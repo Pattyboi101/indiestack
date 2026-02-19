@@ -50,9 +50,23 @@ CREATE TABLE IF NOT EXISTS upvotes (
     UNIQUE(tool_id, ip_hash)
 );
 
+CREATE TABLE IF NOT EXISTS purchases (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tool_id INTEGER NOT NULL REFERENCES tools(id),
+    buyer_email TEXT NOT NULL,
+    stripe_session_id TEXT NOT NULL DEFAULT '',
+    amount_pence INTEGER NOT NULL,
+    commission_pence INTEGER NOT NULL,
+    purchase_token TEXT NOT NULL UNIQUE,
+    delivered INTEGER NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE INDEX IF NOT EXISTS idx_tools_status ON tools(status);
 CREATE INDEX IF NOT EXISTS idx_tools_category ON tools(category_id);
 CREATE INDEX IF NOT EXISTS idx_tools_upvotes ON tools(upvote_count DESC);
+CREATE INDEX IF NOT EXISTS idx_purchases_token ON purchases(purchase_token);
+CREATE INDEX IF NOT EXISTS idx_purchases_tool ON purchases(tool_id);
 """
 
 FTS_SCHEMA = """
@@ -129,6 +143,31 @@ async def init_db():
             await db.execute("SELECT is_verified FROM tools LIMIT 1")
         except Exception:
             await db.execute("ALTER TABLE tools ADD COLUMN is_verified INTEGER NOT NULL DEFAULT 0")
+        # Migration: add marketplace columns if missing
+        for col, ddl in [
+            ("price_pence", "ALTER TABLE tools ADD COLUMN price_pence INTEGER"),
+            ("delivery_type", "ALTER TABLE tools ADD COLUMN delivery_type TEXT NOT NULL DEFAULT 'link'"),
+            ("delivery_url", "ALTER TABLE tools ADD COLUMN delivery_url TEXT NOT NULL DEFAULT ''"),
+            ("stripe_account_id", "ALTER TABLE tools ADD COLUMN stripe_account_id TEXT NOT NULL DEFAULT ''"),
+        ]:
+            try:
+                await db.execute(f"SELECT {col} FROM tools LIMIT 1")
+            except Exception:
+                await db.execute(ddl)
+        # Ensure purchases table exists (for existing DBs)
+        await db.execute("""CREATE TABLE IF NOT EXISTS purchases (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            tool_id INTEGER NOT NULL REFERENCES tools(id),
+            buyer_email TEXT NOT NULL,
+            stripe_session_id TEXT NOT NULL DEFAULT '',
+            amount_pence INTEGER NOT NULL,
+            commission_pence INTEGER NOT NULL,
+            purchase_token TEXT NOT NULL UNIQUE,
+            delivered INTEGER NOT NULL DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )""")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_purchases_token ON purchases(purchase_token)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_purchases_tool ON purchases(tool_id)")
         # Seed categories if empty
         cursor = await db.execute("SELECT COUNT(*) as cnt FROM categories")
         count = (await cursor.fetchone())['cnt']
@@ -253,7 +292,9 @@ async def search_tools(db: aiosqlite.Connection, query: str, limit: int = 20):
 # ── Submissions ───────────────────────────────────────────────────────────
 
 async def create_tool(db: aiosqlite.Connection, *, name: str, tagline: str, description: str,
-                      url: str, maker_name: str, maker_url: str, category_id: int, tags: str) -> int:
+                      url: str, maker_name: str, maker_url: str, category_id: int, tags: str,
+                      price_pence: Optional[int] = None, delivery_type: str = 'link',
+                      delivery_url: str = '', stripe_account_id: str = '') -> int:
     slug = slugify(name)
     # Ensure unique slug
     base_slug = slug
@@ -266,9 +307,11 @@ async def create_tool(db: aiosqlite.Connection, *, name: str, tagline: str, desc
         counter += 1
 
     cursor = await db.execute(
-        """INSERT INTO tools (name, slug, tagline, description, url, maker_name, maker_url, category_id, tags)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-        (name, slug, tagline, description, url, maker_name, maker_url, category_id, tags),
+        """INSERT INTO tools (name, slug, tagline, description, url, maker_name, maker_url,
+           category_id, tags, price_pence, delivery_type, delivery_url, stripe_account_id)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (name, slug, tagline, description, url, maker_name, maker_url, category_id, tags,
+         price_pence, delivery_type, delivery_url, stripe_account_id),
     )
     await db.commit()
     return cursor.lastrowid
@@ -405,3 +448,65 @@ async def has_upvoted(db: aiosqlite.Connection, tool_id: int, ip: str) -> bool:
         "SELECT id FROM upvotes WHERE tool_id = ? AND ip_hash = ?", (tool_id, ip_h)
     )
     return await cursor.fetchone() is not None
+
+
+# ── Purchases ────────────────────────────────────────────────────────────
+
+async def create_purchase(db: aiosqlite.Connection, *, tool_id: int, buyer_email: str,
+                          stripe_session_id: str, amount_pence: int, commission_pence: int) -> str:
+    """Create a purchase record. Returns the unique purchase_token."""
+    token = secrets.token_urlsafe(32)
+    await db.execute(
+        """INSERT INTO purchases (tool_id, buyer_email, stripe_session_id, amount_pence,
+           commission_pence, purchase_token)
+           VALUES (?, ?, ?, ?, ?, ?)""",
+        (tool_id, buyer_email, stripe_session_id, amount_pence, commission_pence, token),
+    )
+    await db.commit()
+    return token
+
+
+async def get_purchase_by_token(db: aiosqlite.Connection, token: str):
+    cursor = await db.execute(
+        """SELECT p.*, t.name as tool_name, t.slug as tool_slug, t.delivery_type,
+                  t.delivery_url, t.maker_name
+           FROM purchases p JOIN tools t ON p.tool_id = t.id
+           WHERE p.purchase_token = ?""",
+        (token,),
+    )
+    return await cursor.fetchone()
+
+
+async def get_purchase_by_session(db: aiosqlite.Connection, session_id: str):
+    cursor = await db.execute(
+        """SELECT p.*, t.name as tool_name, t.slug as tool_slug, t.delivery_type,
+                  t.delivery_url, t.maker_name
+           FROM purchases p JOIN tools t ON p.tool_id = t.id
+           WHERE p.stripe_session_id = ?""",
+        (session_id,),
+    )
+    return await cursor.fetchone()
+
+
+async def get_purchases_for_tool(db: aiosqlite.Connection, tool_id: int):
+    cursor = await db.execute(
+        """SELECT * FROM purchases WHERE tool_id = ? ORDER BY created_at DESC""",
+        (tool_id,),
+    )
+    return await cursor.fetchall()
+
+
+async def get_purchase_stats(db: aiosqlite.Connection):
+    """Get total revenue and purchase count for admin dashboard."""
+    cursor = await db.execute(
+        """SELECT COUNT(*) as total_purchases,
+                  COALESCE(SUM(amount_pence), 0) as total_revenue,
+                  COALESCE(SUM(commission_pence), 0) as total_commission
+           FROM purchases"""
+    )
+    return await cursor.fetchone()
+
+
+async def update_tool_stripe_account(db: aiosqlite.Connection, tool_id: int, stripe_account_id: str):
+    await db.execute("UPDATE tools SET stripe_account_id = ? WHERE id = ?", (stripe_account_id, tool_id))
+    await db.commit()

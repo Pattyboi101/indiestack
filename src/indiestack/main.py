@@ -3,10 +3,10 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse, Response
 
 from indiestack import db
-from indiestack.routes import landing, browse, tool, search, submit, admin
+from indiestack.routes import landing, browse, tool, search, submit, admin, purchase
 
 
 @asynccontextmanager
@@ -37,6 +37,54 @@ async def health():
     return {"status": "ok"}
 
 
+# ── SEO ───────────────────────────────────────────────────────────────────
+
+@app.get("/robots.txt", response_class=PlainTextResponse)
+async def robots():
+    return "User-agent: *\nAllow: /\nSitemap: https://indiestack.fly.dev/sitemap.xml"
+
+
+@app.get("/sitemap.xml")
+async def sitemap(request: Request):
+    urls = [
+        ("https://indiestack.fly.dev/", "daily", "1.0"),
+        ("https://indiestack.fly.dev/submit", "monthly", "0.5"),
+    ]
+    d = request.state.db
+    cats = await db.get_all_categories(d)
+    for c in cats:
+        urls.append((f"https://indiestack.fly.dev/category/{c['slug']}", "daily", "0.8"))
+    cursor = await d.execute("SELECT slug FROM tools WHERE status = 'approved'")
+    tools = await cursor.fetchall()
+    for t in tools:
+        urls.append((f"https://indiestack.fly.dev/tool/{t['slug']}", "weekly", "0.7"))
+    entries = "\n".join(
+        f"  <url><loc>{u}</loc><changefreq>{f}</changefreq><priority>{p}</priority></url>"
+        for u, f, p in urls
+    )
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{entries}
+</urlset>"""
+    return Response(content=xml, media_type="application/xml")
+
+
+FAVICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<rect width="100" height="100" rx="16" fill="#F59E0B"/>
+<text x="50" y="72" font-size="60" text-anchor="middle" fill="white" font-family="sans-serif" font-weight="bold">iS</text>
+</svg>"""
+
+
+@app.get("/favicon.svg")
+async def favicon_svg():
+    return Response(content=FAVICON_SVG, media_type="image/svg+xml")
+
+
+@app.get("/favicon.ico")
+async def favicon_ico():
+    return Response(content=FAVICON_SVG, media_type="image/svg+xml")
+
+
 # ── Upvote API ────────────────────────────────────────────────────────────
 
 @app.post("/api/upvote")
@@ -63,3 +111,4 @@ app.include_router(tool.router)
 app.include_router(search.router)
 app.include_router(submit.router)
 app.include_router(admin.router)
+app.include_router(purchase.router)

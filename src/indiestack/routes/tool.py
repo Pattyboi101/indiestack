@@ -12,6 +12,14 @@ from indiestack.db import get_tool_by_slug, get_related_tools
 router = APIRouter()
 
 
+def format_price(pence: int) -> str:
+    """Format pence as display string."""
+    pounds = pence / 100
+    if pounds == int(pounds):
+        return f"\u00a3{int(pounds)}"
+    return f"\u00a3{pounds:.2f}"
+
+
 @router.get("/tool/{slug}", response_class=HTMLResponse)
 async def tool_detail(request: Request, slug: str):
     db = request.state.db
@@ -39,6 +47,7 @@ async def tool_detail(request: Request, slug: str):
     tags = str(tool.get('tags', ''))
     is_verified = bool(tool.get('is_verified', 0))
     tool_id = tool['id']
+    price_pence = tool.get('price_pence')
 
     # Tags
     tag_html = ''
@@ -57,15 +66,51 @@ async def tool_detail(request: Request, slug: str):
         else:
             maker_html = f'<p class="text-muted text-sm mt-4">Built by {maker_name}</p>'
 
+    # Price tag
+    price_tag_html = ''
+    if price_pence and price_pence > 0:
+        price_display = format_price(price_pence)
+        price_tag_html = f"""
+        <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);
+                     font-size:24px;font-weight:700;color:var(--violet);margin-top:12px;">
+            {price_display}
+        </span>
+        """
+
+    # CTA button — "Buy Now" for paid tools, "Visit Website" for free
+    if price_pence and price_pence > 0:
+        price_display = format_price(price_pence)
+        cta_html = f"""
+        <form method="post" action="/api/checkout" style="display:inline;">
+            <input type="hidden" name="tool_id" value="{tool_id}">
+            <button type="submit" class="btn btn-violet" style="font-size:16px;padding:14px 32px;">
+                Buy Now {price_display} &rarr;
+            </button>
+        </form>
+        """
+    else:
+        cta_html = f"""
+        <a href="{url}" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
+            Visit Website &rarr;
+        </a>
+        """
+
     # JSON-LD
-    json_ld = json.dumps({
+    json_ld_data = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": tool['name'],
         "description": tool['tagline'],
         "url": tool['url'],
         "applicationCategory": tool.get('category_name', ''),
-    })
+    }
+    if price_pence and price_pence > 0:
+        json_ld_data["offers"] = {
+            "@type": "Offer",
+            "price": f"{price_pence / 100:.2f}",
+            "priceCurrency": "GBP",
+        }
+    json_ld = json.dumps(json_ld_data)
     extra_head = f'<script type="application/ld+json">{json_ld}</script>'
 
     # Related tools
@@ -92,10 +137,11 @@ async def tool_detail(request: Request, slug: str):
                     {verified_badge_html() if is_verified else ''}
                 </div>
                 <p style="font-size:18px;color:var(--stone-500);margin-top:8px;">{tagline}</p>
+                {price_tag_html}
             </div>
             <button class="upvote-btn" onclick="upvote({tool_id})" id="upvote-{tool_id}"
                     style="flex-shrink:0;min-width:60px;">
-                <span class="arrow">▲</span>
+                <span class="arrow">&#9650;</span>
                 <span id="count-{tool_id}">{upvotes}</span>
             </button>
         </div>
@@ -105,9 +151,7 @@ async def tool_detail(request: Request, slug: str):
         </div>
 
         <div style="margin-top:32px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-            <a href="{url}" target="_blank" rel="noopener" class="btn btn-primary">
-                Visit Website →
-            </a>
+            {cta_html}
             {maker_html}
         </div>
 

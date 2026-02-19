@@ -7,7 +7,7 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.routes.components import page_shell
-from indiestack.db import get_pending_tools, get_all_tools_admin, update_tool_status, toggle_verified, bulk_create_tools
+from indiestack.db import get_pending_tools, get_all_tools_admin, update_tool_status, toggle_verified, bulk_create_tools, get_purchase_stats
 from indiestack.auth import check_admin_session, make_session_token, ADMIN_PASSWORD
 
 router = APIRouter()
@@ -45,6 +45,7 @@ async def admin_get(request: Request):
     db = request.state.db
     pending = await get_pending_tools(db)
     all_tools = await get_all_tools_admin(db)
+    stats = await get_purchase_stats(db)
 
     # Pending section
     pending_count = len(pending)
@@ -58,6 +59,8 @@ async def admin_get(request: Request):
             t_url = escape(str(t['url']))
             maker = escape(str(t.get('maker_name', '')))
             cat = escape(str(t.get('category_name', '')))
+            price_p = t.get('price_pence')
+            price_str = f'\u00a3{price_p/100:.2f}' if price_p else 'Free'
             pending_html += f"""
             <div class="card" style="margin-bottom:12px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
@@ -67,7 +70,7 @@ async def admin_get(request: Request):
                         <p class="text-sm mt-2">
                             <a href="{t_url}" target="_blank" rel="noopener">{t_url}</a>
                         </p>
-                        <p class="text-muted text-sm">Maker: {maker} &middot; Category: {cat}</p>
+                        <p class="text-muted text-sm">Maker: {maker} &middot; Category: {cat} &middot; Price: {price_str}</p>
                     </div>
                     <div style="display:flex;gap:8px;">
                         <form method="post" action="/admin">
@@ -107,6 +110,8 @@ async def admin_get(request: Request):
             v_label = 'Unverify' if is_v else 'Verify'
             v_style = 'background:#FEF3C7;color:#92400E;border:1px solid #F59E0B;' if is_v else 'background:var(--stone-100);color:var(--stone-600);border:1px solid var(--stone-200);'
             v_badge = '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#D97706;border:1px solid #F59E0B;">Verified</span>' if is_v else ''
+            t_price_p = t.get('price_pence')
+            price_cell = f'\u00a3{t_price_p/100:.2f}' if t_price_p else 'Free'
             rows += f"""
             <tr style="border-bottom:1px solid var(--stone-200);">
                 <td style="padding:10px 12px;font-weight:600;">{escape(str(t['name']))} {v_badge}</td>
@@ -115,6 +120,7 @@ async def admin_get(request: Request):
                                  font-weight:600;{style}">{escape(s)}</span>
                 </td>
                 <td style="padding:10px 12px;">{t.get('upvote_count', 0)}</td>
+                <td style="padding:10px 12px;">{price_cell}</td>
                 <td style="padding:10px 12px;">{escape(str(t.get('category_name', '')))}</td>
                 <td style="padding:10px 12px;">
                     <form method="post" action="/admin" style="margin:0;">
@@ -134,6 +140,7 @@ async def admin_get(request: Request):
                         <th style="padding:10px 12px;">Name</th>
                         <th style="padding:10px 12px;">Status</th>
                         <th style="padding:10px 12px;">Upvotes</th>
+                        <th style="padding:10px 12px;">Price</th>
                         <th style="padding:10px 12px;">Category</th>
                         <th style="padding:10px 12px;">Verified</th>
                     </tr>
@@ -152,6 +159,20 @@ async def admin_get(request: Request):
             <a href="/admin/import" class="btn" style="background:var(--stone-100);color:var(--stone-700);border:1px solid var(--stone-300);">
                 Bulk Import
             </a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
+            <div class="card" style="text-align:center;padding:16px;">
+                <div class="text-muted text-sm">Total Purchases</div>
+                <div style="font-family:var(--font-display);font-size:28px;font-weight:700;margin-top:4px;">{stats['total_purchases']}</div>
+            </div>
+            <div class="card" style="text-align:center;padding:16px;">
+                <div class="text-muted text-sm">Total Revenue</div>
+                <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--violet);margin-top:4px;">&pound;{stats['total_revenue'] / 100:.2f}</div>
+            </div>
+            <div class="card" style="text-align:center;padding:16px;">
+                <div class="text-muted text-sm">Platform Commission</div>
+                <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--amber-dark);margin-top:4px;">&pound;{stats['total_commission'] / 100:.2f}</div>
+            </div>
         </div>
         {pending_html}
         <hr style="margin:32px 0;border:none;border-top:1px solid var(--stone-200);">

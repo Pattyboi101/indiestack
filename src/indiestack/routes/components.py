@@ -331,6 +331,7 @@ def page_shell(title: str, body: str, *, description: str = "", extra_head: str 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{escape(title)} — IndieStack</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta name="description" content="{desc}">
     <meta property="og:title" content="{escape(title)} — IndieStack">
     <meta property="og:description" content="{desc}">
