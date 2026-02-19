@@ -1,0 +1,164 @@
+[
+  {
+    "name": "Plausible Analytics",
+    "tagline": "Privacy-friendly website analytics without cookies or consent banners",
+    "url": "https://plausible.io",
+    "description": "Plausible is a lightweight, open-source web analytics tool that gives you meaningful traffic stats without collecting personal data or using cookies. Fully GDPR-compliant and under 1KB, it shows everything you need on a single clean dashboard. Built as a direct, ethical alternative to Google Analytics.",
+    "category": "Analytics & Metrics",
+    "maker_name": "Uku Täht & Marko Saric",
+    "tags": "privacy-first, open-source, web analytics"
+  },
+  {
+    "name": "Fathom Analytics",
+    "tagline": "Stop feeding Google your visitors' data — get simple, private analytics",
+    "url": "https://usefathom.com",
+    "description": "Fathom is a privacy-first Google Analytics alternative that gives you traffic insights without cookies, tracking scripts, or GDPR headaches. It routes through your own subdomain so ad blockers rarely touch it. Self-funded from day one by a two-person team.",
+    "category": "Analytics & Metrics",
+    "maker_name": "Jack Ellis & Paul Jarvis",
+    "tags": "privacy-analytics, cookieless, bootstrapped"
+  },
+  {
+    "name": "Buttondown",
+    "tagline": "The best way to start, grow, and run your newsletter",
+    "url": "https://buttondown.com",
+    "description": "Buttondown is a small, elegant newsletter tool for writers and indie makers who want a focused, no-bloat experience. It strips away the complexity of Mailchimp and lets you focus on writing great emails and growing your audience. Grown entirely through word-of-mouth since 2017.",
+    "category": "Email Marketing",
+    "maker_name": "Justin Duke",
+    "tags": "newsletter, writers, indie-maker"
+  },
+  {
+    "name": "EmailOctopus",
+    "tagline": "Email marketing that does more for less",
+    "url": "https://emailoctopus.com",
+    "description": "EmailOctopus is an affordable email marketing platform offering campaigns, automations, and landing pages at a fraction of Mailchimp's price. Built because existing tools were too expensive for small businesses. Bootstrapped to over $3M ARR with no investors.",
+    "category": "Email Marketing",
+    "maker_name": "Jonathan Bull",
+    "tags": "email-campaigns, affordable, small-business"
+  },
+  {
+    "name": "Invoice Ninja",
+    "tagline": "Free invoicing, expenses, and time-tracking for freelancers",
+    "url": "https://invoiceninja.com",
+    "description": "Invoice Ninja is a fully-featured, source-available invoicing platform that lets freelancers and small businesses create invoices, track expenses, manage time, and accept payments. Offers both hosted cloud and self-hostable versions. Used by over 200,000 businesses worldwide.",
+    "category": "Invoicing & Billing",
+    "maker_name": "Hillel Coren",
+    "tags": "open-source, freelancers, self-hosted"
+  },
+  {
+    "name": "Cushion",
+    "tagline": "See your freelance income and workload before it happens",
+    "url": "https://cushionapp.com",
+    "description": "Cushion combines scheduling, invoicing, time-tracking, and income forecasting in one app built specifically for freelancers. It helps you visualise upcoming income and avoid the feast-or-famine cycle. Solo-built by a design engineer in Brooklyn who's been building it in public since 2014.",
+    "category": "Invoicing & Billing",
+    "maker_name": "Jonnie Hallman",
+    "tags": "freelancers, forecasting, solo-founder"
+  },
+  {
+    "name": "Crisp",
+    "tagline": "All-in-one customer messaging — live chat, email, WhatsApp, and more",
+    "url": "https://crisp.chat",
+    "description": "Crisp brings together live chat, email, WhatsApp, Instagram, Telegram, AI agents, a knowledge base, and CRM into a single workspace. Founded in Nantes, France with zero VC funding ever raised, it now serves over 200,000 brands worldwide. Free plan available.",
+    "category": "Customer Support",
+    "maker_name": "Baptiste Jamin & Valerian Saliou",
+    "tags": "live-chat, multi-channel, bootstrapped"
+  },
+  {
+    "name": "HelpKit",
+    "tagline": "Turn your Notion pages into a professional help centre",
+    "url": "https://helpkit.so",
+    "description": "HelpKit lets you build a polished, public-facing knowledge base directly from your existing Notion pages — no coding required. Perfect for indie makers and small SaaS teams who already use Notion. Solo-bootstrapped to over $10K MRR by a self-taught developer from Austria.",
+    "category": "Customer Support",
+    "maker_name": "Dominik Sobe",
+    "tags": "Notion, knowledge-base, no-code"
+  },
+  {
+    "name": "SavvyCal",
+    "tagline": "Scheduling links that let people overlay their own calendar",
+    "url": "https://savvycal.com",
+    "description": "SavvyCal replaces the clunky Calendly experience with a calendar overlay — recipients see your availability on top of their own schedule and pick the best mutual time. Built by the former technical co-founder of Drip. Small-team, bootstrapped, and backed by TinySeed.",
+    "category": "Scheduling & Booking",
+    "maker_name": "Derrick Reimer",
+    "tags": "scheduling, calendar, indie-saas"
+  },
+  {
+    "name": "Canny",
+    "tagline": "Capture and prioritise feature requests without the spreadsheet chaos",
+    "url": "https://canny.io",
+    "description": "Canny lets your users submit and upvote feature requests, helps you prioritise what to build, and automatically notifies everyone when you ship. Founded by two ex-Facebook engineers who bootstrapped it to $3.3M ARR with zero outside investment over seven years.",
+    "category": "Feedback & Reviews",
+    "maker_name": "Sarah Hum & Andrew Rasmussen",
+    "tags": "feedback, feature-requests, product-roadmap"
+  },
+  {
+    "name": "Senja",
+    "tagline": "Collect and display testimonials that actually convert visitors",
+    "url": "https://senja.io",
+    "description": "Senja makes it easy to request testimonials via a branded form, then display them anywhere — embedded widgets, wall-of-love pages, or auto-formatted social posts. Built remotely by two indie hackers who met online and bootstrapped it to $1M ARR with over 3,000 customers.",
+    "category": "Feedback & Reviews",
+    "maker_name": "Wilson Wilson & Olly Meakings",
+    "tags": "testimonials, social-proof, conversions"
+  },
+  {
+    "name": "Tally",
+    "tagline": "Create beautiful forms as easily as typing a document — free forever",
+    "url": "https://tally.so",
+    "description": "Tally is a Notion-style form builder where you type your form like a document instead of dragging blocks around. The generous free tier made it a go-to for indie makers and small businesses who find Typeform too expensive and Google Forms too ugly. Bootstrapped to $4M ARR by a two-person team in Belgium.",
+    "category": "Forms & Surveys",
+    "maker_name": "Marie Martens & Filip Minev",
+    "tags": "forms, no-code, typeform-alternative"
+  },
+  {
+    "name": "Typefully",
+    "tagline": "Write, schedule, and grow on X, LinkedIn, Bluesky, and Threads",
+    "url": "https://typefully.com",
+    "description": "Typefully started as a tiny side project for writing Twitter threads, went viral on Hacker News, and grew into a $1.6M ARR scheduling and analytics tool. Now covers X, LinkedIn, Threads, Bluesky, and Mastodon with AI writing assistance and analytics built in. Fully bootstrapped by two Italian founders.",
+    "category": "Social Media",
+    "maker_name": "Fabrizio Rinaldi & Francesco Di Lorenzo",
+    "tags": "social-scheduling, content-creation, bootstrapped"
+  },
+  {
+    "name": "Carrd",
+    "tagline": "Build a beautiful one-page site in minutes — from $19/year",
+    "url": "https://carrd.co",
+    "description": "Carrd is the beloved one-page website builder made by one person. Instead of competing with Wix or Squarespace, it went ruthlessly narrow: one page, done beautifully. Grown entirely by word of mouth to 4M+ sites and $1.5M+ ARR with no marketing team, ads, or investors.",
+    "category": "Landing Pages",
+    "maker_name": "AJ",
+    "tags": "landing-pages, one-page-website, no-code"
+  },
+  {
+    "name": "Oh Dear",
+    "tagline": "Monitor your whole website, not just whether it's up",
+    "url": "https://ohdear.app",
+    "description": "Oh Dear goes beyond basic uptime pings — it monitors SSL certificate expiry, broken links, DNS changes, scheduled tasks, and application health from one dashboard. Built by two developers from Antwerp as a hobby project in 2017, it's been self-funded and profitable ever since.",
+    "category": "Monitoring & Uptime",
+    "maker_name": "Freek Van der Herten & Mattias Geniar",
+    "tags": "uptime-monitoring, ssl-monitoring, website-health"
+  },
+  {
+    "name": "ScreenshotOne",
+    "tagline": "A screenshot API that handles ad blockers, cookies, and full-page scrolls",
+    "url": "https://screenshotone.com",
+    "description": "ScreenshotOne turns any URL or raw HTML into a screenshot via a simple API — handling ad blocking, cookie banners, and full-page captures so you don't have to manage Puppeteer yourself. Solo-built to $10K MRR and over 1 million screenshots generated.",
+    "category": "Developer Tools",
+    "maker_name": "Dmytro Krasun",
+    "tags": "screenshot-api, developer-tools, solo-founder"
+  },
+  {
+    "name": "Pika",
+    "tagline": "Turn boring screenshots into polished, shareable mockups instantly",
+    "url": "https://pika.style",
+    "description": "Pika wraps your screenshots in browser frames, device mockups, or gradient backgrounds to make them share-worthy for Product Hunt launches, social posts, and docs. Solo-built by a design engineer from India, with no employees or marketing spend. Runs on a freemium model.",
+    "category": "Design & Creative",
+    "maker_name": "Rishi Mohan",
+    "tags": "screenshot-mockup, design-tool, social-sharing"
+  },
+  {
+    "name": "Activepieces",
+    "tagline": "Open-source automation with 330+ integrations — self-host or use the cloud",
+    "url": "https://activepieces.com",
+    "description": "Activepieces is an open-source automation platform rivalling Zapier with a visual workflow builder and native AI agent support. MIT-licensed so you can self-host for free on Docker and never pay per task. About 60% of its integrations were contributed by the community.",
+    "category": "AI & Automation",
+    "maker_name": "Ashraf Samhouri & Mohammad AbuAboud",
+    "tags": "automation, open-source, zapier-alternative"
+  }
+]

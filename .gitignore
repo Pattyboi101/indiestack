@@ -1,0 +1,39 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.db
+.env
+*.log
+.claude/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Images (screenshots, drafts)
+*.png
+*.avif
+
+# Internal docs
+GEMINI_*.md
+LAUNCH_CONTENT.md
+MONETISATION_PLAN.md
+PRODUCT_HUNT_DRAFT.md
+SHOW_HN_DRAFT.md
+marketing/
+
+# Scripts (internal)
+send_*.py
+reply_*.py
+seed_social_proof.py
+purge_seeded_data.py
+
+# PyPI
+PyPI-Recovery-Codes-*.txt

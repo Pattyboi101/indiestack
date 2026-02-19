@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.Pattyboi101/indiestack",
+  "title": "IndieStack",
+  "description": "Search 130+ vetted indie SaaS tools from your AI coding assistant. Before your AI writes boilerplate, it checks what's already built.",
+  "repository": {
+    "url": "https://github.com/indiestack/indiestack",
+    "source": "github"
+  },
+  "version": "0.1.2",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "indiestack",
+      "version": "0.1.2",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

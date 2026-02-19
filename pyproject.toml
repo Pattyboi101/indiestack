@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "indiestack"
+version = "0.1.2"
+description = "MCP server for IndieStack — search indie SaaS tools from your AI coding assistant."
+readme = "README_PYPI.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "IndieStack", email = "hello@indiestack.fly.dev" },
+]
+keywords = ["mcp", "indie", "saas", "tools", "ai", "claude", "cursor", "windsurf"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "mcp[cli]>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://indiestack.fly.dev"
+Repository = "https://github.com/indiestack/indiestack"
+
+# Optional: full server dependencies (only needed for self-hosting)
+[project.optional-dependencies]
+server = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "aiosqlite>=0.19.0",
+    "python-multipart>=0.0.6",
+    "stripe>=8.0.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/indiestack"]
