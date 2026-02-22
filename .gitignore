@@ -7,3 +7,5 @@ build/
 *.db
 .env
 *.log
+.claude/
+Screenshot *.png

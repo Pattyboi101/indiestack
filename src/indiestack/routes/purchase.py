@@ -5,8 +5,9 @@ from html import escape
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 
-from indiestack.routes.components import page_shell
-from indiestack.db import get_tool_by_slug, create_purchase, get_purchase_by_token, get_purchase_by_session
+from indiestack.routes.components import page_shell, integration_snippet_html
+from indiestack.db import get_tool_by_slug, create_purchase, get_purchase_by_token, get_purchase_by_session, get_tool_by_id, get_active_subscription
+from indiestack.email import send_email, purchase_receipt_html
 from indiestack.payments import (
     create_checkout_session, verify_webhook, retrieve_checkout_session,
     calculate_commission, STRIPE_SECRET_KEY,
@@ -24,6 +25,8 @@ def format_price(pence: int) -> str:
 
 @router.post("/api/checkout")
 async def api_checkout(request: Request, tool_id: int = Form(0)):
+    if not request.state.user:
+        return RedirectResponse(url="/login", status_code=303)
     if not STRIPE_SECRET_KEY:
         return JSONResponse({"error": "Payments not configured"}, status_code=503)
 
@@ -41,27 +44,49 @@ async def api_checkout(request: Request, tool_id: int = Form(0)):
     if not tool.get('stripe_account_id'):
         return RedirectResponse(url=f"/tool/{tool['slug']}", status_code=303)
 
+    # Indie Ring: 50% off for makers buying OTHER makers' tools
+    discount_pence = 0
+    effective_price = tool['price_pence']
+    user = request.state.user
+    if user:
+        buyer_maker_id = user.get('maker_id')
+        tool_maker_id = tool.get('maker_id')
+        if buyer_maker_id and tool_maker_id and buyer_maker_id != tool_maker_id:
+            discount_pence = tool['price_pence'] // 2
+            effective_price = tool['price_pence'] - discount_pence
+
+    # Check if maker has Pro subscription for reduced commission
+    is_pro = False
+    maker_id = tool.get('maker_id')
+    if maker_id:
+        maker_user_cur = await db.execute("SELECT id FROM users WHERE maker_id = ?", (maker_id,))
+        maker_user_row = await maker_user_cur.fetchone()
+        if maker_user_row:
+            sub = await get_active_subscription(db, maker_user_row['id'])
+            is_pro = sub is not None
+
     base_url = str(request.base_url).rstrip("/")
     try:
         session = create_checkout_session(
             tool_name=tool['name'],
             tool_id=tool['id'],
-            price_pence=tool['price_pence'],
+            price_pence=effective_price,
             stripe_account_id=tool['stripe_account_id'],
             success_url=f"{base_url}/purchase/success?session_id={{CHECKOUT_SESSION_ID}}",
             cancel_url=f"{base_url}/tool/{tool['slug']}",
+            is_pro=is_pro,
         )
         return RedirectResponse(url=session.url, status_code=303)
     except Exception as e:
         body = f"""
         <div class="container" style="text-align:center;padding:80px 0;">
-            <h1 style="font-family:var(--font-display);font-size:32px;">Payment Error</h1>
-            <p class="text-muted mt-4">Something went wrong creating the checkout session.</p>
-            <p class="text-sm mt-2" style="color:var(--stone-400);">{escape(str(e))}</p>
+            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Payment Error</h1>
+            <p style="color:var(--ink-muted);margin-top:16px;">Something went wrong creating the checkout session.</p>
+            <p style="font-size:14px;margin-top:8px;color:var(--ink-muted);">{escape(str(e))}</p>
             <a href="/tool/{escape(str(tool['slug']))}" class="btn btn-primary mt-4">Back to Tool</a>
         </div>
         """
-        return HTMLResponse(page_shell("Payment Error", body), status_code=500)
+        return HTMLResponse(page_shell("Payment Error", body, user=request.state.user), status_code=500)
 
 
 @router.get("/purchase/success", response_class=HTMLResponse)
@@ -82,29 +107,46 @@ async def purchase_success(request: Request, session_id: str = ""):
     except Exception:
         body = """
         <div class="container" style="text-align:center;padding:80px 0;">
-            <h1 style="font-family:var(--font-display);font-size:32px;">Session Not Found</h1>
-            <p class="text-muted mt-4">We couldn't verify your payment. Please contact support.</p>
+            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Session Not Found</h1>
+            <p style="color:var(--ink-muted);margin-top:16px;">We couldn't verify your payment. Please contact support.</p>
             <a href="/" class="btn btn-primary mt-4">Back to Home</a>
         </div>
         """
-        return HTMLResponse(page_shell("Session Not Found", body), status_code=404)
+        return HTMLResponse(page_shell("Session Not Found", body, user=request.state.user), status_code=404)
 
     if session.payment_status != "paid":
         body = """
         <div class="container" style="text-align:center;padding:80px 0;">
-            <h1 style="font-family:var(--font-display);font-size:32px;">Payment Incomplete</h1>
-            <p class="text-muted mt-4">Your payment hasn't been confirmed yet. Please try again.</p>
+            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Payment Incomplete</h1>
+            <p style="color:var(--ink-muted);margin-top:16px;">Your payment hasn't been confirmed yet. Please try again.</p>
             <a href="/" class="btn btn-primary mt-4">Back to Home</a>
         </div>
         """
-        return HTMLResponse(page_shell("Payment Incomplete", body))
+        return HTMLResponse(page_shell("Payment Incomplete", body, user=request.state.user))
 
     tool_id = int(session.metadata.get("tool_id", 0))
     buyer_email = ""
     if session.customer_details:
         buyer_email = session.customer_details.email or ""
     amount = session.amount_total or 0
-    commission = calculate_commission(amount)
+
+    # Check maker's Pro status for correct commission
+    is_pro = False
+    tool_for_commission = await get_tool_by_id(db, tool_id) if tool_id else None
+    if tool_for_commission and tool_for_commission.get('maker_id'):
+        maker_user_cur = await db.execute("SELECT id FROM users WHERE maker_id = ?", (tool_for_commission['maker_id'],))
+        maker_user_row = await maker_user_cur.fetchone()
+        if maker_user_row:
+            sub = await get_active_subscription(db, maker_user_row['id'])
+            is_pro = sub is not None
+    commission = calculate_commission(amount, is_pro=is_pro)
+
+    # Calculate discount for record-keeping
+    tool_cur = await db.execute("SELECT price_pence FROM tools WHERE id = ?", (tool_id,))
+    tool_row = await tool_cur.fetchone()
+    discount_pence = 0
+    if tool_row and tool_row['price_pence']:
+        discount_pence = max(0, tool_row['price_pence'] - amount)
 
     token = await create_purchase(
         db,
@@ -113,9 +155,34 @@ async def purchase_success(request: Request, session_id: str = ""):
         stripe_session_id=session_id,
         amount_pence=amount,
         commission_pence=commission,
+        discount_pence=discount_pence,
     )
 
+    # Send receipt email
+    if buyer_email:
+        tool_obj = await get_tool_by_id(db, tool_id)
+        tool_name_str = tool_obj['name'] if tool_obj else 'Your purchase'
+        delivery = tool_obj.get('delivery_url', '') if tool_obj else ''
+        receipt_html = purchase_receipt_html(
+            tool_name=tool_name_str,
+            amount=f"£{amount/100:.2f}",
+            delivery_url=f"{str(request.base_url).rstrip('/')}/purchase/{token}",
+        )
+        await send_email(buyer_email, f"Your IndieStack purchase: {tool_name_str}", receipt_html)
+
     return RedirectResponse(url=f"/purchase/{token}", status_code=303)
+
+
+@router.get("/purchase/cancel", response_class=HTMLResponse)
+async def purchase_cancel(request: Request):
+    body = """
+    <div class="container" style="text-align:center;padding:80px 0;">
+        <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Payment Cancelled</h1>
+        <p style="color:var(--ink-muted);margin-top:16px;">Your payment was cancelled. No charge was made.</p>
+        <a href="/" class="btn btn-primary mt-4">Back to Home</a>
+    </div>
+    """
+    return HTMLResponse(page_shell("Payment Cancelled", body, user=request.state.user))
 
 
 @router.get("/purchase/{token}", response_class=HTMLResponse)
@@ -126,37 +193,46 @@ async def purchase_delivery(request: Request, token: str):
     if not purchase:
         body = """
         <div class="container" style="text-align:center;padding:80px 0;">
-            <h1 style="font-family:var(--font-display);font-size:32px;">Purchase Not Found</h1>
-            <p class="text-muted mt-4">This purchase link is invalid or has expired.</p>
+            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Purchase Not Found</h1>
+            <p style="color:var(--ink-muted);margin-top:16px;">This purchase link is invalid or has expired.</p>
             <a href="/" class="btn btn-primary mt-4">Back to Home</a>
         </div>
         """
-        return HTMLResponse(page_shell("Not Found", body), status_code=404)
+        return HTMLResponse(page_shell("Not Found", body, user=request.state.user), status_code=404)
 
     tool_name = escape(str(purchase['tool_name']))
     tool_slug = escape(str(purchase['tool_slug']))
     delivery_type = purchase.get('delivery_type', 'link')
     delivery_url = str(purchase.get('delivery_url', ''))
+
+    # Build tool dict for integration snippet
+    tool_for_snippet = {
+        'name': purchase.get('tool_name', ''),
+        'url': delivery_url or '',
+        'delivery_url': delivery_url,
+    }
+    snippet_html = integration_snippet_html(tool_for_snippet)
+
     amount_display = format_price(purchase['amount_pence'])
 
     # Delivery section depends on type
     if delivery_type == 'download':
         delivery_html = f"""
-        <a href="{escape(delivery_url)}" class="btn btn-violet" style="font-size:16px;padding:14px 32px;" target="_blank" rel="noopener">
+        <a href="{escape(delivery_url)}" class="btn btn-slate" style="font-size:16px;padding:14px 32px;" target="_blank" rel="noopener">
             Download Now &darr;
         </a>
         """
     elif delivery_type == 'license_key':
         delivery_html = f"""
-        <div style="background:var(--stone-100);border:1px solid var(--stone-200);border-radius:var(--radius);padding:20px;margin-top:12px;">
-            <p class="text-sm text-muted" style="margin-bottom:8px;">Your license / access link:</p>
+        <div style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:12px;">
+            <p style="font-size:14px;color:var(--ink-muted);margin-bottom:8px;">Your license / access link:</p>
             <a href="{escape(delivery_url)}" target="_blank" rel="noopener"
                style="font-family:var(--font-mono);font-size:14px;word-break:break-all;">{escape(delivery_url)}</a>
         </div>
         """
     else:
         delivery_html = f"""
-        <a href="{escape(delivery_url)}" class="btn btn-violet" style="font-size:16px;padding:14px 32px;" target="_blank" rel="noopener">
+        <a href="{escape(delivery_url)}" class="btn btn-slate" style="font-size:16px;padding:14px 32px;" target="_blank" rel="noopener">
             Access {tool_name} &rarr;
         </a>
         """
@@ -168,38 +244,28 @@ async def purchase_delivery(request: Request, token: str):
                         align-items:center;justify-content:center;margin-bottom:16px;">
                 <span style="font-size:28px;">&#10003;</span>
             </div>
-            <h1 style="font-family:var(--font-display);font-size:32px;">Purchase Complete!</h1>
-            <p class="text-muted mt-2">Thank you for purchasing <strong>{tool_name}</strong> for {amount_display}.</p>
+            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Purchase Complete!</h1>
+            <p style="color:var(--ink-muted);margin-top:8px;">Thank you for purchasing <strong>{tool_name}</strong> for {amount_display}.</p>
         </div>
 
         <div class="card" style="text-align:center;padding:32px;">
-            <h2 style="font-family:var(--font-display);font-size:22px;margin-bottom:20px;">
+            <h2 style="font-family:var(--font-display);font-size:22px;margin-bottom:20px;color:var(--ink);">
                 Your Purchase
             </h2>
             {delivery_html}
-            <p class="text-muted text-sm mt-4">
+            <p style="color:var(--ink-muted);font-size:14px;margin-top:16px;">
                 Bookmark this page &mdash; it's your receipt and access link.
             </p>
         </div>
+
+        {snippet_html}
 
         <div style="text-align:center;margin-top:32px;">
             <a href="/tool/{tool_slug}" class="btn btn-secondary">Back to {tool_name}</a>
         </div>
     </div>
     """
-    return HTMLResponse(page_shell(f"Purchase: {tool_name}", body))
-
-
-@router.get("/purchase/cancel", response_class=HTMLResponse)
-async def purchase_cancel(request: Request):
-    body = """
-    <div class="container" style="text-align:center;padding:80px 0;">
-        <h1 style="font-family:var(--font-display);font-size:32px;">Payment Cancelled</h1>
-        <p class="text-muted mt-4">Your payment was cancelled. No charge was made.</p>
-        <a href="/" class="btn btn-primary mt-4">Back to Home</a>
-    </div>
-    """
-    return HTMLResponse(page_shell("Payment Cancelled", body))
+    return HTMLResponse(page_shell(f"Purchase: {tool_name}", body, user=request.state.user))
 
 
 @router.post("/webhooks/stripe")
@@ -215,11 +281,27 @@ async def stripe_webhook(request: Request):
 
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
+        metadata = session.get("metadata", {})
+
+        # Skip verification purchases — they're handled by the verify route
+        if metadata.get("type") == "verification":
+            return JSONResponse({"received": True})
+
         session_id = session.get("id", "")
-        tool_id = int(session.get("metadata", {}).get("tool_id", 0))
+        tool_id = int(metadata.get("tool_id", 0))
         buyer_email = session.get("customer_details", {}).get("email", "") if session.get("customer_details") else ""
         amount = session.get("amount_total", 0)
-        commission = calculate_commission(amount)
+
+        # Check maker's Pro status for correct commission
+        is_pro_wh = False
+        tool_for_wh = await get_tool_by_id(db, tool_id) if tool_id else None
+        if tool_for_wh and tool_for_wh.get('maker_id'):
+            mk_cur = await db.execute("SELECT id FROM users WHERE maker_id = ?", (tool_for_wh['maker_id'],))
+            mk_row = await mk_cur.fetchone()
+            if mk_row:
+                sub_wh = await get_active_subscription(db, mk_row['id'])
+                is_pro_wh = sub_wh is not None
+        commission = calculate_commission(amount, is_pro=is_pro_wh)
 
         db = request.state.db
         existing = await get_purchase_by_session(db, session_id)

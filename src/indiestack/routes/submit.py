@@ -4,10 +4,10 @@ from html import escape
 from typing import Optional
 
 from fastapi import APIRouter, Request, Form
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.routes.components import page_shell
-from indiestack.db import get_all_categories, create_tool
+from indiestack.db import get_all_categories, create_tool, get_tool_by_id, slugify, get_maker_by_id
 
 router = APIRouter()
 
@@ -21,6 +21,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
     maker_name_val = escape(str(v.get('maker_name', '')))
     maker_url_val = escape(str(v.get('maker_url', '')))
     tags_val = escape(str(v.get('tags', '')))
+    replaces_val = escape(str(v.get('replaces', '')))
     selected_cat = v.get('category_id', '')
     price_val = escape(str(v.get('price', '')))
     delivery_url_val = escape(str(v.get('delivery_url', '')))
@@ -45,8 +46,8 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
     return f"""
     <div class="container" style="max-width:640px;padding:48px 24px;">
         <div style="text-align:center;margin-bottom:40px;">
-            <h1 style="font-family:var(--font-display);font-size:36px;">Submit Your Tool</h1>
-            <p class="text-muted mt-2">Share your indie SaaS tool with the community. We'll review it within 24 hours.</p>
+            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Submit Your Tool</h1>
+            <p style="color:var(--ink-muted);margin-top:8px;">Share your indie SaaS tool with the community. We'll review it within 24 hours.</p>
         </div>
         {alert}
         <form method="post" action="/submit">
@@ -56,7 +57,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                        placeholder="e.g. InvoiceNinja">
             </div>
             <div class="form-group">
-                <label for="tagline">Tagline * <span class="text-muted text-sm">(max 100 chars)</span></label>
+                <label for="tagline">Tagline * <span style="color:var(--ink-muted);font-size:13px;font-weight:400;">(max 100 chars)</span></label>
                 <input type="text" id="tagline" name="tagline" class="form-input" required maxlength="100"
                        value="{tagline_val}" placeholder="e.g. Open-source invoicing for freelancers">
             </div>
@@ -77,30 +78,79 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                 </select>
             </div>
 
-            <div style="background:var(--stone-100);border:1px solid var(--stone-200);border-radius:var(--radius);padding:24px;margin:28px 0;">
-                <h3 style="font-family:var(--font-display);font-size:18px;margin-bottom:4px;">Sell on IndieStack</h3>
-                <p class="text-muted text-sm" style="margin-bottom:20px;">
+            <div style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:28px 0;">
+                <h3 style="font-family:var(--font-display);font-size:18px;margin-bottom:4px;color:var(--ink);">Sell on IndieStack</h3>
+                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
                     Set a price to sell directly through IndieStack. Leave blank for a free listing.
                 </p>
+
+                <div style="background:white;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                        <span style="font-size:16px;">&#128176;</span>
+                        <strong style="font-size:14px;color:var(--ink);">You keep ~92% of every sale</strong>
+                        <br><span style="font-size:13px;color:var(--ink-muted);margin-top:4px;display:inline-block;">Your polished tool saves other builders thousands of tokens. That's real value.</span>
+                    </div>
+                    <p style="color:var(--ink-muted);font-size:13px;line-height:1.5;margin:0;">
+                        The remaining ~8% covers Stripe payment processing (~3%) and the platform fee (5%).
+                        You set the price, we handle checkout &mdash; buyers pay via Stripe and
+                        get instant access to your delivery link.
+                    </p>
+                    <p style="color:var(--ink-light);font-size:13px;margin-top:8px;margin-bottom:0;">
+                        <strong>Example:</strong> Price your tool at &pound;10 &rarr; you earn &pound;9.20 per sale.
+                    </p>
+                </div>
+
                 <div class="form-group">
                     <label for="price">Price (GBP)</label>
                     <div style="position:relative;">
-                        <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--stone-400);font-weight:600;">&pound;</span>
+                        <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-muted);font-weight:600;">&pound;</span>
                         <input type="number" id="price" name="price" class="form-input" step="0.01" min="0.50"
                                value="{price_val}" placeholder="e.g. 9.00"
                                style="padding-left:30px;">
                     </div>
                 </div>
+                <div id="submit-earnings-calc" style="background:white;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-top:12px;display:none;">
+                    <p style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;">Earnings Preview</p>
+                    <div style="font-size:14px;color:var(--ink-light);line-height:2;">
+                        <div style="display:flex;justify-content:space-between;">You set: <span id="sc-price">-</span></div>
+                        <div style="display:flex;justify-content:space-between;">Stripe (~3%): <span id="sc-stripe" style="color:var(--ink-muted);">-</span></div>
+                        <div style="display:flex;justify-content:space-between;">Platform (5%): <span id="sc-platform" style="color:var(--ink-muted);">-</span></div>
+                        <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;">
+                            <strong style="color:var(--terracotta);">You earn:</strong>
+                            <strong id="sc-earn" style="color:var(--terracotta);">-</strong>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                document.getElementById('price').addEventListener('input', function() {{
+                    var calc = document.getElementById('submit-earnings-calc');
+                    var v = parseFloat(this.value);
+                    if (v > 0) {{
+                        calc.style.display = 'block';
+                        var stripe = v * 0.03;
+                        var platform = v * 0.05;
+                        var earn = v - stripe - platform;
+                        document.getElementById('sc-price').textContent = '\\u00a3' + v.toFixed(2);
+                        document.getElementById('sc-stripe').textContent = '-\\u00a3' + stripe.toFixed(2);
+                        document.getElementById('sc-platform').textContent = '-\\u00a3' + platform.toFixed(2);
+                        document.getElementById('sc-earn').textContent = '\\u00a3' + earn.toFixed(2);
+                    }} else {{ calc.style.display = 'none'; }}
+                }});
+                </script>
                 <div class="form-group">
-                    <label for="delivery_type">Delivery method</label>
+                    <label for="delivery_type">How will buyers receive it?</label>
                     <select id="delivery_type" name="delivery_type" class="form-select">
                         {delivery_options}
                     </select>
+                    <p style="color:var(--ink-muted);font-size:12px;margin-top:6px;">
+                        After payment, the buyer is redirected to your delivery URL.
+                        This could be a private GitHub repo, a download page, or a license portal.
+                    </p>
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
-                    <label for="delivery_url">Delivery URL <span class="text-muted text-sm">(link or download URL sent after purchase)</span></label>
+                    <label for="delivery_url">Delivery URL <span style="color:var(--ink-muted);font-size:13px;font-weight:400;">(where buyers go after purchase)</span></label>
                     <input type="url" id="delivery_url" name="delivery_url" class="form-input"
-                           value="{delivery_url_val}" placeholder="https://your-tool.com/download">
+                           value="{delivery_url_val}" placeholder="e.g. https://github.com/you/repo or https://your-tool.com/download">
                 </div>
             </div>
 
@@ -115,9 +165,27 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                        value="{maker_url_val}" placeholder="https://twitter.com/you">
             </div>
             <div class="form-group">
-                <label for="tags">Tags <span class="text-muted text-sm">(comma-separated, optional)</span></label>
+                <label for="tags">Tags <span style="color:var(--ink-muted);font-size:13px;font-weight:400;">(comma-separated, optional)</span></label>
                 <input type="text" id="tags" name="tags" class="form-input"
                        value="{tags_val}" placeholder="e.g. open-source, freemium, API">
+            </div>
+            <div class="form-group">
+                <label for="replaces">Replaces <span style="color:var(--ink-muted);font-size:13px;font-weight:400;">(what big-tech tool does yours replace? comma-separated)</span></label>
+                <input type="text" id="replaces" name="replaces" class="form-input"
+                       value="{replaces_val}" placeholder="e.g. Mailchimp, Google Analytics, Auth0">
+                <p style="color:var(--ink-muted);font-size:12px;margin-top:6px;">
+                    This helps us generate &ldquo;alternatives to&rdquo; pages that drive traffic to your listing.
+                </p>
+            </div>
+            <div class="form-group">
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                    <input type="checkbox" name="supports_export" value="1"
+                           style="accent-color:var(--terracotta);width:18px;height:18px;">
+                    <span>
+                        <strong style="font-size:14px;color:var(--ink);">&#128275; My tool supports full data export</strong>
+                        <br><span style="font-size:13px;color:var(--ink-muted);">Tools with clean data export get a &ldquo;Certified Ejectable&rdquo; badge after admin review.</span>
+                    </span>
+                </label>
             </div>
             <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">
                 Submit for Review
@@ -129,10 +197,19 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
 
 @router.get("/submit", response_class=HTMLResponse)
 async def submit_get(request: Request):
+    if not request.state.user:
+        return RedirectResponse(url="/login", status_code=303)
     db = request.state.db
     categories = await get_all_categories(db)
-    body = submit_form(categories)
-    return HTMLResponse(page_shell("Submit Your Tool", body))
+    values = {}
+    user = request.state.user
+    if user.get('maker_id'):
+        maker = await get_maker_by_id(db, user['maker_id'])
+        if maker:
+            values['maker_name'] = maker.get('name', '')
+            values['maker_url'] = maker.get('url', '')
+    body = submit_form(categories, values=values)
+    return HTMLResponse(page_shell("Submit Your Tool", body, user=user))
 
 
 @router.post("/submit", response_class=HTMLResponse)
@@ -149,13 +226,17 @@ async def submit_post(
     price: str = Form(""),
     delivery_type: str = Form("link"),
     delivery_url: str = Form(""),
+    replaces: str = Form(""),
+    supports_export: str = Form(""),
 ):
+    if not request.state.user:
+        return RedirectResponse(url="/login", status_code=303)
     db = request.state.db
     categories = await get_all_categories(db)
 
     values = dict(name=name, tagline=tagline, url=url, description=description,
                   category_id=category_id, maker_name=maker_name, maker_url=maker_url,
-                  tags=tags, price=price, delivery_type=delivery_type, delivery_url=delivery_url)
+                  tags=tags, replaces=replaces, price=price, delivery_type=delivery_type, delivery_url=delivery_url)
 
     # Validation
     errors = []
@@ -167,7 +248,7 @@ async def submit_post(
         errors.append("A valid URL starting with http is required.")
     if not description.strip():
         errors.append("Description is required.")
-    if not category_id:
+    if not category_id or not str(category_id).isdigit():
         errors.append("Please select a category.")
 
     # Parse price
@@ -190,9 +271,9 @@ async def submit_post(
 
     if errors:
         body = submit_form(categories, values, error=" ".join(errors))
-        return HTMLResponse(page_shell("Submit Your Tool", body))
+        return HTMLResponse(page_shell("Submit Your Tool", body, user=request.state.user))
 
-    await create_tool(
+    tool_id = await create_tool(
         db, name=name.strip(), tagline=tagline.strip(), description=description.strip(),
         url=url.strip(), maker_name=maker_name.strip(), maker_url=maker_url.strip(),
         category_id=int(category_id), tags=tags.strip(),
@@ -200,5 +281,32 @@ async def submit_post(
         delivery_url=delivery_url.strip(),
     )
 
+    # Save replaces field if provided
+    if replaces.strip():
+        await db.execute("UPDATE tools SET replaces = ? WHERE id = ?", (replaces.strip(), tool_id))
+        await db.commit()
+
+    # Get the tool slug for verification link
+    tool = await get_tool_by_id(db, tool_id)
+    tool_slug = tool['slug'] if tool else slugify(name.strip())
+
+    verify_upsell = f"""
+    <div style="background:#FDF8EE;border:1px solid var(--gold);border-radius:var(--radius);
+                padding:24px;margin-bottom:24px;text-align:center;">
+        <p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:6px;">
+            Want to stand out?
+        </p>
+        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
+            Get a verified badge for &pound;29 — rank higher, build trust, and get noticed.
+        </p>
+        <a href="/verify/{tool_slug}" class="btn" style="background:linear-gradient(135deg, var(--gold), #D4A24A);
+                color:#5C3D0E;font-weight:700;padding:10px 24px;border-radius:999px;border:1px solid var(--gold);">
+            Get Verified &rarr;
+        </a>
+    </div>
+    """
+
     body = submit_form(categories, success="Your tool has been submitted! We'll review it shortly.")
-    return HTMLResponse(page_shell("Submit Your Tool", body))
+    # Insert upsell before the form
+    body = verify_upsell + body
+    return HTMLResponse(page_shell("Submit Your Tool", body, user=request.state.user))
