@@ -285,7 +285,7 @@ def subscriber_digest_html(trending_tools: list, new_tool: dict, total_tokens_sa
 
 
 def ego_ping_html(*, maker_name: str, tool_name: str, tool_slug: str,
-                   views: int, upvotes: int, wishlists: int,
+                   views: int, clicks: int, upvotes: int, wishlists: int,
                    has_changelog: bool, has_active_badge: bool) -> str:
     """Weekly 'Ego Ping' email to hook makers back to their dashboard."""
     # Humanise the views number
@@ -322,10 +322,14 @@ def ego_ping_html(*, maker_name: str, tool_name: str, tool_slug: str,
     <p style="color:#6B6560;font-size:15px;text-align:center;margin-bottom:24px;">
         Hi {maker_name} &mdash; {views_label}
     </p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0;">
         <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
             <div style="font-size:28px;font-weight:bold;color:#1A2D4A;">{views}</div>
             <div style="font-size:12px;color:#6B6560;margin-top:4px;">Views</div>
+        </div>
+        <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+            <div style="font-size:28px;font-weight:bold;color:#10B981;">{clicks}</div>
+            <div style="font-size:12px;color:#6B6560;margin-top:4px;">Clicks</div>
         </div>
         <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
             <div style="font-size:28px;font-weight:bold;color:#00D4F5;">{upvotes}</div>

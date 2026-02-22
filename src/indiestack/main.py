@@ -122,6 +122,7 @@ async def _weekly_ego_ping():
                         tool_name=m['tool_name'],
                         tool_slug=m['tool_slug'],
                         views=m['weekly_views'],
+                        clicks=m.get('weekly_clicks', 0),
                         upvotes=m['upvote_count'],
                         wishlists=m['wishlist_count'],
                         has_changelog=m['changelog_count'] > 0,
@@ -938,6 +939,21 @@ async def api_boost(request: Request):
         return RedirectResponse(url=session.url, status_code=303)
     except Exception:
         return RedirectResponse(url=f"/tool/{tool['slug']}", status_code=303)
+
+
+@app.get("/api/click/{slug}")
+async def outbound_click(request: Request, slug: str):
+    """Track outbound click and redirect to tool's website."""
+    from fastapi.responses import RedirectResponse
+    from indiestack.db import get_tool_by_slug, record_outbound_click
+    d = request.state.db
+    tool = await get_tool_by_slug(d, slug)
+    if not tool:
+        return RedirectResponse("/explore", status_code=302)
+    ip = request.headers.get("fly-client-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip() or request.client.host
+    referrer = request.headers.get("referer", "")
+    await record_outbound_click(d, tool['id'], str(tool['url']), ip, referrer)
+    return RedirectResponse(str(tool['url']), status_code=307)
 
 
 @app.get("/boost/success")

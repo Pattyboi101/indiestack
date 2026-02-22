@@ -137,6 +137,7 @@ async def dashboard_overview(request: Request):
                 <tr>
                     <td style="padding:10px 12px;font-weight:600;"><a href="/tool/{f['tool_slug']}" style="color:var(--terracotta);">{f['tool_name']}</a></td>
                     <td style="padding:10px 12px;text-align:center;">{f['views']}</td>
+                    <td style="padding:10px 12px;text-align:center;">{f['clicks']}</td>
                     <td style="padding:10px 12px;text-align:center;">{f['wishlist_saves']}</td>
                     <td style="padding:10px 12px;text-align:center;">{f['upvotes']}</td>
                 </tr>
@@ -152,6 +153,7 @@ async def dashboard_overview(request: Request):
                             <tr style="border-bottom:2px solid var(--border);">
                                 <th style="padding:10px 12px;text-align:left;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Tool</th>
                                 <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Views</th>
+                                <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Clicks</th>
                                 <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Wishlist Saves</th>
                                 <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Upvotes</th>
                             </tr>
@@ -299,8 +301,9 @@ async def dashboard_overview(request: Request):
                     else f'<span style="background:#6B7280;color:#fff;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;">Ended {expires_str}</span>'
                 )
 
-                # Calculate estimated impressions (views * ~3 for feed appearances)
-                impressions = boost_views * 3
+                # Get outbound clicks during boost period
+                from indiestack.db import get_outbound_click_count
+                boost_clicks = await get_outbound_click_count(db, bt['id'], days=30)
 
                 view_listing_btn = ''
                 if not is_active:
@@ -320,8 +323,8 @@ async def dashboard_overview(request: Request):
                             <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Profile Views</div>
                         </div>
                         <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
-                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">~{impressions}</div>
-                            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Search Impressions</div>
+                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">{boost_clicks}</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Outbound Clicks</div>
                         </div>
                         <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
                             <div style="font-size:28px;font-weight:800;color:#00D4F5;">{upvotes}</div>

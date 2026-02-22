@@ -340,6 +340,15 @@ CREATE TABLE IF NOT EXISTS sponsored_placements (
     is_active INTEGER NOT NULL DEFAULT 1
 );
 CREATE INDEX IF NOT EXISTS idx_sponsored_competitor ON sponsored_placements(competitor_slug, is_active);
+CREATE TABLE IF NOT EXISTS outbound_clicks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tool_id INTEGER NOT NULL REFERENCES tools(id),
+    url TEXT NOT NULL,
+    ip_hash TEXT NOT NULL,
+    referrer TEXT NOT NULL DEFAULT '',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_outbound_clicks_tool ON outbound_clicks(tool_id, created_at);
 """
 
 FTS_SCHEMA = """
@@ -1419,6 +1428,39 @@ async def record_tool_view(db: aiosqlite.Connection, tool_id: int, ip: str):
     await db.commit()
 
 
+async def record_outbound_click(db: aiosqlite.Connection, tool_id: int, url: str, ip: str, referrer: str = ''):
+    """Record an outbound click from a tool listing to the tool's website."""
+    ip_h = hash_ip(ip)
+    await db.execute(
+        "INSERT INTO outbound_clicks (tool_id, url, ip_hash, referrer) VALUES (?, ?, ?, ?)",
+        (tool_id, url, ip_h, referrer),
+    )
+    await db.commit()
+
+
+async def get_outbound_click_count(db: aiosqlite.Connection, tool_id: int, days: int = 30) -> int:
+    """Get outbound click count for a tool over the last N days."""
+    cursor = await db.execute(
+        "SELECT COUNT(*) as cnt FROM outbound_clicks WHERE tool_id = ? AND created_at > datetime('now', ?)",
+        (tool_id, f'-{days} days'),
+    )
+    row = await cursor.fetchone()
+    return int(row['cnt']) if row else 0
+
+
+async def get_outbound_clicks_by_tool(db: aiosqlite.Connection, tool_id: int, days: int = 30) -> list:
+    """Get outbound clicks grouped by day for a tool."""
+    cursor = await db.execute(
+        """SELECT date(created_at) as day, COUNT(*) as clicks
+           FROM outbound_clicks
+           WHERE tool_id = ? AND created_at > datetime('now', ?)
+           GROUP BY date(created_at)
+           ORDER BY day DESC""",
+        (tool_id, f'-{days} days'),
+    )
+    return [dict(r) for r in await cursor.fetchall()]
+
+
 async def get_tool_view_count(db: aiosqlite.Connection, tool_id: int, days: int = 30) -> int:
     cursor = await db.execute(
         """SELECT COUNT(*) as cnt FROM tool_views
@@ -2395,12 +2437,13 @@ async def get_trending_scored(db, limit: int = 20, days: int = 7):
 
 async def get_maker_funnel(db, maker_id: int, days: int = 7):
     """Get funnel analytics for a maker's tools over the last N days.
-    Returns list of dicts: {tool_name, tool_slug, views, wishlist_saves, upvotes}"""
+    Returns list of dicts: {tool_name, tool_slug, views, wishlist_saves, upvotes, clicks}"""
     cursor = await db.execute(f"""
         SELECT t.id, t.name as tool_name, t.slug as tool_slug,
                t.upvote_count as upvotes,
                COALESCE(v.view_count, 0) as views,
-               COALESCE(w.save_count, 0) as wishlist_saves
+               COALESCE(w.save_count, 0) as wishlist_saves,
+               COALESCE(c.click_count, 0) as clicks
         FROM tools t
         LEFT JOIN (
             SELECT tool_id, COUNT(*) as view_count
@@ -2413,6 +2456,12 @@ async def get_maker_funnel(db, maker_id: int, days: int = 7):
             FROM wishlists
             GROUP BY tool_id
         ) w ON w.tool_id = t.id
+        LEFT JOIN (
+            SELECT tool_id, COUNT(*) as click_count
+            FROM outbound_clicks
+            WHERE created_at >= datetime('now', '-{days} days')
+            GROUP BY tool_id
+        ) c ON c.tool_id = t.id
         WHERE t.maker_id = ?
         ORDER BY views DESC
     """, (maker_id,))
@@ -2900,6 +2949,8 @@ async def get_makers_for_ego_ping(db) -> list[dict]:
             (SELECT COUNT(*) FROM tool_views WHERE tool_id = t.id
              AND viewed_at > datetime('now', '-7 days')) as weekly_views,
             (SELECT COUNT(*) FROM wishlists WHERE tool_id = t.id) as wishlist_count,
+            (SELECT COUNT(*) FROM outbound_clicks WHERE tool_id = t.id
+             AND created_at > datetime('now', '-7 days')) as weekly_clicks,
             (SELECT COUNT(*) FROM maker_updates WHERE tool_id = t.id) as changelog_count,
             (SELECT COUNT(*) FROM maker_updates WHERE tool_id = t.id
              AND created_at > datetime('now', '-14 days')) as recent_updates

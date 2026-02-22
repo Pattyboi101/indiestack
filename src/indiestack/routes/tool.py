@@ -294,13 +294,13 @@ async def tool_detail(request: Request, slug: str):
         # Paid tool but not selling through IndieStack — link to their site with price shown
         cta_price = format_price(price_pence)
         cta_html = f"""
-        <a href="{url}" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
+        <a href="/api/click/{escape(slug)}" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
             Get it from {cta_price}/mo &rarr;
         </a>
         """
     else:
         cta_html = f"""
-        <a href="{url}" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
+        <a href="/api/click/{escape(slug)}" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
             Visit Website &rarr;
         </a>
         """
