@@ -158,6 +158,29 @@ async def explore(request: Request):
     </form>
     '''
 
+    # Newsletter signup banner (inline JS to avoid redirect away from explore)
+    newsletter_banner = """
+    <div style="background:linear-gradient(135deg,#1A2D4A,#0D3B66);border-radius:16px;padding:32px;
+        margin:32px 0;text-align:center;color:#fff;">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:8px;">
+            Get the best indie tools in your inbox
+        </h3>
+        <p style="color:rgba(255,255,255,0.7);font-size:14px;margin-bottom:20px;">
+            Weekly curated picks, new launches, and maker stories. Join 2,000+ developers.
+        </p>
+        <form id="explore-subscribe" style="display:flex;gap:8px;max-width:400px;margin:0 auto;flex-wrap:wrap;justify-content:center;"
+              onsubmit="event.preventDefault();var f=this;var em=f.email.value;fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'email='+encodeURIComponent(em)}).then(function(){f.innerHTML='<p style=&quot;color:#10B981;font-weight:600;font-size:16px;&quot;>You\\'re in! Check your inbox.</p>'}).catch(function(){f.innerHTML='<p style=&quot;color:#EF4444;&quot;>Something went wrong. Try again.</p>'})">
+            <input type="email" name="email" placeholder="you@example.com" required
+                style="flex:1;min-width:200px;padding:12px 16px;border:none;border-radius:999px;font-size:14px;
+                    font-family:inherit;">
+            <button type="submit" style="background:#00D4F5;color:#1A2D4A;border:none;padding:12px 24px;
+                border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">
+                Subscribe Free
+            </button>
+        </form>
+    </div>
+    """
+
     # Results
     if results:
         cards_html = "".join(tool_card(t) for t in results)
@@ -165,6 +188,7 @@ async def explore(request: Request):
         results_section = f'''
         <p style="font-size:14px;color:var(--ink-muted);margin-bottom:16px;">{result_label}</p>
         <div class="card-grid">{cards_html}</div>
+        {newsletter_banner}
         {pagination_html(page, total_pages, base_url)}
         '''
     else:

@@ -15,7 +15,7 @@ from indiestack.db import (
     get_tool_changelogs, update_maker_stripe_account,
     get_user_tokens_saved, get_or_create_badge_token,
     get_maker_funnel, get_wishlist_users_for_tool,
-    get_launch_readiness,
+    get_launch_readiness, get_similar_makers,
     get_user_milestones, get_unshared_milestones, check_milestones,
     create_user_stack, get_user_stack, add_tool_to_user_stack, remove_tool_from_user_stack, update_user_stack,
     get_tool_by_slug, get_search_terms_for_tool,
@@ -255,6 +255,91 @@ async def dashboard_overview(request: Request):
                 {cards}
             </div>"""
 
+    # Boost performance report
+    boost_report_html = ''
+    if user.get('maker_id'):
+        maker_tools_for_boost = await get_tools_by_maker(db, user['maker_id'])
+        for bt in maker_tools_for_boost:
+            if bt.get('is_boosted') or bt.get('boost_expires_at'):
+                # Get stats for the boost period
+                boost_start = bt.get('boost_expires_at', '')
+                # Calculate views during boost period from tool_views table
+                views_cursor = await db.execute(
+                    "SELECT COUNT(*) as cnt FROM tool_views WHERE tool_id = ? AND viewed_at > datetime(?, '-30 days')",
+                    (bt['id'], boost_start or 'now'))
+                views_row = await views_cursor.fetchone()
+                boost_views = views_row['cnt'] if views_row else 0
+
+                # Get total upvotes
+                upvotes = bt.get('upvote_count', 0)
+
+                # Get wishlist count
+                wl_cursor = await db.execute(
+                    "SELECT COUNT(*) as cnt FROM wishlists WHERE tool_id = ?", (bt['id'],))
+                wl_row = await wl_cursor.fetchone()
+                wishlists = wl_row['cnt'] if wl_row else 0
+
+                # Determine if boost is active or expired
+                from datetime import datetime
+                is_active = False
+                days_left = 0
+                expires_str = ''
+                if bt.get('boost_expires_at'):
+                    try:
+                        exp = datetime.fromisoformat(bt['boost_expires_at'])
+                        is_active = exp > datetime.utcnow()
+                        days_left = max(0, (exp - datetime.utcnow()).days)
+                        expires_str = exp.strftime('%d %b %Y')
+                    except Exception:
+                        pass
+
+                status_badge = (
+                    f'<span style="background:#10B981;color:#fff;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;">Active &mdash; {days_left} days left</span>'
+                    if is_active
+                    else f'<span style="background:#6B7280;color:#fff;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;">Ended {expires_str}</span>'
+                )
+
+                # Calculate estimated impressions (views * ~3 for feed appearances)
+                impressions = boost_views * 3
+
+                view_listing_btn = ''
+                if not is_active:
+                    view_listing_btn = '<div style="text-align:center;margin-top:16px;"><a href="/tool/' + escape(str(bt['slug'])) + '" style="background:#00D4F5;color:#1A2D4A;padding:10px 24px;border-radius:999px;font-weight:700;text-decoration:none;font-size:14px;">View Your Listing</a></div>'
+
+                boost_report_html += f"""
+                <div style="background:linear-gradient(135deg,#1A2D4A,#0D3B66);border-radius:16px;padding:24px;margin-bottom:24px;color:#fff;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                        <h3 style="font-family:'DM Serif Display',serif;font-size:20px;margin:0;color:#fff;">
+                            &#9733; Boost Report &mdash; {escape(str(bt['name']))}
+                        </h3>
+                        {status_badge}
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
+                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">{boost_views}</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Profile Views</div>
+                        </div>
+                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
+                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">~{impressions}</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Search Impressions</div>
+                        </div>
+                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
+                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">{upvotes}</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Upvotes</div>
+                        </div>
+                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
+                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">{wishlists}</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Wishlists</div>
+                        </div>
+                    </div>
+                    <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;">
+                        &#9733; Featured badge shown on your listing and in search results<br>
+                        &#9733; Priority placement in category and explore pages<br>
+                        &#9733; Featured in weekly newsletter sent to all subscribers
+                    </div>
+                    {view_listing_btn}
+                </div>"""
+
     # Search intent analytics
     search_intent_html = ''
     if user.get('maker_id'):
@@ -288,6 +373,44 @@ async def dashboard_overview(request: Request):
                     </thead>
                     <tbody>{search_rows}</tbody>
                 </table>
+            </div>"""
+
+    # Maker Matchmaker widget
+    matchmaker_html = ''
+    if user.get('maker_id'):
+        similar_makers = await get_similar_makers(db, user['maker_id'])
+        if similar_makers:
+            maker_cards = ''
+            for sm in similar_makers:
+                sm_name = escape(str(sm['name']))
+                sm_slug = escape(str(sm['slug']))
+                sm_bio = escape(str(sm.get('bio', '') or '')[:80])
+                sm_tool = escape(str(sm.get('tool_name', '')))
+                indie = sm.get('indie_status', '')
+                indie_label = 'Solo Maker' if indie == 'solo' else 'Small Team' if indie == 'small_team' else ''
+                indie_pill = f'<span style="font-size:11px;padding:2px 8px;border-radius:999px;background:#EDE9FE;color:#7C3AED;">{indie_label}</span>' if indie_label else ''
+
+                maker_cards += f"""
+                <a href="/maker/{sm_slug}" style="text-decoration:none;color:inherit;display:block;padding:16px;
+                    background:var(--cream-dark);border-radius:12px;transition:transform 0.15s;"
+                    onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                        <span style="font-weight:700;color:var(--ink);">{sm_name}</span>
+                        {indie_pill}
+                    </div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-bottom:4px;">Building {sm_tool}</div>
+                    <div style="font-size:12px;color:var(--ink-light);">{sm_bio}{'...' if len(sm.get('bio', '') or '') > 80 else ''}</div>
+                </a>"""
+
+            matchmaker_html = f"""
+            <div style="background:#fff;border-radius:16px;padding:24px;border:1px solid #E8E3DC;margin-bottom:24px;">
+                <h3 style="font-family:'DM Serif Display',serif;font-size:18px;color:#1A2D4A;margin-bottom:16px;">
+                    Makers Like You
+                </h3>
+                <div style="display:grid;gap:12px;">{maker_cards}</div>
+                <a href="/makers" style="display:block;text-align:center;margin-top:16px;font-size:13px;color:#00D4F5;font-weight:600;text-decoration:none;">
+                    Browse all makers &rarr;
+                </a>
             </div>"""
 
     body = f"""
@@ -327,6 +450,7 @@ async def dashboard_overview(request: Request):
 
         {readiness_html}
         {milestone_html}
+        {boost_report_html}
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
             <a href="/dashboard/tools" class="btn btn-primary">My Tools</a>
@@ -340,6 +464,7 @@ async def dashboard_overview(request: Request):
 
         {funnel_html}
         {search_intent_html}
+        {matchmaker_html}
         {payment_card_html}
         {badge_section}
         {buyer_badge_html}

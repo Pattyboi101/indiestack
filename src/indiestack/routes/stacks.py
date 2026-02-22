@@ -1,6 +1,7 @@
 """Vibe Stacks — curated 1-click tool bundles with bundle discount."""
 
 import os
+import json
 import logging
 from html import escape
 
@@ -107,6 +108,200 @@ async def community_stacks(request: Request):
 
     return HTMLResponse(page_shell("Community Stacks", body, user=request.state.user,
                                    description="Browse curated indie tool stacks shared by the community."))
+
+
+# ── Stack Generator — paste package.json / requirements.txt ──────────────
+
+
+@router.get("/stacks/generator", response_class=HTMLResponse)
+async def stack_generator_form(request: Request):
+    """Form page: paste your package.json or requirements.txt to get indie alternatives."""
+    body = """
+    <div class="container" style="max-width:760px;padding:48px 24px;">
+        <div style="text-align:center;margin-bottom:36px;">
+            <span style="font-size:48px;display:block;margin-bottom:12px;">&#128270;</span>
+            <h1 style="font-family:var(--font-display);font-size:clamp(26px,4vw,38px);color:var(--ink);margin-bottom:10px;">
+                Stack Generator
+            </h1>
+            <p style="color:var(--ink-muted);font-size:17px;max-width:520px;margin:0 auto;line-height:1.6;">
+                Paste your <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:14px;">package.json</code> or
+                <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:14px;">requirements.txt</code>
+                and we&rsquo;ll find indie tool replacements for your dependencies.
+            </p>
+        </div>
+
+        <form method="post" action="/stacks/generator">
+            <label for="deps" style="font-weight:600;color:var(--ink);font-size:15px;display:block;margin-bottom:8px;">
+                Your dependencies
+            </label>
+            <textarea id="deps" name="deps"
+                      rows="14"
+                      placeholder='{\n  "dependencies": {\n    "express": "^4.18.2",\n    "stripe": "^12.0.0",\n    "nodemailer": "^6.9.0"\n  }\n}\n\n&mdash; or &mdash;\n\nflask==3.0.0\nstripe>=5.0\ncelery[redis]'
+                      style="width:100%;font-family:var(--font-mono);font-size:14px;padding:16px;
+                             border:2px solid var(--border);border-radius:var(--radius-sm);
+                             background:var(--card-bg);color:var(--ink);resize:vertical;
+                             line-height:1.5;"></textarea>
+            <button type="submit" class="btn btn-primary"
+                    style="margin-top:16px;font-size:16px;padding:14px 40px;width:100%;">
+                Find Indie Alternatives &rarr;
+            </button>
+        </form>
+
+        <div style="margin-top:32px;padding:20px;border:1px dashed var(--border);border-radius:var(--radius-sm);">
+            <p style="font-weight:600;color:var(--ink);font-size:14px;margin-bottom:8px;">How it works</p>
+            <ol style="color:var(--ink-muted);font-size:14px;line-height:1.8;padding-left:20px;margin:0;">
+                <li>Paste the contents of your <code style="font-family:var(--font-mono);font-size:13px;">package.json</code> or <code style="font-family:var(--font-mono);font-size:13px;">requirements.txt</code></li>
+                <li>We extract dependency names and search our indie tool catalog</li>
+                <li>You get a list of indie-built alternatives for each dependency</li>
+            </ol>
+        </div>
+    </div>
+    """
+    return HTMLResponse(page_shell(
+        "Stack Generator — Find Indie Alternatives", body,
+        user=request.state.user,
+        description="Paste your package.json or requirements.txt and discover indie tool replacements for your dependencies.",
+    ))
+
+
+@router.post("/stacks/generator", response_class=HTMLResponse)
+async def stack_generator_results(request: Request, deps: str = Form("")):
+    """Parse pasted dependencies and find matching indie tools."""
+    db = request.state.db
+    pasted_text = deps.strip()
+
+    if not pasted_text:
+        return RedirectResponse(url="/stacks/generator", status_code=303)
+
+    # Extract dependency names
+    dependencies: list[str] = []
+    try:
+        pkg = json.loads(pasted_text)
+        dependencies = list(pkg.get('dependencies', {}).keys()) + list(pkg.get('devDependencies', {}).keys())
+    except (json.JSONDecodeError, AttributeError):
+        # Try requirements.txt format
+        for line in pasted_text.split('\n'):
+            line = line.strip()
+            if line and not line.startswith('#') and not line.startswith('-'):
+                pkg_name = line.split('==')[0].split('>=')[0].split('<=')[0].split('!=')[0].split('[')[0].split(';')[0].strip()
+                if pkg_name:
+                    dependencies.append(pkg_name)
+
+    # Cap at 30 to prevent abuse
+    dependencies = dependencies[:30]
+
+    if not dependencies:
+        body = """
+        <div class="container" style="max-width:760px;padding:48px 24px;text-align:center;">
+            <span style="font-size:48px;display:block;margin-bottom:12px;">&#128533;</span>
+            <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);">No dependencies found</h1>
+            <p style="color:var(--ink-muted);margin-top:8px;">
+                We couldn&rsquo;t parse any package names from what you pasted.
+                Make sure it&rsquo;s a valid <code>package.json</code> or <code>requirements.txt</code>.
+            </p>
+            <a href="/stacks/generator" class="btn btn-primary" style="margin-top:20px;">Try Again &rarr;</a>
+        </div>
+        """
+        return HTMLResponse(page_shell("No Dependencies Found", body, user=request.state.user))
+
+    # Search for indie matches
+    matches = []
+    unmatched = []
+    for dep in dependencies:
+        safe_dep = dep.replace('%', '').replace('_', ' ')
+        cursor = await db.execute(
+            """SELECT id, name, slug, tagline, logo_url, category_name, category_slug,
+                      price_pence, replaces, tags
+               FROM tools WHERE status = 'approved'
+               AND (replaces LIKE ? OR tags LIKE ? OR name LIKE ?)
+               LIMIT 3""",
+            (f'%{safe_dep}%', f'%{safe_dep}%', f'%{safe_dep}%'))
+        results = await cursor.fetchall()
+        if results:
+            matches.append({'dependency': dep, 'alternatives': [dict(r) for r in results]})
+        else:
+            unmatched.append(dep)
+
+    # Build results HTML
+    match_count = len(matches)
+    total = len(dependencies)
+
+    matches_html = ''
+    for m in matches:
+        dep_name = escape(m['dependency'])
+        cards = ''
+        for t in m['alternatives']:
+            t_name = escape(str(t['name']))
+            t_tagline = escape(str(t.get('tagline', '')))
+            t_slug = escape(str(t.get('slug', '')))
+            logo = escape(str(t.get('logo_url', ''))) if t.get('logo_url') else ''
+            logo_html = f'<img src="{logo}" alt="" style="width:36px;height:36px;border-radius:8px;object-fit:cover;">' if logo else '<div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#1A2D4A,#00D4F5);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">{}</div>'.format(t_name[0] if t_name else '?')
+            cards += f"""
+            <a href="/tool/{t_slug}" style="text-decoration:none;display:flex;align-items:center;gap:12px;
+                     padding:12px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);
+                     background:var(--card-bg);transition:border-color .15s;">
+                {logo_html}
+                <div style="min-width:0;">
+                    <div style="font-weight:600;color:var(--ink);font-size:15px;">{t_name}</div>
+                    <div style="font-size:13px;color:var(--ink-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{t_tagline}</div>
+                </div>
+            </a>"""
+
+        matches_html += f"""
+        <div style="margin-bottom:28px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                <code style="font-family:var(--font-mono);font-size:14px;background:var(--cream-dark);
+                             padding:4px 10px;border-radius:6px;color:var(--ink);">{dep_name}</code>
+                <span style="font-size:13px;color:var(--ink-muted);">&rarr; {len(m['alternatives'])} indie alternative{'s' if len(m['alternatives']) != 1 else ''}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+                {cards}
+            </div>
+        </div>"""
+
+    # Unmatched section
+    unmatched_html = ''
+    if unmatched:
+        dep_pills = ' '.join(
+            f'<span style="display:inline-block;font-family:var(--font-mono);font-size:13px;background:var(--cream-dark);padding:4px 10px;border-radius:6px;color:var(--ink-muted);margin:3px 2px;">{escape(u)}</span>'
+            for u in unmatched
+        )
+        unmatched_html = f"""
+        <div style="margin-top:36px;padding:24px;border:1px dashed var(--border);border-radius:var(--radius-sm);">
+            <p style="font-weight:600;color:var(--ink);font-size:15px;margin-bottom:10px;">
+                No indie matches yet ({len(unmatched)})
+            </p>
+            <div style="line-height:2;">{dep_pills}</div>
+            <p style="margin-top:14px;">
+                <a href="/submit" style="color:var(--slate);font-weight:600;text-decoration:none;">
+                    Built an indie alternative? Submit it to IndieStack &rarr;
+                </a>
+            </p>
+        </div>"""
+
+    body = f"""
+    <div class="container" style="max-width:760px;padding:48px 24px;">
+        <a href="/stacks/generator" style="color:var(--ink-muted);font-size:14px;font-weight:600;text-decoration:none;">&larr; Paste another file</a>
+
+        <div style="margin-top:20px;margin-bottom:32px;">
+            <h1 style="font-family:var(--font-display);font-size:clamp(24px,3.5vw,34px);color:var(--ink);margin-bottom:8px;">
+                Your Indie Stack
+            </h1>
+            <p style="color:var(--ink-muted);font-size:16px;">
+                We scanned <strong>{total}</strong> dependenc{'y' if total == 1 else 'ies'} and found
+                <strong>{match_count}</strong> with indie alternatives.
+            </p>
+        </div>
+
+        {matches_html}
+        {unmatched_html}
+    </div>
+    """
+    return HTMLResponse(page_shell(
+        f"Stack Generator — {match_count} Indie Matches", body,
+        user=request.state.user,
+        description=f"Found {match_count} indie alternatives for {total} dependencies.",
+    ))
 
 
 @router.get("/stacks/{slug}", response_class=HTMLResponse)

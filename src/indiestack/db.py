@@ -329,6 +329,17 @@ CREATE TABLE IF NOT EXISTS magic_claim_tokens (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_magic_claim_token ON magic_claim_tokens(token);
+
+CREATE TABLE IF NOT EXISTS sponsored_placements (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tool_id INTEGER NOT NULL REFERENCES tools(id),
+    competitor_slug TEXT NOT NULL,
+    label TEXT DEFAULT 'Sponsored',
+    started_at TEXT DEFAULT (datetime('now')),
+    expires_at TEXT,
+    is_active INTEGER NOT NULL DEFAULT 1
+);
+CREATE INDEX IF NOT EXISTS idx_sponsored_competitor ON sponsored_placements(competitor_slug, is_active);
 """
 
 FTS_SCHEMA = """
@@ -1327,6 +1338,42 @@ async def get_tools_by_maker(db: aiosqlite.Connection, maker_id: int):
     return await cursor.fetchall()
 
 
+async def get_similar_makers(db: aiosqlite.Connection, maker_id: int, limit: int = 3) -> list:
+    """Find makers with tools that share tags with this maker's tools."""
+    cursor = await db.execute(
+        "SELECT tags FROM tools WHERE maker_id = ? AND status = 'approved'", (maker_id,))
+    rows = await cursor.fetchall()
+
+    all_tags = set()
+    for row in rows:
+        tags_str = row['tags'] or ''
+        for tag in tags_str.split(','):
+            tag = tag.strip().lower()
+            if tag:
+                all_tags.add(tag)
+
+    if not all_tags:
+        return []
+
+    # Find other makers whose tools share tags
+    conditions = ' OR '.join(['t.tags LIKE ?' for _ in all_tags])
+    params = [f'%{tag}%' for tag in all_tags]
+    params.append(maker_id)
+
+    cursor = await db.execute(f"""
+        SELECT DISTINCT m.id, m.name, m.slug, m.bio, m.indie_status,
+               t.name as tool_name, t.slug as tool_slug,
+               COUNT(DISTINCT t.id) as tool_count
+        FROM makers m
+        JOIN tools t ON t.maker_id = m.id AND t.status = 'approved'
+        WHERE ({conditions}) AND m.id != ?
+        GROUP BY m.id
+        ORDER BY tool_count DESC
+        LIMIT ?
+    """, params + [limit])
+    return [dict(row) for row in await cursor.fetchall()]
+
+
 async def get_sales_by_maker(db: aiosqlite.Connection, maker_id: int):
     cursor = await db.execute(
         """SELECT p.*, t.name as tool_name, t.slug as tool_slug
@@ -1886,6 +1933,48 @@ async def get_active_boosts(db):
         "SELECT * FROM tools WHERE is_boosted = 1 AND boost_expires_at > ? AND status = 'approved'",
         (now,))
     return await cursor.fetchall()
+
+
+# ── Sponsored placements (B2B) ─────────────────────────────────────────
+
+async def get_sponsored_for_competitor(db, competitor_slug: str) -> list:
+    """Get active sponsored placements for a competitor's alternatives page."""
+    cursor = await db.execute("""
+        SELECT sp.*, t.name, t.slug, t.tagline, t.url, t.upvote_count, t.is_verified,
+               t.price_pence, t.tags
+        FROM sponsored_placements sp
+        JOIN tools t ON sp.tool_id = t.id
+        WHERE sp.competitor_slug = ? AND sp.is_active = 1
+        AND (sp.expires_at IS NULL OR sp.expires_at > datetime('now'))
+        ORDER BY sp.id
+    """, (competitor_slug,))
+    return [dict(row) for row in await cursor.fetchall()]
+
+
+async def create_sponsored_placement(db, tool_id: int, competitor_slug: str, label: str = 'Sponsored', days: int = 30):
+    """Create a sponsored placement."""
+    expires = (datetime.utcnow() + timedelta(days=days)).isoformat() if days else None
+    await db.execute(
+        "INSERT INTO sponsored_placements (tool_id, competitor_slug, label, expires_at) VALUES (?, ?, ?, ?)",
+        (tool_id, competitor_slug, label, expires))
+    await db.commit()
+
+
+async def delete_sponsored_placement(db, placement_id: int):
+    """Delete a sponsored placement."""
+    await db.execute("DELETE FROM sponsored_placements WHERE id = ?", (placement_id,))
+    await db.commit()
+
+
+async def get_all_sponsored_placements(db) -> list:
+    """Get all sponsored placements for admin."""
+    cursor = await db.execute("""
+        SELECT sp.*, t.name as tool_name, t.slug as tool_slug
+        FROM sponsored_placements sp
+        JOIN tools t ON sp.tool_id = t.id
+        ORDER BY sp.is_active DESC, sp.started_at DESC
+    """)
+    return [dict(row) for row in await cursor.fetchall()]
 
 
 # ── Stacks (Bundles) ────────────────────────────────────────────────────
@@ -2798,3 +2887,26 @@ async def get_launch_readiness(db, maker_id: int) -> dict:
         'items': items,
         'tool_id': tool['id'] if tool else None,
     }
+
+
+async def get_makers_for_ego_ping(db) -> list[dict]:
+    """Get all makers with claimed tools and their weekly stats for ego ping emails."""
+    cursor = await db.execute("""
+        SELECT
+            m.id as maker_id, m.name as maker_name,
+            u.email,
+            t.id as tool_id, t.name as tool_name, t.slug as tool_slug,
+            t.upvote_count,
+            (SELECT COUNT(*) FROM tool_views WHERE tool_id = t.id
+             AND viewed_at > datetime('now', '-7 days')) as weekly_views,
+            (SELECT COUNT(*) FROM wishlists WHERE tool_id = t.id) as wishlist_count,
+            (SELECT COUNT(*) FROM maker_updates WHERE tool_id = t.id) as changelog_count,
+            (SELECT COUNT(*) FROM maker_updates WHERE tool_id = t.id
+             AND created_at > datetime('now', '-14 days')) as recent_updates
+        FROM makers m
+        JOIN users u ON u.maker_id = m.id
+        JOIN tools t ON t.maker_id = m.id AND t.status = 'approved'
+        WHERE u.email IS NOT NULL AND u.email != ''
+        ORDER BY m.id
+    """)
+    return [dict(row) for row in await cursor.fetchall()]

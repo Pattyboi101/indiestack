@@ -1,5 +1,6 @@
 """Static content pages — about, terms, privacy, FAQ, blog, best-of."""
 
+import re
 from html import escape
 
 from fastapi import APIRouter, Request
@@ -7,6 +8,22 @@ from fastapi.responses import HTMLResponse
 
 from indiestack.routes.components import page_shell, tool_card
 from indiestack import db as _db
+
+
+async def _inject_tool_cards(db, content: str) -> str:
+    """Replace {{ tool: slug }} placeholders with interactive tool cards."""
+    pattern = r'\{\{\s*tool:\s*([\w-]+)\s*\}\}'
+    matches = re.findall(pattern, content)
+
+    for slug in matches:
+        tool = await _db.get_tool_by_slug(db, slug)
+        if tool:
+            card_html = f'<div style="margin:24px 0;">{tool_card(tool)}</div>'
+            content = content.replace(f'{{{{ tool: {slug} }}}}', card_html)
+        else:
+            content = content.replace(f'{{{{ tool: {slug} }}}}', '')
+
+    return content
 
 router = APIRouter()
 
@@ -539,6 +556,8 @@ async def blog_stop_wasting_tokens(request: Request):
                 Your AI did not know. It was never taught to check.
             </p>
 
+            {{{{ tool: simple-analytics }}}}
+
             <h2>The Problem</h2>
             <p>
                 AI coding assistants are extraordinary at <em>generating</em> code. They can scaffold
@@ -654,6 +673,8 @@ claude mcp add indiestack -- python -m indiestack.mcp_server
         </footer>
     </article>
     """
+
+    body = await _inject_tool_cards(request.state.db, body)
 
     return HTMLResponse(page_shell(
         post['title'], body,
@@ -957,6 +978,8 @@ async def about_page(request: Request):
         </footer>
     </article>
     """
+
+    body = await _inject_tool_cards(request.state.db, body)
 
     return HTMLResponse(page_shell(
         post['title'], body,

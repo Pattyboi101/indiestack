@@ -81,7 +81,8 @@ _LOGO_CANDIDATES = [
 _logo_bytes: bytes | None = None
 
 from indiestack import db
-from indiestack.db import CATEGORY_TOKEN_COSTS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views
+from indiestack.db import CATEGORY_TOKEN_COSTS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping
+from indiestack.email import send_email, ego_ping_html
 from indiestack.auth import get_current_user
 from indiestack.routes import landing, browse, tool, search, submit, admin, purchase
 from indiestack.routes import verify, maker, collections, compare, new, account, dashboard, pricing, updates, alternatives
@@ -103,6 +104,34 @@ async def _periodic_session_cleanup():
             pass
 
 
+async def _weekly_ego_ping():
+    """Send ego ping emails every Friday."""
+    import aiosqlite
+    from datetime import datetime
+    while True:
+        await asyncio.sleep(86400)  # Check daily
+        if datetime.utcnow().weekday() != 4:  # 4 = Friday
+            continue
+        try:
+            async with aiosqlite.connect(db.DB_PATH) as conn:
+                conn.row_factory = aiosqlite.Row
+                makers = await get_makers_for_ego_ping(conn)
+                for m in makers:
+                    html = ego_ping_html(
+                        maker_name=m['maker_name'],
+                        tool_name=m['tool_name'],
+                        tool_slug=m['tool_slug'],
+                        views=m['weekly_views'],
+                        upvotes=m['upvote_count'],
+                        wishlists=m['wishlist_count'],
+                        has_changelog=m['changelog_count'] > 0,
+                        has_active_badge=m['recent_updates'] > 0,
+                    )
+                    await send_email(m['email'], f"Your week on IndieStack \u2014 {m['tool_name']}", html)
+        except Exception:
+            pass
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await db.init_db()
@@ -117,8 +146,10 @@ async def lifespan(app: FastAPI):
         pass
     # Start periodic cleanup task
     cleanup_task = asyncio.create_task(_periodic_session_cleanup())
+    ego_ping_task = asyncio.create_task(_weekly_ego_ping())
     yield
     cleanup_task.cancel()
+    ego_ping_task.cancel()
 
 
 app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)

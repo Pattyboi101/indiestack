@@ -14,7 +14,7 @@ Live at: https://indiestack.fly.dev/
 
 - **Backend**: Python 3.11, FastAPI, aiosqlite (SQLite + WAL mode)
 - **Frontend**: Pure Python string HTML templates (no Jinja2, no React)
-- **Payments**: Stripe Connect (destination charges)
+- **Payments**: Stripe Checkout (£29 Boost direct payment). Stripe Connect disabled for now.
 - **Deploy**: Fly.io, single machine, Docker
 - **Data**: SQLite at `/data/indiestack.db` (persistent Fly volume)
 
@@ -31,7 +31,7 @@ Live at: https://indiestack.fly.dev/
 | `src/indiestack/routes/search.py` | FTS5 search with filters (price, sort, category, verified) |
 | `src/indiestack/routes/tags.py` | Programmatic /tag/{slug} SEO pages (~197 tags) |
 | `src/indiestack/routes/submit.py` | Tool submission form (free + paid) with earnings calc, "Replaces" field, data export checkbox |
-| `src/indiestack/routes/admin.py` | Admin dashboard: approve/reject, bulk import, reviews, maker mgmt, toggle verified/ejectable/boost, stack management |
+| `src/indiestack/routes/admin.py` | Admin dashboard: tabbed UI, KPI cards, filter/sort/search bar, paginated tools (50/page), approve/reject, bulk import, reviews, maker mgmt, toggle verified/ejectable/boost, stack management, magic claim links |
 | `src/indiestack/routes/purchase.py` | Stripe checkout, success, cancel, delivery with integration snippets, webhook |
 | `src/indiestack/routes/maker.py` | Maker profiles + `/makers` directory with search |
 | `src/indiestack/routes/collections.py` | Curated tool collections |
@@ -39,7 +39,7 @@ Live at: https://indiestack.fly.dev/
 | `src/indiestack/routes/new.py` | Recently added tools |
 | `src/indiestack/routes/updates.py` | Maker updates / build-in-public feed |
 | `src/indiestack/routes/stacks.py` | Vibe Stacks — curated bundles at 15% discount with one-click checkout; public user stacks + community gallery |
-| `src/indiestack/routes/dashboard.py` | Maker dashboard: tools, saved, updates, changelogs, notifications, Stripe Connect, tokens saved, badge embed, buyer badge, my stack management, launch readiness, milestones, search analytics |
+| `src/indiestack/routes/dashboard.py` | Maker dashboard: tools, saved, updates, changelogs, notifications, tokens saved, badge embed, buyer badge, my stack management, interactive launch readiness (inline forms + links), milestones, search analytics, readiness-update endpoint |
 | `src/indiestack/routes/account.py` | Login, signup, logout, password reset, email verification |
 | `src/indiestack/routes/content.py` | Static pages: about, terms, privacy, FAQ, founders, blog index, blog posts |
 | `src/indiestack/routes/verify.py` | Verified badge checkout |
@@ -122,6 +122,33 @@ Live at: https://indiestack.fly.dev/
 - **Smoke test script**: `smoke_test.py` hits 32 endpoints with status + content validation
 - **Canonical URLs**: Added to all high-SEO-value pages
 
+### Round 12 Features (Monetization Pivot)
+- **£29 Boost self-serve**: Makers pay via Stripe Checkout for 30 days of Featured badge + priority placement + newsletter feature
+- **Frictionless claim flow**: `?next=` redirect on login/signup, instant claim (no email verification), CTA for logged-out users
+- **Dual claim CTA**: "Claim Free" + "Claim & Boost £29" on unclaimed tool pages
+- **Copy reframe**: Hero shifted from "save tokens" to "Skip the boilerplate. Launch this weekend."
+
+### Round 13 Features (Admin & User QoL)
+- **Admin tabs**: URL-routed tabs (`?tab=`) — tools, collections, stacks, reviews, makers, import
+- **Admin KPI cards**: Pending Review, Unclaimed Tools, Total Tools, Active Boosts (clickable filters)
+- **Admin filter/sort bar**: Search, status dropdown, special filter (unclaimed/verified/boosted), sort by newest/oldest/upvotes/name
+- **Admin pagination**: Tools capped at 50/page with prev/next controls, reviews/makers capped at 50
+- **Admin magic claim links**: "Copy Link" button generates one-click claim URLs for DM outreach
+- **Breadcrumbs**: `Home › Category › Tool Name` on tool detail pages
+- **Share row**: Copy Link, Share on X, Embed Badge buttons on tool pages
+- **Toast notifications**: CSS transition toasts for upvote and wishlist actions
+- **Interactive launch readiness**: Checklist items are clickable links or expandable inline forms (bio, avatar, URL, competitors)
+
+### Scale Hardening
+- **DB indexes**: `tools(maker_id)`, `makers(slug)`, `collections(slug)`, `stacks(slug)`, `sessions(expires_at)`
+- **Upvote transactions**: `BEGIN IMMEDIATE` prevents race conditions on concurrent upvotes
+- **Rate limiting**: `/api/upvote` 10/min, `/api/wishlist` 10/min, `/api/subscribe` 5/min
+- **Sitemap cache**: 1-hour in-memory TTL
+- **Landing page cache**: 5-minute in-memory cache for all 13 DB queries (stats, trending, categories, etc.)
+- **Session cleanup**: Background `asyncio` task purges expired sessions every hour
+- **Page view retention**: Views older than 90 days pruned hourly
+- **Admin dropdown cap**: Collection/stack tool dropdowns capped at 200 options
+
 ### Content & Legal
 - **About** (`/about`): Mission, founders, story
 - **Terms** (`/terms`): SaaS marketplace terms of service
@@ -129,10 +156,11 @@ Live at: https://indiestack.fly.dev/
 - **FAQ** (`/faq`): 10 common questions with `<details>` accordions
 - **Footer**: 3-column layout (Product, Company, Legal) linking to all key pages
 
-### Stripe Connect Onboarding
-- Dashboard "Payment Setup" card shows connection status
-- `POST /dashboard/stripe-connect` creates Connect account + redirects to Stripe onboarding
-- `GET /dashboard/stripe-callback` shows success page after onboarding
+### Stripe
+- **Stripe Connect**: Routes exist but disabled (removed from dashboard UI). Connect not enabled on Stripe account.
+- **£29 Boost**: Direct Stripe Checkout (one-time payment, `mode="payment"`). Endpoints: `POST /api/claim-and-boost`, `POST /api/boost`, `GET /boost/success`
+- **Verified badge**: One-time Stripe Checkout via `/verify.py`
+- To go live: `flyctl secrets set STRIPE_SECRET_KEY=sk_live_... --app indiestack`
 
 ### SEO
 - Sitemap (`/sitemap.xml`) with tools, categories, makers, collections, alternatives, stacks, tags
@@ -184,7 +212,7 @@ Live at: https://indiestack.fly.dev/
 - Admin is password-protected at `/admin`
 - **Password reset**: Token-based (1hr expiry), email with reset link
 - **Email verification**: Token-based (24hr expiry), sent on signup, yellow banner for unverified users
-- **Rate limiting**: In-memory per-IP limits — `/login` 5/min, `/signup` 3/min, `/submit` 3/min, `/api/*` 30/min
+- **Rate limiting**: In-memory per-IP limits — `/login` 5/min, `/signup` 3/min, `/submit` 3/min, `/api/upvote` 10/min, `/api/wishlist` 10/min, `/api/subscribe` 5/min, `/api/*` 30/min
 
 ## Deploy
 
@@ -224,6 +252,7 @@ Pre-flight: syntax check all .py files before deploying.
 | `user_stacks` | User-curated "My Stack" pages (user_id, title, description, slug) |
 | `user_stack_tools` | Junction table for user stacks ↔ tools |
 | `search_logs` | Search query log for Live Wire feed + search intent analytics |
+| `magic_claim_tokens` | One-click claim URLs for admin DM outreach (7-day expiry, single-use) |
 | `milestones` | Maker achievement tracking (first-tool, 100-views, 10-upvotes, first-review, launch-ready) |
 
 ## API Endpoints
@@ -264,11 +293,16 @@ Templates: purchase receipt, tool approved, new review, password reset, email ve
 - `purge_seeded_data.py` — Removes all fake social proof (reviews, upvotes, wishlists, test users, maker updates). Run with `--yes` flag to skip confirmation.
 - Run on production via: `flyctl ssh console` → `python seed_tools.py && python seed_social_proof.py`
 
+## GitHub
+
+- **Repo**: `Pattyboi101/indiestack` (private)
+- **Collaborators**: Ed (`rupert61622-blip`) — push access
+- **Workflow**: Deploy is local → Fly.io via `flyctl deploy`. PRs merge on GitHub, then pull locally and deploy.
+
 ## Production Data (as of Feb 2026)
 
-- ~100+ tools across 20 categories
+- ~131 tools across 20 categories, 55 unclaimed
 - ~70 makers
-- 22 reviews, 72 maker updates, 60 wishlists, 1500+ views
-- 6 Verified tools, 8+ Ejectable tools, 12+ Active (fire badge) tools
-- GovLink as first priced product (£29)
-- 8 subscribers, 5 test users
+- Already launched on Product Hunt
+- GovLink + LogicGate as real priced products
+- Stripe in test mode — switch to live before taking real payments

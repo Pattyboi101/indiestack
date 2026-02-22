@@ -284,6 +284,121 @@ def subscriber_digest_html(trending_tools: list, new_tool: dict, total_tokens_sa
     """)
 
 
+def ego_ping_html(*, maker_name: str, tool_name: str, tool_slug: str,
+                   views: int, upvotes: int, wishlists: int,
+                   has_changelog: bool, has_active_badge: bool) -> str:
+    """Weekly 'Ego Ping' email to hook makers back to their dashboard."""
+    # Humanise the views number
+    if views == 0:
+        views_label = "Your tool is listed and waiting for its first visitors"
+    elif views == 1:
+        views_label = "1 developer discovered your tool this week"
+    else:
+        views_label = f"{views} developers discovered your tool this week"
+
+    # Contextual CTA
+    if not has_changelog:
+        cta_text = "Post your first changelog to earn the Active badge"
+        cta_sub = "Makers who post updates get 2x more visibility in search."
+    elif not has_active_badge:
+        cta_text = "Post an update to earn the Active badge"
+        cta_sub = "You've posted before — one more recent update and you'll unlock the badge."
+    else:
+        cta_text = "Keep the streak! Post an update this week"
+        cta_sub = "Active tools rank higher and get featured in the newsletter."
+
+    base = "https://indiestack.fly.dev"
+
+    return f"""
+    <div style="text-align:center;margin-bottom:24px;">
+        <div style="display:inline-block;background:#1A2D4A;color:#00D4F5;font-size:11px;font-weight:700;
+                    text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:999px;">
+            Weekly Stats
+        </div>
+    </div>
+    <h2 style="font-family:serif;font-size:22px;color:#1A2D4A;margin-bottom:4px;text-align:center;">
+        {tool_name}
+    </h2>
+    <p style="color:#6B6560;font-size:15px;text-align:center;margin-bottom:24px;">
+        Hi {maker_name} &mdash; {views_label}
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;">
+        <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+            <div style="font-size:28px;font-weight:bold;color:#1A2D4A;">{views}</div>
+            <div style="font-size:12px;color:#6B6560;margin-top:4px;">Views</div>
+        </div>
+        <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+            <div style="font-size:28px;font-weight:bold;color:#00D4F5;">{upvotes}</div>
+            <div style="font-size:12px;color:#6B6560;margin-top:4px;">Upvotes</div>
+        </div>
+        <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+            <div style="font-size:28px;font-weight:bold;color:#1A2D4A;">{wishlists}</div>
+            <div style="font-size:12px;color:#6B6560;margin-top:4px;">Wishlists</div>
+        </div>
+    </div>
+    <div style="margin:28px 0;padding:20px;background:#1A2D4A;border-radius:12px;text-align:center;">
+        <p style="color:#00D4F5;font-size:14px;font-weight:700;margin:0 0 4px;">{cta_text}</p>
+        <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0;">{cta_sub}</p>
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+        <a href="{base}/dashboard" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            View Dashboard
+        </a>
+    </div>
+    <p style="color:#9C958E;font-size:12px;text-align:center;margin-top:24px;">
+        You're receiving this because you have a tool on
+        <a href="{base}/tool/{tool_slug}" style="color:#00D4F5;">IndieStack</a>.
+    </p>
+    """
+
+
+def boost_expired_html(*, tool_name: str, tool_slug: str, views: int, upvotes: int, wishlists: int) -> str:
+    """Email sent when a boost expires, highlighting the value delivered."""
+    impressions = views * 3
+    return _email_wrapper(f"""
+        <h1 style="font-size:24px;font-weight:700;color:#2D2926;margin-bottom:16px;">
+            Your Boost Results for {tool_name}
+        </h1>
+        <p style="color:#5A5550;font-size:16px;line-height:1.6;margin-bottom:24px;">
+            Your 30-day Featured boost has ended. Here's what it delivered:
+        </p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0;">
+            <div style="text-align:center;padding:16px;background:#F0FFFE;border-radius:12px;">
+                <div style="font-size:28px;font-weight:800;color:#1A2D4A;">{views}</div>
+                <div style="font-size:12px;color:#6B7280;">Profile Views</div>
+            </div>
+            <div style="text-align:center;padding:16px;background:#F0FFFE;border-radius:12px;">
+                <div style="font-size:28px;font-weight:800;color:#1A2D4A;">~{impressions}</div>
+                <div style="font-size:12px;color:#6B7280;">Search Impressions</div>
+            </div>
+            <div style="text-align:center;padding:16px;background:#F0FFFE;border-radius:12px;">
+                <div style="font-size:28px;font-weight:800;color:#1A2D4A;">{upvotes}</div>
+                <div style="font-size:12px;color:#6B7280;">Upvotes</div>
+            </div>
+            <div style="text-align:center;padding:16px;background:#F0FFFE;border-radius:12px;">
+                <div style="font-size:28px;font-weight:800;color:#1A2D4A;">{wishlists}</div>
+                <div style="font-size:12px;color:#6B7280;">Wishlists</div>
+            </div>
+        </div>
+        <p style="color:#5A5550;font-size:14px;line-height:1.6;">
+            During your boost, your tool was featured in the weekly newsletter,
+            shown with priority placement in search results, and displayed with
+            the &#9733; Featured badge on your listing.
+        </p>
+        <div style="text-align:center;margin:32px 0;">
+            <a href="https://indiestack.fly.dev/tool/{tool_slug}"
+               style="display:inline-block;padding:14px 32px;background:#1A2D4A;color:white;
+                      border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+                Boost Again for &pound;29
+            </a>
+        </div>
+        <p style="color:#8A8580;font-size:13px;text-align:center;">
+            Re-boosting keeps your Featured badge active and maintains your priority placement.
+        </p>
+    """)
+
+
 def wishlist_update_html(user_name: str, tool_name: str, update_title: str, tool_url: str) -> str:
     """Email sent when a wishlisted tool ships an update."""
     return _email_wrapper(f"""
