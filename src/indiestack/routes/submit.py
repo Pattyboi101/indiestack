@@ -1,5 +1,6 @@
 """Tool submission form."""
 
+import logging
 from html import escape
 from typing import Optional
 
@@ -8,6 +9,8 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.routes.components import page_shell
 from indiestack.db import get_all_categories, create_tool, get_tool_by_id, slugify, get_maker_by_id
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -228,9 +231,20 @@ async def submit_post(
     delivery_url: str = Form(""),
     replaces: str = Form(""),
     supports_export: str = Form(""),
+    # Public (no-login) submission fields
+    email: str = Form(""),
+    website2: str = Form(""),  # honeypot
 ):
-    if not request.state.user:
+    # Honeypot check: bots fill the hidden website2 field, humans don't
+    if website2:
+        logger.warning(f"Honeypot triggered from {request.client.host}")
+        return RedirectResponse(url="/submit?status=success", status_code=303)
+
+    # Allow public submissions if email is provided (no login required)
+    is_public = not request.state.user
+    if is_public and not email.strip():
         return RedirectResponse(url="/login", status_code=303)
+
     db = request.state.db
     categories = await get_all_categories(db)
 
@@ -286,6 +300,15 @@ async def submit_post(
         await db.execute("UPDATE tools SET replaces = ? WHERE id = ?", (replaces.strip(), tool_id))
         await db.commit()
 
+    # Store submitter email for public (no-login) submissions
+    if is_public and email.strip():
+        await db.execute(
+            "UPDATE tools SET submitter_email = ?, submitted_from_ip = ? WHERE id = ?",
+            (email.strip().lower(), request.client.host, tool_id),
+        )
+        await db.commit()
+        logger.info(f"Public submission: '{name.strip()}' from {email.strip()} ({request.client.host})")
+
     # Get the tool slug for verification link
     tool = await get_tool_by_id(db, tool_id)
     tool_slug = tool['slug'] if tool else slugify(name.strip())
@@ -305,6 +328,10 @@ async def submit_post(
         </a>
     </div>
     """
+
+    # Public submissions get a simple redirect (no session for page_shell)
+    if is_public:
+        return RedirectResponse(url="/submit?status=success", status_code=303)
 
     body = submit_form(categories, success="Your tool has been submitted! We'll review it shortly.")
     # Insert upsell before the form
