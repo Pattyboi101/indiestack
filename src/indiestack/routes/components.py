@@ -444,6 +444,7 @@ def nav_html(user=None) -> str:
         initial = user_name[0].upper() if user_name else '?'
         auth_links = f"""
                 <a href="/dashboard" style="color:var(--ink-light);">Dashboard</a>
+                <a href="/developer" style="color:var(--ink-light);">API</a>
                 <a href="/dashboard/notifications" style="position:relative;color:var(--ink-light);font-size:18px;text-decoration:none;">&#128276;</a>
                 <div style="display:flex;align-items:center;gap:8px;">
                     <div style="width:28px;height:28px;border-radius:50%;background:var(--terracotta);
@@ -456,6 +457,7 @@ def nav_html(user=None) -> str:
         """
         mobile_auth_links = f"""
                 <a href="/dashboard">Dashboard</a>
+                <a href="/developer">API</a>
                 <a href="/dashboard/notifications">Notifications</a>
                 <a href="/logout">Log out</a>
         """

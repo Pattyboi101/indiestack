@@ -585,6 +585,23 @@ async def dashboard_overview(request: Request):
     </div>
     <script>if(!localStorage.getItem('comet_dismissed')){document.getElementById('comet-banner').style.display='block';}</script>'''
 
+    # ── API nudge for users without API keys ─────────────────────
+    api_nudge = ''
+    user_keys = await get_api_keys_for_user(db, user['id'])
+    if not user_keys:
+        api_nudge = '''<div style="background:linear-gradient(135deg,var(--card-bg),var(--cream-dark));border:1px solid var(--accent);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:24px;">&#9889;</span>
+                <div>
+                    <strong style="font-size:14px;">Get personalized recommendations</strong>
+                    <p style="font-size:13px;color:var(--ink-muted);margin:4px 0 0;">
+                        Create an API key to unlock AI-powered tool recommendations tailored to your workflow.
+                        <a href="/developer" style="color:var(--accent);font-weight:600;">Set up your Developer API &rarr;</a>
+                    </p>
+                </div>
+            </div>
+        </div>'''
+
     # ── Stripe launch banner (makers without Stripe) ──────────────
     stripe_launch_banner = ''
     if maker_id and not maker_stripe_id:
@@ -631,6 +648,7 @@ async def dashboard_overview(request: Request):
     <div class="container" style="padding:48px 24px;max-width:960px;">
         {stripe_launch_banner}
         {welcome_perk}
+        {api_nudge}
         {verify_banner}
         {boost_success_banner}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
@@ -1767,6 +1785,10 @@ async def developer_page(request: Request):
     usage = await get_api_key_usage_stats(db, user['id'], days=30)
     usage_map = {u['id']: u['request_count'] for u in usage}
 
+    # Determine API key for install snippet
+    from html import escape as _escape
+    snippet_key = _escape(new_key) if (new_key and new_key.startswith('isk_')) else 'your-api-key-here'
+
     # Load developer profile (from first active API key)
     profile_html = ''
     if keys:
@@ -1804,7 +1826,7 @@ async def developer_page(request: Request):
                 toggle_color = 'var(--ink-muted)' if enabled else 'var(--success-text)'
 
                 profile_html = f'''
-                <div class="card" style="padding:24px;margin-bottom:32px;">
+                <div id="profile" class="card" style="padding:24px;margin-bottom:32px;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
                         <h3 style="font-family:var(--font-display);font-size:20px;margin:0;">Your Profile</h3>
                         <span style="font-size:12px;color:var(--ink-muted);">{profile['search_count']} searches analyzed</span>
@@ -1923,24 +1945,38 @@ async def developer_page(request: Request):
         </div>
 
         <div class="card" style="padding:24px;">
-            <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 16px;color:var(--ink);">Quick Start</h2>
+            <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 4px;color:var(--ink);">Quick Start</h2>
+            <p style="font-size:14px;color:var(--ink-muted);margin:0 0 20px;">Integrate IndieStack into your workflow</p>
 
-            <h3 style="font-size:15px;margin:0 0 8px;color:var(--ink);">MCP Server (Claude, Cursor, Windsurf)</h3>
-            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Install once, your AI assistant searches IndieStack before writing code.</p>
-            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
-                        font-family:var(--font-mono);overflow-x:auto;margin-bottom:20px;">pip install indiestack</pre>
-            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Set your key as an environment variable in your MCP client config:</p>
-            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
-                        font-family:var(--font-mono);overflow-x:auto;margin-bottom:24px;">INDIESTACK_API_KEY=your_key_here</pre>
+            <div style="position:relative;">
+                <pre id="install-snippet" style="background:var(--terracotta);color:var(--slate);padding:16px;border-radius:var(--radius-sm);font-size:13px;
+                            font-family:var(--font-mono);overflow-x:auto;margin-bottom:12px;line-height:1.6;"># Install the MCP server
+pip install indiestack
 
-            <h3 style="font-size:15px;margin:0 0 8px;color:var(--ink);">REST API</h3>
-            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Query the API directly with your key as a query parameter.</p>
-            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
-                        font-family:var(--font-mono);overflow-x:auto;margin-bottom:20px;">curl &quot;{BASE_URL}/api/tools/search?q=analytics&amp;key=your_key_here&quot;</pre>
+# Set your API key
+export INDIESTACK_API_KEY="{snippet_key}"</pre>
+                <button onclick="var text=document.getElementById('install-snippet').textContent.trim();navigator.clipboard.writeText(text).then(function(){{var b=event.target;b.textContent='Copied!';setTimeout(function(){{b.textContent='Copy';}},2000);}});"
+                    style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.12);color:var(--slate);border:1px solid rgba(255,255,255,0.2);
+                           padding:4px 12px;border-radius:var(--radius-sm);font-size:12px;font-family:var(--font-body);cursor:pointer;
+                           min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;">Copy</button>
+            </div>
 
-            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Or use the Authorization header:</p>
-            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
-                        font-family:var(--font-mono);overflow-x:auto;">curl -H &quot;Authorization: Bearer your_key_here&quot; &quot;{BASE_URL}/api/tools/search?q=analytics&quot;</pre>
+            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;line-height:1.5;">
+                With an API key, searches build your preference profile for personalized recommendations.
+                We store category interests only &mdash; never raw queries.
+            </p>
+            <a href="#profile" style="font-size:13px;color:var(--accent);text-decoration:none;">Learn how personalization works &rarr;</a>
+
+            <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border);">
+                <h3 style="font-size:15px;margin:0 0 8px;color:var(--ink);">REST API</h3>
+                <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Query the API directly with your key as a query parameter.</p>
+                <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
+                            font-family:var(--font-mono);overflow-x:auto;margin-bottom:20px;">curl &quot;{BASE_URL}/api/tools/search?q=analytics&amp;key={snippet_key}&quot;</pre>
+
+                <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Or use the Authorization header:</p>
+                <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
+                            font-family:var(--font-mono);overflow-x:auto;">curl -H &quot;Authorization: Bearer {snippet_key}&quot; &quot;{BASE_URL}/api/tools/search?q=analytics&quot;</pre>
+            </div>
         </div>
     </div>'''
 
