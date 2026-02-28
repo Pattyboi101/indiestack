@@ -12,28 +12,54 @@ def design_tokens() -> str:
         @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
         :root {
+            /* Primary palette — legacy names preserved for compatibility */
             --terracotta: #1A2D4A;
             --terracotta-light: #2B4A6E;
             --terracotta-dark: #0F1D30;
             --gold: #E2B764;
             --gold-light: #F0D898;
+            --gold-dark: #78350F;
             --slate: #00D4F5;
             --slate-light: #B2F0FF;
             --slate-dark: #00A8C6;
+            --accent: var(--slate);
+
+            /* Surfaces */
             --cream: #F7F9FC;
             --cream-dark: #EDF1F7;
+            --card-bg: white;
+            --nav-bg: white;
+
+            /* Text */
             --ink: #1A1A2E;
             --ink-light: #475569;
             --ink-muted: #64748B;
             --border: #E2E8F0;
+
+            /* Typography */
             --font-display: 'DM Serif Display', serif;
             --font-body: 'DM Sans', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
+            --text-xs: 11px;
+            --text-sm: 13px;
+            --text-base: 14px;
+            --text-lg: 16px;
+            --heading-sm: 18px;
+            --heading-md: 22px;
+            --heading-lg: 28px;
+            --heading-xl: 36px;
+
+            /* Layout */
             --max-w: 1100px;
             --radius: 12px;
             --radius-sm: 8px;
-            --card-bg: white;
-            --nav-bg: white;
+
+            /* Elevation */
+            --shadow-sm: 0 1px 3px rgba(26,45,74,0.06);
+            --shadow-md: 0 4px 12px rgba(26,45,74,0.08);
+            --shadow-lg: 0 12px 40px rgba(26,45,74,0.10);
+
+            /* Status */
             --success-bg: #ECFDF5;
             --success-text: #065F46;
             --success-border: #A7F3D0;
@@ -45,36 +71,30 @@ def design_tokens() -> str:
             --error-bg: #FEF2F2;
             --error-text: #991B1B;
             --error-border: #FECACA;
-            --gold-dark: #78350F;
-            --shadow-sm: 0 1px 3px rgba(26,45,74,0.06);
-            --shadow-md: 0 4px 12px rgba(26,45,74,0.08);
-            --shadow-lg: 0 12px 40px rgba(26,45,74,0.10);
-            --text-xs: 11px;
-            --text-sm: 13px;
-            --text-base: 14px;
-            --text-lg: 16px;
-            --heading-sm: 17px;
-            --heading-md: 22px;
-            --heading-lg: 28px;
         }
 
         [data-theme="dark"] {
             --terracotta: #3A6A9F;
             --terracotta-light: #4A7AB0;
             --terracotta-dark: #2B4A6E;
-            --gold: #E2B764;
+            --gold: #F0D898;
             --gold-light: #D4A24A;
+            --gold-dark: #F0D898;
             --slate: #40E8FF;
             --slate-light: #80F0FF;
             --slate-dark: #20C8E0;
+            --accent: var(--slate);
             --cream: #0F1420;
             --cream-dark: #1A2535;
+            --card-bg: #1A2535;
+            --nav-bg: #0F1420;
             --ink: #E8ECF0;
             --ink-light: #B0B8C8;
             --ink-muted: #6A7488;
             --border: #2A3545;
-            --card-bg: #1A2535;
-            --nav-bg: #0F1420;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
             --success-bg: #052E16;
             --success-text: #86EFAC;
             --success-border: #166534;
@@ -86,10 +106,6 @@ def design_tokens() -> str:
             --error-bg: #2D0F0F;
             --error-text: #FCA5A5;
             --error-border: #7F1D1D;
-            --gold-dark: #F0D898;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -127,7 +143,7 @@ def design_tokens() -> str:
         .card-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 24px;
             max-width: 100%;
             overflow: hidden;
         }
@@ -137,11 +153,11 @@ def design_tokens() -> str:
         /* ── Scroll Row ───────────── */
         .scroll-row {
             display: flex;
-            gap: 20px;
+            gap: 24px;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
-            padding-bottom: 12px;
+            padding-bottom: 16px;
         }
         .scroll-row > * {
             scroll-snap-align: start;
@@ -158,10 +174,11 @@ def design_tokens() -> str:
             display: inline-flex; align-items: center; gap: 8px;
             font-family: var(--font-body);
             font-weight: 600; font-size: 14px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 999px;
             border: none; cursor: pointer;
             transition: all 0.15s ease;
+            min-height: 44px;
         }
         .btn-primary { background: var(--terracotta); color: white; }
         .btn-primary:hover { background: var(--terracotta-dark); color: white; }
@@ -169,8 +186,8 @@ def design_tokens() -> str:
         .btn-secondary:hover { background: var(--border); }
         .btn-slate { background: var(--slate); color: white; }
         .btn-slate:hover { background: var(--slate-dark); color: white; }
-        .btn-lg { padding: 14px 28px; font-size: 16px; }
-        .btn-sm { padding: 6px 14px; font-size: 12px; }
+        .btn-lg { padding: 16px 32px; font-size: 16px; }
+        .btn-sm { padding: 8px 16px; font-size: 12px; min-height: 36px; }
         .btn:focus-visible { outline: 2px solid var(--slate); outline-offset: 2px; }
 
         /* ── Hover utilities ──────── */
@@ -188,16 +205,18 @@ def design_tokens() -> str:
             display: inline-block;
             font-family: var(--font-mono);
             font-size: 12px; font-weight: 500;
-            padding: 3px 10px;
+            padding: 4px 12px;
             background: rgba(26,45,74,0.07);
             color: var(--terracotta);
             border-radius: 999px;
         }
+        [data-theme="dark"] .tag { background: rgba(255,255,255,0.08); }
 
         /* ── Upvote button ─────────── */
         .upvote-btn {
             display: inline-flex; flex-direction: column; align-items: center;
-            gap: 2px; padding: 8px 14px;
+            gap: 2px; padding: 8px 16px;
+            min-width: 44px; min-height: 44px;
             background: var(--cream-dark); border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             cursor: pointer; transition: all 0.15s ease;
@@ -220,17 +239,18 @@ def design_tokens() -> str:
         .upvote-btn .arrow { font-size: 16px; line-height: 1; }
 
         /* ── Form elements ─────────── */
-        .form-group { margin-bottom: 20px; }
+        .form-group { margin-bottom: 24px; }
         .form-group label {
             display: block; font-weight: 600; font-size: 14px;
-            color: var(--ink); margin-bottom: 6px;
+            color: var(--ink); margin-bottom: 8px;
         }
         .form-input, .form-textarea, .form-select {
-            width: 100%; padding: 10px 14px;
+            width: 100%; padding: 12px 16px;
             font-family: var(--font-body); font-size: 15px;
             border: 1px solid var(--border); border-radius: var(--radius-sm);
             background: var(--card-bg); color: var(--ink);
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            min-height: 44px;
         }
         .form-input:focus, .form-textarea:focus, .form-select:focus {
             outline: none; border-color: var(--terracotta);
@@ -263,7 +283,7 @@ def design_tokens() -> str:
         .badge {
             display: inline-flex; align-items: center; gap: 4px;
             font-size: var(--text-xs); font-weight: 600;
-            padding: 2px 10px; border-radius: 999px;
+            padding: 4px 8px; border-radius: 999px;
             border: 1px solid transparent;
         }
         .badge-success { color: var(--success-text); background: var(--success-bg); border-color: var(--success-border); }
@@ -280,13 +300,13 @@ def design_tokens() -> str:
         .pill-price {
             display: inline-block; background: var(--terracotta); color: var(--slate);
             font-size: var(--text-xs); font-weight: 600;
-            padding: 2px 8px; border-radius: 4px;
+            padding: 4px 8px; border-radius: 4px;
         }
 
         /* ── Alert / Flash ─────────── */
         .alert {
-            padding: 14px 20px; border-radius: var(--radius-sm);
-            font-size: 14px; font-weight: 500; margin-bottom: 20px;
+            padding: 16px 24px; border-radius: var(--radius-sm);
+            font-size: 14px; font-weight: 500; margin-bottom: 24px;
         }
         .alert-success { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
         .alert-error { background: var(--error-bg); color: var(--error-text); border: 1px solid var(--error-border); }
@@ -299,7 +319,7 @@ def design_tokens() -> str:
         }
         .pagination a, .pagination span {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px; border-radius: 999px;
+            width: 44px; height: 44px; border-radius: 999px;
             font-weight: 600; font-size: 14px;
             border: 1px solid var(--border); color: var(--ink-light);
         }
@@ -321,11 +341,11 @@ def design_tokens() -> str:
             font-size: 12px; font-weight: 600;
             color: var(--gold-dark);
             background: linear-gradient(135deg, var(--gold-light), var(--gold));
-            padding: 2px 10px; border-radius: 999px;
+            padding: 4px 12px; border-radius: 999px;
             border: 1px solid var(--gold);
         }
         .verified-badge svg { width: 14px; height: 14px; fill: var(--gold-dark); }
-        .verified-card { border-color: var(--gold-light); background: linear-gradient(180deg, #FDF8EE 0%, white 40%); }
+        .verified-card { border-color: var(--gold-light); background: linear-gradient(180deg, var(--warning-bg) 0%, var(--card-bg) 40%); }
         .verified-card:hover { box-shadow: 0 12px 40px rgba(226,183,100,0.2); }
 
         /* ── Toast notification ───── */
@@ -335,8 +355,8 @@ def design_tokens() -> str:
             right: 24px;
             background: var(--terracotta);
             color: white;
-            padding: 12px 20px;
-            border-radius: 10px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
             font-size: 14px;
             font-weight: 600;
             font-family: var(--font-body);
@@ -360,12 +380,12 @@ def design_tokens() -> str:
         [data-theme="dark"] .alert-success { background: var(--success-bg); color: var(--success-text); border-color: var(--success-border); }
         [data-theme="dark"] .alert-error { background: var(--error-bg); color: var(--error-text); border-color: var(--error-border); }
         [data-theme="dark"] .alert-info { background: var(--info-bg); color: var(--info-text); border-color: var(--info-border); }
-        [data-theme="dark"] .verified-card { border-color: #5C4A1E; background: linear-gradient(180deg, #2A2318 0%, var(--card-bg) 40%); }
+        [data-theme="dark"] .verified-card { border-color: var(--gold-dark); background: linear-gradient(180deg, var(--warning-bg) 0%, var(--card-bg) 40%); }
         [data-theme="dark"] .card:hover { box-shadow: var(--shadow-lg); }
 
         /* Mobile nav */
         .nav-links { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 500; }
-        .hamburger { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 20px; color: var(--ink); }
+        .hamburger { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 20px; color: var(--ink); min-width: 44px; min-height: 44px; }
         .mobile-menu { display: none; }
 
         /* Nav dropdown */
@@ -409,7 +429,7 @@ def design_tokens() -> str:
         .footer-link:hover { color: white; }
         .footer-muted { color: rgba(255,255,255,0.5); font-size: 12px; }
         .footer-email-input::placeholder { color: rgba(255,255,255,0.5); opacity: 1; }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
         @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
     </style>
@@ -483,11 +503,12 @@ def nav_html(user=None) -> str:
                         <a href="/leaderboard" class="nav-dropdown-item">Leaderboard</a>
                         <a href="/stacks" class="nav-dropdown-item">Stacks</a>
                         <a href="/best" class="nav-dropdown-item">Best Tools</a>
+                        <a href="/plugins" class="nav-dropdown-item">Plugins</a>
                         <a href="/blog" class="nav-dropdown-item">Blog</a>
                     </div>
                 </div>
                 <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Add Your Tool</a>
-                <button onclick="toggleTheme()" id="theme-toggle" style="background:none;border:1px solid var(--border);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all 0.15s ease;" title="Toggle dark mode">&#9790;</button>
+                <button onclick="toggleTheme()" id="theme-toggle" style="background:none;border:1px solid var(--border);border-radius:999px;padding:8px 12px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all 0.15s ease;min-width:44px;min-height:44px;" title="Toggle dark mode">&#9790;</button>
                 {auth_links}
             </div>
             <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu">&#9776;</button>
@@ -499,6 +520,7 @@ def nav_html(user=None) -> str:
             <a href="/makers">Makers</a>
             <a href="/leaderboard">Leaderboard</a>
             <a href="/stacks">Stacks</a>
+            <a href="/plugins">Plugins</a>
             <a href="/submit" class="btn btn-primary">Add Your Tool</a>
             <button onclick="toggleTheme()">Toggle Theme</button>
             {mobile_auth_links}
@@ -802,6 +824,11 @@ def tool_card(tool: dict) -> str:
     is_boosted = bool(tool.get('is_boosted', 0))
     if is_boosted:
         badge += ' ' + boosted_badge_html()
+    # Show claim status: "Maker ✓" for claimed tools, "Community Listed" for unclaimed
+    if tool.get('claimed_at') and not is_verified:
+        badge += ' <span class="badge badge-success" style="font-size:10px;">Maker &#10003;</span>'
+    elif not tool.get('claimed_at') and not is_verified:
+        badge += ' <span class="badge badge-muted" style="font-size:10px;">Community Listed</span>'
     price_pence = tool.get('price_pence')
     if price_pence and price_pence > 0 and not tool.get('stripe_account_id'):
         badge += f' <span class="pill-price">&pound;{price_pence // 100}/mo</span>'

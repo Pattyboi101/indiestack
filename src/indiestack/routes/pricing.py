@@ -66,10 +66,10 @@ async def pricing_page(request: Request):
             </div>
 
             <!-- Pro Tier -->
-            <div class="card" style="padding:32px;border-color:var(--gold);background:linear-gradient(180deg,#FDF8EE 0%,white 30%);position:relative;">
-                <span style="position:absolute;top:-12px;right:16px;font-size:11px;font-weight:700;color:#5C3D0E;
-                             background:linear-gradient(135deg,var(--gold-light),var(--gold));padding:4px 14px;
-                             border-radius:999px;">RECOMMENDED</span>
+            <div class="card" style="padding:32px;border-color:var(--gold);background:linear-gradient(180deg,var(--warning-bg) 0%,white 30%);position:relative;">
+                <span style="position:absolute;top:-12px;right:16px;font-size:11px;font-weight:700;color:var(--gold-dark);
+                             background:linear-gradient(135deg,var(--gold-light),var(--gold));padding:4px 16px;
+                             border-radius:999px;">COMING SOON</span>
                 <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin-bottom:4px;">Pro</h2>
                 <div style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:24px;">
                     &pound;9<span style="font-size:16px;color:var(--ink-muted);font-family:var(--font-body);">/month</span>
@@ -94,12 +94,12 @@ async def pricing_page(request: Request):
                         <span style="color:var(--gold);font-weight:bold;">&#9733;</span> <strong>Priority search ranking</strong>
                     </li>
                 </ul>
-                {'<span class="btn btn-secondary" style="width:100%;justify-content:center;padding:12px;opacity:0.7;cursor:default;">Current Plan</span>' if is_pro else '<a href="/api/subscribe" class="btn" style="width:100%;justify-content:center;padding:12px;background:linear-gradient(135deg,var(--gold),#D4A24A);color:#5C3D0E;font-weight:700;border:1px solid var(--gold);">Upgrade to Pro</a>' if user else '<a href="/signup?next=pricing" class="btn" style="width:100%;justify-content:center;padding:12px;background:linear-gradient(135deg,var(--gold),#D4A24A);color:#5C3D0E;font-weight:700;border:1px solid var(--gold);">Sign Up &amp; Go Pro</a>'}
+                {'<span class="btn btn-secondary" style="width:100%;justify-content:center;padding:12px;opacity:0.7;cursor:default;">Current Plan</span>' if is_pro else '<a href="/signup" class="btn" style="width:100%;justify-content:center;padding:12px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--gold-dark);font-weight:700;border:1px solid var(--gold);">Join the Waitlist</a>'}
             </div>
         </div>
 
         <p style="text-align:center;color:var(--ink-muted);font-size:13px;margin-top:24px;">
-            All prices in GBP. Pro subscription billed monthly via Stripe. Cancel anytime.
+            Pro launching soon. Sign up free to be first in line when it goes live.
         </p>
     </div>
     """

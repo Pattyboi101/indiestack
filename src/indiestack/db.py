@@ -570,6 +570,16 @@ async def init_db():
             await db.execute("SELECT replaces FROM tools LIMIT 1")
         except Exception:
             await db.execute("ALTER TABLE tools ADD COLUMN replaces TEXT NOT NULL DEFAULT ''")
+        # Migration: add plugin metadata columns if missing
+        for col, sql in [
+            ("tool_type", "ALTER TABLE tools ADD COLUMN tool_type TEXT DEFAULT NULL"),
+            ("platforms", "ALTER TABLE tools ADD COLUMN platforms TEXT NOT NULL DEFAULT ''"),
+            ("install_command", "ALTER TABLE tools ADD COLUMN install_command TEXT NOT NULL DEFAULT ''"),
+        ]:
+            try:
+                await db.execute(sql)
+            except Exception:
+                pass  # Column already exists
         # ── boosted_competitor migration ──────────────────────────────────────
         try:
             await db.execute("SELECT boosted_competitor FROM tools LIMIT 1")
@@ -884,7 +894,9 @@ async def search_tools(db: aiosqlite.Connection, query: str, limit: int = 20):
 async def create_tool(db: aiosqlite.Connection, *, name: str, tagline: str, description: str,
                       url: str, maker_name: str, maker_url: str, category_id: int, tags: str,
                       price_pence: Optional[int] = None, delivery_type: str = 'link',
-                      delivery_url: str = '', stripe_account_id: str = '') -> int:
+                      delivery_url: str = '', stripe_account_id: str = '',
+                      tool_type: Optional[str] = None, platforms: str = '',
+                      install_command: str = '') -> int:
     slug = slugify(name)
     # Ensure unique slug
     base_slug = slug
@@ -903,10 +915,12 @@ async def create_tool(db: aiosqlite.Connection, *, name: str, tagline: str, desc
 
     cursor = await db.execute(
         """INSERT INTO tools (name, slug, tagline, description, url, maker_name, maker_url,
-           category_id, tags, price_pence, delivery_type, delivery_url, stripe_account_id, maker_id)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+           category_id, tags, price_pence, delivery_type, delivery_url, stripe_account_id, maker_id,
+           tool_type, platforms, install_command)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (name, slug, tagline, description, url, maker_name, maker_url, category_id, tags,
-         price_pence, delivery_type, delivery_url, stripe_account_id, maker_id),
+         price_pence, delivery_type, delivery_url, stripe_account_id, maker_id,
+         tool_type, platforms, install_command),
     )
     await db.commit()
     return cursor.lastrowid
@@ -2916,7 +2930,7 @@ async def get_trending_scored(db, limit: int = 20, days: int = 7):
     cursor = await db.execute(f"""
         SELECT t.*, c.name as category_name, c.slug as category_slug,
                COALESCE(v.view_count, 0) as views_7d,
-               (t.upvote_count + COALESCE(v.view_count, 0)) * 1.0 /
+               (t.upvote_count + COALESCE(v.view_count, 0) + (CASE WHEN t.claimed_at IS NOT NULL THEN 20 ELSE 0 END)) * 1.0 /
                MAX(1.0, POWER(MAX(1, (julianday('now') - julianday(t.created_at)) * 24), 1.5)) as heat_score,
                EXISTS(SELECT 1 FROM maker_updates mu WHERE mu.tool_id = t.id AND mu.created_at >= datetime('now', '-14 days')) as has_changelog_14d
         FROM tools t
