@@ -355,7 +355,6 @@ CREATE TABLE IF NOT EXISTS search_logs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_search_logs_created ON search_logs(created_at);
-CREATE INDEX IF NOT EXISTS idx_search_logs_api_key ON search_logs(api_key_id);
 
 CREATE TABLE IF NOT EXISTS developer_profiles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
