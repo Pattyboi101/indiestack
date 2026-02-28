@@ -144,6 +144,7 @@ async def compare_tools(request: Request, slugs: str):
         </div>
     </div>
     """
-    return HTMLResponse(page_shell(title, body,
+    return HTMLResponse(page_shell(f"{name1} vs {name2} — Indie Tool Comparison | IndieStack", body,
                                     user=request.state.user,
-                                    description=f"Compare {tool1['name']} vs {tool2['name']} — side-by-side on IndieStack."))
+                                    description=f"Compare {tool1['name']} vs {tool2['name']} side-by-side. Features, pricing, and community ratings on IndieStack.",
+                                    canonical=f"/compare/{slug1}-vs-{slug2}"))

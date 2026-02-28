@@ -1,14 +1,150 @@
 """Programmatic 'alternatives to X' pages for SEO."""
 
+import json as _json
 from html import escape
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
+from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card
 from indiestack.db import get_tools_replacing, get_all_competitors, slugify, get_sponsored_for_competitor
 
 router = APIRouter()
+
+
+@router.get("/compare", response_class=HTMLResponse)
+async def compare_index(request: Request):
+    """SEO index page listing all tool-vs-competitor comparison pairs, grouped by category."""
+    db = request.state.db
+
+    # Get all approved tools that have a replaces field, with their category
+    cursor = await db.execute(
+        """SELECT t.id, t.name, t.slug, t.replaces, t.category_id,
+                  c.name as category_name, c.slug as category_slug
+           FROM tools t
+           JOIN categories c ON c.id = t.category_id
+           WHERE t.status = 'approved' AND t.replaces != '' AND t.replaces IS NOT NULL
+           ORDER BY c.name, t.name"""
+    )
+    rows = await cursor.fetchall()
+    tools = [dict(r) for r in rows]
+
+    # Build pairs: for each tool, create a (competitor, tool) pair
+    # Group by category
+    from collections import defaultdict
+    categories = defaultdict(list)  # category_name -> list of (competitor_name, competitor_slug, tool_name, tool_slug)
+
+    for t in tools:
+        replaces = t.get('replaces', '') or ''
+        for comp in replaces.split(','):
+            comp = comp.strip()
+            if comp:
+                comp_slug = slugify(comp)
+                categories[t['category_name']].append(
+                    (comp, comp_slug, t['name'], t['slug'])
+                )
+
+    # Deduplicate and limit to 10 pairs per category
+    category_count = 0
+    total_pairs = 0
+    sections_html = ''
+
+    for cat_name in sorted(categories.keys()):
+        pairs = categories[cat_name]
+        # Deduplicate by (competitor_slug, tool_slug)
+        seen = set()
+        unique_pairs = []
+        for comp_name, comp_slug, tool_name, tool_slug in pairs:
+            key = (comp_slug, tool_slug)
+            if key not in seen:
+                seen.add(key)
+                unique_pairs.append((comp_name, comp_slug, tool_name, tool_slug))
+
+        if len(unique_pairs) < 1:
+            continue
+
+        category_count += 1
+        # Limit to top 10 pairs per category
+        display_pairs = unique_pairs[:10]
+        total_pairs += len(display_pairs)
+
+        pills = ''
+        for comp_name, comp_slug, tool_name, tool_slug in display_pairs:
+            safe_comp = escape(comp_name)
+            safe_tool = escape(tool_name)
+            pills += f'''<a href="/alternatives/{escape(comp_slug)}/vs/{escape(tool_slug)}"
+                style="display:inline-block;padding:8px 16px;background:var(--cream-dark);border:1px solid var(--border);
+                border-radius:var(--radius-sm);font-size:13px;color:var(--ink);text-decoration:none;font-weight:500;
+                transition:border-color 0.15s,box-shadow 0.15s;"
+                onmouseover="this.style.borderColor='var(--accent)';this.style.boxShadow='var(--shadow-sm)'"
+                onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'"
+                >{safe_comp} vs {safe_tool}</a>\n'''
+
+        safe_cat = escape(cat_name)
+        sections_html += f'''
+        <div style="margin-bottom:36px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:14px;">
+                {safe_cat}
+            </h2>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                {pills}
+            </div>
+        </div>'''
+
+    if not sections_html:
+        body = """
+        <div class="container" style="text-align:center;padding:80px 24px;">
+            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Tool Comparisons</h1>
+            <p style="color:var(--ink-muted);margin-top:12px;">No comparisons available yet.</p>
+        </div>
+        """
+        return HTMLResponse(page_shell("Tool Comparisons — IndieStack", body, user=request.state.user))
+
+    # JSON-LD CollectionPage
+    jsonld = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Tool Comparisons — IndieStack",
+        "description": f"Side-by-side comparisons of indie tools across {category_count} categories. {total_pairs} comparison pages.",
+        "url": f"{BASE_URL}/compare",
+    }
+    jsonld_script = f'<script type="application/ld+json">{_json.dumps(jsonld)}</script>'
+
+    body = f"""
+    <div class="container" style="padding:48px 24px;max-width:960px;">
+        <div style="text-align:center;margin-bottom:48px;">
+            <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);">
+                Tool Comparisons
+            </h1>
+            <p style="color:var(--ink-muted);font-size:17px;margin-top:12px;max-width:600px;margin-left:auto;margin-right:auto;">
+                Side-by-side comparisons of indie tools across {category_count} categories.
+                Find the best alternative for your stack.
+            </p>
+            <a href="/alternatives" style="color:var(--ink-muted);font-size:14px;font-weight:600;margin-top:12px;display:inline-block;">
+                &larr; Back to Alternatives
+            </a>
+        </div>
+
+        {sections_html}
+
+        <div style="text-align:center;margin-top:48px;padding:32px;background:var(--cream-dark);border-radius:var(--radius);">
+            <p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
+                Don&rsquo;t see your tool?
+            </p>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
+                Submit it for free and get listed on comparison pages.
+            </p>
+            <a href="/submit" class="btn btn-primary">Submit Your Tool &rarr;</a>
+        </div>
+    </div>
+    """
+    return HTMLResponse(page_shell(
+        "Tool Comparisons — IndieStack", body,
+        description=f"Browse {total_pairs} side-by-side comparisons of indie tools across {category_count} categories. Find the best alternative for your stack.",
+        user=request.state.user, canonical="/compare",
+        extra_head=jsonld_script,
+    ))
 
 
 @router.get("/alternatives", response_class=HTMLResponse)
@@ -27,6 +163,12 @@ async def alternatives_index(request: Request):
         """
         return HTMLResponse(page_shell("Indie Alternatives", body, user=request.state.user))
 
+    # Get tool counts per competitor
+    comp_counts = {}
+    for comp in competitors:
+        comp_tools = await get_tools_replacing(db, comp, limit=100)
+        comp_counts[comp] = len(comp_tools)
+
     # Build grid of competitor pills
     pills_html = ''
     for comp in competitors:
@@ -37,7 +179,7 @@ async def alternatives_index(request: Request):
             <span style="font-size:24px;">&#9889;</span>
             <div>
                 <div style="font-family:var(--font-display);font-size:16px;color:var(--ink);">{escape(comp)} alternatives</div>
-                <div style="font-size:13px;color:var(--ink-muted);">Indie tools that replace {escape(comp)}</div>
+                <div style="font-size:13px;color:var(--ink-muted);">{comp_counts.get(comp, 0)} indie tools</div>
             </div>
         </a>
         """
@@ -55,6 +197,12 @@ async def alternatives_index(request: Request):
             </p>
         </div>
         <div class="card-grid">{pills_html}</div>
+
+        <div style="text-align:center;margin-top:24px;">
+            <a href="/compare" style="color:var(--ink-muted);font-size:14px;font-weight:600;text-decoration:none;">
+                View all comparisons &rarr;
+            </a>
+        </div>
 
         <div style="text-align:center;margin-top:48px;padding:32px;background:var(--cream-dark);border-radius:var(--radius);">
             <p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
@@ -106,7 +254,8 @@ async def alternatives_for(request: Request, competitor_slug: str):
         </div>
         """
         return HTMLResponse(page_shell(f"Alternatives to {competitor_name}", body,
-                                       user=request.state.user))
+                                       user=request.state.user,
+                                       extra_head='<meta name="robots" content="noindex">'))
 
     safe_name = escape(competitor_name)
 
@@ -147,6 +296,91 @@ async def alternatives_for(request: Request, competitor_slug: str):
         </div>"""
 
     tool_count = len(tools)
+
+    import json as _json
+
+    # Build ItemList JSON-LD
+    item_list_items = []
+    for i, t in enumerate(tools):
+        item_list_items.append({
+            "@type": "ListItem",
+            "position": i + 1,
+            "url": f"{BASE_URL}/tool/{t['slug']}",
+            "name": t['name'],
+        })
+
+    jsonld_itemlist = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": f"Indie Alternatives to {competitor_name}",
+        "description": f"Compare {tool_count} bootstrapped and open-source alternatives to {competitor_name}.",
+        "numberOfItems": tool_count,
+        "itemListElement": item_list_items,
+    }
+
+    # Build FAQ JSON-LD
+    # Check if any tools are free
+    free_tools = [t for t in tools if not t.get('price_pence') or t['price_pence'] == 0]
+    top_tool = tools[0] if tools else None
+
+    faq_entries = []
+    if free_tools:
+        free_names = ", ".join(escape(str(t['name'])) for t in free_tools[:5])
+        faq_entries.append({
+            "@type": "Question",
+            "name": f"Is there a free alternative to {competitor_name}?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": f"Yes! {len(free_tools)} free indie alternatives to {competitor_name} are available on IndieStack, including {free_names}."
+            }
+        })
+    if top_tool:
+        faq_entries.append({
+            "@type": "Question",
+            "name": f"What is the best open-source alternative to {competitor_name}?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": f"Based on community upvotes, {top_tool['name']} is the top-rated indie alternative to {competitor_name} on IndieStack. Browse all {tool_count} alternatives to find the best fit for your needs."
+            }
+        })
+
+    jsonld_faq = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faq_entries,
+    }
+
+    jsonld_script = (
+        f'<script type="application/ld+json">{_json.dumps(jsonld_itemlist)}</script>\n'
+        f'    <script type="application/ld+json">{_json.dumps(jsonld_faq)}</script>'
+    )
+
+    # Build HTML FAQ section
+    faq_html = ""
+    if free_tools:
+        free_names_html = ", ".join(f'<a href="/tool/{t["slug"]}" style="color:var(--terracotta);text-decoration:underline;">{escape(str(t["name"]))}</a>' for t in free_tools[:5])
+        faq_html += f'''
+        <details style="margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;">
+            <summary style="padding:14px 16px;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                Is there a free alternative to {safe_name}?
+                <span style="font-size:18px;color:var(--ink-muted);">+</span>
+            </summary>
+            <div style="padding:0 16px 14px;font-size:14px;color:var(--ink-light);line-height:1.6;">
+                Yes! {len(free_tools)} free indie alternatives to {safe_name} are available, including {free_names_html}.
+            </div>
+        </details>'''
+    if top_tool:
+        faq_html += f'''
+        <details style="margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;">
+            <summary style="padding:14px 16px;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                What is the best open-source alternative to {safe_name}?
+                <span style="font-size:18px;color:var(--ink-muted);">+</span>
+            </summary>
+            <div style="padding:0 16px 14px;font-size:14px;color:var(--ink-light);line-height:1.6;">
+                Based on community upvotes, <a href="/tool/{top_tool['slug']}" style="color:var(--terracotta);text-decoration:underline;">{escape(str(top_tool['name']))}</a> is the top-rated indie alternative to {safe_name} on IndieStack. Browse all {tool_count} alternatives to find the best fit.
+            </div>
+        </details>'''
+
     cards_parts = []
     for t in tools:
         card = tool_card(t)
@@ -192,6 +426,50 @@ async def alternatives_for(request: Request, competitor_slug: str):
 
         <div class="card-grid">{cards_html}</div>
 
+        <!-- Email capture banner -->
+        <div id="alt-sub-banner" style="display:none;margin-top:40px;padding:28px 24px;background:var(--terracotta);
+            border-radius:var(--radius);position:relative;box-shadow:var(--shadow-md);">
+            <button onclick="document.getElementById('alt-sub-banner').style.display='none';
+                localStorage.setItem('alt_sub_{escape(competitor_slug)}_dismissed','1');"
+                style="position:absolute;top:10px;right:14px;background:none;border:none;color:rgba(255,255,255,0.7);
+                font-size:22px;cursor:pointer;line-height:1;padding:4px;" aria-label="Dismiss">&times;</button>
+            <p style="font-family:var(--font-display);font-size:20px;color:#fff;margin-bottom:6px;">
+                Get notified when a new {safe_name} alternative launches
+            </p>
+            <p style="font-size:14px;color:rgba(255,255,255,0.8);margin-bottom:16px;">
+                We&rsquo;ll email you when indie makers ship new tools that replace {safe_name}. No spam, ever.
+            </p>
+            <form action="/api/subscribe" method="POST"
+                style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                <input type="hidden" name="source" value="alternatives">
+                <input type="hidden" name="tool_slug" value="{escape(competitor_slug)}">
+                <input type="hidden" name="next" value="/alternatives/{escape(competitor_slug)}">
+                <input type="email" name="email" required placeholder="you@example.com"
+                    style="flex:1;min-width:200px;padding:10px 14px;border:2px solid rgba(255,255,255,0.3);
+                    border-radius:var(--radius-sm);font-size:15px;font-family:var(--font-body);
+                    background:rgba(255,255,255,0.12);color:#fff;outline:none;"
+                    onfocus="this.style.borderColor='var(--slate)'" onblur="this.style.borderColor='rgba(255,255,255,0.3)'">
+                <button type="submit"
+                    style="padding:10px 24px;background:var(--slate);color:var(--terracotta-dark);font-weight:700;
+                    font-size:14px;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-body);
+                    white-space:nowrap;">Notify Me &rarr;</button>
+            </form>
+        </div>
+        <script>
+            (function() {{
+                if (!localStorage.getItem('alt_sub_{escape(competitor_slug)}_dismissed')) {{
+                    document.getElementById('alt-sub-banner').style.display = 'block';
+                }}
+            }})();
+        </script>
+
+        <div style="margin-top:48px;">
+            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:16px;">
+                Frequently Asked Questions
+            </h2>
+            {faq_html}
+        </div>
+
         <div style="text-align:center;margin-top:48px;padding:32px;background:var(--cream-dark);border-radius:var(--radius);">
             <p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
                 Know an indie alternative to {safe_name} we&rsquo;re missing?
@@ -203,6 +481,161 @@ async def alternatives_for(request: Request, competitor_slug: str):
         </div>
     </div>
     """
-    return HTMLResponse(page_shell(f"Indie Alternatives to {safe_name}", body,
-                                   description=f"Discover {tool_count} indie SaaS alternatives to {competitor_name}. Built by indie makers, priced fairly.",
-                                   user=request.state.user, canonical=f"/alternatives/{competitor_slug}"))
+    return HTMLResponse(page_shell(f"{tool_count} Indie Alternatives to {competitor_name} (2026)", body,
+                                   description=f"Compare {tool_count} bootstrapped and open-source alternatives to {competitor_name}. Curated indie tools, no VC-funded software.",
+                                   user=request.state.user, canonical=f"/alternatives/{competitor_slug}",
+                                   extra_head=jsonld_script))
+
+
+@router.get("/alternatives/{competitor_slug}/vs/{tool_slug}", response_class=HTMLResponse)
+async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str):
+    """Deep comparison: one incumbent vs one indie tool."""
+    import json as _json
+    db = request.state.db
+
+    # Resolve competitor name
+    all_competitors = await get_all_competitors(db)
+    competitor_name = competitor_slug.replace('-', ' ').title()
+    for comp in all_competitors:
+        if slugify(comp) == competitor_slug:
+            competitor_name = comp
+            break
+
+    # Get the tool
+    cursor = await db.execute(
+        "SELECT t.*, c.name as category_name, c.slug as category_slug "
+        "FROM tools t JOIN categories c ON t.category_id = c.id "
+        "WHERE t.slug = ? AND t.status = 'approved'", (tool_slug,))
+    tool = await cursor.fetchone()
+    if not tool:
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url=f"/alternatives/{competitor_slug}", status_code=303)
+    tool = dict(tool)
+
+    # Validate this tool actually replaces the competitor
+    replaces_list = [r.strip().lower() for r in (tool.get('replaces') or '').split(',')]
+    if competitor_name.lower() not in replaces_list and competitor_slug.replace('-', ' ') not in replaces_list:
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url=f"/alternatives/{competitor_slug}", status_code=303)
+
+    safe_comp = escape(competitor_name)
+    safe_name = escape(str(tool['name']))
+    safe_tagline = escape(str(tool.get('tagline', '')))
+    safe_desc = escape(str(tool.get('description', '')))
+    tool_slug_safe = escape(str(tool['slug']))
+
+    # Pricing display
+    price_pence = tool.get('price_pence')
+    if price_pence and isinstance(price_pence, int) and price_pence > 0:
+        price_display = f"From &pound;{price_pence / 100:.0f}/mo"
+    else:
+        price_display = "Free"
+
+    # Badges
+    verified_badge = '<span style="display:inline-block;background:#DCFCE7;color:#16a34a;padding:3px 10px;border-radius:9999px;font-size:12px;font-weight:600;">&#10003; Verified</span>' if tool.get('is_verified') else ''
+    ejectable_badge = '<span style="display:inline-block;background:#EDE9FE;color:#7C3AED;padding:3px 10px;border-radius:9999px;font-size:12px;font-weight:600;">&#9889; Ejectable</span>' if tool.get('is_ejectable') else ''
+
+    # Get other alternatives for cross-linking
+    other_tools = await get_tools_replacing(db, competitor_name, limit=6)
+    other_tools = [t for t in other_tools if t['slug'] != tool_slug]
+
+    cross_links = ""
+    if other_tools:
+        links = []
+        for ot in other_tools[:5]:
+            ot_name = escape(str(ot['name']))
+            ot_slug = escape(str(ot['slug']))
+            links.append(f'<a href="/alternatives/{escape(competitor_slug)}/vs/{ot_slug}" style="display:inline-block;padding:6px 14px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;color:var(--ink);text-decoration:none;font-weight:500;">{safe_comp} vs {ot_name}</a>')
+        cross_links = f'''
+        <div style="margin-top:40px;">
+            <h2 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">
+                Other {safe_comp} Alternatives
+            </h2>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                {"".join(links)}
+            </div>
+        </div>'''
+
+    # JSON-LD
+    jsonld = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": f"{competitor_name} vs {tool['name']} — Indie Alternative Comparison",
+        "description": f"Compare {competitor_name} with {tool['name']}, an indie alternative. {tool.get('tagline', '')}",
+        "mainEntity": {
+            "@type": "SoftwareApplication",
+            "name": tool['name'],
+            "url": tool.get('url', ''),
+            "applicationCategory": tool.get('category_name', ''),
+            "description": tool.get('tagline', ''),
+        }
+    }
+    jsonld_script = f'<script type="application/ld+json">{_json.dumps(jsonld)}</script>'
+
+    body = f"""
+    <div class="container" style="padding:48px 24px;max-width:800px;">
+        <div style="margin-bottom:8px;">
+            <a href="/alternatives/{escape(competitor_slug)}" style="color:var(--ink-muted);font-size:14px;font-weight:600;">&larr; All {safe_comp} Alternatives</a>
+        </div>
+
+        <h1 style="font-family:var(--font-display);font-size:clamp(26px,4vw,38px);color:var(--ink);margin-bottom:8px;">
+            {safe_comp} vs {safe_name}
+        </h1>
+        <p style="color:var(--ink-muted);font-size:17px;margin-bottom:32px;">
+            Is {safe_name} a good alternative to {safe_comp}? Here&rsquo;s what you need to know.
+        </p>
+
+        <div class="card" style="padding:24px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+                <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin:0;">{safe_name}</h2>
+                {verified_badge}
+                {ejectable_badge}
+                <span style="font-size:14px;font-weight:600;color:#065F46;background:#ECFDF5;padding:4px 12px;border-radius:999px;">{price_display}</span>
+            </div>
+            <p style="font-size:16px;color:var(--ink);margin-bottom:12px;font-weight:500;">{safe_tagline}</p>
+            <p style="font-size:14px;color:var(--ink-light);line-height:1.7;margin-bottom:20px;">{safe_desc}</p>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <a href="/api/click/{tool_slug_safe}" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:14px;">
+                    Visit {safe_name} &rarr;
+                </a>
+                <a href="/tool/{tool_slug_safe}" class="btn" style="font-size:14px;background:var(--cream-dark);color:var(--ink);border:1px solid var(--border);">
+                    View Full Listing
+                </a>
+            </div>
+        </div>
+
+        <div style="margin-top:32px;padding:24px;background:var(--cream-dark);border-radius:var(--radius);">
+            <h2 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
+                Why switch from {safe_comp}?
+            </h2>
+            <ul style="color:var(--ink-light);font-size:14px;line-height:1.8;padding-left:20px;">
+                <li><strong>Indie pricing</strong> &mdash; no enterprise markup or per-seat fees</li>
+                <li><strong>Direct maker support</strong> &mdash; talk to the person who built it</li>
+                <li><strong>Transparent &amp; open</strong> &mdash; many indie tools are open-source</li>
+                <li><strong>No vendor lock-in</strong> &mdash; own your data, export anytime</li>
+            </ul>
+        </div>
+
+        {cross_links}
+
+        <div style="text-align:center;margin-top:48px;padding:32px;background:var(--cream-dark);border-radius:var(--radius);">
+            <p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
+                Building an alternative to {safe_comp}?
+            </p>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
+                List your tool on IndieStack for free and reach developers looking to switch.
+            </p>
+            <a href="/submit" class="btn btn-primary">Submit Your Tool &rarr;</a>
+        </div>
+    </div>
+    """
+
+    return HTMLResponse(page_shell(
+        f"{competitor_name} vs {tool['name']} — Indie Alternative Comparison (2026)",
+        body,
+        description=f"Compare {competitor_name} with {tool['name']}, a bootstrapped indie alternative. {tool.get('tagline', '')}",
+        user=request.state.user,
+        canonical=f"/alternatives/{competitor_slug}/vs/{tool_slug}",
+        extra_head=jsonld_script,
+    ))

@@ -12,7 +12,8 @@ COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/pytho
 COPY --from=builder /usr/local/bin/uvicorn /usr/local/bin/uvicorn
 COPY src/ src/
 COPY logo/ logo/
-COPY seed_tools.py seed_social_proof.py purge_seeded_data.py ./
+COPY founder-photos/ founder-photos/
+COPY seed_tools.py seed_social_proof.py seed_search_gaps.py seed_ai_dev_tools.py seed_launch_changelog.py seed_integration_snippets.py seed_mcp_coverage.py seed_comprehensive.py seed_round2.py seed_round3.py purge_seeded_data.py send_comet_email.py send_ed_email.py ./
 
 ENV PORT=8080
 EXPOSE 8080

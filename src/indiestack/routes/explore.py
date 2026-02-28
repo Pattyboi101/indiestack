@@ -146,7 +146,7 @@ async def explore(request: Request):
                 Verified
             </label>
             <label style="display:flex;align-items:center;gap:4px;font-size:13px;color:var(--ink-light);cursor:pointer;">
-                <input type="checkbox" name="ejectable" value="1"{ejectable_checked} onchange="this.form.submit()" style="accent-color:#2E7D32;">
+                <input type="checkbox" name="ejectable" value="1"{ejectable_checked} onchange="this.form.submit()" style="accent-color:var(--success-text);">
                 Ejectable
             </label>
         </div>
@@ -155,7 +155,7 @@ async def explore(request: Request):
 
     # Newsletter signup banner (inline JS to avoid redirect away from explore)
     newsletter_banner = """
-    <div style="background:linear-gradient(135deg,#1A2D4A,#0D3B66);border-radius:16px;padding:32px;
+    <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:16px;padding:32px;
         margin:32px 0;text-align:center;color:#fff;">
         <h3 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:8px;">
             Get the best indie tools in your inbox
@@ -164,11 +164,11 @@ async def explore(request: Request):
             Weekly curated picks, new launches, and maker stories. Join 2,000+ developers.
         </p>
         <form id="explore-subscribe" style="display:flex;gap:8px;max-width:400px;margin:0 auto;flex-wrap:wrap;justify-content:center;"
-              onsubmit="event.preventDefault();var f=this;var em=f.email.value;fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'email='+encodeURIComponent(em)}).then(function(){f.innerHTML='<p style=&quot;color:#10B981;font-weight:600;font-size:16px;&quot;>You\\'re in! Check your inbox.</p>'}).catch(function(){f.innerHTML='<p style=&quot;color:#EF4444;&quot;>Something went wrong. Try again.</p>'})">
+              onsubmit="event.preventDefault();var f=this;var em=f.email.value;fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'email='+encodeURIComponent(em)}).then(function(){f.innerHTML='<p style=&quot;color:var(--success-text);font-weight:600;font-size:16px;&quot;>You\\'re in! Check your inbox.</p>'}).catch(function(){f.innerHTML='<p style=&quot;color:#EF4444;&quot;>Something went wrong. Try again.</p>'})">
             <input type="email" name="email" placeholder="you@example.com" required
                 style="flex:1;min-width:200px;padding:12px 16px;border:none;border-radius:999px;font-size:14px;
                     font-family:inherit;">
-            <button type="submit" style="background:#00D4F5;color:#1A2D4A;border:none;padding:12px 24px;
+            <button type="submit" style="background:var(--slate);color:var(--terracotta);border:none;padding:12px 24px;
                 border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">
                 Subscribe Free
             </button>
@@ -201,6 +201,13 @@ async def explore(request: Request):
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Explore Tools</h1>
             <p style="color:var(--ink-muted);font-size:16px;">Discover indie SaaS tools with powerful filters. Find exactly what you need.</p>
         </div>
+        <form action="/search" method="GET" style="margin-bottom:24px;">
+            <div style="display:flex;gap:8px;max-width:480px;">
+                <input type="text" name="q" placeholder="Search tools..." class="form-input"
+                    style="flex:1;border-radius:999px;padding:10px 20px;font-size:14px;">
+                <button type="submit" class="btn btn-primary" style="padding:10px 20px;font-size:14px;">Search</button>
+            </div>
+        </form>
         {tag_pills_html}
         {filter_bar}
         {active_html}
@@ -208,5 +215,5 @@ async def explore(request: Request):
     </div>
     '''
 
-    desc = "Explore and filter indie SaaS tools by category, tags, verification status, and more."
-    return HTMLResponse(page_shell(title="Explore Tools", body=body, description=desc, user=user))
+    desc = "Browse and filter indie SaaS tools by category, tags, verification status, and price. Find the perfect indie alternative."
+    return HTMLResponse(page_shell(title="Explore Indie Tools — Filter by Category, Tag, Price | IndieStack", body=body, description=desc, user=user, canonical="/explore"))

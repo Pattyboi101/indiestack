@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse
 
 from indiestack.routes.components import page_shell, tool_card, verified_badge_html, maker_card, indie_badge_html, update_card, pagination_html
 from indiestack.db import (get_maker_with_tools, get_maker_stats, get_all_makers_paginated,
-                           search_makers, get_updates_by_maker)
+                           search_makers, get_updates_by_maker, get_maker_reputation_leaderboard)
 
 router = APIRouter()
 
@@ -165,3 +165,131 @@ async def maker_profile(request: Request, slug: str):
     return HTMLResponse(page_shell(f"{maker['name']} — Maker Profile", body,
                                     description=f"Tools built by {maker['name']} on IndieStack.", user=request.state.user,
                                     canonical=f"/maker/{maker['slug']}"))
+
+
+# ── Leaderboard ─────────────────────────────────────────────────────────
+
+@router.get("/leaderboard", response_class=HTMLResponse)
+async def leaderboard(request: Request):
+    db = request.state.db
+    makers = await get_maker_reputation_leaderboard(db)
+
+    rows = ''
+    for i, m in enumerate(makers):
+        rank = i + 1
+        if rank == 1:
+            medal = '<span style="font-size:20px;">&#129351;</span>'
+        elif rank == 2:
+            medal = '<span style="font-size:20px;">&#129352;</span>'
+        elif rank == 3:
+            medal = '<span style="font-size:20px;">&#129353;</span>'
+        else:
+            medal = f'<span style="font-size:16px;font-weight:700;color:var(--ink-muted);">{rank}</span>'
+
+        name = escape(str(m['name']))
+        slug = escape(str(m['slug']))
+        tools = m['tool_count']
+        upvotes = m['total_upvotes']
+        reviews = m['total_reviews']
+        clicks = m['total_clicks']
+        score = m['reputation_score']
+        indie = m.get('indie_status', '')
+
+        indie_pill = ''
+        if indie == 'solo':
+            indie_pill = '<span style="font-size:11px;font-weight:700;color:#0D7377;background:#E0F7F7;padding:2px 8px;border-radius:999px;">Solo Maker</span>'
+        elif indie == 'small_team':
+            indie_pill = '<span style="font-size:11px;font-weight:700;color:#7C3AED;background:#EDE9FE;padding:2px 8px;border-radius:999px;">Small Team</span>'
+
+        verified_pill = ''
+        if m['verified_count'] > 0:
+            verified_pill = '<span style="font-size:11px;font-weight:700;color:#D97706;background:#FEF3C7;padding:2px 8px;border-radius:999px;">&#10004; Verified</span>'
+
+        active_pill = ''
+        if m['has_changelog']:
+            active_pill = '<span style="font-size:11px;font-weight:700;color:#EA580C;background:#FFF7ED;padding:2px 8px;border-radius:999px;">&#128293; Active</span>'
+
+        row_bg = 'background:linear-gradient(135deg,rgba(0,212,245,0.05),rgba(26,45,74,0.03));' if rank <= 3 else ''
+
+        rows += f'''
+        <tr style="border-bottom:1px solid var(--border);{row_bg}">
+            <td style="padding:14px 12px;text-align:center;width:50px;">{medal}</td>
+            <td style="padding:14px 12px;">
+                <a href="/maker/{slug}" style="font-weight:700;color:var(--ink);font-size:15px;">{name}</a>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
+                    {indie_pill}{verified_pill}{active_pill}
+                </div>
+            </td>
+            <td style="padding:14px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{tools}</td>
+            <td style="padding:14px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{upvotes}</td>
+            <td style="padding:14px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{reviews}</td>
+            <td style="padding:14px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{clicks}</td>
+            <td style="padding:14px 12px;text-align:center;">
+                <span style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--terracotta);">{score}</span>
+            </td>
+        </tr>
+        '''
+
+    score_explainer = '''
+    <div class="card" style="padding:20px;margin-top:32px;">
+        <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:10px;">How Reputation Works</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;font-size:13px;color:var(--ink-muted);">
+            <div><strong style="color:var(--ink);">+1</strong> per upvote</div>
+            <div><strong style="color:var(--ink);">+5</strong> per review</div>
+            <div><strong style="color:var(--ink);">+2</strong> per click (30d)</div>
+            <div><strong style="color:var(--ink);">+10</strong> verified badge</div>
+            <div><strong style="color:var(--ink);">+5</strong> active changelog</div>
+        </div>
+        <p style="font-size:12px;color:var(--ink-muted);margin-top:12px;">
+            Reputation resets clicks monthly. Ship updates, earn reviews, and stay active to climb.
+        </p>
+    </div>
+    '''
+
+    from datetime import date
+    launch = date(2026, 3, 2)
+    today = date.today()
+    days_left = (launch - today).days
+    if days_left > 0:
+        launch_line = f'Marketplace launches in <strong>{days_left} day{"s" if days_left != 1 else ""}</strong> &mdash; top-ranked makers get featured.'
+    elif days_left == 0:
+        launch_line = 'The marketplace is <strong>live today</strong>! Start selling now.'
+    else:
+        launch_line = 'The marketplace is <strong>live</strong>. Top sellers get featured.'
+
+    body = f"""
+    <div class="container" style="padding:48px 24px;max-width:960px;">
+        <div style="text-align:center;margin-bottom:40px;">
+            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Maker Leaderboard</h1>
+            <p style="color:var(--ink-muted);margin-top:8px;font-size:16px;">
+                The most active and trusted indie makers on IndieStack.
+                <br><span style="font-size:14px;">{launch_line}</span>
+            </p>
+        </div>
+        <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                <thead>
+                    <tr style="border-bottom:2px solid var(--border);">
+                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Rank</th>
+                        <th style="padding:10px 12px;text-align:left;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Maker</th>
+                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Tools</th>
+                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Upvotes</th>
+                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Reviews</th>
+                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Clicks</th>
+                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows if rows else '<tr><td colspan="7" style="padding:40px;text-align:center;color:var(--ink-muted);">No makers yet. <a href="/submit" style="color:var(--accent);">Be the first!</a></td></tr>'}
+                </tbody>
+            </table>
+        </div>
+        {score_explainer}
+        <div style="text-align:center;margin-top:32px;">
+            <a href="/submit" class="btn btn-slate" style="padding:14px 28px;font-size:16px;">Add Your Tool &rarr;</a>
+        </div>
+    </div>
+    """
+    return HTMLResponse(page_shell("Maker Leaderboard", body, user=request.state.user,
+                                    description="The most active indie makers on IndieStack, ranked by reputation.",
+                                    canonical="/leaderboard"))

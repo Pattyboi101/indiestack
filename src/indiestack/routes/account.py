@@ -1,7 +1,10 @@
-"""User authentication routes — login, signup, logout."""
+"""User authentication routes — login, signup, logout, GitHub OAuth."""
 
+import os
+import secrets as _secrets
 from html import escape
 
+import httpx
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 
@@ -11,10 +14,36 @@ from indiestack.db import (
     get_user_by_email, create_user, get_or_create_maker, update_user, delete_session, update_maker,
     create_password_reset_token, get_valid_reset_token, mark_reset_token_used,
     create_email_verification_token, verify_email_token,
+    get_user_by_github_id, create_github_user, link_github_to_user,
 )
-from indiestack.email import send_email, password_reset_html, email_verification_html
+from indiestack.email import send_email, password_reset_html, email_verification_html, welcome_signup_html
 
 router = APIRouter()
+
+GITHUB_CLIENT_ID = os.environ.get("GITHUB_CLIENT_ID", "")
+GITHUB_CLIENT_SECRET = os.environ.get("GITHUB_CLIENT_SECRET", "")
+
+_GITHUB_SVG = '<svg width="20" height="20" viewBox="0 0 16 16" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>'
+
+
+def _github_button(next_url: str = "") -> str:
+    """GitHub sign-in button + divider. Returns empty string if OAuth not configured."""
+    if not GITHUB_CLIENT_ID:
+        return ""
+    qs = f"?next={next_url}" if next_url else ""
+    return f"""
+    <a href="/auth/github{qs}" style="display:flex;align-items:center;justify-content:center;gap:10px;
+       width:100%;padding:12px;background:#24292e;color:white;border-radius:8px;text-decoration:none;
+       font-weight:600;font-size:15px;margin-bottom:20px;box-sizing:border-box;">
+        {_GITHUB_SVG}
+        Sign in with GitHub
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <div style="flex:1;height:1px;background:var(--border);"></div>
+        <span style="color:var(--ink-muted);font-size:13px;">or</span>
+        <div style="flex:1;height:1px;background:var(--border);"></div>
+    </div>
+    """
 
 
 # ── Login ────────────────────────────────────────────────────────────────
@@ -37,6 +66,7 @@ def login_form(error: str = "", email: str = "", next_url: str = "") -> str:
                 Log In
             </h1>
             {alert}
+            {_github_button(next_url)}
             <form method="post" action="/login">
                 {next_hidden}
                 <div class="form-group">
@@ -82,14 +112,23 @@ async def login_post(request: Request, email: str = Form(""), password: str = Fo
                                        user=request.state.user))
 
     user = await get_user_by_email(db, email)
-    if not user or not verify_password(password, user['password_hash']):
+    if not user:
+        return HTMLResponse(page_shell("Log In", login_form("Invalid email or password.", email, next_url=next_url),
+                                       user=request.state.user))
+
+    if user['password_hash'] == 'GITHUB_OAUTH_NO_PASSWORD':
+        return HTMLResponse(page_shell("Log In", login_form(
+            "This account uses GitHub login. Click 'Sign in with GitHub' above.", email, next_url=next_url),
+            user=request.state.user))
+
+    if not verify_password(password, user['password_hash']):
         return HTMLResponse(page_shell("Log In", login_form("Invalid email or password.", email, next_url=next_url),
                                        user=request.state.user))
 
     token = await create_user_session(db, user['id'])
     redirect_to = next_url or "/dashboard"
     response = RedirectResponse(url=redirect_to, status_code=303)
-    response.set_cookie(key="indiestack_session", value=token, httponly=True, samesite="lax", max_age=30*86400)
+    response.set_cookie(key="indiestack_session", value=token, httponly=True, samesite="lax", max_age=30*86400, secure=True)
     return response
 
 
@@ -109,6 +148,7 @@ def signup_form(error: str = "", values: dict = None, next_url: str = "", ref: s
                 Create Account
             </h1>
             {alert}
+            {_github_button(next_url)}
             <form method="post" action="/signup">
                 {next_hidden}
                 {ref_hidden}
@@ -226,14 +266,17 @@ async def signup_post(
 
     # Send verification email
     verify_token = await create_email_verification_token(db, user_id)
-    base_url = str(request.base_url).rstrip("/")
+    base_url = str(request.base_url).rstrip("/").replace("http://", "https://")
     verify_url = f"{base_url}/verify-email?token={verify_token}"
     await send_email(email, "Verify your IndieStack email", email_verification_html(verify_url))
+
+    # Send welcome email
+    await send_email(email, "Welcome to IndieStack", welcome_signup_html())
 
     token = await create_user_session(db, user_id)
     redirect_to = next_url or "/dashboard"
     response = RedirectResponse(url=redirect_to, status_code=303)
-    response.set_cookie(key="indiestack_session", value=token, httponly=True, samesite="lax", max_age=30*86400)
+    response.set_cookie(key="indiestack_session", value=token, httponly=True, samesite="lax", max_age=30*86400, secure=True)
     return response
 
 
@@ -295,7 +338,7 @@ async def forgot_password_submit(request: Request):
         user = await get_user_by_email(db, email)
         if user:
             token = await create_password_reset_token(db, user['id'])
-            base_url = str(request.base_url).rstrip("/")
+            base_url = str(request.base_url).rstrip("/").replace("http://", "https://")
             reset_url = f"{base_url}/reset-password?token={token}"
             await send_email(email, "Reset your IndieStack password", password_reset_html(reset_url))
 
@@ -390,6 +433,108 @@ async def reset_password_submit(request: Request):
     return HTMLResponse(page_shell("Password Updated", body, user=None))
 
 
+# ── GitHub OAuth ─────────────────────────────────────────────────────────
+
+@router.get("/auth/github")
+async def github_auth(request: Request):
+    if not GITHUB_CLIENT_ID:
+        return RedirectResponse("/login", status_code=303)
+    next_url = _safe_next(request.query_params.get("next", ""))
+    state = _secrets.token_urlsafe(32)
+    callback = str(request.base_url).rstrip("/").replace("http://", "https://") + "/auth/github/callback"
+    url = (f"https://github.com/login/oauth/authorize?client_id={GITHUB_CLIENT_ID}"
+           f"&scope=user:email&state={state}&redirect_uri={callback}")
+    response = RedirectResponse(url=url, status_code=303)
+    response.set_cookie("github_oauth_state", f"{state}|{next_url}", httponly=True, samesite="lax", max_age=600, secure=True)
+    return response
+
+
+@router.get("/auth/github/callback")
+async def github_callback(request: Request):
+    code = request.query_params.get("code", "")
+    state = request.query_params.get("state", "")
+
+    # Validate CSRF state
+    cookie_state = request.cookies.get("github_oauth_state", "")
+    parts = cookie_state.split("|", 1)
+    expected_state = parts[0] if parts else ""
+    next_url = _safe_next(parts[1] if len(parts) > 1 else "")
+
+    if not code or not state or state != expected_state:
+        return RedirectResponse("/login?error=github_failed", status_code=303)
+
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            # Exchange code for access token
+            token_resp = await client.post(
+                "https://github.com/login/oauth/access_token",
+                json={"client_id": GITHUB_CLIENT_ID, "client_secret": GITHUB_CLIENT_SECRET, "code": code},
+                headers={"Accept": "application/json"},
+            )
+            token_data = token_resp.json()
+            access_token = token_data.get("access_token", "")
+            if not access_token:
+                return RedirectResponse("/login?error=github_failed", status_code=303)
+
+            headers = {"Authorization": f"Bearer {access_token}", "Accept": "application/json"}
+
+            # Fetch user profile
+            user_resp = await client.get("https://api.github.com/user", headers=headers)
+            gh_user = user_resp.json()
+
+            # Fetch emails (user:email scope)
+            emails_resp = await client.get("https://api.github.com/user/emails", headers=headers)
+            emails = emails_resp.json()
+
+        github_id = gh_user.get("id")
+        github_username = gh_user.get("login", "")
+        github_avatar = gh_user.get("avatar_url", "")
+        name = gh_user.get("name") or github_username
+
+        # Find primary verified email
+        email = ""
+        if isinstance(emails, list):
+            for e in emails:
+                if e.get("primary") and e.get("verified"):
+                    email = e["email"]
+                    break
+            if not email:
+                for e in emails:
+                    if e.get("verified"):
+                        email = e["email"]
+                        break
+        if not email:
+            email = gh_user.get("email", "")
+
+        if not email or not github_id:
+            return RedirectResponse("/login?error=github_no_email", status_code=303)
+
+        db = request.state.db
+
+        # Three-way user matching
+        existing = await get_user_by_github_id(db, github_id)
+        if existing:
+            user_id = existing["id"]
+        else:
+            existing_email = await get_user_by_email(db, email)
+            if existing_email:
+                await link_github_to_user(db, existing_email["id"], github_id, github_username, github_avatar)
+                user_id = existing_email["id"]
+            else:
+                user_id = await create_github_user(db, email, name, github_id, github_username, github_avatar)
+
+        # Create session and redirect
+        token = await create_user_session(db, user_id)
+        redirect_to = next_url or "/dashboard"
+        response = RedirectResponse(url=redirect_to, status_code=303)
+        response.set_cookie(key="indiestack_session", value=token, httponly=True, samesite="lax", max_age=30*86400, secure=True)
+        response.delete_cookie("github_oauth_state")
+        return response
+
+    except Exception:
+        return RedirectResponse("/login?error=github_failed", status_code=303)
+
+
 # ── Email Verification ───────────────────────────────────────────────────
 
 @router.get("/verify-email")
@@ -422,7 +567,7 @@ async def resend_verification(request: Request):
 
     db = request.state.db
     token = await create_email_verification_token(db, user['id'])
-    base_url = str(request.base_url).rstrip("/")
+    base_url = str(request.base_url).rstrip("/").replace("http://", "https://")
     verify_url = f"{base_url}/verify-email?token={token}"
     await send_email(user['email'], "Verify your IndieStack email", email_verification_html(verify_url))
 

@@ -3,13 +3,17 @@
 import asyncio
 import hashlib
 import os as _os
+import re
 import time as _time
 from contextlib import asynccontextmanager
+
+from indiestack.config import BASE_URL
 
 from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, PlainTextResponse, Response
+from starlette.middleware.gzip import GZipMiddleware
 
 # Rate limiting
 _rate_limits: dict[str, list[float]] = {}
@@ -45,6 +49,7 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
         "/api/upvote": 10,
         "/api/wishlist": 10,
         "/api/subscribe": 5,
+        "/api/claim": 5,
     }
 
     # Check specific path limits
@@ -53,6 +58,8 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
         max_requests = limits[path]
     elif path.startswith("/api/"):
         max_requests = 30
+    elif path.startswith("/tool/") and method == "POST":
+        max_requests = 5
 
     if max_requests is None:
         return False
@@ -80,14 +87,28 @@ _LOGO_CANDIDATES = [
 ]
 _logo_bytes: bytes | None = None
 
+_FOUNDER_PHOTO_DIR_CANDIDATES = [
+    Path(__file__).resolve().parent.parent.parent / "founder-photos",
+    Path("/app/founder-photos"),
+]
+_founder_photo_cache: dict[str, bytes] = {}
+
 from indiestack import db
-from indiestack.db import CATEGORY_TOKEN_COSTS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping
-from indiestack.email import send_email, ego_ping_html
+from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping
+from indiestack.email import send_email, ego_ping_html, maker_welcome_html, email_verification_html
 from indiestack.auth import get_current_user
 from indiestack.routes import landing, browse, tool, search, submit, admin, purchase
 from indiestack.routes import verify, maker, collections, compare, new, account, dashboard, pricing, updates, alternatives
 from indiestack.routes import stacks
 from indiestack.routes import explore, tags
+
+from indiestack.routes.calculator import router as calculator_router
+from indiestack.routes import built_this
+from indiestack.routes import stripe_guide, launch
+from indiestack.routes import embed
+from indiestack.routes import launch_with_me
+from indiestack.routes import use_cases
+from indiestack.routes import why_list
 
 
 async def _periodic_session_cleanup():
@@ -133,6 +154,208 @@ async def _weekly_ego_ping():
             pass
 
 
+async def _auto_tool_of_the_week():
+    """Auto-select Tool of the Week every Monday based on outbound clicks."""
+    import aiosqlite
+    from datetime import datetime
+    import logging
+    logger = logging.getLogger("indiestack")
+    while True:
+        await asyncio.sleep(86400)
+        if datetime.now().weekday() != 0:  # 0 = Monday
+            continue
+        try:
+            async with aiosqlite.connect(db.DB_PATH) as conn:
+                conn.row_factory = aiosqlite.Row
+                row = await conn.execute_fetchall(
+                    """SELECT t.id, t.name, t.slug, t.maker_name, t.maker_id, COUNT(oc.id) as clicks
+                       FROM tools t
+                       JOIN outbound_clicks oc ON oc.tool_id = t.id
+                       WHERE oc.clicked_at >= datetime('now', '-7 days')
+                       AND t.status = 'approved'
+                       GROUP BY t.id
+                       ORDER BY clicks DESC
+                       LIMIT 1"""
+                )
+                if not row:
+                    continue
+                tool = dict(row[0])
+                clicks = tool['clicks']
+                await conn.execute("UPDATE tools SET tool_of_the_week = 0 WHERE tool_of_the_week = 1")
+                await conn.execute("UPDATE tools SET tool_of_the_week = 1 WHERE id = ?", (tool['id'],))
+                await conn.commit()
+                # Try to email the maker
+                try:
+                    maker_email = None
+                    if tool.get('maker_id'):
+                        maker_row = await conn.execute_fetchall(
+                            "SELECT u.email FROM users u WHERE u.maker_id = ? AND COALESCE(u.email_opt_out, 0) = 0", (tool['maker_id'],)
+                        )
+                        if maker_row and maker_row[0]['email']:
+                            maker_email = maker_row[0]['email']
+                    if maker_email:
+                        from indiestack.email import tool_of_the_week_html
+                        badge_url = f"{BASE_URL}/api/badge/{tool['slug']}.svg?style=winner"
+                        tool_url = f"{BASE_URL}/tool/{tool['slug']}"
+                        html = tool_of_the_week_html(
+                            maker_name=tool['maker_name'] or "Maker",
+                            tool_name=tool['name'],
+                            tool_slug=tool['slug'],
+                            clicks=clicks,
+                            badge_url=badge_url,
+                            tool_url=tool_url,
+                        )
+                        await send_email(maker_email, f"Your tool is Tool of the Week!", html)
+                except Exception:
+                    pass
+                logger.info(f"Auto TOTW: {tool['name']} ({clicks} clicks)")
+        except Exception:
+            pass
+
+
+async def _badge_nudge_check():
+    """Send badge nudge emails to tools approved 48-72 hours ago."""
+    import aiosqlite
+    import logging
+    logger = logging.getLogger("indiestack")
+    while True:
+        await asyncio.sleep(86400)
+        try:
+            async with aiosqlite.connect(db.DB_PATH) as conn:
+                conn.row_factory = aiosqlite.Row
+                rows = await conn.execute_fetchall(
+                    """SELECT t.id, t.name, t.slug, t.maker_id
+                       FROM tools t
+                       WHERE t.status = 'approved'
+                       AND t.badge_nudge_sent = 0
+                       AND t.created_at <= datetime('now', '-2 days')
+                       AND t.created_at >= datetime('now', '-3 days')"""
+                )
+                for tool in rows:
+                    tool = dict(tool)
+                    maker_email = None
+                    if tool.get('maker_id'):
+                        maker_row = await conn.execute_fetchall(
+                            "SELECT u.email FROM users u WHERE u.maker_id = ? AND COALESCE(u.email_opt_out, 0) = 0", (tool['maker_id'],)
+                        )
+                        if maker_row and maker_row[0]['email']:
+                            maker_email = maker_row[0]['email']
+                    if maker_email:
+                        try:
+                            from indiestack.email import badge_nudge_html
+                            html = badge_nudge_html(tool['name'], tool['slug'])
+                            await send_email(maker_email, f"Your badge for {tool['name']} is ready", html)
+                            logger.info(f"Badge nudge sent for {tool['name']} to {maker_email}")
+                            await conn.execute("UPDATE tools SET badge_nudge_sent = 1 WHERE id = ?", (tool['id'],))
+                        except Exception:
+                            pass
+                    else:
+                        await conn.execute("UPDATE tools SET badge_nudge_sent = 1 WHERE id = ?", (tool['id'],))
+                await conn.commit()
+        except Exception:
+            pass
+
+
+async def _auto_weekly_digest():
+    """Send weekly digest emails every Friday."""
+    import aiosqlite
+    from datetime import datetime
+    import logging
+    logger = logging.getLogger("indiestack")
+    while True:
+        await asyncio.sleep(86400)
+        if datetime.now().weekday() != 4:  # 4 = Friday
+            continue
+        try:
+            async with aiosqlite.connect(db.DB_PATH) as conn:
+                conn.row_factory = aiosqlite.Row
+                # Gather stats
+                new_count_row = await conn.execute_fetchall(
+                    "SELECT COUNT(*) as cnt FROM tools WHERE created_at >= datetime('now', '-7 days') AND status = 'approved'"
+                )
+                total_tools_row = await conn.execute_fetchall(
+                    "SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'"
+                )
+                total_makers_row = await conn.execute_fetchall(
+                    "SELECT COUNT(*) as cnt FROM makers"
+                )
+                subscribers = await conn.execute_fetchall(
+                    "SELECT email, unsubscribe_token FROM subscribers"
+                )
+                subscriber_count = len(subscribers)
+                totw_row = await conn.execute_fetchall(
+                    "SELECT name, slug FROM tools WHERE tool_of_the_week = 1 LIMIT 1"
+                )
+                top_clicked = await conn.execute_fetchall(
+                    """SELECT t.name, t.slug, COUNT(oc.id) as clicks
+                       FROM tools t
+                       JOIN outbound_clicks oc ON oc.tool_id = t.id
+                       WHERE oc.clicked_at >= datetime('now', '-7 days')
+                       GROUP BY t.id
+                       ORDER BY clicks DESC
+                       LIMIT 5"""
+                )
+                new_tools = await conn.execute_fetchall(
+                    """SELECT name, slug, tagline
+                       FROM tools
+                       WHERE created_at >= datetime('now', '-7 days') AND status = 'approved'
+                       ORDER BY created_at DESC
+                       LIMIT 5"""
+                )
+                top_searched = await conn.execute_fetchall(
+                    """SELECT query, COUNT(*) as cnt
+                       FROM search_logs
+                       WHERE created_at >= datetime('now', '-7 days')
+                       GROUP BY query
+                       ORDER BY cnt DESC
+                       LIMIT 5"""
+                )
+
+                total_tools = total_tools_row[0]['cnt'] if total_tools_row else 0
+                total_makers = total_makers_row[0]['cnt'] if total_makers_row else 0
+                totw_name = totw_row[0]['name'] if totw_row else None
+                totw_slug = totw_row[0]['slug'] if totw_row else None
+                totw_clicks = 0
+                if totw_slug:
+                    tc_row = await conn.execute_fetchall(
+                        """SELECT COUNT(*) as cnt FROM outbound_clicks oc
+                           JOIN tools t ON oc.tool_id = t.id
+                           WHERE t.slug = ? AND oc.clicked_at >= datetime('now', '-7 days')""",
+                        (totw_slug,)
+                    )
+                    totw_clicks = tc_row[0]['cnt'] if tc_row else 0
+
+                new_tools_list = [dict(r) for r in new_tools]
+                top_clicked_list = [dict(r) for r in top_clicked]
+                top_searched_list = [r['query'] for r in top_searched]
+
+                from datetime import date
+                week_label = f"Week of {date.today().strftime('%B %d, %Y')}"
+
+                from indiestack.email import weekly_digest_html
+                sent = 0
+                for sub in subscribers:
+                    unsub_url = f"{BASE_URL}/unsubscribe/{sub['unsubscribe_token']}"
+                    html = weekly_digest_html(
+                        week_label=week_label,
+                        new_tools=new_tools_list,
+                        top_clicked=top_clicked_list,
+                        top_searched=top_searched_list,
+                        totw_name=totw_name,
+                        totw_slug=totw_slug,
+                        totw_clicks=totw_clicks,
+                        total_tools=total_tools,
+                        total_makers=total_makers,
+                        subscriber_count=subscriber_count,
+                        unsubscribe_url=unsub_url,
+                    )
+                    await send_email(sub['email'], f"IndieStack Weekly \u2014 {week_label}", html, unsubscribe_url=unsub_url)
+                    sent += 1
+                logger.info(f"Auto digest sent to {sent} subscribers")
+        except Exception:
+            pass
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await db.init_db()
@@ -148,12 +371,61 @@ async def lifespan(app: FastAPI):
     # Start periodic cleanup task
     cleanup_task = asyncio.create_task(_periodic_session_cleanup())
     ego_ping_task = asyncio.create_task(_weekly_ego_ping())
+    totw_task = asyncio.create_task(_auto_tool_of_the_week())
+    nudge_task = asyncio.create_task(_badge_nudge_check())
+    digest_task = asyncio.create_task(_auto_weekly_digest())
     yield
     cleanup_task.cancel()
     ego_ping_task.cancel()
+    totw_task.cancel()
+    nudge_task.cancel()
+    digest_task.cancel()
 
 
-app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
+app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
+
+# ── Compression ──────────────────────────────────────────────────────────
+app.add_middleware(GZipMiddleware, minimum_size=500)
+
+
+# ── Security Headers ─────────────────────────────────────────────────────
+
+_CSRF_EXEMPT_PATHS = {"/webhooks/stripe"}  # Stripe sends POSTs from their servers
+_ALLOWED_ORIGINS = {"https://indiestack.fly.dev", "https://www.indiestack.fly.dev", "http://localhost:8000", "http://127.0.0.1:8000"}
+
+
+@app.middleware("http")
+async def csrf_protection(request: Request, call_next):
+    """Block cross-origin POST/PUT/DELETE requests (CSRF protection via Origin header)."""
+    if request.method in ("POST", "PUT", "DELETE", "PATCH"):
+        path = request.url.path
+        # Skip exempt paths (webhooks from external services)
+        if path not in _CSRF_EXEMPT_PATHS:
+            origin = request.headers.get("origin", "")
+            if not origin:
+                # Fall back to Referer header
+                referer = request.headers.get("referer", "")
+                if referer:
+                    # Extract origin from referer (scheme + host)
+                    from urllib.parse import urlparse
+                    parsed = urlparse(referer)
+                    origin = f"{parsed.scheme}://{parsed.netloc}" if parsed.scheme and parsed.netloc else ""
+
+            if origin and origin not in _ALLOWED_ORIGINS:
+                return JSONResponse({"error": "Cross-origin request blocked"}, status_code=403)
+    response = await call_next(request)
+    return response
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains"
+    return response
 
 
 # ── 404 Error Page ───────────────────────────────────────────────────────
@@ -210,8 +482,28 @@ async def db_middleware(request: Request, call_next):
     request.state.db = await db.get_db()
     try:
         request.state.user = await get_current_user(request, request.state.db)
-        # Track pageview (skip static assets and API calls)
+
+        # API key resolution (soft enforcement — log but don't block)
+        request.state.api_key = None
         path = request.url.path
+        if path.startswith("/api/"):
+            raw_key = request.query_params.get("key", "")
+            if not raw_key:
+                auth_header = request.headers.get("authorization", "")
+                if auth_header.startswith("Bearer isk_"):
+                    raw_key = auth_header[7:]
+            if raw_key and raw_key.startswith("isk_"):
+                api_key_row = await db.get_api_key_by_key(request.state.db, raw_key)
+                if api_key_row:
+                    request.state.api_key = api_key_row
+                    try:
+                        await db.touch_api_key(request.state.db, api_key_row["id"])
+                        await db.log_api_usage(request.state.db, api_key_row["id"], path)
+                        await request.state.db.commit()
+                    except Exception:
+                        pass
+
+        # Track pageview (skip static assets and API calls)
         if not path.startswith(('/api/', '/health', '/favicon', '/logo', '/track', '/robots', '/sitemap')):
             visitor_raw = f"{request.headers.get('fly-client-ip', '') or request.headers.get('x-forwarded-for', '').split(',')[0].strip() or request.client.host}:{request.headers.get('user-agent', '')}"
             visitor_id = hashlib.sha256(visitor_raw.encode()).hexdigest()[:16]
@@ -245,74 +537,118 @@ async def logo_png():
                 break
         else:
             return Response(content=b"", status_code=404)
-    return Response(content=_logo_bytes, media_type="image/png")
+    return Response(content=_logo_bytes, media_type="image/png", headers={"Cache-Control": "public, max-age=86400"})
+
+
+@app.get("/founders/{name}.jpg")
+async def founder_photo(name: str):
+    # Whitelist valid founder names
+    if name not in ("pat", "ed"):
+        return Response(content=b"", status_code=404)
+    if name in _founder_photo_cache:
+        return Response(content=_founder_photo_cache[name], media_type="image/jpeg", headers={"Cache-Control": "public, max-age=86400"})
+    for d in _FOUNDER_PHOTO_DIR_CANDIDATES:
+        # Try common extensions
+        for ext in (".JPG", ".jpg", ".jpeg", ".png"):
+            p = d / f"founderphoto-{name.capitalize()}{ext}"
+            if p.exists():
+                _founder_photo_cache[name] = p.read_bytes()
+                return Response(content=_founder_photo_cache[name], media_type="image/jpeg", headers={"Cache-Control": "public, max-age=86400"})
+    return Response(content=b"", status_code=404)
 
 
 # ── SEO ───────────────────────────────────────────────────────────────────
+
+@app.get("/googleb0483aef4f89d039.html", response_class=PlainTextResponse)
+async def google_verification():
+    return "google-site-verification: googleb0483aef4f89d039.html"
+
 
 @app.get("/robots.txt", response_class=PlainTextResponse)
 async def robots():
     lines = [
         "User-agent: *",
         "Allow: /",
-        "Sitemap: https://indiestack.fly.dev/sitemap.xml",
-        "# LLMs: https://indiestack.fly.dev/llms.txt",
+        "Disallow: /admin",
+        "Disallow: /dashboard",
+        f"Sitemap: {BASE_URL}/sitemap.xml",
+        f"# LLMs: {BASE_URL}/llms.txt",
     ]
     indexnow_key = _os.environ.get("INDEXNOW_KEY", "")
     if indexnow_key:
-        lines.append(f"# IndexNow: https://indiestack.fly.dev/{indexnow_key}.txt")
+        lines.append(f"# IndexNow: {BASE_URL}/{indexnow_key}.txt")
     return "\n".join(lines)
 
 
 @app.get("/llms.txt", response_class=PlainTextResponse)
-async def llms_txt():
+async def llms_txt(request: Request):
     """LLMs.txt — structured site info for AI crawlers."""
-    return """# IndieStack
-> Your AI's tool discovery layer. Search 130+ vetted indie SaaS tools before building from scratch.
+    d = request.state.db
+    count_cursor = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
+    row = await count_cursor.fetchone()
+    tool_count = row['cnt'] if row else 350
+    return f"""# IndieStack
+> The procurement layer for AI agents and developers. Search {tool_count}+ vetted indie SaaS tools before building from scratch. Every tool is queryable via MCP, OpenAPI, and JSON APIs.
 
 ## About
-IndieStack is a curated directory of indie SaaS tools with an MCP (Model Context Protocol) server that plugs into AI coding assistants like Claude Code, Cursor, and Windsurf. When a developer asks their AI to build common functionality (auth, analytics, invoicing, etc.), IndieStack helps the AI suggest existing tools instead of writing boilerplate.
+IndieStack is the tool discovery and procurement layer for AI agents and indie developers. Our MCP server plugs into AI coding assistants (Claude Code, Cursor, Windsurf) so agents can check if a polished tool exists before writing boilerplate. Every search saves 30k-120k tokens versus building from scratch.
 
 ## Install
 - pip install indiestack
 - claude mcp add indiestack -- python -m indiestack.mcp_server
 
+## For AI Agents
+IndieStack is designed as infrastructure for AI agents. Use it to:
+- Check if a tool exists before writing code (saves 30k-120k tokens per use case)
+- Compare tools by price, ratings, and token efficiency
+- Browse curated stacks for common architectures
+- Include /api/tools/index.json in your system prompt for instant catalog access
+- Every recommendation is tracked — makers see real agent traffic
+
 ## API Endpoints
-- GET /api/tools/search?q={query}&category={slug}&limit={n} — Search tools by keyword or category. Returns JSON with tool name, tagline, price, upvotes, URL.
-- GET /api/tools/{slug} — Get full details for a specific tool including description, ratings, integration snippets, and tokens saved estimate.
-- GET /feed/rss — RSS feed of latest tools
-- GET /sitemap.xml — Full sitemap
+- GET /api/tools/index.json — Compact index of all tools for prompt caching (include in agent system prompts).
+- GET /api/tools/search?q={{query}}&category={{slug}}&limit={{n}}&offset={{n}} — Search tools by keyword or category. Supports pagination.
+- GET /api/tools/{{slug}} — Full tool details including description, ratings, integration snippets, and tokens saved.
+- GET /api/new?limit={{n}}&offset={{n}} — Recently added tools, paginated.
+- GET /api/categories — All categories with tool counts.
+- GET /api/tags — All tags with usage counts, sorted by popularity.
+- GET /api/stacks — Curated tool stacks for common use cases.
+- GET /api/collections — Curated tool collections.
+- GET /api/stack-builder?needs={{needs}}&budget={{n}} — Build an indie tool stack. Provide comma-separated needs (auth,payments,analytics) and optional max monthly budget.
+- GET /api/use-cases — All use cases with tool counts and token estimates.
+- GET /api/use-cases/{{slug}} — Detailed use case with comparison tools.
+- GET /openapi.json — OpenAPI 3.0 spec for all public endpoints.
+- GET /feed/rss — RSS feed of latest tools.
+- GET /sitemap.xml — Full sitemap.
 
 ## Key Pages
 - / — Homepage with trending tools, categories, and MCP install instructions
 - /explore — Browse all tools with filters
-- /category/{slug} — Tools in a specific category
-- /tool/{slug} — Individual tool page with reviews, ratings, integration snippets
-- /alternatives/{slug} — Indie alternatives to popular tools (e.g. /alternatives/google-analytics)
-- /compare/{slug1}-vs-{slug2} — Side-by-side tool comparisons
+- /category/{{slug}} — Tools in a specific category
+- /tool/{{slug}} — Individual tool page with reviews, ratings, integration snippets
+- /alternatives/{{slug}} — Indie alternatives to popular tools (e.g. /alternatives/google-analytics)
 - /collections — Curated tool collections
 - /stacks — Pre-built tool stacks for common use cases
 - /stacks/generator — Paste package.json to find indie alternatives to your dependencies
 - /makers — Indie maker directory
 - /submit — Submit a tool (free)
-- /blog — Blog with articles about indie tools and the vibe-coding ecosystem
+- /blog — Blog with articles about indie tools
 - /tags — Browse tools by tag
 - /new — Recently added tools
-- /updates — Latest maker updates and changelogs
-- /live — Real-time search query feed
+- /use-cases — Use case comparison pages (auth, payments, analytics, etc.)
+- /use-cases/{{slug}} — Detailed comparison for a specific use case
 
 ## Categories
 Analytics & Metrics, Auth & Identity, Automation & Workflows, CMS & Content, Customer Support, Database & Backend, Design & UI, DevOps & Hosting, Email & Marketing, Forms & Surveys, Invoicing & Billing, Monitoring & Logging, Payments & Subscriptions, Privacy & Compliance, Scheduling & Calendar, Search & Discovery, Security & Encryption, SEO & Growth, Social & Community, Storage & Files, Testing & QA
 
 ## For Makers
-- Free tool listings with optional paid boost placement
+- Free tool listings
 - Platform fee: 5% standard / 3% Pro (+ Stripe processing)
-- Free to list, no hidden fees
-- Trust badges: Verified, Ejectable (clean data export), Maker Pulse (active development)
-- SVG embed badges and milestone cards for social sharing
+- Trust badges: Verified, Ejectable, Maker Pulse
+- SVG embed badges and milestone cards
 
 ## Contact
-- Website: https://indiestack.fly.dev
+- Website: {BASE_URL}
 - PyPI: https://pypi.org/project/indiestack/
 """
 
@@ -332,60 +668,84 @@ async def sitemap(request: Request):
     if _sitemap_cache['xml'] and _time.time() < _sitemap_cache['expires']:
         return Response(content=_sitemap_cache['xml'], media_type="application/xml")
     urls = [
-        ("https://indiestack.fly.dev/", "daily", "1.0"),
-        ("https://indiestack.fly.dev/submit", "monthly", "0.5"),
-        ("https://indiestack.fly.dev/new", "daily", "0.8"),
-        ("https://indiestack.fly.dev/collections", "weekly", "0.7"),
-        ("https://indiestack.fly.dev/makers", "daily", "0.8"),
-        ("https://indiestack.fly.dev/updates", "daily", "0.8"),
-        ("https://indiestack.fly.dev/live", "always", "0.6"),
+        (f"{BASE_URL}/", "daily", "1.0"),
+        (f"{BASE_URL}/submit", "monthly", "0.5"),
+        (f"{BASE_URL}/new", "daily", "0.8"),
+        (f"{BASE_URL}/stacks", "weekly", "0.7"),
+        (f"{BASE_URL}/makers", "daily", "0.8"),
+        (f"{BASE_URL}/updates", "daily", "0.8"),
+        (f"{BASE_URL}/live", "always", "0.6"),
     ]
     for path in ["/about", "/terms", "/privacy", "/faq"]:
-        urls.append((f"https://indiestack.fly.dev{path}", "monthly", "0.5"))
-    urls.append(("https://indiestack.fly.dev/blog", "weekly", "0.7"))
-    urls.append(("https://indiestack.fly.dev/blog/stop-wasting-tokens", "monthly", "0.8"))
-    urls.append(("https://indiestack.fly.dev/blog/zero-js-frameworks", "monthly", "0.8"))
-    urls.append(("https://indiestack.fly.dev/alternatives", "daily", "0.8"))
+        urls.append((f"{BASE_URL}{path}", "monthly", "0.5"))
+    urls.append((f"{BASE_URL}/blog", "weekly", "0.7"))
+    urls.append((f"{BASE_URL}/blog/stop-wasting-tokens", "monthly", "0.8"))
+    urls.append((f"{BASE_URL}/blog/zero-js-frameworks", "monthly", "0.8"))
+    urls.append((f"{BASE_URL}/blog/marketplace-launch", "monthly", "0.8"))
+    urls.append((f"{BASE_URL}/blog/tokens-saved", "monthly", "0.8"))
+    urls.append((f"{BASE_URL}/blog/agent-infrastructure", "monthly", "0.8"))
+    urls.append((f"{BASE_URL}/alternatives", "daily", "0.8"))
+    urls.append((f"{BASE_URL}/compare", "weekly", "0.7"))
     # Individual alternatives pages
     d = request.state.db
     competitors = await db.get_all_competitors(d)
     for comp in competitors:
         comp_slug = comp.lower().replace(" ", "-").replace(".", "-")
-        urls.append((f"https://indiestack.fly.dev/alternatives/{comp_slug}", "weekly", "0.7"))
+        urls.append((f"{BASE_URL}/alternatives/{comp_slug}", "weekly", "0.7"))
+    # Deep comparison pages: /alternatives/{competitor}/vs/{tool}
+    for comp in competitors:
+        comp_slug = comp.lower().replace(" ", "-").replace(".", "-")
+        comp_tools_cursor = await d.execute(
+            "SELECT slug FROM tools WHERE status = 'approved' AND LOWER(replaces) LIKE LOWER(?)",
+            (f'%{comp}%',))
+        comp_tools_rows = await comp_tools_cursor.fetchall()
+        for ct in comp_tools_rows:
+            urls.append((f"{BASE_URL}/alternatives/{comp_slug}/vs/{ct['slug']}", "weekly", "0.6"))
+    # Use case pages
+    urls.append((f"{BASE_URL}/use-cases", "weekly", "0.8"))
+    for uc_slug in db.NEED_MAPPINGS:
+        urls.append((f"{BASE_URL}/use-cases/{uc_slug}", "weekly", "0.7"))
     cats = await db.get_all_categories(d)
     for c in cats:
-        urls.append((f"https://indiestack.fly.dev/category/{c['slug']}", "daily", "0.8"))
+        urls.append((f"{BASE_URL}/category/{c['slug']}", "daily", "0.8"))
     # Best-of programmatic SEO pages
-    urls.append(("https://indiestack.fly.dev/best", "weekly", "0.8"))
+    urls.append((f"{BASE_URL}/best", "weekly", "0.8"))
     for c in cats:
-        urls.append((f"https://indiestack.fly.dev/best/{c['slug']}", "weekly", "0.7"))
+        urls.append((f"{BASE_URL}/best/{c['slug']}", "weekly", "0.7"))
     cursor = await d.execute("SELECT slug FROM tools WHERE status = 'approved'")
     tools = await cursor.fetchall()
     for t in tools:
-        urls.append((f"https://indiestack.fly.dev/tool/{t['slug']}", "weekly", "0.7"))
+        urls.append((f"{BASE_URL}/tool/{t['slug']}", "weekly", "0.7"))
     # Maker profiles
     cursor2 = await d.execute("SELECT slug FROM makers")
     makers = await cursor2.fetchall()
     for m in makers:
-        urls.append((f"https://indiestack.fly.dev/maker/{m['slug']}", "weekly", "0.6"))
-    # Collections
-    cursor3 = await d.execute("SELECT slug FROM collections")
-    colls = await cursor3.fetchall()
-    for cl in colls:
-        urls.append((f"https://indiestack.fly.dev/collection/{cl['slug']}", "weekly", "0.7"))
+        urls.append((f"{BASE_URL}/maker/{m['slug']}", "weekly", "0.6"))
     # Stacks
-    urls.append(("https://indiestack.fly.dev/stacks", "weekly", "0.7"))
     cursor_stacks = await d.execute("SELECT slug FROM stacks")
     all_stacks_list = await cursor_stacks.fetchall()
     for st in all_stacks_list:
-        urls.append((f"https://indiestack.fly.dev/stacks/{st['slug']}", "weekly", "0.7"))
+        urls.append((f"{BASE_URL}/stacks/{st['slug']}", "weekly", "0.7"))
+    # Compare pages (top pairs per category)
+    for c in cats:
+        cat_cursor = await d.execute(
+            "SELECT slug FROM tools WHERE category_id = ? AND status = 'approved' ORDER BY upvote_count DESC LIMIT 6",
+            (c['id'],))
+        cat_tools = await cat_cursor.fetchall()
+        slugs = [t['slug'] for t in cat_tools]
+        for i in range(len(slugs)):
+            for j in range(i + 1, len(slugs)):
+                urls.append((f"{BASE_URL}/compare/{slugs[i]}-vs-{slugs[j]}", "weekly", "0.5"))
+    # Pricing page
+    urls.append((f"{BASE_URL}/pricing", "monthly", "0.6"))
+    urls.append((f"{BASE_URL}/calculator", "weekly", "0.8"))
     # Explore
-    urls.append(("https://indiestack.fly.dev/explore", "daily", "0.9"))
+    urls.append((f"{BASE_URL}/explore", "daily", "0.9"))
     # Tags
-    urls.append(("https://indiestack.fly.dev/tags", "weekly", "0.7"))
+    urls.append((f"{BASE_URL}/tags", "weekly", "0.7"))
     all_tags = await db.get_all_tags_with_counts(d, min_count=1)
     for tag_item in all_tags:
-        urls.append((f"https://indiestack.fly.dev/tag/{tag_item['slug']}", "weekly", "0.6"))
+        urls.append((f"{BASE_URL}/tag/{tag_item['slug']}", "weekly", "0.6"))
     entries = "\n".join(
         f"  <url><loc>{u}</loc><changefreq>{f}</changefreq><priority>{p}</priority></url>"
         for u, f, p in urls
@@ -407,12 +767,12 @@ FAVICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
 
 @app.get("/favicon.svg")
 async def favicon_svg():
-    return Response(content=FAVICON_SVG, media_type="image/svg+xml")
+    return Response(content=FAVICON_SVG, media_type="image/svg+xml", headers={"Cache-Control": "public, max-age=86400"})
 
 
 @app.get("/favicon.ico")
 async def favicon_ico():
-    return Response(content=FAVICON_SVG, media_type="image/svg+xml")
+    return Response(content=FAVICON_SVG, media_type="image/svg+xml", headers={"Cache-Control": "public, max-age=86400"})
 
 
 # ── Upvote API ────────────────────────────────────────────────────────────
@@ -518,44 +878,109 @@ async def api_wishlist(request: Request):
 @app.post("/api/subscribe")
 async def api_subscribe(request: Request):
     from fastapi.responses import RedirectResponse as _Redirect
+
+    def _safe_subscribe_next(url: str) -> str:
+        """Validate redirect URL — must be relative path, not protocol-relative."""
+        if url and url.startswith("/") and not url.startswith("//"):
+            return url
+        return ""
+
     try:
         form = await request.form()
         email = str(form.get("email", "")).strip().lower()
+        next_url = _safe_subscribe_next(str(form.get("next", "")).strip())
+        source = str(form.get("source", "")).strip()
+        tool_slug = str(form.get("tool_slug", "")).strip()
     except Exception:
         email = ""
+        next_url = ""
+        source = ""
+        tool_slug = ""
     if not email or "@" not in email:
+        if next_url:
+            return _Redirect(url=next_url, status_code=303)
         return _Redirect(url="/?subscribed=error", status_code=303)
     try:
+        import uuid as _uuid
+        token = str(_uuid.uuid4())
         await request.state.db.execute(
-            "INSERT OR IGNORE INTO subscribers (email) VALUES (?)", (email,)
+            "INSERT OR IGNORE INTO subscribers (email, source, tool_slug, unsubscribe_token) VALUES (?, ?, ?, ?)",
+            (email, source, tool_slug, token),
         )
         await request.state.db.commit()
     except Exception:
         pass
+    if next_url:
+        return _Redirect(url=next_url, status_code=303)
     return _Redirect(url="/?subscribed=1", status_code=303)
+
+
+# ── Unsubscribe ─────────────────────────────────────────────────────────
+
+@app.get("/unsubscribe/{token}")
+async def unsubscribe(request: Request, token: str):
+    from fastapi.responses import HTMLResponse
+    from indiestack.routes.components import page_shell
+    from html import escape as _esc
+    db = request.state.db
+    cursor = await db.execute("SELECT id, email FROM subscribers WHERE unsubscribe_token = ?", (token,))
+    row = await cursor.fetchone()
+    if row:
+        await db.execute("DELETE FROM subscribers WHERE id = ?", (row["id"],))
+        await db.commit()
+        body = f"""
+        <div style="max-width:480px;margin:80px auto;text-align:center;">
+            <h1 style="font-size:28px;margin-bottom:12px;">You've been unsubscribed</h1>
+            <p style="color:var(--ink-muted);font-size:15px;line-height:1.6;">
+                <strong>{_esc(row['email'])}</strong> has been removed from our mailing list.
+                You won't receive any more emails from IndieStack.
+            </p>
+            <a href="/" style="display:inline-block;margin-top:24px;color:var(--terracotta);font-weight:600;text-decoration:none;">
+                &larr; Back to IndieStack
+            </a>
+        </div>
+        """
+    else:
+        body = """
+        <div style="max-width:480px;margin:80px auto;text-align:center;">
+            <h1 style="font-size:28px;margin-bottom:12px;">Already unsubscribed</h1>
+            <p style="color:var(--ink-muted);font-size:15px;line-height:1.6;">
+                This link has already been used or is no longer valid.
+            </p>
+            <a href="/" style="display:inline-block;margin-top:24px;color:var(--terracotta);font-weight:600;text-decoration:none;">
+                &larr; Back to IndieStack
+            </a>
+        </div>
+        """
+    return HTMLResponse(page_shell("Unsubscribe — IndieStack", body))
 
 
 # ── Tool Search API ──────────────────────────────────────────────────────
 
 @app.get("/api/tools/search")
-async def api_tools_search(request: Request, q: str = "", category: str = "", limit: int = 20):
+async def api_tools_search(request: Request, q: str = "", category: str = "", limit: int = 20, offset: int = 0, source: str = ""):
     """JSON API for searching tools — used by MCP server and integrations."""
     d = request.state.db
     if limit < 1:
         limit = 1
     if limit > 50:
         limit = 50
+    if offset < 0:
+        offset = 0
 
     if q.strip():
-        tools = await db.search_tools(d, q.strip(), limit=limit)
+        tools = await db.search_tools(d, q.strip(), limit=offset + limit)
+        tools = tools[offset:]
     elif category.strip():
         cat = await db.get_category_by_slug(d, category.strip())
         if cat:
-            tools, _ = await db.get_tools_by_category(d, cat['id'], page=1, per_page=limit)
+            page = (offset // limit) + 1
+            tools, _ = await db.get_tools_by_category(d, cat['id'], page=page, per_page=limit)
         else:
             tools = []
     else:
-        tools = await db.get_trending_tools(d, limit=limit)
+        tools = await db.get_trending_tools(d, limit=offset + limit)
+        tools = tools[offset:]
 
     results = []
     for t in tools:
@@ -568,7 +993,7 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
             "name": t['name'],
             "tagline": t.get('tagline', ''),
             "url": t.get('url', ''),
-            "indiestack_url": f"https://indiestack.fly.dev/tool/{t['slug']}",
+            "indiestack_url": f"{BASE_URL}/tool/{t['slug']}",
             "category": t.get('category_name', ''),
             "price": price_str,
             "is_verified": bool(t.get('is_verified', 0)),
@@ -584,15 +1009,447 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
     except Exception:
         pass  # Don't fail the search if logging fails
 
-    return JSONResponse({
+    # Track MCP views
+    if source == "mcp" and tools:
+        try:
+            tool_ids = [t['id'] for t in tools if t.get('id')]
+            await db.increment_mcp_views_bulk(d, tool_ids)
+            await db.log_agent_citations_bulk(d, tool_ids, agent_name="mcp")
+        except Exception:
+            pass
+
+    response = {
         "tools": results,
         "total": len(results),
         "query": q,
+        "offset": offset,
+    }
+    if q.strip() and not results:
+        demand = await db.get_search_demand(d, q, days=30)
+        response["market_gap"] = {
+            "message": f"No indie tools found for '{q.strip()}'. This is an unsolved market gap — consider building one.",
+            "submit_url": f"{BASE_URL}/submit",
+            "query": q.strip(),
+            "searches_30d": demand,
+        }
+    return JSONResponse(response)
+
+
+@app.get("/api/new")
+async def api_new_tools(request: Request, limit: int = 20, offset: int = 0):
+    """JSON API for recently added tools."""
+    d = request.state.db
+    if limit < 1: limit = 1
+    if limit > 50: limit = 50
+    if offset < 0: offset = 0
+    page = (offset // limit) + 1
+    tools, total = await db.get_recent_tools_paginated(d, page=page, per_page=limit)
+    results = []
+    for t in tools:
+        price_pence = t.get('price_pence')
+        if price_pence and price_pence > 0:
+            price_str = f"\u00a3{price_pence / 100:.2f}"
+        else:
+            price_str = "Free"
+        results.append({
+            "name": t['name'],
+            "slug": t.get('slug', ''),
+            "tagline": t.get('tagline', ''),
+            "url": t.get('url', ''),
+            "indiestack_url": f"{BASE_URL}/tool/{t['slug']}",
+            "category": t.get('category_name', ''),
+            "price": price_str,
+            "is_verified": bool(t.get('is_verified', 0)),
+            "upvote_count": int(t.get('upvote_count', 0)),
+            "tags": t.get('tags', ''),
+            "created_at": t.get('created_at', ''),
+        })
+    return JSONResponse({"tools": results, "total": total, "offset": offset})
+
+
+@app.get("/api/tags")
+async def api_tags(request: Request):
+    """JSON API for all tags with usage counts."""
+    d = request.state.db
+    results = await db.get_all_tags_with_counts(d)
+    return JSONResponse({"tags": results, "total": len(results)})
+
+
+@app.get("/api/stacks")
+async def api_stacks(request: Request):
+    """JSON API for curated tool stacks."""
+    d = request.state.db
+    stacks = await db.get_all_stacks(d)
+    results = []
+    for s in stacks:
+        results.append({
+            "title": s['title'],
+            "slug": s.get('slug', ''),
+            "description": s.get('description', ''),
+            "cover_emoji": s.get('cover_emoji', ''),
+            "tool_count": int(s.get('tool_count', 0)),
+            "indiestack_url": f"{BASE_URL}/stacks/{s.get('slug', '')}",
+        })
+    return JSONResponse({"stacks": results, "total": len(results)})
+
+
+@app.get("/api/collections")
+async def api_collections(request: Request):
+    """Redirects to /api/stacks — collections merged into stacks."""
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/api/stacks", status_code=301)
+
+
+@app.get("/api/tools/index.json")
+async def api_tools_index(request: Request):
+    """Compact index of all tools — designed for agent system prompts and prompt caching."""
+    d = request.state.db
+    cursor = await d.execute("""
+        SELECT t.id, t.name, t.slug, t.tagline, t.price_pence, t.tags,
+               t.is_verified, t.upvote_count, t.mcp_view_count,
+               c.name as category_name, c.slug as category_slug
+        FROM tools t
+        JOIN categories c ON t.category_id = c.id
+        WHERE t.status = 'approved'
+        ORDER BY t.name
+    """)
+    rows = await cursor.fetchall()
+    tools = []
+    for r in rows:
+        pp = r['price_pence']
+        tools.append({
+            "id": r['id'], "name": r['name'], "slug": r['slug'],
+            "tagline": r['tagline'],
+            "category": r['category_name'], "category_slug": r['category_slug'],
+            "price": f"\u00a3{pp/100:.2f}" if pp and pp > 0 else "Free",
+            "tags": r['tags'] or "",
+            "verified": bool(r['is_verified']),
+            "upvotes": int(r['upvote_count'] or 0),
+            "agent_views": int(r['mcp_view_count'] or 0),
+        })
+    return JSONResponse(
+        {"tools": tools, "total": len(tools), "generated": str(date.today())},
+        headers={"Cache-Control": "public, max-age=3600"}
+    )
+
+
+@app.post("/api/cite")
+async def api_cite(request: Request):
+    """Log an agent citation/recommendation for a tool."""
+    d = request.state.db
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+    slug = body.get("tool_slug", "")
+    agent_name = body.get("agent_name", "unknown")[:50]
+    context = body.get("context", "")[:200]
+    if not slug:
+        return JSONResponse({"error": "tool_slug required"}, status_code=400)
+    tool = await db.get_tool_by_slug(d, slug)
+    if not tool:
+        return JSONResponse({"error": "Tool not found"}, status_code=404)
+    await db.log_agent_citation(d, tool['id'], agent_name, context)
+    return JSONResponse({"ok": True})
+
+
+@app.get("/api/stack-builder")
+async def api_stack_builder(request: Request, needs: str = "", budget: int = 0):
+    """AI agent endpoint: recommend an indie tool stack for given requirements.
+
+    Args:
+        needs: Comma-separated use cases (e.g. needs=auth,payments,analytics)
+        budget: Optional max monthly price per tool in GBP (0 = no limit)
+    """
+    d = request.state.db
+    if not needs.strip():
+        return JSONResponse({
+            "error": "Provide needs as comma-separated use cases",
+            "example": "/api/stack-builder?needs=auth,payments,analytics",
+            "available_needs": sorted(NEED_MAPPINGS.keys()),
+        }, status_code=400)
+
+    need_list = [n.strip().lower() for n in needs.split(",") if n.strip()]
+    stack = []
+
+    for need in need_list:
+        mapping = NEED_MAPPINGS.get(need)
+        matched_via = "category" if mapping else "search"
+        category_slug = mapping["category"] if mapping else None
+        category_name = mapping.get("title", need.title()) if mapping else need.title()
+        tokens_saved = CATEGORY_TOKEN_COSTS.get(category_slug, 50_000) if category_slug else 50_000
+
+        tools_raw = []
+        if category_slug:
+            cat = await db.get_category_by_slug(d, category_slug)
+            if cat:
+                rows, _ = await db.get_tools_by_category(d, cat['id'], page=1, per_page=5)
+                tools_raw = list(rows)
+                category_name = cat['name']
+
+        # Supplement with FTS5 search if we got fewer than 3 results
+        if len(tools_raw) < 3:
+            search_terms = mapping["terms"] if mapping else [need]
+            for term in search_terms:
+                if len(tools_raw) >= 5:
+                    break
+                found = await db.search_tools(d, term, limit=5)
+                existing_ids = {t['id'] for t in tools_raw}
+                for f in found:
+                    if f['id'] not in existing_ids and len(tools_raw) < 5:
+                        tools_raw.append(f)
+                        existing_ids.add(f['id'])
+            if not matched_via == "category" or not tools_raw:
+                matched_via = "search"
+
+        # Format tools
+        recommendations = []
+        for t in tools_raw:
+            pp = t.get('price_pence')
+            price_monthly = (pp / 100) if pp and pp > 0 else 0
+            if budget > 0 and price_monthly > budget:
+                continue
+            recommendations.append({
+                "name": t['name'],
+                "slug": t['slug'],
+                "tagline": t.get('tagline', ''),
+                "price": f"\u00a3{price_monthly:.2f}" if price_monthly > 0 else "Free",
+                "price_monthly": price_monthly,
+                "verified": bool(t.get('is_verified', 0)),
+                "upvotes": int(t.get('upvote_count', 0)),
+                "url": f"{BASE_URL}/tool/{t['slug']}",
+            })
+
+        stack.append({
+            "need": need,
+            "category": category_name,
+            "tokens_saved": tokens_saved,
+            "matched_via": matched_via,
+            "tools": recommendations,
+        })
+
+    # Find matching Vibe Stacks
+    matching_stacks = []
+    all_stacks = await db.get_all_stacks(d)
+    for s in all_stacks:
+        _, stack_tools = await db.get_stack_with_tools(d, s['slug'])
+        if not stack_tools:
+            continue
+        stack_cat_slugs = {t.get('category_slug', '') for t in stack_tools}
+        coverage = []
+        for need in need_list:
+            mapping = NEED_MAPPINGS.get(need)
+            if mapping and mapping["category"] in stack_cat_slugs:
+                coverage.append(need)
+        if coverage:
+            matching_stacks.append({
+                "title": s['title'],
+                "slug": s.get('slug', ''),
+                "description": s.get('description', ''),
+                "coverage": coverage,
+                "discount": int(s.get('discount_percent', 15)),
+                "tool_count": int(s.get('tool_count', 0)),
+                "url": f"{BASE_URL}/stacks/{s.get('slug', '')}",
+            })
+
+    # Sort matching stacks by coverage count descending
+    matching_stacks.sort(key=lambda x: len(x["coverage"]), reverse=True)
+
+    total_tokens_saved = sum(s["tokens_saved"] for s in stack if s["tools"])
+
+    return JSONResponse({
+        "stack": stack,
+        "matching_stacks": matching_stacks,
+        "summary": {
+            "total_needs": len(need_list),
+            "needs_covered": sum(1 for s in stack if s["tools"]),
+            "total_tokens_saved": total_tokens_saved,
+        },
     })
 
 
+@app.get("/api/use-cases")
+async def api_use_cases(request: Request):
+    """JSON API listing all use cases with tool counts."""
+    d = request.state.db
+    categories = await db.get_all_categories(d)
+    cat_counts = {c['slug']: int(c.get('tool_count', 0)) for c in categories}
+
+    results = []
+    for slug, uc in sorted(NEED_MAPPINGS.items(), key=lambda x: x[1].get("title", "")):
+        cat_slug = uc.get("category", "")
+        results.append({
+            "slug": slug,
+            "title": uc.get("title", slug.title()),
+            "description": uc.get("description", ""),
+            "icon": uc.get("icon", ""),
+            "category_slug": cat_slug,
+            "tool_count": cat_counts.get(cat_slug, 0),
+            "tokens_estimate": CATEGORY_TOKEN_COSTS.get(cat_slug, 50_000),
+            "build_estimate": uc.get("build_estimate", "varies"),
+            "competitors": uc.get("competitors", []),
+            "url": f"{BASE_URL}/use-cases/{slug}",
+            "api_url": f"{BASE_URL}/api/use-cases/{slug}",
+        })
+    return JSONResponse({"use_cases": results, "total": len(results)})
+
+
+@app.get("/api/use-cases/{slug}")
+async def api_use_case_detail(request: Request, slug: str):
+    """JSON API for a single use case with its tools."""
+    d = request.state.db
+    uc = NEED_MAPPINGS.get(slug)
+    if not uc:
+        cat = await db.get_category_by_slug(d, slug)
+        if not cat:
+            return JSONResponse({"error": "Use case not found"}, status_code=404)
+        uc = {
+            "title": cat['name'], "description": f"Indie {cat['name'].lower()} tools.",
+            "category": cat['slug'], "competitors": [], "build_estimate": "varies", "icon": "",
+            "terms": [],
+        }
+
+    # Reuse the route helper for fetching tools
+    from indiestack.routes.use_cases import _get_tools_for_use_case
+    tools = await _get_tools_for_use_case(d, slug)
+
+    cat_slug = uc.get("category", "")
+    tool_results = []
+    for t in tools:
+        pp = t.get('price_pence')
+        tool_results.append({
+            "name": t['name'], "slug": t['slug'], "tagline": t.get('tagline', ''),
+            "price": f"\u00a3{pp/100:.2f}" if pp and pp > 0 else "Free",
+            "verified": bool(t.get('is_verified', 0)),
+            "upvotes": int(t.get('upvote_count', 0)),
+            "replaces": t.get('replaces', ''),
+            "url": f"{BASE_URL}/tool/{t['slug']}",
+        })
+
+    return JSONResponse({
+        "slug": slug,
+        "title": uc.get("title", slug.title()),
+        "description": uc.get("description", ""),
+        "icon": uc.get("icon", ""),
+        "tokens_estimate": CATEGORY_TOKEN_COSTS.get(cat_slug, 50_000),
+        "build_estimate": uc.get("build_estimate", "varies"),
+        "competitors": uc.get("competitors", []),
+        "tools": tool_results,
+        "total_tools": len(tool_results),
+        "url": f"{BASE_URL}/use-cases/{slug}",
+    })
+
+
+@app.get("/openapi.json")
+async def openapi_spec(request: Request):
+    """OpenAPI 3.0 spec for IndieStack's public API."""
+    d = request.state.db
+    count_cursor = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
+    row = await count_cursor.fetchone()
+    tool_count = row['cnt'] if row else 350
+
+    spec = {
+        "openapi": "3.0.3",
+        "info": {
+            "title": "IndieStack API",
+            "version": "1.0.0",
+            "description": f"Search and browse {tool_count}+ indie SaaS tools. Every tool is also discoverable by AI coding assistants via the IndieStack MCP server (pip install indiestack).",
+        },
+        "servers": [{"url": BASE_URL}],
+        "paths": {
+            "/api/tools/search": {
+                "get": {
+                    "summary": "Search indie tools",
+                    "description": "Full-text search across all approved tools. Returns results sorted by relevance. Without a query, returns trending tools.",
+                    "parameters": [
+                        {"name": "q", "in": "query", "schema": {"type": "string"}, "description": "Search query (e.g. 'analytics', 'auth', 'email marketing')"},
+                        {"name": "category", "in": "query", "schema": {"type": "string"}, "description": "Filter by category slug (use /api/categories to get slugs)"},
+                        {"name": "limit", "in": "query", "schema": {"type": "integer", "default": 20, "minimum": 1, "maximum": 50}},
+                        {"name": "offset", "in": "query", "schema": {"type": "integer", "default": 0, "minimum": 0}, "description": "Pagination offset"},
+                    ],
+                    "responses": {"200": {"description": "List of matching tools with total count and offset"}},
+                }
+            },
+            "/api/tools/{slug}": {
+                "get": {
+                    "summary": "Get tool details",
+                    "description": "Full details for a specific tool including description, ratings, integration code snippets, and estimated tokens saved vs building from scratch.",
+                    "parameters": [
+                        {"name": "slug", "in": "path", "required": True, "schema": {"type": "string"}, "description": "Tool URL slug (e.g. 'simple-analytics')"},
+                    ],
+                    "responses": {"200": {"description": "Full tool details"}, "404": {"description": "Tool not found"}},
+                }
+            },
+            "/api/new": {
+                "get": {
+                    "summary": "Recently added tools",
+                    "description": "Browse the newest tools added to IndieStack, ordered by creation date.",
+                    "parameters": [
+                        {"name": "limit", "in": "query", "schema": {"type": "integer", "default": 20, "minimum": 1, "maximum": 50}},
+                        {"name": "offset", "in": "query", "schema": {"type": "integer", "default": 0, "minimum": 0}},
+                    ],
+                    "responses": {"200": {"description": "List of recent tools with total count"}},
+                }
+            },
+            "/api/categories": {
+                "get": {
+                    "summary": "List all categories",
+                    "description": "All tool categories with names, slugs, icons, descriptions, and tool counts.",
+                    "responses": {"200": {"description": "List of categories"}},
+                }
+            },
+            "/api/tags": {
+                "get": {
+                    "summary": "List all tags",
+                    "description": "All tags used across tools, sorted by usage count (most popular first).",
+                    "responses": {"200": {"description": "List of tags with counts"}},
+                }
+            },
+            "/api/stacks": {
+                "get": {
+                    "summary": "List curated stacks",
+                    "description": "Pre-built combinations of indie tools for common use cases.",
+                    "responses": {"200": {"description": "List of stacks with tool counts"}},
+                }
+            },
+            "/api/collections": {
+                "get": {
+                    "summary": "List curated collections",
+                    "description": "Themed groupings of indie tools curated by the IndieStack team.",
+                    "responses": {"200": {"description": "List of collections with tool counts"}},
+                }
+            },
+            "/feed/rss": {
+                "get": {
+                    "summary": "RSS feed",
+                    "description": "RSS 2.0 feed of the latest tools added to IndieStack.",
+                    "responses": {"200": {"description": "RSS XML feed"}},
+                }
+            },
+        },
+    }
+    return JSONResponse(spec, headers={"Cache-Control": "public, max-age=3600"})
+
+
+@app.get("/api/categories")
+async def api_categories(request: Request):
+    """JSON API for listing all categories with tool counts."""
+    d = request.state.db
+    cats = await db.get_all_categories(d)
+    results = []
+    for c in cats:
+        results.append({
+            "name": c["name"],
+            "slug": c["slug"],
+            "icon": c.get("icon", ""),
+            "description": c.get("description", ""),
+            "tool_count": int(c.get("tool_count", 0)),
+        })
+    return JSONResponse({"categories": results, "total": len(results)})
+
+
 @app.get("/api/tools/{slug}")
-async def api_tool_detail(request: Request, slug: str):
+async def api_tool_detail(request: Request, slug: str, source: str = ""):
     """JSON API for getting full tool details — used by MCP server."""
     d = request.state.db
     tool = await db.get_tool_by_slug(d, slug)
@@ -607,13 +1464,21 @@ async def api_tool_detail(request: Request, slug: str):
 
     rating = await db.get_tool_rating(d, tool['id'])
 
+    # Track MCP view
+    if source == "mcp":
+        try:
+            await db.increment_mcp_view(d, tool['id'])
+            await db.log_agent_citation(d, tool['id'], agent_name="mcp")
+        except Exception:
+            pass
+
     result = {
         "name": tool['name'],
         "slug": tool['slug'],
         "tagline": tool.get('tagline', ''),
         "description": tool.get('description', ''),
         "url": tool.get('url', ''),
-        "indiestack_url": f"https://indiestack.fly.dev/tool/{tool['slug']}",
+        "indiestack_url": f"{BASE_URL}/tool/{tool['slug']}",
         "category": tool.get('category_name', ''),
         "category_slug": tool.get('category_slug', ''),
         "price": price_str,
@@ -624,12 +1489,73 @@ async def api_tool_detail(request: Request, slug: str):
         "maker_name": tool.get('maker_name', ''),
         "avg_rating": round(float(rating['avg_rating']), 1) if rating['review_count'] else None,
         "review_count": int(rating['review_count']),
-        "integration_python": f'import httpx\nresponse = httpx.get("{tool.get("url", "")}")\nprint(response.status_code)',
-        "integration_curl": f'curl -s {tool.get("url", "")}',
+        "integration_python": tool.get("integration_python") or f'import httpx\nresponse = httpx.get("{tool.get("url", "")}")\nprint(response.status_code)',
+        "integration_curl": tool.get("integration_curl") or f'curl -s {tool.get("url", "")}',
         "tokens_saved": CATEGORY_TOKEN_COSTS.get(tool.get('category_slug', ''), 50_000),
+        "mcp_view_count": int(tool.get('mcp_view_count', 0)),
     }
 
     return JSONResponse({"tool": result})
+
+
+@app.post("/api/tools/submit")
+async def api_submit_tool(request: Request):
+    """JSON API for programmatic tool submissions (MCP, integrations)."""
+    try:
+        data = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+
+    name = (data.get("name") or "").strip()
+    url = (data.get("url") or "").strip()
+    tagline = (data.get("tagline") or "").strip()[:100]
+    description = (data.get("description") or "").strip()
+
+    if not name or not url or not tagline or not description:
+        return JSONResponse({"error": "name, url, tagline, and description are required"}, status_code=400)
+
+    # Generate slug
+    slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
+
+    d = await db.get_db()
+    try:
+        # Check for duplicate slug
+        existing = await d.execute("SELECT id FROM tools WHERE slug = ?", (slug,))
+        if await existing.fetchone():
+            return JSONResponse({"error": f"A tool with slug '{slug}' already exists", "slug": slug}, status_code=409)
+
+        # Match category by slug if provided
+        category_id = None
+        cat_slug = (data.get("category") or "").strip()
+        if cat_slug:
+            cat_row = await d.execute("SELECT id FROM categories WHERE slug = ?", (cat_slug,))
+            cat = await cat_row.fetchone()
+            if cat:
+                category_id = cat["id"]
+
+        # If no category matched, use first category as default
+        if not category_id:
+            cat_row = await d.execute("SELECT id FROM categories ORDER BY id LIMIT 1")
+            cat = await cat_row.fetchone()
+            category_id = cat["id"] if cat else 1
+
+        tags = (data.get("tags") or "").strip()
+        replaces = (data.get("replaces") or "").strip()
+
+        # Get IP for spam tracking
+        ip = request.headers.get("x-forwarded-for", request.client.host if request.client else "unknown")
+
+        await d.execute(
+            """INSERT INTO tools (name, slug, tagline, description, url, category_id, tags, replaces,
+               status, submitted_from_ip, created_at)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, CURRENT_TIMESTAMP)""",
+            (name, slug, tagline, description, url, category_id, tags, replaces, ip),
+        )
+        await d.commit()
+    finally:
+        await d.close()
+
+    return JSONResponse({"success": True, "message": "Tool submitted for review", "slug": slug})
 
 
 # ── Live Wire ─────────────────────────────────────────────────────────────
@@ -638,6 +1564,7 @@ async def api_tool_detail(request: Request, slug: str):
 async def live_wire(request: Request):
     """Live Wire — real-time search query feed."""
     from fastapi.responses import HTMLResponse
+    from html import escape as _esc
     d = await db.get_db()
     try:
         recent = await db.get_recent_searches(d, limit=30)
@@ -651,10 +1578,10 @@ async def live_wire(request: Request):
         feed_html = '<p style="text-align:center;color:#6B7280;padding:40px 0;">No searches yet. Be the first to search on <a href="/explore" style="color:#00D4F5;">Explore</a>!</p>'
     else:
         for s in recent:
-            query_text = s.get('query', '')
-            count = s.get('result_count', 0)
-            top_slug = s.get('top_result_slug', '')
-            top_name = s.get('top_result_name', '')
+            query_text = _esc(s.get('query') or '')
+            count = int(s.get('result_count') or 0)
+            top_slug = _esc(s.get('top_result_slug') or '')
+            top_name = _esc(s.get('top_result_name') or '')
             source = s.get('source', 'web')
             created = s.get('created_at', '')
 
@@ -685,7 +1612,7 @@ async def live_wire(request: Request):
     today = stats.get('today', 0)
     week = stats.get('this_week', 0)
     all_time = stats.get('all_time', 0)
-    top_q = stats.get('top_query', '')
+    top_q = _esc(stats.get('top_query', ''))
 
     body = f"""
     <meta http-equiv="refresh" content="15">
@@ -790,23 +1717,54 @@ async def milestone_card_svg(request: Request, slug: str, type: str = "first-too
 
 
 @app.get("/api/badge/{slug}.svg")
-async def tool_badge_svg(request: Request, slug: str):
+async def tool_badge_svg(request: Request, slug: str, style: str = ""):
     """Dynamic SVG badge for makers to embed on their websites."""
     d = request.state.db
     tool = await db.get_tool_by_slug(d, slug)
-    if not tool or tool.get('status') != 'approved':
+    if not tool:
         return Response(content="", status_code=404)
 
     name = tool['name']
-    cat_slug = tool.get('category_slug', '')
-    tokens = CATEGORY_TOKEN_COSTS.get(cat_slug, 50_000)
-    tokens_k = f"{tokens // 1000}k"
+    price_pence = tool.get('price_pence')
 
-    # Calculate widths for the two-part badge
-    left_text = f"IndieStack"
-    right_text = f"Saves {tokens_k} tokens"
-    left_width = 90
-    right_width = 120
+    if style == "winner":
+        # Winner badge: "Tool of the Week" (navy) | "IndieStack" (gold)
+        left_text = "\u2b50 Tool of the Week"
+        right_text = "IndieStack"
+        left_width = 140
+        right_width = 80
+        right_fill = "#E2B764"
+        right_text_fill = "#1A2D4A"
+    elif style == "marketplace" and price_pence and price_pence > 0:
+        # Marketplace badge: "Available on IndieStack | From £X"
+        pounds = price_pence / 100
+        price_str = f"\u00a3{int(pounds)}" if pounds == int(pounds) else f"\u00a3{pounds:.2f}"
+        left_text = "Available on IndieStack"
+        right_text = f"From {price_str}"
+        left_width = 160
+        right_width = 80
+        right_fill = "#00D4F5"
+        right_text_fill = "#1A2D4A"
+    elif style == "early":
+        # Early Supporter badge for tools listed before marketplace launch
+        left_text = "Early Supporter"
+        right_text = "IndieStack"
+        left_width = 110
+        right_width = 80
+        right_fill = "#E2B764"
+        right_text_fill = "#1A2D4A"
+    else:
+        # Default tokens badge
+        cat_slug = tool.get('category_slug', '')
+        tokens = CATEGORY_TOKEN_COSTS.get(cat_slug, 50_000)
+        tokens_k = f"{tokens // 1000}k"
+        left_text = "IndieStack"
+        right_text = f"Saves {tokens_k} tokens"
+        left_width = 90
+        right_width = 120
+        right_fill = "#00D4F5"
+        right_text_fill = "#1A2D4A"
+
     total_width = left_width + right_width
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{total_width}" height="20" role="img" aria-label="{left_text}: {right_text}">
@@ -815,12 +1773,12 @@ async def tool_badge_svg(request: Request, slug: str):
   <clipPath id="r"><rect width="{total_width}" height="20" rx="3" fill="#fff"/></clipPath>
   <g clip-path="url(#r)">
     <rect width="{left_width}" height="20" fill="#1A2D4A"/>
-    <rect x="{left_width}" width="{right_width}" height="20" fill="#00D4F5"/>
+    <rect x="{left_width}" width="{right_width}" height="20" fill="{right_fill}"/>
     <rect width="{total_width}" height="20" fill="url(#s)"/>
   </g>
   <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="11">
     <text x="{left_width/2}" y="14" fill="#fff">{left_text}</text>
-    <text x="{left_width + right_width/2}" y="14" fill="#1A2D4A" font-weight="600">{right_text}</text>
+    <text x="{left_width + right_width/2}" y="14" fill="{right_text_fill}" font-weight="600">{right_text}</text>
   </g>
 </svg>'''
     return Response(content=svg, media_type="image/svg+xml",
@@ -868,7 +1826,7 @@ async def og_share_card(request: Request, slug: str):
     """Dynamic OG share card SVG for social media sharing."""
     d = request.state.db
     tool = await db.get_tool_by_slug(d, slug)
-    if not tool or tool.get('status') != 'approved':
+    if not tool:
         return Response(content="", status_code=404)
 
     from html import escape as _esc
@@ -908,6 +1866,7 @@ async def og_home_card():
   <text x="80" y="440" font-size="22" fill="rgba(255,255,255,0.6)" font-family="system-ui,sans-serif">Before your AI writes code, it checks what already exists.</text>
   <text x="80" y="540" font-size="18" fill="rgba(255,255,255,0.3)" font-family="system-ui,sans-serif">pip install indiestack</text>
   <text x="1120" y="540" font-size="18" fill="rgba(255,255,255,0.3)" text-anchor="end" font-family="system-ui,sans-serif">indiestack.fly.dev</text>
+  <text x="80" y="580" font-size="16" fill="rgba(255,255,255,0.25)" font-family="system-ui,sans-serif">358+ indie tools &#183; 104 makers &#183; 21 categories</text>
 </svg>'''
     return Response(content=svg, media_type="image/svg+xml",
                     headers={"Cache-Control": "public, max-age=86400"})
@@ -917,7 +1876,7 @@ async def og_home_card():
 
 @app.post("/api/claim")
 async def api_claim(request: Request):
-    """Instant-claim an unclaimed tool for the logged-in user."""
+    """Request to claim an unclaimed tool — requires admin approval."""
     from fastapi.responses import RedirectResponse
     user = request.state.user
     if not user:
@@ -934,15 +1893,14 @@ async def api_claim(request: Request):
     if not tool or tool.get('maker_id'):
         return RedirectResponse(url=f"/tool/{tool['slug']}" if tool else "/", status_code=303)
 
-    # Instant claim — no email verification needed
-    maker_name = user.get('name', '') or user.get('email', '').split('@')[0]
-    maker_id = await db.get_or_create_maker(d, maker_name, '')
-    await d.execute("UPDATE tools SET maker_id = ? WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
-    if not user.get('maker_id'):
-        await d.execute("UPDATE users SET maker_id = ?, role = 'maker' WHERE id = ?", (maker_id, user['id']))
+    # Record claim request for admin approval (don't auto-assign)
+    await d.execute(
+        "INSERT OR IGNORE INTO claim_requests (tool_id, user_id, created_at) VALUES (?, ?, CURRENT_TIMESTAMP)",
+        (tool_id, user['id']),
+    )
     await d.commit()
 
-    return RedirectResponse(url=f"/tool/{tool['slug']}?claimed=1", status_code=303)
+    return RedirectResponse(url=f"/tool/{tool['slug']}?claim_requested=1", status_code=303)
 
 
 @app.post("/api/claim-and-boost")
@@ -968,7 +1926,7 @@ async def api_claim_and_boost(request: Request):
     if not tool.get('maker_id'):
         maker_name = user.get('name', '') or user.get('email', '').split('@')[0]
         maker_id = await db.get_or_create_maker(d, maker_name, '')
-        await d.execute("UPDATE tools SET maker_id = ? WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
+        await d.execute("UPDATE tools SET maker_id = ?, claimed_at = CURRENT_TIMESTAMP WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
         if not user.get('maker_id'):
             await d.execute("UPDATE users SET maker_id = ?, role = 'maker' WHERE id = ?", (maker_id, user['id']))
         await d.commit()
@@ -1041,10 +1999,67 @@ async def api_boost(request: Request):
         return RedirectResponse(url=f"/tool/{tool['slug']}", status_code=303)
 
 
+@app.post("/api/github-fetch")
+async def api_github_fetch(request: Request):
+    """Fetch GitHub repo metadata for auto-filling submission forms."""
+    import httpx
+
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+
+    url = body.get("url", "").strip()
+    match = re.match(r'https?://github\.com/([^/]+)/([^/]+?)(?:\.git)?/?$', url)
+    if not match:
+        return JSONResponse({"error": "Invalid GitHub URL. Use format: https://github.com/owner/repo"}, status_code=400)
+
+    owner, repo = match.group(1), match.group(2)
+
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            resp = await client.get(f"https://api.github.com/repos/{owner}/{repo}",
+                                     headers={"Accept": "application/json"})
+            if resp.status_code != 200:
+                return JSONResponse({"error": "Repository not found"}, status_code=404)
+            data = resp.json()
+    except Exception:
+        return JSONResponse({"error": "Failed to fetch from GitHub"}, status_code=502)
+
+    description = data.get("description") or ""
+    tagline = description.split(". ")[0] if description else data.get("name", "")
+    if len(tagline) > 100:
+        tagline = tagline[:97] + "..."
+
+    name = data.get("name", repo).replace("-", " ").replace("_", " ").title()
+
+    topics = data.get("topics", []) or []
+    language = data.get("language") or ""
+    tags = list(topics)
+    if language and language.lower() not in [t.lower() for t in tags]:
+        tags.append(language.lower())
+
+    tool_url = data.get("homepage") or url
+    if tool_url and not tool_url.startswith("http"):
+        tool_url = url
+
+    return JSONResponse({
+        "name": name,
+        "tagline": tagline,
+        "description": description,
+        "url": tool_url,
+        "github_url": url,
+        "tags": ", ".join(tags[:10]),
+        "stars": data.get("stargazers_count", 0),
+        "language": language,
+    })
+
+
 @app.get("/api/click/{slug}")
 async def outbound_click(request: Request, slug: str):
-    """Track outbound click and redirect to tool's website."""
-    from fastapi.responses import RedirectResponse
+    """Track outbound click and show brief interstitial with email capture."""
+    import html as _html
+    from fastapi.responses import RedirectResponse, HTMLResponse
     from indiestack.db import get_tool_by_slug, record_outbound_click
     d = request.state.db
     tool = await get_tool_by_slug(d, slug)
@@ -1053,7 +2068,8 @@ async def outbound_click(request: Request, slug: str):
     ip = request.headers.get("fly-client-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip() or request.client.host
     referrer = request.headers.get("referer", "")
     await record_outbound_click(d, tool['id'], str(tool['url']), ip, referrer)
-    return RedirectResponse(str(tool['url']), status_code=307)
+
+    return RedirectResponse(str(tool['url']), status_code=302)
 
 
 @app.get("/boost/success")
@@ -1075,10 +2091,13 @@ async def boost_success(request: Request):
         if session.payment_status == "paid" or session.status == "complete":
             tool_id = int(session.metadata.get("tool_id", 0))
             if tool_id:
-                await db.activate_boost(d, tool_id)
+                # Verify the logged-in user owns this tool
                 tool = await db.get_tool_by_id(d, tool_id)
-                slug = tool['slug'] if tool else ''
-                return RedirectResponse(url=f"/tool/{slug}?boosted=1", status_code=303)
+                if tool and tool.get('maker_id') and tool['maker_id'] == user.get('maker_id'):
+                    await db.activate_boost(d, tool_id)
+                    return RedirectResponse(url=f"/tool/{tool['slug']}?boosted=1", status_code=303)
+                elif tool:
+                    return RedirectResponse(url=f"/tool/{tool['slug']}", status_code=303)
     except Exception:
         pass
 
@@ -1096,6 +2115,22 @@ async def verify_claim(request: Request, token: str):
         tool_id, user_id = result
         tool = await db.get_tool_by_id(d, tool_id)
         slug = tool['slug'] if tool else ''
+        # Send maker welcome email
+        try:
+            user = await db.get_user_by_id(d, user_id)
+            if user and tool:
+                await send_email(
+                    user['email'],
+                    f"Welcome to IndieStack — {tool['name']} is live!",
+                    maker_welcome_html(
+                        maker_name=user['name'],
+                        tool_name=tool['name'],
+                        tool_slug=tool['slug'],
+                        dashboard_url=f"{BASE_URL}/dashboard",
+                    ),
+                )
+        except Exception:
+            pass  # Don't block claim on email failure
         return RedirectResponse(url=f"/tool/{slug}?claimed=1", status_code=303)
     else:
         body = """
@@ -1171,7 +2206,7 @@ async def magic_claim(request: Request):
     if user:
         maker_name = user.get('name', '') or user.get('email', '').split('@')[0]
         maker_id = await db.get_or_create_maker(d, maker_name, '')
-        await d.execute("UPDATE tools SET maker_id = ? WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
+        await d.execute("UPDATE tools SET maker_id = ?, claimed_at = CURRENT_TIMESTAMP WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
         if not user.get('maker_id'):
             await d.execute("UPDATE users SET maker_id = ?, role = 'maker' WHERE id = ?", (maker_id, user['id']))
         await d.commit()
@@ -1298,16 +2333,40 @@ async def magic_claim_complete(request: Request):
     user_id = await db.create_user(d, email=email, password_hash=pw_hash, name=name, role='maker', maker_id=maker_id)
 
     # Claim the tool
-    await d.execute("UPDATE tools SET maker_id = ? WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
+    await d.execute("UPDATE tools SET maker_id = ?, claimed_at = CURRENT_TIMESTAMP WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
     await d.commit()
 
     # Mark token used
     await db.use_magic_claim_token(d, token)
 
+    # Send verification email
+    try:
+        verify_token = await db.create_email_verification_token(d, user_id)
+        base_url = str(request.base_url).rstrip("/")
+        verify_url = f"{base_url}/verify-email?token={verify_token}"
+        await send_email(email, "Verify your IndieStack email", email_verification_html(verify_url))
+    except Exception:
+        pass
+
+    # Send maker welcome email
+    try:
+        await send_email(
+            email,
+            f"Welcome to IndieStack — {tool['name']} is live!",
+            maker_welcome_html(
+                maker_name=name,
+                tool_name=tool['name'],
+                tool_slug=tool['slug'],
+                dashboard_url=f"{BASE_URL}/dashboard",
+            ),
+        )
+    except Exception:
+        pass  # Don't block claim on email failure
+
     # Create session and log them in
     session_token = await create_user_session(d, user_id)
     response = RedirectResponse(url=f"/tool/{tool['slug']}?claimed=1", status_code=303)
-    response.set_cookie("indiestack_session", session_token, httponly=True, samesite="lax", max_age=30 * 86400)
+    response.set_cookie("indiestack_session", session_token, httponly=True, samesite="lax", max_age=30 * 86400, secure=True)
     return response
 
 
@@ -1316,9 +2375,10 @@ async def magic_claim_complete(request: Request):
 @app.get("/api/send-weekly")
 async def send_weekly_digest(request: Request):
     """Trigger weekly digest email to all subscribers. Protected by admin key."""
+    import secrets as _secrets
     key = request.query_params.get("key", "")
     admin_key = _os.environ.get("ADMIN_SECRET", "indiestack-admin-secret")
-    if key != admin_key:
+    if not _secrets.compare_digest(key, admin_key):
         return JSONResponse({"error": "Unauthorized"}, status_code=401)
 
     d = request.state.db
@@ -1360,11 +2420,11 @@ def _build_rss_xml(tools: list, title: str, description: str, link: str) -> str:
         created = str(t.get('created_at', ''))
         items.append(f"""    <item>
       <title>{name}</title>
-      <link>https://indiestack.fly.dev/tool/{slug}</link>
+      <link>{BASE_URL}/tool/{slug}</link>
       <description>{tagline}</description>
       <category>{cat}</category>
       <pubDate>{created}</pubDate>
-      <guid>https://indiestack.fly.dev/tool/{slug}</guid>
+      <guid>{BASE_URL}/tool/{slug}</guid>
     </item>""")
     items_xml = "\n".join(items)
     return f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -1386,7 +2446,7 @@ async def rss_all(request: Request):
     tools = await db.get_tools_for_rss(request.state.db, limit=30)
     xml = _build_rss_xml(tools, "IndieStack — New Indie Tools",
                           "The latest indie SaaS tools on IndieStack",
-                          "https://indiestack.fly.dev/feed/rss")
+                          f"{BASE_URL}/feed/rss")
     return Response(content=xml, media_type="application/rss+xml",
                     headers={"Cache-Control": "public, max-age=3600"})
 
@@ -1397,7 +2457,7 @@ async def rss_category(request: Request, slug: str):
     tools = await db.get_tools_for_rss(request.state.db, category_slug=slug, limit=30)
     xml = _build_rss_xml(tools, f"IndieStack — {slug.replace('-', ' ').title()} Tools",
                           f"Indie tools in the {slug.replace('-', ' ')} category",
-                          f"https://indiestack.fly.dev/category/{slug}/rss")
+                          f"{BASE_URL}/category/{slug}/rss")
     return Response(content=xml, media_type="application/rss+xml",
                     headers={"Cache-Control": "public, max-age=3600"})
 
@@ -1408,9 +2468,67 @@ async def rss_tag(request: Request, slug: str):
     tools = await db.get_tools_for_rss(request.state.db, tag=slug.replace('-', ' '), limit=30)
     xml = _build_rss_xml(tools, f"IndieStack — #{slug} Tools",
                           f"Indie tools tagged with {slug.replace('-', ' ')}",
-                          f"https://indiestack.fly.dev/tag/{slug}/rss")
+                          f"{BASE_URL}/tag/{slug}/rss")
     return Response(content=xml, media_type="application/rss+xml",
                     headers={"Cache-Control": "public, max-age=3600"})
+
+
+# ── LobeChat Plugin Manifest ──────────────────────────────────────────────
+
+@app.get("/manifest.json")
+async def lobechat_manifest():
+    """LobeChat plugin manifest for the IndieStack search plugin."""
+    return {
+        "api": [
+            {
+                "name": "searchIndieTools",
+                "url": f"{BASE_URL}/api/tools/search",
+                "description": "Search 130+ indie SaaS tools by keyword or category. Use this before building common functionality from scratch — save tokens, ship faster.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "q": {
+                            "type": "string",
+                            "description": "Search query (e.g. 'invoicing', 'analytics', 'auth')"
+                        },
+                        "category": {
+                            "type": "string",
+                            "description": "Optional category slug filter (e.g. 'invoicing-billing', 'analytics-metrics')"
+                        },
+                        "limit": {
+                            "type": "number",
+                            "description": "Max results to return (default 10)",
+                            "default": 10
+                        }
+                    },
+                    "required": ["q"]
+                }
+            },
+            {
+                "name": "getToolDetails",
+                "url": f"{BASE_URL}/api/tools/{{slug}}",
+                "description": "Get full details for a specific indie tool including description, pricing, ratings, and integration snippets.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "slug": {
+                            "type": "string",
+                            "description": "The tool's URL slug (e.g. 'plausible-analytics')"
+                        }
+                    },
+                    "required": ["slug"]
+                }
+            }
+        ],
+        "identifier": "indiestack",
+        "meta": {
+            "avatar": "🧱",
+            "title": "IndieStack",
+            "description": "Search 130+ indie SaaS tools from your AI coding assistant before it writes code.",
+            "tags": ["search", "developer-tools", "indie", "saas", "mcp"]
+        },
+        "version": "1"
+    }
 
 
 # ── Mount routes ──────────────────────────────────────────────────────────
@@ -1437,3 +2555,12 @@ app.include_router(alternatives.router)
 app.include_router(stacks.router)
 app.include_router(explore.router)
 app.include_router(tags.router)
+
+app.include_router(calculator_router)
+app.include_router(built_this.router)
+app.include_router(stripe_guide.router)
+app.include_router(launch.router)
+app.include_router(embed.router)
+app.include_router(launch_with_me.router)
+app.include_router(use_cases.router)
+app.include_router(why_list.router)

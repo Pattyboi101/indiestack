@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 
 from indiestack.routes.components import page_shell, integration_snippet_html
 from indiestack.db import get_tool_by_slug, create_purchase, get_purchase_by_token, get_purchase_by_session, get_tool_by_id, get_active_subscription
-from indiestack.email import send_email, purchase_receipt_html
+from indiestack.email import send_email, purchase_receipt_html, maker_sale_notification_html
 from indiestack.payments import (
     create_checkout_session, verify_webhook, retrieve_checkout_session,
     calculate_commission, STRIPE_SECRET_KEY,
@@ -39,10 +39,10 @@ async def api_checkout(request: Request, tool_id: int = Form(0)):
     tool = await cursor.fetchone()
 
     if not tool or not tool.get('price_pence') or tool['price_pence'] <= 0:
-        return RedirectResponse(url="/", status_code=303)
+        return RedirectResponse(url="/?toast=This+tool+isn%27t+available+for+purchase", status_code=303)
 
     if not tool.get('stripe_account_id'):
-        return RedirectResponse(url=f"/tool/{tool['slug']}", status_code=303)
+        return RedirectResponse(url=f"/tool/{tool['slug']}?toast=This+tool+isn%27t+set+up+for+payments+yet", status_code=303)
 
     # Indie Ring: 50% off for makers buying OTHER makers' tools
     discount_pence = 0
@@ -65,7 +65,7 @@ async def api_checkout(request: Request, tool_id: int = Form(0)):
             sub = await get_active_subscription(db, maker_user_row['id'])
             is_pro = sub is not None
 
-    base_url = str(request.base_url).rstrip("/")
+    base_url = str(request.base_url).rstrip("/").replace("http://", "https://")
     try:
         session = create_checkout_session(
             tool_name=tool['name'],
@@ -77,12 +77,11 @@ async def api_checkout(request: Request, tool_id: int = Form(0)):
             is_pro=is_pro,
         )
         return RedirectResponse(url=session.url, status_code=303)
-    except Exception as e:
+    except Exception:
         body = f"""
         <div class="container" style="text-align:center;padding:80px 0;">
             <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Payment Error</h1>
-            <p style="color:var(--ink-muted);margin-top:16px;">Something went wrong creating the checkout session.</p>
-            <p style="font-size:14px;margin-top:8px;color:var(--ink-muted);">{escape(str(e))}</p>
+            <p style="color:var(--ink-muted);margin-top:16px;">Something went wrong creating the checkout session. Please try again or contact support.</p>
             <a href="/tool/{escape(str(tool['slug']))}" class="btn btn-primary mt-4">Back to Tool</a>
         </div>
         """
@@ -158,9 +157,11 @@ async def purchase_success(request: Request, session_id: str = ""):
         discount_pence=discount_pence,
     )
 
+    # Fetch tool for emails
+    tool_obj = await get_tool_by_id(db, tool_id) if tool_id else None
+
     # Send receipt email
     if buyer_email:
-        tool_obj = await get_tool_by_id(db, tool_id)
         tool_name_str = tool_obj['name'] if tool_obj else 'Your purchase'
         delivery = tool_obj.get('delivery_url', '') if tool_obj else ''
         receipt_html = purchase_receipt_html(
@@ -169,6 +170,28 @@ async def purchase_success(request: Request, session_id: str = ""):
             delivery_url=f"{str(request.base_url).rstrip('/')}/purchase/{token}",
         )
         await send_email(buyer_email, f"Your IndieStack purchase: {tool_name_str}", receipt_html)
+
+    # Notify the maker of the sale
+    if tool_obj and tool_obj.get('maker_id'):
+        maker_email_cur = await db.execute(
+            "SELECT u.email FROM users u WHERE u.maker_id = ?",
+            (tool_obj['maker_id'],)
+        )
+        maker_user = await maker_email_cur.fetchone()
+        if maker_user and maker_user.get('email'):
+            net_pence = amount - commission
+            maker_html = maker_sale_notification_html(
+                tool_name=tool_obj.get('name', 'Unknown'),
+                buyer_email=buyer_email,
+                amount=f"£{amount / 100:.2f}",
+                net_amount=f"£{net_pence / 100:.2f}",
+                dashboard_url=f"{str(request.base_url).rstrip('/')}/dashboard/sales",
+            )
+            await send_email(
+                maker_user['email'],
+                f"New sale: {tool_obj.get('name', 'your tool')}",
+                maker_html,
+            )
 
     return RedirectResponse(url=f"/purchase/{token}", status_code=303)
 
@@ -200,10 +223,10 @@ async def purchase_delivery(request: Request, token: str):
         """
         return HTMLResponse(page_shell("Not Found", body, user=request.state.user), status_code=404)
 
-    tool_name = escape(str(purchase['tool_name']))
-    tool_slug = escape(str(purchase['tool_slug']))
-    delivery_type = purchase.get('delivery_type', 'link')
-    delivery_url = str(purchase.get('delivery_url', ''))
+    tool_name = escape(str(purchase['tool_name'] or 'Removed Tool'))
+    tool_slug = escape(str(purchase['tool_slug'] or ''))
+    delivery_type = purchase.get('delivery_type') or 'link'
+    delivery_url = str(purchase.get('delivery_url') or '')
 
     # Build tool dict for integration snippet
     tool_for_snippet = {
@@ -216,7 +239,14 @@ async def purchase_delivery(request: Request, token: str):
     amount_display = format_price(purchase['amount_pence'])
 
     # Delivery section depends on type
-    if delivery_type == 'download':
+    if not delivery_url:
+        delivery_html = f"""
+        <div style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:12px;">
+            <p style="font-size:15px;color:var(--ink);">The maker hasn't set up delivery yet.</p>
+            <p style="font-size:14px;color:var(--ink-muted);margin-top:8px;">We've notified them -- you'll receive an email at <strong>{escape(str(purchase['buyer_email']))}</strong> once it's ready.</p>
+        </div>
+        """
+    elif delivery_type == 'download':
         delivery_html = f"""
         <a href="{escape(delivery_url)}" class="btn btn-slate" style="font-size:16px;padding:14px 32px;" target="_blank" rel="noopener">
             Download Now &darr;
@@ -261,7 +291,7 @@ async def purchase_delivery(request: Request, token: str):
         {snippet_html}
 
         <div style="text-align:center;margin-top:32px;">
-            <a href="/tool/{tool_slug}" class="btn btn-secondary">Back to {tool_name}</a>
+            <a href="{'/' if not tool_slug else f'/tool/{tool_slug}'}" class="btn btn-secondary">{'Back to Home' if not tool_slug else f'Back to {tool_name}'}</a>
         </div>
     </div>
     """
@@ -292,6 +322,8 @@ async def stripe_webhook(request: Request):
         buyer_email = session.get("customer_details", {}).get("email", "") if session.get("customer_details") else ""
         amount = session.get("amount_total", 0)
 
+        db = request.state.db
+
         # Check maker's Pro status for correct commission
         is_pro_wh = False
         tool_for_wh = await get_tool_by_id(db, tool_id) if tool_id else None
@@ -303,7 +335,6 @@ async def stripe_webhook(request: Request):
                 is_pro_wh = sub_wh is not None
         commission = calculate_commission(amount, is_pro=is_pro_wh)
 
-        db = request.state.db
         existing = await get_purchase_by_session(db, session_id)
         if not existing and tool_id:
             await create_purchase(
@@ -314,5 +345,28 @@ async def stripe_webhook(request: Request):
                 amount_pence=amount,
                 commission_pence=commission,
             )
+
+            # Notify the maker of the sale
+            if tool_for_wh and tool_for_wh.get('maker_id'):
+                maker_email_cur = await db.execute(
+                    "SELECT u.email FROM users u WHERE u.maker_id = ?",
+                    (tool_for_wh['maker_id'],)
+                )
+                maker_user = await maker_email_cur.fetchone()
+                if maker_user and maker_user.get('email'):
+                    net_pence = amount - commission
+                    base_url = str(request.base_url).rstrip('/')
+                    maker_html = maker_sale_notification_html(
+                        tool_name=tool_for_wh.get('name', 'Unknown'),
+                        buyer_email=buyer_email,
+                        amount=f"£{amount / 100:.2f}",
+                        net_amount=f"£{net_pence / 100:.2f}",
+                        dashboard_url=f"{base_url}/dashboard/sales",
+                    )
+                    await send_email(
+                        maker_user['email'],
+                        f"New sale: {tool_for_wh.get('name', 'your tool')}",
+                        maker_html,
+                    )
 
     return JSONResponse({"received": True})

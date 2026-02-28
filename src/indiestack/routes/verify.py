@@ -190,7 +190,7 @@ async def verify_checkout(request: Request, slug: str):
     if tool.get('is_verified'):
         return RedirectResponse(url=f"/tool/{slug}", status_code=303)
 
-    base_url = str(request.base_url).rstrip('/')
+    base_url = str(request.base_url).rstrip('/').replace("http://", "https://")
     try:
         session = create_verification_checkout(
             tool_name=tool['name'],

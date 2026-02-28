@@ -1,4 +1,4 @@
-"""Vibe Stacks — curated 1-click tool bundles with bundle discount."""
+"""Stacks — curated 1-click tool bundles with bundle discount."""
 
 import os
 import json
@@ -8,6 +8,8 @@ from html import escape
 import stripe
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
+
+from indiestack.config import BASE_URL
 
 from indiestack.routes.components import page_shell, tool_card, stack_card, user_stack_card
 from indiestack.db import (
@@ -26,6 +28,7 @@ logger = logging.getLogger("indiestack.stacks")
 router = APIRouter()
 
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
+MARKETPLACE_ENABLED = False
 
 
 def format_price(pence: int) -> str:
@@ -37,38 +40,72 @@ def format_price(pence: int) -> str:
 
 @router.get("/stacks", response_class=HTMLResponse)
 async def stacks_index(request: Request):
-    """Browse all Vibe Stacks."""
+    """Browse all Stacks."""
     db = request.state.db
     stacks = await get_all_stacks(db)
+    community_stacks_list = await get_public_stacks(db, limit=6)
 
-    if not stacks:
-        body = """
-        <div class="container" style="text-align:center;padding:80px 24px;">
-            <span style="font-size:48px;">&#128230;</span>
-            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-top:16px;">Vibe Stacks</h1>
-            <p style="color:var(--ink-muted);margin-top:12px;max-width:440px;margin-left:auto;margin-right:auto;">
-                Curated bundles of indie tools coming soon. One click, one price, full stack.
-            </p>
-        </div>
-        """
-        return HTMLResponse(page_shell("Vibe Stacks", body, user=request.state.user))
-
-    cards = "\n".join(stack_card(s) for s in stacks)
-    body = f"""
-    <div class="container" style="padding:48px 24px;max-width:900px;">
-        <div style="text-align:center;margin-bottom:40px;">
-            <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);">
-                Vibe Stacks
-            </h1>
-            <p style="color:var(--ink-muted);font-size:17px;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto;">
-                Pre-built indie tool bundles. One checkout, bundled discount, full stack shipped.
-            </p>
-        </div>
-        <div class="card-grid">{cards}</div>
+    # Header
+    header_html = """
+    <div style="text-align:center;margin-bottom:40px;">
+        <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);">
+            Stacks
+        </h1>
+        <p style="color:var(--ink-muted);font-size:17px;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto;">
+            Curated tool bundles and community stacks.
+        </p>
     </div>
     """
-    return HTMLResponse(page_shell("Vibe Stacks — Curated Indie Tool Bundles", body,
-                                   description="One-click indie tool bundles at a discount. Stop building from scratch.",
+
+    # Featured Stacks section
+    if stacks:
+        featured_cards = "\n".join(stack_card(s) for s in stacks)
+        featured_html = f"""
+        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:20px;">Featured</h2>
+        <div class="card-grid">{featured_cards}</div>
+        """
+    else:
+        featured_html = ""
+
+    # Community Stacks section
+    if community_stacks_list:
+        community_cards = "\n".join(user_stack_card(s) for s in community_stacks_list)
+        community_html = f"""
+        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:40px 0 20px;">Community Stacks</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;">
+            {community_cards}
+        </div>
+        """
+    else:
+        community_html = """
+        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:40px 0 20px;">Community Stacks</h2>
+        <div class="card" style="padding:32px;text-align:center;">
+            <p style="color:var(--ink-muted);font-size:15px;margin-bottom:16px;">
+                Share your stack &mdash; show what tools you use and why
+            </p>
+            <a href="/dashboard" class="btn btn-primary" style="font-size:14px;padding:10px 24px;">Create Your Stack &rarr;</a>
+        </div>
+        """
+
+    # Generator CTA
+    generator_cta = """
+    <div class="card" style="padding:24px;text-align:center;margin-top:40px;">
+        <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">Find indie alternatives to your dependencies</h3>
+        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">Paste your package.json or requirements.txt and we'll match indie tools.</p>
+        <a href="/stacks/generator" class="btn btn-primary" style="font-size:14px;padding:10px 24px;">Try the Stack Generator &rarr;</a>
+    </div>
+    """
+
+    body = f"""
+    <div class="container" style="padding:48px 24px;max-width:900px;">
+        {header_html}
+        {featured_html}
+        {community_html}
+        {generator_cta}
+    </div>
+    """
+    return HTMLResponse(page_shell("Stacks — Curated Indie Tool Bundles", body,
+                                   description="Curated tool bundles and community stacks. Discover indie tools.",
                                    user=request.state.user))
 
 
@@ -210,10 +247,13 @@ async def stack_generator_results(request: Request, deps: str = Form("")):
     for dep in dependencies:
         safe_dep = dep.replace('%', '').replace('_', ' ')
         cursor = await db.execute(
-            """SELECT id, name, slug, tagline, logo_url, category_name, category_slug,
-                      price_pence, replaces, tags
-               FROM tools WHERE status = 'approved'
-               AND (replaces LIKE ? OR tags LIKE ? OR name LIKE ?)
+            """SELECT t.id, t.name, t.slug, t.tagline,
+                      c.name as category_name, c.slug as category_slug,
+                      t.price_pence, t.replaces, t.tags
+               FROM tools t
+               JOIN categories c ON t.category_id = c.id
+               WHERE t.status = 'approved'
+               AND (t.replaces LIKE ? OR t.tags LIKE ? OR t.name LIKE ?)
                LIMIT 3""",
             (f'%{safe_dep}%', f'%{safe_dep}%', f'%{safe_dep}%'))
         results = await cursor.fetchall()
@@ -234,8 +274,7 @@ async def stack_generator_results(request: Request, deps: str = Form("")):
             t_name = escape(str(t['name']))
             t_tagline = escape(str(t.get('tagline', '')))
             t_slug = escape(str(t.get('slug', '')))
-            logo = escape(str(t.get('logo_url', ''))) if t.get('logo_url') else ''
-            logo_html = f'<img src="{logo}" alt="" style="width:36px;height:36px;border-radius:8px;object-fit:cover;">' if logo else '<div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#1A2D4A,#00D4F5);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">{}</div>'.format(t_name[0] if t_name else '?')
+            logo_html = '<div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--terracotta),var(--slate));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">{}</div>'.format(t_name[0] if t_name else '?')
             cards += f"""
             <a href="/tool/{t_slug}" style="text-decoration:none;display:flex;align-items:center;gap:12px;
                      padding:12px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);
@@ -342,7 +381,7 @@ async def stack_detail(request: Request, slug: str):
     cards_html = "\n".join(tool_card(t) for t in tools)
 
     # Pricing section
-    if has_paid:
+    if MARKETPLACE_ENABLED and has_paid:
         pricing_html = f"""
         <div class="card" style="text-align:center;padding:32px;">
             <div style="font-size:14px;color:var(--ink-muted);text-decoration:line-through;margin-bottom:4px;">
@@ -351,7 +390,7 @@ async def stack_detail(request: Request, slug: str):
             <div style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:4px;">
                 {format_price(bundle_price)}
             </div>
-            <div style="font-size:13px;font-weight:700;color:#065F46;background:#ECFDF5;
+            <div style="font-size:13px;font-weight:700;color:var(--success-text);background:var(--success-bg);
                          display:inline-block;padding:4px 14px;border-radius:999px;margin-bottom:16px;">
                 Save {discount_percent}% &middot; {format_price(discount_amount)} off
             </div>
@@ -399,7 +438,7 @@ async def stack_detail(request: Request, slug: str):
         {pricing_html}
     </div>
     """
-    return HTMLResponse(page_shell(f"{stack['title']} — Vibe Stack", body,
+    return HTMLResponse(page_shell(f"{stack['title']} — Stack", body,
                                    description=f"Get {len(tools)} indie tools in one bundle at {discount_percent}% off. {stack.get('description', '')}",
                                    user=request.state.user))
 
@@ -428,7 +467,7 @@ async def api_checkout_stack(request: Request, stack_id: int = Form(0)):
     discount_amount = full_price * discount_percent // 100
     bundle_price = full_price - discount_amount
 
-    base_url = str(request.base_url).rstrip("/")
+    base_url = str(request.base_url).rstrip("/").replace("http://", "https://")
     try:
         session = create_stack_checkout_session(
             stack_title=stack['title'],
@@ -643,12 +682,12 @@ async def public_user_stack(request: Request, username: str):
             note = t.get('note', '')
             cards_html += tool_card(t)
             if note:
-                cards_html += f'<div style="background:var(--surface,#F9FAFB);border-radius:8px;padding:10px 14px;margin:-8px 0 16px 0;font-size:14px;color:var(--ink-muted);border-left:3px solid var(--accent,#00D4F5);">&#128172; {escape(str(note))}</div>'
+                cards_html += f'<div style="background:var(--surface,#F9FAFB);border-radius:8px;padding:10px 14px;margin:-8px 0 16px 0;font-size:14px;color:var(--ink-muted);border-left:3px solid var(--slate);">&#128172; {escape(str(note))}</div>'
     else:
         cards_html = '<p style="text-align:center;color:var(--ink-muted);padding:40px;">This stack is empty.</p>'
 
     # Share URL
-    share_url = f"https://indiestack.fly.dev/stack/{escape(username)}"
+    share_url = f"{BASE_URL}/stack/{escape(username)}"
     share_text = f"Check out {escape(user_name)}'s indie tool stack — {tool_count} tool{'s' if tool_count != 1 else ''} for building better software!"
     tweet_url = f"https://twitter.com/intent/tweet?text={share_text}&amp;url={share_url}"
 
@@ -656,9 +695,9 @@ async def public_user_stack(request: Request, username: str):
 
     body = f"""
     <div class="container" style="max-width:800px;padding:48px 24px;">
-        <div style="background:linear-gradient(135deg,#1A2D4A 0%,#0D3B66 100%);border-radius:20px;padding:40px;margin-bottom:32px;">
+        <div style="background:linear-gradient(135deg,var(--terracotta) 0%,var(--terracotta-dark) 100%);border-radius:20px;padding:40px;margin-bottom:32px;">
             <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
-                <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#00D4F5,#10B981);
+                <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--slate),var(--success-text));
                             display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:24px;">
                     {escape(user_name[0].upper()) if user_name else '?'}
                 </div>
@@ -670,7 +709,7 @@ async def public_user_stack(request: Request, username: str):
             {f'<p style="color:rgba(255,255,255,0.8);font-size:16px;line-height:1.6;margin:0;">{description}</p>' if description else ''}
             <div style="margin-top:20px;">
                 <a href="{tweet_url}" target="_blank" rel="noopener"
-                   style="background:#00D4F5;color:#1A2D4A;padding:10px 24px;border-radius:999px;
+                   style="background:var(--slate);color:var(--terracotta);padding:10px 24px;border-radius:999px;
                           text-decoration:none;font-weight:700;font-size:14px;">
                     Share on &#120143; &rarr;
                 </a>
@@ -682,7 +721,7 @@ async def public_user_stack(request: Request, username: str):
         </div>
 
         <div style="text-align:center;margin-top:32px;">
-            <a href="/stacks/community" style="color:var(--accent,#00D4F5);text-decoration:none;font-weight:600;">
+            <a href="/stacks/community" style="color:var(--slate);text-decoration:none;font-weight:600;">
                 &larr; Browse more community stacks
             </a>
         </div>

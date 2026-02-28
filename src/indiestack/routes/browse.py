@@ -7,6 +7,7 @@ from html import escape
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
+from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card, pagination_html
 from indiestack.db import get_category_by_slug, get_tools_by_category, get_category_tools_for_compare
 
@@ -37,8 +38,9 @@ async def category_page(request: Request, slug: str, page: int = 1):
     total_pages = max(1, math.ceil(total / PER_PAGE))
 
     icon = str(category.get('icon', ''))
-    name = escape(str(category['name']))
-    desc = escape(str(category.get('description', '')))
+    name = str(category['name'])
+    name_esc = escape(name)
+    desc = f"Discover indie {name} tools built by solo developers and small teams. Open-source, bootstrapped alternatives."
 
     if tools:
         cards = '\n'.join(tool_card(t) for t in tools)
@@ -85,7 +87,7 @@ async def category_page(request: Request, slug: str, page: int = 1):
     <div class="container" style="padding:48px 24px;">
         <div style="text-align:center;margin-bottom:40px;">
             <span style="font-size:48px;">{icon}</span>
-            <h1 style="font-family:var(--font-display);font-size:36px;margin-top:8px;color:var(--ink);">{name}</h1>
+            <h1 style="font-family:var(--font-display);font-size:36px;margin-top:8px;color:var(--ink);">{name_esc}</h1>
             <p class="text-muted mt-2">{desc}</p>
         </div>
         {tools_html}
@@ -97,13 +99,13 @@ async def category_page(request: Request, slug: str, page: int = 1):
         "@type": "ItemList",
         "name": str(category['name']),
         "description": str(category.get('description', '')),
-        "url": f"https://indiestack.fly.dev/category/{slug}",
+        "url": f"{BASE_URL}/category/{slug}",
         "numberOfItems": total,
         "itemListElement": [
             {
                 "@type": "ListItem",
                 "position": i + 1,
-                "url": f"https://indiestack.fly.dev/tool/{t['slug']}",
+                "url": f"{BASE_URL}/tool/{t['slug']}",
                 "name": str(t['name']),
             }
             for i, t in enumerate(tools)
@@ -111,4 +113,5 @@ async def category_page(request: Request, slug: str, page: int = 1):
     }
     extra_head = f'<script type="application/ld+json">{json.dumps(json_ld_data, ensure_ascii=False)}</script>'
 
-    return HTMLResponse(page_shell(name, body, description=desc, user=request.state.user, extra_head=extra_head))
+    title = f"{name} Tools — Indie Software Directory"
+    return HTMLResponse(page_shell(title, body, description=desc, user=request.state.user, extra_head=extra_head, canonical=f"/category/{slug}"))

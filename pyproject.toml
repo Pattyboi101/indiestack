@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "indiestack"
-version = "0.1.2"
-description = "MCP server for IndieStack — search indie SaaS tools from your AI coding assistant."
+version = "0.4.0"
+description = "MCP server for IndieStack — search 358+ indie SaaS tools, build stacks, spot market gaps, and submit your own from your AI coding assistant."
 readme = "README_PYPI.md"
 requires-python = ">=3.10"
 license = "MIT"
@@ -36,6 +36,7 @@ server = [
     "aiosqlite>=0.19.0",
     "python-multipart>=0.0.6",
     "stripe>=8.0.0",
+    "httpx>=0.25.0",
 ]
 
 [tool.hatch.build.targets.wheel]

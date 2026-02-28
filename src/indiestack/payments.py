@@ -1,6 +1,8 @@
 """Stripe payment helpers for IndieStack marketplace."""
 
 import os
+from datetime import date
+
 import stripe
 
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
@@ -8,11 +10,22 @@ STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 PLATFORM_FEE_PERCENT = 5  # 5% standard platform commission
 PRO_FEE_PERCENT = 3  # 3% for Pro makers
 
+# Launch week commission holiday: 0% commission March 2-16 2026 inclusive
+LAUNCH_HOLIDAY_START = date(2026, 3, 2)
+LAUNCH_HOLIDAY_END = date(2026, 3, 16)
+
 stripe.api_key = STRIPE_SECRET_KEY
 
 
+def is_launch_holiday() -> bool:
+    """Return True if today falls within the launch week commission holiday."""
+    return LAUNCH_HOLIDAY_START <= date.today() <= LAUNCH_HOLIDAY_END
+
+
 def calculate_commission(amount_pence: int, is_pro: bool = False) -> int:
-    """Calculate platform commission (5% standard, 3% for Pro makers)."""
+    """Calculate platform commission (5% standard, 3% for Pro makers, 0% during launch week)."""
+    if is_launch_holiday():
+        return 0
     rate = PRO_FEE_PERCENT if is_pro else PLATFORM_FEE_PERCENT
     return int(amount_pence * rate / 100)
 

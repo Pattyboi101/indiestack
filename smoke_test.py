@@ -21,11 +21,11 @@ TESTS = [
     ("GET", "/new", 200, "New tools"),
     ("GET", "/search?q=analytics", 200, "Search"),
     ("GET", "/makers", 200, "Makers"),
-    ("GET", "/collections", 200, "Collections"),
+    ("GET", "/collections", [200, 301], "Collections redirect"),
     ("GET", "/updates", 200, "Updates"),
     ("GET", "/tags", 200, "Tags"),
     ("GET", "/alternatives", 200, "Alternatives"),
-    ("GET", "/stacks", 200, "Vibe Stacks"),
+    ("GET", "/stacks", 200, "Stacks"),
     ("GET", "/stacks/community", 200, "Community stacks"),
     ("GET", "/live", 200, "Live Wire"),
 

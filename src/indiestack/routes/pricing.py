@@ -51,7 +51,7 @@ async def pricing_page(request: Request):
                         <span style="color:#16a34a;font-weight:bold;">&#10003;</span> List unlimited tools
                     </li>
                     <li style="display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--ink-light);">
-                        <span style="color:#16a34a;font-weight:bold;">&#10003;</span> Sell tools (5% commission)
+                        <span style="color:#16a34a;font-weight:bold;">&#10003;</span> Claim &amp; manage your listing
                     </li>
                     <li style="display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--ink-light);">
                         <span style="color:#16a34a;font-weight:bold;">&#10003;</span> Public maker profile
@@ -79,7 +79,7 @@ async def pricing_page(request: Request):
                         <span style="color:#16a34a;font-weight:bold;">&#10003;</span> Everything in Free
                     </li>
                     <li style="display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--ink);">
-                        <span style="color:var(--gold);font-weight:bold;">&#9733;</span> <strong>3% commission</strong> (save 2%)
+                        <span style="color:var(--gold);font-weight:bold;">&#9733;</span> <strong>Featured placement boost</strong>
                     </li>
                     <li style="display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--ink);">
                         <span style="color:var(--gold);font-weight:bold;">&#9733;</span> <strong>Priority listing placement</strong>
@@ -119,7 +119,7 @@ async def api_subscribe(request: Request):
     import stripe
     stripe.api_key = STRIPE_SECRET_KEY
 
-    base_url = str(request.base_url).rstrip("/")
+    base_url = str(request.base_url).rstrip("/").replace("http://", "https://")
     try:
         session = stripe.checkout.Session.create(
             mode="subscription",

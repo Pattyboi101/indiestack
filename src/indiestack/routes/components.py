@@ -2,6 +2,8 @@
 
 from html import escape
 
+from indiestack.config import BASE_URL
+
 # ── Design Tokens ─────────────────────────────────────────────────────────
 
 def design_tokens() -> str:
@@ -32,6 +34,28 @@ def design_tokens() -> str:
             --radius-sm: 8px;
             --card-bg: white;
             --nav-bg: white;
+            --success-bg: #ECFDF5;
+            --success-text: #065F46;
+            --success-border: #A7F3D0;
+            --warning-bg: #FDF8EE;
+            --warning-text: #92400E;
+            --info-bg: #F0F9FF;
+            --info-text: #0E7490;
+            --info-border: #A5F3FC;
+            --error-bg: #FEF2F2;
+            --error-text: #991B1B;
+            --error-border: #FECACA;
+            --gold-dark: #78350F;
+            --shadow-sm: 0 1px 3px rgba(26,45,74,0.06);
+            --shadow-md: 0 4px 12px rgba(26,45,74,0.08);
+            --shadow-lg: 0 12px 40px rgba(26,45,74,0.10);
+            --text-xs: 11px;
+            --text-sm: 13px;
+            --text-base: 14px;
+            --text-lg: 16px;
+            --heading-sm: 17px;
+            --heading-md: 22px;
+            --heading-lg: 28px;
         }
 
         [data-theme="dark"] {
@@ -41,8 +65,8 @@ def design_tokens() -> str:
             --gold: #E2B764;
             --gold-light: #D4A24A;
             --slate: #40E8FF;
-            --slate-light: #20C8E0;
-            --slate-dark: #80F0FF;
+            --slate-light: #80F0FF;
+            --slate-dark: #20C8E0;
             --cream: #0F1420;
             --cream-dark: #1A2535;
             --ink: #E8ECF0;
@@ -51,6 +75,21 @@ def design_tokens() -> str:
             --border: #2A3545;
             --card-bg: #1A2535;
             --nav-bg: #0F1420;
+            --success-bg: #052E16;
+            --success-text: #86EFAC;
+            --success-border: #166534;
+            --warning-bg: #451A03;
+            --warning-text: #FDE68A;
+            --info-bg: #0C1929;
+            --info-text: var(--slate);
+            --info-border: var(--slate-dark);
+            --error-bg: #2D0F0F;
+            --error-text: #FCA5A5;
+            --error-border: #7F1D1D;
+            --gold-dark: #F0D898;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -76,13 +115,13 @@ def design_tokens() -> str:
             border-radius: var(--radius);
             padding: 24px;
             transition: transform 0.15s ease, box-shadow 0.15s ease;
-            box-shadow: 0 1px 3px rgba(26,45,74,0.06);
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
             word-break: break-word;
         }
         .card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(26,45,74,0.10);
+            box-shadow: var(--shadow-lg);
         }
 
         .card-grid {
@@ -130,6 +169,19 @@ def design_tokens() -> str:
         .btn-secondary:hover { background: var(--border); }
         .btn-slate { background: var(--slate); color: white; }
         .btn-slate:hover { background: var(--slate-dark); color: white; }
+        .btn-lg { padding: 14px 28px; font-size: 16px; }
+        .btn-sm { padding: 6px 14px; font-size: 12px; }
+        .btn:focus-visible { outline: 2px solid var(--slate); outline-offset: 2px; }
+
+        /* ── Hover utilities ──────── */
+        .hover-lift { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+        .hover-lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .hover-highlight { transition: background 0.15s ease; }
+        .hover-highlight:hover { background: var(--cream-dark); }
+        .totw-link { transition: box-shadow 0.2s ease, transform 0.2s ease; }
+        .totw-link:hover { box-shadow: 0 4px 16px rgba(226,183,100,0.25); transform: translateY(-1px); }
+        .pill-link { transition: border-color 0.15s ease, color 0.15s ease; }
+        .pill-link:hover { border-color: var(--slate) !important; color: var(--ink) !important; }
 
         /* ── Tags ──────────────────── */
         .tag {
@@ -154,16 +206,16 @@ def design_tokens() -> str:
         }
         .upvote-btn:hover {
             border-color: var(--slate);
-            color: #0E7490;
-            background: #ECFEFF;
+            color: var(--info-text);
+            background: var(--info-bg);
         }
         .upvote-btn.active {
-            border-color: #00D4F5;
-            color: #00D4F5;
+            border-color: var(--slate);
+            color: var(--slate);
             background: rgba(0, 212, 245, 0.08);
         }
         .upvote-btn.active .arrow {
-            color: #00D4F5;
+            color: var(--slate);
         }
         .upvote-btn .arrow { font-size: 16px; line-height: 1; }
 
@@ -196,7 +248,7 @@ def design_tokens() -> str:
             border: 2px solid var(--border); border-radius: 999px;
             background: var(--card-bg);
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
-            box-shadow: 0 2px 12px rgba(26,45,74,0.06);
+            box-shadow: var(--shadow-sm);
         }
         .search-box input:focus {
             outline: none; border-color: var(--terracotta);
@@ -207,14 +259,38 @@ def design_tokens() -> str:
             font-size: 18px; color: var(--ink-muted);
         }
 
+        /* ── Badges ────────────────── */
+        .badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: var(--text-xs); font-weight: 600;
+            padding: 2px 10px; border-radius: 999px;
+            border: 1px solid transparent;
+        }
+        .badge-success { color: var(--success-text); background: var(--success-bg); border-color: var(--success-border); }
+        .badge-warning { color: var(--warning-text); background: var(--warning-bg); border-color: var(--gold); }
+        .badge-danger  { color: var(--error-text); background: var(--error-bg); border-color: var(--error-border); }
+        .badge-info    { color: var(--info-text); background: var(--info-bg); border-color: var(--info-border); }
+        .badge-muted   { color: var(--ink-muted); background: var(--cream-dark); border-color: var(--border); }
+        .badge-gold    { color: var(--gold-dark); background: linear-gradient(135deg, var(--gold-light), var(--gold)); border-color: var(--gold); }
+
+        /* ── Section Divider ──────── */
+        .section-divider { margin-top: 48px; border-top: 1px solid var(--border); padding-top: 24px; }
+
+        /* ── Price Pill ───────────── */
+        .pill-price {
+            display: inline-block; background: var(--terracotta); color: var(--slate);
+            font-size: var(--text-xs); font-weight: 600;
+            padding: 2px 8px; border-radius: 4px;
+        }
+
         /* ── Alert / Flash ─────────── */
         .alert {
             padding: 14px 20px; border-radius: var(--radius-sm);
             font-size: 14px; font-weight: 500; margin-bottom: 20px;
         }
-        .alert-success { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
-        .alert-error { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
-        .alert-info { background: #EDF4F9; color: var(--slate-dark); border: 1px solid var(--slate-light); }
+        .alert-success { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+        .alert-error { background: var(--error-bg); color: var(--error-text); border: 1px solid var(--error-border); }
+        .alert-info { background: var(--info-bg); color: var(--info-text); border: 1px solid var(--info-border); }
 
         /* ── Pagination ────────────── */
         .pagination {
@@ -243,12 +319,12 @@ def design_tokens() -> str:
         .verified-badge {
             display: inline-flex; align-items: center; gap: 4px;
             font-size: 12px; font-weight: 600;
-            color: #78350F;
+            color: var(--gold-dark);
             background: linear-gradient(135deg, var(--gold-light), var(--gold));
             padding: 2px 10px; border-radius: 999px;
             border: 1px solid var(--gold);
         }
-        .verified-badge svg { width: 14px; height: 14px; fill: #78350F; }
+        .verified-badge svg { width: 14px; height: 14px; fill: var(--gold-dark); }
         .verified-card { border-color: var(--gold-light); background: linear-gradient(180deg, #FDF8EE 0%, white 40%); }
         .verified-card:hover { box-shadow: 0 12px 40px rgba(226,183,100,0.2); }
 
@@ -257,7 +333,7 @@ def design_tokens() -> str:
             position: fixed;
             bottom: 24px;
             right: 24px;
-            background: #1A2D4A;
+            background: var(--terracotta);
             color: white;
             padding: 12px 20px;
             border-radius: 10px;
@@ -281,11 +357,11 @@ def design_tokens() -> str:
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
-        [data-theme="dark"] .alert-success { background: #0D2818; color: #6EE7B7; border-color: #065F46; }
-        [data-theme="dark"] .alert-error { background: #2D0F0F; color: #FCA5A5; border-color: #7F1D1D; }
-        [data-theme="dark"] .alert-info { background: #0F1D2D; color: var(--slate-light); border-color: var(--slate-dark); }
+        [data-theme="dark"] .alert-success { background: var(--success-bg); color: var(--success-text); border-color: var(--success-border); }
+        [data-theme="dark"] .alert-error { background: var(--error-bg); color: var(--error-text); border-color: var(--error-border); }
+        [data-theme="dark"] .alert-info { background: var(--info-bg); color: var(--info-text); border-color: var(--info-border); }
         [data-theme="dark"] .verified-card { border-color: #5C4A1E; background: linear-gradient(180deg, #2A2318 0%, var(--card-bg) 40%); }
-        [data-theme="dark"] .card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+        [data-theme="dark"] .card:hover { box-shadow: var(--shadow-lg); }
 
         /* Mobile nav */
         .nav-links { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 500; }
@@ -320,6 +396,22 @@ def design_tokens() -> str:
         }
         details > summary::-webkit-details-marker { display: none; }
         details > summary::marker { display: none; content: ''; }
+
+        /* Nav dropdown items */
+        .nav-dropdown-item { display: block; padding: 8px 16px; color: var(--ink-light); font-size: 14px; text-decoration: none; }
+        .nav-dropdown-item:hover { background: var(--cream-dark); }
+
+        /* Footer */
+        .footer { background: var(--terracotta); color: white; padding: 60px 20px 30px; margin-top: 80px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-heading { font-weight: 700; font-size: 14px; margin-bottom: 12px; }
+        .footer-link { color: rgba(255,255,255,0.7); font-size: 13px; line-height: 2; display: block; text-decoration: none; }
+        .footer-link:hover { color: white; }
+        .footer-muted { color: rgba(255,255,255,0.5); font-size: 12px; }
+        .footer-email-input::placeholder { color: rgba(255,255,255,0.5); opacity: 1; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.15); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
     </style>
     """
 
@@ -360,9 +452,9 @@ def nav_html(user=None) -> str:
     verification_banner = ""
     if user and not user.get('email_verified', 1):
         verification_banner = '''
-    <div style="background:#FFF3CD;color:#856404;padding:10px 20px;text-align:center;font-size:14px;border-bottom:1px solid #FFEAA7;">
+    <div style="background:var(--warning-bg);color:var(--warning-text);padding:10px 20px;text-align:center;font-size:14px;border-bottom:1px solid var(--gold);">
         Please verify your email address.
-        <a href="/resend-verification" style="color:#856404;font-weight:600;text-decoration:underline;margin-left:8px;">Resend verification email</a>
+        <a href="/resend-verification" style="color:var(--warning-text);font-weight:600;text-decoration:underline;margin-left:8px;">Resend verification email</a>
     </div>
         '''
 
@@ -384,14 +476,14 @@ def nav_html(user=None) -> str:
                     <div class="nav-dropdown-menu" style="display:none;position:absolute;top:calc(100% + 8px);
                                 left:50%;transform:translateX(-50%);background:var(--card-bg);
                                 border:1px solid var(--border);border-radius:var(--radius-sm);
-                                box-shadow:0 8px 32px rgba(26,45,74,0.12);padding:8px 0;min-width:180px;z-index:200;">
-                        <a href="/new" style="display:block;padding:8px 16px;color:var(--ink-light);font-size:14px;">New Arrivals</a>
-                        <a href="/tags" style="display:block;padding:8px 16px;color:var(--ink-light);font-size:14px;">Tags</a>
-                        <a href="/makers" style="display:block;padding:8px 16px;color:var(--ink-light);font-size:14px;">Makers</a>
-                        <a href="/collections" style="display:block;padding:8px 16px;color:var(--ink-light);font-size:14px;">Collections</a>
-                        <a href="/stacks" style="display:block;padding:8px 16px;color:var(--ink-light);font-size:14px;">Stacks</a>
-                        <a href="/best" style="display:block;padding:8px 16px;color:var(--ink-light);font-size:14px;">Best Tools</a>
-                        <a href="/blog" style="display:block;padding:8px 16px;color:var(--ink-light);font-size:14px;">Blog</a>
+                                box-shadow:var(--shadow-md);padding:8px 0;min-width:180px;z-index:200;">
+                        <a href="/new" class="nav-dropdown-item">New Arrivals</a>
+                        <a href="/tags" class="nav-dropdown-item">Tags</a>
+                        <a href="/makers" class="nav-dropdown-item">Makers</a>
+                        <a href="/leaderboard" class="nav-dropdown-item">Leaderboard</a>
+                        <a href="/stacks" class="nav-dropdown-item">Stacks</a>
+                        <a href="/best" class="nav-dropdown-item">Best Tools</a>
+                        <a href="/blog" class="nav-dropdown-item">Blog</a>
                     </div>
                 </div>
                 <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Add Your Tool</a>
@@ -405,7 +497,7 @@ def nav_html(user=None) -> str:
             <a href="/new">New</a>
             <a href="/tags">Tags</a>
             <a href="/makers">Makers</a>
-            <a href="/collections">Collections</a>
+            <a href="/leaderboard">Leaderboard</a>
             <a href="/stacks">Stacks</a>
             <a href="/submit" class="btn btn-primary">Add Your Tool</a>
             <button onclick="toggleTheme()">Toggle Theme</button>
@@ -420,9 +512,9 @@ def nav_html(user=None) -> str:
 
 def footer_html() -> str:
     return '''
-    <footer style="background:var(--terracotta);color:white;padding:60px 20px 30px;margin-top:80px;">
+    <footer class="footer">
       <div style="max-width:1100px;margin:0 auto;">
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;">
+        <div class="footer-grid">
           <!-- Brand -->
           <div>
             <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;">IndieStack</div>
@@ -430,54 +522,47 @@ def footer_html() -> str:
           </div>
           <!-- Product -->
           <div>
-            <div style="font-weight:700;font-size:14px;margin-bottom:12px;">Product</div>
-            <a href="/explore" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">Explore Tools</a>
-            <a href="/new" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">New Arrivals</a>
-            <a href="/collections" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">Collections</a>
-            <a href="/makers" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">Makers</a>
-            <a href="/blog" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">Blog</a>
-            <a href="/best" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">Best Tools</a>
+            <div class="footer-heading">Product</div>
+            <a href="/explore" class="footer-link">Explore Tools</a>
+            <a href="/new" class="footer-link">New Arrivals</a>
+            <a href="/stacks" class="footer-link">Stacks</a>
+            <a href="/makers" class="footer-link">Makers</a>
+            <a href="/blog" class="footer-link">Blog</a>
+            <a href="/best" class="footer-link">Best Tools</a>
           </div>
           <!-- Company -->
           <div>
-            <div style="font-weight:700;font-size:14px;margin-bottom:12px;">Company</div>
-            <a href="/about" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">About</a>
-            <a href="/faq" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">FAQ</a>
-            <a href="/submit" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">Add Your Tool</a>
+            <div class="footer-heading">Company</div>
+            <a href="/about" class="footer-link">About</a>
+            <a href="/faq" class="footer-link">FAQ</a>
+            <a href="/submit" class="footer-link">Add Your Tool</a>
           </div>
           <!-- Legal -->
           <div>
-            <div style="font-weight:700;font-size:14px;margin-bottom:12px;">Legal</div>
-            <a href="/terms" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">Terms of Service</a>
-            <a href="/privacy" style="color:rgba(255,255,255,0.7);font-size:13px;line-height:2;display:block;text-decoration:none;">Privacy Policy</a>
+            <div class="footer-heading">Legal</div>
+            <a href="/terms" class="footer-link">Terms of Service</a>
+            <a href="/privacy" class="footer-link">Privacy Policy</a>
           </div>
         </div>
-        <div style="border-top:1px solid rgba(255,255,255,0.15);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div class="footer-bottom">
           <div style="text-align:center;margin-bottom:20px;">
     <p style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:600;margin-bottom:10px;">Get weekly picks — the best new indie tools in your inbox.</p>
     <form action="/api/subscribe" method="POST" style="display:flex;gap:8px;justify-content:center;max-width:400px;margin:0 auto;">
         <input type="email" name="email" required placeholder="you@example.com"
                style="flex:1;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.3);
-                      background:rgba(255,255,255,0.1);color:white;font-size:14px;font-family:var(--font-body);">
+                      background:rgba(255,255,255,0.1);color:white;font-size:14px;font-family:var(--font-body);
+                      --placeholder-color:rgba(255,255,255,0.5);"
+               class="footer-email-input">
         <button type="submit" style="padding:8px 18px;border-radius:999px;border:none;
                 background:var(--slate);color:white;font-weight:600;font-size:14px;cursor:pointer;
                 font-family:var(--font-body);">Subscribe</button>
     </form>
 </div>
-          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">Stop your AI writing code you don&rsquo;t need.</span>
-          <span style="color:rgba(255,255,255,0.5);font-size:12px;">&copy; 2026 IndieStack. All rights reserved.</span>
-          <span style="color:rgba(255,255,255,0.5);font-size:12px;">Made with care for the indie maker community.</span>
+          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">The indie tool catalog your AI actually uses.</span>
+          <span class="footer-muted">&copy; 2026 IndieStack. All rights reserved.</span>
+          <span class="footer-muted">Made with care for the indie maker community.</span>
         </div>
       </div>
-      <style>
-        footer a:hover { color: white !important; }
-        @media (max-width: 768px) {
-          footer > div > div:first-child { grid-template-columns: 1fr 1fr !important; }
-        }
-        @media (max-width: 480px) {
-          footer > div > div:first-child { grid-template-columns: 1fr !important; }
-        }
-      </style>
     </footer>
     '''
 
@@ -487,15 +572,15 @@ def footer_html() -> str:
 def indie_badge_html(indie_status: str) -> str:
     """Render indie maker status badge."""
     if indie_status == 'solo':
-        return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#0E7490;background:#ECFEFF;padding:2px 10px;border-radius:999px;border:1px solid #A5F3FC;">Solo Maker</span>'
+        return '<span class="badge badge-info">Solo Maker</span>'
     elif indie_status == 'small_team':
-        return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#0E7490;background:#ECFEFF;padding:2px 10px;border-radius:999px;border:1px solid #A5F3FC;">Small Team</span>'
+        return '<span class="badge badge-info">Small Team</span>'
     return ''
 
 
 def ejectable_badge_html() -> str:
     """Render Certified Ejectable badge — signals clean data export / no lock-in."""
-    return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#2E7D32;background:#E8F5E9;padding:2px 10px;border-radius:999px;border:1px solid #A5D6A7;">&#128275; Ejectable</span>'
+    return '<span class="badge badge-success">&#128275; Ejectable</span>'
 
 
 def maker_pulse_html(last_active: str) -> str:
@@ -511,32 +596,22 @@ def maker_pulse_html(last_active: str) -> str:
         return ''
 
     if delta <= 7:
-        color = '#16a34a'
-        bg = '#DCFCE7'
-        border = '#A7F3D0'
+        badge_class = 'badge-success'
         label = 'Updated this week'
     elif delta <= 30:
-        color = '#16a34a'
-        bg = '#DCFCE7'
-        border = '#A7F3D0'
+        badge_class = 'badge-success'
         label = f'Updated {delta}d ago'
     elif delta <= 90:
-        color = '#92400E'
-        bg = '#FDF8EE'
-        border = '#E2B764'
+        badge_class = 'badge-warning'
         label = f'Updated {delta}d ago'
     elif delta <= 365:
-        color = 'var(--ink-muted)'
-        bg = 'var(--cream-dark)'
-        border = 'var(--border)'
+        badge_class = 'badge-muted'
         label = f'Updated {delta // 30}mo ago'
     else:
-        color = 'var(--ink-muted)'
-        bg = 'var(--cream-dark)'
-        border = 'var(--border)'
+        badge_class = 'badge-muted'
         label = f'Updated {delta // 365}y ago'
 
-    return f'<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:{color};background:{bg};padding:2px 10px;border-radius:999px;border:1px solid {border};">&#128994; {label}</span>'
+    return f'<span class="badge {badge_class}">&#128994; {label}</span>'
 
 
 def integration_snippet_html(tool: dict) -> str:
@@ -545,7 +620,8 @@ def integration_snippet_html(tool: dict) -> str:
     url = escape(str(tool.get('url', 'https://example.com')))
     delivery_url = escape(str(tool.get('delivery_url', '')))
 
-    python_snippet = f'''import httpx
+    # Prefer custom snippets from database, fall back to generic
+    python_snippet = tool.get('integration_python') or f'''import httpx
 
 # {name} — via IndieStack
 client = httpx.Client(base_url="{url}")
@@ -554,7 +630,7 @@ client = httpx.Client(base_url="{url}")
 resp = client.get("/")
 print(f"{name} status: {{resp.status_code}}")'''
 
-    curl_snippet = f'''# Quick test — {name}
+    curl_snippet = tool.get('integration_curl') or f'''# Quick test — {name}
 curl -s "{url}" -o /dev/null -w "%{{http_code}}"'''
 
     return f"""
@@ -567,7 +643,7 @@ curl -s "{url}" -o /dev/null -w "%{{http_code}}"'''
         </p>
         <div style="margin-bottom:16px;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-                <span style="font-size:12px;font-weight:700;color:var(--slate-dark);background:#E0F7FA;padding:2px 10px;border-radius:999px;">Python</span>
+                <span class="badge badge-info" style="font-weight:700;">Python</span>
                 <button onclick="navigator.clipboard.writeText(document.getElementById('snippet-py').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                         style="font-size:11px;font-weight:600;padding:2px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card-bg);cursor:pointer;color:var(--ink-muted);">Copy</button>
             </div>
@@ -593,14 +669,12 @@ COFOUNDER_EMAILS = {'ameyjonesP@gmail.com', 'ed@placeholder.com'}
 
 def cofounder_badge_html() -> str:
     """Render co-founder badge."""
-    return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#5C3D0E;background:linear-gradient(135deg,#F0D898,#E2B764);padding:2px 10px;border-radius:999px;border:1px solid #E2B764;">&#9733; Co-founder</span>'
+    return '<span class="badge badge-gold" style="font-weight:700;">&#9733; Co-founder</span>'
 
 
 def maker_discount_badge_html() -> str:
     """Green pill badge showing Indie Ring 50% maker discount."""
-    return '''<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;
-        color:#065F46;background:#ECFDF5;padding:2px 8px;border-radius:999px;border:1px solid #A7F3D0;">
-        &#9889; 50% off &middot; Indie Ring</span>'''
+    return '<span class="badge badge-success" style="font-weight:700;">&#9889; 50% off &middot; Indie Ring</span>'
 
 
 def indie_score_html(tool: dict) -> str:
@@ -629,25 +703,19 @@ def indie_score_html(tool: dict) -> str:
     if tool.get('maker_id'):
         score += 10
 
-    # Color based on score
+    # Badge class based on score
     if score >= 70:
-        color = '#16a34a'
-        bg = '#DCFCE7'
-        border = '#A7F3D0'
+        badge_class = 'badge-success'
     elif score >= 40:
-        color = '#92400E'
-        bg = '#FDF8EE'
-        border = 'var(--gold)'
+        badge_class = 'badge-warning'
     else:
-        color = 'var(--ink-muted)'
-        bg = 'var(--cream-dark)'
-        border = 'var(--border)'
+        badge_class = 'badge-muted'
 
-    return f'''<span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
-                     color:{color};background:{bg};padding:4px 12px;border-radius:999px;
-                     border:1px solid {border};">
+    return f'''<span class="badge {badge_class}" style="gap:6px;font-size:12px;font-weight:700;padding:4px 12px;">
         <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
-                     border-radius:50%;background:{color};color:white;font-size:10px;font-weight:800;">{score}</span>
+                     border-radius:50%;background:currentColor;font-size:10px;font-weight:800;">
+            <span style="color:white;">{score}</span>
+        </span>
         Indie Score
     </span>'''
 
@@ -669,8 +737,7 @@ def stack_card(stack: dict) -> str:
         <div style="display:flex;gap:8px;align-items:center;">
             <span style="font-size:12px;font-weight:600;color:var(--ink-light);background:var(--cream-dark);
                          padding:3px 10px;border-radius:999px;">{count} tool{"s" if count != 1 else ""}</span>
-            <span style="font-size:12px;font-weight:700;color:#065F46;background:#ECFDF5;
-                         padding:3px 10px;border-radius:999px;">{discount}% off</span>
+            {f'<span class="badge badge-success" style="font-weight:700;">{discount}% off</span>' if stack.get('discount_percent', 0) > 0 else ''}
         </div>
     </a>
     """
@@ -684,7 +751,7 @@ def verified_badge_html() -> str:
 
 def boosted_badge_html():
     """Render Featured/Boosted badge for tool cards."""
-    return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#1A2D4A;background:linear-gradient(135deg,#00D4F5,#40E8FF);padding:2px 10px;border-radius:999px;">&#9733; Featured</span>'
+    return '<span class="badge" style="font-weight:700;color:var(--terracotta);background:linear-gradient(135deg,var(--slate),var(--slate-light));">&#9733; Featured</span>'
 
 
 def tool_card(tool: dict) -> str:
@@ -708,23 +775,43 @@ def tool_card(tool: dict) -> str:
     # Changelog streak badge — fire emoji if updated in last 14 days
     streak_html = ''
     if tool.get('has_changelog_14d'):
-        streak_html = '<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;color:#EA580C;background:#FFF7ED;padding:2px 8px;border-radius:999px;border:1px solid #FDBA74;margin-top:8px;">&#128293; Active</span>'
+        streak_html = '<span class="badge badge-warning" style="font-weight:700;margin-top:8px;">&#128293; Active</span>'
 
-    # Add bookmark icon
-    bookmark_html = f'''<button class="wishlist-btn" onclick="toggleWishlist({tool['id']})" id="wishlist-{tool['id']}"
-        style="background:none;border:none;cursor:pointer;padding:4px;color:var(--ink-muted);font-size:16px;margin-top:8px;"
+    # Add bookmark icon — positioned absolutely in top-right of card
+    bookmark_html = f'''<button class="wishlist-btn" onclick="event.stopPropagation();toggleWishlist({tool['id']})" id="wishlist-{tool['id']}"
+        style="position:absolute;top:12px;right:12px;z-index:2;background:none;border:none;cursor:pointer;padding:4px;font-size:20px;line-height:1;color:var(--ink-muted);opacity:0.5;transition:color 0.2s,transform 0.2s,opacity 0.2s;"
+        onmouseenter="this.style.color='#E2B764';this.style.opacity='1';this.style.transform='scale(1.1)';"
+        onmouseleave="if(!this.dataset.wishlisted){{this.style.color='var(--ink-muted)';this.style.opacity='0.5';this.style.transform='scale(1)';}}else{{this.style.transform='scale(1)';}}"
         title="Save to wishlist">&#9734;</button>'''
+
+    visit_html = f'<a href="/api/click/{slug}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:12px;color:var(--accent);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:2px;">Visit&nbsp;&rarr;</a>'
+
+    gh_indicator = ''
+    if tool.get('github_url'):
+        gh_stars = int(tool.get('github_stars', 0))
+        if gh_stars:
+            gh_indicator = f'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--ink-muted);margin-top:8px;"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> {gh_stars}&#9733;</span>'
+
+    # AI agent recommendation indicator
+    ai_recs_html = ''
+    mcp_views = int(tool.get('mcp_view_count', 0))
+    if mcp_views > 0:
+        ai_recs_html = f'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--accent);font-weight:600;margin-top:8px;" title="Recommended by AI agents {mcp_views} times">&#9889; AI picked {mcp_views}x</span>'
 
     badge = verified_badge_html() if is_verified else ''
     is_boosted = bool(tool.get('is_boosted', 0))
     if is_boosted:
         badge += ' ' + boosted_badge_html()
+    price_pence = tool.get('price_pence')
+    if price_pence and price_pence > 0 and not tool.get('stripe_account_id'):
+        badge += f' <span class="pill-price">&pound;{price_pence // 100}/mo</span>'
     card_class = 'card verified-card' if is_verified else 'card'
 
     return f"""
-    <div class="{card_class}" style="display:flex;gap:16px;">
+    <div class="{card_class}" style="position:relative;display:flex;gap:16px;">
+        {bookmark_html}
         <div style="flex:1;min-width:0;">
-            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-right:32px;">
                 <a href="/tool/{slug}" style="font-family:var(--font-display);font-size:17px;
                                               color:var(--ink);">{name}</a>
                 {badge}
@@ -734,8 +821,12 @@ def tool_card(tool: dict) -> str:
             <a href="/category/{cat_slug}" class="tag" style="margin-top:10px;display:inline-block;
                                                               font-family:var(--font-mono);">{cat_name}</a>
             {tag_html}
-            {streak_html}
-            {bookmark_html}
+            <div style="display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;">
+                {visit_html}
+                {gh_indicator}
+                {ai_recs_html}
+                {streak_html}
+            </div>
         </div>
         <button class="upvote-btn" onclick="upvote({tool['id']})" id="upvote-{tool['id']}">
             <span class="arrow">&#9650;</span>
@@ -795,10 +886,10 @@ def update_card(update: dict) -> str:
     created = str(update.get('created_at', ''))[:10]
 
     type_colors = {
-        'update': ('var(--slate)', '#EDF4F9', 'Update'),
-        'launch': ('var(--terracotta)', '#FDF0EA', 'Launch'),
-        'milestone': ('var(--gold)', '#FDF8EE', 'Milestone'),
-        'changelog': ('#6B7280', '#F3F4F6', 'Changelog'),
+        'update': ('var(--slate)', 'var(--info-bg)', 'Update'),
+        'launch': ('var(--terracotta)', 'var(--cream-dark)', 'Launch'),
+        'milestone': ('var(--gold)', 'var(--warning-bg)', 'Milestone'),
+        'changelog': ('var(--ink-muted)', 'var(--cream-dark)', 'Changelog'),
     }
     color, bg, label = type_colors.get(update_type, type_colors['update'])
 
@@ -887,11 +978,13 @@ def wishlist_js() -> str:
                 const btn = document.getElementById('wishlist-' + toolId);
                 if (btn) {
                     btn.innerHTML = data.saved ? '&#9733;' : '&#9734;';
-                    btn.style.color = data.saved ? 'var(--gold)' : 'var(--ink-muted)';
+                    btn.style.color = data.saved ? '#E2B764' : 'var(--ink-muted)';
+                    btn.style.opacity = data.saved ? '1' : '0.5';
+                    if (data.saved) { btn.dataset.wishlisted = '1'; } else { delete btn.dataset.wishlisted; }
                 }
                 showToast(data.saved ? '\u2605 Saved to wishlist' : 'Removed from wishlist');
             } else if (data.error === 'login_required') {
-                window.location.href = '/login';
+                window.location.href = '/auth/github?next=' + encodeURIComponent(window.location.pathname);
             }
         } catch(e) { console.error(e); }
     }
@@ -939,25 +1032,33 @@ def theme_js() -> str:
 
 # ── Page Shell ────────────────────────────────────────────────────────────
 
-def page_shell(title: str, body: str, *, description: str = "", extra_head: str = "", user=None, og_image: str = "/logo.png", canonical: str = "") -> str:
+def page_shell(title: str, body: str, *, description: str = "", extra_head: str = "", user=None, og_image: str = f"{BASE_URL}/logo.png", canonical: str = "") -> str:
     desc = escape(description) if description else "Discover indie SaaS tools built by solo developers."
-    canonical_tag = f'\n    <link rel="canonical" href="https://indiestack.fly.dev{escape(canonical)}">' if canonical else ""
+    canonical_tag = f'\n    <link rel="canonical" href="{BASE_URL}{escape(canonical)}">' if canonical else ""
+    # Strip trailing " | IndieStack" or " — IndieStack" to avoid duplication
+    clean_title = title
+    for suffix in (" | IndieStack", " — IndieStack", " -- IndieStack"):
+        if clean_title.endswith(suffix):
+            clean_title = clean_title[:-len(suffix)]
+            break
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{escape(title)} — IndieStack</title>
+    <title>{escape(clean_title)} — IndieStack</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta name="description" content="{desc}">{canonical_tag}
-    <meta property="og:title" content="{escape(title)} — IndieStack">
+    <meta property="og:title" content="{escape(clean_title)} — IndieStack">
     <meta property="og:description" content="{desc}">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="{escape(og_image)}">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{escape(title)}">
+    <meta property="og:image" content="{escape(og_image)}">{f'''
+    <meta property="og:url" content="{BASE_URL}{escape(canonical)}">''' if canonical else ''}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{escape(clean_title)} — IndieStack">
     <meta name="twitter:description" content="{desc}">
     {design_tokens()}
+    <link rel="alternate" type="application/rss+xml" title="IndieStack — New Tools" href="{BASE_URL}/feed/rss">
     {extra_head}
 </head>
 <body>
@@ -967,7 +1068,7 @@ def page_shell(title: str, body: str, *, description: str = "", extra_head: str 
     {upvote_js()}
     {wishlist_js()}
     {theme_js()}
-    <div id="toast" class="toast"></div>
+    <div id="toast" class="toast" role="alert" aria-live="polite"></div>
     <script>
     function showToast(message) {{
         var t = document.getElementById('toast');
@@ -977,6 +1078,17 @@ def page_shell(title: str, body: str, *, description: str = "", extra_head: str 
         clearTimeout(t._timer);
         t._timer = setTimeout(function() {{ t.classList.remove('show'); }}, 2500);
     }}
+    (function() {{
+        var p = new URLSearchParams(window.location.search);
+        var msg = p.get('toast');
+        if (msg) {{
+            showToast(decodeURIComponent(msg));
+            p.delete('toast');
+            var clean = p.toString();
+            var url = window.location.pathname + (clean ? '?' + clean : '') + window.location.hash;
+            window.history.replaceState(null, '', url);
+        }}
+    }})();
     </script>
 </body>
 </html>"""
@@ -995,11 +1107,11 @@ def featured_card(featured: dict) -> str:
     badge = verified_badge_html() if is_verified else ''
 
     return f"""
-    <div class="card" style="background:#1A2D4A;border:none;padding:32px;color:white;
-                box-shadow:0 4px 16px rgba(15,29,48,0.2);">
+    <div class="card" style="background:var(--terracotta);border:none;padding:32px;color:white;
+                box-shadow:var(--shadow-md);">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-            <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
-                         color:#00D4F5;">
+            <span style="font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+                         color:var(--slate);">
                 Tool of the Week
             </span>
             {badge}
@@ -1008,7 +1120,7 @@ def featured_card(featured: dict) -> str:
             <a href="/tool/{slug}" style="color:white;text-decoration:none;">{headline or name}</a>
         </h3>
         <p style="color:rgba(255,255,255,0.7);font-size:15px;margin-bottom:20px;line-height:1.6;">{desc or tagline}</p>
-        <a href="/tool/{slug}" class="btn" style="background:#00D4F5;color:#1A2D4A;font-weight:700;
+        <a href="/tool/{slug}" class="btn" style="background:var(--slate);color:var(--terracotta);font-weight:700;
                 padding:10px 24px;">
             View tool
         </a>
@@ -1186,10 +1298,7 @@ def user_stack_card(stack):
 
     return f"""
     <a href="/stack/{username_slug}" style="text-decoration:none;color:inherit;display:block;">
-    <div style="background:#fff;border-radius:16px;padding:24px;border:1px solid #E8E3DC;
-                transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;"
-         onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 24px rgba(26,45,74,0.12)'"
-         onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+    <div class="card hover-lift" style="border-radius:16px;padding:24px;cursor:pointer;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
             <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1A2D4A,#00D4F5);
                         display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">

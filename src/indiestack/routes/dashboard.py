@@ -5,6 +5,8 @@ from html import escape
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 
+from indiestack.config import BASE_URL
+
 from indiestack.routes.components import page_shell, star_rating_html, tool_card, indie_badge_html, pagination_html, update_card, launch_readiness_bar
 from indiestack.db import (
     get_tools_by_maker, get_sales_by_maker, get_maker_revenue, get_maker_stats,
@@ -21,6 +23,9 @@ from indiestack.db import (
     get_tool_by_slug, get_search_terms_for_tool,
     ensure_referral_code, get_referral_count, claim_referral_boost,
     MILESTONE_THRESHOLDS,
+    get_purchases_by_email,
+    get_total_agent_citations,
+    create_api_key, get_api_keys_for_user, revoke_api_key, get_api_key_usage_stats,
 )
 from indiestack.payments import create_connect_account, create_onboarding_link
 from indiestack.email import send_email, wishlist_update_html
@@ -77,10 +82,55 @@ async def dashboard_overview(request: Request):
     user_tokens = await get_user_tokens_saved(db, user['id'])
     tokens_k = user_tokens // 1000 if user_tokens else 0
 
+    # Agent citations (7-day)
+    agent_citations = await get_total_agent_citations(db, maker_id, days=7) if maker_id else 0
+
     pro_badge = '<span style="font-size:11px;font-weight:700;color:#5C3D0E;background:linear-gradient(135deg,var(--gold-light),var(--gold));padding:2px 10px;border-radius:999px;margin-left:8px;">PRO</span>' if is_pro else ''
     upgrade_html = '' if is_pro else '<a href="/pricing" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">Upgrade to Pro</a>'
 
+    # Stripe Connect status
     payment_card_html = ''
+    if maker_id:
+        mk_stripe_row = await db.execute("SELECT stripe_account_id FROM makers WHERE id = ?", (maker_id,))
+        mk_stripe = await mk_stripe_row.fetchone()
+        maker_stripe_id = mk_stripe.get('stripe_account_id') if mk_stripe else None
+
+        if maker_stripe_id:
+            payment_card_html = '''
+            <div class="card" style="margin-top:24px;border-left:4px solid #10B981;">
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                    <div>
+                        <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin:0 0 4px;">
+                            &#9989; Stripe Connected
+                        </h3>
+                        <p style="color:var(--ink-muted);font-size:14px;margin:0;">
+                            Payments enabled. Set a price on your tools to start selling.
+                        </p>
+                    </div>
+                    <form method="post" action="/dashboard/stripe-connect">
+                        <button type="submit" class="btn btn-secondary" style="font-size:13px;">
+                            Manage Stripe &rarr;
+                        </button>
+                    </form>
+                </div>
+            </div>'''
+        else:
+            payment_card_html = '''
+            <div class="card" style="margin-top:24px;border-left:4px solid var(--accent);">
+                <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin:0 0 8px;">
+                    &#128179; Accept Payments
+                </h3>
+                <p style="color:var(--ink-muted);font-size:14px;margin:0 0 16px;">
+                    Connect your Stripe account to sell tools on IndieStack.
+                    We take just 5% (3% for Pro makers) &mdash; you keep the rest.
+                    <a href="/stripe-guide" style="color:var(--accent);font-size:13px;">See how it works &rarr;</a>
+                </p>
+                <form method="post" action="/dashboard/stripe-connect">
+                    <button type="submit" class="btn btn-primary">
+                        Connect Stripe &rarr;
+                    </button>
+                </form>
+            </div>'''
 
     # Badge embed code for makers
     badge_section = ''
@@ -88,16 +138,56 @@ async def dashboard_overview(request: Request):
         # Get first tool slug for the embed example
         maker_tools_list = await get_tools_by_maker(db, maker_id)
         if maker_tools_list:
-            first_slug = maker_tools_list[0]['slug']
-            badge_url = f"https://indiestack.fly.dev/api/badge/{first_slug}.svg"
-            tool_url = f"https://indiestack.fly.dev/tool/{first_slug}"
+            first_tool = maker_tools_list[0]
+            first_slug = first_tool['slug']
+            has_price = first_tool.get('price_pence') and first_tool['price_pence'] > 0
+            has_stripe = bool(first_tool.get('stripe_account_id'))
+
+            tokens_badge_url = f"{BASE_URL}/api/badge/{first_slug}.svg"
+            marketplace_badge_url = f"{BASE_URL}/api/badge/{first_slug}.svg?style=marketplace"
+            tool_url = f"{BASE_URL}/tool/{first_slug}"
+
+            # Choose primary badge based on whether tool has pricing
+            if has_price or has_stripe:
+                badge_url = marketplace_badge_url
+                badge_desc = "Show your audience they can buy your tool on IndieStack."
+                alt_badge_url = tokens_badge_url
+                alt_label = "Tokens Saved Badge"
+            else:
+                badge_url = tokens_badge_url
+                badge_desc = "Add this badge to your website to show you&rsquo;re listed on IndieStack."
+                alt_badge_url = None
+                alt_label = None
+
+            # Secondary badge section (tokens badge when marketplace is primary)
+            secondary_html = ''
+            if alt_badge_url:
+                _alt_html_code = f'<a href="{tool_url}"><img src="{alt_badge_url}" alt="Listed on IndieStack"></a>'
+                secondary_html = f'''
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+                    <p style="font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:8px;">{alt_label}</p>
+                    <div style="text-align:center;padding:8px;background:var(--cream-dark);border-radius:var(--radius);margin-bottom:8px;">
+                        <img src="{alt_badge_url}" alt="{alt_label}" style="height:20px;">
+                    </div>
+                    <div style="position:relative;">
+                        <pre style="background:var(--ink);color:#00D4F5;padding:8px 12px;border-radius:8px;font-size:12px;
+                                    font-family:var(--font-mono);overflow-x:auto;"><code>&lt;a href="{tool_url}"&gt;&lt;img src="{alt_badge_url}" alt="Listed on IndieStack"&gt;&lt;/a&gt;</code></pre>
+                        <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
+                                data-code='&lt;a href=&quot;{tool_url}&quot;&gt;&lt;img src=&quot;{alt_badge_url}&quot; alt=&quot;Listed on IndieStack&quot;&gt;&lt;/a&gt;'
+                                style="position:absolute;top:4px;right:4px;background:#00D4F5;color:#1A2D4A;border:none;
+                                       padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;cursor:pointer;">Copy</button>
+                    </div>
+                </div>'''
+
+            _html_code = f'<a href="{tool_url}"><img src="{badge_url}" alt="Listed on IndieStack"></a>'
+            _md_code = f'[![Listed on IndieStack]({badge_url})]({tool_url})'
             badge_section = f'''
             <div class="card" style="margin-top:24px;">
                 <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">
                     &#127991; Embed Your IndieStack Badge
                 </h3>
                 <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
-                    Add this badge to your website to show you&rsquo;re listed on IndieStack. It auto-updates with your token savings estimate.
+                    {badge_desc}
                 </p>
                 <div style="margin-bottom:16px;text-align:center;padding:16px;background:var(--cream-dark);border-radius:var(--radius);">
                     <img src="{badge_url}" alt="IndieStack Badge" style="height:20px;">
@@ -124,6 +214,7 @@ async def dashboard_overview(request: Request):
                                        padding:4px 12px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
                     </div>
                 </div>
+                {secondary_html}
             </div>
             '''
 
@@ -170,7 +261,7 @@ async def dashboard_overview(request: Request):
     buyer_badge_html = ''
     if user_tokens and user_tokens > 0:
         badge_token = await get_or_create_badge_token(db, user['id'])
-        badge_url = f"https://indiestack.fly.dev/api/badge/buyer/{badge_token}.svg"
+        badge_url = f"{BASE_URL}/api/badge/buyer/{badge_token}.svg"
         buyer_badge_html = f'''
         <div class="card" style="padding:24px;margin-top:24px;">
             <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
@@ -186,9 +277,9 @@ async def dashboard_overview(request: Request):
                 <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Markdown</label>
                 <div style="position:relative;margin-top:4px;">
                     <pre style="background:var(--ink);color:#00D4F5;padding:12px 16px;border-radius:8px;font-size:13px;
-                        font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;"><code>[![Built with IndieStack]({badge_url})](https://indiestack.fly.dev)</code></pre>
+                        font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;"><code>[![Built with IndieStack]({badge_url})]({BASE_URL})</code></pre>
                     <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
-                        data-code="[![Built with IndieStack]({badge_url})](https://indiestack.fly.dev)"
+                        data-code="[![Built with IndieStack]({badge_url})]({BASE_URL})"
                         style="position:absolute;top:8px;right:8px;background:#00D4F5;color:#1A2D4A;border:none;
                             padding:4px 12px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
                 </div>
@@ -197,9 +288,9 @@ async def dashboard_overview(request: Request):
                 <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">HTML</label>
                 <div style="position:relative;margin-top:4px;">
                     <pre style="background:var(--ink);color:#00D4F5;padding:12px 16px;border-radius:8px;font-size:13px;
-                        font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;"><code>&lt;a href="https://indiestack.fly.dev"&gt;&lt;img src="{badge_url}" alt="Built with IndieStack"&gt;&lt;/a&gt;</code></pre>
+                        font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;"><code>&lt;a href="{BASE_URL}"&gt;&lt;img src="{badge_url}" alt="Built with IndieStack"&gt;&lt;/a&gt;</code></pre>
                     <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
-                        data-code='<a href="https://indiestack.fly.dev"><img src="{badge_url}" alt="Built with IndieStack"></a>'
+                        data-code='<a href="{BASE_URL}"><img src="{badge_url}" alt="Built with IndieStack"></a>'
                         style="position:absolute;top:8px;right:8px;background:#00D4F5;color:#1A2D4A;border:none;
                             padding:4px 12px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
                 </div>
@@ -232,8 +323,8 @@ async def dashboard_overview(request: Request):
                 tool_name = ms.get('tool_name', '')
                 tool_slug = ms.get('tool_slug', '')
                 share_text = f"{emoji} {desc} on IndieStack!"
-                share_url = f"https://indiestack.fly.dev/api/milestone/{tool_slug}.svg?type={ms_type}" if tool_slug else ""
-                tweet_url = f"https://twitter.com/intent/tweet?text={share_text}&url=https://indiestack.fly.dev/tool/{tool_slug}" if tool_slug else ""
+                share_url = f"{BASE_URL}/api/milestone/{tool_slug}.svg?type={ms_type}" if tool_slug else ""
+                tweet_url = f"https://twitter.com/intent/tweet?text={share_text}&url={BASE_URL}/tool/{tool_slug}" if tool_slug else ""
 
                 cards += f"""
                 <div style="background:linear-gradient(135deg,#1A2D4A,#0D3B66);border-radius:16px;padding:20px 24px;
@@ -395,9 +486,8 @@ async def dashboard_overview(request: Request):
                 indie_pill = f'<span style="font-size:11px;padding:2px 8px;border-radius:999px;background:#EDE9FE;color:#7C3AED;">{indie_label}</span>' if indie_label else ''
 
                 maker_cards += f"""
-                <a href="/maker/{sm_slug}" style="text-decoration:none;color:inherit;display:block;padding:16px;
-                    background:var(--cream-dark);border-radius:12px;transition:transform 0.15s;"
-                    onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                <a href="/maker/{sm_slug}" class="hover-lift" style="text-decoration:none;color:inherit;display:block;padding:16px;
+                    background:var(--cream-dark);border-radius:12px;">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
                         <span style="font-weight:700;color:var(--ink);">{sm_name}</span>
                         {indie_pill}
@@ -419,7 +509,7 @@ async def dashboard_overview(request: Request):
 
     # ── Referral Programme ─────────────────────────────────────────
     referral_code = await ensure_referral_code(db, user['id'])
-    referral_link = f"https://indiestack.fly.dev/signup?ref={referral_code}"
+    referral_link = f"{BASE_URL}/signup?ref={referral_code}"
     referral_count = await get_referral_count(db, user['id'])
     boost_days = user.get('referral_boost_days', 0) or 0
 
@@ -472,6 +562,64 @@ async def dashboard_overview(request: Request):
     </div>
     '''
 
+    # ── Welcome perk banner (Perplexity Comet) ──────────────────────
+    welcome_perk = '''<div id="comet-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,#0D1B2A);border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
+        <button onclick="localStorage.setItem('comet_dismissed','1');document.getElementById('comet-banner').remove();"
+                style="position:absolute;top:10px;right:12px;background:none;border:none;color:#94A3B8;font-size:18px;cursor:pointer;line-height:1;">&times;</button>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;">
+                <div style="font-family:var(--font-display);font-size:16px;color:white;margin-bottom:4px;">
+                    Welcome to IndieStack &#127881;
+                </div>
+                <p style="font-size:13px;color:#94A3B8;margin:0;line-height:1.5;">
+                    As a thank you for joining, here&rsquo;s free access to <strong style="color:#00D4F5;">Perplexity Comet</strong> &mdash; an AI-powered browser built for students and builders.
+                </p>
+            </div>
+            <a href="https://pplx.ai/patrick-amey" target="_blank" rel="noopener"
+               style="display:inline-block;padding:8px 20px;background:#00D4F5;color:#1A2D4A;font-size:13px;font-weight:700;
+                      border-radius:var(--radius-sm);text-decoration:none;white-space:nowrap;">
+                Get Comet Free &rarr;
+            </a>
+        </div>
+    </div>
+    <script>if(!localStorage.getItem('comet_dismissed')){document.getElementById('comet-banner').style.display='block';}</script>'''
+
+    # ── Stripe launch banner (makers without Stripe) ──────────────
+    stripe_launch_banner = ''
+    if maker_id and not maker_stripe_id:
+        from datetime import date as _date
+        _mkt_text = "The Marketplace is live!" if _date.today() >= _date(2026, 3, 2) else "Marketplace launches March 2!"
+        stripe_launch_banner = f'''<div id="stripe-launch-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,#0D1B2A);border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
+        <button onclick="localStorage.setItem('stripe_launch_dismissed','1');document.getElementById('stripe-launch-banner').remove();"
+                style="position:absolute;top:10px;right:12px;background:none;border:none;color:#94A3B8;font-size:18px;cursor:pointer;line-height:1;">&times;</button>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;">
+                <div style="font-family:var(--font-display);font-size:16px;color:white;margin-bottom:4px;">
+                    {_mkt_text} &#128176;
+                </div>
+                <p style="font-size:13px;color:#94A3B8;margin:0;line-height:1.5;">
+                    Connect your Stripe account to <strong style="color:#00D4F5;">receive payouts</strong> when developers buy your tool.
+                    <a href="/stripe-guide" style="color:#00D4F5;font-size:12px;">How does it work?</a>
+                </p>
+            </div>
+            <form method="post" action="/dashboard/stripe-connect" style="margin:0;">
+                <button type="submit" style="display:inline-block;padding:8px 20px;background:#00D4F5;color:#1A2D4A;font-size:13px;font-weight:700;
+                      border-radius:var(--radius-sm);border:none;cursor:pointer;white-space:nowrap;">
+                    Connect Stripe &rarr;
+                </button>
+            </form>
+        </div>
+    </div>
+    <script>if(!localStorage.getItem('stripe_launch_dismissed')){{document.getElementById('stripe-launch-banner').style.display='block';}}</script>'''
+
+    # ── Email verification banner ──────────────────────────────────
+    verify_banner = ''
+    if not user.get('email_verified'):
+        verify_banner = '''<div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <span style="color:#92400E;font-size:14px;font-weight:600;">Please verify your email to unlock all features.</span>
+            <a href="/resend-verification" style="background:#D97706;color:white;padding:6px 16px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;">Resend Verification Email</a>
+        </div>'''
+
     # ── Boost success banner ──────────────────────────────────────
     boosted_param = request.query_params.get('boosted', '')
     boost_success_banner = ''
@@ -480,6 +628,9 @@ async def dashboard_overview(request: Request):
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
+        {stripe_launch_banner}
+        {welcome_perk}
+        {verify_banner}
         {boost_success_banner}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
             <div>
@@ -491,7 +642,7 @@ async def dashboard_overview(request: Request):
             {upgrade_html}
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:40px;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px;">
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="color:var(--ink-muted);font-size:13px;">Tools</div>
                 <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--ink);">{tool_count}</div>
@@ -512,6 +663,10 @@ async def dashboard_overview(request: Request):
                 <div style="color:var(--ink-muted);font-size:13px;">&#9889; Tokens Saved</div>
                 <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--slate-dark);">{'~' + str(tokens_k) + 'k' if tokens_k > 0 else '0'}</div>
             </div>
+            <div class="card" style="text-align:center;padding:20px;">
+                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations}</div>
+                <div style="font-size:13px;color:var(--ink-muted);">Agent Recs<br><span style="font-size:11px;opacity:0.7;">(7 days)</span></div>
+            </div>
         </div>
 
         {readiness_html}
@@ -526,6 +681,9 @@ async def dashboard_overview(request: Request):
             <a href="/dashboard/saved" class="btn btn-secondary">Saved Tools</a>
             {'<a href="/dashboard/updates" class="btn btn-secondary">Post Update</a>' if maker_id else ''}
             <a href="/dashboard/my-stack" class="btn btn-secondary">My Stack</a>
+            <a href="/dashboard/purchases" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">My Purchases</a>
+            <!-- Developer API link hidden until key enforcement is enabled -->
+            <!-- <a href="/developer" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">Developer API</a> -->
         </div>
 
         {referral_html}
@@ -786,7 +944,7 @@ async def post_tool_changelog(request: Request, tool_id: int):
                                     wu.get('name', 'there'),
                                     tool_info['name'],
                                     title,
-                                    f"https://indiestack.fly.dev/tool/{tool_info['slug']}"
+                                    f"{BASE_URL}/tool/{tool_info['slug']}"
                                 )
                             )
                         except Exception:
@@ -1275,7 +1433,7 @@ async def stripe_connect(request: Request):
     # Check if maker already has a Stripe account
     row = await db.execute("SELECT stripe_account_id FROM makers WHERE id = ?", (maker_id,))
     existing = await row.fetchone()
-    account_id = existing.get('stripe_account_id') if existing else None
+    account_id = existing.get('stripe_account_id') or None if existing else None
 
     try:
         if not account_id:
@@ -1283,9 +1441,15 @@ async def stripe_connect(request: Request):
             account = create_connect_account()
             account_id = account.id
             await update_maker_stripe_account(db, maker_id, account_id)
+            # Propagate to all maker's tools so "Buy Now" button appears
+            await db.execute(
+                "UPDATE tools SET stripe_account_id = ? WHERE maker_id = ?",
+                (account_id, maker_id)
+            )
+            await db.commit()
 
         # Create onboarding link (works for new or returning onboarding)
-        base_url = str(request.base_url).rstrip("/")
+        base_url = str(request.base_url).rstrip("/").replace("http://", "https://")
         onboarding_url = create_onboarding_link(
             account_id,
             return_url=f"{base_url}/dashboard/stripe-callback",
@@ -1310,6 +1474,19 @@ async def stripe_callback(request: Request):
     user = request.state.user
     if not user:
         return RedirectResponse("/login", status_code=303)
+
+    db = request.state.db
+
+    # Propagate stripe_account_id to maker's tools
+    if user.get('maker_id'):
+        mk_row = await db.execute("SELECT stripe_account_id FROM makers WHERE id = ?", (user['maker_id'],))
+        mk_data = await mk_row.fetchone()
+        if mk_data and mk_data.get('stripe_account_id'):
+            await db.execute(
+                "UPDATE tools SET stripe_account_id = ? WHERE maker_id = ?",
+                (mk_data['stripe_account_id'], user['maker_id'])
+            )
+            await db.commit()
 
     body = '''
     <div style="max-width:600px;margin:60px auto;text-align:center;padding:40px;">
@@ -1366,7 +1543,7 @@ async def my_stack_page(request: Request):
     description = escape(str(stack['description'])) if stack and stack.get('description') else ''
     is_public = stack.get('is_public', 1) if stack else 1
     username_slug = (user.get('name', '') or '').lower().replace(' ', '-')
-    share_url = f"https://indiestack.fly.dev/stack/{username_slug}" if username_slug else ''
+    share_url = f"{BASE_URL}/stack/{username_slug}" if username_slug else ''
 
     share_banner = ''
     if share_url and is_public:
@@ -1418,7 +1595,7 @@ async def my_stack_page(request: Request):
         </form>
     </div>"""
 
-    return HTMLResponse(page_shell("My Stack &mdash; IndieStack", body, user=user))
+    return HTMLResponse(page_shell("My Stack", body, user=user))
 
 
 @router.post("/dashboard/my-stack")
@@ -1516,3 +1693,221 @@ async def remove_from_my_stack(request: Request):
         await remove_tool_from_user_stack(db, stack['id'], tool['id'])
 
     return RedirectResponse("/dashboard/my-stack", status_code=303)
+
+
+# ── Purchases ────────────────────────────────────────────────────────────
+
+@router.get("/dashboard/purchases", response_class=HTMLResponse)
+async def dashboard_purchases(request: Request):
+    user = request.state.user
+    if not user:
+        return RedirectResponse("/login", status_code=303)
+
+    db = request.state.db
+    purchases = await get_purchases_by_email(db, user['email'])
+
+    rows = ''
+    for p in purchases:
+        tool_name = escape(str(p.get('tool_name', '')))
+        tool_slug = escape(str(p.get('tool_slug', '')))
+        amount = f"\u00a3{p['amount_pence'] / 100:.2f}" if p.get('amount_pence') else '\u00a30'
+        dt = str(p.get('created_at', ''))[:10]
+        token = p.get('purchase_token', '')
+        rows += f'''<tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:12px;">{dt}</td>
+            <td style="padding:12px;font-weight:600;"><a href="/tool/{tool_slug}" style="color:var(--accent);">{tool_name}</a></td>
+            <td style="padding:12px;">{amount}</td>
+            <td style="padding:12px;"><a href="/purchase/{token}" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">Access &rarr;</a></td>
+        </tr>'''
+
+    if rows:
+        table_html = f'''
+        <div class="card" style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                <thead><tr style="border-bottom:2px solid var(--border);text-align:left;">
+                    <th style="padding:12px;">Date</th>
+                    <th style="padding:12px;">Tool</th>
+                    <th style="padding:12px;">Amount</th>
+                    <th style="padding:12px;"></th>
+                </tr></thead>
+                <tbody>{rows}</tbody>
+            </table>
+        </div>'''
+    else:
+        table_html = '''
+        <div class="card" style="text-align:center;padding:48px;">
+            <p style="color:var(--ink-muted);font-size:15px;">No purchases yet.</p>
+            <a href="/explore" class="btn btn-primary" style="margin-top:16px;">Browse Tools</a>
+        </div>'''
+
+    body = f'''
+    <div class="container" style="padding:48px 24px;max-width:960px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">My Purchases</h1>
+            <a href="/dashboard" style="color:var(--ink-muted);font-size:14px;">&larr; Dashboard</a>
+        </div>
+        {table_html}
+    </div>'''
+    return HTMLResponse(page_shell("My Purchases", body, user=user))
+
+
+# ── Developer API Keys ──────────────────────────────────────────────────
+
+@router.get("/developer", response_class=HTMLResponse)
+async def developer_page(request: Request):
+    user = request.state.user
+    redirect = require_login(user)
+    if redirect:
+        return redirect
+
+    new_key = request.query_params.get("new", "")
+    db = request.state.db
+    keys = await get_api_keys_for_user(db, user['id'])
+    usage = await get_api_key_usage_stats(db, user['id'], days=30)
+    usage_map = {u['id']: u['request_count'] for u in usage}
+
+    # Show full key once after creation
+    new_key_html = ""
+    if new_key and new_key.startswith("isk_"):
+        new_key_html = f'''
+        <div class="card" style="border-left:4px solid var(--success-text);margin-bottom:24px;padding:20px;">
+            <h3 style="margin:0 0 8px;font-family:var(--font-display);font-size:18px;color:var(--ink);">Key Created</h3>
+            <p style="color:var(--ink-muted);font-size:14px;margin:0 0 12px;">
+                Copy this key now &mdash; you won&rsquo;t be able to see it again.
+            </p>
+            <code id="new-key-value" style="font-family:var(--font-mono);font-size:14px;background:#1A2D4A;
+                         color:#00D4F5;padding:10px 14px;border-radius:8px;display:block;
+                         word-break:break-all;">{escape(new_key)}</code>
+            <button onclick="navigator.clipboard.writeText(document.getElementById('new-key-value').textContent);this.textContent='Copied!'"
+                    class="btn btn-primary" style="margin-top:12px;font-size:13px;">
+                Copy to Clipboard
+            </button>
+        </div>'''
+
+    # Keys table rows
+    key_rows = ""
+    for k in keys:
+        count = usage_map.get(k['id'], 0)
+        status = '<span class="badge-success" style="font-size:11px;padding:2px 8px;">Active</span>' if k['is_active'] else '<span class="badge-danger" style="font-size:11px;padding:2px 8px;">Revoked</span>'
+        last_used = escape(str(k['last_used_at'] or 'Never'))
+        revoke_btn = ""
+        if k['is_active']:
+            revoke_btn = f'''
+            <form method="POST" action="/developer/revoke-key" style="display:inline;">
+                <input type="hidden" name="key_id" value="{k['id']}">
+                <button type="submit" class="btn btn-secondary"
+                        style="font-size:11px;padding:3px 10px;"
+                        onclick="return confirm('Revoke this key? This cannot be undone.')">Revoke</button>
+            </form>'''
+        key_rows += f'''
+        <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:10px;font-family:var(--font-mono);font-size:13px;">{escape(k['key_preview'])}</td>
+            <td style="padding:10px;">{escape(k['name'])}</td>
+            <td style="padding:10px;">{status}</td>
+            <td style="padding:10px;text-align:right;font-weight:600;">{count}</td>
+            <td style="padding:10px;font-size:12px;color:var(--ink-muted);">{last_used}</td>
+            <td style="padding:10px;">{revoke_btn}</td>
+        </tr>'''
+
+    empty_row = '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--ink-muted);">No API keys yet. Create one to get started.</td></tr>'
+
+    body = f'''
+    <div class="container" style="max-width:800px;padding:48px 24px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+            <div>
+                <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin:0;">
+                    Developer
+                </h1>
+                <p style="color:var(--ink-muted);font-size:15px;margin:4px 0 0;">
+                    API keys for the IndieStack MCP server and REST API.
+                </p>
+            </div>
+            <a href="/dashboard" class="btn btn-secondary" style="font-size:13px;">&larr; Dashboard</a>
+        </div>
+
+        {new_key_html}
+
+        <div class="card" style="margin-bottom:24px;padding:24px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                <h2 style="font-family:var(--font-display);font-size:20px;margin:0;color:var(--ink);">Your API Keys</h2>
+                <form method="POST" action="/developer/create-key">
+                    <input type="hidden" name="name" value="Default">
+                    <button type="submit" class="btn btn-primary" style="font-size:13px;">+ New Key</button>
+                </form>
+            </div>
+            <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                <thead><tr style="border-bottom:2px solid var(--border);">
+                    <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Key</th>
+                    <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Name</th>
+                    <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Status</th>
+                    <th style="padding:10px;text-align:right;font-size:13px;color:var(--ink-muted);">Requests (30d)</th>
+                    <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Last Used</th>
+                    <th style="padding:10px;font-size:13px;"></th>
+                </tr></thead>
+                <tbody>{key_rows if key_rows else empty_row}</tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="card" style="padding:24px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 16px;color:var(--ink);">Quick Start</h2>
+
+            <h3 style="font-size:15px;margin:0 0 8px;color:var(--ink);">MCP Server (Claude, Cursor, Windsurf)</h3>
+            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Install once, your AI assistant searches IndieStack before writing code.</p>
+            <pre style="background:#1A2D4A;color:#00D4F5;padding:14px;border-radius:8px;font-size:13px;
+                        font-family:var(--font-mono);overflow-x:auto;margin-bottom:20px;">pip install indiestack</pre>
+            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Set your key as an environment variable in your MCP client config:</p>
+            <pre style="background:#1A2D4A;color:#00D4F5;padding:14px;border-radius:8px;font-size:13px;
+                        font-family:var(--font-mono);overflow-x:auto;margin-bottom:24px;">INDIESTACK_API_KEY=your_key_here</pre>
+
+            <h3 style="font-size:15px;margin:0 0 8px;color:var(--ink);">REST API</h3>
+            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Query the API directly with your key as a query parameter.</p>
+            <pre style="background:#1A2D4A;color:#00D4F5;padding:14px;border-radius:8px;font-size:13px;
+                        font-family:var(--font-mono);overflow-x:auto;margin-bottom:20px;">curl &quot;{BASE_URL}/api/tools/search?q=analytics&amp;key=your_key_here&quot;</pre>
+
+            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Or use the Authorization header:</p>
+            <pre style="background:#1A2D4A;color:#00D4F5;padding:14px;border-radius:8px;font-size:13px;
+                        font-family:var(--font-mono);overflow-x:auto;">curl -H &quot;Authorization: Bearer your_key_here&quot; &quot;{BASE_URL}/api/tools/search?q=analytics&quot;</pre>
+        </div>
+    </div>'''
+
+    return HTMLResponse(page_shell("Developer — IndieStack", body, user=user))
+
+
+@router.post("/developer/create-key")
+async def developer_create_key(request: Request):
+    user = request.state.user
+    redirect = require_login(user)
+    if redirect:
+        return redirect
+
+    form = await request.form()
+    name = str(form.get("name", "Default")).strip()[:50] or "Default"
+
+    db = request.state.db
+    # Max 5 active keys per user
+    keys = await get_api_keys_for_user(db, user['id'])
+    active = [k for k in keys if k['is_active']]
+    if len(active) >= 5:
+        return RedirectResponse(url="/developer?error=max_keys", status_code=303)
+
+    result = await create_api_key(db, user['id'], name)
+    return RedirectResponse(url=f"/developer?new={result['key']}", status_code=303)
+
+
+@router.post("/developer/revoke-key")
+async def developer_revoke_key(request: Request):
+    user = request.state.user
+    redirect = require_login(user)
+    if redirect:
+        return redirect
+
+    form = await request.form()
+    try:
+        key_id = int(form.get("key_id", 0))
+    except (ValueError, TypeError):
+        return RedirectResponse(url="/developer", status_code=303)
+
+    await revoke_api_key(request.state.db, key_id, user['id'])
+    return RedirectResponse(url="/developer", status_code=303)

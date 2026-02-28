@@ -6,7 +6,7 @@ from html import escape
 from urllib.parse import urlencode
 
 from indiestack.routes.components import page_shell, tool_card, search_filters_html, pagination_html
-from indiestack.db import search_tools_advanced, get_all_categories
+from indiestack.db import search_tools_advanced, get_all_categories, log_search, get_search_demand
 
 router = APIRouter()
 
@@ -87,17 +87,49 @@ async def search(request: Request):
 
     pagination = pagination_html(page, total_pages, base_url)
 
+    # Log the search for analytics
+    if query.strip():
+        try:
+            top_slug = results[0]['slug'] if results else None
+            top_name = results[0]['name'] if results else None
+            await log_search(db, query, 'web', total, top_slug, top_name)
+        except Exception:
+            pass
+
     if not results:
         no_results_msg = ""
         if query.strip():
+            demand = await get_search_demand(db, query, days=30)
+            demand_line = ""
+            if demand > 1:
+                demand_line = f"""
+                <p style="font-size:13px;color:var(--accent);font-weight:600;margin:8px 0 0 0;">
+                    {demand} people have searched for this in the last 30 days
+                </p>
+                """
             no_results_msg = f"""
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
                 0 results for &ldquo;{safe_query}&rdquo;
             </h2>
-            <p style="color:var(--ink-muted);font-size:16px;">
-                No tools found for that query. Try different keywords or
+            <p style="color:var(--ink-muted);font-size:16px;margin-bottom:24px;">
+                No indie tools found for that query. Try different keywords or
                 <a href="/" style="color:var(--terracotta);">browse categories</a>.
             </p>
+            <div style="background:linear-gradient(135deg, var(--cream-dark), #FFF7ED);border:1px solid var(--border);
+                        border-left:3px solid var(--accent);border-radius:var(--radius-sm);padding:20px 24px;">
+                <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin:0 0 8px 0;">
+                    Market gap spotted
+                </h3>
+                <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;margin:0 0 12px 0;">
+                    Nobody&rsquo;s built an indie <strong>{safe_query}</strong> tool yet.
+                    If you&rsquo;re a maker, this is a gap waiting to be filled &mdash;
+                    be the first to list yours and own this category.
+                </p>
+                {demand_line}
+                <a href="/submit" class="btn btn-primary" style="padding:10px 20px;font-size:14px;margin-top:12px;">
+                    Submit Your Tool
+                </a>
+            </div>
             """
         else:
             no_results_msg = '<p style="color:var(--ink-muted);font-size:16px;">Enter a search term to find tools.</p>'
@@ -117,6 +149,27 @@ async def search(request: Request):
     if query.strip():
         result_label += f' for &ldquo;{safe_query}&rdquo;'
 
+    # Check if results came from 'replaces' fallback (alternatives)
+    alternatives_banner = ""
+    if query.strip() and results:
+        q_lower = query.strip().lower()
+        is_alternatives = any(
+            q_lower in (r.get('replaces', '') or '').lower()
+            for r in results
+        )
+        if is_alternatives:
+            alt_slug = q_lower.replace(' ', '-').replace('.', '-')
+            result_label = f'{total} indie alternative{"s" if total != 1 else ""} to &ldquo;{safe_query}&rdquo;'
+            alternatives_banner = f"""
+            <div style="background:var(--cream-dark);border:1px solid var(--border);border-left:3px solid var(--accent);
+                        border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:20px;font-size:14px;color:var(--ink);">
+                Looking for <strong>{safe_query}</strong>? These indie tools are alternatives you can use instead.
+                <a href="/alternatives/{escape(alt_slug)}" style="color:var(--accent);font-weight:600;margin-left:4px;">
+                    View full comparison &rarr;
+                </a>
+            </div>
+            """
+
     body = f"""
     <div class="container" style="padding:48px 24px;">
         <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin-bottom:24px;">Search</h1>
@@ -125,6 +178,7 @@ async def search(request: Request):
         <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:16px;">
             {result_label}
         </h2>
+        {alternatives_banner}
         <div class="card-grid">
             {cards_html}
         </div>

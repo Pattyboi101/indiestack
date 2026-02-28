@@ -6,6 +6,7 @@ from html import escape
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
+from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card
 from indiestack import db as _db
 
@@ -35,113 +36,135 @@ _TEXT = 'style="color:var(--ink);"'
 @router.get("/about", response_class=HTMLResponse)
 async def about_page(request: Request):
     body = f"""
-    <div {_CONTAINER}>
-      <h1 {_HEADING}>About IndieStack</h1>
-      <p {_TEXT}>
-        IndieStack is a curated marketplace for indie SaaS tools — built by solo developers
-        and small teams who pour their creativity into software that solves real problems.
-      </p>
-      <p {_TEXT}>
-        We started IndieStack because we noticed something broken: incredible tools built by
-        independent makers were getting buried beneath big-budget SaaS products with massive
-        marketing spend. Discovery was the bottleneck, not quality.
+    <div style="max-width:720px;margin:0 auto;padding:64px 24px;">
+
+      <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);line-height:1.2;margin-bottom:8px;">
+        Two uni students, 5 hours of sleep, and an indie tool catalog.
+      </h1>
+      <p style="font-size:18px;color:var(--ink-muted);line-height:1.6;margin-bottom:48px;">
+        IndieStack is built by people who know what it&rsquo;s like to ship something and have nobody see it.
       </p>
 
-      <h2 {_HEADING}>Our Mission</h2>
-      <p {_TEXT}>
-        We believe indie tools deserve visibility alongside the giants. Our mission is to help
-        solo developers and small teams get discovered by the people who need their products most.
-        Every listing on IndieStack is a real product built by a real maker — no vapourware, no
-        enterprise bloat, just focused software that does its job well.
+      <!-- The story -->
+      <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
+        How this started
+      </h2>
+      <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
+        Pat kept trying to launch side projects &mdash; GovLink, Logic Gate &mdash; and kept hitting the same wall:
+        nobody could find them. Reddit wants you to farm karma before you can post. Product Hunt is a
+        popularity contest. Hacker News is gated. The places where indie makers are supposed to get
+        discovered are ironically the hardest places to be seen.
+      </p>
+      <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
+        Meanwhile Ed was building AI automations for solar panel businesses and running into the same
+        problem &mdash; every tool cost $29.99 a month, and the good stuff built by real people was
+        impossible to find. One night Pat texted: <em>&ldquo;There&rsquo;s a gap here we need to fill.
+        This will solve all of our problems with SaaS.&rdquo;</em> That text became IndieStack.
       </p>
 
-      <h2 {_HEADING}>Who We Are</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0;">
-        <div class="card" style="text-align:center;padding:28px;">
-          <div style="width:64px;height:64px;border-radius:50%;background:var(--terracotta);color:white;
-                      display:flex;align-items:center;justify-content:center;font-size:24px;
-                      font-family:var(--font-display);margin:0 auto 12px;">P</div>
-          <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);">Patrick</h3>
-          <p style="color:var(--ink-muted);font-size:14px;margin:8px 0;">Co-founder. Full-time CS student, indie builder, and AI enthusiast.</p>
-          <p style="color:var(--ink-muted);font-size:12px;margin:4px 0 0;">Shipped GovLink &middot; Building IndieStack</p>
-          <div style="display:flex;gap:12px;justify-content:center;margin-top:12px;">
-            <a href="https://x.com/indiestack_dev" style="color:var(--ink-muted);font-size:13px;">Twitter/X</a>
-            <a href="https://github.com/pattyboi101" style="color:var(--ink-muted);font-size:13px;">GitHub</a>
+      <!-- The mission -->
+      <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-top:40px;margin-bottom:12px;">
+        What we&rsquo;re actually building
+      </h2>
+      <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
+        A curated catalog of indie tools that&rsquo;s searchable by both humans and AI agents. We have an
+        <a href="https://pypi.org/project/indiestack/" style="color:var(--accent);">MCP server</a>
+        that plugs into Claude, Cursor, and Windsurf &mdash; so when a developer asks their AI to build
+        something, it checks IndieStack first. If an indie tool already does the job, the agent recommends
+        it instead of writing code from scratch.
+      </p>
+      <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
+        Think of it like humans sharing knowledge across generations &mdash; except we&rsquo;re building the same
+        system for AI agents. Every tool listed here saves someone else from reinventing the wheel, saves
+        tokens, and helps the maker build a reputation.
+      </p>
+
+      <!-- Who we are -->
+      <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-top:40px;margin-bottom:20px;">
+        Who we are
+      </h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+        <!-- Pat -->
+        <div class="card" style="padding:28px;">
+          <img src="/founders/pat.jpg" alt="Patrick Amey-Jones" style="width:56px;height:56px;border-radius:50%;object-fit:cover;margin-bottom:12px;">
+          <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:4px;">
+            Pat <span style="font-size:13px;color:var(--ink-muted);font-family:var(--font-body);font-weight:400;">(a.k.a. Oatcake)</span>
+          </h3>
+          <p style="color:var(--accent);font-size:13px;font-weight:600;margin-bottom:12px;">Builds the product</p>
+          <p style="color:var(--ink-light);font-size:14px;line-height:1.7;">
+            Final-year Zoology student at Cardiff Uni. Does data analytics in R and Python by day, builds
+            IndieStack with Claude by night. Averages 5&ndash;6 hours of sleep. Previously shipped GovLink.
+            Believes the second mouse gets the cheese. Maybe the best Binding of Isaac player in the world.
+          </p>
+          <div style="display:flex;gap:12px;margin-top:12px;">
+            <a href="https://github.com/pattyboi101" style="color:var(--ink-muted);font-size:13px;text-decoration:none;">GitHub</a>
+            <a href="https://instagram.com/pattyaj_" style="color:var(--ink-muted);font-size:13px;text-decoration:none;">Instagram</a>
           </div>
         </div>
-        <div class="card" style="text-align:center;padding:28px;">
-          <div style="width:64px;height:64px;border-radius:50%;background:var(--terracotta);color:white;
-                      display:flex;align-items:center;justify-content:center;font-size:24px;
-                      font-family:var(--font-display);margin:0 auto 12px;">E</div>
-          <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);">Ed</h3>
-          <p style="color:var(--ink-muted);font-size:14px;margin:8px 0;">Co-founder. Full-time CS student, indie builder, and AI enthusiast.</p>
-          <p style="color:var(--ink-muted);font-size:12px;margin:4px 0 0;">Building IndieStack</p>
-          <div style="display:flex;gap:12px;justify-content:center;margin-top:12px;">
-            <a href="https://x.com/indiestack_dev" style="color:var(--ink-muted);font-size:13px;">Twitter/X</a>
+        <!-- Ed -->
+        <div class="card" style="padding:28px;">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--terracotta);color:white;
+                      display:flex;align-items:center;justify-content:center;font-size:22px;
+                      font-family:var(--font-display);margin-bottom:12px;">E</div>
+          <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:4px;">
+            Ed <span style="font-size:13px;color:var(--ink-muted);font-family:var(--font-body);font-weight:400;">(a.k.a. Jabba)</span>
+          </h3>
+          <p style="color:var(--accent);font-size:13px;font-weight:600;margin-bottom:12px;">Handles growth</p>
+          <p style="color:var(--ink-light);font-size:14px;line-height:1.7;">
+            Co-founder. Student teacher by day, built an AI receptionist and lead verifier for solar
+            panel businesses on n8n before channelling that energy into IndieStack. Runs Reddit outreach,
+            maker relationships, and social strategy. Semi-professional Brawlhalla player.
+          </p>
+          <div style="display:flex;gap:12px;margin-top:8px;">
+            <a href="https://x.com/indiestack_dev" style="color:var(--ink-muted);font-size:13px;text-decoration:none;">X / Twitter</a>
           </div>
         </div>
       </div>
-      <p {_TEXT} style="margin-top:8px;">
-        We met at school in Cardiff, bonded over code, and never stopped building. Now we're
-        full-time uni students who spend our evenings and weekends shipping indie tools. We started
-        IndieStack because we kept finding amazing software buried under big-budget products &mdash;
-        and we knew indie makers deserved better distribution. A few months in, we're more
-        convinced than ever.
+
+      <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
+        We&rsquo;ve been friends since school &mdash; we used to play Pok&eacute;mon Go together before
+        either of us knew what an API was. Now we&rsquo;re based in Cardiff, building IndieStack with the
+        same energy (and once smashed a laptop screen fighting over the keyboard because we couldn&rsquo;t
+        agree whose prompt was better).
+      </p>
+      <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
+        Neither of us has a background in SaaS or startups &mdash; Pat studies zoology and Ed was
+        automating solar businesses. This whole thing started because we couldn&rsquo;t get our own
+        projects noticed. That frustration turned into IndieStack.
       </p>
 
-      <h2 {_HEADING}>Why IndieStack?</h2>
-      <p {_TEXT}>
-        Big SaaS directories charge extortionate listing fees or bury indie tools in favour of
-        paying sponsors. IndieStack is different. Listing is completely free, we verify every listing, and we actively champion indie makers through
-        curated collections, maker profiles, and a community that cares about craft over scale.
+      <!-- Why indie tools -->
+      <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-top:40px;margin-bottom:12px;">
+        Why indie tools specifically
+      </h2>
+      <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
+        Because we were sick of every tool costing $29.99 a month. We just wanted a place to find
+        powerful tools built by real people, not corporations. The vibecoding wave means more people
+        than ever are building real software &mdash; but getting discovered is still the hardest part.
+        If you&rsquo;ve built something useful, you should be able to put it in front of people without
+        farming karma or paying for placement.
       </p>
-      <p {_TEXT}>
-        If you're a maker with a tool worth sharing, or a buyer looking for focused, high-quality
-        software — you're in the right place.
+      <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
+        Abandonware is a real problem &mdash; that&rsquo;s why we verify every tool on IndieStack. Each one is
+        reviewed by a human before it goes live. No spam. No abandoned projects. No enterprise products
+        pretending to be indie. Just real tools by real people.
       </p>
 
-      <h2 {_HEADING}>How We Compare</h2>
-      <div style="overflow-x:auto;margin:24px 0;">
-        <table style="width:100%;border-collapse:collapse;font-size:14px;">
-          <thead>
-            <tr style="border-bottom:2px solid var(--border);text-align:left;">
-              <th style="padding:12px;">Platform</th>
-              <th style="padding:12px;">Fee</th>
-              <th style="padding:12px;">Indie Focus</th>
-              <th style="padding:12px;">Curation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom:1px solid var(--border);background:var(--cream-dark);">
-              <td style="padding:12px;font-weight:600;">IndieStack</td>
-              <td style="padding:12px;">5% (3% Pro)</td>
-              <td style="padding:12px;color:#16a34a;font-weight:600;">Yes &mdash; verified indie</td>
-              <td style="padding:12px;">Manual review</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:12px;">Gumroad</td>
-              <td style="padding:12px;">10%</td>
-              <td style="padding:12px;color:var(--ink-muted);">No</td>
-              <td style="padding:12px;color:var(--ink-muted);">No</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:12px;">Lemon Squeezy</td>
-              <td style="padding:12px;">5% + 50p</td>
-              <td style="padding:12px;color:var(--ink-muted);">No</td>
-              <td style="padding:12px;color:var(--ink-muted);">No</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:12px;">AppSumo</td>
-              <td style="padding:12px;">70%+</td>
-              <td style="padding:12px;color:var(--ink-muted);">No</td>
-              <td style="padding:12px;">Editorial</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- CTA -->
+      <div style="text-align:center;padding:40px 0;border-top:1px solid var(--border);margin-top:32px;">
+        <p style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
+          Built something? We&rsquo;d love to see it.
+        </p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a href="/submit" class="btn btn-primary" style="padding:12px 28px;">Submit Your Tool</a>
+          <a href="/why-list" class="btn btn-secondary" style="padding:12px 28px;">Why list here?</a>
+        </div>
       </div>
+
     </div>
     """
-    return HTMLResponse(page_shell("About", body, user=request.state.user))
+    return HTMLResponse(page_shell("About", body, user=request.state.user,
+                                    description="IndieStack is built by two uni students in Cardiff who couldn't get their own projects noticed. Now we're building the indie tool catalog AI agents actually use."))
 
 
 @router.get("/terms", response_class=HTMLResponse)
@@ -176,13 +199,11 @@ async def terms_page(request: Request):
         </li>
 
         <li>
-          <h2 {_HEADING}>Payments &amp; Refunds</h2>
-          <p>All payments are processed securely through Stripe. IndieStack does not store
-          your card details. Purchases on the Platform are for digital goods (software tools
-          and licences). Due to the nature of digital goods, refunds are handled on a
-          case-by-case basis at the discretion of the tool maker. Platform fees are
-          non-refundable. All prices are displayed inclusive of applicable taxes where
-          required.</p>
+          <h2 {_HEADING}>Payments</h2>
+          <p>IndieStack is currently free to use. There are no listing fees, subscription charges,
+          or transaction fees. If we introduce paid features in the future, we will notify users
+          in advance and update these terms accordingly. Any future payments will be processed
+          securely through Stripe.</p>
         </li>
 
         <li>
@@ -195,10 +216,11 @@ async def terms_page(request: Request):
 
         <li>
           <h2 {_HEADING}>Prohibited Conduct</h2>
-          <p>You agree not to: submit false or misleading listings; attempt to circumvent
-          Platform fees; scrape or harvest data from the Platform; interfere with the
-          Platform's operation; impersonate another user or maker; or use the Platform
-          for any unlawful purpose.</p>
+          <p>You agree not to: submit false or misleading listings; scrape or harvest data
+          from the Platform beyond what is available via our public API and MCP server;
+          interfere with the Platform's operation; impersonate another user or maker;
+          abuse the search or reaction features (e.g. automated clicking); or use the
+          Platform for any unlawful purpose.</p>
         </li>
 
         <li>
@@ -234,7 +256,12 @@ async def terms_page(request: Request):
       </ol>
     </div>
     """
-    return HTMLResponse(page_shell("Terms of Service", body, user=request.state.user))
+    return HTMLResponse(page_shell(
+        "Terms of Service", body,
+        user=request.state.user,
+        description="Terms of Service for IndieStack, the curated indie tool catalog.",
+        canonical="/terms",
+    ))
 
 
 @router.get("/privacy", response_class=HTMLResponse)
@@ -247,32 +274,49 @@ async def privacy_page(request: Request):
       <h2 {_HEADING}>Data We Collect</h2>
       <p {_TEXT}>We collect the following information:</p>
       <ul {_TEXT}>
-        <li><strong>Account information:</strong> your email address and name when you create an account.</li>
-        <li><strong>IP address:</strong> used for analytics, rate limiting, and abuse prevention.</li>
-        <li><strong>Payment information:</strong> processed securely by Stripe. We do not store your card
-        details on our servers — all payment data is handled directly by Stripe in accordance with
-        PCI-DSS standards.</li>
+        <li><strong>Account information:</strong> your email address and display name when you create
+        an account.</li>
+        <li><strong>Session cookie:</strong> a session identifier stored in your browser to keep you
+        logged in. Anonymous visitors also receive a session cookie so that features like tool
+        reactions work without an account.</li>
+        <li><strong>IP address:</strong> used for rate limiting and abuse prevention. We do not build
+        profiles from IP addresses.</li>
+        <li><strong>Usage data:</strong> page views, search queries, outbound clicks to tool websites,
+        and tool reactions ("I use this" / "Bookmarked"). This data is stored in our database and
+        used to power activity feeds, search rankings, and aggregate statistics shown on the site.</li>
+        <li><strong>MCP server queries:</strong> when an AI agent searches our catalog via the MCP
+        server, we log the search query and increment view counts. No personal data from the
+        agent's user is collected.</li>
       </ul>
 
       <h2 {_HEADING}>How We Use Your Data</h2>
-      <p {_TEXT}>Your data is used to: provide and maintain your account, process transactions,
-      send transactional emails (e.g. purchase confirmations), improve the Platform, and prevent
+      <p {_TEXT}>Your data is used to: provide and maintain your account, send transactional emails
+      (e.g. email verification, tool approval notifications), improve search results and tool
+      rankings, display aggregate activity on the site (e.g. "X searches this week"), and prevent
       abuse or fraud.</p>
 
-      <h2 {_HEADING}>Third-Party Data Sharing</h2>
-      <p {_TEXT}>We do not sell or share your personal data with third parties, with one exception:
-      payment information is shared with <strong>Stripe</strong> solely for the purpose of processing
-      transactions. Stripe's privacy policy governs their handling of your data.</p>
+      <h2 {_HEADING}>Third-Party Services</h2>
+      <p {_TEXT}>We use the following third-party services:</p>
+      <ul {_TEXT}>
+        <li><strong>Fly.io</strong> — hosting. Your requests are processed on Fly.io infrastructure.</li>
+        <li><strong>Gmail SMTP</strong> — transactional emails are sent from our Gmail account.</li>
+        <li><strong>Stripe</strong> — if and when we introduce paid features, payments will be processed
+        by Stripe. We do not currently collect or store any payment information.</li>
+      </ul>
+      <p {_TEXT}>We do not sell your personal data. We do not use any third-party analytics,
+      advertising, or tracking services.</p>
 
       <h2 {_HEADING}>Cookies</h2>
-      <p {_TEXT}>IndieStack uses a single session cookie to keep you logged in. We do not use
-      tracking cookies, advertising cookies, or any third-party cookie-based analytics. No cookie
-      consent banner is needed because we only use strictly necessary cookies.</p>
+      <p {_TEXT}>IndieStack uses a single session cookie (<code>session_id</code>) for authentication
+      and anonymous feature access (e.g. reactions). We do not use tracking cookies, advertising
+      cookies, or any third-party cookie-based analytics. No cookie consent banner is needed because
+      we only use strictly necessary cookies.</p>
 
       <h2 {_HEADING}>Data Retention</h2>
       <p {_TEXT}>Account data is retained for as long as your account is active. If you delete your
       account, your personal data will be removed within 30 days. Anonymised analytics data (page
-      views, aggregated usage statistics) may be retained indefinitely.</p>
+      views, search logs, aggregated usage statistics) may be retained indefinitely. Session data
+      for anonymous visitors is periodically cleaned up.</p>
 
       <h2 {_HEADING}>Your Rights (GDPR)</h2>
       <p {_TEXT}>If you are in the UK or EU, you have the right to:</p>
@@ -286,37 +330,47 @@ async def privacy_page(request: Request):
 
       <h2 {_HEADING}>Contact</h2>
       <p {_TEXT}>For any privacy-related questions or to exercise your rights, contact us at
-      <a href="mailto:privacy@indiestack.dev">privacy@indiestack.dev</a>.</p>
+      <a href="mailto:pajebay1@gmail.com" style="color:var(--accent);">pajebay1@gmail.com</a>.</p>
     </div>
     """
-    return HTMLResponse(page_shell("Privacy Policy", body, user=request.state.user))
+    return HTMLResponse(page_shell(
+        "Privacy Policy", body,
+        user=request.state.user,
+        description="Privacy policy for IndieStack. We collect minimal data, use no third-party trackers, and never sell your information.",
+        canonical="/privacy",
+    ))
 
 
 @router.get("/faq", response_class=HTMLResponse)
 async def faq_page(request: Request):
     questions = [
         (
-            "How do I list my tool on IndieStack?",
-            "Click <strong>Submit a Tool</strong> in the navigation bar. Fill out the form with "
-            "your tool's name, description, pricing, and a link to your website. Once submitted, "
-            "our team will review your listing and approve it — usually within 24-48 hours."
+            "What is IndieStack?",
+            "IndieStack is a hand-curated catalog of indie tools &mdash; small software products "
+            "built by solo founders and tiny teams. Every tool is reviewed by a human before it goes "
+            "live. The catalog is searchable by both humans on the website and AI agents via our "
+            "<a href='https://pypi.org/project/indiestack/' style='color:var(--accent);'>MCP server</a>."
         ),
         (
-            "How do I get paid?",
-            "Payments are processed through Stripe Connect. When you set up your maker profile, "
-            "you'll connect your Stripe account. Revenue from sales is deposited directly into your "
-            "Stripe balance, minus the platform fee."
+            "How do I list my tool?",
+            "Click <a href='/submit' style='color:var(--accent);'>Submit a Tool</a> in the navigation bar. "
+            "Fill out the form with your tool's name, description, pricing, and a link to your website. "
+            "Takes about 2 minutes. Our team reviews every submission and approves it &mdash; usually "
+            "within 24&ndash;48 hours."
         ),
         (
-            "What's the platform fee?",
-            "Listing on IndieStack is completely free. When we launch paid features like sales and "
-            "boost placements, fees will be kept fair and transparent."
+            "Is it free to list?",
+            "Yes. Listing your tool on IndieStack is completely free. No monthly charges, no upfront "
+            "fees. We want the catalog to be as comprehensive as possible."
         ),
         (
-            "Can I list a free tool?",
-            "Absolutely. Free tools are welcome on IndieStack. Many makers list a free version "
-            "alongside a paid tier. Free listings help you build visibility and gain upvotes from "
-            "the community."
+            "How does AI agent discovery work?",
+            "IndieStack has an MCP server listed on <a href='https://pypi.org/project/indiestack/' "
+            "style='color:var(--accent);'>PyPI</a> and the "
+            "<a href='https://registry.modelcontextprotocol.io/' style='color:var(--accent);'>official MCP Registry</a>. "
+            "When developers install it in Claude, Cursor, or Windsurf, their AI assistant can search "
+            "our catalog before writing code from scratch. Your tool gets recommended directly in "
+            "the conversation &mdash; not buried on page 3 of a directory."
         ),
         (
             "How does tool verification work?",
@@ -325,33 +379,29 @@ async def faq_page(request: Request):
             "our quality standards. Verified tools display a badge on their listing."
         ),
         (
-            "How long does approval take?",
-            "Most submissions are reviewed and approved within <strong>24-48 hours</strong>. If we "
-            "need more information or spot an issue, we'll email you with feedback."
+            "Can I list a free tool?",
+            "Absolutely. Free and open-source tools are welcome. Many makers list a free version "
+            "alongside a paid tier. All tools get the same visibility regardless of pricing."
         ),
         (
             "Can I edit my listing after it's published?",
             "Yes. Log in to your maker dashboard and you can update your tool's description, pricing, "
-            "images, and other details at any time. Major changes may trigger a brief re-review."
+            "tags, and other details at any time. Major changes may trigger a brief re-review."
         ),
         (
-            "What payment methods do buyers have?",
-            "Buyers can pay with any major credit or debit card via Stripe. We support Visa, "
-            "Mastercard, American Express, and more. All transactions are secured with SSL encryption."
+            "What are reactions (&ldquo;I use this&rdquo; / &ldquo;Bookmarked&rdquo;)?",
+            "Anyone can react to a tool to signal that they use it or want to remember it. "
+            "These help other developers gauge real adoption and help makers see who's interested. "
+            "You don't need an account to react."
         ),
         (
-            "Is there a free tier for makers?",
-            "Listing your tool on IndieStack is completely free. You only pay the platform fee when "
-            "you make a sale. There are no monthly charges or upfront listing fees."
+            "Who's behind IndieStack?",
+            "Two uni students in Cardiff &mdash; Pat and Ed. Pat builds the product, Ed handles "
+            "growth and maker outreach. You can read the full story on our "
+            "<a href='/about' style='color:var(--accent);'>about page</a>."
         ),
         (
-            "How do upvotes and wishlists work?",
-            "Anyone can upvote a tool to show support — it helps surface the best tools in our "
-            "rankings. Logged-in users can also save tools to their wishlist for easy access later. "
-            "Makers can see upvote and wishlist counts in their dashboard."
-        ),
-        (
-            "Why should I buy an indie tool instead of building it myself with AI?",
+            "Why use an indie tool instead of building it myself with AI?",
             "You <em>could</em> vibe-code anything &mdash; but should you? Every tool you build from "
             "scratch is tokens burned, bugs to fix, and features to maintain forever. A polished indie "
             "tool saves you thousands of tokens and gives you something battle-tested from day one. "
@@ -371,16 +421,42 @@ async def faq_page(request: Request):
     <div {_CONTAINER}>
       <h1 {_HEADING}>Frequently Asked Questions</h1>
       <p {_TEXT}>Got questions? We've got answers. If you can't find what you're looking for,
-      drop us an email at <a href="mailto:hello@indiestack.dev">hello@indiestack.dev</a>.</p>
+      drop us an email at <a href="mailto:pajebay1@gmail.com" style="color:var(--accent);">pajebay1@gmail.com</a>.</p>
       {details_html}
     </div>
     """
-    return HTMLResponse(page_shell("FAQ", body, user=request.state.user))
+    return HTMLResponse(page_shell(
+        "FAQ — IndieStack", body,
+        user=request.state.user,
+        description="Frequently asked questions about IndieStack — how to list your tool, AI agent discovery via MCP, verification, and more.",
+        canonical="/faq",
+    ))
 
 
 # ── Blog ─────────────────────────────────────────────────────────────────
 
 _BLOG_POSTS = [
+    {
+        "slug": "agent-infrastructure",
+        "title": "IndieStack Is Now the Procurement Layer for AI Agents",
+        "date": "2026-02-27",
+        "reading_time": "5 min read",
+        "excerpt": "AI agents waste 30k-120k tokens building things that already exist. We built 5 features to make IndieStack the first place agents check before writing code.",
+    },
+    {
+        "slug": "marketplace-launch",
+        "title": "IndieStack Marketplace is Live — Sell Your Tools, Keep 95%",
+        "date": "2026-03-02",
+        "reading_time": "4 min read",
+        "excerpt": "Indie developers can now sell their tools directly on IndieStack. 5% platform fee, Stripe payouts to your bank, and a curated audience of developers who want alternatives to big SaaS.",
+    },
+    {
+        "slug": "tokens-saved",
+        "title": "I asked Claude to build analytics from scratch. It cost 47,000 tokens. The alternative cost 2 lines.",
+        "date": "2026-02-23",
+        "reading_time": "4 min read",
+        "excerpt": "A real comparison: 47,000 tokens and three hours of back-and-forth versus 700 tokens and four minutes. The MCP server that makes the difference.",
+    },
     {
         "slug": "zero-js-frameworks",
         "title": "How We Built a Full Marketplace With Python, SQLite, and Zero JS Frameworks",
@@ -407,11 +483,8 @@ async def blog_index(request: Request):
     cards = ""
     for post in _BLOG_POSTS:
         cards += f"""
-        <a href="/blog/{post['slug']}" style="display:block;text-decoration:none;color:inherit;
-                  padding:28px;border:1px solid var(--border);border-radius:var(--radius);
-                  background:var(--card-bg);transition:transform 0.15s ease,box-shadow 0.15s ease;margin-bottom:20px;"
-           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 40px rgba(45,41,38,0.12)'"
-           onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+        <a href="/blog/{post['slug']}" class="card hover-lift" style="display:block;text-decoration:none;color:inherit;
+                  padding:28px;margin-bottom:20px;">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
                 <time style="font-family:var(--font-mono);font-size:13px;color:var(--ink-muted);">{post['date']}</time>
                 <span style="font-family:var(--font-mono);font-size:13px;color:var(--slate-dark);">{post['reading_time']}</span>
@@ -436,9 +509,757 @@ async def blog_index(request: Request):
     ))
 
 
+@router.get("/blog/agent-infrastructure", response_class=HTMLResponse)
+async def blog_agent_infrastructure(request: Request):
+    post = _BLOG_POSTS[0]
+
+    json_ld = """{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "IndieStack Is Now the Procurement Layer for AI Agents",
+        "datePublished": "2026-02-27",
+        "dateModified": "2026-02-27",
+        "author": {
+            "@type": "Organization",
+            "name": "IndieStack",
+            "url": "_BASE_URL_PLACEHOLDER_"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "IndieStack",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "_BASE_URL_PLACEHOLDER_/logo.png"
+            }
+        },
+        "description": "AI agents waste 30k-120k tokens building things that already exist. We built 5 features to make IndieStack the first place agents check before writing code.",
+        "mainEntityOfPage": "_BASE_URL_PLACEHOLDER_/blog/agent-infrastructure",
+        "wordCount": 1100
+    }""".replace("_BASE_URL_PLACEHOLDER_", BASE_URL)
+
+    extra_head = f"""
+    <script type="application/ld+json">{json_ld}</script>
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2026-02-27">
+    <meta property="article:author" content="IndieStack">
+    <style>
+        .blog-article h2 {{
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--ink);
+            margin: 40px 0 16px;
+        }}
+        .blog-article p {{
+            margin-bottom: 20px;
+        }}
+        .blog-article blockquote {{
+            border-left: 4px solid var(--slate);
+            margin: 28px 0;
+            padding: 16px 24px;
+            background: var(--cream-dark);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--ink);
+            line-height: 1.7;
+        }}
+        .blog-article pre {{
+            background: var(--terracotta);
+            color: #E8ECF0;
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin: 24px 0;
+        }}
+        .blog-article pre code {{
+            color: #E8ECF0;
+        }}
+        .blog-article code {{
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+            background: var(--cream-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }}
+        .blog-article a {{
+            color: var(--slate-dark);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }}
+        .blog-article a:hover {{
+            color: var(--terracotta);
+        }}
+        .blog-article ol {{
+            padding-left: 24px;
+            margin: 20px 0;
+        }}
+        .blog-article ol li {{
+            margin-bottom: 12px;
+        }}
+        .blog-article ul {{
+            padding-left: 24px;
+            margin: 20px 0;
+        }}
+        .blog-article ul li {{
+            margin-bottom: 10px;
+        }}
+    </style>
+    """
+
+    tweet_text = "IndieStack%20is%20now%20the%20procurement%20layer%20for%20AI%20agents.%205%20features%20so%20agents%20check%20IndieStack%20before%20writing%20boilerplate.%0A%0Ahttps%3A%2F%2Findiestack.fly.dev%2Fblog%2Fagent-infrastructure%0A%0A%40indiestack_dev"
+
+    body = f"""
+    <article class="blog-article" {_BLOG_CONTAINER}>
+        <header style="margin-bottom:40px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <time style="font-family:var(--font-mono);font-size:13px;color:var(--ink-muted);">{post['date']}</time>
+                <span style="font-family:var(--font-mono);font-size:13px;color:var(--slate-dark);">{post['reading_time']}</span>
+            </div>
+            <h1 {_BLOG_TITLE}>{post['title']}</h1>
+            <p style="font-size:17px;color:var(--ink-muted);line-height:1.6;margin-top:12px;">{post['excerpt']}</p>
+        </header>
+
+        <div {_BLOG_BODY}>
+
+            <h2>The Problem</h2>
+            <p>
+                Every time an AI agent is asked to build auth, payments, or analytics, it burns
+                30,000 to 120,000 tokens writing code from scratch. It generates middleware,
+                database schemas, API routes, error handling &mdash; the full stack. Three hours
+                and 47,000 tokens later, you have a serviceable but unpolished implementation
+                of something that already exists as a battle-tested indie tool.
+            </p>
+            <p>
+                The agent is not lazy. It is uninformed. It does not know that a focused indie
+                tool already handles exactly this problem, maintained by a developer who has
+                spent months getting the edge cases right. The agent just does not have a way
+                to check.
+            </p>
+            <p>
+                Until now.
+            </p>
+
+            <h2>What We Built</h2>
+            <p>
+                We shipped five features in one push to make IndieStack the first place AI agents
+                check before writing boilerplate code:
+            </p>
+
+            <ol>
+                <li>
+                    <strong>Prompt Cache Index</strong> &mdash;
+                    <code>/api/tools/index.json</code> returns a compact JSON array of all 358 tools
+                    on the platform. An agent includes this once in its system prompt and can
+                    reference tools by slug forever after. With prompt caching, the first query
+                    costs tokens; every subsequent query is nearly free.
+                    <pre><code>curl https://indiestack.fly.dev/api/tools/index.json | jq '.[0]'
+{{
+  "slug": "simple-analytics",
+  "name": "Simple Analytics",
+  "tagline": "Privacy-friendly analytics in one script tag",
+  "category": "Analytics",
+  "pricing": "$9/mo"
+}}</code></pre>
+                </li>
+                <li>
+                    <strong>Agent Citation Tracking</strong> &mdash;
+                    Every time an agent recommends a tool, we log it. Makers see
+                    &ldquo;Recommended by AI agents X times this week&rdquo; on their dashboard.
+                    This is the flywheel: makers see real agent traffic, get excited, share their
+                    listing, and more tools come in.
+                </li>
+                <li>
+                    <strong>Dual-Audience Messaging</strong> &mdash;
+                    Our MCP server and <code>llms.txt</code> now explicitly frame IndieStack as
+                    &ldquo;the procurement layer for AI agents.&rdquo; When an AI crawler reads
+                    our <code>llms.txt</code>, it sees clear instructions to check IndieStack
+                    before writing boilerplate.
+                </li>
+                <li>
+                    <strong>Stack Builder API</strong> &mdash;
+                    Tell us what you need, we tell you what to use. Returns the best indie tool
+                    for each requirement, matches Vibe Stacks if they cover the needs, and
+                    reports total tokens saved. Also available as a <code>build_stack</code>
+                    MCP tool.
+                    <pre><code>curl "https://indiestack.fly.dev/api/stack-builder?needs=auth,payments,analytics"
+{{
+  "stack": [
+    {{"need": "auth", "tool": "clerk", "tokens_saved": 47000}},
+    {{"need": "payments", "tool": "lemon-squeezy", "tokens_saved": 52000}},
+    {{"need": "analytics", "tool": "simple-analytics", "tokens_saved": 31000}}
+  ],
+  "total_tokens_saved": 130000
+}}</code></pre>
+                </li>
+                <li>
+                    <strong>Use Case Pages</strong> &mdash;
+                    <a href="/use-cases">/use-cases/auth</a>, <a href="/use-cases">/use-cases/payments</a>,
+                    and more. Human-readable comparison tables with build-vs-buy analysis. Each
+                    page has JSON-LD for agents to parse. 18 curated use cases with category
+                    fallback for the rest.
+                </li>
+            </ol>
+
+            <h2>Why This Matters</h2>
+            <p>
+                Moltbook proved that 1.6 million agents will show up if you build infrastructure
+                for them. We are doing the same thing but for tool procurement. When an agent
+                needs auth, it should check IndieStack before generating 50,000 tokens of code.
+            </p>
+            <blockquote>
+                The future of software procurement is not a human browsing a comparison site.
+                It is an AI agent querying a structured index of vetted tools and making a
+                recommendation in under a second.
+            </blockquote>
+            <p>
+                Every major coding assistant &mdash; Claude Code, Cursor, Windsurf, Copilot &mdash;
+                is adding tool-use capabilities. MCP servers are becoming the standard way
+                agents interact with external services. We have had an MCP server since day
+                one. Now it is not just a nice-to-have; it is the primary distribution channel
+                for reaching agents.
+            </p>
+
+            <h2>For Makers</h2>
+            <p>
+                Your tools are now discoverable by AI coding assistants. Every recommendation
+                is tracked. You can see exactly how often agents suggest your tool on your
+                <a href="/dashboard">maker dashboard</a>. This is a new distribution channel
+                that did not exist a week ago.
+            </p>
+            <p>
+                If your tool is not on IndieStack yet, <a href="/submit">submit it now</a>.
+                It takes two minutes. Once it is listed, every AI agent with access to our
+                MCP server or prompt cache can recommend it to developers.
+            </p>
+
+            <h2>Try It</h2>
+            <p>
+                Install the MCP server:
+            </p>
+            <pre><code>pip install indiestack</code></pre>
+            <p>
+                Or hit the Stack Builder API directly:
+            </p>
+            <pre><code>curl "https://indiestack.fly.dev/api/stack-builder?needs=auth,payments"</code></pre>
+            <p>
+                Browse the use case pages to see what agents see when they evaluate tools:
+            </p>
+        </div>
+
+        <footer style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <a href="/use-cases"
+               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+                Browse Use Cases
+            </a>
+            <a href="https://twitter.com/intent/tweet?text={tweet_text}"
+               target="_blank" rel="noopener"
+               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+                Share on X
+            </a>
+            <a href="/blog" style="color:var(--ink-muted);font-size:14px;">&#8592; Back to blog</a>
+        </footer>
+    </article>
+    """
+
+    return HTMLResponse(page_shell(
+        post['title'], body,
+        user=request.state.user,
+        description=post['excerpt'],
+        canonical="/blog/agent-infrastructure",
+        extra_head=extra_head,
+    ))
+
+
+@router.get("/blog/marketplace-launch", response_class=HTMLResponse)
+async def blog_marketplace_launch(request: Request):
+    post = _BLOG_POSTS[1]
+
+    json_ld = """{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "IndieStack Marketplace is Live — Sell Your Tools, Keep 95%",
+        "datePublished": "2026-03-02",
+        "dateModified": "2026-03-02",
+        "author": {
+            "@type": "Organization",
+            "name": "IndieStack",
+            "url": "_BASE_URL_PLACEHOLDER_"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "IndieStack",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "_BASE_URL_PLACEHOLDER_/logo.png"
+            }
+        },
+        "description": "Indie developers can now sell their tools directly on IndieStack. 5% platform fee, Stripe payouts to your bank, and a curated audience of developers who want alternatives to big SaaS.",
+        "mainEntityOfPage": "_BASE_URL_PLACEHOLDER_/blog/marketplace-launch",
+        "wordCount": 850
+    }""".replace("_BASE_URL_PLACEHOLDER_", BASE_URL)
+
+    extra_head = f"""
+    <script type="application/ld+json">{json_ld}</script>
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2026-03-02">
+    <meta property="article:author" content="IndieStack">
+    <style>
+        .blog-article h2 {{
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--ink);
+            margin: 40px 0 16px;
+        }}
+        .blog-article p {{
+            margin-bottom: 20px;
+        }}
+        .blog-article blockquote {{
+            border-left: 4px solid var(--slate);
+            margin: 28px 0;
+            padding: 16px 24px;
+            background: var(--cream-dark);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--ink);
+            line-height: 1.7;
+        }}
+        .blog-article pre {{
+            background: var(--terracotta);
+            color: #E8ECF0;
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin: 24px 0;
+        }}
+        .blog-article pre code {{
+            color: #E8ECF0;
+        }}
+        .blog-article code {{
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+            background: var(--cream-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }}
+        .blog-article a {{
+            color: var(--slate-dark);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }}
+        .blog-article a:hover {{
+            color: var(--terracotta);
+        }}
+        .blog-article ol {{
+            padding-left: 24px;
+            margin: 20px 0;
+        }}
+        .blog-article ol li {{
+            margin-bottom: 12px;
+        }}
+        .blog-article ul {{
+            padding-left: 24px;
+            margin: 20px 0;
+        }}
+        .blog-article ul li {{
+            margin-bottom: 10px;
+        }}
+    </style>
+    """
+
+    tweet_text = "IndieStack%20Marketplace%20is%20live.%20Sell%20your%20indie%20tools%2C%20keep%2095%25.%205%25%20platform%20fee%2C%20Stripe%20payouts%20to%20your%20bank.%0A%0Ahttps%3A%2F%2Findiestack.fly.dev%2Fblog%2Fmarketplace-launch%0A%0A%40indiestack_dev"
+
+    body = f"""
+    <article class="blog-article" {_BLOG_CONTAINER}>
+        <header style="margin-bottom:40px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <time style="font-family:var(--font-mono);font-size:13px;color:var(--ink-muted);">{post['date']}</time>
+                <span style="font-family:var(--font-mono);font-size:13px;color:var(--slate-dark);">{post['reading_time']}</span>
+            </div>
+            <h1 {_BLOG_TITLE}>{post['title']}</h1>
+            <p style="font-size:17px;color:var(--ink-muted);line-height:1.6;margin-top:12px;">{post['excerpt']}</p>
+        </header>
+
+        <div {_BLOG_BODY}>
+
+            <p>
+                Today we are launching the IndieStack Marketplace. Indie developers can now sell
+                their tools directly to other developers &mdash; with a 5% platform fee and direct
+                Stripe payouts to your bank account. No gatekeepers. No 30% cuts. Just your tool,
+                your price, and a curated audience of developers who want alternatives to big SaaS.
+            </p>
+
+            <h2>Why We Built This</h2>
+            <p>
+                Indie devs build incredible tools. Auth libraries, analytics dashboards, deployment
+                platforms, monitoring services &mdash; focused software that does one thing brilliantly.
+                But distribution is the bottleneck. Building the tool is the easy part. Getting it
+                found is where most indie makers hit a wall.
+            </p>
+            <p>
+                App stores take 30%. Gumroad takes 10%. And discovery on those platforms is still
+                broken &mdash; your tool gets buried under a thousand Notion templates and AI wrapper
+                courses. The developers who would love your product never find it.
+            </p>
+            <p>
+                We built IndieStack to fix the discovery problem. We have over 130 curated indie
+                tools, MCP integration so AI assistants can search the catalogue, and a community
+                of makers and buyers who care about craft over scale. Now we are fixing the revenue
+                problem too.
+            </p>
+
+            {{{{ tool: govlink }}}}
+
+            <h2>How It Works</h2>
+            <ol>
+                <li><strong>List your tool</strong> &mdash; free, takes about two minutes. Add your
+                description, pricing, screenshots, and tags.</li>
+                <li><strong>Connect Stripe</strong> &mdash; Express onboarding walks you through it.
+                Enter your bank details and you are set up to receive payouts.</li>
+                <li><strong>Set your price</strong> &mdash; buyers pay via Stripe Checkout. Clean,
+                secure, no card details touch our servers.</li>
+                <li><strong>You get 95%</strong> &mdash; money goes directly to your bank via Stripe
+                payouts. We take a 5% platform fee (3% for Pro makers). Stripe's processing fee
+                is separate, roughly 1.4% + 20p for UK cards.</li>
+            </ol>
+
+            <h2>What Makes This Different</h2>
+            <p>
+                There are a lot of places to sell software. Here is why we think IndieStack is
+                worth your attention:
+            </p>
+            <ul>
+                <li><strong>5% commission</strong> (3% for Pro makers) &mdash; compare that to the
+                App Store's 30% or Gumroad's 10%. We take less because we believe the maker
+                should keep most of what they earn.</li>
+                <li><strong>Curated marketplace</strong> &mdash; every tool is reviewed before it
+                goes live. We award Verified and Ejectable trust badges so buyers know what
+                they are getting. No spam, no vapourware, no AI wrapper courses.</li>
+                <li><strong>Built for developers</strong> &mdash; our MCP integration means AI
+                coding tools like Claude Code and Cursor can discover your product automatically.
+                When a developer asks their AI for an analytics tool, yours shows up.</li>
+                <li><strong>Indie Ring</strong> &mdash; makers on the platform get 50% off each
+                other's tools. It is community cross-pollination: you use mine, I use yours,
+                we all ship faster.</li>
+            </ul>
+
+            {{{{ tool: simple-analytics }}}}
+
+            <blockquote>
+                We did not build IndieStack to compete with Gumroad or Lemon Squeezy. We built
+                it because indie developers deserve a marketplace where the audience already
+                cares about indie tools &mdash; and where the AI assistants writing code can
+                actually find them.
+            </blockquote>
+
+            <h2>What You Can Sell</h2>
+            <p>
+                Anything that helps developers build, ship, or run software. SaaS subscriptions,
+                one-time licence purchases, open-core tools with paid tiers, API services, dev
+                utilities. If you built it and other developers would pay for it, it belongs here.
+            </p>
+            <p>
+                We are not interested in hosting courses, e-books, or Notion templates. IndieStack
+                is a tools marketplace. The tools are the point.
+            </p>
+
+            <h2>Get Started</h2>
+            <p>
+                If you have built something worth selling, <a href="/submit">list it on IndieStack</a>.
+                It is free to list, takes two minutes, and your tool goes live after a quick review.
+                Connect Stripe when you are ready to start accepting payments.
+            </p>
+            <p>
+                If you are a developer looking for focused, high-quality alternatives to bloated
+                enterprise software, <a href="/explore">browse the catalogue</a>. Every tool on
+                IndieStack is built by an indie maker who cares about getting the details right.
+            </p>
+            <p>
+                We have been building toward this for months. The directory, the trust badges,
+                the MCP server, the maker profiles, the community &mdash; all of it was leading
+                here. Today the marketplace is live. Let us see what indie developers can do
+                when distribution is no longer the bottleneck.
+            </p>
+        </div>
+
+        <footer style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <a href="https://twitter.com/intent/tweet?text={tweet_text}"
+               target="_blank" rel="noopener"
+               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+                Share on X
+            </a>
+            <a href="/blog" style="color:var(--ink-muted);font-size:14px;">&#8592; Back to blog</a>
+        </footer>
+    </article>
+    """
+
+    body = await _inject_tool_cards(request.state.db, body)
+
+    return HTMLResponse(page_shell(
+        post['title'], body,
+        user=request.state.user,
+        description=post['excerpt'],
+        canonical="/blog/marketplace-launch",
+        extra_head=extra_head,
+    ))
+
+
+@router.get("/blog/tokens-saved", response_class=HTMLResponse)
+async def blog_tokens_saved(request: Request):
+    post = _BLOG_POSTS[2]
+
+    json_ld = """{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "I asked Claude to build analytics from scratch. It cost 47,000 tokens. The alternative cost 2 lines.",
+        "datePublished": "2026-02-23",
+        "dateModified": "2026-02-23",
+        "author": {
+            "@type": "Organization",
+            "name": "IndieStack",
+            "url": "_BASE_URL_PLACEHOLDER_"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "IndieStack",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "_BASE_URL_PLACEHOLDER_/logo.png"
+            }
+        },
+        "description": "A real comparison: 47,000 tokens and three hours of back-and-forth versus 700 tokens and four minutes. The MCP server that makes the difference.",
+        "mainEntityOfPage": "_BASE_URL_PLACEHOLDER_/blog/tokens-saved",
+        "wordCount": 1100
+    }""".replace("_BASE_URL_PLACEHOLDER_", BASE_URL)
+
+    extra_head = f"""
+    <script type="application/ld+json">{json_ld}</script>
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2026-02-23">
+    <meta property="article:author" content="IndieStack">
+    <style>
+        .blog-article h2 {{{{
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--ink);
+            margin: 40px 0 16px;
+        }}}}
+        .blog-article p {{{{
+            margin-bottom: 20px;
+        }}}}
+        .blog-article blockquote {{{{
+            border-left: 4px solid var(--slate);
+            margin: 28px 0;
+            padding: 16px 24px;
+            background: var(--cream-dark);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--ink);
+            line-height: 1.7;
+        }}}}
+        .blog-article pre {{{{
+            background: var(--terracotta);
+            color: #E8ECF0;
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin: 24px 0;
+        }}}}
+        .blog-article pre code {{{{
+            color: #E8ECF0;
+        }}}}
+        .blog-article code {{{{
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+            background: var(--cream-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }}}}
+        .blog-article a {{{{
+            color: var(--slate-dark);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }}}}
+        .blog-article a:hover {{{{
+            color: var(--terracotta);
+        }}}}
+    </style>
+    """
+
+    tweet_text = "I%20asked%20Claude%20to%20build%20analytics%20from%20scratch.%2047%2C000%20tokens.%20The%20alternative%3F%20700%20tokens%20and%204%20minutes.%0A%0Ahttps%3A%2F%2Findiestack.fly.dev%2Fblog%2Ftokens-saved%0A%0A%40indiestack_dev"
+
+    body = f"""
+    <article class="blog-article" {_BLOG_CONTAINER}>
+        <header style="margin-bottom:40px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <time style="font-family:var(--font-mono);font-size:13px;color:var(--ink-muted);">{post['date']}</time>
+                <span style="font-family:var(--font-mono);font-size:13px;color:var(--slate-dark);">{post['reading_time']}</span>
+            </div>
+            <h1 {_BLOG_TITLE}>{post['title']}</h1>
+            <p style="font-size:17px;color:var(--ink-muted);line-height:1.6;margin-top:12px;">{post['excerpt']}</p>
+        </header>
+
+        <div {_BLOG_BODY}>
+
+            <p>
+                I was building a SaaS dashboard and asked Claude to add analytics. Here is what happened.
+            </p>
+
+            <h2>The Waste</h2>
+            <p>
+                It started innocently. I had a FastAPI backend, a halfway-decent frontend, and I wanted
+                to know which features users were actually clicking. Standard stuff. So I typed something
+                like "add analytics tracking to my app" and hit enter.
+            </p>
+            <p>
+                Claude got to work.
+            </p>
+            <p>
+                First prompt: database schema. Tables for events, sessions, page views, user properties.
+                Foreign keys. Indexes. Migration scripts. About 15,000 tokens of perfectly reasonable
+                SQLite DDL that I would need to maintain forever.
+            </p>
+            <p>
+                Second prompt: the event tracking layer. Middleware to capture requests, a utility function
+                to fire custom events, a queue so I was not hammering the DB on every click. Another
+                18,000 tokens. Still not wired up to the frontend.
+            </p>
+            <p>
+                Third prompt: the dashboard. Charts. A little bar graph for daily active users. A funnel.
+                Retention cohorts, because I got ambitious. Vanilla JS canvas rendering because I was not
+                about to pull in Chart.js for a side project. This one took two follow-up messages to fix
+                a timezone bug and another to make it actually render on mobile.
+            </p>
+            <p>
+                Token count at this point: somewhere around <strong>47,000</strong>. Three hours of
+                back-and-forth. And I had something that technically worked but that I would never trust
+                in production. No data retention policy. No GDPR story. No way to actually understand
+                the data without staring at raw numbers in a table I had built myself.
+            </p>
+            <p>
+                I had reinvented a wheel that hundreds of people had already reinvented, and done it
+                worse than all of them.
+            </p>
+
+            <h2>The Discovery</h2>
+            <p>
+                A few weeks later I was setting up a new project and stumbled on
+                <a href="/">IndieStack</a>. The pitch was simple: it is a directory of indie tools
+                &mdash; small SaaS products built by solo founders and tiny teams &mdash; plus an
+                MCP server that lets your AI assistant search the directory before it starts building
+                something from scratch.
+            </p>
+            <p>
+                Two commands:
+            </p>
+<pre><code>pip install indiestack
+claude mcp add indiestack</code></pre>
+            <p>
+                That is it. Now when I work in Claude, it has access to a curated index of tools:
+                what they do, what they cost, how they are installed, whether the founder is still
+                actively maintaining them.
+            </p>
+
+            <h2>The Result</h2>
+            <p>
+                Next project. Same situation: I wanted analytics. This time I just asked Claude
+                normally &mdash; "I need to add analytics to this app."
+            </p>
+            <p>
+                Instead of immediately generating schema files, Claude paused and checked IndieStack
+                first. It came back with a suggestion: Simple Analytics. Privacy-first, no cookies,
+                no GDPR headaches. The integration is a single script tag. If I wanted server-side
+                event tracking, that is one more line.
+            </p>
+            <p>
+                The token count for that entire interaction: around 500 for the suggestion, maybe
+                200 more when I asked it to show me the integration snippet. Call it <strong>700
+                tokens</strong> total.
+            </p>
+            <p>
+                I had it running in about four minutes. The dashboard looked better than anything
+                I had built, the data was accurate from day one, and I did not have to think about
+                it again.
+            </p>
+
+            <h2>The Math</h2>
+            <p>
+                <strong>47,000 tokens versus 700 tokens.</strong>
+            </p>
+            <p>
+                That is not a made-up comparison. A full analytics feature &mdash; schema, event
+                tracking, dashboard UI, charts, bug fixes &mdash; will realistically run you 40,000
+                to 60,000 tokens with any capable LLM. It might be spread across multiple sessions,
+                but the cost accumulates. On Claude Pro you have a context window and a rate limit.
+                Every thousand tokens you spend regenerating infrastructure that already exists in a
+                better form is a thousand tokens you are not spending on the thing that is actually
+                different about your app.
+            </p>
+            <p>
+                The 47,000-token version also needs maintenance. The 700-token version does not.
+            </p>
+
+            <h2>The Broader Point</h2>
+            <p>
+                Analytics is just one example. Auth. Payments. Transactional email. PDF invoices.
+                Uptime monitoring. Background job queues. Every one of these has at least one indie
+                tool &mdash; often several &mdash; that a single founder spent years building and is
+                actively supporting. The tools are good. They are usually cheaper than the big-brand
+                alternatives. They often have better documentation because the person who wrote the
+                code also wrote the docs.
+            </p>
+            <p>
+                The problem is that your AI does not know they exist. Without a way to search for
+                them, it defaults to building the thing from scratch. Not because building is better
+                &mdash; it is almost never better &mdash; but because building is what it knows how
+                to do.
+            </p>
+            <p>
+                Give it the tool. Let it search first.
+            </p>
+<pre><code>pip install indiestack</code></pre>
+            <p>
+                Thirty seconds to install. The next time you ask your AI to add a feature, it will
+                check what has already been built before it starts writing boilerplate.
+            </p>
+            <p>
+                I wish I had had it three hours earlier.
+            </p>
+        </div>
+
+        <footer style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <a href="https://twitter.com/intent/tweet?text={tweet_text}"
+               target="_blank" rel="noopener"
+               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+                Share on X
+            </a>
+            <a href="/blog" style="color:var(--ink-muted);font-size:14px;">&#8592; Back to blog</a>
+        </footer>
+    </article>
+    """
+
+    return HTMLResponse(page_shell(
+        post['title'], body,
+        user=request.state.user,
+        description=post['excerpt'],
+        canonical="/blog/tokens-saved",
+        extra_head=extra_head,
+    ))
+
+
 @router.get("/blog/stop-wasting-tokens", response_class=HTMLResponse)
 async def blog_stop_wasting_tokens(request: Request):
-    post = _BLOG_POSTS[1]
+    post = _BLOG_POSTS[4]
 
     json_ld = """{
         "@context": "https://schema.org",
@@ -449,20 +1270,20 @@ async def blog_stop_wasting_tokens(request: Request):
         "author": {
             "@type": "Organization",
             "name": "IndieStack",
-            "url": "https://indiestack.fly.dev"
+            "url": "_BASE_URL_PLACEHOLDER_"
         },
         "publisher": {
             "@type": "Organization",
             "name": "IndieStack",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://indiestack.fly.dev/logo.png"
+                "url": "_BASE_URL_PLACEHOLDER_/logo.png"
             }
         },
         "description": "Every day, developers burn thousands of tokens asking AI to build invoicing, analytics, and feedback widgets from scratch — when battle-tested indie tools already exist.",
-        "mainEntityOfPage": "https://indiestack.fly.dev/blog/stop-wasting-tokens",
+        "mainEntityOfPage": "_BASE_URL_PLACEHOLDER_/blog/stop-wasting-tokens",
         "wordCount": 950
-    }"""
+    }""".replace("_BASE_URL_PLACEHOLDER_", BASE_URL)
 
     extra_head = f"""
     <script type="application/ld+json">{json_ld}</script>
@@ -491,7 +1312,7 @@ async def blog_stop_wasting_tokens(request: Request):
             line-height: 1.7;
         }}
         .blog-article pre {{
-            background: #1A2D4A;
+            background: var(--terracotta);
             color: #E8ECF0;
             border-radius: var(--radius-sm);
             padding: 20px 24px;
@@ -686,7 +1507,7 @@ claude mcp add indiestack -- python -m indiestack.mcp_server
 
 @router.get("/blog/zero-js-frameworks", response_class=HTMLResponse)
 async def blog_zero_js_frameworks(request: Request):
-    post = _BLOG_POSTS[0]
+    post = _BLOG_POSTS[3]
 
     json_ld = """{
         "@context": "https://schema.org",
@@ -697,20 +1518,20 @@ async def blog_zero_js_frameworks(request: Request):
         "author": {
             "@type": "Organization",
             "name": "IndieStack",
-            "url": "https://indiestack.fly.dev"
+            "url": "_BASE_URL_PLACEHOLDER_"
         },
         "publisher": {
             "@type": "Organization",
             "name": "IndieStack",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://indiestack.fly.dev/logo.png"
+                "url": "_BASE_URL_PLACEHOLDER_/logo.png"
             }
         },
         "description": "No React. No Vue. No build step. Just Python f-strings, SQLite with WAL mode, and a single Fly.io machine serving 100+ tools.",
-        "mainEntityOfPage": "https://indiestack.fly.dev/blog/zero-js-frameworks",
+        "mainEntityOfPage": "_BASE_URL_PLACEHOLDER_/blog/zero-js-frameworks",
         "wordCount": 1050
-    }"""
+    }""".replace("_BASE_URL_PLACEHOLDER_", BASE_URL)
 
     extra_head = f"""
     <script type="application/ld+json">{json_ld}</script>
@@ -739,7 +1560,7 @@ async def blog_zero_js_frameworks(request: Request):
             line-height: 1.7;
         }}
         .blog-article pre {{
-            background: #1A2D4A;
+            background: var(--terracotta);
             color: #E8ECF0;
             border-radius: var(--radius-sm);
             padding: 20px 24px;
@@ -1029,10 +1850,7 @@ async def best_index(request: Request):
         name = escape(cat['name'])
         cards += f"""
         <a href="/best/{slug}" class="card"
-           style="text-decoration:none;color:inherit;padding:20px 24px;display:flex;align-items:center;gap:14px;
-                  transition:transform 0.15s ease,box-shadow 0.15s ease;"
-           onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 40px rgba(26,45,74,0.12)'"
-           onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+           style="text-decoration:none;color:inherit;padding:20px 24px;display:flex;align-items:center;gap:14px;">
             <span style="font-size:28px;">{icon}</span>
             <div>
                 <div style="font-family:var(--font-display);font-size:16px;color:var(--ink);">Best {name} Tools</div>
@@ -1082,7 +1900,7 @@ async def best_category(request: Request, category_slug: str):
         rank = i + 1
         badge = ""
         if rank <= 3:
-            colours = {1: ("#FFD700", "&#127942;"), 2: ("#C0C0C0", "&#129352;"), 3: ("#CD7F32", "&#129353;")}
+            colours = {1: ("var(--gold)", "&#127942;"), 2: ("#C0C0C0", "&#129352;"), 3: ("#CD7F32", "&#129353;")}
             colour, emoji = colours[rank]
             badge = f'<div style="position:absolute;top:-8px;left:-8px;width:32px;height:32px;background:{colour};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">{emoji}</div>'
 
@@ -1100,7 +1918,7 @@ async def best_category(request: Request, category_slug: str):
         """
 
     cat_name_esc = escape(cat['name'])
-    json_ld = f"""{{"@context":"https://schema.org","@type":"CollectionPage","name":"Best Indie {cat_name_esc} Tools in 2026","description":"{escape(intro_text)}","url":"https://indiestack.fly.dev/best/{escape(category_slug)}","numberOfItems":{total},"provider":{{"@type":"Organization","name":"IndieStack","url":"https://indiestack.fly.dev"}}}}"""
+    json_ld = f"""{{"@context":"https://schema.org","@type":"CollectionPage","name":"Best Indie {cat_name_esc}{'' if 'tool' in cat_name_esc.lower() else ' Tools'} in 2026","description":"{escape(intro_text)}","url":"{BASE_URL}/best/{escape(category_slug)}","numberOfItems":{total},"provider":{{"@type":"Organization","name":"IndieStack","url":"{BASE_URL}"}}}}"""
 
     extra_head = f'<script type="application/ld+json">{json_ld}</script>'
 
@@ -1113,7 +1931,7 @@ async def best_category(request: Request, category_slug: str):
                 {cat_name_esc}
             </div>
             <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,38px);color:var(--ink);margin-bottom:12px;">
-                Best Indie {cat_name_esc} Tools in 2026
+                Best Indie {cat_name_esc}{'' if 'tool' in cat_name_esc.lower() else ' Tools'} in 2026
             </h1>
             <p style="color:var(--ink-muted);font-size:17px;line-height:1.6;max-width:700px;">
                 {escape(intro_text)}
@@ -1127,7 +1945,7 @@ async def best_category(request: Request, category_slug: str):
     </div>
     """
     return HTMLResponse(page_shell(
-        f"Best Indie {cat_name_esc} Tools in 2026", body,
+        f"Best Indie {cat_name_esc}{'' if 'tool' in cat_name_esc.lower() else ' Tools'} in 2026", body,
         user=request.state.user,
         description=f"The best indie {cat['name'].lower()} tools in 2026, curated by IndieStack. Built by solo developers, priced fairly.",
         canonical=f"/best/{category_slug}",

@@ -7,6 +7,7 @@ from html import escape
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
+from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card, pagination_html
 from indiestack.db import get_all_tags_with_counts, get_tools_by_tag
 
@@ -58,9 +59,9 @@ async def tags_index(request: Request):
         }}
     </style>
     '''
-    return HTMLResponse(page_shell(title="Browse by Tag", body=body,
+    return HTMLResponse(page_shell(title="Browse by Tag — Indie Software Directory | IndieStack", body=body,
                                     description="Browse indie SaaS tools by tag — find tools for APIs, analytics, automation, and more.",
-                                    user=user))
+                                    user=user, canonical="/tags"))
 
 
 @router.get("/tag/{slug}", response_class=HTMLResponse)
@@ -119,7 +120,7 @@ async def tag_detail(request: Request, slug: str):
         "@type": "CollectionPage",
         "name": f"Indie tools tagged '{tag_name}'",
         "description": f"Discover {total} indie SaaS tools tagged with '{tag_name}' on IndieStack.",
-        "url": f"https://indiestack.fly.dev/tag/{slug}",
+        "url": f"{BASE_URL}/tag/{slug}",
         "numberOfItems": total,
     })
 
@@ -154,12 +155,13 @@ async def tag_detail(request: Request, slug: str):
     </div>
     '''
 
-    desc = f"Discover {total} indie SaaS tools tagged with '{tag_name}'. Save your tokens — use indie builds."
+    desc = f"Browse {total} indie tools tagged with '{tag_name}'. Curated directory of bootstrapped and open-source software."
+    noindex = '<meta name="robots" content="noindex">' if total == 0 else ""
     return HTMLResponse(page_shell(
-        title=f"Tools tagged '{safe_tag}'",
+        title=f"{safe_tag.title()} Tools — Indie Software Directory",
         body=body,
         description=desc,
         user=user,
-        extra_head=f'<script type="application/ld+json">{json_ld}</script>',
+        extra_head=f'{noindex}<script type="application/ld+json">{json_ld}</script>',
         canonical=f"/tag/{slug}",
     ))
