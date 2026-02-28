@@ -170,12 +170,12 @@ async def dashboard_overview(request: Request):
                         <img src="{alt_badge_url}" alt="{alt_label}" style="height:20px;">
                     </div>
                     <div style="position:relative;">
-                        <pre style="background:var(--ink);color:#00D4F5;padding:8px 12px;border-radius:8px;font-size:12px;
+                        <pre style="background:var(--ink);color:var(--slate);padding:8px 12px;border-radius:var(--radius-sm);font-size:12px;
                                     font-family:var(--font-mono);overflow-x:auto;"><code>&lt;a href="{tool_url}"&gt;&lt;img src="{alt_badge_url}" alt="Listed on IndieStack"&gt;&lt;/a&gt;</code></pre>
                         <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                                 data-code='&lt;a href=&quot;{tool_url}&quot;&gt;&lt;img src=&quot;{alt_badge_url}&quot; alt=&quot;Listed on IndieStack&quot;&gt;&lt;/a&gt;'
-                                style="position:absolute;top:4px;right:4px;background:#00D4F5;color:#1A2D4A;border:none;
-                                       padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;cursor:pointer;">Copy</button>
+                                style="position:absolute;top:4px;right:4px;background:var(--slate);color:var(--terracotta);border:none;
+                                       padding:2px 8px;border-radius:var(--radius-sm);font-size:10px;font-weight:600;cursor:pointer;">Copy</button>
                     </div>
                 </div>'''
 
@@ -195,23 +195,23 @@ async def dashboard_overview(request: Request):
                 <div style="margin-bottom:8px;">
                     <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">HTML</label>
                     <div style="position:relative;">
-                        <pre style="background:var(--ink);color:#00D4F5;padding:12px 16px;border-radius:8px;font-size:13px;
+                        <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;
                                     font-family:var(--font-mono);overflow-x:auto;margin-top:4px;"><code>&lt;a href="{tool_url}"&gt;&lt;img src="{badge_url}" alt="Listed on IndieStack"&gt;&lt;/a&gt;</code></pre>
                         <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                                 data-code='&lt;a href=&quot;{tool_url}&quot;&gt;&lt;img src=&quot;{badge_url}&quot; alt=&quot;Listed on IndieStack&quot;&gt;&lt;/a&gt;'
-                                style="position:absolute;top:8px;right:8px;background:#00D4F5;color:#1A2D4A;border:none;
-                                       padding:4px 12px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
+                                style="position:absolute;top:8px;right:8px;background:var(--slate);color:var(--terracotta);border:none;
+                                       padding:4px 12px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
                     </div>
                 </div>
                 <div>
                     <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Markdown</label>
                     <div style="position:relative;">
-                        <pre style="background:var(--ink);color:#00D4F5;padding:12px 16px;border-radius:8px;font-size:13px;
+                        <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;
                                     font-family:var(--font-mono);overflow-x:auto;margin-top:4px;"><code>[![Listed on IndieStack]({badge_url})]({tool_url})</code></pre>
                         <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                                 data-code="[![Listed on IndieStack]({badge_url})]({tool_url})"
-                                style="position:absolute;top:8px;right:8px;background:#00D4F5;color:#1A2D4A;border:none;
-                                       padding:4px 12px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
+                                style="position:absolute;top:8px;right:8px;background:var(--slate);color:var(--terracotta);border:none;
+                                       padding:4px 12px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
                     </div>
                 </div>
                 {secondary_html}
@@ -246,7 +246,7 @@ async def dashboard_overview(request: Request):
                                 <th style="padding:10px 12px;text-align:left;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Tool</th>
                                 <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Views</th>
                                 <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Clicks</th>
-                                <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Wishlist Saves</th>
+                                <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Bookmarks</th>
                                 <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Upvotes</th>
                             </tr>
                         </thead>
@@ -276,23 +276,23 @@ async def dashboard_overview(request: Request):
             <div style="margin-bottom:12px;">
                 <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Markdown</label>
                 <div style="position:relative;margin-top:4px;">
-                    <pre style="background:var(--ink);color:#00D4F5;padding:12px 16px;border-radius:8px;font-size:13px;
+                    <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;
                         font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;"><code>[![Built with IndieStack]({badge_url})]({BASE_URL})</code></pre>
                     <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                         data-code="[![Built with IndieStack]({badge_url})]({BASE_URL})"
-                        style="position:absolute;top:8px;right:8px;background:#00D4F5;color:#1A2D4A;border:none;
-                            padding:4px 12px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
+                        style="position:absolute;top:8px;right:8px;background:var(--slate);color:var(--terracotta);border:none;
+                            padding:4px 12px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
                 </div>
             </div>
             <div>
                 <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">HTML</label>
                 <div style="position:relative;margin-top:4px;">
-                    <pre style="background:var(--ink);color:#00D4F5;padding:12px 16px;border-radius:8px;font-size:13px;
+                    <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;
                         font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;"><code>&lt;a href="{BASE_URL}"&gt;&lt;img src="{badge_url}" alt="Built with IndieStack"&gt;&lt;/a&gt;</code></pre>
                     <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                         data-code='<a href="{BASE_URL}"><img src="{badge_url}" alt="Built with IndieStack"></a>'
-                        style="position:absolute;top:8px;right:8px;background:#00D4F5;color:#1A2D4A;border:none;
-                            padding:4px 12px;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
+                        style="position:absolute;top:8px;right:8px;background:var(--slate);color:var(--terracotta);border:none;
+                            padding:4px 12px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
                 </div>
             </div>
         </div>
@@ -327,7 +327,7 @@ async def dashboard_overview(request: Request):
                 tweet_url = f"https://twitter.com/intent/tweet?text={share_text}&url={BASE_URL}/tool/{tool_slug}" if tool_slug else ""
 
                 cards += f"""
-                <div style="background:linear-gradient(135deg,#1A2D4A,#0D3B66);border-radius:16px;padding:20px 24px;
+                <div style="background:linear-gradient(135deg,#1A2D4A,var(--terracotta-dark));border-radius:var(--radius);padding:20px 24px;
                             display:flex;align-items:center;gap:16px;margin-bottom:8px;">
                     <span style="font-size:36px;">{emoji}</span>
                     <div style="flex:1;">
@@ -335,7 +335,7 @@ async def dashboard_overview(request: Request):
                         <div style="color:rgba(255,255,255,0.6);font-size:13px;">{tool_name}</div>
                     </div>
                     <a href="{tweet_url}" target="_blank" rel="noopener"
-                       style="background:#00D4F5;color:#1A2D4A;padding:8px 16px;border-radius:999px;
+                       style="background:var(--slate);color:var(--terracotta);padding:8px 16px;border-radius:999px;
                               text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap;">
                         Share on &#120143; &rarr;
                     </a>
@@ -343,7 +343,7 @@ async def dashboard_overview(request: Request):
 
             milestone_html = f"""
             <div style="margin-bottom:24px;">
-                <h3 style="font-family:'DM Serif Display',serif;font-size:18px;color:#1A2D4A;margin-bottom:12px;">
+                <h3 style="font-family:var(--font-display);font-size:18px;color:var(--terracotta);margin-bottom:12px;">
                     &#127942; New Achievements
                 </h3>
                 {cards}
@@ -390,7 +390,7 @@ async def dashboard_overview(request: Request):
                 status_badge = (
                     f'<span style="background:#10B981;color:#fff;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;">Active &mdash; {days_left} days left</span>'
                     if is_active
-                    else f'<span style="background:#6B7280;color:#fff;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;">Ended {expires_str}</span>'
+                    else f'<span style="background:var(--ink-muted);color:#fff;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;">Ended {expires_str}</span>'
                 )
 
                 # Get outbound clicks during boost period
@@ -399,32 +399,32 @@ async def dashboard_overview(request: Request):
 
                 view_listing_btn = ''
                 if not is_active:
-                    view_listing_btn = '<div style="text-align:center;margin-top:16px;"><a href="/tool/' + escape(str(bt['slug'])) + '" style="background:#00D4F5;color:#1A2D4A;padding:10px 24px;border-radius:999px;font-weight:700;text-decoration:none;font-size:14px;">View Your Listing</a></div>'
+                    view_listing_btn = '<div style="text-align:center;margin-top:16px;"><a href="/tool/' + escape(str(bt['slug'])) + '" style="background:var(--slate);color:var(--terracotta);padding:10px 24px;border-radius:999px;font-weight:700;text-decoration:none;font-size:14px;">View Your Listing</a></div>'
 
                 boost_report_html += f"""
-                <div style="background:linear-gradient(135deg,#1A2D4A,#0D3B66);border-radius:16px;padding:24px;margin-bottom:24px;color:#fff;">
+                <div style="background:linear-gradient(135deg,#1A2D4A,var(--terracotta-dark));border-radius:var(--radius);padding:24px;margin-bottom:24px;color:#fff;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-                        <h3 style="font-family:'DM Serif Display',serif;font-size:20px;margin:0;color:#fff;">
+                        <h3 style="font-family:var(--font-display);font-size:20px;margin:0;color:#fff;">
                             &#9733; Boost Report &mdash; {escape(str(bt['name']))}
                         </h3>
                         {status_badge}
                     </div>
                     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
-                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
-                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">{boost_views}</div>
+                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:var(--radius);">
+                            <div style="font-size:28px;font-weight:800;color:var(--slate);">{boost_views}</div>
                             <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Profile Views</div>
                         </div>
-                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
-                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">{boost_clicks}</div>
+                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:var(--radius);">
+                            <div style="font-size:28px;font-weight:800;color:var(--slate);">{boost_clicks}</div>
                             <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Outbound Clicks</div>
                         </div>
-                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
-                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">{upvotes}</div>
+                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:var(--radius);">
+                            <div style="font-size:28px;font-weight:800;color:var(--slate);">{upvotes}</div>
                             <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Upvotes</div>
                         </div>
-                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:12px;">
-                            <div style="font-size:28px;font-weight:800;color:#00D4F5;">{wishlists}</div>
-                            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Wishlists</div>
+                        <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.1);border-radius:var(--radius);">
+                            <div style="font-size:28px;font-weight:800;color:var(--slate);">{wishlists}</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">Bookmarks</div>
                         </div>
                     </div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;">
@@ -449,21 +449,21 @@ async def dashboard_overview(request: Request):
             search_rows = ''
             for term in all_terms[:10]:
                 search_rows += f"""<tr>
-                    <td style="padding:8px 12px;border-bottom:1px solid #F3F4F6;font-weight:500;">"{escape(str(term['query']))}"</td>
-                    <td style="padding:8px 12px;border-bottom:1px solid #F3F4F6;color:#6B7280;">{escape(str(term['tool_name']))}</td>
-                    <td style="padding:8px 12px;border-bottom:1px solid #F3F4F6;text-align:center;">{term['count']}</td>
+                    <td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:500;">"{escape(str(term['query']))}"</td>
+                    <td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--ink-muted);">{escape(str(term['tool_name']))}</td>
+                    <td style="padding:8px 12px;border-bottom:1px solid var(--border);text-align:center;">{term['count']}</td>
                 </tr>"""
             search_intent_html = f"""
-            <div style="background:#fff;border-radius:16px;padding:24px;border:1px solid #E8E3DC;margin-bottom:24px;">
-                <h3 style="font-family:'DM Serif Display',serif;font-size:18px;color:#1A2D4A;margin-bottom:16px;">
+            <div style="background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:24px;">
+                <h3 style="font-family:var(--font-display);font-size:18px;color:var(--terracotta);margin-bottom:16px;">
                     &#128269; How Developers Find Your Tools
                 </h3>
                 <table style="width:100%;border-collapse:collapse;">
                     <thead>
-                        <tr style="border-bottom:2px solid #E8E3DC;">
-                            <th style="padding:8px 12px;text-align:left;font-size:13px;color:#6B7280;">Search Query</th>
-                            <th style="padding:8px 12px;text-align:left;font-size:13px;color:#6B7280;">Matched Tool</th>
-                            <th style="padding:8px 12px;text-align:center;font-size:13px;color:#6B7280;">Times</th>
+                        <tr style="border-bottom:2px solid var(--border);">
+                            <th style="padding:8px 12px;text-align:left;font-size:13px;color:var(--ink-muted);">Search Query</th>
+                            <th style="padding:8px 12px;text-align:left;font-size:13px;color:var(--ink-muted);">Matched Tool</th>
+                            <th style="padding:8px 12px;text-align:center;font-size:13px;color:var(--ink-muted);">Times</th>
                         </tr>
                     </thead>
                     <tbody>{search_rows}</tbody>
@@ -487,8 +487,8 @@ async def dashboard_overview(request: Request):
 
                 maker_cards += f"""
                 <a href="/maker/{sm_slug}" class="hover-lift" style="text-decoration:none;color:inherit;display:block;padding:16px;
-                    background:var(--cream-dark);border-radius:12px;">
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    background:var(--cream-dark);border-radius:var(--radius);">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                         <span style="font-weight:700;color:var(--ink);">{sm_name}</span>
                         {indie_pill}
                     </div>
@@ -497,12 +497,12 @@ async def dashboard_overview(request: Request):
                 </a>"""
 
             matchmaker_html = f"""
-            <div style="background:#fff;border-radius:16px;padding:24px;border:1px solid #E8E3DC;margin-bottom:24px;">
-                <h3 style="font-family:'DM Serif Display',serif;font-size:18px;color:#1A2D4A;margin-bottom:16px;">
+            <div style="background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:24px;">
+                <h3 style="font-family:var(--font-display);font-size:18px;color:var(--terracotta);margin-bottom:16px;">
                     Makers Like You
                 </h3>
                 <div style="display:grid;gap:12px;">{maker_cards}</div>
-                <a href="/makers" style="display:block;text-align:center;margin-top:16px;font-size:13px;color:#00D4F5;font-weight:600;text-decoration:none;">
+                <a href="/makers" style="display:block;text-align:center;margin-top:16px;font-size:13px;color:var(--slate);font-weight:600;text-decoration:none;">
                     Browse all makers &rarr;
                 </a>
             </div>"""
@@ -521,10 +521,10 @@ async def dashboard_overview(request: Request):
             options_ref = ''.join(f'<option value="{t["id"]}">{escape(str(t["name"]))}</option>' for t in maker_tools_ref)
             claim_form_html = f'''
             <form method="POST" action="/dashboard/claim-referral-boost" style="margin-top:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-                <select name="tool_id" style="padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-size:14px;">
+                <select name="tool_id" style="padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);font-size:14px;">
                     {options_ref}
                 </select>
-                <button type="submit" style="background:#00D4F5;color:#1A2D4A;border:none;padding:8px 20px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;">
+                <button type="submit" style="background:var(--slate);color:var(--terracotta);border:none;padding:8px 20px;border-radius:var(--radius-sm);font-weight:700;font-size:14px;cursor:pointer;">
                     Apply {boost_days} Boost Days
                 </button>
             </form>'''
@@ -540,20 +540,20 @@ async def dashboard_overview(request: Request):
             </p>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
                 <input type="text" readonly value="{referral_link}" id="ref-link"
-                    style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;
+                    style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);
                            font-size:13px;font-family:var(--font-mono);background:var(--cream-dark);color:var(--ink);" />
                 <button onclick="navigator.clipboard.writeText(document.getElementById('ref-link').value);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy Link',1500)"
-                    style="background:#1A2D4A;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;">
+                    style="background:var(--terracotta);color:#fff;border:none;padding:10px 20px;border-radius:var(--radius-sm);font-weight:700;font-size:13px;cursor:pointer;">
                     Copy Link
                 </button>
             </div>
             <div style="display:flex;gap:24px;margin-top:20px;">
-                <div style="text-align:center;padding:12px 16px;background:var(--cream-dark);border-radius:8px;flex:1;">
+                <div style="text-align:center;padding:12px 16px;background:var(--cream-dark);border-radius:var(--radius-sm);flex:1;">
                     <div style="font-size:24px;font-weight:800;color:var(--ink);">{referral_count}</div>
                     <div style="font-size:12px;color:var(--ink-muted);">Referrals</div>
                 </div>
-                <div style="text-align:center;padding:12px 16px;background:var(--cream-dark);border-radius:8px;flex:1;">
-                    <div style="font-size:24px;font-weight:800;color:#00D4F5;">{boost_days}</div>
+                <div style="text-align:center;padding:12px 16px;background:var(--cream-dark);border-radius:var(--radius-sm);flex:1;">
+                    <div style="font-size:24px;font-weight:800;color:var(--slate);">{boost_days}</div>
                     <div style="font-size:12px;color:var(--ink-muted);">Boost Days Earned</div>
                 </div>
             </div>
@@ -563,7 +563,7 @@ async def dashboard_overview(request: Request):
     '''
 
     # ── Welcome perk banner (Perplexity Comet) ──────────────────────
-    welcome_perk = '''<div id="comet-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,#0D1B2A);border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
+    welcome_perk = '''<div id="comet-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,var(--terracotta-dark));border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
         <button onclick="localStorage.setItem('comet_dismissed','1');document.getElementById('comet-banner').remove();"
                 style="position:absolute;top:10px;right:12px;background:none;border:none;color:#94A3B8;font-size:18px;cursor:pointer;line-height:1;">&times;</button>
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
@@ -572,11 +572,11 @@ async def dashboard_overview(request: Request):
                     Welcome to IndieStack &#127881;
                 </div>
                 <p style="font-size:13px;color:#94A3B8;margin:0;line-height:1.5;">
-                    As a thank you for joining, here&rsquo;s free access to <strong style="color:#00D4F5;">Perplexity Comet</strong> &mdash; an AI-powered browser built for students and builders.
+                    As a thank you for joining, here&rsquo;s free access to <strong style="color:var(--slate);">Perplexity Comet</strong> &mdash; an AI-powered browser built for students and builders.
                 </p>
             </div>
             <a href="https://pplx.ai/patrick-amey" target="_blank" rel="noopener"
-               style="display:inline-block;padding:8px 20px;background:#00D4F5;color:#1A2D4A;font-size:13px;font-weight:700;
+               style="display:inline-block;padding:8px 20px;background:var(--slate);color:var(--terracotta);font-size:13px;font-weight:700;
                       border-radius:var(--radius-sm);text-decoration:none;white-space:nowrap;">
                 Get Comet Free &rarr;
             </a>
@@ -589,7 +589,7 @@ async def dashboard_overview(request: Request):
     if maker_id and not maker_stripe_id:
         from datetime import date as _date
         _mkt_text = "The Marketplace is live!" if _date.today() >= _date(2026, 3, 2) else "Marketplace launches March 2!"
-        stripe_launch_banner = f'''<div id="stripe-launch-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,#0D1B2A);border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
+        stripe_launch_banner = f'''<div id="stripe-launch-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,var(--terracotta-dark));border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
         <button onclick="localStorage.setItem('stripe_launch_dismissed','1');document.getElementById('stripe-launch-banner').remove();"
                 style="position:absolute;top:10px;right:12px;background:none;border:none;color:#94A3B8;font-size:18px;cursor:pointer;line-height:1;">&times;</button>
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
@@ -598,12 +598,12 @@ async def dashboard_overview(request: Request):
                     {_mkt_text} &#128176;
                 </div>
                 <p style="font-size:13px;color:#94A3B8;margin:0;line-height:1.5;">
-                    Connect your Stripe account to <strong style="color:#00D4F5;">receive payouts</strong> when developers buy your tool.
-                    <a href="/stripe-guide" style="color:#00D4F5;font-size:12px;">How does it work?</a>
+                    Connect your Stripe account to <strong style="color:var(--slate);">receive payouts</strong> when developers buy your tool.
+                    <a href="/stripe-guide" style="color:var(--slate);font-size:12px;">How does it work?</a>
                 </p>
             </div>
             <form method="post" action="/dashboard/stripe-connect" style="margin:0;">
-                <button type="submit" style="display:inline-block;padding:8px 20px;background:#00D4F5;color:#1A2D4A;font-size:13px;font-weight:700;
+                <button type="submit" style="display:inline-block;padding:8px 20px;background:var(--slate);color:var(--terracotta);font-size:13px;font-weight:700;
                       border-radius:var(--radius-sm);border:none;cursor:pointer;white-space:nowrap;">
                     Connect Stripe &rarr;
                 </button>
@@ -615,16 +615,16 @@ async def dashboard_overview(request: Request):
     # ── Email verification banner ──────────────────────────────────
     verify_banner = ''
     if not user.get('email_verified'):
-        verify_banner = '''<div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        verify_banner = '''<div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
             <span style="color:#92400E;font-size:14px;font-weight:600;">Please verify your email to unlock all features.</span>
-            <a href="/resend-verification" style="background:#D97706;color:white;padding:6px 16px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;">Resend Verification Email</a>
+            <a href="/resend-verification" style="background:#D97706;color:white;padding:6px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;text-decoration:none;">Resend Verification Email</a>
         </div>'''
 
     # ── Boost success banner ──────────────────────────────────────
     boosted_param = request.query_params.get('boosted', '')
     boost_success_banner = ''
     if boosted_param == '1':
-        boost_success_banner = '<div style="background:#ECFDF5;border:1px solid #6EE7B7;border-radius:8px;padding:12px 16px;margin-bottom:16px;color:#065F46;font-weight:600;font-size:14px;">Referral boost applied! Your tool is now featured.</div>'
+        boost_success_banner = '<div style="background:#ECFDF5;border:1px solid #6EE7B7;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;color:#065F46;font-weight:600;font-size:14px;">Referral boost applied! Your tool is now featured.</div>'
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
@@ -1493,7 +1493,7 @@ async def stripe_callback(request: Request):
         <div style="font-size:48px;margin-bottom:20px;">&#10003;</div>
         <h1 style="color:var(--terracotta);font-family:var(--font-display);">Stripe Connected!</h1>
         <p style="color:var(--ink-muted);margin:16px 0;">Your payment account is set up. You can now receive payments for your tools.</p>
-        <a href="/dashboard" style="display:inline-block;margin-top:20px;padding:12px 32px;background:var(--terracotta);color:white;border-radius:8px;text-decoration:none;font-weight:600;">Back to Dashboard</a>
+        <a href="/dashboard" style="display:inline-block;margin-top:20px;padding:12px 32px;background:var(--terracotta);color:white;border-radius:var(--radius-sm);text-decoration:none;font-weight:600;">Back to Dashboard</a>
     </div>
     '''
     return HTMLResponse(page_shell("Stripe Connected", body, user=user))
@@ -1519,15 +1519,15 @@ async def my_stack_page(request: Request):
     # Build tools list
     tools_html = ''
     if not tools:
-        tools_html = '<p style="color:#6B7280;text-align:center;padding:20px;">No tools in your stack yet. Add some below!</p>'
+        tools_html = '<p style="color:var(--ink-muted);text-align:center;padding:20px;">No tools in your stack yet. Add some below!</p>'
     else:
         for t in tools:
             tools_html += f"""
             <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff;
-                        border-radius:12px;border:1px solid #E8E3DC;margin-bottom:8px;">
+                        border-radius:var(--radius);border:1px solid var(--border);margin-bottom:8px;">
                 <div style="flex:1;">
-                    <a href="/tool/{escape(str(t['slug']))}" style="font-weight:600;color:#1A2D4A;text-decoration:none;">{escape(str(t['name']))}</a>
-                    <span style="color:#6B7280;font-size:13px;margin-left:8px;">{escape(str(t.get('category_name', '')))}</span>
+                    <a href="/tool/{escape(str(t['slug']))}" style="font-weight:600;color:var(--terracotta);text-decoration:none;">{escape(str(t['name']))}</a>
+                    <span style="color:var(--ink-muted);font-size:13px;margin-left:8px;">{escape(str(t.get('category_name', '')))}</span>
                 </div>
                 <form method="post" action="/dashboard/my-stack/remove" style="margin:0;">
                     <input type="hidden" name="tool_slug" value="{escape(str(t['slug']))}">
@@ -1548,32 +1548,32 @@ async def my_stack_page(request: Request):
     share_banner = ''
     if share_url and is_public:
         share_banner = f"""
-        <div style="background:#E8F9FA;border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;">
-            <div><span style="font-weight:600;color:#0D7377;">Your public stack:</span> <a href="/stack/{username_slug}" style="color:#00D4F5;">{share_url}</a></div>
+        <div style="background:var(--cream-dark);border-radius:var(--radius);padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;">
+            <div><span style="font-weight:600;color:var(--terracotta);">Your public stack:</span> <a href="/stack/{username_slug}" style="color:var(--slate);">{share_url}</a></div>
             <a href="https://twitter.com/intent/tweet?text=Check out my indie tool stack!&url={share_url}" target="_blank" rel="noopener"
-               style="background:#1A2D4A;color:#fff;padding:6px 14px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:600;">Share on &#120143;</a>
+               style="background:var(--terracotta);color:#fff;padding:6px 14px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:600;">Share on &#120143;</a>
         </div>"""
 
     body = f"""
     <div style="max-width:700px;margin:0 auto;padding:40px 20px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-            <h1 style="font-family:'DM Serif Display',serif;color:#1A2D4A;font-size:28px;margin:0;">My Stack</h1>
-            <a href="/dashboard" style="color:#6B7280;text-decoration:none;font-size:14px;">&larr; Back to Dashboard</a>
+            <h1 style="font-family:var(--font-display);color:var(--terracotta);font-size:28px;margin:0;">My Stack</h1>
+            <a href="/dashboard" style="color:var(--ink-muted);text-decoration:none;font-size:14px;">&larr; Back to Dashboard</a>
         </div>
 
         <form method="post" action="/dashboard/my-stack" style="margin-bottom:24px;">
-            <div style="background:#fff;border-radius:16px;padding:24px;border:1px solid #E8E3DC;">
-                <label style="font-weight:600;color:#1A2D4A;display:block;margin-bottom:6px;">Stack Title</label>
+            <div style="background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border);">
+                <label style="font-weight:600;color:var(--terracotta);display:block;margin-bottom:8px;">Stack Title</label>
                 <input type="text" name="title" value="{title}"
-                       style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:8px;font-size:15px;margin-bottom:16px;box-sizing:border-box;">
-                <label style="font-weight:600;color:#1A2D4A;display:block;margin-bottom:6px;">Description</label>
+                       style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;margin-bottom:16px;box-sizing:border-box;">
+                <label style="font-weight:600;color:var(--terracotta);display:block;margin-bottom:8px;">Description</label>
                 <textarea name="description" rows="3"
-                          style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:8px;font-size:15px;margin-bottom:16px;box-sizing:border-box;resize:vertical;">{description}</textarea>
+                          style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;margin-bottom:16px;box-sizing:border-box;resize:vertical;">{description}</textarea>
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
                     <input type="checkbox" name="is_public" id="is_public" value="1" {'checked' if is_public else ''}>
-                    <label for="is_public" style="font-size:14px;color:#4B5563;">Make my stack public</label>
+                    <label for="is_public" style="font-size:14px;color:var(--ink-light);">Make my stack public</label>
                 </div>
-                <button type="submit" style="background:#1A2D4A;color:#fff;padding:10px 24px;border:none;border-radius:999px;cursor:pointer;font-weight:600;">
+                <button type="submit" style="background:var(--terracotta);color:#fff;padding:10px 24px;border:none;border-radius:999px;cursor:pointer;font-weight:600;">
                     Save Settings
                 </button>
             </div>
@@ -1581,15 +1581,15 @@ async def my_stack_page(request: Request):
 
         {share_banner}
 
-        <h2 style="font-family:'DM Serif Display',serif;color:#1A2D4A;font-size:20px;margin-bottom:16px;">Tools in Your Stack</h2>
+        <h2 style="font-family:var(--font-display);color:var(--terracotta);font-size:20px;margin-bottom:16px;">Tools in Your Stack</h2>
         {tools_html}
 
         <form method="post" action="/dashboard/my-stack/add" style="margin-top:16px;display:flex;gap:8px;">
-            <select name="tool_slug" style="flex:1;padding:10px 14px;border:1px solid #D1D5DB;border-radius:8px;font-size:15px;">
+            <select name="tool_slug" style="flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;">
                 <option value="">Select a tool to add...</option>
                 {options}
             </select>
-            <button type="submit" style="background:#00D4F5;color:#1A2D4A;padding:10px 20px;border:none;border-radius:999px;cursor:pointer;font-weight:700;">
+            <button type="submit" style="background:var(--slate);color:var(--terracotta);padding:10px 20px;border:none;border-radius:999px;cursor:pointer;font-weight:700;">
                 + Add
             </button>
         </form>
@@ -1775,8 +1775,8 @@ async def developer_page(request: Request):
             <p style="color:var(--ink-muted);font-size:14px;margin:0 0 12px;">
                 Copy this key now &mdash; you won&rsquo;t be able to see it again.
             </p>
-            <code id="new-key-value" style="font-family:var(--font-mono);font-size:14px;background:#1A2D4A;
-                         color:#00D4F5;padding:10px 14px;border-radius:8px;display:block;
+            <code id="new-key-value" style="font-family:var(--font-mono);font-size:14px;background:var(--terracotta);
+                         color:var(--slate);padding:10px 14px;border-radius:var(--radius-sm);display:block;
                          word-break:break-all;">{escape(new_key)}</code>
             <button onclick="navigator.clipboard.writeText(document.getElementById('new-key-value').textContent);this.textContent='Copied!'"
                     class="btn btn-primary" style="margin-top:12px;font-size:13px;">
@@ -1855,19 +1855,19 @@ async def developer_page(request: Request):
 
             <h3 style="font-size:15px;margin:0 0 8px;color:var(--ink);">MCP Server (Claude, Cursor, Windsurf)</h3>
             <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Install once, your AI assistant searches IndieStack before writing code.</p>
-            <pre style="background:#1A2D4A;color:#00D4F5;padding:14px;border-radius:8px;font-size:13px;
+            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
                         font-family:var(--font-mono);overflow-x:auto;margin-bottom:20px;">pip install indiestack</pre>
             <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Set your key as an environment variable in your MCP client config:</p>
-            <pre style="background:#1A2D4A;color:#00D4F5;padding:14px;border-radius:8px;font-size:13px;
+            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
                         font-family:var(--font-mono);overflow-x:auto;margin-bottom:24px;">INDIESTACK_API_KEY=your_key_here</pre>
 
             <h3 style="font-size:15px;margin:0 0 8px;color:var(--ink);">REST API</h3>
             <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Query the API directly with your key as a query parameter.</p>
-            <pre style="background:#1A2D4A;color:#00D4F5;padding:14px;border-radius:8px;font-size:13px;
+            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
                         font-family:var(--font-mono);overflow-x:auto;margin-bottom:20px;">curl &quot;{BASE_URL}/api/tools/search?q=analytics&amp;key=your_key_here&quot;</pre>
 
             <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">Or use the Authorization header:</p>
-            <pre style="background:#1A2D4A;color:#00D4F5;padding:14px;border-radius:8px;font-size:13px;
+            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;
                         font-family:var(--font-mono);overflow-x:auto;">curl -H &quot;Authorization: Bearer your_key_here&quot; &quot;{BASE_URL}/api/tools/search?q=analytics&quot;</pre>
         </div>
     </div>'''

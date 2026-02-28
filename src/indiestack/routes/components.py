@@ -804,7 +804,7 @@ def tool_card(tool: dict) -> str:
         style="position:absolute;top:12px;right:12px;z-index:2;background:none;border:none;cursor:pointer;padding:4px;font-size:20px;line-height:1;color:var(--ink-muted);opacity:0.5;transition:color 0.2s,transform 0.2s,opacity 0.2s;"
         onmouseenter="this.style.color='#E2B764';this.style.opacity='1';this.style.transform='scale(1.1)';"
         onmouseleave="if(!this.dataset.wishlisted){{this.style.color='var(--ink-muted)';this.style.opacity='0.5';this.style.transform='scale(1)';}}else{{this.style.transform='scale(1)';}}"
-        title="Save to wishlist">&#9734;</button>'''
+        title="Bookmark">&#9734;</button>'''
 
     visit_html = f'<a href="/api/click/{slug}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:12px;color:var(--accent);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:2px;">Visit&nbsp;&rarr;</a>'
 
@@ -1009,7 +1009,7 @@ def wishlist_js() -> str:
                     btn.style.opacity = data.saved ? '1' : '0.5';
                     if (data.saved) { btn.dataset.wishlisted = '1'; } else { delete btn.dataset.wishlisted; }
                 }
-                showToast(data.saved ? '\u2605 Saved to wishlist' : 'Removed from wishlist');
+                showToast(data.saved ? '\u2605 Bookmarked' : 'Bookmark removed');
             } else if (data.error === 'login_required') {
                 window.location.href = '/auth/github?next=' + encodeURIComponent(window.location.pathname);
             }

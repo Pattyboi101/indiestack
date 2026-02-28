@@ -28,7 +28,7 @@ async def _inject_tool_cards(db, content: str) -> str:
 
 router = APIRouter()
 
-_CONTAINER = 'style="max-width:800px; margin:40px auto; padding:0 20px; line-height:1.8;"'
+_CONTAINER = 'style="max-width:800px; margin:40px auto; padding:0 24px; line-height:1.8;"'
 _HEADING = 'style="color:var(--terracotta);"'
 _TEXT = 'style="color:var(--ink);"'
 
@@ -80,12 +80,12 @@ async def about_page(request: Request):
       </p>
 
       <!-- Who we are -->
-      <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-top:40px;margin-bottom:20px;">
+      <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-top:40px;margin-bottom:24px;">
         Who we are
       </h2>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
         <!-- Pat -->
-        <div class="card" style="padding:28px;">
+        <div class="card" style="padding:24px;">
           <img src="/founders/pat.jpg" alt="Patrick Amey-Jones" style="width:56px;height:56px;border-radius:50%;object-fit:cover;margin-bottom:12px;">
           <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:4px;">
             Pat <span style="font-size:13px;color:var(--ink-muted);font-family:var(--font-body);font-weight:400;">(a.k.a. Oatcake)</span>
@@ -102,7 +102,7 @@ async def about_page(request: Request):
           </div>
         </div>
         <!-- Ed -->
-        <div class="card" style="padding:28px;">
+        <div class="card" style="padding:24px;">
           <div style="width:56px;height:56px;border-radius:50%;background:var(--terracotta);color:white;
                       display:flex;align-items:center;justify-content:center;font-size:22px;
                       font-family:var(--font-display);margin-bottom:12px;">E</div>
@@ -156,8 +156,8 @@ async def about_page(request: Request):
           Built something? We&rsquo;d love to see it.
         </p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-          <a href="/submit" class="btn btn-primary" style="padding:12px 28px;">Submit Your Tool</a>
-          <a href="/why-list" class="btn btn-secondary" style="padding:12px 28px;">Why list here?</a>
+          <a href="/submit" class="btn btn-primary" style="padding:12px 24px;">Submit Your Tool</a>
+          <a href="/why-list" class="btn btn-secondary" style="padding:12px 24px;">Why list here?</a>
         </div>
       </div>
 
@@ -410,8 +410,8 @@ async def faq_page(request: Request):
     ]
 
     details_html = "\n".join(
-        f'<details style="border-bottom:1px solid var(--border, #e2e0dc); padding:16px 0;">'
-        f'<summary style="cursor:pointer; font-weight:600; font-size:1.1rem; color:var(--ink);">{q}</summary>'
+        f'<details style="border-bottom:1px solid var(--border); padding:16px 0;">'
+        f'<summary style="cursor:pointer; font-weight:600; font-size:18px; color:var(--ink);">{q}</summary>'
         f'<p style="margin-top:12px; color:var(--ink);">{a}</p>'
         f'</details>'
         for q, a in questions
@@ -473,8 +473,8 @@ _BLOG_POSTS = [
     },
 ]
 
-_BLOG_CONTAINER = 'style="max-width:720px; margin:60px auto; padding:0 20px;"'
-_BLOG_TITLE = 'style="font-family:var(--font-display); font-size:2.4rem; line-height:1.2; color:var(--ink); margin-bottom:16px;"'
+_BLOG_CONTAINER = 'style="max-width:720px; margin:64px auto; padding:0 24px;"'
+_BLOG_TITLE = 'style="font-family:var(--font-display); font-size:38px; line-height:1.2; color:var(--ink); margin-bottom:16px;"'
 _BLOG_BODY = 'style="font-size:17px; line-height:1.8; color:var(--ink);"'
 
 
@@ -484,19 +484,19 @@ async def blog_index(request: Request):
     for post in _BLOG_POSTS:
         cards += f"""
         <a href="/blog/{post['slug']}" class="card hover-lift" style="display:block;text-decoration:none;color:inherit;
-                  padding:28px;margin-bottom:20px;">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                  padding:24px;margin-bottom:24px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
                 <time style="font-family:var(--font-mono);font-size:13px;color:var(--ink-muted);">{post['date']}</time>
                 <span style="font-family:var(--font-mono);font-size:13px;color:var(--slate-dark);">{post['reading_time']}</span>
             </div>
-            <h2 style="font-family:var(--font-display);font-size:1.4rem;color:var(--ink);margin-bottom:8px;">{post['title']}</h2>
+            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">{post['title']}</h2>
             <p style="color:var(--ink-muted);font-size:15px;line-height:1.6;">{post['excerpt']}</p>
         </a>
         """
 
     body = f"""
     <div {_BLOG_CONTAINER}>
-        <h1 style="font-family:var(--font-display);font-size:2.2rem;color:var(--ink);margin-bottom:8px;">Blog</h1>
+        <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Blog</h1>
         <p style="color:var(--ink-muted);font-size:16px;margin-bottom:40px;">Thoughts on indie tools, AI workflows, and building in public.</p>
         {cards}
     </div>
@@ -545,16 +545,16 @@ async def blog_agent_infrastructure(request: Request):
     <style>
         .blog-article h2 {{
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 24px;
             color: var(--ink);
             margin: 40px 0 16px;
         }}
         .blog-article p {{
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }}
         .blog-article blockquote {{
             border-left: 4px solid var(--slate);
-            margin: 28px 0;
+            margin: 32px 0;
             padding: 16px 24px;
             background: var(--cream-dark);
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -565,9 +565,9 @@ async def blog_agent_infrastructure(request: Request):
         }}
         .blog-article pre {{
             background: var(--terracotta);
-            color: #E8ECF0;
+            color: var(--cream);
             border-radius: var(--radius-sm);
-            padding: 20px 24px;
+            padding: 24px;
             font-family: var(--font-mono);
             font-size: 13px;
             line-height: 1.7;
@@ -575,13 +575,13 @@ async def blog_agent_infrastructure(request: Request):
             margin: 24px 0;
         }}
         .blog-article pre code {{
-            color: #E8ECF0;
+            color: var(--cream);
         }}
         .blog-article code {{
             font-family: var(--font-mono);
             font-size: 0.9em;
             background: var(--cream-dark);
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
         }}
         .blog-article a {{
@@ -594,17 +594,17 @@ async def blog_agent_infrastructure(request: Request):
         }}
         .blog-article ol {{
             padding-left: 24px;
-            margin: 20px 0;
+            margin: 24px 0;
         }}
         .blog-article ol li {{
             margin-bottom: 12px;
         }}
         .blog-article ul {{
             padding-left: 24px;
-            margin: 20px 0;
+            margin: 24px 0;
         }}
         .blog-article ul li {{
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }}
     </style>
     """
@@ -751,12 +751,12 @@ async def blog_agent_infrastructure(request: Request):
 
         <footer style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
             <a href="/use-cases"
-               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+               class="btn btn-primary" style="padding:12px 24px;border-radius:999px;text-decoration:none;">
                 Browse Use Cases
             </a>
             <a href="https://twitter.com/intent/tweet?text={tweet_text}"
                target="_blank" rel="noopener"
-               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+               class="btn btn-primary" style="padding:12px 24px;border-radius:999px;text-decoration:none;">
                 Share on X
             </a>
             <a href="/blog" style="color:var(--ink-muted);font-size:14px;">&#8592; Back to blog</a>
@@ -809,16 +809,16 @@ async def blog_marketplace_launch(request: Request):
     <style>
         .blog-article h2 {{
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 24px;
             color: var(--ink);
             margin: 40px 0 16px;
         }}
         .blog-article p {{
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }}
         .blog-article blockquote {{
             border-left: 4px solid var(--slate);
-            margin: 28px 0;
+            margin: 32px 0;
             padding: 16px 24px;
             background: var(--cream-dark);
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -829,9 +829,9 @@ async def blog_marketplace_launch(request: Request):
         }}
         .blog-article pre {{
             background: var(--terracotta);
-            color: #E8ECF0;
+            color: var(--cream);
             border-radius: var(--radius-sm);
-            padding: 20px 24px;
+            padding: 24px;
             font-family: var(--font-mono);
             font-size: 13px;
             line-height: 1.7;
@@ -839,13 +839,13 @@ async def blog_marketplace_launch(request: Request):
             margin: 24px 0;
         }}
         .blog-article pre code {{
-            color: #E8ECF0;
+            color: var(--cream);
         }}
         .blog-article code {{
             font-family: var(--font-mono);
             font-size: 0.9em;
             background: var(--cream-dark);
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
         }}
         .blog-article a {{
@@ -858,17 +858,17 @@ async def blog_marketplace_launch(request: Request):
         }}
         .blog-article ol {{
             padding-left: 24px;
-            margin: 20px 0;
+            margin: 24px 0;
         }}
         .blog-article ol li {{
             margin-bottom: 12px;
         }}
         .blog-article ul {{
             padding-left: 24px;
-            margin: 20px 0;
+            margin: 24px 0;
         }}
         .blog-article ul li {{
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }}
     </style>
     """
@@ -991,7 +991,7 @@ async def blog_marketplace_launch(request: Request):
         <footer style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
             <a href="https://twitter.com/intent/tweet?text={tweet_text}"
                target="_blank" rel="noopener"
-               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+               class="btn btn-primary" style="padding:12px 24px;border-radius:999px;text-decoration:none;">
                 Share on X
             </a>
             <a href="/blog" style="color:var(--ink-muted);font-size:14px;">&#8592; Back to blog</a>
@@ -1046,16 +1046,16 @@ async def blog_tokens_saved(request: Request):
     <style>
         .blog-article h2 {{{{
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 24px;
             color: var(--ink);
             margin: 40px 0 16px;
         }}}}
         .blog-article p {{{{
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }}}}
         .blog-article blockquote {{{{
             border-left: 4px solid var(--slate);
-            margin: 28px 0;
+            margin: 32px 0;
             padding: 16px 24px;
             background: var(--cream-dark);
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -1066,9 +1066,9 @@ async def blog_tokens_saved(request: Request):
         }}}}
         .blog-article pre {{{{
             background: var(--terracotta);
-            color: #E8ECF0;
+            color: var(--cream);
             border-radius: var(--radius-sm);
-            padding: 20px 24px;
+            padding: 24px;
             font-family: var(--font-mono);
             font-size: 13px;
             line-height: 1.7;
@@ -1076,13 +1076,13 @@ async def blog_tokens_saved(request: Request):
             margin: 24px 0;
         }}}}
         .blog-article pre code {{{{
-            color: #E8ECF0;
+            color: var(--cream);
         }}}}
         .blog-article code {{{{
             font-family: var(--font-mono);
             font-size: 0.9em;
             background: var(--cream-dark);
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
         }}}}
         .blog-article a {{{{
@@ -1240,7 +1240,7 @@ claude mcp add indiestack</code></pre>
         <footer style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
             <a href="https://twitter.com/intent/tweet?text={tweet_text}"
                target="_blank" rel="noopener"
-               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+               class="btn btn-primary" style="padding:12px 24px;border-radius:999px;text-decoration:none;">
                 Share on X
             </a>
             <a href="/blog" style="color:var(--ink-muted);font-size:14px;">&#8592; Back to blog</a>
@@ -1293,16 +1293,16 @@ async def blog_stop_wasting_tokens(request: Request):
     <style>
         .blog-article h2 {{
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 24px;
             color: var(--ink);
             margin: 40px 0 16px;
         }}
         .blog-article p {{
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }}
         .blog-article blockquote {{
             border-left: 4px solid var(--slate);
-            margin: 28px 0;
+            margin: 32px 0;
             padding: 16px 24px;
             background: var(--cream-dark);
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -1313,9 +1313,9 @@ async def blog_stop_wasting_tokens(request: Request):
         }}
         .blog-article pre {{
             background: var(--terracotta);
-            color: #E8ECF0;
+            color: var(--cream);
             border-radius: var(--radius-sm);
-            padding: 20px 24px;
+            padding: 24px;
             font-family: var(--font-mono);
             font-size: 13px;
             line-height: 1.7;
@@ -1323,13 +1323,13 @@ async def blog_stop_wasting_tokens(request: Request):
             margin: 24px 0;
         }}
         .blog-article pre code {{
-            color: #E8ECF0;
+            color: var(--cream);
         }}
         .blog-article code {{
             font-family: var(--font-mono);
             font-size: 0.9em;
             background: var(--cream-dark);
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
         }}
         .blog-article a {{
@@ -1486,7 +1486,7 @@ claude mcp add indiestack -- python -m indiestack.mcp_server
         <footer style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
             <a href="https://twitter.com/intent/tweet?text={tweet_text}"
                target="_blank" rel="noopener"
-               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+               class="btn btn-primary" style="padding:12px 24px;border-radius:999px;text-decoration:none;">
                 Share on X
             </a>
             <a href="/blog" style="color:var(--ink-muted);font-size:14px;">&#8592; Back to blog</a>
@@ -1541,16 +1541,16 @@ async def blog_zero_js_frameworks(request: Request):
     <style>
         .blog-article h2 {{
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 24px;
             color: var(--ink);
             margin: 40px 0 16px;
         }}
         .blog-article p {{
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }}
         .blog-article blockquote {{
             border-left: 4px solid var(--slate);
-            margin: 28px 0;
+            margin: 32px 0;
             padding: 16px 24px;
             background: var(--cream-dark);
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -1561,9 +1561,9 @@ async def blog_zero_js_frameworks(request: Request):
         }}
         .blog-article pre {{
             background: var(--terracotta);
-            color: #E8ECF0;
+            color: var(--cream);
             border-radius: var(--radius-sm);
-            padding: 20px 24px;
+            padding: 24px;
             font-family: var(--font-mono);
             font-size: 13px;
             line-height: 1.7;
@@ -1571,13 +1571,13 @@ async def blog_zero_js_frameworks(request: Request):
             margin: 24px 0;
         }}
         .blog-article pre code {{
-            color: #E8ECF0;
+            color: var(--cream);
         }}
         .blog-article code {{
             font-family: var(--font-mono);
             font-size: 0.9em;
             background: var(--cream-dark);
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
         }}
         .blog-article a {{
@@ -1611,7 +1611,7 @@ async def blog_zero_js_frameworks(request: Request):
                 Everyone told us we needed React. Or at the very least Vue, Svelte, something
                 with a virtual DOM and a build pipeline. We were building IndieStack &mdash; a
                 full marketplace with authentication, Stripe Connect payments, full-text search,
-                an admin dashboard, maker profiles, wishlists, reviews, and an MCP server that
+                an admin dashboard, maker profiles, bookmarks, reviews, and an MCP server that
                 plugs into AI coding assistants. Not a todo app. A real product with real money
                 flowing through it.
             </p>
@@ -1791,7 +1791,7 @@ async def about_page(request: Request):
         <footer style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
             <a href="https://twitter.com/intent/tweet?text={tweet_text}"
                target="_blank" rel="noopener"
-               class="btn btn-primary" style="padding:10px 24px;border-radius:999px;text-decoration:none;">
+               class="btn btn-primary" style="padding:12px 24px;border-radius:999px;text-decoration:none;">
                 Share on X
             </a>
             <a href="/blog" style="color:var(--ink-muted);font-size:14px;">&#8592; Back to blog</a>
@@ -1850,7 +1850,7 @@ async def best_index(request: Request):
         name = escape(cat['name'])
         cards += f"""
         <a href="/best/{slug}" class="card"
-           style="text-decoration:none;color:inherit;padding:20px 24px;display:flex;align-items:center;gap:14px;">
+           style="text-decoration:none;color:inherit;padding:24px;display:flex;align-items:center;gap:16px;">
             <span style="font-size:28px;">{icon}</span>
             <div>
                 <div style="font-family:var(--font-display);font-size:16px;color:var(--ink);">Best {name} Tools</div>
@@ -1900,7 +1900,7 @@ async def best_category(request: Request, category_slug: str):
         rank = i + 1
         badge = ""
         if rank <= 3:
-            colours = {1: ("var(--gold)", "&#127942;"), 2: ("#C0C0C0", "&#129352;"), 3: ("#CD7F32", "&#129353;")}
+            colours = {1: ("var(--gold)", "&#127942;"), 2: ("var(--ink-muted)", "&#129352;"), 3: ("var(--accent)", "&#129353;")}
             colour, emoji = colours[rank]
             badge = f'<div style="position:absolute;top:-8px;left:-8px;width:32px;height:32px;background:{colour};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">{emoji}</div>'
 
@@ -1912,7 +1912,7 @@ async def best_category(request: Request, category_slug: str):
         <div class="card" style="text-align:center;padding:48px 24px;border:2px dashed var(--border);">
             <p style="font-size:32px;margin-bottom:12px;">&#128640;</p>
             <h3 style="font-family:var(--font-display);color:var(--ink);">No tools listed yet</h3>
-            <p style="color:var(--ink-muted);margin:8px 0 20px;">Be the first to list your tool in this category.</p>
+            <p style="color:var(--ink-muted);margin:8px 0 24px;">Be the first to list your tool in this category.</p>
             <a href="/submit" class="btn btn-primary">Submit Your Tool</a>
         </div>
         """
@@ -1927,7 +1927,7 @@ async def best_category(request: Request, category_slug: str):
         <div style="margin-bottom:40px;">
             <div style="font-size:13px;color:var(--ink-muted);margin-bottom:12px;">
                 <a href="/best" style="color:var(--ink-muted);text-decoration:none;">Best Tools</a>
-                <span style="margin:0 6px;">&#8250;</span>
+                <span style="margin:0 8px;">&#8250;</span>
                 {cat_name_esc}
             </div>
             <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,38px);color:var(--ink);margin-bottom:12px;">

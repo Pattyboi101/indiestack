@@ -243,7 +243,7 @@ async def render_funnels_section(db) -> str:
     stages = [
         ("Views", total_views, "#1A2D4A"),
         ("Clicks", total_clicks, "#00D4F5"),
-        ("Wishlists", total_wishlists, "#16a34a"),
+        ("Bookmarks", total_wishlists, "#16a34a"),
         ("Purchases", total_purchases, "#EA580C"),
     ]
     funnel_bar = ""
@@ -257,9 +257,9 @@ async def render_funnels_section(db) -> str:
         if total_views > 0 and total_clicks > 0:
             drop_labels += f'<span style="font-size:12px;color:var(--ink-muted);">Views&rarr;Clicks: {total_clicks/total_views*100:.1f}%</span>'
         if total_clicks > 0 and total_wishlists > 0:
-            drop_labels += f'<span style="font-size:12px;color:var(--ink-muted);">Clicks&rarr;Wishlists: {total_wishlists/total_clicks*100:.1f}%</span>'
+            drop_labels += f'<span style="font-size:12px;color:var(--ink-muted);">Clicks&rarr;Bookmarks: {total_wishlists/total_clicks*100:.1f}%</span>'
         if total_wishlists > 0 and total_purchases > 0:
-            drop_labels += f'<span style="font-size:12px;color:var(--ink-muted);">Wishlists&rarr;Purchases: {total_purchases/total_wishlists*100:.1f}%</span>'
+            drop_labels += f'<span style="font-size:12px;color:var(--ink-muted);">Bookmarks&rarr;Purchases: {total_purchases/total_wishlists*100:.1f}%</span>'
 
         funnel_bar = f"""
         <div class="card" style="padding:24px;margin-bottom:32px;">
@@ -302,7 +302,7 @@ async def render_funnels_section(db) -> str:
         </tr>
         """
 
-    tool_funnel_table = data_table("Per-Tool Funnel (30 Days)", ["Tool", "Views", "Clicks", "CTR%", "Wishlists", "Purchases"], tool_rows)
+    tool_funnel_table = data_table("Per-Tool Funnel (30 Days)", ["Tool", "Views", "Clicks", "CTR%", "Bookmarks", "Purchases"], tool_rows)
 
     # Maker leaderboard
     makers = await get_maker_leaderboard(db, days=30)

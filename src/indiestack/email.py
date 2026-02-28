@@ -552,7 +552,7 @@ def ego_ping_html(*, maker_name: str, tool_name: str, tool_slug: str,
         </div>
         <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
             <div style="font-size:28px;font-weight:bold;color:#1A2D4A;">{wishlists}</div>
-            <div style="font-size:12px;color:#6B6560;margin-top:4px;">Wishlists</div>
+            <div style="font-size:12px;color:#6B6560;margin-top:4px;">Bookmarks</div>
         </div>
     </div>
     <div style="margin:28px 0;padding:20px;background:#1A2D4A;border-radius:12px;text-align:center;">
@@ -597,7 +597,7 @@ def boost_expired_html(*, tool_name: str, tool_slug: str, views: int, upvotes: i
             </div>
             <div style="text-align:center;padding:16px;background:#F0FFFE;border-radius:12px;">
                 <div style="font-size:28px;font-weight:800;color:#1A2D4A;">{wishlists}</div>
-                <div style="font-size:12px;color:#6B7280;">Wishlists</div>
+                <div style="font-size:12px;color:#6B7280;">Bookmarks</div>
             </div>
         </div>
         <p style="color:#5A5550;font-size:14px;line-height:1.6;">
@@ -619,13 +619,13 @@ def boost_expired_html(*, tool_name: str, tool_slug: str, views: int, upvotes: i
 
 
 def wishlist_update_html(user_name: str, tool_name: str, update_title: str, tool_url: str) -> str:
-    """Email sent when a wishlisted tool ships an update."""
+    """Email sent when a bookmarked tool ships an update."""
     return _email_wrapper(f"""
         <h1 style="font-size:24px;font-weight:700;color:#2D2926;margin-bottom:16px;">
             A Tool You Saved Just Shipped an Update
         </h1>
         <p style="color:#5A5550;font-size:16px;line-height:1.6;margin-bottom:16px;">
-            Hey {user_name} — <strong>{tool_name}</strong> on your wishlist just posted an update:
+            Hey {user_name} — <strong>{tool_name}</strong> that you bookmarked just posted an update:
         </p>
         <div style="padding:16px;background:#F5F3F0;border-radius:8px;margin-bottom:24px;border-left:4px solid #C4714E;">
             <p style="font-size:16px;font-weight:600;color:#2D2926;margin:0;">
@@ -639,7 +639,7 @@ def wishlist_update_html(user_name: str, tool_name: str, update_title: str, tool
             </a>
         </div>
         <p style="color:#8A8580;font-size:13px;text-align:center;">
-            You're receiving this because {tool_name} is on your IndieStack wishlist.
+            You're receiving this because you bookmarked {tool_name} on IndieStack.
         </p>
     """)
 

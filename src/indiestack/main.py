@@ -109,6 +109,7 @@ from indiestack.routes import embed
 from indiestack.routes import launch_with_me
 from indiestack.routes import use_cases
 from indiestack.routes import why_list
+from indiestack.routes import plugins
 
 
 async def _periodic_session_cleanup():
@@ -989,7 +990,7 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
             price_str = f"\u00a3{price_pence / 100:.2f}"
         else:
             price_str = "Free"
-        results.append({
+        result = {
             "name": t['name'],
             "tagline": t.get('tagline', ''),
             "url": t.get('url', ''),
@@ -999,7 +1000,13 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
             "is_verified": bool(t.get('is_verified', 0)),
             "upvote_count": int(t.get('upvote_count', 0)),
             "tags": t.get('tags', ''),
-        })
+        }
+        # Add plugin metadata if present
+        if t.get('tool_type'):
+            result["tool_type"] = t['tool_type']
+            result["platforms"] = t.get('platforms', '')
+            result["install_command"] = t.get('install_command', '')
+        results.append(result)
 
     # Log the search for Live Wire
     try:
@@ -1687,7 +1694,7 @@ async def milestone_card_svg(request: Request, slug: str, type: str = "first-too
         '10-upvotes': {'emoji': '🔥', 'text': '10 developers upvoted my tool!'},
         'first-review': {'emoji': '⭐', 'text': 'Got my first review!'},
         'launch-ready': {'emoji': '🚀', 'text': '100% Launch Ready!'},
-        '50-wishlists': {'emoji': '💾', 'text': '50 developers wishlisted my tool!'},
+        '50-wishlists': {'emoji': '💾', 'text': '50 developers bookmarked my tool!'},
     }
     m = milestones.get(type, milestones['first-tool'])
 
@@ -2564,3 +2571,4 @@ app.include_router(embed.router)
 app.include_router(launch_with_me.router)
 app.include_router(use_cases.router)
 app.include_router(why_list.router)
+app.include_router(plugins.router)
