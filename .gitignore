@@ -35,5 +35,8 @@ reply_*.py
 seed_social_proof.py
 purge_seeded_data.py
 
+# Tokens / secrets
+.mcpregistry_github_token
+
 # PyPI
 PyPI-Recovery-Codes-*.txt
