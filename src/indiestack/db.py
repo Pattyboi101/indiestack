@@ -351,9 +351,24 @@ CREATE TABLE IF NOT EXISTS search_logs (
     result_count INTEGER NOT NULL DEFAULT 0,
     top_result_slug TEXT,
     top_result_name TEXT,
+    api_key_id INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_search_logs_created ON search_logs(created_at);
+CREATE INDEX IF NOT EXISTS idx_search_logs_api_key ON search_logs(api_key_id);
+
+CREATE TABLE IF NOT EXISTS developer_profiles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    api_key_id INTEGER NOT NULL UNIQUE REFERENCES api_keys(id),
+    interests TEXT NOT NULL DEFAULT '{}',
+    tech_stack TEXT NOT NULL DEFAULT '[]',
+    favorite_tools TEXT NOT NULL DEFAULT '[]',
+    search_count INTEGER NOT NULL DEFAULT 0,
+    personalization_enabled INTEGER NOT NULL DEFAULT 1,
+    notice_shown INTEGER NOT NULL DEFAULT 0,
+    last_rebuilt_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE IF NOT EXISTS milestones (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -517,6 +532,21 @@ NEED_MAPPINGS = {
     "design": {"category": "design-creative", "terms": ["design", "ui", "creative", "graphics"], "competitors": ["Figma", "Canva", "Adobe"], "title": "Design & Creative", "description": "Create designs, generate graphics, and build UI components.", "build_estimate": "varies", "icon": "\U0001f3a8"},
     "feedback": {"category": "feedback-reviews", "terms": ["feedback", "reviews", "nps", "ratings"], "competitors": ["Hotjar", "UserTesting", "Typeform"], "title": "Feedback & Reviews", "description": "Collect user feedback, run NPS surveys, and manage reviews.", "build_estimate": "1-2 weeks", "icon": "\U0001f4ac"},
     "social": {"category": "social-media", "terms": ["social", "community", "social media"], "competitors": ["Buffer", "Hootsuite"], "title": "Social Media", "description": "Schedule posts, manage social accounts, and grow communities.", "build_estimate": "2-3 weeks", "icon": "\U0001f4f1"},
+}
+
+TECH_KEYWORDS = {
+    "react", "nextjs", "next.js", "vue", "nuxt", "svelte", "sveltekit", "angular",
+    "django", "flask", "fastapi", "rails", "laravel", "express", "nestjs",
+    "supabase", "firebase", "postgres", "postgresql", "mongodb", "mysql", "redis",
+    "tailwind", "bootstrap", "chakra",
+    "vercel", "netlify", "cloudflare", "aws", "gcp", "azure", "fly.io",
+    "docker", "kubernetes",
+    "stripe", "paddle", "lemon squeezy",
+    "typescript", "python", "go", "rust", "ruby", "php", "java",
+    "graphql", "rest", "trpc",
+    "prisma", "drizzle", "sqlalchemy",
+    "playwright", "cypress", "jest", "vitest",
+    "openai", "anthropic", "claude", "gpt",
 }
 
 # ── Database init ─────────────────────────────────────────────────────────
@@ -757,6 +787,28 @@ async def init_db():
             await db.execute("CREATE INDEX IF NOT EXISTS idx_citations_created ON agent_citations(created_at)")
         except Exception:
             pass
+        await db.commit()
+
+        # Agent Memory: add api_key_id to search_logs + create developer_profiles
+        try:
+            await db.execute("SELECT api_key_id FROM search_logs LIMIT 1")
+        except Exception:
+            await db.execute("ALTER TABLE search_logs ADD COLUMN api_key_id INTEGER")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_search_logs_api_key ON search_logs(api_key_id)")
+            await db.commit()
+
+        await db.execute("""CREATE TABLE IF NOT EXISTS developer_profiles (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            api_key_id INTEGER NOT NULL UNIQUE REFERENCES api_keys(id),
+            interests TEXT NOT NULL DEFAULT '{}',
+            tech_stack TEXT NOT NULL DEFAULT '[]',
+            favorite_tools TEXT NOT NULL DEFAULT '[]',
+            search_count INTEGER NOT NULL DEFAULT 0,
+            personalization_enabled INTEGER NOT NULL DEFAULT 1,
+            notice_shown INTEGER NOT NULL DEFAULT 0,
+            last_rebuilt_at TIMESTAMP,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )""")
         await db.commit()
     finally:
         await db.close()
@@ -3213,14 +3265,15 @@ async def get_stack_preview_tools(db, stack_id: int, limit: int = 3):
 # ── Round 10: Search Logs & Live Wire ─────────────────────────────────
 
 async def log_search(db, query: str, source: str = 'web', result_count: int = 0,
-                     top_result_slug: str = None, top_result_name: str = None):
+                     top_result_slug: str = None, top_result_name: str = None,
+                     api_key_id: int = None):
     """Log a search query for the Live Wire feed and maker analytics."""
     if not query or not query.strip():
         return
     await db.execute(
-        """INSERT INTO search_logs (query, source, result_count, top_result_slug, top_result_name)
-           VALUES (?, ?, ?, ?, ?)""",
-        (query.strip()[:200], source, result_count, top_result_slug, top_result_name))
+        """INSERT INTO search_logs (query, source, result_count, top_result_slug, top_result_name, api_key_id)
+           VALUES (?, ?, ?, ?, ?, ?)""",
+        (query.strip()[:200], source, result_count, top_result_slug, top_result_name, api_key_id))
     await db.commit()
 
 
@@ -3906,3 +3959,155 @@ async def get_reaction_counts(db, tool_id: int, user_id: int = None, session_id:
         )
         user_reactions = {r["reaction"] for r in await rows.fetchall()}
     return {"counts": counts, "user_reactions": user_reactions}
+
+
+# ── Agent Memory: Developer Profiles ──────────────────────────
+
+async def get_developer_profile(db, api_key_id: int) -> dict | None:
+    """Get a developer's personalization profile."""
+    cursor = await db.execute(
+        "SELECT * FROM developer_profiles WHERE api_key_id = ?", (api_key_id,))
+    row = await cursor.fetchone()
+    return dict(row) if row else None
+
+
+async def clear_developer_profile(db, api_key_id: int):
+    """Clear personalization data but keep the profile row."""
+    await db.execute(
+        """UPDATE developer_profiles
+           SET interests = '{}', tech_stack = '[]', favorite_tools = '[]',
+               search_count = 0, last_rebuilt_at = NULL
+           WHERE api_key_id = ?""", (api_key_id,))
+    await db.commit()
+
+
+async def toggle_personalization(db, api_key_id: int) -> bool:
+    """Toggle personalization on/off. Returns new state."""
+    cursor = await db.execute(
+        "SELECT personalization_enabled FROM developer_profiles WHERE api_key_id = ?",
+        (api_key_id,))
+    row = await cursor.fetchone()
+    if not row:
+        return True
+    new_state = 0 if row['personalization_enabled'] else 1
+    await db.execute(
+        "UPDATE developer_profiles SET personalization_enabled = ? WHERE api_key_id = ?",
+        (new_state, api_key_id))
+    await db.commit()
+    return bool(new_state)
+
+
+async def mark_notice_shown(db, api_key_id: int):
+    """Mark that the first-search personalization notice has been shown."""
+    await db.execute(
+        "UPDATE developer_profiles SET notice_shown = 1 WHERE api_key_id = ?",
+        (api_key_id,))
+    await db.commit()
+
+
+async def build_developer_profile(db, api_key_id: int) -> dict:
+    """Build or rebuild a developer profile from their search history.
+
+    Aggregates last 90 days of searches into:
+    - interests: category slug -> confidence score (0-1)
+    - tech_stack: list of inferred technology keywords
+    - favorite_tools: list of tool slugs they interact with repeatedly
+    """
+    import json
+    from collections import Counter
+
+    # Get recent searches for this API key
+    cursor = await db.execute(
+        """SELECT query, top_result_slug, created_at,
+                  julianday('now') - julianday(created_at) as days_ago
+           FROM search_logs
+           WHERE api_key_id = ? AND created_at >= datetime('now', '-90 days')
+           ORDER BY created_at DESC""",
+        (api_key_id,))
+    searches = [dict(r) for r in await cursor.fetchall()]
+
+    search_count = len(searches)
+    if search_count == 0:
+        return {'interests': {}, 'tech_stack': [], 'favorite_tools': [], 'search_count': 0}
+
+    # Score categories from search queries using NEED_MAPPINGS
+    category_scores = Counter()
+    tech_found = Counter()
+    tool_slugs = Counter()
+
+    for s in searches:
+        q = (s['query'] or '').lower()
+        days = s['days_ago'] or 0
+
+        # Recency weight: last 7 days = 3x, last 30 = 2x, older = 1x
+        weight = 3.0 if days <= 7 else (2.0 if days <= 30 else 1.0)
+
+        # Match against NEED_MAPPINGS keywords
+        for keyword, mapping in NEED_MAPPINGS.items():
+            terms = [keyword] + mapping.get('terms', [])
+            for term in terms:
+                if term.lower() in q:
+                    category_scores[mapping['category']] += weight
+                    break
+
+        # Extract tech keywords
+        for kw in TECH_KEYWORDS:
+            if kw in q:
+                tech_found[kw] += weight
+
+        # Track tool slugs from top results
+        if s['top_result_slug']:
+            tool_slugs[s['top_result_slug']] += 1
+
+    # Also check bookmarks for this user
+    key_cursor = await db.execute(
+        "SELECT user_id FROM api_keys WHERE id = ?", (api_key_id,))
+    key_row = await key_cursor.fetchone()
+    if key_row:
+        user_id = key_row['user_id']
+        wl_cursor = await db.execute(
+            """SELECT t.slug, t.tags, c.slug as cat_slug
+               FROM wishlists w
+               JOIN tools t ON w.tool_id = t.id
+               JOIN categories c ON t.category_id = c.id
+               WHERE w.user_id = ?""", (user_id,))
+        for row in await wl_cursor.fetchall():
+            tool_slugs[row['slug']] += 2  # Bookmarks count more
+            category_scores[row['cat_slug']] += 1.0
+            # Infer tech from bookmarked tool names
+            name_lower = row['slug'].replace('-', ' ')
+            for kw in TECH_KEYWORDS:
+                if kw in name_lower:
+                    tech_found[kw] += 1.0
+
+    # Normalize interests to 0-1 scale
+    max_score = max(category_scores.values()) if category_scores else 1
+    interests = {cat: round(score / max_score, 2) for cat, score in category_scores.most_common(10)}
+
+    # Top 10 tech keywords
+    tech_stack = [kw for kw, _ in tech_found.most_common(10)]
+
+    # Favorite tools: appeared 2+ times
+    favorite_tools = [slug for slug, count in tool_slugs.most_common(20) if count >= 2]
+
+    # Upsert profile
+    profile = await get_developer_profile(db, api_key_id)
+    if profile:
+        await db.execute(
+            """UPDATE developer_profiles
+               SET interests = ?, tech_stack = ?, favorite_tools = ?,
+                   search_count = ?, last_rebuilt_at = CURRENT_TIMESTAMP
+               WHERE api_key_id = ?""",
+            (json.dumps(interests), json.dumps(tech_stack), json.dumps(favorite_tools),
+             search_count, api_key_id))
+    else:
+        await db.execute(
+            """INSERT INTO developer_profiles
+               (api_key_id, interests, tech_stack, favorite_tools, search_count, last_rebuilt_at)
+               VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)""",
+            (api_key_id, json.dumps(interests), json.dumps(tech_stack),
+             json.dumps(favorite_tools), search_count))
+    await db.commit()
+
+    return {'interests': interests, 'tech_stack': tech_stack,
+            'favorite_tools': favorite_tools, 'search_count': search_count}

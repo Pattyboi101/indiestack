@@ -26,6 +26,7 @@ from indiestack.db import (
     get_purchases_by_email,
     get_total_agent_citations,
     create_api_key, get_api_keys_for_user, revoke_api_key, get_api_key_usage_stats,
+    get_developer_profile, toggle_personalization, clear_developer_profile,
 )
 from indiestack.payments import create_connect_account, create_onboarding_link
 from indiestack.email import send_email, wishlist_update_html
@@ -1766,6 +1767,75 @@ async def developer_page(request: Request):
     usage = await get_api_key_usage_stats(db, user['id'], days=30)
     usage_map = {u['id']: u['request_count'] for u in usage}
 
+    # Load developer profile (from first active API key)
+    profile_html = ''
+    if keys:
+        first_key_id = keys[0]['id'] if keys else None
+        if first_key_id:
+            profile = await get_developer_profile(db, first_key_id)
+            if profile and profile.get('search_count', 0) > 0:
+                import json as _json
+                interests = _json.loads(profile['interests']) if isinstance(profile['interests'], str) else profile['interests']
+                tech_stack = _json.loads(profile['tech_stack']) if isinstance(profile['tech_stack'], str) else profile['tech_stack']
+                favorites = _json.loads(profile['favorite_tools']) if isinstance(profile['favorite_tools'], str) else profile['favorite_tools']
+                enabled = profile.get('personalization_enabled', 1)
+
+                # Interest pills
+                interest_pills = ''
+                for cat, score in sorted(interests.items(), key=lambda x: -x[1])[:8]:
+                    level = 'high' if score >= 0.7 else ('medium' if score >= 0.4 else 'low')
+                    color = 'var(--success-text)' if level == 'high' else ('var(--gold)' if level == 'medium' else 'var(--ink-muted)')
+                    cat_display = cat.replace('-', ' ').title()
+                    interest_pills += f'<span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid {color};color:{color};margin:2px;">{cat_display} ({level})</span>'
+
+                # Tech stack pills
+                tech_pills = ''.join(
+                    f'<span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--accent);color:var(--accent);margin:2px;">{kw}</span>'
+                    for kw in tech_stack[:8]
+                ) if tech_stack else '<span style="color:var(--ink-muted);font-size:13px;">None inferred yet</span>'
+
+                # Favorite tools
+                fav_pills = ''.join(
+                    f'<a href="/tool/{slug}" style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--border);color:var(--ink-light);margin:2px;text-decoration:none;">{slug}</a>'
+                    for slug in favorites[:6]
+                ) if favorites else '<span style="color:var(--ink-muted);font-size:13px;">None yet</span>'
+
+                toggle_text = 'Pause Personalization' if enabled else 'Resume Personalization'
+                toggle_color = 'var(--ink-muted)' if enabled else 'var(--success-text)'
+
+                profile_html = f'''
+                <div class="card" style="padding:24px;margin-bottom:32px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                        <h3 style="font-family:var(--font-display);font-size:20px;margin:0;">Your Profile</h3>
+                        <span style="font-size:12px;color:var(--ink-muted);">{profile['search_count']} searches analyzed</span>
+                    </div>
+                    <p style="font-size:13px;color:var(--ink-muted);margin-bottom:16px;">
+                        Built from your search patterns. We store category interests and tech keywords — never raw queries.
+                    </p>
+                    <div style="margin-bottom:16px;">
+                        <div style="font-size:13px;font-weight:600;color:var(--ink-light);margin-bottom:8px;">Interests</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:4px;">{interest_pills if interest_pills else '<span style="color:var(--ink-muted);font-size:13px;">None yet</span>'}</div>
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <div style="font-size:13px;font-weight:600;color:var(--ink-light);margin-bottom:8px;">Inferred Stack</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:4px;">{tech_pills}</div>
+                    </div>
+                    <div style="margin-bottom:24px;">
+                        <div style="font-size:13px;font-weight:600;color:var(--ink-light);margin-bottom:8px;">Favorite Tools</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:4px;">{fav_pills}</div>
+                    </div>
+                    <div style="display:flex;gap:12px;">
+                        <form method="POST" action="/developer/toggle-personalization" style="margin:0;">
+                            <button type="submit" class="btn btn-secondary" style="font-size:13px;padding:8px 16px;color:{toggle_color};">{toggle_text}</button>
+                        </form>
+                        <form method="POST" action="/developer/clear-profile" style="margin:0;"
+                              onsubmit="return confirm('Clear your preferences? Your profile will rebuild from scratch.')">
+                            <button type="submit" class="btn btn-secondary" style="font-size:13px;padding:8px 16px;color:var(--danger);">Clear Preferences</button>
+                        </form>
+                    </div>
+                </div>
+                '''
+
     # Show full key once after creation
     new_key_html = ""
     if new_key and new_key.startswith("isk_"):
@@ -1826,6 +1896,8 @@ async def developer_page(request: Request):
         </div>
 
         {new_key_html}
+
+        {profile_html}
 
         <div class="card" style="margin-bottom:24px;padding:24px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
@@ -1911,3 +1983,27 @@ async def developer_revoke_key(request: Request):
 
     await revoke_api_key(request.state.db, key_id, user['id'])
     return RedirectResponse(url="/developer", status_code=303)
+
+
+@router.post("/developer/toggle-personalization")
+async def toggle_personalization_route(request: Request):
+    user = request.state.user
+    if not user:
+        return RedirectResponse("/login?next=/developer", status_code=303)
+    db_conn = request.state.db
+    keys = await get_api_keys_for_user(db_conn, user['id'])
+    if keys:
+        await toggle_personalization(db_conn, keys[0]['id'])
+    return RedirectResponse("/developer", status_code=303)
+
+
+@router.post("/developer/clear-profile")
+async def clear_profile_route(request: Request):
+    user = request.state.user
+    if not user:
+        return RedirectResponse("/login?next=/developer", status_code=303)
+    db_conn = request.state.db
+    keys = await get_api_keys_for_user(db_conn, user['id'])
+    if keys:
+        await clear_developer_profile(db_conn, keys[0]['id'])
+    return RedirectResponse("/developer", status_code=303)

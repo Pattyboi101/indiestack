@@ -169,6 +169,46 @@ def find_alternatives(product: str) -> list[dict]:
     ]
 
 
+@mcp.prompt(
+    name="save-tokens",
+    title="Token-Saving Workflow Audit",
+    description="Analyze your current task and find IndieStack tools that would save tokens vs building from scratch.",
+)
+def save_tokens(task_description: str) -> list[dict]:
+    """Prompt template that audits a workflow for token-saving opportunities."""
+    return [
+        {
+            "role": "user",
+            "content": (
+                f"I'm working on: {task_description}\n\n"
+                "Audit this task for token-saving opportunities. Follow these steps:\n\n"
+                "**Step 1: Identify components I might build from scratch.**\n"
+                "Break down the task into distinct functional pieces (e.g. auth, payments, "
+                "email, analytics, file uploads, database, monitoring, search, forms).\n\n"
+                "**Step 2: Search IndieStack for each component.**\n"
+                "For each piece you identified, call search_indie_tools() with relevant keywords. "
+                "Also check for MCP servers (search 'mcp' + the component name) that could integrate directly.\n\n"
+                "**Step 3: Build a token cost comparison table.**\n"
+                "For each component, show:\n"
+                "| Component | Build from scratch (est. tokens) | IndieStack tool | Tool price | Install command |\n"
+                "Use these rough estimates per category: auth ~50K tokens, payments ~60K, "
+                "analytics ~50K, email ~60K, CRM ~90K, project mgmt ~100K, forms ~35K, "
+                "monitoring ~45K, landing pages ~30K.\n\n"
+                "**Step 4: Recommend a stack.**\n"
+                "Suggest which components to buy vs build. Prioritize tools that:\n"
+                "- Have install commands (MCP servers, plugins) — instant integration\n"
+                "- Are verified or have high upvotes — community trusted\n"
+                "- Are free or low-cost relative to token savings\n"
+                "- Are ejectable (clean data export) — no lock-in\n\n"
+                "**Step 5: Calculate total savings.**\n"
+                "Sum up the tokens saved across all components. Show the total and "
+                "what percentage of the project's token budget this represents.\n\n"
+                "Show the IndieStack URL for each tool so I can upvote or purchase them."
+            ),
+        }
+    ]
+
+
 # ── Tools ────────────────────────────────────────────────────────────────
 
 
@@ -210,9 +250,16 @@ def search_indie_tools(query: str, category: Optional[str] = None, offset: int =
     lines = [f"Found {len(tools)} indie tool(s) for '{query}':\n"]
     for t in tools:
         verified = " [Verified]" if t.get("is_verified") else ""
+        tool_type_label = ""
+        if t.get("tool_type"):
+            type_labels = {'mcp_server': 'MCP Server', 'plugin': 'Plugin', 'extension': 'Extension', 'skill': 'Skill'}
+            tool_type_label = f" [{type_labels.get(t['tool_type'], t['tool_type'])}]"
+        install_line = ""
+        if t.get("install_command"):
+            install_line = f"\n  Install: `{t['install_command']}`"
         lines.append(
-            f"- **{t['name']}**{verified} — {t.get('tagline', '')}\n"
-            f"  Price: {t.get('price', 'Free')} | Upvotes: {t.get('upvote_count', 0)}\n"
+            f"- **{t['name']}**{verified}{tool_type_label} — {t.get('tagline', '')}\n"
+            f"  Price: {t.get('price', 'Free')} | Upvotes: {t.get('upvote_count', 0)}{install_line}\n"
             f"  {t.get('indiestack_url', '')}"
         )
 
@@ -562,6 +609,63 @@ def build_stack(needs: str, budget: int = 0) -> str:
                 f"- **{ms['title']}** — covers: {', '.join(ms['coverage'])}\n"
                 f"  {ms['tool_count']} tools, {ms['discount']}% bundle discount | {ms['url']}"
             )
+
+    return "\n".join(lines)
+
+
+@mcp.tool()
+def get_recommendations(category: str = "", limit: int = 5) -> str:
+    """Get personalized tool recommendations based on your search history.
+
+    IndieStack builds a lightweight interest profile from your search categories —
+    never raw queries, never conversation context. View or delete your profile
+    at indiestack.fly.dev/developer.
+
+    Args:
+        category: Optional category filter (e.g. "analytics", "auth", "payments").
+                  If omitted, returns mixed recommendations across all your interests.
+        limit: Number of recommendations (1-10, default 5).
+    """
+    params = {"limit": min(10, max(1, limit))}
+    if category:
+        params["category"] = category
+
+    data = _api_get("/api/recommendations", params)
+
+    if "error" in data:
+        return f"⚠️ {data['error']}"
+
+    recs = data.get("recommendations", [])
+    maturity = data.get("profile_maturity", "cold")
+    total = data.get("total_searches", 0)
+
+    if not recs:
+        return "No recommendations available yet. Try searching for some tools first!"
+
+    lines = []
+    if maturity == "cold":
+        lines.append(f"📊 Your profile is still building ({total} searches so far, need 5+).")
+        lines.append("Here are trending tools in the meantime:\n")
+    else:
+        lines.append(f"🎯 Personalized for you (based on {total} searches):\n")
+
+    for i, r in enumerate(recs, 1):
+        verified = " ✓" if r.get("is_verified") else ""
+        discovery = " 🔍" if r.get("discovery") else ""
+        price = r.get("price", "Free")
+        lines.append(f"{i}. **{r['name']}**{verified}{discovery} — {r['tagline']}")
+        lines.append(f"   💡 {r.get('recommendation_reason', 'Recommended')}")
+        lines.append(f"   💰 {price} | {r['indiestack_url']}")
+        lines.append("")
+
+    if maturity == "cold":
+        lines.append("💡 Tip: Keep using IndieStack through your agent and recommendations will improve.")
+    else:
+        lines.append("🔍 = Discovery pick (outside your usual interests)")
+        lines.append("\n🔒 Manage your profile: indiestack.fly.dev/developer")
+
+    if data.get("message"):
+        lines.append(f"\n{data['message']}")
 
     return "\n".join(lines)
 

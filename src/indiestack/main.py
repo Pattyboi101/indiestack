@@ -958,6 +958,58 @@ async def unsubscribe(request: Request, token: str):
 
 # ── Tool Search API ──────────────────────────────────────────────────────
 
+def _personalize_results(tools: list[dict], profile: dict) -> list[dict]:
+    """Rerank search results using a developer's profile. Returns tools with recommendation_reason."""
+    import json
+    interests = json.loads(profile.get('interests', '{}')) if isinstance(profile.get('interests'), str) else profile.get('interests', {})
+    tech_stack = json.loads(profile.get('tech_stack', '[]')) if isinstance(profile.get('tech_stack'), str) else profile.get('tech_stack', [])
+    favorites = json.loads(profile.get('favorite_tools', '[]')) if isinstance(profile.get('favorite_tools'), str) else profile.get('favorite_tools', [])
+    tech_set = set(kw.lower() for kw in tech_stack)
+
+    scored = []
+    for i, tool in enumerate(tools):
+        boost = 0.0
+        reason = ''
+
+        # Category match
+        cat_slug = tool.get('category_slug', '') or tool.get('category', '').lower().replace(' ', '-')
+        if cat_slug in interests:
+            confidence = interests[cat_slug]
+            boost += confidence * 0.3
+            cat_name = cat_slug.replace('-', ' ').title()
+            reason = f"Matches your interest in {cat_name}"
+
+        # Tech stack match — check tool tags
+        tags = (tool.get('tags', '') or '').lower()
+        tool_name = (tool.get('name', '') or '').lower()
+        matched_tech = [kw for kw in tech_set if kw in tags or kw in tool_name]
+        if matched_tech:
+            boost += 0.2
+            reason = f"Works with {matched_tech[0].title()}" if not reason else reason
+
+        # Favorite boost
+        slug = tool.get('slug', '')
+        if slug in favorites:
+            boost += 0.1
+
+        # Preserve original order as tiebreaker
+        tool['_personalization_score'] = boost
+        tool['_original_index'] = i
+        if reason:
+            tool['recommendation_reason'] = reason
+        scored.append(tool)
+
+    # Sort by boost descending, original order as tiebreaker
+    scored.sort(key=lambda t: (-t['_personalization_score'], t['_original_index']))
+
+    # Clean up internal fields
+    for t in scored:
+        t.pop('_personalization_score', None)
+        t.pop('_original_index', None)
+
+    return scored
+
+
 @app.get("/api/tools/search")
 async def api_tools_search(request: Request, q: str = "", category: str = "", limit: int = 20, offset: int = 0, source: str = ""):
     """JSON API for searching tools — used by MCP server and integrations."""
@@ -992,10 +1044,12 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
             price_str = "Free"
         result = {
             "name": t['name'],
+            "slug": t['slug'],
             "tagline": t.get('tagline', ''),
             "url": t.get('url', ''),
             "indiestack_url": f"{BASE_URL}/tool/{t['slug']}",
             "category": t.get('category_name', ''),
+            "category_slug": t.get('category_slug', ''),
             "price": price_str,
             "is_verified": bool(t.get('is_verified', 0)),
             "upvote_count": int(t.get('upvote_count', 0)),
@@ -1012,7 +1066,8 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
     try:
         top_slug = tools[0]['slug'] if tools else None
         top_name = tools[0]['name'] if tools else None
-        await db.log_search(d, q, 'api', len(results), top_slug, top_name)
+        api_key_id = request.state.api_key['id'] if request.state.api_key else None
+        await db.log_search(d, q, 'api', len(results), top_slug, top_name, api_key_id=api_key_id)
     except Exception:
         pass  # Don't fail the search if logging fails
 
@@ -1025,12 +1080,50 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
         except Exception:
             pass
 
+    # Personalize results if API key has a mature profile
+    personalized = False
+    notice = None
+    api_key = request.state.api_key
+    if api_key and results:
+        profile = await db.get_developer_profile(d, api_key['id'])
+
+        # Rebuild if stale (> 1 hour old) or doesn't exist
+        should_rebuild = False
+        if not profile:
+            should_rebuild = True
+        elif profile['last_rebuilt_at']:
+            from datetime import datetime, timedelta
+            try:
+                rebuilt = datetime.fromisoformat(profile['last_rebuilt_at'])
+                if datetime.utcnow() - rebuilt > timedelta(hours=1):
+                    should_rebuild = True
+            except (ValueError, TypeError):
+                should_rebuild = True
+        else:
+            should_rebuild = True
+
+        if should_rebuild:
+            profile_data = await db.build_developer_profile(d, api_key['id'])
+            profile = await db.get_developer_profile(d, api_key['id'])
+
+        if profile and profile.get('search_count', 0) >= 5 and profile.get('personalization_enabled', 1):
+            results = _personalize_results(results, profile)
+            personalized = True
+
+        # First-search notice
+        if profile and not profile.get('notice_shown', 0):
+            notice = "IndieStack is learning your preferences to improve recommendations. View or manage your profile at indiestack.fly.dev/developer"
+            await db.mark_notice_shown(d, api_key['id'])
+
     response = {
         "tools": results,
         "total": len(results),
         "query": q,
         "offset": offset,
+        "personalized": personalized,
     }
+    if notice:
+        response["notice"] = notice
     if q.strip() and not results:
         demand = await db.get_search_demand(d, q, days=30)
         response["market_gap"] = {
@@ -1040,6 +1133,132 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
             "searches_30d": demand,
         }
     return JSONResponse(response)
+
+
+@app.get("/api/recommendations")
+async def api_recommendations(request: Request, category: str = "", limit: int = 5):
+    """Personalized tool recommendations based on developer profile."""
+    import json as _json
+
+    limit = max(1, min(10, limit))
+    api_key = request.state.api_key
+    d = request.state.db
+
+    if not api_key:
+        return JSONResponse({"error": "API key required for recommendations. Get one at indiestack.fly.dev/developer"}, status_code=401)
+
+    # Get or build profile
+    profile = await db.get_developer_profile(d, api_key['id'])
+    if not profile:
+        await db.build_developer_profile(d, api_key['id'])
+        profile = await db.get_developer_profile(d, api_key['id'])
+
+    if not profile or profile.get('search_count', 0) < 5:
+        # Cold profile — return trending instead
+        trending = await db.get_trending_scored(d, limit=limit)
+        tools_list = []
+        for t in trending:
+            tools_list.append({
+                "name": t['name'], "slug": t['slug'], "tagline": t['tagline'],
+                "price": f"£{t['price_pence'] / 100:.2f}" if t.get('price_pence') else "Free",
+                "is_verified": bool(t.get('is_verified')),
+                "indiestack_url": f"https://indiestack.fly.dev/tool/{t['slug']}",
+                "recommendation_reason": "Trending this week",
+                "discovery": False,
+            })
+        return JSONResponse({
+            "recommendations": tools_list,
+            "profile_maturity": "cold",
+            "total_searches": profile.get('search_count', 0) if profile else 0,
+            "message": "Not enough search history to personalize yet. Keep using IndieStack through your agent and recommendations will improve.",
+        })
+
+    if not profile.get('personalization_enabled', 1):
+        return JSONResponse({"error": "Personalization is paused. Enable it at indiestack.fly.dev/developer"}, status_code=403)
+
+    interests = _json.loads(profile['interests']) if isinstance(profile['interests'], str) else profile['interests']
+    tech_stack = _json.loads(profile['tech_stack']) if isinstance(profile['tech_stack'], str) else profile['tech_stack']
+    favorites = _json.loads(profile['favorite_tools']) if isinstance(profile['favorite_tools'], str) else profile['favorite_tools']
+
+    # Build a weighted query across top interest categories
+    recommended = []
+    seen_slugs = set(favorites)  # Exclude favorites (they already know these)
+
+    # Get recent search result slugs to avoid repeats
+    recent_cursor = await d.execute(
+        """SELECT DISTINCT top_result_slug FROM search_logs
+           WHERE api_key_id = ? AND top_result_slug IS NOT NULL
+           AND created_at >= datetime('now', '-7 days')""",
+        (api_key['id'],))
+    for row in await recent_cursor.fetchall():
+        seen_slugs.add(row['top_result_slug'])
+
+    # Query tools from top interest categories
+    sorted_interests = sorted(interests.items(), key=lambda x: -x[1])
+    if category:
+        # Filter to specific category if requested
+        sorted_interests = [(cat, score) for cat, score in sorted_interests if cat == category]
+
+    for cat_slug, confidence in sorted_interests[:5]:
+        cat_cursor = await d.execute(
+            """SELECT t.*, c.name as category_name, c.slug as category_slug
+               FROM tools t JOIN categories c ON t.category_id = c.id
+               WHERE c.slug = ? AND t.status = 'approved'
+               ORDER BY t.upvote_count DESC LIMIT 10""",
+            (cat_slug,))
+        for t in await cat_cursor.fetchall():
+            t = dict(t)
+            if t['slug'] not in seen_slugs and len(recommended) < limit - 1:
+                # Generate reason
+                tags = (t.get('tags', '') or '').lower()
+                tech_match = [kw for kw in tech_stack if kw.lower() in tags or kw.lower() in t['name'].lower()]
+                cat_name = t['category_name']
+
+                if tech_match:
+                    reason = f"Popular with {tech_match[0].title()} users"
+                elif confidence >= 0.7:
+                    reason = f"Matches your interest in {cat_name}"
+                else:
+                    reason = f"Recommended in {cat_name}"
+
+                recommended.append({
+                    "name": t['name'], "slug": t['slug'], "tagline": t['tagline'],
+                    "price": f"£{t['price_pence'] / 100:.2f}" if t.get('price_pence') else "Free",
+                    "is_verified": bool(t.get('is_verified')),
+                    "indiestack_url": f"https://indiestack.fly.dev/tool/{t['slug']}",
+                    "recommendation_reason": reason,
+                    "discovery": False,
+                })
+                seen_slugs.add(t['slug'])
+
+        if len(recommended) >= limit - 1:
+            break
+
+    # Add 1 discovery pick — trending tool outside their interests
+    interest_cats = set(interests.keys())
+    disc_cursor = await d.execute(
+        """SELECT t.*, c.name as category_name, c.slug as category_slug
+           FROM tools t JOIN categories c ON t.category_id = c.id
+           WHERE t.status = 'approved'
+           ORDER BY t.upvote_count DESC LIMIT 50""")
+    for t in await disc_cursor.fetchall():
+        t = dict(t)
+        if t['slug'] not in seen_slugs and t.get('category_slug') not in interest_cats:
+            recommended.append({
+                "name": t['name'], "slug": t['slug'], "tagline": t['tagline'],
+                "price": f"£{t['price_pence'] / 100:.2f}" if t.get('price_pence') else "Free",
+                "is_verified": bool(t.get('is_verified')),
+                "indiestack_url": f"https://indiestack.fly.dev/tool/{t['slug']}",
+                "recommendation_reason": f"Trending in {t['category_name']} — outside your usual picks",
+                "discovery": True,
+            })
+            break
+
+    return JSONResponse({
+        "recommendations": recommended[:limit],
+        "profile_maturity": "mature",
+        "total_searches": profile['search_count'],
+    })
 
 
 @app.get("/api/new")
