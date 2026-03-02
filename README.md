@@ -1,6 +1,8 @@
 # IndieStack
 
-A curated directory of 130+ indie SaaS tools with a built-in MCP server that lets AI coding assistants search the catalog before generating boilerplate.
+[![txt_to_fasta.py on IndieStack](https://indiestack.fly.dev/api/badge/txt-to-fasta.svg)](https://indiestack.fly.dev/tool/txt-to-fasta)
+
+A curated directory of 880+ indie tools with a built-in MCP server that lets AI coding assistants search the catalog before generating boilerplate.
 
 **Your AI is writing code you don't need.** Instead of generating 47,000 tokens of analytics boilerplate, IndieStack finds an existing indie tool in 700 tokens.
 
