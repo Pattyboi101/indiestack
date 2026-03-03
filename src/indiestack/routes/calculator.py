@@ -57,7 +57,7 @@ async def calculator(request: Request):
         comp_slug = slugify(comp)
         checked = "checked" if comp_slug in preselected or comp.lower() in preselected else ""
         alt_count = alt_counts.get(comp, 0)
-        alt_badge = f'<span style="font-size:11px;color:#0D7377;font-weight:600;">{alt_count} indie alt{"s" if alt_count != 1 else ""}</span>' if alt_count > 0 else '<span style="font-size:11px;color:var(--ink-muted);">No alts yet</span>'
+        alt_badge = f'<span style="font-size:11px;color:var(--accent);font-weight:600;">{alt_count} indie alt{"s" if alt_count != 1 else ""}</span>' if alt_count > 0 else '<span style="font-size:11px;color:var(--ink-muted);">No alts yet</span>'
         border_color = "var(--accent)" if checked else "var(--border)"
 
         cards_html += f'''
@@ -65,7 +65,7 @@ async def calculator(request: Request):
                style="display:block;cursor:pointer;border:2px solid {border_color};border-radius:var(--radius);padding:16px;
                       transition:border-color 0.15s;background:var(--card-bg);"
                onclick="this.style.borderColor=this.querySelector('input').checked?'var(--accent)':'var(--border)'">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                 <input type="checkbox" name="tools" value="{comp_slug}" {checked}
                        onchange="updateCalc()" style="accent-color:var(--accent);width:16px;height:16px;">
                 <span style="font-family:var(--font-display);font-size:16px;color:var(--ink);">{escape(comp)}</span>
@@ -106,16 +106,16 @@ async def calculator(request: Request):
         </div>
 
         <!-- Results banner (hidden until selection) -->
-        <div id="results-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,#0D1B2A);border-radius:var(--radius);
+        <div id="results-banner" style="display:none;background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);
              padding:28px 24px;margin-bottom:32px;text-align:center;">
             <div style="font-size:14px;color:#94A3B8;margin-bottom:4px;">Your estimated annual SaaS spend</div>
-            <div id="total-spend" style="font-family:var(--font-display);font-size:48px;color:#00D4F5;font-weight:700;">
+            <div id="total-spend" style="font-family:var(--font-display);font-size:48px;color:var(--slate);font-weight:700;">
                 &pound;0
             </div>
             <div id="tool-count-label" style="font-size:14px;color:#94A3B8;margin-top:4px;">across 0 tools</div>
             <div id="share-url" style="margin-top:12px;">
                 <button onclick="navigator.clipboard.writeText(window.location.href).then(()=>{{this.textContent='Link copied!';setTimeout(()=>this.textContent='Share this calculation',2000)}})"
-                        style="padding:6px 16px;font-size:12px;background:rgba(255,255,255,0.1);color:#94A3B8;border:1px solid rgba(255,255,255,0.2);
+                        style="padding:8px 16px;font-size:12px;background:rgba(255,255,255,0.1);color:#94A3B8;border:1px solid rgba(255,255,255,0.2);
                                border-radius:var(--radius-sm);cursor:pointer;">
                     Share this calculation
                 </button>

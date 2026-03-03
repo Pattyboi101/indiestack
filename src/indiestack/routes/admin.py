@@ -16,8 +16,9 @@ from indiestack.db import (get_pending_tools, get_all_tools_admin, update_tool_s
                            get_collection_by_slug, get_all_reviews_admin, delete_review, get_all_makers_admin, update_maker,
                            toggle_tool_boost, create_stack, get_all_stacks, add_tool_to_stack, remove_tool_from_stack, delete_stack,
                            get_tool_by_id, get_makers_in_category, get_all_purchases_admin,
-                           update_tool, get_all_categories, delete_tool, get_pro_subscriber_stats)
-from indiestack.email import send_email, competitor_ping_html, tool_approved_html
+                           update_tool, get_all_categories, delete_tool, get_pro_subscriber_stats,
+                           create_notification)
+from indiestack.email import send_email, tool_approved_html
 from indiestack.auth import check_admin_session, make_session_token, ADMIN_PASSWORD
 
 # New imports for consolidated admin
@@ -388,6 +389,47 @@ async def render_tools_tab(db, request, pending):
     else:
         pending_html += '<p style="color:var(--ink-muted);">No tools pending review.</p>'
 
+    # --- Claim Requests ---
+    claim_rows = await db.execute(
+        """SELECT cr.id, cr.tool_id, cr.user_id, cr.status, cr.created_at,
+                  t.name as tool_name, t.slug as tool_slug,
+                  u.name as user_name, u.email as user_email
+           FROM claim_requests cr
+           JOIN tools t ON t.id = cr.tool_id
+           JOIN users u ON u.id = cr.user_id
+           WHERE cr.status = 'pending'
+           ORDER BY cr.created_at DESC""")
+    claims = [dict(r) for r in await claim_rows.fetchall()]
+    claims_html = f'<h2 style="font-family:var(--font-display);margin:32px 0 16px;color:var(--ink);">Claim Requests ({len(claims)})</h2>'
+    if claims:
+        claims_html += '<div style="display:flex;flex-direction:column;gap:12px;">'
+        for c in claims:
+            claims_html += f'''
+            <div class="card" style="padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                <div>
+                    <a href="/tool/{escape(str(c['tool_slug']))}" style="font-weight:700;color:var(--ink);font-size:15px;">{escape(str(c['tool_name']))}</a>
+                    <span style="color:var(--ink-muted);font-size:13px;margin-left:8px;">claimed by {escape(str(c['user_name'] or c['user_email']))}</span>
+                    <span style="color:var(--ink-muted);font-size:12px;margin-left:8px;">{escape(str(c['created_at'][:10]))}</span>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <form method="post" action="/admin" style="display:inline;">
+                        <input type="hidden" name="action" value="approve_claim">
+                        <input type="hidden" name="claim_id" value="{c['id']}">
+                        <input type="hidden" name="tool_id" value="{c['tool_id']}">
+                        <input type="hidden" name="user_id" value="{c['user_id']}">
+                        <button type="submit" class="btn" style="background:#16a34a;color:white;padding:6px 16px;font-size:13px;">Approve</button>
+                    </form>
+                    <form method="post" action="/admin" style="display:inline;">
+                        <input type="hidden" name="action" value="reject_claim">
+                        <input type="hidden" name="claim_id" value="{c['id']}">
+                        <button type="submit" class="btn" style="background:#dc2626;color:white;padding:6px 16px;font-size:13px;">Reject</button>
+                    </form>
+                </div>
+            </div>'''
+        claims_html += '</div>'
+    else:
+        claims_html += '<p style="color:var(--ink-muted);">No pending claim requests.</p>'
+
     # --- Filter & Sort bar ---
     status_filter = request.query_params.get('status', '')
     cat_filter = request.query_params.get('category', '')
@@ -401,7 +443,7 @@ async def render_tools_tab(db, request, pending):
         status_opts += f'<option value="{sv}"{sel}>{sl}</option>'
 
     filter_opts = ''
-    for fv, fl in [('', 'All Tools'), ('unclaimed', 'Unclaimed'), ('verified', 'Verified'), ('boosted', 'Boosted')]:
+    for fv, fl in [('', 'All Tools'), ('unclaimed', 'Unclaimed'), ('boosted', 'Boosted')]:
         sel = ' selected' if fv == special_filter else ''
         filter_opts += f'<option value="{fv}"{sel}>{fl}</option>'
 
@@ -430,8 +472,6 @@ async def render_tools_tab(db, request, pending):
         filtered = [t for t in filtered if t.get('status') == status_filter]
     if special_filter == 'unclaimed':
         filtered = [t for t in filtered if not t.get('maker_id')]
-    elif special_filter == 'verified':
-        filtered = [t for t in filtered if t.get('is_verified')]
     elif special_filter == 'boosted':
         filtered = [t for t in filtered if t.get('is_boosted')]
     if search_q:
@@ -614,7 +654,7 @@ async def render_tools_tab(db, request, pending):
     else:
         all_html += '<p style="color:var(--ink-muted);">No tools match the current filters.</p>'
 
-    section_html = pending_html + '<hr style="margin:32px 0;border:none;border-top:1px solid var(--border);">' + all_html
+    section_html = pending_html + claims_html + '<hr style="margin:32px 0;border:none;border-top:1px solid var(--border);">' + all_html
     section_html += """
     <script>
     async function generateMagicLink(toolId, btn) {
@@ -1009,29 +1049,29 @@ async def admin_post(request: Request):
             new_status = "approved" if action == "approve" else "rejected"
             await update_tool_status(db, tool_id_int, new_status)
             if new_status == "approved":
-                # ── Competitor pings + approval notification ──
+                # ── Competitor pings (dashboard notification, no email) ──
                 try:
                     approved_tool = await get_tool_by_id(db, tool_id_int)
                     if approved_tool:
                         cat_id = approved_tool['category_id']
                         cat_name = approved_tool.get('category_name', '')
                         tool_name = approved_tool['name']
+                        tool_slug = approved_tool.get('slug', '')
                         competitors = await get_makers_in_category(db, cat_id, exclude_tool_id=tool_id_int)
                         for comp in competitors:
-                            if comp.get('email'):
-                                try:
-                                    await send_email(
-                                        comp['email'],
-                                        f"New tool in {cat_name}: {tool_name}",
-                                        competitor_ping_html(
-                                            comp.get('maker_name', comp.get('name', 'there')),
-                                            tool_name,
-                                            cat_name,
-                                            f"{BASE_URL}/dashboard"
-                                        )
+                            try:
+                                cursor = await db.execute(
+                                    "SELECT id FROM users WHERE maker_id = ?",
+                                    (comp['maker_id'],))
+                                user_row = await cursor.fetchone()
+                                if user_row:
+                                    await create_notification(
+                                        db, user_row['id'], 'competition',
+                                        f"New in {cat_name}: {tool_name} just launched",
+                                        f"/tool/{tool_slug}"
                                     )
-                                except Exception:
-                                    pass
+                            except Exception:
+                                pass
                 except Exception:
                     pass
 
@@ -1055,6 +1095,32 @@ async def admin_post(request: Request):
                     pass
             toast_msg = "Tool+approved" if action == "approve" else "Tool+rejected"
             return RedirectResponse(url=f"/admin?tab=tools&toast={toast_msg}", status_code=303)
+        elif action == "approve_claim":
+            claim_id = int(form.get("claim_id", 0))
+            claim_tool_id = int(form.get("tool_id", 0))
+            claim_user_id = int(form.get("user_id", 0))
+            if claim_id and claim_tool_id and claim_user_id:
+                # Create or get maker, assign to tool
+                u_cursor = await db.execute("SELECT name, email, maker_id FROM users WHERE id = ?", (claim_user_id,))
+                claim_user = await u_cursor.fetchone()
+                if claim_user:
+                    maker_name = claim_user['name'] or claim_user['email'].split('@')[0]
+                    if claim_user['maker_id']:
+                        mid = claim_user['maker_id']
+                    else:
+                        from indiestack.db import get_or_create_maker
+                        mid = await get_or_create_maker(db, maker_name, '')
+                        await db.execute("UPDATE users SET maker_id = ?, role = 'maker' WHERE id = ?", (mid, claim_user_id))
+                    await db.execute("UPDATE tools SET maker_id = ?, claimed_at = CURRENT_TIMESTAMP WHERE id = ? AND maker_id IS NULL", (mid, claim_tool_id))
+                    await db.execute("UPDATE claim_requests SET status = 'approved' WHERE id = ?", (claim_id,))
+                    await db.commit()
+            return RedirectResponse(url="/admin?tab=tools&toast=Claim+approved", status_code=303)
+        elif action == "reject_claim":
+            claim_id = int(form.get("claim_id", 0))
+            if claim_id:
+                await db.execute("UPDATE claim_requests SET status = 'rejected' WHERE id = ?", (claim_id,))
+                await db.commit()
+            return RedirectResponse(url="/admin?tab=tools&toast=Claim+rejected", status_code=303)
         elif tool_id_int and action == "toggle_verified":
             await toggle_verified(db, tool_id_int)
             return RedirectResponse(url="/admin?tab=tools&toast=Verified+toggled", status_code=303)

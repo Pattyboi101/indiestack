@@ -62,7 +62,7 @@ def _use_case_card(slug: str, uc: dict, tool_count: int = 0) -> str:
     return f'''
     <a href="/use-cases/{escape(slug)}" class="card" style="display:block;text-decoration:none;padding:24px;transition:transform 0.15s;">
         <div style="font-size:28px;margin-bottom:8px;">{icon}</div>
-        <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin:0 0 6px;">{title}</h3>
+        <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin:0 0 8px;">{title}</h3>
         <p style="color:var(--ink-muted);font-size:13px;line-height:1.5;margin:0 0 8px;">{desc}</p>
         <div style="display:flex;gap:12px;font-size:12px;color:var(--ink-muted);">
             <span>{tool_count} tools</span>
@@ -76,7 +76,6 @@ def _comparison_row(tool: dict) -> str:
     """Render a row in the comparison table."""
     pp = tool.get('price_pence')
     price = f"\u00a3{pp/100:.2f}/mo" if pp and pp > 0 else '<span style="color:var(--accent);">Free</span>'
-    verified = '\u2705' if tool.get('is_verified') else ''
     upvotes = int(tool.get('upvote_count', 0))
     replaces = escape(tool.get('replaces', '') or '')
     name = escape(tool['name'])
@@ -90,7 +89,6 @@ def _comparison_row(tool: dict) -> str:
             <div style="font-size:12px;color:var(--ink-muted);margin-top:2px;">{tagline}</div>
         </td>
         <td style="padding:12px;text-align:center;">{price}</td>
-        <td style="padding:12px;text-align:center;">{verified}</td>
         <td style="padding:12px;text-align:center;">{upvotes}</td>
         <td style="padding:12px;font-size:12px;color:var(--ink-muted);">{replaces}</td>
     </tr>
@@ -177,8 +175,6 @@ async def use_case_detail(request: Request, slug: str):
     competitors = uc.get("competitors", [])
     category_slug = uc.get("category", "")
     tokens_saved = CATEGORY_TOKEN_COSTS.get(category_slug, 50_000)
-    verified_count = sum(1 for t in tools if t.get('is_verified'))
-
     # Comparison table rows
     table_rows = "".join(_comparison_row(t) for t in tools)
     if not table_rows:
@@ -249,9 +245,9 @@ async def use_case_detail(request: Request, slug: str):
         <!-- Breadcrumbs -->
         <nav style="font-size:13px;color:var(--ink-muted);margin-bottom:24px;">
             <a href="/" style="color:var(--ink-muted);text-decoration:none;">Home</a>
-            <span style="margin:0 6px;">/</span>
+            <span style="margin:0 8px;">/</span>
             <a href="/use-cases" style="color:var(--ink-muted);text-decoration:none;">Use Cases</a>
-            <span style="margin:0 6px;">/</span>
+            <span style="margin:0 8px;">/</span>
             <span style="color:var(--ink);">{escape(title)}</span>
         </nav>
 
@@ -271,10 +267,6 @@ async def use_case_detail(request: Request, slug: str):
             <div style="text-align:center;">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--slate);">{len(tools)}</div>
                 <div style="font-size:12px;color:var(--ink-muted);">indie tools</div>
-            </div>
-            <div style="text-align:center;">
-                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{verified_count}</div>
-                <div style="font-size:12px;color:var(--ink-muted);">verified</div>
             </div>
             <div style="text-align:center;">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--slate);">{tokens_saved:,}</div>
@@ -301,7 +293,6 @@ async def use_case_detail(request: Request, slug: str):
                     <tr style="border-bottom:2px solid var(--border);text-align:left;">
                         <th style="padding:12px;font-weight:600;color:var(--ink);">Tool</th>
                         <th style="padding:12px;text-align:center;font-weight:600;color:var(--ink);">Price</th>
-                        <th style="padding:12px;text-align:center;font-weight:600;color:var(--ink);">Verified</th>
                         <th style="padding:12px;text-align:center;font-weight:600;color:var(--ink);">Upvotes</th>
                         <th style="padding:12px;font-weight:600;color:var(--ink);">Replaces</th>
                     </tr>

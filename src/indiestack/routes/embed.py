@@ -13,10 +13,8 @@ router = APIRouter()
 
 
 def _indie_score(t: dict) -> int:
-    """Simple indie score from verification + upvotes."""
+    """Simple indie score from upvotes."""
     score = int(t.get('upvote_count', 0))
-    if t.get('is_verified'):
-        score += 100
     return score
 
 
@@ -57,12 +55,12 @@ async def embed_docs(request: Request):
 
         <!-- Category picker -->
         <div style="margin-bottom:24px;">
-            <label for="cat-select" style="font-weight:600;font-size:14px;color:var(--ink);display:block;margin-bottom:6px;">
+            <label for="cat-select" style="font-weight:600;font-size:14px;color:var(--ink);display:block;margin-bottom:8px;">
                 Choose a category
             </label>
             <select id="cat-select" style="
-                width:100%;max-width:360px;padding:10px 14px;font-size:15px;
-                border:1px solid #d1d5db;border-radius:8px;background:#fff;
+                width:100%;max-width:360px;padding:12px 16px;font-size:15px;
+                border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;
                 font-family:inherit;color:var(--ink);
             ">
                 {options}
@@ -80,13 +78,13 @@ async def embed_docs(request: Request):
             </p>
             <div style="position:relative;">
                 <pre id="script-code" style="
-                    background:#1A2D4A;color:#e2e8f0;padding:16px 20px;border-radius:8px;
-                    font-family:'JetBrains Mono',monospace;font-size:13px;
+                    background:var(--terracotta);color:var(--border);padding:16px 20px;border-radius:var(--radius-sm);
+                    font-family:var(--font-mono);font-size:13px;
                     overflow-x:auto;white-space:pre-wrap;word-break:break-all;
                 "></pre>
                 <button onclick="copyCode('script-code')" style="
-                    position:absolute;top:8px;right:8px;background:#00D4F5;color:#fff;
-                    border:none;border-radius:6px;padding:6px 14px;font-size:12px;
+                    position:absolute;top:8px;right:8px;background:var(--slate);color:#fff;
+                    border:none;border-radius:var(--radius-sm);padding:8px 16px;font-size:12px;
                     font-weight:600;cursor:pointer;
                 ">Copy</button>
             </div>
@@ -102,13 +100,13 @@ async def embed_docs(request: Request):
             </p>
             <div style="position:relative;">
                 <pre id="iframe-code" style="
-                    background:#1A2D4A;color:#e2e8f0;padding:16px 20px;border-radius:8px;
-                    font-family:'JetBrains Mono',monospace;font-size:13px;
+                    background:var(--terracotta);color:var(--border);padding:16px 20px;border-radius:var(--radius-sm);
+                    font-family:var(--font-mono);font-size:13px;
                     overflow-x:auto;white-space:pre-wrap;word-break:break-all;
                 "></pre>
                 <button onclick="copyCode('iframe-code')" style="
-                    position:absolute;top:8px;right:8px;background:#00D4F5;color:#fff;
-                    border:none;border-radius:6px;padding:6px 14px;font-size:12px;
+                    position:absolute;top:8px;right:8px;background:var(--slate);color:#fff;
+                    border:none;border-radius:var(--radius-sm);padding:8px 16px;font-size:12px;
                     font-weight:600;cursor:pointer;
                 ">Copy</button>
             </div>
@@ -120,11 +118,11 @@ async def embed_docs(request: Request):
                 Live Preview
             </h2>
             <div id="preview-wrap" style="
-                border:2px dashed #d1d5db;border-radius:12px;padding:24px;
+                border:2px dashed var(--border);border-radius:var(--radius);padding:24px;
                 background:#fff;min-height:200px;
             ">
                 <iframe id="preview-iframe" style="
-                    width:100%;border:none;border-radius:8px;min-height:400px;
+                    width:100%;border:none;border-radius:var(--radius-sm);min-height:400px;
                 " src="{BASE_URL}/embed/analytics"></iframe>
             </div>
         </div>
@@ -206,10 +204,9 @@ WIDGET_JS = '(function(){\n  var BASE = "' + BASE_URL + '";\n' + r"""
       for (var i = 0; i < tools.length; i++) {
         var t = tools[i];
         var alt = i % 2 === 1 ? ' style="background:#fafbfd;"' : '';
-        var verified = t.is_verified ? ' <span style="display:inline-block;background:#00D4F5;color:#fff;border-radius:50%;width:14px;height:14px;font-size:9px;text-align:center;line-height:14px;margin-left:3px;vertical-align:middle;">&#10003;</span>' : '';
         rows += '<tr' + alt + '>'
           + '<td style="padding:10px 12px;border-bottom:1px solid #eef0f4;vertical-align:top;">'
-          + '<a href="' + t.indiestack_url + '?ref=embed" target="_blank" rel="noopener" style="color:#1A2D4A;text-decoration:none;font-weight:600;font-size:14px;">' + esc(t.name) + '</a>' + verified
+          + '<a href="' + t.indiestack_url + '?ref=embed" target="_blank" rel="noopener" style="color:#1A2D4A;text-decoration:none;font-weight:600;font-size:14px;">' + esc(t.name) + '</a>'
           + '<div style="color:#6b7a8d;font-size:12px;margin-top:2px;">' + esc(t.tagline) + '</div>'
           + '</td>'
           + '<td style="padding:10px 8px;border-bottom:1px solid #eef0f4;text-align:center;font-size:13px;font-weight:500;white-space:nowrap;">' + t.upvote_count + '</td>'
@@ -291,12 +288,11 @@ async def embed_category(request: Request, category_slug: str):
         slug = escape(t['slug'])
         score = _indie_score(t)
         price = _price_label(t)
-        verified = ' <span class="verified" title="Verified">&#10003;</span>' if t.get('is_verified') else ''
         zebra = ' class="alt"' if i % 2 == 1 else ''
 
         rows += f"""<tr{zebra}>
   <td class="name-cell">
-    <a href="{BASE_URL}/tool/{slug}" target="_blank" rel="noopener">{name}</a>{verified}
+    <a href="{BASE_URL}/tool/{slug}" target="_blank" rel="noopener">{name}</a>
     <div class="tagline">{tagline}</div>
   </td>
   <td class="score-cell">{score}</td>
@@ -360,18 +356,6 @@ tr:last-child td{{border-bottom:none;}}
 }}
 .name-cell a:hover{{color:#00D4F5;}}
 .tagline{{color:#6b7a8d;font-size:13px;margin-top:2px;}}
-.verified{{
-  display:inline-block;
-  background:#00D4F5;
-  color:#fff;
-  border-radius:50%;
-  width:16px;height:16px;
-  font-size:10px;
-  text-align:center;
-  line-height:16px;
-  margin-left:4px;
-  vertical-align:middle;
-}}
 .score-cell,.price-cell{{text-align:center;font-weight:500;white-space:nowrap;}}
 .link-cell{{text-align:right;white-space:nowrap;}}
 .link-cell a{{

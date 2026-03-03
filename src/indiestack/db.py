@@ -755,6 +755,12 @@ async def init_db():
             await db.commit()
         except Exception:
             pass
+        # Migration: add tool_of_the_week to tools
+        try:
+            await db.execute("ALTER TABLE tools ADD COLUMN tool_of_the_week INTEGER DEFAULT 0")
+            await db.commit()
+        except Exception:
+            pass
         # Migration: add AI Dev Tools category if missing
         cursor = await db.execute("SELECT id FROM categories WHERE slug = 'ai-dev-tools'")
         if not await cursor.fetchone():
@@ -809,6 +815,18 @@ async def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )""")
         await db.commit()
+
+        # Source type: classify tools as 'code' (open-source/installable) vs 'saas' (hosted service)
+        try:
+            await db.execute("SELECT source_type FROM tools LIMIT 1")
+        except Exception:
+            await db.execute("ALTER TABLE tools ADD COLUMN source_type VARCHAR DEFAULT 'saas'")
+            await db.execute("""
+                UPDATE tools SET source_type = 'code'
+                WHERE url LIKE '%github.com%' OR url LIKE '%gitlab.com%' OR url LIKE '%codeberg.org%'
+            """)
+            await db.commit()
+
     finally:
         await db.close()
 
@@ -845,7 +863,7 @@ async def get_category_by_slug(db: aiosqlite.Connection, slug: str):
 async def get_trending_tools(db: aiosqlite.Connection, limit: int = 6):
     cursor = await db.execute(
         """SELECT t.*, c.name as category_name, c.slug as category_slug,
-                  (t.is_verified * 100 + t.upvote_count) as rank_score,
+                  (t.upvote_count) as rank_score,
                   EXISTS(SELECT 1 FROM maker_updates mu WHERE mu.tool_id = t.id AND mu.created_at >= datetime('now', '-14 days')) as has_changelog_14d
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.status = 'approved'
@@ -861,7 +879,7 @@ async def get_tools_by_category(db: aiosqlite.Connection, category_id: int, page
         """SELECT t.*, c.name as category_name, c.slug as category_slug
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.category_id = ? AND t.status = 'approved'
-           ORDER BY (t.is_verified * 100 + t.upvote_count) DESC, t.created_at DESC
+           ORDER BY t.upvote_count DESC, t.created_at DESC
            LIMIT ? OFFSET ?""",
         (category_id, per_page, offset),
     )
@@ -890,7 +908,7 @@ async def get_related_tools(db: aiosqlite.Connection, tool_id: int, category_id:
         """SELECT t.*, c.name as category_name, c.slug as category_slug
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.category_id = ? AND t.id != ? AND t.status = 'approved'
-           ORDER BY (t.is_verified * 100 + t.upvote_count) DESC LIMIT ?""",
+           ORDER BY t.upvote_count DESC LIMIT ?""",
         (category_id, tool_id, limit),
     )
     return await cursor.fetchall()
@@ -907,19 +925,24 @@ def sanitize_fts(query: str) -> str:
     return ' '.join(f'"{t}"*' for t in terms[:10])
 
 
-async def search_tools(db: aiosqlite.Connection, query: str, limit: int = 20):
+async def search_tools(db: aiosqlite.Connection, query: str, limit: int = 20, source_type: str = ""):
     safe_q = sanitize_fts(query)
     if not safe_q:
         return []
+    st_filter = ""
+    st_params: list = []
+    if source_type in ("code", "saas"):
+        st_filter = " AND t.source_type = ?"
+        st_params = [source_type]
     cursor = await db.execute(
-        """SELECT t.*, c.name as category_name, c.slug as category_slug,
+        f"""SELECT t.*, c.name as category_name, c.slug as category_slug,
                   bm25(tools_fts) as rank
            FROM tools_fts fts
            JOIN tools t ON t.id = fts.rowid
            JOIN categories c ON t.category_id = c.id
-           WHERE tools_fts MATCH ? AND t.status = 'approved'
-           ORDER BY (t.is_verified * 5.0 + rank) LIMIT ?""",
-        (safe_q, limit),
+           WHERE tools_fts MATCH ? AND t.status = 'approved'{st_filter}
+           ORDER BY rank LIMIT ?""",
+        (safe_q, *st_params, limit),
     )
     rows = await cursor.fetchall()
 
@@ -927,13 +950,13 @@ async def search_tools(db: aiosqlite.Connection, query: str, limit: int = 20):
     if not rows:
         like_q = f"%{query.strip()}%"
         cursor = await db.execute(
-            """SELECT t.*, c.name as category_name, c.slug as category_slug
+            f"""SELECT t.*, c.name as category_name, c.slug as category_slug
                FROM tools t
                JOIN categories c ON t.category_id = c.id
-               WHERE LOWER(t.replaces) LIKE LOWER(?) AND t.status = 'approved'
-               ORDER BY (t.is_verified * 100 + t.upvote_count) DESC
+               WHERE LOWER(t.replaces) LIKE LOWER(?) AND t.status = 'approved'{st_filter}
+               ORDER BY t.upvote_count DESC
                LIMIT ?""",
-            (like_q, limit),
+            (like_q, *st_params, limit),
         )
         rows = await cursor.fetchall()
 
@@ -964,14 +987,18 @@ async def create_tool(db: aiosqlite.Connection, *, name: str, tagline: str, desc
     if maker_name.strip():
         maker_id = await get_or_create_maker(db, maker_name.strip(), maker_url.strip())
 
+    # Auto-detect source_type from URL
+    url_lower = url.lower()
+    source_type = 'code' if any(host in url_lower for host in ('github.com', 'gitlab.com', 'codeberg.org')) else 'saas'
+
     cursor = await db.execute(
         """INSERT INTO tools (name, slug, tagline, description, url, maker_name, maker_url,
            category_id, tags, price_pence, delivery_type, delivery_url, stripe_account_id, maker_id,
-           tool_type, platforms, install_command)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+           tool_type, platforms, install_command, source_type)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (name, slug, tagline, description, url, maker_name, maker_url, category_id, tags,
          price_pence, delivery_type, delivery_url, stripe_account_id, maker_id,
-         tool_type, platforms, install_command),
+         tool_type, platforms, install_command, source_type),
     )
     await db.commit()
     return cursor.lastrowid
@@ -1348,7 +1375,7 @@ async def get_maker_with_tools(db: aiosqlite.Connection, slug: str):
         """SELECT t.*, c.name as category_name, c.slug as category_slug
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.maker_id = ? AND t.status = 'approved'
-           ORDER BY (t.is_verified * 100 + t.upvote_count) DESC""",
+           ORDER BY t.upvote_count DESC""",
         (maker['id'],),
     )
     tools = await cursor.fetchall()
@@ -1517,7 +1544,7 @@ async def get_category_tools_for_compare(db: aiosqlite.Connection, category_id: 
     cursor = await db.execute(
         """SELECT t.slug, t.name FROM tools t
            WHERE t.category_id = ? AND t.status = 'approved'
-           ORDER BY (t.is_verified * 100 + t.upvote_count) DESC LIMIT ?""",
+           ORDER BY t.upvote_count DESC LIMIT ?""",
         (category_id, limit),
     )
     return await cursor.fetchall()
@@ -1784,11 +1811,11 @@ async def search_tools_advanced(db: aiosqlite.Connection, *, query: str = "",
 
     # Sort
     order_by = {
-        "upvotes": "(t.is_verified * 100 + t.upvote_count) DESC, t.created_at DESC",
+        "upvotes": "t.upvote_count DESC, t.created_at DESC",
         "newest": "t.created_at DESC",
         "price_low": "COALESCE(t.price_pence, 0) ASC, t.created_at DESC",
         "price_high": "COALESCE(t.price_pence, 0) DESC, t.created_at DESC",
-    }.get(sort, "(t.is_verified * 100 + t.upvote_count) DESC, t.created_at DESC")
+    }.get(sort, "t.upvote_count DESC, t.created_at DESC")
 
     if query.strip():
         safe_q = sanitize_fts(query)
@@ -1800,7 +1827,7 @@ async def search_tools_advanced(db: aiosqlite.Connection, *, query: str = "",
                   JOIN tools t ON t.id = fts.rowid
                   JOIN categories c ON t.category_id = c.id
                   WHERE tools_fts MATCH ? AND {where}
-                  ORDER BY {order_by if sort != 'relevance' else '(t.is_verified * 5.0 + rank)'}
+                  ORDER BY {order_by if sort != 'relevance' else 'rank'}
                   LIMIT ? OFFSET ?"""
         fts_params = [safe_q] + params + [per_page, (page - 1) * per_page]
         cursor = await db.execute(sql, fts_params)
@@ -1818,7 +1845,7 @@ async def search_tools_advanced(db: aiosqlite.Connection, *, query: str = "",
         if total == 0 and page == 1:
             raw_q = query.strip()
             like_q = f"%{raw_q}%"
-            fallback_order = "(t.is_verified * 100 + t.upvote_count) DESC, t.created_at DESC"
+            fallback_order = "t.upvote_count DESC, t.created_at DESC"
             fallback_sql = f"""SELECT t.*, c.name as category_name, c.slug as category_slug
                       FROM tools t
                       JOIN categories c ON t.category_id = c.id
@@ -2454,7 +2481,7 @@ async def get_tools_replacing(db: aiosqlite.Connection, competitor: str, limit: 
         """SELECT t.*, c.name as category_name, c.slug as category_slug
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.status = 'approved' AND LOWER(t.replaces) LIKE LOWER(?)
-           ORDER BY (CASE WHEN t.boosted_competitor != '' THEN 0 ELSE 1 END), (t.is_verified * 100 + t.upvote_count) DESC LIMIT ?""",
+           ORDER BY (CASE WHEN t.boosted_competitor != '' THEN 0 ELSE 1 END), t.upvote_count DESC LIMIT ?""",
         (like_pattern, limit),
     )
     return await cursor.fetchall()
@@ -2784,7 +2811,7 @@ async def get_tools_by_tag(db: aiosqlite.Connection, tag: str, *, page: int = 1,
              FROM tools t JOIN categories c ON t.category_id = c.id
              WHERE t.status = 'approved'
                AND (LOWER(TRIM(t.tags)) = ? OR LOWER(t.tags) LIKE ? OR LOWER(t.tags) LIKE ? OR LOWER(t.tags) LIKE ?)
-             ORDER BY (t.is_verified * 100 + t.upvote_count) DESC, t.created_at DESC
+             ORDER BY t.upvote_count DESC, t.created_at DESC
              LIMIT ? OFFSET ?"""
     cursor = await db.execute(sql, (like_exact, like_start, like_end, like_mid, per_page, offset))
     rows = await cursor.fetchall()
@@ -2800,6 +2827,7 @@ async def get_tools_by_tag(db: aiosqlite.Connection, tag: str, *, page: int = 1,
 async def explore_tools(db: aiosqlite.Connection, *, category_id: int = None,
                          tag: str = "", price_filter: str = "", sort: str = "trending",
                          verified_only: bool = False, ejectable_only: bool = False,
+                         source_type: str = "",
                          page: int = 1, per_page: int = 12):
     """Unified explore query with faceted filtering. Returns (tools, total)."""
     conditions = ["t.status = 'approved'"]
@@ -2827,16 +2855,20 @@ async def explore_tools(db: aiosqlite.Connection, *, category_id: int = None,
     if ejectable_only:
         conditions.append("t.is_ejectable = 1")
 
+    if source_type in ("code", "saas"):
+        conditions.append("t.source_type = ?")
+        params.append(source_type)
+
     where = " AND ".join(conditions)
 
     boost_prefix = "(CASE WHEN t.is_boosted = 1 AND t.boost_expires_at > datetime('now') THEN 0 ELSE 1 END), "
     order_by = {
         "hot": boost_prefix + "t.upvote_count DESC, t.created_at DESC",
-        "trending": boost_prefix + "(t.is_verified * 100 + t.upvote_count) DESC, t.created_at DESC",
+        "trending": boost_prefix + "t.upvote_count DESC, t.created_at DESC",
         "newest": boost_prefix + "t.created_at DESC",
         "name": boost_prefix + "t.name ASC",
         "upvotes": boost_prefix + "t.upvote_count DESC, t.created_at DESC",
-    }.get(sort, boost_prefix + "(t.is_verified * 100 + t.upvote_count) DESC, t.created_at DESC")
+    }.get(sort, boost_prefix + "t.upvote_count DESC, t.created_at DESC")
 
     offset = (page - 1) * per_page
 
@@ -2932,8 +2964,8 @@ async def verify_claim_token(db, token: str):
     return (tool_id, user_id)
 
 
-async def create_magic_claim_token(db, tool_id: int, days: int = 7) -> str:
-    """Create a magic claim token for admin to share. 7-day expiry. No user required."""
+async def create_magic_claim_token(db, tool_id: int, days: int = 30) -> str:
+    """Create a magic claim token for admin to share. 30-day expiry. No user required."""
     token = secrets.token_urlsafe(32)
     expires_at = (datetime.utcnow() + timedelta(days=days)).isoformat()
     await db.execute(
@@ -3333,6 +3365,58 @@ async def get_search_terms_for_tool(db, tool_slug: str, limit: int = 10):
     return await cursor.fetchall()
 
 
+# ── AI Pulse: Unified Activity Feed ──────────────────────────────────
+
+async def get_pulse_feed(db, limit: int = 50):
+    """Get a unified, chronological feed of AI activity (searches + citations).
+
+    Returns a list of dicts with keys:
+        type: 'recommend' | 'search' | 'gap'
+        query: the search query (for search/gap events)
+        tool_name: tool name (for recommend events, or top result for search events)
+        tool_slug: tool slug for linking
+        agent: agent name (for recommend events)
+        created_at: timestamp string
+    """
+    cursor = await db.execute("""
+        SELECT * FROM (
+            SELECT
+                CASE WHEN sl.result_count > 0 AND sl.top_result_name IS NOT NULL
+                     THEN 'search' ELSE 'gap' END as type,
+                sl.query as query,
+                sl.top_result_name as tool_name,
+                sl.top_result_slug as tool_slug,
+                CASE WHEN sl.source = 'api' THEN 'AI Agent' ELSE 'Developer' END as agent,
+                sl.created_at as created_at
+            FROM search_logs sl
+            WHERE sl.created_at >= datetime('now', '-7 days')
+              AND LENGTH(TRIM(sl.query)) >= 2
+              AND sl.query NOT LIKE '%http%'
+              AND sl.query NOT LIKE '%.com%'
+              AND sl.query NOT LIKE '%.org%'
+              AND sl.query NOT LIKE '%.net%'
+              AND sl.query NOT LIKE '%.io%'
+              AND sl.query NOT LIKE '@%'
+
+            UNION ALL
+
+            SELECT
+                'recommend' as type,
+                NULL as query,
+                t.name as tool_name,
+                t.slug as tool_slug,
+                COALESCE(ac.agent_name, 'AI Agent') as agent,
+                ac.created_at as created_at
+            FROM agent_citations ac
+            JOIN tools t ON t.id = ac.tool_id
+            WHERE ac.created_at >= datetime('now', '-7 days')
+        )
+        ORDER BY created_at DESC
+        LIMIT ?
+    """, (limit,))
+    return await cursor.fetchall()
+
+
 # ── Round 10: Milestones ──────────────────────────────────────────────
 
 MILESTONE_THRESHOLDS = {
@@ -3674,7 +3758,7 @@ async def get_maker_reputation_leaderboard(db) -> list:
                (COALESCE(SUM(t.upvote_count), 0) * 1
                 + COALESCE(rv.review_count, 0) * 5
                 + COALESCE(cl.click_count, 0) * 2
-                + COALESCE(SUM(t.is_verified), 0) * 10
+                + 0
                 + COALESCE(ch.has_recent, 0) * 5
                ) as reputation_score
         FROM makers m
@@ -3710,6 +3794,13 @@ async def get_search_gaps(db, limit: int = 30) -> list:
         SELECT LOWER(TRIM(query)) as query, COUNT(*) as count, MAX(created_at) as last_searched
         FROM search_logs
         WHERE result_count = 0
+          AND LENGTH(TRIM(query)) >= 2
+          AND query NOT LIKE '%http%'
+          AND query NOT LIKE '%.com%'
+          AND query NOT LIKE '%.org%'
+          AND query NOT LIKE '%.net%'
+          AND query NOT LIKE '%.io%'
+          AND query NOT LIKE '@%'
         GROUP BY LOWER(TRIM(query))
         ORDER BY count DESC
         LIMIT ?

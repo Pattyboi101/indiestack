@@ -83,8 +83,8 @@ async def compare_index(request: Request):
 
         safe_cat = escape(cat_name)
         sections_html += f'''
-        <div style="margin-bottom:36px;">
-            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:14px;">
+        <div style="margin-bottom:32px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
                 {safe_cat}
             </h2>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
@@ -277,12 +277,12 @@ async def alternatives_for(request: Request, competitor_slug: str):
 
             sponsored_html += f"""
             <a href="/tool/{sp_slug}" class="card" style="text-decoration:none;color:inherit;display:block;
-                border:2px solid #00D4F5;background:linear-gradient(135deg,#F0FFFE,#fff);position:relative;overflow:hidden;">
+                border:2px solid var(--slate);background:linear-gradient(135deg,var(--cream),#fff);position:relative;overflow:hidden;">
                 <div style="position:absolute;top:12px;right:12px;">
-                    <span style="background:linear-gradient(135deg,#00D4F5,#40E8FF);color:#1A2D4A;padding:3px 10px;
+                    <span style="background:linear-gradient(135deg,var(--slate),var(--slate-light));color:var(--terracotta);padding:3px 10px;
                         border-radius:999px;font-size:11px;font-weight:700;">{sp_label}</span>
                 </div>
-                <h3 style="font-family:var(--font-display);font-size:18px;margin-bottom:6px;color:var(--ink);">{sp_name}</h3>
+                <h3 style="font-family:var(--font-display);font-size:18px;margin-bottom:8px;color:var(--ink);">{sp_name}</h3>
                 <p style="color:var(--ink-muted);font-size:14px;margin-bottom:10px;">{sp_tagline}</p>
                 <div style="display:flex;gap:8px;align-items:center;">
                     <span style="font-size:13px;font-weight:600;color:#10B981;">{price_text}</span>
@@ -387,7 +387,7 @@ async def alternatives_for(request: Request, competitor_slug: str):
         if t.get('boosted_competitor', ''):
             # Wrap boosted tool cards with a Featured badge
             card = f'''<div style="position:relative;">
-                <span style="position:absolute;top:-8px;right:12px;background:#00D4F5;color:#1A2D4A;font-size:11px;
+                <span style="position:absolute;top:-8px;right:12px;background:var(--slate);color:var(--terracotta);font-size:11px;
                     font-weight:700;padding:2px 10px;border-radius:999px;z-index:1;text-transform:uppercase;
                     letter-spacing:0.5px;">&#9733; Featured</span>
                 {card}
@@ -433,24 +433,25 @@ async def alternatives_for(request: Request, competitor_slug: str):
                 localStorage.setItem('alt_sub_{escape(competitor_slug)}_dismissed','1');"
                 style="position:absolute;top:10px;right:14px;background:none;border:none;color:rgba(255,255,255,0.7);
                 font-size:22px;cursor:pointer;line-height:1;padding:4px;" aria-label="Dismiss">&times;</button>
-            <p style="font-family:var(--font-display);font-size:20px;color:#fff;margin-bottom:6px;">
+            <p style="font-family:var(--font-display);font-size:20px;color:#fff;margin-bottom:8px;">
                 Get notified when a new {safe_name} alternative launches
             </p>
             <p style="font-size:14px;color:rgba(255,255,255,0.8);margin-bottom:16px;">
                 We&rsquo;ll email you when indie makers ship new tools that replace {safe_name}. No spam, ever.
             </p>
             <form action="/api/subscribe" method="POST"
-                style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                style="display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;">
                 <input type="hidden" name="source" value="alternatives">
                 <input type="hidden" name="tool_slug" value="{escape(competitor_slug)}">
                 <input type="hidden" name="next" value="/alternatives/{escape(competitor_slug)}">
                 <input type="email" name="email" required placeholder="you@example.com"
-                    style="flex:1;min-width:200px;padding:10px 14px;border:2px solid rgba(255,255,255,0.3);
+                    style="flex:1;min-width:200px;height:48px;padding:0 16px;border:1px solid rgba(255,255,255,0.2);
                     border-radius:var(--radius-sm);font-size:15px;font-family:var(--font-body);
-                    background:rgba(255,255,255,0.12);color:#fff;outline:none;"
-                    onfocus="this.style.borderColor='var(--slate)'" onblur="this.style.borderColor='rgba(255,255,255,0.3)'">
+                    background:rgba(0,0,0,0.3);color:#FFFFFF;outline:none;transition:border-color 0.2s ease;"
+                    onfocus="this.style.borderColor='var(--accent)';this.style.boxShadow='0 0 0 3px rgba(0,212,245,0.15)'"
+                    onblur="this.style.borderColor='rgba(255,255,255,0.2)';this.style.boxShadow='none'">
                 <button type="submit"
-                    style="padding:10px 24px;background:var(--slate);color:var(--terracotta-dark);font-weight:700;
+                    style="height:48px;padding:0 24px;background:var(--accent);color:#000;font-weight:700;
                     font-size:14px;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-body);
                     white-space:nowrap;">Notify Me &rarr;</button>
             </form>
@@ -532,8 +533,7 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
         price_display = "Free"
 
     # Badges
-    verified_badge = '<span style="display:inline-block;background:#DCFCE7;color:#16a34a;padding:3px 10px;border-radius:9999px;font-size:12px;font-weight:600;">&#10003; Verified</span>' if tool.get('is_verified') else ''
-    ejectable_badge = '<span style="display:inline-block;background:#EDE9FE;color:#7C3AED;padding:3px 10px;border-radius:9999px;font-size:12px;font-weight:600;">&#9889; Ejectable</span>' if tool.get('is_ejectable') else ''
+    ejectable_badge = '<span style="display:inline-block;background:#EDE9FE;color:#7C3AED;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;">&#9889; Ejectable</span>' if tool.get('is_ejectable') else ''
 
     # Get other alternatives for cross-linking
     other_tools = await get_tools_replacing(db, competitor_name, limit=6)
@@ -588,7 +588,6 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
         <div class="card" style="padding:24px;">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
                 <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin:0;">{safe_name}</h2>
-                {verified_badge}
                 {ejectable_badge}
                 <span style="font-size:14px;font-weight:600;color:#065F46;background:#ECFDF5;padding:4px 12px;border-radius:999px;">{price_display}</span>
             </div>

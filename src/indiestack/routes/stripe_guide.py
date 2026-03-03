@@ -11,9 +11,9 @@ router = APIRouter()
 def _step_card(number: str, title: str, body: str) -> str:
     return f'''
     <div style="display:flex;gap:20px;align-items:flex-start;">
-        <div style="min-width:48px;height:48px;background:linear-gradient(135deg,#1A2D4A,#0D1B2A);
+        <div style="min-width:48px;height:48px;background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));
                     border-radius:50%;display:flex;align-items:center;justify-content:center;
-                    font-family:var(--font-display);font-size:22px;color:#00D4F5;font-weight:700;">{number}</div>
+                    font-family:var(--font-display);font-size:22px;color:var(--slate);font-weight:700;">{number}</div>
         <div>
             <h3 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin:0 0 8px;">{title}</h3>
             <p style="color:var(--ink-muted);font-size:15px;line-height:1.6;margin:0;">{body}</p>
@@ -25,7 +25,7 @@ def _step_card(number: str, title: str, body: str) -> str:
 def _faq_item(q: str, a: str) -> str:
     return f'''
     <div style="border-bottom:1px solid var(--border);padding:16px 0;">
-        <h4 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 6px;">{q}</h4>
+        <h4 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 8px;">{q}</h4>
         <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;margin:0;">{a}</p>
     </div>
     '''
@@ -38,7 +38,7 @@ async def stripe_guide(request: Request):
     steps_html = f'''
     <div style="display:flex;flex-direction:column;gap:32px;margin:40px 0;">
         {_step_card("1", "Set your price",
-            "Log into your <a href='/dashboard' style='color:#00D4F5;'>dashboard</a>, click <strong>Edit</strong> on your tool, "
+            "Log into your <a href='/dashboard' style='color:var(--slate);'>dashboard</a>, click <strong>Edit</strong> on your tool, "
             "and set a monthly price in GBP. This is what buyers will pay."
         )}
         {_step_card("2", "Connect Stripe",
@@ -65,7 +65,7 @@ async def stripe_guide(request: Request):
         )}
         {_faq_item("When do I get paid?",
             "Stripe pays out to your bank account daily (after an initial 7-day holding period for new accounts). "
-            "You can track all your sales in your <a href='/dashboard/sales' style='color:#00D4F5;'>dashboard</a>."
+            "You can track all your sales in your <a href='/dashboard/sales' style='color:var(--slate);'>dashboard</a>."
         )}
         {_faq_item("Can I change my price later?",
             "Yes. Edit your tool from your dashboard anytime. The new price takes effect immediately."
@@ -99,7 +99,7 @@ async def stripe_guide(request: Request):
                 Go to Dashboard &rarr;
             </a>
             <p style="color:var(--ink-muted);font-size:13px;margin-top:12px;">
-                Don't have a tool listed yet? <a href="/submit" style="color:#00D4F5;">Submit one free</a>.
+                Don't have a tool listed yet? <a href="/submit" style="color:var(--slate);">Submit one free</a>.
             </p>
         </div>
 

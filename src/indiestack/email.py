@@ -1180,3 +1180,57 @@ def maker_launch_countdown_html(maker_name: str, maker_slug: str, tool_count: in
         Questions? Just reply to this email &mdash; we read every one.
     </p>
     """
+
+
+def launch_morning_maker_html(maker_name: str, tool_name: str) -> str:
+    """Launch-day email to claimed makers — review your listing before PH launch."""
+    dashboard_url = f"{BASE_URL}/dashboard"
+    return f"""
+    <div style="text-align:center;margin-bottom:24px;">
+        <div style="display:inline-block;background:#2D2926;color:white;font-size:11px;font-weight:700;
+                    text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:999px;">
+            Launching Today
+        </div>
+    </div>
+
+    <h2 style="font-family:serif;font-size:24px;color:#2D2926;margin-bottom:16px;text-align:center;">
+        Your Tool Goes in Front of Product Hunt Today
+    </h2>
+
+    <p style="color:#2D2926;font-size:15px;line-height:1.6;">
+        Hi {maker_name},
+    </p>
+
+    <p style="color:#6B6560;font-size:15px;line-height:1.6;">
+        IndieStack is launching on Product Hunt today.
+        <strong style="color:#2D2926;">{tool_name}</strong> will be in front of
+        thousands of developers <em>and</em> the AI agents they build with.
+    </p>
+
+    <p style="color:#6B6560;font-size:15px;line-height:1.6;">
+        IndieStack is becoming the knowledge layer where AI agents learn what tools exist.
+        We&rsquo;ve already seen <strong style="color:#2D2926;">2,000+ agent lookups</strong>
+        across 480 tools &mdash; and that number is growing fast.
+    </p>
+
+    <div style="margin:24px 0;padding:20px;background:#FAF7F2;border-radius:12px;border-left:4px solid #C4714E;">
+        <strong style="color:#2D2926;font-size:15px;">Quick pre-launch checklist:</strong>
+        <ul style="color:#6B6560;font-size:14px;margin:10px 0 0;padding-left:20px;line-height:1.8;">
+            <li>Is your <strong style="color:#2D2926;">description</strong> clear and up to date?</li>
+            <li>Are your <strong style="color:#2D2926;">tags</strong> accurate?</li>
+            <li>Posted a <strong style="color:#2D2926;">changelog</strong> recently?</li>
+        </ul>
+    </div>
+
+    <div style="text-align:center;margin:32px 0;">
+        <a href="{dashboard_url}" style="display:inline-block;background:#C4714E;color:white;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            Review Your Listing &rarr;
+        </a>
+    </div>
+
+    <p style="color:#6B6560;font-size:14px;line-height:1.6;text-align:center;">
+        See you on launch day,<br>
+        <strong style="color:#2D2926;">Patrick &amp; Ed</strong>
+    </p>
+    """

@@ -26,17 +26,17 @@ async def render_traffic_section(db, request) -> str:
     now = datetime.utcnow()
 
     if period == "today":
-        since = now.replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        since = now.replace(hour=0, minute=0, second=0, microsecond=0).strftime("%Y-%m-%d %H:%M:%S")
         period_label = "Today"
     elif period == "30":
-        since = (now - timedelta(days=30)).isoformat()
+        since = (now - timedelta(days=30)).strftime("%Y-%m-%d %H:%M:%S")
         period_label = "Last 30 days"
     elif period == "all":
-        since = "2000-01-01T00:00:00"
+        since = "2000-01-01 00:00:00"
         period_label = "All time"
     else:
         period = "7"
-        since = (now - timedelta(days=7)).isoformat()
+        since = (now - timedelta(days=7)).strftime("%Y-%m-%d %H:%M:%S")
         period_label = "Last 7 days"
 
     # ── KPI queries ──

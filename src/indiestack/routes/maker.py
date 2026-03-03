@@ -31,7 +31,7 @@ async def makers_directory(request: Request):
     sort_pills = ''
     for val, label in [('most_tools', 'Most Tools'), ('most_upvoted', 'Most Upvoted'), ('newest', 'Newest')]:
         active = 'background:var(--terracotta);color:white;border-color:var(--terracotta);' if val == sort else ''
-        sort_pills += f'<a href="/makers?sort={val}" style="padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;border:1px solid var(--border);background:white;color:var(--ink-light);text-decoration:none;{active}">{escape(label)}</a>'
+        sort_pills += f'<a href="/makers?sort={val}" style="padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;border:1px solid var(--border);background:white;color:var(--ink-light);text-decoration:none;{active}">{escape(label)}</a>'
 
     cards = '\n'.join(maker_card(m) for m in makers)
 
@@ -80,8 +80,6 @@ async def maker_profile(request: Request, slug: str):
     stats = await get_maker_stats(db, maker['id'])
     tool_count = stats['tool_count']
     total_upvotes = stats['total_upvotes']
-    verified_count = stats['verified_count']
-
     # Indie badge
     indie_status = str(maker.get('indie_status', ''))
     badge_html = indie_badge_html(indie_status) if indie_status else ''
@@ -106,10 +104,6 @@ async def maker_profile(request: Request, slug: str):
         <div style="text-align:center;">
             <div style="font-family:var(--font-display);font-size:24px;color:var(--slate-dark);">{total_upvotes}</div>
             <div style="font-size:13px;color:var(--ink-muted);">upvotes</div>
-        </div>
-        <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:24px;color:var(--gold);">{verified_count}</div>
-            <div style="font-size:13px;color:var(--ink-muted);">verified</div>
         </div>
     </div>
     """
@@ -201,10 +195,6 @@ async def leaderboard(request: Request):
         elif indie == 'small_team':
             indie_pill = '<span style="font-size:11px;font-weight:700;color:#7C3AED;background:#EDE9FE;padding:2px 8px;border-radius:999px;">Small Team</span>'
 
-        verified_pill = ''
-        if m['verified_count'] > 0:
-            verified_pill = '<span style="font-size:11px;font-weight:700;color:#D97706;background:#FEF3C7;padding:2px 8px;border-radius:999px;">&#10004; Verified</span>'
-
         active_pill = ''
         if m['has_changelog']:
             active_pill = '<span style="font-size:11px;font-weight:700;color:#EA580C;background:#FFF7ED;padding:2px 8px;border-radius:999px;">&#128293; Active</span>'
@@ -213,18 +203,18 @@ async def leaderboard(request: Request):
 
         rows += f'''
         <tr style="border-bottom:1px solid var(--border);{row_bg}">
-            <td style="padding:14px 12px;text-align:center;width:50px;">{medal}</td>
-            <td style="padding:14px 12px;">
+            <td style="padding:16px 12px;text-align:center;width:50px;">{medal}</td>
+            <td style="padding:16px 12px;">
                 <a href="/maker/{slug}" style="font-weight:700;color:var(--ink);font-size:15px;">{name}</a>
-                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
-                    {indie_pill}{verified_pill}{active_pill}
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+                    {indie_pill}{active_pill}
                 </div>
             </td>
-            <td style="padding:14px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{tools}</td>
-            <td style="padding:14px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{upvotes}</td>
-            <td style="padding:14px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{reviews}</td>
-            <td style="padding:14px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{clicks}</td>
-            <td style="padding:14px 12px;text-align:center;">
+            <td style="padding:16px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{tools}</td>
+            <td style="padding:16px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{upvotes}</td>
+            <td style="padding:16px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{reviews}</td>
+            <td style="padding:16px 12px;text-align:center;font-family:var(--font-mono);font-size:13px;">{clicks}</td>
+            <td style="padding:16px 12px;text-align:center;">
                 <span style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--terracotta);">{score}</span>
             </td>
         </tr>
@@ -232,12 +222,11 @@ async def leaderboard(request: Request):
 
     score_explainer = '''
     <div class="card" style="padding:20px;margin-top:32px;">
-        <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:10px;">How Reputation Works</h3>
+        <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:12px;">How Reputation Works</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;font-size:13px;color:var(--ink-muted);">
             <div><strong style="color:var(--ink);">+1</strong> per upvote</div>
             <div><strong style="color:var(--ink);">+5</strong> per review</div>
             <div><strong style="color:var(--ink);">+2</strong> per click (30d)</div>
-            <div><strong style="color:var(--ink);">+10</strong> verified badge</div>
             <div><strong style="color:var(--ink);">+5</strong> active changelog</div>
         </div>
         <p style="font-size:12px;color:var(--ink-muted);margin-top:12px;">
@@ -251,11 +240,11 @@ async def leaderboard(request: Request):
     today = date.today()
     days_left = (launch - today).days
     if days_left > 0:
-        launch_line = f'Marketplace launches in <strong>{days_left} day{"s" if days_left != 1 else ""}</strong> &mdash; top-ranked makers get featured.'
+        launch_line = f'AI agents are already searching &mdash; <strong>{days_left} day{"s" if days_left != 1 else ""}</strong> until Product Hunt relaunch.'
     elif days_left == 0:
-        launch_line = 'The marketplace is <strong>live today</strong>! Start selling now.'
+        launch_line = 'We&rsquo;re <strong>live on Product Hunt today</strong>! Claimed makers get featured.'
     else:
-        launch_line = 'The marketplace is <strong>live</strong>. Top sellers get featured.'
+        launch_line = 'AI agents search IndieStack before writing code from scratch. <strong>Claimed makers rank higher.</strong>'
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
@@ -270,13 +259,13 @@ async def leaderboard(request: Request):
             <table style="width:100%;border-collapse:collapse;font-size:14px;">
                 <thead>
                     <tr style="border-bottom:2px solid var(--border);">
-                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Rank</th>
-                        <th style="padding:10px 12px;text-align:left;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Maker</th>
-                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Tools</th>
-                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Upvotes</th>
-                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Reviews</th>
-                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Clicks</th>
-                        <th style="padding:10px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Score</th>
+                        <th style="padding:12px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Rank</th>
+                        <th style="padding:12px 12px;text-align:left;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Maker</th>
+                        <th style="padding:12px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Tools</th>
+                        <th style="padding:12px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Upvotes</th>
+                        <th style="padding:12px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Reviews</th>
+                        <th style="padding:12px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Clicks</th>
+                        <th style="padding:12px 12px;text-align:center;color:var(--ink-muted);font-size:12px;text-transform:uppercase;">Score</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -286,7 +275,7 @@ async def leaderboard(request: Request):
         </div>
         {score_explainer}
         <div style="text-align:center;margin-top:32px;">
-            <a href="/submit" class="btn btn-slate" style="padding:14px 28px;font-size:16px;">Add Your Tool &rarr;</a>
+            <a href="/submit" class="btn btn-slate" style="padding:16px 32px;font-size:16px;">Add Your Tool &rarr;</a>
         </div>
     </div>
     """

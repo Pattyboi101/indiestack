@@ -83,7 +83,7 @@ async def stacks_index(request: Request):
             <p style="color:var(--ink-muted);font-size:15px;margin-bottom:16px;">
                 Share your stack &mdash; show what tools you use and why
             </p>
-            <a href="/dashboard" class="btn btn-primary" style="font-size:14px;padding:10px 24px;">Create Your Stack &rarr;</a>
+            <a href="/dashboard" class="btn btn-primary" style="font-size:14px;padding:12px 24px;">Create Your Stack &rarr;</a>
         </div>
         """
 
@@ -92,7 +92,7 @@ async def stacks_index(request: Request):
     <div class="card" style="padding:24px;text-align:center;margin-top:40px;">
         <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">Find indie alternatives to your dependencies</h3>
         <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">Paste your package.json or requirements.txt and we'll match indie tools.</p>
-        <a href="/stacks/generator" class="btn btn-primary" style="font-size:14px;padding:10px 24px;">Try the Stack Generator &rarr;</a>
+        <a href="/stacks/generator" class="btn btn-primary" style="font-size:14px;padding:12px 24px;">Try the Stack Generator &rarr;</a>
     </div>
     """
 
@@ -157,12 +157,12 @@ async def stack_generator_form(request: Request):
     <div class="container" style="max-width:760px;padding:48px 24px;">
         <div style="text-align:center;margin-bottom:36px;">
             <span style="font-size:48px;display:block;margin-bottom:12px;">&#128270;</span>
-            <h1 style="font-family:var(--font-display);font-size:clamp(26px,4vw,38px);color:var(--ink);margin-bottom:10px;">
+            <h1 style="font-family:var(--font-display);font-size:clamp(26px,4vw,38px);color:var(--ink);margin-bottom:12px;">
                 Stack Generator
             </h1>
             <p style="color:var(--ink-muted);font-size:17px;max-width:520px;margin:0 auto;line-height:1.6;">
-                Paste your <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:14px;">package.json</code> or
-                <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:14px;">requirements.txt</code>
+                Paste your <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 8px;border-radius:var(--radius-sm);font-size:14px;">package.json</code> or
+                <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 8px;border-radius:var(--radius-sm);font-size:14px;">requirements.txt</code>
                 and we&rsquo;ll find indie tool replacements for your dependencies.
             </p>
         </div>
@@ -179,7 +179,7 @@ async def stack_generator_form(request: Request):
                              background:var(--card-bg);color:var(--ink);resize:vertical;
                              line-height:1.5;"></textarea>
             <button type="submit" class="btn btn-primary"
-                    style="margin-top:16px;font-size:16px;padding:14px 40px;width:100%;">
+                    style="margin-top:16px;font-size:16px;padding:16px 40px;width:100%;">
                 Find Indie Alternatives &rarr;
             </button>
         </form>
@@ -236,7 +236,7 @@ async def stack_generator_results(request: Request, deps: str = Form("")):
                 We couldn&rsquo;t parse any package names from what you pasted.
                 Make sure it&rsquo;s a valid <code>package.json</code> or <code>requirements.txt</code>.
             </p>
-            <a href="/stacks/generator" class="btn btn-primary" style="margin-top:20px;">Try Again &rarr;</a>
+            <a href="/stacks/generator" class="btn btn-primary" style="margin-top:24px;">Try Again &rarr;</a>
         </div>
         """
         return HTMLResponse(page_shell("No Dependencies Found", body, user=request.state.user))
@@ -274,7 +274,7 @@ async def stack_generator_results(request: Request, deps: str = Form("")):
             t_name = escape(str(t['name']))
             t_tagline = escape(str(t.get('tagline', '')))
             t_slug = escape(str(t.get('slug', '')))
-            logo_html = '<div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--terracotta),var(--slate));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">{}</div>'.format(t_name[0] if t_name else '?')
+            logo_html = '<div style="width:36px;height:36px;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--terracotta),var(--slate));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">{}</div>'.format(t_name[0] if t_name else '?')
             cards += f"""
             <a href="/tool/{t_slug}" style="text-decoration:none;display:flex;align-items:center;gap:12px;
                      padding:12px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);
@@ -288,9 +288,9 @@ async def stack_generator_results(request: Request, deps: str = Form("")):
 
         matches_html += f"""
         <div style="margin-bottom:28px;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                 <code style="font-family:var(--font-mono);font-size:14px;background:var(--cream-dark);
-                             padding:4px 10px;border-radius:6px;color:var(--ink);">{dep_name}</code>
+                             padding:4px 12px;border-radius:var(--radius-sm);color:var(--ink);">{dep_name}</code>
                 <span style="font-size:13px;color:var(--ink-muted);">&rarr; {len(m['alternatives'])} indie alternative{'s' if len(m['alternatives']) != 1 else ''}</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px;">
@@ -302,16 +302,16 @@ async def stack_generator_results(request: Request, deps: str = Form("")):
     unmatched_html = ''
     if unmatched:
         dep_pills = ' '.join(
-            f'<span style="display:inline-block;font-family:var(--font-mono);font-size:13px;background:var(--cream-dark);padding:4px 10px;border-radius:6px;color:var(--ink-muted);margin:3px 2px;">{escape(u)}</span>'
+            f'<span style="display:inline-block;font-family:var(--font-mono);font-size:13px;background:var(--cream-dark);padding:4px 12px;border-radius:var(--radius-sm);color:var(--ink-muted);margin:4px 2px;">{escape(u)}</span>'
             for u in unmatched
         )
         unmatched_html = f"""
         <div style="margin-top:36px;padding:24px;border:1px dashed var(--border);border-radius:var(--radius-sm);">
-            <p style="font-weight:600;color:var(--ink);font-size:15px;margin-bottom:10px;">
+            <p style="font-weight:600;color:var(--ink);font-size:15px;margin-bottom:12px;">
                 No indie matches yet ({len(unmatched)})
             </p>
             <div style="line-height:2;">{dep_pills}</div>
-            <p style="margin-top:14px;">
+            <p style="margin-top:16px;">
                 <a href="/submit" style="color:var(--slate);font-weight:600;text-decoration:none;">
                     Built an indie alternative? Submit it to IndieStack &rarr;
                 </a>
@@ -322,7 +322,7 @@ async def stack_generator_results(request: Request, deps: str = Form("")):
     <div class="container" style="max-width:760px;padding:48px 24px;">
         <a href="/stacks/generator" style="color:var(--ink-muted);font-size:14px;font-weight:600;text-decoration:none;">&larr; Paste another file</a>
 
-        <div style="margin-top:20px;margin-bottom:32px;">
+        <div style="margin-top:24px;margin-bottom:32px;">
             <h1 style="font-family:var(--font-display);font-size:clamp(24px,3.5vw,34px);color:var(--ink);margin-bottom:8px;">
                 Your Indie Stack
             </h1>
@@ -391,7 +391,7 @@ async def stack_detail(request: Request, slug: str):
                 {format_price(bundle_price)}
             </div>
             <div style="font-size:13px;font-weight:700;color:var(--success-text);background:var(--success-bg);
-                         display:inline-block;padding:4px 14px;border-radius:999px;margin-bottom:16px;">
+                         display:inline-block;padding:4px 16px;border-radius:999px;margin-bottom:16px;">
                 Save {discount_percent}% &middot; {format_price(discount_amount)} off
             </div>
             <div style="margin-bottom:16px;font-size:14px;color:var(--ink-muted);">
@@ -399,7 +399,7 @@ async def stack_detail(request: Request, slug: str):
             </div>
             <form method="post" action="/api/checkout-stack">
                 <input type="hidden" name="stack_id" value="{stack['id']}">
-                <button type="submit" class="btn btn-primary" style="font-size:16px;padding:14px 40px;">
+                <button type="submit" class="btn btn-primary" style="font-size:16px;padding:16px 40px;">
                     Buy This Stack &rarr;
                 </button>
             </form>
@@ -682,7 +682,7 @@ async def public_user_stack(request: Request, username: str):
             note = t.get('note', '')
             cards_html += tool_card(t)
             if note:
-                cards_html += f'<div style="background:var(--surface,#F9FAFB);border-radius:8px;padding:10px 14px;margin:-8px 0 16px 0;font-size:14px;color:var(--ink-muted);border-left:3px solid var(--slate);">&#128172; {escape(str(note))}</div>'
+                cards_html += f'<div style="background:var(--surface,var(--cream));border-radius:var(--radius-sm);padding:12px 16px;margin:-8px 0 16px 0;font-size:14px;color:var(--ink-muted);border-left:3px solid var(--slate);">&#128172; {escape(str(note))}</div>'
     else:
         cards_html = '<p style="text-align:center;color:var(--ink-muted);padding:40px;">This stack is empty.</p>'
 
@@ -695,7 +695,7 @@ async def public_user_stack(request: Request, username: str):
 
     body = f"""
     <div class="container" style="max-width:800px;padding:48px 24px;">
-        <div style="background:linear-gradient(135deg,var(--terracotta) 0%,var(--terracotta-dark) 100%);border-radius:20px;padding:40px;margin-bottom:32px;">
+        <div style="background:linear-gradient(135deg,var(--terracotta) 0%,var(--terracotta-dark) 100%);border-radius:var(--radius);padding:40px;margin-bottom:32px;">
             <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
                 <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--slate),var(--success-text));
                             display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:24px;">
@@ -707,9 +707,9 @@ async def public_user_stack(request: Request, username: str):
                 </div>
             </div>
             {f'<p style="color:rgba(255,255,255,0.8);font-size:16px;line-height:1.6;margin:0;">{description}</p>' if description else ''}
-            <div style="margin-top:20px;">
+            <div style="margin-top:24px;">
                 <a href="{tweet_url}" target="_blank" rel="noopener"
-                   style="background:var(--slate);color:var(--terracotta);padding:10px 24px;border-radius:999px;
+                   style="background:var(--slate);color:var(--terracotta);padding:12px 24px;border-radius:999px;
                           text-decoration:none;font-weight:700;font-size:14px;">
                     Share on &#120143; &rarr;
                 </a>

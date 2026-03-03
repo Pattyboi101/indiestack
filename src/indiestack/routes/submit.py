@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-def submit_success_page(tool_name, tool_slug, maker_slug=""):
+def submit_success_page(tool_name, tool_slug, maker_slug="", tool_type=None):
     tool_url = f"{BASE_URL}/tool/{tool_slug}"
     tweet_text = quote(f"Just listed {tool_name} on @IndieStack! \U0001f680")
     tweet_url = quote(tool_url)
@@ -48,9 +48,9 @@ def submit_success_page(tool_name, tool_slug, maker_slug=""):
         </div>
 
         <!-- AI Discovery callout -->
-        <div style="background:linear-gradient(135deg, #1A2D4A 0%, #0D1B2A 100%);border-radius:var(--radius);padding:24px;margin-bottom:24px;">
+        <div style="background:linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);border-radius:var(--radius);padding:24px;margin-bottom:24px;">
             <p style="color:white;font-size:15px;line-height:1.6;margin:0;">
-                &#129302; Your tool is now searchable by AI coding assistants (Cursor, Windsurf, Claude Code) through our MCP server.
+                &#129302; {"Your " + escape({"mcp_server": "MCP server", "plugin": "plugin", "extension": "extension", "skill": "skill"}.get(tool_type, "plugin")) + " is now discoverable by AI coding assistants through our MCP server and plugin directory." if tool_type else "Your tool is now searchable by AI coding assistants (Cursor, Windsurf, Claude Code) through our MCP server."}
             </p>
         </div>
 
@@ -87,24 +87,11 @@ def submit_success_page(tool_name, tool_slug, maker_slug=""):
 
         {launch_link}
 
-        <!-- Verified upsell -->
-        <div style="background:#FDF8EE;border:1px solid var(--gold);border-radius:var(--radius);padding:24px;margin-top:24px;text-align:center;">
-            <p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:6px;">
-                Want to stand out?
-            </p>
-            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
-                Get a verified badge for &pound;29 &mdash; rank higher, build trust, and get noticed.
-            </p>
-            <a href="/verify/{escape(tool_slug)}" class="btn" style="background:linear-gradient(135deg, var(--gold), #D4A24A);
-                    color:#5C3D0E;font-weight:700;padding:10px 24px;border-radius:999px;border:1px solid var(--gold);">
-                Get Verified &rarr;
-            </a>
-        </div>
     </div>
     """
 
 
-def submit_form(categories, values: dict = None, error: str = "", success: str = "", tool_count: int = 0) -> str:
+def submit_form(categories, values: dict = None, error: str = "", success: str = "", tool_count: int = 0, logged_in: bool = True) -> str:
     v = values or {}
     name_val = escape(str(v.get('name', '')))
     tagline_val = escape(str(v.get('tagline', '')))
@@ -155,6 +142,14 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
         <div style="display:flex;align-items:center;gap:16px;margin:28px 0;"><div style="flex:1;height:1px;background:var(--border);"></div><span style="color:var(--ink-muted);font-size:13px;white-space:nowrap;">or fill in the form manually</span><div style="flex:1;height:1px;background:var(--border);"></div></div>
     """
 
+    if logged_in:
+        submit_or_login_btn = '<button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Submit for Review</button>'
+    else:
+        submit_or_login_btn = (
+            '<a href="/login" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;text-decoration:none;display:flex;align-items:center;">Log in to submit your tool</a>'
+            '<p style="text-align:center;color:var(--ink-muted);font-size:13px;margin-top:12px;">Takes 30 seconds. Then come back and submit.</p>'
+        )
+
     github_js = """
         <script>
         async function fetchGitHub() {
@@ -198,17 +193,22 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
 
     return f"""
     <div class="container" style="max-width:640px;padding:48px 24px;">
-        {"" if date.today() >= date(2026, 3, 2) else '''<div style="background:linear-gradient(135deg,#1A2D4A 0%,#0D1B2A 100%);border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;text-align:center;">
-            <p style="color:white;font-size:15px;font-weight:600;margin:0;">
-                &#128640; Marketplace launches March 2nd
-            </p>
-            <p style="color:rgba(255,255,255,0.7);font-size:13px;margin:6px 0 0;">
-                List now for free. Set a price to queue for launch. Tools with early reviews and upvotes rank higher on day one.
-            </p>
-        </div>'''}
         <div style="text-align:center;margin-bottom:40px;">
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Make Your Tool Discoverable by AI</h1>
             <p style="color:var(--ink-muted);margin-top:8px;">{f"{tool_count}+ tools are already searchable by AI coding assistants via our MCP server. List yours free — we'll review within 24 hours." if tool_count > 0 else "Tools listed here are searchable by AI coding assistants via our MCP server. List yours free — we'll review within 24 hours."}</p>
+        </div>
+
+        <div style="background:var(--info-bg);border:1px solid var(--info-border);border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;line-height:1.7;">
+            <p style="font-size:14px;color:var(--info-text);margin:0;">
+                <strong>A note from us:</strong> IndieStack is still young &mdash; a small, curated directory built by two uni students in Cardiff.
+                We&rsquo;re building something we think matters: a knowledge base where AI agents recommend real tools
+                instead of regenerating code from scratch. Every tool you add helps craft that generational knowledge.
+                Early listers get the most visibility as the catalog grows.
+            </p>
+            <p style="font-size:14px;color:var(--info-text);margin:12px 0 0 0;">
+                &#127942; <strong>Tool of the Week:</strong> The most AI-recommended tool each week gets featured
+                on our homepage. The more agents discover your tool, the higher your chances.
+            </p>
         </div>
         {alert}
         {github_import}
@@ -240,98 +240,74 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                 </select>
             </div>
 
+            <!-- Agent Plugin Section -->
+            <div style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:24px 0;">
+                <label style="display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:0;">
+                    <input type="checkbox" id="is_plugin" name="is_plugin" value="1"
+                           onchange="document.getElementById('plugin-fields').style.display=this.checked?'block':'none'"
+                           class="custom-checkbox"
+                           {"checked" if v.get('tool_type') else ""}>
+                    <div>
+                        <strong style="font-size:15px;color:var(--ink);">This is an agent plugin or extension</strong>
+                        <p style="color:var(--ink-muted);font-size:13px;margin:4px 0 0;">MCP server, Claude Code plugin, Cursor extension, AI skill, etc.</p>
+                    </div>
+                </label>
+                <div id="plugin-fields" style="display:{"block" if v.get("tool_type") else "none"};margin-top:24px;">
+                    <div class="form-group">
+                        <label for="tool_type">Type *</label>
+                        <select id="tool_type" name="tool_type" class="form-select">
+                            <option value="">Select type...</option>
+                            <option value="mcp_server" {"selected" if v.get("tool_type") == "mcp_server" else ""}>MCP Server</option>
+                            <option value="plugin" {"selected" if v.get("tool_type") == "plugin" else ""}>Plugin</option>
+                            <option value="extension" {"selected" if v.get("tool_type") == "extension" else ""}>Extension</option>
+                            <option value="skill" {"selected" if v.get("tool_type") == "skill" else ""}>Skill</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="platforms">Compatible platforms <span style="color:var(--ink-muted);font-size:13px;font-weight:400;">(comma-separated)</span></label>
+                        <input type="text" id="platforms" name="platforms" class="form-input"
+                               value="{escape(str(v.get('platforms', '')))}" placeholder="e.g. Claude Code, Cursor, Windsurf">
+                    </div>
+                    <div class="form-group">
+                        <label for="install_command">Install command</label>
+                        <input type="text" id="install_command" name="install_command" class="form-input"
+                               value="{escape(str(v.get('install_command', '')))}"
+                               placeholder="e.g. claude mcp add your-tool"
+                               style="font-family:var(--font-mono);font-size:14px;">
+                    </div>
+                </div>
+            </div>
+
             <div style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:28px 0;">
-                <h3 style="font-family:var(--font-display);font-size:18px;margin-bottom:4px;color:var(--ink);">Listing &amp; Pricing</h3>
+                <h3 style="font-family:var(--font-display);font-size:18px;margin-bottom:16px;color:var(--ink);">What You Get</h3>
 
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-                    <div style="background:white;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;">
-                        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                             <span style="font-size:14px;">&#9989;</span>
-                            <strong style="font-size:14px;color:var(--ink);">Free listing</strong>
+                            <strong style="font-size:14px;color:var(--ink);">Free forever</strong>
                         </div>
                         <p style="color:var(--ink-muted);font-size:13px;line-height:1.5;margin:0;">
-                            Goes live immediately after approval. Your tool gets reviews, upvotes,
-                            and AI discovery through our MCP server.
+                            No fees, no commission, no catch. Your tool gets reviews, upvotes,
+                            and a permanent listing in the catalog.
                         </p>
                     </div>
-                    <div style="background:white;border:1px solid #00D4F5;border-radius:var(--radius-sm);padding:16px;">
-                        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-                            <span style="font-size:14px;">&#128176;</span>
-                            <strong style="font-size:14px;color:var(--ink);">Sell on IndieStack</strong>
-                            <span style="font-size:11px;font-weight:700;color:#00D4F5;background:rgba(0,212,245,0.1);padding:2px 8px;border-radius:999px;">{"Live" if date.today() >= date(2026, 3, 2) else "March 2nd"}</span>
+                    <div style="background:var(--card-bg);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:16px;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                            <span style="font-size:14px;">&#129302;</span>
+                            <strong style="font-size:14px;color:var(--ink);">AI Discovery</strong>
+                            <span style="font-size:11px;font-weight:700;color:var(--slate);background:rgba(0,212,245,0.1);padding:2px 8px;border-radius:999px;">Live</span>
                         </div>
                         <p style="color:var(--ink-muted);font-size:13px;line-height:1.5;margin:0;">
-                            Set a price to queue for our marketplace launch. Build reviews and
-                            upvotes now &mdash; top-rated tools rank higher on launch day.
+                            AI coding assistants (Cursor, Windsurf, Claude Code) search IndieStack via MCP
+                            before writing code from scratch. Your tool becomes part of the knowledge layer.
                         </p>
                     </div>
-                </div>
-                <div style="background:linear-gradient(135deg,#1A2D4A 0%,#0D1B2A 100%);border-radius:var(--radius-sm);padding:16px;margin-top:16px;">
-                    <p style="color:white;font-size:14px;font-weight:600;margin-bottom:4px;">&#129302; AI Discovery — included free</p>
-                    <p style="color:rgba(255,255,255,0.7);font-size:13px;line-height:1.5;margin:0;">
-                        Every listed tool is instantly searchable by AI coding assistants (Cursor, Windsurf, Claude Code) through IndieStack's MCP server.
-                    </p>
                 </div>
 
-                <div class="form-group">
-                    <label for="price">Price (GBP) <span style="color:var(--ink-muted);font-size:13px;font-weight:400;">&mdash; leave blank for a free listing</span></label>
-                    <div style="position:relative;">
-                        <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-muted);font-weight:600;">&pound;</span>
-                        <input type="number" id="price" name="price" class="form-input" step="0.01" min="0.50"
-                               value="{price_val}" placeholder="e.g. 9.00"
-                               style="padding-left:30px;">
-                    </div>
-                </div>
-                {"" if not (date(2026, 3, 2) <= date.today() <= date(2026, 3, 16)) else '''<div style="background:linear-gradient(135deg,var(--gold-light) 0%,rgba(226,183,100,0.15) 100%);border:1px solid var(--gold);border-radius:var(--radius-sm);padding:12px 16px;margin-top:12px;">
-                    <p style="margin:0;font-size:13px;font-weight:600;color:var(--gold-dark);">
-                        &#127881; Launch Week Special &mdash; 0% platform commission until March 16th. You keep everything (minus Stripe fees).
-                    </p>
-                </div>'''}
-                <div id="submit-earnings-calc" style="background:white;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-top:12px;display:none;">
-                    <p style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;">Earnings Preview</p>
-                    <div style="font-size:14px;color:var(--ink-light);line-height:2;">
-                        <div style="display:flex;justify-content:space-between;">You set: <span id="sc-price">-</span></div>
-                        <div style="display:flex;justify-content:space-between;">Stripe (~3%): <span id="sc-stripe" style="color:var(--ink-muted);">-</span></div>
-                        <div style="display:flex;justify-content:space-between;">Platform (<span id="sc-rate">5</span>%): <span id="sc-platform" style="color:var(--ink-muted);">-</span></div>
-                        <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;">
-                            <strong style="color:var(--terracotta);">You earn:</strong>
-                            <strong id="sc-earn" style="color:var(--terracotta);">-</strong>
-                        </div>
-                    </div>
-                </div>
-                <script>
-                document.getElementById('price').addEventListener('input', function() {{
-                    var calc = document.getElementById('submit-earnings-calc');
-                    var v = parseFloat(this.value);
-                    if (v > 0) {{
-                        calc.style.display = 'block';
-                        var now = new Date();
-                        var launchStart = new Date(2026, 2, 2);
-                        var launchEnd = new Date(2026, 2, 16);
-                        var isHoliday = (now >= launchStart && now <= launchEnd);
-                        var platformRate = isHoliday ? 0 : 0.05;
-                        var stripe = v * 0.03;
-                        var platform = v * platformRate;
-                        var earn = v - stripe - platform;
-                        document.getElementById('sc-price').textContent = '\\u00a3' + v.toFixed(2);
-                        document.getElementById('sc-stripe').textContent = '-\\u00a3' + stripe.toFixed(2);
-                        document.getElementById('sc-platform').textContent = '-\\u00a3' + platform.toFixed(2);
-                        document.getElementById('sc-rate').textContent = isHoliday ? '0' : '5';
-                        document.getElementById('sc-earn').textContent = '\\u00a3' + earn.toFixed(2);
-                    }} else {{ calc.style.display = 'none'; }}
-                }});
-                </script>
-                <div class="form-group">
-                    <label for="delivery_type">How will buyers receive it? <span style="color:var(--ink-muted);font-size:13px;font-weight:400;">&mdash; you can update this before launch</span></label>
-                    <select id="delivery_type" name="delivery_type" class="form-select">
-                        {delivery_options}
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom:0;">
-                    <label for="delivery_url">Delivery URL <span style="color:var(--ink-muted);font-size:13px;font-weight:400;">&mdash; optional for now</span></label>
-                    <input type="url" id="delivery_url" name="delivery_url" class="form-input"
-                           value="{delivery_url_val}" placeholder="e.g. https://github.com/you/repo or https://your-tool.com/download">
-                </div>
+                <input type="hidden" id="price" name="price" value="">
+                <input type="hidden" id="delivery_type" name="delivery_type" value="link">
+                <input type="hidden" id="delivery_url" name="delivery_url" value="{delivery_url_val}">
             </div>
 
             <div class="form-group">
@@ -360,16 +336,14 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
             <div class="form-group">
                 <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
                     <input type="checkbox" name="supports_export" value="1"
-                           style="accent-color:var(--terracotta);width:18px;height:18px;">
+                           class="custom-checkbox">
                     <span>
                         <strong style="font-size:14px;color:var(--ink);">&#128275; My tool supports full data export</strong>
                         <br><span style="font-size:13px;color:var(--ink-muted);">Tools with clean data export get a &ldquo;Certified Ejectable&rdquo; badge after admin review.</span>
                     </span>
                 </label>
             </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">
-                Submit for Review
-            </button>
+            {submit_or_login_btn}
         </form>
         {github_js}
     </div>
@@ -397,14 +371,15 @@ async def submit_get(request: Request):
         body = submit_success_page(tool_name, tool_slug, maker_slug=maker_slug)
         return HTMLResponse(page_shell("Tool Submitted", body, user=request.state.user))
 
-    # Require login for the submit form itself
-    if not request.state.user:
-        return RedirectResponse(url="/login", status_code=303)
-
     categories = await get_all_categories(db)
     values = {}
+    # Pre-fill name from query param (e.g. from /gaps "Fill this gap" links)
+    prefill_name = request.query_params.get('name', '').strip()
+    if prefill_name:
+        values['name'] = prefill_name
     user = request.state.user
-    if user.get('maker_id'):
+    logged_in = user is not None
+    if logged_in and user.get('maker_id'):
         maker = await get_maker_by_id(db, user['maker_id'])
         if maker:
             values['maker_name'] = maker.get('name', '')
@@ -412,7 +387,7 @@ async def submit_get(request: Request):
     cursor = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
     row = await cursor.fetchone()
     tool_count = row['cnt'] if row else 0
-    body = submit_form(categories, values=values, tool_count=tool_count)
+    body = submit_form(categories, values=values, tool_count=tool_count, logged_in=logged_in)
     return HTMLResponse(page_shell("Make Your Tool Discoverable by AI", body, user=user))
 
 
@@ -432,6 +407,10 @@ async def submit_post(
     delivery_url: str = Form(""),
     replaces: str = Form(""),
     supports_export: str = Form(""),
+    is_plugin: str = Form(""),
+    tool_type: str = Form(""),
+    platforms: str = Form(""),
+    install_command: str = Form(""),
     # Public (no-login) submission fields
     email: str = Form(""),
     website2: str = Form(""),  # honeypot
@@ -451,7 +430,10 @@ async def submit_post(
 
     values = dict(name=name, tagline=tagline, url=url, description=description,
                   category_id=category_id, maker_name=maker_name, maker_url=maker_url,
-                  tags=tags, replaces=replaces, price=price, delivery_type=delivery_type, delivery_url=delivery_url)
+                  tags=tags, replaces=replaces, price=price, delivery_type=delivery_type, delivery_url=delivery_url,
+                  tool_type=tool_type if is_plugin else None,
+                  platforms=platforms if is_plugin else '',
+                  install_command=install_command if is_plugin else '')
 
     # Validation
     errors = []
@@ -493,6 +475,9 @@ async def submit_post(
         category_id=int(category_id), tags=tags.strip(),
         price_pence=price_pence, delivery_type=delivery_type,
         delivery_url=delivery_url.strip(),
+        tool_type=tool_type.strip() if is_plugin and tool_type.strip() else None,
+        platforms=platforms.strip() if is_plugin else '',
+        install_command=install_command.strip() if is_plugin else '',
     )
 
     # Auto-detect GitHub URL
@@ -532,5 +517,5 @@ async def submit_post(
         if maker:
             maker_slug = maker.get('slug', '')
 
-    body = submit_success_page(name.strip(), tool_slug, maker_slug)
+    body = submit_success_page(name.strip(), tool_slug, maker_slug, tool_type=tool_type.strip() if is_plugin and tool_type.strip() else None)
     return HTMLResponse(page_shell("Tool Submitted", body, user=request.state.user))

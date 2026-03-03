@@ -150,8 +150,15 @@ async def about_page(request: Request):
         pretending to be indie. Just real tools by real people.
       </p>
 
+      <!-- Contact -->
+      <div style="text-align:center;margin-top:40px;padding:24px 0;">
+        <p style="color:var(--ink-muted);font-size:15px;">
+          Get in touch: <a href="mailto:pajebay1@gmail.com" style="color:var(--accent);font-weight:600;text-decoration:none;">pajebay1@gmail.com</a>
+        </p>
+      </div>
+
       <!-- CTA -->
-      <div style="text-align:center;padding:40px 0;border-top:1px solid var(--border);margin-top:32px;">
+      <div style="text-align:center;padding:40px 0;border-top:1px solid var(--border);margin-top:16px;">
         <p style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
           Built something? We&rsquo;d love to see it.
         </p>
@@ -739,7 +746,7 @@ async def blog_agent_infrastructure(request: Request):
             <p>
                 Install the MCP server:
             </p>
-            <pre><code>pip install indiestack</code></pre>
+            <pre><code>claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code></pre>
             <p>
                 Or hit the Stack Builder API directly:
             </p>
@@ -1162,8 +1169,7 @@ async def blog_tokens_saved(request: Request):
             <p>
                 Two commands:
             </p>
-<pre><code>pip install indiestack
-claude mcp add indiestack</code></pre>
+<pre><code>claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code></pre>
             <p>
                 That is it. Now when I work in Claude, it has access to a curated index of tools:
                 what they do, what they cost, how they are installed, whether the founder is still
@@ -1227,7 +1233,7 @@ claude mcp add indiestack</code></pre>
             <p>
                 Give it the tool. Let it search first.
             </p>
-<pre><code>pip install indiestack</code></pre>
+<pre><code>claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code></pre>
             <p>
                 Thirty seconds to install. The next time you ask your AI to add a feature, it will
                 check what has already been built before it starts writing boilerplate.

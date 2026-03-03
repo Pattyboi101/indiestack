@@ -32,13 +32,13 @@ def _github_button(next_url: str = "") -> str:
         return ""
     qs = f"?next={next_url}" if next_url else ""
     return f"""
-    <a href="/auth/github{qs}" style="display:flex;align-items:center;justify-content:center;gap:10px;
-       width:100%;padding:12px;background:#24292e;color:white;border-radius:8px;text-decoration:none;
-       font-weight:600;font-size:15px;margin-bottom:20px;box-sizing:border-box;">
+    <a href="/auth/github{qs}" style="display:flex;align-items:center;justify-content:center;gap:8px;
+       width:100%;padding:12px;background:var(--ink);color:white;border-radius:var(--radius-sm);text-decoration:none;
+       font-weight:600;font-size:15px;margin-bottom:24px;box-sizing:border-box;">
         {_GITHUB_SVG}
         Sign in with GitHub
     </a>
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
         <div style="flex:1;height:1px;background:var(--border);"></div>
         <span style="color:var(--ink-muted);font-size:13px;">or</span>
         <div style="flex:1;height:1px;background:var(--border);"></div>
@@ -305,12 +305,12 @@ async def forgot_password_form(request: Request):
         <h1 style="font-family:var(--font-display);color:var(--terracotta);margin-bottom:8px;">Reset Password</h1>
         <p style="color:var(--ink-muted);margin-bottom:32px;">Enter your email and we'll send you a reset link.</p>
         <form method="POST" action="/forgot-password">
-            <label style="display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px;">Email</label>
+            <label style="display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;">Email</label>
             <input type="email" name="email" required placeholder="you@example.com"
-                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box;margin-bottom:24px;">
-            <button type="submit" style="width:100%;padding:14px;background:var(--terracotta);color:white;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;">Send Reset Link</button>
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;box-sizing:border-box;margin-bottom:24px;">
+            <button type="submit" style="width:100%;padding:14px;background:var(--terracotta);color:white;border:none;border-radius:var(--radius-sm);font-size:16px;font-weight:600;cursor:pointer;">Send Reset Link</button>
         </form>
-        <p style="text-align:center;margin-top:20px;font-size:14px;color:var(--ink-muted);">
+        <p style="text-align:center;margin-top:24px;font-size:14px;color:var(--ink-muted);">
             <a href="/login" style="color:var(--terracotta);text-decoration:none;">Back to login</a>
         </p>
     </div>
@@ -356,7 +356,7 @@ async def reset_password_form(request: Request):
         <div style="max-width:420px;margin:60px auto;padding:0 20px;text-align:center;">
             <h1 style="font-family:var(--font-display);color:var(--terracotta);margin-bottom:8px;">Invalid or Expired Link</h1>
             <p style="color:var(--ink-muted);">This reset link is no longer valid. Please request a new one.</p>
-            <a href="/forgot-password" style="display:inline-block;margin-top:20px;padding:12px 28px;background:var(--terracotta);color:white;border-radius:8px;text-decoration:none;font-weight:600;">Request New Link</a>
+            <a href="/forgot-password" style="display:inline-block;margin-top:24px;padding:12px 28px;background:var(--terracotta);color:white;border-radius:var(--radius-sm);text-decoration:none;font-weight:600;">Request New Link</a>
         </div>
         '''
         return HTMLResponse(page_shell("Invalid Link", body, user=None))
@@ -367,13 +367,13 @@ async def reset_password_form(request: Request):
         <p style="color:var(--ink-muted);margin-bottom:32px;">Choose a new password for your account.</p>
         <form method="POST" action="/reset-password">
             <input type="hidden" name="token" value="{token}">
-            <label style="display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px;">New Password</label>
+            <label style="display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;">New Password</label>
             <input type="password" name="password" required minlength="8" placeholder="Min 8 characters"
-                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box;margin-bottom:16px;">
-            <label style="display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px;">Confirm Password</label>
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;box-sizing:border-box;margin-bottom:16px;">
+            <label style="display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;">Confirm Password</label>
             <input type="password" name="password_confirm" required minlength="8" placeholder="Confirm password"
-                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box;margin-bottom:24px;">
-            <button type="submit" style="width:100%;padding:14px;background:var(--terracotta);color:white;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;">Update Password</button>
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;box-sizing:border-box;margin-bottom:24px;">
+            <button type="submit" style="width:100%;padding:14px;background:var(--terracotta);color:white;border:none;border-radius:var(--radius-sm);font-size:16px;font-weight:600;cursor:pointer;">Update Password</button>
         </form>
     </div>
     '''
@@ -412,7 +412,7 @@ async def reset_password_submit(request: Request):
         <div style="max-width:420px;margin:60px auto;padding:0 20px;text-align:center;">
             <h1 style="font-family:var(--font-display);color:var(--terracotta);">Invalid or Expired Link</h1>
             <p style="color:var(--ink-muted);">Please request a new reset link.</p>
-            <a href="/forgot-password" style="display:inline-block;margin-top:20px;padding:12px 28px;background:var(--terracotta);color:white;border-radius:8px;text-decoration:none;font-weight:600;">Request New Link</a>
+            <a href="/forgot-password" style="display:inline-block;margin-top:24px;padding:12px 28px;background:var(--terracotta);color:white;border-radius:var(--radius-sm);text-decoration:none;font-weight:600;">Request New Link</a>
         </div>
         '''
         return HTMLResponse(page_shell("Invalid Link", body, user=None))
@@ -427,7 +427,7 @@ async def reset_password_submit(request: Request):
         <div style="font-size:48px;margin-bottom:16px;">&#10003;</div>
         <h1 style="font-family:var(--font-display);color:var(--terracotta);">Password Updated</h1>
         <p style="color:var(--ink-muted);margin-bottom:24px;">Your password has been reset. You can now log in.</p>
-        <a href="/login" style="display:inline-block;padding:12px 28px;background:var(--terracotta);color:white;border-radius:8px;text-decoration:none;font-weight:600;">Log In</a>
+        <a href="/login" style="display:inline-block;padding:12px 28px;background:var(--terracotta);color:white;border-radius:var(--radius-sm);text-decoration:none;font-weight:600;">Log In</a>
     </div>
     '''
     return HTMLResponse(page_shell("Password Updated", body, user=None))
@@ -550,7 +550,7 @@ async def verify_email(request: Request):
     <div style="max-width:420px;margin:60px auto;padding:0 20px;text-align:center;">
         <h1 style="font-family:var(--font-display);color:var(--terracotta);">Invalid or Expired Link</h1>
         <p style="color:var(--ink-muted);">This verification link is no longer valid.</p>
-        <a href="/resend-verification" style="display:inline-block;margin-top:20px;padding:12px 28px;background:var(--terracotta);color:white;border-radius:8px;text-decoration:none;font-weight:600;">Resend Verification</a>
+        <a href="/resend-verification" style="display:inline-block;margin-top:24px;padding:12px 28px;background:var(--terracotta);color:white;border-radius:var(--radius-sm);text-decoration:none;font-weight:600;">Resend Verification</a>
     </div>
     '''
     return HTMLResponse(page_shell("Invalid Link", body, user=None))
@@ -576,7 +576,7 @@ async def resend_verification(request: Request):
         <div style="font-size:48px;margin-bottom:16px;">&#9993;</div>
         <h1 style="font-family:var(--font-display);color:var(--terracotta);">Verification Sent</h1>
         <p style="color:var(--ink-muted);">Check your email for a verification link.</p>
-        <p style="margin-top:20px;font-size:14px;"><a href="/dashboard" style="color:var(--terracotta);text-decoration:none;">Back to dashboard</a></p>
+        <p style="margin-top:24px;font-size:14px;"><a href="/dashboard" style="color:var(--terracotta);text-decoration:none;">Back to dashboard</a></p>
     </div>
     '''
     return HTMLResponse(page_shell("Verification Sent", body, user=user))

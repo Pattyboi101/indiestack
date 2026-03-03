@@ -13,7 +13,6 @@ from indiestack.config import BASE_URL
 from indiestack.routes.components import (
     page_shell,
     tool_card,
-    verified_badge_html,
     boosted_badge_html,
     ejectable_badge_html,
     maker_pulse_html,
@@ -23,6 +22,7 @@ from indiestack.routes.components import (
     review_form_html,
     update_card,
     maker_discount_badge_html,
+    email_sticky_bar,
 )
 from indiestack.db import (
     get_tool_by_slug,
@@ -64,7 +64,7 @@ async def tool_detail(request: Request, slug: str):
 
     if not tool or tool['status'] != 'approved':
         body = """
-        <div class="container" style="text-align:center;padding:80px 0;">
+        <div class="container" style="text-align:center;padding:64px 0;">
             <h1 style="font-family:var(--font-display);font-size:32px;">Tool Not Found</h1>
             <p class="text-muted mt-4">This tool doesn't exist or hasn't been approved yet.</p>
             <a href="/" class="btn btn-primary mt-4">Back to Home</a>
@@ -84,6 +84,9 @@ async def tool_detail(request: Request, slug: str):
     tags = str(tool.get('tags', ''))
     is_verified = bool(tool.get('is_verified', 0))
     is_ejectable = bool(tool.get('is_ejectable', 0))
+    source_type = tool.get('source_type', 'saas')
+    is_totw = bool(tool.get('tool_of_the_week', 0))
+    totw_badge = '<span style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E2B764,#D4A84B);color:#1A2D4A;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;">&#127942; Tool of the Week</span>' if is_totw else ''
     tool_type = tool.get('tool_type') or None
     platforms_raw = tool.get('platforms', '')
     install_command = tool.get('install_command', '')
@@ -151,7 +154,7 @@ async def tool_detail(request: Request, slug: str):
     tag_html = ''
     if tags.strip():
         tag_list = [t.strip() for t in tags.split(',') if t.strip()]
-        tag_html = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">'
+        tag_html = '<div style="display:flex;gap:8px;flex-wrap:wrap;">'
         for t in tag_list:
             tag_html += f'<span class="tag">{escape(t)}</span>'
         tag_html += '</div>'
@@ -216,92 +219,49 @@ async def tool_detail(request: Request, slug: str):
             View on GitHub{gh_stars_text}{gh_lang_text}
         </a>'''
 
-    # Claim + Boost CTA — show for unclaimed tools
+    # Claim CTA — show for unclaimed tools (maker_id may exist from auto-import but claimed_at is only set on real claims)
     claim_html = ''
-    if not tool.get('maker_id'):
+    if not tool.get('claimed_at'):
         if user:
             claim_action = f'''
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
                 <form method="POST" action="/api/claim" style="margin:0;">
                     <input type="hidden" name="tool_id" value="{tool['id']}">
-                    <button type="submit" style="padding:8px 20px;background:var(--card-bg);color:var(--ink);border:1px solid var(--border);border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;font-family:var(--font-body);">
-                        Claim Free
+                    <button type="submit" class="btn btn-primary" style="padding:12px 24px;font-size:14px;">
+                        Claim This Tool
                     </button>
-                </form>
-                <form method="POST" action="/api/claim-and-boost" style="margin:0;">
-                    <input type="hidden" name="tool_id" value="{tool['id']}">
-                    <button type="submit" style="padding:8px 20px;background:linear-gradient(135deg,var(--slate),var(--slate-light));color:var(--terracotta);border:none;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--font-body);">
-                        &#9733; Claim &amp; Boost &pound;29
-                    </button>
-                </form>
-            </div>'''
+                </form>'''
         else:
             claim_action = f'''
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <a href="/signup?next=/tool/{slug}" style="padding:8px 20px;background:var(--card-bg);color:var(--ink);border:1px solid var(--border);border-radius:999px;font-weight:600;font-size:14px;text-decoration:none;font-family:var(--font-body);">
-                    Claim Free
-                </a>
-                <a href="/signup?next=/tool/{slug}" style="padding:8px 20px;background:linear-gradient(135deg,var(--slate),var(--slate-light));color:var(--terracotta);border:none;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;font-family:var(--font-body);">
-                    &#9733; Claim &amp; Boost &pound;29
-                </a>
-            </div>'''
+                <a href="/signup?next=/tool/{slug}" class="btn btn-primary" style="padding:12px 24px;font-size:14px;text-decoration:none;">
+                    Claim This Tool
+                </a>'''
         claim_html = f'''
-        <div id="claim" style="margin:16px 0;padding:24px;background:linear-gradient(135deg,var(--warning-bg),var(--warning-bg));border:1px solid var(--gold);border-radius:var(--radius-sm);">
+        <div id="claim" style="margin:16px 0;padding:24px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);">
             <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
                 <span style="font-size:24px;">&#128075;</span>
                 <div style="flex:1;min-width:200px;">
-                    <p style="font-weight:700;font-size:15px;color:var(--warning-text);margin-bottom:2px;">Is this your tool?</p>
-                    <p style="font-size:13px;color:var(--warning-text);margin-bottom:12px;">This listing was added by the IndieStack community. Claim it to update details, track analytics, and connect Stripe.</p>
+                    <p style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px;">Is this your tool?</p>
+                    <p style="font-size:13px;color:var(--ink-light);margin-bottom:12px;">This tool is listed for free on IndieStack &mdash; no commission, no fees. Claim it to update details and track how often AI agents recommend it.</p>
                     {claim_action}
-                    <div style="margin-top:12px;font-size:12px;color:var(--warning-text);">
-                        <strong>Boost includes:</strong> Featured badge for 30 days &middot; Priority placement &middot; Weekly newsletter feature
-                    </div>
                 </div>
             </div>
         </div>
         '''
 
-    # Boost upsell for tools the current user owns
+    # Boost upsell — hidden for now (re-enable when trust is established)
     boost_html = ''
-    if user and tool.get('maker_id') and user.get('maker_id') == tool.get('maker_id'):
-        if tool.get('is_boosted') and tool.get('boost_expires_at', '') > '':
-            from datetime import datetime
-            try:
-                expires = datetime.fromisoformat(tool['boost_expires_at'])
-                if expires > datetime.utcnow():
-                    boost_html = f'<div class="alert alert-info" style="margin:16px 0;">&#9733; <strong>Boosted</strong> until {expires.strftime("%d %b %Y")}. Your tool has priority placement and a Featured badge.</div>'
-            except (ValueError, TypeError):
-                pass
-        if not boost_html:
-            boost_html = f'''
-            <div style="margin:16px 0;padding:16px;background:linear-gradient(135deg,var(--info-bg),var(--info-bg));border:1px solid var(--info-border);border-radius:var(--radius-sm);">
-                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-                    <span style="font-size:20px;">&#9733;</span>
-                    <div style="flex:1;">
-                        <p style="font-weight:700;font-size:14px;color:var(--info-text);">Boost this tool for &pound;29</p>
-                        <p style="font-size:12px;color:var(--info-text);">Featured badge for 30 days &middot; Priority placement &middot; Newsletter feature</p>
-                    </div>
-                    <form method="POST" action="/api/boost" style="margin:0;">
-                        <input type="hidden" name="tool_id" value="{tool['id']}">
-                        <button type="submit" style="padding:8px 16px;background:linear-gradient(135deg,var(--slate),var(--slate-light));color:var(--terracotta);border:none;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font-body);">
-                            Boost Now
-                        </button>
-                    </form>
-                </div>
-            </div>
-            '''
 
     # Community listing notice — shown on tools listed by Community Curated maker
     community_notice = ''
     maker_slug_val = tool.get('maker_slug', '') or ''
     if maker_slug_val == 'community' or (str(tool.get('maker_name', '')) == 'Community Curated'):
         community_notice = f'''
-        <div style="margin:16px 0;padding:16px 20px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="margin:16px 0;padding:16px 24px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);">
             <div style="display:flex;align-items:flex-start;gap:8px;">
                 <span style="font-size:18px;flex-shrink:0;">&#9432;</span>
                 <div style="font-size:13px;color:var(--ink-light);line-height:1.6;">
                     <strong style="color:var(--ink);">Community listing</strong> &mdash;
-                    This tool was added by the IndieStack community, not by its creators.
+                    This tool is listed for free by the IndieStack community &mdash; no fees, no commission.
                     If you built {escape(str(tool['name']))}, you can
                     <a href="/signup?next=/tool/{slug}" style="color:var(--accent);font-weight:600;">claim this listing</a>
                     to manage it, or
@@ -316,7 +276,7 @@ async def tool_detail(request: Request, slug: str):
     unclaimed_badge = ''
     if not tool.get('claimed_at'):
         unclaimed_badge = '''<span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--ink-muted);background:var(--cream-dark);padding:2px 8px;border-radius:999px;border:1px solid var(--border);">
-    Community Listed &middot; <a href="#claim" style="color:var(--accent);text-decoration:none;">Claim this tool</a>
+    Listed for free &middot; No commission &middot; <a href="#claim" style="color:var(--accent);text-decoration:none;">Claim this tool</a>
 </span>'''
     if maker_name:
         maker_slug = slugify(maker_name)
@@ -457,18 +417,18 @@ async def tool_detail(request: Request, slug: str):
     use_count = reactions['counts']['use_this']
     bm_count = reactions['counts']['bookmark']
     reactions_html = f'''
-    <div style="display:flex;gap:8px;margin-top:12px;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button onclick="react({tool_id},'use_this')" id="react-use_this"
                 style="background:{'var(--accent-light,#E6FAFF)' if use_active else 'var(--card-bg)'};
                        border:1px solid {'var(--accent)' if use_active else 'var(--border)'};
-                       padding:8px 16px;border-radius:999px;font-size:13px;cursor:pointer;
+                       padding:8px 16px;border-radius:999px;font-size:13px;cursor:pointer;min-height:44px;
                        color:{'var(--accent)' if use_active else 'var(--ink-light)'};">
             &#9889; I use this{f' ({use_count})' if use_count else ''}
         </button>
         <button onclick="react({tool_id},'bookmark')" id="react-bookmark"
                 style="background:{'var(--gold-light,#FDF8EE)' if bm_active else 'var(--card-bg)'};
                        border:1px solid {'var(--gold)' if bm_active else 'var(--border)'};
-                       padding:8px 16px;border-radius:999px;font-size:13px;cursor:pointer;
+                       padding:8px 16px;border-radius:999px;font-size:13px;cursor:pointer;min-height:44px;
                        color:{'var(--gold)' if bm_active else 'var(--ink-light)'};">
             &#9733; Bookmarked{f' ({bm_count})' if bm_count else ''}
         </button>
@@ -535,7 +495,7 @@ async def tool_detail(request: Request, slug: str):
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:16px;">
                 Similar Tools
             </h2>
-            <div class="scroll-row">{similar_cards}</div>
+            <div class="scroll-row card-stagger">{similar_cards}</div>
         </div>
         '''
     else:
@@ -545,8 +505,8 @@ async def tool_detail(request: Request, slug: str):
     banners_html = ''
     if request.query_params.get('claimed') == '1':
         banners_html += '<div class="alert alert-success" style="margin-bottom:16px;">&#127881; You\'ve claimed this tool! You can now manage it from your <a href="/dashboard" style="font-weight:700;">dashboard</a>.</div>'
-    elif request.query_params.get('claim') == 'sent':
-        banners_html += '<div class="alert alert-info" style="margin-bottom:16px;">Claim request received! Check your email to verify ownership.</div>'
+    elif request.query_params.get('claim') == 'sent' or request.query_params.get('claim_requested') == '1':
+        banners_html += '<div class="alert alert-info" style="margin-bottom:16px;">&#9989; Claim request submitted! We\'ll review it and get back to you shortly.</div>'
     boosted_param = request.query_params.get('boosted')
     if boosted_param == '1':
         banners_html += '<div class="alert alert-success" style="margin-bottom:16px;">&#9733; <strong>Your tool is now boosted!</strong> It has priority placement for 30 days and will be featured in our weekly newsletter.</div>'
@@ -570,18 +530,18 @@ async def tool_detail(request: Request, slug: str):
     safe_tool_url = tool_url.replace("'", "\\'")
 
     share_row = f'''
-<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+<div style="display:flex;gap:8px;flex-wrap:wrap;">
     <button onclick="navigator.clipboard.writeText('{safe_tool_url}');this.innerHTML='&#10003; Copied!';setTimeout(()=>this.innerHTML='&#128279; Copy Link',2000)"
-            style="padding:8px 16px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
+            style="padding:8px 16px;min-height:44px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
                    font-size:12px;font-weight:600;cursor:pointer;color:var(--ink-light);font-family:var(--font-body);">
         &#128279; Copy Link
     </button>
     <a href="{twitter_url}" target="_blank" rel="noopener"
-       style="padding:8px 16px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
+       style="padding:8px 16px;min-height:44px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
               font-size:12px;font-weight:600;text-decoration:none;color:var(--ink-light);display:inline-flex;align-items:center;gap:4px;">
         &#120143; Share
     </a>
-    {'<a href="/api/badge/' + slug + '.svg" target="_blank" style="padding:8px 16px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;font-size:12px;font-weight:600;text-decoration:none;color:var(--ink-light);display:inline-flex;align-items:center;gap:4px;">&#128247; Embed Badge</a>' if user and tool.get('maker_id') and user.get('maker_id') == tool.get('maker_id') else ''}
+    {'<a href="/dashboard#badge" style="padding:8px 16px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;font-size:12px;font-weight:600;text-decoration:none;color:var(--ink-light);display:inline-flex;align-items:center;gap:4px;">&#128247; Get Badge</a>' if user and tool.get('maker_id') and user.get('maker_id') == tool.get('maker_id') else ''}
 </div>
 '''
 
@@ -603,7 +563,7 @@ async def tool_detail(request: Request, slug: str):
             )
         if comp_links:
             alternatives_links_html = f'''
-        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
             {"".join(comp_links)}
         </div>'''
 
@@ -649,14 +609,18 @@ async def tool_detail(request: Request, slug: str):
     <div class="container" style="padding:48px 24px;max-width:800px;">
         {breadcrumb_html}
         {claim_banner}
+        <div style="position:relative;padding:32px 24px 24px;border-radius:var(--radius);
+                    background:linear-gradient(135deg, var(--cream-dark) 0%, var(--card-bg) 100%);
+                    border:1px solid var(--border);margin-bottom:24px;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;">
             <div style="flex:1;">
                 <a href="/category/{cat_slug}" class="tag mb-2" style="display:inline-block;">{cat_name}</a>
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px;">
                     <h1 style="font-family:var(--font-display);font-size:36px;">{name}</h1>
-                    {verified_badge_html() if is_verified else ''}
+                    {totw_badge}
                     {ejectable_badge_html() if is_ejectable else ''}
                     {type_badge}
+                    {'<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--success-bg);color:var(--success-text);border:1px solid var(--success-border);">&#128230; Open Source</span>' if source_type == 'code' else '<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--info-bg);color:var(--info-text);border:1px solid var(--info-border);">&#9729; SaaS</span>'}
                     {pulse_html}
 
                     {rating_display_html}
@@ -672,31 +636,38 @@ async def tool_detail(request: Request, slug: str):
                 <span id="count-{tool_id}">{upvotes}</span>
             </button>
         </div>
+        </div>
 
         {claim_html}
         {community_notice}
         {boost_html}
 
+        <!-- Description -->
         <div style="margin-top:32px;">
             <p style="white-space:pre-line;color:var(--ink-light);line-height:1.8;font-size:16px;">{description}</p>
         </div>
 
-        <div style="margin-top:32px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+        <!-- CTA + Maker -->
+        <div style="margin-top:24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
             {cta_html}
             {wishlist_btn_html}
-            {maker_html}
         </div>
+        <div style="margin-top:12px;">{maker_html}</div>
         {click_badge}
-        {reactions_html}
-        {share_row}
 
-        {tag_html}
-        {github_badge}
-        {freshness_badge}
-        {token_hint_html}
-        {alternatives_links_html}
-
-        {'<div style="margin-top:48px;padding:24px;border:1px dashed var(--gold);border-radius:var(--radius);background:var(--gold-light,#FDF8EE);text-align:center;"><p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">Boost this listing</p><p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">Get a verified badge, rank higher in search, and build buyer trust.</p><a href="/verify/' + slug + '" class="btn" style="background:linear-gradient(135deg,var(--gold),var(--gold));color:var(--gold-dark);font-weight:700;padding:8px 24px;border-radius:999px;border:1px solid var(--gold);">Get Verified — £29 &rarr;</a></div>' if not is_verified and user and tool.get('maker_id') and user.get('maker_id') == tool.get('maker_id') else ''}
+        <!-- Metadata card -->
+        <div style="margin-top:32px;padding:24px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius);">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                {reactions_html}
+            </div>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                {share_row}
+            </div>
+            {f'<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">' + tag_html + '</div>' if tag_html else ''}
+            {f'<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center;">' + github_badge + ' ' + freshness_badge + '</div>' if github_badge or freshness_badge else ''}
+            {f'<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:12px;flex-wrap:wrap;align-items:center;">' + token_hint_html + '</div>' if token_hint_html else ''}
+            {f'<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">' + alternatives_links_html + '</div>' if alternatives_links_html else ''}
+        </div>
 
         {similar_html}
 
@@ -706,7 +677,7 @@ async def tool_detail(request: Request, slug: str):
     </div>
     """
     og_image_url = f"{BASE_URL}/api/og/{slug}.svg"
-    return HTMLResponse(page_shell(f"{tool['name']} — {tagline} | IndieStack", body, description=tagline, extra_head=extra_head, user=user, og_image=og_image_url, canonical=f"/tool/{slug}"))
+    return HTMLResponse(page_shell(f"{tool['name']} — {tagline} | IndieStack", body + email_sticky_bar(), description=tagline, extra_head=extra_head, user=user, og_image=og_image_url, canonical=f"/tool/{slug}"))
 
 
 @router.post("/tool/{slug}/review")

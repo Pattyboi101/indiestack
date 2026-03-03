@@ -31,7 +31,7 @@ async def tags_index(request: Request):
             tag_cards.append(f'''
                 <a href="/tag/{tag_slug}" class="card" style="text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;">
                     <span style="font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--ink);">{tag_name}</span>
-                    <span style="font-size:13px;color:var(--ink-muted);background:var(--cream-dark);padding:3px 10px;border-radius:999px;">{count} tool{"s" if count != 1 else ""}</span>
+                    <span style="font-size:13px;color:var(--ink-muted);background:var(--cream-dark);padding:4px 8px;border-radius:999px;">{count} tool{"s" if count != 1 else ""}</span>
                 </a>
             ''')
         tags_grid = f'''
@@ -134,8 +134,8 @@ async def tag_detail(request: Request, slug: str):
     if related_pills:
         related_html = f'''
         <div style="margin-top:32px;padding:20px;background:var(--cream-dark);border-radius:var(--radius);">
-            <span style="font-size:13px;font-weight:600;color:var(--ink-muted);display:block;margin-bottom:10px;">Related Tags</span>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;">{"".join(related_pills[:8])}</div>
+            <span style="font-size:13px;font-weight:600;color:var(--ink-muted);display:block;margin-bottom:8px;">Related Tags</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">{"".join(related_pills[:8])}</div>
         </div>
         '''
 

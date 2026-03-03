@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse
 from html import escape
 from urllib.parse import urlencode
 
-from indiestack.routes.components import page_shell, tool_card, search_filters_html, pagination_html
+from indiestack.routes.components import page_shell, tool_card, search_filters_html, pagination_html, email_sticky_bar
 from indiestack.db import search_tools_advanced, get_all_categories, log_search, get_search_demand
 
 router = APIRouter()
@@ -126,7 +126,7 @@ async def search(request: Request):
                     be the first to list yours and own this category.
                 </p>
                 {demand_line}
-                <a href="/submit" class="btn btn-primary" style="padding:10px 20px;font-size:14px;margin-top:12px;">
+                <a href="/submit" class="btn btn-primary" style="padding:12px 20px;font-size:14px;margin-top:12px;">
                     Submit Your Tool
                 </a>
             </div>
@@ -142,7 +142,7 @@ async def search(request: Request):
             {no_results_msg}
         </div>
         """
-        return HTMLResponse(page_shell(title="Search", body=body, user=user))
+        return HTMLResponse(page_shell(title="Search", body=body + email_sticky_bar(), user=user))
 
     cards_html = "".join(tool_card(tool) for tool in results)
     result_label = f'{total} result{"s" if total != 1 else ""}'
@@ -185,4 +185,4 @@ async def search(request: Request):
         {pagination}
     </div>
     """
-    return HTMLResponse(page_shell(title=f"Search: {safe_query}" if query else "Search", body=body, user=user))
+    return HTMLResponse(page_shell(title=f"Search: {safe_query}" if query else "Search", body=body + email_sticky_bar(), user=user))

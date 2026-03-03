@@ -1,23 +1,31 @@
 # IndieStack MCP Server
 
-The procurement layer for AI agents. Search 358+ vetted indie SaaS tools, build complete stacks, and spot market gaps — all from your AI coding assistant.
+The tool knowledge layer for AI agents. Search 480+ indie tools — from full SaaS products to tiny utilities — so your AI stops rebuilding solved problems.
 
 <!-- mcp-name: io.github.Pattyboi101/indiestack -->
 
 ## Quick Start
 
 ```bash
+# Option 1: pipx (recommended — handles venv automatically)
+pipx install indiestack
+claude mcp add indiestack -- indiestack-mcp
+
+# Option 2: pip (if pipx isn't available)
 pip install indiestack
-claude mcp add indiestack -- python -m indiestack.mcp_server
+claude mcp add indiestack -- indiestack-mcp
+
+# Option 3: uvx (zero install — runs directly)
+claude mcp add indiestack -- uvx indiestack-mcp
 ```
 
 That's it. Your AI will now check IndieStack before building common functionality from scratch.
 
 ## Works with
 
-- **Claude Code** — `claude mcp add indiestack -- python -m indiestack.mcp_server`
-- **Cursor** — Add to your MCP config
-- **Windsurf** — Add to your MCP config
+- **Claude Code** — `claude mcp add indiestack -- indiestack-mcp`
+- **Cursor** — Add `indiestack-mcp` to your MCP config
+- **Windsurf** — Add `indiestack-mcp` to your MCP config
 
 ## What it does
 
@@ -32,7 +40,7 @@ When you ask your AI to "build invoicing" or "add analytics", it checks IndieSta
 | `list_categories` | Browse all 21 categories with tool counts |
 | `compare_tools` | Side-by-side comparison of any two tools |
 | `build_stack` | Build a complete indie tool stack for your requirements |
-| `submit_tool` | Submit a new tool to the marketplace |
+| `submit_tool` | Submit a new tool to IndieStack |
 | `browse_new_tools` | Recently added tools with pagination |
 | `list_tags` | All tags sorted by popularity |
 | `list_stacks` | Curated tool stack combinations |
@@ -53,12 +61,13 @@ When you ask your AI to "build invoicing" or "add analytics", it checks IndieSta
 | `before-you-build` | Check IndieStack before building common functionality |
 | `find-alternatives` | Find indie alternatives to mainstream SaaS products |
 
-## What's new in v0.4.0
+## What's new in v0.4.1
 
-- **Market gap detection** — Zero-result searches return demand data ("12 people searched for this") and a submit link. Your AI can tell users about unsolved gaps.
-- **Stack builder** — `build_stack(needs="auth,payments,analytics")` returns recommended tools for each requirement with token savings estimates.
-- **Prompt cache index** — The `tools-index` resource lets agents include the full catalog in their system prompt for instant lookup.
-- **Agent citation tracking** — Every search and detail lookup is tracked, so makers can see how often AI agents recommend their tools.
+- **`indiestack-mcp` CLI command** — No more `python -m` incantations. Just `indiestack-mcp`.
+- **480+ tools** — Catalog has grown 3x since initial launch.
+- **Personalized recommendations** — Agent memory learns your tech stack and suggests tools you haven't seen.
+- **Market gap detection** — Zero-result searches return demand data and a submit link.
+- **Stack builder** — `build_stack(needs="auth,payments,analytics")` returns recommended tools with token savings estimates.
 
 ## Links
 

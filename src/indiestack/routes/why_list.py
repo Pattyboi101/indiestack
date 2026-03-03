@@ -30,10 +30,10 @@ async def why_list_page(request: Request):
     _searches = await db.execute("SELECT COUNT(*) as cnt FROM search_logs WHERE created_at >= datetime('now', '-7 days')")
     searches_week = (await _searches.fetchone())['cnt']
 
-    # Notable tools — grab a few verified or high-click tools
+    # Notable tools — grab a few high-activity tools
     _notable = await db.execute("""
         SELECT t.name, t.slug FROM tools t
-        WHERE t.status='approved' AND (t.is_verified=1 OR t.mcp_view_count > 5)
+        WHERE t.status='approved' AND t.mcp_view_count > 5
         ORDER BY t.mcp_view_count DESC LIMIT 8
     """)
     notable_tools = [dict(r) for r in await _notable.fetchall()]
@@ -54,19 +54,27 @@ async def why_list_page(request: Request):
 
         <!-- Stat cards -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:16px;margin-bottom:48px;">
-            <div class="card" style="padding:20px;text-align:center;">
+            <div class="card" style="padding:24px;text-align:center;cursor:default;transition:all 0.2s ease;"
+                 onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)';this.style.borderColor='rgba(255,255,255,0.15)'"
+                 onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor=''">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--ink);">{tool_count}</div>
                 <div style="font-size:13px;color:var(--ink-muted);">curated tools</div>
             </div>
-            <div class="card" style="padding:20px;text-align:center;">
+            <div class="card" style="padding:24px;text-align:center;cursor:default;transition:all 0.2s ease;"
+                 onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)';this.style.borderColor='rgba(255,255,255,0.15)'"
+                 onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor=''">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--ink);">{cat_count}</div>
                 <div style="font-size:13px;color:var(--ink-muted);">categories</div>
             </div>
-            <div class="card" style="padding:20px;text-align:center;">
+            <div class="card" style="padding:24px;text-align:center;cursor:default;transition:all 0.2s ease;"
+                 onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)';this.style.borderColor='rgba(255,255,255,0.15)'"
+                 onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor=''">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{mcp_views}</div>
                 <div style="font-size:13px;color:var(--ink-muted);">AI agent lookups</div>
             </div>
-            <div class="card" style="padding:20px;text-align:center;">
+            <div class="card" style="padding:24px;text-align:center;cursor:default;transition:all 0.2s ease;"
+                 onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)';this.style.borderColor='rgba(255,255,255,0.15)'"
+                 onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor=''">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--ink);">{clicks_30d}</div>
                 <div style="font-size:13px;color:var(--ink-muted);">clicks to tools (30d)</div>
             </div>
@@ -93,15 +101,15 @@ async def why_list_page(request: Request):
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
                 &#9889; What you get (free)
             </h2>
-            <ul style="color:var(--ink-light);line-height:2;padding-left:20px;">
-                <li><strong>Tool profile page</strong> &mdash; description, tags, screenshots, changelog, reviews</li>
-                <li><strong>AI agent discoverability</strong> &mdash; your tool appears in MCP search results</li>
-                <li><strong>SEO pages</strong> &mdash; alternatives pages, use-case comparisons, category listings</li>
-                <li><strong>Outbound click tracking</strong> &mdash; see how many developers click through to your site</li>
-                <li><strong>Embeddable badge</strong> &mdash; "Listed on IndieStack" SVG for your README</li>
-                <li><strong>Maker profile</strong> &mdash; showcase all your tools in one place</li>
-                <li><strong>Vibe Stacks</strong> &mdash; get included in curated tool bundles</li>
-                <li><strong>Changelog updates</strong> &mdash; post updates that show on the IndieStack feed</li>
+            <ul style="color:var(--ink-light);line-height:2.2;padding-left:0;list-style:none;">
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Tool profile page</strong> &mdash; description, tags, screenshots, changelog, reviews</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>AI agent discoverability</strong> &mdash; your tool appears in MCP search results</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>SEO pages</strong> &mdash; alternatives pages, use-case comparisons, category listings</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Outbound click tracking</strong> &mdash; see how many developers click through to your site</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Embeddable badge</strong> &mdash; "Listed on IndieStack" SVG for your README</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Maker profile</strong> &mdash; showcase all your tools in one place</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Vibe Stacks</strong> &mdash; get included in curated tool bundles</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Changelog updates</strong> &mdash; post updates that show on the IndieStack feed</li>
             </ul>
         </div>
 
@@ -159,7 +167,7 @@ async def why_list_page(request: Request):
 
         <!-- CTA -->
         <div style="text-align:center;padding:40px 0;border-top:1px solid var(--border);margin-top:16px;">
-            <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin-bottom:16px;">
+            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:16px;">
                 List your tool for free
             </h2>
             <p style="color:var(--ink-muted);margin-bottom:24px;font-size:15px;">

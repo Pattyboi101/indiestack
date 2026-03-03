@@ -94,7 +94,7 @@ _FOUNDER_PHOTO_DIR_CANDIDATES = [
 _founder_photo_cache: dict[str, bytes] = {}
 
 from indiestack import db
-from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping
+from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping, create_notification
 from indiestack.email import send_email, ego_ping_html, maker_welcome_html, email_verification_html
 from indiestack.auth import get_current_user
 from indiestack.routes import landing, browse, tool, search, submit, admin, purchase
@@ -110,6 +110,7 @@ from indiestack.routes import launch_with_me
 from indiestack.routes import use_cases
 from indiestack.routes import why_list
 from indiestack.routes import plugins
+from indiestack.routes import gaps
 
 
 async def _periodic_session_cleanup():
@@ -139,18 +140,22 @@ async def _weekly_ego_ping():
                 conn.row_factory = aiosqlite.Row
                 makers = await get_makers_for_ego_ping(conn)
                 for m in makers:
-                    html = ego_ping_html(
-                        maker_name=m['maker_name'],
-                        tool_name=m['tool_name'],
-                        tool_slug=m['tool_slug'],
-                        views=m['weekly_views'],
-                        clicks=m.get('weekly_clicks', 0),
-                        upvotes=m['upvote_count'],
-                        wishlists=m['wishlist_count'],
-                        has_changelog=m['changelog_count'] > 0,
-                        has_active_badge=m['recent_updates'] > 0,
-                    )
-                    await send_email(m['email'], f"Your week on IndieStack \u2014 {m['tool_name']}", html)
+                    # Dashboard notification instead of email
+                    try:
+                        cursor = await conn.execute(
+                            "SELECT id FROM users WHERE maker_id = ?",
+                            (m['maker_id'],))
+                        user_row = await cursor.fetchone()
+                        if user_row:
+                            views = m['weekly_views']
+                            clicks = m.get('weekly_clicks', 0)
+                            await create_notification(
+                                conn, user_row['id'], 'weekly_stats',
+                                f"{m['tool_name']}: {views} views, {clicks} clicks this week",
+                                f"/tool/{m['tool_slug']}"
+                            )
+                    except Exception:
+                        pass
         except Exception:
             pass
 
@@ -169,19 +174,29 @@ async def _auto_tool_of_the_week():
             async with aiosqlite.connect(db.DB_PATH) as conn:
                 conn.row_factory = aiosqlite.Row
                 row = await conn.execute_fetchall(
-                    """SELECT t.id, t.name, t.slug, t.maker_name, t.maker_id, COUNT(oc.id) as clicks
+                    """SELECT t.id, t.name, t.slug, t.maker_name, t.maker_id,
+                              (COALESCE(sl.cnt, 0) + COALESCE(ac.cnt, 0)) as mentions
                        FROM tools t
-                       JOIN outbound_clicks oc ON oc.tool_id = t.id
-                       WHERE oc.clicked_at >= datetime('now', '-7 days')
-                       AND t.status = 'approved'
-                       GROUP BY t.id
-                       ORDER BY clicks DESC
+                       LEFT JOIN (
+                           SELECT top_result_slug, COUNT(*) as cnt FROM search_logs
+                           WHERE created_at >= datetime('now', '-7 days')
+                             AND top_result_slug IS NOT NULL
+                           GROUP BY top_result_slug
+                       ) sl ON sl.top_result_slug = t.slug
+                       LEFT JOIN (
+                           SELECT tool_id, COUNT(*) as cnt FROM agent_citations
+                           WHERE created_at >= datetime('now', '-7 days')
+                           GROUP BY tool_id
+                       ) ac ON ac.tool_id = t.id
+                       WHERE t.status = 'approved'
+                         AND (COALESCE(sl.cnt, 0) + COALESCE(ac.cnt, 0)) > 0
+                       ORDER BY mentions DESC
                        LIMIT 1"""
                 )
                 if not row:
                     continue
                 tool = dict(row[0])
-                clicks = tool['clicks']
+                clicks = tool['mentions']
                 await conn.execute("UPDATE tools SET tool_of_the_week = 0 WHERE tool_of_the_week = 1")
                 await conn.execute("UPDATE tools SET tool_of_the_week = 1 WHERE id = ?", (tool['id'],))
                 await conn.commit()
@@ -209,7 +224,7 @@ async def _auto_tool_of_the_week():
                         await send_email(maker_email, f"Your tool is Tool of the Week!", html)
                 except Exception:
                     pass
-                logger.info(f"Auto TOTW: {tool['name']} ({clicks} clicks)")
+                logger.info(f"Auto TOTW: {tool['name']} ({clicks} AI mentions this week)")
         except Exception:
             pass
 
@@ -234,24 +249,23 @@ async def _badge_nudge_check():
                 )
                 for tool in rows:
                     tool = dict(tool)
-                    maker_email = None
+                    # Dashboard notification instead of email
                     if tool.get('maker_id'):
-                        maker_row = await conn.execute_fetchall(
-                            "SELECT u.email FROM users u WHERE u.maker_id = ? AND COALESCE(u.email_opt_out, 0) = 0", (tool['maker_id'],)
-                        )
-                        if maker_row and maker_row[0]['email']:
-                            maker_email = maker_row[0]['email']
-                    if maker_email:
                         try:
-                            from indiestack.email import badge_nudge_html
-                            html = badge_nudge_html(tool['name'], tool['slug'])
-                            await send_email(maker_email, f"Your badge for {tool['name']} is ready", html)
-                            logger.info(f"Badge nudge sent for {tool['name']} to {maker_email}")
-                            await conn.execute("UPDATE tools SET badge_nudge_sent = 1 WHERE id = ?", (tool['id'],))
+                            cursor = await conn.execute(
+                                "SELECT id FROM users WHERE maker_id = ?",
+                                (tool['maker_id'],))
+                            user_row = await cursor.fetchone()
+                            if user_row:
+                                await create_notification(
+                                    conn, user_row['id'], 'badge',
+                                    f"Your badge for {tool['name']} is ready — embed it on your site!",
+                                    f"/tool/{tool['slug']}#badge"
+                                )
+                                logger.info(f"Badge nudge notification for {tool['name']}")
                         except Exception:
                             pass
-                    else:
-                        await conn.execute("UPDATE tools SET badge_nudge_sent = 1 WHERE id = ?", (tool['id'],))
+                    await conn.execute("UPDATE tools SET badge_nudge_sent = 1 WHERE id = ?", (tool['id'],))
                 await conn.commit()
         except Exception:
             pass
@@ -595,8 +609,8 @@ async def llms_txt(request: Request):
 IndieStack is the tool discovery and procurement layer for AI agents and indie developers. Our MCP server plugs into AI coding assistants (Claude Code, Cursor, Windsurf) so agents can check if a polished tool exists before writing boilerplate. Every search saves 30k-120k tokens versus building from scratch.
 
 ## Install
-- pip install indiestack
-- claude mcp add indiestack -- python -m indiestack.mcp_server
+- claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
+- Or add {"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]} to your Cursor/Windsurf/VS Code MCP config
 
 ## For AI Agents
 IndieStack is designed as infrastructure for AI agents. Use it to:
@@ -644,7 +658,6 @@ Analytics & Metrics, Auth & Identity, Automation & Workflows, CMS & Content, Cus
 
 ## For Makers
 - Free tool listings
-- Platform fee: 5% standard / 3% Pro (+ Stripe processing)
 - Trust badges: Verified, Ejectable, Maker Pulse
 - SVG embed badges and milestone cards
 
@@ -737,8 +750,6 @@ async def sitemap(request: Request):
         for i in range(len(slugs)):
             for j in range(i + 1, len(slugs)):
                 urls.append((f"{BASE_URL}/compare/{slugs[i]}-vs-{slugs[j]}", "weekly", "0.5"))
-    # Pricing page
-    urls.append((f"{BASE_URL}/pricing", "monthly", "0.6"))
     urls.append((f"{BASE_URL}/calculator", "weekly", "0.8"))
     # Explore
     urls.append((f"{BASE_URL}/explore", "daily", "0.9"))
@@ -1011,7 +1022,7 @@ def _personalize_results(tools: list[dict], profile: dict) -> list[dict]:
 
 
 @app.get("/api/tools/search")
-async def api_tools_search(request: Request, q: str = "", category: str = "", limit: int = 20, offset: int = 0, source: str = ""):
+async def api_tools_search(request: Request, q: str = "", category: str = "", limit: int = 20, offset: int = 0, source: str = "", source_type: str = ""):
     """JSON API for searching tools — used by MCP server and integrations."""
     d = request.state.db
     if limit < 1:
@@ -1021,8 +1032,13 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
     if offset < 0:
         offset = 0
 
+    # Validate source_type
+    st = source_type.strip().lower() if source_type else ""
+    if st not in ("code", "saas", ""):
+        st = ""
+
     if q.strip():
-        tools = await db.search_tools(d, q.strip(), limit=offset + limit)
+        tools = await db.search_tools(d, q.strip(), limit=offset + limit, source_type=st)
         tools = tools[offset:]
     elif category.strip():
         cat = await db.get_category_by_slug(d, category.strip())
@@ -1054,6 +1070,7 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
             "is_verified": bool(t.get('is_verified', 0)),
             "upvote_count": int(t.get('upvote_count', 0)),
             "tags": t.get('tags', ''),
+            "source_type": t.get('source_type', 'saas'),
         }
         # Add plugin metadata if present
         if t.get('tool_type'):
@@ -1719,6 +1736,7 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
         "integration_curl": tool.get("integration_curl") or f'curl -s {tool.get("url", "")}',
         "tokens_saved": CATEGORY_TOKEN_COSTS.get(tool.get('category_slug', ''), 50_000),
         "mcp_view_count": int(tool.get('mcp_view_count', 0)),
+        "source_type": tool.get('source_type', 'saas'),
     }
 
     return JSONResponse({"tool": result})
@@ -1979,8 +1997,8 @@ async def tool_badge_svg(request: Request, slug: str, style: str = ""):
         right_width = 80
         right_fill = "#E2B764"
         right_text_fill = "#1A2D4A"
-    else:
-        # Default tokens badge
+    elif style == "tokens":
+        # Tokens saved badge (was the old default)
         cat_slug = tool.get('category_slug', '')
         tokens = CATEGORY_TOKEN_COSTS.get(cat_slug, 50_000)
         tokens_k = f"{tokens // 1000}k"
@@ -1990,10 +2008,57 @@ async def tool_badge_svg(request: Request, slug: str, style: str = ""):
         right_width = 120
         right_fill = "#00D4F5"
         right_text_fill = "#1A2D4A"
+    else:
+        # Default: AI recommendations badge (live count) with pulsing dot
+        tool_id = tool['id']
+        mcp_count = tool.get('mcp_view_count', 0) or 0
+        _cites = await d.execute(
+            "SELECT COUNT(*) as cnt FROM agent_citations WHERE tool_id = ?", (tool_id,)
+        )
+        cite_count = (await _cites.fetchone())['cnt']
+        ai_total = mcp_count + cite_count
+        if ai_total == 0:
+            right_text = "AI Discoverable"
+            right_width = 120
+        elif ai_total < 1000:
+            right_text = f"{ai_total} AI recs"
+            right_width = 100
+        else:
+            right_text = f"{ai_total / 1000:.1f}k AI recs"
+            right_width = 110
+        left_text = "IndieStack"
+        left_width = 90
+        right_fill = "#10B981"
+        right_text_fill = "#FFFFFF"
 
     total_width = left_width + right_width
+    is_ai_badge = style in ("", "ai")
 
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{total_width}" height="20" role="img" aria-label="{left_text}: {right_text}">
+    if is_ai_badge:
+        # Special SVG with pulsing red "LIVE" dot
+        dot_x = left_width + 10
+        text_x = left_width + 18 + (right_width - 18) / 2
+        svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{total_width}" height="20" role="img" aria-label="{left_text}: {right_text}">
+  <title>{left_text}: {right_text} (live)</title>
+  <style>
+    @keyframes pulse {{ 0%,100% {{ opacity:1 }} 50% {{ opacity:0.3 }} }}
+    .live-dot {{ animation: pulse 2s ease-in-out infinite; }}
+  </style>
+  <linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient>
+  <clipPath id="r"><rect width="{total_width}" height="20" rx="3" fill="#fff"/></clipPath>
+  <g clip-path="url(#r)">
+    <rect width="{left_width}" height="20" fill="#1A2D4A"/>
+    <rect x="{left_width}" width="{right_width}" height="20" fill="{right_fill}"/>
+    <rect width="{total_width}" height="20" fill="url(#s)"/>
+  </g>
+  <circle class="live-dot" cx="{dot_x}" cy="10" r="3" fill="#EF4444"/>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="11">
+    <text x="{left_width/2}" y="14" fill="#fff">{left_text}</text>
+    <text x="{text_x}" y="14" fill="{right_text_fill}" font-weight="600">{right_text}</text>
+  </g>
+</svg>'''
+    else:
+        svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{total_width}" height="20" role="img" aria-label="{left_text}: {right_text}">
   <title>{left_text}: {right_text}</title>
   <linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient>
   <clipPath id="r"><rect width="{total_width}" height="20" rx="3" fill="#fff"/></clipPath>
@@ -2007,8 +2072,10 @@ async def tool_badge_svg(request: Request, slug: str, style: str = ""):
     <text x="{left_width + right_width/2}" y="14" fill="{right_text_fill}" font-weight="600">{right_text}</text>
   </g>
 </svg>'''
+    # AI badge: 1 hour cache (feels live). Others: 24 hour cache.
+    cache_ttl = 3600 if style in ("", "ai") else 86400
     return Response(content=svg, media_type="image/svg+xml",
-                    headers={"Cache-Control": "public, max-age=86400"})
+                    headers={"Cache-Control": f"public, max-age={cache_ttl}"})
 
 
 @app.get("/api/badge/buyer/{badge_token}.svg")
@@ -2116,7 +2183,7 @@ async def api_claim(request: Request):
 
     d = request.state.db
     tool = await db.get_tool_by_id(d, tool_id)
-    if not tool or tool.get('maker_id'):
+    if not tool or tool.get('claimed_at'):
         return RedirectResponse(url=f"/tool/{tool['slug']}" if tool else "/", status_code=303)
 
     # Record claim request for admin approval (don't auto-assign)
@@ -2149,7 +2216,7 @@ async def api_claim_and_boost(request: Request):
         return RedirectResponse(url="/", status_code=303)
 
     # Instant claim first (if not already claimed)
-    if not tool.get('maker_id'):
+    if not tool.get('claimed_at'):
         maker_name = user.get('name', '') or user.get('email', '').split('@')[0]
         maker_id = await db.get_or_create_maker(d, maker_name, '')
         await d.execute("UPDATE tools SET maker_id = ?, claimed_at = CURRENT_TIMESTAMP WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
@@ -2791,3 +2858,6 @@ app.include_router(launch_with_me.router)
 app.include_router(use_cases.router)
 app.include_router(why_list.router)
 app.include_router(plugins.router)
+app.include_router(gaps.router)
+from indiestack.routes import pulse
+app.include_router(pulse.router)

@@ -28,6 +28,7 @@ TESTS = [
     ("GET", "/stacks", 200, "Stacks"),
     ("GET", "/stacks/community", 200, "Community stacks"),
     ("GET", "/live", 200, "Live Wire"),
+    ("GET", "/plugins", 200, "Plugins"),
 
     # Static pages (200)
     ("GET", "/about", 200, "About"),

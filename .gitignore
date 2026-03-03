@@ -36,7 +36,13 @@ seed_social_proof.py
 purge_seeded_data.py
 
 # Tokens / secrets
-.mcpregistry_github_token
+.mcpregistry_*
+
+# Paid features (kept locally, not on public GitHub)
+src/indiestack/payments.py
+src/indiestack/routes/pricing.py
+src/indiestack/routes/purchase.py
+src/indiestack/routes/verify.py
 
 # PyPI
 PyPI-Recovery-Codes-*.txt

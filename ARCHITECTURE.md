@@ -4,9 +4,13 @@
 
 ## What This Is
 
-IndieStack is a curated marketplace for indie SaaS tools. Developers submit
-their tools (free or paid), we review and approve them, and buyers discover
-them through search and category browsing.
+IndieStack is an Intergenerational Knowledge Transfer hub for AI agents — the
+knowledge layer where agents learn what tools already exist so they stop
+rebuilding solved problems. The catalog covers everything from full indie SaaS
+products to tiny single-purpose utilities (e.g., a txt-to-FASTA converter
+someone built because the online ones were paywalled). Makers submit tools, we
+review and approve them, and both humans and AI agents discover them through
+search, category browsing, and the MCP server.
 
 Live at: https://indiestack.fly.dev/
 
@@ -14,7 +18,6 @@ Live at: https://indiestack.fly.dev/
 
 - **Backend**: Python 3.11, FastAPI, aiosqlite (SQLite + WAL mode)
 - **Frontend**: Pure Python string HTML templates (no Jinja2, no React)
-- **Payments**: Stripe Checkout (£29 Boost), Stripe Connect (marketplace purchases, 5%/3% commission)
 - **Deploy**: Fly.io, single machine, Docker
 - **Data**: SQLite at `/data/indiestack.db` (persistent Fly volume)
 
@@ -24,37 +27,35 @@ Live at: https://indiestack.fly.dev/
 |------|---------|
 | `src/indiestack/main.py` | FastAPI app, middleware, rate limiting, upvote/wishlist APIs, JSON tool API, SVG badge API, logo/favicon, sitemap, RSS feeds, OG SVG cards, claim endpoints, weekly email trigger |
 | `src/indiestack/routes/components.py` | Design system: tokens, nav, footer, cards, badges (verified/ejectable/indie/pulse/changelog-streak/co-founder), page shell, integration snippets, indie score |
-| `src/indiestack/routes/landing.py` | Homepage: hero, trending (scroll-row), categories, MCP section, live ticker, testimonials, tokens saved stat, CTA |
+| `src/indiestack/routes/landing.py` | Homepage: hero, MCP walkthrough (3-step install), search widget (live API), trending strip (6 tools), compact category grid, maker CTA |
 | `src/indiestack/routes/explore.py` | Unified /explore page with faceted filtering (category, tags, price, sort, verified, ejectable) |
 | `src/indiestack/routes/browse.py` | Category browse with pagination |
-| `src/indiestack/routes/tool.py` | Tool detail page with reviews, wishlists, changelogs, badges, similar tools (scroll-row), 4-state CTA (Buy Now/Notify/Get it/Visit), JSON-LD |
+| `src/indiestack/routes/tool.py` | Tool detail page with reviews, wishlists, changelogs, badges, similar tools (scroll-row), JSON-LD |
 | `src/indiestack/routes/search.py` | FTS5 search with `replaces` fallback, filters (price, sort, category, verified), alternatives banner, market gap CTA with demand count |
 | `src/indiestack/routes/tags.py` | Programmatic /tag/{slug} SEO pages (~197 tags) |
-| `src/indiestack/routes/submit.py` | Tool submission form (free + paid) with earnings calc, "Replaces" field, data export checkbox, GitHub URL auto-fill |
+| `src/indiestack/routes/submit.py` | Tool submission form with "Replaces" field, data export checkbox, GitHub URL auto-fill, plugin toggle (tool_type/platforms/install_command) |
+| `src/indiestack/routes/plugins.py` | AI Plugins & Skills discovery page: `/plugins` with type filters (MCP Server/Plugin/Extension/Skill) and platform filters |
 | `src/indiestack/routes/admin.py` | Admin Command Center: unified `/admin?tab=X` with 5 tabs — Overview (KPIs, alerts, activity), Tools (approve/reject, filter, bulk import, stacks), People (unified makers+users table), Content (email blast, magic links, TOTW, digest), Growth (rendered by admin_analytics.py). ~1450 lines. |
-| `src/indiestack/routes/admin_analytics.py` | Growth tab renderer: Traffic & Funnels (daily + hourly traffic charts, top pages, referrers, revenue), Search (gap analysis, trends, volume), Email (subscriber stats), Social (placeholder). Called by admin.py. |
+| `src/indiestack/routes/admin_analytics.py` | Growth tab renderer: Traffic & Funnels (daily + hourly traffic charts, top pages, referrers), Search (gap analysis, trends, volume), Email (subscriber stats), Social (placeholder). Called by admin.py. |
 | `src/indiestack/routes/admin_outreach.py` | Content tab renderer: email blast, magic links, maker tracker, Tool of the Week panel, weekly digest panel, stale tools. Called by admin.py. |
 | `src/indiestack/routes/admin_helpers.py` | Shared admin UI components: `kpi_card`, `tab_nav`, `growth_sub_nav`, `bar_chart`, `data_table`, `status_badge`, `role_badge`, `pending_alert_bar`, `time_ago`, `row_bg` |
 | `src/indiestack/routes/embed.py` | Embeddable comparison widget: `/embed` docs, `/embed/widget.js`, `/embed/{category}` iframe |
-| `src/indiestack/routes/purchase.py` | Stripe checkout, success, cancel, delivery with integration snippets, webhook |
 | `src/indiestack/routes/maker.py` | Maker profiles + `/makers` directory with search + `/leaderboard` reputation ranking |
 | `src/indiestack/routes/collections.py` | Curated tool collections |
 | `src/indiestack/routes/compare.py` | Tool comparison pages |
 | `src/indiestack/routes/new.py` | Recently added tools |
 | `src/indiestack/routes/updates.py` | Maker updates / build-in-public feed |
-| `src/indiestack/routes/stacks.py` | Vibe Stacks — curated bundles at 15% discount with one-click checkout; public user stacks + community gallery |
-| `src/indiestack/routes/dashboard.py` | Maker dashboard: tools, saved, updates, changelogs, notifications, tokens saved, badge embed, buyer badge, my stack management, interactive launch readiness (inline forms + links), milestones, search analytics, readiness-update endpoint, Perplexity Comet welcome banner (dismissible via localStorage) |
+| `src/indiestack/routes/stacks.py` | Vibe Stacks — curated bundles; public user stacks + community gallery |
+| `src/indiestack/routes/dashboard.py` | Maker dashboard: tools, bookmarks, updates, changelogs, notifications, tokens saved, badge embed, buyer badge, my stack management, interactive launch readiness (inline forms + links), milestones, search analytics, readiness-update endpoint, Perplexity Comet welcome banner (dismissible via localStorage), API key nudge banner, developer profile UI (interests/tech/favorites/clear/pause) |
 | `src/indiestack/routes/account.py` | Login, signup, logout, password reset, email verification, GitHub OAuth (`/auth/github`, `/auth/github/callback`) |
 | `src/indiestack/routes/built_this.py` | Lightweight `/built-this` submission — paste GitHub URL, auto-pull metadata, one-field submit |
 | `src/indiestack/routes/content.py` | Static pages: about, terms, privacy, FAQ, founders, blog index, blog posts |
-| `src/indiestack/routes/verify.py` | Verified badge checkout |
-| `src/indiestack/routes/pricing.py` | Pro subscription page |
+| `src/indiestack/routes/verify.py` | Verified badge flow |
 | `src/indiestack/routes/alternatives.py` | Programmatic SEO: `/alternatives` index (with tool counts) + `/alternatives/{competitor}` pages (ItemList+FAQPage JSON-LD, FAQ accordions, Featured boost) + `/alternatives/{comp}/vs/{tool}` deep comparison pages |
 | `src/indiestack/routes/calculator.py` | SaaS cost calculator (`/calculator`, `/savings` alias): 20 hardcoded competitor prices, client-side JS calc, shareable `?tools=` URLs, indie alt counts from DB, WebApplication JSON-LD |
-| `src/indiestack/mcp_server.py` | MCP server: 10 tools (search, details, categories, compare, submit, new, tags, stacks, collections, build_stack) + 3 resources + 2 prompts |
+| `src/indiestack/mcp_server.py` | MCP server: 11 tools (search, details, categories, compare, submit, new, tags, stacks, collections, build_stack, get_recommendations) + 3 resources + 3 prompts |
 | `src/indiestack/routes/use_cases.py` | Use case comparison pages: `/use-cases` index + `/use-cases/{slug}` detail with comparison tables, JSON-LD, build-vs-buy analysis |
-| `src/indiestack/db.py` | Schema, migrations, all queries, FTS5, token costs, NEED_MAPPINGS (18 use case keyword mappings), agent_citations table, competitor tracking, boost logic, trending algorithm, tool views, 12 analytics/outreach query functions |
-| `src/indiestack/payments.py` | Stripe helpers, commission calc, stack checkout |
+| `src/indiestack/db.py` | Schema, migrations, all queries, FTS5, token costs, NEED_MAPPINGS (18 use case keyword mappings), TECH_KEYWORDS (~50 keywords), agent_citations table, developer_profiles table, competitor tracking, trending algorithm, tool views, profile builder (build_developer_profile), 12 analytics/outreach query functions |
 | `src/indiestack/auth.py` | User session auth (cookie-based), password hashing |
 | `src/indiestack/email.py` | SMTP via Gmail, email templates: receipt, approval, review, digest, password reset, verification, weekly digest, maker welcome, tool of the week, auto-digest |
 | `seed_tools.py` | Script to populate DB with ~26 real indie tools + makers + GovLink |
@@ -74,15 +75,15 @@ Live at: https://indiestack.fly.dev/
 - **Favicon**: Navy `#1A2D4A` background, cyan `#00D4F5` "iS" text (SVG)
 - **Dark mode**: Toggleable via nav button, persisted in localStorage, respects OS preference
 - **Mobile**: Hamburger nav at <=768px, scroll-row for horizontal card strips
-- **CSS Tokens**: Semantic color families (success, warning, error, info) with bg/text/border variants. Shadow scale (sm/md/lg). Typography scale (text-xs through heading-lg). All defined in `:root` with dark mode overrides.
+- **CSS Tokens**: Semantic color families (success, warning, error, info) with bg/text/border variants. Shadow scale (sm/md/lg). Typography scale (text-xs through heading-xl). All defined in `:root` with dark mode overrides. Fully normalized across all route files — no hard-coded hex colors remain.
 - **CSS Utility Classes**: `.badge` + modifiers, `.section-divider`, `.pill-price` — replaces repeated inline badge/divider patterns
+- **Touch targets**: All interactive elements (buttons, inputs, nav items, pagination) meet WCAG 2.5.5 minimum 44×44px
 
 ## Features
 
 ### Core
 - Tool submission, admin review, category browsing, FTS5 search
 - Upvoting (IP-based, toggle), wishlists (user-based, toggle)
-- Stripe Connect checkout with webhook verification
 - Maker profiles with indie status badges (Solo Maker, Small Team)
 
 ### Discovery (Rounds 7-8)
@@ -94,7 +95,7 @@ Live at: https://indiestack.fly.dev/
 - **Maker directory** (`/makers`): FTS5 search, sort by tools/upvotes/newest
 - **Maker updates** (`/updates`): Build-in-public feed (update/launch/milestone/changelog)
 - **Tool changelogs**: Makers post version updates from tool edit page, shown on tool detail
-- **Reviews & ratings**: Star ratings, verified purchase badges
+- **Reviews & ratings**: Star ratings
 - **Wishlists**: Save tools, view in `/dashboard/saved`
 - **Notifications**: In-app bell icon, upvote/wishlist alerts for makers
 
@@ -115,13 +116,12 @@ Live at: https://indiestack.fly.dev/
 - **Duplicate removal**: Removed ~19 duplicate bot-scraped tools
 - **Social proof seeding**: Realistic upvotes, views, wishlists, reviews, maker updates
 - **Badge assignment**: 6 Verified, 8+ Ejectable tools flagged
-- **3-state CTA**: Buy Now (Stripe) / Get it from £X/mo (external) / Visit Website (free)
-- **GovLink listing**: First real priced product (£29) with verified + ejectable badges
+- **GovLink listing**: First real product with verified + ejectable badges
 
 ### Round 10 Features (Activation & Viral Loops)
 - **User-Curated "My Stacks"**: Users create shareable `/stack/{username}` pages. One stack per user. Add/remove tools, set title/description. Public gallery at `/stacks/community`.
 - **MCP "Live Wire"**: `/live` page showing real-time feed of developer searches across web/API/MCP. Auto-refreshes every 15s. Stats sidebar with search counts and top queries.
-- **Launch Readiness Progress Bar**: Maker dashboard checklist (8 items: tags, replaces, bio, avatar, URL, Stripe, changelog, github_url). CSS progress bar, "Launch Ready" at 100%.
+- **Launch Readiness Progress Bar**: Maker dashboard checklist (8 items: tags, replaces, bio, avatar, URL, changelog, github_url). CSS progress bar, "Launch Ready" at 100%.
 - **Milestone Share Cards**: Track achievements (first-tool, 100-views, 10-upvotes, first-review, launch-ready). SVG celebration cards at `/api/milestone/{slug}.svg?type=X`. "Share on X" buttons with pre-filled tweets.
 - **Search Intent Analytics**: Maker dashboard "How developers find your tools" table showing search queries that surface their tools.
 - **Snippet-First Newsletter**: Weekly digest now includes "Tool of the Week" spotlight with curl/pip code snippet in dark code block.
@@ -131,19 +131,17 @@ Live at: https://indiestack.fly.dev/
 - **Empty state polish**: Styled empty states for reviews, updates, community stacks
 - **"Unclaimed listing" badge**: Shown on tool pages without a claimed maker
 - **Blog**: `/blog` with first post "Why Your AI Assistant Wastes Tokens" — evergreen content for outreach
-- **Smoke test script**: `smoke_test.py` hits 32 endpoints with status + content validation
+- **Smoke test script**: `smoke_test.py` hits 38 endpoints with status + content validation
 - **Canonical URLs**: Added to all high-SEO-value pages
 
-### Round 12 Features (Monetization Pivot)
-- **£29 Boost self-serve**: Makers pay via Stripe Checkout for 30 days of Featured badge + priority placement + newsletter feature
+### Round 12 Features
 - **Frictionless claim flow**: `?next=` redirect on login/signup, instant claim (no email verification), CTA for logged-out users
-- **Dual claim CTA**: "Claim Free" + "Claim & Boost £29" on unclaimed tool pages
 - **Copy reframe**: Hero shifted from "save tokens" to "Skip the boilerplate. Launch this weekend."
 
 ### Round 13 Features (Admin & User QoL)
 - **Admin tabs**: URL-routed tabs (`?tab=`) — tools, collections, stacks, reviews, makers, import
-- **Admin KPI cards**: Pending Review, Unclaimed Tools, Total Tools, Active Boosts (clickable filters)
-- **Admin filter/sort bar**: Search, status dropdown, special filter (unclaimed/verified/boosted), sort by newest/oldest/upvotes/name
+- **Admin KPI cards**: Pending Review, Unclaimed Tools, Total Tools (clickable filters)
+- **Admin filter/sort bar**: Search, status dropdown, special filter (unclaimed/verified), sort by newest/oldest/upvotes/name
 - **Admin pagination**: Tools capped at 50/page with prev/next controls, reviews/makers capped at 50
 - **Admin magic claim links**: "Copy Link" button generates one-click claim URLs for DM outreach
 - **Breadcrumbs**: `Home › Category › Tool Name` on tool detail pages
@@ -155,19 +153,15 @@ Live at: https://indiestack.fly.dev/
 - **Outbound click tracking**: `/api/click/{slug}` logs clicks then 307 redirects to tool's site
 - **`outbound_clicks` table**: Tracks tool_id, url, ip_hash, referrer, timestamp
 - **Dashboard funnel table**: Now shows Views → Clicks → Wishlists → Upvotes
-- **Boost report**: Shows real outbound clicks instead of estimated impressions
 - **Ego ping weekly email**: Includes click count
-- **Stripe live**: Switched to live keys (GovLink account, shared) with named Price ID
 - **Gemini Round 15 response**: Stop building, start selling. Focus on distribution.
 
 ### Round 16 (Referral System + Polish)
 - **Referral codes**: `REF-{6hex}` generated on email verification via `ensure_referral_code()`
-- **Referral columns**: `users.referral_code`, `users.referred_by`, `users.referral_boost_days`
+- **Referral columns**: `users.referral_code`, `users.referred_by`
 - **Signup captures `?ref=` param**: Stores `referred_by` on new user
-- **Referral rewards**: Admin tool approval credits 10 boost days to referrer (first approved tool only)
-- **Dashboard referral card**: Top of page with copy link, stats, claim button
-- **`/dashboard/claim-referral-boost`**: Endpoint applies boost days to a tool
-- **Boost stacking**: `activate_boost()` extends existing boost expiry instead of resetting
+- **Referral rewards**: Admin tool approval credits referrer (first approved tool only)
+- **Dashboard referral card**: Top of page with copy link, stats
 - **Upvote state persistence**: `/api/upvote-check` batch endpoint + cyan active styling
 - **Explore pagination**: 24 tools per page, all sort modes paginate (was 12, hot sort didn't paginate)
 - **Public submissions (Ed's PR #1)**: Tool submissions without login, honeypot spam protection, submitter_email tracking
@@ -177,11 +171,11 @@ Live at: https://indiestack.fly.dev/
 - **Consolidated 3-page admin into single Command Center**: Merged `admin.py`, `admin_analytics.py`, `admin_outreach.py` into unified `/admin?tab=X` with 5 tabs: Overview, Tools, People, Content, Growth
 - **admin_helpers.py**: New shared module with reusable UI components (`kpi_card`, `tab_nav`, `growth_sub_nav`, `bar_chart`, `data_table`, `status_badge`, `role_badge`, `pending_alert_bar`, `time_ago`, `row_bg`)
 - **People tab**: Unified makers+users into single table with UNION query. Role badges (Maker/Subscriber/Buyer/Unclaimed). Eliminated confusing "makers vs users" split.
-- **Overview tab**: 6 KPI cards (Tools, Pending, Verified, Unclaimed, MCP Views, Subscribers) + Recent Activity timeline + Alerts (pending reviews, search gaps, expiring boosts)
+- **Overview tab**: 6 KPI cards (Tools, Pending, Verified, Unclaimed, MCP Views, Subscribers) + Recent Activity timeline + Alerts (pending reviews, search gaps)
 - **Growth tab**: Hourly traffic heatmap (24-bar chart, last 7 days) added alongside daily chart
 - **Content tab**: Email blast, magic links, TOTW, digest (rendered by admin_outreach.py)
-- **Tools table schema**: Uses `created_at` NOT `updated_at` (column doesn't exist). Purchases table uses `buyer_email` NOT `user_id`.
-- **kpi_card fix**: Removed `escape()` on value param — was double-escaping HTML entities (`&pound;` → `&amp;pound;`)
+- **Tools table schema**: Uses `created_at` NOT `updated_at` (column doesn't exist).
+- **kpi_card fix**: Removed `escape()` on value param — was double-escaping HTML entities
 
 ### Search Improvements (Session Feb 27b)
 - **`replaces` fallback**: Both `search_tools()` and `search_tools_advanced()` in db.py now fall back to `LOWER(t.replaces) LIKE LOWER(?)` when FTS5 returns zero results. Finds indie alternatives to big-name tools (Auth0 → Clerk/Kinde/Lucia Auth).
@@ -192,7 +186,7 @@ Live at: https://indiestack.fly.dev/
 
 ### Admin & Analytics Upgrade (Session Feb 23b)
 - **Admin split** (now superseded by Command Center): Originally split into 3 files, now consolidated back into unified tabbed interface
-- **12 new db.py functions**: `get_revenue_timeseries`, `get_pro_subscriber_stats`, `get_platform_funnel`, `get_top_tools_by_metric`, `get_maker_leaderboard`, `get_search_gaps`, `get_search_trends`, `get_subscriber_growth`, `get_subscriber_count`, `get_maker_activity_status`, `get_all_subscribers_with_dates`, `get_unclaimed_tools_for_outreach`
+- **12 new db.py functions**: `get_platform_funnel`, `get_top_tools_by_metric`, `get_maker_leaderboard`, `get_search_gaps`, `get_search_trends`, `get_subscriber_growth`, `get_subscriber_count`, `get_maker_activity_status`, `get_all_subscribers_with_dates`, `get_unclaimed_tools_for_outreach`
 - **Email verification fix**: Magic claim signup now sends verification email. Dashboard shows yellow nag banner for unverified users with "Resend Verification Email" button.
 - **Funnel fix**: `get_platform_funnel` SQL — changed `HAVING` (invalid without GROUP BY) to `WHERE` with `COALESCE` expressions
 
@@ -200,12 +194,11 @@ Live at: https://indiestack.fly.dev/
 - **Inline "Visit →" links**: Added to `tool_card()` in components.py — every tool card across explore, search, browse, tags, collections, alternatives now has a tracked outbound link via `/api/click/{slug}`. Removes the friction of clicking into tool detail page just to find the website link.
 - **Search gap fill**: Created `seed_search_gaps.py` with 11 new tools covering top zero-result queries: Coolify (Vercel/Netlify), Railway (Vercel), Clerk/Kinde/Lucia Auth (Auth0), Chatwoot/Papercups (Intercom), Ghost/Payload CMS (WordPress), Spike.sh (PagerDuty), Loops (Mailchimp), Supabase (Firebase). Total tools: 115.
 - **Google Search Console**: Verified via HTML file route `/googleb0483aef4f89d039.html` in main.py. Sitemap submitted for crawling.
-- **Marketplace launch date**: March 2, 2026. Submit form redesigned with two-panel layout: "Free listing (goes live immediately)" + "Sell on IndieStack (March 2nd)" with cyan badge. Price field + earnings calculator (platform 5% + Stripe ~3%). Delivery URL optional pre-launch.
-- **Launch banners**: Dark navy gradient banner on landing page (above hero) and submit page (above form heading) announcing March 2nd marketplace launch with CTA to list tools.
+- **Launch banners**: Dark navy gradient banner on landing page (above hero) and submit page (above form heading) with CTA to list tools.
 - **"Add Your Tool" CTAs**: Cyan pill button below hero stats pills + button below MCP install section on landing page.
 - **Maker Leaderboard** (`/leaderboard`): Public reputation ranking. Score: upvotes×1 + reviews×5 + outbound clicks(30d)×2 + verified badge×10 + active changelog×5. Gold/silver/bronze medals for top 3. Badges for Solo Maker, Small Team, Verified, Active. "How Reputation Works" explainer card. Added to nav dropdown (desktop + mobile).
 - **`get_maker_reputation_leaderboard()`** in db.py: Complex query joining tools, reviews, outbound_clicks (30d), maker_updates (14d) with weighted reputation score.
-- **Indie Ring section removed** from landing page (premature without active marketplace).
+- **Indie Ring section removed** from landing page.
 - **Gemini Round 16 prompt** written with live production data (10.7K views/week, 0.34% CTR, search gaps, funnel analysis).
 
 ### Round 17 — Ed's pSEO Specs + Admin Improvements (Session Feb 24)
@@ -213,7 +206,7 @@ Live at: https://indiestack.fly.dev/
 - **Alternatives index tool counts**: Each competitor pill shows "{N} indie tools" from `get_tools_replacing()` count
 - **Deep comparison pages**: `/alternatives/{competitor_slug}/vs/{tool_slug}` — validates tool.replaces field, WebPage+SoftwareApplication JSON-LD, cross-links to other alts, canonical URLs. All valid pairs in sitemap.
 - **Meta tags across routes**: Updated title/description patterns on /compare (+ canonical), /tool (tagline in title), /collections + /collection (canonical), /explore (canonical)
-- **Sitemap additions**: Compare pages (top 6 tools per category, all pairs), /vs/ pages (all competitor/tool pairs), /pricing, /calculator
+- **Sitemap additions**: Compare pages (top 6 tools per category, all pairs), /vs/ pages (all competitor/tool pairs), /calculator
 - **SaaS Cost Calculator** (`/calculator`, `/savings` alias): 20 hardcoded competitor prices, clickable card grid, client-side JS totals, shareable `?tools=` URLs with `history.replaceState`, per-tool breakdown with indie alt counts from DB, "Share this calculation" clipboard button, WebApplication JSON-LD
 - **Claim tracking**: `claimed_at TIMESTAMP` added to tools table (migration + backfill from created_at). All 5 claim paths (4 in main.py, 1 in db.py) now set `claimed_at = CURRENT_TIMESTAMP`. `get_recently_claimed_tools()` query in db.py.
 - **Recently Claimed table**: Top of Magic Links tab in admin outreach — tool name, maker link, email, claim date. Sorted most-recent-first.
@@ -234,21 +227,13 @@ Live at: https://indiestack.fly.dev/
 
 ### Content & Legal
 - **About** (`/about`): Mission, founders, story
-- **Terms** (`/terms`): SaaS marketplace terms of service
+- **Terms** (`/terms`): Terms of service
 - **Privacy** (`/privacy`): Data handling, GDPR, cookie policy
 - **FAQ** (`/faq`): 10 common questions with `<details>` accordions
 - **Footer**: 3-column layout (Product, Company, Legal) linking to all key pages
 
-### Round 18 — Marketplace Launch (Session Feb 25)
-- **Stripe Connect re-enabled**: Dashboard payment card restored — shows "Stripe Connected" (green) or "Accept Payments" CTA (cyan) based on maker's `stripe_account_id`. Connect Stripe → onboarding flow.
-- **stripe_account_id propagation fix**: `stripe_connect` + `stripe_callback` handlers now `UPDATE tools SET stripe_account_id = ? WHERE maker_id = ?` so "Buy Now" button appears on tool pages.
-- **Webhook db bug fix**: `db = request.state.db` moved above first usage in `stripe_webhook` (was referenced before assignment).
-- **Maker sale notification emails**: `maker_sale_notification_html()` — "You Made a Sale!" email with tool name, amount, net earnings, dashboard link. Sent from both `purchase_success` and `stripe_webhook` (belt-and-suspenders).
-- **Admin Orders tab**: New tab (keyboard shortcut `7`) showing all purchases with 4 KPI cards (Total Orders, Gross Revenue, Platform Commission, Net to Makers) + paginated table. Uses `get_all_purchases_admin(db)`.
-- **Buyer order history**: `/dashboard/purchases` page showing buyer's purchases with date, tool, amount, access link. Uses `get_purchases_by_email(db, email)`. "My Purchases" button in dashboard nav.
-- **Date-aware landing banner**: Automatically switches from "launches March 2nd" to "Marketplace is live!" green banner on/after March 2, 2026.
-- **Tool approval email updated**: Now includes Stripe Connect prompt ("Ready to sell? Connect your Stripe account...").
-- **2 new db.py functions**: `get_all_purchases_admin()` (JOIN tools+makers), `get_purchases_by_email()` (JOIN tools for delivery info).
+### Round 18 — (Session Feb 25)
+- **Date-aware landing banner**: Automatically switches messaging on/after March 2, 2026.
 
 ### Round 19 — Accessibility Push + SEO Audit (Session Feb 25b)
 - **GitHub OAuth login**: "Sign in with GitHub" dark button on login/signup pages. Flow: redirect to GitHub → exchange code for token → fetch /user + /user/emails → three-way matching (by github_id → by email → new user). CSRF via `github_oauth_state` cookie. Users table: `github_id`, `github_username`, `github_avatar_url` columns. GitHub-only users get `password_hash="GITHUB_OAUTH_NO_PASSWORD"` (can't password-login, shown helpful message).
@@ -261,26 +246,15 @@ Live at: https://indiestack.fly.dev/
 - **LinkedIn marketing**: Company page content, first company post, personal update post (with real analytics), updated personal bio. Files in `marketing/`.
 
 ### Round 20 — Pre-Launch QA + Polish (Session Feb 25c)
-- **Purchase flow QA**: Full end-to-end QA of checkout guards, delivery page, email templates, webhook idempotency. All guards pass (logged-out → /login, free → /, no Stripe → /tool/slug).
-- **`is_claimed` bug fix**: `claimed_at` was backfilled for all tools, making it useless. Changed to `SELECT 1 FROM users WHERE maker_id = ?` for real ownership check. Affects 4-state CTA logic.
-- **UNIQUE index**: `CREATE UNIQUE INDEX idx_purchases_stripe_session ON purchases(stripe_session_id) WHERE stripe_session_id != ''` — prevents duplicate purchases from webhook race conditions.
+- **`is_claimed` bug fix**: `claimed_at` was backfilled for all tools, making it useless. Changed to `SELECT 1 FROM users WHERE maker_id = ?` for real ownership check.
 - **Global toast system**: IIFE in `page_shell` reads `?toast=` query param, calls `showToast()`, strips param via `replaceState`. Works on every page.
-- **Checkout guard toasts**: Guards now redirect with `?toast=` messages instead of silent 303s.
-- **Empty delivery URL fallback**: Delivery page shows "The maker hasn't set up delivery yet" with buyer email instead of broken `href=""` button.
-- **Deleted tool safety**: `get_purchase_by_token` uses `LEFT JOIN` — delivery page shows "Removed Tool" + "Back to Home" if tool deleted after purchase.
 - **Wishlist gating**: Redirects to `/auth/github?next=...` instead of `/login`. Falls back to login if OAuth not configured.
-- **4-state CTA**: Buy Now (Stripe) / Notify me (claimed, no Stripe) / Get it from £X/mo (unclaimed) / Visit Website (free).
-- **Stripe onboarding emails**: 11 emails sent to claimed makers. Follow-up draft at `marketing/follow-up-email-march1.md`.
-- **Sales ticker**: Purchases appear in live ticker as 4th activity type with green dot prefix. `get_recent_activity()` extended.
-- **Maker readiness KPIs**: Admin Maker Tracker tab shows 4 cards: Claimed / Stripe Connected / Have Pricing / Ready to Sell.
-- **Leaderboard countdown**: Dynamic "X days until marketplace" / "Marketplace is live!" based on `date(2026, 3, 2)`.
 - **Brainstorm skill**: `.claude/skills/brainstorm/SKILL.md` — Explore agent for growth/marketing/feature ideation.
-- **Marketplace banner**: "Marketplace launches Monday" localStorage-dismissible banner on maker dashboard.
 - **Reddit**: Post 1 on r/microsaas (oatcake21). Post 2 draft for r/nocode at `marketing/reddit-nocode-post.md`.
 
 ### Round 21 — Compounding Growth Engine (Session Feb 26)
 - **Outbound click email capture**: `/api/click/{slug}` no longer 307 redirects — shows interstitial HTML page with 4-second auto-redirect + email form (POSTs to /api/subscribe with hidden `source=click_interstitial` and `tool_slug` fields) + "Skip →" link. Works because tool cards use `target="_blank"`.
-- **Badge variants**: `/api/badge/{slug}.svg?style=X` — `default` (cyan, tokens saved), `marketplace` (cyan, "From £X"), `winner` (gold `#E2B764`, "Tool of the Week"). Dashboard embed section shows marketplace badge for priced tools.
+- **Badge variants**: `/api/badge/{slug}.svg?style=X` — `default` (cyan, tokens saved), `winner` (gold `#E2B764`, "Tool of the Week").
 - **Tool of the Week system**: `_render_totw_panel()` in admin_outreach.py shows top 5 tools by clicks (7d) with "Send Winner Email" buttons. `tool_of_the_week_html()` email template with trophy, stats, badge preview, embed code. Landing page gold-bordered showcase card after hero.
 - **Embeddable comparison widget**: New route file `routes/embed.py`. `/embed` docs page with usage instructions. `/embed/widget.js` self-contained JS that injects comparison table. `/embed/{category}` standalone HTML page for iframe embedding. Bloggers embed one line of code, get live-updating tool comparison.
 - **Dead Tool Detector**: `scripts/check_tool_freshness.py` checks GitHub repos via API for last commit date. Stale (90+ days) tools flagged with warning badge on tool pages. Admin "Stale Tools" tab in outreach.
@@ -299,19 +273,12 @@ Live at: https://indiestack.fly.dev/
 - **Dark mode tokens**: Error, info, gold-dark, shadow overrides for dark theme
 - **Dark mode slate fix**: Swapped `--slate-light`/`--slate-dark` values (were inverted)
 - **CSS utility classes**: `.badge` base + `.badge-success/warning/danger/info/muted/gold` modifiers, `.section-divider`, `.pill-price`
-- **Component function tokenization**: 12 component functions in components.py converted from hardcoded hex to `var()` tokens (indie_badge, ejectable_badge, maker_pulse, cofounder_badge, maker_discount_badge, indie_score, boosted_badge, tool_card, stack_card, featured_card, update_card, verification_banner)
+- **Component function tokenization**: 12 component functions in components.py converted from hardcoded hex to `var()` tokens (indie_badge, ejectable_badge, maker_pulse, cofounder_badge, indie_score, tool_card, stack_card, featured_card, update_card, verification_banner)
 - **Route file tokenization**: 78 hardcoded hex colors replaced with tokens across 6 public-facing route files (landing.py, tool.py, content.py, explore.py, stacks.py, components.py)
 - **Toast accessibility**: Added `role="alert" aria-live="polite"` to toast element
 - **Placeholder contrast fix**: Banner email input now has explicit `::placeholder` color for dark backgrounds
 - **Launch day email**: `launch_day_html()` template in email.py + admin "Send Launch Day Email" panel
 - **MCP Registry v0.3.0**: Published to official MCP registry (`io.github.Pattyboi101/indiestack`). 5 tools, 2 resources, 2 prompts.
-
-### Stripe
-- **Stripe Connect**: Re-enabled on dashboard. Express accounts, 5% commission (3% for Pro). `stripe_account_id` stored on both `makers` and `tools` tables. Connect onboarding at `/dashboard/stripe-connect`, callback at `/dashboard/stripe-callback`.
-- **£29 Boost**: Direct Stripe Checkout (one-time payment, `mode="payment"`). Endpoints: `POST /api/claim-and-boost`, `POST /api/boost`, `GET /boost/success`
-- **Verified badge**: One-time Stripe Checkout via `/verify.py`
-- **Live keys set** (from GovLink account, shared). Price ID `price_1T3fnNKzUt3DIisgvNOJG0al` for £29 Boost.
-- **Indie Ring**: Makers get 50% off other makers' tools (buyer_maker_id != tool_maker_id check in checkout).
 
 ### SEO
 - Sitemap (`/sitemap.xml`) with tools, categories, makers, collections, alternatives, stacks, tags
@@ -335,28 +302,16 @@ Live at: https://indiestack.fly.dev/
 ### Round 5 Features (SEO + Trust)
 - **"David vs. Goliath" alternatives pages**: `/alternatives` index + `/alternatives/{competitor}`
 - **Maker Pulse badge**: Color-coded freshness indicator (green <30d, amber <90d, gray >90d)
-- **Integration snippets**: Python + cURL code blocks with copy buttons on purchase delivery page
+- **Integration snippets**: Python + cURL code blocks with copy buttons on tool pages
 - **"Replaces" field**: Tools declare what competitors they replace
 
-### Round 6 Features (Growth + Revenue)
+### Round 6 Features (Growth)
 - **MCP Auto-Integrate**: MCP server returns integration snippets + token savings
 - **Dynamic SVG badges**: `/api/badge/{slug}.svg` — embeddable badges for maker websites
-- **Top-Shelf placements**: Boosted tools on alternatives pages with "Featured" badge
 - **Badge embed section**: Maker dashboard HTML/Markdown embed code with copy buttons
 
-### Round 7 Features (Commerce)
-- **Indie Ring**: Makers get 50% off other makers' tools (cross-pollination)
-- **Vibe Stacks**: Admin-curated bundles at 15% discount, one-click checkout with Stripe Transfers
-- **Buyer badge**: SVG badge for makers showing tools purchased
-
-### Revenue Model
-- **Free listings**: All tool listings are free
-- **Marketplace sales**: 5% platform commission (3% for Pro subscribers) + Stripe fees. Makers connect via Stripe Express, set their own prices.
-- **£29 Boost**: 30-day Featured badge + priority placement + newsletter feature
-- **Pro subscription**: £9/mo — reduced commission (3% vs 5%), priority support
-- **Verified badge**: Paid badge via Stripe checkout
-- **Top-Shelf placements**: Boosted position on alternatives pages
-- **Indie Ring**: Makers get 50% off other makers' tools (cross-pollination incentive)
+### Round 7 Features
+- **Vibe Stacks**: Admin-curated bundles; public user stacks + community gallery
 
 ## Auth
 
@@ -381,7 +336,7 @@ Pre-flight: syntax check all .py files before deploying.
 
 | Table | Purpose |
 |-------|---------|
-| `tools` | Tool listings (name, slug, tagline, price, status, maker_id, is_verified, is_ejectable, replaces, github_url, github_stars, github_language, claimed_by) |
+| `tools` | Tool listings (name, slug, tagline, price, status, maker_id, is_verified, is_ejectable, replaces, github_url, github_stars, github_language, claimed_by, tool_type, platforms, install_command) |
 | `categories` | Problem-based categories (icon, slug, description) |
 | `makers` | Maker profiles (name, slug, bio, indie_status) |
 | `users` | User accounts (email, password_hash, role, maker_id, github_id, github_username, github_avatar_url) |
@@ -390,7 +345,6 @@ Pre-flight: syntax check all .py files before deploying.
 | `tool_views` | Anonymous tool page views (visitor_id hash, for trending algorithm) |
 | `wishlists` | User-tool bookmarks |
 | `reviews` | Star ratings + text reviews |
-| `purchases` | Completed Stripe purchases |
 | `collections` | Curated tool lists |
 | `collection_tools` | Junction table for collections |
 | `featured_tools` | Weekly featured tool picks |
@@ -402,11 +356,12 @@ Pre-flight: syntax check all .py files before deploying.
 | `email_verification_tokens` | Time-limited tokens for email verification (24hr expiry) |
 | `page_views` | Anonymous page view analytics (visitor_id from IP+UA hash) |
 | `subscribers` | Email newsletter subscribers |
-| `stacks` | Vibe Stacks — curated bundles (name, slug, discount_pct) |
+| `stacks` | Vibe Stacks — curated bundles (name, slug) |
 | `stack_tools` | Junction table for stacks ↔ tools |
 | `user_stacks` | User-curated "My Stack" pages (user_id, title, description, slug) |
 | `user_stack_tools` | Junction table for user stacks ↔ tools |
-| `search_logs` | Search query log for Live Wire feed + search intent analytics |
+| `search_logs` | Search query log for Live Wire feed + search intent analytics (api_key_id links to API keys for profile building) |
+| `developer_profiles` | Agent memory profiles: api_key_id, interests (JSON category→confidence), tech_stack (JSON), favorite_tools (JSON), personalization_enabled |
 | `magic_claim_tokens` | One-click claim URLs for admin DM outreach (7-day expiry, single-use) |
 | `milestones` | Maker achievement tracking (first-tool, 100-views, 10-upvotes, first-review, launch-ready) |
 | `agent_citations` | Logs when AI agents recommend tools (tool_id, agent_name, context, created_at) |
@@ -437,15 +392,16 @@ Pre-flight: syntax check all .py files before deploying.
 | `GET /api/tags` | All tags with usage counts |
 | `GET /api/stacks` | Curated Vibe Stacks |
 | `GET /api/collections` | Curated tool collections |
+| `GET /api/recommendations` | Personalized tool recommendations based on developer profile (requires API key) |
 | `GET /openapi.json` | OpenAPI 3.0 spec for all public endpoints |
 
 ## MCP Server
 
-Standalone at `src/indiestack/mcp_server.py`. v0.3.0 published to official MCP registry and PyPI.
+Standalone at `src/indiestack/mcp_server.py`. v0.4.0 published to official MCP registry and PyPI.
 
-**Tools** (10): `search_indie_tools`, `get_tool_details`, `list_categories`, `compare_tools`, `submit_tool`, `browse_new_tools`, `list_tags`, `list_stacks`, `list_collections`, `build_stack`
+**Tools** (11): `search_indie_tools`, `get_tool_details`, `list_categories`, `compare_tools`, `submit_tool`, `browse_new_tools`, `list_tags`, `list_stacks`, `list_collections`, `build_stack`, `get_recommendations`
 **Resources** (3): `categories://list`, `trending://tools`, `indiestack://tools-index`
-**Prompts** (2): `before-you-build`, `find-alternatives`
+**Prompts** (3): `before-you-build`, `find-alternatives`, `save-tokens`
 
 Calls the JSON API over HTTP. Default base: `https://indiestack.fly.dev`.
 Run with: `python3 -m indiestack.mcp_server`
@@ -453,7 +409,7 @@ Run with: `python3 -m indiestack.mcp_server`
 ## Email
 
 Gmail SMTP via `email.py`. Secrets on Fly: `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`.
-Templates: purchase receipt, tool approved, new review, password reset, email verification, weekly digest, maker welcome, tool of the week, auto-digest, launch day, marketplace preview, marketplace blast, stripe nudge, ego ping, boost expired, wishlist update, competitor ping, claim tool.
+Templates: tool approved, new review, password reset, email verification, weekly digest, maker welcome, tool of the week, auto-digest, launch day, ego ping, wishlist update, competitor ping, claim tool.
 
 ## Seed Scripts
 
@@ -474,7 +430,7 @@ Templates: purchase receipt, tool approved, new review, password reset, email ve
 - **Dark mode**: Forced on landing for first-time visitors via early inline script (respects localStorage)
 - **SEO**: IndexNow key file, /llms.txt route, JSON-LD WebSite+SearchAction (homepage), ItemList (category pages)
 - **OG share card**: `/api/og-home.svg` — 1200x630 dark SVG with headline + pip install
-- **"Free to list" messaging**: Removed all "92-94% of every sale" references across 7 files
+- **"Free to list" messaging**: Cleaned up across 7 files
 - **PyPI v0.1.2**: Published with `<!-- mcp-name: io.github.Pattyboi101/indiestack -->` verification tag
 - **MCP Registry**: Published as `io.github.Pattyboi101/indiestack`. Uses `mcp-publisher` CLI.
 - **server.json**: In repo root. Update `version` fields when bumping PyPI, then run `mcp-publisher publish`.
@@ -491,19 +447,67 @@ Templates: purchase receipt, tool approved, new review, password reset, email ve
 - **9 new API endpoints** added across sessions: `/api/tools/index.json`, `/api/cite`, `/api/stack-builder`, `/api/use-cases`, `/api/use-cases/{slug}`, `/api/new`, `/api/tags`, `/api/stacks`, `/api/collections`, `/openapi.json`
 - **Bug fixes**: submit.py `UnboundLocalError` (redundant local import shadowing module-level), `KeyError: 0` (aiosqlite Row needs aliased column names)
 
-## Production Data (as of Feb 26 2026)
+## Production Data (as of Feb 28 2026)
 
-- 358 tools across 21 categories, 20 users (12 verified), 108 makers, 3 subscribers
+- 480 tools across 21 categories, 20 users, 220+ makers, 66 claimed tools
 - 4,557 unique visitors/7d, 18K+ page views/7d, 901 outbound clicks, 346 searches
 - 6/55 magic claim links converted (Atomic CRM, Klirr, LiveAsk, Poe the Poet, Volet, ScreenshotOne)
 - Notable signups: Invoice Ninja, Francois Zaninotto (Marmelab/Atomic CRM), ScreenshotOne
 - Reddit #1 referrer, Bing #2. Ed has done 12 Reddit replies.
 - Already launched on Product Hunt
-- Stripe live (GovLink shared account), Stripe Connect re-enabled, 0 makers connected Stripe
 - GitHub OAuth live (credentials set on Fly)
-- Admin panel: 3-page split + Orders tab + TOTW panel + weekly digest + stale tools
-- Marketplace launch: March 2, 2026 (3 days away)
+- Admin panel: 3-page split + TOTW panel + weekly digest + stale tools
 - LinkedIn company page + personal profile content drafted
 - Fly.io: `min_machines_running = 1` (always-on), single shared-cpu-1x:512MB machine in sjc
-- R21-R22 features + Agent Infrastructure deployed. Use --buildkit flag if depot builder times out.
+- R21-R22 features + Agent Infrastructure + Agent Memory deployed. Use --buildkit flag if depot builder times out.
 - R22 design system tokens deployed. 78 hardcoded colors replaced.
+- Agent Memory live: 11 MCP tools, personalized search, developer profiles, /api/recommendations endpoint.
+
+### Design System Normalization Sweep (Session Feb 28)
+- **components.py spacing**: All button/tag/badge/input/form padding aligned to 8px scale. Touch targets ≥44px on all interactive elements (buttons, upvote, hamburger, theme toggle, pagination).
+- **Verified card colors**: Hard-coded `#FDF8EE`/`#5C4A1E`/`#2A2318` replaced with `var(--warning-bg)`/`var(--gold-dark)` tokens.
+- **Hero headline gradient**: Theme-aware `.hero-headline` CSS class — cyan→navy for light mode, cyan→white for dark mode. Replaced inline style that caused invisible text bug (inline `style="background:none"` overrode class).
+- **Full route file sweep**: All 20+ route files normalized — hard-coded hex colors replaced with CSS variables, off-scale spacing fixed, font-family declarations tokenized. Done via parallel agents in 4 batches.
+- **38 smoke test endpoints**: Added `/plugins`.
+
+### Plugins & Skills Feature (Session Feb 28)
+- **Data model**: 3 new nullable columns on `tools` table: `tool_type TEXT` (mcp_server/plugin/extension/skill), `platforms TEXT` (free-text CSV), `install_command TEXT`. NULL tool_type = regular tool (backwards compatible).
+- **Submit form**: Plugin toggle checkbox reveals tool_type dropdown, platforms input, install_command input (monospace). Fields conditionally passed to `create_tool()`.
+- **Tool detail page**: Shows type badge (cyan pill), install command block (dark bg, monospace, copy button), platform tags when `tool_type` is set.
+- **`/plugins` discovery page**: `routes/plugins.py` — type filter pills (All/MCP Servers/Plugins/Extensions/Skills), platform filter pills (auto-detected from DB, top 8 by frequency), card grid, empty state with submit CTA.
+- **Nav**: "Plugins" added to desktop dropdown and mobile menu in components.py.
+- **Search API**: Conditionally includes `tool_type`, `platforms`, `install_command` in JSON response when tool has a type set.
+- **MCP server**: Search results show type label and install command line for plugin-type tools.
+- **Design doc**: `docs/plans/2026-02-28-plugins-skills-design.md`
+- **Implementation plan**: `docs/plans/2026-02-28-plugins-skills.md` (8 tasks, all complete)
+
+### Growth Sprint + Agent Memory (Session Feb 28b)
+- **Maker ✓ badge**: Claimed tools show green "Maker ✓" (`badge-success`) on all tool cards. Unclaimed show gray "Community Listed" (`badge-muted`). Implemented in `tool_card()` in components.py.
+- **Landing stats bars**: Hero and MCP walkthrough show `{claimed_count} maker-verified` alongside tool count and agent lookups.
+- **Trending boost for claimed tools**: +20 heat score for tools with `claimed_by IS NOT NULL` in db.py trending algorithm.
+- **Pricing reframe**: Badge changed to "COMING SOON", CTA changed to "Join the Waitlist" → /signup.
+- **Wishlist → Bookmark rename**: All user-facing "wishlist" text changed to "bookmark" across 7 files (components.py, tool.py, dashboard.py, main.py, email.py, content.py, admin_analytics.py). Internal DB table `wishlists` and API routes `/api/wishlist` unchanged.
+- **Agent Memory**: Developer profiles built from search patterns via API keys.
+  - `developer_profiles` table: api_key_id, interests (JSON: category→confidence), tech_stack (JSON array), favorite_tools (JSON array), personalization_enabled, updated_at.
+  - `search_logs.api_key_id` column added via migration (links searches to API keys).
+  - Profile builder in db.py: recency-weighted scoring (3x for 7d, 2x for 30d, 1x older), `TECH_KEYWORDS` extraction, `NEED_MAPPINGS` category matching.
+  - Personalized search reranking: `final_score = fts_relevance + (category_match * 0.3) + (stack_match * 0.2) + (favorite_boost * 0.1)`. First-search notice shown once.
+  - `/api/recommendations` endpoint: interest-based tool selection + discovery pick (trending tool outside usual interests).
+  - `get_recommendations()` MCP tool (sync, not async — uses `urllib.request`).
+  - Developer UI at `/developer`: profile card with interest pills, tech stack pills, favorite tools. Clear preferences and pause personalization buttons.
+  - Design doc: `docs/plans/2026-02-28-agent-memory-design.md`. Implementation plan: `docs/plans/2026-02-28-agent-memory.md`.
+- **Feature surfacing**: API nav link (desktop + mobile), dashboard API key nudge banner, copy-install snippet on /developer page (pre-filled with API key), MCP prompt updates mentioning `get_recommendations()`.
+- **Bug fix**: Removed `CREATE INDEX idx_search_logs_api_key` from SCHEMA string — was crashing on startup because column didn't exist yet (migration adds it). Migration block handles index creation.
+
+### PH Launch Prep + Growth Features (Session Mar 2)
+- **Install commands fixed**: All 8 occurrences of `uvx indiestack` → `uvx --from indiestack indiestack-mcp` across landing.py, main.py, content.py, launch.py, dashboard.py. Also fixed Cursor/Windsurf JSON args.
+- **MCP explainer**: Added one-liner under "How it works" heading on landing page explaining what MCP (Model Context Protocol) is for non-technical PH visitors.
+- **Landing page stats reframe**: "agent lookups" (mcp_view_count only) → "AI recommendations" (mcp_view_count + search_logs count + agent_citations count). Shows ~900+ instead of 144.
+- **Catalog cleanup**: Deleted 34 VC-funded/paid SaaS tools with seeded upvotes (Stytch, Attio, ScrapingBee, Resend, Postmark, incident.io, etc). Reclassified 10 open-source tools (PocketBase, Dokku, Appwrite, Langfuse, etc) from `saas` → `code` with votes reset to 0. Un-featured SuperTokens, Logto, Umami, Chatwoot (deleted). Catalog: 881 tools (571 code, 310 saas).
+- **Live AI Recommendation Badge**: New default badge style at `/api/badge/{slug}.svg`. Shows pulsing red CSS dot + live count from `mcp_view_count + agent_citations`. Three states: "AI Discoverable" (0 recs), "X AI recs" (<1000), "X.Xk AI recs" (1000+). Green `#10B981` right section, 1-hour cache. Old styles available via `?style=tokens`, `?style=winner`, `?style=early`.
+- **Badge UX**: "Get Badge" button on tool page restricted to tool's own maker (links to `/dashboard#badge`). Dashboard badge section redesigned with step-by-step instructions (Markdown for GitHub README, HTML for websites). Badge preview with copy buttons.
+- **`/gaps` page**: `routes/gaps.py` — public page showing zero-result searches ranked by demand frequency. Uses `get_search_gaps()` from db.py. Blocklist filters junk queries. Heat indicators (🔥🔥🔥 High demand / 🔥🔥 Growing / 🔥 Emerging / New). "Fill this gap →" buttons link to `/submit?name={query}` (URL-encoded). Hero explains concept, 3-step visual flow, CTA at bottom. Added to Browse dropdown nav + mobile menu.
+- **`/pulse` page (AI Pulse)**: `routes/pulse.py` — live feed of AI agent activity in real time. `get_pulse_feed()` in db.py merges `search_logs` + `agent_citations` via UNION ALL into a single chronological feed (last 7 days, limit 50). Three event types: recommend (green dot — agent citation), search (cyan dot — search found a match), gap (red dot — zero results). Auto-refreshes every 30s via `/api/pulse` JSON endpoint that returns server-rendered HTML. Pulsing red dot CSS animation. Stats bar (today/week/all-time). Legend. CTA links to /submit and /gaps. Added to Browse dropdown nav + mobile menu.
+- **Submit page transparency note**: Info box on submit form below heading — "A note from us: IndieStack is still young — a small, curated directory built by two uni students in Cardiff..." Frames the mission (generational knowledge for AI agents) and incentivizes early listers.
+- **Bug fixes**: (1) URL encoding — all `/submit?name=` links in gaps.py and pulse.py now use `quote()` instead of raw `escape()`. (2) Submit form reads `?name=` query param to pre-fill tool name from gap links. (3) `_relative_time()` handles negative diffs (clock skew → "just now"). (4) Exception handling narrowed from bare `except Exception` to `except (ValueError, TypeError, AttributeError)`.
+- **Security audit**: Passed — SQL injection safe (parameterized queries), rate limiting adequate (30 req/60s on `/api/*`), no sensitive data exposed, XSS properly escaped via `html.escape()`.

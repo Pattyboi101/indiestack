@@ -44,10 +44,10 @@ def design_tokens() -> str:
             --text-sm: 13px;
             --text-base: 14px;
             --text-lg: 16px;
-            --heading-sm: 18px;
-            --heading-md: 22px;
-            --heading-lg: 28px;
-            --heading-xl: 36px;
+            --heading-sm: 20px;
+            --heading-md: 26px;
+            --heading-lg: 34px;
+            --heading-xl: 44px;
 
             /* Layout */
             --max-w: 1100px;
@@ -58,6 +58,24 @@ def design_tokens() -> str:
             --shadow-sm: 0 1px 3px rgba(26,45,74,0.06);
             --shadow-md: 0 4px 12px rgba(26,45,74,0.08);
             --shadow-lg: 0 12px 40px rgba(26,45,74,0.10);
+
+            /* Layered elevation — premium depth */
+            --shadow-lifted: 0 1px 2px rgba(26,45,74,0.04),
+                             0 4px 8px rgba(26,45,74,0.06),
+                             0 16px 48px rgba(26,45,74,0.08);
+            --shadow-floating: 0 2px 4px rgba(26,45,74,0.04),
+                               0 8px 24px rgba(26,45,74,0.08),
+                               0 24px 64px rgba(26,45,74,0.12);
+
+            /* Glassmorphism */
+            --backdrop-blur: blur(12px);
+            --nav-bg-glass: rgba(247,249,252,0.85);
+
+            /* Animation */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-fast: 0.15s;
+            --duration-normal: 0.25s;
+            --stagger-delay: 80ms;
 
             /* Status */
             --success-bg: #ECFDF5;
@@ -84,17 +102,20 @@ def design_tokens() -> str:
             --slate-light: #80F0FF;
             --slate-dark: #20C8E0;
             --accent: var(--slate);
-            --cream: #0F1420;
-            --cream-dark: #1A2535;
-            --card-bg: #1A2535;
-            --nav-bg: #0F1420;
-            --ink: #E8ECF0;
-            --ink-light: #B0B8C8;
-            --ink-muted: #6A7488;
-            --border: #2A3545;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.25);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.3);
+            --cream: #0A0E1A;
+            --cream-dark: #141B2D;
+            --card-bg: #141B2D;
+            --nav-bg: #0A0E1A;
+            --ink: #F1F5F9;
+            --ink-light: #94A3B8;
+            --ink-muted: #546178;
+            --border: rgba(255,255,255,0.08);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
+            --shadow-lifted: 0 4px 16px rgba(0,0,0,0.4), 0 0 32px rgba(64,232,255,0.06);
+            --shadow-floating: 0 8px 32px rgba(0,0,0,0.5), 0 0 64px rgba(64,232,255,0.08);
+            --nav-bg-glass: rgba(10,14,26,0.8);
             --success-bg: #052E16;
             --success-text: #86EFAC;
             --success-border: #166534;
@@ -118,6 +139,9 @@ def design_tokens() -> str:
             line-height: 1.6;
             min-height: 100vh;
         }
+        [data-theme="dark"] body {
+            background: linear-gradient(180deg, #0A0E1A 0%, #0D1225 50%, #0A0E1A 100%);
+        }
 
         a { color: var(--terracotta); text-decoration: none; }
         a:hover { color: var(--terracotta-dark); }
@@ -130,14 +154,15 @@ def design_tokens() -> str:
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 24px;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            transition: transform 0.25s var(--ease-out-expo), box-shadow 0.25s var(--ease-out-expo), border-color 0.25s ease;
             box-shadow: var(--shadow-sm);
             overflow: hidden;
             word-break: break-word;
         }
         .card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lifted);
+            border-color: var(--accent);
         }
 
         .card-grid {
@@ -147,6 +172,7 @@ def design_tokens() -> str:
             max-width: 100%;
             overflow: hidden;
         }
+        .card-grid > * { min-width: 0; overflow: hidden; }
         @media (max-width: 900px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .card-grid { grid-template-columns: 1fr; } }
 
@@ -164,7 +190,7 @@ def design_tokens() -> str:
             flex: 0 0 340px;
             min-width: 280px;
         }
-        .scroll-row::-webkit-scrollbar { height: 6px; }
+        .scroll-row::-webkit-scrollbar { height: 8px; }
         .scroll-row::-webkit-scrollbar-track { background: var(--cream-dark); border-radius: 3px; }
         .scroll-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         .scroll-row::-webkit-scrollbar-thumb:hover { background: var(--ink-muted); }
@@ -180,15 +206,18 @@ def design_tokens() -> str:
             transition: all 0.15s ease;
             min-height: 44px;
         }
-        .btn-primary { background: var(--terracotta); color: white; }
-        .btn-primary:hover { background: var(--terracotta-dark); color: white; }
+        .btn-primary { background: var(--accent); color: #000; font-weight: 700; }
+        .btn-primary:hover { background: var(--accent); color: #000; filter: brightness(1.1); }
         .btn-secondary { background: var(--cream-dark); color: var(--ink); border: 1px solid var(--border); }
         .btn-secondary:hover { background: var(--border); }
+        [data-theme="dark"] .btn-secondary { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+        [data-theme="dark"] .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); }
         .btn-slate { background: var(--slate); color: white; }
         .btn-slate:hover { background: var(--slate-dark); color: white; }
         .btn-lg { padding: 16px 32px; font-size: 16px; }
         .btn-sm { padding: 8px 16px; font-size: 12px; min-height: 36px; }
-        .btn:focus-visible { outline: 2px solid var(--slate); outline-offset: 2px; }
+        .btn:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 4px var(--accent); }
+        a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 
         /* ── Hover utilities ──────── */
         .hover-lift { transition: transform 0.15s ease, box-shadow 0.15s ease; }
@@ -209,34 +238,44 @@ def design_tokens() -> str:
             background: rgba(26,45,74,0.07);
             color: var(--terracotta);
             border-radius: 999px;
+            border: 1px solid transparent;
         }
-        [data-theme="dark"] .tag { background: rgba(255,255,255,0.08); }
+        [data-theme="dark"] .tag {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: var(--ink-light);
+            font-weight: 600;
+        }
 
         /* ── Upvote button ─────────── */
         .upvote-btn {
             display: inline-flex; flex-direction: column; align-items: center;
             gap: 2px; padding: 8px 16px;
-            min-width: 44px; min-height: 44px;
-            background: var(--cream-dark); border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            cursor: pointer; transition: all 0.15s ease;
-            font-family: var(--font-body); font-size: 13px; font-weight: 600;
+            min-width: 48px; min-height: 48px;
+            background: var(--cream-dark); border: none; border-left: 1px solid rgba(255,255,255,0.05);
+            border-radius: var(--radius);
+            cursor: pointer; transition: all 0.2s var(--ease-out-expo);
+            font-family: var(--font-body); font-size: 13px; font-weight: 700;
             color: var(--ink-light);
         }
         .upvote-btn:hover {
             border-color: var(--slate);
-            color: var(--info-text);
+            color: var(--slate);
             background: var(--info-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px rgba(64,232,255,0.15);
         }
+        .upvote-btn:active { transform: scale(0.93); }
         .upvote-btn.active {
             border-color: var(--slate);
             color: var(--slate);
             background: rgba(0, 212, 245, 0.08);
+            box-shadow: 0 0 12px rgba(64,232,255,0.12);
         }
         .upvote-btn.active .arrow {
             color: var(--slate);
         }
-        .upvote-btn .arrow { font-size: 16px; line-height: 1; }
+        .upvote-btn .arrow { font-size: 18px; line-height: 1; }
 
         /* ── Form elements ─────────── */
         .form-group { margin-bottom: 24px; }
@@ -253,8 +292,8 @@ def design_tokens() -> str:
             min-height: 44px;
         }
         .form-input:focus, .form-textarea:focus, .form-select:focus {
-            outline: none; border-color: var(--terracotta);
-            box-shadow: 0 0 0 3px rgba(26,45,74,0.15);
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(64,232,255,0.15);
         }
         .form-textarea { resize: vertical; min-height: 100px; }
 
@@ -271,8 +310,8 @@ def design_tokens() -> str:
             box-shadow: var(--shadow-sm);
         }
         .search-box input:focus {
-            outline: none; border-color: var(--terracotta);
-            box-shadow: 0 0 0 4px rgba(26,45,74,0.12);
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(64,232,255,0.12);
         }
         .search-box .search-icon {
             position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
@@ -294,7 +333,14 @@ def design_tokens() -> str:
         .badge-gold    { color: var(--gold-dark); background: linear-gradient(135deg, var(--gold-light), var(--gold)); border-color: var(--gold); }
 
         /* ── Section Divider ──────── */
-        .section-divider { margin-top: 48px; border-top: 1px solid var(--border); padding-top: 24px; }
+        .section-divider {
+            margin-top: 48px; padding-top: 24px; border-top: none; position: relative;
+        }
+        .section-divider::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.3;
+        }
 
         /* ── Price Pill ───────────── */
         .pill-price {
@@ -315,17 +361,28 @@ def design_tokens() -> str:
         /* ── Pagination ────────────── */
         .pagination {
             display: flex; gap: 8px; justify-content: center;
-            margin-top: 32px;
+            align-items: center; margin-top: 32px; flex-wrap: wrap;
         }
         .pagination a, .pagination span {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 44px; height: 44px; border-radius: 999px;
-            font-weight: 600; font-size: 14px;
+            min-width: 40px; height: 40px; border-radius: 999px;
+            font-weight: 600; font-size: 14px; padding: 0 4px;
             border: 1px solid var(--border); color: var(--ink-light);
+            text-decoration: none;
         }
         .pagination a:hover { background: var(--cream-dark); }
         .pagination .active {
             background: var(--terracotta); color: white; border-color: var(--terracotta);
+        }
+        .pagination .ellipsis {
+            border: none; color: var(--ink-light); pointer-events: none;
+            min-width: 32px; font-size: 16px;
+        }
+        .pagination .prev-next {
+            padding: 0 12px; font-size: 13px; gap: 4px;
+        }
+        .pagination .disabled {
+            opacity: 0.35; pointer-events: none;
         }
 
         /* ── Utility ───────────────── */
@@ -335,18 +392,92 @@ def design_tokens() -> str:
         .text-muted { color: var(--ink-muted); }
         .text-sm { font-size: 14px; }
 
+        /* ── Pill Filter ──────────── */
+        .pill-filter {
+            display: inline-block; padding: 4px 12px; border-radius: 999px;
+            font-size: 12px; font-weight: 600; cursor: pointer;
+            border: 1px solid var(--border); background: var(--card-bg); color: var(--ink-light);
+            font-family: var(--font-body); transition: all var(--duration-fast) ease;
+            text-decoration: none; white-space: nowrap;
+        }
+        .pill-filter:hover { border-color: var(--terracotta); color: var(--ink); }
+        .pill-filter.active { background: var(--terracotta); color: white; border-color: var(--terracotta); }
+
+        /* ── Copy Button ──────────── */
+        .copy-btn {
+            font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 999px;
+            border: 1px solid var(--border); background: var(--card-bg); cursor: pointer;
+            color: var(--ink-muted); font-family: var(--font-body); transition: all var(--duration-fast) ease;
+        }
+        .copy-btn:hover { border-color: var(--terracotta); color: var(--ink); }
+        .copy-btn:active { transform: scale(0.96); }
+
+        /* ── Glassmorphism Nav ─────── */
+        .backdrop-nav {
+            backdrop-filter: var(--backdrop-blur); -webkit-backdrop-filter: var(--backdrop-blur);
+            background: var(--nav-bg-glass) !important;
+        }
+
+        /* ── Card Stagger Animation ── */
+        @keyframes card-enter {
+            from { opacity: 0; transform: translateY(24px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .card-stagger > * {
+            opacity: 0; animation: card-enter 0.6s var(--ease-out-expo) forwards;
+        }
+        .card-stagger > :nth-child(1) { animation-delay: calc(0 * var(--stagger-delay)); }
+        .card-stagger > :nth-child(2) { animation-delay: calc(1 * var(--stagger-delay)); }
+        .card-stagger > :nth-child(3) { animation-delay: calc(2 * var(--stagger-delay)); }
+        .card-stagger > :nth-child(4) { animation-delay: calc(3 * var(--stagger-delay)); }
+        .card-stagger > :nth-child(5) { animation-delay: calc(4 * var(--stagger-delay)); }
+        .card-stagger > :nth-child(6) { animation-delay: calc(5 * var(--stagger-delay)); }
+        .card-stagger > :nth-child(7) { animation-delay: calc(6 * var(--stagger-delay)); }
+        .card-stagger > :nth-child(8) { animation-delay: calc(7 * var(--stagger-delay)); }
+        .card-stagger > :nth-child(9) { animation-delay: calc(8 * var(--stagger-delay)); }
+        .card-stagger > :nth-child(n+10) { animation-delay: calc(9 * var(--stagger-delay)); }
+        @media (prefers-reduced-motion: reduce) { .card-stagger > * { opacity: 1; animation: none; } }
+
+        /* ── Button Press State ───── */
+        .btn:active { transform: scale(0.95); transition-duration: 0.05s; }
+        [data-theme="dark"] .btn-primary { box-shadow: 0 0 24px rgba(64,232,255,0.2); }
+        [data-theme="dark"] .btn-primary:hover { box-shadow: 0 0 32px rgba(64,232,255,0.35); }
+
+        /* ── Custom Checkbox ──────── */
+        .custom-checkbox {
+            appearance: none; -webkit-appearance: none; width: 20px; height: 20px;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; background: var(--card-bg);
+            cursor: pointer; position: relative; transition: all var(--duration-fast) ease; flex-shrink: 0;
+        }
+        .custom-checkbox:checked { background: var(--accent); border-color: var(--accent); }
+        .custom-checkbox:checked::after {
+            content: ''; position: absolute; left: 5px; top: 2px;
+            width: 6px; height: 10px; border: solid #000; border-width: 0 2px 2px 0; transform: rotate(45deg);
+        }
+        .custom-checkbox:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 4px var(--accent); }
+
+        /* ── Custom Select Pill ───── */
+        .form-select-pill {
+            max-width: 180px; font-size: 13px; padding: 8px 32px 8px 12px; border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--card-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+            appearance: none; -webkit-appearance: none; font-family: var(--font-body); font-weight: 500;
+            color: var(--ink); cursor: pointer; transition: border-color var(--duration-fast) ease; min-height: 36px;
+        }
+        .form-select-pill:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(64,232,255,0.15); }
+
         /* ── Verified Badge ────────── */
         .verified-badge {
             display: inline-flex; align-items: center; gap: 4px;
-            font-size: 12px; font-weight: 600;
-            color: var(--gold-dark);
-            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            font-size: 12px; font-weight: 700;
+            color: #0a4f5c;
+            background: var(--accent);
             padding: 4px 12px; border-radius: 999px;
-            border: 1px solid var(--gold);
+            border: 1px solid var(--accent);
         }
-        .verified-badge svg { width: 14px; height: 14px; fill: var(--gold-dark); }
-        .verified-card { border-color: var(--gold-light); background: linear-gradient(180deg, var(--warning-bg) 0%, var(--card-bg) 40%); }
-        .verified-card:hover { box-shadow: 0 12px 40px rgba(226,183,100,0.2); }
+        .verified-badge svg { width: 14px; height: 14px; fill: none; stroke: #0a4f5c; }
+        .verified-card { border-color: var(--accent); border-top-color: var(--accent); background: linear-gradient(180deg, rgba(64,232,255,0.06) 0%, var(--card-bg) 40%); }
+        .verified-card:hover { box-shadow: var(--shadow-lifted); }
 
         /* ── Toast notification ───── */
         .toast {
@@ -380,8 +511,37 @@ def design_tokens() -> str:
         [data-theme="dark"] .alert-success { background: var(--success-bg); color: var(--success-text); border-color: var(--success-border); }
         [data-theme="dark"] .alert-error { background: var(--error-bg); color: var(--error-text); border-color: var(--error-border); }
         [data-theme="dark"] .alert-info { background: var(--info-bg); color: var(--info-text); border-color: var(--info-border); }
-        [data-theme="dark"] .verified-card { border-color: var(--gold-dark); background: linear-gradient(180deg, var(--warning-bg) 0%, var(--card-bg) 40%); }
+        [data-theme="dark"] .verified-card { border-color: var(--accent); background: linear-gradient(180deg, rgba(64,232,255,0.08) 0%, var(--card-bg) 40%); }
         [data-theme="dark"] .card:hover { box-shadow: var(--shadow-lg); }
+
+        /* Dark mode form inputs */
+        [data-theme="dark"] .form-input,
+        [data-theme="dark"] .form-textarea,
+        [data-theme="dark"] .form-select {
+            background: rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.1);
+            color: var(--ink);
+        }
+        [data-theme="dark"] .form-input:focus,
+        [data-theme="dark"] .form-textarea:focus,
+        [data-theme="dark"] .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0,212,245,0.15), inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+        /* Dark mode select styling */
+        [data-theme="dark"] select,
+        [data-theme="dark"] .form-select-pill {
+            background-color: rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.1);
+            color: var(--ink);
+        }
+        /* Global focus reset — no browser default rings */
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0,212,245,0.15);
+            transition: all 0.2s ease;
+        }
 
         /* Mobile nav */
         .nav-links { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 500; }
@@ -389,7 +549,11 @@ def design_tokens() -> str:
         .mobile-menu { display: none; }
 
         /* Nav dropdown */
-        .nav-dropdown.open .nav-dropdown-menu { display: block !important; }
+        .nav-dropdown .nav-dropdown-menu {
+            opacity: 0; transform: translateY(8px) translateX(-50%); pointer-events: none;
+            transition: opacity var(--duration-normal) var(--ease-out-expo), transform var(--duration-normal) var(--ease-out-expo);
+        }
+        .nav-dropdown.open .nav-dropdown-menu { display: block !important; opacity: 1; transform: translateY(0) translateX(-50%); pointer-events: auto; }
         .nav-dropdown-menu a:hover { background: var(--cream-dark); color: var(--ink) !important; }
 
         @media (max-width: 768px) {
@@ -422,7 +586,7 @@ def design_tokens() -> str:
         .nav-dropdown-item:hover { background: var(--cream-dark); }
 
         /* Footer */
-        .footer { background: var(--terracotta); color: white; padding: 60px 20px 30px; margin-top: 80px; }
+        .footer { background: var(--terracotta); color: white; padding: 64px 24px 32px; margin-top: 0; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
         .footer-heading { font-weight: 700; font-size: 14px; margin-bottom: 12px; }
         .footer-link { color: rgba(255,255,255,0.7); font-size: 13px; line-height: 2; display: block; text-decoration: none; }
@@ -447,7 +611,7 @@ def nav_html(user=None) -> str:
                 <a href="/developer" style="color:var(--ink-light);">API</a>
                 <a href="/dashboard/notifications" style="position:relative;color:var(--ink-light);font-size:18px;text-decoration:none;">&#128276;</a>
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <div style="width:28px;height:28px;border-radius:50%;background:var(--terracotta);
+                    <div style="width:32px;height:32px;border-radius:50%;background:var(--terracotta);
                                 color:white;display:flex;align-items:center;justify-content:center;
                                 font-size:12px;font-weight:700;">{initial}</div>
                     <span style="color:var(--ink);font-size:13px;font-weight:600;">{user_name}</span>
@@ -464,7 +628,7 @@ def nav_html(user=None) -> str:
     else:
         auth_links = """
                 <a href="/login" style="color:var(--ink-light);">Log in</a>
-                <a href="/signup" class="btn btn-secondary" style="padding:6px 14px;font-size:13px;">Sign up</a>
+                <a href="/signup" class="btn btn-secondary" style="padding:8px 16px;font-size:13px;">Sign up</a>
         """
         mobile_auth_links = """
                 <a href="/login">Log in</a>
@@ -474,14 +638,14 @@ def nav_html(user=None) -> str:
     verification_banner = ""
     if user and not user.get('email_verified', 1):
         verification_banner = '''
-    <div style="background:var(--warning-bg);color:var(--warning-text);padding:10px 20px;text-align:center;font-size:14px;border-bottom:1px solid var(--gold);">
+    <div style="background:var(--warning-bg);color:var(--warning-text);padding:12px 24px;text-align:center;font-size:14px;border-bottom:1px solid var(--gold);">
         Please verify your email address.
         <a href="/resend-verification" style="color:var(--warning-text);font-weight:600;text-decoration:underline;margin-left:8px;">Resend verification email</a>
     </div>
         '''
 
     return f"""
-    <nav style="position:sticky;top:0;z-index:100;background:var(--nav-bg);border-bottom:1px solid var(--border);">
+    <nav class="backdrop-nav" style="position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);">
         <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
             <a href="/" style="display:flex;align-items:center;">
                 <img src="/logo.png" height="40" alt="IndieStack">
@@ -506,6 +670,8 @@ def nav_html(user=None) -> str:
                         <a href="/stacks" class="nav-dropdown-item">Stacks</a>
                         <a href="/best" class="nav-dropdown-item">Best Tools</a>
                         <a href="/plugins" class="nav-dropdown-item">Plugins</a>
+                        <a href="/gaps" class="nav-dropdown-item">Gaps &#128293;</a>
+                        <a href="/pulse" class="nav-dropdown-item">AI Pulse &#128308;</a>
                         <a href="/blog" class="nav-dropdown-item">Blog</a>
                     </div>
                 </div>
@@ -523,6 +689,8 @@ def nav_html(user=None) -> str:
             <a href="/leaderboard">Leaderboard</a>
             <a href="/stacks">Stacks</a>
             <a href="/plugins">Plugins</a>
+            <a href="/gaps">Gaps</a>
+            <a href="/pulse">AI Pulse</a>
             <a href="/submit" class="btn btn-primary">Add Your Tool</a>
             <button onclick="toggleTheme()">Toggle Theme</button>
             {mobile_auth_links}
@@ -530,6 +698,64 @@ def nav_html(user=None) -> str:
     </nav>
     {verification_banner}
     """
+
+
+# ── Sticky Email Bar ──────────────────────────────────────────────────────
+
+def email_sticky_bar():
+    """Sticky bottom email capture bar for browse pages."""
+    return """
+    <div id="sticky-email-bar" style="position:fixed;bottom:0;left:0;right:0;z-index:99;
+        background:linear-gradient(135deg, var(--terracotta), var(--terracotta-dark));
+        padding:16px 24px;box-shadow:0 -4px 20px rgba(0,0,0,0.15);">
+        <form id="sticky-email-form" style="max-width:800px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <span style="color:white;font-size:14px;font-weight:500;white-space:nowrap;">
+                Get weekly indie tool picks straight to your inbox</span>
+            <input type="email" name="email" placeholder="you@example.com" required
+                style="border:none;border-radius:999px;padding:10px 16px;font-size:14px;
+                min-width:200px;flex:1;outline:none;">
+            <button type="submit" style="background:var(--slate);color:var(--terracotta);
+                font-weight:700;border:none;border-radius:999px;padding:10px 20px;
+                cursor:pointer;white-space:nowrap;">Subscribe</button>
+            <button type="button" id="sticky-dismiss" style="color:rgba(255,255,255,0.6);font-size:20px;
+                cursor:pointer;background:none;border:none;padding:4px 8px;">&times;</button>
+        </form>
+    </div>
+    <style>
+    @media(max-width:600px){
+        #sticky-email-bar form{flex-wrap:wrap;}
+        #sticky-email-bar form>span{width:100%;}
+        #sticky-email-bar form>input{width:100%;}
+        #sticky-email-bar form>button[type="submit"]{width:100%;}
+    }
+    </style>
+    <script>
+    (function(){
+        var bar = document.getElementById('sticky-email-bar');
+        if (!bar) return;
+        if (sessionStorage.getItem('sticky_dismissed') || location.search.includes('subscribed=1')) {
+            bar.style.display = 'none';
+            return;
+        }
+        document.getElementById('sticky-dismiss').addEventListener('click', function() {
+            bar.style.display = 'none';
+            sessionStorage.setItem('sticky_dismissed', '1');
+        });
+        document.getElementById('sticky-email-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var em = this.email.value;
+            fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'email=' + encodeURIComponent(em) + '&source=sticky_bar'
+            }).then(function() {
+                bar.innerHTML = '<p style="color:white;font-weight:600;font-size:14px;text-align:center;margin:0;padding:8px 0;">You\\'re in! Check your inbox.</p>';
+            }).catch(function() {
+                bar.innerHTML = '<p style="color:var(--danger);font-size:14px;text-align:center;margin:0;">Something went wrong. Try again.</p>';
+            });
+        });
+    })();
+    </script>"""
 
 
 # ── Footer ────────────────────────────────────────────────────────────────
@@ -569,8 +795,8 @@ def footer_html() -> str:
           </div>
         </div>
         <div class="footer-bottom">
-          <div style="text-align:center;margin-bottom:20px;">
-    <p style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:600;margin-bottom:10px;">Get weekly picks — the best new indie tools in your inbox.</p>
+          <div style="text-align:center;margin-bottom:24px;">
+    <p style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:600;margin-bottom:12px;">Get weekly picks — the best new indie tools in your inbox.</p>
     <form action="/api/subscribe" method="POST" style="display:flex;gap:8px;justify-content:center;max-width:400px;margin:0 auto;">
         <input type="email" name="email" required placeholder="you@example.com"
                style="flex:1;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.3);
@@ -669,7 +895,7 @@ curl -s "{url}" -o /dev/null -w "%{{http_code}}"'''
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                 <span class="badge badge-info" style="font-weight:700;">Python</span>
                 <button onclick="navigator.clipboard.writeText(document.getElementById('snippet-py').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
-                        style="font-size:11px;font-weight:600;padding:2px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card-bg);cursor:pointer;color:var(--ink-muted);">Copy</button>
+                        class="copy-btn">Copy</button>
             </div>
             <pre id="snippet-py" style="background:var(--ink);color:var(--slate);border-radius:var(--radius-sm);padding:16px 20px;
                         font-family:var(--font-mono);font-size:13px;line-height:1.7;overflow-x:auto;margin:0;">{python_snippet}</pre>
@@ -678,7 +904,7 @@ curl -s "{url}" -o /dev/null -w "%{{http_code}}"'''
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                 <span style="font-size:12px;font-weight:700;color:var(--ink-muted);background:var(--cream-dark);padding:2px 10px;border-radius:999px;">cURL</span>
                 <button onclick="navigator.clipboard.writeText(document.getElementById('snippet-curl').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
-                        style="font-size:11px;font-weight:600;padding:2px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card-bg);cursor:pointer;color:var(--ink-muted);">Copy</button>
+                        class="copy-btn">Copy</button>
             </div>
             <pre id="snippet-curl" style="background:var(--ink);color:var(--slate);border-radius:var(--radius-sm);padding:16px 20px;
                         font-family:var(--font-mono);font-size:13px;line-height:1.7;overflow-x:auto;margin:0;">{curl_snippet}</pre>
@@ -710,9 +936,6 @@ def indie_score_html(tool: dict) -> str:
         score += 30
     elif indie_status == 'small_team':
         score += 20
-    # Verified badge: +25
-    if tool.get('is_verified'):
-        score += 25
     # Has reviews (review_count field): +15
     if int(tool.get('review_count', 0)) > 0:
         score += 15
@@ -755,12 +978,12 @@ def stack_card(stack: dict) -> str:
     return f"""
     <a href="/stacks/{slug}" class="card" style="text-decoration:none;color:inherit;display:block;">
         <span style="font-size:32px;display:block;margin-bottom:8px;">{emoji}</span>
-        <h3 style="font-family:var(--font-display);font-size:17px;margin-bottom:6px;color:var(--ink);">{title}</h3>
-        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:10px;
+        <h3 style="font-family:var(--font-display);font-size:17px;margin-bottom:8px;color:var(--ink);">{title}</h3>
+        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;
                   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{desc}</p>
         <div style="display:flex;gap:8px;align-items:center;">
             <span style="font-size:12px;font-weight:600;color:var(--ink-light);background:var(--cream-dark);
-                         padding:3px 10px;border-radius:999px;">{count} tool{"s" if count != 1 else ""}</span>
+                         padding:4px 12px;border-radius:999px;">{count} tool{"s" if count != 1 else ""}</span>
             {f'<span class="badge badge-success" style="font-weight:700;">{discount}% off</span>' if stack.get('discount_percent', 0) > 0 else ''}
         </div>
     </a>
@@ -770,7 +993,7 @@ def stack_card(stack: dict) -> str:
 # ── Tool Card ─────────────────────────────────────────────────────────────
 
 def verified_badge_html() -> str:
-    return """<span class="verified-badge"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</span>"""
+    return ""
 
 
 def boosted_badge_html():
@@ -786,12 +1009,10 @@ def tool_card(tool: dict) -> str:
     cat_slug = escape(str(tool.get('category_slug', '')))
     upvotes = int(tool.get('upvote_count', 0))
     tags = str(tool.get('tags', ''))
-    is_verified = bool(tool.get('is_verified', 0))
-
     tag_html = ''
     if tags.strip():
         tag_list = [t.strip() for t in tags.split(',') if t.strip()][:3]
-        tag_html = '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;">'
+        tag_html = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">'
         for t in tag_list:
             tag_html += f'<span class="tag">{escape(t)}</span>'
         tag_html += '</div>'
@@ -803,7 +1024,7 @@ def tool_card(tool: dict) -> str:
 
     # Add bookmark icon — positioned absolutely in top-right of card
     bookmark_html = f'''<button class="wishlist-btn" onclick="event.stopPropagation();toggleWishlist({tool['id']})" id="wishlist-{tool['id']}"
-        style="position:absolute;top:12px;right:12px;z-index:2;background:none;border:none;cursor:pointer;padding:4px;font-size:20px;line-height:1;color:var(--ink-muted);opacity:0.5;transition:color 0.2s,transform 0.2s,opacity 0.2s;"
+        style="position:absolute;top:12px;right:12px;z-index:2;background:none;border:none;cursor:pointer;padding:8px;font-size:20px;line-height:1;color:var(--ink-muted);opacity:0.5;transition:color 0.2s,transform 0.2s,opacity 0.2s;min-width:44px;min-height:44px;"
         onmouseenter="this.style.color='#E2B764';this.style.opacity='1';this.style.transform='scale(1.1)';"
         onmouseleave="if(!this.dataset.wishlisted){{this.style.color='var(--ink-muted)';this.style.opacity='0.5';this.style.transform='scale(1)';}}else{{this.style.transform='scale(1)';}}"
         title="Bookmark">&#9734;</button>'''
@@ -822,24 +1043,24 @@ def tool_card(tool: dict) -> str:
     if mcp_views > 0:
         ai_recs_html = f'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--accent);font-weight:600;margin-top:8px;" title="Recommended by AI agents {mcp_views} times">&#9889; AI picked {mcp_views}x</span>'
 
-    badge = verified_badge_html() if is_verified else ''
+    badge = ''
     is_boosted = bool(tool.get('is_boosted', 0))
     if is_boosted:
         badge += ' ' + boosted_badge_html()
     # Show claim status: "Maker ✓" for claimed tools, "Community Listed" for unclaimed
-    if tool.get('claimed_at') and not is_verified:
-        badge += ' <span class="badge badge-success" style="font-size:10px;">Maker &#10003;</span>'
-    elif not tool.get('claimed_at') and not is_verified:
-        badge += ' <span class="badge badge-muted" style="font-size:10px;">Community Listed</span>'
+    if tool.get('claimed_at'):
+        badge += ' <span class="badge badge-success" style="font-size:var(--text-xs);">Maker &#10003;</span>'
+    elif not tool.get('claimed_at'):
+        badge += ' <span class="badge badge-muted" style="font-size:var(--text-xs);">Community Listed</span>'
     price_pence = tool.get('price_pence')
     if price_pence and price_pence > 0 and not tool.get('stripe_account_id'):
         badge += f' <span class="pill-price">&pound;{price_pence // 100}/mo</span>'
-    card_class = 'card verified-card' if is_verified else 'card'
+    card_class = 'card'
 
     return f"""
     <div class="{card_class}" style="position:relative;display:flex;gap:16px;">
         {bookmark_html}
-        <div style="flex:1;min-width:0;">
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;">
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-right:32px;">
                 <a href="/tool/{slug}" style="font-family:var(--font-display);font-size:17px;
                                               color:var(--ink);">{name}</a>
@@ -847,10 +1068,10 @@ def tool_card(tool: dict) -> str:
             </div>
             <p style="color:var(--ink-muted);font-size:14px;margin-top:4px;
                       overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{tagline}</p>
-            <a href="/category/{cat_slug}" class="tag" style="margin-top:10px;display:inline-block;
+            <a href="/category/{cat_slug}" class="tag" style="margin-top:12px;display:inline-block;
                                                               font-family:var(--font-mono);">{cat_name}</a>
             {tag_html}
-            <div style="display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:12px;flex-wrap:wrap;">
                 {visit_html}
                 {gh_indicator}
                 {ai_recs_html}
@@ -887,14 +1108,14 @@ def maker_card(maker: dict, stats: dict = None) -> str:
     <a href="/maker/{slug}" class="card" style="text-decoration:none;color:inherit;display:block;text-align:center;">
         <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;
                     border-radius:50%;background:var(--terracotta);color:white;font-size:22px;
-                    font-family:var(--font-display);margin-bottom:10px;">
+                    font-family:var(--font-display);margin-bottom:12px;">
             {name[0].upper() if name else '?'}
         </div>
-        <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">
             <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);">{name}</h3>
             {badge}
         </div>
-        <p style="color:var(--ink-muted);font-size:13px;margin-top:6px;line-height:1.5;">{bio if bio else 'Indie maker'}</p>
+        <p style="color:var(--ink-muted);font-size:13px;margin-top:8px;line-height:1.5;">{bio if bio else 'Indie maker'}</p>
         <div style="display:flex;gap:16px;justify-content:center;margin-top:12px;font-size:13px;">
             <span style="color:var(--ink-light);"><strong style="color:var(--ink);">{tool_count}</strong> tools</span>
             <span style="color:var(--ink-light);"><strong style="color:var(--slate-dark);">{total_upvotes}</strong> upvotes</span>
@@ -926,8 +1147,8 @@ def update_card(update: dict) -> str:
 
     return f"""
     <div class="card" style="margin-bottom:16px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-            <span style="font-size:11px;font-weight:700;color:{color};background:{bg};padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.5px;">{label}</span>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+            <span style="font-size:11px;font-weight:700;color:{color};background:{bg};padding:4px 12px;border-radius:999px;text-transform:uppercase;letter-spacing:0.5px;">{label}</span>
             <span style="font-size:13px;color:var(--ink-muted);">{created}</span>
         </div>
         {title_html}
@@ -1132,8 +1353,7 @@ def featured_card(featured: dict) -> str:
     tagline = escape(str(featured.get('tagline', '')))
     headline = escape(str(featured.get('headline', '')))
     desc = escape(str(featured.get('description', '')))
-    is_verified = bool(featured.get('is_verified', 0))
-    badge = verified_badge_html() if is_verified else ''
+    badge = ''
 
     return f"""
     <div class="card" style="background:var(--terracotta);border:none;padding:32px;color:white;
@@ -1148,9 +1368,9 @@ def featured_card(featured: dict) -> str:
         <h3 style="font-family:var(--font-display);font-size:24px;margin-bottom:8px;">
             <a href="/tool/{slug}" style="color:white;text-decoration:none;">{headline or name}</a>
         </h3>
-        <p style="color:rgba(255,255,255,0.7);font-size:15px;margin-bottom:20px;line-height:1.6;">{desc or tagline}</p>
+        <p style="color:rgba(255,255,255,0.7);font-size:15px;margin-bottom:24px;line-height:1.6;">{desc or tagline}</p>
         <a href="/tool/{slug}" class="btn" style="background:var(--slate);color:var(--terracotta);font-weight:700;
-                padding:10px 24px;">
+                padding:12px 24px;">
             View tool
         </a>
     </div>
@@ -1162,13 +1382,39 @@ def featured_card(featured: dict) -> str:
 def pagination_html(current: int, total_pages: int, base_url: str) -> str:
     if total_pages <= 1:
         return ""
+    sep = "&amp;" if "?" in base_url else "?"
+
+    def href(p):
+        return f'{base_url}{sep}page={p}'
+
+    # Build the set of page numbers to show: 1, last, current +/- 1
+    visible = sorted({1, total_pages} | {p for p in range(current - 1, current + 2) if 1 <= p <= total_pages})
+
     parts = ['<div class="pagination">']
-    for p in range(1, total_pages + 1):
+
+    # Prev
+    if current > 1:
+        parts.append(f'<a href="{href(current - 1)}" class="prev-next">&#8592; Prev</a>')
+    else:
+        parts.append('<span class="prev-next disabled">&#8592; Prev</span>')
+
+    # Page numbers with ellipsis in gaps
+    last = 0
+    for p in visible:
+        if last and p - last > 1:
+            parts.append('<span class="ellipsis">&#8230;</span>')
         if p == current:
             parts.append(f'<span class="active">{p}</span>')
         else:
-            sep = "&amp;" if "?" in base_url else "?"
-            parts.append(f'<a href="{base_url}{sep}page={p}">{p}</a>')
+            parts.append(f'<a href="{href(p)}">{p}</a>')
+        last = p
+
+    # Next
+    if current < total_pages:
+        parts.append(f'<a href="{href(current + 1)}" class="prev-next">Next &#8594;</a>')
+    else:
+        parts.append('<span class="prev-next disabled">Next &#8594;</span>')
+
     parts.append('</div>')
     return ''.join(parts)
 
@@ -1198,7 +1444,7 @@ def review_card(review: dict) -> str:
     body = escape(str(review.get('body', '')))
     is_vp = bool(review.get('is_verified_purchase', 0))
     created = str(review.get('created_at', ''))[:10]
-    vp_badge = '<span style="font-size:11px;color:#065F46;background:#ECFDF5;padding:2px 8px;border-radius:999px;font-weight:600;margin-left:8px;">Verified Purchase</span>' if is_vp else ''
+    vp_badge = '<span style="font-size:11px;color:var(--success-text);background:var(--success-bg);padding:2px 8px;border-radius:999px;font-weight:600;margin-left:8px;">Verified Purchase</span>' if is_vp else ''
 
     title_html = f'<strong style="font-size:15px;color:var(--ink);">{title}</strong><br>' if title else ''
 
@@ -1275,9 +1521,6 @@ def search_filters_html(*, query: str = "", price_filter: str = "", sort: str = 
         sel = ' selected' if val == sort else ''
         sort_options += f'<option value="{val}"{sel}>{label}</option>'
 
-    # Verified toggle
-    verified_checked = ' checked' if verified_only else ''
-
     # Category dropdown
     cat_html = ''
     if categories:
@@ -1304,11 +1547,6 @@ def search_filters_html(*, query: str = "", price_filter: str = "", sort: str = 
                 {sort_options}
             </select>
             {cat_html}
-            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-light);cursor:pointer;">
-                <input type="checkbox" name="verified" value="1"{verified_checked}
-                       onchange="this.form.submit()" style="accent-color:var(--terracotta);">
-                Verified only
-            </label>
         </div>
     </form>
     """
@@ -1327,20 +1565,20 @@ def user_stack_card(stack):
 
     return f"""
     <a href="/stack/{username_slug}" style="text-decoration:none;color:inherit;display:block;">
-    <div class="card hover-lift" style="border-radius:16px;padding:24px;cursor:pointer;">
+    <div class="card hover-lift" style="border-radius:var(--radius);padding:24px;cursor:pointer;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1A2D4A,#00D4F5);
+            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--terracotta),var(--accent));
                         display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">
                 {name[0].upper() if name else '?'}
             </div>
             <div>
-                <div style="font-family:'DM Serif Display',serif;font-size:16px;color:#1A2D4A;">{title}</div>
-                <div style="font-size:13px;color:#6B7280;">by {name}</div>
+                <div style="font-family:var(--font-display);font-size:16px;color:var(--ink);">{title}</div>
+                <div style="font-size:13px;color:var(--ink-muted);">by {name}</div>
             </div>
         </div>
-        {f'<p style="font-size:14px;color:#4B5563;margin:0 0 12px 0;line-height:1.5;">{desc[:120]}{"..." if len(desc) > 120 else ""}</p>' if desc else ''}
+        {f'<p style="font-size:14px;color:var(--ink-light);margin:0 0 12px 0;line-height:1.5;">{desc[:120]}{"..." if len(desc) > 120 else ""}</p>' if desc else ''}
         <div style="display:flex;align-items:center;gap:8px;">
-            <span style="background:#E8F9FA;color:#0D7377;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;">
+            <span style="background:var(--cream-dark);color:var(--accent);padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;">
                 {tool_count} tool{'s' if tool_count != 1 else ''}
             </span>
         </div>
@@ -1358,16 +1596,16 @@ def launch_readiness_bar(readiness):
     total = readiness.get('total', 8)
     tool_id = readiness.get('tool_id')
 
-    bar_color = '#10B981' if score >= 100 else '#00D4F5'
+    bar_color = 'var(--success-text)' if score >= 100 else 'var(--accent)'
     badge_html = ''
     if score >= 100:
-        badge_html = '<span style="background:#10B981;color:#fff;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;margin-left:12px;">&#128640; Launch Ready</span>'
+        badge_html = '<span style="background:var(--success-text);color:#fff;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;margin-left:12px;">&#128640; Launch Ready</span>'
 
     checklist_items = ''
     for item in items:
         check = '&#10003;' if item['done'] else '&#9675;'
-        color = '#10B981' if item['done'] else '#9CA3AF'
-        text_style = 'color:#4B5563;' if item['done'] else 'color:#1A2D4A;'
+        color = 'var(--success-text)' if item['done'] else 'var(--ink-muted)'
+        text_style = 'color:var(--ink-light);' if item['done'] else 'color:var(--ink);'
         strike = 'text-decoration:line-through;opacity:0.7;' if item['done'] else ''
         action = item.get('action', '')
 
@@ -1381,11 +1619,11 @@ def launch_readiness_bar(readiness):
         if action == 'link' and not item['done']:
             url = item.get('url', '#')
             checklist_items += f"""
-            <a href="{url}" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #F3F4F6;
+            <a href="{url}" style="display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--border);
                 text-decoration:none;border-radius:8px;transition:background 0.15s;cursor:pointer;"
-                onmouseover="this.style.background='#F0F9FF'" onmouseout="this.style.background='transparent'">
+                onmouseover="this.style.background='var(--cream-dark)'" onmouseout="this.style.background='transparent'">
                 {row_inner}
-                <span style="color:#00D4F5;font-size:14px;font-weight:600;">&#8594;</span>
+                <span style="color:var(--accent);font-size:14px;font-weight:600;">&#8594;</span>
             </a>"""
         elif action == 'form' and not item['done']:
             field = item.get('field', '')
@@ -1396,63 +1634,63 @@ def launch_readiness_bar(readiness):
             placeholder_escaped = escape(str(placeholder))
 
             if input_type == 'textarea':
-                input_html = f'<textarea name="value" placeholder="{placeholder_escaped}" style="width:100%;padding:10px 12px;border:1px solid #D1D5DB;border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;min-height:80px;">{current_escaped}</textarea>'
+                input_html = f'<textarea name="value" placeholder="{placeholder_escaped}" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;min-height:80px;">{current_escaped}</textarea>'
             else:
-                input_html = f'<input type="{input_type}" name="value" value="{current_escaped}" placeholder="{placeholder_escaped}" style="width:100%;padding:10px 12px;border:1px solid #D1D5DB;border-radius:8px;font-size:14px;font-family:inherit;">'
+                input_html = f'<input type="{input_type}" name="value" value="{current_escaped}" placeholder="{placeholder_escaped}" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;">'
 
             checklist_items += f"""
-            <details style="border-bottom:1px solid #F3F4F6;">
-                <summary style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;list-style:none;
+            <details style="border-bottom:1px solid var(--border);">
+                <summary style="display:flex;align-items:center;gap:12px;padding:12px;cursor:pointer;list-style:none;
                     border-radius:8px;transition:background 0.15s;"
-                    onmouseover="this.style.background='#F0F9FF'" onmouseout="this.style.background='transparent'">
+                    onmouseover="this.style.background='var(--cream-dark)'" onmouseout="this.style.background='transparent'">
                     {row_inner}
-                    <span style="color:#00D4F5;font-size:12px;transition:transform 0.2s;">&#9660;</span>
+                    <span style="color:var(--accent);font-size:12px;transition:transform 0.2s;">&#9660;</span>
                 </summary>
                 <form method="post" action="/dashboard/readiness-update" style="padding:8px 12px 16px 48px;">
                     <input type="hidden" name="field" value="{field}">
                     <input type="hidden" name="tool_id" value="{tool_id or ''}">
                     <div style="display:flex;gap:8px;align-items:flex-start;">
                         <div style="flex:1;">{input_html}</div>
-                        <button type="submit" style="background:#00D4F5;color:#1A2D4A;border:none;padding:10px 20px;
+                        <button type="submit" style="background:var(--accent);color:var(--ink);border:none;padding:12px 24px;
                             border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;">Save</button>
                     </div>
                 </form>
             </details>"""
         elif action == 'stripe' and not item['done']:
             checklist_items += f"""
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #F3F4F6;
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--border);
                 border-radius:8px;transition:background 0.15s;cursor:pointer;"
-                onmouseover="this.style.background='#F0F9FF'" onmouseout="this.style.background='transparent'"
+                onmouseover="this.style.background='var(--cream-dark)'" onmouseout="this.style.background='transparent'"
                 onclick="this.querySelector('form').submit()">
                 {row_inner}
                 <form method="post" action="/dashboard/stripe-connect" style="margin:0;">
-                    <button type="submit" style="background:#00D4F5;color:#1A2D4A;border:none;padding:6px 16px;
-                        border-radius:6px;font-weight:600;font-size:12px;cursor:pointer;">Connect &#8594;</button>
+                    <button type="submit" style="background:var(--accent);color:var(--ink);border:none;padding:8px 16px;
+                        border-radius:8px;font-weight:600;font-size:12px;cursor:pointer;">Connect &#8594;</button>
                 </form>
             </div>"""
         else:
             # Completed items or items without action — static row
             checklist_items += f"""
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #F3F4F6;">
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--border);">
                 {row_inner}
             </div>"""
 
     return f"""
-    <div style="background:#fff;border-radius:16px;padding:24px;border:1px solid #E8E3DC;margin-bottom:24px;">
+    <div style="background:var(--card-bg);border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:24px;">
         <div style="display:flex;align-items:center;margin-bottom:16px;">
-            <h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:#1A2D4A;margin:0;">
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin:0;">
                 Launch Readiness
             </h3>
             {badge_html}
         </div>
-        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
-            <div style="flex:1;background:#E5E7EB;border-radius:999px;height:12px;overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+            <div style="flex:1;background:var(--cream-dark);border-radius:999px;height:6px;overflow:hidden;">
                 <div style="width:{score}%;height:100%;background:{bar_color};border-radius:999px;transition:width 0.5s;"></div>
             </div>
-            <span style="font-family:'DM Serif Display',serif;font-size:24px;color:#1A2D4A;white-space:nowrap;">
+            <span style="font-family:var(--font-display);font-size:24px;color:var(--ink);white-space:nowrap;">
                 {score}%
             </span>
         </div>
-        <div style="font-size:13px;color:#6B7280;margin-bottom:16px;">{completed} of {total} completed</div>
+        <div style="font-size:13px;color:var(--ink-muted);margin-bottom:16px;">{completed} of {total} completed</div>
         <div>{checklist_items}</div>
     </div>"""

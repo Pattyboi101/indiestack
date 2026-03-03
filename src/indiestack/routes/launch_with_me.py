@@ -7,6 +7,7 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
 from indiestack.config import BASE_URL
+from indiestack.payments import is_launch_holiday
 from indiestack.routes.components import page_shell, tool_card, indie_badge_html
 from indiestack.db import get_maker_with_tools, get_maker_stats
 
@@ -35,8 +36,6 @@ async def launch_with_me(request: Request, slug: str):
     stats = await get_maker_stats(db, maker['id'])
     tool_count = stats['tool_count']
     total_upvotes = stats['total_upvotes']
-    verified_count = stats['verified_count']
-
     # Tool names for subtitle
     tool_names = ', '.join(escape(str(t.get('name', ''))) for t in tools[:3])
     if len(tools) > 3:
@@ -49,13 +48,16 @@ async def launch_with_me(request: Request, slug: str):
     # Page URL for sharing
     page_url = f"{BASE_URL}/launch/{maker_slug}"
 
-    # ── Launch Week Banner ──────────────────────────────────────────────
-    banner_html = """
-    <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));
-                color:white;text-align:center;padding:14px 24px;font-size:14px;font-weight:600;">
-        Launch Week Special: 0% commission &mdash; makers keep 100%
-    </div>
-    """
+    # ── Launch Week Banner (only during launch holiday: March 2-16) ────
+    if is_launch_holiday():
+        banner_html = """
+        <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));
+                    color:white;text-align:center;padding:14px 24px;font-size:14px;font-weight:600;">
+            Launch Week Special: 0% commission &mdash; makers keep 100%
+        </div>
+        """
+    else:
+        banner_html = ""
 
     # ── Hero Section ────────────────────────────────────────────────────
     hero_html = f"""
@@ -109,10 +111,6 @@ async def launch_with_me(request: Request, slug: str):
             <div style="font-family:var(--font-display);font-size:28px;color:var(--slate-dark);">{total_upvotes}</div>
             <div style="font-size:13px;color:var(--ink-muted);">upvotes</div>
         </div>
-        <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:28px;color:var(--gold);">{verified_count}</div>
-            <div style="font-size:13px;color:var(--ink-muted);">verified</div>
-        </div>
     </div>
     """
 
@@ -160,11 +158,11 @@ async def launch_with_me(request: Request, slug: str):
         </p>
         <div style="display:flex;gap:8px;justify-content:center;align-items:center;">
             <input type="text" id="share-url" value="{page_url}" readonly
-                   style="flex:1;max-width:400px;padding:10px 14px;font-size:13px;font-family:var(--font-mono);
+                   style="flex:1;max-width:400px;padding:12px 16px;font-size:13px;font-family:var(--font-mono);
                           border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--cream);
                           color:var(--ink);">
             <button onclick="navigator.clipboard.writeText(document.getElementById('share-url').value).then(()=>this.textContent='Copied!')"
-                    style="padding:10px 20px;font-size:13px;font-weight:600;font-family:var(--font-body);
+                    style="padding:12px 20px;font-size:13px;font-weight:600;font-family:var(--font-body);
                            background:var(--terracotta);color:white;border:none;border-radius:var(--radius-sm);
                            cursor:pointer;">
                 Copy

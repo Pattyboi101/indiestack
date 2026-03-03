@@ -86,52 +86,11 @@ async def dashboard_overview(request: Request):
     # Agent citations (7-day)
     agent_citations = await get_total_agent_citations(db, maker_id, days=7) if maker_id else 0
 
-    pro_badge = '<span style="font-size:11px;font-weight:700;color:#5C3D0E;background:linear-gradient(135deg,var(--gold-light),var(--gold));padding:2px 10px;border-radius:999px;margin-left:8px;">PRO</span>' if is_pro else ''
-    upgrade_html = '' if is_pro else '<a href="/pricing" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">Upgrade to Pro</a>'
+    pro_badge = ''
+    upgrade_html = ''
 
-    # Stripe Connect status
+    maker_stripe_id = None
     payment_card_html = ''
-    if maker_id:
-        mk_stripe_row = await db.execute("SELECT stripe_account_id FROM makers WHERE id = ?", (maker_id,))
-        mk_stripe = await mk_stripe_row.fetchone()
-        maker_stripe_id = mk_stripe.get('stripe_account_id') if mk_stripe else None
-
-        if maker_stripe_id:
-            payment_card_html = '''
-            <div class="card" style="margin-top:24px;border-left:4px solid #10B981;">
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-                    <div>
-                        <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin:0 0 4px;">
-                            &#9989; Stripe Connected
-                        </h3>
-                        <p style="color:var(--ink-muted);font-size:14px;margin:0;">
-                            Payments enabled. Set a price on your tools to start selling.
-                        </p>
-                    </div>
-                    <form method="post" action="/dashboard/stripe-connect">
-                        <button type="submit" class="btn btn-secondary" style="font-size:13px;">
-                            Manage Stripe &rarr;
-                        </button>
-                    </form>
-                </div>
-            </div>'''
-        else:
-            payment_card_html = '''
-            <div class="card" style="margin-top:24px;border-left:4px solid var(--accent);">
-                <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin:0 0 8px;">
-                    &#128179; Accept Payments
-                </h3>
-                <p style="color:var(--ink-muted);font-size:14px;margin:0 0 16px;">
-                    Connect your Stripe account to sell tools on IndieStack.
-                    We take just 5% (3% for Pro makers) &mdash; you keep the rest.
-                    <a href="/stripe-guide" style="color:var(--accent);font-size:13px;">See how it works &rarr;</a>
-                </p>
-                <form method="post" action="/dashboard/stripe-connect">
-                    <button type="submit" class="btn btn-primary">
-                        Connect Stripe &rarr;
-                    </button>
-                </form>
-            </div>'''
 
     # Badge embed code for makers
     badge_section = ''
@@ -144,78 +103,50 @@ async def dashboard_overview(request: Request):
             has_price = first_tool.get('price_pence') and first_tool['price_pence'] > 0
             has_stripe = bool(first_tool.get('stripe_account_id'))
 
-            tokens_badge_url = f"{BASE_URL}/api/badge/{first_slug}.svg"
-            marketplace_badge_url = f"{BASE_URL}/api/badge/{first_slug}.svg?style=marketplace"
+            badge_url = f"{BASE_URL}/api/badge/{first_slug}.svg"
             tool_url = f"{BASE_URL}/tool/{first_slug}"
 
-            # Choose primary badge based on whether tool has pricing
-            if has_price or has_stripe:
-                badge_url = marketplace_badge_url
-                badge_desc = "Show your audience they can buy your tool on IndieStack."
-                alt_badge_url = tokens_badge_url
-                alt_label = "Tokens Saved Badge"
-            else:
-                badge_url = tokens_badge_url
-                badge_desc = "Add this badge to your website to show you&rsquo;re listed on IndieStack."
-                alt_badge_url = None
-                alt_label = None
-
-            # Secondary badge section (tokens badge when marketplace is primary)
-            secondary_html = ''
-            if alt_badge_url:
-                _alt_html_code = f'<a href="{tool_url}"><img src="{alt_badge_url}" alt="Listed on IndieStack"></a>'
-                secondary_html = f'''
-                <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-                    <p style="font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:8px;">{alt_label}</p>
-                    <div style="text-align:center;padding:8px;background:var(--cream-dark);border-radius:var(--radius);margin-bottom:8px;">
-                        <img src="{alt_badge_url}" alt="{alt_label}" style="height:20px;">
-                    </div>
-                    <div style="position:relative;">
-                        <pre style="background:var(--ink);color:var(--slate);padding:8px 12px;border-radius:var(--radius-sm);font-size:12px;
-                                    font-family:var(--font-mono);overflow-x:auto;"><code>&lt;a href="{tool_url}"&gt;&lt;img src="{alt_badge_url}" alt="Listed on IndieStack"&gt;&lt;/a&gt;</code></pre>
-                        <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
-                                data-code='&lt;a href=&quot;{tool_url}&quot;&gt;&lt;img src=&quot;{alt_badge_url}&quot; alt=&quot;Listed on IndieStack&quot;&gt;&lt;/a&gt;'
-                                style="position:absolute;top:4px;right:4px;background:var(--slate);color:var(--terracotta);border:none;
-                                       padding:2px 8px;border-radius:var(--radius-sm);font-size:10px;font-weight:600;cursor:pointer;">Copy</button>
-                    </div>
-                </div>'''
-
-            _html_code = f'<a href="{tool_url}"><img src="{badge_url}" alt="Listed on IndieStack"></a>'
-            _md_code = f'[![Listed on IndieStack]({badge_url})]({tool_url})'
             badge_section = f'''
             <div class="card" style="margin-top:24px;">
-                <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">
-                    &#127991; Embed Your IndieStack Badge
+                <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:4px;">
+                    Live AI Recommendation Badge
                 </h3>
                 <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
-                    {badge_desc}
+                    Shows a live count of how many times AI agents have recommended your tool. The red dot pulses to show it&rsquo;s live. Add it to your README or website.
                 </p>
-                <div style="margin-bottom:16px;text-align:center;padding:16px;background:var(--cream-dark);border-radius:var(--radius);">
+                <div style="margin-bottom:20px;text-align:center;padding:16px;background:var(--cream-dark);border-radius:var(--radius);">
                     <img src="{badge_url}" alt="IndieStack Badge" style="height:20px;">
                 </div>
-                <div style="margin-bottom:8px;">
-                    <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">HTML</label>
-                    <div style="position:relative;">
-                        <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;
-                                    font-family:var(--font-mono);overflow-x:auto;margin-top:4px;"><code>&lt;a href="{tool_url}"&gt;&lt;img src="{badge_url}" alt="Listed on IndieStack"&gt;&lt;/a&gt;</code></pre>
-                        <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
-                                data-code='&lt;a href=&quot;{tool_url}&quot;&gt;&lt;img src=&quot;{badge_url}&quot; alt=&quot;Listed on IndieStack&quot;&gt;&lt;/a&gt;'
-                                style="position:absolute;top:8px;right:8px;background:var(--slate);color:var(--terracotta);border:none;
-                                       padding:4px 12px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                    <div>
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                            <span style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:white;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">1</span>
+                            <span style="font-size:13px;font-weight:600;color:var(--ink);">For GitHub README (Markdown)</span>
+                        </div>
+                        <div style="position:relative;">
+                            <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:11px;
+                                        font-family:var(--font-mono);overflow-x:auto;margin:0;white-space:pre-wrap;word-break:break-all;">[![{first_tool['name']} on IndieStack]({badge_url})]({tool_url})</pre>
+                            <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
+                                    data-code="[![{first_tool['name']} on IndieStack]({badge_url})]({tool_url})"
+                                    style="position:absolute;top:8px;right:8px;padding:4px 10px;background:var(--accent);color:white;border:none;border-radius:4px;font-size:11px;cursor:pointer;">Copy</button>
+                        </div>
+                        <p style="font-size:11px;color:var(--ink-muted);margin-top:6px;">Paste this anywhere in your README.md file on GitHub.</p>
+                    </div>
+                    <div>
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                            <span style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:white;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">2</span>
+                            <span style="font-size:13px;font-weight:600;color:var(--ink);">For your website (HTML)</span>
+                        </div>
+                        <div style="position:relative;">
+                            <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:11px;
+                                        font-family:var(--font-mono);overflow-x:auto;margin:0;white-space:pre-wrap;word-break:break-all;">&lt;a href="{tool_url}"&gt;&lt;img src="{badge_url}" alt="{first_tool['name']} on IndieStack"&gt;&lt;/a&gt;</pre>
+                            <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
+                                    data-code='<a href="{tool_url}"><img src="{badge_url}" alt="{first_tool["name"]} on IndieStack"></a>'
+                                    style="position:absolute;top:8px;right:8px;padding:4px 10px;background:var(--accent);color:white;border:none;border-radius:4px;font-size:11px;cursor:pointer;">Copy</button>
+                        </div>
+                        <p style="font-size:11px;color:var(--ink-muted);margin-top:6px;">Paste this into any HTML page, landing page, or docs site.</p>
                     </div>
                 </div>
-                <div>
-                    <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Markdown</label>
-                    <div style="position:relative;">
-                        <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;
-                                    font-family:var(--font-mono);overflow-x:auto;margin-top:4px;"><code>[![Listed on IndieStack]({badge_url})]({tool_url})</code></pre>
-                        <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
-                                data-code="[![Listed on IndieStack]({badge_url})]({tool_url})"
-                                style="position:absolute;top:8px;right:8px;background:var(--slate);color:var(--terracotta);border:none;
-                                       padding:4px 12px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
-                    </div>
-                </div>
-                {secondary_html}
             </div>
             '''
 
@@ -277,22 +208,22 @@ async def dashboard_overview(request: Request):
             <div style="margin-bottom:12px;">
                 <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Markdown</label>
                 <div style="position:relative;margin-top:4px;">
-                    <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;
-                        font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;"><code>[![Built with IndieStack]({badge_url})]({BASE_URL})</code></pre>
+                    <pre style="background:rgba(0,0,0,0.3);color:#E2E8F0;padding:16px;border-radius:var(--radius-sm);font-size:13px;
+                        font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;border:1px solid rgba(255,255,255,0.1);"><code>[![Built with IndieStack]({badge_url})]({BASE_URL})</code></pre>
                     <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                         data-code="[![Built with IndieStack]({badge_url})]({BASE_URL})"
-                        style="position:absolute;top:8px;right:8px;background:var(--slate);color:var(--terracotta);border:none;
+                        style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.1);color:var(--ink-light);border:1px solid rgba(255,255,255,0.1);
                             padding:4px 12px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
                 </div>
             </div>
             <div>
                 <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">HTML</label>
                 <div style="position:relative;margin-top:4px;">
-                    <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;
-                        font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;"><code>&lt;a href="{BASE_URL}"&gt;&lt;img src="{badge_url}" alt="Built with IndieStack"&gt;&lt;/a&gt;</code></pre>
+                    <pre style="background:rgba(0,0,0,0.3);color:#E2E8F0;padding:16px;border-radius:var(--radius-sm);font-size:13px;
+                        font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;border:1px solid rgba(255,255,255,0.1);"><code>&lt;a href="{BASE_URL}"&gt;&lt;img src="{badge_url}" alt="Built with IndieStack"&gt;&lt;/a&gt;</code></pre>
                     <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                         data-code='<a href="{BASE_URL}"><img src="{badge_url}" alt="Built with IndieStack"></a>'
-                        style="position:absolute;top:8px;right:8px;background:var(--slate);color:var(--terracotta);border:none;
+                        style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,0.1);color:var(--ink-light);border:1px solid rgba(255,255,255,0.1);
                             padding:4px 12px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
                 </div>
             </div>
@@ -450,12 +381,12 @@ async def dashboard_overview(request: Request):
             search_rows = ''
             for term in all_terms[:10]:
                 search_rows += f"""<tr>
-                    <td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:500;">"{escape(str(term['query']))}"</td>
-                    <td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--ink-muted);">{escape(str(term['tool_name']))}</td>
-                    <td style="padding:8px 12px;border-bottom:1px solid var(--border);text-align:center;">{term['count']}</td>
+                    <td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:500;color:var(--ink);">"{escape(str(term['query']))}"</td>
+                    <td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--ink-light);">{escape(str(term['tool_name']))}</td>
+                    <td style="padding:8px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--ink-light);">{term['count']}</td>
                 </tr>"""
             search_intent_html = f"""
-            <div style="background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:24px;">
+            <div style="background:var(--card-bg);border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:24px;">
                 <h3 style="font-family:var(--font-display);font-size:18px;color:var(--terracotta);margin-bottom:16px;">
                     &#128269; How Developers Find Your Tools
                 </h3>
@@ -498,7 +429,7 @@ async def dashboard_overview(request: Request):
                 </a>"""
 
             matchmaker_html = f"""
-            <div style="background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:24px;">
+            <div style="background:var(--card-bg);border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:24px;">
                 <h3 style="font-family:var(--font-display);font-size:18px;color:var(--terracotta);margin-bottom:16px;">
                     Makers Like You
                 </h3>
@@ -602,33 +533,7 @@ async def dashboard_overview(request: Request):
             </div>
         </div>'''
 
-    # ── Stripe launch banner (makers without Stripe) ──────────────
     stripe_launch_banner = ''
-    if maker_id and not maker_stripe_id:
-        from datetime import date as _date
-        _mkt_text = "The Marketplace is live!" if _date.today() >= _date(2026, 3, 2) else "Marketplace launches March 2!"
-        stripe_launch_banner = f'''<div id="stripe-launch-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,var(--terracotta-dark));border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
-        <button onclick="localStorage.setItem('stripe_launch_dismissed','1');document.getElementById('stripe-launch-banner').remove();"
-                style="position:absolute;top:10px;right:12px;background:none;border:none;color:#94A3B8;font-size:18px;cursor:pointer;line-height:1;">&times;</button>
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-            <div style="flex:1;min-width:200px;">
-                <div style="font-family:var(--font-display);font-size:16px;color:white;margin-bottom:4px;">
-                    {_mkt_text} &#128176;
-                </div>
-                <p style="font-size:13px;color:#94A3B8;margin:0;line-height:1.5;">
-                    Connect your Stripe account to <strong style="color:var(--slate);">receive payouts</strong> when developers buy your tool.
-                    <a href="/stripe-guide" style="color:var(--slate);font-size:12px;">How does it work?</a>
-                </p>
-            </div>
-            <form method="post" action="/dashboard/stripe-connect" style="margin:0;">
-                <button type="submit" style="display:inline-block;padding:8px 20px;background:var(--slate);color:var(--terracotta);font-size:13px;font-weight:700;
-                      border-radius:var(--radius-sm);border:none;cursor:pointer;white-space:nowrap;">
-                    Connect Stripe &rarr;
-                </button>
-            </form>
-        </div>
-    </div>
-    <script>if(!localStorage.getItem('stripe_launch_dismissed')){{document.getElementById('stripe-launch-banner').style.display='block';}}</script>'''
 
     # ── Email verification banner ──────────────────────────────────
     verify_banner = ''
@@ -661,18 +566,10 @@ async def dashboard_overview(request: Request):
             {upgrade_html}
         </div>
 
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;">
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="color:var(--ink-muted);font-size:13px;">Tools</div>
                 <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--ink);">{tool_count}</div>
-            </div>
-            <div class="card" style="text-align:center;padding:20px;">
-                <div style="color:var(--ink-muted);font-size:13px;">Total Sales</div>
-                <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--ink);">{total_sales}</div>
-            </div>
-            <div class="card" style="text-align:center;padding:20px;">
-                <div style="color:var(--ink-muted);font-size:13px;">Earnings</div>
-                <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--terracotta);">{format_price(total_revenue)}</div>
             </div>
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="color:var(--ink-muted);font-size:13px;">Upvotes</div>
@@ -684,7 +581,7 @@ async def dashboard_overview(request: Request):
             </div>
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations}</div>
-                <div style="font-size:13px;color:var(--ink-muted);">Agent Recs<br><span style="font-size:11px;opacity:0.7;">(7 days)</span></div>
+                <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Agent Recs<br><span style="font-size:11px;opacity:0.7;">(7 days)</span></div>
             </div>
         </div>
 
@@ -694,13 +591,10 @@ async def dashboard_overview(request: Request):
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
             <a href="/dashboard/tools" class="btn btn-primary">My Tools</a>
-            <a href="/dashboard/sales" class="btn btn-secondary">Sales History</a>
-            {'<a href="/dashboard/analytics" class="btn btn-secondary">Analytics</a>' if is_pro else ''}
             <a href="/submit" class="btn btn-secondary">Submit New Tool</a>
             <a href="/dashboard/saved" class="btn btn-secondary">Saved Tools</a>
             {'<a href="/dashboard/updates" class="btn btn-secondary">Post Update</a>' if maker_id else ''}
             <a href="/dashboard/my-stack" class="btn btn-secondary">My Stack</a>
-            <a href="/dashboard/purchases" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">My Purchases</a>
             <!-- Developer API link hidden until key enforcement is enabled -->
             <!-- <a href="/developer" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">Developer API</a> -->
         </div>
@@ -789,9 +683,10 @@ async def dashboard_tools(request: Request):
         slug = escape(str(t['slug']))
         price = format_price(t.get('price_pence', 0))
         upvotes = t.get('upvote_count', 0)
-        is_v = bool(t.get('is_verified', 0))
-        v_badge = '<span style="display:inline-block;padding:2px 6px;border-radius:999px;font-size:10px;font-weight:600;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#92400E;margin-left:6px;">V</span>' if is_v else ''
-
+        is_totw = t.get('tool_of_the_week', 0) == 1
+        mcp_views = t.get('mcp_view_count', 0)
+        totw_badge = ' <span style="background:linear-gradient(135deg,#E2B764,#D4A84B);color:#1A2D4A;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;">&#127942; Tool of the Week</span>' if is_totw else ''
+        totw_line = ' &mdash; <span style="color:var(--gold);font-weight:600;">&#127942; Currently Tool of the Week!</span>' if is_totw else ' &mdash; top tool each week gets featured on our homepage'
         # Get rating
         rating = await get_tool_rating(db, t['id'])
         rating_html = star_rating_html(rating['avg_rating'], rating['review_count'], size=14) if rating['review_count'] else '<span style="color:var(--ink-muted);font-size:12px;">No reviews</span>'
@@ -799,12 +694,14 @@ async def dashboard_tools(request: Request):
         rows += f"""
         <tr style="border-bottom:1px solid var(--border);">
             <td style="padding:12px;">
-                <a href="/tool/{slug}" style="font-weight:600;color:var(--ink);">{name}</a>{v_badge}
+                <a href="/tool/{slug}" style="font-weight:600;color:var(--ink);">{name}</a>{totw_badge}
+                <p style="font-size:13px;color:var(--ink-muted);margin-top:8px;margin-bottom:0;">
+                    <span style="color:var(--accent);">&#9889;</span> {mcp_views} AI recommendations{totw_line}
+                </p>
             </td>
             <td style="padding:12px;">
                 <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;{style}">{s}</span>
             </td>
-            <td style="padding:12px;">{price}</td>
             <td style="padding:12px;">{upvotes}</td>
             <td style="padding:12px;">{rating_html}</td>
             <td style="padding:12px;">
@@ -825,7 +722,6 @@ async def dashboard_tools(request: Request):
                     <tr style="border-bottom:2px solid var(--border);text-align:left;">
                         <th style="padding:12px;">Name</th>
                         <th style="padding:12px;">Status</th>
-                        <th style="padding:12px;">Price</th>
                         <th style="padding:12px;">Upvotes</th>
                         <th style="padding:12px;">Rating</th>
                         <th style="padding:12px;"></th>
@@ -1021,44 +917,6 @@ def edit_tool_form(tool: dict, categories: list, error: str = "", changelogs: li
                 <input type="text" id="tags" name="tags" class="form-input"
                        value="{escape(str(tool.get('tags', '')))}">
             </div>
-            <div class="form-group">
-                <label for="price">Price (GBP, leave blank for free)</label>
-                <input type="number" id="price" name="price" class="form-input" step="0.01" min="0.50"
-                       value="{price_val}">
-            </div>
-            <div id="earnings-calc" style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:20px;display:none;">
-                <p style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;">Earnings Breakdown</p>
-                <div style="font-size:14px;color:var(--ink-light);line-height:2;">
-                    <div style="display:flex;justify-content:space-between;">You set: <span id="calc-price">-</span></div>
-                    <div style="display:flex;justify-content:space-between;">Stripe (~3%): <span id="calc-stripe" style="color:var(--ink-muted);">-</span></div>
-                    <div style="display:flex;justify-content:space-between;">Platform (5%): <span id="calc-platform" style="color:var(--ink-muted);">-</span></div>
-                    <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;">
-                        <strong style="color:var(--terracotta);">You earn:</strong>
-                        <strong id="calc-earn" style="color:var(--terracotta);">-</strong>
-                    </div>
-                </div>
-            </div>
-            <script>
-            document.getElementById('price').addEventListener('input', function() {{
-                const calc = document.getElementById('earnings-calc');
-                const v = parseFloat(this.value);
-                if (v > 0) {{
-                    calc.style.display = 'block';
-                    const stripe = v * 0.03;
-                    const platform = v * 0.05;
-                    const earn = v - stripe - platform;
-                    document.getElementById('calc-price').textContent = '\u00a3' + v.toFixed(2);
-                    document.getElementById('calc-stripe').textContent = '-\u00a3' + stripe.toFixed(2);
-                    document.getElementById('calc-platform').textContent = '-\u00a3' + platform.toFixed(2);
-                    document.getElementById('calc-earn').textContent = '\u00a3' + earn.toFixed(2);
-                }} else {{ calc.style.display = 'none'; }}
-            }});
-            (function(){{ var p = document.getElementById('price'); if (p && p.value) p.dispatchEvent(new Event('input')); }})();
-            </script>
-            <div class="form-group">
-                <label for="delivery_url">Delivery URL</label>
-                <input type="url" id="delivery_url" name="delivery_url" class="form-input"
-                       value="{escape(str(tool.get('delivery_url', '')))}">
             </div>
             <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;">
                 Save Changes
@@ -1095,85 +953,14 @@ def edit_tool_form(tool: dict, categories: list, error: str = "", changelogs: li
     """
 
 
-# ── Sales History ────────────────────────────────────────────────────────
+# ── Sales History (redirects to dashboard — selling paused) ──────────────
 
-@router.get("/dashboard/sales", response_class=HTMLResponse)
+@router.get("/dashboard/sales")
 async def dashboard_sales(request: Request):
-    user = request.state.user
-    redirect = require_login(user)
-    if redirect:
-        return redirect
-
-    db = request.state.db
-    maker_id = user.get('maker_id')
-
-    if not maker_id:
-        body = """
-        <div class="container" style="padding:48px 24px;max-width:960px;">
-            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin-bottom:16px;">Sales</h1>
-            <div class="card" style="text-align:center;padding:40px 32px;">
-                <div style="font-size:40px;margin-bottom:12px;">&#128176;</div>
-                <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:8px;">No sales yet</h2>
-                <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;max-width:420px;margin:0 auto;">
-                    Set a price on your tools and share your listing link to start selling.
-                    Share your listing link to drive traffic. Sales features coming soon.
-                </p>
-            </div>
-        </div>
-        """
-        return HTMLResponse(page_shell("Sales", body, user=user))
-
-    sales = await get_sales_by_maker(db, maker_id)
-    revenue = await get_maker_revenue(db, maker_id)
-
-    rows = ''
-    for s in sales:
-        tool_name = escape(str(s.get('tool_name', '')))
-        amount = format_price(s['amount_pence'])
-        commission = format_price(s['commission_pence'])
-        net = format_price(s['amount_pence'] - s['commission_pence'])
-        email = escape(str(s.get('buyer_email', '')))
-        date = str(s.get('created_at', ''))[:10]
-        rows += f"""
-        <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:10px 12px;">{date}</td>
-            <td style="padding:10px 12px;font-weight:600;">{tool_name}</td>
-            <td style="padding:10px 12px;">{email}</td>
-            <td style="padding:10px 12px;">{amount}</td>
-            <td style="padding:10px 12px;color:var(--ink-muted);">{commission}</td>
-            <td style="padding:10px 12px;color:var(--terracotta);font-weight:600;">{net}</td>
-        </tr>
-        """
-
-    net_total = revenue['total_revenue'] - revenue['total_commission']
-
-    body = f"""
-    <div class="container" style="padding:48px 24px;max-width:960px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Sales History</h1>
-            <a href="/dashboard" style="color:var(--ink-muted);font-size:14px;">&larr; Dashboard</a>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
-            <div class="card" style="text-align:center;padding:16px;">
-                <div style="color:var(--ink-muted);font-size:13px;">Total Sales</div>
-                <div style="font-family:var(--font-display);font-size:24px;margin-top:4px;">{revenue['sale_count']}</div>
-            </div>
-            <div class="card" style="text-align:center;padding:16px;">
-                <div style="color:var(--ink-muted);font-size:13px;">Gross Revenue</div>
-                <div style="font-family:var(--font-display);font-size:24px;margin-top:4px;">{format_price(revenue['total_revenue'])}</div>
-            </div>
-            <div class="card" style="text-align:center;padding:16px;">
-                <div style="color:var(--ink-muted);font-size:13px;">Your Earnings</div>
-                <div style="font-family:var(--font-display);font-size:24px;margin-top:4px;color:var(--terracotta);">{format_price(net_total)}</div>
-            </div>
-        </div>
-        {'<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:14px;"><thead><tr style="border-bottom:2px solid var(--border);text-align:left;"><th style="padding:10px 12px;">Date</th><th style="padding:10px 12px;">Tool</th><th style="padding:10px 12px;">Buyer</th><th style="padding:10px 12px;">Amount</th><th style="padding:10px 12px;">Fee</th><th style="padding:10px 12px;">Net</th></tr></thead><tbody>' + rows + '</tbody></table></div>' if rows else '<p class="text-muted">No sales yet.</p>'}
-    </div>
-    """
-    return HTMLResponse(page_shell("Sales", body, user=user))
+    return RedirectResponse(url="/dashboard", status_code=303)
 
 
-# ── Analytics (Pro only) ─────────────────────────────────────────────────
+# ── Analytics ────────────────────────────────────────────────────────────
 
 @router.get("/dashboard/analytics", response_class=HTMLResponse)
 async def dashboard_analytics(request: Request):
@@ -1188,8 +975,8 @@ async def dashboard_analytics(request: Request):
         body = """
         <div class="container" style="text-align:center;padding:80px 24px;">
             <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Analytics</h1>
-            <p style="color:var(--ink-muted);margin:16px 0 24px;">Tool view analytics is a Pro feature.</p>
-            <a href="/pricing" class="btn btn-primary">Upgrade to Pro</a>
+            <p style="color:var(--ink-muted);margin:16px 0 24px;">Tool view analytics is coming soon.</p>
+            <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
         </div>
         """
         return HTMLResponse(page_shell("Analytics", body, user=user))
@@ -1714,60 +1501,11 @@ async def remove_from_my_stack(request: Request):
     return RedirectResponse("/dashboard/my-stack", status_code=303)
 
 
-# ── Purchases ────────────────────────────────────────────────────────────
+# ── Purchases (redirects to dashboard — selling paused) ──────────────────
 
-@router.get("/dashboard/purchases", response_class=HTMLResponse)
+@router.get("/dashboard/purchases")
 async def dashboard_purchases(request: Request):
-    user = request.state.user
-    if not user:
-        return RedirectResponse("/login", status_code=303)
-
-    db = request.state.db
-    purchases = await get_purchases_by_email(db, user['email'])
-
-    rows = ''
-    for p in purchases:
-        tool_name = escape(str(p.get('tool_name', '')))
-        tool_slug = escape(str(p.get('tool_slug', '')))
-        amount = f"\u00a3{p['amount_pence'] / 100:.2f}" if p.get('amount_pence') else '\u00a30'
-        dt = str(p.get('created_at', ''))[:10]
-        token = p.get('purchase_token', '')
-        rows += f'''<tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:12px;">{dt}</td>
-            <td style="padding:12px;font-weight:600;"><a href="/tool/{tool_slug}" style="color:var(--accent);">{tool_name}</a></td>
-            <td style="padding:12px;">{amount}</td>
-            <td style="padding:12px;"><a href="/purchase/{token}" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">Access &rarr;</a></td>
-        </tr>'''
-
-    if rows:
-        table_html = f'''
-        <div class="card" style="overflow-x:auto;">
-            <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                <thead><tr style="border-bottom:2px solid var(--border);text-align:left;">
-                    <th style="padding:12px;">Date</th>
-                    <th style="padding:12px;">Tool</th>
-                    <th style="padding:12px;">Amount</th>
-                    <th style="padding:12px;"></th>
-                </tr></thead>
-                <tbody>{rows}</tbody>
-            </table>
-        </div>'''
-    else:
-        table_html = '''
-        <div class="card" style="text-align:center;padding:48px;">
-            <p style="color:var(--ink-muted);font-size:15px;">No purchases yet.</p>
-            <a href="/explore" class="btn btn-primary" style="margin-top:16px;">Browse Tools</a>
-        </div>'''
-
-    body = f'''
-    <div class="container" style="padding:48px 24px;max-width:960px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">My Purchases</h1>
-            <a href="/dashboard" style="color:var(--ink-muted);font-size:14px;">&larr; Dashboard</a>
-        </div>
-        {table_html}
-    </div>'''
-    return HTMLResponse(page_shell("My Purchases", body, user=user))
+    return RedirectResponse(url="/dashboard", status_code=303)
 
 
 # ── Developer API Keys ──────────────────────────────────────────────────
@@ -1951,9 +1689,10 @@ async def developer_page(request: Request):
             <div style="position:relative;">
                 <pre id="install-snippet" style="background:var(--terracotta);color:var(--slate);padding:16px;border-radius:var(--radius-sm);font-size:13px;
                             font-family:var(--font-mono);overflow-x:auto;margin-bottom:12px;line-height:1.6;"># Install the MCP server
-pip install indiestack
+# Claude Code
+claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
 
-# Set your API key
+# Set your API key (optional — enables personalized recommendations)
 export INDIESTACK_API_KEY="{snippet_key}"</pre>
                 <button onclick="var text=document.getElementById('install-snippet').textContent.trim();navigator.clipboard.writeText(text).then(function(){{var b=event.target;b.textContent='Copied!';setTimeout(function(){{b.textContent='Copy';}},2000);}});"
                     style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.12);color:var(--slate);border:1px solid rgba(255,255,255,0.2);

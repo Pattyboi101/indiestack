@@ -5,7 +5,7 @@ from html import escape
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
-from indiestack.routes.components import page_shell, verified_badge_html
+from indiestack.routes.components import page_shell
 from indiestack.db import get_tools_for_comparison
 
 router = APIRouter()
@@ -29,53 +29,49 @@ def tool_column(tool: dict) -> str:
     url = escape(str(tool['url']))
     cat_name = escape(str(tool.get('category_name', '')))
     upvotes = int(tool.get('upvote_count', 0))
-    is_verified = bool(tool.get('is_verified', 0))
     tags = str(tool.get('tags', ''))
     price_pence = tool.get('price_pence')
-
-    badge = verified_badge_html() if is_verified else '<span style="color:var(--ink-muted);font-size:13px;">Not verified</span>'
     price_str = format_price(price_pence)
 
     tag_html = ''
     if tags.strip():
         tag_list = [t.strip() for t in tags.split(',') if t.strip()][:5]
-        tag_html = '<div style="display:flex;gap:6px;flex-wrap:wrap;">'
+        tag_html = '<div style="display:flex;gap:8px;flex-wrap:wrap;">'
         for t in tag_list:
             tag_html += f'<span class="tag">{escape(t)}</span>'
         tag_html += '</div>'
 
     return f"""
     <div style="flex:1;min-width:280px;">
-        <div style="text-align:center;padding-bottom:24px;border-bottom:1px solid var(--border);margin-bottom:20px;">
+        <div style="text-align:center;padding-bottom:24px;border-bottom:1px solid var(--border);margin-bottom:24px;">
             <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin-bottom:8px;">
                 <a href="/tool/{slug}" style="color:var(--ink);">{name}</a>
             </h2>
-            {badge}
         </div>
         <div style="display:flex;flex-direction:column;gap:20px;">
             <div>
-                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:6px;">Tagline</div>
+                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;">Tagline</div>
                 <p style="color:var(--ink-light);font-size:15px;">{tagline}</p>
             </div>
             <div>
-                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:6px;">Description</div>
+                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;">Description</div>
                 <p style="color:var(--ink-light);font-size:14px;line-height:1.6;
                           display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;">{description}</p>
             </div>
             <div>
-                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:6px;">Price</div>
+                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;">Price</div>
                 <span style="font-family:var(--font-display);font-size:20px;color:var(--ink);">{price_str}</span>
             </div>
             <div>
-                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:6px;">Category</div>
+                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;">Category</div>
                 <span class="tag">{cat_name}</span>
             </div>
             <div>
-                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:6px;">Upvotes</div>
+                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;">Upvotes</div>
                 <span style="font-family:var(--font-display);font-size:20px;color:var(--slate-dark);">&#9650; {upvotes}</span>
             </div>
             <div>
-                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:6px;">Tags</div>
+                <div style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;">Tags</div>
                 {tag_html if tag_html else '<span style="color:var(--ink-muted);font-size:14px;">No tags</span>'}
             </div>
             <a href="/tool/{slug}" class="btn btn-primary" style="text-align:center;justify-content:center;margin-top:8px;">
