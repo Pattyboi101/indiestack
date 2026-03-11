@@ -46,6 +46,9 @@ src/indiestack/routes/pricing.py
 src/indiestack/routes/purchase.py
 src/indiestack/routes/verify.py
 
+# Database backups
+backups/
+
 # Large binaries
 *.jpeg
 *.mp4

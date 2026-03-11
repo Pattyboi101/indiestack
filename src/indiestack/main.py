@@ -11,6 +11,20 @@ from datetime import date
 
 _logger = logging.getLogger("indiestack")
 
+
+def _alert_telegram(task_name: str, error: str):
+    """Send error alert to Patrick via Telegram (fire-and-forget)."""
+    import subprocess
+    msg = f"IndieStack BG task FAILED: {task_name}\n{error[:200]}"
+    try:
+        subprocess.Popen(
+            ["bash", "/home/patty/.claude/telegram.sh", msg],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
+    except Exception:
+        pass
+
+
 from indiestack.config import BASE_URL
 
 from pathlib import Path
@@ -191,8 +205,9 @@ async def _weekly_ego_ping():
                             )
                     except Exception:
                         pass
-        except Exception:
+        except Exception as e:
             _logger.exception("Background task failed: weekly ego ping")
+            _alert_telegram("ego ping", str(e))
 
 
 async def _auto_tool_of_the_week():
@@ -260,8 +275,9 @@ async def _auto_tool_of_the_week():
                 except Exception:
                     pass
                 logger.info(f"Auto TOTW: {tool['name']} ({clicks} AI mentions this week)")
-        except Exception:
+        except Exception as e:
             _logger.exception("Background task failed: auto TOTW")
+            _alert_telegram("TOTW selection", str(e))
 
 
 async def _badge_nudge_check():
@@ -302,8 +318,9 @@ async def _badge_nudge_check():
                             pass
                     await conn.execute("UPDATE tools SET badge_nudge_sent = 1 WHERE id = ?", (tool['id'],))
                 await conn.commit()
-        except Exception:
+        except Exception as e:
             _logger.exception("Background task failed: badge nudge")
+            _alert_telegram("badge nudge", str(e))
 
 
 async def _auto_weekly_digest():
@@ -402,8 +419,9 @@ async def _auto_weekly_digest():
                     await send_email(sub['email'], f"IndieStack Weekly \u2014 {week_label}", html, unsubscribe_url=unsub_url)
                     sent += 1
                 logger.info(f"Auto digest sent to {sent} subscribers")
-        except Exception:
+        except Exception as e:
             _logger.exception("Background task failed: weekly digest")
+            _alert_telegram("weekly digest", str(e))
 
 
 @asynccontextmanager
