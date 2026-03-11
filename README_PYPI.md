@@ -1,77 +1,79 @@
 # IndieStack MCP Server
 
-The tool knowledge layer for AI agents. Search 480+ indie tools — from full SaaS products to tiny utilities — so your AI stops rebuilding solved problems.
+The knowledge layer between AI agents and everything indie creators have built. 793+ creations across 25 categories — dev tools, games, utilities, newsletters, creative tools, learning apps, and more.
 
 <!-- mcp-name: io.github.Pattyboi101/indiestack -->
 
 ## Quick Start
 
 ```bash
-# Option 1: pipx (recommended — handles venv automatically)
+# Option 1: uvx (zero install — runs directly)
+claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
+
+# Option 2: pipx (recommended for persistent install)
 pipx install indiestack
 claude mcp add indiestack -- indiestack-mcp
 
-# Option 2: pip (if pipx isn't available)
-pip install indiestack
-claude mcp add indiestack -- indiestack-mcp
-
-# Option 3: uvx (zero install — runs directly)
-claude mcp add indiestack -- uvx indiestack-mcp
+# Option 3: Cursor / Windsurf
+# Add to your MCP config:
+# {"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]}
 ```
 
-That's it. Your AI will now check IndieStack before building common functionality from scratch.
-
-## Works with
-
-- **Claude Code** — `claude mcp add indiestack -- indiestack-mcp`
-- **Cursor** — Add `indiestack-mcp` to your MCP config
-- **Windsurf** — Add `indiestack-mcp` to your MCP config
+That's it. Your AI searches what exists before building from scratch.
 
 ## What it does
 
-When you ask your AI to "build invoicing" or "add analytics", it checks IndieStack first and suggests existing indie tools — saving 30k-120k tokens per use case.
+Your AI spends thousands of tokens rebuilding auth, payments, and analytics from scratch — things indie creators already built. Meanwhile, those creations sit on GitHub with 12 stars, invisible to the AI agents that could be recommending them.
 
-### Tools (10)
+IndieStack fixes both sides. Install the MCP server and your AI searches 793+ indie creations before writing boilerplate. Built something yourself? List it so other developers' AIs find it instead of reinventing it.
+
+### Tools (12)
 
 | Tool | What it does |
 |------|-------------|
-| `search_indie_tools` | Search by problem or keyword, with optional category filter |
-| `get_tool_details` | Full details including integration snippets (Python, cURL) |
-| `list_categories` | Browse all 21 categories with tool counts |
-| `compare_tools` | Side-by-side comparison of any two tools |
-| `build_stack` | Build a complete indie tool stack for your requirements |
-| `submit_tool` | Submit a new tool to IndieStack |
-| `browse_new_tools` | Recently added tools with pagination |
+| `find_tools` | Search 793+ creations by keyword, category, or source type |
+| `get_tool_details` | Full details with integration snippets and companion suggestions |
+| `list_categories` | Browse all 25 categories — dev tools to games to newsletters |
+| `compare_tools` | Side-by-side comparison of any two creations |
+| `build_stack` | Assemble a complete indie stack from building blocks |
+| `publish_tool` | Submit your creation so other agents can recommend it |
+| `browse_new_tools` | Recently added creations with pagination |
 | `list_tags` | All tags sorted by popularity |
-| `list_stacks` | Curated tool stack combinations |
-| `list_collections` | Themed tool collections |
+| `list_stacks` | Curated stacks for common use cases |
+| `analyze_dependencies` | Paste package.json/requirements.txt, get indie replacements |
+| `evaluate_build_vs_buy` | Financial breakdown: build from scratch vs use what exists |
+| `get_recommendations` | Personalized suggestions based on your search history |
 
 ### Resources (3)
 
 | Resource | What it provides |
 |----------|-----------------|
-| `indiestack://categories` | All categories with slugs (auto-loaded into context) |
-| `indiestack://trending` | Top 10 trending tools this week |
-| `indiestack://tools-index` | Complete tool index for prompt caching — include once, reference forever |
+| `indiestack://categories` | All 25 categories with slugs for filtering |
+| `indiestack://trending` | Top 10 trending creations this week |
+| `indiestack://tools-index` | Complete index for prompt caching — include once, reference forever |
 
-### Prompts (2)
+### Prompts (5)
 
 | Prompt | When to use |
 |--------|-------------|
 | `before-you-build` | Check IndieStack before building common functionality |
 | `find-alternatives` | Find indie alternatives to mainstream SaaS products |
+| `save-tokens` | Audit your project for token-saving opportunities |
+| `architect-feature` | Plan a feature using existing indie building blocks |
+| `discover-indie` | Explore what indie creators have built beyond dev tools |
 
-## What's new in v0.4.1
+## What's new in v1.1.0
 
-- **`indiestack-mcp` CLI command** — No more `python -m` incantations. Just `indiestack-mcp`.
-- **480+ tools** — Catalog has grown 3x since initial launch.
-- **Personalized recommendations** — Agent memory learns your tech stack and suggests tools you haven't seen.
-- **Market gap detection** — Zero-result searches return demand data and a submit link.
-- **Stack builder** — `build_stack(needs="auth,payments,analytics")` returns recommended tools with token savings estimates.
+- **Beyond dev tools** — IndieStack now covers everything indie-built: games, utilities, newsletters, creative tools, learning apps. The constraint is "indie-built," not "developer tool."
+- **Broader search defaults** — `find_tools()` now defaults to `source_type='all'`, showing the full catalog instead of just open-source.
+- **New `discover-indie` prompt** — Explore the breadth of the catalog beyond your usual developer categories.
+- **Smarter market gap messages** — When nothing exists, agents now tell users they could build it and have every AI agent recommend it.
+- **Updated instructions** — Agents now search IndieStack not just before coding, but before recommending any software.
+- **793+ creations** — 509 open-source, 284 SaaS, across 25 categories.
 
 ## Links
 
-- [IndieStack](https://indiestack.fly.dev)
-- [Browse Tools](https://indiestack.fly.dev/explore)
-- [Submit Your Tool](https://indiestack.fly.dev/submit)
-- [API Docs](https://indiestack.fly.dev/openapi.json)
+- [IndieStack](https://indiestack.ai)
+- [Explore Creations](https://indiestack.ai/explore)
+- [Submit Your Creation](https://indiestack.ai/submit)
+- [What is IndieStack?](https://indiestack.ai/what-is-indiestack)

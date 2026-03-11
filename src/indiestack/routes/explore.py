@@ -5,10 +5,10 @@ from html import escape
 from urllib.parse import urlencode
 
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.routes.components import page_shell, tool_card, pagination_html, email_sticky_bar
-from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_counts
+from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_counts, get_new_for_user
 
 router = APIRouter()
 
@@ -21,7 +21,7 @@ async def explore(request: Request):
     # Parse query params
     category = request.query_params.get("category", "")
     tag = request.query_params.get("tag", "")
-    price = request.query_params.get("price", "")
+    price = ""
     sort = request.query_params.get("sort", "hot")
     verified = ""
     ejectable = request.query_params.get("ejectable", "")
@@ -30,6 +30,24 @@ async def explore(request: Request):
         page = int(request.query_params.get("page", "1") or "1")
     except (ValueError, TypeError):
         page = 1
+
+    # "New for you" personalized section (logged-in users only)
+    new_for_you_html = ''
+    if user and not any([category, tag, source_type, ejectable]) and page == 1:
+        new_for_you = await get_new_for_user(db, user['id'], limit=6)
+        if new_for_you:
+            nfy_cards = ''.join(tool_card(t) for t in new_for_you)
+            new_for_you_html = f'''
+        <div style="margin-bottom:32px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+                <span style="font-size:18px;">&#10024;</span>
+                <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:0;">New for you</h2>
+                <span style="font-size:12px;color:var(--ink-muted);background:var(--cream-dark);padding:4px 10px;border-radius:999px;">Based on your bookmarks</span>
+            </div>
+            <div class="card-grid">{nfy_cards}</div>
+            <div style="border-bottom:1px solid var(--border);margin-top:24px;"></div>
+        </div>
+        '''
 
     # Fetch filter data
     categories = await get_all_categories(db)
@@ -54,7 +72,6 @@ async def explore(request: Request):
     params = {}
     if category: params["category"] = category
     if tag: params["tag"] = tag
-    if price: params["price"] = price
     if sort and sort != "hot": params["sort"] = sort
     if ejectable: params["ejectable"] = ejectable
     if source_type in ("code", "saas"): params["source_type"] = source_type
@@ -86,11 +103,7 @@ async def explore(request: Request):
         </div>
         '''
 
-    # Price pills
     price_pills = ''
-    for val, label in [("", "All"), ("free", "Free"), ("paid", "Paid")]:
-        is_active = val == price
-        price_pills += f'<button type="submit" name="price" value="{val}" class="pill-filter{" active" if is_active else ""}">{label}</button>'
 
     # Sort dropdown
     sort_options = ''
@@ -118,10 +131,6 @@ async def explore(request: Request):
                 break
     if ejectable:
         active_filters.append('<strong>Ejectable</strong>')
-    if price == 'free':
-        active_filters.append('<strong>Free</strong>')
-    elif price == 'paid':
-        active_filters.append('<strong>Paid</strong>')
     if source_type == 'code':
         active_filters.append('<strong>Code (Open Source)</strong>')
     elif source_type == 'saas':
@@ -148,9 +157,6 @@ async def explore(request: Request):
             <select name="category" class="form-select-pill" onchange="this.form.submit()">
                 {cat_options}
             </select>
-            <div style="display:flex;gap:8px;">
-                {price_pills}
-            </div>
             <select name="sort" class="form-select-pill" onchange="this.form.submit()">
                 {sort_options}
             </select>
@@ -167,7 +173,7 @@ async def explore(request: Request):
     <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);padding:32px;
         margin:32px 0;text-align:center;color:#fff;">
         <h3 style="font-family:var(--font-display);font-size:24px;margin-bottom:8px;">
-            Get the best indie tools in your inbox
+            Get the best indie creations in your inbox
         </h3>
         <p style="color:rgba(255,255,255,0.7);font-size:14px;margin-bottom:24px;">
             Weekly curated picks, new launches, and maker stories.
@@ -188,7 +194,7 @@ async def explore(request: Request):
     # Results
     if results:
         cards_html = "".join(tool_card(t) for t in results)
-        result_label = f'{total} tool{"s" if total != 1 else ""}'
+        result_label = f'{total} creation{"s" if total != 1 else ""}'
         results_section = f'''
         <p style="font-size:14px;color:var(--ink-muted);margin-bottom:16px;">{result_label}</p>
         <div class="card-grid card-stagger">{cards_html}</div>
@@ -207,22 +213,43 @@ async def explore(request: Request):
     body = f'''
     <div class="container" style="padding:48px 24px;overflow-x:hidden;">
         <div style="margin-bottom:32px;">
-            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Explore Tools</h1>
-            <p style="color:var(--ink-muted);font-size:16px;">Community-curated catalog of indie tools. Makers can <a href="/submit" style="color:var(--accent);">claim their listing</a> to update details and verify ownership.</p>
+            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Explore</h1>
+            <p style="color:var(--ink-muted);font-size:16px;">Community-curated catalog of indie creations. Makers can <a href="/submit" style="color:var(--accent);">claim their listing</a> to update details and verify ownership.</p>
         </div>
         <form action="/search" method="GET" style="margin-bottom:24px;">
             <div style="display:flex;gap:8px;max-width:480px;">
-                <input type="text" name="q" placeholder="Search tools..." class="form-input"
+                <input type="text" name="q" placeholder="Search creations..." class="form-input"
                     style="flex:1;border-radius:999px;padding:12px 24px;font-size:14px;">
                 <button type="submit" class="btn btn-primary" style="padding:12px 24px;font-size:14px;">Search</button>
             </div>
         </form>
+        <a href="/surprise" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;
+            background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
+            color:var(--ink-light);font-size:14px;font-weight:500;text-decoration:none;
+            transition:all 0.2s;margin-bottom:16px;"
+            onmouseover="this.style.background='var(--accent)';this.style.color='#fff';this.style.borderColor='var(--accent)'"
+            onmouseout="this.style.background='var(--cream-dark)';this.style.color='var(--ink-light)';this.style.borderColor='var(--border)'">
+            &#127922; Surprise me
+        </a>
         {tag_pills_html}
         {filter_bar}
         {active_html}
+        {new_for_you_html}
         {results_section}
     </div>
     '''
 
-    desc = "Browse and filter indie SaaS tools by category, tags, verification status, and price. Find the perfect indie alternative."
-    return HTMLResponse(page_shell(title="Explore Indie Tools — Filter by Category, Tag, Price | IndieStack", body=body + email_sticky_bar(), description=desc, user=user, canonical="/explore"))
+    desc = "Browse and filter indie creations by category, tags, verification status, and price. Find the perfect indie alternative."
+    response = HTMLResponse(page_shell(title="Explore Indie Creations | IndieStack", body=body + email_sticky_bar(), description=desc, user=user, canonical="/explore"))
+    response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"
+    return response
+
+
+@router.get("/surprise", response_class=RedirectResponse)
+async def surprise(request: Request):
+    db = request.state.db
+    row = await db.execute("SELECT slug FROM tools WHERE status='approved' ORDER BY RANDOM() LIMIT 1")
+    tool = await row.fetchone()
+    if tool:
+        return RedirectResponse(f"/tool/{tool['slug']}", status_code=302)
+    return RedirectResponse("/explore", status_code=302)

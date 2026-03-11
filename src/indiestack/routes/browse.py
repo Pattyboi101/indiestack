@@ -9,6 +9,7 @@ from fastapi.responses import HTMLResponse
 
 from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card, pagination_html
+from indiestack.routes.category_icons import category_icon
 from indiestack.db import get_category_by_slug, get_tools_by_category, get_category_tools_for_compare
 
 router = APIRouter()
@@ -37,10 +38,10 @@ async def category_page(request: Request, slug: str, page: int = 1):
     tools, total = await get_tools_by_category(db, int(category['id']), page=page, per_page=PER_PAGE)
     total_pages = max(1, math.ceil(total / PER_PAGE))
 
-    icon = str(category.get('icon', ''))
+    icon = category_icon(str(category.get('slug', '')), size=48)
     name = str(category['name'])
     name_esc = escape(name)
-    desc = f"Discover indie {name} tools built by solo developers and small teams. Open-source, bootstrapped alternatives."
+    desc = f"Discover indie {name} creations built by independent makers and small teams. Open-source, bootstrapped alternatives."
 
     if tools:
         cards = '\n'.join(tool_card(t) for t in tools)
@@ -86,7 +87,7 @@ async def category_page(request: Request, slug: str, page: int = 1):
     body = f"""
     <div class="container" style="padding:48px 24px;">
         <div style="text-align:center;margin-bottom:40px;">
-            <span style="font-size:48px;">{icon}</span>
+            <span style="color:var(--slate);display:inline-block;">{icon}</span>
             <h1 style="font-family:var(--font-display);font-size:36px;margin-top:8px;color:var(--ink);">{name_esc}</h1>
             <p class="text-muted mt-2">{desc}</p>
         </div>

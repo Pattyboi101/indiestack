@@ -56,7 +56,7 @@ async def makers_directory(request: Request):
         {pagination_html(page, total_pages, f'/makers?sort={escape(sort)}')}
     </div>
     """
-    return HTMLResponse(page_shell("Maker Directory", body, description="Discover indie makers building SaaS tools.", user=request.state.user))
+    return HTMLResponse(page_shell("Maker Directory", body, description="Discover indie makers and the creations they've built. Browse profiles, see their work, and connect with the people behind the software.", user=request.state.user, canonical="/makers"))
 
 
 @router.get("/maker/{slug}", response_class=HTMLResponse)
@@ -244,7 +244,7 @@ async def leaderboard(request: Request):
     elif days_left == 0:
         launch_line = 'We&rsquo;re <strong>live on Product Hunt today</strong>! Claimed makers get featured.'
     else:
-        launch_line = 'AI agents search IndieStack before writing code from scratch. <strong>Claimed makers rank higher.</strong>'
+        launch_line = 'AI agents search IndieStack before building from scratch. <strong>Claimed makers rank higher.</strong>'
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
@@ -275,7 +275,7 @@ async def leaderboard(request: Request):
         </div>
         {score_explainer}
         <div style="text-align:center;margin-top:32px;">
-            <a href="/submit" class="btn btn-slate" style="padding:16px 32px;font-size:16px;">Add Your Tool &rarr;</a>
+            <a href="/submit" class="btn btn-slate" style="padding:16px 32px;font-size:16px;">Submit Your Creation &rarr;</a>
         </div>
     </div>
     """

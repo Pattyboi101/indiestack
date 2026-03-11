@@ -1,0 +1,1617 @@
+[
+  {
+    "name": "readfish",
+    "full_name": "LooseLab/readfish",
+    "url": "https://github.com/LooseLab/readfish",
+    "description": "CLI tool for flexible and fast adaptive sampling on ONT sequencers",
+    "stars": 194,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "LooseLab",
+      "name": "LooseLab",
+      "email": "",
+      "bio": "The LooseLab is based in the University of Nottingham's school of life sciences.",
+      "url": "looselab.github.io"
+    }
+  },
+  {
+    "name": "perfect-bioinformatic-tools",
+    "full_name": "shenwei356/perfect-bioinformatic-tools",
+    "url": "https://github.com/shenwei356/perfect-bioinformatic-tools",
+    "description": "What should perfect bioinformatic tools be like?",
+    "stars": 146,
+    "language": "",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source",
+    "maker": {
+      "login": "shenwei356",
+      "name": "Wei Shen",
+      "email": "shenwei356@gmail.com",
+      "bio": "",
+      "url": "http://shenwei.me"
+    }
+  },
+  {
+    "name": "jgi-query",
+    "full_name": "glarue/jgi-query",
+    "url": "https://github.com/glarue/jgi-query",
+    "description": "A simple command-line tool to download data from Joint Genome Institute databases",
+    "stars": 51,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "glarue",
+      "name": "Graham Larue",
+      "email": "",
+      "bio": "Bioinformatician",
+      "url": "https://scholar.google.com/citations?user=vamLUFgAAAAJ&hl=en"
+    }
+  },
+  {
+    "name": "appsheet_parser_and_orphan_detector",
+    "full_name": "KirkMasden/appsheet_parser_and_orphan_detector",
+    "url": "https://github.com/KirkMasden/appsheet_parser_and_orphan_detector",
+    "description": "Python tools for AppSheet developers: Convert HTML Application Documentation to CSV format, analyze component dependencies, and identify unused (orphan) elements for cleanup.",
+    "stars": 6,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "open-source,python",
+    "maker": {
+      "login": "KirkMasden",
+      "name": "KirkMasden",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/KirkMasden"
+    }
+  },
+  {
+    "name": "1password-export",
+    "full_name": "ericwastaken/1password-export",
+    "url": "https://github.com/ericwastaken/1password-export",
+    "description": "A simple CLI tool to export a 1Password item to CSV, including attachments, with optional encryption and secure cleanup.",
+    "stars": 2,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "ericwastaken",
+      "name": "Eric Soto",
+      "email": "eric@issfl.com",
+      "bio": "",
+      "url": "http://ericsoto.net/"
+    }
+  },
+  {
+    "name": "Firefly-Argenta-import",
+    "full_name": "mvanrompuy/Firefly-Argenta-import",
+    "url": "https://github.com/mvanrompuy/Firefly-Argenta-import",
+    "description": "A small script to cleanup the CSV that can be extracted from the bank accounts of the Belgian bank Argenta (for usage in the Firefly CSV import tool).",
+    "stars": 2,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "open-source,python",
+    "maker": {
+      "login": "mvanrompuy",
+      "name": "Maarten Van Rompuy",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/mvanrompuy"
+    }
+  },
+  {
+    "name": "DevOps-Python-tools",
+    "full_name": "HariSekhon/DevOps-Python-tools",
+    "url": "https://github.com/HariSekhon/DevOps-Python-tools",
+    "description": "80+ DevOps & Data CLI Tools - AWS, GCP, GCF Python Cloud Functions, Log Anonymizer, Spark, Hadoop, HBase, Hive, Impala, Linux, Docker, Spark Data Converters & Validators (Avro/Parquet/JSON/CSV/INI/XML",
+    "stars": 815,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,converter,docker,open-source,python",
+    "maker": {
+      "login": "HariSekhon",
+      "name": "Hari Sekhon",
+      "email": "",
+      "bio": "Cloud Architect, DevOps, Data Engineer, Big Data (ex-Cloudera), 100% Remote Overseas Digital Nomad",
+      "url": "https://github.com/HariSekhon"
+    }
+  },
+  {
+    "name": "stencil",
+    "full_name": "raystack/stencil",
+    "url": "https://github.com/raystack/stencil",
+    "description": "Stencil is a schema registry that provides schema management and validation dynamically, efficiently, and reliably to ensure data compatibility across applications.",
+    "stars": 236,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "raystack",
+      "name": "Raystack Foundation",
+      "email": "hello@raystack.org",
+      "bio": "Non-profit organization building open-source technology to build, scale, and secure data-intensive applications.",
+      "url": "https://raystack.org"
+    }
+  },
+  {
+    "name": "Major-project-list",
+    "full_name": "ManojKumarPatnaik/Major-project-list",
+    "url": "https://github.com/ManojKumarPatnaik/Major-project-list",
+    "description": "A list of practical projects that anyone can solve in any programming language (See solutions). These projects are divided into multiple categories, and each category has its own folder.  To get start",
+    "stars": 218,
+    "language": "",
+    "category_slug": "file-management",
+    "tags": "cli,converter,generator,open-source",
+    "maker": {
+      "login": "ManojKumarPatnaik",
+      "name": "Manoj kumar patnaik",
+      "email": "",
+      "bio": "Empowering communities via open-source and education.",
+      "url": "https://github.com/ManojKumarPatnaik"
+    }
+  },
+  {
+    "name": "aptos",
+    "full_name": "pennsignals/aptos",
+    "url": "https://github.com/pennsignals/aptos",
+    "description": ":sunny: A tool for validating data using JSON Schema and converting JSON Schema documents into different data-interchange formats",
+    "stars": 148,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "pennsignals",
+      "name": "Penn Signals",
+      "email": "pennsignals@pennmedicine.upenn.edu",
+      "bio": "",
+      "url": "http://predictivehealthcare.pennmedicine.org"
+    }
+  },
+  {
+    "name": "Termux-command",
+    "full_name": "CNTRUN/Termux-command",
+    "url": "https://github.com/CNTRUN/Termux-command",
+    "description": "char const* const commands[] = { \"aapt\", \" aapt\", \" zipalign\", \"abduco\", \" abduco\", \"abook\", \" abook\", \"alpine\", \" alpine\", \" pico\", \" pilot\", \" rpdump\", \" rpload\", \"angband\", \" angband\", \"apache2\", \"",
+    "stars": 108,
+    "language": "",
+    "category_slug": "file-management",
+    "tags": "api,cli,open-source",
+    "maker": {
+      "login": "CNTRUN",
+      "name": "CNTRUN",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/CNTRUN"
+    }
+  },
+  {
+    "name": "yajsv",
+    "full_name": "neilpa/yajsv",
+    "url": "https://github.com/neilpa/yajsv",
+    "description": "Yet Another JSON Schema Validator [CLI]",
+    "stars": 102,
+    "language": "Go",
+    "category_slug": "file-management",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "neilpa",
+      "name": "Neil Pankey",
+      "email": "",
+      "bio": "",
+      "url": "https://neilpa.me"
+    }
+  },
+  {
+    "name": "geojson-to-sqlite",
+    "full_name": "simonw/geojson-to-sqlite",
+    "url": "https://github.com/simonw/geojson-to-sqlite",
+    "description": "CLI tool for converting GeoJSON files to SQLite (with SpatiaLite)",
+    "stars": 64,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "simonw",
+      "name": "Simon Willison",
+      "email": "",
+      "bio": "",
+      "url": "https://simonwillison.net/"
+    }
+  },
+  {
+    "name": "Houdini-Geospatial-Tools",
+    "full_name": "vvzen/Houdini-Geospatial-Tools",
+    "url": "https://github.com/vvzen/Houdini-Geospatial-Tools",
+    "description": "tools for geospatial exploration in Houdini (ipython notebooks + GeoJSON libraries/CLIs/GUIs)",
+    "stars": 33,
+    "language": "Jupyter Notebook",
+    "category_slug": "file-management",
+    "tags": "cli,jupyter notebook,open-source",
+    "maker": {
+      "login": "vvzen",
+      "name": "Valerio Viperino",
+      "email": "",
+      "bio": "Scratching my head around code for expressive purposes.\r\nMaking a living as a Pipeline Developer.\r\nThis is my PERSONAL, non-work, profile.",
+      "url": "valerioviperino.me/code"
+    }
+  },
+  {
+    "name": "geojson-to-svg-cli",
+    "full_name": "derhuerst/geojson-to-svg-cli",
+    "url": "https://github.com/derhuerst/geojson-to-svg-cli",
+    "description": "Command line tool to convert GeoJSON to SVG.",
+    "stars": 28,
+    "language": "JavaScript",
+    "category_slug": "file-management",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "derhuerst",
+      "name": "Jannis",
+      "email": "mail@jannisr.de",
+      "bio": "By writing open-source software, I try to make urban infrastructure more accessible & convenient.",
+      "url": "https://jannisr.de"
+    }
+  },
+  {
+    "name": "PodcastGenerator",
+    "full_name": "PodcastGenerator/PodcastGenerator",
+    "url": "https://github.com/PodcastGenerator/PodcastGenerator",
+    "description": "Open Source Podcast Publishing Solution since 2006",
+    "stars": 619,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "generator,open-source,php",
+    "maker": {
+      "login": "PodcastGenerator",
+      "name": "PodcastGenerator",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/PodcastGenerator"
+    }
+  },
+  {
+    "name": "screaming-liquid-tiger",
+    "full_name": "herrbischoff/screaming-liquid-tiger",
+    "url": "https://github.com/herrbischoff/screaming-liquid-tiger",
+    "description": "Minimalistic podcast feed generator script for audiobooks, for use with Pocket Casts, Overcast and similar apps.",
+    "stars": 156,
+    "language": "",
+    "category_slug": "developer-tools",
+    "tags": "generator,open-source",
+    "maker": {
+      "login": "herrbischoff",
+      "name": "Marcel Bischoff",
+      "email": "",
+      "bio": "Soldier of Fortune Since 1979. Moved most of my projects over to https://git.herrbischoff.com, make sure to look there if you're missing something.",
+      "url": "https://herrbischoff.com"
+    }
+  },
+  {
+    "name": "podcast",
+    "full_name": "eduncan911/podcast",
+    "url": "https://github.com/eduncan911/podcast",
+    "description": "iTunes and RSS 2.0 Podcast Generator in Golang",
+    "stars": 140,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "generator,go,open-source",
+    "maker": {
+      "login": "eduncan911",
+      "name": "Eric Duncan",
+      "email": "",
+      "bio": "Contact via open DM @ twitter.com/eduncan911",
+      "url": "eduncan911.com"
+    }
+  },
+  {
+    "name": "blog-minimal",
+    "full_name": "thiefuniverse/blog-minimal",
+    "url": "https://github.com/thiefuniverse/blog-minimal",
+    "description": "a simple static site generator based on org mode",
+    "stars": 68,
+    "language": "Emacs Lisp",
+    "category_slug": "landing-pages",
+    "tags": "emacs lisp,generator,open-source",
+    "maker": {
+      "login": "thiefuniverse",
+      "name": "flythief",
+      "email": "thiefuniverses@gmail.com",
+      "bio": "An enthusiastic programmer ..... :laughing: ",
+      "url": "https://thiefuniverse.github.io"
+    }
+  },
+  {
+    "name": "utterson",
+    "full_name": "stef/utterson",
+    "url": "https://github.com/stef/utterson",
+    "description": "a minimal static blog generator written using old-school unix tools (make, ksh, m4, awk, procmail and a pinch of elisp)",
+    "stars": 38,
+    "language": "Shell",
+    "category_slug": "landing-pages",
+    "tags": "generator,open-source,shell",
+    "maker": {
+      "login": "stef",
+      "name": "Stefan Marsiske",
+      "email": "",
+      "bio": "",
+      "url": "https://www.ctrlc.hu/~stef/blog"
+    }
+  },
+  {
+    "name": "potato-dark",
+    "full_name": "surajmandalcell/potato-dark",
+    "url": "https://github.com/surajmandalcell/potato-dark",
+    "description": "Dark and elegant blog theme for goHugo static site generator.",
+    "stars": 31,
+    "language": "HTML",
+    "category_slug": "landing-pages",
+    "tags": "generator,html,open-source",
+    "maker": {
+      "login": "surajmandalcell",
+      "name": "Suraj Mandal",
+      "email": "me@mandalsuraj.com",
+      "bio": "Side Ventures \u00b3 | Code Janitor",
+      "url": "mandalsuraj.com"
+    }
+  },
+  {
+    "name": "epub-to-pdf-cli",
+    "full_name": "surajsutar7/epub-to-pdf-cli",
+    "url": "https://github.com/surajsutar7/epub-to-pdf-cli",
+    "description": "\ud83d\udcd8 EPUB to PDF CLI \u2013 Node.js EPUB to PDF Converter using Calibre",
+    "stars": 3,
+    "language": "JavaScript",
+    "category_slug": "file-management",
+    "tags": "cli,converter,javascript,open-source",
+    "maker": {
+      "login": "surajsutar7",
+      "name": "Suraj Sutar",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/surajsutar7"
+    }
+  },
+  {
+    "name": "fictionpub",
+    "full_name": "TinyRaindrop/fictionpub",
+    "url": "https://github.com/TinyRaindrop/fictionpub",
+    "description": "FB2 to EPUB3 ebook converter with CLI / GUI",
+    "stars": 2,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,converter,open-source,python",
+    "maker": {
+      "login": "TinyRaindrop",
+      "name": "TinyRaindrop",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/TinyRaindrop"
+    }
+  },
+  {
+    "name": "convertext",
+    "full_name": "danielcorsano/convertext",
+    "url": "https://github.com/danielcorsano/convertext",
+    "description": "CLI based universal converter for ebook, text, document, PDF, markdown and HTML files.",
+    "stars": 1,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,converter,open-source,python",
+    "maker": {
+      "login": "danielcorsano",
+      "name": "danielcorsano",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/danielcorsano"
+    }
+  },
+  {
+    "name": "video-thumbnail-generator",
+    "full_name": "flavioribeiro/video-thumbnail-generator",
+    "url": "https://github.com/flavioribeiro/video-thumbnail-generator",
+    "description": ":camera: Generate thumbnail sprites from videos.",
+    "stars": 327,
+    "language": "Python",
+    "category_slug": "design-creative",
+    "tags": "generator,open-source,python",
+    "maker": {
+      "login": "flavioribeiro",
+      "name": "Flavio Ribeiro",
+      "email": "email@flavioribeiro.com",
+      "bio": "From the Northeast of Brazil \ud83c\udde7\ud83c\uddf7. FOSS, distributed systems, multimedia, and games.\r\n",
+      "url": "http://flavioribeiro.com"
+    }
+  },
+  {
+    "name": "react-native-create-thumbnail",
+    "full_name": "souvik-ghosh/react-native-create-thumbnail",
+    "url": "https://github.com/souvik-ghosh/react-native-create-thumbnail",
+    "description": "iOS/Android thumbnail generator with support for both local and remote videos",
+    "stars": 304,
+    "language": "Java",
+    "category_slug": "design-creative",
+    "tags": "generator,java,open-source",
+    "maker": {
+      "login": "souvik-ghosh",
+      "name": "Souvik Ghosh",
+      "email": "emailtosvk@gmail.com",
+      "bio": "React Native developer. Open to remote work.",
+      "url": "https://github.com/souvik-ghosh"
+    }
+  },
+  {
+    "name": "WFPlayer",
+    "full_name": "zhw2590582/WFPlayer",
+    "url": "https://github.com/zhw2590582/WFPlayer",
+    "description": ":ocean: WFPlayer.js is an audio waveform generator",
+    "stars": 304,
+    "language": "JavaScript",
+    "category_slug": "design-creative",
+    "tags": "generator,javascript,open-source",
+    "maker": {
+      "login": "zhw2590582",
+      "name": "Harvey Zhao",
+      "email": "laozhaochaguan@gmail.com",
+      "bio": "Maintainer of ArtPlayer.js",
+      "url": "https://aimu.app"
+    }
+  },
+  {
+    "name": "waveform-path",
+    "full_name": "jerosoler/waveform-path",
+    "url": "https://github.com/jerosoler/waveform-path",
+    "description": "\ud83c\udf99 Generator waveform paths for SVG \ud83c\udfb6",
+    "stars": 127,
+    "language": "JavaScript",
+    "category_slug": "design-creative",
+    "tags": "generator,javascript,open-source",
+    "maker": {
+      "login": "jerosoler",
+      "name": "Jero Soler",
+      "email": "jero.soler@gmail.com",
+      "bio": "\ud83d\udcbb Developer & Maker \ud83e\udd16",
+      "url": "https://twitter.com/jerosoler"
+    }
+  },
+  {
+    "name": "audio-waveform-php",
+    "full_name": "maximal/audio-waveform-php",
+    "url": "https://github.com/maximal/audio-waveform-php",
+    "description": "Audio waveform generator on PHP with SoX",
+    "stars": 52,
+    "language": "PHP",
+    "category_slug": "design-creative",
+    "tags": "generator,open-source,php",
+    "maker": {
+      "login": "maximal",
+      "name": "MaximAL",
+      "email": "",
+      "bio": "Engineer in soul.",
+      "url": "https://maximals.ru/"
+    }
+  },
+  {
+    "name": "faviator",
+    "full_name": "faviator/faviator",
+    "url": "https://github.com/faviator/faviator",
+    "description": "A simple easy favicon generator.",
+    "stars": 212,
+    "language": "JavaScript",
+    "category_slug": "design-creative",
+    "tags": "cli,generator,javascript,open-source",
+    "maker": {
+      "login": "faviator",
+      "name": "Faviator",
+      "email": "yo@faviator.xyz",
+      "bio": "A simple easy favicon generator.",
+      "url": "https://www.faviator.xyz/"
+    }
+  },
+  {
+    "name": "favicons",
+    "full_name": "thatmattlove/favicons",
+    "url": "https://github.com/thatmattlove/favicons",
+    "description": "Favicon generator for Python 3 with sync & async APIs, CLI, & HTML generation",
+    "stars": 14,
+    "language": "Python",
+    "category_slug": "design-creative",
+    "tags": "api,cli,generator,open-source,python",
+    "maker": {
+      "login": "thatmattlove",
+      "name": "Matt Love",
+      "email": "mtt.lov@gmail.com",
+      "bio": "I make boring things in interesting ways",
+      "url": "https://github.com/thatmattlove"
+    }
+  },
+  {
+    "name": "favico",
+    "full_name": "sorairolake/favico",
+    "url": "https://github.com/sorairolake/favico",
+    "description": "A command-line utility for creating favicons",
+    "stars": 10,
+    "language": "Rust",
+    "category_slug": "design-creative",
+    "tags": "cli,generator,open-source,rust",
+    "maker": {
+      "login": "sorairolake",
+      "name": "Shun Sakai",
+      "email": "sorairolake@protonmail.ch",
+      "bio": "",
+      "url": "https://sorairolake.github.io/"
+    }
+  },
+  {
+    "name": "LoremIpsum",
+    "full_name": "lukaskubanek/LoremIpsum",
+    "url": "https://github.com/lukaskubanek/LoremIpsum",
+    "description": "A lightweight lorem ipsum and image placeholders generator for Objective-C",
+    "stars": 232,
+    "language": "Objective-C",
+    "category_slug": "design-creative",
+    "tags": "generator,lightweight,objective-c,open-source",
+    "maker": {
+      "login": "lukaskubanek",
+      "name": "Lukas Kubanek",
+      "email": "",
+      "bio": "macOS & iOS app developer",
+      "url": "lukaskubanek.com"
+    }
+  },
+  {
+    "name": "simple-svg-placeholder",
+    "full_name": "cloudfour/simple-svg-placeholder",
+    "url": "https://github.com/cloudfour/simple-svg-placeholder",
+    "description": "A very simple placeholder image generator with zero dependencies.",
+    "stars": 182,
+    "language": "JavaScript",
+    "category_slug": "design-creative",
+    "tags": "generator,javascript,open-source",
+    "maker": {
+      "login": "cloudfour",
+      "name": "Cloud Four",
+      "email": "",
+      "bio": "We help forward-thinking teams craft accessible design systems and progressive web apps.",
+      "url": "https://cloudfour.com"
+    }
+  },
+  {
+    "name": "PixelHolder-Sinatra",
+    "full_name": "dinglidingli/PixelHolder-Sinatra",
+    "url": "https://github.com/dinglidingli/PixelHolder-Sinatra",
+    "description": "PixelHoldr website placeholder image generator",
+    "stars": 59,
+    "language": "Ruby",
+    "category_slug": "design-creative",
+    "tags": "generator,open-source,ruby",
+    "maker": {
+      "login": "dinglidingli",
+      "name": "Christopher Dingli",
+      "email": "christopher@dingli.com.au",
+      "bio": "",
+      "url": "https://github.com/dinglidingli"
+    }
+  },
+  {
+    "name": "motus",
+    "full_name": "oleiade/motus",
+    "url": "https://github.com/oleiade/motus",
+    "description": "A dead simple password generator",
+    "stars": 149,
+    "language": "Rust",
+    "category_slug": "authentication",
+    "tags": "cli,generator,open-source,rust",
+    "maker": {
+      "login": "oleiade",
+      "name": "Th\u00e9o Crevon",
+      "email": "",
+      "bio": "I whisper to computers.",
+      "url": "https://www.linkedin.com/in/theocrevon/"
+    }
+  },
+  {
+    "name": "bash-otp",
+    "full_name": "poolpog/bash-otp",
+    "url": "https://github.com/poolpog/bash-otp",
+    "description": "One-time Password generator for CLI using bash, oathtool",
+    "stars": 139,
+    "language": "Shell",
+    "category_slug": "authentication",
+    "tags": "cli,generator,open-source,shell",
+    "maker": {
+      "login": "poolpog",
+      "name": "Pog",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/poolpog"
+    }
+  },
+  {
+    "name": "SecretScanner",
+    "full_name": "deepfence/SecretScanner",
+    "url": "https://github.com/deepfence/SecretScanner",
+    "description": ":unlock: :unlock: Find secrets and passwords in container images and file systems :unlock: :unlock:",
+    "stars": 3271,
+    "language": "Go",
+    "category_slug": "design-creative",
+    "tags": "go,open-source",
+    "maker": {
+      "login": "deepfence",
+      "name": "Deepfence",
+      "email": "",
+      "bio": "",
+      "url": "https://deepfence.io"
+    }
+  },
+  {
+    "name": "noseyparker",
+    "full_name": "praetorian-inc/noseyparker",
+    "url": "https://github.com/praetorian-inc/noseyparker",
+    "description": "Nosey Parker is a command-line tool that finds secrets and sensitive information in textual data and Git history.",
+    "stars": 2308,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "open-source,rust",
+    "maker": {
+      "login": "praetorian-inc",
+      "name": "Praetorian",
+      "email": "info@praetorian.com",
+      "bio": "Praetorian provides a suite of security solutions that enable clients to solve cybersecurity problems across their enterprise and product portfolios.",
+      "url": "https://www.praetorian.com"
+    }
+  },
+  {
+    "name": "repo-security-scanner",
+    "full_name": "techjacker/repo-security-scanner",
+    "url": "https://github.com/techjacker/repo-security-scanner",
+    "description": "CLI tool that finds secrets accidentally committed to a git repo, eg passwords, private keys",
+    "stars": 1160,
+    "language": "Go",
+    "category_slug": "authentication",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "techjacker",
+      "name": "Andrew Griffiths",
+      "email": "",
+      "bio": "Building ML & Data Platforms",
+      "url": "https://andrewgriffithsonline.com"
+    }
+  },
+  {
+    "name": "license-checker-rseidelsohn",
+    "full_name": "RSeidelsohn/license-checker-rseidelsohn",
+    "url": "https://github.com/RSeidelsohn/license-checker-rseidelsohn",
+    "description": "Extract NPM package licenses. Enhanced and updated fork of Dav Glass' original (but abandoned) license-checker.",
+    "stars": 188,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "RSeidelsohn",
+      "name": "Roman Seidelsohn",
+      "email": "rseidelsohn@gmail.com",
+      "bio": "Senior Frontend Developer at Springer Nature in Berlin",
+      "url": "https://github.com/RSeidelsohn"
+    }
+  },
+  {
+    "name": "hawkeye",
+    "full_name": "korandoru/hawkeye",
+    "url": "https://github.com/korandoru/hawkeye",
+    "description": "Simple license header checker and formatter, in multiple distribution forms.",
+    "stars": 178,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,rust",
+    "maker": {
+      "login": "korandoru",
+      "name": "korandoru",
+      "email": "",
+      "bio": "Newly development happens in https://github.com/cratesland/ and https://github.com/fast/",
+      "url": "https://github.com/korandoru"
+    }
+  },
+  {
+    "name": "license-checker-php",
+    "full_name": "madewithlove/license-checker-php",
+    "url": "https://github.com/madewithlove/license-checker-php",
+    "description": "CLI tool to verify used licenses in composer dependencies",
+    "stars": 51,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,php",
+    "maker": {
+      "login": "madewithlove",
+      "name": "madewithlove",
+      "email": "hello@madewithlove.com",
+      "bio": "",
+      "url": "https://madewithlove.com"
+    }
+  },
+  {
+    "name": "app-privacy-policy-generator",
+    "full_name": "nisrulz/app-privacy-policy-generator",
+    "url": "https://github.com/nisrulz/app-privacy-policy-generator",
+    "description": "Generate a customized Privacy Policy and Terms of Use document for your mobile apps",
+    "stars": 4511,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "generator,html,open-source,privacy",
+    "maker": {
+      "login": "nisrulz",
+      "name": "Nishant Srivastava",
+      "email": "",
+      "bio": "Sr. Android Engineer \ud83d\udc68\ud83c\udffb\u200d\ud83d\udcbb  ",
+      "url": "https://www.nisrulz.com/"
+    }
+  },
+  {
+    "name": "free-privacy-policy-generator",
+    "full_name": "SanjayDevTech/free-privacy-policy-generator",
+    "url": "https://github.com/SanjayDevTech/free-privacy-policy-generator",
+    "description": "",
+    "stars": 14,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "generator,html,open-source,privacy",
+    "maker": {
+      "login": "SanjayDevTech",
+      "name": "sanjay",
+      "email": "",
+      "bio": "noted",
+      "url": "https://github.com/SanjayDevTech"
+    }
+  },
+  {
+    "name": "app-privacy-policy-generator",
+    "full_name": "theindianappguy/app-privacy-policy-generator",
+    "url": "https://github.com/theindianappguy/app-privacy-policy-generator",
+    "description": "A simple flutter app to generate a generic privacy policy for your Android/iOS apps",
+    "stars": 9,
+    "language": "Dart",
+    "category_slug": "developer-tools",
+    "tags": "dart,generator,open-source,privacy",
+    "maker": {
+      "login": "theindianappguy",
+      "name": "Sanskar Tiwari",
+      "email": "theindianappguy@gmail.com",
+      "bio": "Building awesome products and Teaching youtube.com/SanskarTiwari.",
+      "url": "https://www.indianappguy.com"
+    }
+  },
+  {
+    "name": "plausible-docker",
+    "full_name": "eliasiturri/plausible-docker",
+    "url": "https://github.com/eliasiturri/plausible-docker",
+    "description": "A self-hosted, privacy-focused, cookie-free analytics solution for tracking website visits without the need for cookie consent banners.",
+    "stars": 1,
+    "language": "Shell",
+    "category_slug": "developer-tools",
+    "tags": "docker,open-source,privacy,self-hosted,shell",
+    "maker": {
+      "login": "eliasiturri",
+      "name": "El\u00edas",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/eliasiturri"
+    }
+  },
+  {
+    "name": "euvia-nodejs",
+    "full_name": "Teyk0o/euvia-nodejs",
+    "url": "https://github.com/Teyk0o/euvia-nodejs",
+    "description": "Euvia: Invisible, GDPR-compliant live visitor tracking for Next.js. One npm package, Redis-powered, zero cookies/consent banners.",
+    "stars": 1,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "Teyk0o",
+      "name": "Teyko",
+      "email": "",
+      "bio": "I shape projects through structure, clarity, and consistent execution.",
+      "url": "https://github.com/Teyk0o"
+    }
+  },
+  {
+    "name": "Hyva-s-GTM-Klaro",
+    "full_name": "centrum-digital/Hyva-s-GTM-Klaro",
+    "url": "https://github.com/centrum-digital/Hyva-s-GTM-Klaro",
+    "description": "Lightweight Magento 2 module for Hyv\u00e4 theme integrating Klaro! consent manager with self-hosted Google Tag Manager (GTM SS). Provides full eCommerce dataLayer, first-party cookies and defer-loaded gta",
+    "stars": 0,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,php,self-hosted",
+    "maker": {
+      "login": "centrum-digital",
+      "name": "centrum-digital",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/centrum-digital"
+    }
+  },
+  {
+    "name": "dockerfilelint",
+    "full_name": "replicatedhq/dockerfilelint",
+    "url": "https://github.com/replicatedhq/dockerfilelint",
+    "description": "An opinionated Dockerfile linter.",
+    "stars": 1030,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "docker,javascript,linter,open-source",
+    "maker": {
+      "login": "replicatedhq",
+      "name": "Replicated",
+      "email": "contact@replicated.com",
+      "bio": "Enabling the delivery and management of modern on-prem Kubernetes applications.",
+      "url": "http://www.replicated.com"
+    }
+  },
+  {
+    "name": "hadolint-action",
+    "full_name": "hadolint/hadolint-action",
+    "url": "https://github.com/hadolint/hadolint-action",
+    "description": "GitHub action for Hadolint, A  Dockerfile linting tool",
+    "stars": 260,
+    "language": "Shell",
+    "category_slug": "developer-tools",
+    "tags": "docker,linter,open-source,shell",
+    "maker": {
+      "login": "hadolint",
+      "name": "Haskell Dockerfile Linter",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/hadolint"
+    }
+  },
+  {
+    "name": "golang-clean-web-api",
+    "full_name": "naeemaei/golang-clean-web-api",
+    "url": "https://github.com/naeemaei/golang-clean-web-api",
+    "description": "Golang Clean architecture REST API example with a comprehensive real project. It uses docker,  docker compose, redis, elasticsearch, kibana, filebeat, postgresql, prometheus, grafana. also use gin, go",
+    "stars": 393,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "api,docker,go,open-source",
+    "maker": {
+      "login": "naeemaei",
+      "name": "Hamed Naeemaei",
+      "email": "h.naimaei@gmail.com",
+      "bio": " Software Engineer | C#, go",
+      "url": "naeemaei.ir"
+    }
+  },
+  {
+    "name": "docker-compose-linter",
+    "full_name": "zavoloklom/docker-compose-linter",
+    "url": "https://github.com/zavoloklom/docker-compose-linter",
+    "description": "A command-line tool for validating and enforcing best practices in Docker Compose files.",
+    "stars": 231,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "docker,linter,open-source,typescript",
+    "maker": {
+      "login": "zavoloklom",
+      "name": "Sergey Kupletsky",
+      "email": "s.kupletsky@gmail.com",
+      "bio": "Software Engineering Manager",
+      "url": "https://github.com/zavoloklom"
+    }
+  },
+  {
+    "name": "charon-distributed-validator-node",
+    "full_name": "ObolNetwork/charon-distributed-validator-node",
+    "url": "https://github.com/ObolNetwork/charon-distributed-validator-node",
+    "description": "Run one node as part of Distributed Validator Cluster using docker-compose ",
+    "stars": 88,
+    "language": "Shell",
+    "category_slug": "developer-tools",
+    "tags": "docker,open-source,shell",
+    "maker": {
+      "login": "ObolNetwork",
+      "name": "Obol Collective",
+      "email": "github@obol.tech",
+      "bio": "Building Distributed Validators for Ethereum",
+      "url": "https://obol.org"
+    }
+  },
+  {
+    "name": "config-lint",
+    "full_name": "stelligent/config-lint",
+    "url": "https://github.com/stelligent/config-lint",
+    "description": "Command line tool to validate configuration files",
+    "stars": 206,
+    "language": "HCL",
+    "category_slug": "developer-tools",
+    "tags": "hcl,open-source",
+    "maker": {
+      "login": "stelligent",
+      "name": "Stelligent",
+      "email": "github@stelligent.com",
+      "bio": "Automation for the People!",
+      "url": "https://stelligent.com"
+    }
+  },
+  {
+    "name": "helm-cel",
+    "full_name": "idsulik/helm-cel",
+    "url": "https://github.com/idsulik/helm-cel",
+    "description": "A Helm plugin that uses Common Expression Language (CEL) to validate values. Instead of using JSON Schema in values.schema.json, you can write more expressive validation rules using CEL in values.cel.",
+    "stars": 122,
+    "language": "Go",
+    "category_slug": "file-management",
+    "tags": "go,open-source",
+    "maker": {
+      "login": "idsulik",
+      "name": "Suleiman Dibirov",
+      "email": "",
+      "bio": "Senior Software Engineer.",
+      "url": "https://github.com/idsulik"
+    }
+  },
+  {
+    "name": "chatgpt-yaml-generator",
+    "full_name": "robusta-dev/chatgpt-yaml-generator",
+    "url": "https://github.com/robusta-dev/chatgpt-yaml-generator",
+    "description": "Give ChatGPT full knowledge of Kubernetes schemas + validation capabilities",
+    "stars": 116,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "generator,open-source,python",
+    "maker": {
+      "login": "robusta-dev",
+      "name": "Robusta",
+      "email": "",
+      "bio": "Open source Kubernetes troubleshooting and automation platform",
+      "url": "https://docs.robusta.dev/master/"
+    }
+  },
+  {
+    "name": "china-dictatorship",
+    "full_name": "cirosantilli/china-dictatorship",
+    "url": "https://github.com/cirosantilli/china-dictatorship",
+    "description": "\u53cd\u4e2d\u5171\u653f\u6cbb\u5ba3\u4f20\u5e93\u3002Anti Chinese government propaganda. \u4f4f\u5728\u4e2d\u56fd\u771f\u540d\u7528\u6237\u7684\u7f51\u53cb\u8bf7\u522b\u7ed9\u661f\u661f\uff0c\u4e0d\u7136\u4f60\u8981\u88ab\u8b66\u5bdf\u8bf7\u559d\u8336\u3002\u5e38\u89c1\u95ee\u7b54\u96c6\uff0c\u65b0\u95fb\u96c6\u548c\u996d\u5e97\u548c\u97f3\u4e50\u5efa\u8bae\u3002\u5350\u4e60\u4e07\u5c81\u5350\u3002\u51a0\u72b6\u75c5\u6bd2\u5ba1\u67e5\u90dd\u6d77\u4e1c\u65b0\u7586\u6539\u9020\u4e2d\u5fc3\u516d\u56db\u4e8b\u4ef6\u6cd5\u8f6e\u529f 996.ICU709\u5927\u6293\u6355\u5df4\u62ff\u9a6c\u6587\u4ef6\u9093\u5bb6\u8d35\u4f4e\u7aef\u4eba\u53e3\u897f\u85cf\u9a9a\u4e71\u3002Friends who live in China and have real name on ac",
+    "stars": 2866,
+    "language": "HTML",
+    "category_slug": "file-management",
+    "tags": "api,cli,docker,generator,html,open-source",
+    "maker": {
+      "login": "cirosantilli",
+      "name": "Ciro Santilli (\u4e09\u897f\u7334) OurBigBook.com sponsor me: cirosantilli.com/sponsor, opinions my own 2020\u51a0\u72b6\u75c5\u6bd2\u5ba1\u67e5 \uff0c2020\u90dd\u6d77\u4e1c \uff0c2018\u65b0\u7586\u6539\u9020\u4e2d\u5fc3\uff0c1989\u516d\u56db\u4e8b\u4ef6\uff0c1999\u6cd5\u8f6e\u529f \uff0c2019 996.ICU, 2018\u5305\u5b50\u9732\u5baa\uff0c2015 709\u5927\u6293\u6355\uff0c2015\u5df4\u62ff\u9a6c\u6587\u4ef6 \u9093\u5bb6\u8d35\uff0c2017\u4f4e\u7aef\u4eba\u53e3\uff0c2008\u897f\u85cf\u9a9a\u4e71<script>alert(1)</script>",
+      "email": "",
+      "bio": "2020\u51a0\u72b6\u75c5\u6bd2\u5ba1\u67e5 \uff0c2020\u90dd\u6d77\u4e1c \uff0c2018\u65b0\u7586\u6539\u9020\u4e2d\u5fc3\uff0c1989\u516d\u56db\u4e8b\u4ef6\uff0c1999\u6cd5\u8f6e\u529f \uff0c2019 996.ICU, 2018\u5305\u5b50\u9732\u5baa\uff0c2015 709\u5927\u6293\u6355\uff0c2015\u5df4\u62ff\u9a6c\u6587\u4ef6 \u9093\u5bb6\u8d35\uff0c2017\u4f4e\u7aef\u4eba\u53e3\uff0c2008\u897f\u85cf\u9a9a\u4e71<script>alert(1)</script>",
+      "url": "https://cirosantilli.com"
+    }
+  },
+  {
+    "name": ".github",
+    "full_name": "gege-circle/.github",
+    "url": "https://github.com/gege-circle/.github",
+    "description": "\u8fd9\u91cc\u662fGitHub\u7684\u8349\u573a\uff0c\u4e5f\u662f\u6208\u6208\u5708\u7231\u597d\u8005\u7684\u4ea4\u6d41\u5730\uff0c\u4e3b\u8981\u8ba8\u8bba\u52a8\u6f2b\u3001\u6e38\u620f\u3001\u79d1\u6280\u3001\u4eba\u6587\u3001\u751f\u6d3b\u7b49\u6240\u6709\u8bdd\u9898\uff0c\u6b22\u8fce\u5404\u4f4d\u5c0f\u4f19\u4f34\u4eec\u5728\u6b64\u8ba8\u8bba\u8da3\u4e8b\u3002This is GitHub grassland, and the community place for Gege circle lovers, mainly discusses anime, games, technology, lifing and other t",
+    "stars": 1788,
+    "language": "",
+    "category_slug": "file-management",
+    "tags": "api,cli,docker,generator,open-source",
+    "maker": {
+      "login": "gege-circle",
+      "name": "\u6208\u6208\u5708 Gege Circle",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/gege-circle"
+    }
+  },
+  {
+    "name": "my-systemd-service-file-generator",
+    "full_name": "NunuM/my-systemd-service-file-generator",
+    "url": "https://github.com/NunuM/my-systemd-service-file-generator",
+    "description": "A simple Systemd service file online generator.",
+    "stars": 140,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "generator,html,open-source",
+    "maker": {
+      "login": "NunuM",
+      "name": "Nuno Goncalves",
+      "email": "",
+      "bio": "Computer science",
+      "url": "https://nunum.me"
+    }
+  },
+  {
+    "name": "Py-Server-Gen",
+    "full_name": "bocaletto-luca/Py-Server-Gen",
+    "url": "https://github.com/bocaletto-luca/Py-Server-Gen",
+    "description": "Python Persistent Server Reporter Author: Bocaletto Luca Python Persistent Server Reporter \u00e8 un\u2019applicazione cross-platform che:  Raccoglie metriche di sistema (IP, MAC, hostname, OS, CPU, memoria, di",
+    "stars": 8,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "generator,open-source,python",
+    "maker": {
+      "login": "bocaletto-luca",
+      "name": "Bocaletto Luca",
+      "email": "",
+      "bio": "Luca Bocaletto is an Italian Full-Stack developer born in 1982, specializing in Web Development Full-Stack, Python, \r\nJavascript, Databases, C, C++, C#, Bash.",
+      "url": "https://bocaletto-luca.github.io"
+    }
+  },
+  {
+    "name": "master-server-generator",
+    "full_name": "bocaletto-luca/master-server-generator",
+    "url": "https://github.com/bocaletto-luca/master-server-generator",
+    "description": "msgen \u2014 Master Server Generator msgen is a cross-platform CLI tool written in Go that scaffolds a standalone, persistent \u201cserver\u201d binary. The generated server:  Runs as a background service/daemon on ",
+    "stars": 8,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "cli,generator,go,open-source",
+    "maker": {
+      "login": "bocaletto-luca",
+      "name": "bocaletto-luca",
+      "email": "",
+      "bio": "",
+      "url": ""
+    }
+  },
+  {
+    "name": "actionlint",
+    "full_name": "rhysd/actionlint",
+    "url": "https://github.com/rhysd/actionlint",
+    "description": ":octocat: Static checker for GitHub Actions workflow files",
+    "stars": 3637,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "go,linter,open-source",
+    "maker": {
+      "login": "rhysd",
+      "name": "Linda_pp",
+      "email": "",
+      "bio": "A dog enjoying software development (with bugs)",
+      "url": "https://rhysd.github.io/"
+    }
+  },
+  {
+    "name": "kirby-meta-tags",
+    "full_name": "pedroborges/kirby-meta-tags",
+    "url": "https://github.com/pedroborges/kirby-meta-tags",
+    "description": "\u2b22 HTML meta tags generator for Kirby. Supports Open Graph and Twitter Cards out of the box.",
+    "stars": 97,
+    "language": "PHP",
+    "category_slug": "seo-tools",
+    "tags": "generator,open-source,php",
+    "maker": {
+      "login": "pedroborges",
+      "name": "Pedro Borges",
+      "email": "",
+      "bio": "Software Engineer @MercuryTechnologies ",
+      "url": "https://github.com/pedroborges"
+    }
+  },
+  {
+    "name": "Vue3-SPA-starter-template",
+    "full_name": "M-Media-Group/Vue3-SPA-starter-template",
+    "url": "https://github.com/M-Media-Group/Vue3-SPA-starter-template",
+    "description": "Start your Vue3 app with full authentication routes, payment support, multilingual abilities, a global event bus, meta+schema tag generators, and more!",
+    "stars": 72,
+    "language": "TypeScript",
+    "category_slug": "seo-tools",
+    "tags": "generator,open-source,typescript",
+    "maker": {
+      "login": "M-Media-Group",
+      "name": "M Media",
+      "email": "contact@mmediagroup.fr",
+      "bio": "At night, we make free open-source solutions to benefit the world. In the day, we make websites and handle marketing for our customers.",
+      "url": "https://mmediagroup.fr"
+    }
+  },
+  {
+    "name": "meta-tags",
+    "full_name": "pedroborges/meta-tags",
+    "url": "https://github.com/pedroborges/meta-tags",
+    "description": "HTML meta tags generator for PHP. Supports Open Graph, Twitter Cards, and JSON Linked Data out of the box",
+    "stars": 45,
+    "language": "PHP",
+    "category_slug": "file-management",
+    "tags": "generator,open-source,php",
+    "maker": {
+      "login": "pedroborges",
+      "name": "pedroborges",
+      "email": "",
+      "bio": "",
+      "url": ""
+    }
+  },
+  {
+    "name": "next-sitemap",
+    "full_name": "iamvishnusankar/next-sitemap",
+    "url": "https://github.com/iamvishnusankar/next-sitemap",
+    "description": "Sitemap generator for next.js. Generate sitemap(s) and robots.txt for all static/pre-rendered/dynamic/server-side pages.",
+    "stars": 3701,
+    "language": "TypeScript",
+    "category_slug": "seo-tools",
+    "tags": "generator,open-source,typescript",
+    "maker": {
+      "login": "iamvishnusankar",
+      "name": "Vishnu Sankar",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/iamvishnusankar"
+    }
+  },
+  {
+    "name": "svelte-sitemap",
+    "full_name": "bartholomej/svelte-sitemap",
+    "url": "https://github.com/bartholomej/svelte-sitemap",
+    "description": "Sitemap generator for SvelteKit. Small helper which scans your SvelteKit routes and generates static sitemap.xml",
+    "stars": 338,
+    "language": "TypeScript",
+    "category_slug": "seo-tools",
+    "tags": "cli,generator,open-source,typescript",
+    "maker": {
+      "login": "bartholomej",
+      "name": "BART!",
+      "email": "",
+      "bio": "Famed for his skills in archery, navigation and lovemaking",
+      "url": "https://bartweb.cz"
+    }
+  },
+  {
+    "name": "sitemap-generator-cli",
+    "full_name": "lgraubner/sitemap-generator-cli",
+    "url": "https://github.com/lgraubner/sitemap-generator-cli",
+    "description": "Creates an XML-Sitemap by crawling a given site.",
+    "stars": 336,
+    "language": "JavaScript",
+    "category_slug": "seo-tools",
+    "tags": "cli,generator,javascript,open-source",
+    "maker": {
+      "login": "lgraubner",
+      "name": "Lars Graubner",
+      "email": "",
+      "bio": "I build accessible React apps",
+      "url": "https://stolt.tech"
+    }
+  },
+  {
+    "name": "sitemap-generator",
+    "full_name": "maciekmm/sitemap-generator",
+    "url": "https://github.com/maciekmm/sitemap-generator",
+    "description": "A highly concurrent Go solution to build sitemaps. Features CLI, proxy support, rate limiting, robots.txt compliant, url filtering and many other features.",
+    "stars": 22,
+    "language": "Go",
+    "category_slug": "seo-tools",
+    "tags": "cli,generator,go,open-source",
+    "maker": {
+      "login": "maciekmm",
+      "name": "Maciej Mionskowski",
+      "email": "git@maciekmm.net",
+      "bio": "Backend developer. Sailor, hiker, paragliding pilot and recreational cyclist.",
+      "url": "https://mionskowski.pl"
+    }
+  },
+  {
+    "name": "accessibility-checker",
+    "full_name": "Roaa-Ghanem/accessibility-checker",
+    "url": "https://github.com/Roaa-Ghanem/accessibility-checker",
+    "description": "A powerful Python CLI tool that automatically scans web pages for accessibility issues and provides actionable fixes. Make your websites more inclusive by identifying common accessibility problems aut",
+    "stars": 0,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "Roaa-Ghanem",
+      "name": "Eng. Roaa Ghanem ",
+      "email": "roaaalmaamari104@gmail.com",
+      "bio": "",
+      "url": "https://github.com/Roaa-Ghanem"
+    }
+  },
+  {
+    "name": "redesigned-pancake",
+    "full_name": "Sfedfcv/redesigned-pancake",
+    "url": "https://github.com/Sfedfcv/redesigned-pancake",
+    "description": "Skip to content github / docs Code Issues 80 Pull requests 35 Discussions Actions Projects 2 Security Insights Merge branch 'main' into 1862-Add-Travis-CI-migration-table  1862-Add-Travis-CI-migration",
+    "stars": 213,
+    "language": "",
+    "category_slug": "file-management",
+    "tags": "api,cli,docker,linter,open-source,privacy",
+    "maker": {
+      "login": "Sfedfcv",
+      "name": "Sfedfcv",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/Sfedfcv"
+    }
+  },
+  {
+    "name": "A",
+    "full_name": "chikitang/A",
+    "url": "https://github.com/chikitang/A",
+    "description": "!DOCTYPE html> <html lang=\"en\" data-color-mode=\"auto\" data-light-theme=\"light\" data-dark-theme=\"dark\" data-a11y-animated-images=\"system\">   <head>     <meta charset=\"utf-8\">   <link rel=\"dns-prefetch\"",
+    "stars": 52,
+    "language": "",
+    "category_slug": "file-management",
+    "tags": "api,cli,open-source,privacy",
+    "maker": {
+      "login": "chikitang",
+      "name": "chikitang",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/chikitang"
+    }
+  },
+  {
+    "name": "ShareMyLink",
+    "full_name": "jordanwan/ShareMyLink",
+    "url": "https://github.com/jordanwan/ShareMyLink",
+    "description": " ShareMyLink is a tool that parses and relays Open Graph data to social media platforms when sharing URLs generated by this tool, enabling unrestricted content link sharing along with preview images a",
+    "stars": 7,
+    "language": "PHP",
+    "category_slug": "design-creative",
+    "tags": "open-source,php",
+    "maker": {
+      "login": "jordanwan",
+      "name": "Jordan Wan",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/jordanwan"
+    }
+  },
+  {
+    "name": "arttime",
+    "full_name": "poetaman/arttime",
+    "url": "https://github.com/poetaman/arttime",
+    "description": "arttime is a CLI application that blends beauty of ASCII / text art with functionality of clock / timer / pattern-based time manager in terminal \u23f0",
+    "stars": 1278,
+    "language": "Shell",
+    "category_slug": "project-management",
+    "tags": "cli,open-source,shell",
+    "maker": {
+      "login": "poetaman",
+      "name": "poetaman",
+      "email": "",
+      "bio": "The original code poet",
+      "url": "https://github.com/poetaman"
+    }
+  },
+  {
+    "name": "wisdom-tree",
+    "full_name": "HACKER097/wisdom-tree",
+    "url": "https://github.com/HACKER097/wisdom-tree",
+    "description": "Wisdom Tree is a TUI concentration app, with features like pomodoro timer, YouTube music player, Lo-fi radio.",
+    "stars": 407,
+    "language": "Python",
+    "category_slug": "project-management",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "HACKER097",
+      "name": "Shantanu Bhargava",
+      "email": "",
+      "bio": "Will code for Monero",
+      "url": "https://github.com/HACKER097"
+    }
+  },
+  {
+    "name": "pomo",
+    "full_name": "Bahaaio/pomo",
+    "url": "https://github.com/Bahaaio/pomo",
+    "description": "Customizable TUI Pomodoro timer with ASCII art, progress bar, desktop notifications, and productivity statistics.",
+    "stars": 320,
+    "language": "Go",
+    "category_slug": "project-management",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "Bahaaio",
+      "name": "Bahaa Mohamed",
+      "email": "",
+      "bio": "SWE Student | ECPC finalist | Linux enthusiast",
+      "url": "https://github.com/Bahaaio"
+    }
+  },
+  {
+    "name": "Watson",
+    "full_name": "jazzband/Watson",
+    "url": "https://github.com/jazzband/Watson",
+    "description": ":watch: A wonderful CLI to track your time!",
+    "stars": 2514,
+    "language": "Python",
+    "category_slug": "project-management",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "jazzband",
+      "name": "Jazzband",
+      "email": "",
+      "bio": "We are all part of this",
+      "url": "https://jazzband.co/"
+    }
+  },
+  {
+    "name": "corona-cli",
+    "full_name": "ahmadawais/corona-cli",
+    "url": "https://github.com/ahmadawais/corona-cli",
+    "description": "\ud83e\udda0 Track the Coronavirus disease (COVID-19) in the command line. Worldwide for all countries, for one country, and the US States. Fast response time (< 100ms). https://x.com/MrAhmadAwais",
+    "stars": 1837,
+    "language": "JavaScript",
+    "category_slug": "project-management",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "ahmadawais",
+      "name": "Ahmad Awais",
+      "email": "me@AhmadAwais.com",
+      "bio": "Award-winning Open Source Engr.\r\n\u276f CEO @CommandCodeAI @Google Dev Advisory Board\r\n\u276f Automator at NodeCLI.com\r\n\u276f @Nodejs ComCommittee\r\n\u276f BGB Linux Foundation",
+      "url": "https://AhmadAwais.com"
+    }
+  },
+  {
+    "name": "timewarrior",
+    "full_name": "GothenburgBitFactory/timewarrior",
+    "url": "https://github.com/GothenburgBitFactory/timewarrior",
+    "description": "Timewarrior - Commandline Time Tracking and Reporting",
+    "stars": 1556,
+    "language": "C++",
+    "category_slug": "project-management",
+    "tags": "c++,cli,open-source",
+    "maker": {
+      "login": "GothenburgBitFactory",
+      "name": "Gothenburg Bit Factory",
+      "email": "support@gothenburgbitfactory.org",
+      "bio": "Open source organization. The team bringing you Taskwarrior and Timewarrior, since 2006.",
+      "url": "https://gothenburgbitfactory.org/"
+    }
+  },
+  {
+    "name": "invoice-maker",
+    "full_name": "ad-si/invoice-maker",
+    "url": "https://github.com/ad-si/invoice-maker",
+    "description": "Generate beautiful invoices from simple Typst or YAML data records",
+    "stars": 163,
+    "language": "Typst",
+    "category_slug": "invoicing-billing",
+    "tags": "cli,generator,open-source,typst",
+    "maker": {
+      "login": "ad-si",
+      "name": "Adrian Sieber",
+      "email": "",
+      "bio": "CEO @Airsequel\r\n| Haskell, Elm, PureScript, Rust\r\n",
+      "url": "https://adriansieber.com"
+    }
+  },
+  {
+    "name": "InvoicerNETCore",
+    "full_name": "CraigBanach/InvoicerNETCore",
+    "url": "https://github.com/CraigBanach/InvoicerNETCore",
+    "description": "PDF invoice generator for .NET Core. Create invoices easily, including example CLI.",
+    "stars": 9,
+    "language": "C#",
+    "category_slug": "invoicing-billing",
+    "tags": "c#,cli,generator,open-source",
+    "maker": {
+      "login": "CraigBanach",
+      "name": "Craig Banach",
+      "email": "craigsb93@gmail.com",
+      "bio": "",
+      "url": "https://github.com/CraigBanach"
+    }
+  },
+  {
+    "name": "Python-based-Automated-Invoices-and-Quotations-Generator",
+    "full_name": "areebaghazal88/Python-based-Automated-Invoices-and-Quotations-Generator",
+    "url": "https://github.com/areebaghazal88/Python-based-Automated-Invoices-and-Quotations-Generator",
+    "description": "A Python-based tool to generate professional invoices and quotations with PDF export, MySQL storage, and both GUI and CLI support",
+    "stars": 4,
+    "language": "Python",
+    "category_slug": "invoicing-billing",
+    "tags": "cli,generator,open-source,python",
+    "maker": {
+      "login": "areebaghazal88",
+      "name": "Areeba Ghazal",
+      "email": "",
+      "bio": "AI and ML Enthusiast | Python and Computer Vision Developer | Passionate about solving real-world problems with code.",
+      "url": "https://github.com/areebaghazal88"
+    }
+  },
+  {
+    "name": "Receipt-OCR-Analyzer-AI",
+    "full_name": "Xer0bit/Receipt-OCR-Analyzer-AI",
+    "url": "https://github.com/Xer0bit/Receipt-OCR-Analyzer-AI",
+    "description": "An intelligent OCR-based receipt analysis tool that extracts key information from receipt images.",
+    "stars": 2,
+    "language": "Jupyter Notebook",
+    "category_slug": "design-creative",
+    "tags": "jupyter notebook,open-source",
+    "maker": {
+      "login": "Xer0bit",
+      "name": "Sameer Samiullah",
+      "email": "",
+      "bio": "",
+      "url": "xer0bit.com"
+    }
+  },
+  {
+    "name": "sgv-receipt-ocr-reader",
+    "full_name": "spyglassventures/sgv-receipt-ocr-reader",
+    "url": "https://github.com/spyglassventures/sgv-receipt-ocr-reader",
+    "description": "Python tool to machine read shopping receipt from Lidl Switzerland ",
+    "stars": 1,
+    "language": "Python",
+    "category_slug": "invoicing-billing",
+    "tags": "open-source,python",
+    "maker": {
+      "login": "spyglassventures",
+      "name": "Dr. Daniel M\u00fcller",
+      "email": "dm@spyglassventures.ch",
+      "bio": "Translating Business Problems into code.",
+      "url": "https://github.com/spyglassventures"
+    }
+  },
+  {
+    "name": "receipt-labeler",
+    "full_name": "glebkorolkov/receipt-labeler",
+    "url": "https://github.com/glebkorolkov/receipt-labeler",
+    "description": "Web-based labeling tool for receipt images parsed with Google Cloud Vision OCR",
+    "stars": 1,
+    "language": "HTML",
+    "category_slug": "design-creative",
+    "tags": "html,open-source",
+    "maker": {
+      "login": "glebkorolkov",
+      "name": "Gleb Korolkov",
+      "email": "",
+      "bio": "Data Engineer",
+      "url": "bit.ly/glebkorolkov"
+    }
+  },
+  {
+    "name": "beaverhabits",
+    "full_name": "daya0576/beaverhabits",
+    "url": "https://github.com/daya0576/beaverhabits",
+    "description": "A self-hosted habit tracking app without \"Goals\"",
+    "stars": 1687,
+    "language": "Python",
+    "category_slug": "project-management",
+    "tags": "open-source,python,self-hosted",
+    "maker": {
+      "login": "daya0576",
+      "name": "Henry Zhu",
+      "email": "",
+      "bio": "\ud83d\udccdShanghai \ud83c\udfd3\ud83d\ude0b\ud83d\udc0d\ud83d\ude92 ",
+      "url": "https://changchen.me"
+    }
+  },
+  {
+    "name": "HabitTrove",
+    "full_name": "dohsimpson/HabitTrove",
+    "url": "https://github.com/dohsimpson/HabitTrove",
+    "description": "Gamified Habit Tracker - Find Your Treasure",
+    "stars": 620,
+    "language": "TypeScript",
+    "category_slug": "project-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "dohsimpson",
+      "name": "Doh",
+      "email": "mydohsimpson@gmail.com",
+      "bio": "",
+      "url": "https://github.com/dohsimpson"
+    }
+  },
+  {
+    "name": "habitsync",
+    "full_name": "jofoerster/habitsync",
+    "url": "https://github.com/jofoerster/habitsync",
+    "description": "Self hosted Habit Tracker featuring goals and challenges with friends",
+    "stars": 281,
+    "language": "TypeScript",
+    "category_slug": "project-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "jofoerster",
+      "name": "jofoerster",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/jofoerster"
+    }
+  },
+  {
+    "name": "wirehook",
+    "full_name": "runabol/wirehook",
+    "url": "https://github.com/runabol/wirehook",
+    "description": "No-nonsense stateless webhook tester",
+    "stars": 4,
+    "language": "TypeScript",
+    "category_slug": "api-tools",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "runabol",
+      "name": "Arik Cohen",
+      "email": "",
+      "bio": "",
+      "url": "https://arikcohen.com"
+    }
+  },
+  {
+    "name": "server",
+    "full_name": "pushbits/server",
+    "url": "https://github.com/pushbits/server",
+    "description": "A simple server for push notifications via Matrix (and a minimalistic alternative to Pushover and Gotify) \ud83d\ude80\ud83d\udcef",
+    "stars": 354,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "pushbits",
+      "name": "PushBits",
+      "email": "",
+      "bio": "A simple server for self-hosted push notifications via Matrix",
+      "url": "https://pushbits.github.io/"
+    }
+  },
+  {
+    "name": "notifico",
+    "full_name": "notificohq/notifico",
+    "url": "https://github.com/notificohq/notifico",
+    "description": "Self-hosted open source notification server",
+    "stars": 171,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "open-source,rust,self-hosted",
+    "maker": {
+      "login": "notificohq",
+      "name": "Notifico",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/notificohq"
+    }
+  },
+  {
+    "name": "Pinakes",
+    "full_name": "fabiodalez-dev/Pinakes",
+    "url": "https://github.com/fabiodalez-dev/Pinakes",
+    "description": "Complete Library Management System (ILS) - Circulation, OPAC, cataloging, reservations, loans, automatic notifications, plugin system, and Z39.50/SRU server",
+    "stars": 62,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "fabiodalez-dev",
+      "name": "fabiodalez-dev",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/fabiodalez-dev"
+    }
+  },
+  {
+    "name": "operational.co",
+    "full_name": "operational-co/operational.co",
+    "url": "https://github.com/operational-co/operational.co",
+    "description": "Operational - open-source tool to track important events and receive push notifications on your device.",
+    "stars": 436,
+    "language": "Vue",
+    "category_slug": "developer-tools",
+    "tags": "open-source,self-hosted,vue",
+    "maker": {
+      "login": "operational-co",
+      "name": "operational.co",
+      "email": "",
+      "bio": "Event tracker for tech products.",
+      "url": "https://operational.co"
+    }
+  },
+  {
+    "name": "nitroping",
+    "full_name": "productdevbook/nitroping",
+    "url": "https://github.com/productdevbook/nitroping",
+    "description": "Open-source, self-hosted push notification service built with Vite, Vue 3 & Nitro.",
+    "stars": 295,
+    "language": "Vue",
+    "category_slug": "developer-tools",
+    "tags": "open-source,self-hosted,vue",
+    "maker": {
+      "login": "productdevbook",
+      "name": "Wind",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/productdevbook"
+    }
+  }
+]

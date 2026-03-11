@@ -106,7 +106,7 @@ async def compare_index(request: Request):
         "@context": "https://schema.org",
         "@type": "CollectionPage",
         "name": "Tool Comparisons — IndieStack",
-        "description": f"Side-by-side comparisons of indie tools across {category_count} categories. {total_pairs} comparison pages.",
+        "description": f"Side-by-side comparisons of indie creations across {category_count} categories. {total_pairs} comparison pages.",
         "url": f"{BASE_URL}/compare",
     }
     jsonld_script = f'<script type="application/ld+json">{_json.dumps(jsonld)}</script>'
@@ -118,7 +118,7 @@ async def compare_index(request: Request):
                 Tool Comparisons
             </h1>
             <p style="color:var(--ink-muted);font-size:17px;margin-top:12px;max-width:600px;margin-left:auto;margin-right:auto;">
-                Side-by-side comparisons of indie tools across {category_count} categories.
+                Side-by-side comparisons of indie creations across {category_count} categories.
                 Find the best alternative for your stack.
             </p>
             <a href="/alternatives" style="color:var(--ink-muted);font-size:14px;font-weight:600;margin-top:12px;display:inline-block;">
@@ -135,13 +135,13 @@ async def compare_index(request: Request):
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
                 Submit it for free and get listed on comparison pages.
             </p>
-            <a href="/submit" class="btn btn-primary">Submit Your Tool &rarr;</a>
+            <a href="/submit" class="btn btn-primary">Submit Your Creation &rarr;</a>
         </div>
     </div>
     """
     return HTMLResponse(page_shell(
         "Tool Comparisons — IndieStack", body,
-        description=f"Browse {total_pairs} side-by-side comparisons of indie tools across {category_count} categories. Find the best alternative for your stack.",
+        description=f"Browse {total_pairs} side-by-side comparisons of indie creations across {category_count} categories. Find the best alternative for your stack.",
         user=request.state.user, canonical="/compare",
         extra_head=jsonld_script,
     ))
@@ -158,7 +158,7 @@ async def alternatives_index(request: Request):
         <div class="container" style="text-align:center;padding:80px 24px;">
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Indie Alternatives</h1>
             <p style="color:var(--ink-muted);margin-top:12px;">No alternatives listed yet. Makers can add the big-tech tools they replace when submitting.</p>
-            <a href="/submit" class="btn btn-primary mt-8">Submit Your Tool</a>
+            <a href="/submit" class="btn btn-primary mt-8">Submit Your Creation</a>
         </div>
         """
         return HTMLResponse(page_shell("Indie Alternatives", body, user=request.state.user))
@@ -176,10 +176,10 @@ async def alternatives_index(request: Request):
         pills_html += f"""
         <a href="/alternatives/{escape(comp_slug)}" class="card"
            style="text-decoration:none;color:inherit;padding:16px 20px;display:flex;align-items:center;gap:12px;">
-            <span style="font-size:24px;">&#9889;</span>
+            <span style="color:var(--slate);display:inline-block;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
             <div>
                 <div style="font-family:var(--font-display);font-size:16px;color:var(--ink);">{escape(comp)} alternatives</div>
-                <div style="font-size:13px;color:var(--ink-muted);">{comp_counts.get(comp, 0)} indie tools</div>
+                <div style="font-size:13px;color:var(--ink-muted);">{comp_counts.get(comp, 0)} indie creations</div>
             </div>
         </a>
         """
@@ -192,7 +192,7 @@ async def alternatives_index(request: Request):
             </h1>
             <p style="color:var(--ink-muted);font-size:17px;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto;">
                 Looking for an alternative to expensive software?
-                These indie tools offer the same features &mdash; with better pricing, more flexibility,
+                These indie creations offer the same features &mdash; with better pricing, more flexibility,
                 and personal support from the makers who built them.
             </p>
         </div>
@@ -211,7 +211,7 @@ async def alternatives_index(request: Request):
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
                 Submit it for free and help others discover better tools.
             </p>
-            <a href="/submit" class="btn btn-primary">Submit Your Tool &rarr;</a>
+            <a href="/submit" class="btn btn-primary">Submit Your Creation &rarr;</a>
         </div>
     </div>
     """
@@ -222,7 +222,7 @@ async def alternatives_index(request: Request):
 
 @router.get("/alternatives/{competitor_slug}", response_class=HTMLResponse)
 async def alternatives_for(request: Request, competitor_slug: str):
-    """Show all indie tools that replace a specific competitor."""
+    """Show all indie creations that replace a specific competitor."""
     db = request.state.db
 
     # Reconstruct competitor name from slug — search broadly
@@ -250,7 +250,7 @@ async def alternatives_for(request: Request, competitor_slug: str):
                 We don&rsquo;t have any indie alternatives to {escape(competitor_name)} listed yet.
                 If your tool replaces {escape(competitor_name)}, list it now!
             </p>
-            <a href="/submit" class="btn btn-primary mt-8">Submit Your Tool</a>
+            <a href="/submit" class="btn btn-primary mt-8">Submit Your Creation</a>
         </div>
         """
         return HTMLResponse(page_shell(f"Alternatives to {competitor_name}", body,
@@ -417,7 +417,7 @@ async def alternatives_for(request: Request, competitor_slug: str):
                 {tool_count} Indie Alternative{"s" if tool_count != 1 else ""} to {safe_name}
             </h1>
             <p style="color:var(--ink-muted);font-size:17px;margin-top:8px;max-width:600px;">
-                Looking for a {safe_name} alternative? These indie tools offer the same features
+                Looking for a {safe_name} alternative? These indie creations offer the same features
                 with better pricing, more flexibility, and personal support from the makers who built them.
             </p>
         </div>
@@ -478,12 +478,12 @@ async def alternatives_for(request: Request, competitor_slug: str):
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
                 Submit it for free and help others find better, more affordable tools.
             </p>
-            <a href="/submit" class="btn btn-primary">Submit Your Tool &rarr;</a>
+            <a href="/submit" class="btn btn-primary">Submit Your Creation &rarr;</a>
         </div>
     </div>
     """
     return HTMLResponse(page_shell(f"{tool_count} Indie Alternatives to {competitor_name} (2026)", body,
-                                   description=f"Compare {tool_count} bootstrapped and open-source alternatives to {competitor_name}. Curated indie tools, no VC-funded software.",
+                                   description=f"Compare {tool_count} bootstrapped and open-source alternatives to {competitor_name}. Curated indie creations, no VC-funded software.",
                                    user=request.state.user, canonical=f"/alternatives/{competitor_slug}",
                                    extra_head=jsonld_script))
 
@@ -533,7 +533,7 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
         price_display = "Free"
 
     # Badges
-    ejectable_badge = '<span style="display:inline-block;background:#EDE9FE;color:#7C3AED;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;">&#9889; Ejectable</span>' if tool.get('is_ejectable') else ''
+    ejectable_badge = '<span style="display:inline-block;background:#EDE9FE;color:#7C3AED;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Ejectable</span>' if tool.get('is_ejectable') else ''
 
     # Get other alternatives for cross-linking
     other_tools = await get_tools_replacing(db, competitor_name, limit=6)
@@ -611,7 +611,7 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
             <ul style="color:var(--ink-light);font-size:14px;line-height:1.8;padding-left:20px;">
                 <li><strong>Indie pricing</strong> &mdash; no enterprise markup or per-seat fees</li>
                 <li><strong>Direct maker support</strong> &mdash; talk to the person who built it</li>
-                <li><strong>Transparent &amp; open</strong> &mdash; many indie tools are open-source</li>
+                <li><strong>Transparent &amp; open</strong> &mdash; many indie creations are open-source</li>
                 <li><strong>No vendor lock-in</strong> &mdash; own your data, export anytime</li>
             </ul>
         </div>
@@ -625,7 +625,7 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
                 List your tool on IndieStack for free and reach developers looking to switch.
             </p>
-            <a href="/submit" class="btn btn-primary">Submit Your Tool &rarr;</a>
+            <a href="/submit" class="btn btn-primary">Submit Your Creation &rarr;</a>
         </div>
     </div>
     """

@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.config import BASE_URL
 
-from indiestack.routes.components import page_shell, star_rating_html, tool_card, indie_badge_html, pagination_html, update_card, launch_readiness_bar
+from indiestack.routes.components import page_shell, star_rating_html, tool_card, indie_badge_html, pagination_html, update_card, launch_readiness_bar, pixel_icon_svg
 from indiestack.db import (
     get_tools_by_maker, get_sales_by_maker, get_maker_revenue, get_maker_stats,
     get_tool_by_id, update_tool, get_all_categories, get_tool_rating,
@@ -25,8 +25,10 @@ from indiestack.db import (
     MILESTONE_THRESHOLDS,
     get_purchases_by_email,
     get_total_agent_citations,
+    get_maker_query_intelligence, get_maker_agent_breakdown, get_maker_daily_trend,
     create_api_key, get_api_keys_for_user, revoke_api_key, get_api_key_usage_stats,
     get_developer_profile, toggle_personalization, clear_developer_profile,
+    update_user,
 )
 from indiestack.payments import create_connect_account, create_onboarding_link
 from indiestack.email import send_email, wishlist_update_html
@@ -188,6 +190,89 @@ async def dashboard_overview(request: Request):
                 <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;">Tip: Active tools with changelogs rank higher in search and get a &#128293; streak badge.</p>
             </div>
             '''
+
+    # ── AI Distribution Intelligence ──────────────────────────
+    ai_intel_html = ''
+    if user.get('maker_id'):
+        queries = await get_maker_query_intelligence(db, user['maker_id'], days=30)
+        agents = await get_maker_agent_breakdown(db, user['maker_id'], days=30)
+        trend = await get_maker_daily_trend(db, user['maker_id'], days=30)
+
+        # Query intelligence table
+        query_rows = ''
+        for q in queries:
+            query_rows += f'''
+            <tr>
+                <td style="padding:8px 12px;font-family:var(--font-mono);font-size:13px;">{escape(q['query'])}</td>
+                <td style="padding:8px 12px;text-align:center;font-weight:600;">{q['count']}</td>
+                <td style="padding:8px 12px;"><a href="/tool/{q['top_result_slug']}" style="color:var(--accent);font-size:13px;">{escape(q['top_result_name'] or q['top_result_slug'])}</a></td>
+            </tr>'''
+
+        # Agent breakdown
+        agent_rows = ''
+        total_citations = sum(a['count'] for a in agents)
+        for a in agents:
+            pct = round(a['count'] / total_citations * 100) if total_citations else 0
+            bar_width = max(pct, 2)
+            agent_label = {
+                'mcp': 'MCP Server (Claude, Cursor, etc.)',
+                'api': 'REST API',
+                'web': 'Web Search',
+            }.get(a['agent_name'], a['agent_name'] or 'Unknown')
+            agent_rows += f'''
+            <div style="margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+                    <span style="color:var(--ink);">{agent_label}</span>
+                    <span style="color:var(--ink-muted);">{a['count']} ({pct}%)</span>
+                </div>
+                <div style="background:var(--cream-dark);border-radius:4px;height:8px;overflow:hidden;">
+                    <div style="background:var(--accent);width:{bar_width}%;height:100%;border-radius:4px;"></div>
+                </div>
+            </div>'''
+
+        # Sparkline trend (pure CSS bars)
+        trend_html = ''
+        if trend:
+            max_val = max((d['citations'] for d in trend), default=1) or 1
+            bars = ''
+            for d in trend[-14:]:  # Last 14 days
+                h = max(int(d['citations'] / max_val * 40), 2)
+                day_label = d['day'][5:]  # MM-DD
+                bars += f'<div title="{day_label}: {d["citations"]}" style="width:8px;height:{h}px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>'
+            trend_html = f'''
+            <div style="margin-top:16px;">
+                <h4 style="font-size:13px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Daily AI Recommendations (14d)</h4>
+                <div style="display:flex;align-items:flex-end;gap:3px;height:44px;padding:2px 0;">{bars}</div>
+            </div>'''
+
+        if queries or agents:
+            ai_intel_html = f'''
+            <div style="margin-top:32px;">
+                <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
+                    &#129302; AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
+                </h2>
+                <style>.ai-intel-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}}@media(max-width:600px){{.ai-intel-grid{{grid-template-columns:1fr}}}}</style>
+                <div class="ai-intel-grid">
+                    <div class="card">
+                        <h3 style="font-size:15px;color:var(--ink);margin-bottom:12px;">Queries Finding Your Tools</h3>
+                        <p style="font-size:12px;color:var(--ink-muted);margin-bottom:12px;">What people search for when they discover your creations.</p>
+                        {f"""<table style="width:100%;border-collapse:collapse;font-size:14px;">
+                            <thead><tr style="border-bottom:1px solid var(--border);">
+                                <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;color:var(--ink-muted);">Query</th>
+                                <th style="padding:8px 12px;text-align:center;font-size:11px;text-transform:uppercase;color:var(--ink-muted);">Count</th>
+                                <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;color:var(--ink-muted);">Tool</th>
+                            </tr></thead>
+                            <tbody>{query_rows}</tbody>
+                        </table>""" if queries else '<p style="color:var(--ink-muted);font-size:13px;">No search data yet. Queries will appear here as AI agents discover your tools.</p>'}
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size:15px;color:var(--ink);margin-bottom:12px;">Recommendation Sources</h3>
+                        <p style="font-size:12px;color:var(--ink-muted);margin-bottom:12px;">Which AI agents and channels recommend your creations.</p>
+                        {agent_rows if agents else '<p style="color:var(--ink-muted);font-size:13px;">No citations yet. As agents recommend your tools, sources will appear here.</p>'}
+                        {trend_html}
+                    </div>
+                </div>
+            </div>'''
 
     # Buyer badge embed section
     buyer_badge_html = ''
@@ -522,7 +607,7 @@ async def dashboard_overview(request: Request):
     if not user_keys:
         api_nudge = '''<div style="background:linear-gradient(135deg,var(--card-bg),var(--cream-dark));border:1px solid var(--accent);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;">
             <div style="display:flex;align-items:center;gap:12px;">
-                <span style="font-size:24px;">&#9889;</span>
+                <span style="color:var(--slate);display:inline-block;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
                 <div>
                     <strong style="font-size:14px;">Get personalized recommendations</strong>
                     <p style="font-size:13px;color:var(--ink-muted);margin:4px 0 0;">
@@ -549,6 +634,112 @@ async def dashboard_overview(request: Request):
     if boosted_param == '1':
         boost_success_banner = '<div style="background:#ECFDF5;border:1px solid #6EE7B7;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;color:#065F46;font-weight:600;font-size:14px;">Referral boost applied! Your tool is now featured.</div>'
 
+    # ── Avatar saved banner ───────────────────────────────────────
+    avatar_saved_param = request.query_params.get('avatar', '')
+    avatar_saved_banner = ''
+    if avatar_saved_param == 'saved':
+        avatar_saved_banner = '<div style="background:#ECFDF5;border:1px solid #6EE7B7;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;color:#065F46;font-weight:600;font-size:14px;">Pixel avatar saved! It\'ll be visible to others once we\'ve reviewed it.</div>'
+
+    # ── Pixel Avatar Editor ───────────────────────────────────────
+    existing_avatar = escape(str(user.get('pixel_avatar', '') or ''))
+    current_avatar_preview = ''
+    raw_pixel = str(user.get('pixel_avatar', '') or '')
+    if raw_pixel and len(raw_pixel) == 49:
+        approved = bool(user.get('pixel_avatar_approved', 0))
+        status_badge = '<span class="badge badge-success">Approved</span>' if approved else '<span class="badge badge-warning">Pending review</span>'
+        current_avatar_preview = f'<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">{pixel_icon_svg(raw_pixel, size=48)} <div><p style="font-size:13px;font-weight:600;color:var(--ink);">Current avatar</p>{status_badge}</div></div>'
+
+    avatar_editor_html = f'''
+    <div class="card" style="padding:20px;margin-top:24px;margin-bottom:24px;">
+        <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">Your Pixel Avatar</h3>
+        {current_avatar_preview}
+        <form method="POST" action="/dashboard/avatar">
+            <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+                <div>
+                    <div id="avatar-grid" style="display:grid;grid-template-columns:repeat(7,28px);grid-template-rows:repeat(7,28px);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;cursor:crosshair;"></div>
+                    <div id="avatar-palette" style="display:flex;gap:4px;margin-top:8px;"></div>
+                </div>
+                <div>
+                    <p style="font-size:12px;color:var(--ink-muted);margin-bottom:4px;">Preview</p>
+                    <div id="avatar-preview" style="border:1px solid var(--border);border-radius:4px;"></div>
+                </div>
+            </div>
+            <input type="hidden" id="pixel_avatar" name="pixel_avatar" value="{existing_avatar}">
+            <div style="display:flex;gap:8px;margin-top:12px;">
+                <button type="button" onclick="clearAvatarGrid()" style="font-size:12px;color:var(--ink-muted);background:none;border:1px solid var(--border);border-radius:4px;padding:6px 14px;cursor:pointer;">Clear</button>
+                <button type="submit" class="btn btn-primary" style="font-size:13px;padding:6px 20px;">Save Avatar</button>
+            </div>
+        </form>
+        <script>
+        (function(){{
+            var COLORS = ['transparent','#1A2D4A','#00D4F5','#E2B764','#FFFFFF','#64748B','#E07A5F','#22C55E','#000000','#EF4444','#EC4899','#8B5CF6','#F97316','#7DD3FC','#86EFAC','#92400E'];
+            var LABELS = ['Erase','Navy','Cyan','Gold','White','Slate','Terracotta','Green','Black','Red','Pink','Purple','Orange','Light Blue','Light Green','Brown'];
+            var grid = document.getElementById('avatar-grid');
+            var palette = document.getElementById('avatar-palette');
+            var input = document.getElementById('pixel_avatar');
+            var preview = document.getElementById('avatar-preview');
+            var activeColor = '1';
+            var cells = [];
+            var data = (input.value || '').padEnd(49, '0').split('');
+
+            COLORS.forEach(function(c, i) {{
+                var sw = document.createElement('div');
+                sw.title = LABELS[i];
+                sw.style.cssText = 'width:22px;height:22px;border-radius:4px;cursor:pointer;border:2px solid ' + (i.toString(16) === activeColor ? 'var(--accent)' : 'var(--border)') + ';background:' + (c === 'transparent' ? 'repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 12px 12px' : c) + ';';
+                sw.onclick = function() {{
+                    activeColor = i.toString(16);
+                    palette.querySelectorAll('div').forEach(function(s, j) {{
+                        s.style.borderColor = j === i ? 'var(--accent)' : 'var(--border)';
+                    }});
+                }};
+                palette.appendChild(sw);
+            }});
+
+            var isMouseDown = false;
+            grid.onmousedown = function() {{ isMouseDown = true; }};
+            document.addEventListener('mouseup', function() {{ isMouseDown = false; }});
+            for (var i = 0; i < 49; i++) {{
+                (function(idx) {{
+                    var cell = document.createElement('div');
+                    cell.style.cssText = 'background:' + (data[idx] === '0' ? 'var(--card-bg)' : COLORS[parseInt(data[idx],16)]) + ';';
+                    cell.onmousedown = function(e) {{ e.preventDefault(); paintAvatar(idx); }};
+                    cell.onmouseenter = function() {{ if (isMouseDown) paintAvatar(idx); }};
+                    grid.appendChild(cell);
+                    cells.push(cell);
+                }})(i);
+            }}
+
+            function paintAvatar(idx) {{
+                data[idx] = activeColor;
+                cells[idx].style.background = activeColor === '0' ? 'var(--card-bg)' : COLORS[parseInt(activeColor,16)];
+                syncAvatar();
+            }}
+
+            function syncAvatar() {{
+                input.value = data.join('');
+                var svg = '<svg width="24" height="24" viewBox="0 0 7 7" style="image-rendering:pixelated;">';
+                for (var i = 0; i < 49; i++) {{
+                    if (data[i] !== '0' && COLORS[parseInt(data[i],16)]) {{
+                        var x = i % 7, y = Math.floor(i / 7);
+                        svg += '<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="'+COLORS[parseInt(data[i],16)]+'"/>';
+                    }}
+                }}
+                svg += '</svg>';
+                preview.innerHTML = svg;
+            }}
+
+            window.clearAvatarGrid = function() {{
+                data = Array(49).fill('0');
+                cells.forEach(function(c) {{ c.style.background = 'var(--card-bg)'; }});
+                syncAvatar();
+            }};
+
+            syncAvatar();
+        }})();
+        </script>
+    </div>
+    '''
+
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
         {stripe_launch_banner}
@@ -556,6 +747,7 @@ async def dashboard_overview(request: Request):
         {api_nudge}
         {verify_banner}
         {boost_success_banner}
+        {avatar_saved_banner}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
             <div>
                 <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">
@@ -576,7 +768,7 @@ async def dashboard_overview(request: Request):
                 <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--slate-dark);">{total_upvotes}</div>
             </div>
             <div class="card" style="text-align:center;padding:20px;">
-                <div style="color:var(--ink-muted);font-size:13px;">&#9889; Tokens Saved</div>
+                <div style="color:var(--ink-muted);font-size:13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Tokens Saved</div>
                 <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--slate-dark);">{'~' + str(tokens_k) + 'k' if tokens_k > 0 else '0'}</div>
             </div>
             <div class="card" style="text-align:center;padding:20px;">
@@ -591,16 +783,19 @@ async def dashboard_overview(request: Request):
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
             <a href="/dashboard/tools" class="btn btn-primary">My Tools</a>
-            <a href="/submit" class="btn btn-secondary">Submit New Tool</a>
-            <a href="/dashboard/saved" class="btn btn-secondary">Saved Tools</a>
+            <a href="/submit" class="btn btn-secondary">Submit New</a>
+            <a href="/dashboard/saved" class="btn btn-secondary">Bookmarks</a>
             {'<a href="/dashboard/updates" class="btn btn-secondary">Post Update</a>' if maker_id else ''}
             <a href="/dashboard/my-stack" class="btn btn-secondary">My Stack</a>
             <!-- Developer API link hidden until key enforcement is enabled -->
             <!-- <a href="/developer" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">Developer API</a> -->
         </div>
 
+        {avatar_editor_html}
+
         {referral_html}
         {funnel_html}
+        {ai_intel_html}
         {search_intent_html}
         {matchmaker_html}
         {payment_card_html}
@@ -636,6 +831,22 @@ async def claim_referral_boost_handler(request: Request):
     return RedirectResponse(url="/dashboard?boosted=1", status_code=303)
 
 
+# ── Save Pixel Avatar ────────────────────────────────────────────────────
+
+@router.post("/dashboard/avatar", response_class=HTMLResponse)
+async def save_avatar(request: Request, pixel_avatar: str = Form("")):
+    user = request.state.user
+    redirect = require_login(user)
+    if redirect:
+        return redirect
+    db = request.state.db
+    clean = pixel_avatar.strip().lower()
+    if clean and (len(clean) != 49 or not all(c in '0123456789abcdef' for c in clean)):
+        clean = ''
+    await update_user(db, user['id'], pixel_avatar=clean)
+    return RedirectResponse(url="/dashboard?avatar=saved", status_code=303)
+
+
 # ── My Tools ─────────────────────────────────────────────────────────────
 
 @router.get("/dashboard/tools", response_class=HTMLResponse)
@@ -654,14 +865,14 @@ async def dashboard_tools(request: Request):
             <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin-bottom:16px;">My Tools</h1>
             <div class="card" style="text-align:center;padding:48px 32px;">
                 <div style="font-size:48px;margin-bottom:16px;">&#128640;</div>
-                <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin-bottom:12px;">List your first tool</h2>
+                <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin-bottom:12px;">List your first creation</h2>
                 <p style="color:var(--ink-muted);font-size:15px;line-height:1.6;max-width:400px;margin:0 auto 8px;">
                     Listing takes under 2 minutes. Free to list, no hidden fees.
                 </p>
                 <p style="color:var(--ink-muted);font-size:14px;margin-bottom:24px;">
                     Your maker profile is created automatically when you submit.
                 </p>
-                <a href="/submit" class="btn btn-primary" style="padding:12px 32px;font-size:16px;">Submit Your First Tool &rarr;</a>
+                <a href="/submit" class="btn btn-primary" style="padding:12px 32px;font-size:16px;">Submit Your First Creation &rarr;</a>
             </div>
         </div>
         """
@@ -696,7 +907,7 @@ async def dashboard_tools(request: Request):
             <td style="padding:12px;">
                 <a href="/tool/{slug}" style="font-weight:600;color:var(--ink);">{name}</a>{totw_badge}
                 <p style="font-size:13px;color:var(--ink-muted);margin-top:8px;margin-bottom:0;">
-                    <span style="color:var(--accent);">&#9889;</span> {mcp_views} AI recommendations{totw_line}
+                    <span style="color:var(--accent);display:inline-flex;align-items:center;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span> {mcp_views} AI recommendations{totw_line}
                 </p>
             </td>
             <td style="padding:12px;">
@@ -731,7 +942,7 @@ async def dashboard_tools(request: Request):
             </table>
         </div>
         <div style="margin-top:24px;">
-            <a href="/submit" class="btn btn-primary">Submit New Tool</a>
+            <a href="/submit" class="btn btn-primary">Submit New</a>
         </div>
     </div>
     """
@@ -761,7 +972,8 @@ async def edit_tool_get(request: Request, tool_id: int):
 
     categories = await get_all_categories(db)
     changelogs = await get_tool_changelogs(db, tool_id, limit=20)
-    body = edit_tool_form(tool, categories, changelogs=changelogs)
+    maker = await get_maker_by_id(db, user['maker_id']) if user.get('maker_id') else None
+    body = edit_tool_form(tool, categories, changelogs=changelogs, maker=maker)
     return HTMLResponse(page_shell(f"Edit {tool['name']}", body, user=user))
 
 
@@ -771,6 +983,9 @@ async def edit_tool_post(
     name: str = Form(""), tagline: str = Form(""), description: str = Form(""),
     url: str = Form(""), tags: str = Form(""),
     price: str = Form(""), delivery_url: str = Form(""),
+    pixel_icon: str = Form(""),
+    story_motivation: str = Form(""), story_challenge: str = Form(""),
+    story_advice: str = Form(""), story_fun_fact: str = Form(""),
 ):
     user = request.state.user
     redirect = require_login(user)
@@ -781,6 +996,10 @@ async def edit_tool_post(
     tool = await get_tool_by_id(db, tool_id)
     if not tool or tool.get('maker_id') != user.get('maker_id'):
         return RedirectResponse(url="/dashboard/tools", status_code=303)
+
+    # Auto-prepend https:// if missing protocol (mobile users often skip it)
+    if url.strip() and not url.startswith("http"):
+        url = "https://" + url.strip()
 
     # Validate
     errors = []
@@ -809,11 +1028,26 @@ async def edit_tool_post(
         body = edit_tool_form(tool, categories, error=" ".join(errors))
         return HTMLResponse(page_shell(f"Edit {tool['name']}", body, user=user))
 
+    # Validate pixel_icon if provided
+    clean_pixel = pixel_icon.strip().lower()
+    if clean_pixel and (len(clean_pixel) != 49 or not all(c in '0123456789abcdef' for c in clean_pixel)):
+        clean_pixel = tool.get('pixel_icon', '') or ''  # keep existing if invalid
+
     await update_tool(db, tool_id,
                       name=name.strip(), tagline=tagline.strip(),
                       description=description.strip(), url=url.strip(),
                       tags=tags.strip(), price_pence=price_pence,
-                      delivery_url=delivery_url.strip())
+                      delivery_url=delivery_url.strip(),
+                      pixel_icon=clean_pixel)
+
+    # Save maker story fields
+    maker_id = user.get('maker_id')
+    if maker_id:
+        await update_maker(db, maker_id,
+                           story_motivation=story_motivation.strip(),
+                           story_challenge=story_challenge.strip(),
+                           story_advice=story_advice.strip(),
+                           story_fun_fact=story_fun_fact.strip())
 
     return RedirectResponse(url="/dashboard/tools", status_code=303)
 
@@ -870,7 +1104,7 @@ async def post_tool_changelog(request: Request, tool_id: int):
     return RedirectResponse(f"/dashboard/tools/{tool_id}/edit", status_code=303)
 
 
-def edit_tool_form(tool: dict, categories: list, error: str = "", changelogs: list = None) -> str:
+def edit_tool_form(tool: dict, categories: list, error: str = "", changelogs: list = None, maker: dict = None) -> str:
     alert = f'<div class="alert alert-error">{escape(error)}</div>' if error else ''
     price_val = f"{tool['price_pence']/100:.2f}" if tool.get('price_pence') else ''
 
@@ -917,6 +1151,119 @@ def edit_tool_form(tool: dict, categories: list, error: str = "", changelogs: li
                 <input type="text" id="tags" name="tags" class="form-input"
                        value="{escape(str(tool.get('tags', '')))}">
             </div>
+            <div class="form-group">
+                <label>Pixel Icon <span style="color:var(--ink-muted);font-weight:400;font-size:13px;">(7&times;7 pixel art for your tool)</span></label>
+                <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+                    <div>
+                        <div id="pixel-grid" style="display:grid;grid-template-columns:repeat(7,32px);grid-template-rows:repeat(7,32px);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;cursor:crosshair;"></div>
+                        <div id="pixel-palette" style="display:flex;gap:4px;margin-top:8px;"></div>
+                        <button type="button" onclick="clearPixelGrid()" style="margin-top:8px;font-size:12px;color:var(--ink-muted);background:none;border:1px solid var(--border);border-radius:4px;padding:4px 10px;cursor:pointer;">Clear</button>
+                    </div>
+                    <div>
+                        <p style="font-size:12px;color:var(--ink-muted);margin-bottom:4px;">Preview</p>
+                        <div id="pixel-preview" style="border:1px solid var(--border);border-radius:4px;"></div>
+                    </div>
+                </div>
+                <input type="hidden" id="pixel_icon" name="pixel_icon" value="{escape(str(tool.get('pixel_icon', '') or ''))}">
+            </div>
+            <script>
+            (function(){{
+                var COLORS = ['transparent','#1A2D4A','#00D4F5','#E2B764','#FFFFFF','#64748B','#E07A5F','#22C55E','#000000','#EF4444','#EC4899','#8B5CF6','#F97316','#7DD3FC','#86EFAC','#92400E'];
+                var LABELS = ['Erase','Navy','Cyan','Gold','White','Slate','Terracotta','Green','Black','Red','Pink','Purple','Orange','Light Blue','Light Green','Brown'];
+                var grid = document.getElementById('pixel-grid');
+                var palette = document.getElementById('pixel-palette');
+                var input = document.getElementById('pixel_icon');
+                var preview = document.getElementById('pixel-preview');
+                var activeColor = '1';
+                var cells = [];
+                var data = (input.value || '').padEnd(49, '0').split('');
+
+                // Build palette
+                COLORS.forEach(function(c, i) {{
+                    var sw = document.createElement('div');
+                    sw.title = LABELS[i];
+                    sw.style.cssText = 'width:24px;height:24px;border-radius:4px;cursor:pointer;border:2px solid ' + (i.toString(16) === activeColor ? 'var(--accent)' : 'var(--border)') + ';background:' + (c === 'transparent' ? 'repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 12px 12px' : c) + ';';
+                    sw.onclick = function() {{
+                        activeColor = i.toString(16);
+                        palette.querySelectorAll('div').forEach(function(s, j) {{
+                            s.style.borderColor = j === i ? 'var(--accent)' : 'var(--border)';
+                        }});
+                    }};
+                    palette.appendChild(sw);
+                }});
+
+                // Build grid
+                var isMouseDown = false;
+                grid.onmousedown = function() {{ isMouseDown = true; }};
+                document.onmouseup = function() {{ isMouseDown = false; }};
+                for (var i = 0; i < 49; i++) {{
+                    (function(idx) {{
+                        var cell = document.createElement('div');
+                        cell.style.cssText = 'background:' + (data[idx] === '0' ? 'var(--card-bg)' : COLORS[parseInt(data[idx],16)]) + ';';
+                        cell.onmousedown = function(e) {{ e.preventDefault(); paint(idx); }};
+                        cell.onmouseenter = function() {{ if (isMouseDown) paint(idx); }};
+                        grid.appendChild(cell);
+                        cells.push(cell);
+                    }})(i);
+                }}
+
+                function paint(idx) {{
+                    data[idx] = activeColor;
+                    cells[idx].style.background = activeColor === '0' ? 'var(--card-bg)' : COLORS[parseInt(activeColor,16)];
+                    sync();
+                }}
+
+                function sync() {{
+                    input.value = data.join('');
+                    // Update preview SVG
+                    var svg = '<svg width="24" height="24" viewBox="0 0 7 7" style="image-rendering:pixelated;">';
+                    for (var i = 0; i < 49; i++) {{
+                        if (data[i] !== '0' && COLORS[parseInt(data[i],16)]) {{
+                            var x = i % 7, y = Math.floor(i / 7);
+                            svg += '<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="'+COLORS[parseInt(data[i],16)]+'"/>';
+                        }}
+                    }}
+                    svg += '</svg>';
+                    preview.innerHTML = svg;
+                }}
+
+                window.clearPixelGrid = function() {{
+                    data = Array(49).fill('0');
+                    cells.forEach(function(c) {{ c.style.background = 'var(--card-bg)'; }});
+                    sync();
+                }};
+
+                sync();
+            }})();
+            </script>
+            </div>
+            <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);">
+                <h3 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:4px;">Your Maker Story</h3>
+                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">Tell the community about your journey. This appears on your tool's page.</p>
+                <div class="form-group">
+                    <label for="story_motivation">Why did you build this?</label>
+                    <textarea id="story_motivation" name="story_motivation"
+                        style="width:100%;min-height:80px;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px;resize:vertical;background:var(--bg);color:var(--ink);"
+                        placeholder="What problem were you solving? What made you decide to build it yourself?">{escape(str((maker or {{}}).get('story_motivation', '') or ''))}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="story_challenge">What was the hardest part?</label>
+                    <textarea id="story_challenge" name="story_challenge"
+                        style="width:100%;min-height:80px;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px;resize:vertical;background:var(--bg);color:var(--ink);"
+                        placeholder="Technical challenge, design decision, or business hurdle?">{escape(str((maker or {{}}).get('story_challenge', '') or ''))}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="story_advice">Advice for indie makers?</label>
+                    <textarea id="story_advice" name="story_advice"
+                        style="width:100%;min-height:80px;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px;resize:vertical;background:var(--bg);color:var(--ink);"
+                        placeholder="What would you tell someone starting a similar project?">{escape(str((maker or {{}}).get('story_advice', '') or ''))}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="story_fun_fact">Fun fact about this project</label>
+                    <textarea id="story_fun_fact" name="story_fun_fact"
+                        style="width:100%;min-height:80px;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:14px;resize:vertical;background:var(--bg);color:var(--ink);"
+                        placeholder="Something surprising, weird, or delightful about building this">{escape(str((maker or {{}}).get('story_fun_fact', '') or ''))}</textarea>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;">
                 Save Changes
@@ -1028,7 +1375,7 @@ async def dashboard_analytics(request: Request):
     return HTMLResponse(page_shell("Analytics", body, user=user))
 
 
-# ── Saved Tools ─────────────────────────────────────────────────────────
+# ── Bookmarks ─────────────────────────────────────────────────────────
 
 @router.get("/dashboard/saved", response_class=HTMLResponse)
 async def dashboard_saved(request: Request):
@@ -1047,14 +1394,14 @@ async def dashboard_saved(request: Request):
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Saved Tools</h1>
+            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Bookmarks</h1>
             <a href="/dashboard" style="color:var(--ink-muted);font-size:14px;">&larr; Dashboard</a>
         </div>
         <div class="card-grid">{cards}</div>
         {pagination_html(page, total_pages, '/dashboard/saved')}
     </div>
     """
-    return HTMLResponse(page_shell("Saved Tools", body, user=user))
+    return HTMLResponse(page_shell("Bookmarks", body, user=user))
 
 
 # ── Maker Updates ───────────────────────────────────────────────────────

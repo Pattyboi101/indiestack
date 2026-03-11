@@ -4,15 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "indiestack"
-version = "0.5.0"
-description = "MCP server for IndieStack — the tool knowledge layer for AI agents. Search 480+ indie tools, get personalized recommendations, build stacks, and spot market gaps."
+version = "1.1.0"
+description = "MCP server for IndieStack — the knowledge layer between AI agents and everything indie creators have built. 793+ creations across 25 categories. Search, compare, build stacks, and publish."
 readme = "README_PYPI.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [
-    { name = "IndieStack", email = "hello@indiestack.fly.dev" },
+    { name = "IndieStack", email = "hello@indiestack.ai" },
 ]
-keywords = ["mcp", "indie", "saas", "tools", "ai", "claude", "cursor", "windsurf"]
+keywords = ["mcp", "indie", "saas", "tools", "ai", "claude", "cursor", "windsurf", "knowledge-layer", "creations"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -22,13 +22,14 @@ classifiers = [
 ]
 dependencies = [
     "mcp[cli]>=1.0.0",
+    "httpx>=0.25.0",
 ]
 
 [project.scripts]
 indiestack-mcp = "indiestack.mcp_server:main"
 
 [project.urls]
-Homepage = "https://indiestack.fly.dev"
+Homepage = "https://indiestack.ai"
 Repository = "https://github.com/indiestack/indiestack"
 
 # Optional: full server dependencies (only needed for self-hosting)
@@ -44,3 +45,7 @@ server = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/indiestack"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/indiestack/**", "README_PYPI.md", "pyproject.toml", "LICENSE"]
+exclude = ["*.db", "*.sqlite", "*.mp4", "*.png", "*.jpg", "dist/", "docs/", ".claude/", "__pycache__/", "*.pyc"]

@@ -48,7 +48,7 @@ def _built_this_form(error: str = "", url_val: str = "", desc_val: str = "",
                     Just built something?
                 </h1>
                 <p style="color:var(--ink-muted);font-size:15px;line-height:1.5;">
-                    Share it with 350+ indie tools and the devs who use them.
+                    Share it with 350+ indie creations and the devs who use them.
                 </p>
             </div>
             {alert}
@@ -103,6 +103,10 @@ async def built_this_post(
 
     url = url.strip()
     description = description.strip()
+
+    # Auto-prepend https:// if missing protocol (mobile users often skip it)
+    if url and not url.startswith("http"):
+        url = "https://" + url
 
     if not url or not url.startswith("http"):
         body = _built_this_form("Please enter a valid URL starting with http.", url, description, email, show_email)

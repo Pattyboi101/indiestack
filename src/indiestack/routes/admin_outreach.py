@@ -1,6 +1,7 @@
 """Admin outreach helpers — email blasts, magic links, maker tracking, social kit."""
 
 import os
+import asyncio
 from datetime import datetime
 from html import escape
 from urllib.parse import quote
@@ -18,42 +19,9 @@ from indiestack.db import (
     get_outbound_click_count,
 )
 from indiestack.email import send_email, maker_stripe_nudge_html, marketplace_preview_html, tool_of_the_week_html, weekly_digest_html, launch_day_html, maker_launch_countdown_html
+from indiestack.routes.admin_helpers import time_ago, days_ago_label, status_badge, freshness_badge, kpi_card, data_table, row_bg
 
 SMTP_FROM = os.environ.get("SMTP_FROM", "")
-
-
-# ── Small helpers ─────────────────────────────────────────────────────────
-
-def _days_ago_label(days):
-    if days is None:
-        return "Never"
-    if days == 0:
-        return "Today"
-    if days == 1:
-        return "Yesterday"
-    if days < 30:
-        return f"{days}d ago"
-    if days < 365:
-        return f"{days // 30}mo ago"
-    return f"{days // 365}y ago"
-
-
-def _status_badge(status):
-    if status == "active":
-        return '<span style="display:inline-block;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:600;background:#DCFCE7;color:#16a34a;">Active</span>'
-    if status == "idle":
-        return '<span style="display:inline-block;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:600;background:#FEF3C7;color:#D97706;">Idle</span>'
-    return '<span style="display:inline-block;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:600;background:#FEE2E2;color:#DC2626;">Dormant</span>'
-
-
-def _freshness_badge(freshness):
-    if freshness == "active":
-        return '<span style="display:inline-block;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:600;background:#DCFCE7;color:#16a34a;">Active</span>'
-    if freshness == "stale":
-        return '<span style="display:inline-block;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:600;background:#FEF3C7;color:#D97706;">Stale</span>'
-    if freshness == "inactive":
-        return '<span style="display:inline-block;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:600;background:#FEE2E2;color:#DC2626;">Inactive</span>'
-    return '<span style="display:inline-block;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:600;background:#F3F4F6;color:#6B7280;">Unknown</span>'
 
 
 # ── Tool of the Week panel ────────────────────────────────────────────────
@@ -147,6 +115,32 @@ def _render_digest_panel(new_count, top_clicked_name, top_search, subscriber_cou
 </div>'''
 
 
+def _render_ph_launch_panel(subscriber_count, user_count, tool_count):
+    """Render the Product Hunt launch announcement card."""
+    total = subscriber_count + user_count  # rough total (may overlap)
+    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #FF6154;">
+    <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 4px;">Product Hunt Launch Announcement</h3>
+    <p style="color:var(--ink-muted);font-size:13px;margin:0 0 8px;">MCP v1.1 + PH launch. Sends to {subscriber_count} subscribers + {user_count} registered users (deduped).</p>
+    <div style="display:flex;gap:10px;">
+        <form method="POST" action="/admin?tab=growth&section=email">
+            <input type="hidden" name="action" value="send_ph_test">
+            <button type="submit"
+                    style="padding:8px 16px;background:var(--cream-dark);color:var(--ink);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;">
+                Send Test to Me
+            </button>
+        </form>
+        <form method="POST" action="/admin?tab=growth&section=email">
+            <input type="hidden" name="action" value="send_ph_all">
+            <button type="submit"
+                    onclick="return confirm(\\'Send PH launch email to ~{total} people (subscribers + users)?\\');"
+                    style="padding:8px 16px;background:#FF6154;color:white;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
+                Send to Everyone
+            </button>
+        </form>
+    </div>
+</div>'''
+
+
 def _render_launch_day_panel(subscriber_count, tool_count, maker_count):
     """Render the Launch Day Email one-click card."""
     return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #00D4F5;">
@@ -197,13 +191,14 @@ def _render_maker_countdown_panel(claimed_maker_count):
 </div>'''
 
 
-def _render_email_tab(subscribers, result_html="", totw_html="", digest_html="", launch_day_html_panel="", maker_countdown_panel=""):
+def _render_email_tab(subscribers, result_html="", totw_html="", digest_html="", launch_day_html_panel="", maker_countdown_panel="", ph_panel=""):
     count = len(subscribers)
     pill = f'<span style="display:inline-block;background:var(--terracotta);color:white;padding:3px 12px;border-radius:9999px;font-size:13px;font-weight:600;margin-bottom:16px;">{count} subscribers</span>'
 
     return f"""
 {pill}
 {result_html}
+{ph_panel}
 {totw_html}
 {digest_html}
 {launch_day_html_panel}
@@ -394,10 +389,10 @@ def _render_makers_tab(makers, needs_stripe_ids=None):
         maker_id = m.get("id", "")
         tools = m.get("tool_count", 0)
         days = m.get("days_inactive")
-        last = _days_ago_label(days)
+        last = days_ago_label(days)
         email = escape(str(m.get("email") or ""))
         status = m.get("status", "dormant")
-        badge = _status_badge(status)
+        badge = status_badge(status)
 
         name_link = f'<a href="/maker/{slug}" style="color:var(--terracotta);text-decoration:none;font-weight:600;">{name}</a>' if slug else name
 
@@ -501,7 +496,7 @@ def _render_stale_tab(stale_tools, counts):
                 {'<a href="' + github_url + '" target="_blank" style="color:var(--ink-muted);text-decoration:none;font-family:var(--font-mono);font-size:12px;">' + github_url.replace("https://github.com/", "") + '</a>' if github_url else ''}
             </td>
             <td style="padding:10px 8px;font-size:13px;">{commit_display or '&mdash;'}</td>
-            <td style="padding:10px 8px;font-size:13px;">{_freshness_badge(freshness)}</td>
+            <td style="padding:10px 8px;font-size:13px;">{freshness_badge(freshness)}</td>
             <td style="padding:10px 8px;font-size:13px;font-family:var(--font-mono);">{maker_email or '&mdash;'}</td>
         </tr>"""
 
@@ -564,7 +559,7 @@ def _render_social_kit(totw, new_tools, tool_count, maker_count):
     if totw:
         totw_text = (
             f"\U0001f3c6 This week's Tool of the Week on IndieStack: {totw['name']} \u2014 {totw['tagline']}\n\n"
-            f"{tool_count}+ indie tools, all searchable by AI coding assistants.\n\n"
+            f"{tool_count}+ indie creations, all searchable by AI coding assistants.\n\n"
             f"{BASE_URL}/tool/{totw['slug']}"
         )
         cards += _social_card("social-totw", "Tool of the Week Tweet", totw_text, include_tweet=True)
@@ -573,7 +568,7 @@ def _render_social_kit(totw, new_tools, tool_count, maker_count):
     if new_tools:
         bullet_list = "\n".join(f"\u2022 {t['name']}" for t in new_tools)
         new_text = (
-            f"{len(new_tools)} new indie tools on IndieStack this week:\n\n"
+            f"{len(new_tools)} new indie creations on IndieStack this week:\n\n"
             f"{bullet_list}\n\n"
             f"All discoverable by AI coding assistants via our MCP server \U0001f916\n\n"
             f"{BASE_URL}/new"
@@ -583,7 +578,7 @@ def _render_social_kit(totw, new_tools, tool_count, maker_count):
     # Card 3: Launch Thread
     launch_text = (
         f"\U0001f680 IndieStack Marketplace is LIVE\n\n"
-        f"{tool_count} indie tools. {maker_count} makers. Zero big-tech gatekeepers.\n\n"
+        f"{tool_count} indie creations. {maker_count} makers. Zero big-tech gatekeepers.\n\n"
         f"Every tool is searchable by AI coding assistants (Cursor, Windsurf, Claude Code) through our MCP server.\n\n"
         f"0% commission for launch week (March 2-16).\n\n"
         f"List your tool free \u2192 {BASE_URL}/submit"
@@ -592,7 +587,7 @@ def _render_social_kit(totw, new_tools, tool_count, maker_count):
 
     # Card 4: Reddit Post
     reddit_text = (
-        f"Title: IndieStack Marketplace \u2014 {tool_count} indie tools discoverable by AI coding assistants\n\n"
+        f"Title: IndieStack Marketplace \u2014 {tool_count} indie creations discoverable by AI coding assistants\n\n"
         f"Body: We built IndieStack as a directory of indie SaaS tools, but with a twist: "
         f"every tool listed is instantly searchable by AI coding assistants (Cursor, Windsurf, Claude Code) "
         f"through our MCP server.\n\n"
@@ -652,11 +647,15 @@ async def render_email_section(db, request) -> str:
     cursor = await db.execute("SELECT COUNT(*) as cnt FROM makers")
     launch_maker_count = (await cursor.fetchone())["cnt"]
     launch_panel = _render_launch_day_panel(len(subscribers), launch_tool_count, launch_maker_count)
+    # PH Launch panel
+    cursor = await db.execute("SELECT COUNT(*) as cnt FROM users WHERE email IS NOT NULL AND email != ''")
+    user_count = (await cursor.fetchone())["cnt"]
+    ph_panel = _render_ph_launch_panel(len(subscribers), user_count, launch_tool_count)
     # Maker countdown panel
     _cm = await db.execute("SELECT COUNT(DISTINCT m.id) as cnt FROM makers m JOIN users u ON u.maker_id = m.id")
     claimed_maker_count = (await _cm.fetchone())["cnt"]
     countdown_panel = _render_maker_countdown_panel(claimed_maker_count)
-    return _render_email_tab(subscribers, result_html, totw_html=totw_html, digest_html=digest_html, launch_day_html_panel=launch_panel, maker_countdown_panel=countdown_panel)
+    return _render_email_tab(subscribers, result_html, totw_html=totw_html, digest_html=digest_html, launch_day_html_panel=launch_panel, maker_countdown_panel=countdown_panel, ph_panel=ph_panel)
 
 
 async def render_magic_section(db) -> str:
@@ -771,14 +770,19 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
         subject = form.get("subject", "")
         html_body = form.get("html_body", "")
         subscribers = await get_all_subscribers_with_dates(db)
+        cursor = await db.execute("SELECT email FROM email_optouts")
+        optouts = {r["email"] for r in await cursor.fetchall()}
         success = 0
         fail = 0
         for sub in subscribers:
+            if sub["email"].lower() in optouts:
+                continue
             ok = await send_email(sub["email"], subject, html_body, unsubscribe_url=_unsub_url(sub.get("unsubscribe_token")))
             if ok:
                 success += 1
             else:
                 fail += 1
+            await asyncio.sleep(1)
         toast = f"Sent: {success} success, {fail} failed"
         return RedirectResponse(url=f"/admin?tab=growth&section=email&toast={toast}", status_code=303)
 
@@ -818,6 +822,7 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
                     success += 1
                 else:
                     fail += 1
+                await asyncio.sleep(1)  # Rate limit: 1 email per second to avoid Gmail throttling
             toast = f"Preview sent: {success} success, {fail} failed"
         return RedirectResponse(url=f"/admin?tab=growth&section=email&toast={toast}", status_code=303)
 
@@ -910,8 +915,12 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
                 ok = await send_email(smtp_from, subject, html_body)
                 toast = "Digest test sent!" if ok else "Digest test failed"
         else:
+            cursor = await db.execute("SELECT email FROM email_optouts")
+            optouts = {r["email"] for r in await cursor.fetchall()}
             success = fail = 0
             for sub in subscribers:
+                if sub["email"].lower() in optouts:
+                    continue
                 unsub = _unsub_url(sub.get("unsubscribe_token"))
                 html_body = weekly_digest_html(**_digest_kwargs, unsubscribe_url=unsub)
                 ok = await send_email(sub["email"], subject, html_body, unsubscribe_url=unsub)
@@ -919,6 +928,7 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
                     success += 1
                 else:
                     fail += 1
+                await asyncio.sleep(1)
             toast = f"Digest sent: {success} success, {fail} failed"
         return RedirectResponse(url=f"/admin?tab=growth&section=email&toast={toast}", status_code=303)
 
@@ -928,7 +938,7 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
         tool_count = (await cursor.fetchone())["cnt"]
         cursor = await db.execute("SELECT COUNT(*) as cnt FROM makers")
         maker_count = (await cursor.fetchone())["cnt"]
-        subject = f"The IndieStack Marketplace is Live \u2014 Browse {tool_count} Indie Tools"
+        subject = f"The IndieStack Marketplace is Live \u2014 Browse {tool_count} Indie Creations"
 
         if action == "send_launch_test":
             smtp_from = os.environ.get("SMTP_FROM", "")
@@ -949,7 +959,54 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
                     success += 1
                 else:
                     fail += 1
+                await asyncio.sleep(1)  # Rate limit: 1 email per second to avoid Gmail throttling
             toast = f"Launch day email sent: {success} success, {fail} failed"
+        return RedirectResponse(url=f"/admin?tab=growth&section=email&toast={toast}", status_code=303)
+
+    # ── PH Launch Announcement (subscribers + registered users) ─────────
+    if action in ("send_ph_test", "send_ph_all"):
+        from indiestack.email import ph_launch_announcement_html
+        ph_url = os.environ.get("PH_URL", "https://www.producthunt.com/products/indiestack-4")
+        cursor = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
+        tool_count = (await cursor.fetchone())["cnt"]
+        subject = f"IndieStack is live on Product Hunt \u2014 {tool_count} indie creations"
+
+        if action == "send_ph_test":
+            smtp_from = os.environ.get("SMTP_FROM", "")
+            if not smtp_from:
+                toast = "SMTP_FROM not configured"
+            else:
+                html_body = ph_launch_announcement_html(ph_url, tool_count)
+                ok = await send_email(smtp_from, subject, html_body)
+                toast = "PH test sent!" if ok else "PH test failed"
+        else:
+            # Collect all unique emails: subscribers + registered users
+            subscribers = await get_all_subscribers_with_dates(db)
+            sub_emails = {s["email"]: s.get("unsubscribe_token", "") for s in subscribers}
+            cursor = await db.execute("SELECT email FROM users WHERE email IS NOT NULL AND email != ''")
+            user_rows = await cursor.fetchall()
+            # Get optouts to exclude
+            cursor = await db.execute("SELECT email FROM email_optouts")
+            optouts = {r["email"] for r in await cursor.fetchall()}
+            # Merge — subscribers get unsubscribe links, users don't
+            all_emails = {}
+            for email in [r["email"] for r in user_rows]:
+                if email.lower() not in optouts:
+                    all_emails[email] = sub_emails.get(email, "")
+            for email, token in sub_emails.items():
+                if email.lower() not in optouts:
+                    all_emails[email] = token
+            success = fail = skipped = 0
+            for email, unsub_token in all_emails.items():
+                unsub = _unsub_url(unsub_token)
+                html_body = ph_launch_announcement_html(ph_url, tool_count)
+                ok = await send_email(email, subject, html_body, unsubscribe_url=unsub)
+                if ok:
+                    success += 1
+                else:
+                    fail += 1
+                await asyncio.sleep(1)
+            toast = f"PH announcement sent: {success} success, {fail} failed"
         return RedirectResponse(url=f"/admin?tab=growth&section=email&toast={toast}", status_code=303)
 
     # ── Maker Launch Countdown email ─────────────────────────────────────
@@ -986,6 +1043,7 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
                     success += 1
                 else:
                     fail += 1
+                await asyncio.sleep(1)  # Rate limit: 1 email per second to avoid Gmail throttling
             toast = f"Maker countdown sent: {success} success, {fail} failed"
         return RedirectResponse(url=f"/admin?tab=growth&section=email&toast={toast}", status_code=303)
 
@@ -998,7 +1056,7 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
             html_body = f"""<p>Hi {escape(maker_name)},</p>
 <p>Just a friendly nudge \u2014 your IndieStack listing could use a fresh changelog update.
 Even a small note about what you've been working on helps your tool stand out and keeps your profile active.</p>
-<p>You can post an update here: <a href="{BASE_URL}/dashboard">indiestack.fly.dev/dashboard</a></p>
+<p>You can post an update here: <a href="{BASE_URL}/dashboard">indiestack.ai/dashboard</a></p>
 <p>Cheers,<br>IndieStack</p>"""
             ok = await send_email(maker_email, subj, html_body)
             toast = f"Nudge sent to {maker_name}!" if ok else f"Failed to send nudge to {maker_name}"

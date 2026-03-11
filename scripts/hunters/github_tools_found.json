@@ -1,0 +1,1646 @@
+[
+  {
+    "name": "trdsql",
+    "full_name": "noborus/trdsql",
+    "url": "https://github.com/noborus/trdsql",
+    "description": "CLI tool that can execute SQL queries on CSV, LTSV, JSON, YAML and TBLN. Can output to various formats.",
+    "stars": 2152,
+    "language": "Go",
+    "topics": [
+      "cli",
+      "csv",
+      "go",
+      "golang",
+      "json",
+      "jsonl",
+      "ltsv",
+      "mysql",
+      "postgresql",
+      "sql",
+      "sqlite3",
+      "tbln",
+      "trdsql",
+      "yaml"
+    ],
+    "category_slug": "file-management",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "noborus",
+      "name": "Noboru Saito",
+      "email": "noborusai@gmail.com",
+      "bio": "Interested in SQL\r\n",
+      "url": "https://noborus.github.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/2296563?v=4"
+    }
+  },
+  {
+    "name": "markdown-pdf",
+    "full_name": "alanshaw/markdown-pdf",
+    "url": "https://github.com/alanshaw/markdown-pdf",
+    "description": " :page_facing_up: Markdown to PDF converter",
+    "stars": 2844,
+    "language": "JavaScript",
+    "topics": [
+      "converter",
+      "markdown",
+      "md",
+      "pdf",
+      "pdf-generation",
+      "template"
+    ],
+    "category_slug": "file-management",
+    "tags": "converter,javascript,open-source",
+    "maker": {
+      "login": "alanshaw",
+      "name": "ash",
+      "email": "",
+      "bio": "It was an uphill battle but they didn\u2019t know we were gonna use the roads as a ramp to take off.",
+      "url": "https://storacha.network",
+      "avatar": "https://avatars.githubusercontent.com/u/152863?v=4"
+    }
+  },
+  {
+    "name": "pdf-to-markdown",
+    "full_name": "jzillmann/pdf-to-markdown",
+    "url": "https://github.com/jzillmann/pdf-to-markdown",
+    "description": "A PDF to Markdown converter",
+    "stars": 1546,
+    "language": "JavaScript",
+    "topics": [
+      "markdown",
+      "pdf-converter"
+    ],
+    "category_slug": "file-management",
+    "tags": "converter,javascript,open-source",
+    "maker": {
+      "login": "jzillmann",
+      "name": "Johannes Zillmann",
+      "email": "",
+      "bio": "",
+      "url": "https://blog.morethan.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/148472?v=4"
+    }
+  },
+  {
+    "name": "e2m",
+    "full_name": "wisupai/e2m",
+    "url": "https://github.com/wisupai/e2m",
+    "description": "E2M converts various file types (doc, docx, epub, html, htm, url, pdf, ppt, pptx, mp3, m4a) into Markdown. It\u2019s easy to install, with dedicated parsers and converters, supporting custom configs. E2M o",
+    "stars": 1272,
+    "language": "Jupyter Notebook",
+    "topics": [
+      "doc2x",
+      "e2m",
+      "llm",
+      "markdown",
+      "pdf-to-markdown",
+      "text-cleaning"
+    ],
+    "category_slug": "file-management",
+    "tags": "converter,jupyter notebook,open-source",
+    "maker": {
+      "login": "wisupai",
+      "name": "WisupAI",
+      "email": "team@wisup.ai",
+      "bio": "",
+      "url": "https://github.com/wisupai",
+      "avatar": "https://avatars.githubusercontent.com/u/177441637?v=4"
+    }
+  },
+  {
+    "name": "optimizt",
+    "full_name": "funbox/optimizt",
+    "url": "https://github.com/funbox/optimizt",
+    "description": "CLI image optimization tool",
+    "stars": 951,
+    "language": "JavaScript",
+    "topics": [
+      "avif",
+      "gif",
+      "image-compression",
+      "jpeg",
+      "png",
+      "svg",
+      "webp"
+    ],
+    "category_slug": "file-management",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "funbox",
+      "name": "FunBox",
+      "email": "",
+      "bio": "Keep calm and open source",
+      "url": "https://funbox.ru",
+      "avatar": "https://avatars.githubusercontent.com/u/1439359?v=4"
+    }
+  },
+  {
+    "name": "lepto",
+    "full_name": "dimitrinicolas/lepto",
+    "url": "https://github.com/dimitrinicolas/lepto",
+    "description": "Automated image Editing, Optimization and Analysis via CLI and a web interface. You give to lepto your input and output directories, the plugins you want to use and their options. Then lepto does his ",
+    "stars": 494,
+    "language": "JavaScript",
+    "topics": [
+      "automation",
+      "images",
+      "lepto",
+      "nodejs",
+      "optimization"
+    ],
+    "category_slug": "file-management",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "dimitrinicolas",
+      "name": "Dimitri Nicolas",
+      "email": "dimitri.nicolas@ooeo.fr",
+      "bio": "Web Developer - Co-Founder @ooeoagency & Examino",
+      "url": "https://github.com/dimitrinicolas",
+      "avatar": "https://avatars.githubusercontent.com/u/1094367?v=4"
+    }
+  },
+  {
+    "name": ".config",
+    "full_name": "zszszszsz/.config",
+    "url": "https://github.com/zszszszsz/.config",
+    "description": "# # Automatically generated file; DO NOT EDIT. # OpenWrt Configuration # CONFIG_MODULES=y CONFIG_HAVE_DOT_CONFIG=y # CONFIG_TARGET_sunxi is not set # CONFIG_TARGET_apm821xx is not set # CONFIG_TARGET_",
+    "stars": 314,
+    "language": "Shell",
+    "topics": [],
+    "category_slug": "file-management",
+    "tags": "api,cli,docker,monitor,open-source,shell",
+    "maker": {
+      "login": "zszszszsz",
+      "name": "zszszszsz",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/zszszszsz",
+      "avatar": "https://avatars.githubusercontent.com/u/56225718?v=4"
+    }
+  },
+  {
+    "name": "webp2jpg-online",
+    "full_name": "renzhezhilu/webp2jpg-online",
+    "url": "https://github.com/renzhezhilu/webp2jpg-online",
+    "description": "Use the browser's online image format converter, no need to upload files, you can convert jpeg, jpg, png, gif, webp, svg, ico, bmp files to jpeg, png, webp animation, gif, base64,avif,mozjpeg. \u4f7f\u7528\u6d4f\u89c8\u5668\u7684\u5728",
+    "stars": 2010,
+    "language": "JavaScript",
+    "topics": [
+      "browser-picture-converter",
+      "conversionem-image",
+      "image-converter",
+      "picture-converter",
+      "to-avif",
+      "to-base64",
+      "to-gif",
+      "to-jpeg",
+      "to-mozjpeg",
+      "to-png",
+      "to-webp",
+      "to-webp-animation"
+    ],
+    "category_slug": "file-management",
+    "tags": "converter,javascript,open-source",
+    "maker": {
+      "login": "renzhezhilu",
+      "name": "renzhezhilu",
+      "email": "",
+      "bio": "\u585e\u7206\u6d4f\u89c8\u5668\uff01",
+      "url": "https://imagestool.com",
+      "avatar": "https://avatars.githubusercontent.com/u/7707921?v=4"
+    }
+  },
+  {
+    "name": "density-converter",
+    "full_name": "patrickfav/density-converter",
+    "url": "https://github.com/patrickfav/density-converter",
+    "description": "A multi platform image density converting tool converting single or batches of images to Android, iOS, Windows or CSS specific formats and density versions given the source scale factor or width/heigh",
+    "stars": 249,
+    "language": "Java",
+    "topics": [
+      "android",
+      "cli",
+      "converter",
+      "density",
+      "dpi",
+      "drawable",
+      "gui",
+      "ios",
+      "jpeg",
+      "mozjpeg",
+      "nine-patch",
+      "png",
+      "pngcrush",
+      "post-processor",
+      "psd",
+      "resized-images",
+      "svg"
+    ],
+    "category_slug": "file-management",
+    "tags": "converter,java,open-source",
+    "maker": {
+      "login": "patrickfav",
+      "name": "Patrick Favre",
+      "email": "",
+      "bio": "Lead Dev, CS M.Sc. @ TUWien. Going through the stack: JS Frontends, Android, Spring/Kotlin backend, cloud & IaC. Interested in most topics cryptography.",
+      "url": "favr.dev",
+      "avatar": "https://avatars.githubusercontent.com/u/2980711?v=4"
+    }
+  },
+  {
+    "name": "cad2x-converter",
+    "full_name": "orcastor/cad2x-converter",
+    "url": "https://github.com/orcastor/cad2x-converter",
+    "description": "\ud83d\udddc\ufe0f\u3010CAD\u8f6c\u6362\u547d\u4ee4\u884c\u5de5\u5177\u3011\u652f\u6301\u4eceDXF\u3001DWG\u8f6c\u6362\u6210DXF\u3001PDF\u3001PNG\u3001SVG\u683c\u5f0f [cad2x] Minimal stand-alone CLI tool convert CAD files (DXF / DWG) to other formats (DXF / PDF / PNG / SVG)",
+    "stars": 181,
+    "language": "C++",
+    "topics": [
+      "cad",
+      "cad2pdf",
+      "cad2png",
+      "cad2svg",
+      "cad2x",
+      "dwg",
+      "dwg2dxf",
+      "dwg2pdf",
+      "dwg2png",
+      "dwg2svg",
+      "dxf",
+      "dxf2pdf",
+      "dxf2png",
+      "dxf2svg",
+      "librecad",
+      "no-gui",
+      "pdf",
+      "png",
+      "stand-alone",
+      "svg"
+    ],
+    "category_slug": "file-management",
+    "tags": "c++,cli,converter,open-source",
+    "maker": {
+      "login": "orcastor",
+      "name": "orcastor",
+      "email": "",
+      "bio": "[WIP] \u66f4\u806a\u660e\u3001\u66f4\u73b0\u4ee3\u7684\u8f7b\u91cf\u7ea7NAS\u89e3\u51b3\u65b9\u6848\ud83d\uddc4\ufe0f Lightweight NAS solution that is smarter and more modern. \ud83d\uddc4\ufe0f 3D\u6253\u5370\u5916\u58f3\uff0c6\u5757\u76d8\u4ec550W\uff0c\u81ea\u5236\u70ed\u63d2\u62d4\u80cc\u677f\u6210\u672c\u4f4e\u81f325%\uff0c\u8d85\u9ad8\u6027\u80fd\u51c6\u7cfb\u7edf\u4ec5\uffe5745.6",
+      "url": "orcastor.github.io/doc/",
+      "avatar": "https://avatars.githubusercontent.com/u/48271345?v=4"
+    }
+  },
+  {
+    "name": "redesigned-pancake",
+    "full_name": "Sfedfcv/redesigned-pancake",
+    "url": "https://github.com/Sfedfcv/redesigned-pancake",
+    "description": "Skip to content github / docs Code Issues 80 Pull requests 35 Discussions Actions Projects 2 Security Insights Merge branch 'main' into 1862-Add-Travis-CI-migration-table  1862-Add-Travis-CI-migration",
+    "stars": 213,
+    "language": "",
+    "topics": [],
+    "category_slug": "file-management",
+    "tags": "api,cli,docker,monitor,open-source",
+    "maker": {
+      "login": "Sfedfcv",
+      "name": "Sfedfcv",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/Sfedfcv",
+      "avatar": "https://avatars.githubusercontent.com/u/84260390?v=4"
+    }
+  },
+  {
+    "name": "Hack-SQL",
+    "full_name": "Don-No7/Hack-SQL",
+    "url": "https://github.com/Don-No7/Hack-SQL",
+    "description": "-- -- File generated with SQLiteStudio v3.2.1 on Sun Feb 7 14:58:28 2021 -- -- Text encoding used: System -- PRAGMA foreign_keys = off; BEGIN TRANSACTION;  -- Table: Commands CREATE TABLE Commands (Co",
+    "stars": 127,
+    "language": "",
+    "topics": [],
+    "category_slug": "file-management",
+    "tags": "api,cli,monitor,open-source",
+    "maker": {
+      "login": "Don-No7",
+      "name": "Md. Sarif Hossain",
+      "email": "",
+      "bio": "DON",
+      "url": "https://github.com/Don-No7",
+      "avatar": "https://avatars.githubusercontent.com/u/76004326?v=4"
+    }
+  },
+  {
+    "name": "lutgen-rs",
+    "full_name": "ozwaldorf/lutgen-rs",
+    "url": "https://github.com/ozwaldorf/lutgen-rs",
+    "description": "Blazingly fast interpolated LUT generator and applicator for arbitrary and popular color palettes.",
+    "stars": 510,
+    "language": "Rust",
+    "topics": [
+      "cli",
+      "color-grading",
+      "colorscheme",
+      "gui",
+      "hald-clut",
+      "image-converter",
+      "linux-desktop",
+      "rice",
+      "rust",
+      "theming",
+      "wallpaper"
+    ],
+    "category_slug": "design-creative",
+    "tags": "cli,generator,open-source,rust",
+    "maker": {
+      "login": "ozwaldorf",
+      "name": "ozwaldorf",
+      "email": "",
+      "bio": "dont panic!",
+      "url": "https://ossian.dev",
+      "avatar": "https://avatars.githubusercontent.com/u/8976745?v=4"
+    }
+  },
+  {
+    "name": "material-palette-generator",
+    "full_name": "KaindlJulian/material-palette-generator",
+    "url": "https://github.com/KaindlJulian/material-palette-generator",
+    "description": "Node.js cli utility to generate material design color palettes",
+    "stars": 18,
+    "language": "JavaScript",
+    "topics": [
+      "chalk",
+      "cli",
+      "color",
+      "commander",
+      "material",
+      "material-design",
+      "nodejs",
+      "palette"
+    ],
+    "category_slug": "design-creative",
+    "tags": "cli,generator,javascript,open-source",
+    "maker": {
+      "login": "KaindlJulian",
+      "name": "Julian Kaindl",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/KaindlJulian",
+      "avatar": "https://avatars.githubusercontent.com/u/22956190?v=4"
+    }
+  },
+  {
+    "name": "Tonal",
+    "full_name": "15fathoms/Tonal",
+    "url": "https://github.com/15fathoms/Tonal",
+    "description": "Smart color palette generator \u2013 CSS, SCSS, LESS, Stylus, JS, OKLCH-ready",
+    "stars": 4,
+    "language": "JavaScript",
+    "topics": [
+      "cli",
+      "colors",
+      "css",
+      "frontend-tooling",
+      "less",
+      "oklch",
+      "scss",
+      "stylus",
+      "tailwindcss"
+    ],
+    "category_slug": "design-creative",
+    "tags": "cli,generator,javascript,open-source",
+    "maker": {
+      "login": "15fathoms",
+      "name": "Emmanuel Cartelli",
+      "email": "fallingup68@gmail.com",
+      "bio": "Building a Headless CMS like every js dev.",
+      "url": "https://github.com/15fathoms",
+      "avatar": "https://avatars.githubusercontent.com/u/79156039?v=4"
+    }
+  },
+  {
+    "name": "qrc",
+    "full_name": "fumiyas/qrc",
+    "url": "https://github.com/fumiyas/qrc",
+    "description": "QR code generator for text terminals (ASCII art, Sixel)",
+    "stars": 399,
+    "language": "Go",
+    "topics": [
+      "cli",
+      "cui",
+      "go",
+      "qrcode-generator",
+      "sixel",
+      "terminal",
+      "tui"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "cli,generator,go,open-source",
+    "maker": {
+      "login": "fumiyas",
+      "name": "SATOH Fumiyasu",
+      "email": "",
+      "bio": "\u65e9\u671f\u30ea\u30bf\u30a4\u30a2\u3057\u305f\u3044\u3002\r\n\u732b\u306b\u5c31\u8077\u3057\u305f\u3044\u3002",
+      "url": "https://fumiyas.github.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/289209?v=4"
+    }
+  },
+  {
+    "name": "qrrs",
+    "full_name": "Lenivaya/qrrs",
+    "url": "https://github.com/Lenivaya/qrrs",
+    "description": "CLI QR code generator and reader written in rust",
+    "stars": 99,
+    "language": "Rust",
+    "topics": [
+      "cli",
+      "cli-qr",
+      "nix",
+      "nix-flake",
+      "qrcode",
+      "qrcode-generator",
+      "qrcode-scanner",
+      "reader",
+      "rust",
+      "rust-crate",
+      "rust-lang",
+      "rustlang",
+      "shell",
+      "terminal",
+      "terminal-based"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "cli,generator,open-source,rust",
+    "maker": {
+      "login": "Lenivaya",
+      "name": "Danylo Osipchuk",
+      "email": "danylo.osipchuk@proton.me",
+      "bio": "",
+      "url": "https://github.com/Lenivaya",
+      "avatar": "https://avatars.githubusercontent.com/u/49302467?v=4"
+    }
+  },
+  {
+    "name": "payme",
+    "full_name": "jovandeginste/payme",
+    "url": "https://github.com/jovandeginste/payme",
+    "description": "QR code generator (ASCII & PNG) for SEPA payments",
+    "stars": 89,
+    "language": "Go",
+    "topics": [
+      "ascii",
+      "cli",
+      "png",
+      "qr",
+      "sepa"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "cli,generator,go,open-source",
+    "maker": {
+      "login": "jovandeginste",
+      "name": "Jo Vandeginste",
+      "email": "jo.vandeginste@gmail.com",
+      "bio": "",
+      "url": "jovandeginste.github.io",
+      "avatar": "https://avatars.githubusercontent.com/u/3170771?v=4"
+    }
+  },
+  {
+    "name": "python-hacked-mobile-phone-",
+    "full_name": "Masudbro94/python-hacked-mobile-phone-",
+    "url": "https://github.com/Masudbro94/python-hacked-mobile-phone-",
+    "description": "Open in app Get started   ITNEXT Published in ITNEXT  You have 2 free member-only stories left this month. Sign up for Medium and get an extra one  Kush Kush Follow Apr 15, 2021  \u00b7 7 min read \u00b7  Liste",
+    "stars": 130,
+    "language": "",
+    "topics": [],
+    "category_slug": "file-management",
+    "tags": "cli,open-source",
+    "maker": {
+      "login": "Masudbro94",
+      "name": "Masudbro94",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/Masudbro94",
+      "avatar": "https://avatars.githubusercontent.com/u/106722506?v=4"
+    }
+  },
+  {
+    "name": "clip_share_server",
+    "full_name": "thevindu-w/clip_share_server",
+    "url": "https://github.com/thevindu-w/clip_share_server",
+    "description": "Share Clipboard across devices. Share copied files and screenshots securely. Free and open-source tool that works on Windows, Linux, macOS, and Android.",
+    "stars": 105,
+    "language": "C",
+    "topics": [
+      "android",
+      "clipboard",
+      "clipboard-share",
+      "clipboard-sync",
+      "fileshare",
+      "lan-share",
+      "linux",
+      "macos",
+      "screenshot",
+      "share-files",
+      "shared-clipboard",
+      "universal-clipboard",
+      "windows"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "c,cli,open-source",
+    "maker": {
+      "login": "thevindu-w",
+      "name": "Thevindu Wijesekera",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/thevindu-w",
+      "avatar": "https://avatars.githubusercontent.com/u/91218789?v=4"
+    }
+  },
+  {
+    "name": "envie",
+    "full_name": "ilmari-h/envie",
+    "url": "https://github.com/ilmari-h/envie",
+    "description": "The convenient and secure .env file replacement. Open source and self-hostable secrets manager.",
+    "stars": 127,
+    "language": "TypeScript",
+    "topics": [
+      "environment-variables",
+      "secret-management",
+      "security"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "open-source,typescript",
+    "maker": {
+      "login": "ilmari-h",
+      "name": "Salle Helev\u00e4",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/ilmari-h",
+      "avatar": "https://avatars.githubusercontent.com/u/52321471?v=4"
+    }
+  },
+  {
+    "name": "overcommit",
+    "full_name": "sds/overcommit",
+    "url": "https://github.com/sds/overcommit",
+    "description": "A fully configurable and extendable Git hook manager",
+    "stars": 3991,
+    "language": "Ruby",
+    "topics": [],
+    "category_slug": "developer-tools",
+    "tags": "open-source,ruby",
+    "maker": {
+      "login": "sds",
+      "name": "Shane da Silva",
+      "email": "",
+      "bio": "Software engineer and trampoline aficionado",
+      "url": "https://shane.io",
+      "avatar": "https://avatars.githubusercontent.com/u/677877?v=4"
+    }
+  },
+  {
+    "name": "sish",
+    "full_name": "antoniomika/sish",
+    "url": "https://github.com/antoniomika/sish",
+    "description": "HTTP(S)/WS(S)/TCP Tunnels to localhost using only SSH.",
+    "stars": 4540,
+    "language": "Go",
+    "topics": [
+      "http",
+      "https",
+      "ngrok",
+      "serveo",
+      "ssh",
+      "tcp",
+      "tunnel",
+      "websockets"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "go,open-source",
+    "maker": {
+      "login": "antoniomika",
+      "name": "Antonio Mika",
+      "email": "me@antoniomika.me",
+      "bio": "",
+      "url": "https://antoniomika.me",
+      "avatar": "https://avatars.githubusercontent.com/u/6239308?v=4"
+    }
+  },
+  {
+    "name": "minicron",
+    "full_name": "jamesrwhite/minicron",
+    "url": "https://github.com/jamesrwhite/minicron",
+    "description": "\ud83d\udd70\ufe0f Monitor your cron jobs",
+    "stars": 2321,
+    "language": "Ruby",
+    "topics": [
+      "automation",
+      "cron",
+      "devops",
+      "infrastructure",
+      "monitoring",
+      "ops",
+      "ruby",
+      "scheduler"
+    ],
+    "category_slug": "monitoring-uptime",
+    "tags": "monitor,open-source,ruby",
+    "maker": {
+      "login": "jamesrwhite",
+      "name": "James White",
+      "email": "",
+      "bio": "",
+      "url": "https://jamesrwhite.co.uk",
+      "avatar": "https://avatars.githubusercontent.com/u/640960?v=4"
+    }
+  },
+  {
+    "name": "podil",
+    "full_name": "podiljs/podil",
+    "url": "https://github.com/podiljs/podil",
+    "description": "Lightweight and secure database schema migration tool \ud83c\udfaf",
+    "stars": 29,
+    "language": "TypeScript",
+    "topics": [
+      "database",
+      "javascript",
+      "migration",
+      "migration-tool",
+      "nodejs",
+      "postgres",
+      "postgresql",
+      "sql",
+      "typescript"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,typescript",
+    "maker": {
+      "login": "podiljs",
+      "name": "Podil.js",
+      "email": "",
+      "bio": "Lightwait and secure database migration tool",
+      "url": "https://github.com/podiljs",
+      "avatar": "https://avatars.githubusercontent.com/u/120647852?v=4"
+    }
+  },
+  {
+    "name": "migrator",
+    "full_name": "lukaszbudnik/migrator",
+    "url": "https://github.com/lukaszbudnik/migrator",
+    "description": "Super fast and lightweight DB migration & evolution tool written in Go",
+    "stars": 22,
+    "language": "Go",
+    "topics": [
+      "database",
+      "database-migrations",
+      "databases",
+      "db-evolution",
+      "db-migration",
+      "docker",
+      "evolution",
+      "go",
+      "golang",
+      "microsoft-sql-server",
+      "migration",
+      "multi-tenant-database",
+      "mysql",
+      "postgresql",
+      "schema",
+      "tenant"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "go,lightweight,open-source",
+    "maker": {
+      "login": "lukaszbudnik",
+      "name": "\u0141ukasz Budnik",
+      "email": "lukasz.budnik@gmail.com",
+      "bio": "",
+      "url": "https://lukaszbudnik.github.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/1637066?v=4"
+    }
+  },
+  {
+    "name": "workwork",
+    "full_name": "shenguanjiejie/workwork",
+    "url": "https://github.com/shenguanjiejie/workwork",
+    "description": "Developer/Tester common tools CLI. \u5f00\u53d1/\u6d4b\u8bd5\u5e38\u7528\u5de5\u5177CLI",
+    "stars": 7,
+    "language": "Go",
+    "topics": [
+      "base64",
+      "calc",
+      "cli",
+      "date",
+      "decode",
+      "encode",
+      "format",
+      "go",
+      "md5",
+      "regex",
+      "shell",
+      "time",
+      "tools",
+      "translate",
+      "url",
+      "utils",
+      "workwork",
+      "ww"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "shenguanjiejie",
+      "name": "Another",
+      "email": "835166018@qq.com",
+      "bio": "Learning",
+      "url": "https://github.com/shenguanjiejie",
+      "avatar": "https://avatars.githubusercontent.com/u/9425605?v=4"
+    }
+  },
+  {
+    "name": "regex-cli",
+    "full_name": "Ayobami0/regex-cli",
+    "url": "https://github.com/Ayobami0/regex-cli",
+    "description": "A terminal Regular Expression tester",
+    "stars": 3,
+    "language": "Go",
+    "topics": [],
+    "category_slug": "developer-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "Ayobami0",
+      "name": "Ayobami0",
+      "email": "",
+      "bio": "I enjoy building stuff.",
+      "url": "https://github.com/Ayobami0",
+      "avatar": "https://avatars.githubusercontent.com/u/89994264?v=4"
+    }
+  },
+  {
+    "name": "MX1014",
+    "full_name": "L-codes/MX1014",
+    "url": "https://github.com/L-codes/MX1014",
+    "description": "MX1014 is a flexible, lightweight and fast port scanner.",
+    "stars": 171,
+    "language": "Go",
+    "topics": [
+      "gather",
+      "nmap",
+      "portscan",
+      "scanner",
+      "tcpscan",
+      "udpscan"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "go,lightweight,open-source",
+    "maker": {
+      "login": "L-codes",
+      "name": "L",
+      "email": "",
+      "bio": "One who wants to wear the crown, Bears the crown",
+      "url": "https://github.com/L-codes",
+      "avatar": "https://avatars.githubusercontent.com/u/20529064?v=4"
+    }
+  },
+  {
+    "name": "Portforge",
+    "full_name": "Beyarz/Portforge",
+    "url": "https://github.com/Beyarz/Portforge",
+    "description": "Lightweight utility to fool port scanners",
+    "stars": 32,
+    "language": "Crystal",
+    "topics": [
+      "blue-team",
+      "defense",
+      "port-scan",
+      "port-scanner",
+      "port-scanning",
+      "protection",
+      "reconnaissance"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "crystal,lightweight,open-source",
+    "maker": {
+      "login": "Beyarz",
+      "name": "Beyar",
+      "email": "beyar-123@outlook.com",
+      "bio": "",
+      "url": "https://github.com/Beyarz",
+      "avatar": "https://avatars.githubusercontent.com/u/11684952?v=4"
+    }
+  },
+  {
+    "name": "scanr",
+    "full_name": "trinhminhtriet/scanr",
+    "url": "https://github.com/trinhminhtriet/scanr",
+    "description": "ScanR: A lightweight, fast, and configurable port scanner built in Rust for reliable multi-platform network scanning.",
+    "stars": 23,
+    "language": "Rust",
+    "topics": [],
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,rust",
+    "maker": {
+      "login": "trinhminhtriet",
+      "name": "Triet Trinh",
+      "email": "contact@trinhminhtriet.com",
+      "bio": "\u2705 Platform Engineer | AWS Certified | Scrum Master PSMI | Java |  Golang | Rust | Android | Remote",
+      "url": "https://trinhminhtriet.com",
+      "avatar": "https://avatars.githubusercontent.com/u/1650997?v=4"
+    }
+  },
+  {
+    "name": "ssl-checker",
+    "full_name": "narbehaj/ssl-checker",
+    "url": "https://github.com/narbehaj/ssl-checker",
+    "description": "Python script that collects SSL/TLS information from hosts ",
+    "stars": 314,
+    "language": "Python",
+    "topics": [
+      "analyze",
+      "analyzer",
+      "certificate",
+      "csv",
+      "hearbeat",
+      "hearbleed",
+      "html",
+      "json",
+      "openssl",
+      "poodle",
+      "pyopenssl",
+      "python",
+      "python-script",
+      "security-vulnerability",
+      "ssl",
+      "ssl-certificates",
+      "ssl-checker",
+      "tls",
+      "x509",
+      "x509certificates"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "open-source,python",
+    "maker": {
+      "login": "narbehaj",
+      "name": "Narbeh",
+      "email": "narbeh@protonmail.com",
+      "bio": "",
+      "url": "https://github.com/narbehaj",
+      "avatar": "https://avatars.githubusercontent.com/u/31076988?v=4"
+    }
+  },
+  {
+    "name": "jota-cert-checker",
+    "full_name": "juliojsb/jota-cert-checker",
+    "url": "https://github.com/juliojsb/jota-cert-checker",
+    "description": "Check SSL certificate expiration date of a list of sites.",
+    "stars": 87,
+    "language": "Shell",
+    "topics": [
+      "apache",
+      "certificates",
+      "docker",
+      "https",
+      "iis",
+      "nginx",
+      "openssl",
+      "security",
+      "slack",
+      "ssl",
+      "ssl-certificates"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "open-source,shell",
+    "maker": {
+      "login": "juliojsb",
+      "name": "Jota",
+      "email": "juliojosesb@gmail.com",
+      "bio": "Sysadmin, Devops, Linuxer",
+      "url": "https://www.elarraydejota.com/",
+      "avatar": "https://avatars.githubusercontent.com/u/12804701?v=4"
+    }
+  },
+  {
+    "name": "bash-ssl-checker-tool",
+    "full_name": "bobbyiliev/bash-ssl-checker-tool",
+    "url": "https://github.com/bobbyiliev/bash-ssl-checker-tool",
+    "description": "A simple Bash script to check SSL certificate details for any domain from the command line, inspired by https://sslshopper.com",
+    "stars": 50,
+    "language": "Shell",
+    "topics": [
+      "bash",
+      "hacktoberfest",
+      "script",
+      "ssl"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "open-source,shell",
+    "maker": {
+      "login": "bobbyiliev",
+      "name": "Bobby Iliev",
+      "email": "bobby@bobbyiliev.com",
+      "bio": "DevOps Engineer  |  Laravel enthusiast\r\n",
+      "url": "bobbyiliev.com",
+      "avatar": "https://avatars.githubusercontent.com/u/21223421?v=4"
+    }
+  },
+  {
+    "name": "zdns",
+    "full_name": "zmap/zdns",
+    "url": "https://github.com/zmap/zdns",
+    "description": "Fast DNS Lookup Library and CLI Tool",
+    "stars": 1093,
+    "language": "Go",
+    "topics": [
+      "dns",
+      "research",
+      "scanner"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "zmap",
+      "name": "The ZMap Project",
+      "email": "team@zmap.io",
+      "bio": "The ZMap Project is a collection of open source tools for performing large-scale studies of the hosts and services that compose the public Internet.",
+      "url": "https://zmap.io",
+      "avatar": "https://avatars.githubusercontent.com/u/3345672?v=4"
+    }
+  },
+  {
+    "name": "ttfb",
+    "full_name": "phip1611/ttfb",
+    "url": "https://github.com/phip1611/ttfb",
+    "description": "Library + CLI-Tool to measure the TTFB (time to first byte) of HTTP requests. Additionally, this crate measures the times of DNS lookup, TCP connect and TLS handshake.",
+    "stars": 49,
+    "language": "Rust",
+    "topics": [],
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,rust",
+    "maker": {
+      "login": "phip1611",
+      "name": "Philipp Schuster",
+      "email": "phip1611@gmail.com",
+      "bio": "Writing code, maintaining open-source software, solving problems. Also: rock concerts and traveling the world.",
+      "url": "https://phip1611.de/",
+      "avatar": "https://avatars.githubusercontent.com/u/5737016?v=4"
+    }
+  },
+  {
+    "name": "domain2ip",
+    "full_name": "SagarBiswas-MultiHAT/domain2ip",
+    "url": "https://github.com/SagarBiswas-MultiHAT/domain2ip",
+    "description": "Resolve domains, URLs, and IP literals to IPv4/IPv6 addresses with a production-ready CLI and library-safe API. Supports IDNs, URL inputs, concurrent lookups, JSON output, optional dnspython timeouts,",
+    "stars": 17,
+    "language": "Python",
+    "topics": [
+      "cli",
+      "concurrency",
+      "dns",
+      "dnspython",
+      "idn",
+      "ip",
+      "networking",
+      "python",
+      "resolver",
+      "tools"
+    ],
+    "category_slug": "file-management",
+    "tags": "api,cli,open-source,python",
+    "maker": {
+      "login": "SagarBiswas-MultiHAT",
+      "name": "Sagar Biswas",
+      "email": "",
+      "bio": "\u1d04\u1d1c\u0280\u026a\u1d0f\ua731\u026a\u1d1b\u028f \u026a\ua731 \u1d0d\u028f \u1d18\u1d00\u028f\u029f\u1d0f\u1d00\u1d05 \u2014 \u1d05\u1d07\u029f\u026a\u1d20\u1d07\u0280\u1d07\u1d05 \u1d0f\u1d20\u1d07\u0280 \u1d18\u1d0f\ua731\u1d1b.",
+      "url": "e-Portfolio: https://sagarbiswas-multihat.github.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/192402369?v=4"
+    }
+  },
+  {
+    "name": "shlink",
+    "full_name": "shlinkio/shlink",
+    "url": "https://github.com/shlinkio/shlink",
+    "description": "The definitive self-hosted URL shortener",
+    "stars": 4704,
+    "language": "PHP",
+    "topics": [
+      "laminas",
+      "mezzio",
+      "php",
+      "rest-api",
+      "url-shortener"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "open-source,php,self-hosted",
+    "maker": {
+      "login": "shlinkio",
+      "name": "shlinkio",
+      "email": "",
+      "bio": "Shlink. The self-hosted URL shortener",
+      "url": "https://shlink.io",
+      "avatar": "https://avatars.githubusercontent.com/u/20341790?v=4"
+    }
+  },
+  {
+    "name": "gh-pages-url-shortener",
+    "full_name": "nelsontky/gh-pages-url-shortener",
+    "url": "https://github.com/nelsontky/gh-pages-url-shortener",
+    "description": "Minimal URL shortener that can be entirely hosted on GitHub pages.",
+    "stars": 1404,
+    "language": "HTML",
+    "topics": [
+      "bitly",
+      "github-page",
+      "self-hosted",
+      "serverless",
+      "short-url",
+      "shorten-urls",
+      "shortener",
+      "shorturl",
+      "tinyurl",
+      "url-shortener",
+      "url-shorteners",
+      "urlshortener"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "html,open-source,self-hosted",
+    "maker": {
+      "login": "nelsontky",
+      "name": "nelsontky",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/nelsontky",
+      "avatar": "https://avatars.githubusercontent.com/u/7272103?v=4"
+    }
+  },
+  {
+    "name": "hastebin",
+    "full_name": "jub0t/hastebin",
+    "url": "https://github.com/jub0t/hastebin",
+    "description": "Lightweight self-hosted pastebin website with 40+ Language Support.",
+    "stars": 45,
+    "language": "PHP",
+    "topics": [
+      "bin",
+      "cloud",
+      "paste",
+      "pastebin",
+      "php",
+      "self-hosted",
+      "storage",
+      "text"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,php,self-hosted",
+    "maker": {
+      "login": "jub0t",
+      "name": "Jareer",
+      "email": "",
+      "bio": "Two buzzwords are better than one.",
+      "url": "https://github.com/jub0t",
+      "avatar": "https://avatars.githubusercontent.com/u/57962439?v=4"
+    }
+  },
+  {
+    "name": "pastepass",
+    "full_name": "v1k45/pastepass",
+    "url": "https://github.com/v1k45/pastepass",
+    "description": "Secure, one-time paste bin for sharing secrets.",
+    "stars": 28,
+    "language": "Go",
+    "topics": [
+      "pastebin",
+      "secret-sharing",
+      "secure-sharing",
+      "self-hosted"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "v1k45",
+      "name": "Vikas",
+      "email": "vikas@v1k45.com",
+      "bio": "expert overthinker",
+      "url": "http://v1k45.com/",
+      "avatar": "https://avatars.githubusercontent.com/u/7877501?v=4"
+    }
+  },
+  {
+    "name": "pingvin-share",
+    "full_name": "stonith404/pingvin-share",
+    "url": "https://github.com/stonith404/pingvin-share",
+    "description": "A self-hosted file sharing platform that combines lightness and beauty, perfect for seamless and efficient file sharing.",
+    "stars": 4621,
+    "language": "TypeScript",
+    "topics": [
+      "file-sharing",
+      "nestjs",
+      "nextjs",
+      "self-hosted"
+    ],
+    "category_slug": "file-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "stonith404",
+      "name": "Elias Schneider",
+      "email": "",
+      "bio": "",
+      "url": "https://eliasschneider.com",
+      "avatar": "https://avatars.githubusercontent.com/u/58886915?v=4"
+    }
+  },
+  {
+    "name": "Palmr",
+    "full_name": "kyantech/Palmr",
+    "url": "https://github.com/kyantech/Palmr",
+    "description": "\ud83c\udf34 Palmr. is an open-source file-sharing platform focused on privacy and security. It enables users to upload, manage, and share files with features like password protection, custom links, and access c",
+    "stars": 2414,
+    "language": "TypeScript",
+    "topics": [
+      "fastify",
+      "file-sharing",
+      "nextjs",
+      "self-hosted",
+      "typescript"
+    ],
+    "category_slug": "file-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "kyantech",
+      "name": "kyantech",
+      "email": "",
+      "bio": "The best software house you will ever find.",
+      "url": "kyantech.com.br",
+      "avatar": "https://avatars.githubusercontent.com/u/173965632?v=4"
+    }
+  },
+  {
+    "name": "Pepperminty-Wiki",
+    "full_name": "sbrl/Pepperminty-Wiki",
+    "url": "https://github.com/sbrl/Pepperminty-Wiki",
+    "description": "A wiki in a box",
+    "stars": 206,
+    "language": "PHP",
+    "topics": [
+      "collaborative",
+      "knowledge",
+      "lightweight",
+      "modular",
+      "php",
+      "self-hosted",
+      "selfhosted",
+      "wiki",
+      "wiki-engine"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,php,self-hosted",
+    "maker": {
+      "login": "sbrl",
+      "name": "Starbeamrainbowlabs",
+      "email": "sbrl@starbeamrainbowlabs.com",
+      "bio": "A PhD computer science researcher who loves to explore and learn new things.",
+      "url": "https://starbeamrainbowlabs.com/",
+      "avatar": "https://avatars.githubusercontent.com/u/9929737?v=4"
+    }
+  },
+  {
+    "name": "WorkPages",
+    "full_name": "rueetschli/WorkPages",
+    "url": "https://github.com/rueetschli/WorkPages",
+    "description": "A lightweight, self-hosted alternative to Jira and Confluence. Combines a wiki and task management in one fast PHP/MySQL app. No Docker, no build tools, no cloud lock-in.",
+    "stars": 1,
+    "language": "PHP",
+    "topics": [
+      "confluence-alternative",
+      "jira-alternative",
+      "kanban",
+      "knowledge-based-systems",
+      "no-docker",
+      "privacy-focused",
+      "project-management-system",
+      "self-hosted",
+      "task-management",
+      "wiki"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "docker,lightweight,open-source,php,self-hosted",
+    "maker": {
+      "login": "rueetschli",
+      "name": "Michael R\u00fcetschli",
+      "email": "",
+      "bio": "Agile Project Manager turning theory into code. Mastering failure culture to boost time-to-market. I build practical open-source tools & AI assistants for teams",
+      "url": "https://rueetschli.com",
+      "avatar": "https://avatars.githubusercontent.com/u/8299018?v=4"
+    }
+  },
+  {
+    "name": "Self-Hosted-Wiki.js-on-AWS-EC2-with-Docker",
+    "full_name": "orvencasido/Self-Hosted-Wiki.js-on-AWS-EC2-with-Docker",
+    "url": "https://github.com/orvencasido/Self-Hosted-Wiki.js-on-AWS-EC2-with-Docker",
+    "description": "Deployed a personal knowledge management system using Wiki.js on an Ubuntu EC2 instance to host a lightweight, fast, and modern wiki platform! ",
+    "stars": 0,
+    "language": "",
+    "topics": [],
+    "category_slug": "developer-tools",
+    "tags": "docker,lightweight,open-source,self-hosted",
+    "maker": {
+      "login": "orvencasido",
+      "name": "Orven Casido ",
+      "email": "orvencasidop@gmail.com",
+      "bio": "DevOps Engineer | Architecting cloud-native systems, then AI vibe-coding web apps on Kubernetes (cloud & homelab)",
+      "url": "orvencasido-headless-cv.vercel.app",
+      "avatar": "https://avatars.githubusercontent.com/u/179516001?v=4"
+    }
+  },
+  {
+    "name": "stringer",
+    "full_name": "stringer-rss/stringer",
+    "url": "https://github.com/stringer-rss/stringer",
+    "description": "A self-hosted, anti-social RSS reader.",
+    "stars": 4100,
+    "language": "Ruby",
+    "topics": [
+      "feed-reader",
+      "feedjira",
+      "rss",
+      "rss-reader",
+      "ruby"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "open-source,ruby,self-hosted",
+    "maker": {
+      "login": "stringer-rss",
+      "name": "stringer-rss",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/stringer-rss",
+      "avatar": "https://avatars.githubusercontent.com/u/96632003?v=4"
+    }
+  },
+  {
+    "name": "commafeed",
+    "full_name": "Athou/commafeed",
+    "url": "https://github.com/Athou/commafeed",
+    "description": "Google Reader inspired self-hosted personal RSS reader.",
+    "stars": 3461,
+    "language": "Java",
+    "topics": [
+      "java",
+      "rss",
+      "rss-reader",
+      "self-hosted",
+      "web-application"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "java,open-source,self-hosted",
+    "maker": {
+      "login": "Athou",
+      "name": "J\u00e9r\u00e9mie Panzer",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/Athou",
+      "avatar": "https://avatars.githubusercontent.com/u/1256795?v=4"
+    }
+  },
+  {
+    "name": "selfoss",
+    "full_name": "fossar/selfoss",
+    "url": "https://github.com/fossar/selfoss",
+    "description": "multipurpose rss reader, live stream, mashup, aggregation web application",
+    "stars": 2453,
+    "language": "HTML",
+    "topics": [
+      "aggregator",
+      "hacktoberfest",
+      "mashup",
+      "news-feed",
+      "php",
+      "rss-reader",
+      "self-hosted",
+      "selfoss",
+      "webbased"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "html,open-source,self-hosted",
+    "maker": {
+      "login": "fossar",
+      "name": "fossar",
+      "email": "",
+      "bio": "we develop selfoss, multipurpose rss reader, live stream, mashup, aggregation web application",
+      "url": "https://selfoss.aditu.de",
+      "avatar": "https://avatars.githubusercontent.com/u/23532424?v=4"
+    }
+  },
+  {
+    "name": "redd-archiver",
+    "full_name": "19-84/redd-archiver",
+    "url": "https://github.com/19-84/redd-archiver",
+    "description": "A PostgreSQL-backed archive generator that creates browsable HTML archives from link aggregator platforms including Reddit, Voat, and Ruqqus.",
+    "stars": 324,
+    "language": "Python",
+    "topics": [
+      "archival",
+      "archive",
+      "data-preservation",
+      "docker",
+      "full-text-search",
+      "html-generator",
+      "link-aggregator",
+      "mcp-server",
+      "postgresql",
+      "privacy",
+      "pushshift",
+      "python3",
+      "reddit",
+      "reddit-api",
+      "research-tool",
+      "ruqqus",
+      "self-hosted",
+      "static-site-generator",
+      "tor",
+      "voat"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "generator,open-source,python,self-hosted",
+    "maker": {
+      "login": "19-84",
+      "name": "19-84",
+      "email": "",
+      "bio": "\"Who controls the past controls the future: who controls the present controls the past.\"",
+      "url": "https://github.com/19-84",
+      "avatar": "https://avatars.githubusercontent.com/u/236727850?v=4"
+    }
+  },
+  {
+    "name": "9b",
+    "full_name": "faresbakhit/9b",
+    "url": "https://github.com/faresbakhit/9b",
+    "description": "A link aggregator you can self-host (WIP)",
+    "stars": 1,
+    "language": "Go",
+    "topics": [],
+    "category_slug": "developer-tools",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "faresbakhit",
+      "name": "Fares A. Bakhit",
+      "email": "faresa.bakhit@gmail.com",
+      "bio": "Student at the Faculty of Computers and Artificial Intelligence - Cairo University",
+      "url": "https://faresbakhit.github.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/73843130?v=4"
+    }
+  },
+  {
+    "name": "lemmy_help",
+    "full_name": "grouvie/lemmy_help",
+    "url": "https://github.com/grouvie/lemmy_help",
+    "description": "Lemmy_Help is a setup guide repository that provides instructions for deploying Lemmy, a self-hosted link aggregator and social platform, using Helm charts. This repository aims to simplify the deploy",
+    "stars": 1,
+    "language": "Mustache",
+    "topics": [],
+    "category_slug": "developer-tools",
+    "tags": "mustache,open-source,self-hosted",
+    "maker": {
+      "login": "grouvie",
+      "name": "grouvie",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/grouvie",
+      "avatar": "https://avatars.githubusercontent.com/u/20428462?v=4"
+    }
+  },
+  {
+    "name": "openchangelog",
+    "full_name": "JonasHiltl/openchangelog",
+    "url": "https://github.com/JonasHiltl/openchangelog",
+    "description": "Easy to configure & self hostable Changelog Website",
+    "stars": 293,
+    "language": "Go",
+    "topics": [
+      "changelog",
+      "go",
+      "release-notes",
+      "rss"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "JonasHiltl",
+      "name": "Jonas Hiltl",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/JonasHiltl",
+      "avatar": "https://avatars.githubusercontent.com/u/71456708?v=4"
+    }
+  },
+  {
+    "name": "ShipShipShip",
+    "full_name": "GauthierNelkinsky/ShipShipShip",
+    "url": "https://github.com/GauthierNelkinsky/ShipShipShip",
+    "description": "A lightweight, self-hostable changelog and roadmap web application that lets you share product updates with your community and gather feedback through voting on upcoming features. Built with SvelteKit",
+    "stars": 264,
+    "language": "Svelte",
+    "topics": [
+      "changelog",
+      "customer-feedback",
+      "docker",
+      "go",
+      "kanban-board",
+      "newsletter",
+      "product-management",
+      "release-notes",
+      "rest-api",
+      "roadmap",
+      "self-hostable",
+      "self-hosted",
+      "sqlite",
+      "sveltekit",
+      "tailwindcss"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,self-hosted,svelte",
+    "maker": {
+      "login": "GauthierNelkinsky",
+      "name": "Gauthier Nelkin",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/GauthierNelkinsky",
+      "avatar": "https://avatars.githubusercontent.com/u/59910646?v=4"
+    }
+  },
+  {
+    "name": "Alpha-System-ContentHub",
+    "full_name": "devAlphaSystem/Alpha-System-ContentHub",
+    "url": "https://github.com/devAlphaSystem/Alpha-System-ContentHub",
+    "description": "Simple NodeJS app to create & manage Markdown changelogs/documentation. Features an admin dashboard, view tracking, themes, powered by PocketBase.",
+    "stars": 35,
+    "language": "JavaScript",
+    "topics": [
+      "admin-dashboard",
+      "changelog",
+      "cms",
+      "documentation",
+      "markdown",
+      "mermaidjs",
+      "nodejs",
+      "pocketbase",
+      "self-hosted",
+      "sqlite"
+    ],
+    "category_slug": "file-management",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "devAlphaSystem",
+      "name": "Anderson L Polo A",
+      "email": "anderson@alphasystem.dev",
+      "bio": "",
+      "url": "https://alphasystem.dev",
+      "avatar": "https://avatars.githubusercontent.com/u/65295283?v=4"
+    }
+  },
+  {
+    "name": "formzero",
+    "full_name": "BohdanPetryshyn/formzero",
+    "url": "https://github.com/BohdanPetryshyn/formzero",
+    "description": "Form backend with zero paid features. One-click deploy to your free Cloudflare account.",
+    "stars": 53,
+    "language": "TypeScript",
+    "topics": [
+      "cloudflare",
+      "cloudflare-workers",
+      "form-backend",
+      "form-handler",
+      "forms",
+      "newsletter",
+      "self-hosted",
+      "serverless",
+      "waitlist"
+    ],
+    "category_slug": "landing-pages",
+    "tags": "cli,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "BohdanPetryshyn",
+      "name": "Bohdan Petryshyn",
+      "email": "",
+      "bio": "\ud83d\udca1 Building Lenzy | \ud83d\udc68\u200d\ud83d\udcbb Former Staff Software Engineer at @Redocly | \u2699\ufe0f Creator of @basti-app",
+      "url": "https://github.com/BohdanPetryshyn",
+      "avatar": "https://avatars.githubusercontent.com/u/45905756?v=4"
+    }
+  },
+  {
+    "name": "0list",
+    "full_name": "d4mr/0list",
+    "url": "https://github.com/d4mr/0list",
+    "description": "Self-hosted waitlist software for Cloudflare Workers",
+    "stars": 5,
+    "language": "TypeScript",
+    "topics": [
+      "cloudflare-workers",
+      "cloudlfare",
+      "self-hosted",
+      "waitlist",
+      "waitlist-api"
+    ],
+    "category_slug": "landing-pages",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "d4mr",
+      "name": "Prithvish Baidya",
+      "email": "",
+      "bio": "",
+      "url": "d4mr.com",
+      "avatar": "https://avatars.githubusercontent.com/u/16459486?v=4"
+    }
+  },
+  {
+    "name": "automail",
+    "full_name": "verygoodplugins/automail",
+    "url": "https://github.com/verygoodplugins/automail",
+    "description": "A self-hosted email waitlist system that runs entirely on Cloudflare's edge",
+    "stars": 1,
+    "language": "JavaScript",
+    "topics": [],
+    "category_slug": "landing-pages",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "verygoodplugins",
+      "name": "Very Good Plugins",
+      "email": "info@verygoodplugins.com",
+      "bio": "Purveyors of handcrafted code products \ud83c\udfa8",
+      "url": "https://verygoodplugins.com",
+      "avatar": "https://avatars.githubusercontent.com/u/193913467?v=4"
+    }
+  },
+  {
+    "name": "go-feature-flag",
+    "full_name": "thomaspoignant/go-feature-flag",
+    "url": "https://github.com/thomaspoignant/go-feature-flag",
+    "description": "GO Feature Flag is a simple, complete and lightweight self-hosted feature flag solution 100% Open Source. \ud83c\udf9b\ufe0f",
+    "stars": 1947,
+    "language": "Go",
+    "topics": [
+      "beginner-friendly",
+      "continuous-delivery",
+      "continuous-deployment",
+      "continuous-testing",
+      "devops",
+      "experimentation",
+      "experiments",
+      "feature-flag",
+      "feature-flags",
+      "feature-toggle",
+      "feature-toggles",
+      "feature-toggling",
+      "go",
+      "go-feature-flag",
+      "golang",
+      "golang-library",
+      "help-wanted",
+      "toggles",
+      "variants"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "go,lightweight,open-source,self-hosted",
+    "maker": {
+      "login": "thomaspoignant",
+      "name": "Thomas Poignant",
+      "email": "thomas.poignant@gmail.com",
+      "bio": "\ud83c\uddeb\ud83c\uddf7 Creator of GO Feature Flag / @open-feature Technical Committee member / CTO @gensdeconfiance",
+      "url": "https://medium.com/@thomaspoignant",
+      "avatar": "https://avatars.githubusercontent.com/u/17908063?v=4"
+    }
+  },
+  {
+    "name": "featbit",
+    "full_name": "featbit/featbit",
+    "url": "https://github.com/featbit/featbit",
+    "description": "Enterprise-grade feature flag platform that you can self-host. Get started - free.",
+    "stars": 1760,
+    "language": "C#",
+    "topics": [
+      "ab-test",
+      "ab-testing",
+      "asp-net-core",
+      "continuous-delivery",
+      "csharp",
+      "dotnet",
+      "entitlement",
+      "experimentation",
+      "feature",
+      "feature-flags",
+      "feature-management",
+      "feature-toggles",
+      "progressive-delivery",
+      "python",
+      "release-as-code",
+      "remote-config",
+      "self-hosted",
+      "typescript"
+    ],
+    "category_slug": "developer-tools",
+    "tags": "c#,open-source,self-hosted",
+    "maker": {
+      "login": "featbit",
+      "name": "FeatBit",
+      "email": "contact@featbit.co",
+      "bio": "",
+      "url": "https://www.featbit.co",
+      "avatar": "https://avatars.githubusercontent.com/u/112318170?v=4"
+    }
+  }
+]

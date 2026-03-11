@@ -8,6 +8,7 @@ from fastapi.responses import HTMLResponse
 
 from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card
+from indiestack.routes.category_icons import category_icon
 from indiestack import db as _db
 
 
@@ -39,7 +40,7 @@ async def about_page(request: Request):
     <div style="max-width:720px;margin:0 auto;padding:64px 24px;">
 
       <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);line-height:1.2;margin-bottom:8px;">
-        Two uni students, 5 hours of sleep, and an indie tool catalog.
+        Two uni students, 5 hours of sleep, and an indie catalog.
       </h1>
       <p style="font-size:18px;color:var(--ink-muted);line-height:1.6;margin-bottom:48px;">
         IndieStack is built by people who know what it&rsquo;s like to ship something and have nobody see it.
@@ -67,11 +68,11 @@ async def about_page(request: Request):
         What we&rsquo;re actually building
       </h2>
       <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
-        A curated catalog of indie tools that&rsquo;s searchable by both humans and AI agents. We have an
+        A curated catalog of indie creations that&rsquo;s searchable by both humans and AI agents. We have an
         <a href="https://pypi.org/project/indiestack/" style="color:var(--accent);">MCP server</a>
         that plugs into Claude, Cursor, and Windsurf &mdash; so when a developer asks their AI to build
-        something, it checks IndieStack first. If an indie tool already does the job, the agent recommends
-        it instead of writing code from scratch.
+        something, it checks IndieStack first. If an indie creation already does the job, the agent recommends
+        it instead of building from scratch.
       </p>
       <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
         Think of it like humans sharing knowledge across generations &mdash; except we&rsquo;re building the same
@@ -103,9 +104,7 @@ async def about_page(request: Request):
         </div>
         <!-- Ed -->
         <div class="card" style="padding:24px;">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--terracotta);color:white;
-                      display:flex;align-items:center;justify-content:center;font-size:22px;
-                      font-family:var(--font-display);margin-bottom:12px;">E</div>
+          <img src="/founders/ed.jpg" alt="Edward" style="width:56px;height:56px;border-radius:50%;object-fit:cover;margin-bottom:12px;">
           <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:4px;">
             Ed <span style="font-size:13px;color:var(--ink-muted);font-family:var(--font-body);font-weight:400;">(a.k.a. Jabba)</span>
           </h3>
@@ -124,8 +123,7 @@ async def about_page(request: Request):
       <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
         We&rsquo;ve been friends since school &mdash; we used to play Pok&eacute;mon Go together before
         either of us knew what an API was. Now we&rsquo;re based in Cardiff, building IndieStack with the
-        same energy (and once smashed a laptop screen fighting over the keyboard because we couldn&rsquo;t
-        agree whose prompt was better).
+        same energy and a lot of late nights.
       </p>
       <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
         Neither of us has a background in SaaS or startups &mdash; Pat studies zoology and Ed was
@@ -133,9 +131,9 @@ async def about_page(request: Request):
         projects noticed. That frustration turned into IndieStack.
       </p>
 
-      <!-- Why indie tools -->
+      <!-- Why indie creations -->
       <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-top:40px;margin-bottom:12px;">
-        Why indie tools specifically
+        Why indie creations specifically
       </h2>
       <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
         Because we were sick of every tool costing $29.99 a month. We just wanted a place to find
@@ -163,7 +161,7 @@ async def about_page(request: Request):
           Built something? We&rsquo;d love to see it.
         </p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-          <a href="/submit" class="btn btn-primary" style="padding:12px 24px;">Submit Your Tool</a>
+          <a href="/submit" class="btn btn-primary" style="padding:12px 24px;">Submit Your Creation</a>
           <a href="/why-list" class="btn btn-secondary" style="padding:12px 24px;">Why list here?</a>
         </div>
       </div>
@@ -171,7 +169,7 @@ async def about_page(request: Request):
     </div>
     """
     return HTMLResponse(page_shell("About", body, user=request.state.user,
-                                    description="IndieStack is built by two uni students in Cardiff who couldn't get their own projects noticed. Now we're building the indie tool catalog AI agents actually use."))
+                                    description="IndieStack is built by two uni students in Cardiff who couldn't get their own projects noticed. Now we're building the indie catalog AI agents actually use."))
 
 
 @router.get("/terms", response_class=HTMLResponse)
@@ -266,7 +264,7 @@ async def terms_page(request: Request):
     return HTMLResponse(page_shell(
         "Terms of Service", body,
         user=request.state.user,
-        description="Terms of Service for IndieStack, the curated indie tool catalog.",
+        description="Terms of Service for IndieStack, the curated indie catalog.",
         canonical="/terms",
     ))
 
@@ -353,7 +351,7 @@ async def faq_page(request: Request):
     questions = [
         (
             "What is IndieStack?",
-            "IndieStack is a hand-curated catalog of indie tools &mdash; small software products "
+            "IndieStack is a hand-curated catalog of indie creations &mdash; small software products "
             "built by solo founders and tiny teams. Every tool is reviewed by a human before it goes "
             "live. The catalog is searchable by both humans on the website and AI agents via our "
             "<a href='https://pypi.org/project/indiestack/' style='color:var(--accent);'>MCP server</a>."
@@ -376,7 +374,7 @@ async def faq_page(request: Request):
             "style='color:var(--accent);'>PyPI</a> and the "
             "<a href='https://registry.modelcontextprotocol.io/' style='color:var(--accent);'>official MCP Registry</a>. "
             "When developers install it in Claude, Cursor, or Windsurf, their AI assistant can search "
-            "our catalog before writing code from scratch. Your tool gets recommended directly in "
+            "our catalog before building from scratch. Your creation gets recommended directly in "
             "the conversation &mdash; not buried on page 3 of a directory."
         ),
         (
@@ -408,7 +406,7 @@ async def faq_page(request: Request):
             "<a href='/about' style='color:var(--accent);'>about page</a>."
         ),
         (
-            "Why use an indie tool instead of building it myself with AI?",
+            "Why use an indie creation instead of building it myself with AI?",
             "You <em>could</em> vibe-code anything &mdash; but should you? Every tool you build from "
             "scratch is tokens burned, bugs to fix, and features to maintain forever. A polished indie "
             "tool saves you thousands of tokens and gives you something battle-tested from day one. "
@@ -476,7 +474,7 @@ _BLOG_POSTS = [
         "title": "Why Your AI Assistant Wastes Tokens Rebuilding Tools That Already Exist",
         "date": "2026-02-20",
         "reading_time": "5 min read",
-        "excerpt": "Every day, developers burn thousands of tokens asking AI to build invoicing, analytics, and feedback widgets from scratch — when battle-tested indie tools already exist.",
+        "excerpt": "Every day, developers burn thousands of tokens asking AI to build invoicing, analytics, and feedback widgets from scratch — when battle-tested indie creations already exist.",
     },
 ]
 
@@ -504,14 +502,14 @@ async def blog_index(request: Request):
     body = f"""
     <div {_BLOG_CONTAINER}>
         <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Blog</h1>
-        <p style="color:var(--ink-muted);font-size:16px;margin-bottom:40px;">Thoughts on indie tools, AI workflows, and building in public.</p>
+        <p style="color:var(--ink-muted);font-size:16px;margin-bottom:40px;">Thoughts on indie creations, AI workflows, and building in public.</p>
         {cards}
     </div>
     """
     return HTMLResponse(page_shell(
         "Blog", body,
         user=request.state.user,
-        description="Thoughts on indie tools, AI workflows, and the future of software discovery.",
+        description="Thoughts on indie creations, AI workflows, and the future of software discovery.",
         canonical="/blog",
     ))
 
@@ -616,7 +614,7 @@ async def blog_agent_infrastructure(request: Request):
     </style>
     """
 
-    tweet_text = "IndieStack%20is%20now%20the%20procurement%20layer%20for%20AI%20agents.%205%20features%20so%20agents%20check%20IndieStack%20before%20writing%20boilerplate.%0A%0Ahttps%3A%2F%2Findiestack.fly.dev%2Fblog%2Fagent-infrastructure%0A%0A%40indiestack_dev"
+    tweet_text = "IndieStack%20is%20now%20the%20procurement%20layer%20for%20AI%20agents.%205%20features%20so%20agents%20check%20IndieStack%20before%20writing%20boilerplate.%0A%0Ahttps%3A%2F%2Findiestack.ai%2Fblog%2Fagent-infrastructure%0A%0A%40indiestack_dev"
 
     body = f"""
     <article class="blog-article" {_BLOG_CONTAINER}>
@@ -634,10 +632,10 @@ async def blog_agent_infrastructure(request: Request):
             <h2>The Problem</h2>
             <p>
                 Every time an AI agent is asked to build auth, payments, or analytics, it burns
-                30,000 to 120,000 tokens writing code from scratch. It generates middleware,
+                30,000 to 120,000 tokens building from scratch. It generates middleware,
                 database schemas, API routes, error handling &mdash; the full stack. Three hours
                 and 47,000 tokens later, you have a serviceable but unpolished implementation
-                of something that already exists as a battle-tested indie tool.
+                of something that already exists as a battle-tested indie creation.
             </p>
             <p>
                 The agent is not lazy. It is uninformed. It does not know that a focused indie
@@ -662,7 +660,7 @@ async def blog_agent_infrastructure(request: Request):
                     on the platform. An agent includes this once in its system prompt and can
                     reference tools by slug forever after. With prompt caching, the first query
                     costs tokens; every subsequent query is nearly free.
-                    <pre><code>curl https://indiestack.fly.dev/api/tools/index.json | jq '.[0]'
+                    <pre><code>curl https://indiestack.ai/api/tools/index.json | jq '.[0]'
 {{
   "slug": "simple-analytics",
   "name": "Simple Analytics",
@@ -687,11 +685,11 @@ async def blog_agent_infrastructure(request: Request):
                 </li>
                 <li>
                     <strong>Stack Builder API</strong> &mdash;
-                    Tell us what you need, we tell you what to use. Returns the best indie tool
+                    Tell us what you need, we tell you what to use. Returns the best indie creation
                     for each requirement, matches Vibe Stacks if they cover the needs, and
                     reports total tokens saved. Also available as a <code>build_stack</code>
                     MCP tool.
-                    <pre><code>curl "https://indiestack.fly.dev/api/stack-builder?needs=auth,payments,analytics"
+                    <pre><code>curl "https://indiestack.ai/api/stack-builder?needs=auth,payments,analytics"
 {{
   "stack": [
     {{"need": "auth", "tool": "clerk", "tokens_saved": 47000}},
@@ -750,7 +748,7 @@ async def blog_agent_infrastructure(request: Request):
             <p>
                 Or hit the Stack Builder API directly:
             </p>
-            <pre><code>curl "https://indiestack.fly.dev/api/stack-builder?needs=auth,payments"</code></pre>
+            <pre><code>curl "https://indiestack.ai/api/stack-builder?needs=auth,payments"</code></pre>
             <p>
                 Browse the use case pages to see what agents see when they evaluate tools:
             </p>
@@ -880,7 +878,7 @@ async def blog_marketplace_launch(request: Request):
     </style>
     """
 
-    tweet_text = "IndieStack%20Marketplace%20is%20live.%20Sell%20your%20indie%20tools%2C%20keep%2095%25.%205%25%20platform%20fee%2C%20Stripe%20payouts%20to%20your%20bank.%0A%0Ahttps%3A%2F%2Findiestack.fly.dev%2Fblog%2Fmarketplace-launch%0A%0A%40indiestack_dev"
+    tweet_text = "IndieStack%20Marketplace%20is%20live.%20Sell%20your%20indie%20tools%2C%20keep%2095%25.%205%25%20platform%20fee%2C%20Stripe%20payouts%20to%20your%20bank.%0A%0Ahttps%3A%2F%2Findiestack.ai%2Fblog%2Fmarketplace-launch%0A%0A%40indiestack_dev"
 
     body = f"""
     <article class="blog-article" {_BLOG_CONTAINER}>
@@ -894,6 +892,10 @@ async def blog_marketplace_launch(request: Request):
         </header>
 
         <div {_BLOG_BODY}>
+
+            <div style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:24px;font-size:14px;color:var(--ink-muted);">
+                <strong>Update:</strong> Direct selling is paused while we focus on building the best indie creation discovery platform. The marketplace infrastructure is built and will return.
+            </div>
 
             <p>
                 Today we are launching the IndieStack Marketplace. Indie developers can now sell
@@ -961,7 +963,7 @@ async def blog_marketplace_launch(request: Request):
             <blockquote>
                 We did not build IndieStack to compete with Gumroad or Lemon Squeezy. We built
                 it because indie developers deserve a marketplace where the audience already
-                cares about indie tools &mdash; and where the AI assistants writing code can
+                cares about indie creations &mdash; and where the AI agents
                 actually find them.
             </blockquote>
 
@@ -1103,7 +1105,7 @@ async def blog_tokens_saved(request: Request):
     </style>
     """
 
-    tweet_text = "I%20asked%20Claude%20to%20build%20analytics%20from%20scratch.%2047%2C000%20tokens.%20The%20alternative%3F%20700%20tokens%20and%204%20minutes.%0A%0Ahttps%3A%2F%2Findiestack.fly.dev%2Fblog%2Ftokens-saved%0A%0A%40indiestack_dev"
+    tweet_text = "I%20asked%20Claude%20to%20build%20analytics%20from%20scratch.%2047%2C000%20tokens.%20The%20alternative%3F%20700%20tokens%20and%204%20minutes.%0A%0Ahttps%3A%2F%2Findiestack.ai%2Fblog%2Ftokens-saved%0A%0A%40indiestack_dev"
 
     body = f"""
     <article class="blog-article" {_BLOG_CONTAINER}>
@@ -1161,7 +1163,7 @@ async def blog_tokens_saved(request: Request):
             <h2>The Discovery</h2>
             <p>
                 A few weeks later I was setting up a new project and stumbled on
-                <a href="/">IndieStack</a>. The pitch was simple: it is a directory of indie tools
+                <a href="/">IndieStack</a>. The pitch was simple: it is a catalog of indie creations
                 &mdash; small SaaS products built by solo founders and tiny teams &mdash; plus an
                 MCP server that lets your AI assistant search the directory before it starts building
                 something from scratch.
@@ -1286,7 +1288,7 @@ async def blog_stop_wasting_tokens(request: Request):
                 "url": "_BASE_URL_PLACEHOLDER_/logo.png"
             }
         },
-        "description": "Every day, developers burn thousands of tokens asking AI to build invoicing, analytics, and feedback widgets from scratch — when battle-tested indie tools already exist.",
+        "description": "Every day, developers burn thousands of tokens asking AI to build invoicing, analytics, and feedback widgets from scratch — when battle-tested indie creations already exist.",
         "mainEntityOfPage": "_BASE_URL_PLACEHOLDER_/blog/stop-wasting-tokens",
         "wordCount": 950
     }""".replace("_BASE_URL_PLACEHOLDER_", BASE_URL)
@@ -1349,7 +1351,7 @@ async def blog_stop_wasting_tokens(request: Request):
     </style>
     """
 
-    tweet_text = "Stop%20burning%20tokens%20rebuilding%20tools%20that%20already%20exist.%20Your%20AI%20assistant%20needs%20a%20curated%20index%20of%20indie%20tools.%0A%0Ahttps%3A%2F%2Findiestack.fly.dev%2Fblog%2Fstop-wasting-tokens%0A%0A%40indiestack_dev"
+    tweet_text = "Stop%20burning%20tokens%20rebuilding%20tools%20that%20already%20exist.%20Your%20AI%20assistant%20needs%20a%20curated%20index%20of%20indie%20tools.%0A%0Ahttps%3A%2F%2Findiestack.ai%2Fblog%2Fstop-wasting-tokens%0A%0A%40indiestack_dev"
 
     body = f"""
     <article class="blog-article" {_BLOG_CONTAINER}>
@@ -1454,7 +1456,7 @@ async def blog_stop_wasting_tokens(request: Request):
             <p>
                 We built an <a href="https://modelcontextprotocol.io">MCP server</a> that plugs
                 directly into Claude Code, Cursor, and Windsurf. Before your AI writes a single
-                line of boilerplate, it can search over 100 vetted indie tools and suggest an
+                line of boilerplate, it can search over 100 vetted indie creations and suggest an
                 existing solution. It returns pricing, integration snippets, and an estimate of
                 how many tokens you would burn building it yourself.
             </p>
@@ -1597,7 +1599,7 @@ async def blog_zero_js_frameworks(request: Request):
     </style>
     """
 
-    tweet_text = "We%20built%20a%20full%20marketplace%20with%20Python%2C%20SQLite%2C%20and%20zero%20JS%20frameworks.%20No%20React.%20No%20build%20step.%20Here%27s%20how.%0A%0Ahttps%3A%2F%2Findiestack.fly.dev%2Fblog%2Fzero-js-frameworks%0A%0A%40indiestack_dev"
+    tweet_text = "We%20built%20a%20full%20marketplace%20with%20Python%2C%20SQLite%2C%20and%20zero%20JS%20frameworks.%20No%20React.%20No%20build%20step.%20Here%27s%20how.%0A%0Ahttps%3A%2F%2Findiestack.ai%2Fblog%2Fzero-js-frameworks%0A%0A%40indiestack_dev"
 
     body = f"""
     <article class="blog-article" {_BLOG_CONTAINER}>
@@ -1850,17 +1852,16 @@ async def best_index(request: Request):
 
     cards = ""
     for cat in categories:
-        icon = cat['icon'] or "&#128640;"
         count = cat['tool_count']
         slug = escape(cat['slug'])
         name = escape(cat['name'])
         cards += f"""
         <a href="/best/{slug}" class="card"
            style="text-decoration:none;color:inherit;padding:24px;display:flex;align-items:center;gap:16px;">
-            <span style="font-size:28px;">{icon}</span>
+            <span style="color:var(--slate);display:flex;align-items:center;flex-shrink:0;">{category_icon(cat['slug'], size=28)}</span>
             <div>
                 <div style="font-family:var(--font-display);font-size:16px;color:var(--ink);">Best {name} Tools</div>
-                <div style="font-size:13px;color:var(--ink-muted);">{count} indie tool{'s' if count != 1 else ''}</div>
+                <div style="font-size:13px;color:var(--ink-muted);">{count} indie creation{'s' if count != 1 else ''}</div>
             </div>
         </a>
         """
@@ -1869,27 +1870,27 @@ async def best_index(request: Request):
     <div class="container" style="padding:48px 24px;max-width:900px;">
         <div style="text-align:center;margin-bottom:40px;">
             <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);">
-                Best Indie SaaS Tools in 2026
+                Best Indie Creations in 2026
             </h1>
             <p style="color:var(--ink-muted);font-size:17px;margin-top:12px;max-width:600px;margin-left:auto;margin-right:auto;">
-                Curated lists of the best indie developer tools across {len(categories)} categories.
-                Built by solo makers, priced fairly, and battle-tested in production.
+                Curated lists of the best indie creations across {len(categories)} categories.
+                Built by independent makers, priced fairly, and battle-tested in production.
             </p>
         </div>
         <div class="card-grid">{cards}</div>
     </div>
     """
     return HTMLResponse(page_shell(
-        "Best Indie SaaS Tools in 2026", body,
+        "Best Indie Creations in 2026", body,
         user=request.state.user,
-        description="Curated lists of the best indie developer tools across 20 categories. Built by solo makers, priced fairly.",
+        description="Curated lists of the best indie creations across 25 categories. Built by independent makers, priced fairly.",
         canonical="/best",
     ))
 
 
 @router.get("/best/{category_slug}", response_class=HTMLResponse)
 async def best_category(request: Request, category_slug: str):
-    """Best indie tools page for a specific category."""
+    """Best indie creations page for a specific category."""
     d = request.state.db
     cat = await _db.get_category_by_slug(d, category_slug)
     if not cat:
@@ -1919,7 +1920,7 @@ async def best_category(request: Request, category_slug: str):
             <p style="font-size:32px;margin-bottom:12px;">&#128640;</p>
             <h3 style="font-family:var(--font-display);color:var(--ink);">No tools listed yet</h3>
             <p style="color:var(--ink-muted);margin:8px 0 24px;">Be the first to list your tool in this category.</p>
-            <a href="/submit" class="btn btn-primary">Submit Your Tool</a>
+            <a href="/submit" class="btn btn-primary">Submit Your Creation</a>
         </div>
         """
 
@@ -1953,7 +1954,9 @@ async def best_category(request: Request, category_slug: str):
     return HTMLResponse(page_shell(
         f"Best Indie {cat_name_esc}{'' if 'tool' in cat_name_esc.lower() else ' Tools'} in 2026", body,
         user=request.state.user,
-        description=f"The best indie {cat['name'].lower()} tools in 2026, curated by IndieStack. Built by solo developers, priced fairly.",
+        description=f"The best indie {cat['name'].lower()} creations in 2026, curated by IndieStack. Built by independent makers, priced fairly.",
         canonical=f"/best/{category_slug}",
         extra_head=extra_head,
     ))
+
+

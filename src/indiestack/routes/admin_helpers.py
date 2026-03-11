@@ -119,6 +119,24 @@ def status_badge(status):
     )
 
 
+def freshness_badge(freshness):
+    """Tool freshness badge: active (green), stale (yellow), inactive (red), unknown (gray)."""
+    f = (freshness or "").lower().strip()
+    if f == "active":
+        bg, fg, label = "#DCFCE7", "#16a34a", "Active"
+    elif f == "stale":
+        bg, fg, label = "#FEF9C3", "#CA8A04", "Stale"
+    elif f == "inactive":
+        bg, fg, label = "#FEE2E2", "#DC2626", "Inactive"
+    else:
+        bg, fg, label = "#F3F4F6", "#6B7280", "Unknown"
+    return (
+        f'<span style="display:inline-block;padding:2px 8px;border-radius:9999px;'
+        f'font-size:11px;font-weight:700;background:{bg};color:{fg};">'
+        f'{label}</span>'
+    )
+
+
 def role_badge(role):
     """Person role badge for the People tab."""
     r = (role or "").lower().strip()
@@ -142,7 +160,6 @@ def tab_nav(active_tab, pending_count=0):
         ("overview", "Overview"),
         ("tools", "Tools"),
         ("people", "People"),
-        ("content", "Content"),
         ("growth", "Growth"),
     ]
     items = []
@@ -176,9 +193,14 @@ def tab_nav(active_tab, pending_count=0):
 def growth_sub_nav(active_section):
     """Lighter sub-nav within the Growth tab."""
     sections = [
-        ("traffic", "Traffic & Funnels"),
+        ("charts", "Charts"),
+        ("tables", "Tables"),
+        ("funnels", "Funnels"),
         ("search", "Search"),
         ("email", "Email"),
+        ("magic", "Magic Links"),
+        ("makers", "Makers"),
+        ("stale", "Stale Tools"),
         ("social", "Social"),
     ]
     items = []
@@ -192,6 +214,33 @@ def growth_sub_nav(active_section):
             f'<a href="/admin?tab=growth&amp;section={slug}" style="{style}padding:8px 14px;'
             f'text-decoration:none;font-size:13px;font-family:var(--font-body);'
             f'white-space:nowrap;">{escape(label)}</a>'
+        )
+    return (
+        f'<div style="display:flex;border-bottom:1px solid var(--border);'
+        f'margin-bottom:20px;gap:0;opacity:0.85;">{"".join(items)}</div>'
+    )
+
+
+def tools_sub_nav(active_section, pending_count=0):
+    """Sub-nav within the Tools tab."""
+    sections = [
+        ("pending", f"Pending ({pending_count})" if pending_count else "Pending"),
+        ("all", "All Tools"),
+        ("claims", "Claims"),
+        ("stacks", "Stacks"),
+        ("reviews", "Reviews"),
+    ]
+    items = []
+    for slug, label in sections:
+        is_active = (active_section or "").lower() == slug
+        if is_active:
+            style = "color:var(--slate);border-bottom:2px solid var(--slate);font-weight:600;"
+        else:
+            style = "color:var(--ink-muted);border-bottom:2px solid transparent;"
+        items.append(
+            f'<a href="/admin?tab=tools&amp;section={slug}" style="{style}padding:8px 14px;'
+            f'text-decoration:none;font-size:13px;font-family:var(--font-body);'
+            f'white-space:nowrap;">{label}</a>'
         )
     return (
         f'<div style="display:flex;border-bottom:1px solid var(--border);'

@@ -1,4 +1,4 @@
-"""Tool submission form."""
+"""Submission form."""
 
 import logging
 from datetime import date
@@ -50,7 +50,7 @@ def submit_success_page(tool_name, tool_slug, maker_slug="", tool_type=None):
         <!-- AI Discovery callout -->
         <div style="background:linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);border-radius:var(--radius);padding:24px;margin-bottom:24px;">
             <p style="color:white;font-size:15px;line-height:1.6;margin:0;">
-                &#129302; {"Your " + escape({"mcp_server": "MCP server", "plugin": "plugin", "extension": "extension", "skill": "skill"}.get(tool_type, "plugin")) + " is now discoverable by AI coding assistants through our MCP server and plugin directory." if tool_type else "Your tool is now searchable by AI coding assistants (Cursor, Windsurf, Claude Code) through our MCP server."}
+                &#129302; {"Your " + escape({"mcp_server": "MCP server", "plugin": "plugin", "extension": "extension", "skill": "skill"}.get(tool_type, "plugin")) + " is now discoverable by AI coding assistants through our MCP server and plugin directory." if tool_type else "Your creation is now discoverable by AI agents (Cursor, Windsurf, Claude Code) through our MCP server."}
             </p>
         </div>
 
@@ -146,7 +146,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
         submit_or_login_btn = '<button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Submit for Review</button>'
     else:
         submit_or_login_btn = (
-            '<a href="/login" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;text-decoration:none;display:flex;align-items:center;">Log in to submit your tool</a>'
+            '<a href="/login" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;text-decoration:none;display:flex;align-items:center;">Log in to submit your creation</a>'
             '<p style="text-align:center;color:var(--ink-muted);font-size:13px;margin-top:12px;">Takes 30 seconds. Then come back and submit.</p>'
         )
 
@@ -194,27 +194,27 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
     return f"""
     <div class="container" style="max-width:640px;padding:48px 24px;">
         <div style="text-align:center;margin-bottom:40px;">
-            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Make Your Tool Discoverable by AI</h1>
-            <p style="color:var(--ink-muted);margin-top:8px;">{f"{tool_count}+ tools are already searchable by AI coding assistants via our MCP server. List yours free — we'll review within 24 hours." if tool_count > 0 else "Tools listed here are searchable by AI coding assistants via our MCP server. List yours free — we'll review within 24 hours."}</p>
+            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Make Your Creation Discoverable by AI</h1>
+            <p style="color:var(--ink-muted);margin-top:8px;">{f"{tool_count}+ creations are already discoverable by AI agents via our MCP server. List yours free — we'll review within 24 hours." if tool_count > 0 else "Creations listed here are discoverable by AI agents via our MCP server. List yours free — we'll review within 24 hours."}</p>
         </div>
 
         <div style="background:var(--info-bg);border:1px solid var(--info-border);border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;line-height:1.7;">
             <p style="font-size:14px;color:var(--info-text);margin:0;">
                 <strong>A note from us:</strong> IndieStack is still young &mdash; a small, curated directory built by two uni students in Cardiff.
-                We&rsquo;re building something we think matters: a knowledge base where AI agents recommend real tools
-                instead of regenerating code from scratch. Every tool you add helps craft that generational knowledge.
+                We&rsquo;re building something we think matters: a knowledge base where AI agents recommend real creations
+                instead of building from scratch. Games, utilities, newsletters, dev tools &mdash; anything you&rsquo;ve built. Every listing helps craft that generational knowledge.
                 Early listers get the most visibility as the catalog grows.
             </p>
             <p style="font-size:14px;color:var(--info-text);margin:12px 0 0 0;">
-                &#127942; <strong>Tool of the Week:</strong> The most AI-recommended tool each week gets featured
-                on our homepage. The more agents discover your tool, the higher your chances.
+                &#127942; <strong>Pick of the Week:</strong> The most AI-recommended creation each week gets featured
+                on our homepage. The more agents discover yours, the higher your chances.
             </p>
         </div>
         {alert}
         {github_import}
         <form method="post" action="/submit">
             <div class="form-group">
-                <label for="name">Tool Name *</label>
+                <label for="name">Name *</label>
                 <input type="text" id="name" name="name" class="form-input" required value="{name_val}"
                        placeholder="e.g. InvoiceNinja">
             </div>
@@ -226,12 +226,12 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
             <div class="form-group">
                 <label for="url">Website URL *</label>
                 <input type="url" id="url" name="url" class="form-input" required value="{url_val}"
-                       placeholder="https://your-tool.com">
+                       placeholder="https://yourproject.com">
             </div>
             <div class="form-group">
                 <label for="description">Description *</label>
                 <textarea id="description" name="description" class="form-textarea" required
-                          placeholder="Tell us what your tool does and who it's for...">{desc_val}</textarea>
+                          placeholder="Tell us what you've built and who it's for...">{desc_val}</textarea>
             </div>
             <div class="form-group">
                 <label for="category_id">Category *</label>
@@ -288,7 +288,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                             <strong style="font-size:14px;color:var(--ink);">Free forever</strong>
                         </div>
                         <p style="color:var(--ink-muted);font-size:13px;line-height:1.5;margin:0;">
-                            No fees, no commission, no catch. Your tool gets reviews, upvotes,
+                            No fees, no commission, no catch. Your creation gets reviews, upvotes,
                             and a permanent listing in the catalog.
                         </p>
                     </div>
@@ -299,8 +299,8 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                             <span style="font-size:11px;font-weight:700;color:var(--slate);background:rgba(0,212,245,0.1);padding:2px 8px;border-radius:999px;">Live</span>
                         </div>
                         <p style="color:var(--ink-muted);font-size:13px;line-height:1.5;margin:0;">
-                            AI coding assistants (Cursor, Windsurf, Claude Code) search IndieStack via MCP
-                            before writing code from scratch. Your tool becomes part of the knowledge layer.
+                            AI agents (Cursor, Windsurf, Claude Code) search IndieStack via MCP
+                            before building from scratch. Your creation becomes part of the knowledge layer.
                         </p>
                     </div>
                 </div>
@@ -338,8 +338,8 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                     <input type="checkbox" name="supports_export" value="1"
                            class="custom-checkbox">
                     <span>
-                        <strong style="font-size:14px;color:var(--ink);">&#128275; My tool supports full data export</strong>
-                        <br><span style="font-size:13px;color:var(--ink-muted);">Tools with clean data export get a &ldquo;Certified Ejectable&rdquo; badge after admin review.</span>
+                        <strong style="font-size:14px;color:var(--ink);">&#128275; Supports full data export</strong>
+                        <br><span style="font-size:13px;color:var(--ink-muted);">Creations with clean data export get a &ldquo;Certified Ejectable&rdquo; badge after admin review.</span>
                     </span>
                 </label>
             </div>
@@ -357,7 +357,7 @@ async def submit_get(request: Request):
     # Handle success page (accessible without login for public submissions)
     if request.query_params.get('status') == 'success':
         tool_slug = request.query_params.get('tool', '')
-        tool_name = "Your Tool"
+        tool_name = "Your Creation"
         maker_slug = ""
         if tool_slug:
             tool = await get_tool_by_slug(db, tool_slug)
@@ -369,7 +369,7 @@ async def submit_get(request: Request):
             if maker:
                 maker_slug = maker.get('slug', '')
         body = submit_success_page(tool_name, tool_slug, maker_slug=maker_slug)
-        return HTMLResponse(page_shell("Tool Submitted", body, user=request.state.user))
+        return HTMLResponse(page_shell("Submitted", body, user=request.state.user))
 
     categories = await get_all_categories(db)
     values = {}
@@ -388,7 +388,7 @@ async def submit_get(request: Request):
     row = await cursor.fetchone()
     tool_count = row['cnt'] if row else 0
     body = submit_form(categories, values=values, tool_count=tool_count, logged_in=logged_in)
-    return HTMLResponse(page_shell("Make Your Tool Discoverable by AI", body, user=user))
+    return HTMLResponse(page_shell("Make Your Creation Discoverable by AI", body, user=user))
 
 
 @router.post("/submit", response_class=HTMLResponse)
@@ -435,10 +435,14 @@ async def submit_post(
                   platforms=platforms if is_plugin else '',
                   install_command=install_command if is_plugin else '')
 
+    # Auto-prepend https:// if missing protocol (mobile users often skip it)
+    if url.strip() and not url.startswith("http"):
+        url = "https://" + url.strip()
+
     # Validation
     errors = []
     if not name.strip():
-        errors.append("Tool name is required.")
+        errors.append("Name is required.")
     if not tagline.strip():
         errors.append("Tagline is required.")
     if not url.strip() or not url.startswith("http"):
@@ -467,7 +471,7 @@ async def submit_post(
 
     if errors:
         body = submit_form(categories, values, error=" ".join(errors))
-        return HTMLResponse(page_shell("Make Your Tool Discoverable by AI", body, user=request.state.user))
+        return HTMLResponse(page_shell("Make Your Creation Discoverable by AI", body, user=request.state.user))
 
     tool_id = await create_tool(
         db, name=name.strip(), tagline=tagline.strip(), description=description.strip(),
@@ -518,4 +522,4 @@ async def submit_post(
             maker_slug = maker.get('slug', '')
 
     body = submit_success_page(name.strip(), tool_slug, maker_slug, tool_type=tool_type.strip() if is_plugin and tool_type.strip() else None)
-    return HTMLResponse(page_shell("Tool Submitted", body, user=request.state.user))
+    return HTMLResponse(page_shell("Submitted", body, user=request.state.user))

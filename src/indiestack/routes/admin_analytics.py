@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta
 from html import escape
 
-from indiestack.routes.admin_helpers import kpi_card, bar_chart, data_table, row_bg
+from indiestack.routes.admin_helpers import kpi_card, bar_chart, data_table, row_bg, status_badge
 from indiestack.db import (
     get_revenue_timeseries,
     get_pro_subscriber_stats,
@@ -20,8 +20,8 @@ from indiestack.db import (
 
 # ── Tab renderers ────────────────────────────────────────────────────────
 
-async def render_traffic_section(db, request) -> str:
-    """Overview/traffic tab — KPIs, period pills, charts, tables."""
+async def render_charts_section(db, request) -> str:
+    """Charts portion of traffic tab — KPIs, daily/hourly charts, revenue."""
     period = request.query_params.get("period", "7")
     now = datetime.utcnow()
 
@@ -55,6 +55,15 @@ async def render_traffic_section(db, request) -> str:
     )
     outbound_clicks = (await cursor.fetchone())['cnt']
 
+    cursor = await db.execute(
+        """SELECT COUNT(*) as cnt FROM (
+            SELECT visitor_id FROM page_views
+            WHERE timestamp >= ? AND visitor_id IS NOT NULL
+            GROUP BY visitor_id HAVING COUNT(DISTINCT DATE(timestamp)) > 1
+        )""", (since,)
+    )
+    returning_visitors = (await cursor.fetchone())['cnt']
+
     purchase_stats = await get_purchase_stats(db)
     total_revenue_pence = purchase_stats.get('total_revenue', 0) or 0
 
@@ -68,34 +77,32 @@ async def render_traffic_section(db, request) -> str:
         active_style = "background:var(--slate);color:white;" if val == period else "background:var(--cream-dark);color:var(--ink-light);border:1px solid var(--border);"
         pills += f'<a href="/admin?tab=growth&section=traffic&period={val}" class="btn" style="{active_style}padding:6px 16px;font-size:13px;border-radius:999px;text-decoration:none;font-weight:600;">{label}</a>'
 
-    # ── 14-day traffic bar chart ──
-    chart_days = 14
+    # Daily traffic — single GROUP BY query
+    chart_since = (now - timedelta(days=13)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+    cursor = await db.execute(
+        """SELECT DATE(timestamp) as day, COUNT(*) as cnt
+           FROM page_views WHERE timestamp >= ?
+           GROUP BY DATE(timestamp) ORDER BY day""",
+        (chart_since,)
+    )
+    daily_rows = {r['day']: r['cnt'] for r in await cursor.fetchall()}
     daily_data = []
-    for i in range(chart_days - 1, -1, -1):
+    for i in range(13, -1, -1):
         day = now - timedelta(days=i)
-        day_start = day.replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
-        day_end = (day.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat()
-        cursor = await db.execute(
-            "SELECT COUNT(*) as cnt FROM page_views WHERE timestamp >= ? AND timestamp < ?",
-            (day_start, day_end)
-        )
-        cnt = (await cursor.fetchone())['cnt']
-        daily_data.append((day.strftime("%b %d"), cnt))
+        day_str = day.strftime("%Y-%m-%d")
+        label = day.strftime("%b %d")
+        daily_data.append((label, daily_rows.get(day_str, 0)))
 
     traffic_chart = bar_chart(daily_data, "Daily Traffic (Last 14 Days)")
 
-    # ── Hourly traffic heatmap (last 7 days) ──
-    hourly_data = []
-    for hour in range(24):
-        cursor = await db.execute(
-            """SELECT COUNT(*) as cnt FROM page_views
-               WHERE timestamp >= datetime('now', '-7 days')
-               AND CAST(strftime('%H', timestamp) AS INTEGER) = ?""",
-            (hour,)
-        )
-        cnt = (await cursor.fetchone())['cnt']
-        label = f"{hour:02d}:00"
-        hourly_data.append((label, cnt))
+    # Hourly traffic — single GROUP BY query
+    cursor = await db.execute(
+        """SELECT CAST(strftime('%H', timestamp) AS INTEGER) as hour, COUNT(*) as cnt
+           FROM page_views WHERE timestamp >= datetime('now', '-7 days')
+           GROUP BY hour ORDER BY hour"""
+    )
+    hourly_rows = {r['hour']: r['cnt'] for r in await cursor.fetchall()}
+    hourly_data = [(f"{h:02d}:00", hourly_rows.get(h, 0)) for h in range(24)]
 
     hourly_chart = bar_chart(hourly_data, "Traffic by Hour of Day (Last 7 Days)")
 
@@ -105,6 +112,52 @@ async def render_traffic_section(db, request) -> str:
     if rev_data:
         rev_points = [(r['date'], r['revenue_pence'] / 100) for r in rev_data]
         rev_chart = bar_chart(rev_points, "Daily Revenue (Last 30 Days)", value_prefix="\u00a3")
+
+    return f"""
+        <!-- Period filter -->
+        <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+            {pills}
+        </div>
+
+        <!-- KPI cards -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;">
+            {kpi_card("Page Views", f"{total_views:,}", sublabel=period_label)}
+            {kpi_card("Unique Visitors", f"{unique_visitors:,}", sublabel=period_label)}
+            {kpi_card("Returning Visitors", f"{returning_visitors:,}", sublabel=period_label)}
+            {kpi_card("Outbound Clicks", f"{outbound_clicks:,}", sublabel=period_label)}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
+            {kpi_card("Total Revenue", f"£{total_revenue_pence / 100:.2f}")}
+            {kpi_card("Pro Subscribers", f"{pro_count:,}")}
+            {kpi_card("MRR", f"£{mrr_pence / 100:.2f}")}
+        </div>
+
+        {traffic_chart}
+        {hourly_chart}
+        {rev_chart}
+    """
+
+
+async def render_tables_section(db, request) -> str:
+    """Tables portion of traffic tab — top pages, referrers, recent visitors."""
+    period = request.query_params.get("period", "7")
+    now = datetime.utcnow()
+
+    if period == "today":
+        since = now.replace(hour=0, minute=0, second=0, microsecond=0).strftime("%Y-%m-%d %H:%M:%S")
+    elif period == "30":
+        since = (now - timedelta(days=30)).strftime("%Y-%m-%d %H:%M:%S")
+    elif period == "all":
+        since = "2000-01-01 00:00:00"
+    else:
+        period = "7"
+        since = (now - timedelta(days=7)).strftime("%Y-%m-%d %H:%M:%S")
+
+    # Period filter pills
+    pills = ""
+    for val, label in [("today", "Today"), ("7", "Last 7 days"), ("30", "Last 30 days"), ("all", "All time")]:
+        active_style = "background:var(--slate);color:white;" if val == period else "background:var(--cream-dark);color:var(--ink-light);border:1px solid var(--border);"
+        pills += f'<a href="/admin?tab=growth&section=traffic&period={val}" class="btn" style="{active_style}padding:6px 16px;font-size:13px;border-radius:999px;text-decoration:none;font-weight:600;">{label}</a>'
 
     # ── Top pages ──
     cursor = await db.execute(
@@ -203,30 +256,15 @@ async def render_traffic_section(db, request) -> str:
     recent_table = data_table("Recent Visitors", ["Time", "Page", "Source"], recent_rows)
 
     return f"""
-        <!-- Period filter -->
-        <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
-            {pills}
-        </div>
-
-        <!-- KPI cards -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
-            {kpi_card("Page Views", f"{total_views:,}", sublabel=period_label)}
-            {kpi_card("Unique Visitors", f"{unique_visitors:,}", sublabel=period_label)}
-            {kpi_card("Outbound Clicks", f"{outbound_clicks:,}", sublabel=period_label)}
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
-            {kpi_card("Total Revenue", f"£{total_revenue_pence / 100:.2f}")}
-            {kpi_card("Pro Subscribers", f"{pro_count:,}")}
-            {kpi_card("MRR", f"£{mrr_pence / 100:.2f}")}
-        </div>
-
-        {traffic_chart}
-        {hourly_chart}
-        {rev_chart}
         {top_pages_table}
         {referrers_table}
         {recent_table}
     """
+
+
+async def render_traffic_section(db, request) -> str:
+    """Legacy wrapper — renders charts + tables together."""
+    return await render_charts_section(db, request) + await render_tables_section(db, request)
 
 
 async def render_funnels_section(db) -> str:
@@ -315,20 +353,21 @@ async def render_funnels_section(db) -> str:
         clicks = m.get('total_clicks', 0) or 0
         last_update = m.get('last_update', '')
 
-        # Status badge
-        badge = '<span style="color:#16a34a;font-weight:600;font-size:12px;">Active</span>'
+        # Status badge based on last update
         if last_update:
             try:
                 lu_dt = datetime.fromisoformat(str(last_update))
-                days_ago = (datetime.utcnow() - lu_dt).days
-                if days_ago > 60:
-                    badge = '<span style="color:#dc2626;font-weight:600;font-size:12px;">Dormant</span>'
-                elif days_ago > 14:
-                    badge = '<span style="color:#EA580C;font-weight:600;font-size:12px;">Idle</span>'
+                days_ago_val = (datetime.utcnow() - lu_dt).days
+                if days_ago_val > 60:
+                    badge = status_badge("dormant")
+                elif days_ago_val > 14:
+                    badge = status_badge("idle")
+                else:
+                    badge = status_badge("active")
             except Exception:
-                badge = '<span style="color:var(--ink-muted);font-size:12px;">Unknown</span>'
+                badge = status_badge("unknown")
         else:
-            badge = '<span style="color:#dc2626;font-weight:600;font-size:12px;">Dormant</span>'
+            badge = status_badge("dormant")
 
         lu_display = ""
         if last_update:

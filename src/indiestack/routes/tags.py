@@ -46,7 +46,7 @@ async def tags_index(request: Request):
     <div class="container" style="padding:48px 24px;">
         <div style="text-align:center;margin-bottom:40px;">
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Browse by Tag</h1>
-            <p style="color:var(--ink-muted);font-size:16px;">{len(tags)} tags across all indie tools. Click any tag to explore.</p>
+            <p style="color:var(--ink-muted);font-size:16px;">{len(tags)} tags across all indie creations. Click any tag to explore.</p>
         </div>
         {tags_grid}
     </div>
@@ -60,7 +60,7 @@ async def tags_index(request: Request):
     </style>
     '''
     return HTMLResponse(page_shell(title="Browse by Tag — Indie Software Directory | IndieStack", body=body,
-                                    description="Browse indie SaaS tools by tag — find tools for APIs, analytics, automation, and more.",
+                                    description="Browse indie creations by tag — find creations for APIs, analytics, automation, and more.",
                                     user=user, canonical="/tags"))
 
 
@@ -118,8 +118,8 @@ async def tag_detail(request: Request, slug: str):
     json_ld = json.dumps({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        "name": f"Indie tools tagged '{tag_name}'",
-        "description": f"Discover {total} indie SaaS tools tagged with '{tag_name}' on IndieStack.",
+        "name": f"Indie creations tagged '{tag_name}'",
+        "description": f"Discover {total} indie creations tagged with '{tag_name}' on IndieStack.",
         "url": f"{BASE_URL}/tag/{slug}",
         "numberOfItems": total,
     })
@@ -148,14 +148,14 @@ async def tag_detail(request: Request, slug: str):
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">
                 <span style="font-family:var(--font-mono);background:var(--cream-dark);padding:4px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);">{safe_tag}</span>
             </h1>
-            <p style="color:var(--ink-muted);font-size:16px;">{total} indie tool{"s" if total != 1 else ""} tagged with &ldquo;{safe_tag}&rdquo;</p>
+            <p style="color:var(--ink-muted);font-size:16px;">{total} indie creation{"s" if total != 1 else ""} tagged with &ldquo;{safe_tag}&rdquo;</p>
         </div>
         {tools_html}
         {related_html}
     </div>
     '''
 
-    desc = f"Browse {total} indie tools tagged with '{tag_name}'. Curated directory of bootstrapped and open-source software."
+    desc = f"Browse {total} indie creations tagged with '{tag_name}'. Curated directory of bootstrapped and open-source software."
     noindex = '<meta name="robots" content="noindex">' if total == 0 else ""
     return HTMLResponse(page_shell(
         title=f"{safe_tag.title()} Tools — Indie Software Directory",

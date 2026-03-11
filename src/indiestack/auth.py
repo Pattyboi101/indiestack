@@ -8,7 +8,10 @@ from fastapi import Request
 
 # ── Admin Auth (unchanged) ───────────────────────────────────────────────
 
-ADMIN_PASSWORD = os.environ.get("INDIESTACK_ADMIN_PASSWORD", "indiestack-dev-pw")
+_raw_admin_pw = os.environ.get("INDIESTACK_ADMIN_PASSWORD", "")
+if not _raw_admin_pw and os.environ.get("FLY_APP_NAME"):
+    raise RuntimeError("INDIESTACK_ADMIN_PASSWORD must be set in production")
+ADMIN_PASSWORD = _raw_admin_pw or "indiestack-dev-pw"
 _SESSION_SECRET = os.environ.get("INDIESTACK_SESSION_SECRET", secrets.token_hex(32))
 
 
@@ -65,6 +68,8 @@ async def get_current_user(request: Request, db) -> dict | None:
         'role': row['role'],
         'maker_id': row['maker_id'],
         'email_verified': row['email_verified'],
+        'pixel_avatar': row['pixel_avatar'],
+        'pixel_avatar_approved': row['pixel_avatar_approved'],
     }
 
 

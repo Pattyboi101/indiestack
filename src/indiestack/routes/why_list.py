@@ -40,16 +40,16 @@ async def why_list_page(request: Request):
     notable_html = ', '.join(
         f'<a href="/tool/{escape(t["slug"])}" style="color:var(--accent);text-decoration:none;font-weight:600;">{escape(t["name"])}</a>'
         for t in notable_tools
-    ) if notable_tools else f'{tool_count} indie tools and growing'
+    ) if notable_tools else f'{tool_count} indie creations and growing'
 
     body = f'''
     <div style="max-width:720px;margin:0 auto;padding:64px 24px;">
 
         <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);line-height:1.2;margin-bottom:8px;">
-            Why List Your Tool on IndieStack
+            Why List on IndieStack
         </h1>
         <p style="font-size:18px;color:var(--ink-muted);line-height:1.6;margin-bottom:48px;">
-            A curated catalog of {tool_count} indie tools, searchable by AI agents and humans alike. Here's what you get.
+            A curated catalog of {tool_count} indie creations, searchable by AI agents and humans alike. Here's what you get.
         </p>
 
         <!-- Stat cards -->
@@ -58,7 +58,7 @@ async def why_list_page(request: Request):
                  onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)';this.style.borderColor='rgba(255,255,255,0.15)'"
                  onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor=''">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--ink);">{tool_count}</div>
-                <div style="font-size:13px;color:var(--ink-muted);">curated tools</div>
+                <div style="font-size:13px;color:var(--ink-muted);">curated creations</div>
             </div>
             <div class="card" style="padding:24px;text-align:center;cursor:default;transition:all 0.2s ease;"
                  onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)';this.style.borderColor='rgba(255,255,255,0.15)'"
@@ -76,20 +76,20 @@ async def why_list_page(request: Request):
                  onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)';this.style.borderColor='rgba(255,255,255,0.15)'"
                  onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor=''">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--ink);">{clicks_30d}</div>
-                <div style="font-size:13px;color:var(--ink-muted);">clicks to tools (30d)</div>
+                <div style="font-size:13px;color:var(--ink-muted);">outbound clicks (30d)</div>
             </div>
         </div>
 
         <!-- Section 1: AI Agent Discovery -->
         <div style="margin-bottom:40px;">
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
-                &#129302; Your tool shows up in AI conversations
+                &#129302; Your creation shows up in AI conversations
             </h2>
             <p style="color:var(--ink-light);line-height:1.7;">
                 IndieStack has an <a href="https://pypi.org/project/indiestack/" style="color:var(--accent);">MCP server on PyPI</a>
                 and the <a href="https://registry.modelcontextprotocol.io/" style="color:var(--accent);">official MCP Registry</a>.
                 When developers install it in Claude, Cursor, or Windsurf, their AI assistant searches our catalog
-                before writing code from scratch. Your tool gets recommended in the conversation &mdash; not buried on page 3 of a directory.
+                before building from scratch. Your creation gets recommended in the conversation &mdash; not buried on page 3 of a directory.
             </p>
             <div class="card" style="padding:16px 20px;margin-top:12px;font-size:14px;color:var(--ink-light);background:var(--cream);">
                 <strong>{mcp_views} AI agent lookups</strong> so far &mdash; and growing weekly as more developers install the MCP server.
@@ -99,16 +99,16 @@ async def why_list_page(request: Request):
         <!-- Section 2: What you get -->
         <div style="margin-bottom:40px;">
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
-                &#9889; What you get (free)
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> What you get (free)
             </h2>
             <ul style="color:var(--ink-light);line-height:2.2;padding-left:0;list-style:none;">
-                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Tool profile page</strong> &mdash; description, tags, screenshots, changelog, reviews</li>
-                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>AI agent discoverability</strong> &mdash; your tool appears in MCP search results</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Profile page</strong> &mdash; description, tags, screenshots, changelog, reviews</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>AI agent discoverability</strong> &mdash; your creation appears in MCP search results</li>
                 <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>SEO pages</strong> &mdash; alternatives pages, use-case comparisons, category listings</li>
                 <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Outbound click tracking</strong> &mdash; see how many developers click through to your site</li>
                 <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Embeddable badge</strong> &mdash; "Listed on IndieStack" SVG for your README</li>
-                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Maker profile</strong> &mdash; showcase all your tools in one place</li>
-                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Vibe Stacks</strong> &mdash; get included in curated tool bundles</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Maker profile</strong> &mdash; showcase all your creations in one place</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Vibe Stacks</strong> &mdash; get included in curated bundles</li>
                 <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Changelog updates</strong> &mdash; post updates that show on the IndieStack feed</li>
             </ul>
         </div>
@@ -120,20 +120,20 @@ async def why_list_page(request: Request):
             </h2>
             <p style="color:var(--ink-light);line-height:1.7;">
                 {notable_html}, and {maker_count} makers total.
-                Every tool is reviewed by a human before it goes live &mdash; no spam, no abandoned projects.
+                Every submission is reviewed by a human before it goes live &mdash; no spam, no abandoned projects.
             </p>
         </div>
 
         <!-- Section 4: How it works -->
         <div style="margin-bottom:40px;">
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
-                &#128295; How to list your tool
+                &#128295; How to list your creation
             </h2>
             <div style="display:flex;flex-direction:column;gap:16px;">
                 <div style="display:flex;gap:16px;align-items:flex-start;">
                     <div style="min-width:32px;height:32px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">1</div>
                     <div>
-                        <strong style="color:var(--ink);">Submit your tool</strong>
+                        <strong style="color:var(--ink);">Submit your creation</strong>
                         <p style="color:var(--ink-light);margin:4px 0 0;font-size:14px;">Fill out the form at <a href="/submit" style="color:var(--accent);">/submit</a>. Takes 2 minutes.</p>
                     </div>
                 </div>
@@ -141,14 +141,14 @@ async def why_list_page(request: Request):
                     <div style="min-width:32px;height:32px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">2</div>
                     <div>
                         <strong style="color:var(--ink);">We review it</strong>
-                        <p style="color:var(--ink-light);margin:4px 0 0;font-size:14px;">Every tool is manually reviewed. We check it&rsquo;s real, indie, and actively maintained.</p>
+                        <p style="color:var(--ink-light);margin:4px 0 0;font-size:14px;">Every submission is manually reviewed. We check it&rsquo;s real, indie, and actively maintained.</p>
                     </div>
                 </div>
                 <div style="display:flex;gap:16px;align-items:flex-start;">
                     <div style="min-width:32px;height:32px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">3</div>
                     <div>
                         <strong style="color:var(--ink);">You&rsquo;re live</strong>
-                        <p style="color:var(--ink-light);margin:4px 0 0;font-size:14px;">Your tool appears on the site, in search, in AI agent results, and on relevant alternatives pages.</p>
+                        <p style="color:var(--ink-light);margin:4px 0 0;font-size:14px;">Your creation appears on the site, in search, in AI agent results, and on relevant alternatives pages.</p>
                     </div>
                 </div>
             </div>
@@ -160,21 +160,21 @@ async def why_list_page(request: Request):
                 &#128200; Real activity this week
             </h2>
             <p style="color:var(--ink-light);line-height:1.7;">
-                {searches_week} searches in the last 7 days. {clicks_30d} outbound clicks to tool websites in the last 30 days.
-                These are real developers finding tools &mdash; not bot traffic.
+                {searches_week} searches in the last 7 days. {clicks_30d} outbound clicks in the last 30 days.
+                These are real people finding creations &mdash; not bot traffic.
             </p>
         </div>
 
         <!-- CTA -->
         <div style="text-align:center;padding:40px 0;border-top:1px solid var(--border);margin-top:16px;">
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:16px;">
-                List your tool for free
+                List your creation for free
             </h2>
             <p style="color:var(--ink-muted);margin-bottom:24px;font-size:15px;">
                 Takes 2 minutes. No payment required.
             </p>
             <a href="/submit" class="btn btn-lg btn-primary" style="font-size:16px;padding:14px 32px;">
-                Submit Your Tool &rarr;
+                Submit Your Creation &rarr;
             </a>
         </div>
 
@@ -185,22 +185,22 @@ async def why_list_page(request: Request):
     json_ld = f'''<script type="application/ld+json">{{
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Why List Your Tool on IndieStack",
-        "description": "IndieStack is a curated catalog of {tool_count} indie tools searchable by AI agents via MCP. Free to list.",
+        "name": "Why List on IndieStack",
+        "description": "IndieStack is a curated catalog of {tool_count} indie creations searchable by AI agents via MCP. Free to list.",
         "url": "{BASE_URL}/why-list",
         "mainEntity": {{
             "@type": "Organization",
             "name": "IndieStack",
             "url": "{BASE_URL}",
-            "description": "Curated indie tool catalog with AI agent discovery via MCP server"
+            "description": "Curated indie catalog with AI agent discovery via MCP server"
         }}
     }}</script>'''
 
     return HTMLResponse(page_shell(
-        "Why List Your Tool on IndieStack",
+        "Why List on IndieStack",
         body,
         user=user,
-        description=f"IndieStack is a curated catalog of {tool_count} indie tools searchable by AI agents. Free to list. {mcp_views} AI agent lookups and counting.",
+        description=f"IndieStack is a curated catalog of {tool_count} indie creations searchable by AI agents. Free to list. {mcp_views} AI agent lookups and counting.",
         extra_head=json_ld,
         canonical="/why-list",
     ))

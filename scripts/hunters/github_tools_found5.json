@@ -1,0 +1,1498 @@
+[
+  {
+    "name": "litecart",
+    "full_name": "shurco/litecart",
+    "url": "https://github.com/shurco/litecart",
+    "description": "\ud83d\uded2 litecart - shopping cart in 1 file with card and cryptocurrency payment support",
+    "stars": 344,
+    "language": "Svelte",
+    "category_slug": "invoicing-billing",
+    "tags": "open-source,self-hosted,svelte",
+    "maker": {
+      "login": "shurco",
+      "name": "Shurco",
+      "email": "",
+      "bio": "\ud83d\udc68\u200d\ud83d\udcbb Indie developer, open-source enthusiast, and startup entrepreneur",
+      "url": "https://github.com/shurco"
+    }
+  },
+  {
+    "name": "mfrieman-ShoppingCart_MicroService_SH",
+    "full_name": "mfrieman/mfrieman-ShoppingCart_MicroService_SH",
+    "url": "https://github.com/mfrieman/mfrieman-ShoppingCart_MicroService_SH",
+    "description": "Docker Test Application - Shopping Cart Micro Service self hosted",
+    "stars": 0,
+    "language": "C#",
+    "category_slug": "invoicing-billing",
+    "tags": "c#,docker,open-source,self-hosted",
+    "maker": {
+      "login": "mfrieman",
+      "name": "Mark Frieman",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/mfrieman"
+    }
+  },
+  {
+    "name": "shopping-cart",
+    "full_name": "stevenhughes08/shopping-cart",
+    "url": "https://github.com/stevenhughes08/shopping-cart",
+    "description": "A basic functional shopping cart for a self hosted online store. This uses React, Redux and Node. ",
+    "stars": 0,
+    "language": "JavaScript",
+    "category_slug": "invoicing-billing",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "stevenhughes08",
+      "name": "Steven Hughes",
+      "email": "stevenhughes08@gmail.com",
+      "bio": "",
+      "url": "https://github.com/stevenhughes08"
+    }
+  },
+  {
+    "name": "sellsynapsetgbot",
+    "full_name": "Freazzzing/sellsynapsetgbot",
+    "url": "https://github.com/Freazzzing/sellsynapsetgbot",
+    "description": "SellSynapse - Self-hosted Telegram bot builder for e-commerce. Create stores with payments, product catalog, and full data control. Deploy on your infrastructure.SellSynapse \u2014 \u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0442\u043e\u0440 Telegram-\u0431\u043e\u0442",
+    "stars": 3,
+    "language": "",
+    "category_slug": "invoicing-billing",
+    "tags": "open-source,self-hosted",
+    "maker": {
+      "login": "Freazzzing",
+      "name": "Freazzzing",
+      "email": "",
+      "bio": "\u041d\u0435\u043f\u0440\u0435\u0440\u044b\u0432\u043d\u043e \u0434\u0432\u0438\u0433\u0430\u0439\u0441\u044f\r\n\u0410\u0434 \u043f\u043e\u0436\u0438\u0440\u0430\u0435\u0442 \u043f\u0440\u0430\u0437\u0434\u043d\u044b\u0445\r\nKeep moving\r\nHell devours the idle",
+      "url": "https://github.com/Freazzzing"
+    }
+  },
+  {
+    "name": "VpicHost.Net",
+    "full_name": "Phalelashvili/VpicHost.Net",
+    "url": "https://github.com/Phalelashvili/VpicHost.Net",
+    "description": "(VIN Parser) Self-Hosted NHTSA Product Information Catalog Vehicle Listing Client",
+    "stars": 0,
+    "language": "C#",
+    "category_slug": "invoicing-billing",
+    "tags": "c#,cli,open-source,self-hosted",
+    "maker": {
+      "login": "Phalelashvili",
+      "name": "Spartak",
+      "email": "phalelashvili@protonmail.com",
+      "bio": "",
+      "url": "https://github.com/Phalelashvili"
+    }
+  },
+  {
+    "name": "inventra",
+    "full_name": "dobermanch/inventra",
+    "url": "https://github.com/dobermanch/inventra",
+    "description": "A lightweight, self-hosted inventory and business management app.",
+    "stars": 0,
+    "language": "TypeScript",
+    "category_slug": "invoicing-billing",
+    "tags": "lightweight,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "dobermanch",
+      "name": "Sergii Chevkota",
+      "email": "",
+      "bio": ":ukraine:",
+      "url": "https://libertus.dev"
+    }
+  },
+  {
+    "name": "StockTrack",
+    "full_name": "NexusForgeLab/StockTrack",
+    "url": "https://github.com/NexusForgeLab/StockTrack",
+    "description": "StockTrack is a lightweight, self-hosted inventory management system built with HTML, PHP, and SQLite, designed for small stores, workshops, and internal teams.",
+    "stars": 0,
+    "language": "PHP",
+    "category_slug": "invoicing-billing",
+    "tags": "lightweight,open-source,php,self-hosted",
+    "maker": {
+      "login": "NexusForgeLab",
+      "name": "NexusForge Lab",
+      "email": "",
+      "bio": "NexusForgeLab builds open-source and private infrastructure, container, and DevOps projects focused on reliability and simplicity.",
+      "url": "https://github.com/NexusForgeLab"
+    }
+  },
+  {
+    "name": "LANEye",
+    "full_name": "SiteQ8/LANEye",
+    "url": "https://github.com/SiteQ8/LANEye",
+    "description": "Lightweight network IP scanner with web GUI - Real-time host discovery, inventory management, ELK/Grafana integration",
+    "stars": 0,
+    "language": "Python",
+    "category_slug": "invoicing-billing",
+    "tags": "lightweight,open-source,python,self-hosted",
+    "maker": {
+      "login": "SiteQ8",
+      "name": "Ali AlEnezi",
+      "email": "site@hotmail.com",
+      "bio": "Kuwaiti\ud83c\uddf0\ud83c\uddfc, Passionate about Computers, Information Security, Networks, IoT, Toastmasters, Volunteering, Aviation & Education.",
+      "url": "www.3li.info"
+    }
+  },
+  {
+    "name": "dyndnsd",
+    "full_name": "cmur2/dyndnsd",
+    "url": "https://github.com/cmur2/dyndnsd",
+    "description": "A small, lightweight and extensible DynDNS server written with Ruby and Rack.",
+    "stars": 73,
+    "language": "Ruby",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,ruby,self-hosted",
+    "maker": {
+      "login": "cmur2",
+      "name": "Christian Nicolai",
+      "email": "cn@mycrobase.de",
+      "bio": "",
+      "url": "https://mycroba.se/"
+    }
+  },
+  {
+    "name": "makiatto",
+    "full_name": "halcyonnouveau/makiatto",
+    "url": "https://github.com/halcyonnouveau/makiatto",
+    "description": "Lightweight CDN for distributing content across multiple servers.",
+    "stars": 13,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,rust,self-hosted",
+    "maker": {
+      "login": "halcyonnouveau",
+      "name": "halcyon.nouveau.",
+      "email": "salut@halcyonnouve.au",
+      "bio": "Reach heaven through PrivEsc",
+      "url": "https://github.com/halcyonnouveau"
+    }
+  },
+  {
+    "name": "cloudflare-verified-ddns",
+    "full_name": "bkaewell/cloudflare-verified-ddns",
+    "url": "https://github.com/bkaewell/cloudflare-verified-ddns",
+    "description": "Lightweight, reliable Dynamic DNS updater for Cloudflare. Automatically detects your public IP and updates DNS records with verification. Built in Python, container-ready (Docker), minimal footprint. ",
+    "stars": 1,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "docker,lightweight,open-source,python,self-hosted",
+    "maker": {
+      "login": "bkaewell",
+      "name": "Brian Kaewell",
+      "email": "briankaewell@gmail.com",
+      "bio": "Hi, I\u2019m Brian, a Self-Driving Car Software Engineer who loves building machine learning products. I recently developed a deep learning model using Python/Tensor",
+      "url": "https://briankaewell.com"
+    }
+  },
+  {
+    "name": "Findomain",
+    "full_name": "Findomain/Findomain",
+    "url": "https://github.com/Findomain/Findomain",
+    "description": "The fastest and complete solution for domain recognition. Supports screenshoting, port scan, HTTP check, data import from other tools, subdomain monitoring, alerts via Discord, Slack and Telegram, mul",
+    "stars": 3690,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "api,open-source,rust",
+    "maker": {
+      "login": "Findomain",
+      "name": "Findomain",
+      "email": "monitoring@findomain.app",
+      "bio": "Advanced, automated and modern reconnaissance and vulnerability discovery.",
+      "url": "https://findomain.app"
+    }
+  },
+  {
+    "name": "domain-locker",
+    "full_name": "Lissy93/domain-locker",
+    "url": "https://github.com/Lissy93/domain-locker",
+    "description": "\ud83c\udf10 The all-in-one tool, for keeping track of your domain name portfolio. Got domain names? Get Domain Locker!",
+    "stars": 1187,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "open-source,typescript",
+    "maker": {
+      "login": "Lissy93",
+      "name": "Alicia Sykes",
+      "email": "alicia@omg.lol",
+      "bio": "Turning caffeine into code \ud83e\udd64",
+      "url": "https://aliciasykes.com"
+    }
+  },
+  {
+    "name": "odin",
+    "full_name": "maelstrom-cms/odin",
+    "url": "https://github.com/maelstrom-cms/odin",
+    "description": "An open-source domain monitoring tool built using Maelstrom \ud83e\udd16 Uptime Robot + \ud83e\uddd0 Oh Dear + \ud83e\uddea SSL Labs + \u23f0 Cronitor + \ud83d\udd75\ud83c\udffb\u200d\u2642\ufe0f DNS Spy",
+    "stars": 474,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "open-source,php",
+    "maker": {
+      "login": "maelstrom-cms",
+      "name": "Maelstrom CMS Toolkit",
+      "email": "",
+      "bio": "A CMS Toolkit built on Laravel and React",
+      "url": "https://www.maelstrom-cms.com"
+    }
+  },
+  {
+    "name": "Major-project-list",
+    "full_name": "ManojKumarPatnaik/Major-project-list",
+    "url": "https://github.com/ManojKumarPatnaik/Major-project-list",
+    "description": "A list of practical projects that anyone can solve in any programming language (See solutions). These projects are divided into multiple categories, and each category has its own folder.  To get start",
+    "stars": 218,
+    "language": "",
+    "category_slug": "invoicing-billing",
+    "tags": "cli,converter,generator,open-source",
+    "maker": {
+      "login": "ManojKumarPatnaik",
+      "name": "Manoj kumar patnaik",
+      "email": "",
+      "bio": "Empowering communities via open-source and education.",
+      "url": "https://github.com/ManojKumarPatnaik"
+    }
+  },
+  {
+    "name": "WEBFANG",
+    "full_name": "Talyx66/WEBFANG",
+    "url": "https://github.com/Talyx66/WEBFANG",
+    "description": "WEBFANG, is my first CLI, a modular OSINT & Reconnaissance toolkit curated for Ethical Hackers and Red-Teamers. Sink fangs into web targets using a passive intel gathering approach, active Spidering, ",
+    "stars": 82,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,lightweight,open-source,python",
+    "maker": {
+      "login": "Talyx66",
+      "name": "Talyx",
+      "email": "Tylercobey@hotmail.com",
+      "bio": "I'm Tyler | Founder & CEO @ Nyverra Systems |OffSec R&D Engineer | I hack. I forge my own weapons, and yes, I deliver. \r\n*WRAITHFRAME Demo coming soon",
+      "url": "https://www.linkedin.com/in/tyler-b-4439732b0/"
+    }
+  },
+  {
+    "name": "DomainDog",
+    "full_name": "navisecdelta/DomainDog",
+    "url": "https://github.com/navisecdelta/DomainDog",
+    "description": "A cli tool to perform reverse whois lookups through viewdns.info",
+    "stars": 7,
+    "language": "Ruby",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,ruby",
+    "maker": {
+      "login": "navisecdelta",
+      "name": "NaviSec Delta",
+      "email": "delta@navisec.io",
+      "bio": "Simulate. Test. Adapt. We're an Offensive Security Team.",
+      "url": "https://delta.navisec.io"
+    }
+  },
+  {
+    "name": "hopp-doc-gen",
+    "full_name": "hoppscotch/hopp-doc-gen",
+    "url": "https://github.com/hoppscotch/hopp-doc-gen",
+    "description": "\ud83d\udcd4 API documentation generator CLI for https://hoppscotch.io",
+    "stars": 136,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,generator,javascript,open-source",
+    "maker": {
+      "login": "hoppscotch",
+      "name": "Hoppscotch",
+      "email": "support@hoppscotch.io",
+      "bio": "Open source API development ecosystem.",
+      "url": "https://hoppscotch.com"
+    }
+  },
+  {
+    "name": "demystify",
+    "full_name": "AndrewWalsh/demystify",
+    "url": "https://github.com/AndrewWalsh/demystify",
+    "description": "Automated documentation for APIs",
+    "stars": 105,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,generator,open-source,typescript",
+    "maker": {
+      "login": "AndrewWalsh",
+      "name": "Andrew Walsh",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/AndrewWalsh"
+    }
+  },
+  {
+    "name": "ci4-api-generator",
+    "full_name": "jivtesh813/ci4-api-generator",
+    "url": "https://github.com/jivtesh813/ci4-api-generator",
+    "description": "CodeIgniter 4 Auto API Generator - Instantly create production-ready RESTful APIs from your database tables with zero configuration. Features automatic CRUD endpoints, pagination, filtering, sorting, ",
+    "stars": 4,
+    "language": "PHP",
+    "category_slug": "invoicing-billing",
+    "tags": "api,cli,generator,open-source,php",
+    "maker": {
+      "login": "jivtesh813",
+      "name": "jivtesh813",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/jivtesh813"
+    }
+  },
+  {
+    "name": "readme-ai",
+    "full_name": "eli64s/readme-ai",
+    "url": "https://github.com/eli64s/readme-ai",
+    "description": "README file generator, powered by AI.",
+    "stars": 2872,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,generator,open-source,python",
+    "maker": {
+      "login": "eli64s",
+      "name": "Eli Salamie",
+      "email": "",
+      "bio": "AI \u232c Art \u232c Meta \u232c",
+      "url": "elisalamie.com"
+    }
+  },
+  {
+    "name": "readmeX",
+    "full_name": "aibox22/readmeX",
+    "url": "https://github.com/aibox22/readmeX",
+    "description": "An AI Powered README and Interactive Wiki Generator for Any Projects. AI\u9a71\u52a8\u7684README\u53ca\u4ea4\u4e92\u5f0fWiki\u751f\u6210\u5de5\u5177\uff0c\u9762\u5411\u4e2d\u6587\u7684\u5f00\u6e90DeepWiki\u3002",
+    "stars": 407,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,generator,open-source,python",
+    "maker": {
+      "login": "aibox22",
+      "name": "aibox22",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/aibox22"
+    }
+  },
+  {
+    "name": "git-man-page-generator-legacy",
+    "full_name": "Lokaltog/git-man-page-generator-legacy",
+    "url": "https://github.com/Lokaltog/git-man-page-generator-legacy",
+    "description": "Git man page generator.",
+    "stars": 398,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "generator,javascript,open-source",
+    "maker": {
+      "login": "Lokaltog",
+      "name": "Kim A. \u00d8degaard",
+      "email": "kim@dyktig.no",
+      "bio": "",
+      "url": "https://github.com/Lokaltog"
+    }
+  },
+  {
+    "name": "mango",
+    "full_name": "muesli/mango",
+    "url": "https://github.com/muesli/mango",
+    "description": "mango is a man-page generator for the Go flag, pflag, cobra, coral, and kong packages",
+    "stars": 317,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "generator,go,open-source",
+    "maker": {
+      "login": "muesli",
+      "name": "Christian Muehlhaeuser",
+      "email": "muesli@gmail.com",
+      "bio": "Geek, Gopher, Software Developer, Maker, Opensource Advocate, Tech Enthusiast, Photographer, Board and Card Gamer.",
+      "url": "https://fribbledom.com"
+    }
+  },
+  {
+    "name": "zsh-manpage-completion-generator",
+    "full_name": "umlx5h/zsh-manpage-completion-generator",
+    "url": "https://github.com/umlx5h/zsh-manpage-completion-generator",
+    "description": "Generate zsh completions from man page",
+    "stars": 59,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "generator,go,open-source",
+    "maker": {
+      "login": "umlx5h",
+      "name": "umlx5h",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/umlx5h"
+    }
+  },
+  {
+    "name": "qlty",
+    "full_name": "qltysh/qlty",
+    "url": "https://github.com/qltysh/qlty",
+    "description": "\ud83d\udc8e Code quality CLI for universal linting, auto-formatting, security scanning, and maintainability",
+    "stars": 2962,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,rust",
+    "maker": {
+      "login": "qltysh",
+      "name": "Qlty Software",
+      "email": "hello@qlty.sh",
+      "bio": "Code quality and coverage done right",
+      "url": "https://qlty.sh"
+    }
+  },
+  {
+    "name": "keycloak-config-cli",
+    "full_name": "adorsys/keycloak-config-cli",
+    "url": "https://github.com/adorsys/keycloak-config-cli",
+    "description": "Import YAML/JSON-formatted configuration files into Keycloak - Configuration as Code for Keycloak.",
+    "stars": 1074,
+    "language": "Java",
+    "category_slug": "developer-tools",
+    "tags": "cli,java,open-source",
+    "maker": {
+      "login": "adorsys",
+      "name": "adorsys GmbH & Co. KG",
+      "email": "",
+      "bio": "Revolutionizing in secure Software Engineering",
+      "url": "https://adorsys.com"
+    }
+  },
+  {
+    "name": "srclib",
+    "full_name": "sourcegraph/srclib",
+    "url": "https://github.com/sourcegraph/srclib",
+    "description": "srclib is a polyglot code analysis library, built for hackability. It consists of language analysis toolchains (currently for Go and Java, with Python, JavaScript, and Ruby in beta) with a common outp",
+    "stars": 936,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "sourcegraph",
+      "name": "Sourcegraph",
+      "email": "hi@sourcegraph.com",
+      "bio": "Helping developers search, understand, and write code in complex codebases with AI",
+      "url": "https://sourcegraph.com"
+    }
+  },
+  {
+    "name": "phpdcd",
+    "full_name": "sebastianbergmann/phpdcd",
+    "url": "https://github.com/sebastianbergmann/phpdcd",
+    "description": "Dead Code Detector (DCD) for PHP code.",
+    "stars": 414,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "open-source,php",
+    "maker": {
+      "login": "sebastianbergmann",
+      "name": "Sebastian Bergmann",
+      "email": "sebastian@phpunit.de",
+      "bio": "Sebastian Bergmann is the creator of PHPUnit. He co-founded thePHP.cc and helps PHP teams build better software.",
+      "url": "https://sebastian-bergmann.de/index.html?ref=github"
+    }
+  },
+  {
+    "name": "dead-code-detector",
+    "full_name": "shipmonk-rnd/dead-code-detector",
+    "url": "https://github.com/shipmonk-rnd/dead-code-detector",
+    "description": "\ud83d\udc80 PHP unused code detection via PHPStan extension. Detects dead cycles, supports libs like Symfony, Twig, Doctrine, PHPUnit etc. Can automatically remove dead PHP code. Able to detect dead code used o",
+    "stars": 324,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "open-source,php",
+    "maker": {
+      "login": "shipmonk-rnd",
+      "name": "ShipMonk R&D",
+      "email": "",
+      "bio": "ShipMonk Research & Development",
+      "url": "https://rnd.shipmonk.com/"
+    }
+  },
+  {
+    "name": "puppet-ghostbuster",
+    "full_name": "voxpupuli/puppet-ghostbuster",
+    "url": "https://github.com/voxpupuli/puppet-ghostbuster",
+    "description": "\ud83d\udc7b Dead code detector for Puppet",
+    "stars": 95,
+    "language": "Ruby",
+    "category_slug": "developer-tools",
+    "tags": "open-source,ruby",
+    "maker": {
+      "login": "voxpupuli",
+      "name": "Vox Pupuli",
+      "email": "voxpupuli@groups.io",
+      "bio": "Modules and tooling maintained by and for the OpenVox/Puppet community",
+      "url": "https://voxpupuli.org"
+    }
+  },
+  {
+    "name": "churnalizer",
+    "full_name": "gosukiwi/churnalizer",
+    "url": "https://github.com/gosukiwi/churnalizer",
+    "description": "Analyze your Ruby app for Churn vs Complexity",
+    "stars": 26,
+    "language": "Ruby",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,ruby",
+    "maker": {
+      "login": "gosukiwi",
+      "name": "Federico Ramirez",
+      "email": "fedra.arg@gmail.com",
+      "bio": "Developer, gamer, nerd, martial artists and cat lover",
+      "url": "http://gosukiwi.github.io/"
+    }
+  },
+  {
+    "name": "debtmap",
+    "full_name": "iepathos/debtmap",
+    "url": "https://github.com/iepathos/debtmap",
+    "description": "Technical debt and risk analyzer that predicts bug hotspots by combining cognitive complexity, pattern recognition, coverage gaps, information theory, and git history.",
+    "stars": 22,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,rust",
+    "maker": {
+      "login": "iepathos",
+      "name": "Glen Baker",
+      "email": "iepathos@gmail.com",
+      "bio": "Staff Software Engineer working in web development, mobile development, AI analysis, developer tooling, and infrastructure.",
+      "url": "https://entropicdrift.com"
+    }
+  },
+  {
+    "name": "ComposerRequireChecker",
+    "full_name": "maglnet/ComposerRequireChecker",
+    "url": "https://github.com/maglnet/ComposerRequireChecker",
+    "description": "A CLI tool to check whether a specific composer package uses imported symbols that aren't part of its direct composer dependencies",
+    "stars": 987,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,php",
+    "maker": {
+      "login": "maglnet",
+      "name": "Matthias Glaub",
+      "email": "",
+      "bio": "",
+      "url": "https://magl.net"
+    }
+  },
+  {
+    "name": "solidarity",
+    "full_name": "infinitered/solidarity",
+    "url": "https://github.com/infinitered/solidarity",
+    "description": "Solidarity is an environment checker for project dependencies across multiple machines.",
+    "stars": 642,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,typescript",
+    "maker": {
+      "login": "infinitered",
+      "name": "Infinite Red, Inc.",
+      "email": "hello@infinite.red",
+      "bio": "Development Studio",
+      "url": "http://infinite.red"
+    }
+  },
+  {
+    "name": "virusgotal",
+    "full_name": "moldabekov/virusgotal",
+    "url": "https://github.com/moldabekov/virusgotal",
+    "description": "\ud83d\udc7e VirusTotal zero dependency command line client. Hassle free file/URL scanning from CLI",
+    "stars": 71,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "moldabekov",
+      "name": "Margulan",
+      "email": "",
+      "bio": "security engineer, system engineer, dev(sec)ops.",
+      "url": "https://github.com/moldabekov"
+    }
+  },
+  {
+    "name": "webpack-bundle-size-analyzer",
+    "full_name": "robertknight/webpack-bundle-size-analyzer",
+    "url": "https://github.com/robertknight/webpack-bundle-size-analyzer",
+    "description": "A tool for finding out what contributes to the size of Webpack bundles",
+    "stars": 1391,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "open-source,typescript",
+    "maker": {
+      "login": "robertknight",
+      "name": "Robert Knight",
+      "email": "robertknight@gmail.com",
+      "bio": "Rustacean and front-end developer.\r\n\r\nPrevious projects - @Hypothesis web annotation client, @Mendeley's desktop app, Konsole terminal for KDE.",
+      "url": "https://robertknight.me.uk"
+    }
+  },
+  {
+    "name": "ember-cli-bundle-analyzer",
+    "full_name": "simonihmig/ember-cli-bundle-analyzer",
+    "url": "https://github.com/simonihmig/ember-cli-bundle-analyzer",
+    "description": "Analyze the size and contents of your Ember app's bundles",
+    "stars": 98,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "cli,html,open-source",
+    "maker": {
+      "login": "simonihmig",
+      "name": "Simon Ihmig",
+      "email": "simon.ihmig@gmail.com",
+      "bio": "Previously Co-founder of @kaliber5, now @CrowdStrike. JavaScript/TypeScript developer, in love with Ember.js",
+      "url": "https://simonihmig.github.io/cv/"
+    }
+  },
+  {
+    "name": "crawlyx",
+    "full_name": "theritikchoure/crawlyx",
+    "url": "https://github.com/theritikchoure/crawlyx",
+    "description": "Crawlyx is an open-source command-line interface (CLI) based web crawler built using Node.js. It is designed to crawl websites and extract useful information like links, images, and text. It is lightw",
+    "stars": 13,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,javascript,lightweight,open-source",
+    "maker": {
+      "login": "theritikchoure",
+      "name": "Ritik Chourasiya",
+      "email": "ritvikchoure65@gmail.com",
+      "bio": "\ud83d\ude0e Software Engineer @ BestPeers || Full Stack Developer (MERN) || Cloud & DevOps || #Go #JS #DevOps",
+      "url": "http://ritikprojects.tech"
+    }
+  },
+  {
+    "name": "derja-smart-scraper",
+    "full_name": "bahaeddinmselmi/derja-smart-scraper",
+    "url": "https://github.com/bahaeddinmselmi/derja-smart-scraper",
+    "description": "A lightweight CLI tool for collecting Tunisian Derja text snippets from the open web. It queries Google via [SerpAPI](https://serpapi.com), downloads each result, extracts readable text, and keeps onl",
+    "stars": 10,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,lightweight,open-source,python",
+    "maker": {
+      "login": "bahaeddinmselmi",
+      "name": "Baha Eddin Mselmi",
+      "email": "",
+      "bio": "Software Engineer | Backend & AI Automation | Co-Founder @ Zaynah AI | Building production systems",
+      "url": "zaynah.app"
+    }
+  },
+  {
+    "name": "lighthead",
+    "full_name": "meddlesome/lighthead",
+    "url": "https://github.com/meddlesome/lighthead",
+    "description": "Lightweight Headless Web Scraper which bypass the bot protection. CLI, API, MCP Soon",
+    "stars": 1,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,lightweight,open-source,typescript",
+    "maker": {
+      "login": "meddlesome",
+      "name": "meddlesome",
+      "email": "",
+      "bio": "204 (No Content) Most of the time working on the private repos",
+      "url": "is.st"
+    }
+  },
+  {
+    "name": "china-dictatorship",
+    "full_name": "cirosantilli/china-dictatorship",
+    "url": "https://github.com/cirosantilli/china-dictatorship",
+    "description": "\u53cd\u4e2d\u5171\u653f\u6cbb\u5ba3\u4f20\u5e93\u3002Anti Chinese government propaganda. \u4f4f\u5728\u4e2d\u56fd\u771f\u540d\u7528\u6237\u7684\u7f51\u53cb\u8bf7\u522b\u7ed9\u661f\u661f\uff0c\u4e0d\u7136\u4f60\u8981\u88ab\u8b66\u5bdf\u8bf7\u559d\u8336\u3002\u5e38\u89c1\u95ee\u7b54\u96c6\uff0c\u65b0\u95fb\u96c6\u548c\u996d\u5e97\u548c\u97f3\u4e50\u5efa\u8bae\u3002\u5350\u4e60\u4e07\u5c81\u5350\u3002\u51a0\u72b6\u75c5\u6bd2\u5ba1\u67e5\u90dd\u6d77\u4e1c\u65b0\u7586\u6539\u9020\u4e2d\u5fc3\u516d\u56db\u4e8b\u4ef6\u6cd5\u8f6e\u529f 996.ICU709\u5927\u6293\u6355\u5df4\u62ff\u9a6c\u6587\u4ef6\u9093\u5bb6\u8d35\u4f4e\u7aef\u4eba\u53e3\u897f\u85cf\u9a9a\u4e71\u3002Friends who live in China and have real name on ac",
+    "stars": 2866,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,docker,generator,html,open-source",
+    "maker": {
+      "login": "cirosantilli",
+      "name": "Ciro Santilli (\u4e09\u897f\u7334) OurBigBook.com sponsor me: cirosantilli.com/sponsor, opinions my own 2020\u51a0\u72b6\u75c5\u6bd2\u5ba1\u67e5 \uff0c2020\u90dd\u6d77\u4e1c \uff0c2018\u65b0\u7586\u6539\u9020\u4e2d\u5fc3\uff0c1989\u516d\u56db\u4e8b\u4ef6\uff0c1999\u6cd5\u8f6e\u529f \uff0c2019 996.ICU, 2018\u5305\u5b50\u9732\u5baa\uff0c2015 709\u5927\u6293\u6355\uff0c2015\u5df4\u62ff\u9a6c\u6587\u4ef6 \u9093\u5bb6\u8d35\uff0c2017\u4f4e\u7aef\u4eba\u53e3\uff0c2008\u897f\u85cf\u9a9a\u4e71<script>alert(1)</script>",
+      "email": "",
+      "bio": "2020\u51a0\u72b6\u75c5\u6bd2\u5ba1\u67e5 \uff0c2020\u90dd\u6d77\u4e1c \uff0c2018\u65b0\u7586\u6539\u9020\u4e2d\u5fc3\uff0c1989\u516d\u56db\u4e8b\u4ef6\uff0c1999\u6cd5\u8f6e\u529f \uff0c2019 996.ICU, 2018\u5305\u5b50\u9732\u5baa\uff0c2015 709\u5927\u6293\u6355\uff0c2015\u5df4\u62ff\u9a6c\u6587\u4ef6 \u9093\u5bb6\u8d35\uff0c2017\u4f4e\u7aef\u4eba\u53e3\uff0c2008\u897f\u85cf\u9a9a\u4e71<script>alert(1)</script>",
+      "url": "https://cirosantilli.com"
+    }
+  },
+  {
+    "name": ".github",
+    "full_name": "gege-circle/.github",
+    "url": "https://github.com/gege-circle/.github",
+    "description": "\u8fd9\u91cc\u662fGitHub\u7684\u8349\u573a\uff0c\u4e5f\u662f\u6208\u6208\u5708\u7231\u597d\u8005\u7684\u4ea4\u6d41\u5730\uff0c\u4e3b\u8981\u8ba8\u8bba\u52a8\u6f2b\u3001\u6e38\u620f\u3001\u79d1\u6280\u3001\u4eba\u6587\u3001\u751f\u6d3b\u7b49\u6240\u6709\u8bdd\u9898\uff0c\u6b22\u8fce\u5404\u4f4d\u5c0f\u4f19\u4f34\u4eec\u5728\u6b64\u8ba8\u8bba\u8da3\u4e8b\u3002This is GitHub grassland, and the community place for Gege circle lovers, mainly discusses anime, games, technology, lifing and other t",
+    "stars": 1788,
+    "language": "",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,docker,generator,open-source",
+    "maker": {
+      "login": "gege-circle",
+      "name": "\u6208\u6208\u5708 Gege Circle",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/gege-circle"
+    }
+  },
+  {
+    "name": "china-dictatroship-7",
+    "full_name": "cirosantilli/china-dictatroship-7",
+    "url": "https://github.com/cirosantilli/china-dictatroship-7",
+    "description": "\u53cd\u4e2d\u5171\u653f\u6cbb\u5ba3\u4f20\u5e93\u3002Anti Chinese government propaganda. https://github.com/cirosantilli/china-dictatorship \u7684\u5907\u4efdbackup. \u4f4f\u5728\u4e2d\u56fd\u771f\u540d\u7528\u6237\u7684\u7f51\u53cb\u8bf7\u522b\u7ed9\u661f\u661f\uff0c\u4e0d\u7136\u4f60\u8981\u88ab\u8b66\u5bdf\u8bf7\u559d\u8336\u3002\u5e38\u89c1\u95ee\u7b54\u96c6\uff0c\u65b0\u95fb\u96c6\u548c\u996d\u5e97\u548c\u97f3\u4e50\u5efa\u8bae\u3002\u5350\u4e60\u4e07\u5c81\u5350\u3002\u51a0\u72b6\u75c5\u6bd2\u5ba1\u67e5\u90dd\u6d77\u4e1c\u65b0\u7586\u6539\u9020\u4e2d\u5fc3\u516d\u56db\u4e8b\u4ef6\u6cd5\u8f6e\u529f 996.ICU709\u5927\u6293\u6355\u5df4\u62ff\u9a6c\u6587\u4ef6",
+    "stars": 316,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,docker,generator,html,open-source",
+    "maker": {
+      "login": "cirosantilli",
+      "name": "cirosantilli",
+      "email": "",
+      "bio": "",
+      "url": ""
+    }
+  },
+  {
+    "name": "pricebuddy",
+    "full_name": "jez500/pricebuddy",
+    "url": "https://github.com/jez500/pricebuddy",
+    "description": "A self hostable app that tracks prices and sends you notifications when prices match your preferences",
+    "stars": 867,
+    "language": "PHP",
+    "category_slug": "monitoring-uptime",
+    "tags": "open-source,php,self-hosted",
+    "maker": {
+      "login": "jez500",
+      "name": "Jeremy Graham",
+      "email": "",
+      "bio": "Lover of cool code & good UX. Development manager @DoghouseMedia ",
+      "url": "http://jez.me"
+    }
+  },
+  {
+    "name": "web-archive",
+    "full_name": "Ray-D-Song/web-archive",
+    "url": "https://github.com/Ray-D-Song/web-archive",
+    "description": "Free web archiving and sharing service based on Cloudflare. \u8dd1\u5728 Cloudflare \u4e0a\u7684\u514d\u8d39\u7f51\u9875\u5f52\u6863\u548c\u5206\u4eab\u5de5\u5177\u3002",
+    "stars": 918,
+    "language": "TypeScript",
+    "category_slug": "file-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "Ray-D-Song",
+      "name": "Ray-D-Song",
+      "email": "songraysmail@gmail.com",
+      "bio": "Cultivating my Mechanical Sympathy\u2699\ufe0f",
+      "url": "https://ray-d-song.com/"
+    }
+  },
+  {
+    "name": "hamsterbase",
+    "full_name": "hamsterbase/hamsterbase",
+    "url": "https://github.com/hamsterbase/hamsterbase",
+    "description": "self-hosted, local-first web archive application.",
+    "stars": 678,
+    "language": "TypeScript",
+    "category_slug": "file-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "hamsterbase",
+      "name": "hamsterbase",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/hamsterbase"
+    }
+  },
+  {
+    "name": "proxy.py",
+    "full_name": "abhinavsingh/proxy.py",
+    "url": "https://github.com/abhinavsingh/proxy.py",
+    "description": "\ud83d\udcab Ngrok FRP Alternative \u2022 \u26a1 Fast \u2022 \ud83e\udeb6 Lightweight \u2022 0\ufe0f\u20e3 Dependency \u2022 \ud83d\udd0c Pluggable \u2022 \ud83d\ude08 TLS interception \u2022 \ud83d\udd12 DNS-over-HTTPS \u2022 \ud83d\udd25 Poor Man's VPN \u2022 \u23ea Reverse & \u23e9 Forward \u2022 \ud83d\udc6e\ud83c\udfff \"Proxy Server\" framework \u2022 \ud83c\udf10 \"We",
+    "stars": 3506,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,python",
+    "maker": {
+      "login": "abhinavsingh",
+      "name": "Abhinav Singh",
+      "email": "",
+      "bio": "",
+      "url": "https://abhinavsingh.com/about"
+    }
+  },
+  {
+    "name": "gate",
+    "full_name": "minekube/gate",
+    "url": "https://github.com/minekube/gate",
+    "description": "High-performance, resource-efficient Minecraft reverse proxy and library with robust multi-protocol version support. Designed as a scalable Velocity/BungeeCord alternative, suitable for both developme",
+    "stars": 973,
+    "language": "Go",
+    "category_slug": "invoicing-billing",
+    "tags": "go,lightweight,open-source",
+    "maker": {
+      "login": "minekube",
+      "name": "Minekube - The Minecraft Developer Platform",
+      "email": "",
+      "bio": "Elevating Minecraft to the edge and cloud! Known for our 10MB Gate Proxy and open Connect Network, redefining player and dev experiences. \ud83d\ude80",
+      "url": "https://connect.minekube.com"
+    }
+  },
+  {
+    "name": "samples-viewer-generator",
+    "full_name": "rousan/samples-viewer-generator",
+    "url": "https://github.com/rousan/samples-viewer-generator",
+    "description": ":tada: A CLI utility tool to generate web app of data visualization samples for presentation purpose",
+    "stars": 13,
+    "language": "CSS",
+    "category_slug": "design-creative",
+    "tags": "cli,css,generator,open-source",
+    "maker": {
+      "login": "rousan",
+      "name": "Rousan Ali",
+      "email": "rousanali786@gmail.com",
+      "bio": "Building \ud83d\udc77\u200d\u2642\ufe0f !",
+      "url": "https://github.com/rousan"
+    }
+  },
+  {
+    "name": "flask-charts-api-container-app",
+    "full_name": "pamelafox/flask-charts-api-container-app",
+    "url": "https://github.com/pamelafox/flask-charts-api-container-app",
+    "description": "An example Flask app for a chart generator API designed to be run inside Docker and deployed to Azure Container Apps with the Azure Developer CLI.",
+    "stars": 6,
+    "language": "Bicep",
+    "category_slug": "design-creative",
+    "tags": "api,bicep,cli,docker,generator,open-source",
+    "maker": {
+      "login": "pamelafox",
+      "name": "Pamela Fox",
+      "email": "",
+      "bio": "Cloud Advocate in Python @ Microsoft",
+      "url": "https://www.pamelafox.org"
+    }
+  },
+  {
+    "name": "climate-chart",
+    "full_name": "william-song-shy/climate-chart",
+    "url": "https://github.com/william-song-shy/climate-chart",
+    "description": "Climate chart generator.",
+    "stars": 2,
+    "language": "Python",
+    "category_slug": "design-creative",
+    "tags": "cli,generator,open-source,python",
+    "maker": {
+      "login": "william-song-shy",
+      "name": "William Song",
+      "email": "songhongyishy@gmail.com",
+      "bio": "An oier",
+      "url": "https://github.com/william-song-shy"
+    }
+  },
+  {
+    "name": "asciigraph",
+    "full_name": "guptarohit/asciigraph",
+    "url": "https://github.com/guptarohit/asciigraph",
+    "description": "Go package to make lightweight ASCII line graph \u256d\u2508\u256f in command line apps with no other dependencies.",
+    "stars": 2961,
+    "language": "Go",
+    "category_slug": "design-creative",
+    "tags": "cli,go,lightweight,open-source",
+    "maker": {
+      "login": "guptarohit",
+      "name": "Rohit Gupta",
+      "email": "",
+      "bio": "",
+      "url": "blog.rohitgupta.xyz"
+    }
+  },
+  {
+    "name": "ervy",
+    "full_name": "chunqiuyiyu/ervy",
+    "url": "https://github.com/chunqiuyiyu/ervy",
+    "description": "Bring charts to terminal.",
+    "stars": 1608,
+    "language": "JavaScript",
+    "category_slug": "design-creative",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "chunqiuyiyu",
+      "name": "\u6625\u79cb\u4e00\u8bed",
+      "email": "chunqiuyiyu@outlook.com",
+      "bio": "\u6d89\u730e\u9605\u65e7\u95fb\uff0c\u6682\u4f7f\u5fc3\u9b42\u6f84",
+      "url": "https://www.chunqiuyiyu.com/"
+    }
+  },
+  {
+    "name": "stonks-dashboard",
+    "full_name": "pierridotite/stonks-dashboard",
+    "url": "https://github.com/pierridotite/stonks-dashboard",
+    "description": "A cyberpunk-style, real-time financial monitor that runs directly in the terminal. It visualizes cryptocurrency and stock market data using ASCII charts and dynamic coloring.",
+    "stars": 170,
+    "language": "JavaScript",
+    "category_slug": "design-creative",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "pierridotite",
+      "name": "Pierre RAFFALLI",
+      "email": "",
+      "bio": "I'm a AI & software engineering enthusiast currently pursuing an agronomic engineering degree at Institut Agro Montpellier. ",
+      "url": "https://github.com/pierridotite"
+    }
+  },
+  {
+    "name": "text-to-uml",
+    "full_name": "nikhildhole/text-to-uml",
+    "url": "https://github.com/nikhildhole/text-to-uml",
+    "description": "AI-powered Text \u2192 UML generator \u2014 convert natural language descriptions into PlantUML/Mermaid diagrams via a web UI, CLI, and API.",
+    "stars": 0,
+    "language": "",
+    "category_slug": "design-creative",
+    "tags": "api,cli,generator,open-source",
+    "maker": {
+      "login": "nikhildhole",
+      "name": "Nikhil Dhole",
+      "email": "nikhildhole001@gmail.com",
+      "bio": "",
+      "url": "https://github.com/nikhildhole"
+    }
+  },
+  {
+    "name": "Tree-structure-generator",
+    "full_name": "ramz404/Tree-structure-generator",
+    "url": "https://github.com/ramz404/Tree-structure-generator",
+    "description": "Smart Tree Structure Generator A Python CLI app that reads a text-based folder tree (using symbols like \u2502, \u251c\u2500\u2500, \u2514\u2500\u2500) and automatically generates the exact directory and file structure in a chosen loca",
+    "stars": 0,
+    "language": "",
+    "category_slug": "design-creative",
+    "tags": "cli,generator,open-source",
+    "maker": {
+      "login": "ramz404",
+      "name": "ramz404",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/ramz404"
+    }
+  },
+  {
+    "name": "-Smart-tree-generator",
+    "full_name": "ramz404/-Smart-tree-generator",
+    "url": "https://github.com/ramz404/-Smart-tree-generator",
+    "description": "Smart Tree Structure Generator A Python CLI app that reads a text-based folder tree (using symbols like \u2502, \u251c\u2500\u2500, \u2514\u2500\u2500) and automatically generates the exact directory and file structure in a chosen loca",
+    "stars": 0,
+    "language": "",
+    "category_slug": "design-creative",
+    "tags": "cli,generator,open-source",
+    "maker": {
+      "login": "ramz404",
+      "name": "ramz404",
+      "email": "",
+      "bio": "",
+      "url": ""
+    }
+  },
+  {
+    "name": "ganttchart_generator",
+    "full_name": "takuya0206/ganttchart_generator",
+    "url": "https://github.com/takuya0206/ganttchart_generator",
+    "description": "Google spreadsheet add-on which allows users to create a gantt chart automatically",
+    "stars": 92,
+    "language": "JavaScript",
+    "category_slug": "design-creative",
+    "tags": "generator,javascript,open-source",
+    "maker": {
+      "login": "takuya0206",
+      "name": "Takuya Tokiwa",
+      "email": "tokiwatakuya@gmail.com",
+      "bio": "",
+      "url": "https://github.com/takuya0206"
+    }
+  },
+  {
+    "name": "timeline",
+    "full_name": "gerald1248/timeline",
+    "url": "https://github.com/gerald1248/timeline",
+    "description": "generator for timelines and Gantt charts",
+    "stars": 32,
+    "language": "Go",
+    "category_slug": "design-creative",
+    "tags": "generator,go,open-source",
+    "maker": {
+      "login": "gerald1248",
+      "name": "Gerald Schmidt",
+      "email": "",
+      "bio": "Spends too much time staring at clouds.",
+      "url": "https://github.com/gerald1248"
+    }
+  },
+  {
+    "name": "ganttr",
+    "full_name": "mdarby/ganttr",
+    "url": "https://github.com/mdarby/ganttr",
+    "description": "A pure Javascript Gantt chart generator, drop in, point, render.",
+    "stars": 18,
+    "language": "JavaScript",
+    "category_slug": "design-creative",
+    "tags": "generator,javascript,open-source",
+    "maker": {
+      "login": "mdarby",
+      "name": "Matt Darby",
+      "email": "",
+      "bio": "Programming for 25+ years; MSCS. Former CEO, CTO, Prof, speaker.\r\n",
+      "url": "matt-darby.com"
+    }
+  },
+  {
+    "name": "trdsql",
+    "full_name": "noborus/trdsql",
+    "url": "https://github.com/noborus/trdsql",
+    "description": "CLI tool that can execute SQL queries on CSV, LTSV, JSON, YAML and TBLN. Can output to various formats.",
+    "stars": 2152,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "noborus",
+      "name": "Noboru Saito",
+      "email": "noborusai@gmail.com",
+      "bio": "Interested in SQL\r\n",
+      "url": "https://noborus.github.io/"
+    }
+  },
+  {
+    "name": "opengist",
+    "full_name": "thomiceli/opengist",
+    "url": "https://github.com/thomiceli/opengist",
+    "description": "Self-hosted pastebin powered by Git, open-source alternative to Github Gist.",
+    "stars": 3006,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "thomiceli",
+      "name": "Thomas Miceli",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/thomiceli"
+    }
+  },
+  {
+    "name": "enclosed",
+    "full_name": "CorentinTh/enclosed",
+    "url": "https://github.com/CorentinTh/enclosed",
+    "description": "Minimalistic web app designed for sending private and secure notes.",
+    "stars": 1945,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "CorentinTh",
+      "name": "Corentin Thomasset",
+      "email": "corentin.thomasset74@gmail.com",
+      "bio": "Computer Science Engineer.\r\nFullstack JS. FOSS creator and maintainer.\r\nMade @papra-hq, it-tools.tech, jugly.io, enclosed.cc, and more.",
+      "url": "corentin.tech"
+    }
+  },
+  {
+    "name": "marchat",
+    "full_name": "Cod-e-Codes/marchat",
+    "url": "https://github.com/Cod-e-Codes/marchat",
+    "description": "Lightweight terminal chat with server/client binaries, real-time WebSocket messaging, optional end-to-end encryption, plugins, file sharing, admin panel, and code snippets. Built in Go with Bubble Tea",
+    "stars": 123,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "cli,go,lightweight,open-source,self-hosted",
+    "maker": {
+      "login": "Cod-e-Codes",
+      "name": "Cody Marsengill",
+      "email": "cod.e.codes.dev@gmail.com",
+      "bio": "Developer building fast, durable, terminal-native tools in Go, Rust, and Python.",
+      "url": "www.cod-e-codes.com"
+    }
+  },
+  {
+    "name": "Snippet2",
+    "full_name": "snipet-ir/Snippet2",
+    "url": "https://github.com/snipet-ir/Snippet2",
+    "description": "A simple Code Snippet with user account and share feature",
+    "stars": 20,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "snipet-ir",
+      "name": "Snipet.ir",
+      "email": "",
+      "bio": "A simple Code Snippet with user account and share feature",
+      "url": "https://snipet.ir"
+    }
+  },
+  {
+    "name": "gluestick",
+    "full_name": "nwj/gluestick",
+    "url": "https://github.com/nwj/gluestick",
+    "description": "A self-hosted pastebin that makes it easy to share code, notes, and text snippets.",
+    "stars": 2,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "open-source,rust,self-hosted",
+    "maker": {
+      "login": "nwj",
+      "name": "Nick Willett-Jeffries",
+      "email": "contact@nwj.sh",
+      "bio": "",
+      "url": "https://nwj.sh"
+    }
+  },
+  {
+    "name": "droppy",
+    "full_name": "silverwind/droppy",
+    "url": "https://github.com/silverwind/droppy",
+    "description": "**ARCHIVED** Self-hosted file storage",
+    "stars": 1631,
+    "language": "JavaScript",
+    "category_slug": "file-management",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "silverwind",
+      "name": "silverwind",
+      "email": "",
+      "bio": "",
+      "url": "https://silverwind.io"
+    }
+  },
+  {
+    "name": "HRConvert2",
+    "full_name": "zelon88/HRConvert2",
+    "url": "https://github.com/zelon88/HRConvert2",
+    "description": "A self-hosted, drag-and-drop & nosql file conversion server & share tool that supports 445 file formats in 13 languages.",
+    "stars": 1319,
+    "language": "PHP",
+    "category_slug": "file-management",
+    "tags": "open-source,php,self-hosted",
+    "maker": {
+      "login": "zelon88",
+      "name": "Justin Grimes",
+      "email": "zelon88@gmail.com",
+      "bio": "Just a guy with too many hobbies.",
+      "url": "https://www.HonestRepair.net"
+    }
+  },
+  {
+    "name": "droppy",
+    "full_name": "droppyjs/droppy",
+    "url": "https://github.com/droppyjs/droppy",
+    "description": "Self-hosted file storage",
+    "stars": 142,
+    "language": "TypeScript",
+    "category_slug": "file-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "droppyjs",
+      "name": "droppyjs",
+      "email": "",
+      "bio": "",
+      "url": "droppyjs.com"
+    }
+  },
+  {
+    "name": "mysti",
+    "full_name": "xarantolus/mysti",
+    "url": "https://github.com/xarantolus/mysti",
+    "description": "Self-hosted clipboard sync and remote command runner for Linux and Windows",
+    "stars": 5,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,rust,self-hosted",
+    "maker": {
+      "login": "xarantolus",
+      "name": "Philipp",
+      "email": "x@010.one",
+      "bio": "Informatics Student @ TUM, satellites @ WARR",
+      "url": "https://010.one"
+    }
+  },
+  {
+    "name": "cloudpaste",
+    "full_name": "mrtian2016/cloudpaste",
+    "url": "https://github.com/mrtian2016/cloudpaste",
+    "description": "Self-hosted clipboard manager with real-time multi-device sync via WebSocket - Supports search, favorites,   and multiple content formats",
+    "stars": 5,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "mrtian2016",
+      "name": "Martin",
+      "email": "mrtian2016@gmail.com",
+      "bio": "coder",
+      "url": "hass-panel.com"
+    }
+  },
+  {
+    "name": "clipboard-sync-platform",
+    "full_name": "YellowKidokc/clipboard-sync-platform",
+    "url": "https://github.com/YellowKidokc/clipboard-sync-platform",
+    "description": "A self-hosted clipboard sync and automation hub with rules, folders, and AI workflows",
+    "stars": 0,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "YellowKidokc",
+      "name": "YellowKidokc",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/YellowKidokc"
+    }
+  },
+  {
+    "name": "flick",
+    "full_name": "chrissy-dev/flick",
+    "url": "https://github.com/chrissy-dev/flick",
+    "description": "Flick is a simple and lightweight PHP application to self-host photo galleries",
+    "stars": 1,
+    "language": "PHP",
+    "category_slug": "design-creative",
+    "tags": "lightweight,open-source,php,self-hosted",
+    "maker": {
+      "login": "chrissy-dev",
+      "name": "Chris",
+      "email": "chriscollins238@gmail.com",
+      "bio": "",
+      "url": "https://www.chrissy.dev"
+    }
+  },
+  {
+    "name": "Photo-Gallery",
+    "full_name": "mehrshadmdr/Photo-Gallery",
+    "url": "https://github.com/mehrshadmdr/Photo-Gallery",
+    "description": "A lightweight, self-hosted photo vault application using PHP, MySQL, and Tailwind CSS",
+    "stars": 0,
+    "language": "PHP",
+    "category_slug": "design-creative",
+    "tags": "lightweight,open-source,php,self-hosted",
+    "maker": {
+      "login": "mehrshadmdr",
+      "name": "mehrshad motamedtabar",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/mehrshadmdr"
+    }
+  },
+  {
+    "name": "MemoTrip",
+    "full_name": "quake0day/MemoTrip",
+    "url": "https://github.com/quake0day/MemoTrip",
+    "description": "A lightweight, self-hosted trip expense splitting and photo gallery application designed for group trips",
+    "stars": 0,
+    "language": "TypeScript",
+    "category_slug": "design-creative",
+    "tags": "lightweight,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "quake0day",
+      "name": "Si Chen",
+      "email": "quake0day@gmail.com",
+      "bio": "Professor\r\n",
+      "url": "https://www.darlingtree.com"
+    }
+  },
+  {
+    "name": "pinry",
+    "full_name": "pinry/pinry",
+    "url": "https://github.com/pinry/pinry",
+    "description": "Pinry, a tiling image board system for people who want to save, tag, and share images, videos and webpages in an easy to skim through format. It's open-source and self-hosted.",
+    "stars": 3335,
+    "language": "Python",
+    "category_slug": "design-creative",
+    "tags": "open-source,python,self-hosted",
+    "maker": {
+      "login": "pinry",
+      "name": "Pinry",
+      "email": "",
+      "bio": "",
+      "url": "https://getpinry.com"
+    }
+  },
+  {
+    "name": "sonixd",
+    "full_name": "jeffvli/sonixd",
+    "url": "https://github.com/jeffvli/sonixd",
+    "description": "A full-featured Subsonic/Jellyfin compatible desktop music player",
+    "stars": 1927,
+    "language": "TypeScript",
+    "category_slug": "design-creative",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "jeffvli",
+      "name": "Jeff",
+      "email": "",
+      "bio": "Webdev & PowerShell",
+      "url": "https://github.com/jeffvli"
+    }
+  },
+  {
+    "name": "swingmusic",
+    "full_name": "swingmx/swingmusic",
+    "url": "https://github.com/swingmx/swingmusic",
+    "description": " Swing Music is a beautiful, self-hosted music player for your local audio files. Like a cooler Spotify ... but bring your own music.",
+    "stars": 1753,
+    "language": "Python",
+    "category_slug": "design-creative",
+    "tags": "open-source,python,self-hosted",
+    "maker": {
+      "login": "swingmx",
+      "name": "Swing Music",
+      "email": "",
+      "bio": "Home to swing music ... and friends",
+      "url": "https://swingmx.com"
+    }
+  },
+  {
+    "name": "music",
+    "full_name": "WillKirkmanM/music",
+    "url": "https://github.com/WillKirkmanM/music",
+    "description": "ParsonLabs Music is the Self Hosted Audio streaming alternative to YouTube Music, Spotify & Apple Music, providing Unrestricted Access to your library in Uncompressed, Lossless Quality \u2014 Head to https",
+    "stars": 125,
+    "language": "TypeScript",
+    "category_slug": "design-creative",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "WillKirkmanM",
+      "name": "WillKirkmanM",
+      "email": "",
+      "bio": "Attempting to possess the passion to understand and master the things of the world. (9) @ParsonLabs @X-pl @DS-emu @P64-emu @pl-OS @seven-browser @GBA-emu",
+      "url": "parson.dev"
+    }
+  },
+  {
+    "name": "Analytics-for-Spotify",
+    "full_name": "ArthurVardevanyan/Analytics-for-Spotify",
+    "url": "https://github.com/ArthurVardevanyan/Analytics-for-Spotify",
+    "description": "Self Hosted Last.FM Alternative to keeping track of your Spotify History",
+    "stars": 7,
+    "language": "Python",
+    "category_slug": "design-creative",
+    "tags": "open-source,python,self-hosted",
+    "maker": {
+      "login": "ArthurVardevanyan",
+      "name": "Arthur Vardevanyan",
+      "email": "",
+      "bio": "",
+      "url": "http://www.arthurvardevanyan.com"
+    }
+  },
+  {
+    "name": "Backend",
+    "full_name": "not-spotify/Backend",
+    "url": "https://github.com/not-spotify/Backend",
+    "description": "Attempt to create self-hosted Spotify alternative.",
+    "stars": 0,
+    "language": "F#",
+    "category_slug": "design-creative",
+    "tags": "f#,open-source,self-hosted",
+    "maker": {
+      "login": "not-spotify",
+      "name": "Not Spotify",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/not-spotify"
+    }
+  },
+  {
+    "name": "Pckd",
+    "full_name": "Just-Moh-it/Pckd",
+    "url": "https://github.com/Just-Moh-it/Pckd",
+    "description": "The \u26a1\ufe0f analytics-intensive, self-hostable link-shortener with a beautiful UI | AKA free bit.ly alternative \ud83d\ude80",
+    "stars": 797,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "Just-Moh-it",
+      "name": "Mohit Yadav",
+      "email": "mohit@mohitya.dev",
+      "bio": "i like building cool stuff",
+      "url": "https://mohitya.dev"
+    }
+  },
+  {
+    "name": "thiss.link",
+    "full_name": "NayamAmarshe/thiss.link",
+    "url": "https://github.com/NayamAmarshe/thiss.link",
+    "description": "\ud83d\udd25 MagLit - Privacy Respecting Encrypted Link Shortener with Password Protection and Torrent Magnet Links support",
+    "stars": 594,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "open-source,privacy,self-hosted,typescript",
+    "maker": {
+      "login": "NayamAmarshe",
+      "name": "NayamAmarshe",
+      "email": "",
+      "bio": "FOSS is the future and we're building it \ud83d\ude80 \r\nCreator of Upscayl, MagLit, Pashword, writedown, please-cli and more \ud83d\ude09",
+      "url": "https://github.com/NayamAmarshe"
+    }
+  },
+  {
+    "name": "blink",
+    "full_name": "JaneJeon/blink",
+    "url": "https://github.com/JaneJeon/blink",
+    "description": "Modern, lightweight, planet-scale link shortener for teams \ud83c\udf89",
+    "stars": 294,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "javascript,lightweight,open-source,self-hosted",
+    "maker": {
+      "login": "JaneJeon",
+      "name": "Jane Jeon",
+      "email": "",
+      "bio": "Dartmouth Class of 2019, Certified Webshit\u2122, my opinions my own",
+      "url": "janejeon.dev"
+    }
+  },
+  {
+    "name": "grimoire",
+    "full_name": "goniszewski/grimoire",
+    "url": "https://github.com/goniszewski/grimoire",
+    "description": "Bookmark manager for the wizards \ud83e\uddd9",
+    "stars": 2748,
+    "language": "TypeScript",
+    "category_slug": "project-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "goniszewski",
+      "name": "Robert Goniszewski",
+      "email": "",
+      "bio": "",
+      "url": "https://goniszewski.com/"
+    }
+  },
+  {
+    "name": "pdf-link-checker",
+    "full_name": "a-nau/pdf-link-checker",
+    "url": "https://github.com/a-nau/pdf-link-checker",
+    "description": "Github Action and CLI tool to automatically check all links in a PDF for dead or broken links.",
+    "stars": 8,
+    "language": "Python",
+    "category_slug": "seo-tools",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "a-nau",
+      "name": "Alex Naumann",
+      "email": "",
+      "bio": "Deep Learning for Autonomous Vehicles at NVIDIA. Previously ML PhD at KIT.",
+      "url": "a-nau.github.io"
+    }
+  },
+  {
+    "name": "dead-link-checker",
+    "full_name": "Kaltsoon/dead-link-checker",
+    "url": "https://github.com/Kaltsoon/dead-link-checker",
+    "description": "\ud83d\udc80 A dead-simple way (pun intended) to recursively look for broken links on a web page",
+    "stars": 6,
+    "language": "Python",
+    "category_slug": "seo-tools",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "Kaltsoon",
+      "name": "Kalle Ilves",
+      "email": "kalleilv@gmail.com",
+      "bio": "Software Developer & Teacher \ud83d\udca1 ",
+      "url": "https://kalleilves.github.io"
+    }
+  }
+]

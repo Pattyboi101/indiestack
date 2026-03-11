@@ -35,7 +35,7 @@ async def search(request: Request):
                 type="text"
                 name="q"
                 value="{safe_query}"
-                placeholder="Search tools..."
+                placeholder="Search creations..."
                 class="form-input"
                 style="flex:1;border-radius:999px;padding:12px 20px;"
             />
@@ -112,7 +112,7 @@ async def search(request: Request):
                 0 results for &ldquo;{safe_query}&rdquo;
             </h2>
             <p style="color:var(--ink-muted);font-size:16px;margin-bottom:24px;">
-                No indie tools found for that query. Try different keywords or
+                No indie creations found for that query. Try different keywords or
                 <a href="/" style="color:var(--terracotta);">browse categories</a>.
             </p>
             <div style="background:linear-gradient(135deg, var(--cream-dark), #FFF7ED);border:1px solid var(--border);
@@ -121,18 +121,18 @@ async def search(request: Request):
                     Market gap spotted
                 </h3>
                 <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;margin:0 0 12px 0;">
-                    Nobody&rsquo;s built an indie <strong>{safe_query}</strong> tool yet.
+                    Nobody&rsquo;s built an indie <strong>{safe_query}</strong> creation yet.
                     If you&rsquo;re a maker, this is a gap waiting to be filled &mdash;
                     be the first to list yours and own this category.
                 </p>
                 {demand_line}
                 <a href="/submit" class="btn btn-primary" style="padding:12px 20px;font-size:14px;margin-top:12px;">
-                    Submit Your Tool
+                    Submit Your Creation
                 </a>
             </div>
             """
         else:
-            no_results_msg = '<p style="color:var(--ink-muted);font-size:16px;">Enter a search term to find tools.</p>'
+            no_results_msg = '<p style="color:var(--ink-muted);font-size:16px;">Enter a search term to find creations.</p>'
 
         body = f"""
         <div class="container" style="padding:48px 24px;">
@@ -163,7 +163,7 @@ async def search(request: Request):
             alternatives_banner = f"""
             <div style="background:var(--cream-dark);border:1px solid var(--border);border-left:3px solid var(--accent);
                         border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:20px;font-size:14px;color:var(--ink);">
-                Looking for <strong>{safe_query}</strong>? These indie tools are alternatives you can use instead.
+                Looking for <strong>{safe_query}</strong>? These indie creations are alternatives you can use instead.
                 <a href="/alternatives/{escape(alt_slug)}" style="color:var(--accent);font-weight:600;margin-left:4px;">
                     View full comparison &rarr;
                 </a>

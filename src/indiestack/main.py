@@ -2,17 +2,21 @@
 
 import asyncio
 import hashlib
+import logging
 import os as _os
 import re
 import time as _time
 from contextlib import asynccontextmanager
+from datetime import date
+
+_logger = logging.getLogger("indiestack")
 
 from indiestack.config import BASE_URL
 
 from pathlib import Path
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse, PlainTextResponse, Response
+from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, Response
 from starlette.middleware.gzip import GZipMiddleware
 
 # Rate limiting
@@ -32,16 +36,18 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
         for k in expired_keys:
             del _rate_limits[k]
 
-    # Rate limit GET for email-sending endpoints, POST for everything else
-    get_limited = {"/resend-verification"}
+    # Rate limit GET for auth and email-sending endpoints, POST for everything else
+    get_limited = {"/resend-verification", "/signup", "/login", "/auth/github", "/auth/github/callback"}
     if method == "GET" and path not in get_limited:
         return False
     if method not in ("POST", "GET"):
         return False
 
     limits = {
-        "/login": 5,
-        "/signup": 3,
+        "/login": 10,
+        "/signup": 10,
+        "/auth/github": 10,
+        "/auth/github/callback": 10,
         "/submit": 3,
         "/forgot-password": 3,
         "/resend-verification": 3,
@@ -79,6 +85,33 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
     _rate_limits[key].append(now)
     return False
 
+# ── Admin Login Rate Limiting ────────────────────────────────────────────
+_admin_login_attempts = {}  # {ip: [timestamp, ...]}
+_ADMIN_LOGIN_MAX = 5
+_ADMIN_LOGIN_WINDOW = 900  # 15 minutes
+
+
+def _check_admin_rate_limit(ip: str) -> bool:
+    """Return True if IP is rate-limited for admin login."""
+    import time as _rl_time
+    now = _rl_time.time()
+    attempts = _admin_login_attempts.get(ip, [])
+    attempts = [t for t in attempts if now - t < _ADMIN_LOGIN_WINDOW]
+    _admin_login_attempts[ip] = attempts
+    return len(attempts) >= _ADMIN_LOGIN_MAX
+
+
+def _record_admin_attempt(ip: str):
+    """Record a failed admin login attempt."""
+    import time as _rl_time
+    _admin_login_attempts.setdefault(ip, []).append(_rl_time.time())
+
+
+def _clear_admin_attempts(ip: str):
+    """Clear rate limit on successful login."""
+    _admin_login_attempts.pop(ip, None)
+
+
 _sitemap_cache: dict[str, object] = {'xml': None, 'expires': 0}
 
 _LOGO_CANDIDATES = [
@@ -109,8 +142,10 @@ from indiestack.routes import embed
 from indiestack.routes import launch_with_me
 from indiestack.routes import use_cases
 from indiestack.routes import why_list
+from indiestack.routes import what_is
 from indiestack.routes import plugins
 from indiestack.routes import gaps
+from indiestack.routes import api_docs
 
 
 async def _periodic_session_cleanup():
@@ -124,7 +159,7 @@ async def _periodic_session_cleanup():
                 await cleanup_expired_sessions(conn)
                 await cleanup_old_page_views(conn)
         except Exception:
-            pass
+            _logger.exception("Background task failed: session cleanup")
 
 
 async def _weekly_ego_ping():
@@ -157,7 +192,7 @@ async def _weekly_ego_ping():
                     except Exception:
                         pass
         except Exception:
-            pass
+            _logger.exception("Background task failed: weekly ego ping")
 
 
 async def _auto_tool_of_the_week():
@@ -226,7 +261,7 @@ async def _auto_tool_of_the_week():
                     pass
                 logger.info(f"Auto TOTW: {tool['name']} ({clicks} AI mentions this week)")
         except Exception:
-            pass
+            _logger.exception("Background task failed: auto TOTW")
 
 
 async def _badge_nudge_check():
@@ -268,7 +303,7 @@ async def _badge_nudge_check():
                     await conn.execute("UPDATE tools SET badge_nudge_sent = 1 WHERE id = ?", (tool['id'],))
                 await conn.commit()
         except Exception:
-            pass
+            _logger.exception("Background task failed: badge nudge")
 
 
 async def _auto_weekly_digest():
@@ -368,7 +403,7 @@ async def _auto_weekly_digest():
                     sent += 1
                 logger.info(f"Auto digest sent to {sent} subscribers")
         except Exception:
-            pass
+            _logger.exception("Background task failed: weekly digest")
 
 
 @asynccontextmanager
@@ -405,8 +440,20 @@ app.add_middleware(GZipMiddleware, minimum_size=500)
 
 # ── Security Headers ─────────────────────────────────────────────────────
 
-_CSRF_EXEMPT_PATHS = {"/webhooks/stripe"}  # Stripe sends POSTs from their servers
-_ALLOWED_ORIGINS = {"https://indiestack.fly.dev", "https://www.indiestack.fly.dev", "http://localhost:8000", "http://127.0.0.1:8000"}
+_CSRF_EXEMPT_PATHS = {"/webhooks/stripe", "/api/cite", "/api/tools/submit", "/api/follow-through"}
+_ALLOWED_ORIGINS = {"https://indiestack.ai", "https://www.indiestack.ai", "https://indiestack.fly.dev", "https://www.indiestack.fly.dev", "http://localhost:8000", "http://127.0.0.1:8000"}
+
+
+@app.middleware("http")
+async def redirect_old_domain(request: Request, call_next):
+    host = request.headers.get("host", "")
+    if "indiestack.fly.dev" in host and request.url.path != "/health":
+        from starlette.responses import RedirectResponse
+        new_url = f"https://indiestack.ai{request.url.path}"
+        if request.url.query:
+            new_url += f"?{request.url.query}"
+        return RedirectResponse(url=new_url, status_code=302)
+    return await call_next(request)
 
 
 @app.middleware("http")
@@ -426,7 +473,9 @@ async def csrf_protection(request: Request, call_next):
                     parsed = urlparse(referer)
                     origin = f"{parsed.scheme}://{parsed.netloc}" if parsed.scheme and parsed.netloc else ""
 
-            if origin and origin not in _ALLOWED_ORIGINS:
+            if not origin:
+                return JSONResponse({"error": "Origin required"}, status_code=403)
+            if origin not in _ALLOWED_ORIGINS:
                 return JSONResponse({"error": "Cross-origin request blocked"}, status_code=403)
     response = await call_next(request)
     return response
@@ -440,6 +489,15 @@ async def security_headers(request: Request, call_next):
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
     response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains"
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline'; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "img-src 'self' https: data:; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "connect-src 'self'; "
+        "frame-src https://www.youtube.com https://player.vimeo.com"
+    )
     return response
 
 
@@ -484,6 +542,13 @@ async def custom_http_exception_handler(request: Request, exc: StarletteHTTPExce
     return JSONResponse({"error": exc.detail}, status_code=exc.status_code)
 
 
+@app.exception_handler(Exception)
+async def generic_exception_handler(request: Request, exc: Exception):
+    """Catch unhandled exceptions — log detail, return generic message."""
+    _logger.exception("Unhandled exception on %s %s", request.method, request.url.path)
+    return JSONResponse({"error": "Internal server error"}, status_code=500)
+
+
 # ── DB middleware ─────────────────────────────────────────────────────────
 
 @app.middleware("http")
@@ -518,8 +583,8 @@ async def db_middleware(request: Request, call_next):
                     except Exception:
                         pass
 
-        # Track pageview (skip static assets and API calls)
-        if not path.startswith(('/api/', '/health', '/favicon', '/logo', '/track', '/robots', '/sitemap')):
+        # Track pageview (skip static assets, API calls, and auth pages)
+        if not path.startswith(('/api/', '/health', '/favicon', '/logo', '/track', '/robots', '/sitemap', '/signup', '/login', '/auth/')):
             visitor_raw = f"{request.headers.get('fly-client-ip', '') or request.headers.get('x-forwarded-for', '').split(',')[0].strip() or request.client.host}:{request.headers.get('user-agent', '')}"
             visitor_id = hashlib.sha256(visitor_raw.encode()).hexdigest()[:16]
             referrer = request.headers.get('referer', '')
@@ -572,6 +637,15 @@ async def founder_photo(name: str):
     return Response(content=b"", status_code=404)
 
 
+@app.get("/promo-video.mp4")
+async def promo_video():
+    for d in _FOUNDER_PHOTO_DIR_CANDIDATES:
+        p = d / "indiestack_promo_vid.mp4"
+        if p.exists():
+            return FileResponse(p, media_type="video/mp4", headers={"Cache-Control": "public, max-age=86400"})
+    return Response(content=b"", status_code=404)
+
+
 # ── SEO ───────────────────────────────────────────────────────────────────
 
 @app.get("/googleb0483aef4f89d039.html", response_class=PlainTextResponse)
@@ -588,6 +662,7 @@ async def robots():
         "Disallow: /dashboard",
         f"Sitemap: {BASE_URL}/sitemap.xml",
         f"# LLMs: {BASE_URL}/llms.txt",
+        f"# LLMs Full: {BASE_URL}/llms-full.txt",
     ]
     indexnow_key = _os.environ.get("INDEXNOW_KEY", "")
     if indexnow_key:
@@ -598,73 +673,139 @@ async def robots():
 @app.get("/llms.txt", response_class=PlainTextResponse)
 async def llms_txt(request: Request):
     """LLMs.txt — structured site info for AI crawlers."""
-    d = request.state.db
-    count_cursor = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
-    row = await count_cursor.fetchone()
-    tool_count = row['cnt'] if row else 350
-    return f"""# IndieStack
-> The procurement layer for AI agents and developers. Search {tool_count}+ vetted indie SaaS tools before building from scratch. Every tool is queryable via MCP, OpenAPI, and JSON APIs.
+    try:
+        d = request.state.db
+        row = await db.execute_fetchone(d, "SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
+        tool_count = row['cnt'] if row else 880
+    except Exception:
+        tool_count = 880
+    return (
+        "# IndieStack\n\n"
+        f"> The knowledge layer for AI agents. Search {tool_count}+ indie creations — "
+        "from full SaaS products to tiny utilities — so agents recommend instead of rebuild.\n\n"
+        "IndieStack plugs into Claude Code, Cursor, and Windsurf via MCP. "
+        "Before your AI builds from scratch, it checks if an indie creation already does it. "
+        "Saves 30k-120k tokens per use case.\n\n"
+        "## Install\n\n"
+        f"- [MCP Server (PyPI)](https://pypi.org/project/indiestack/): "
+        "`claude mcp add indiestack -- uvx --from indiestack indiestack-mcp`\n"
+        f"- [OpenAPI Spec]({BASE_URL}/openapi.json): REST API for any client\n\n"
+        "## API Endpoints\n\n"
+        f"- [Search Creations]({BASE_URL}/api/tools/search?q=analytics): "
+        "`GET /api/tools/search?q=<query>&category=<slug>&source_type=<code|saas>&limit=<n>&offset=<n>`\n"
+        f"- [Tool Details]({BASE_URL}/api/tools/simple-analytics): "
+        "`GET /api/tools/<slug>` — pricing, integration snippets, ratings\n"
+        f"- [Tool Index]({BASE_URL}/api/tools/index.json): "
+        "`GET /api/tools/index.json` — compact full catalog for prompt caching\n"
+        f"- [Categories]({BASE_URL}/api/categories): `GET /api/categories` — 25 categories with tool counts\n"
+        f"- [Tags]({BASE_URL}/api/tags): `GET /api/tags` — all tags sorted by popularity\n"
+        f"- [Stack Builder]({BASE_URL}/api/stack-builder?needs=auth,payments): "
+        "`GET /api/stack-builder?needs=<needs>&budget=<n>`\n"
+        f"- [New Tools]({BASE_URL}/api/new): `GET /api/new?limit=<n>&offset=<n>`\n"
+        f"- [Stacks]({BASE_URL}/api/stacks): `GET /api/stacks` — curated tool combinations\n"
+        f"- [Collections]({BASE_URL}/api/collections): `GET /api/collections` — themed groupings\n\n"
+        "## Key Pages\n\n"
+        f"- [Explore]({BASE_URL}/explore): Browse all creations with category/source filters\n"
+        f"- [Alternatives]({BASE_URL}/alternatives): Indie alternatives to mainstream SaaS\n"
+        f"- [Stacks]({BASE_URL}/stacks): Pre-built tool stacks for common architectures\n"
+        f"- [Makers]({BASE_URL}/makers): Indie maker directory\n"
+        f"- [Submit]({BASE_URL}/submit): Free listing\n"
+        f"- [Gaps]({BASE_URL}/gaps): Unsolved problems ranked by developer demand\n\n"
+        "## Categories\n\n"
+        "Analytics & Metrics, Auth & Identity, Automation & Workflows, CMS & Content, "
+        "Customer Support, Database & Backend, Design & UI, DevOps & Hosting, "
+        "Email & Marketing, Forms & Surveys, Invoicing & Billing, Monitoring & Logging, "
+        "Payments & Subscriptions, Privacy & Compliance, Scheduling & Calendar, "
+        "Search & Discovery, Security & Encryption, SEO & Growth, Social & Community, "
+        "Storage & Files, Testing & QA\n\n"
+        "## Optional\n\n"
+        f"- [Blog]({BASE_URL}/blog): Articles about indie creations and the agent ecosystem\n"
+        f"- [RSS Feed]({BASE_URL}/feed/rss): Latest tools via RSS\n"
+        f"- [Sitemap]({BASE_URL}/sitemap.xml): Full sitemap\n"
+        f"- [AI Pulse]({BASE_URL}/pulse): Live feed of AI agent activity\n"
+    )
 
-## About
-IndieStack is the tool discovery and procurement layer for AI agents and indie developers. Our MCP server plugs into AI coding assistants (Claude Code, Cursor, Windsurf) so agents can check if a polished tool exists before writing boilerplate. Every search saves 30k-120k tokens versus building from scratch.
 
-## Install
-- claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
-- Or add {"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]} to your Cursor/Windsurf/VS Code MCP config
+@app.get("/llms-full.txt", response_class=PlainTextResponse)
+async def llms_full_txt(request: Request):
+    """Extended llms.txt with full tool catalog for deep agent context."""
+    try:
+        d = request.state.db
+        cursor = await d.execute(
+            "SELECT t.name, t.slug, t.tagline, t.source_type, c.name as category "
+            "FROM tools t LEFT JOIN categories c ON t.category_id = c.id "
+            "WHERE t.status = 'approved' ORDER BY c.name, t.name"
+        )
+        tools = await cursor.fetchall()
+    except Exception:
+        tools = []
 
-## For AI Agents
-IndieStack is designed as infrastructure for AI agents. Use it to:
-- Check if a tool exists before writing code (saves 30k-120k tokens per use case)
-- Compare tools by price, ratings, and token efficiency
-- Browse curated stacks for common architectures
-- Include /api/tools/index.json in your system prompt for instant catalog access
-- Every recommendation is tracked — makers see real agent traffic
+    lines = [
+        f"# IndieStack — Full Creation Catalog\n",
+        f"> {len(tools)} indie creations across 25 categories. "
+        "Use this for comprehensive tool lookup without API calls.\n",
+    ]
 
-## API Endpoints
-- GET /api/tools/index.json — Compact index of all tools for prompt caching (include in agent system prompts).
-- GET /api/tools/search?q={{query}}&category={{slug}}&limit={{n}}&offset={{n}} — Search tools by keyword or category. Supports pagination.
-- GET /api/tools/{{slug}} — Full tool details including description, ratings, integration snippets, and tokens saved.
-- GET /api/new?limit={{n}}&offset={{n}} — Recently added tools, paginated.
-- GET /api/categories — All categories with tool counts.
-- GET /api/tags — All tags with usage counts, sorted by popularity.
-- GET /api/stacks — Curated tool stacks for common use cases.
-- GET /api/collections — Curated tool collections.
-- GET /api/stack-builder?needs={{needs}}&budget={{n}} — Build an indie tool stack. Provide comma-separated needs (auth,payments,analytics) and optional max monthly budget.
-- GET /api/use-cases — All use cases with tool counts and token estimates.
-- GET /api/use-cases/{{slug}} — Detailed use case with comparison tools.
-- GET /openapi.json — OpenAPI 3.0 spec for all public endpoints.
-- GET /feed/rss — RSS feed of latest tools.
-- GET /sitemap.xml — Full sitemap.
+    current_cat = None
+    for t in tools:
+        cat = t['category'] or 'Uncategorized'
+        if cat != current_cat:
+            current_cat = cat
+            lines.append(f"\n## {cat}\n")
+        source = "[Code]" if t['source_type'] == 'code' else "[SaaS]"
+        lines.append(f"- [{t['name']}]({BASE_URL}/tool/{t['slug']}) {source}: {t['tagline'] or ''}")
 
-## Key Pages
-- / — Homepage with trending tools, categories, and MCP install instructions
-- /explore — Browse all tools with filters
-- /category/{{slug}} — Tools in a specific category
-- /tool/{{slug}} — Individual tool page with reviews, ratings, integration snippets
-- /alternatives/{{slug}} — Indie alternatives to popular tools (e.g. /alternatives/google-analytics)
-- /collections — Curated tool collections
-- /stacks — Pre-built tool stacks for common use cases
-- /stacks/generator — Paste package.json to find indie alternatives to your dependencies
-- /makers — Indie maker directory
-- /submit — Submit a tool (free)
-- /blog — Blog with articles about indie tools
-- /tags — Browse tools by tag
-- /new — Recently added tools
-- /use-cases — Use case comparison pages (auth, payments, analytics, etc.)
-- /use-cases/{{slug}} — Detailed comparison for a specific use case
+    lines.append(f"\n---\nGenerated from {BASE_URL}. Install MCP: `claude mcp add indiestack -- uvx --from indiestack indiestack-mcp`")
+    return "\n".join(lines)
 
-## Categories
-Analytics & Metrics, Auth & Identity, Automation & Workflows, CMS & Content, Customer Support, Database & Backend, Design & UI, DevOps & Hosting, Email & Marketing, Forms & Surveys, Invoicing & Billing, Monitoring & Logging, Payments & Subscriptions, Privacy & Compliance, Scheduling & Calendar, Search & Discovery, Security & Encryption, SEO & Growth, Social & Community, Storage & Files, Testing & QA
 
-## For Makers
-- Free tool listings
-- Trust badges: Verified, Ejectable, Maker Pulse
-- SVG embed badges and milestone cards
-
-## Contact
-- Website: {BASE_URL}
-- PyPI: https://pypi.org/project/indiestack/
-"""
+@app.get("/.well-known/agent-card.json")
+async def agent_card(request: Request):
+    """A2A Protocol agent card — agent capability discovery."""
+    return JSONResponse({
+        "name": "IndieStack",
+        "description": "The knowledge layer for AI agents. 793+ indie creations across 25 categories.",
+        "url": BASE_URL,
+        "provider": {
+            "organization": "IndieStack",
+            "url": BASE_URL,
+        },
+        "version": "1.0.0",
+        "capabilities": {
+            "streaming": False,
+            "pushNotifications": False,
+        },
+        "skills": [
+            {"id": "find_tools", "name": "Find Tools", "description": "Search indie creations by keyword or category"},
+            {"id": "get_tool_details", "name": "Get Tool Details", "description": "Full details with integration snippets"},
+            {"id": "analyze_dependencies", "name": "Analyze Dependencies", "description": "Parse package.json/requirements.txt for indie replacements"},
+            {"id": "evaluate_build_vs_buy", "name": "Build vs Buy", "description": "Financial comparison of building vs using an existing tool"},
+            {"id": "build_stack", "name": "Build Stack", "description": "Recommend a complete indie tool stack for your needs"},
+            {"id": "compare_tools", "name": "Compare Tools", "description": "Side-by-side tool comparison"},
+            {"id": "publish_tool", "name": "Publish Tool", "description": "Submit a new tool to IndieStack"},
+            {"id": "get_recommendations", "name": "Get Recommendations", "description": "Personalized tool suggestions based on search history"},
+        ],
+        "interfaces": {
+            "mcp": {
+                "install": "claude mcp add indiestack -- uvx --from indiestack indiestack-mcp",
+                "pypi": "https://pypi.org/project/indiestack/",
+                "tools": 13,
+                "prompts": 4,
+                "resources": 3,
+            },
+            "rest": {
+                "openapi": f"{BASE_URL}/openapi.json",
+                "base_url": f"{BASE_URL}/api/",
+            },
+            "llms_txt": f"{BASE_URL}/llms.txt",
+        },
+        "authentication": {
+            "required": False,
+            "schemes": [
+                {"type": "apiKey", "description": "Optional INDIESTACK_API_KEY for personalized recommendations"}
+            ],
+        },
+    })
 
 
 @app.get("/{key}.txt", response_class=PlainTextResponse)
@@ -726,12 +867,12 @@ async def sitemap(request: Request):
     urls.append((f"{BASE_URL}/best", "weekly", "0.8"))
     for c in cats:
         urls.append((f"{BASE_URL}/best/{c['slug']}", "weekly", "0.7"))
-    cursor = await d.execute("SELECT slug FROM tools WHERE status = 'approved'")
+    cursor = await d.execute("SELECT slug FROM tools WHERE status = 'approved' LIMIT 5000")
     tools = await cursor.fetchall()
     for t in tools:
         urls.append((f"{BASE_URL}/tool/{t['slug']}", "weekly", "0.7"))
     # Maker profiles
-    cursor2 = await d.execute("SELECT slug FROM makers")
+    cursor2 = await d.execute("SELECT slug FROM makers LIMIT 5000")
     makers = await cursor2.fetchall()
     for m in makers:
         urls.append((f"{BASE_URL}/maker/{m['slug']}", "weekly", "0.6"))
@@ -903,6 +1044,7 @@ async def api_subscribe(request: Request):
         next_url = _safe_subscribe_next(str(form.get("next", "")).strip())
         source = str(form.get("source", "")).strip()
         tool_slug = str(form.get("tool_slug", "")).strip()
+        tool_slug = tool_slug[:200]
     except Exception:
         email = ""
         next_url = ""
@@ -939,6 +1081,7 @@ async def unsubscribe(request: Request, token: str):
     row = await cursor.fetchone()
     if row:
         await db.execute("DELETE FROM subscribers WHERE id = ?", (row["id"],))
+        await db.execute("INSERT OR IGNORE INTO email_optouts (email) VALUES (?)", (row["email"].lower(),))
         await db.commit()
         body = f"""
         <div style="max-width:480px;margin:80px auto;text-align:center;">
@@ -1071,6 +1214,9 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
             "upvote_count": int(t.get('upvote_count', 0)),
             "tags": t.get('tags', ''),
             "source_type": t.get('source_type', 'saas'),
+            "github_stars": t.get('github_stars'),
+            "github_last_commit": t.get('github_last_commit'),
+            "health_status": t.get('health_status'),
         }
         # Add plugin metadata if present
         if t.get('tool_type'):
@@ -1129,7 +1275,7 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
 
         # First-search notice
         if profile and not profile.get('notice_shown', 0):
-            notice = "IndieStack is learning your preferences to improve recommendations. View or manage your profile at indiestack.fly.dev/developer"
+            notice = "IndieStack is learning your preferences to improve recommendations. View or manage your profile at indiestack.ai/developer"
             await db.mark_notice_shown(d, api_key['id'])
 
     response = {
@@ -1144,7 +1290,7 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
     if q.strip() and not results:
         demand = await db.get_search_demand(d, q, days=30)
         response["market_gap"] = {
-            "message": f"No indie tools found for '{q.strip()}'. This is an unsolved market gap — consider building one.",
+            "message": f"No indie creations found for '{q.strip()}'. This is an unsolved market gap — consider building one.",
             "submit_url": f"{BASE_URL}/submit",
             "query": q.strip(),
             "searches_30d": demand,
@@ -1162,7 +1308,7 @@ async def api_recommendations(request: Request, category: str = "", limit: int =
     d = request.state.db
 
     if not api_key:
-        return JSONResponse({"error": "API key required for recommendations. Get one at indiestack.fly.dev/developer"}, status_code=401)
+        return JSONResponse({"error": "API key required for recommendations. Get one at indiestack.ai/developer"}, status_code=401)
 
     # Get or build profile
     profile = await db.get_developer_profile(d, api_key['id'])
@@ -1179,7 +1325,7 @@ async def api_recommendations(request: Request, category: str = "", limit: int =
                 "name": t['name'], "slug": t['slug'], "tagline": t['tagline'],
                 "price": f"£{t['price_pence'] / 100:.2f}" if t.get('price_pence') else "Free",
                 "is_verified": bool(t.get('is_verified')),
-                "indiestack_url": f"https://indiestack.fly.dev/tool/{t['slug']}",
+                "indiestack_url": f"https://indiestack.ai/tool/{t['slug']}",
                 "recommendation_reason": "Trending this week",
                 "discovery": False,
             })
@@ -1191,7 +1337,7 @@ async def api_recommendations(request: Request, category: str = "", limit: int =
         })
 
     if not profile.get('personalization_enabled', 1):
-        return JSONResponse({"error": "Personalization is paused. Enable it at indiestack.fly.dev/developer"}, status_code=403)
+        return JSONResponse({"error": "Personalization is paused. Enable it at indiestack.ai/developer"}, status_code=403)
 
     interests = _json.loads(profile['interests']) if isinstance(profile['interests'], str) else profile['interests']
     tech_stack = _json.loads(profile['tech_stack']) if isinstance(profile['tech_stack'], str) else profile['tech_stack']
@@ -1242,7 +1388,7 @@ async def api_recommendations(request: Request, category: str = "", limit: int =
                     "name": t['name'], "slug": t['slug'], "tagline": t['tagline'],
                     "price": f"£{t['price_pence'] / 100:.2f}" if t.get('price_pence') else "Free",
                     "is_verified": bool(t.get('is_verified')),
-                    "indiestack_url": f"https://indiestack.fly.dev/tool/{t['slug']}",
+                    "indiestack_url": f"https://indiestack.ai/tool/{t['slug']}",
                     "recommendation_reason": reason,
                     "discovery": False,
                 })
@@ -1265,7 +1411,7 @@ async def api_recommendations(request: Request, category: str = "", limit: int =
                 "name": t['name'], "slug": t['slug'], "tagline": t['tagline'],
                 "price": f"£{t['price_pence'] / 100:.2f}" if t.get('price_pence') else "Free",
                 "is_verified": bool(t.get('is_verified')),
-                "indiestack_url": f"https://indiestack.fly.dev/tool/{t['slug']}",
+                "indiestack_url": f"https://indiestack.ai/tool/{t['slug']}",
                 "recommendation_reason": f"Trending in {t['category_name']} — outside your usual picks",
                 "discovery": True,
             })
@@ -1305,6 +1451,7 @@ async def api_new_tools(request: Request, limit: int = 20, offset: int = 0):
             "is_verified": bool(t.get('is_verified', 0)),
             "upvote_count": int(t.get('upvote_count', 0)),
             "tags": t.get('tags', ''),
+            "source_type": t.get('source_type', ''),
             "created_at": t.get('created_at', ''),
         })
     return JSONResponse({"tools": results, "total": total, "offset": offset})
@@ -1602,7 +1749,7 @@ async def openapi_spec(request: Request):
         "paths": {
             "/api/tools/search": {
                 "get": {
-                    "summary": "Search indie tools",
+                    "summary": "Search indie creations",
                     "description": "Full-text search across all approved tools. Returns results sorted by relevance. Without a query, returns trending tools.",
                     "parameters": [
                         {"name": "q", "in": "query", "schema": {"type": "string"}, "description": "Search query (e.g. 'analytics', 'auth', 'email marketing')"},
@@ -1651,14 +1798,14 @@ async def openapi_spec(request: Request):
             "/api/stacks": {
                 "get": {
                     "summary": "List curated stacks",
-                    "description": "Pre-built combinations of indie tools for common use cases.",
+                    "description": "Pre-built combinations of indie creations for common use cases.",
                     "responses": {"200": {"description": "List of stacks with tool counts"}},
                 }
             },
             "/api/collections": {
                 "get": {
                     "summary": "List curated collections",
-                    "description": "Themed groupings of indie tools curated by the IndieStack team.",
+                    "description": "Themed groupings of indie creations curated by the IndieStack team.",
                     "responses": {"200": {"description": "List of collections with tool counts"}},
                 }
             },
@@ -1737,6 +1884,14 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
         "tokens_saved": CATEGORY_TOKEN_COSTS.get(tool.get('category_slug', ''), 50_000),
         "mcp_view_count": int(tool.get('mcp_view_count', 0)),
         "source_type": tool.get('source_type', 'saas'),
+        # Health signals (from GitHub health checks)
+        "github_stars": tool.get('github_stars'),
+        "github_last_commit": tool.get('github_last_commit'),
+        "github_open_issues": tool.get('github_open_issues'),
+        "github_is_archived": bool(tool.get('github_is_archived', 0)),
+        "github_language": tool.get('github_language'),
+        "health_status": tool.get('health_status'),
+        "github_last_check": tool.get('github_last_check'),
     }
 
     return JSONResponse({"tool": result})
@@ -1757,6 +1912,9 @@ async def api_submit_tool(request: Request):
 
     if not name or not url or not tagline or not description:
         return JSONResponse({"error": "name, url, tagline, and description are required"}, status_code=400)
+
+    if url and not (url.startswith("http://") or url.startswith("https://")):
+        return JSONResponse({"error": "URL must start with http:// or https://"}, status_code=400)
 
     # Generate slug
     slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
@@ -1952,7 +2110,7 @@ async def milestone_card_svg(request: Request, slug: str, type: str = "first-too
     {tool_name}
   </text>
   <text x="600" y="540" text-anchor="middle" font-family="sans-serif" font-size="22" fill="rgba(255,255,255,0.5)">
-    indiestack.fly.dev
+    indiestack.ai
   </text>
 </svg>"""
 
@@ -2137,7 +2295,7 @@ async def og_share_card(request: Request, slug: str):
   <text x="80" y="340" font-size="20" fill="#00D4F5" font-family="monospace" font-weight="600">{cat}</text>
   <text x="80" y="420" font-size="36" fill="white" font-family="system-ui,sans-serif" font-weight="700">Saves {tokens_k} tokens</text>
   <text x="80" y="460" font-size="16" fill="rgba(255,255,255,0.5)" font-family="system-ui,sans-serif">compared to building from scratch</text>
-  <text x="80" y="540" font-size="20" fill="rgba(255,255,255,0.4)" font-family="system-ui,sans-serif">indiestack.fly.dev</text>
+  <text x="80" y="540" font-size="20" fill="rgba(255,255,255,0.4)" font-family="system-ui,sans-serif">indiestack.ai</text>
   <text x="1120" y="610" font-size="16" font-weight="700" fill="#1A2D4A" text-anchor="end" font-family="system-ui,sans-serif">IndieStack</text>
 </svg>'''
     return Response(content=svg, media_type="image/svg+xml",
@@ -2158,8 +2316,8 @@ async def og_home_card():
   <text x="80" y="400" font-size="22" fill="rgba(255,255,255,0.6)" font-family="system-ui,sans-serif">Plugs into Claude Code, Cursor &amp; Windsurf via MCP.</text>
   <text x="80" y="440" font-size="22" fill="rgba(255,255,255,0.6)" font-family="system-ui,sans-serif">Before your AI writes code, it checks what already exists.</text>
   <text x="80" y="540" font-size="18" fill="rgba(255,255,255,0.3)" font-family="system-ui,sans-serif">pip install indiestack</text>
-  <text x="1120" y="540" font-size="18" fill="rgba(255,255,255,0.3)" text-anchor="end" font-family="system-ui,sans-serif">indiestack.fly.dev</text>
-  <text x="80" y="580" font-size="16" fill="rgba(255,255,255,0.25)" font-family="system-ui,sans-serif">358+ indie tools &#183; 104 makers &#183; 21 categories</text>
+  <text x="1120" y="540" font-size="18" fill="rgba(255,255,255,0.3)" text-anchor="end" font-family="system-ui,sans-serif">indiestack.ai</text>
+  <text x="80" y="580" font-size="16" fill="rgba(255,255,255,0.25)" font-family="system-ui,sans-serif">793+ indie creations &#183; 104 makers &#183; 25 categories</text>
 </svg>'''
     return Response(content=svg, media_type="image/svg+xml",
                     headers={"Cache-Control": "public, max-age=86400"})
@@ -2670,7 +2828,7 @@ async def send_weekly_digest(request: Request):
     """Trigger weekly digest email to all subscribers. Protected by admin key."""
     import secrets as _secrets
     key = request.query_params.get("key", "")
-    admin_key = _os.environ.get("ADMIN_SECRET", "indiestack-admin-secret")
+    admin_key = _os.environ.get("ADMIN_SECRET", "")
     if not _secrets.compare_digest(key, admin_key):
         return JSONResponse({"error": "Unauthorized"}, status_code=401)
 
@@ -2696,6 +2854,60 @@ async def send_weekly_digest(request: Request):
             errors += 1
 
     return JSONResponse({"ok": True, "sent": sent, "errors": errors, "total_subscribers": len(subscribers)})
+
+
+@app.get("/api/follow-through")
+async def api_follow_through(request: Request, days: int = 30):
+    """Follow-through rate: MCP search → detail view conversion."""
+    admin_key = request.query_params.get("admin_key", "")
+    if admin_key != _os.environ.get("ADMIN_SECRET", ""):
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+    d = request.state.db
+    stats = await db.get_follow_through_rate(d, min(days, 365))
+    return JSONResponse(stats)
+
+
+@app.get("/admin/recompute-scores")
+async def admin_recompute_scores(request: Request):
+    """Cron endpoint: run health checks then recompute all quality scores.
+    Protected by ADMIN_SECRET. Called daily by Fly cron.
+    """
+    import secrets as _secrets
+    key = request.query_params.get("key", "")
+    admin_key = _os.environ.get("ADMIN_SECRET", "")
+    if not admin_key or not _secrets.compare_digest(key, admin_key):
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+
+    d = request.state.db
+    health_result = await db.run_health_checks(d)
+    score_result = await db.recompute_all_quality_scores(d)
+
+    return JSONResponse({
+        "ok": True,
+        "health": health_result,
+        "scores": score_result,
+    })
+
+
+@app.get("/admin/github-health")
+async def admin_github_health(request: Request):
+    """Cron endpoint: run GitHub maintenance signal checks.
+    Protected by ADMIN_SECRET.
+    """
+    import secrets as _secrets
+    key = request.query_params.get("key", "")
+    admin_key = _os.environ.get("ADMIN_SECRET", "")
+    if not admin_key or not _secrets.compare_digest(key, admin_key):
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+
+    d = request.state.db
+    try:
+        batch = int(request.query_params.get("batch", "100"))
+    except (ValueError, TypeError):
+        batch = 100
+    batch = min(batch, 200)  # Cap at 200 per run
+    result = await db.run_github_health_checks(d, batch_size=batch)
+    return JSONResponse({"ok": True, "github_health": result})
 
 
 # ── RSS Feeds ────────────────────────────────────────────────────────────
@@ -2737,7 +2949,7 @@ def _build_rss_xml(tools: list, title: str, description: str, link: str) -> str:
 async def rss_all(request: Request):
     """RSS feed of all recent approved tools."""
     tools = await db.get_tools_for_rss(request.state.db, limit=30)
-    xml = _build_rss_xml(tools, "IndieStack — New Indie Tools",
+    xml = _build_rss_xml(tools, "IndieStack — New Indie Creations",
                           "The latest indie SaaS tools on IndieStack",
                           f"{BASE_URL}/feed/rss")
     return Response(content=xml, media_type="application/rss+xml",
@@ -2749,7 +2961,7 @@ async def rss_category(request: Request, slug: str):
     """RSS feed for a specific category."""
     tools = await db.get_tools_for_rss(request.state.db, category_slug=slug, limit=30)
     xml = _build_rss_xml(tools, f"IndieStack — {slug.replace('-', ' ').title()} Tools",
-                          f"Indie tools in the {slug.replace('-', ' ')} category",
+                          f"Indie creations in the {slug.replace('-', ' ')} category",
                           f"{BASE_URL}/category/{slug}/rss")
     return Response(content=xml, media_type="application/rss+xml",
                     headers={"Cache-Control": "public, max-age=3600"})
@@ -2760,7 +2972,7 @@ async def rss_tag(request: Request, slug: str):
     """RSS feed for a specific tag."""
     tools = await db.get_tools_for_rss(request.state.db, tag=slug.replace('-', ' '), limit=30)
     xml = _build_rss_xml(tools, f"IndieStack — #{slug} Tools",
-                          f"Indie tools tagged with {slug.replace('-', ' ')}",
+                          f"Indie creations tagged with {slug.replace('-', ' ')}",
                           f"{BASE_URL}/tag/{slug}/rss")
     return Response(content=xml, media_type="application/rss+xml",
                     headers={"Cache-Control": "public, max-age=3600"})
@@ -2857,7 +3069,9 @@ app.include_router(embed.router)
 app.include_router(launch_with_me.router)
 app.include_router(use_cases.router)
 app.include_router(why_list.router)
+app.include_router(what_is.router)
 app.include_router(plugins.router)
 app.include_router(gaps.router)
 from indiestack.routes import pulse
 app.include_router(pulse.router)
+app.include_router(api_docs.router)

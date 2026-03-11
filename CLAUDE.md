@@ -1,15 +1,20 @@
 ## Design Context
 
+### What IndieStack Is
+IndieStack is the knowledge layer between AI agents and indie creators. When an AI agent is about to help someone build something, it checks IndieStack first to see if an indie creator has already built it. The constraint isn't "developer tool" — it's "indie-built." Games, utilities, newsletters, creative tools, learning apps, dev tools — anything made by independent creators belongs here.
+
+The wedge is dev tools (that's where AI coding agents live), but the catalog expands to everything indie. The moat is becoming the default knowledge source that every AI agent queries before recommending "build it from scratch."
+
 ### Users
-- **Primary**: Developers building SaaS products who need to discover indie tools before writing code from scratch
-- **Secondary**: AI coding assistants (Claude, Cursor, Windsurf) searching via MCP server
-- **Tertiary**: Indie SaaS makers submitting and promoting their tools
-- **Context**: Developers are mid-flow, building something. They arrive via AI recommendation, search, or direct browse. They want to evaluate tools quickly and move on.
+- **Primary**: AI coding assistants (Claude, Cursor, Windsurf, Copilot) searching via MCP server — the main distribution channel
+- **Secondary**: Developers and creators who browse the site directly, arriving via AI recommendation, search, or Product Hunt
+- **Tertiary**: Indie makers submitting and promoting their creations
+- **Context**: The typical flow is agent-first: a developer asks their AI to build something, the AI checks IndieStack, finds an existing indie creation, and recommends it. Human visitors arrive to evaluate what the AI found, or to explore/submit directly.
 
 ### Brand Personality
 **Trusted, Sharp, Human.**
 
-IndieStack is professional but not corporate. It respects your time — no fluff, no marketing speak. It feels like a tool built by developers for developers, with enough warmth to remind you there are real people behind it. Two uni students in Cardiff who smashed a laptop arguing over prompts.
+IndieStack is professional but not corporate. It respects your time — no fluff, no marketing speak. It feels like something built by makers for makers, with enough warmth to remind you there are real people behind every listing. Two uni students in Cardiff who smashed a laptop arguing over prompts.
 
 ### Aesthetic Direction
 - **Visual tone**: Linear.app-inspired — clean, precise, intentional. Every element earns its place.

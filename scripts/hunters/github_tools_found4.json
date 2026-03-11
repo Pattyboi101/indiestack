@@ -1,0 +1,1124 @@
+[
+  {
+    "name": "Minimalistic_Flashcards",
+    "full_name": "vishnugt/Minimalistic_Flashcards",
+    "url": "https://github.com/vishnugt/Minimalistic_Flashcards",
+    "description": "A self hostable minimalistic flashcard app that takes the data in csv format",
+    "stars": 7,
+    "language": "JavaScript",
+    "category_slug": "project-management",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "vishnugt",
+      "name": "Vishnu Gt",
+      "email": "vishnugt@hotmail.com",
+      "bio": "",
+      "url": "gt.ms"
+    }
+  },
+  {
+    "name": "decks",
+    "full_name": "adrianvla/decks",
+    "url": "https://github.com/adrianvla/decks",
+    "description": " LaTeX Flashcard app ",
+    "stars": 1,
+    "language": "JavaScript",
+    "category_slug": "project-management",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "adrianvla",
+      "name": "Adrian",
+      "email": "",
+      "bio": "morisinc.net/about\r\nStudent at EPFL",
+      "url": "https://morisinc.net"
+    }
+  },
+  {
+    "name": "techynotes",
+    "full_name": "1techy/techynotes",
+    "url": "https://github.com/1techy/techynotes",
+    "description": "self hosted speech to text note taking app using whisper with review and flashcard function",
+    "stars": 0,
+    "language": "",
+    "category_slug": "project-management",
+    "tags": "open-source,self-hosted",
+    "maker": {
+      "login": "1techy",
+      "name": "atharva khairnar",
+      "email": "",
+      "bio": "cs @ utd",
+      "url": "https://github.com/1techy"
+    }
+  },
+  {
+    "name": "Major-project-list",
+    "full_name": "ManojKumarPatnaik/Major-project-list",
+    "url": "https://github.com/ManojKumarPatnaik/Major-project-list",
+    "description": "A list of practical projects that anyone can solve in any programming language (See solutions). These projects are divided into multiple categories, and each category has its own folder.  To get start",
+    "stars": 218,
+    "language": "",
+    "category_slug": "project-management",
+    "tags": "cli,converter,generator,open-source",
+    "maker": {
+      "login": "ManojKumarPatnaik",
+      "name": "Manoj kumar patnaik",
+      "email": "",
+      "bio": "Empowering communities via open-source and education.",
+      "url": "https://github.com/ManojKumarPatnaik"
+    }
+  },
+  {
+    "name": "word-quiz-generator",
+    "full_name": "nodaguti/word-quiz-generator",
+    "url": "https://github.com/nodaguti/word-quiz-generator",
+    "description": "CLI tool to generate a vocabulary quiz",
+    "stars": 12,
+    "language": "JavaScript",
+    "category_slug": "project-management",
+    "tags": "cli,generator,javascript,open-source",
+    "maker": {
+      "login": "nodaguti",
+      "name": "nodaguti",
+      "email": "nodaguti@protonmail.com",
+      "bio": "",
+      "url": "https://nodaguti.github.io/"
+    }
+  },
+  {
+    "name": "java-quiz-gen",
+    "full_name": "sabirbuxsoo/java-quiz-gen",
+    "url": "https://github.com/sabirbuxsoo/java-quiz-gen",
+    "description": "Java-base CLI Data Structures multiple choice quiz generator",
+    "stars": 2,
+    "language": "Java",
+    "category_slug": "project-management",
+    "tags": "cli,generator,java,open-source",
+    "maker": {
+      "login": "sabirbuxsoo",
+      "name": "Sabir Buxsoo",
+      "email": "",
+      "bio": "Computer Science and Information Systems graduate.\r\n\r\nPassionate about technology with special interests in startups, education, and healthcare.",
+      "url": "https://github.com/sabirbuxsoo"
+    }
+  },
+  {
+    "name": "memoet",
+    "full_name": "memoetapp/memoet",
+    "url": "https://github.com/memoetapp/memoet",
+    "description": "A self-hosted spaced repetition software",
+    "stars": 105,
+    "language": "Elixir",
+    "category_slug": "project-management",
+    "tags": "elixir,open-source,self-hosted",
+    "maker": {
+      "login": "memoetapp",
+      "name": "Memoet",
+      "email": "",
+      "bio": "Self-hosted spaced repetition software",
+      "url": "https://memoet.gitbook.io"
+    }
+  },
+  {
+    "name": "vibe-learn",
+    "full_name": "jmilne22/vibe-learn",
+    "url": "https://github.com/jmilne22/vibe-learn",
+    "description": "Self-hosted static course platform \u2014 markdown lessons, exercises, flashcards, spaced repetition, 10 themes, zero backend",
+    "stars": 3,
+    "language": "JavaScript",
+    "category_slug": "project-management",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "jmilne22",
+      "name": "James Milne",
+      "email": "jmilne22@gmail.com",
+      "bio": "Experienced Infrastructure DevOps Developer @ Redis",
+      "url": "https://github.com/jmilne22"
+    }
+  },
+  {
+    "name": "Yelena",
+    "full_name": "ByMykel/Yelena",
+    "url": "https://github.com/ByMykel/Yelena",
+    "description": "Yelena is a self-hosted flashcard program for your Google Translate saved words using spaced repetition, a technique for fast and long-lasting memorization.",
+    "stars": 3,
+    "language": "PHP",
+    "category_slug": "project-management",
+    "tags": "open-source,php,self-hosted",
+    "maker": {
+      "login": "ByMykel",
+      "name": "ByMykel",
+      "email": "",
+      "bio": "",
+      "url": "bymykel.com"
+    }
+  },
+  {
+    "name": "redesigned-pancake",
+    "full_name": "Sfedfcv/redesigned-pancake",
+    "url": "https://github.com/Sfedfcv/redesigned-pancake",
+    "description": "Skip to content github / docs Code Issues 80 Pull requests 35 Discussions Actions Projects 2 Security Insights Merge branch 'main' into 1862-Add-Travis-CI-migration-table  1862-Add-Travis-CI-migration",
+    "stars": 213,
+    "language": "",
+    "category_slug": "project-management",
+    "tags": "api,cli,docker,linter,open-source,privacy",
+    "maker": {
+      "login": "Sfedfcv",
+      "name": "Sfedfcv",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/Sfedfcv"
+    }
+  },
+  {
+    "name": "-L-",
+    "full_name": "jettbrains/-L-",
+    "url": "https://github.com/jettbrains/-L-",
+    "description": "W3C Strategic Highlights  September 2019  This report was prepared for the September 2019 W3C Advisory Committee Meeting (W3C Member link). See the accompanying W3C Fact Sheet \u2014 September 2019. For th",
+    "stars": 138,
+    "language": "",
+    "category_slug": "project-management",
+    "tags": "api,cli,lightweight,open-source,privacy",
+    "maker": {
+      "login": "jettbrains",
+      "name": "jettbrains",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/jettbrains"
+    }
+  },
+  {
+    "name": "neurons",
+    "full_name": "Aryia-Behroziuan/neurons",
+    "url": "https://github.com/Aryia-Behroziuan/neurons",
+    "description": "An ANN is a model based on a collection of connected units or nodes called \"artificial neurons\", which loosely model the neurons in a biological brain. Each connection, like the synapses in a biologic",
+    "stars": 78,
+    "language": "",
+    "category_slug": "project-management",
+    "tags": "cli,open-source,privacy",
+    "maker": {
+      "login": "Aryia-Behroziuan",
+      "name": "Aryia Behroziuan",
+      "email": "",
+      "bio": "Artificial intelligence and data mining programmer and specialist working on genetics and in-depth learning projects and natural language processing and compute",
+      "url": "https://aryia-behroziuan.github.io/web/"
+    }
+  },
+  {
+    "name": "languagetool-node",
+    "full_name": "funbox/languagetool-node",
+    "url": "https://github.com/funbox/languagetool-node",
+    "description": "CLI spell and grammar checker",
+    "stars": 13,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "funbox",
+      "name": "FunBox",
+      "email": "",
+      "bio": "Keep calm and open source",
+      "url": "https://funbox.ru"
+    }
+  },
+  {
+    "name": "languagetool-node",
+    "full_name": "343dev/languagetool-node",
+    "url": "https://github.com/343dev/languagetool-node",
+    "description": "CLI spell and grammar checker",
+    "stars": 8,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "343dev",
+      "name": "Andrey Warkentin",
+      "email": "",
+      "bio": "\ud835\ude1a\ud835\ude26\ud835\ude2f\ud835\ude2a\ud835\ude30\ud835\ude33 \ud835\ude0d\ud835\ude33\ud835\ude30\ud835\ude2f\ud835\ude35\ud835\ude26\ud835\ude2f\ud835\ude25 \ud835\ude0b\ud835\ude26\ud835\ude37\ud835\ude26\ud835\ude2d\ud835\ude30\ud835\ude31\ud835\ude26\ud835\ude33 / \ud835\ude4a\ud835\ude4b\ud835\ude40\ud835\ude49 \ud835\ude4f\ud835\ude4a\u00a0\ud835\ude52\ud835\ude4a\ud835\ude4d\ud835\ude46",
+      "url": "https://github.com/343dev"
+    }
+  },
+  {
+    "name": "bntk-client",
+    "full_name": "jubayeramb/bntk-client",
+    "url": "https://github.com/jubayeramb/bntk-client",
+    "description": "Bangla spelling and grammar checker app (alpha)",
+    "stars": 3,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,typescript",
+    "maker": {
+      "login": "jubayeramb",
+      "name": "Jubayer Al Mamun",
+      "email": "jubayeramb@gmail.com",
+      "bio": "Software Engineer & Undergrad CS Student\r\n\r\n",
+      "url": "jubayeramb.me"
+    }
+  },
+  {
+    "name": "typos",
+    "full_name": "crate-ci/typos",
+    "url": "https://github.com/crate-ci/typos",
+    "description": "Source code spell checker",
+    "stars": 3828,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,rust",
+    "maker": {
+      "login": "crate-ci",
+      "name": "crate-ci",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/crate-ci"
+    }
+  },
+  {
+    "name": "cspell-cli",
+    "full_name": "streetsidesoftware/cspell-cli",
+    "url": "https://github.com/streetsidesoftware/cspell-cli",
+    "description": "CSpell command line spell checker.",
+    "stars": 123,
+    "language": "Dockerfile",
+    "category_slug": "developer-tools",
+    "tags": "cli,dockerfile,open-source",
+    "maker": {
+      "login": "streetsidesoftware",
+      "name": "Street Side Software",
+      "email": "info@streetsidesoftware.nl",
+      "bio": "",
+      "url": "https://streetsidesoftware.com"
+    }
+  },
+  {
+    "name": "test-readability-score",
+    "full_name": "qa-gary-parker/test-readability-score",
+    "url": "https://github.com/qa-gary-parker/test-readability-score",
+    "description": "CLI tool to analyze Playwright test files for readability and maintainability",
+    "stars": 1,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,typescript",
+    "maker": {
+      "login": "qa-gary-parker",
+      "name": "qa-gary-parker",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/qa-gary-parker"
+    }
+  },
+  {
+    "name": "markdown-analyzer",
+    "full_name": "fulgidus/markdown-analyzer",
+    "url": "https://github.com/fulgidus/markdown-analyzer",
+    "description": "A cross-language Markdown analysis CLI tool written in Rust, Go, and Zig. Extracts word count, headings, links, reading time, and readability score from Markdown files or entire folders, with JSON exp",
+    "stars": 1,
+    "language": "Zig",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,zig",
+    "maker": {
+      "login": "fulgidus",
+      "name": "Alessio Corsi",
+      "email": "",
+      "bio": "",
+      "url": "fulgidus.github.io"
+    }
+  },
+  {
+    "name": "ctitool",
+    "full_name": "SidhuK007/ctitool",
+    "url": "https://github.com/SidhuK007/ctitool",
+    "description": "CTI Triage CLI for SOC analysts. Enrich IPs, domains, and file hashes using multiple CTI sources (RDAP, VirusTotal, Shodan, Censys, etc.), normalize results, score risk, cache responses, and present r",
+    "stars": 1,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "SidhuK007",
+      "name": "LuCiFeR",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/SidhuK007"
+    }
+  },
+  {
+    "name": "clip-guided-diffusion",
+    "full_name": "afiaka87/clip-guided-diffusion",
+    "url": "https://github.com/afiaka87/clip-guided-diffusion",
+    "description": "A CLI tool/python module for generating images from text using guided diffusion and CLIP from OpenAI.",
+    "stars": 460,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "afiaka87",
+      "name": "Clay Mullis",
+      "email": "claymullis@fastmail.com",
+      "bio": "Software Engineer. Check pins for my proudest contributions.",
+      "url": "https://github.com/afiaka87"
+    }
+  },
+  {
+    "name": ".config",
+    "full_name": "zszszszsz/.config",
+    "url": "https://github.com/zszszszsz/.config",
+    "description": "# # Automatically generated file; DO NOT EDIT. # OpenWrt Configuration # CONFIG_MODULES=y CONFIG_HAVE_DOT_CONFIG=y # CONFIG_TARGET_sunxi is not set # CONFIG_TARGET_apm821xx is not set # CONFIG_TARGET_",
+    "stars": 314,
+    "language": "Shell",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,docker,open-source,shell",
+    "maker": {
+      "login": "zszszszsz",
+      "name": "zszszszsz",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/zszszszsz"
+    }
+  },
+  {
+    "name": "Plagiarism-checker-ai",
+    "full_name": "Ahmedkhn143/Plagiarism-checker-ai",
+    "url": "https://github.com/Ahmedkhn143/Plagiarism-checker-ai",
+    "description": "A self-hosted Flask web app for unlimited plagiarism detection and AI-powered paraphrasing. Paste or upload TXT/DOC/PDF files, get instant TF-IDF-based similarity scores with detailed match highlights",
+    "stars": 0,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "html,open-source,privacy,self-hosted",
+    "maker": {
+      "login": "Ahmedkhn143",
+      "name": "Muhammad Ahmad",
+      "email": "ahmadkha8143@gmail.com",
+      "bio": "Transforming ideas into clean, responsive websites with WordPress & Front-end",
+      "url": "https://github.com/Ahmedkhn143"
+    }
+  },
+  {
+    "name": "OxiCloud",
+    "full_name": "DioCrafts/OxiCloud",
+    "url": "https://github.com/DioCrafts/OxiCloud",
+    "description": "\u2601\ufe0f Ultra-fast, secure & lightweight self-hosted cloud storage \u2014 your files, photos, calendars & contacts, all in one place. Built in Rust.",
+    "stars": 2620,
+    "language": "Rust",
+    "category_slug": "project-management",
+    "tags": "lightweight,open-source,rust,self-hosted",
+    "maker": {
+      "login": "DioCrafts",
+      "name": "Dionisio Pozo",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/DioCrafts"
+    }
+  },
+  {
+    "name": "open-kalendo",
+    "full_name": "kamil-homer/open-kalendo",
+    "url": "https://github.com/kamil-homer/open-kalendo",
+    "description": "The \"Community Hub\" Starter Kit. A lightweight, self-hosted event calendar and knowledge base for modern communities.",
+    "stars": 1,
+    "language": "TypeScript",
+    "category_slug": "project-management",
+    "tags": "lightweight,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "kamil-homer",
+      "name": "Kamil Homernik",
+      "email": "",
+      "bio": "Full-stack JavaScript Developer and Startups enthusiast",
+      "url": "https://github.com/kamil-homer"
+    }
+  },
+  {
+    "name": "discordcal",
+    "full_name": "JiFish/discordcal",
+    "url": "https://github.com/JiFish/discordcal",
+    "description": "A lightweight self-hosted alternative to chroniclebot. This bot integrates Google Calendar with Discord, automatically creating and managing Discord events based on your Google Calendar events.",
+    "stars": 0,
+    "language": "Python",
+    "category_slug": "project-management",
+    "tags": "lightweight,open-source,python,self-hosted",
+    "maker": {
+      "login": "JiFish",
+      "name": "Joseph Fowler",
+      "email": "",
+      "bio": "",
+      "url": "http://jifish.co.uk"
+    }
+  },
+  {
+    "name": "telegram-salon-booking-bot",
+    "full_name": "nazgool97/telegram-salon-booking-bot",
+    "url": "https://github.com/nazgool97/telegram-salon-booking-bot",
+    "description": "A ready-to-use, self-hosted Telegram booking system for beauty salons and small businesses. Clients book appointments, masters manage schedules, and owners see analytics \u2014 all inside Telegram. One-tim",
+    "stars": 4,
+    "language": "",
+    "category_slug": "project-management",
+    "tags": "cli,open-source,self-hosted",
+    "maker": {
+      "login": "nazgool97",
+      "name": "Tartz Brewer",
+      "email": "",
+      "bio": "Automation & business tools creator.\r\nBuilding self-hosted Telegram bots for small businesses.\r\nSimple, practical, one-time payment tools.",
+      "url": "https://github.com/nazgool97"
+    }
+  },
+  {
+    "name": "Event-Managment-System",
+    "full_name": "flaviokapapelo25/Event-Managment-System",
+    "url": "https://github.com/flaviokapapelo25/Event-Managment-System",
+    "description": "# Event Management SystemA full-stack event booking system built with ASP.NET Core 8.0, following a 3-tier architecture. This project offers a clean separation of concerns, making it easy to manage an",
+    "stars": 2,
+    "language": "C#",
+    "category_slug": "project-management",
+    "tags": "c#,open-source,self-hosted",
+    "maker": {
+      "login": "flaviokapapelo25",
+      "name": "flaviokapapelo25",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/flaviokapapelo25"
+    }
+  },
+  {
+    "name": "nexcal",
+    "full_name": "ribato22/nexcal",
+    "url": "https://github.com/ribato22/nexcal",
+    "description": "\u26a1 Free & Open-Source Appointment Booking System. A self-hosted Calendly alternative built with Next.js 16, PostgreSQL, and Docker.",
+    "stars": 1,
+    "language": "TypeScript",
+    "category_slug": "project-management",
+    "tags": "docker,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "ribato22",
+      "name": "Rizky Bachtiar Irwanto",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/ribato22"
+    }
+  },
+  {
+    "name": "easyappointments",
+    "full_name": "alextselegidis/easyappointments",
+    "url": "https://github.com/alextselegidis/easyappointments",
+    "description": ":date: Easy!Appointments - Self Hosted Appointment Scheduler",
+    "stars": 4065,
+    "language": "PHP",
+    "category_slug": "project-management",
+    "tags": "open-source,php,self-hosted",
+    "maker": {
+      "login": "alextselegidis",
+      "name": "Alex Tselegidis",
+      "email": "alextselegidis@gmail.com",
+      "bio": "",
+      "url": "https://alextselegidis.com"
+    }
+  },
+  {
+    "name": "NextAppointments",
+    "full_name": "ajdichmann/NextAppointments",
+    "url": "https://github.com/ajdichmann/NextAppointments",
+    "description": "Self Hosted, Open Source Appointment Scheduling Software App!",
+    "stars": 2,
+    "language": "TypeScript",
+    "category_slug": "project-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "ajdichmann",
+      "name": "AJ Dichmann",
+      "email": "aj.dichmann@gmail.com",
+      "bio": "VP of Digital Strategy at Globe Runner",
+      "url": "https://www.ajdichmann.com/"
+    }
+  },
+  {
+    "name": "easyappointments",
+    "full_name": "FDOGAN01/easyappointments",
+    "url": "https://github.com/FDOGAN01/easyappointments",
+    "description": ":date: Easy!Appointments - Self Hosted Appointment Scheduler",
+    "stars": 0,
+    "language": "PHP",
+    "category_slug": "project-management",
+    "tags": "open-source,php,self-hosted",
+    "maker": {
+      "login": "FDOGAN01",
+      "name": "FDOGAN01",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/FDOGAN01"
+    }
+  },
+  {
+    "name": "super-fast-dumpster-diver",
+    "full_name": "stelin41/super-fast-dumpster-diver",
+    "url": "https://github.com/stelin41/super-fast-dumpster-diver",
+    "description": "Instantly find content in TBs of files with text on typical hardware. Self-hosted lightweight search engine and analysis tool for OSINT and cybersecurity investigations.",
+    "stars": 2,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,python,self-hosted",
+    "maker": {
+      "login": "stelin41",
+      "name": "stelin41",
+      "email": "",
+      "bio": "University student. Wannabe hacker || AI/ML. CTF player. Driven by curiosity.",
+      "url": "https://stelin41.github.io"
+    }
+  },
+  {
+    "name": "Perceive-Search",
+    "full_name": "vikramlingam/Perceive-Search",
+    "url": "https://github.com/vikramlingam/Perceive-Search",
+    "description": "Privacy-respecting metasearch engine with integrated AI summaries powered by local open-source LLMs.  Perceive Search proxies Google/Bing results (ad/tracker-free) + generates concise AI insights for ",
+    "stars": 2,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,privacy,python,self-hosted",
+    "maker": {
+      "login": "vikramlingam",
+      "name": "Vikram Lingam",
+      "email": "",
+      "bio": "Data Scientist | Machine Learning",
+      "url": "https://vikramlingam.github.io"
+    }
+  },
+  {
+    "name": "go-search-engine",
+    "full_name": "BoxCosplayer/go-search-engine",
+    "url": "https://github.com/BoxCosplayer/go-search-engine",
+    "description": "A lightweight, self\u2011hosted \u201cgo links\u201d server that lets you jump to saved URLs by typing go <keyword>. Built using flask",
+    "stars": 1,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,python,self-hosted",
+    "maker": {
+      "login": "BoxCosplayer",
+      "name": "Rajveer S.",
+      "email": "",
+      "bio": "Aspiring Security Engineer / Quantum Algorithms Engineer",
+      "url": "https://portfolio-website-seven-iota-45.vercel.app/"
+    }
+  },
+  {
+    "name": "all-docs",
+    "full_name": "Jarrettluo/all-docs",
+    "url": "https://github.com/Jarrettluo/all-docs",
+    "description": "\"All Docs\" is a tool that enables online previewing, storage, and sharing of documents such as Word, Excel, PowerPoint, PDF, and images (Pic). It supports full-text search for all document information",
+    "stars": 637,
+    "language": "Java",
+    "category_slug": "developer-tools",
+    "tags": "java,open-source",
+    "maker": {
+      "login": "Jarrettluo",
+      "name": "Jarrett",
+      "email": "291979254@qq.com",
+      "bio": "To be a geeker!",
+      "url": "jiaruiblog.com"
+    }
+  },
+  {
+    "name": "FlyEnv",
+    "full_name": "xpf0000/FlyEnv",
+    "url": "https://github.com/xpf0000/FlyEnv",
+    "description": "Lightweight Native Local Dev Toolbox for Windows, macOS & Linux. Run Apache/Nginx/Caddy/Tomcat/PHP/Node.js/Bun/Deno/Python/Java/Go/Ruby/Perl/Rust/Erlang/MySQL/PostgreSQL/MariaDB/MongoDB/Redis/RabbitMQ",
+    "stars": 2508,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "docker,lightweight,open-source,typescript",
+    "maker": {
+      "login": "xpf0000",
+      "name": "\u5f90\u9e4f\u98de",
+      "email": "250881478@qq.com",
+      "bio": "A developer from China, loves coding, loves making widgets.",
+      "url": "https://github.com/xpf0000"
+    }
+  },
+  {
+    "name": "docker-sso-server",
+    "full_name": "soulteary/docker-sso-server",
+    "url": "https://github.com/soulteary/docker-sso-server",
+    "description": "Lightweight \ud83e\udeb6 self-hosted SSO server, resource utilization rate is <1% CPU, MEM <15 M",
+    "stars": 188,
+    "language": "Shell",
+    "category_slug": "authentication",
+    "tags": "docker,lightweight,open-source,self-hosted,shell",
+    "maker": {
+      "login": "soulteary",
+      "name": "Su Yang",
+      "email": "",
+      "bio": "I find code fascinating: building for life.",
+      "url": "https://soulteary.com"
+    }
+  },
+  {
+    "name": "authgate",
+    "full_name": "go-authgate/authgate",
+    "url": "https://github.com/go-authgate/authgate",
+    "description": "A lightweight OAuth 2.0 Authorization Server supporting Device Authorization Grant (RFC 8628) and Authorization Code Flow with PKCE (RFC 6749 + RFC 7636), developed using Go and the Gin framework.",
+    "stars": 28,
+    "language": "Go",
+    "category_slug": "authentication",
+    "tags": "go,lightweight,open-source",
+    "maker": {
+      "login": "go-authgate",
+      "name": "Authgate",
+      "email": "appleboy.tw@gmail.com",
+      "bio": "A lightweight OAuth 2.0 Authorization Server supporting Device Authorization Grant (RFC 8628) and Authorization Code Flow with PKCE (RFC 6749 + RFC 7636), devel",
+      "url": "https://github.com/go-authgate"
+    }
+  },
+  {
+    "name": "webdav-server",
+    "full_name": "vaggeliskls/webdav-server",
+    "url": "https://github.com/vaggeliskls/webdav-server",
+    "description": "The WebDAV Server is a lightweight, customizable solution built with Docker, designed for secure file sharing and remote access. It offers flexible configuration options and supports multiple authenti",
+    "stars": 20,
+    "language": "Shell",
+    "category_slug": "authentication",
+    "tags": "docker,lightweight,open-source,shell",
+    "maker": {
+      "login": "vaggeliskls",
+      "name": "vaggeliskls",
+      "email": "vaggeliskls@gmail.com",
+      "bio": "",
+      "url": "https://www.linkedin.com/in/vaggelis-kls-5817bb47/"
+    }
+  },
+  {
+    "name": "helloy-word",
+    "full_name": "klonnet23/helloy-word",
+    "url": "https://github.com/klonnet23/helloy-word",
+    "description": "    {   \"releases\": {     \"2.0.4\": [       \"[Fixed] Refresh for Enterprise repositories did not handle API error querying branches - #7713\",       \"[Fixed] Missing \\\"Discard all changes\\\" context menu",
+    "stars": 82,
+    "language": "",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,docker,open-source",
+    "maker": {
+      "login": "klonnet23",
+      "name": "klonnet23",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/klonnet23"
+    }
+  },
+  {
+    "name": "zauth",
+    "full_name": "RijulGulati/zauth",
+    "url": "https://github.com/RijulGulati/zauth",
+    "description": "2FA (Two-Factor Authentication) application for CLI terminal with support to import/export andOTP files.",
+    "stars": 79,
+    "language": "Go",
+    "category_slug": "authentication",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "RijulGulati",
+      "name": "Rijul Gulati",
+      "email": "rijul@rijulgulati.com",
+      "bio": "",
+      "url": "https://rijulgulati.com"
+    }
+  },
+  {
+    "name": "jwt-cli",
+    "full_name": "mike-engel/jwt-cli",
+    "url": "https://github.com/mike-engel/jwt-cli",
+    "description": "A super fast CLI tool to decode and encode JWTs built in Rust",
+    "stars": 1453,
+    "language": "Rust",
+    "category_slug": "authentication",
+    "tags": "cli,open-source,rust",
+    "maker": {
+      "login": "mike-engel",
+      "name": "Mike Engel",
+      "email": "mike@mike-engel.com",
+      "bio": "Developer and designer of various things",
+      "url": "https://mike-engel.com"
+    }
+  },
+  {
+    "name": "f-license",
+    "full_name": "furkansenharputlu/f-license",
+    "url": "https://github.com/furkansenharputlu/f-license",
+    "description": "Open Source License Key Generation and Verification Tool written in Go",
+    "stars": 823,
+    "language": "Go",
+    "category_slug": "authentication",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "furkansenharputlu",
+      "name": "Furkan Senharputlu",
+      "email": "",
+      "bio": "Senior Software Engineer @Microsoft",
+      "url": "https://www.linkedin.com/in/furkansenharputlu/"
+    }
+  },
+  {
+    "name": "typescript-backend-toolkit",
+    "full_name": "muneebhashone/typescript-backend-toolkit",
+    "url": "https://github.com/muneebhashone/typescript-backend-toolkit",
+    "description": "Production-ready Express.js/TypeScript framework with auto-generated OpenAPI, Artisan-style CLI, plugin system, JWT/sessions, BullMQ, React Email, Socket.io, Django-style admin, multi-provider storage",
+    "stars": 319,
+    "language": "TypeScript",
+    "category_slug": "authentication",
+    "tags": "api,cli,open-source,typescript",
+    "maker": {
+      "login": "muneebhashone",
+      "name": "Muneeb Hussain",
+      "email": "",
+      "bio": "",
+      "url": "tstoolkit.themuneebh.com"
+    }
+  },
+  {
+    "name": "voidauth",
+    "full_name": "voidauth/voidauth",
+    "url": "https://github.com/voidauth/voidauth",
+    "description": "Single Sign-On for Your Self-Hosted Universe",
+    "stars": 1857,
+    "language": "TypeScript",
+    "category_slug": "authentication",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "voidauth",
+      "name": "VoidAuth",
+      "email": "voidauth@voidauth.app",
+      "bio": "",
+      "url": "https://voidauth.app"
+    }
+  },
+  {
+    "name": "werbot",
+    "full_name": "werbot/werbot",
+    "url": "https://github.com/werbot/werbot",
+    "description": "\ud83d\udd11 Team Access Sharing - a self-hosted solution with single sign-on for secure, easy shared access to servers, databases, and applications.",
+    "stars": 168,
+    "language": "Go",
+    "category_slug": "authentication",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "werbot",
+      "name": "Werbot",
+      "email": "info@werbot.com",
+      "bio": "Easy access sharing, control, and work audit for teams and freelancers",
+      "url": "https://werbot.com"
+    }
+  },
+  {
+    "name": "SSO_Project",
+    "full_name": "OWASP/SSO_Project",
+    "url": "https://github.com/OWASP/SSO_Project",
+    "description": "OWASP Single Sign-On allows a secure-by-default self-hosted SSO experience, including phishing-proof two-factor authentication, using state-of-the-art security mechanisms.",
+    "stars": 79,
+    "language": "JavaScript",
+    "category_slug": "authentication",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "OWASP",
+      "name": "OWASP",
+      "email": "admin@owasp.com",
+      "bio": "The OWASP Foundation",
+      "url": "https://owasp.org"
+    }
+  },
+  {
+    "name": "mini-s3-clone",
+    "full_name": "SysTechSalihY/mini-s3-clone",
+    "url": "https://github.com/SysTechSalihY/mini-s3-clone",
+    "description": "Mini S3 Clone is a lightweight, self-hosted Amazon S3 clone built in Go. It provides secure file storage with bucket versioning, presigned URLs, and task queue processing using Fiber, GORM, MySQL, Red",
+    "stars": 1,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "go,lightweight,open-source,self-hosted",
+    "maker": {
+      "login": "SysTechSalihY",
+      "name": "somedeveloper",
+      "email": "",
+      "bio": "Building cool stuff with Go, Spring Boot, and WebRTC | Chat + streaming apps",
+      "url": "https://github.com/SysTechSalihY"
+    }
+  },
+  {
+    "name": "airunner",
+    "full_name": "Capsize-Games/airunner",
+    "url": "https://github.com/Capsize-Games/airunner",
+    "description": "Offline inference engine for art, real-time voice conversations, LLM powered chatbots and automated workflows",
+    "stars": 1305,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "open-source,python,self-hosted",
+    "maker": {
+      "login": "Capsize-Games",
+      "name": "CAPSIZE",
+      "email": "contact@capsize.gg",
+      "bio": "Video games, assets, plugins and libraries",
+      "url": "https://capsizegames.com/"
+    }
+  },
+  {
+    "name": "rest-api-fuzz-testing",
+    "full_name": "microsoft/rest-api-fuzz-testing",
+    "url": "https://github.com/microsoft/rest-api-fuzz-testing",
+    "description": "REST API Fuzz Testing (RAFT): Source code for self-hosted service developed for Azure, including the API, orchestration engine, and default set of security tools (including MSR's RESTler), that enable",
+    "stars": 264,
+    "language": "F#",
+    "category_slug": "developer-tools",
+    "tags": "api,f#,open-source,self-hosted",
+    "maker": {
+      "login": "microsoft",
+      "name": "Microsoft",
+      "email": "opensource@microsoft.com",
+      "bio": "Open source projects and samples from Microsoft",
+      "url": "https://opensource.microsoft.com"
+    }
+  },
+  {
+    "name": "flowbaker",
+    "full_name": "flowbaker/flowbaker",
+    "url": "https://github.com/flowbaker/flowbaker",
+    "description": "Execution engine powering Flowbaker, a no code platform to build, connect, and automate workflows.",
+    "stars": 191,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "flowbaker",
+      "name": "flowbaker",
+      "email": "hq@flowbaker.io",
+      "bio": "",
+      "url": "https://flowbaker.io"
+    }
+  },
+  {
+    "name": "hookshot",
+    "full_name": "mensfeld/hookshot",
+    "url": "https://github.com/mensfeld/hookshot",
+    "description": "A self-hosted webhook relay service built with Rails 8. Receives webhooks, filters them based on configurable rules, and dispatches to multiple target endpoints.",
+    "stars": 6,
+    "language": "Ruby",
+    "category_slug": "api-tools",
+    "tags": "open-source,ruby,self-hosted",
+    "maker": {
+      "login": "mensfeld",
+      "name": "Maciej Mensfeld",
+      "email": "maciej@mensfeld.pl",
+      "bio": "Creator of Mend Supply Chain Defender (Diffend), Karafka framework author, part of RubyGems security team.",
+      "url": "http://mensfeld.pl"
+    }
+  },
+  {
+    "name": "rusty-relay",
+    "full_name": "larscom/rusty-relay",
+    "url": "https://github.com/larscom/rusty-relay",
+    "description": "A self-hostable server that forwards webhooks and can proxy all kinds HTTP requests to a local machine.",
+    "stars": 3,
+    "language": "Rust",
+    "category_slug": "api-tools",
+    "tags": "open-source,rust,self-hosted",
+    "maker": {
+      "login": "larscom",
+      "name": "Lars Kniep",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/larscom"
+    }
+  },
+  {
+    "name": "hookshot",
+    "full_name": "lance0/hookshot",
+    "url": "https://github.com/lance0/hookshot",
+    "description": "A self-hostable webhook relay for local development. Forward webhooks from external services to your localhost.",
+    "stars": 2,
+    "language": "Go",
+    "category_slug": "api-tools",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "lance0",
+      "name": "lance",
+      "email": "",
+      "bio": "",
+      "url": "lance0.com"
+    }
+  },
+  {
+    "name": "n8n-install",
+    "full_name": "kossakovsky/n8n-install",
+    "url": "https://github.com/kossakovsky/n8n-install",
+    "description": "\ud83d\ude80 Self-hosted AI automation platform. Deploy n8n, Ollama, Flowise, RAG, Supabase & 30+ tools with one command. Auto HTTPS. Free Zapier/Make alternative.",
+    "stars": 740,
+    "language": "Shell",
+    "category_slug": "developer-tools",
+    "tags": "api,open-source,self-hosted,shell",
+    "maker": {
+      "login": "kossakovsky",
+      "name": "Yury Kossakovsky",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/kossakovsky"
+    }
+  },
+  {
+    "name": "flot",
+    "full_name": "FlotHQ/flot",
+    "url": "https://github.com/FlotHQ/flot",
+    "description": "Open source Make alternative, a workflow automation tool that is just as easy to use as it is deployed.",
+    "stars": 28,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "api,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "FlotHQ",
+      "name": "FlotHQ",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/FlotHQ"
+    }
+  },
+  {
+    "name": "locationator",
+    "full_name": "RhetTbull/locationator",
+    "url": "https://github.com/RhetTbull/locationator",
+    "description": "A simple macOS menubar app that provides access to the macOS Location Services reverse geocoding API via a local web server as well as a command line tool.",
+    "stars": 33,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,open-source,python",
+    "maker": {
+      "login": "RhetTbull",
+      "name": "Rhet Turnbull",
+      "email": "rturnbull+git@gmail.com",
+      "bio": "Software enthusiast & hobbyist. I write code as a hobby, as a way to give back to the open source community, and to stay current on software engineering trends.",
+      "url": "https://github.com/RhetTbull"
+    }
+  },
+  {
+    "name": "ClimaPH",
+    "full_name": "iyawnnn/ClimaPH",
+    "url": "https://github.com/iyawnnn/ClimaPH",
+    "description": "Real-time PH weather tracking with interactive maps and daily lifestyle planning tools.",
+    "stars": 12,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,typescript",
+    "maker": {
+      "login": "iyawnnn",
+      "name": "Ian Macabulos",
+      "email": "iannmacabulos@gmail.com",
+      "bio": "Full-Stack Developer | 3rd Year IT Student @ Holy Angel University",
+      "url": "https://www.iansebastian.dev/"
+    }
+  },
+  {
+    "name": "geocode",
+    "full_name": "dbrady/geocode",
+    "url": "https://github.com/dbrady/geocode",
+    "description": "Ruby library and CLI tool to geocode and reverse geocode.",
+    "stars": 6,
+    "language": "Ruby",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,ruby",
+    "maker": {
+      "login": "dbrady",
+      "name": "David Brady",
+      "email": "dbrady@shinybit.com",
+      "bio": "I once wrote a perl script in Reno, just to watch it die();",
+      "url": "http://www.whydavewhy.com/"
+    }
+  },
+  {
+    "name": "SelfHostedMapTileServerNotes",
+    "full_name": "Gjacquenot/SelfHostedMapTileServerNotes",
+    "url": "https://github.com/Gjacquenot/SelfHostedMapTileServerNotes",
+    "description": "Notes on self-hosted map tile server with OpenStreetMap data",
+    "stars": 9,
+    "language": "",
+    "category_slug": "developer-tools",
+    "tags": "open-source,self-hosted",
+    "maker": {
+      "login": "Gjacquenot",
+      "name": "Guillaume Jacquenot",
+      "email": "",
+      "bio": "This is a personal account. I have also a professional one @GuillaumeJacquenot",
+      "url": "https://github.com/Gjacquenot"
+    }
+  },
+  {
+    "name": "map-tiles-server",
+    "full_name": "huyitan/map-tiles-server",
+    "url": "https://github.com/huyitan/map-tiles-server",
+    "description": "Self-hosted map tile server with OpenStreetMap data",
+    "stars": 4,
+    "language": "",
+    "category_slug": "developer-tools",
+    "tags": "open-source,self-hosted",
+    "maker": {
+      "login": "huyitan",
+      "name": "Huy Nguyen",
+      "email": "quanghuy.httt06@gmail.com",
+      "bio": "6:00 pm",
+      "url": "https://github.com/huyitan"
+    }
+  },
+  {
+    "name": "dzmap",
+    "full_name": "WoozyMasta/dzmap",
+    "url": "https://github.com/WoozyMasta/dzmap",
+    "description": "A lightweight map tile server for DayZ. Mirrors or make tiles and converts locations to GeoJSON.",
+    "stars": 3,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "go,lightweight,open-source,self-hosted",
+    "maker": {
+      "login": "WoozyMasta",
+      "name": "Maxim Levchenko",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/WoozyMasta"
+    }
+  },
+  {
+    "name": "geoip-api",
+    "full_name": "Malith-Rukshan/geoip-api",
+    "url": "https://github.com/Malith-Rukshan/geoip-api",
+    "description": "Self-hosted IP geolocation API and Python package with no external API dependencies. Lookup IP data using local databases with Docker support.",
+    "stars": 8,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "api,docker,open-source,python,self-hosted",
+    "maker": {
+      "login": "Malith-Rukshan",
+      "name": "Malith Rukshan",
+      "email": "hello@malith.dev",
+      "bio": "Full-stack developer specializing in AI/ML solutions and modern web applications. Creating intelligent systems that solve real-world problems.",
+      "url": "malith.dev"
+    }
+  },
+  {
+    "name": "geoip0",
+    "full_name": "DemoMacro/geoip0",
+    "url": "https://github.com/DemoMacro/geoip0",
+    "description": "Self-hosted Geo IP Zero Configuration API Services for Serverless.",
+    "stars": 5,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "api,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "DemoMacro",
+      "name": "Demo Macro",
+      "email": "",
+      "bio": "Always believe that good things are about to happen.",
+      "url": "https://imst.xyz"
+    }
+  },
+  {
+    "name": "ipquery",
+    "full_name": "akyriako/ipquery",
+    "url": "https://github.com/akyriako/ipquery",
+    "description": "Self-hosted Geolocation and Malicious IP Detection API",
+    "stars": 2,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "api,go,open-source,self-hosted",
+    "maker": {
+      "login": "akyriako",
+      "name": "Kyriakos Akriotis",
+      "email": "",
+      "bio": "Kubernetes, Go, C, eBPF, Open Telekom Cloud, AWS in no particular order or preference. ",
+      "url": "https://medium.com/@akyriako"
+    }
+  }
+]

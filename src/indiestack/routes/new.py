@@ -32,8 +32,8 @@ async def new_tools(request: Request, page: int = 1):
     else:
         tools_html = """
         <div style="text-align:center;padding:60px 0;">
-            <p style="font-size:18px;color:var(--ink-muted);">No tools yet. Be the first!</p>
-            <a href="/submit" class="btn btn-primary mt-4">Submit a Tool</a>
+            <p style="font-size:18px;color:var(--ink-muted);">No creations yet. Be the first!</p>
+            <a href="/submit" class="btn btn-primary mt-4">Submit Yours</a>
         </div>
         """
 
@@ -42,12 +42,12 @@ async def new_tools(request: Request, page: int = 1):
         <div style="text-align:center;margin-bottom:40px;">
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Recently Added</h1>
             <p style="color:var(--ink-muted);margin-top:8px;font-size:16px;">
-                The latest indie tools, fresh off the press.
+                The latest indie creations, fresh off the press.
             </p>
         </div>
         {tools_html}
     </div>
     """
     return HTMLResponse(page_shell("Recently Added", body,
-                                    description="Discover the latest indie SaaS tools added to IndieStack.",
+                                    description="Discover the latest indie creations added to IndieStack.",
                                     user=request.state.user))

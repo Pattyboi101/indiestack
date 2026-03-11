@@ -1,4 +1,4 @@
-"""Admin Command Center — unified dashboard with 5 tabs: Overview, Tools, People, Content, Growth."""
+"""Admin Command Center — unified dashboard with 4 tabs: Overview, Tools, People, Growth."""
 
 import json
 import secrets as _secrets
@@ -10,24 +10,26 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.config import BASE_URL
-from indiestack.routes.components import page_shell
+from indiestack.routes.components import page_shell, pixel_icon_svg
 from indiestack.db import (get_pending_tools, get_all_tools_admin, update_tool_status, toggle_verified, toggle_ejectable,
                            bulk_create_tools, get_purchase_stats, set_featured_tool, clear_featured_tool,
                            get_collection_by_slug, get_all_reviews_admin, delete_review, get_all_makers_admin, update_maker,
                            toggle_tool_boost, create_stack, get_all_stacks, add_tool_to_stack, remove_tool_from_stack, delete_stack,
                            get_tool_by_id, get_makers_in_category, get_all_purchases_admin,
                            update_tool, get_all_categories, delete_tool, get_pro_subscriber_stats,
-                           create_notification)
+                           create_notification, get_pending_avatars, update_user,
+                           get_follow_through_rate)
 from indiestack.email import send_email, tool_approved_html
 from indiestack.auth import check_admin_session, make_session_token, ADMIN_PASSWORD
+from indiestack.main import _check_admin_rate_limit, _record_admin_attempt, _clear_admin_attempts
 
 # New imports for consolidated admin
 from indiestack.routes.admin_helpers import (
     time_ago, kpi_card, pending_alert_bar, status_badge, role_badge,
-    tab_nav, growth_sub_nav, row_bg, data_table
+    tab_nav, growth_sub_nav, tools_sub_nav, row_bg, data_table
 )
 from indiestack.routes.admin_analytics import (
-    render_traffic_section, render_funnels_section,
+    render_charts_section, render_tables_section, render_funnels_section,
     render_search_section, render_growth_section
 )
 from indiestack.routes.admin_outreach import (
@@ -42,6 +44,7 @@ router = APIRouter()
 OUTREACH_ACTIONS = {
     'send_totw', 'send_digest_test', 'send_digest_all',
     'send_launch_test', 'send_launch_all',
+    'send_ph_test', 'send_ph_all',
     'send_maker_countdown_test', 'send_maker_countdown_all',
     'test_email', 'blast_email', 'send_preview',
     'generate_magic', 'generate_all_csv', 'send_nudge', 'send_stripe_nudge'
@@ -98,10 +101,12 @@ async def admin_get(request: Request):
         section_html = await render_tools_tab(db, request, pending)
     elif tab == 'people':
         section_html = await render_people_tab(db, request)
-    elif tab == 'content':
-        section_html = await render_content_tab(db, request)
     elif tab == 'growth':
         section_html = await render_growth_tab(db, request)
+    elif tab == 'content':
+        # Legacy redirect — content moved to tools sub-tabs
+        section_html = await render_tools_tab(db, request, pending)
+        tab = 'tools'
     else:
         tab = 'overview'
         section_html = await render_overview(db, request, pending)
@@ -123,230 +128,321 @@ async def admin_get(request: Request):
 # ── Overview Tab ─────────────────────────────────────────────────────────
 
 async def render_overview(db, request, pending):
-    """Overview tab: KPI cards, pending queue, alerts, recent activity."""
+    """Overview tab: two-column command centre — Action Items + Today's Pulse."""
+    from datetime import datetime, timedelta
     pending_count = len(pending)
+    pending_avatars = await get_pending_avatars(db)
 
-    # KPI data
-    cursor = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
-    total_tools = (await cursor.fetchone())['cnt']
+    # ── LEFT COLUMN: Action Items ──
 
-    cursor = await db.execute("SELECT COUNT(*) as cnt FROM makers")
-    total_makers = (await cursor.fetchone())['cnt']
-
-    cursor = await db.execute("SELECT COUNT(*) as cnt FROM users")
-    total_users = (await cursor.fetchone())['cnt']
-
-    stats = await get_purchase_stats(db)
-    total_revenue_pence = stats.get('total_revenue', 0) or 0
-
-    cursor = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE maker_id IS NULL AND status = 'approved'")
-    unclaimed_count = (await cursor.fetchone())['cnt']
-
-    cursor = await db.execute(
-        "SELECT COALESCE(SUM(mcp_view_count), 0) as cnt FROM tools WHERE status = 'approved'"
-    )
-    mcp_views = (await cursor.fetchone())['cnt']
-
-    pro_stats = await get_pro_subscriber_stats(db)
-    pro_count = pro_stats.get('active_count', 0) or 0
-
-    # 8 KPI cards in 4x2 grid
-    kpi_html = f"""
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;">
-        {kpi_card("Total Tools", f"{total_tools:,}", color="var(--slate)", link="/admin?tab=tools")}
-        {kpi_card("Makers", f"{total_makers:,}", color="var(--slate)", link="/admin?tab=people")}
-        {kpi_card("Users", f"{total_users:,}", color="var(--slate)", link="/admin?tab=people")}
-        {kpi_card("Revenue", f"£{total_revenue_pence / 100:.2f}", color="#16a34a")}
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;">
-        {kpi_card("Pending", f"{pending_count}", color="#EA580C", link="/admin?tab=tools&status=pending")}
-        {kpi_card("Unclaimed", f"{unclaimed_count}", color="#D97706", link="/admin?tab=tools&filter=unclaimed")}
-        {kpi_card("MCP Views (7d)", f"{mcp_views:,}", color="var(--accent)")}
-        {kpi_card("Pro Subscribers", f"{pro_count}", color="#7C3AED")}
-    </div>
-    """
-
-    # Pending queue
+    # Pending tools — ALL of them with approve/reject
     pending_html = ''
     if pending:
+        bulk_html = ''
+        if pending_count > 1:
+            bulk_html = f'''
+            <div style="display:flex;gap:8px;margin-bottom:12px;padding:10px 14px;background:var(--cream-dark);border-radius:var(--radius);align-items:center;">
+                <form method="post" action="/admin" style="display:inline;">
+                    <input type="hidden" name="action" value="approve_all">
+                    <button type="submit" class="btn" style="background:#16a34a;color:white;padding:6px 16px;font-size:12px;font-weight:600;">
+                        Approve All ({pending_count})
+                    </button>
+                </form>
+                <form method="post" action="/admin" style="display:inline;">
+                    <input type="hidden" name="action" value="reject_all">
+                    <button type="submit" class="btn" style="background:#dc2626;color:white;padding:6px 16px;font-size:12px;font-weight:600;"
+                            onclick="return confirm('Reject all {pending_count} pending tools?')">
+                        Reject All
+                    </button>
+                </form>
+            </div>
+            '''
         cards = ''
-        for t in pending[:5]:
+        for t in pending:
             tid = t['id']
             name = escape(str(t['name']))
             tagline = escape(str(t['tagline']))
-            t_url = escape(str(t['url']))
             cards += f"""
-            <div class="card" style="margin-bottom:10px;padding:14px 16px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
-                    <div style="flex:1;min-width:200px;">
-                        <strong style="font-size:15px;color:var(--ink);">{name}</strong>
-                        <span style="color:var(--ink-muted);font-size:13px;margin-left:8px;">{tagline}</span>
+            <div class="card" style="margin-bottom:8px;padding:12px 14px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:180px;">
+                        <strong style="font-size:14px;color:var(--ink);">{name}</strong>
+                        <span style="color:var(--ink-muted);font-size:12px;margin-left:6px;">{tagline}</span>
                     </div>
                     <div style="display:flex;gap:6px;">
                         <form method="post" action="/admin" style="margin:0;">
                             <input type="hidden" name="tool_id" value="{tid}">
                             <input type="hidden" name="action" value="approve">
-                            <button type="submit" style="padding:5px 14px;border-radius:999px;font-size:12px;font-weight:600;
+                            <button type="submit" style="padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;
                                     cursor:pointer;background:#16a34a;color:white;border:none;">Approve</button>
                         </form>
                         <form method="post" action="/admin" style="margin:0;">
                             <input type="hidden" name="tool_id" value="{tid}">
                             <input type="hidden" name="action" value="reject">
-                            <button type="submit" style="padding:5px 14px;border-radius:999px;font-size:12px;font-weight:600;
+                            <button type="submit" style="padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;
                                     cursor:pointer;background:#dc2626;color:white;border:none;">Reject</button>
                         </form>
                     </div>
                 </div>
             </div>
             """
-        more_link = ''
-        if pending_count > 5:
-            more_link = f'<a href="/admin?tab=tools&status=pending" style="font-size:13px;color:var(--slate);font-weight:600;">View all {pending_count} pending &rarr;</a>'
         pending_html = f"""
-        <div style="margin-bottom:32px;">
-            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:12px;">
-                Pending Review ({pending_count})
-            </h2>
+        <div style="margin-bottom:24px;">
+            <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:10px;">
+                Pending Tools ({pending_count})
+            </h3>
+            {bulk_html}
             {cards}
-            {more_link}
         </div>
         """
+
+    # Pending avatars
+    avatars_html = ''
+    if pending_avatars:
+        avatar_cards = ''
+        for a in pending_avatars:
+            a_name = escape(str(a.get('name', '') or a.get('email', '')))
+            avatar_cards += f"""
+            <div class="card" style="padding:12px;text-align:center;width:120px;">
+                {pixel_icon_svg(a['pixel_avatar'], size=40)}
+                <p style="font-size:11px;color:var(--ink-muted);margin-top:6px;">{a_name}</p>
+                <div style="display:flex;gap:4px;margin-top:6px;">
+                    <form method="post" action="/admin" style="flex:1;">
+                        <input type="hidden" name="action" value="approve_avatar">
+                        <input type="hidden" name="user_id" value="{a['id']}">
+                        <button type="submit" class="btn btn-primary" style="width:100%;padding:3px;font-size:10px;">&#10003;</button>
+                    </form>
+                    <form method="post" action="/admin" style="flex:1;">
+                        <input type="hidden" name="action" value="reject_avatar">
+                        <input type="hidden" name="user_id" value="{a['id']}">
+                        <button type="submit" class="btn btn-secondary" style="width:100%;padding:3px;font-size:10px;">&#10007;</button>
+                    </form>
+                </div>
+            </div>
+            """
+        avatars_html = f"""
+        <div style="margin-bottom:24px;">
+            <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">Pending Avatars ({len(pending_avatars)})</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">{avatar_cards}</div>
+        </div>
+        """
+
+    # Claim requests
+    claim_cursor = await db.execute(
+        """SELECT cr.id, cr.tool_id, cr.user_id, cr.created_at,
+                  t.name as tool_name, t.slug as tool_slug,
+                  u.name as user_name, u.email as user_email
+           FROM claim_requests cr
+           JOIN tools t ON t.id = cr.tool_id
+           JOIN users u ON u.id = cr.user_id
+           WHERE cr.status = 'pending'
+           ORDER BY cr.created_at DESC""")
+    claims = [dict(r) for r in await claim_cursor.fetchall()]
+    claims_html = ''
+    if claims:
+        claim_cards = ''
+        for c in claims:
+            claim_cards += f'''
+            <div class="card" style="padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <div>
+                    <a href="/tool/{escape(str(c['tool_slug']))}" style="font-weight:700;color:var(--ink);font-size:14px;">{escape(str(c['tool_name']))}</a>
+                    <span style="color:var(--ink-muted);font-size:12px;margin-left:6px;">by {escape(str(c['user_name'] or c['user_email']))}</span>
+                </div>
+                <div style="display:flex;gap:6px;">
+                    <form method="post" action="/admin" style="display:inline;">
+                        <input type="hidden" name="action" value="approve_claim">
+                        <input type="hidden" name="claim_id" value="{c['id']}">
+                        <input type="hidden" name="tool_id" value="{c['tool_id']}">
+                        <input type="hidden" name="user_id" value="{c['user_id']}">
+                        <button type="submit" style="padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;
+                                cursor:pointer;background:#16a34a;color:white;border:none;">Approve</button>
+                    </form>
+                    <form method="post" action="/admin" style="display:inline;">
+                        <input type="hidden" name="action" value="reject_claim">
+                        <input type="hidden" name="claim_id" value="{c['id']}">
+                        <button type="submit" style="padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;
+                                cursor:pointer;background:#dc2626;color:white;border:none;">Reject</button>
+                    </form>
+                </div>
+            </div>'''
+        claims_html = f"""
+        <div style="margin-bottom:24px;">
+            <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:10px;">Claim Requests ({len(claims)})</h3>
+            {claim_cards}
+        </div>
+        """
+
+    # Build left column
+    left_col = pending_html + avatars_html + claims_html
+    if not left_col.strip():
+        left_col = '<div class="card" style="padding:32px;text-align:center;color:var(--ink-muted);font-size:15px;">All clear &mdash; nothing to review</div>'
+
+    # ── RIGHT COLUMN: Today's Pulse ──
+    # Use date() for comparisons — page_views uses 'T' separator, other tables use space
+    cursor = await db.execute("SELECT COUNT(*) as cnt FROM page_views WHERE date(timestamp) = date('now')")
+    views_today = (await cursor.fetchone())['cnt']
+
+    cursor = await db.execute("SELECT COUNT(DISTINCT visitor_id) as cnt FROM page_views WHERE date(timestamp) = date('now') AND visitor_id IS NOT NULL")
+    unique_today = (await cursor.fetchone())['cnt']
+
+    cursor = await db.execute("SELECT COUNT(*) as cnt FROM outbound_clicks WHERE date(created_at) = date('now')")
+    clicks_today = (await cursor.fetchone())['cnt']
+
+    cursor = await db.execute("SELECT COUNT(*) as cnt FROM search_logs WHERE date(created_at) = date('now')")
+    searches_today = (await cursor.fetchone())['cnt']
+
+    cursor = await db.execute("SELECT COUNT(*) as cnt FROM users WHERE date(created_at) = date('now')")
+    signups_today = (await cursor.fetchone())['cnt']
+
+    cursor = await db.execute("SELECT COUNT(*) as cnt FROM agent_citations WHERE date(created_at) = date('now')")
+    ai_recs_today = (await cursor.fetchone())['cnt']
+
+    follow_through = await get_follow_through_rate(db, 30)
+
+    kpi_grid = f"""
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
+        {kpi_card("Page Views", f"{views_today:,}", color="var(--slate)")}
+        {kpi_card("Unique Visitors", f"{unique_today:,}", color="var(--terracotta)")}
+        {kpi_card("Outbound Clicks", f"{clicks_today:,}", color="#E2B764")}
+        {kpi_card("Searches", f"{searches_today:,}", color="var(--accent)")}
+        {kpi_card("Signups", f"{signups_today}", color="#16a34a")}
+        {kpi_card("AI Recs", f"{ai_recs_today:,}", color="#7C3AED")}
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:10px 14px;background:var(--cream-dark);border-radius:var(--radius-sm);">
+        <span style="font-size:var(--heading-lg);font-weight:700;color:var(--accent);">{follow_through['rate']}%</span>
+        <span style="font-size:var(--text-sm);color:var(--text-secondary);">Follow-through (30d) &mdash; {follow_through['details']:,} detail views / {follow_through['searches']:,} MCP searches</span>
+    </div>
+    """
 
     # Alerts strip
     cursor = await db.execute(
         "SELECT COUNT(*) as cnt FROM tools WHERE status='approved' AND created_at < datetime('now', '-90 days')"
     )
     stale_count = (await cursor.fetchone())['cnt']
-
     cursor = await db.execute(
-        """SELECT COUNT(*) as cnt FROM search_logs
-           WHERE result_count = 0 AND created_at >= datetime('now', '-30 days')"""
+        "SELECT COUNT(*) as cnt FROM search_logs WHERE result_count = 0 AND created_at >= datetime('now', '-30 days')"
     )
     search_gaps = (await cursor.fetchone())['cnt']
 
-    cursor = await db.execute(
-        """SELECT COUNT(*) as cnt FROM makers m
-           JOIN users u ON u.maker_id = m.id
-           WHERE m.stripe_account_id IS NULL
-           AND EXISTS (SELECT 1 FROM tools t WHERE t.maker_id = m.id AND t.price_pence > 0)"""
-    )
-    stripe_needed = (await cursor.fetchone())['cnt']
-
-    alerts_html = ''
-    alert_items = []
+    alert_parts = []
     if stale_count > 0:
-        alert_items.append(f'<span style="color:#D97706;font-weight:600;">{stale_count} stale tools</span> (no update in 90+ days)')
+        alert_parts.append(f'<span style="color:#D97706;font-weight:600;">{stale_count} stale</span>')
     if search_gaps > 0:
-        alert_items.append(f'<span style="color:#DC2626;font-weight:600;">{search_gaps} search gaps</span> (searches with no results — people looking for tools we don\'t have yet)')
-    if stripe_needed > 0:
-        alert_items.append(f'<span style="color:#7C3AED;font-weight:600;">{stripe_needed} makers</span> need Stripe setup')
+        alert_parts.append(f'<span style="color:#DC2626;font-weight:600;">{search_gaps} gaps</span>')
+    alerts_html = ''
+    if alert_parts:
+        alerts_html = f'<div style="font-size:12px;color:var(--ink-muted);margin-bottom:16px;padding:8px 12px;background:var(--cream-dark);border-radius:var(--radius-sm);">{" &middot; ".join(alert_parts)}</div>'
 
-    if alert_items:
-        items_html = ' &middot; '.join(alert_items)
-        alerts_html = f"""
-        <div class="card" style="padding:14px 20px;margin-bottom:32px;border-left:3px solid #D97706;">
-            <div style="font-size:13px;color:var(--ink);">
-                <strong style="color:var(--ink);margin-right:8px;">Alerts:</strong> {items_html}
+    # Last 5 submissions
+    cursor = await db.execute(
+        """SELECT t.name, t.status, t.created_at
+           FROM tools t ORDER BY t.created_at DESC LIMIT 5"""
+    )
+    recent = await cursor.fetchall()
+    recent_html = ''
+    if recent:
+        lines = ''
+        for rt in recent:
+            name = escape(str(rt['name']))
+            status = str(rt['status'])
+            ago = time_ago(rt.get('created_at'))
+            dot_color = '#16a34a' if status == 'approved' else '#D97706' if status == 'pending' else '#991B1B'
+            lines += f'<div style="font-size:12px;color:var(--ink);padding:4px 0;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:{dot_color};margin-right:6px;vertical-align:middle;"></span>{name} <span style="color:var(--ink-muted);">{ago}</span></div>'
+        recent_html = f'<div style="margin-top:4px;"><h4 style="font-size:13px;color:var(--ink-muted);margin-bottom:8px;font-weight:600;">Last 5 Submissions</h4>{lines}</div>'
+
+    # Quality score distribution (graceful if column doesn't exist yet)
+    qs_html = ''
+    try:
+        qs_cursor = await db.execute("""
+            SELECT
+                COUNT(CASE WHEN quality_score = 0 THEN 1 END) as dead,
+                COUNT(CASE WHEN quality_score > 0 AND quality_score <= 40 THEN 1 END) as low,
+                COUNT(CASE WHEN quality_score > 40 AND quality_score <= 70 THEN 1 END) as mid,
+                COUNT(CASE WHEN quality_score > 70 THEN 1 END) as high,
+                ROUND(AVG(quality_score), 1) as avg_score
+            FROM tools WHERE status = 'approved'
+        """)
+        qs = await qs_cursor.fetchone()
+        qs_html = f'''
+        <div style="margin-top:12px;padding:12px;border-radius:8px;background:var(--surface-alt);">
+            <h4 style="font-size:13px;color:var(--ink-muted);margin-bottom:8px;font-weight:600;">Quality Score</h4>
+            <div style="font-size:12px;color:var(--ink);">
+                Avg: <strong>{qs["avg_score"] or 0}</strong> &nbsp;|&nbsp;
+                High (&gt;70): {qs["high"]} &nbsp;|&nbsp;
+                Mid (40–70): {qs["mid"]} &nbsp;|&nbsp;
+                Low (1–40): {qs["low"]} &nbsp;|&nbsp;
+                Dead (0): {qs["dead"]}
             </div>
         </div>
-        """
+        '''
+    except Exception:
+        pass
 
-    # Recent activity: last 10 tool submissions
-    cursor = await db.execute(
-        """SELECT t.name, t.status, t.created_at, m.name as maker_name
-           FROM tools t LEFT JOIN makers m ON t.maker_id = m.id
-           ORDER BY t.created_at DESC LIMIT 10"""
-    )
-    recent_tools = await cursor.fetchall()
-
-    recent_tools_rows = ''
-    for idx, rt in enumerate(recent_tools):
-        name = escape(str(rt['name']))
-        status = escape(str(rt['status']))
-        maker = escape(str(rt.get('maker_name', '') or ''))
-        ago = time_ago(rt.get('created_at'))
-        status_styles = {
-            'pending': 'background:#FDF8EE;color:#92400E;',
-            'approved': 'background:#DCFCE7;color:#166534;',
-            'rejected': 'background:#FEE2E2;color:#991B1B;',
-        }
-        s_style = status_styles.get(status, '')
-        recent_tools_rows += f"""
-        <tr style="border-bottom:1px solid var(--border);{row_bg(idx)}">
-            <td style="padding:8px 12px;font-size:13px;font-weight:600;color:var(--ink);">{name}</td>
-            <td style="padding:8px 12px;"><span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;{s_style}">{status}</span></td>
-            <td style="padding:8px 12px;font-size:13px;color:var(--ink-muted);">{maker or 'Unknown'}</td>
-            <td style="padding:8px 12px;font-size:13px;color:var(--ink-muted);">{ago}</td>
-        </tr>
-        """
-
-    recent_tools_table = data_table("Recent Submissions", ["Tool", "Status", "Maker", "When"], recent_tools_rows)
-
-    # Last 10 purchases
-    cursor = await db.execute(
-        """SELECT p.created_at, p.amount_pence, t.name as tool_name, p.buyer_email
-           FROM purchases p
-           LEFT JOIN tools t ON p.tool_id = t.id
-           ORDER BY p.created_at DESC LIMIT 10"""
-    )
-    recent_purchases = await cursor.fetchall()
-
-    recent_purchases_rows = ''
-    for idx, rp in enumerate(recent_purchases):
-        tool_name = escape(str(rp.get('tool_name', '') or 'Unknown'))
-        buyer = escape(str(rp.get('buyer_email', '') or ''))
-        amount = (rp.get('amount_pence', 0) or 0) / 100
-        ago = time_ago(rp.get('created_at'))
-        recent_purchases_rows += f"""
-        <tr style="border-bottom:1px solid var(--border);{row_bg(idx)}">
-            <td style="padding:8px 12px;font-size:13px;font-weight:600;color:var(--ink);">{tool_name}</td>
-            <td style="padding:8px 12px;font-size:13px;color:var(--ink-muted);">{buyer}</td>
-            <td style="padding:8px 12px;font-size:13px;color:#16a34a;font-weight:600;">£{amount:.2f}</td>
-            <td style="padding:8px 12px;font-size:13px;color:var(--ink-muted);">{ago}</td>
-        </tr>
-        """
-
-    recent_purchases_table = data_table("Recent Purchases", ["Tool", "Buyer", "Amount", "When"], recent_purchases_rows)
+    right_col = f"""
+    <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">Today's Pulse</h3>
+    {kpi_grid}
+    {alerts_html}
+    {recent_html}
+    {qs_html}
+    """
 
     return f"""
-    {kpi_html}
-    {pending_html}
-    {alerts_html}
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-        {recent_tools_table}
-        {recent_purchases_table}
+    <div style="display:grid;grid-template-columns:3fr 2fr;gap:32px;align-items:start;">
+        <div>{left_col}</div>
+        <div>{right_col}</div>
     </div>
+    <style>@media(max-width:768px){{[style*="grid-template-columns:3fr 2fr"]{{grid-template-columns:1fr!important;}}}}</style>
     """
 
 
 # ── Tools Tab ────────────────────────────────────────────────────────────
 
 async def render_tools_tab(db, request, pending):
-    """Tools tab: pending cards at top, then full tools table with filters."""
+    """Tools tab: sub-nav with Pending, All, Claims, Stacks, Reviews."""
+    section = request.query_params.get('section', 'pending')
     pending_count = len(pending)
-    all_tools = await get_all_tools_admin(db)
+    html = tools_sub_nav(section, pending_count)
 
-    # --- Pending section ---
-    pending_html = f'<h2 style="font-family:var(--font-display);margin-bottom:16px;color:var(--ink);">Pending Review ({pending_count})</h2>'
+    if section == 'pending':
+        html += await _render_tools_pending(db, request, pending)
+    elif section == 'all':
+        html += await _render_tools_all(db, request)
+    elif section == 'claims':
+        html += await _render_tools_claims(db)
+    elif section == 'stacks':
+        html += await _render_tools_stacks(db)
+    elif section == 'reviews':
+        html += await _render_tools_reviews(db)
+    else:
+        html += await _render_tools_pending(db, request, pending)
+
+    return html
+
+
+async def _render_tools_pending(db, request, pending):
+    """Pending tools with bulk approve/reject."""
+    pending_count = len(pending)
+    html = f'<h2 style="font-family:var(--font-display);margin-bottom:16px;color:var(--ink);">Pending Review ({pending_count})</h2>'
     if pending:
-        pending_html += f'''
-        <div style="display:flex;gap:8px;margin-bottom:16px;padding:12px 16px;background:var(--cream-dark);border-radius:var(--radius);align-items:center;">
-            <form method="post" action="/admin" style="display:inline;">
-                <input type="hidden" name="action" value="approve_all">
-                <button type="submit" class="btn" style="background:#16a34a;color:white;padding:8px 20px;font-weight:600;">
-                    Approve All ({pending_count})
-                </button>
-            </form>
-            <form method="post" action="/admin" style="display:inline;">
-                <input type="hidden" name="action" value="reject_all">
-                <button type="submit" class="btn" style="background:#dc2626;color:white;padding:8px 20px;font-weight:600;"
-                        onclick="return confirm('Reject all {pending_count} pending tools?')">
-                    Reject All
-                </button>
-            </form>
-            <span style="color:var(--ink-muted);font-size:13px;margin-left:8px;">{pending_count} tool{"s" if pending_count != 1 else ""} waiting</span>
-        </div>
-        '''
+        if pending_count > 1:
+            html += f'''
+            <div style="display:flex;gap:8px;margin-bottom:16px;padding:12px 16px;background:var(--cream-dark);border-radius:var(--radius);align-items:center;">
+                <form method="post" action="/admin" style="display:inline;">
+                    <input type="hidden" name="action" value="approve_all">
+                    <button type="submit" class="btn" style="background:#16a34a;color:white;padding:8px 20px;font-weight:600;">
+                        Approve All ({pending_count})
+                    </button>
+                </form>
+                <form method="post" action="/admin" style="display:inline;">
+                    <input type="hidden" name="action" value="reject_all">
+                    <button type="submit" class="btn" style="background:#dc2626;color:white;padding:8px 20px;font-weight:600;"
+                            onclick="return confirm('Reject all {pending_count} pending tools?')">
+                        Reject All
+                    </button>
+                </form>
+                <span style="color:var(--ink-muted);font-size:13px;margin-left:8px;">{pending_count} tool{"s" if pending_count != 1 else ""} waiting</span>
+            </div>
+            '''
         for t in pending:
             tid = t['id']
             name = escape(str(t['name']))
@@ -356,7 +452,7 @@ async def render_tools_tab(db, request, pending):
             cat = escape(str(t.get('category_name', '')))
             price_p = t.get('price_pence')
             price_str = f'\u00a3{price_p/100:.2f}' if price_p else 'Free'
-            pending_html += f"""
+            html += f"""
             <div class="card" style="margin-bottom:12px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
                     <div style="flex:1;min-width:200px;">
@@ -371,68 +467,27 @@ async def render_tools_tab(db, request, pending):
                         <form method="post" action="/admin">
                             <input type="hidden" name="tool_id" value="{tid}">
                             <input type="hidden" name="action" value="approve">
-                            <button type="submit" class="btn" style="background:#16a34a;color:white;padding:8px 16px;">
-                                Approve
-                            </button>
+                            <button type="submit" class="btn" style="background:#16a34a;color:white;padding:8px 16px;">Approve</button>
                         </form>
                         <form method="post" action="/admin">
                             <input type="hidden" name="tool_id" value="{tid}">
                             <input type="hidden" name="action" value="reject">
-                            <button type="submit" class="btn" style="background:#dc2626;color:white;padding:8px 16px;">
-                                Reject
-                            </button>
+                            <button type="submit" class="btn" style="background:#dc2626;color:white;padding:8px 16px;">Reject</button>
                         </form>
                     </div>
                 </div>
             </div>
             """
     else:
-        pending_html += '<p style="color:var(--ink-muted);">No tools pending review.</p>'
+        html += '<p style="color:var(--ink-muted);">No tools pending review.</p>'
+    return html
 
-    # --- Claim Requests ---
-    claim_rows = await db.execute(
-        """SELECT cr.id, cr.tool_id, cr.user_id, cr.status, cr.created_at,
-                  t.name as tool_name, t.slug as tool_slug,
-                  u.name as user_name, u.email as user_email
-           FROM claim_requests cr
-           JOIN tools t ON t.id = cr.tool_id
-           JOIN users u ON u.id = cr.user_id
-           WHERE cr.status = 'pending'
-           ORDER BY cr.created_at DESC""")
-    claims = [dict(r) for r in await claim_rows.fetchall()]
-    claims_html = f'<h2 style="font-family:var(--font-display);margin:32px 0 16px;color:var(--ink);">Claim Requests ({len(claims)})</h2>'
-    if claims:
-        claims_html += '<div style="display:flex;flex-direction:column;gap:12px;">'
-        for c in claims:
-            claims_html += f'''
-            <div class="card" style="padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-                <div>
-                    <a href="/tool/{escape(str(c['tool_slug']))}" style="font-weight:700;color:var(--ink);font-size:15px;">{escape(str(c['tool_name']))}</a>
-                    <span style="color:var(--ink-muted);font-size:13px;margin-left:8px;">claimed by {escape(str(c['user_name'] or c['user_email']))}</span>
-                    <span style="color:var(--ink-muted);font-size:12px;margin-left:8px;">{escape(str(c['created_at'][:10]))}</span>
-                </div>
-                <div style="display:flex;gap:8px;">
-                    <form method="post" action="/admin" style="display:inline;">
-                        <input type="hidden" name="action" value="approve_claim">
-                        <input type="hidden" name="claim_id" value="{c['id']}">
-                        <input type="hidden" name="tool_id" value="{c['tool_id']}">
-                        <input type="hidden" name="user_id" value="{c['user_id']}">
-                        <button type="submit" class="btn" style="background:#16a34a;color:white;padding:6px 16px;font-size:13px;">Approve</button>
-                    </form>
-                    <form method="post" action="/admin" style="display:inline;">
-                        <input type="hidden" name="action" value="reject_claim">
-                        <input type="hidden" name="claim_id" value="{c['id']}">
-                        <button type="submit" class="btn" style="background:#dc2626;color:white;padding:6px 16px;font-size:13px;">Reject</button>
-                    </form>
-                </div>
-            </div>'''
-        claims_html += '</div>'
-    else:
-        claims_html += '<p style="color:var(--ink-muted);">No pending claim requests.</p>'
 
-    # --- Filter & Sort bar ---
+async def _render_tools_all(db, request):
+    """All tools table with filters — slimmed columns (no Boost, Feature, Price)."""
+    all_tools = await get_all_tools_admin(db)
+
     status_filter = request.query_params.get('status', '')
-    cat_filter = request.query_params.get('category', '')
     search_q = request.query_params.get('q', '')
     sort_by = request.query_params.get('sort', 'newest')
     special_filter = request.query_params.get('filter', '')
@@ -457,16 +512,16 @@ async def render_tools_tab(db, request, pending):
     filter_bar = f'''
     <form method="GET" action="/admin" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;">
         <input type="hidden" name="tab" value="tools">
+        <input type="hidden" name="section" value="all">
         <input type="text" name="q" value="{escape(search_q)}" placeholder="Search tools..." style="padding:6px 12px;border:1px solid var(--border);border-radius:999px;font-size:13px;width:180px;">
         <select name="status" style="{select_style}" onchange="this.form.submit()">{status_opts}</select>
         <select name="filter" style="{select_style}" onchange="this.form.submit()">{filter_opts}</select>
         <select name="sort" style="{select_style}" onchange="this.form.submit()">{sort_opts}</select>
         <button type="submit" class="btn btn-primary" style="padding:6px 16px;font-size:13px;">Filter</button>
-        <a href="/admin?tab=tools" style="font-size:12px;color:var(--ink-muted);">Clear</a>
+        <a href="/admin?tab=tools&section=all" style="font-size:12px;color:var(--ink-muted);">Clear</a>
     </form>
     '''
 
-    # --- Apply filters ---
     filtered = list(all_tools)
     if status_filter:
         filtered = [t for t in filtered if t.get('status') == status_filter]
@@ -486,7 +541,6 @@ async def render_tools_tab(db, request, pending):
     elif sort_by == 'name':
         filtered.sort(key=lambda t: str(t.get('name', '')).lower())
 
-    # --- Paginate ---
     per_page = 50
     total_filtered = len(filtered)
     total_pages = max(1, (total_filtered + per_page - 1) // per_page)
@@ -496,9 +550,7 @@ async def render_tools_tab(db, request, pending):
 
     count_line = f'<p style="font-size:13px;color:var(--ink-muted);margin-bottom:12px;">Showing {len(paginated_tools)} of {total_filtered} tools (page {page}/{total_pages})</p>'
 
-    # --- All tools table ---
-    all_html = '<h2 style="font-family:var(--font-display);margin:40px 0 16px;color:var(--ink);">All Tools</h2>'
-    all_html += filter_bar + count_line
+    html = filter_bar + count_line
     if filtered:
         status_styles = {
             'pending': 'background:#FDF8EE;color:#92400E;border:1px solid var(--gold);',
@@ -517,10 +569,7 @@ async def render_tools_tab(db, request, pending):
             v_label = 'Unverify' if is_v else 'Verify'
             v_style = 'background:var(--gold-light);color:#92400E;border:1px solid var(--gold);' if is_v else 'background:var(--cream-dark);color:var(--ink-light);border:1px solid var(--border);'
             v_badge = '<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#92400E;border:1px solid var(--gold);">Verified</span>' if is_v else ''
-            t_price_p = t.get('price_pence')
-            price_cell = f'\u00a3{t_price_p/100:.2f}' if t_price_p else 'Free'
             added_ago = time_ago(t.get('created_at'))
-            # Magic link button (only for unclaimed tools)
             maker_id_val = t.get('maker_id')
             if not maker_id_val:
                 magic_cell = f'''
@@ -544,7 +593,6 @@ async def render_tools_tab(db, request, pending):
                                  font-weight:600;{style}">{escape(s)}</span>
                 </td>
                 <td style="padding:10px 12px;">{t.get('upvote_count', 0)}</td>
-                <td style="padding:10px 12px;">{price_cell}</td>
                 <td style="padding:10px 12px;">{escape(str(t.get('category_name', '')))}</td>
                 <td style="padding:10px 12px;font-size:12px;color:var(--ink-muted);white-space:nowrap;">{added_ago}</td>
                 <td style="padding:10px 12px;">
@@ -563,45 +611,6 @@ async def render_tools_tab(db, request, pending):
                                 font-weight:600;cursor:pointer;{e_style}">{e_label}</button>
                     </form>
                 </td>
-                <td style="font-size:12px;padding:10px 12px;">
-                    {f'<span style="color:#00D4F5;font-weight:600;">{escape(str(t.get("boosted_competitor", "") or ""))}</span>' if t.get('boosted_competitor') else '<span style="color:var(--ink-muted);">&#8212;</span>'}
-                    <form method="post" action="/admin" style="display:inline;margin-left:4px;">
-                        <input type="hidden" name="action" value="toggle_boost">
-                        <input type="hidden" name="tool_id" value="{t['id']}">
-                        <input type="text" name="competitor" value="{escape(str(t.get('boosted_competitor', '') or ''))}" placeholder="e.g. google-analytics"
-                               style="width:110px;font-size:11px;padding:2px 6px;border:1px solid var(--border);border-radius:4px;">
-                        <button type="submit" style="font-size:11px;padding:2px 8px;background:#00D4F5;color:#1A2D4A;border:none;border-radius:4px;cursor:pointer;font-weight:600;">
-                            Set
-                        </button>
-                    </form>
-                </td>
-                <td style="padding:10px 12px;">
-                    <details style="position:relative;">
-                        <summary style="cursor:pointer;padding:4px 12px;border-radius:999px;font-size:12px;
-                                        font-weight:600;background:var(--cream-dark);border:1px solid var(--border);
-                                        color:var(--ink-light);list-style:none;">&#9733; Feature</summary>
-                        <div style="position:absolute;right:0;top:100%;z-index:10;background:white;border:1px solid var(--border);
-                                    border-radius:var(--radius-sm);padding:12px;width:260px;box-shadow:0 4px 16px rgba(0,0,0,0.1);margin-top:4px;">
-                            <form method="post" action="/admin">
-                                <input type="hidden" name="tool_id" value="{t['id']}">
-                                <input type="hidden" name="action" value="feature">
-                                <input type="text" name="headline" placeholder="Headline (optional)" class="form-input"
-                                       style="font-size:12px;padding:6px 10px;margin-bottom:8px;">
-                                <input type="text" name="feature_desc" placeholder="Short blurb (optional)" class="form-input"
-                                       style="font-size:12px;padding:6px 10px;margin-bottom:8px;">
-                                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:6px;font-size:12px;">
-                                    Set as Tool of the Week
-                                </button>
-                            </form>
-                            <form method="post" action="/admin" style="margin-top:8px;">
-                                <input type="hidden" name="action" value="clear_featured">
-                                <button type="submit" class="btn" style="width:100%;justify-content:center;padding:6px;font-size:12px;background:#FEE2E2;color:#991B1B;border:1px solid #FECACA;">
-                                    Clear Tool of the Week
-                                </button>
-                            </form>
-                        </div>
-                    </details>
-                </td>
                 <td style="padding:10px 12px;">
                     <form method="post" action="/admin" style="margin:0;"
                           onsubmit="return confirm('Permanently delete {escape(str(t['name']).replace(chr(39), ''))}? This cannot be undone.')">
@@ -616,7 +625,7 @@ async def render_tools_tab(db, request, pending):
                 {magic_cell}
             </tr>
             """
-        all_html += f"""
+        html += f"""
         <div style="overflow-x:auto;">
             <table style="width:100%;border-collapse:collapse;font-size:14px;">
                 <thead>
@@ -624,13 +633,10 @@ async def render_tools_tab(db, request, pending):
                         <th style="padding:10px 12px;color:var(--ink);">Name</th>
                         <th style="padding:10px 12px;color:var(--ink);">Status</th>
                         <th style="padding:10px 12px;color:var(--ink);">Upvotes</th>
-                        <th style="padding:10px 12px;color:var(--ink);">Price</th>
                         <th style="padding:10px 12px;color:var(--ink);">Category</th>
                         <th style="padding:10px 12px;color:var(--ink);">Added</th>
                         <th style="padding:10px 12px;color:var(--ink);">Verified</th>
                         <th style="padding:10px 12px;color:var(--ink);">Ejectable</th>
-                        <th style="padding:10px 12px;color:var(--ink);">Boost</th>
-                        <th style="padding:10px 12px;color:var(--ink);">Feature</th>
                         <th style="padding:10px 12px;color:var(--ink);">Delete</th>
                         <th style="padding:10px 12px;font-size:12px;">Magic Link</th>
                     </tr>
@@ -639,7 +645,6 @@ async def render_tools_tab(db, request, pending):
             </table>
         </div>
         """
-        # --- Pagination controls ---
         base_params = {k: v for k, v in request.query_params.items() if k != 'page'}
         pagination_html = '<div style="display:flex;justify-content:center;align-items:center;gap:16px;padding:20px 0;">'
         if page > 1:
@@ -650,12 +655,11 @@ async def render_tools_tab(db, request, pending):
             next_params = urlencode({**base_params, 'page': page + 1})
             pagination_html += f'<a href="/admin?{next_params}" style="padding:8px 16px;background:var(--cream-dark);border-radius:8px;text-decoration:none;color:var(--ink);font-weight:600;">Next &rarr;</a>'
         pagination_html += '</div>'
-        all_html += pagination_html
+        html += pagination_html
     else:
-        all_html += '<p style="color:var(--ink-muted);">No tools match the current filters.</p>'
+        html += '<p style="color:var(--ink-muted);">No tools match the current filters.</p>'
 
-    section_html = pending_html + claims_html + '<hr style="margin:32px 0;border:none;border-top:1px solid var(--border);">' + all_html
-    section_html += """
+    html += """
     <script>
     async function generateMagicLink(toolId, btn) {
         btn.disabled = true;
@@ -687,14 +691,200 @@ async def render_tools_tab(db, request, pending):
     }
     </script>
     """
-    return section_html
+    return html
+
+
+async def _render_tools_claims(db):
+    """Claim requests management."""
+    claim_rows = await db.execute(
+        """SELECT cr.id, cr.tool_id, cr.user_id, cr.status, cr.created_at,
+                  t.name as tool_name, t.slug as tool_slug,
+                  u.name as user_name, u.email as user_email
+           FROM claim_requests cr
+           JOIN tools t ON t.id = cr.tool_id
+           JOIN users u ON u.id = cr.user_id
+           WHERE cr.status = 'pending'
+           ORDER BY cr.created_at DESC""")
+    claims = [dict(r) for r in await claim_rows.fetchall()]
+    html = f'<h2 style="font-family:var(--font-display);margin-bottom:16px;color:var(--ink);">Claim Requests ({len(claims)})</h2>'
+    if claims:
+        html += '<div style="display:flex;flex-direction:column;gap:12px;">'
+        for c in claims:
+            html += f'''
+            <div class="card" style="padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                <div>
+                    <a href="/tool/{escape(str(c['tool_slug']))}" style="font-weight:700;color:var(--ink);font-size:15px;">{escape(str(c['tool_name']))}</a>
+                    <span style="color:var(--ink-muted);font-size:13px;margin-left:8px;">claimed by {escape(str(c['user_name'] or c['user_email']))}</span>
+                    <span style="color:var(--ink-muted);font-size:12px;margin-left:8px;">{escape(str(c['created_at'][:10]))}</span>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <form method="post" action="/admin" style="display:inline;">
+                        <input type="hidden" name="action" value="approve_claim">
+                        <input type="hidden" name="claim_id" value="{c['id']}">
+                        <input type="hidden" name="tool_id" value="{c['tool_id']}">
+                        <input type="hidden" name="user_id" value="{c['user_id']}">
+                        <button type="submit" class="btn" style="background:#16a34a;color:white;padding:6px 16px;font-size:13px;">Approve</button>
+                    </form>
+                    <form method="post" action="/admin" style="display:inline;">
+                        <input type="hidden" name="action" value="reject_claim">
+                        <input type="hidden" name="claim_id" value="{c['id']}">
+                        <button type="submit" class="btn" style="background:#dc2626;color:white;padding:6px 16px;font-size:13px;">Reject</button>
+                    </form>
+                </div>
+            </div>'''
+        html += '</div>'
+    else:
+        html += '<p style="color:var(--ink-muted);">No pending claim requests.</p>'
+    return html
+
+
+async def _render_tools_stacks(db):
+    """Stacks management — no collapsible wrapper."""
+    all_tools = await get_all_tools_admin(db)
+    approved_tools = [t for t in all_tools if t.get('status') == 'approved']
+    display_tools = approved_tools[:200]
+    total_approved = len(approved_tools)
+
+    all_stacks = await get_all_stacks(db)
+    tool_options = ''.join(f'<option value="{t["id"]}">{escape(str(t["name"]))}</option>' for t in display_tools)
+    if total_approved > 200:
+        tool_options += f'<option disabled>... and {total_approved - 200} more</option>'
+    stack_options = ''.join(f'<option value="{s["id"]}">{escape(str(s["title"]))}</option>' for s in all_stacks)
+
+    stacks_rows = ''
+    for s in all_stacks:
+        stacks_rows += f'''
+        <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 12px;">{s['id']}</td>
+            <td style="padding:8px 12px;">{escape(str(s['title']))}</td>
+            <td style="padding:8px 12px;">{s.get('cover_emoji', '')}</td>
+            <td style="padding:8px 12px;">{s.get('tool_count', 0)}</td>
+            <td style="padding:8px 12px;">{s.get('discount_percent', 15)}%</td>
+            <td style="padding:8px 12px;">
+                <form method="post" action="/admin" style="display:inline;">
+                    <input type="hidden" name="action" value="delete_stack">
+                    <input type="hidden" name="stack_id" value="{s['id']}">
+                    <button type="submit" style="padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;
+                            cursor:pointer;background:#FEE2E2;color:#991B1B;border:1px solid #FECACA;"
+                            onclick="return confirm('Delete this stack?')">Delete</button>
+                </form>
+            </td>
+        </tr>'''
+
+    add_tool_html = ''
+    if all_stacks and display_tools:
+        add_tool_html = f"""
+        <div class="card" style="padding:16px;margin-bottom:16px;">
+            <h4 style="font-size:14px;margin-bottom:10px;color:var(--ink);">Add Tool to Stack</h4>
+            <form method="post" action="/admin" style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;">
+                <input type="hidden" name="action" value="add_to_stack">
+                <div>
+                    <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Stack</label>
+                    <select name="stack_id" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:13px;">{stack_options}</select>
+                </div>
+                <div>
+                    <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Tool</label>
+                    <select name="tool_id" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:13px;">{tool_options}</select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="padding:6px 16px;font-size:13px;">Add</button>
+            </form>
+        </div>
+        """
+
+    return f"""
+    <h2 style="font-family:var(--font-display);margin-bottom:16px;color:var(--ink);">Stacks ({len(all_stacks)})</h2>
+    <div class="card" style="padding:16px;margin-bottom:16px;">
+        <h4 style="font-size:14px;margin-bottom:10px;color:var(--ink);">Create New Stack</h4>
+        <form method="post" action="/admin" style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;">
+            <input type="hidden" name="action" value="create_stack">
+            <div>
+                <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Title</label>
+                <input type="text" name="stack_title" required style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:13px;">
+            </div>
+            <div>
+                <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Emoji</label>
+                <input type="text" name="stack_emoji" placeholder="&#128230;" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;width:60px;font-size:13px;">
+            </div>
+            <div>
+                <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Discount %</label>
+                <input type="number" name="stack_discount" value="15" min="0" max="50" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;width:70px;font-size:13px;">
+            </div>
+            <div>
+                <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Description</label>
+                <input type="text" name="stack_desc" placeholder="Optional" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;width:200px;font-size:13px;">
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding:6px 16px;font-size:13px;">Create</button>
+        </form>
+    </div>
+    {add_tool_html}
+    <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+            <thead>
+                <tr style="border-bottom:2px solid var(--border);text-align:left;">
+                    <th style="padding:8px 12px;color:var(--ink);">ID</th>
+                    <th style="padding:8px 12px;color:var(--ink);">Title</th>
+                    <th style="padding:8px 12px;color:var(--ink);">Emoji</th>
+                    <th style="padding:8px 12px;color:var(--ink);">Tools</th>
+                    <th style="padding:8px 12px;color:var(--ink);">Discount</th>
+                    <th style="padding:8px 12px;color:var(--ink);">Actions</th>
+                </tr>
+            </thead>
+            <tbody>{stacks_rows}</tbody>
+        </table>
+    </div>
+    """
+
+
+async def _render_tools_reviews(db):
+    """Reviews management — no collapsible wrapper."""
+    reviews = await get_all_reviews_admin(db)
+    total_reviews = len(reviews)
+    display_reviews = reviews[:50]
+
+    html = f'<h2 style="font-family:var(--font-display);margin-bottom:16px;color:var(--ink);">Reviews ({total_reviews})</h2>'
+    if display_reviews:
+        if total_reviews > 50:
+            html += f'<p style="color:var(--ink-muted);font-size:13px;margin-bottom:12px;">Showing most recent 50 of {total_reviews} reviews</p>'
+        for rv in display_reviews:
+            rv_tool_name = escape(str(rv.get('tool_name', 'Unknown')))
+            rv_tool_slug = escape(str(rv.get('tool_slug', '')))
+            rv_reviewer = escape(str(rv.get('reviewer_name', 'Anonymous')))
+            rv_rating = int(rv.get('rating', 0))
+            rv_body = escape(str(rv.get('body', '')))
+            rv_id = rv['id']
+            stars_html = '<span style="color:var(--gold);font-size:16px;">' + ('&#9733;' * rv_rating) + ('&#9734;' * (5 - rv_rating)) + '</span>'
+            html += f"""
+            <div class="card" style="margin-bottom:10px;padding:14px 16px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+                    <div style="flex:1;">
+                        <div style="margin-bottom:4px;">
+                            <a href="/tool/{rv_tool_slug}" style="font-weight:600;color:var(--slate);text-decoration:none;">{rv_tool_name}</a>
+                            <span style="margin-left:8px;">{stars_html}</span>
+                        </div>
+                        <div style="font-size:13px;color:var(--ink-muted);margin-bottom:6px;">by {rv_reviewer}</div>
+                        <p style="font-size:14px;color:var(--ink);margin:0;">{rv_body}</p>
+                    </div>
+                    <form method="post" action="/admin" style="margin:0;">
+                        <input type="hidden" name="action" value="delete_review">
+                        <input type="hidden" name="review_id" value="{rv_id}">
+                        <button type="submit" style="padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;
+                                cursor:pointer;background:#FEE2E2;color:#991B1B;border:1px solid #FECACA;"
+                                onclick="return confirm('Delete this review?')">Delete</button>
+                    </form>
+                </div>
+            </div>
+            """
+    else:
+        html += '<p style="color:var(--ink-muted);padding:12px 0;">No reviews yet.</p>'
+    return html
 
 
 # ── People Tab ───────────────────────────────────────────────────────────
 
 async def render_people_tab(db, request):
-    """People tab: unified view of makers and users with role badges."""
+    """People tab: unified view of makers and users with role badges and search."""
     role_filter = request.query_params.get('role', '')
+    search_q = request.query_params.get('q', '')
 
     # UNION query merging makers and users
     cursor = await db.execute("""
@@ -722,13 +912,29 @@ async def render_people_tab(db, request):
     elif role_filter == 'users':
         all_people = [p for p in all_people if p['role'] == 'user']
 
+    # Apply text search
+    if search_q:
+        q_lower = search_q.lower()
+        all_people = [p for p in all_people if
+                      q_lower in str(p.get('name', '') or '').lower() or
+                      q_lower in str(p.get('email', '') or '').lower()]
+
     # Role filter pills
     pills = ''
     for val, label in [('', 'All'), ('makers', 'Makers'), ('users', 'Users')]:
         active_style = 'background:var(--slate);color:white;' if val == role_filter else 'background:var(--cream-dark);color:var(--ink-muted);border:1px solid var(--border);'
         pills += f'<a href="/admin?tab=people{f"&role={val}" if val else ""}" style="{active_style}padding:6px 14px;font-size:13px;border-radius:999px;text-decoration:none;font-weight:600;display:inline-block;">{label}</a> '
 
-    filter_html = f'<div style="display:flex;gap:8px;margin-bottom:20px;">{pills}</div>'
+    search_input = f'''
+    <form method="GET" action="/admin" style="display:inline;">
+        <input type="hidden" name="tab" value="people">
+        {"<input type='hidden' name='role' value='" + escape(role_filter) + "'>" if role_filter else ""}
+        <input type="text" name="q" value="{escape(search_q)}" placeholder="Search name or email..."
+               style="padding:6px 12px;border:1px solid var(--border);border-radius:999px;font-size:13px;width:200px;">
+        <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:12px;">Search</button>
+    </form>
+    '''
+    filter_html = f'<div style="display:flex;gap:8px;margin-bottom:20px;align-items:center;flex-wrap:wrap;">{pills}{search_input}</div>'
 
     # Count summaries
     maker_count = sum(1 for p in all_people if p['role'] == 'maker') if not role_filter else len([p for p in all_people if p['role'] == 'maker'])
@@ -803,195 +1009,33 @@ async def render_people_tab(db, request):
     """
 
 
-# ── Content Tab ──────────────────────────────────────────────────────────
-
-async def render_content_tab(db, request):
-    """Content tab: collapsible sections for stacks and reviews."""
-    all_tools = await get_all_tools_admin(db)
-    approved_tools = [t for t in all_tools if t.get('status') == 'approved']
-    display_tools = approved_tools[:200]
-
-    # ── Stacks section ──
-    all_stacks = await get_all_stacks(db)
-    stacks_html = _render_stacks_section(all_stacks, display_tools, len(approved_tools))
-
-    # ── Reviews section ──
-    reviews = await get_all_reviews_admin(db)
-    reviews_html = _render_reviews_section(reviews)
-
-    return f"""
-    {stacks_html}
-    <div style="margin-top:20px;">{reviews_html}</div>
-    """
-
-
-def _render_stacks_section(all_stacks, display_tools, total_approved):
-    """Collapsible stacks management section."""
-    tool_options = ''.join(f'<option value="{t["id"]}">{escape(str(t["name"]))}</option>' for t in display_tools)
-    if total_approved > 200:
-        tool_options += f'<option disabled>... and {total_approved - 200} more</option>'
-    stack_options = ''.join(f'<option value="{s["id"]}">{escape(str(s["title"]))}</option>' for s in all_stacks)
-
-    stacks_rows = ''
-    for s in all_stacks:
-        stacks_rows += f'''
-        <tr style="border-bottom:1px solid var(--border);">
-            <td style="padding:8px 12px;">{s['id']}</td>
-            <td style="padding:8px 12px;">{escape(str(s['title']))}</td>
-            <td style="padding:8px 12px;">{s.get('cover_emoji', '')}</td>
-            <td style="padding:8px 12px;">{s.get('tool_count', 0)}</td>
-            <td style="padding:8px 12px;">{s.get('discount_percent', 15)}%</td>
-            <td style="padding:8px 12px;">
-                <form method="post" action="/admin" style="display:inline;">
-                    <input type="hidden" name="action" value="delete_stack">
-                    <input type="hidden" name="stack_id" value="{s['id']}">
-                    <button type="submit" style="padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;
-                            cursor:pointer;background:#FEE2E2;color:#991B1B;border:1px solid #FECACA;"
-                            onclick="return confirm('Delete this stack?')">Delete</button>
-                </form>
-            </td>
-        </tr>'''
-
-    add_tool_html = ''
-    if all_stacks and display_tools:
-        add_tool_html = f"""
-        <div class="card" style="padding:16px;margin-bottom:16px;">
-            <h4 style="font-size:14px;margin-bottom:10px;color:var(--ink);">Add Tool to Stack</h4>
-            <form method="post" action="/admin" style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;">
-                <input type="hidden" name="action" value="add_to_stack">
-                <div>
-                    <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Stack</label>
-                    <select name="stack_id" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:13px;">{stack_options}</select>
-                </div>
-                <div>
-                    <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Tool</label>
-                    <select name="tool_id" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:13px;">{tool_options}</select>
-                </div>
-                <button type="submit" class="btn btn-primary" style="padding:6px 16px;font-size:13px;">Add</button>
-            </form>
-        </div>
-        """
-
-    return f"""
-    <details>
-        <summary style="font-family:var(--font-display);font-size:20px;color:var(--ink);cursor:pointer;padding:12px 0;
-                        border-bottom:1px solid var(--border);margin-bottom:16px;list-style:none;display:flex;align-items:center;gap:8px;">
-            <span style="font-size:14px;">&#9654;</span> Stacks ({len(all_stacks)})
-        </summary>
-        <div class="card" style="padding:16px;margin-bottom:16px;">
-            <h4 style="font-size:14px;margin-bottom:10px;color:var(--ink);">Create New Stack</h4>
-            <form method="post" action="/admin" style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;">
-                <input type="hidden" name="action" value="create_stack">
-                <div>
-                    <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Title</label>
-                    <input type="text" name="stack_title" required style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;font-size:13px;">
-                </div>
-                <div>
-                    <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Emoji</label>
-                    <input type="text" name="stack_emoji" placeholder="&#128230;" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;width:60px;font-size:13px;">
-                </div>
-                <div>
-                    <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Discount %</label>
-                    <input type="number" name="stack_discount" value="15" min="0" max="50" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;width:70px;font-size:13px;">
-                </div>
-                <div>
-                    <label style="font-size:12px;display:block;margin-bottom:4px;color:var(--ink-muted);">Description</label>
-                    <input type="text" name="stack_desc" placeholder="Optional" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;width:200px;font-size:13px;">
-                </div>
-                <button type="submit" class="btn btn-primary" style="padding:6px 16px;font-size:13px;">Create</button>
-            </form>
-        </div>
-        {add_tool_html}
-        <div style="overflow-x:auto;">
-            <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                <thead>
-                    <tr style="border-bottom:2px solid var(--border);text-align:left;">
-                        <th style="padding:8px 12px;color:var(--ink);">ID</th>
-                        <th style="padding:8px 12px;color:var(--ink);">Title</th>
-                        <th style="padding:8px 12px;color:var(--ink);">Emoji</th>
-                        <th style="padding:8px 12px;color:var(--ink);">Tools</th>
-                        <th style="padding:8px 12px;color:var(--ink);">Discount</th>
-                        <th style="padding:8px 12px;color:var(--ink);">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>{stacks_rows}</tbody>
-            </table>
-        </div>
-    </details>
-    """
-
-
-def _render_reviews_section(reviews):
-    """Collapsible reviews management section."""
-    total_reviews = len(reviews)
-    display_reviews = reviews[:50]
-
-    items_html = ''
-    if display_reviews:
-        if total_reviews > 50:
-            items_html += f'<p style="color:var(--ink-muted);font-size:13px;margin-bottom:12px;">Showing most recent 50 of {total_reviews} reviews</p>'
-        for rv in display_reviews:
-            rv_tool_name = escape(str(rv.get('tool_name', 'Unknown')))
-            rv_tool_slug = escape(str(rv.get('tool_slug', '')))
-            rv_reviewer = escape(str(rv.get('reviewer_name', 'Anonymous')))
-            rv_rating = int(rv.get('rating', 0))
-            rv_body = escape(str(rv.get('body', '')))
-            rv_id = rv['id']
-            stars_html = '<span style="color:var(--gold);font-size:16px;">' + ('&#9733;' * rv_rating) + ('&#9734;' * (5 - rv_rating)) + '</span>'
-            items_html += f"""
-            <div class="card" style="margin-bottom:10px;padding:14px 16px;">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-                    <div style="flex:1;">
-                        <div style="margin-bottom:4px;">
-                            <a href="/tool/{rv_tool_slug}" style="font-weight:600;color:var(--slate);text-decoration:none;">{rv_tool_name}</a>
-                            <span style="margin-left:8px;">{stars_html}</span>
-                        </div>
-                        <div style="font-size:13px;color:var(--ink-muted);margin-bottom:6px;">by {rv_reviewer}</div>
-                        <p style="font-size:14px;color:var(--ink);margin:0;">{rv_body}</p>
-                    </div>
-                    <form method="post" action="/admin" style="margin:0;">
-                        <input type="hidden" name="action" value="delete_review">
-                        <input type="hidden" name="review_id" value="{rv_id}">
-                        <button type="submit" style="padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;
-                                cursor:pointer;background:#FEE2E2;color:#991B1B;border:1px solid #FECACA;"
-                                onclick="return confirm('Delete this review?')">Delete</button>
-                    </form>
-                </div>
-            </div>
-            """
-    else:
-        items_html = '<p style="color:var(--ink-muted);padding:12px 0;">No reviews yet.</p>'
-
-    return f"""
-    <details>
-        <summary style="font-family:var(--font-display);font-size:20px;color:var(--ink);cursor:pointer;padding:12px 0;
-                        border-bottom:1px solid var(--border);margin-bottom:16px;list-style:none;display:flex;align-items:center;gap:8px;">
-            <span style="font-size:14px;">&#9654;</span> Reviews ({total_reviews})
-        </summary>
-        {items_html}
-    </details>
-    """
-
-
 # ── Growth Tab ───────────────────────────────────────────────────────────
 
 async def render_growth_tab(db, request):
-    """Growth tab: sub-nav with Traffic & Funnels, Search, Email, Social sections."""
-    section = request.query_params.get('section', 'traffic')
+    """Growth tab: 9 sub-nav sections."""
+    section = request.query_params.get('section', 'charts')
     html = growth_sub_nav(section)
 
-    if section == 'traffic':
-        html += await render_traffic_section(db, request)
+    if section == 'charts':
+        html += await render_charts_section(db, request)
+    elif section == 'tables':
+        html += await render_tables_section(db, request)
+    elif section == 'funnels':
         html += await render_funnels_section(db)
     elif section == 'search':
         html += await render_search_section(db)
     elif section == 'email':
         html += await render_email_section(db, request)
+    elif section == 'magic':
+        html += await render_magic_section(db, request)
+    elif section == 'makers':
+        html += await render_makers_section(db, request)
+    elif section == 'stale':
+        html += await render_stale_section(db, request)
     elif section == 'social':
         html += await render_social_section(db)
     else:
-        html += await render_traffic_section(db, request)
-        html += await render_funnels_section(db)
+        html += await render_charts_section(db, request)
 
     return html
 
@@ -1004,13 +1048,18 @@ async def admin_post(request: Request):
 
     # Login
     if "password" in form:
+        client_ip = request.headers.get("fly-client-ip", request.client.host if request.client else "unknown")
+        if _check_admin_rate_limit(client_ip):
+            return HTMLResponse(page_shell("Admin Login", login_form_html("Too many attempts. Try again in 15 minutes."), user=request.state.user))
         password = str(form["password"])
         if _secrets.compare_digest(password, ADMIN_PASSWORD):
+            _clear_admin_attempts(client_ip)
             token = make_session_token(password)
             response = RedirectResponse(url="/admin", status_code=303)
             response.set_cookie(key="indiestack_admin", value=token, httponly=True, samesite="lax", secure=True, max_age=8*3600)
             return response
         else:
+            _record_admin_attempt(client_ip)
             return HTMLResponse(page_shell("Admin Login", login_form_html("Invalid password."), user=request.state.user))
 
     # Approve / Reject / Verify / all other actions
@@ -1031,6 +1080,19 @@ async def admin_post(request: Request):
         # Delegate outreach actions
         if action in OUTREACH_ACTIONS:
             return await handle_outreach_post(db, form, request)
+
+        # Avatar approve/reject
+        if action == "approve_avatar":
+            user_id = int(form.get("user_id", 0))
+            if user_id:
+                await update_user(db, user_id, pixel_avatar_approved=1)
+            return RedirectResponse(url="/admin?toast=Avatar+approved", status_code=303)
+
+        if action == "reject_avatar":
+            user_id = int(form.get("user_id", 0))
+            if user_id:
+                await update_user(db, user_id, pixel_avatar='', pixel_avatar_approved=0)
+            return RedirectResponse(url="/admin?toast=Avatar+rejected", status_code=303)
 
         # Bulk actions
         if action == "approve_all":
@@ -1142,7 +1204,7 @@ async def admin_post(request: Request):
             review_id = _safe_int(form.get("review_id"))
             if review_id:
                 await delete_review(db, review_id)
-            return RedirectResponse(url="/admin?tab=content&toast=Review+deleted", status_code=303)
+            return RedirectResponse(url="/admin?tab=tools&section=reviews&toast=Review+deleted", status_code=303)
         elif action == "toggle_boost":
             tool_id = int(form.get("tool_id", 0))
             competitor = str(form.get("competitor", "")).strip().lower().replace(" ", "-")
@@ -1163,24 +1225,24 @@ async def admin_post(request: Request):
             if stack_title:
                 await create_stack(db, title=stack_title, description=stack_desc,
                                   cover_emoji=stack_emoji, discount_percent=stack_discount)
-            return RedirectResponse(url="/admin?tab=content&toast=Stack+created", status_code=303)
+            return RedirectResponse(url="/admin?tab=tools&section=stacks&toast=Stack+created", status_code=303)
         elif action == "add_to_stack":
             stack_id_val = int(form.get("stack_id", 0) or 0)
             tool_id_val = int(form.get("tool_id", 0) or 0)
             if stack_id_val and tool_id_val:
                 await add_tool_to_stack(db, stack_id_val, tool_id_val)
-            return RedirectResponse(url="/admin?tab=content&toast=Tool+added+to+stack", status_code=303)
+            return RedirectResponse(url="/admin?tab=tools&section=stacks&toast=Tool+added+to+stack", status_code=303)
         elif action == "remove_from_stack":
             stack_id_val = int(form.get("stack_id", 0) or 0)
             tool_id_val = int(form.get("tool_id", 0) or 0)
             if stack_id_val and tool_id_val:
                 await remove_tool_from_stack(db, stack_id_val, tool_id_val)
-            return RedirectResponse(url="/admin?tab=content&toast=Tool+removed+from+stack", status_code=303)
+            return RedirectResponse(url="/admin?tab=tools&section=stacks&toast=Tool+removed+from+stack", status_code=303)
         elif action == "delete_stack":
             stack_id_val = int(form.get("stack_id", 0) or 0)
             if stack_id_val:
                 await delete_stack(db, stack_id_val)
-            return RedirectResponse(url="/admin?tab=content&toast=Stack+deleted", status_code=303)
+            return RedirectResponse(url="/admin?tab=tools&section=stacks&toast=Stack+deleted", status_code=303)
         return RedirectResponse(url="/admin", status_code=303)
 
     return RedirectResponse(url="/admin", status_code=303)
@@ -1191,14 +1253,14 @@ async def admin_post(request: Request):
 @router.get("/admin/analytics")
 async def admin_analytics_redirect(request: Request):
     tab = request.query_params.get("tab", "overview")
-    section_map = {"overview": "traffic", "funnels": "traffic", "search": "search", "growth": "traffic"}
-    return RedirectResponse(url=f"/admin?tab=growth&section={section_map.get(tab, 'traffic')}", status_code=302)
+    section_map = {"overview": "charts", "funnels": "funnels", "search": "search", "growth": "charts"}
+    return RedirectResponse(url=f"/admin?tab=growth&section={section_map.get(tab, 'charts')}", status_code=302)
 
 
 @router.get("/admin/outreach")
 async def admin_outreach_redirect(request: Request):
     tab = request.query_params.get("tab", "email")
-    section_map = {"email": "email", "magic": "email", "makers": "email", "stale": "email", "social": "social"}
+    section_map = {"email": "email", "magic": "magic", "makers": "makers", "stale": "stale", "social": "social"}
     return RedirectResponse(url=f"/admin?tab=growth&section={section_map.get(tab, 'email')}", status_code=302)
 
 

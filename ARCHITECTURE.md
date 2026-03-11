@@ -12,7 +12,7 @@ someone built because the online ones were paywalled). Makers submit tools, we
 review and approve them, and both humans and AI agents discover them through
 search, category browsing, and the MCP server.
 
-Live at: https://indiestack.fly.dev/
+Live at: https://indiestack.ai/ (redirects from indiestack.fly.dev)
 
 ## Stack
 
@@ -35,10 +35,10 @@ Live at: https://indiestack.fly.dev/
 | `src/indiestack/routes/tags.py` | Programmatic /tag/{slug} SEO pages (~197 tags) |
 | `src/indiestack/routes/submit.py` | Tool submission form with "Replaces" field, data export checkbox, GitHub URL auto-fill, plugin toggle (tool_type/platforms/install_command) |
 | `src/indiestack/routes/plugins.py` | AI Plugins & Skills discovery page: `/plugins` with type filters (MCP Server/Plugin/Extension/Skill) and platform filters |
-| `src/indiestack/routes/admin.py` | Admin Command Center: unified `/admin?tab=X` with 5 tabs — Overview (KPIs, alerts, activity), Tools (approve/reject, filter, bulk import, stacks), People (unified makers+users table), Content (email blast, magic links, TOTW, digest), Growth (rendered by admin_analytics.py). ~1450 lines. |
-| `src/indiestack/routes/admin_analytics.py` | Growth tab renderer: Traffic & Funnels (daily + hourly traffic charts, top pages, referrers), Search (gap analysis, trends, volume), Email (subscriber stats), Social (placeholder). Called by admin.py. |
-| `src/indiestack/routes/admin_outreach.py` | Content tab renderer: email blast, magic links, maker tracker, Tool of the Week panel, weekly digest panel, stale tools. Called by admin.py. |
-| `src/indiestack/routes/admin_helpers.py` | Shared admin UI components: `kpi_card`, `tab_nav`, `growth_sub_nav`, `bar_chart`, `data_table`, `status_badge`, `role_badge`, `pending_alert_bar`, `time_ago`, `row_bg` |
+| `src/indiestack/routes/admin.py` | Admin Command Center: `/admin?tab=X` with 4 tabs — Overview (two-column: action items + today's pulse), Tools (sub-nav: Pending/All/Claims/Stacks/Reviews), People (search + role filter), Growth (9 sub-nav sections, rendered by admin_analytics.py + admin_outreach.py). |
+| `src/indiestack/routes/admin_analytics.py` | Growth tab sections: Charts (KPIs + optimised GROUP BY charts), Tables (top pages, referrers, visitors), Funnels (platform funnel, per-tool, maker leaderboard), Search (gap analysis, trends). |
+| `src/indiestack/routes/admin_outreach.py` | Growth tab sections: Email (TOTW, digest, launch blast, custom), Magic Links, Makers (tracker + nudges), Stale Tools (freshness checker), Social (tweet templates). |
+| `src/indiestack/routes/admin_helpers.py` | Shared admin UI: `kpi_card`, `tab_nav`, `growth_sub_nav`, `tools_sub_nav`, `bar_chart`, `data_table`, `status_badge`, `freshness_badge`, `role_badge`, `pending_alert_bar`, `time_ago`, `days_ago_label`, `row_bg` |
 | `src/indiestack/routes/embed.py` | Embeddable comparison widget: `/embed` docs, `/embed/widget.js`, `/embed/{category}` iframe |
 | `src/indiestack/routes/maker.py` | Maker profiles + `/makers` directory with search + `/leaderboard` reputation ranking |
 | `src/indiestack/routes/collections.py` | Curated tool collections |
@@ -403,7 +403,7 @@ Standalone at `src/indiestack/mcp_server.py`. v0.4.0 published to official MCP r
 **Resources** (3): `categories://list`, `trending://tools`, `indiestack://tools-index`
 **Prompts** (3): `before-you-build`, `find-alternatives`, `save-tokens`
 
-Calls the JSON API over HTTP. Default base: `https://indiestack.fly.dev`.
+Calls the JSON API over HTTP. Default base: `https://indiestack.ai`.
 Run with: `python3 -m indiestack.mcp_server`
 
 ## Email

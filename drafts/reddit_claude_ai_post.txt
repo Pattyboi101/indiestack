@@ -1,0 +1,21 @@
+TITLE: I built an MCP server that stops Claude from rebuilding things that already exist
+
+BODY:
+
+My co-founder and I built this with Claude Code over the past few weeks — it's called IndieStack, and it's an MCP server that gives Claude a catalog of 900+ indie developer tools to search before writing code from scratch.
+
+The problem: Every time I asked Claude to "add analytics" or "add auth," it would write the whole thing from scratch — 200+ lines of code for something a dozen indie tools already solve. Same with payments, email, monitoring... it just defaults to building.
+
+What we built: An MCP server that Claude searches before coding. So now when you ask for analytics, it checks if there's an existing tool first and recommends it with an integration snippet instead of rebuilding from scratch.
+
+- You ask Claude to add analytics → searches the catalog → recommends Plausible or similar
+- You ask for invoicing → finds an indie tool instead of writing billing logic
+- Works with Claude Code, Cursor, Windsurf — anything that supports MCP
+
+Claude's role: Claude Code literally built most of the codebase — the FastAPI backend, the search engine, the MCP server itself, the tool discovery pages. We used it for everything from database schema to email templates.
+
+Free to try: Install from PyPI (pip install indiestack) or find it on the MCP Registry. No API key needed, no paid tier required. The whole catalog is free to search and browse at indiestack.fly.dev.
+
+It's still a work in progress — more makers uploading their tools would help take it further.
+
+Genuinely curious — does anyone else run into this problem? Or do you prefer Claude building everything custom?

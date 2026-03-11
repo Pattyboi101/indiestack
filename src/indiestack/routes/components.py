@@ -606,14 +606,12 @@ def nav_html(user=None) -> str:
     if user:
         user_name = escape(str(user.get('name', '') or user.get('email', '')))
         initial = user_name[0].upper() if user_name else '?'
+        avatar_html = user_avatar_html(user, size=32, is_own=True)
         auth_links = f"""
                 <a href="/dashboard" style="color:var(--ink-light);">Dashboard</a>
-                <a href="/developer" style="color:var(--ink-light);">API</a>
                 <a href="/dashboard/notifications" style="position:relative;color:var(--ink-light);font-size:18px;text-decoration:none;">&#128276;</a>
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <div style="width:32px;height:32px;border-radius:50%;background:var(--terracotta);
-                                color:white;display:flex;align-items:center;justify-content:center;
-                                font-size:12px;font-weight:700;">{initial}</div>
+                    {avatar_html}
                     <span style="color:var(--ink);font-size:13px;font-weight:600;">{user_name}</span>
                     {cofounder_badge_html() if user.get('email', '').lower() in {e.lower() for e in COFOUNDER_EMAILS} else ''}
                 </div>
@@ -621,7 +619,6 @@ def nav_html(user=None) -> str:
         """
         mobile_auth_links = f"""
                 <a href="/dashboard">Dashboard</a>
-                <a href="/developer">API</a>
                 <a href="/dashboard/notifications">Notifications</a>
                 <a href="/logout">Log out</a>
         """
@@ -665,17 +662,12 @@ def nav_html(user=None) -> str:
                                 box-shadow:var(--shadow-md);padding:8px 0;min-width:180px;z-index:200;">
                         <a href="/new" class="nav-dropdown-item">New Arrivals</a>
                         <a href="/tags" class="nav-dropdown-item">Tags</a>
-                        <a href="/makers" class="nav-dropdown-item">Makers</a>
-                        <a href="/leaderboard" class="nav-dropdown-item">Leaderboard</a>
                         <a href="/stacks" class="nav-dropdown-item">Stacks</a>
-                        <a href="/best" class="nav-dropdown-item">Best Tools</a>
-                        <a href="/plugins" class="nav-dropdown-item">Plugins</a>
-                        <a href="/gaps" class="nav-dropdown-item">Gaps &#128293;</a>
                         <a href="/pulse" class="nav-dropdown-item">AI Pulse &#128308;</a>
-                        <a href="/blog" class="nav-dropdown-item">Blog</a>
+                        <a href="/what-is-indiestack" class="nav-dropdown-item">What is IndieStack?</a>
                     </div>
                 </div>
-                <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Add Your Tool</a>
+                <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Submit</a>
                 <button onclick="toggleTheme()" id="theme-toggle" style="background:none;border:1px solid var(--border);border-radius:999px;padding:8px 12px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all 0.15s ease;min-width:44px;min-height:44px;" title="Toggle dark mode">&#9790;</button>
                 {auth_links}
             </div>
@@ -685,13 +677,10 @@ def nav_html(user=None) -> str:
             <a href="/explore">Explore</a>
             <a href="/new">New</a>
             <a href="/tags">Tags</a>
-            <a href="/makers">Makers</a>
-            <a href="/leaderboard">Leaderboard</a>
             <a href="/stacks">Stacks</a>
-            <a href="/plugins">Plugins</a>
-            <a href="/gaps">Gaps</a>
+            <a href="/what-is-indiestack">What is IndieStack?</a>
             <a href="/pulse">AI Pulse</a>
-            <a href="/submit" class="btn btn-primary">Add Your Tool</a>
+            <a href="/submit" class="btn btn-primary">Submit</a>
             <button onclick="toggleTheme()">Toggle Theme</button>
             {mobile_auth_links}
         </div>
@@ -710,7 +699,7 @@ def email_sticky_bar():
         padding:16px 24px;box-shadow:0 -4px 20px rgba(0,0,0,0.15);">
         <form id="sticky-email-form" style="max-width:800px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
             <span style="color:white;font-size:14px;font-weight:500;white-space:nowrap;">
-                Get weekly indie tool picks straight to your inbox</span>
+                Get weekly indie picks straight to your inbox</span>
             <input type="email" name="email" placeholder="you@example.com" required
                 style="border:none;border-radius:999px;padding:10px 16px;font-size:14px;
                 min-width:200px;flex:1;outline:none;">
@@ -768,35 +757,36 @@ def footer_html() -> str:
           <!-- Brand -->
           <div>
             <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;">IndieStack</div>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">Discover indie SaaS tools built by solo developers and small teams.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">Discover indie creations built by independent makers and small teams.</p>
           </div>
           <!-- Product -->
           <div>
             <div class="footer-heading">Product</div>
-            <a href="/explore" class="footer-link">Explore Tools</a>
+            <a href="/explore" class="footer-link">Explore</a>
             <a href="/new" class="footer-link">New Arrivals</a>
             <a href="/stacks" class="footer-link">Stacks</a>
             <a href="/makers" class="footer-link">Makers</a>
             <a href="/blog" class="footer-link">Blog</a>
-            <a href="/best" class="footer-link">Best Tools</a>
+            <a href="/best" class="footer-link">Best Indie</a>
           </div>
           <!-- Company -->
           <div>
             <div class="footer-heading">Company</div>
             <a href="/about" class="footer-link">About</a>
             <a href="/faq" class="footer-link">FAQ</a>
-            <a href="/submit" class="footer-link">Add Your Tool</a>
+            <a href="/submit" class="footer-link">Submit</a>
           </div>
           <!-- Legal -->
           <div>
             <div class="footer-heading">Legal</div>
             <a href="/terms" class="footer-link">Terms of Service</a>
             <a href="/privacy" class="footer-link">Privacy Policy</a>
+            <a href="mailto:pajebay1@gmail.com?subject=Bug%20Report%20%E2%80%94%20IndieStack&body=What%20happened%3A%0A%0AWhat%20I%20expected%3A%0A%0APage%20URL%3A%0A" class="footer-link">Report a Bug</a>
           </div>
         </div>
         <div class="footer-bottom">
           <div style="text-align:center;margin-bottom:24px;">
-    <p style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:600;margin-bottom:12px;">Get weekly picks — the best new indie tools in your inbox.</p>
+    <p style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:600;margin-bottom:12px;">Get weekly picks — the best new indie creations in your inbox.</p>
     <form action="/api/subscribe" method="POST" style="display:flex;gap:8px;justify-content:center;max-width:400px;margin:0 auto;">
         <input type="email" name="email" required placeholder="you@example.com"
                style="flex:1;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.3);
@@ -808,7 +798,7 @@ def footer_html() -> str:
                 font-family:var(--font-body);">Subscribe</button>
     </form>
 </div>
-          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">The indie tool catalog your AI actually uses.</span>
+          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">The knowledge layer for AI agents and indie creators.</span>
           <span class="footer-muted">&copy; 2026 IndieStack. All rights reserved.</span>
           <span class="footer-muted">Made with care for the indie maker community.</span>
         </div>
@@ -886,7 +876,7 @@ curl -s "{url}" -o /dev/null -w "%{{http_code}}"'''
     return f"""
     <div style="margin-top:32px;">
         <h3 style="font-family:var(--font-display);font-size:18px;margin-bottom:12px;color:var(--ink);">
-            &#9889; Quick Integration
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Quick Integration
         </h3>
         <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
             Copy-paste this into your project to get started with {name}.
@@ -924,7 +914,7 @@ def cofounder_badge_html() -> str:
 
 def maker_discount_badge_html() -> str:
     """Green pill badge showing Indie Ring 50% maker discount."""
-    return '<span class="badge badge-success" style="font-weight:700;">&#9889; 50% off &middot; Indie Ring</span>'
+    return '<span class="badge badge-success" style="font-weight:700;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> 50% off &middot; Indie Ring</span>'
 
 
 def indie_score_html(tool: dict) -> str:
@@ -1001,7 +991,48 @@ def boosted_badge_html():
     return '<span class="badge" style="font-weight:700;color:var(--terracotta);background:linear-gradient(135deg,var(--slate),var(--slate-light));">&#9733; Featured</span>'
 
 
-def tool_card(tool: dict) -> str:
+def pixel_icon_svg(pixel_data: str, size: int = 24) -> str:
+    """Render a 7x7 pixel art icon as inline SVG."""
+    PIXEL_COLORS = {
+        '1': '#1A2D4A', '2': '#00D4F5', '3': '#E2B764',
+        '4': '#FFFFFF', '5': '#64748B', '6': '#E07A5F', '7': '#22C55E',
+        '8': '#000000', '9': '#EF4444', 'a': '#EC4899',
+        'b': '#8B5CF6', 'c': '#F97316', 'd': '#7DD3FC',
+        'e': '#86EFAC', 'f': '#92400E',
+    }
+    if not pixel_data or len(pixel_data) != 49:
+        return ''
+    cell = size / 7
+    rects = ''
+    for i, c in enumerate(pixel_data):
+        color = PIXEL_COLORS.get(c)
+        if color:
+            x, y = (i % 7) * cell, (i // 7) * cell
+            rects += f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" fill="{color}"/>'
+    if not rects:
+        return ''
+    return f'<svg width="{size}" height="{size}" viewBox="0 0 {size} {size}" style="border-radius:4px;border:1px solid var(--border);flex-shrink:0;">{rects}</svg>'
+
+
+def user_avatar_html(user: dict, size: int = 32, is_own: bool = False) -> str:
+    """Render user avatar: pixel art → GitHub avatar → letter initial."""
+    name = str(user.get('name', '') or user.get('email', ''))
+    initial = name[0].upper() if name else '?'
+
+    # Pixel art avatar
+    pixel_data = str(user.get('pixel_avatar', '') or '')
+    approved = bool(user.get('pixel_avatar_approved', 0))
+    if pixel_data and len(pixel_data) == 49 and (approved or is_own):
+        return pixel_icon_svg(pixel_data, size=size)
+
+    # Letter initial fallback (rounded square)
+    font_size = max(10, size // 2.5)
+    return (f'<div style="width:{size}px;height:{size}px;border-radius:4px;background:var(--terracotta);'
+            f'color:white;display:flex;align-items:center;justify-content:center;'
+            f'font-size:{font_size:.0f}px;font-weight:700;flex-shrink:0;">{escape(initial)}</div>')
+
+
+def tool_card(tool: dict, compact: bool = False) -> str:
     name = escape(str(tool['name']))
     tagline = escape(str(tool['tagline']))
     slug = escape(str(tool['slug']))
@@ -1022,8 +1053,10 @@ def tool_card(tool: dict) -> str:
     if tool.get('has_changelog_14d'):
         streak_html = '<span class="badge badge-warning" style="font-weight:700;margin-top:8px;">&#128293; Active</span>'
 
-    # Add bookmark icon — positioned absolutely in top-right of card
-    bookmark_html = f'''<button class="wishlist-btn" onclick="event.stopPropagation();toggleWishlist({tool['id']})" id="wishlist-{tool['id']}"
+    # Add bookmark icon — positioned absolutely in top-right of card (hidden in compact mode)
+    bookmark_html = ''
+    if not compact:
+        bookmark_html = f'''<button class="wishlist-btn" onclick="event.stopPropagation();toggleWishlist({tool['id']})" id="wishlist-{tool['id']}"
         style="position:absolute;top:12px;right:12px;z-index:2;background:none;border:none;cursor:pointer;padding:8px;font-size:20px;line-height:1;color:var(--ink-muted);opacity:0.5;transition:color 0.2s,transform 0.2s,opacity 0.2s;min-width:44px;min-height:44px;"
         onmouseenter="this.style.color='#E2B764';this.style.opacity='1';this.style.transform='scale(1.1)';"
         onmouseleave="if(!this.dataset.wishlisted){{this.style.color='var(--ink-muted)';this.style.opacity='0.5';this.style.transform='scale(1)';}}else{{this.style.transform='scale(1)';}}"
@@ -1041,27 +1074,55 @@ def tool_card(tool: dict) -> str:
     ai_recs_html = ''
     mcp_views = int(tool.get('mcp_view_count', 0))
     if mcp_views > 0:
-        ai_recs_html = f'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--accent);font-weight:600;margin-top:8px;" title="Recommended by AI agents {mcp_views} times">&#9889; AI picked {mcp_views}x</span>'
+        ai_recs_html = f'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--accent);font-weight:600;margin-top:8px;" title="Recommended by AI agents {mcp_views} times"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> {mcp_views} AI recommendations</span>'
 
     badge = ''
     is_boosted = bool(tool.get('is_boosted', 0))
     if is_boosted:
         badge += ' ' + boosted_badge_html()
-    # Show claim status: "Maker ✓" for claimed tools, "Community Listed" for unclaimed
+    # Show "Maker ✓" badge only for claimed tools — no badge for unclaimed
     if tool.get('claimed_at'):
         badge += ' <span class="badge badge-success" style="font-size:var(--text-xs);">Maker &#10003;</span>'
-    elif not tool.get('claimed_at'):
-        badge += ' <span class="badge badge-muted" style="font-size:var(--text-xs);">Community Listed</span>'
     price_pence = tool.get('price_pence')
     if price_pence and price_pence > 0 and not tool.get('stripe_account_id'):
         badge += f' <span class="pill-price">&pound;{price_pence // 100}/mo</span>'
+    # Pixel art icon takes priority over favicon
+    pixel_icon = str(tool.get('pixel_icon', '') or '')
+    pixel_svg = pixel_icon_svg(pixel_icon) if pixel_icon else ''
+    if pixel_svg:
+        favicon_html = pixel_svg
+    else:
+        # Favicon — Google service, no letter fallback
+        website = str(tool.get('website', '') or '')
+        favicon_html = ''
+        if website:
+            try:
+                from urllib.parse import urlparse
+                domain = urlparse(website).netloc or urlparse('https://' + website).netloc
+                if domain:
+                    favicon_html = f'<img src="https://www.google.com/s2/favicons?domain={domain}&sz=32" alt="" width="24" height="24" loading="lazy" style="border-radius:4px;border:1px solid var(--border);flex-shrink:0;" onerror="this.style.display=\'none\'">'
+            except Exception:
+                pass
+
     card_class = 'card'
+
+    upvote_html = ''
+    if not compact:
+        # Hide count when low (< 3) — show just the arrow, count appears after voting
+        count_display = str(upvotes) if upvotes >= 3 else ''
+        upvote_html = (
+            f'<button class="upvote-btn" onclick="upvote({tool["id"]})" id="upvote-{tool["id"]}">'
+            f'<span class="arrow">&#9650;</span>'
+            f'<span id="count-{tool["id"]}">{count_display}</span>'
+            f'</button>'
+        )
 
     return f"""
     <div class="{card_class}" style="position:relative;display:flex;gap:16px;">
         {bookmark_html}
         <div style="flex:1;min-width:0;display:flex;flex-direction:column;">
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-right:32px;">
+                {favicon_html}
                 <a href="/tool/{slug}" style="font-family:var(--font-display);font-size:17px;
                                               color:var(--ink);">{name}</a>
                 {badge}
@@ -1072,16 +1133,14 @@ def tool_card(tool: dict) -> str:
                                                               font-family:var(--font-mono);">{cat_name}</a>
             {tag_html}
             <div style="display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:12px;flex-wrap:wrap;">
+                {f'<a href="/maker/{escape(str(tool.get("maker_slug", "")))}" style="font-size:12px;color:var(--ink-muted);text-decoration:none;display:flex;align-items:center;gap:4px;" title="Made by {escape(str(tool.get("maker_name", "")))}"><span style="color:var(--ink-muted);">by</span> <span style="color:var(--cyan);font-weight:600;">{escape(str(tool.get("maker_name", "")))}</span></a>' if tool.get('maker_name') and tool.get('maker_slug') else ''}
                 {visit_html}
                 {gh_indicator}
                 {ai_recs_html}
                 {streak_html}
             </div>
         </div>
-        <button class="upvote-btn" onclick="upvote({tool['id']})" id="upvote-{tool['id']}">
-            <span class="arrow">&#9650;</span>
-            <span id="count-{tool['id']}">{upvotes}</span>
-        </button>
+        {upvote_html}
     </div>
     """
 
@@ -1283,7 +1342,7 @@ def theme_js() -> str:
 # ── Page Shell ────────────────────────────────────────────────────────────
 
 def page_shell(title: str, body: str, *, description: str = "", extra_head: str = "", user=None, og_image: str = f"{BASE_URL}/logo.png", canonical: str = "") -> str:
-    desc = escape(description) if description else "Discover indie SaaS tools built by solo developers."
+    desc = escape(description) if description else "Discover indie creations built by independent makers and small teams."
     canonical_tag = f'\n    <link rel="canonical" href="{BASE_URL}{escape(canonical)}">' if canonical else ""
     # Strip trailing " | IndieStack" or " — IndieStack" to avoid duplication
     clean_title = title
@@ -1307,8 +1366,9 @@ def page_shell(title: str, body: str, *, description: str = "", extra_head: str 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{escape(clean_title)} — IndieStack">
     <meta name="twitter:description" content="{desc}">
+    <meta name="twitter:image" content="{escape(og_image)}">
     {design_tokens()}
-    <link rel="alternate" type="application/rss+xml" title="IndieStack — New Tools" href="{BASE_URL}/feed/rss">
+    <link rel="alternate" type="application/rss+xml" title="IndieStack — New Creations" href="{BASE_URL}/feed/rss">
     {extra_head}
 </head>
 <body>
@@ -1337,6 +1397,22 @@ def page_shell(title: str, body: str, *, description: str = "", extra_head: str 
             var clean = p.toString();
             var url = window.location.pathname + (clean ? '?' + clean : '') + window.location.hash;
             window.history.replaceState(null, '', url);
+        }}
+    }})();
+    </script>
+    <script>
+    (function() {{
+        var p = new URLSearchParams(window.location.search);
+        if (p.get('ref') === 'producthunt' || (document.referrer && document.referrer.indexOf('producthunt') !== -1)) {{
+            localStorage.setItem('ph_visitor', '1');
+        }}
+        if (localStorage.getItem('ph_visitor') && !sessionStorage.getItem('ph_banner_dismissed')) {{
+            var b = document.createElement('div');
+            b.id = 'ph-banner';
+            b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#da552f,#e8744f);color:white;padding:12px 24px;text-align:center;font-family:var(--font-body);font-size:14px;font-weight:500;box-shadow:0 2px 12px rgba(0,0,0,0.15);';
+            b.innerHTML = 'Welcome from Product Hunt! <a href="/submit" style="color:white;text-decoration:underline;font-weight:700;">Submit your creation</a> for instant review this week. <button onclick="this.parentElement.remove();sessionStorage.setItem(\\\'ph_banner_dismissed\\\',\\\'1\\\')" style="background:none;border:none;color:rgba(255,255,255,0.8);cursor:pointer;font-size:18px;margin-left:12px;vertical-align:middle;">&times;</button>';
+            document.body.prepend(b);
+            document.body.style.paddingTop = '44px';
         }}
     }})();
     </script>
@@ -1507,17 +1583,13 @@ def search_filters_html(*, query: str = "", price_filter: str = "", sort: str = 
     """Render search filter bar with pills and dropdowns."""
     safe_q = escape(query)
 
-    # Price pills
+    # Price pills (removed)
     price_pills = ''
-    for val, label in [("", "All"), ("free", "Free"), ("paid", "Paid")]:
-        active = 'background:var(--terracotta);color:white;border-color:var(--terracotta);' if val == price_filter else ''
-        price_pills += f'<button type="submit" name="price" value="{val}" style="padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--card-bg);color:var(--ink-light);{active}">{label}</button>'
 
     # Sort dropdown
     sort_options = ''
     for val, label in [("relevance", "Relevance"), ("upvotes", "Most Upvoted"),
-                        ("newest", "Newest"), ("price_low", "Price: Low to High"),
-                        ("price_high", "Price: High to Low")]:
+                        ("newest", "Newest")]:
         sel = ' selected' if val == sort else ''
         sort_options += f'<option value="{val}"{sel}>{label}</option>'
 

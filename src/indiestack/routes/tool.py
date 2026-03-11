@@ -16,7 +16,7 @@ from indiestack.routes.components import (
     boosted_badge_html,
     ejectable_badge_html,
     maker_pulse_html,
-
+    pixel_icon_svg,
     star_rating_html,
     review_card,
     review_form_html,
@@ -65,8 +65,8 @@ async def tool_detail(request: Request, slug: str):
     if not tool or tool['status'] != 'approved':
         body = """
         <div class="container" style="text-align:center;padding:64px 0;">
-            <h1 style="font-family:var(--font-display);font-size:32px;">Tool Not Found</h1>
-            <p class="text-muted mt-4">This tool doesn't exist or hasn't been approved yet.</p>
+            <h1 style="font-family:var(--font-display);font-size:32px;">Not Found</h1>
+            <p class="text-muted mt-4">This creation doesn't exist or hasn't been approved yet.</p>
             <a href="/" class="btn btn-primary mt-4">Back to Home</a>
         </div>
         """
@@ -131,24 +131,27 @@ async def tool_detail(request: Request, slug: str):
     if review_count > 0:
         rating_display_html = f'<span style="margin-left:12px;">{star_rating_html(avg_rating, review_count)}</span>'
 
-    # Build reviews section
-    reviews_html = '<div class="section-divider">'
-    reviews_html += '<h2 style="font-family:var(--font-display);font-size:24px;margin-bottom:24px;">Reviews</h2>'
-    if reviews:
-        for r in reviews:
-            reviews_html += review_card(r)
-    else:
-        reviews_html += '''<div style="text-align:center;padding:32px 24px;background:var(--cream-dark);border-radius:var(--radius);border:1px dashed var(--border);">
+    # Build reviews section — only show if there are reviews or user is logged in
+    if reviews or user:
+        reviews_html = '<div class="section-divider">'
+        reviews_html += '<h2 style="font-family:var(--font-display);font-size:24px;margin-bottom:24px;">Reviews</h2>'
+        if reviews:
+            for r in reviews:
+                reviews_html += review_card(r)
+        else:
+            reviews_html += '''<div style="text-align:center;padding:32px 24px;background:var(--cream-dark);border-radius:var(--radius);border:1px dashed var(--border);">
     <p style="font-size:28px;margin-bottom:8px;">&#9998;</p>
     <p style="font-weight:600;color:var(--ink);margin-bottom:4px;">No reviews yet</p>
-    <p style="color:var(--ink-muted);font-size:14px;">Used this tool? Be the first to share your experience.</p>
+    <p style="color:var(--ink-muted);font-size:14px;">Used this? Be the first to share your experience.</p>
 </div>'''
 
-    if user:
-        reviews_html += review_form_html(slug, existing_review=user_review)
+        if user:
+            reviews_html += review_form_html(slug, existing_review=user_review)
+        else:
+            reviews_html += '<p style="margin-top:24px;color:var(--ink-muted);font-size:14px;"><a href="/login">Log in</a> to leave a review.</p>'
+        reviews_html += '</div>'
     else:
-        reviews_html += '<p style="margin-top:24px;color:var(--ink-muted);font-size:14px;"><a href="/login">Log in</a> to leave a review.</p>'
-    reviews_html += '</div>'
+        reviews_html = ''
 
     # Tags
     tag_html = ''
@@ -176,8 +179,8 @@ async def tool_detail(request: Request, slug: str):
     token_hint_html = f'''
         <div style="margin-top:16px;padding:8px 16px;background:var(--cream-dark);border-radius:var(--radius-sm);
                     display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-light);">
-            <span style="font-size:16px;">&#9889;</span>
-            Using this tool saves ~{token_k}k tokens vs building from scratch
+            <span style="color:var(--slate);display:inline-block;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+            Using this saves ~{token_k}k tokens vs building from scratch
         </div>
         {mcp_badge}
     '''
@@ -219,6 +222,34 @@ async def tool_detail(request: Request, slug: str):
             View on GitHub{gh_stars_text}{gh_lang_text}
         </a>'''
 
+        # GitHub maintenance signals
+        _gh_signals = []
+        _last_commit = tool.get('github_last_commit', '')
+        _is_archived = tool.get('github_is_archived', 0)
+        _open_issues = int(tool.get('github_open_issues', 0) or 0)
+        if _last_commit:
+            from datetime import datetime as _dt
+            try:
+                _commit_dt = _dt.fromisoformat(_last_commit.replace('Z', '+00:00'))
+                _days_ago = (_dt.now(_commit_dt.tzinfo) - _commit_dt).days
+                if _days_ago < 30:
+                    _gh_signals.append(f'<span style="color:var(--success, #22C55E);">Active &mdash; last commit {_days_ago}d ago</span>')
+                elif _days_ago < 180:
+                    _gh_signals.append(f'<span style="color:var(--gold, #E2B764);">Last commit {_days_ago}d ago</span>')
+                else:
+                    _gh_signals.append(f'<span style="color:var(--ink-muted, #888);">Last commit {_days_ago}d ago</span>')
+            except Exception:
+                pass
+        if _is_archived:
+            _gh_signals.append('<span style="color:var(--danger, #EF4444);">&#128451; Archived</span>')
+        if _open_issues:
+            _gh_signals.append(f'<span style="color:var(--ink-muted, #888);">{_open_issues} open issues</span>')
+        if _gh_signals:
+            github_badge += f'''
+        <div style="display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:6px;font-size:13px;">
+            {"".join(_gh_signals)}
+        </div>'''
+
     # Claim CTA — show for unclaimed tools (maker_id may exist from auto-import but claimed_at is only set on real claims)
     claim_html = ''
     if not tool.get('claimed_at'):
@@ -227,21 +258,21 @@ async def tool_detail(request: Request, slug: str):
                 <form method="POST" action="/api/claim" style="margin:0;">
                     <input type="hidden" name="tool_id" value="{tool['id']}">
                     <button type="submit" class="btn btn-primary" style="padding:12px 24px;font-size:14px;">
-                        Claim This Tool
+                        Claim This Listing
                     </button>
                 </form>'''
         else:
             claim_action = f'''
                 <a href="/signup?next=/tool/{slug}" class="btn btn-primary" style="padding:12px 24px;font-size:14px;text-decoration:none;">
-                    Claim This Tool
+                    Claim This Listing
                 </a>'''
         claim_html = f'''
         <div id="claim" style="margin:16px 0;padding:24px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);">
             <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
                 <span style="font-size:24px;">&#128075;</span>
                 <div style="flex:1;min-width:200px;">
-                    <p style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px;">Is this your tool?</p>
-                    <p style="font-size:13px;color:var(--ink-light);margin-bottom:12px;">This tool is listed for free on IndieStack &mdash; no commission, no fees. Claim it to update details and track how often AI agents recommend it.</p>
+                    <p style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px;">Did you build this?</p>
+                    <p style="font-size:13px;color:var(--ink-light);margin-bottom:12px;">This is listed for free on IndieStack &mdash; no commission, no fees. Claim it to update details and track how often AI agents recommend it.</p>
                     {claim_action}
                 </div>
             </div>
@@ -261,7 +292,7 @@ async def tool_detail(request: Request, slug: str):
                 <span style="font-size:18px;flex-shrink:0;">&#9432;</span>
                 <div style="font-size:13px;color:var(--ink-light);line-height:1.6;">
                     <strong style="color:var(--ink);">Community listing</strong> &mdash;
-                    This tool is listed for free by the IndieStack community &mdash; no fees, no commission.
+                    Listed for free by the IndieStack community &mdash; no fees, no commission.
                     If you built {escape(str(tool['name']))}, you can
                     <a href="/signup?next=/tool/{slug}" style="color:var(--accent);font-weight:600;">claim this listing</a>
                     to manage it, or
@@ -276,7 +307,7 @@ async def tool_detail(request: Request, slug: str):
     unclaimed_badge = ''
     if not tool.get('claimed_at'):
         unclaimed_badge = '''<span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--ink-muted);background:var(--cream-dark);padding:2px 8px;border-radius:999px;border:1px solid var(--border);">
-    Listed for free &middot; No commission &middot; <a href="#claim" style="color:var(--accent);text-decoration:none;">Claim this tool</a>
+    Listed for free &middot; No commission &middot; <a href="#claim" style="color:var(--accent);text-decoration:none;">Claim this listing</a>
 </span>'''
     if maker_name:
         maker_slug = slugify(maker_name)
@@ -423,7 +454,7 @@ async def tool_detail(request: Request, slug: str):
                        border:1px solid {'var(--accent)' if use_active else 'var(--border)'};
                        padding:8px 16px;border-radius:999px;font-size:13px;cursor:pointer;min-height:44px;
                        color:{'var(--accent)' if use_active else 'var(--ink-light)'};">
-            &#9889; I use this{f' ({use_count})' if use_count else ''}
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> I use this{f' ({use_count})' if use_count else ''}
         </button>
         <button onclick="react({tool_id},'bookmark')" id="react-bookmark"
                 style="background:{'var(--gold-light,#FDF8EE)' if bm_active else 'var(--card-bg)'};
@@ -605,6 +636,41 @@ async def tool_detail(request: Request, slug: str):
         )
         platform_tags = f'<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;">{pills}</div>'
 
+    # Pixel art icon (larger on detail page)
+    detail_pixel_html = ''
+    pixel_data = str(tool.get('pixel_icon', '') or '')
+    if pixel_data and len(pixel_data) == 49:
+        detail_pixel_html = pixel_icon_svg(pixel_data, size=48)
+
+    # Build maker story section
+    maker_story_html = ''
+    _story_fields = [
+        ('story_motivation', 'Why I built this'),
+        ('story_challenge', 'The hardest part'),
+        ('story_advice', 'Advice for makers'),
+        ('story_fun_fact', 'Fun fact'),
+    ]
+    _story_items = ''
+    for _field, _label in _story_fields:
+        _val = str(tool.get(_field) or '').strip()
+        if _val:
+            _story_items += f'''
+            <div style="margin-bottom:16px;">
+                <div style="font-size:13px;font-weight:600;color:var(--accent);margin-bottom:4px;">{_label}</div>
+                <p style="color:var(--ink-light);font-size:15px;line-height:1.6;margin:0;">{escape(_val)}</p>
+            </div>
+            '''
+    if _story_items:
+        _maker_name = escape(str(tool.get('maker_name') or 'the maker'))
+        maker_story_html = f'''
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-top:24px;">
+            <h3 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
+                About {_maker_name}
+            </h3>
+            {_story_items}
+        </div>
+        '''
+
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:800px;">
         {breadcrumb_html}
@@ -616,6 +682,7 @@ async def tool_detail(request: Request, slug: str):
             <div style="flex:1;">
                 <a href="/category/{cat_slug}" class="tag mb-2" style="display:inline-block;">{cat_name}</a>
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px;">
+                    {detail_pixel_html}
                     <h1 style="font-family:var(--font-display);font-size:36px;">{name}</h1>
                     {totw_badge}
                     {ejectable_badge_html() if is_ejectable else ''}
@@ -633,7 +700,7 @@ async def tool_detail(request: Request, slug: str):
             <button class="upvote-btn" onclick="upvote({tool_id})" id="upvote-{tool_id}"
                     style="flex-shrink:0;min-width:60px;">
                 <span class="arrow">&#9650;</span>
-                <span id="count-{tool_id}">{upvotes}</span>
+                <span id="count-{tool_id}">{'Upvote' if upvotes < 5 else upvotes}</span>
             </button>
         </div>
         </div>
@@ -669,6 +736,8 @@ async def tool_detail(request: Request, slug: str):
             {f'<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">' + alternatives_links_html + '</div>' if alternatives_links_html else ''}
         </div>
 
+        {maker_story_html}
+
         {similar_html}
 
         {changelog_html}
@@ -676,8 +745,10 @@ async def tool_detail(request: Request, slug: str):
         {reviews_html}
     </div>
     """
-    og_image_url = f"{BASE_URL}/api/og/{slug}.svg"
-    return HTMLResponse(page_shell(f"{tool['name']} — {tagline} | IndieStack", body + email_sticky_bar(), description=tagline, extra_head=extra_head, user=user, og_image=og_image_url, canonical=f"/tool/{slug}"))
+    og_image_url = f"{BASE_URL}/logo.png"
+    response = HTMLResponse(page_shell(f"{tool['name']} — {tagline} | IndieStack", body + email_sticky_bar(), description=tagline, extra_head=extra_head, user=user, og_image=og_image_url, canonical=f"/tool/{slug}"))
+    response.headers["Cache-Control"] = "public, max-age=120, stale-while-revalidate=600"
+    return response
 
 
 @router.post("/tool/{slug}/review")

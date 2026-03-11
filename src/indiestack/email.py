@@ -6,21 +6,23 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+from html import escape
 from indiestack.config import BASE_URL
 
 SMTP_HOST = os.environ.get("SMTP_HOST", "")
 SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("SMTP_USER", "")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
-FROM_EMAIL = os.environ.get("SMTP_FROM", SMTP_USER or "noreply@indiestack.fly.dev")
+FROM_EMAIL = os.environ.get("SMTP_FROM", SMTP_USER or "noreply@indiestack.ai")
 FROM_NAME = "IndieStack"
 
 
 def _email_wrapper(html_body: str, preview_text: str = "", unsubscribe_url: str = "") -> str:
     """Wrap HTML email body in a responsive template."""
-    unsub = ""
     if unsubscribe_url:
         unsub = f'<br><a href="{unsubscribe_url}" style="color:#9C958E;font-size:12px;">Unsubscribe</a>'
+    else:
+        unsub = '<br><a href="mailto:pajebay1@gmail.com?subject=Unsubscribe" style="color:#9C958E;font-size:12px;">Unsubscribe</a>'
     return f"""<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <style>body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;padding:0;background:#FAF7F2;}}
@@ -28,7 +30,7 @@ def _email_wrapper(html_body: str, preview_text: str = "", unsubscribe_url: str 
 a{{color:#C4714E;}}</style></head>
 <body><div class="container"><div class="card">{html_body}</div>
 <p style="text-align:center;font-size:12px;color:#9C958E;margin-top:24px;">
-IndieStack &mdash; Discover indie SaaS tools built by solo developers{unsub}</p></div></body></html>"""
+IndieStack &mdash; Discover indie creations built by independent makers{unsub}</p></div></body></html>"""
 
 
 async def send_email(to: str, subject: str, html_body: str, *, unsubscribe_url: str = "") -> bool:
@@ -43,6 +45,8 @@ async def send_email(to: str, subject: str, html_body: str, *, unsubscribe_url: 
     if unsubscribe_url:
         msg["List-Unsubscribe"] = f"<{unsubscribe_url}>"
         msg["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
+    else:
+        msg["List-Unsubscribe"] = "<mailto:pajebay1@gmail.com?subject=Unsubscribe>"
     msg.attach(MIMEText(_email_wrapper(html_body, unsubscribe_url=unsubscribe_url), "html"))
 
     def _send():
@@ -63,6 +67,7 @@ async def send_email(to: str, subject: str, html_body: str, *, unsubscribe_url: 
 # ── Email Templates ──────────────────────────────────────────────────────
 
 def purchase_receipt_html(*, tool_name: str, amount: str, delivery_url: str) -> str:
+    tool_name = escape(tool_name)
     return f"""
     <h2 style="font-family:serif;font-size:24px;color:#2D2926;margin-bottom:16px;">Purchase Confirmation</h2>
     <p style="color:#6B6560;font-size:15px;">Thank you for purchasing <strong>{tool_name}</strong> for {amount}.</p>
@@ -77,6 +82,8 @@ def purchase_receipt_html(*, tool_name: str, amount: str, delivery_url: str) -> 
 def maker_sale_notification_html(*, tool_name: str, buyer_email: str, amount: str,
                                    net_amount: str, dashboard_url: str) -> str:
     """Email sent to maker when someone purchases their tool."""
+    tool_name = escape(tool_name)
+    buyer_email = escape(buyer_email)
     return f"""
     <h2 style="font-family:serif;font-size:24px;color:#2D2926;margin-bottom:16px;">&#127881; You Made a Sale!</h2>
     <p style="color:#6B6560;font-size:15px;line-height:1.6;">
@@ -102,6 +109,7 @@ def maker_sale_notification_html(*, tool_name: str, buyer_email: str, amount: st
 
 
 def tool_approved_html(*, tool_name: str, tool_url: str) -> str:
+    tool_name = escape(tool_name)
     return f"""
     <h2 style="font-family:serif;font-size:24px;color:#2D2926;margin-bottom:16px;">Your Tool is Live!</h2>
     <p style="color:#6B6560;font-size:15px;"><strong>{tool_name}</strong> has been approved and is now visible on IndieStack.</p>
@@ -120,6 +128,9 @@ def tool_approved_html(*, tool_name: str, tool_url: str) -> str:
 
 
 def new_review_html(*, tool_name: str, reviewer_name: str, rating: int, review_body: str) -> str:
+    tool_name = escape(tool_name)
+    reviewer_name = escape(reviewer_name)
+    review_body = escape(review_body)
     stars = "&#9733;" * rating + "&#9734;" * (5 - rating)
     return f"""
     <h2 style="font-family:serif;font-size:24px;color:#2D2926;margin-bottom:16px;">New Review for {tool_name}</h2>
@@ -157,6 +168,7 @@ def email_verification_html(verify_url: str) -> str:
 
 def maker_weekly_digest_html(*, maker_name: str, tool_count: int, total_views: int,
                               total_upvotes: int, total_sales: int, revenue: str) -> str:
+    maker_name = escape(maker_name)
     return f"""
     <h2 style="font-family:serif;font-size:24px;color:#2D2926;margin-bottom:16px;">Your Weekly Digest</h2>
     <p style="color:#6B6560;font-size:15px;">Hi {maker_name}, here's how your tools performed this week:</p>
@@ -222,6 +234,7 @@ def weekly_digest_html(
     # Tool of the Week
     totw_section = ""
     if totw_name and totw_slug:
+        totw_name = escape(totw_name)
         totw_section = f"""
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;">
       <tr><td style="font-size:14px;font-weight:700;color:#1A2D4A;padding-bottom:12px;">&#127942; Tool of the Week</td></tr>
@@ -247,9 +260,9 @@ def weekly_digest_html(
     if new_tools:
         new_rows = ""
         for t in new_tools[:5]:
-            name = t.get("name", "")
+            name = escape(t.get("name", ""))
             slug = t.get("slug", "")
-            tagline = t.get("tagline", "")
+            tagline = escape(t.get("tagline", ""))
             new_rows += f"""
       <tr>
         <td style="padding:12px 16px;border-bottom:1px solid #E8E3DC;">
@@ -277,7 +290,7 @@ def weekly_digest_html(
     if top_clicked:
         click_rows = ""
         for i, t in enumerate(top_clicked[:5], 1):
-            name = t.get("name", "")
+            name = escape(t.get("name", ""))
             slug = t.get("slug", "")
             clicks = t.get("clicks", t.get("count", 0))
             click_rows += f"""
@@ -307,7 +320,7 @@ def weekly_digest_html(
             search_items += f"""
       <tr>
         <td style="padding:8px 16px;border-bottom:1px solid #E8E3DC;">
-          <span style="font-size:14px;color:#1A2D4A;">&#128269; {term}</span>
+          <span style="font-size:14px;color:#1A2D4A;">&#128269; {escape(term)}</span>
         </td>
       </tr>"""
         search_section = f"""
@@ -333,7 +346,7 @@ def weekly_digest_html(
           You're receiving this because you subscribed to IndieStack updates.<br>
           <a href="{unsubscribe_url or 'mailto:pajebay1@gmail.com?subject=Unsubscribe'}" style="color:#9C958E;">Unsubscribe</a>
           &nbsp;&middot;&nbsp;
-          <a href="{base}/explore" style="color:#00D4F5;text-decoration:none;">indiestack.fly.dev/explore</a>
+          <a href="{base}/explore" style="color:#00D4F5;text-decoration:none;">indiestack.ai/explore</a>
         </p>
       </td></tr>
     </table>
@@ -360,6 +373,7 @@ def weekly_digest_html(
 
 def claim_tool_html(tool_name: str, verify_url: str) -> str:
     """Email sent to a user who wants to claim a tool listing."""
+    tool_name = escape(tool_name)
     return _email_wrapper(f"""
         <h1 style="font-size:24px;font-weight:700;color:#2D2926;margin-bottom:16px;">
             Claim Your Tool on IndieStack
@@ -386,6 +400,9 @@ def claim_tool_html(tool_name: str, verify_url: str) -> str:
 
 def competitor_ping_html(maker_name: str, new_tool_name: str, category_name: str, explore_url: str) -> str:
     """Email sent to makers when a new tool launches in their category."""
+    maker_name = escape(maker_name)
+    new_tool_name = escape(new_tool_name)
+    category_name = escape(category_name)
     return _email_wrapper(f"""
         <h1 style="font-size:24px;font-weight:700;color:#2D2926;margin-bottom:16px;">
             New Competition in {category_name}
@@ -415,8 +432,8 @@ def subscriber_digest_html(trending_tools: list, new_tool: dict, total_tokens_sa
     # Tool of the Week spotlight
     spotlight_html = ''
     if spotlight_tool:
-        tool_name = spotlight_tool.get('name', '')
-        tool_tagline = spotlight_tool.get('tagline', '')
+        tool_name = escape(spotlight_tool.get('name', ''))
+        tool_tagline = escape(spotlight_tool.get('tagline', ''))
         tool_slug = spotlight_tool.get('slug', '')
         tool_url = spotlight_tool.get('url', '')
 
@@ -446,8 +463,8 @@ def subscriber_digest_html(trending_tools: list, new_tool: dict, total_tokens_sa
     # Build trending tools HTML
     trending_html = ""
     for i, t in enumerate(trending_tools[:3], 1):
-        name = t.get('name', 'Unknown')
-        tagline = t.get('tagline', '')
+        name = escape(t.get('name', 'Unknown'))
+        tagline = escape(t.get('tagline', ''))
         slug = t.get('slug', '')
         trending_html += f"""
         <div style="padding:16px;background:#F5F3F0;border-radius:8px;margin-bottom:12px;">
@@ -466,8 +483,8 @@ def subscriber_digest_html(trending_tools: list, new_tool: dict, total_tokens_sa
         <div style="margin-top:24px;">
             <h2 style="font-size:18px;font-weight:700;color:#2D2926;margin-bottom:12px;">Fresh Off the Press</h2>
             <div style="padding:16px;background:#EDF4F9;border-radius:8px;border-left:4px solid #00A8C6;">
-                <a href="{BASE_URL}/tool/{new_tool.get('slug', '')}" style="font-size:16px;font-weight:700;color:#2D2926;text-decoration:none;">{new_tool.get('name', '')}</a>
-                <p style="color:#5A5550;font-size:14px;margin-top:4px;">{new_tool.get('tagline', '')}</p>
+                <a href="{BASE_URL}/tool/{new_tool.get('slug', '')}" style="font-size:16px;font-weight:700;color:#2D2926;text-decoration:none;">{escape(new_tool.get('name', ''))}</a>
+                <p style="color:#5A5550;font-size:14px;margin-top:4px;">{escape(new_tool.get('tagline', ''))}</p>
             </div>
         </div>
         """
@@ -479,7 +496,7 @@ def subscriber_digest_html(trending_tools: list, new_tool: dict, total_tokens_sa
             Your Weekly Vibe Check
         </h1>
         <p style="color:#8A8580;font-size:14px;margin-bottom:24px;">
-            The hottest indie tools this week on IndieStack
+            The hottest indie creations this week on IndieStack
         </p>
         {spotlight_html}
         <h2 style="font-size:18px;font-weight:700;color:#2D2926;margin-bottom:12px;">Trending This Week</h2>
@@ -488,7 +505,7 @@ def subscriber_digest_html(trending_tools: list, new_tool: dict, total_tokens_sa
         <div style="margin-top:32px;padding:20px;background:linear-gradient(135deg,#2D2926,#3D3936);border-radius:12px;text-align:center;">
             <p style="color:#C4714E;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Community Impact</p>
             <p style="color:white;font-size:28px;font-weight:800;">{tokens_k} tokens saved</p>
-            <p style="color:rgba(255,255,255,0.6);font-size:13px;">by developers using indie tools instead of building from scratch</p>
+            <p style="color:rgba(255,255,255,0.6);font-size:13px;">by developers using indie creations instead of building from scratch</p>
         </div>
         <div style="text-align:center;margin-top:32px;">
             <a href="{BASE_URL}/explore" style="display:inline-block;padding:14px 32px;background:#C4714E;
@@ -503,6 +520,8 @@ def ego_ping_html(*, maker_name: str, tool_name: str, tool_slug: str,
                    views: int, clicks: int, upvotes: int, wishlists: int,
                    has_changelog: bool, has_active_badge: bool) -> str:
     """Weekly 'Ego Ping' email to hook makers back to their dashboard."""
+    maker_name = escape(maker_name)
+    tool_name = escape(tool_name)
     # Humanise the views number
     if views == 0:
         views_label = "Your tool is listed and waiting for its first visitors"
@@ -574,6 +593,7 @@ def ego_ping_html(*, maker_name: str, tool_name: str, tool_slug: str,
 
 def boost_expired_html(*, tool_name: str, tool_slug: str, views: int, upvotes: int, wishlists: int) -> str:
     """Email sent when a boost expires, highlighting the value delivered."""
+    tool_name = escape(tool_name)
     impressions = views * 3
     return _email_wrapper(f"""
         <h1 style="font-size:24px;font-weight:700;color:#2D2926;margin-bottom:16px;">
@@ -620,6 +640,9 @@ def boost_expired_html(*, tool_name: str, tool_slug: str, views: int, upvotes: i
 
 def wishlist_update_html(user_name: str, tool_name: str, update_title: str, tool_url: str) -> str:
     """Email sent when a bookmarked tool ships an update."""
+    user_name = escape(user_name)
+    tool_name = escape(tool_name)
+    update_title = escape(update_title)
     return _email_wrapper(f"""
         <h1 style="font-size:24px;font-weight:700;color:#2D2926;margin-bottom:16px;">
             A Tool You Saved Just Shipped an Update
@@ -647,6 +670,8 @@ def wishlist_update_html(user_name: str, tool_name: str, update_title: str, tool
 def maker_welcome_html(*, maker_name: str, tool_name: str, tool_slug: str,
                         dashboard_url: str = f"{BASE_URL}/dashboard") -> str:
     """Welcome email sent when a new maker claims a tool or signs up."""
+    maker_name = escape(maker_name)
+    tool_name = escape(tool_name)
     base = BASE_URL
     return f"""
     <div style="text-align:center;margin-bottom:24px;">
@@ -769,7 +794,7 @@ def marketplace_preview_html(tools: list, launch_url: str = f"{BASE_URL}/launch"
             List your tool for free. Set a price, connect Stripe, and start earning on Monday.
         </p>
         <a href="{BASE_URL}/submit" style="color:#00D4F5;font-weight:600;font-size:14px;text-decoration:none;">
-            Submit your tool &rarr;
+            Submit your creation &rarr;
         </a>
     </div>
 
@@ -825,7 +850,7 @@ def marketplace_launch_blast_html(explore_url: str, unsubscribe_url: str = "") -
     </div>
     <p style="color:#6B6560;font-size:14px;text-align:center;line-height:1.6;">
         Are you a maker? List your tool for free at
-        <a href="{BASE_URL}/submit" style="color:#00D4F5;font-weight:600;">indiestack.fly.dev/submit</a>
+        <a href="{BASE_URL}/submit" style="color:#00D4F5;font-weight:600;">indiestack.ai/submit</a>
     </p>
     <p style="color:#9C958E;font-size:12px;text-align:center;margin-top:24px;">
         You're receiving this because you subscribed to IndieStack updates.
@@ -834,7 +859,7 @@ def marketplace_launch_blast_html(explore_url: str, unsubscribe_url: str = "") -
     """
 
 
-# Subject: "The IndieStack Marketplace is Live — Browse {tool_count} Indie Tools"
+# Subject: "The IndieStack Marketplace is Live — Browse {tool_count} Indie Creations"
 def launch_day_html(*, tool_count: int, maker_count: int, explore_url: str = f"{BASE_URL}/explore", unsubscribe_url: str = "") -> str:
     """Launch day email — sent to all subscribers on March 2, 2026."""
     return f"""
@@ -856,7 +881,7 @@ def launch_day_html(*, tool_count: int, maker_count: int, explore_url: str = f"{
         <div style="padding:16px;background:#F0F7FA;border-radius:10px;margin-bottom:10px;border-left:4px solid #00D4F5;">
             <strong style="color:#1A2D4A;font-size:15px;">&#128269; Discover</strong>
             <p style="color:#6B6560;font-size:13px;margin:4px 0 0;line-height:1.5;">
-                Browse {tool_count} indie tools across 21 categories. No affiliate rankings, no ads &mdash; just real tools from real makers.
+                Browse {tool_count} indie creations across 25 categories. No affiliate rankings, no ads &mdash; just real tools from real makers.
             </p>
         </div>
         <div style="padding:16px;background:#F0F7FA;border-radius:10px;margin-bottom:10px;border-left:4px solid #00D4F5;">
@@ -887,7 +912,7 @@ def launch_day_html(*, tool_count: int, maker_count: int, explore_url: str = f"{
             List your tool for free. Set a price, connect Stripe, and start earning today.
         </p>
         <a href="{BASE_URL}/submit" style="color:#00D4F5;font-weight:600;font-size:14px;text-decoration:none;">
-            Submit your tool &rarr;
+            Submit your creation &rarr;
         </a>
     </div>
 
@@ -901,6 +926,7 @@ def launch_day_html(*, tool_count: int, maker_count: int, explore_url: str = f"{
 # Subject: "Connect Stripe Before March 2nd"
 def maker_stripe_nudge_html(tool_name: str, dashboard_url: str) -> str:
     """Targeted email for makers who have priced tools but haven't connected Stripe."""
+    tool_name = escape(tool_name)
     return f"""
     <div style="text-align:center;margin-bottom:24px;">
         <div style="display:inline-block;background:#1A2D4A;color:#00D4F5;font-size:11px;font-weight:700;
@@ -956,6 +982,8 @@ def maker_stripe_nudge_html(tool_name: str, dashboard_url: str) -> str:
 
 def tool_of_the_week_html(maker_name: str, tool_name: str, tool_slug: str, clicks: int, badge_url: str, tool_url: str) -> str:
     """Congrats email for Tool of the Week winner with embeddable badge code."""
+    maker_name = escape(maker_name)
+    tool_name = escape(tool_name)
     html_embed = f'&lt;a href=&quot;{tool_url}&quot;&gt;&lt;img src=&quot;{badge_url}&quot; alt=&quot;IndieStack Tool of the Week&quot;&gt;&lt;/a&gt;'
     md_embed = f'[![IndieStack Tool of the Week]({badge_url})]({tool_url})'
     return _email_wrapper(f"""
@@ -1061,6 +1089,7 @@ def welcome_signup_html() -> str:
 
 def badge_nudge_html(tool_name, tool_slug):
     """Email sent 48h after tool approval nudging maker to embed their badge."""
+    tool_name = escape(tool_name)
     badge_url = f"{BASE_URL}/api/badge/{tool_slug}.svg"
     tool_url = f"{BASE_URL}/tool/{tool_slug}"
 
@@ -1111,6 +1140,7 @@ def badge_nudge_html(tool_name, tool_slug):
 
 def maker_launch_countdown_html(maker_name: str, maker_slug: str, tool_count: int) -> str:
     """Countdown email sent to claimed makers 3 days before marketplace launch."""
+    maker_name = escape(maker_name)
     stripe_url = f"{BASE_URL}/stripe-guide"
     launch_url = f"{BASE_URL}/launch/{maker_slug}"
     return f"""
@@ -1184,6 +1214,8 @@ def maker_launch_countdown_html(maker_name: str, maker_slug: str, tool_count: in
 
 def launch_morning_maker_html(maker_name: str, tool_name: str) -> str:
     """Launch-day email to claimed makers — review your listing before PH launch."""
+    maker_name = escape(maker_name)
+    tool_name = escape(tool_name)
     dashboard_url = f"{BASE_URL}/dashboard"
     return f"""
     <div style="text-align:center;margin-bottom:24px;">
@@ -1232,5 +1264,58 @@ def launch_morning_maker_html(maker_name: str, tool_name: str) -> str:
     <p style="color:#6B6560;font-size:14px;line-height:1.6;text-align:center;">
         See you on launch day,<br>
         <strong style="color:#2D2926;">Patrick &amp; Ed</strong>
+    </p>
+    """
+
+
+def ph_launch_announcement_html(ph_url: str, tool_count: int = 828) -> str:
+    """Product Hunt launch day announcement — sent to all users and subscribers."""
+    return f"""
+    <div style="text-align:center;margin-bottom:24px;">
+        <div style="display:inline-block;background:#1A2D4A;color:#00D4F5;font-size:11px;font-weight:700;
+                    text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:999px;">
+            We're Live on Product Hunt
+        </div>
+    </div>
+
+    <h2 style="font-family:serif;font-size:26px;color:#1A2D4A;margin-bottom:12px;text-align:center;">
+        IndieStack just launched on Product Hunt
+    </h2>
+
+    <p style="color:#5A5550;font-size:15px;line-height:1.7;margin-bottom:16px;">
+        Hey! Big day for us &mdash; IndieStack is live on Product Hunt today.
+        {tool_count} indie creations, searchable by AI agents, browsable by everyone.
+    </p>
+
+    <p style="color:#5A5550;font-size:15px;line-height:1.7;margin-bottom:20px;">
+        We also just shipped <strong style="color:#1A2D4A;">MCP Server v1.1</strong> &mdash;
+        AI agents can now discover games, newsletters, creative tools, and learning apps alongside dev tools.
+        The catalog goes way beyond code now.
+    </p>
+
+    <div style="text-align:center;margin:28px 0;">
+        <a href="{escape(ph_url)}" style="display:inline-block;background:#FF6154;color:white;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            See us on Product Hunt &rarr;
+        </a>
+    </div>
+
+    <p style="color:#5A5550;font-size:14px;line-height:1.6;margin-bottom:16px;">
+        If IndieStack has been useful to you, an upvote or comment on PH would mean the world.
+        We're two uni students in Cardiff building this &mdash; every bit of support matters.
+    </p>
+
+    <div style="margin:20px 0;padding:16px;background:#F0F7FA;border-radius:10px;border-left:4px solid #00D4F5;">
+        <strong style="color:#1A2D4A;font-size:14px;">What's new in v1.1:</strong>
+        <ul style="color:#6B6560;font-size:13px;margin:8px 0 0;padding-left:18px;line-height:1.8;">
+            <li>Broader catalog &mdash; games, newsletters, creative tools, education</li>
+            <li>Smarter agent discovery &mdash; finds creations across all categories</li>
+            <li>AI Pulse &mdash; live feed of agent activity at <a href="{BASE_URL}/pulse" style="color:#00D4F5;">indiestack.ai/pulse</a></li>
+        </ul>
+    </div>
+
+    <p style="color:#6B6560;font-size:14px;line-height:1.6;text-align:center;margin-top:24px;">
+        Thank you for being here early,<br>
+        <strong style="color:#1A2D4A;">Patrick &amp; Ed</strong>
     </p>
     """

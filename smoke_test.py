@@ -35,7 +35,7 @@ TESTS = [
     ("GET", "/faq", 200, "FAQ"),
     ("GET", "/terms", 200, "Terms"),
     ("GET", "/privacy", 200, "Privacy"),
-    ("GET", "/pricing", 200, "Pricing"),
+    ("GET", "/pricing", [200, 303], "Pricing"),
 
     # Blog pages (200)
     ("GET", "/blog", 200, "Blog"),
@@ -132,7 +132,7 @@ def run_content_check(path, body):
 
 
 def main():
-    base_url = sys.argv[1] if len(sys.argv) > 1 else "https://indiestack.fly.dev"
+    base_url = sys.argv[1] if len(sys.argv) > 1 else "https://indiestack.ai"
 
     print(f"\n{BOLD}IndieStack Smoke Test{RESET}")
     print(f"{DIM}Target: {base_url}{RESET}\n")

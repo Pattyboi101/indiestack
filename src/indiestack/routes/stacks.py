@@ -91,7 +91,7 @@ async def stacks_index(request: Request):
     generator_cta = """
     <div class="card" style="padding:24px;text-align:center;margin-top:40px;">
         <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">Find indie alternatives to your dependencies</h3>
-        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">Paste your package.json or requirements.txt and we'll match indie tools.</p>
+        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">Paste your package.json or requirements.txt and we'll find matching indie creations.</p>
         <a href="/stacks/generator" class="btn btn-primary" style="font-size:14px;padding:12px 24px;">Try the Stack Generator &rarr;</a>
     </div>
     """
@@ -104,9 +104,9 @@ async def stacks_index(request: Request):
         {generator_cta}
     </div>
     """
-    return HTMLResponse(page_shell("Stacks — Curated Indie Tool Bundles", body,
-                                   description="Curated tool bundles and community stacks. Discover indie tools.",
-                                   user=request.state.user))
+    return HTMLResponse(page_shell("Stacks — Curated Indie Bundles", body,
+                                   description="Curated indie creation bundles and community stacks. Find pre-built combinations for auth, analytics, payments, and more.",
+                                   user=request.state.user, canonical="/stacks"))
 
 
 @router.get("/stacks/community", response_class=HTMLResponse)
@@ -135,7 +135,7 @@ async def community_stacks(request: Request):
                 Community Stacks
             </h1>
             <p style="color:var(--ink-muted);font-size:18px;margin:0;">
-                See what indie tools other developers are using
+                See what indie creations other developers are using
             </p>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;">
@@ -144,7 +144,7 @@ async def community_stacks(request: Request):
     </div>"""
 
     return HTMLResponse(page_shell("Community Stacks", body, user=request.state.user,
-                                   description="Browse curated indie tool stacks shared by the community."))
+                                   description="Browse curated indie stacks shared by the community."))
 
 
 # ── Stack Generator — paste package.json / requirements.txt ──────────────
@@ -163,7 +163,7 @@ async def stack_generator_form(request: Request):
             <p style="color:var(--ink-muted);font-size:17px;max-width:520px;margin:0 auto;line-height:1.6;">
                 Paste your <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 8px;border-radius:var(--radius-sm);font-size:14px;">package.json</code> or
                 <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 8px;border-radius:var(--radius-sm);font-size:14px;">requirements.txt</code>
-                and we&rsquo;ll find indie tool replacements for your dependencies.
+                and we&rsquo;ll find indie replacements for your dependencies.
             </p>
         </div>
 
@@ -188,7 +188,7 @@ async def stack_generator_form(request: Request):
             <p style="font-weight:600;color:var(--ink);font-size:14px;margin-bottom:8px;">How it works</p>
             <ol style="color:var(--ink-muted);font-size:14px;line-height:1.8;padding-left:20px;margin:0;">
                 <li>Paste the contents of your <code style="font-family:var(--font-mono);font-size:13px;">package.json</code> or <code style="font-family:var(--font-mono);font-size:13px;">requirements.txt</code></li>
-                <li>We extract dependency names and search our indie tool catalog</li>
+                <li>We extract dependency names and search our indie catalog</li>
                 <li>You get a list of indie-built alternatives for each dependency</li>
             </ol>
         </div>
@@ -203,7 +203,7 @@ async def stack_generator_form(request: Request):
 
 @router.post("/stacks/generator", response_class=HTMLResponse)
 async def stack_generator_results(request: Request, deps: str = Form("")):
-    """Parse pasted dependencies and find matching indie tools."""
+    """Parse pasted dependencies and find matching indie creations."""
     db = request.state.db
     pasted_text = deps.strip()
 
@@ -395,7 +395,7 @@ async def stack_detail(request: Request, slug: str):
                 Save {discount_percent}% &middot; {format_price(discount_amount)} off
             </div>
             <div style="margin-bottom:16px;font-size:14px;color:var(--ink-muted);">
-                &#9889; Saves ~{tokens_k}k tokens vs building from scratch
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Saves ~{tokens_k}k tokens vs building from scratch
             </div>
             <form method="post" action="/api/checkout-stack">
                 <input type="hidden" name="stack_id" value="{stack['id']}">
@@ -412,7 +412,7 @@ async def stack_detail(request: Request, slug: str):
                 Free Stack
             </div>
             <div style="font-size:14px;color:var(--ink-muted);margin-bottom:16px;">
-                All tools in this stack are free. &#9889; Saves ~{tokens_k}k tokens.
+                All tools in this stack are free. <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Saves ~{tokens_k}k tokens.
             </div>
         </div>
         """
@@ -439,7 +439,7 @@ async def stack_detail(request: Request, slug: str):
     </div>
     """
     return HTMLResponse(page_shell(f"{stack['title']} — Stack", body,
-                                   description=f"Get {len(tools)} indie tools in one bundle at {discount_percent}% off. {stack.get('description', '')}",
+                                   description=f"Get {len(tools)} indie creations in one bundle at {discount_percent}% off. {stack.get('description', '')}",
                                    user=request.state.user))
 
 

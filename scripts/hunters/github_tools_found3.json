@@ -1,0 +1,1379 @@
+[
+  {
+    "name": "ClipBrdView",
+    "full_name": "HemulGM/ClipBrdView",
+    "url": "https://github.com/HemulGM/ClipBrdView",
+    "description": "Clipboard Viewer",
+    "stars": 6,
+    "language": "Pascal",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,pascal",
+    "maker": {
+      "login": "HemulGM",
+      "name": "HemulGM",
+      "email": "alinvip22@gmail.com",
+      "bio": "Professional Delphi developer.\r\n@hemulgm",
+      "url": "https://t.me/HemulGM"
+    }
+  },
+  {
+    "name": "FeedbackSQL",
+    "full_name": "Preetham0420/FeedbackSQL",
+    "url": "https://github.com/Preetham0420/FeedbackSQL",
+    "description": "Feedback capture web app using Flask, SQLite, and SQLAlchemy. Supports signup/login (bcrypt-hashed), feedback submission, and an admin page to review/clear entries. Demonstrates practical SQL CRUD via",
+    "stars": 4,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "cli,html,open-source",
+    "maker": {
+      "login": "Preetham0420",
+      "name": "Preetham Elakurthy",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/Preetham0420"
+    }
+  },
+  {
+    "name": "simple_sqlite_viewer",
+    "full_name": "ik0o/simple_sqlite_viewer",
+    "url": "https://github.com/ik0o/simple_sqlite_viewer",
+    "description": "simple cli sqlite viewer for linux and windows",
+    "stars": 2,
+    "language": "C",
+    "category_slug": "developer-tools",
+    "tags": "c,cli,open-source",
+    "maker": {
+      "login": "ik0o",
+      "name": "ik0o",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/ik0o"
+    }
+  },
+  {
+    "name": "podil",
+    "full_name": "podiljs/podil",
+    "url": "https://github.com/podiljs/podil",
+    "description": "Lightweight and secure database schema migration tool \ud83c\udfaf",
+    "stars": 29,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,typescript",
+    "maker": {
+      "login": "podiljs",
+      "name": "Podil.js",
+      "email": "",
+      "bio": "Lightwait and secure database migration tool",
+      "url": "https://github.com/podiljs"
+    }
+  },
+  {
+    "name": "migrator",
+    "full_name": "lukaszbudnik/migrator",
+    "url": "https://github.com/lukaszbudnik/migrator",
+    "description": "Super fast and lightweight DB migration & evolution tool written in Go",
+    "stars": 22,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "go,lightweight,open-source",
+    "maker": {
+      "login": "lukaszbudnik",
+      "name": "\u0141ukasz Budnik",
+      "email": "lukasz.budnik@gmail.com",
+      "bio": "",
+      "url": "https://lukaszbudnik.github.io/"
+    }
+  },
+  {
+    "name": "graphqlviz",
+    "full_name": "sheerun/graphqlviz",
+    "url": "https://github.com/sheerun/graphqlviz",
+    "description": "GraphQL Server schema visualizer",
+    "stars": 749,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "sheerun",
+      "name": "Adam Stankiewicz",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/sheerun"
+    }
+  },
+  {
+    "name": "craftql",
+    "full_name": "yamafaktory/craftql",
+    "url": "https://github.com/yamafaktory/craftql",
+    "description": "A CLI tool to visualize GraphQL schemas and to output a graph data structure as a graphviz .dot format",
+    "stars": 112,
+    "language": "Rust",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,rust",
+    "maker": {
+      "login": "yamafaktory",
+      "name": "Davy Duperron",
+      "email": "yamafaktory@gmail.com",
+      "bio": " Senior software engineer who  love to learn on a daily basis (he/him) #Zig #Rustlang  #TypeScript",
+      "url": "https://davy.quest/"
+    }
+  },
+  {
+    "name": "rails_lens",
+    "full_name": "seuros/rails_lens",
+    "url": "https://github.com/seuros/rails_lens",
+    "description": "Comprehensive Rails application visualization and annotation tool - precision optics for the Rails universe",
+    "stars": 99,
+    "language": "Ruby",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,ruby",
+    "maker": {
+      "login": "seuros",
+      "name": "Abdelkader Boudih",
+      "email": "terminale@gmail.com",
+      "bio": "",
+      "url": "https://www.seuros.com"
+    }
+  },
+  {
+    "name": "sqlitebiter",
+    "full_name": "thombashi/sqlitebiter",
+    "url": "https://github.com/thombashi/sqlitebiter",
+    "description": "A CLI tool to convert CSV / Excel / HTML / JSON / Jupyter Notebook / LDJSON / LTSV / Markdown / SQLite / SSV / TSV / Google-Sheets to a SQLite database file.",
+    "stars": 870,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,converter,open-source,python",
+    "maker": {
+      "login": "thombashi",
+      "name": "Tsuyoshi Hombashi",
+      "email": "tsuyoshi.hombashi@gmail.com",
+      "bio": "\ud83d\udcae\r\n\ud83e\udd89\ud83d\udca4\ud83d\udca4",
+      "url": "https://thombashi.github.io/"
+    }
+  },
+  {
+    "name": "DevOps-Python-tools",
+    "full_name": "HariSekhon/DevOps-Python-tools",
+    "url": "https://github.com/HariSekhon/DevOps-Python-tools",
+    "description": "80+ DevOps & Data CLI Tools - AWS, GCP, GCF Python Cloud Functions, Log Anonymizer, Spark, Hadoop, HBase, Hive, Impala, Linux, Docker, Spark Data Converters & Validators (Avro/Parquet/JSON/CSV/INI/XML",
+    "stars": 815,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,converter,docker,open-source,python",
+    "maker": {
+      "login": "HariSekhon",
+      "name": "Hari Sekhon",
+      "email": "",
+      "bio": "Cloud Architect, DevOps, Data Engineer, Big Data (ex-Cloudera), 100% Remote Overseas Digital Nomad",
+      "url": "https://github.com/HariSekhon"
+    }
+  },
+  {
+    "name": "mlg-converter",
+    "full_name": "karniv00l/mlg-converter",
+    "url": "https://github.com/karniv00l/mlg-converter",
+    "description": "\ud83d\udee0 CLI Tool and npm package \ud83d\udce6 for parsing and converting EFI Analytics (TunerStudio, MegaLogViewer, MegaSquirt, Speeduino) binary log files (.mlg) to a human readable formats",
+    "stars": 24,
+    "language": "TypeScript",
+    "category_slug": "file-management",
+    "tags": "cli,converter,open-source,typescript",
+    "maker": {
+      "login": "karniv00l",
+      "name": "Piotr Rogowski",
+      "email": "piotr.rogowski0@gmail.com",
+      "bio": "",
+      "url": "https://dynamlabs.com"
+    }
+  },
+  {
+    "name": "trdsql",
+    "full_name": "noborus/trdsql",
+    "url": "https://github.com/noborus/trdsql",
+    "description": "CLI tool that can execute SQL queries on CSV, LTSV, JSON, YAML and TBLN. Can output to various formats.",
+    "stars": 2152,
+    "language": "Go",
+    "category_slug": "file-management",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "noborus",
+      "name": "Noboru Saito",
+      "email": "noborusai@gmail.com",
+      "bio": "Interested in SQL\r\n",
+      "url": "https://noborus.github.io/"
+    }
+  },
+  {
+    "name": ".config",
+    "full_name": "zszszszsz/.config",
+    "url": "https://github.com/zszszszsz/.config",
+    "description": "# # Automatically generated file; DO NOT EDIT. # OpenWrt Configuration # CONFIG_MODULES=y CONFIG_HAVE_DOT_CONFIG=y # CONFIG_TARGET_sunxi is not set # CONFIG_TARGET_apm821xx is not set # CONFIG_TARGET_",
+    "stars": 314,
+    "language": "Shell",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,docker,open-source,shell",
+    "maker": {
+      "login": "zszszszsz",
+      "name": "zszszszsz",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/zszszszsz"
+    }
+  },
+  {
+    "name": "DBackup",
+    "full_name": "Skyfay/DBackup",
+    "url": "https://github.com/Skyfay/DBackup",
+    "description": "A self-hosted database backup automation tool for MySQL, PostgreSQL, MongoDB & more. Backup to S3, FTP, or Local Storage. Features cron scheduling, notifications, and easy restores via a modern Web UI",
+    "stars": 7,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "Skyfay",
+      "name": "Manu",
+      "email": "skyfay@skymail.one",
+      "bio": "22, System Engineer, offer self-hosted services on my website!",
+      "url": "https://skyfay.ch"
+    }
+  },
+  {
+    "name": "cli",
+    "full_name": "Portabase/cli",
+    "url": "https://github.com/Portabase/cli",
+    "description": "CLI for Portabase. Database backup & restore tool for PostgreSQL, MySQL/MariaDB (more engines coming soon \ud83d\ude80)",
+    "stars": 3,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "cli,open-source,python,self-hosted",
+    "maker": {
+      "login": "Portabase",
+      "name": "Portabase",
+      "email": "contact@portabase.io",
+      "bio": "Portabase - Database backup & restore tool for PostgreSQL, MySQL/MariaDB, SQLite (more engines coming soon \ud83d\ude80)",
+      "url": "https://portabase.io"
+    }
+  },
+  {
+    "name": "apisprout",
+    "full_name": "danielgtaylor/apisprout",
+    "url": "https://github.com/danielgtaylor/apisprout",
+    "description": "Lightweight, blazing fast, cross-platform OpenAPI 3 mock server with validation",
+    "stars": 717,
+    "language": "Go",
+    "category_slug": "api-tools",
+    "tags": "api,go,lightweight,open-source",
+    "maker": {
+      "login": "danielgtaylor",
+      "name": "Daniel G. Taylor",
+      "email": "danielgtaylor@gmail.com",
+      "bio": "",
+      "url": "https://github.com/danielgtaylor"
+    }
+  },
+  {
+    "name": "mockserver",
+    "full_name": "onurartan/mockserver",
+    "url": "https://github.com/onurartan/mockserver",
+    "description": "MockServer - Lightweight Go-based mock API server for fast prototyping, testing, and simulating REST endpoints with JSON config.",
+    "stars": 22,
+    "language": "Go",
+    "category_slug": "api-tools",
+    "tags": "api,go,lightweight,open-source",
+    "maker": {
+      "login": "onurartan",
+      "name": "Onur Artan",
+      "email": "",
+      "bio": "",
+      "url": "https://onur.trymagic.xyz"
+    }
+  },
+  {
+    "name": "mantis",
+    "full_name": "dubonzi/mantis",
+    "url": "https://github.com/dubonzi/mantis",
+    "description": "A lightweight and easy to use RESTful api mocking server",
+    "stars": 13,
+    "language": "Go",
+    "category_slug": "api-tools",
+    "tags": "api,go,lightweight,open-source",
+    "maker": {
+      "login": "dubonzi",
+      "name": "Eduardo Bonzi",
+      "email": "eduardobonzi.dev@gmail.com",
+      "bio": "\ud83c\udfa7\u2328\ufe0f\ud83d\udda5\ufe0f",
+      "url": "https://blog.eduardobonzi.dev"
+    }
+  },
+  {
+    "name": "thunder-client-support",
+    "full_name": "thunderclient/thunder-client-support",
+    "url": "https://github.com/thunderclient/thunder-client-support",
+    "description": "Thunder Client is a lightweight Rest API Client Extension for VS Code. ",
+    "stars": 3708,
+    "language": "",
+    "category_slug": "api-tools",
+    "tags": "api,cli,lightweight,open-source",
+    "maker": {
+      "login": "thunderclient",
+      "name": "Thunder Client",
+      "email": "",
+      "bio": "Thunder Client is a lightweight API Client for VS Code",
+      "url": "https://www.thunderclient.com/"
+    }
+  },
+  {
+    "name": "strest",
+    "full_name": "eykrehbein/strest",
+    "url": "https://github.com/eykrehbein/strest",
+    "description": "\u26a1\ufe0f CI-ready tests for REST APIs configured in YAML",
+    "stars": 1729,
+    "language": "TypeScript",
+    "category_slug": "api-tools",
+    "tags": "api,cli,open-source,typescript",
+    "maker": {
+      "login": "eykrehbein",
+      "name": "Eyk Rehbein",
+      "email": "eykrehbein@gmail.com",
+      "bio": "Co-founder @superscale-ai",
+      "url": "https://eyk.dev"
+    }
+  },
+  {
+    "name": "openapi-python-client",
+    "full_name": "openapi-generators/openapi-python-client",
+    "url": "https://github.com/openapi-generators/openapi-python-client",
+    "description": "Generate modern Python clients from OpenAPI",
+    "stars": 1915,
+    "language": "Python",
+    "category_slug": "api-tools",
+    "tags": "api,cli,generator,open-source,python",
+    "maker": {
+      "login": "openapi-generators",
+      "name": "openapi-generators",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/openapi-generators"
+    }
+  },
+  {
+    "name": "openapi-generator-cli",
+    "full_name": "OpenAPITools/openapi-generator-cli",
+    "url": "https://github.com/OpenAPITools/openapi-generator-cli",
+    "description": "A node package wrapper for https://github.com/OpenAPITools/openapi-generator",
+    "stars": 1891,
+    "language": "TypeScript",
+    "category_slug": "api-tools",
+    "tags": "api,cli,generator,open-source,typescript",
+    "maker": {
+      "login": "OpenAPITools",
+      "name": "OpenAPI Tools",
+      "email": "team@openapitools.org",
+      "bio": "A collection of tools for OpenAPI specifications. (NOTE: This organization is not affiliated with OpenAPI Initiative (OAI))",
+      "url": "https://openapitools.org"
+    }
+  },
+  {
+    "name": "openapi-zod-client",
+    "full_name": "astahmer/openapi-zod-client",
+    "url": "https://github.com/astahmer/openapi-zod-client",
+    "description": "Generate a zodios (typescript http client with zod validation) from an OpenAPI spec (json/yaml)",
+    "stars": 1140,
+    "language": "TypeScript",
+    "category_slug": "api-tools",
+    "tags": "api,cli,generator,open-source,typescript",
+    "maker": {
+      "login": "astahmer",
+      "name": "Alexandre Stahmer",
+      "email": "",
+      "bio": "Frenchy freelance web/Typescript dev working on Panda CSS, prev @Decathlon",
+      "url": "https://astahmer.dev"
+    }
+  },
+  {
+    "name": "BricksLLM",
+    "full_name": "bricks-cloud/BricksLLM",
+    "url": "https://github.com/bricks-cloud/BricksLLM",
+    "description": "\ud83d\udd12 Enterprise-grade API gateway that helps you monitor and impose cost or rate limits per API key. Get fine-grained access control and monitoring per user, application, or environment. Supports OpenAI,",
+    "stars": 1161,
+    "language": "Go",
+    "category_slug": "api-tools",
+    "tags": "api,go,open-source,self-hosted",
+    "maker": {
+      "login": "bricks-cloud",
+      "name": "bricks-cloud",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/bricks-cloud"
+    }
+  },
+  {
+    "name": "searxng-search",
+    "full_name": "keith-vs-kev/searxng-search",
+    "url": "https://github.com/keith-vs-kev/searxng-search",
+    "description": "OpenClaw plugin: SearXNG-powered web search \u2014 no API keys, no rate limits, self-hosted",
+    "stars": 11,
+    "language": "TypeScript",
+    "category_slug": "api-tools",
+    "tags": "api,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "keith-vs-kev",
+      "name": "keith-vs-kev\u202f",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/keith-vs-kev"
+    }
+  },
+  {
+    "name": "serverless-twzipcode",
+    "full_name": "821wkli/serverless-twzipcode",
+    "url": "https://github.com/821wkli/serverless-twzipcode",
+    "description": "Self-hosted Instant, fast, and no API rate limit - Taiwan postal code lookup API service",
+    "stars": 1,
+    "language": "",
+    "category_slug": "api-tools",
+    "tags": "api,open-source,self-hosted",
+    "maker": {
+      "login": "821wkli",
+      "name": "821wkli",
+      "email": "",
+      "bio": "A guy who love building something fun, exploring the art of fact. binary enthusiast.",
+      "url": "https://github.com/821wkli"
+    }
+  },
+  {
+    "name": "tproxy",
+    "full_name": "kevwan/tproxy",
+    "url": "https://github.com/kevwan/tproxy",
+    "description": "A cli tool to proxy and analyze TCP connections.",
+    "stars": 3656,
+    "language": "Go",
+    "category_slug": "api-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "kevwan",
+      "name": "Kevin Wan",
+      "email": "wanjunfeng@gmail.com",
+      "bio": "go-zero.dev",
+      "url": "github.com/zeromicro/go-zero"
+    }
+  },
+  {
+    "name": "ovpm",
+    "full_name": "cad/ovpm",
+    "url": "https://github.com/cad/ovpm",
+    "description": "OpenVPN Management Server - Effortless and free OpenVPN server administration tool",
+    "stars": 375,
+    "language": "Go",
+    "category_slug": "api-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "cad",
+      "name": "Mustafa",
+      "email": "",
+      "bio": "DevOps engineer interested in platform engineering, AI infrastructure, and distributed systems.",
+      "url": "https://github.com/cad"
+    }
+  },
+  {
+    "name": "spaceman",
+    "full_name": "eliaperantoni/spaceman",
+    "url": "https://github.com/eliaperantoni/spaceman",
+    "description": "A gRPC client from another world",
+    "stars": 374,
+    "language": "Rust",
+    "category_slug": "api-tools",
+    "tags": "cli,open-source,rust",
+    "maker": {
+      "login": "eliaperantoni",
+      "name": "Elia Perantoni",
+      "email": "perantonielia0@gmail.com",
+      "bio": "I make computers do\r\n*Beep Boop*.",
+      "url": "https://github.com/eliaperantoni"
+    }
+  },
+  {
+    "name": "git-chglog",
+    "full_name": "git-chglog/git-chglog",
+    "url": "https://github.com/git-chglog/git-chglog",
+    "description": "[DEPRECATED] CHANGELOG generator implemented in Go (Golang) -> Use now the actively maintained git-cliff",
+    "stars": 2881,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "cli,generator,go,open-source",
+    "maker": {
+      "login": "git-chglog",
+      "name": "git chglog",
+      "email": "",
+      "bio": "Anytime, anywhere, Write your CHANGELOG.",
+      "url": "https://github.com/git-chglog"
+    }
+  },
+  {
+    "name": "gitmoji-changelog",
+    "full_name": "frinyvonnick/gitmoji-changelog",
+    "url": "https://github.com/frinyvonnick/gitmoji-changelog",
+    "description": "A changelog generator for gitmoji \ud83d\ude1c",
+    "stars": 396,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,generator,javascript,open-source",
+    "maker": {
+      "login": "frinyvonnick",
+      "name": "Yvonnick FRIN",
+      "email": "frin.yvonnick@gmail.com",
+      "bio": "\ud83d\udc68\u200d\ud83d\udcbb Developer Web Fullstack at @1024pix\r\n\r\n\ud83c\udfa4Co-organizer at @NantesJS meetup",
+      "url": "https://yvonnickfrin.dev"
+    }
+  },
+  {
+    "name": "overcommit",
+    "full_name": "sds/overcommit",
+    "url": "https://github.com/sds/overcommit",
+    "description": "A fully configurable and extendable Git hook manager",
+    "stars": 3991,
+    "language": "Ruby",
+    "category_slug": "developer-tools",
+    "tags": "open-source,ruby",
+    "maker": {
+      "login": "sds",
+      "name": "Shane da Silva",
+      "email": "",
+      "bio": "Software engineer and trampoline aficionado",
+      "url": "https://shane.io"
+    }
+  },
+  {
+    "name": "commitment",
+    "full_name": "ngerakines/commitment",
+    "url": "https://github.com/ngerakines/commitment",
+    "description": "A commit message generator that I use.",
+    "stars": 1258,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "generator,open-source,python",
+    "maker": {
+      "login": "ngerakines",
+      "name": "Nick Gerakines",
+      "email": "",
+      "bio": "Engineering @github ",
+      "url": "https://ngerakines.me/"
+    }
+  },
+  {
+    "name": "gac",
+    "full_name": "cellwebb/gac",
+    "url": "https://github.com/cellwebb/gac",
+    "description": "Intelligent LLM-powered git commit message generator that understands your code!",
+    "stars": 295,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "generator,open-source,python",
+    "maker": {
+      "login": "cellwebb",
+      "name": "Cell",
+      "email": "",
+      "bio": "",
+      "url": "criteria.dev"
+    }
+  },
+  {
+    "name": "diffsense",
+    "full_name": "edgeleap/diffsense",
+    "url": "https://github.com/edgeleap/diffsense",
+    "description": "A free git commit message generator powered by Apple Intelligence",
+    "stars": 78,
+    "language": "Shell",
+    "category_slug": "developer-tools",
+    "tags": "generator,open-source,shell",
+    "maker": {
+      "login": "edgeleap",
+      "name": "EdgeLeap",
+      "email": "30n1st@gmail.com",
+      "bio": "Local AI apps",
+      "url": "https://edgeleap.github.io/"
+    }
+  },
+  {
+    "name": "Termux-command",
+    "full_name": "CNTRUN/Termux-command",
+    "url": "https://github.com/CNTRUN/Termux-command",
+    "description": "char const* const commands[] = { \"aapt\", \" aapt\", \" zipalign\", \"abduco\", \" abduco\", \"abook\", \" abook\", \"alpine\", \" alpine\", \" pico\", \" pilot\", \" rpdump\", \" rpload\", \"angband\", \" angband\", \"apache2\", \"",
+    "stars": 108,
+    "language": "",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,open-source",
+    "maker": {
+      "login": "CNTRUN",
+      "name": "CNTRUN",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/CNTRUN"
+    }
+  },
+  {
+    "name": "helloy-word",
+    "full_name": "klonnet23/helloy-word",
+    "url": "https://github.com/klonnet23/helloy-word",
+    "description": "    {   \"releases\": {     \"2.0.4\": [       \"[Fixed] Refresh for Enterprise repositories did not handle API error querying branches - #7713\",       \"[Fixed] Missing \\\"Discard all changes\\\" context menu",
+    "stars": 82,
+    "language": "",
+    "category_slug": "developer-tools",
+    "tags": "api,cli,docker,open-source",
+    "maker": {
+      "login": "klonnet23",
+      "name": "klonnet23",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/klonnet23"
+    }
+  },
+  {
+    "name": "comptroller",
+    "full_name": "Aldlevine/comptroller",
+    "url": "https://github.com/Aldlevine/comptroller",
+    "description": "A simple and lightweight tool to manage your monorepo.",
+    "stars": 28,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "javascript,lightweight,open-source",
+    "maker": {
+      "login": "Aldlevine",
+      "name": "Aaron Levine",
+      "email": "ald.levine@gmail.com",
+      "bio": "I have no country to fight for; my country is the earth, and I am a citizen of the world.",
+      "url": "https://github.com/Aldlevine"
+    }
+  },
+  {
+    "name": "monist",
+    "full_name": "lddubeau/monist",
+    "url": "https://github.com/lddubeau/monist",
+    "description": "A lightweight tool for managing monorepos.",
+    "stars": 1,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,typescript",
+    "maker": {
+      "login": "lddubeau",
+      "name": "Louis-Dominique Dubeau",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/lddubeau"
+    }
+  },
+  {
+    "name": "CIGO",
+    "full_name": "Usman-A/CIGO",
+    "url": "https://github.com/Usman-A/CIGO",
+    "description": "A Lightweight monorepo management tool built with go",
+    "stars": 1,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "html,lightweight,open-source",
+    "maker": {
+      "login": "Usman-A",
+      "name": "Usman Asad",
+      "email": "dev@usmanasad.ca",
+      "bio": "Backend Engineer, *nix & shell fan, & homelabber. Crafting clean code, using AI as a typing bot, and finding new ways to apply AI to make things better.",
+      "url": "https://github.com/Usman-A"
+    }
+  },
+  {
+    "name": "git-worktree-runner",
+    "full_name": "coderabbitai/git-worktree-runner",
+    "url": "https://github.com/coderabbitai/git-worktree-runner",
+    "description": "Bash-based Git worktree manager with editor and AI tool integration. Automates per-branch worktree creation, configuration copying, dependency installation, and workspace setup for efficient parallel ",
+    "stars": 1394,
+    "language": "Shell",
+    "category_slug": "developer-tools",
+    "tags": "open-source,shell",
+    "maker": {
+      "login": "coderabbitai",
+      "name": "CodeRabbit",
+      "email": "support@coderabbit.ai",
+      "bio": "AI-powered platform revolutionizing code reviews",
+      "url": "https://www.coderabbit.ai/?utm_source=cr_org&utm_medium=github"
+    }
+  },
+  {
+    "name": "wtp",
+    "full_name": "satococoa/wtp",
+    "url": "https://github.com/satococoa/wtp",
+    "description": "\ud83c\udf33 A powerful Git worktree CLI tool with automated setup, branch tracking, and smart navigation",
+    "stars": 387,
+    "language": "Go",
+    "category_slug": "developer-tools",
+    "tags": "cli,go,open-source",
+    "maker": {
+      "login": "satococoa",
+      "name": "Satoshi Ebisawa",
+      "email": "e.satoshi@gmail.com",
+      "bio": "",
+      "url": "http://satococoa.github.io"
+    }
+  },
+  {
+    "name": "phantom",
+    "full_name": "aku11i/phantom",
+    "url": "https://github.com/aku11i/phantom",
+    "description": "A powerful CLI tool for seamless parallel development with Git worktrees.",
+    "stars": 196,
+    "language": "JavaScript",
+    "category_slug": "developer-tools",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "aku11i",
+      "name": "Shuhei Akutagawa",
+      "email": "shuhei.akutagawa+github@gmail.com",
+      "bio": "",
+      "url": "https://aku11i.dev"
+    }
+  },
+  {
+    "name": "subfont",
+    "full_name": "Munter/subfont",
+    "url": "https://github.com/Munter/subfont",
+    "description": "Command line tool to optimize your webfont loading. Aggressive subsetting based on your font use, self-hosting of Google fonts and preloading",
+    "stars": 1635,
+    "language": "JavaScript",
+    "category_slug": "design-creative",
+    "tags": "javascript,open-source",
+    "maker": {
+      "login": "Munter",
+      "name": "Peter M\u00fcller",
+      "email": "pingvin+github@gmail.com",
+      "bio": "Web developer with a special interest in tooling for web performance and workflow optimization",
+      "url": "https://mntr.dk"
+    }
+  },
+  {
+    "name": "SubFontManager",
+    "full_name": "jensenyg/SubFontManager",
+    "url": "https://github.com/jensenyg/SubFontManager",
+    "description": "Font subsetting and embedding tool for ASS/SSA subtitles.",
+    "stars": 22,
+    "language": "Python",
+    "category_slug": "design-creative",
+    "tags": "open-source,python",
+    "maker": {
+      "login": "jensenyg",
+      "name": "jensenyg",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/jensenyg"
+    }
+  },
+  {
+    "name": "subset-iconfont",
+    "full_name": "dzhuang/subset-iconfont",
+    "url": "https://github.com/dzhuang/subset-iconfont",
+    "description": "A subsetting tool for iconfont, which make it possible to use icons across multiple packages with the same prefix and style.",
+    "stars": 9,
+    "language": "TypeScript",
+    "category_slug": "design-creative",
+    "tags": "open-source,typescript",
+    "maker": {
+      "login": "dzhuang",
+      "name": "dzhuang",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/dzhuang"
+    }
+  },
+  {
+    "name": "arca-ui",
+    "full_name": "simonlee-1994/arca-ui",
+    "url": "https://github.com/simonlee-1994/arca-ui",
+    "description": "A multi-theme component library built on shadcn/ui and Tailwind CSS. 100% AI-driven, production-ready blocks designed to help indie hackers ship faster.",
+    "stars": 18,
+    "language": "TypeScript",
+    "category_slug": "design-creative",
+    "tags": "open-source,typescript",
+    "maker": {
+      "login": "simonlee-1994",
+      "name": "simonlee-1994",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/simonlee-1994"
+    }
+  },
+  {
+    "name": "pingvin-share",
+    "full_name": "stonith404/pingvin-share",
+    "url": "https://github.com/stonith404/pingvin-share",
+    "description": "A self-hosted file sharing platform that combines lightness and beauty, perfect for seamless and efficient file sharing.",
+    "stars": 4621,
+    "language": "TypeScript",
+    "category_slug": "file-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "stonith404",
+      "name": "Elias Schneider",
+      "email": "",
+      "bio": "",
+      "url": "https://eliasschneider.com"
+    }
+  },
+  {
+    "name": "Palmr",
+    "full_name": "kyantech/Palmr",
+    "url": "https://github.com/kyantech/Palmr",
+    "description": "\ud83c\udf34 Palmr. is an open-source file-sharing platform focused on privacy and security. It enables users to upload, manage, and share files with features like password protection, custom links, and access c",
+    "stars": 2414,
+    "language": "TypeScript",
+    "category_slug": "file-management",
+    "tags": "open-source,privacy,self-hosted,typescript",
+    "maker": {
+      "login": "kyantech",
+      "name": "kyantech",
+      "email": "",
+      "bio": "The best software house you will ever find.",
+      "url": "kyantech.com.br"
+    }
+  },
+  {
+    "name": "another-s3-manager",
+    "full_name": "kruchenburger/another-s3-manager",
+    "url": "https://github.com/kruchenburger/another-s3-manager",
+    "description": "Self-hosted S3 browser with multi-account support",
+    "stars": 1,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "open-source,python,self-hosted",
+    "maker": {
+      "login": "kruchenburger",
+      "name": "kruchenburger",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/kruchenburger"
+    }
+  },
+  {
+    "name": "sairo",
+    "full_name": "ashwathstephen/sairo",
+    "url": "https://github.com/ashwathstephen/sairo",
+    "description": "Self-hosted S3 browser for AWS, MinIO, Cloudflare R2, Wasabi, and any S3-compatible storage. Search, preview, share, and manage objects from your browser.",
+    "stars": 1,
+    "language": "JavaScript",
+    "category_slug": "file-management",
+    "tags": "javascript,open-source,self-hosted",
+    "maker": {
+      "login": "ashwathstephen",
+      "name": "Ashwath Abraham Stephen",
+      "email": "",
+      "bio": "Sr. DevOps Engineer building reliable cloud-native & bare-metal infra. Expert in Kubernetes, Terraform & Observability. Enabling safe, fast releases at scale.",
+      "url": "https://www.ashwathstephen.dev"
+    }
+  },
+  {
+    "name": "atrium",
+    "full_name": "aldy505/atrium",
+    "url": "https://github.com/aldy505/atrium",
+    "description": "Self-hosted web UI for securely browse S3-compatible object storage",
+    "stars": 0,
+    "language": "TypeScript",
+    "category_slug": "file-management",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "aldy505",
+      "name": "Reinaldy Rafli",
+      "email": "github@reinaldyrafli.com",
+      "bio": "That's life, if we had more time, we could live forever.",
+      "url": "https://blog.reinaldyrafli.com"
+    }
+  },
+  {
+    "name": "zipoc",
+    "full_name": "jimmydin7/zipoc",
+    "url": "https://github.com/jimmydin7/zipoc",
+    "description": "Lightweight, self hosted & ai-powered version control tool with terminal & web UI. Commit, revert, export & more! Simpler and easier than Git.",
+    "stars": 17,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "lightweight,open-source,python,self-hosted",
+    "maker": {
+      "login": "jimmydin7",
+      "name": "Jim Dinias",
+      "email": "",
+      "bio": "founder @ notefy //\r\nweb dev @ youthunite //\r\nsome python & web stuff\r\n",
+      "url": "jimdinias.dev"
+    }
+  },
+  {
+    "name": "sql-backup",
+    "full_name": "samiulalim1/sql-backup",
+    "url": "https://github.com/samiulalim1/sql-backup",
+    "description": "SQL Backup is a lightweight self-hosted PHP tool to back up MySQL/MariaDB databases. It dumps data, zips files, encrypts configs, and uploads backups to Telegram.",
+    "stars": 0,
+    "language": "HTML",
+    "category_slug": "developer-tools",
+    "tags": "html,lightweight,open-source,self-hosted",
+    "maker": {
+      "login": "samiulalim1",
+      "name": "samiulalim1",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/samiulalim1"
+    }
+  },
+  {
+    "name": "caseiro",
+    "full_name": "guilhermohounie/caseiro",
+    "url": "https://github.com/guilhermohounie/caseiro",
+    "description": "Caseiro is a lightweight, S3-compatible tool that powers self-hosted, local-first applications with the ability to replicate and backup their content, preserving data privacy and ownership through a s",
+    "stars": 0,
+    "language": "TypeScript",
+    "category_slug": "file-management",
+    "tags": "lightweight,open-source,privacy,self-hosted,typescript",
+    "maker": {
+      "login": "guilhermohounie",
+      "name": "Guilhermo Hounie",
+      "email": "",
+      "bio": "Computer Scientist and Software Developer.",
+      "url": "hounie.me"
+    }
+  },
+  {
+    "name": "csv_to_json_converter",
+    "full_name": "maria-python/csv_to_json_converter",
+    "url": "https://github.com/maria-python/csv_to_json_converter",
+    "description": "Lightweight Python CLI tool to convert CSV files into structured JSON format.",
+    "stars": 3,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,converter,lightweight,open-source,python",
+    "maker": {
+      "login": "maria-python",
+      "name": "Mariia Ilnitska",
+      "email": "maria.ladesigner@gmail.com",
+      "bio": "Python | Technical Assistant",
+      "url": "https://github.com/maria-python"
+    }
+  },
+  {
+    "name": "-GTA-DAT-Toolkit-Inspector-Chase-Nodes-Converter",
+    "full_name": "MadGamerHD/-GTA-DAT-Toolkit-Inspector-Chase-Nodes-Converter",
+    "url": "https://github.com/MadGamerHD/-GTA-DAT-Toolkit-Inspector-Chase-Nodes-Converter",
+    "description": "A lightweight GUI + CLI utility for inspecting GTA `nodes.dat` / `chase.dat` files and converting `chase.dat` (20- or 28-byte variants) into `nodes.dat` ready for use in GTA: San Andreas. Fast, safe, ",
+    "stars": 3,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,converter,lightweight,open-source,python",
+    "maker": {
+      "login": "MadGamerHD",
+      "name": "MadGamerHD",
+      "email": "",
+      "bio": "I update tools slowly and intentionally. I learn by doing, improve over time, and only release updates when they feel right\u2014not just to stay active.",
+      "url": "https://github.com/MadGamerHD"
+    }
+  },
+  {
+    "name": "universal-json-converter",
+    "full_name": "Siddharth-lal-13/universal-json-converter",
+    "url": "https://github.com/Siddharth-lal-13/universal-json-converter",
+    "description": "\ud83d\ude80 A lightweight Python CLI tool to convert large .csv, .xlsx, .xml, .yaml, .parquet, and .jsonl files to/from .json.  Supports multi-GB and terabyte-scale datasets using streaming and chunked reading.",
+    "stars": 2,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,converter,lightweight,open-source,python",
+    "maker": {
+      "login": "Siddharth-lal-13",
+      "name": "Siddharth Lal",
+      "email": "",
+      "bio": "Python programmer.\r\n",
+      "url": "https://github.com/Siddharth-lal-13"
+    }
+  },
+  {
+    "name": "percollate",
+    "full_name": "danburzo/percollate",
+    "url": "https://github.com/danburzo/percollate",
+    "description": "A command-line tool to turn web pages into readable PDF, EPUB, HTML, or Markdown docs.",
+    "stars": 4590,
+    "language": "JavaScript",
+    "category_slug": "file-management",
+    "tags": "cli,javascript,open-source",
+    "maker": {
+      "login": "danburzo",
+      "name": "Dan Burzo",
+      "email": "dan@danburzo.ro",
+      "bio": "Designer, tool maker, web platform enthusiast, amateur archivist.",
+      "url": "https://danburzo.ro"
+    }
+  },
+  {
+    "name": "md-to-pdf",
+    "full_name": "simonhaenisch/md-to-pdf",
+    "url": "https://github.com/simonhaenisch/md-to-pdf",
+    "description": "Hackable CLI tool for converting Markdown files to PDF using Node.js and headless Chrome.",
+    "stars": 1696,
+    "language": "TypeScript",
+    "category_slug": "file-management",
+    "tags": "cli,open-source,typescript",
+    "maker": {
+      "login": "simonhaenisch",
+      "name": "Simon H\u00e4nisch",
+      "email": "",
+      "bio": "",
+      "url": "https://simonhaenisch.com"
+    }
+  },
+  {
+    "name": "kokoro-tts",
+    "full_name": "nazdridoy/kokoro-tts",
+    "url": "https://github.com/nazdridoy/kokoro-tts",
+    "description": "A CLI text-to-speech tool using the Kokoro model, supporting multiple languages, voices (with blending), and various input formats including EPUB books and PDF documents.",
+    "stars": 1245,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "cli,open-source,python",
+    "maker": {
+      "login": "nazdridoy",
+      "name": "nazDridoy",
+      "email": "nazdridoy399@gmail.com",
+      "bio": "",
+      "url": "https://github.com/nazdridoy"
+    }
+  },
+  {
+    "name": "checkup",
+    "full_name": "sourcegraph/checkup",
+    "url": "https://github.com/sourcegraph/checkup",
+    "description": "Distributed, lock-free, self-hosted health checks and status pages",
+    "stars": 3458,
+    "language": "Go",
+    "category_slug": "monitoring-uptime",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "sourcegraph",
+      "name": "Sourcegraph",
+      "email": "hi@sourcegraph.com",
+      "bio": "Helping developers search, understand, and write code in complex codebases with AI",
+      "url": "https://sourcegraph.com"
+    }
+  },
+  {
+    "name": "logdy-core",
+    "full_name": "logdyhq/logdy-core",
+    "url": "https://github.com/logdyhq/logdy-core",
+    "description": "Realtime log viewer with web UI, tail -f for logs with a web interface browser.",
+    "stars": 2105,
+    "language": "Go",
+    "category_slug": "monitoring-uptime",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "logdyhq",
+      "name": "Logdy",
+      "email": "",
+      "bio": "",
+      "url": "https://logdy.dev"
+    }
+  },
+  {
+    "name": "nerdlog",
+    "full_name": "dimonomid/nerdlog",
+    "url": "https://github.com/dimonomid/nerdlog",
+    "description": "Nerdlog: fast, remote-first, multi-host TUI log viewer with timeline histogram and no central server",
+    "stars": 1452,
+    "language": "Go",
+    "category_slug": "monitoring-uptime",
+    "tags": "go,open-source,self-hosted",
+    "maker": {
+      "login": "dimonomid",
+      "name": "Dmitry Frank",
+      "email": "mail@dmitryfrank.com",
+      "bio": "Passionate software engineer, nature lover",
+      "url": "https://dmitryfrank.com"
+    }
+  },
+  {
+    "name": "telescope",
+    "full_name": "iamtelescope/telescope",
+    "url": "https://github.com/iamtelescope/telescope",
+    "description": "Web-based log viewer UI. Explore logs data stored in several sources: ClickHouse, Kubernetes or Docker",
+    "stars": 643,
+    "language": "Python",
+    "category_slug": "monitoring-uptime",
+    "tags": "cli,docker,open-source,python,self-hosted",
+    "maker": {
+      "login": "iamtelescope",
+      "name": "iamtelescope",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/iamtelescope"
+    }
+  },
+  {
+    "name": "bugsink",
+    "full_name": "bugsink/bugsink",
+    "url": "https://github.com/bugsink/bugsink",
+    "description": "Self-hosted Error Tracking ",
+    "stars": 1566,
+    "language": "Python",
+    "category_slug": "monitoring-uptime",
+    "tags": "open-source,python,self-hosted",
+    "maker": {
+      "login": "bugsink",
+      "name": "bugsink",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/bugsink"
+    }
+  },
+  {
+    "name": "swetrix",
+    "full_name": "Swetrix/swetrix",
+    "url": "https://github.com/Swetrix/swetrix",
+    "description": "\ud83d\udcc8 Swetrix is a cookie-less, open source, privacy-first web analytics, website speed monitoring and error tracking service that you can host yourself or use in the cloud. Get started for free!",
+    "stars": 893,
+    "language": "TypeScript",
+    "category_slug": "monitoring-uptime",
+    "tags": "open-source,privacy,self-hosted,typescript",
+    "maker": {
+      "login": "Swetrix",
+      "name": "Swetrix",
+      "email": "contact@swetrix.com",
+      "bio": "Bringing privacy oriented web analytics services to the world",
+      "url": "https://swetrix.com"
+    }
+  },
+  {
+    "name": "traceo",
+    "full_name": "traceo-dev/traceo",
+    "url": "https://github.com/traceo-dev/traceo",
+    "description": "Traceo is a self-hosted bug tracking and performance monitoring system.",
+    "stars": 480,
+    "language": "TypeScript",
+    "category_slug": "monitoring-uptime",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "traceo-dev",
+      "name": "Traceo",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/traceo-dev"
+    }
+  },
+  {
+    "name": "NetworkOptimizer",
+    "full_name": "Ozark-Connect/NetworkOptimizer",
+    "url": "https://github.com/Ozark-Connect/NetworkOptimizer",
+    "description": "Self-hosted performance optimization and security audit tool for UniFi Networks. Includes Wi-Fi Optimizer for wireless health scoring and channel optimization, advanced DNS/VLAN/firewall security chec",
+    "stars": 528,
+    "language": "C#",
+    "category_slug": "monitoring-uptime",
+    "tags": "c#,open-source,self-hosted",
+    "maker": {
+      "login": "Ozark-Connect",
+      "name": "Ozark Connect",
+      "email": "",
+      "bio": "",
+      "url": "https://ozarkconnect.net"
+    }
+  },
+  {
+    "name": "Second_Sales_Automation_bot",
+    "full_name": "MasegoMashiane/Second_Sales_Automation_bot",
+    "url": "https://github.com/MasegoMashiane/Second_Sales_Automation_bot",
+    "description": "Free, fully self-hosted sales & social media automation suite. Multi-stage cold email campaigns + scheduled posting to Facebook, Instagram & LinkedIn \u2013 all driven by Google Sheets and Gmail. No paid t",
+    "stars": 1,
+    "language": "Python",
+    "category_slug": "file-management",
+    "tags": "open-source,python,self-hosted",
+    "maker": {
+      "login": "MasegoMashiane",
+      "name": "Masego_Mashiane",
+      "email": "mashianemlb@gmail.com",
+      "bio": "jack of all trades",
+      "url": "https://github.com/MasegoMashiane"
+    }
+  },
+  {
+    "name": "findrr",
+    "full_name": "newandreas/findrr",
+    "url": "https://github.com/newandreas/findrr",
+    "description": "Self hosted health check tool for Plex Media Server testing media via the servers transcoder",
+    "stars": 0,
+    "language": "HTML",
+    "category_slug": "monitoring-uptime",
+    "tags": "html,open-source,self-hosted",
+    "maker": {
+      "login": "newandreas",
+      "name": "newandreas",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/newandreas"
+    }
+  },
+  {
+    "name": "server-manager",
+    "full_name": "peterbamuhigire/server-manager",
+    "url": "https://github.com/peterbamuhigire/server-manager",
+    "description": "Chwezi Server Manager is a self-hosted control panel for deploying and managing web apps. It handles domains, SSL, databases, cron jobs, logs, Git integrations, and WordPress installs, offering a mode",
+    "stars": 2,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "open-source,php,self-hosted",
+    "maker": {
+      "login": "peterbamuhigire",
+      "name": "Peter Bamuhigire",
+      "email": "peter.bamuhigire@gmail.com",
+      "bio": "ICT Consultant, Web Applications, Software and Database Developer from Kampala, Uganda.",
+      "url": "techguypeter.com"
+    }
+  },
+  {
+    "name": "fusion",
+    "full_name": "0x2E/fusion",
+    "url": "https://github.com/0x2E/fusion",
+    "description": "A lightweight, self-hosted friendly RSS reader",
+    "stars": 2005,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "0x2E",
+      "name": "Yuan",
+      "email": "rook1e404@outlook.com",
+      "bio": "Build till 99",
+      "url": "https://rook1e.com"
+    }
+  },
+  {
+    "name": "FeedMe",
+    "full_name": "Seanium/FeedMe",
+    "url": "https://github.com/Seanium/FeedMe",
+    "description": "\ud83d\ude0b AI-powered, Lightweight RSS Reader. Supports: GitHub Pages | Vercel | Alibaba Cloud ESA Pages | Docker",
+    "stars": 714,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "docker,lightweight,open-source,self-hosted,typescript",
+    "maker": {
+      "login": "Seanium",
+      "name": "Sean",
+      "email": "seanium@foxmail.com",
+      "bio": "Student",
+      "url": "https://github.com/Seanium"
+    }
+  },
+  {
+    "name": "myreader",
+    "full_name": "tborychowski/myreader",
+    "url": "https://github.com/tborychowski/myreader",
+    "description": "A lightweight, self-hosted RSS reader & aggregator (Google Reader alternative)",
+    "stars": 11,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,php,self-hosted",
+    "maker": {
+      "login": "tborychowski",
+      "name": "Dziad Borowy",
+      "email": "",
+      "bio": "Tinker Hacker Coder Spy",
+      "url": "https://perfectthings.dev"
+    }
+  },
+  {
+    "name": "talkie-framework",
+    "full_name": "falko-code/talkie-framework",
+    "url": "https://github.com/falko-code/talkie-framework",
+    "description": "A framework for building chat bots - lightweight, fast and modular",
+    "stars": 7,
+    "language": "C#",
+    "category_slug": "developer-tools",
+    "tags": "c#,lightweight,open-source",
+    "maker": {
+      "login": "falko-code",
+      "name": "Falko",
+      "email": "hola@falko.email",
+      "bio": "",
+      "url": "https://falko.es"
+    }
+  },
+  {
+    "name": "sample-telex.im-ai-chat-bot",
+    "full_name": "JC-Coder/sample-telex.im-ai-chat-bot",
+    "url": "https://github.com/JC-Coder/sample-telex.im-ai-chat-bot",
+    "description": "This is a Node.js application that integrates with Telex for message processing using AI capabilities. The application uses Hono as a lightweight web framework to run on any Node.js environment, such ",
+    "stars": 3,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,typescript",
+    "maker": {
+      "login": "JC-Coder",
+      "name": "JC CODER",
+      "email": "",
+      "bio": "Building Awesome Stuffs. ",
+      "url": "https://jccoder.xyz"
+    }
+  },
+  {
+    "name": "chatterpy",
+    "full_name": "Aurora0000/chatterpy",
+    "url": "https://github.com/Aurora0000/chatterpy",
+    "description": "ChatterPy is a lightweight bot framework based on Twisted, designed to be easy to use, with a powerful module loading system and a great amount of flexibility..",
+    "stars": 3,
+    "language": "Python",
+    "category_slug": "developer-tools",
+    "tags": "lightweight,open-source,python",
+    "maker": {
+      "login": "Aurora0000",
+      "name": "Aurora0000",
+      "email": "",
+      "bio": "",
+      "url": "https://github.com/Aurora0000"
+    }
+  },
+  {
+    "name": "input",
+    "full_name": "deck9/input",
+    "url": "https://github.com/deck9/input",
+    "description": "A privacy-focused, no-code, open-source form builder designed for simplicity and brand consistency.",
+    "stars": 249,
+    "language": "PHP",
+    "category_slug": "developer-tools",
+    "tags": "open-source,php,privacy,self-hosted",
+    "maker": {
+      "login": "deck9",
+      "name": "deck9",
+      "email": "philipp@deck9.co",
+      "bio": "",
+      "url": "https://deck9.co"
+    }
+  },
+  {
+    "name": "form-builder",
+    "full_name": "Anmol-Baranwal/form-builder",
+    "url": "https://github.com/Anmol-Baranwal/form-builder",
+    "description": "Self-hosted form builder - describe your form, it builds itself and goes live instantly (Google Forms alternative).",
+    "stars": 45,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "Anmol-Baranwal",
+      "name": "Anmol Baranwal",
+      "email": "",
+      "bio": "Technical Writer (1.5M+ reads). Software Developer. \ud83d\udc9c Loves Open Source.",
+      "url": "https://anmolbaranwal.com"
+    }
+  },
+  {
+    "name": "Form.aro",
+    "full_name": "Anshul-251204/Form.aro",
+    "url": "https://github.com/Anshul-251204/Form.aro",
+    "description": "A Open Source Google forms alternative builder. with self hosting.",
+    "stars": 1,
+    "language": "TypeScript",
+    "category_slug": "developer-tools",
+    "tags": "open-source,self-hosted,typescript",
+    "maker": {
+      "login": "Anshul-251204",
+      "name": "Anshul  choure",
+      "email": "",
+      "bio": "\r\nHey, I'm a college student fascinated by coding and dedicated to web development. Proficient in Java, Python, HTML, CSS, and JavaScript etc.",
+      "url": "https://github.com/Anshul-251204"
+    }
+  }
+]
