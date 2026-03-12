@@ -666,7 +666,6 @@ def nav_html(user=None) -> str:
                         <a href="/new" class="nav-dropdown-item">New Arrivals</a>
                         <a href="/tags" class="nav-dropdown-item">Tags</a>
                         <a href="/stacks" class="nav-dropdown-item">Stacks</a>
-                        <a href="/pulse" class="nav-dropdown-item">AI Pulse &#128308;</a>
                         <a href="/gaps" class="nav-dropdown-item">Demand Board</a>
                         <a href="/what-is-indiestack" class="nav-dropdown-item">What is IndieStack?</a>
                     </div>
@@ -683,7 +682,7 @@ def nav_html(user=None) -> str:
             <a href="/tags">Tags</a>
             <a href="/stacks">Stacks</a>
             <a href="/what-is-indiestack">What is IndieStack?</a>
-            <a href="/pulse">AI Pulse</a>
+            <a href="/gaps">Demand Board</a>
             <a href="/submit" class="btn btn-primary">Submit</a>
             <button onclick="toggleTheme()">Toggle Theme</button>
             {mobile_auth_links}
@@ -1401,22 +1400,6 @@ def page_shell(title: str, body: str, *, description: str = "", extra_head: str 
             var clean = p.toString();
             var url = window.location.pathname + (clean ? '?' + clean : '') + window.location.hash;
             window.history.replaceState(null, '', url);
-        }}
-    }})();
-    </script>
-    <script>
-    (function() {{
-        var p = new URLSearchParams(window.location.search);
-        if (p.get('ref') === 'producthunt' || (document.referrer && document.referrer.indexOf('producthunt') !== -1)) {{
-            localStorage.setItem('ph_visitor', '1');
-        }}
-        if (localStorage.getItem('ph_visitor') && !sessionStorage.getItem('ph_banner_dismissed')) {{
-            var b = document.createElement('div');
-            b.id = 'ph-banner';
-            b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#da552f,#e8744f);color:white;padding:12px 24px;text-align:center;font-family:var(--font-body);font-size:14px;font-weight:500;box-shadow:0 2px 12px rgba(0,0,0,0.15);';
-            b.innerHTML = 'Welcome from Product Hunt! <a href="/submit" style="color:white;text-decoration:underline;font-weight:700;">Submit your creation</a> for instant review this week. <button onclick="this.parentElement.remove();sessionStorage.setItem(\\\'ph_banner_dismissed\\\',\\\'1\\\')" style="background:none;border:none;color:rgba(255,255,255,0.8);cursor:pointer;font-size:18px;margin-left:12px;vertical-align:middle;">&times;</button>';
-            document.body.prepend(b);
-            document.body.style.paddingTop = '44px';
         }}
     }})();
     </script>

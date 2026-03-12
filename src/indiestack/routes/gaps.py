@@ -7,7 +7,7 @@ from urllib.parse import quote
 from datetime import datetime, timezone
 
 from indiestack.routes.components import page_shell
-from indiestack.db import get_search_gaps, get_search_demand, get_demand_trends, get_demand_clusters
+from indiestack.db import get_search_gaps, get_search_demand, get_demand_trends, get_demand_clusters, get_pulse_feed
 
 router = APIRouter()
 
@@ -57,20 +57,50 @@ def _relative_time(timestamp: str) -> str:
         return timestamp[:10] if len(timestamp) >= 10 else timestamp
 
 
+def _pulse_event_html(event: dict) -> str:
+    """Render a single pulse event as a compact HTML row."""
+    etype = event['type']
+    ts = event.get('created_at', '')
+    time_str = _relative_time(ts) if ts else ''
+    query = escape(event['query'] or '') if event.get('query') else ''
+    tool_name = escape(event['tool_name'] or '') if event.get('tool_name') else ''
+    tool_slug = escape(event['tool_slug'] or '') if event.get('tool_slug') else ''
+
+    if etype == 'recommend':
+        dot = 'var(--success-text, #10B981)'
+        tool_link = f'<a href="/tool/{tool_slug}" style="color:var(--accent);text-decoration:none;font-weight:600;">{tool_name}</a>' if tool_slug else tool_name
+        text = f'Agent recommended {tool_link}'
+    elif etype == 'search':
+        dot = 'var(--accent)'
+        tool_link = f'<a href="/tool/{tool_slug}" style="color:var(--accent);text-decoration:none;font-weight:600;">{tool_name}</a>' if tool_slug else tool_name
+        text = f'Search found {tool_link}'
+    else:
+        dot = 'var(--error-text, #EF4444)'
+        text = f'No tool found for &ldquo;{query}&rdquo;'
+
+    return f'''
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);font-size:13px;">
+        <span style="color:{dot};font-size:8px;">&#9679;</span>
+        <span style="color:var(--ink);flex:1;">{text}</span>
+        <span style="color:var(--ink-muted);font-size:11px;font-family:var(--font-mono);white-space:nowrap;">{time_str}</span>
+    </div>'''
+
+
 @router.get("/gaps", response_class=HTMLResponse)
 async def gaps_page(request: Request):
     user = request.state.user
     db = request.state.db
 
-    # Get all zero-result searches, then filter
+    # Get all zero-result searches, then filter — but only show top 5
     raw_gaps = await get_search_gaps(db, limit=100)
-    gaps = [g for g in raw_gaps if _is_valid_gap(g['query'])][:30]
+    all_gaps = [g for g in raw_gaps if _is_valid_gap(g['query'])]
+    gaps = all_gaps[:5]  # Free tier: top 5 only
+    total_gap_count = len(all_gaps)
 
-    # Stats
-    total_gaps = len(gaps)
-    total_searches = sum(g['count'] for g in gaps) if gaps else 0
+    # Get a few recent pulse events for the activity preview
+    pulse_events = await get_pulse_feed(db, limit=3)
 
-    # Build gap cards
+    # Build gap cards — NO exact counts, just tier badges
     gap_cards = ''
     for gap in gaps:
         query = escape(gap['query'])
@@ -110,9 +140,8 @@ async def gaps_page(request: Request):
                         {badge_label}
                     </span>
                 </div>
-                <div style="display:flex;gap:16px;font-size:13px;color:var(--ink-muted);flex-wrap:wrap;">
-                    <span><strong style="color:var(--ink);">{count}</strong> agent search{"es" if count != 1 else ""}</span>
-                    {f'<span style="color:var(--border);">&middot;</span><span>Last searched {last_display}</span>' if last_display else ''}
+                <div style="font-size:13px;color:var(--ink-muted);">
+                    {f'Last searched {last_display}' if last_display else 'Recently searched'}
                 </div>
             </div>
             <div style="flex-shrink:0;text-align:right;">
@@ -129,7 +158,7 @@ async def gaps_page(request: Request):
         </div>'''
 
     # Hero section
-    hero = f'''
+    hero = '''
     <section style="padding:64px 24px 32px;text-align:center;">
         <div class="container" style="max-width:740px;">
             <p style="font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">
@@ -146,44 +175,55 @@ async def gaps_page(request: Request):
     </section>
     '''
 
-    # Stats bar
-    stats_bar = f'''
-    <section style="padding:0 24px 40px;">
+    # Gap list (top 5 only)
+    remaining = total_gap_count - 5
+    upgrade_note = ''
+    if remaining > 0:
+        upgrade_note = f'''
+            <div style="margin-top:20px;padding:24px;background:var(--bg-card);border:2px dashed var(--border);
+                        border-radius:12px;text-align:center;">
+                <p style="font-size:15px;color:var(--ink);margin-bottom:8px;font-weight:600;">
+                    +{remaining} more demand signals available
+                </p>
+                <p style="font-size:13px;color:var(--ink-muted);margin-bottom:16px;">
+                    Get full demand data with exact counts, trend charts, source breakdowns, and JSON export.
+                </p>
+                <a href="/demand" style="display:inline-block;padding:10px 24px;background:var(--accent);color:white;
+                       border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
+                    Unlock Demand Signals Pro &rarr;
+                </a>
+            </div>'''
+
+    gap_list = f'''
+    <section style="padding:0 24px 48px;">
         <div class="container" style="max-width:740px;">
-            <div style="display:flex;gap:1px;background:var(--border);border-radius:12px;overflow:hidden;
-                        border:1px solid var(--border);">
-                <div style="flex:1;background:var(--bg-card);padding:20px 24px;text-align:center;">
-                    <div style="font-family:var(--heading-font, var(--font-display));font-size:28px;font-weight:700;color:var(--accent);margin-bottom:4px;">
-                        {total_gaps}
-                    </div>
-                    <div style="font-size:13px;color:var(--ink-muted);">Unfilled Gaps</div>
-                </div>
-                <div style="flex:1;background:var(--bg-card);padding:20px 24px;text-align:center;">
-                    <div style="font-family:var(--heading-font, var(--font-display));font-size:28px;font-weight:700;color:var(--accent);margin-bottom:4px;">
-                        {total_searches}
-                    </div>
-                    <div style="font-size:13px;color:var(--ink-muted);">Failed Agent Searches</div>
-                </div>
-                <div style="flex:1;background:var(--bg-card);padding:20px 24px;text-align:center;">
-                    <div style="font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;">
-                        Every gap = guaranteed AI recommendations when filled
-                    </div>
-                </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+                <h2 style="font-family:var(--heading-font, var(--font-display));font-size:22px;color:var(--ink);">Top Bounties</h2>
+                <span style="font-size:13px;color:var(--ink-muted);">Showing top 5</span>
             </div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                {gap_cards if gap_cards else '<p style="color:var(--ink-muted);text-align:center;padding:40px;">No gaps detected yet. As more AI agents use the MCP server, bounties will appear here.</p>'}
+            </div>
+            {upgrade_note}
         </div>
     </section>
     '''
 
-    # Gap list
-    gap_list = f'''
-    <section style="padding:0 24px 64px;">
+    # Recent activity preview (mini pulse — 3 events)
+    pulse_html = ''
+    if pulse_events:
+        pulse_rows = ''.join(_pulse_event_html(dict(e)) for e in pulse_events)
+        pulse_html = f'''
+    <section style="padding:0 24px 48px;">
         <div class="container" style="max-width:740px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-                <h2 style="font-family:var(--heading-font, var(--font-display));font-size:22px;color:var(--ink);">Open Bounties</h2>
-                <span style="font-size:13px;color:var(--ink-muted);">Sorted by demand</span>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:12px;">
-                {gap_cards if gap_cards else '<p style="color:var(--ink-muted);text-align:center;padding:40px;">No gaps detected yet. As more AI agents use the MCP server, bounties will appear here.</p>'}
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+                <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-family:var(--heading-font, var(--font-display));font-size:16px;color:var(--ink);">
+                        Recent Agent Activity
+                    </span>
+                    <a href="/demand" style="font-size:12px;color:var(--accent);text-decoration:none;">See full feed &rarr;</a>
+                </div>
+                {pulse_rows}
             </div>
         </div>
     </section>
@@ -248,7 +288,7 @@ async def gaps_page(request: Request):
     </section>
     '''
 
-    body = hero + stats_bar + gap_list + how_it_works + cta
+    body = hero + gap_list + pulse_html + how_it_works + cta
 
     return HTMLResponse(page_shell(
         title="Demand Bounty Board — Tools AI Agents Are Searching For | IndieStack",
@@ -299,18 +339,18 @@ async def demand_pro(request: Request):
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
                 <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px;text-align:center;">
                     <div style="font-size:28px;margin-bottom:12px;">&#x1f4ca;</div>
-                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Clustered Signals</h3>
-                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">Similar searches grouped together to reveal real demand patterns, not noise.</p>
+                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">All Demand Signals</h3>
+                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">Every signal with exact search counts, sources, and timestamps. Not just the top 5.</p>
                 </div>
                 <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px;text-align:center;">
                     <div style="font-size:28px;margin-bottom:12px;">&#x1f4c8;</div>
-                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Trend Data</h3>
-                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">Daily search volume over the past 30 days. See what&rsquo;s rising before it peaks.</p>
+                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Trend Charts</h3>
+                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">Daily search volume over 30 days. See what&rsquo;s rising before it peaks.</p>
                 </div>
                 <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px;text-align:center;">
                     <div style="font-size:28px;margin-bottom:12px;">&#x1f310;</div>
-                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Source Breakdown</h3>
-                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">See where searches come from &mdash; web, MCP, or API. Know your distribution channels.</p>
+                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Live Agent Feed</h3>
+                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">Real-time feed of every agent search, recommendation, and gap &mdash; auto-refreshes.</p>
                 </div>
             </div>
         </div>
@@ -380,6 +420,7 @@ async def demand_pro(request: Request):
     # ── Pro dashboard ──────────────────────────────────────────────────
     trends = await get_demand_trends(db, days=30)
     clusters = await get_demand_clusters(db, limit=50)
+    pulse_events = await get_pulse_feed(db, limit=30)
 
     # Stats
     total_searches_30d = sum(t['total_searches'] for t in trends) if trends else 0
@@ -526,6 +567,61 @@ async def demand_pro(request: Request):
     </section>
     '''
 
+    # Live agent feed (full pulse — pro exclusive)
+    pulse_rows = ''.join(_pulse_event_html(dict(e)) for e in pulse_events) if pulse_events else '''
+        <div style="text-align:center;padding:40px 20px;color:var(--ink-muted);">
+            <p style="font-size:14px;">Waiting for activity...</p>
+        </div>'''
+
+    pulse_section = f'''
+    <style>
+        @keyframes blink {{
+            0%, 100% {{ opacity: 1; }}
+            50% {{ opacity: 0.3; }}
+        }}
+        .pulse-live-dot {{
+            display: inline-block;
+            width: 8px; height: 8px;
+            background: #EF4444;
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }}
+    </style>
+    <section style="padding:0 24px 40px;">
+        <div class="container" style="max-width:900px;">
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+                <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-family:var(--heading-font, var(--font-display));font-size:17px;color:var(--ink);">
+                        <span class="pulse-live-dot" style="margin-right:8px;vertical-align:middle;"></span>
+                        Live Agent Feed
+                    </span>
+                    <span style="font-size:12px;color:var(--ink-muted);font-family:var(--font-mono);" id="pulse-status">
+                        live &mdash; refreshes every 30s
+                    </span>
+                </div>
+                <div id="pulse-events" style="max-height:400px;overflow-y:auto;">
+                    {pulse_rows}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    (function() {{
+        setInterval(function() {{
+            fetch('/api/pulse')
+                .then(function(r) {{ return r.json(); }})
+                .then(function(data) {{
+                    if (data.html) {{
+                        document.getElementById('pulse-events').innerHTML = data.html;
+                    }}
+                }})
+                .catch(function() {{}});
+        }}, 30000);
+    }})();
+    </script>
+    '''
+
     hero = f'''
     <section style="padding:64px 24px 32px;text-align:center;">
         <div class="container" style="max-width:740px;">
@@ -542,7 +638,7 @@ async def demand_pro(request: Request):
     </section>
     '''
 
-    body = hero + stats_bar + trend_section + clusters_section
+    body = hero + stats_bar + trend_section + clusters_section + pulse_section
 
     return HTMLResponse(page_shell(
         title="Demand Signals Pro Dashboard | IndieStack",
