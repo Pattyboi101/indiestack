@@ -56,15 +56,16 @@ async def render_charts_section(db, request) -> str:
     outbound_clicks = (await cursor.fetchone())['cnt']
 
     if period == "today":
-        # A returning visitor today = someone who visited today AND has visits before today
+        # Returning visitor = visited today AND has visited on any prior day
+        # Use two lightweight queries instead of a correlated subquery
         today_start = now.replace(hour=0, minute=0, second=0, microsecond=0).strftime("%Y-%m-%d %H:%M:%S")
         cursor = await db.execute(
-            """SELECT COUNT(DISTINCT pv.visitor_id) as cnt
-            FROM page_views pv
-            WHERE pv.timestamp >= ? AND pv.visitor_id IS NOT NULL
-            AND EXISTS (
-                SELECT 1 FROM page_views pv2
-                WHERE pv2.visitor_id = pv.visitor_id AND pv2.timestamp < ?
+            """SELECT COUNT(*) as cnt FROM (
+                SELECT visitor_id FROM page_views
+                WHERE visitor_id IS NOT NULL
+                GROUP BY visitor_id
+                HAVING MIN(DATE(timestamp)) < DATE(?)
+                AND MAX(DATE(timestamp)) >= DATE(?)
             )""", (today_start, today_start)
         )
     else:
