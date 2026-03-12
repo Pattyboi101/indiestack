@@ -55,13 +55,26 @@ async def render_charts_section(db, request) -> str:
     )
     outbound_clicks = (await cursor.fetchone())['cnt']
 
-    cursor = await db.execute(
-        """SELECT COUNT(*) as cnt FROM (
-            SELECT visitor_id FROM page_views
-            WHERE timestamp >= ? AND visitor_id IS NOT NULL
-            GROUP BY visitor_id HAVING COUNT(DISTINCT DATE(timestamp)) > 1
-        )""", (since,)
-    )
+    if period == "today":
+        # A returning visitor today = someone who visited today AND has visits before today
+        today_start = now.replace(hour=0, minute=0, second=0, microsecond=0).strftime("%Y-%m-%d %H:%M:%S")
+        cursor = await db.execute(
+            """SELECT COUNT(DISTINCT pv.visitor_id) as cnt
+            FROM page_views pv
+            WHERE pv.timestamp >= ? AND pv.visitor_id IS NOT NULL
+            AND EXISTS (
+                SELECT 1 FROM page_views pv2
+                WHERE pv2.visitor_id = pv.visitor_id AND pv2.timestamp < ?
+            )""", (today_start, today_start)
+        )
+    else:
+        cursor = await db.execute(
+            """SELECT COUNT(*) as cnt FROM (
+                SELECT visitor_id FROM page_views
+                WHERE timestamp >= ? AND visitor_id IS NOT NULL
+                GROUP BY visitor_id HAVING COUNT(DISTINCT DATE(timestamp)) > 1
+            )""", (since,)
+        )
     returning_visitors = (await cursor.fetchone())['cnt']
 
     purchase_stats = await get_purchase_stats(db)
