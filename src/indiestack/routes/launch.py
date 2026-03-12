@@ -95,7 +95,7 @@ async def launch_page(request: Request):
                 Now Live
             </div>
             <h1 style="font-family:var(--font-display);font-size:42px;color:var(--ink);margin:0;line-height:1.1;">
-                The Knowledge Layer<br>for AI Agents
+                The Open-Source Supply Chain<br>for Agentic Workflows
             </h1>
             <p style="color:var(--ink-muted);font-size:18px;margin-top:12px;max-width:560px;display:inline-block;">
                 {tool_count} indie creations, searchable by AI coding assistants and developers.
@@ -148,8 +148,8 @@ async def launch_page(request: Request):
     '''
 
     return HTMLResponse(page_shell(
-        "The Knowledge Layer for AI Agents",
+        "The Open-Source Supply Chain for Agentic Workflows",
         body,
         user=user,
-        description=f"IndieStack: {tool_count} indie creations searchable by AI coding assistants. The knowledge layer for developers and AI agents.",
+        description=f"IndieStack: {tool_count} indie creations searchable by AI coding assistants. The open-source supply chain for developers and AI agents.",
     ))

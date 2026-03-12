@@ -3530,11 +3530,16 @@ async def get_tools_by_tag(db: aiosqlite.Connection, tag: str, *, page: int = 1,
 async def explore_tools(db: aiosqlite.Connection, *, category_id: int = None,
                          tag: str = "", price_filter: str = "", sort: str = "trending",
                          verified_only: bool = False, ejectable_only: bool = False,
-                         source_type: str = "",
+                         source_type: str = "", query: str = "",
                          page: int = 1, per_page: int = 12):
     """Unified explore query with faceted filtering. Returns (tools, total)."""
     conditions = ["t.status = 'approved'"]
     params: list = []
+
+    if query:
+        conditions.append("(LOWER(t.name) LIKE ? OR LOWER(t.tagline) LIKE ?)")
+        q_like = f"%{query.strip().lower()}%"
+        params.extend([q_like, q_like])
 
     if category_id:
         conditions.append("t.category_id = ?")

@@ -10,9 +10,25 @@ from fastapi.responses import HTMLResponse
 from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card
 from indiestack.routes.category_icons import category_icon
-from indiestack.db import get_all_categories, get_trending_scored, get_showcase_tools, get_search_stats, get_search_trends
+from indiestack.db import get_all_categories, get_trending_scored, get_showcase_tools, get_search_stats, get_search_trends, get_search_gaps
 
 router = APIRouter()
+
+# Junk query filter for demand gaps (mirrors gaps.py)
+_GAP_BLOCKLIST = {
+    'xbox game pass', 'akoraimagbuot', 'wace', 'test', 'asdf', 'hello',
+    'indiestack', 'xxx', 'porn', 'sex',
+}
+
+def _is_valid_gap(query: str) -> bool:
+    q = query.strip().lower()
+    if len(q) < 3 or len(q) > 60:
+        return False
+    if q in _GAP_BLOCKLIST:
+        return False
+    if not any(c.isalpha() for c in q):
+        return False
+    return True
 
 # Landing page cache — avoids repeated DB queries on every homepage load
 _landing_cache: dict = {
@@ -39,6 +55,7 @@ async def landing(request: Request):
         claimed_count = cached.get('claimed_count', 0)
         today_ai_count = cached.get('today_ai_count', 0)
         featured = cached.get('featured', None)
+        demand_gaps = cached.get('demand_gaps', [])
     else:
         _tc = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
         tool_count = (await _tc.fetchone())['cnt']
@@ -88,6 +105,10 @@ async def landing(request: Request):
         except Exception:
             featured = None
 
+        # Fetch demand gaps for the teaser (top 4 valid gaps)
+        raw_gaps = await get_search_gaps(db, limit=20)
+        demand_gaps = [g for g in raw_gaps if _is_valid_gap(g['query'])][:4]
+
         _landing_cache['data'] = {
             'tool_count': tool_count,
             'cat_count': cat_count,
@@ -100,15 +121,16 @@ async def landing(request: Request):
             'search_trends': search_trends,
             'today_ai_count': today_ai_count,
             'featured': featured,
+            'demand_gaps': demand_gaps,
         }
         _landing_cache['expires'] = _time.time() + 300  # 5 minutes
 
     # ── Top Banner ──────────────────────────────────────────────────
     launch_banner = (
         '<div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));padding:12px 24px;text-align:center;">'
-        '    <a href="#mcp-install" style="color:white;text-decoration:none;font-size:14px;font-weight:600;">'
-        '        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> MCP Server v1.3 &mdash; ' + str(tool_count) + ' indie creations. '
-        '        <span style="text-decoration:underline;">Install in one command</span>'
+        '    <a href="/explore" style="color:white;text-decoration:none;font-size:14px;font-weight:600;">'
+        '        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> ' + str(tool_count) + '+ indie creations &mdash; now with Agent Cards for every tool. '
+        '        <span style="text-decoration:underline;">Explore the catalog</span>'
         '    </a>'
         + (
         '    <span class="pulse-banner-sep" style="color:rgba(255,255,255,0.4);margin:0 12px;font-size:14px;">&middot;</span>'
@@ -175,14 +197,14 @@ async def landing(request: Request):
         '    <div class="glow-sphere" style="width:400px;height:400px;background:radial-gradient(circle,rgba(226,183,100,0.08) 0%,transparent 70%);bottom:10%;right:15%;"></div>'
         '    <div style="position:relative;z-index:1;">'
         '    <div class="status-tag" style="margin-bottom:24px;justify-content:center;">'
-        '        <span class="dot"></span>KNOWLEDGE LAYER FOR AI AGENTS'
+        '        <span class="dot"></span>OPEN-SOURCE SUPPLY CHAIN FOR AI'
         '    </div>'
         '    <h1 style="font-family:var(--font-display);font-size:clamp(36px,6vw,64px);'
         '               line-height:1.15;max-width:700px;margin:0 auto;color:var(--ink);letter-spacing:-0.03em;">'
         '        <span class="hero-headline">Stop letting your AI reinvent the wheel.</span>'
         '    </h1>'
         '    <p style="font-size:20px;color:var(--ink-muted);max-width:560px;margin:16px auto 32px;line-height:1.6;">'
-        f'        The open-source supply chain for AI agents &mdash; {tool_count}+ indie creations, ready to assemble.'
+        f'        {tool_count}+ indie creations your AI can discover, compare, and assemble &mdash; before building from scratch.'
         '    </p>'
         # Hero visual — code conversation block
         '    <div class="hero-glow">'
@@ -473,24 +495,58 @@ async def landing(request: Request):
     </section>
     """
 
-    # ── Maker CTA ────────────────────────────────────────────────────
-    maker_cta = f"""
-    <section style="text-align:center;padding:48px 24px;background:linear-gradient(135deg,rgba(0,212,245,0.1),rgba(26,45,74,0.8));color:white;position:relative;overflow:hidden;">
-        <div class="glow-sphere" style="width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,245,0.1) 0%,transparent 70%);top:-20%;left:50%;transform:translateX(-50%);"></div>
-        <div style="position:relative;z-index:1;">
-            <p style="font-family:var(--font-display);font-size:clamp(24px,3.5vw,32px);margin-bottom:8px;">
-                Join our list of makers
-            </p>
-            <p style="color:rgba(255,255,255,0.7);font-size:16px;margin-bottom:24px;max-width:440px;margin-left:auto;margin-right:auto;">
-                List your creation for free. AI agents and people will find it.
-            </p>
-            <a href="/submit" class="btn landing-neon" style="background:var(--slate);color:var(--terracotta-dark);font-weight:700;
-                                                  padding:16px 32px;font-size:16px;">
-                Submit Your Creation &rarr;
-            </a>
-        </div>
-    </section>
-    """
+    # ── Demand Teaser + Slim Maker CTA ───────────────────────────────
+    demand_teaser = ''
+    if demand_gaps:
+        from urllib.parse import quote as _url_quote
+        gap_items = ''
+        for g in demand_gaps:
+            gap_items += (
+                '<div style="display:flex;align-items:center;justify-content:space-between;'
+                'padding:14px 0;border-bottom:1px solid var(--border);">'
+                '  <span style="font-size:15px;color:var(--ink);font-weight:500;">'
+                f'    &ldquo;{escape(g["query"])}&rdquo;'
+                '  </span>'
+                f'  <a href="/submit?name={_url_quote(g["query"])}" style="font-size:13px;font-weight:600;'
+                '     color:var(--accent);text-decoration:none;white-space:nowrap;">'
+                '    Build This &rarr;'
+                '  </a>'
+                '</div>'
+            )
+        demand_teaser = (
+            '<section style="text-align:center;padding:48px 24px 24px;">'
+            '  <div style="max-width:700px;margin:0 auto;">'
+            '    <h2 style="font-family:var(--font-display);font-size:clamp(22px,3vw,28px);'
+            '               color:var(--ink);margin-bottom:8px;">'
+            '      What agents are searching for'
+            '    </h2>'
+            '    <p style="font-size:15px;color:var(--ink-muted);margin-bottom:24px;">'
+            '      Real queries from AI agents that found no matching tool'
+            '    </p>'
+            '    <div style="border:1px solid var(--border);border-radius:12px;'
+            '                background:var(--card-bg);padding:4px 24px;text-align:left;">'
+            f'      {gap_items}'
+            '    </div>'
+            '    <a href="/gaps" style="display:inline-block;margin-top:16px;font-size:14px;'
+            '       color:var(--accent);text-decoration:none;font-weight:600;">'
+            '      See more on the Demand Board &rarr;'
+            '    </a>'
+            '  </div>'
+            '</section>'
+        )
+
+    maker_cta = demand_teaser + (
+        '<section style="text-align:center;padding:32px 24px 48px;">'
+        '  <p style="font-size:16px;color:var(--ink-muted);margin-bottom:16px;">'
+        '    Built something indie? Get it discovered by AI agents.'
+        '  </p>'
+        '  <a href="/submit" style="display:inline-block;padding:14px 32px;'
+        '     background:var(--accent);color:white;border-radius:999px;'
+        '     font-size:15px;font-weight:600;text-decoration:none;">'
+        '    Submit Your Creation'
+        '  </a>'
+        '</section>'
+    )
 
     # ── Assembly ─────────────────────────────────────────────────────
     def _reveal(html):
@@ -504,7 +560,7 @@ async def landing(request: Request):
         "@type": "WebSite",
         "name": "IndieStack",
         "url": BASE_URL,
-        "description": f"The knowledge layer for AI agents. Search {tool_count}+ indie creations before building from scratch.",
+        "description": f"The open-source supply chain for agentic workflows. Search {tool_count}+ indie creations before building from scratch.",
         "potentialAction": {
             "@type": "SearchAction",
             "target": f"{BASE_URL}/search?q={{search_term_string}}",
@@ -547,7 +603,8 @@ async def landing(request: Request):
         '/* Glow sphere */'
         '.glow-sphere{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;}'
         '/* System status tag */'
-        '.status-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.15em;font-size:11px;color:rgba(255,255,255,0.5);}'
+        '.status-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.15em;font-size:11px;font-weight:600;color:#1A2D4A;}'
+        '[data-theme="dark"] .status-tag{color:rgba(255,255,255,0.5);}'
         '.status-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--slate);animation:status-pulse 2s ease-in-out infinite;}'
         '@keyframes status-pulse{0%,100%{opacity:1;box-shadow:0 0 8px rgba(0,212,245,0.6)}50%{opacity:0.4;box-shadow:0 0 2px rgba(0,212,245,0.2)}}'
         '/* Neon primary button override for landing */'
@@ -678,7 +735,7 @@ async def landing(request: Request):
         '</script>'
     )
 
-    response = HTMLResponse(page_shell("The knowledge layer for AI agents", body,
+    response = HTMLResponse(page_shell("The open-source supply chain for agentic workflows", body,
                                    description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if an indie creation already exists.",
                                    user=request.state.user, canonical="/", extra_head=extra_head,
                                    og_image=f"{BASE_URL}/logo.png"))

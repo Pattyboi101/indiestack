@@ -19,6 +19,7 @@ async def explore(request: Request):
     db = request.state.db
 
     # Parse query params
+    q = request.query_params.get("q", "").strip()
     category = request.query_params.get("category", "")
     tag = request.query_params.get("tag", "")
     price = ""
@@ -33,7 +34,7 @@ async def explore(request: Request):
 
     # "New for you" personalized section (logged-in users only)
     new_for_you_html = ''
-    if user and not any([category, tag, source_type, ejectable]) and page == 1:
+    if user and not any([category, tag, source_type, ejectable, q]) and page == 1:
         new_for_you = await get_new_for_user(db, user['id'], limit=6)
         if new_for_you:
             nfy_cards = ''.join(tool_card(t) for t in new_for_you)
@@ -63,6 +64,7 @@ async def explore(request: Request):
         verified_only=bool(verified),
         ejectable_only=bool(ejectable),
         source_type=source_type if source_type in ("code", "saas") else "",
+        query=q,
         page=page,
         per_page=per_page,
     )
@@ -70,6 +72,7 @@ async def explore(request: Request):
 
     # Build base URL for pagination
     params = {}
+    if q: params["q"] = q
     if category: params["category"] = category
     if tag: params["tag"] = tag
     if sort and sort != "hot": params["sort"] = sort
@@ -122,6 +125,8 @@ async def explore(request: Request):
 
     # Active filter description
     active_filters = []
+    if q:
+        active_filters.append(f'Search: <strong>{escape(q)}</strong>')
     if tag:
         active_filters.append(f'Tag: <strong>{escape(tag)}</strong>')
     if category:
@@ -146,25 +151,41 @@ async def explore(request: Request):
         </div>
         '''
 
+    escaped_query = escape(q, quote=True)
+    filters_open = ' open' if (tag or source_type in ('code', 'saas') or ejectable) else ''
+
     filter_bar = f'''
     <form action="/explore" method="GET" style="margin-bottom:24px;">
-        {"<input type='hidden' name='tag' value='" + escape(tag) + "'>" if tag else ""}
-        {"<input type='hidden' name='source_type' value='" + escape(source_type) + "'>" if source_type in ("code", "saas") else ""}
+        <input type="text" name="q" value="{escaped_query}" placeholder="Search tools..."
+            style="width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:var(--card-bg);color:var(--ink);font-family:var(--font-body);margin-bottom:16px;"
+        />
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
-            <div style="display:flex;gap:8px;">
-                {source_type_pills}
-            </div>
             <select name="category" class="form-select-pill" onchange="this.form.submit()">
                 {cat_options}
             </select>
             <select name="sort" class="form-select-pill" onchange="this.form.submit()">
                 {sort_options}
             </select>
-            <label style="display:flex;align-items:center;gap:4px;font-size:13px;color:var(--ink-light);cursor:pointer;">
-                <input type="checkbox" name="ejectable" value="1"{ejectable_checked} onchange="this.form.submit()" class="custom-checkbox">
-                Ejectable
-            </label>
         </div>
+        <details{filters_open} style="margin-top:12px;">
+            <summary style="cursor:pointer;color:var(--accent);font-size:14px;font-weight:500;">
+                More filters &#9662;
+            </summary>
+            <div style="margin-top:12px;">
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+                    <div style="display:flex;gap:8px;">
+                        {source_type_pills}
+                    </div>
+                    <label style="display:flex;align-items:center;gap:4px;font-size:13px;color:var(--ink-light);cursor:pointer;">
+                        <input type="checkbox" name="ejectable" value="1"{ejectable_checked} onchange="this.form.submit()" class="custom-checkbox">
+                        Ejectable
+                    </label>
+                </div>
+                {tag_pills_html}
+            </div>
+        </details>
+        {"<input type='hidden' name='tag' value='" + escape(tag) + "'>" if tag else ""}
+        {"<input type='hidden' name='source_type' value='" + escape(source_type) + "'>" if source_type in ("code", "saas") else ""}
     </form>
     '''
 
@@ -216,13 +237,6 @@ async def explore(request: Request):
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Explore</h1>
             <p style="color:var(--ink-muted);font-size:16px;">Community-curated catalog of indie creations. Makers can <a href="/submit" style="color:var(--accent);">claim their listing</a> to update details and verify ownership.</p>
         </div>
-        <form action="/search" method="GET" style="margin-bottom:24px;">
-            <div style="display:flex;gap:8px;max-width:480px;">
-                <input type="text" name="q" placeholder="Search creations..." class="form-input"
-                    style="flex:1;border-radius:999px;padding:12px 24px;font-size:14px;">
-                <button type="submit" class="btn btn-primary" style="padding:12px 24px;font-size:14px;">Search</button>
-            </div>
-        </form>
         <a href="/surprise" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;
             background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
             color:var(--ink-light);font-size:14px;font-weight:500;text-decoration:none;
@@ -231,7 +245,6 @@ async def explore(request: Request):
             onmouseout="this.style.background='var(--cream-dark)';this.style.color='var(--ink-light)';this.style.borderColor='var(--border)'">
             &#127922; Surprise me
         </a>
-        {tag_pills_html}
         {filter_bar}
         {active_html}
         {new_for_you_html}

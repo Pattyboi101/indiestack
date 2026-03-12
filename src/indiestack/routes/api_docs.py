@@ -11,8 +11,14 @@ router = APIRouter()
 @router.get("/api", response_class=HTMLResponse)
 async def api_docs(request: Request):
     user = request.state.user
+    try:
+        db = request.state.db
+        row = await (await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")).fetchone()
+        tool_count = row['cnt'] if row else 880
+    except Exception:
+        tool_count = 880
 
-    body = '''
+    body = f'''
     <div class="container" style="padding:48px 24px;max-width:900px;margin:0 auto;">
         <div style="margin-bottom:48px;">
             <h1 style="font-family:var(--font-display);font-size:42px;color:var(--ink);margin-bottom:12px;">REST API</h1>
@@ -34,7 +40,7 @@ async def api_docs(request: Request):
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/search</code>
             </div>
             <div style="padding:16px 20px;">
-                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Search 793+ indie creations by keyword. Returns matching tools with metadata.</p>
+                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Search {tool_count}+ indie creations by keyword. Returns matching tools with metadata.</p>
                 <table style="width:100%;font-size:13px;border-collapse:collapse;">
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:8px 0;color:var(--ink-light);font-weight:600;">q</td>
@@ -63,7 +69,7 @@ async def api_docs(request: Request):
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
                 <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
-                <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/{slug}</code>
+                <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/{{slug}}</code>
             </div>
             <div style="padding:16px 20px;">
                 <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Full details for a specific creation including integration snippets, similar tools, and companion suggestions.</p>
@@ -249,7 +255,7 @@ async def api_docs(request: Request):
     return HTMLResponse(page_shell(
         title="REST API Documentation | IndieStack",
         body=body,
-        description="Query IndieStack's catalog of 793+ indie creations from any agent, script, or application. Search, browse, and submit via JSON API.",
+        description=f"Query IndieStack's catalog of {tool_count}+ indie creations from any agent, script, or application. Search, browse, and submit via JSON API.",
         user=user,
         canonical="/api",
     ))

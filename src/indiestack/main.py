@@ -700,7 +700,7 @@ async def llms_txt(request: Request):
         tool_count = 880
     return (
         "# IndieStack\n\n"
-        f"> The knowledge layer for AI agents. Search {tool_count}+ indie creations — "
+        f"> The open-source supply chain for agentic workflows. Search {tool_count}+ indie creations — "
         "from full SaaS products to tiny utilities — so agents recommend instead of rebuild.\n\n"
         "IndieStack plugs into Claude Code, Cursor, and Windsurf via MCP. "
         "Before your AI builds from scratch, it checks if an indie creation already does it. "
@@ -792,7 +792,7 @@ async def agent_card(request: Request):
         tool_count = 880
     return JSONResponse({
         "name": "IndieStack",
-        "description": f"The knowledge layer for AI agents. {tool_count}+ indie creations across 25 categories.",
+        "description": f"The open-source supply chain for agentic workflows. {tool_count}+ indie creations across 25 categories.",
         "url": BASE_URL,
         "provider": {
             "organization": "IndieStack",

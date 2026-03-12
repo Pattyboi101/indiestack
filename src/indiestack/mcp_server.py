@@ -1,4 +1,4 @@
-"""IndieStack MCP Server — the knowledge layer between AI agents and everything indie creators have built."""
+"""IndieStack MCP Server — the open-source supply chain between AI agents and everything indie creators have built."""
 
 import json
 import os

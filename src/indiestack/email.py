@@ -1240,7 +1240,7 @@ def launch_morning_maker_html(maker_name: str, tool_name: str) -> str:
     </p>
 
     <p style="color:#6B6560;font-size:15px;line-height:1.6;">
-        IndieStack is becoming the knowledge layer where AI agents learn what tools exist.
+        IndieStack is becoming the open-source supply chain where AI agents learn what tools exist.
         We&rsquo;ve already seen <strong style="color:#2D2926;">2,000+ agent lookups</strong>
         across 480 tools &mdash; and that number is growing fast.
     </p>

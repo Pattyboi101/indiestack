@@ -656,18 +656,30 @@ def nav_html(user=None) -> str:
                             style="background:none;border:none;cursor:pointer;font-family:var(--font-body);
                                    font-size:14px;font-weight:500;color:var(--ink-light);display:flex;
                                    align-items:center;gap:4px;padding:0;">
-                        Browse <span style="font-size:10px;">&#9660;</span>
+                        For Makers <span style="font-size:10px;">&#9660;</span>
                     </button>
                     <div class="nav-dropdown-menu" style="display:none;position:absolute;top:calc(100% + 8px);
                                 left:50%;transform:translateX(-50%);background:var(--card-bg);
                                 border:1px solid var(--border);border-radius:var(--radius-sm);
                                 box-shadow:var(--shadow-md);padding:8px 0;min-width:180px;z-index:200;">
                         <a href="/geo" class="nav-dropdown-item">AI Optimize</a>
-                        <a href="/new" class="nav-dropdown-item">New Arrivals</a>
-                        <a href="/tags" class="nav-dropdown-item">Tags</a>
-                        <a href="/stacks" class="nav-dropdown-item">Stacks</a>
-                        <a href="/gaps" class="nav-dropdown-item">Demand Board</a>
+                        <a href="/submit" class="nav-dropdown-item">Submit a Tool</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown" style="position:relative;">
+                    <button onclick="this.parentElement.classList.toggle('open')"
+                            style="background:none;border:none;cursor:pointer;font-family:var(--font-body);
+                                   font-size:14px;font-weight:500;color:var(--ink-light);display:flex;
+                                   align-items:center;gap:4px;padding:0;">
+                        Resources <span style="font-size:10px;">&#9660;</span>
+                    </button>
+                    <div class="nav-dropdown-menu" style="display:none;position:absolute;top:calc(100% + 8px);
+                                left:50%;transform:translateX(-50%);background:var(--card-bg);
+                                border:1px solid var(--border);border-radius:var(--radius-sm);
+                                box-shadow:var(--shadow-md);padding:8px 0;min-width:180px;z-index:200;">
                         <a href="/what-is-indiestack" class="nav-dropdown-item">What is IndieStack?</a>
+                        <a href="/gaps" class="nav-dropdown-item">Demand Board</a>
+                        <a href="/stacks" class="nav-dropdown-item">Stacks</a>
                     </div>
                 </div>
                 <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Submit</a>
@@ -678,11 +690,10 @@ def nav_html(user=None) -> str:
         </div>
         <div class="mobile-menu" id="mobile-menu">
             <a href="/explore">Explore</a>
-            <a href="/new">New</a>
-            <a href="/tags">Tags</a>
+            <a href="/geo">AI Optimize</a>
             <a href="/stacks">Stacks</a>
-            <a href="/what-is-indiestack">What is IndieStack?</a>
             <a href="/gaps">Demand Board</a>
+            <a href="/what-is-indiestack">What is IndieStack?</a>
             <a href="/submit" class="btn btn-primary">Submit</a>
             <button onclick="toggleTheme()">Toggle Theme</button>
             {mobile_auth_links}
@@ -766,7 +777,7 @@ def footer_html() -> str:
           <div>
             <div class="footer-heading">Product</div>
             <a href="/explore" class="footer-link">Explore</a>
-            <a href="/new" class="footer-link">New Arrivals</a>
+            <a href="/explore?sort=newest" class="footer-link">New Arrivals</a>
             <a href="/stacks" class="footer-link">Stacks</a>
             <a href="/makers" class="footer-link">Makers</a>
             <a href="/blog" class="footer-link">Blog</a>
@@ -801,7 +812,7 @@ def footer_html() -> str:
                 font-family:var(--font-body);">Subscribe</button>
     </form>
 </div>
-          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">The knowledge layer for AI agents and indie creators.</span>
+          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">The open-source supply chain for AI agents and indie creators.</span>
           <span class="footer-muted">&copy; 2026 IndieStack. All rights reserved.</span>
           <span class="footer-muted">Made with care for the indie maker community.</span>
         </div>

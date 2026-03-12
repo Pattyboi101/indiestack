@@ -18,7 +18,7 @@ TESTS = [
     # Core pages (200)
     ("GET", "/", 200, "Landing"),
     ("GET", "/explore", 200, "Explore"),
-    ("GET", "/new", 200, "New tools"),
+    ("GET", "/new", 302, "New tools redirect"),
     ("GET", "/search?q=analytics", 200, "Search"),
     ("GET", "/makers", 200, "Makers"),
     ("GET", "/collections", [200, 301], "Collections redirect"),
@@ -70,7 +70,7 @@ TESTS = [
 
     # Sample content pages (200) - using known slugs
     ("GET", "/tool/simple-analytics", 200, "Tool page"),
-    ("GET", "/tag/open-source", 200, "Tag page"),
+    ("GET", "/tag/open-source", 302, "Tag page redirect"),
     ("GET", "/alternatives/google-analytics", 200, "Alternatives page"),
 ]
 

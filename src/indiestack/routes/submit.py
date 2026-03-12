@@ -300,7 +300,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                         </div>
                         <p style="color:var(--ink-muted);font-size:13px;line-height:1.5;margin:0;">
                             AI agents (Cursor, Windsurf, Claude Code) search IndieStack via MCP
-                            before building from scratch. Your creation becomes part of the knowledge layer.
+                            before building from scratch. Your creation becomes part of the supply chain.
                         </p>
                     </div>
                 </div>
