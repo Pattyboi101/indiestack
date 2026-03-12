@@ -343,30 +343,30 @@ async def demand_pro(request: Request):
     </section>
 
     <script>
-    async function subscribeDemandPro() {{
+    async function subscribeDemandPro() {
         const btn = document.getElementById('subscribe-btn');
         const err = document.getElementById('subscribe-error');
         btn.disabled = true;
         btn.textContent = 'Loading...';
         err.style.display = 'none';
-        try {{
-            const res = await fetch('/api/subscribe/demand-pro', {{method: 'POST'}});
+        try {
+            const res = await fetch('/api/subscribe/demand-pro', {method: 'POST'});
             const data = await res.json();
-            if (data.checkout_url) {{
+            if (data.checkout_url) {
                 window.location.href = data.checkout_url;
-            }} else {{
+            } else {
                 err.textContent = data.error || 'Something went wrong';
                 err.style.display = 'block';
                 btn.disabled = false;
                 btn.textContent = 'Subscribe Now';
-            }}
-        }} catch (e) {{
+            }
+        } catch (e) {
             err.textContent = 'Network error. Please try again.';
             err.style.display = 'block';
             btn.disabled = false;
             btn.textContent = 'Subscribe Now';
-        }}
-    }}
+        }
+    }
     </script>
 '''
 
