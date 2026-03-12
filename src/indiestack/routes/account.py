@@ -391,7 +391,7 @@ async def reset_password_submit(request: Request):
     if password != password_confirm:
         body = '''
         <div style="max-width:420px;margin:60px auto;padding:0 20px;text-align:center;">
-            <p style="color:#c0392b;font-weight:600;">Passwords do not match.</p>
+            <p style="color:var(--error-text);font-weight:600;">Passwords do not match.</p>
             <a href="javascript:history.back()" style="color:var(--terracotta);text-decoration:none;">Go back</a>
         </div>
         '''
@@ -400,7 +400,7 @@ async def reset_password_submit(request: Request):
     if len(password) < 8:
         body = '''
         <div style="max-width:420px;margin:60px auto;padding:0 20px;text-align:center;">
-            <p style="color:#c0392b;font-weight:600;">Password must be at least 8 characters.</p>
+            <p style="color:var(--error-text);font-weight:600;">Password must be at least 8 characters.</p>
             <a href="javascript:history.back()" style="color:var(--terracotta);text-decoration:none;">Go back</a>
         </div>
         '''

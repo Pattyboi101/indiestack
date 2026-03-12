@@ -519,6 +519,10 @@ CATEGORY_TOKEN_COSTS = {
     "ai-automation": 80_000,
     "feedback-reviews": 35_000,
     "ai-dev-tools": 120_000,
+    "games-entertainment": 120_000,
+    "learning-education": 80_000,
+    "newsletters-content": 60_000,
+    "creative-tools": 100_000,
 }
 
 # Maps common need keywords to category slugs, search terms, and competitors.
@@ -542,6 +546,14 @@ NEED_MAPPINGS = {
     "design": {"category": "design-creative", "terms": ["design", "ui", "creative", "graphics"], "competitors": ["Figma", "Canva", "Adobe"], "title": "Design & Creative", "description": "Create designs, generate graphics, and build UI components.", "build_estimate": "varies", "icon": "\U0001f3a8"},
     "feedback": {"category": "feedback-reviews", "terms": ["feedback", "reviews", "nps", "ratings"], "competitors": ["Hotjar", "UserTesting", "Typeform"], "title": "Feedback & Reviews", "description": "Collect user feedback, run NPS surveys, and manage reviews.", "build_estimate": "1-2 weeks", "icon": "\U0001f4ac"},
     "social": {"category": "social-media", "terms": ["social", "community", "social media"], "competitors": ["Buffer", "Hootsuite"], "title": "Social Media", "description": "Schedule posts, manage social accounts, and grow communities.", "build_estimate": "2-3 weeks", "icon": "\U0001f4f1"},
+    "project": {"category": "project-management", "terms": ["project management", "kanban", "tasks", "todo", "scrum", "sprint", "agile"], "competitors": ["Jira", "Asana", "Monday.com", "Trello", "Linear"], "title": "Project Management", "description": "Organize tasks, run sprints, and manage projects without enterprise bloat.", "build_estimate": "4-6 weeks", "icon": "\U0001f4cb"},
+    "landing": {"category": "landing-pages", "terms": ["landing page", "website builder", "static site", "portfolio", "one-page"], "competitors": ["Webflow", "Squarespace", "Wix", "Carrd"], "title": "Landing Pages", "description": "Build and ship landing pages, portfolios, and static sites.", "build_estimate": "1-2 weeks", "icon": "\U0001f680"},
+    "api": {"category": "api-tools", "terms": ["api gateway", "rest client", "webhook", "endpoint", "openapi"], "competitors": ["Postman", "Swagger", "Kong", "Insomnia"], "title": "API Tools", "description": "Build, test, and manage APIs with indie developer tools.", "build_estimate": "2-4 weeks", "icon": "\u26a1"},
+    "aidev": {"category": "ai-dev-tools", "terms": ["mcp server", "ai coding", "agent", "copilot", "code assistant", "llm tool"], "competitors": ["GitHub Copilot", "Cursor", "Windsurf", "Cody"], "title": "AI Dev Tools", "description": "MCP servers, AI coding assistants, and agent tools built by indie creators.", "build_estimate": "varies", "icon": "\U0001f9e0"},
+    "games": {"category": "games-entertainment", "terms": ["game engine", "indie game", "gaming", "interactive", "game dev"], "competitors": ["Unity", "Unreal Engine", "GameMaker", "Godot"], "title": "Games & Entertainment", "description": "Game engines, indie games, and interactive experiences from independent creators.", "build_estimate": "varies", "icon": "\U0001f3ae"},
+    "learning": {"category": "learning-education", "terms": ["learning", "education", "flashcards", "course", "quiz", "tutorial"], "competitors": ["Coursera", "Udemy", "Anki", "Duolingo"], "title": "Learning & Education", "description": "Flashcard apps, course platforms, and educational tools.", "build_estimate": "3-5 weeks", "icon": "\U0001f4da"},
+    "publishing": {"category": "newsletters-content", "terms": ["publishing platform", "blog platform", "newsletter platform", "writer tool", "substack alternative"], "competitors": ["Substack", "Ghost", "Medium", "Hashnode"], "title": "Publishing & Newsletters", "description": "Run newsletters, publish blogs, and build writing platforms.", "build_estimate": "3-4 weeks", "icon": "\U0001f4f0"},
+    "creative": {"category": "creative-tools", "terms": ["music production", "video editor", "audio tool", "3d modeling", "pixel art", "creative software"], "competitors": ["Adobe Creative Suite", "DaVinci Resolve", "Blender", "Logic Pro"], "title": "Creative Tools", "description": "Music, video, art, and creative software from indie makers.", "build_estimate": "varies", "icon": "\U0001f3ad"},
 }
 
 TECH_KEYWORDS = {
@@ -557,6 +569,16 @@ TECH_KEYWORDS = {
     "prisma", "drizzle", "sqlalchemy",
     "playwright", "cypress", "jest", "vitest",
     "openai", "anthropic", "claude", "gpt",
+    # AI/Agent
+    "cursor", "windsurf", "cody", "copilot", "mcp", "langchain", "llamaindex", "crewai",
+    # Modern runtimes & frameworks
+    "deno", "bun", "htmx", "alpine.js", "astro", "remix", "solid", "qwik", "hono",
+    # Modern databases
+    "turso", "libsql", "neon", "planetscale", "pocketbase", "surrealdb", "convex",
+    # UI & deployment
+    "shadcn", "radix", "coolify", "railway", "render", "kamal",
+    # Fundamentals
+    "sqlite", "nginx", "caddy",
 }
 
 # ── Database init ─────────────────────────────────────────────────────────
@@ -576,6 +598,229 @@ async def get_db() -> aiosqlite.Connection:
     await db.execute("PRAGMA mmap_size=268435456")  # 256MB memory-mapped I/O
     await db.execute("PRAGMA temp_store=MEMORY")     # temp tables in RAM
     return db
+
+
+async def _enrich_tool_metadata(db):
+    """One-time enrichment of structured metadata for well-known tools.
+    Only sets values where the field is currently empty — won't overwrite manual edits."""
+
+    ENRICHMENTS = [
+        # Authentication
+        {"slug": "hanko", "api_type": "REST", "auth_method": "none", "install_command": "npm install @hanko/elements", "sdk_packages": '{"npm": "@hanko/elements", "pip": "hanko-python"}', "env_vars": '["HANKO_API_URL"]', "frameworks_tested": "nextjs,react,vue,svelte"},
+        {"slug": "lucia", "api_type": "SDK", "auth_method": "none", "install_command": "npm install lucia", "sdk_packages": '{"npm": "lucia"}', "env_vars": '[]', "frameworks_tested": "nextjs,sveltekit,astro,nuxt"},
+        {"slug": "supertokens", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install supertokens-auth-react", "sdk_packages": '{"npm": "supertokens-auth-react", "pip": "supertokens-python"}', "env_vars": '["SUPERTOKENS_CONNECTION_URI", "SUPERTOKENS_API_KEY"]', "frameworks_tested": "nextjs,react,fastapi,flask,django"},
+        {"slug": "logto", "api_type": "REST", "auth_method": "oauth2", "install_command": "npm install @logto/next", "sdk_packages": '{"npm": "@logto/next"}', "env_vars": '["LOGTO_ENDPOINT", "LOGTO_APP_ID", "LOGTO_APP_SECRET"]', "frameworks_tested": "nextjs,react,vue,express"},
+        {"slug": "ory", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install @ory/client", "sdk_packages": '{"npm": "@ory/client", "pip": "ory-client"}', "env_vars": '["ORY_SDK_URL", "ORY_API_KEY"]', "frameworks_tested": "nextjs,react,express,fastapi"},
+        {"slug": "zitadel", "api_type": "REST", "auth_method": "oauth2", "install_command": "npm install @zitadel/node", "sdk_packages": '{"npm": "@zitadel/node"}', "env_vars": '["ZITADEL_DOMAIN", "ZITADEL_CLIENT_ID"]', "frameworks_tested": "nextjs,react,angular"},
+        {"slug": "keycloak", "api_type": "REST", "auth_method": "oauth2", "install_command": "docker pull quay.io/keycloak/keycloak", "sdk_packages": '{"npm": "keycloak-js"}', "env_vars": '["KEYCLOAK_URL", "KEYCLOAK_REALM", "KEYCLOAK_CLIENT_ID"]', "frameworks_tested": "nextjs,react,angular,spring"},
+
+        # Analytics
+        {"slug": "simple-analytics", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install simple-analytics-script", "sdk_packages": '{"npm": "simple-analytics-script"}', "env_vars": '["SA_API_KEY"]', "frameworks_tested": "nextjs,react,vue,svelte,astro"},
+        {"slug": "plausible-analytics", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install plausible-tracker", "sdk_packages": '{"npm": "plausible-tracker"}', "env_vars": '["PLAUSIBLE_API_KEY", "PLAUSIBLE_DOMAIN"]', "frameworks_tested": "nextjs,react,vue,gatsby"},
+        {"slug": "umami", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install @umami/node", "sdk_packages": '{"npm": "@umami/node"}', "env_vars": '["UMAMI_API_KEY", "UMAMI_URL"]', "frameworks_tested": "nextjs,react,vue"},
+        {"slug": "countly", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install countly-sdk-web", "sdk_packages": '{"npm": "countly-sdk-web"}', "env_vars": '["COUNTLY_APP_KEY", "COUNTLY_URL"]', "frameworks_tested": "react,vue,angular"},
+        {"slug": "matomo", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install matomo-tracker", "sdk_packages": '{"npm": "matomo-tracker"}', "env_vars": '["MATOMO_URL", "MATOMO_SITE_ID"]', "frameworks_tested": "react,vue,nextjs"},
+        {"slug": "posthog", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install posthog-js", "sdk_packages": '{"npm": "posthog-js", "pip": "posthog"}', "env_vars": '["POSTHOG_API_KEY", "POSTHOG_HOST"]', "frameworks_tested": "nextjs,react,vue,django,flask"},
+        {"slug": "aptabase", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @aptabase/web", "sdk_packages": '{"npm": "@aptabase/web"}', "env_vars": '["APTABASE_APP_KEY"]', "frameworks_tested": "react,vue,svelte,tauri,electron"},
+
+        # Payments
+        {"slug": "polar", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install @polar-sh/sdk", "sdk_packages": '{"npm": "@polar-sh/sdk", "pip": "polar-python"}', "env_vars": '["POLAR_ACCESS_TOKEN"]', "frameworks_tested": "nextjs,fastapi"},
+        {"slug": "lemon-squeezy", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @lemonsqueezy/lemonsqueezy.js", "sdk_packages": '{"npm": "@lemonsqueezy/lemonsqueezy.js"}', "env_vars": '["LEMONSQUEEZY_API_KEY"]', "frameworks_tested": "nextjs,react,vue"},
+        {"slug": "lago", "api_type": "REST", "auth_method": "bearer", "install_command": "pip install lago-python-client", "sdk_packages": '{"pip": "lago-python-client", "npm": "lago-javascript-client"}', "env_vars": '["LAGO_API_KEY", "LAGO_URL"]', "frameworks_tested": "fastapi,rails"},
+        {"slug": "kill-bill", "api_type": "REST", "auth_method": "api_key", "install_command": "pip install killbill", "sdk_packages": '{"pip": "killbill"}', "env_vars": '["KILLBILL_API_KEY", "KILLBILL_URL"]', "frameworks_tested": "django,rails,spring"},
+
+        # Email
+        {"slug": "listmonk", "api_type": "REST", "auth_method": "api_key", "install_command": "docker pull listmonk/listmonk", "sdk_packages": '{}', "env_vars": '["LISTMONK_HOST", "LISTMONK_USER", "LISTMONK_PASSWORD"]', "frameworks_tested": ""},
+        {"slug": "resend", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install resend", "sdk_packages": '{"npm": "resend", "pip": "resend"}', "env_vars": '["RESEND_API_KEY"]', "frameworks_tested": "nextjs,react,fastapi,express"},
+        {"slug": "plunk", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @plunk/node", "sdk_packages": '{"npm": "@plunk/node"}', "env_vars": '["PLUNK_API_KEY"]', "frameworks_tested": "nextjs,express"},
+        {"slug": "mailpit", "api_type": "REST", "auth_method": "none", "install_command": "docker pull axllent/mailpit", "sdk_packages": '{}', "env_vars": '["MAILPIT_HOST"]', "frameworks_tested": ""},
+
+        # CMS
+        {"slug": "ghost", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @tryghost/content-api", "sdk_packages": '{"npm": "@tryghost/content-api"}', "env_vars": '["GHOST_API_KEY", "GHOST_URL"]', "frameworks_tested": "nextjs,gatsby,react"},
+        {"slug": "strapi", "api_type": "REST", "auth_method": "bearer", "install_command": "npx create-strapi-app@latest", "sdk_packages": '{"npm": "@strapi/strapi"}', "env_vars": '["STRAPI_URL", "STRAPI_TOKEN"]', "frameworks_tested": "nextjs,react,vue,nuxt"},
+        {"slug": "directus", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install @directus/sdk", "sdk_packages": '{"npm": "@directus/sdk"}', "env_vars": '["DIRECTUS_URL", "DIRECTUS_TOKEN"]', "frameworks_tested": "nextjs,react,vue,nuxt"},
+        {"slug": "payload", "api_type": "REST", "auth_method": "bearer", "install_command": "npx create-payload-app@latest", "sdk_packages": '{"npm": "payload"}', "env_vars": '["PAYLOAD_SECRET", "DATABASE_URI"]', "frameworks_tested": "nextjs,react"},
+        {"slug": "tina", "api_type": "GraphQL", "auth_method": "bearer", "install_command": "npx @tinacms/cli@latest init", "sdk_packages": '{"npm": "tinacms"}', "env_vars": '["TINA_CLIENT_ID", "TINA_TOKEN"]', "frameworks_tested": "nextjs,astro"},
+
+        # Database / Backend
+        {"slug": "pocketbase", "api_type": "REST", "auth_method": "bearer", "install_command": "go install github.com/pocketbase/pocketbase", "sdk_packages": '{"npm": "pocketbase"}', "env_vars": '["PB_URL"]', "frameworks_tested": "nextjs,react,svelte,vue"},
+        {"slug": "supabase", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @supabase/supabase-js", "sdk_packages": '{"npm": "@supabase/supabase-js", "pip": "supabase"}', "env_vars": '["SUPABASE_URL", "SUPABASE_ANON_KEY"]', "frameworks_tested": "nextjs,react,vue,svelte,flutter"},
+        {"slug": "appwrite", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install appwrite", "sdk_packages": '{"npm": "appwrite", "pip": "appwrite"}', "env_vars": '["APPWRITE_ENDPOINT", "APPWRITE_PROJECT_ID", "APPWRITE_API_KEY"]', "frameworks_tested": "nextjs,react,vue,flutter"},
+        {"slug": "turso", "api_type": "SDK", "auth_method": "bearer", "install_command": "npm install @libsql/client", "sdk_packages": '{"npm": "@libsql/client", "pip": "libsql-experimental"}', "env_vars": '["TURSO_DATABASE_URL", "TURSO_AUTH_TOKEN"]', "frameworks_tested": "nextjs,fastapi,rails,django"},
+        {"slug": "neon", "api_type": "SDK", "auth_method": "bearer", "install_command": "npm install @neondatabase/serverless", "sdk_packages": '{"npm": "@neondatabase/serverless"}', "env_vars": '["DATABASE_URL"]', "frameworks_tested": "nextjs,remix,astro"},
+        {"slug": "convex", "api_type": "SDK", "auth_method": "bearer", "install_command": "npm install convex", "sdk_packages": '{"npm": "convex"}', "env_vars": '["CONVEX_URL"]', "frameworks_tested": "nextjs,react"},
+
+        # Monitoring / Uptime
+        {"slug": "uptime-kuma", "api_type": "REST", "auth_method": "api_key", "install_command": "docker pull louislam/uptime-kuma", "sdk_packages": '{}', "env_vars": '["UPTIME_KUMA_URL"]', "frameworks_tested": ""},
+        {"slug": "sentry", "api_type": "SDK", "auth_method": "api_key", "install_command": "npm install @sentry/node", "sdk_packages": '{"npm": "@sentry/node", "pip": "sentry-sdk"}', "env_vars": '["SENTRY_DSN"]', "frameworks_tested": "nextjs,react,vue,django,flask,fastapi,express"},
+        {"slug": "highlight-io", "api_type": "SDK", "auth_method": "api_key", "install_command": "npm install @highlight-run/node", "sdk_packages": '{"npm": "@highlight-run/node", "pip": "highlight-io"}', "env_vars": '["HIGHLIGHT_PROJECT_ID"]', "frameworks_tested": "nextjs,react,django,flask"},
+        {"slug": "glitchtip", "api_type": "REST", "auth_method": "api_key", "install_command": "pip install sentry-sdk", "sdk_packages": '{"pip": "sentry-sdk"}', "env_vars": '["GLITCHTIP_DSN"]', "frameworks_tested": "django,flask,fastapi"},
+
+        # Forms / Surveys
+        {"slug": "formbricks", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @formbricks/js", "sdk_packages": '{"npm": "@formbricks/js"}', "env_vars": '["FORMBRICKS_API_HOST", "FORMBRICKS_ENVIRONMENT_ID"]', "frameworks_tested": "nextjs,react"},
+        {"slug": "heyform", "api_type": "REST", "auth_method": "bearer", "install_command": "docker pull heyform/community", "sdk_packages": '{}', "env_vars": '["HEYFORM_URL"]', "frameworks_tested": ""},
+
+        # Search
+        {"slug": "meilisearch", "api_type": "REST", "auth_method": "api_key", "install_command": "docker pull getmeili/meilisearch", "sdk_packages": '{"npm": "meilisearch", "pip": "meilisearch"}', "env_vars": '["MEILI_HOST", "MEILI_MASTER_KEY"]', "frameworks_tested": "nextjs,react,vue,rails,django"},
+        {"slug": "typesense", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install typesense", "sdk_packages": '{"npm": "typesense", "pip": "typesense"}', "env_vars": '["TYPESENSE_HOST", "TYPESENSE_API_KEY"]', "frameworks_tested": "nextjs,react,vue,rails"},
+
+        # Feature Flags / Config
+        {"slug": "flagsmith", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install flagsmith", "sdk_packages": '{"npm": "flagsmith", "pip": "flagsmith"}', "env_vars": '["FLAGSMITH_ENVIRONMENT_KEY"]', "frameworks_tested": "nextjs,react,django,flask"},
+        {"slug": "growthbook", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @growthbook/growthbook-react", "sdk_packages": '{"npm": "@growthbook/growthbook-react"}', "env_vars": '["GROWTHBOOK_API_HOST", "GROWTHBOOK_CLIENT_KEY"]', "frameworks_tested": "nextjs,react"},
+        {"slug": "unleash", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install unleash-client", "sdk_packages": '{"npm": "unleash-client", "pip": "UnleashClient"}', "env_vars": '["UNLEASH_URL", "UNLEASH_API_TOKEN"]', "frameworks_tested": "nextjs,express,django,fastapi"},
+
+        # Scheduling
+        {"slug": "cal-com", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @calcom/embed-react", "sdk_packages": '{"npm": "@calcom/embed-react"}', "env_vars": '["CAL_API_KEY"]', "frameworks_tested": "nextjs,react"},
+
+        # Notifications
+        {"slug": "novu", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @novu/node", "sdk_packages": '{"npm": "@novu/node", "pip": "novu"}', "env_vars": '["NOVU_API_KEY"]', "frameworks_tested": "nextjs,react,express,fastapi"},
+        {"slug": "ntfy", "api_type": "REST", "auth_method": "none", "install_command": "pip install ntfy-wrapper", "sdk_packages": '{"pip": "ntfy-wrapper"}', "env_vars": '["NTFY_TOPIC"]', "frameworks_tested": ""},
+
+        # File Storage
+        {"slug": "minio", "api_type": "REST", "auth_method": "api_key", "install_command": "pip install minio", "sdk_packages": '{"npm": "minio", "pip": "minio"}', "env_vars": '["MINIO_ENDPOINT", "MINIO_ACCESS_KEY", "MINIO_SECRET_KEY"]', "frameworks_tested": "nextjs,django,fastapi,express"},
+
+        # Deployment
+        {"slug": "coolify", "api_type": "REST", "auth_method": "bearer", "install_command": "curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash", "sdk_packages": '{}', "env_vars": '["COOLIFY_URL", "COOLIFY_TOKEN"]', "frameworks_tested": ""},
+        {"slug": "dokku", "api_type": "CLI", "auth_method": "none", "install_command": "wget -NP . https://dokku.com/bootstrap.sh && sudo bash bootstrap.sh", "sdk_packages": '{}', "env_vars": '[]', "frameworks_tested": ""},
+        {"slug": "caprover", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install -g caprover", "sdk_packages": '{"npm": "caprover"}', "env_vars": '["CAPROVER_URL", "CAPROVER_PASSWORD"]', "frameworks_tested": ""},
+
+        # Analytics (additional)
+        {"slug": "fathom-analytics", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install fathom-client", "sdk_packages": '{"npm": "fathom-client"}', "env_vars": '["FATHOM_SITE_ID"]', "frameworks_tested": "nextjs,react,vue,gatsby"},
+        {"slug": "pirsch", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install pirsch-sdk", "sdk_packages": '{"npm": "pirsch-sdk", "pip": "pirsch-api"}', "env_vars": '["PIRSCH_ACCESS_TOKEN"]', "frameworks_tested": "nextjs,react,vue"},
+
+        # Auth (additional)
+        {"slug": "clerk", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @clerk/nextjs", "sdk_packages": '{"npm": "@clerk/nextjs", "pip": "clerk-backend-api"}', "env_vars": '["CLERK_PUBLISHABLE_KEY", "CLERK_SECRET_KEY"]', "frameworks_tested": "nextjs,react,remix,expo"},
+        {"slug": "kinde", "api_type": "REST", "auth_method": "oauth2", "install_command": "npm install @kinde-oss/kinde-auth-nextjs", "sdk_packages": '{"npm": "@kinde-oss/kinde-auth-nextjs"}', "env_vars": '["KINDE_CLIENT_ID", "KINDE_CLIENT_SECRET", "KINDE_ISSUER_URL"]', "frameworks_tested": "nextjs,react,express"},
+        {"slug": "authentik", "api_type": "REST", "auth_method": "oauth2", "install_command": "docker pull ghcr.io/goauthentik/server", "sdk_packages": '{}', "env_vars": '["AUTHENTIK_SECRET_KEY", "AUTHENTIK_HOST"]', "frameworks_tested": ""},
+        {"slug": "ssoready", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install ssoready", "sdk_packages": '{"npm": "ssoready", "pip": "ssoready"}', "env_vars": '["SSOREADY_API_KEY"]', "frameworks_tested": "nextjs,express,fastapi"},
+
+        # Databases & ORMs
+        {"slug": "prisma", "api_type": "SDK", "auth_method": "none", "install_command": "npm install prisma @prisma/client", "sdk_packages": '{"npm": "@prisma/client"}', "env_vars": '["DATABASE_URL"]', "frameworks_tested": "nextjs,express,fastapi,nestjs"},
+        {"slug": "redis", "api_type": "SDK", "auth_method": "none", "install_command": "npm install redis", "sdk_packages": '{"npm": "redis", "pip": "redis"}', "env_vars": '["REDIS_URL"]', "frameworks_tested": "nextjs,express,django,flask,fastapi"},
+        {"slug": "qdrant", "api_type": "REST", "auth_method": "api_key", "install_command": "pip install qdrant-client", "sdk_packages": '{"pip": "qdrant-client", "npm": "@qdrant/js-client-rest"}', "env_vars": '["QDRANT_URL", "QDRANT_API_KEY"]', "frameworks_tested": "fastapi,express,nextjs"},
+        {"slug": "weaviate", "api_type": "REST", "auth_method": "api_key", "install_command": "pip install weaviate-client", "sdk_packages": '{"pip": "weaviate-client", "npm": "weaviate-client"}', "env_vars": '["WEAVIATE_URL", "WEAVIATE_API_KEY"]', "frameworks_tested": "fastapi,nextjs,express"},
+
+        # CMS & Content
+        {"slug": "wiki-js", "api_type": "GraphQL", "auth_method": "bearer", "install_command": "docker pull ghcr.io/requarks/wiki", "sdk_packages": '{}', "env_vars": '["WIKI_DB_HOST", "WIKI_DB_USER", "WIKI_DB_PASS"]', "frameworks_tested": ""},
+
+        # Media & Files
+        {"slug": "cloudinary", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install cloudinary", "sdk_packages": '{"npm": "cloudinary", "pip": "cloudinary"}', "env_vars": '["CLOUDINARY_CLOUD_NAME", "CLOUDINARY_API_KEY", "CLOUDINARY_API_SECRET"]', "frameworks_tested": "nextjs,react,vue,django,express"},
+        {"slug": "paperless-ngx", "api_type": "REST", "auth_method": "bearer", "install_command": "docker pull ghcr.io/paperless-ngx/paperless-ngx", "sdk_packages": '{}', "env_vars": '["PAPERLESS_URL", "PAPERLESS_TOKEN"]', "frameworks_tested": ""},
+
+        # AI & ML
+        {"slug": "dify", "api_type": "REST", "auth_method": "api_key", "install_command": "docker compose up -d", "sdk_packages": '{"pip": "dify-client"}', "env_vars": '["DIFY_API_KEY", "DIFY_API_URL"]', "frameworks_tested": "nextjs,fastapi"},
+        {"slug": "firecrawl", "api_type": "REST", "auth_method": "api_key", "install_command": "pip install firecrawl-py", "sdk_packages": '{"pip": "firecrawl-py", "npm": "@mendable/firecrawl-js"}', "env_vars": '["FIRECRAWL_API_KEY"]', "frameworks_tested": "nextjs,fastapi,express"},
+
+        # Payments (additional)
+        {"slug": "paddle", "api_type": "REST", "auth_method": "api_key", "install_command": "npm install @paddle/paddle-js", "sdk_packages": '{"npm": "@paddle/paddle-js", "pip": "paddle-billing"}', "env_vars": '["PADDLE_API_KEY", "PADDLE_CLIENT_TOKEN"]', "frameworks_tested": "nextjs,react,vue"},
+
+        # DevOps & Hosting
+        {"slug": "render", "api_type": "REST", "auth_method": "bearer", "install_command": "", "sdk_packages": '{}', "env_vars": '["RENDER_API_KEY"]', "frameworks_tested": ""},
+        {"slug": "rancher", "api_type": "REST", "auth_method": "bearer", "install_command": "docker pull rancher/rancher", "sdk_packages": '{}', "env_vars": '["RANCHER_URL", "RANCHER_ACCESS_KEY", "RANCHER_SECRET_KEY"]', "frameworks_tested": ""},
+
+        # Documentation
+        {"slug": "mintlify", "api_type": "CLI", "auth_method": "api_key", "install_command": "npx mintlify dev", "sdk_packages": '{"npm": "mintlify"}', "env_vars": '["MINTLIFY_TOKEN"]', "frameworks_tested": ""},
+
+        # Job Queues
+        {"slug": "bullmq", "api_type": "SDK", "auth_method": "none", "install_command": "npm install bullmq", "sdk_packages": '{"npm": "bullmq"}', "env_vars": '["REDIS_URL"]', "frameworks_tested": "nextjs,express,nestjs"},
+
+        # Search
+        {"slug": "searxng", "api_type": "REST", "auth_method": "none", "install_command": "docker pull searxng/searxng", "sdk_packages": '{}', "env_vars": '["SEARXNG_URL"]', "frameworks_tested": ""},
+
+        # BI & Reporting
+        {"slug": "metabase", "api_type": "REST", "auth_method": "api_key", "install_command": "docker pull metabase/metabase", "sdk_packages": '{}', "env_vars": '["METABASE_URL", "METABASE_API_KEY"]', "frameworks_tested": ""},
+
+        # Landing Pages
+        {"slug": "carrd", "api_type": "REST", "auth_method": "api_key", "install_command": "", "sdk_packages": '{}', "env_vars": '[]', "frameworks_tested": ""},
+
+        # CRM
+        {"slug": "atomic-crm", "api_type": "REST", "auth_method": "bearer", "install_command": "npm install", "sdk_packages": '{}', "env_vars": '["VITE_API_URL"]', "frameworks_tested": "react"},
+    ]
+
+    for tool_data in ENRICHMENTS:
+        slug = tool_data.get("slug")
+        if not slug:
+            continue
+        # Build SET clause only for fields that are currently empty
+        set_parts = []
+        params = []
+        for field, value in tool_data.items():
+            if field == "slug":
+                continue
+            if value:  # skip empty values
+                set_parts.append(f"{field} = CASE WHEN ({field} IS NULL OR {field} = '') THEN ? ELSE {field} END")
+                params.append(value)
+
+        if set_parts:
+            params.append(slug)
+            query = f"UPDATE tools SET {', '.join(set_parts)} WHERE slug = ? AND status = 'approved'"
+            try:
+                await db.execute(query, params)
+            except Exception:
+                pass  # tool might not exist — that's fine
+
+    await db.commit()
+
+    # Seed verified compatibility pairs (idempotent via ON CONFLICT)
+    SEED_PAIRS = [
+        # Auth + Payments
+        ("hanko", "polar"), ("hanko", "lemon-squeezy"), ("clerk", "polar"),
+        ("supertokens", "polar"), ("lucia", "polar"), ("kinde", "polar"),
+        # Auth + Database
+        ("hanko", "supabase"), ("clerk", "supabase"), ("lucia", "pocketbase"),
+        ("lucia", "turso"), ("hanko", "pocketbase"), ("supertokens", "supabase"),
+        # Auth + Email
+        ("hanko", "resend"), ("clerk", "resend"), ("supertokens", "resend"),
+        # Database + Analytics
+        ("supabase", "posthog"), ("supabase", "plausible-analytics"),
+        ("pocketbase", "umami"), ("turso", "simple-analytics"),
+        # Database + CMS
+        ("supabase", "strapi"), ("supabase", "directus"), ("supabase", "payload"),
+        # Database + Search
+        ("supabase", "meilisearch"), ("pocketbase", "typesense"),
+        # Payments + Email
+        ("polar", "resend"), ("lemon-squeezy", "resend"), ("polar", "plunk"),
+        # Monitoring + Database
+        ("sentry", "supabase"), ("sentry", "pocketbase"), ("sentry", "turso"),
+        # Monitoring + Auth
+        ("sentry", "hanko"), ("sentry", "clerk"),
+        # Hosting + Database
+        ("coolify", "supabase"), ("coolify", "pocketbase"),
+        ("dokku", "pocketbase"), ("caprover", "supabase"),
+        # Feature Flags + Analytics
+        ("flagsmith", "posthog"), ("growthbook", "posthog"),
+        # Notifications + Payments
+        ("novu", "polar"), ("ntfy", "polar"),
+    ]
+    for slug_a, slug_b in SEED_PAIRS:
+        a, b = sorted([slug_a, slug_b])
+        try:
+            await db.execute("""
+                INSERT INTO tool_pairs (tool_a_slug, tool_b_slug, source, verified, success_count)
+                VALUES (?, ?, 'seed', 1, 5)
+                ON CONFLICT(tool_a_slug, tool_b_slug) DO NOTHING
+            """, (a, b))
+        except Exception:
+            pass
+    await db.commit()
+
+    # Bulk category-default enrichment for tools with NO metadata at all
+    # Sets reasonable defaults so agents always get at least api_type and auth_method
+    await db.execute("""
+        UPDATE tools SET api_type = CASE
+            WHEN source_type = 'code' THEN 'SDK'
+            ELSE 'REST'
+        END
+        WHERE status = 'approved' AND (api_type IS NULL OR api_type = '')
+    """)
+    await db.execute("""
+        UPDATE tools SET auth_method = CASE
+            WHEN source_type = 'code' THEN 'none'
+            ELSE 'api_key'
+        END
+        WHERE status = 'approved' AND (auth_method IS NULL OR auth_method = '')
+    """)
+    await db.commit()
 
 
 async def init_db():
@@ -973,11 +1218,44 @@ async def init_db():
                 await db.execute(ddl)
         await db.commit()
 
+        # ── Agentic Package Manager metadata ──
+        for col, typedef in [
+            ("api_type", "TEXT DEFAULT ''"),
+            ("auth_method", "TEXT DEFAULT ''"),
+            ("sdk_packages", "TEXT DEFAULT ''"),
+            ("env_vars", "TEXT DEFAULT ''"),
+            ("frameworks_tested", "TEXT DEFAULT ''"),
+            ("verified_pairs", "TEXT DEFAULT ''"),
+        ]:
+            try:
+                await db.execute(f"ALTER TABLE tools ADD COLUMN {col} {typedef}")
+            except Exception:
+                pass
+        await db.commit()
+
         # Performance indexes
         await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_views_viewed ON tool_views(viewed_at)")
         await db.execute("CREATE INDEX IF NOT EXISTS idx_maker_updates_tool ON maker_updates(tool_id, created_at)")
         await db.execute("CREATE INDEX IF NOT EXISTS idx_tools_status_source ON tools(status, source_type)")
         await db.commit()
+
+        # ── Tool pairs table (Agentic Package Manager) ──
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS tool_pairs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                tool_a_slug TEXT NOT NULL,
+                tool_b_slug TEXT NOT NULL,
+                verified INTEGER NOT NULL DEFAULT 0,
+                success_count INTEGER NOT NULL DEFAULT 0,
+                source TEXT NOT NULL DEFAULT 'manual',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(tool_a_slug, tool_b_slug)
+            )
+        """)
+        await db.commit()
+
+        # Enrich well-known tools with structured metadata
+        await _enrich_tool_metadata(db)
 
     finally:
         await db.close()
@@ -1234,7 +1512,7 @@ async def run_github_health_checks(db_conn: aiosqlite.Connection, batch_size: in
             github_url = tool['github_url']
 
             # Parse owner/repo from GitHub URL
-            match = re.match(r'https?://github\.com/([^/]+)/([^/?.]+)', github_url)
+            match = re.match(r'https?://github\.com/([^/]+)/([^/?#]+)', github_url)
             if not match:
                 stats["errors"] += 1
                 continue
@@ -2346,6 +2624,8 @@ _ALLOWED_TOOL_FIELDS = {
     'replaces', 'status', 'is_verified', 'is_ejectable', 'maker_id', 'maker_name',
     'stripe_account_id', 'tool_of_the_week', 'boost_active', 'boost_expires_at',
     'badge_nudge_sent', 'indie_score', 'mcp_view_count', 'pixel_icon',
+    'api_type', 'auth_method', 'install_command', 'sdk_packages', 'env_vars', 'frameworks_tested',
+    'verified_pairs',
 }
 
 async def update_tool(db: aiosqlite.Connection, tool_id: int, **fields):
@@ -2355,6 +2635,33 @@ async def update_tool(db: aiosqlite.Connection, tool_id: int, **fields):
     set_clause = ", ".join(f"{k} = ?" for k in fields)
     values = list(fields.values()) + [tool_id]
     await db.execute(f"UPDATE tools SET {set_clause} WHERE id = ?", values)
+    await db.commit()
+
+
+# ── Tool Pairs (Agentic Package Manager) ─────────────────────────────────
+
+async def get_verified_pairs(db: aiosqlite.Connection, slug: str) -> list:
+    """Get tools verified to work well with this tool."""
+    cursor = await db.execute("""
+        SELECT CASE WHEN tp.tool_a_slug = ? THEN tp.tool_b_slug ELSE tp.tool_a_slug END as pair_slug,
+               tp.success_count, tp.verified,
+               t.url as pair_url
+        FROM tool_pairs tp
+        LEFT JOIN tools t ON t.slug = CASE WHEN tp.tool_a_slug = ? THEN tp.tool_b_slug ELSE tp.tool_a_slug END
+        WHERE (tp.tool_a_slug = ? OR tp.tool_b_slug = ?)
+        ORDER BY tp.success_count DESC
+    """, (slug, slug, slug, slug))
+    return [dict(r) for r in await cursor.fetchall()]
+
+
+async def record_tool_pair(db: aiosqlite.Connection, slug_a: str, slug_b: str, source: str = "agent"):
+    """Record that two tools were used together. Increments success_count if exists."""
+    a, b = sorted([slug_a, slug_b])
+    await db.execute("""
+        INSERT INTO tool_pairs (tool_a_slug, tool_b_slug, source)
+        VALUES (?, ?, ?)
+        ON CONFLICT(tool_a_slug, tool_b_slug) DO UPDATE SET success_count = success_count + 1
+    """, (a, b, source))
     await db.commit()
 
 
@@ -4730,6 +5037,42 @@ async def get_maker_agent_breakdown(db, maker_id: int, days: int = 30) -> list:
         GROUP BY ac.agent_name
         ORDER BY count DESC
     """, (maker_id, f'-{days} days'))
+    return [dict(r) for r in await cursor.fetchall()]
+
+
+async def get_demand_trends(db, days: int = 30) -> list:
+    """Get demand signal trends over time — searches grouped by day."""
+    cursor = await db.execute("""
+        SELECT DATE(created_at) as day,
+               COUNT(*) as total_searches,
+               SUM(CASE WHEN result_count = 0 THEN 1 ELSE 0 END) as zero_results
+        FROM search_logs
+        WHERE created_at >= datetime('now', ?)
+        GROUP BY DATE(created_at)
+        ORDER BY day DESC
+    """, (f'-{days} days',))
+    return [dict(r) for r in await cursor.fetchall()]
+
+
+async def get_demand_clusters(db, limit: int = 50) -> list:
+    """Get clustered demand signals with richer metadata than basic gaps."""
+    cursor = await db.execute("""
+        SELECT LOWER(query) as query,
+               COUNT(*) as search_count,
+               SUM(CASE WHEN result_count = 0 THEN 1 ELSE 0 END) as zero_count,
+               MAX(created_at) as last_searched,
+               MIN(created_at) as first_searched,
+               COUNT(DISTINCT source) as source_count,
+               GROUP_CONCAT(DISTINCT source) as sources
+        FROM search_logs
+        WHERE LENGTH(query) >= 3
+          AND query NOT LIKE '%http%'
+          AND query NOT LIKE '%.com%'
+        GROUP BY LOWER(query)
+        HAVING zero_count > 0
+        ORDER BY zero_count DESC, search_count DESC
+        LIMIT ?
+    """, (limit,))
     return [dict(r) for r in await cursor.fetchall()]
 
 

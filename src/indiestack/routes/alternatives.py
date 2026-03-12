@@ -285,7 +285,7 @@ async def alternatives_for(request: Request, competitor_slug: str):
                 <h3 style="font-family:var(--font-display);font-size:18px;margin-bottom:8px;color:var(--ink);">{sp_name}</h3>
                 <p style="color:var(--ink-muted);font-size:14px;margin-bottom:10px;">{sp_tagline}</p>
                 <div style="display:flex;gap:8px;align-items:center;">
-                    <span style="font-size:13px;font-weight:600;color:#10B981;">{price_text}</span>
+                    <span style="font-size:13px;font-weight:600;color:var(--success-text);">{price_text}</span>
                     <span style="font-size:12px;color:var(--ink-muted);">Indie alternative to {safe_name}</span>
                 </div>
             </a>"""
@@ -398,9 +398,9 @@ async def alternatives_for(request: Request, competitor_slug: str):
         pricing_html = ''
         if price_pence is not None and isinstance(price_pence, int) and price_pence > 0:
             price_display = f"&pound;{price_pence / 100:.0f}" if price_pence >= 100 else f"{price_pence}p"
-            pricing_html = f'<span style="font-size:12px;font-weight:600;color:#065F46;background:#ECFDF5;padding:2px 10px;border-radius:999px;margin-left:8px;">From {price_display}</span>'
+            pricing_html = f'<span style="font-size:12px;font-weight:600;color:var(--success-text);background:var(--success-bg);padding:2px 10px;border-radius:999px;margin-left:8px;">From {price_display}</span>'
         elif price_pence is None or (isinstance(price_pence, int) and price_pence == 0):
-            pricing_html = '<span style="font-size:12px;font-weight:600;color:#065F46;background:#ECFDF5;padding:2px 10px;border-radius:999px;margin-left:8px;">Free</span>'
+            pricing_html = '<span style="font-size:12px;font-weight:600;color:var(--success-text);background:var(--success-bg);padding:2px 10px;border-radius:999px;margin-left:8px;">Free</span>'
         alt_subtitle = f'''<div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:8px;">
             <span style="font-size:12px;color:var(--ink-muted);font-weight:500;">Indie alternative to {safe_name}</span>
             {pricing_html}
@@ -533,7 +533,7 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
         price_display = "Free"
 
     # Badges
-    ejectable_badge = '<span style="display:inline-block;background:#EDE9FE;color:#7C3AED;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Ejectable</span>' if tool.get('is_ejectable') else ''
+    ejectable_badge = '<span style="display:inline-block;background:var(--info-bg, #EDE9FE);color:var(--info-text, #7C3AED);padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Ejectable</span>' if tool.get('is_ejectable') else ''
 
     # Get other alternatives for cross-linking
     other_tools = await get_tools_replacing(db, competitor_name, limit=6)
@@ -589,7 +589,7 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
                 <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin:0;">{safe_name}</h2>
                 {ejectable_badge}
-                <span style="font-size:14px;font-weight:600;color:#065F46;background:#ECFDF5;padding:4px 12px;border-radius:999px;">{price_display}</span>
+                <span style="font-size:14px;font-weight:600;color:var(--success-text);background:var(--success-bg);padding:4px 12px;border-radius:999px;">{price_display}</span>
             </div>
             <p style="font-size:16px;color:var(--ink);margin-bottom:12px;font-weight:500;">{safe_tagline}</p>
             <p style="font-size:14px;color:var(--ink-light);line-height:1.7;margin-bottom:20px;">{safe_desc}</p>

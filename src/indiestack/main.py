@@ -141,7 +141,7 @@ _FOUNDER_PHOTO_DIR_CANDIDATES = [
 _founder_photo_cache: dict[str, bytes] = {}
 
 from indiestack import db
-from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping, create_notification
+from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping, create_notification, record_tool_pair
 from indiestack.email import send_email, ego_ping_html, maker_welcome_html, email_verification_html
 from indiestack.auth import get_current_user
 from indiestack.routes import landing, browse, tool, search, submit, admin, purchase
@@ -160,6 +160,7 @@ from indiestack.routes import what_is
 from indiestack.routes import plugins
 from indiestack.routes import gaps
 from indiestack.routes import api_docs
+from indiestack.routes import geo
 
 
 async def _periodic_session_cleanup():
@@ -736,6 +737,9 @@ async def llms_txt(request: Request):
         "Payments & Subscriptions, Privacy & Compliance, Scheduling & Calendar, "
         "Search & Discovery, Security & Encryption, SEO & Growth, Social & Community, "
         "Storage & Files, Testing & QA\n\n"
+        "## Agent Cards (Machine-Readable)\n\n"
+        f"- Card Index: {BASE_URL}/cards/index.json\n"
+        f"- Per-Tool Card: {BASE_URL}/cards/{{slug}}.json\n\n"
         "## Optional\n\n"
         f"- [Blog]({BASE_URL}/blog): Articles about indie creations and the agent ecosystem\n"
         f"- [RSS Feed]({BASE_URL}/feed/rss): Latest tools via RSS\n"
@@ -780,9 +784,15 @@ async def llms_full_txt(request: Request):
 @app.get("/.well-known/agent-card.json")
 async def agent_card(request: Request):
     """A2A Protocol agent card — agent capability discovery."""
+    d = request.state.db
+    try:
+        row = await db.execute_fetchone(d, "SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
+        tool_count = row["cnt"] if row else 880
+    except Exception:
+        tool_count = 880
     return JSONResponse({
         "name": "IndieStack",
-        "description": "The knowledge layer for AI agents. 793+ indie creations across 25 categories.",
+        "description": f"The knowledge layer for AI agents. {tool_count}+ indie creations across 25 categories.",
         "url": BASE_URL,
         "provider": {
             "organization": "IndieStack",
@@ -816,6 +826,12 @@ async def agent_card(request: Request):
                 "base_url": f"{BASE_URL}/api/",
             },
             "llms_txt": f"{BASE_URL}/llms.txt",
+            "agent_cards": {
+                "catalog_index": "https://indiestack.ai/cards/index.json",
+                "card_template": "https://indiestack.ai/cards/{slug}.json",
+                "total_tools": tool_count,
+                "schema_version": "1.0",
+            },
         },
         "authentication": {
             "required": False,
@@ -1910,9 +1926,212 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
         "github_language": tool.get('github_language'),
         "health_status": tool.get('health_status'),
         "github_last_check": tool.get('github_last_check'),
+        "api_type": tool.get("api_type", "") or "",
+        "auth_method": tool.get("auth_method", "") or "",
+        "install_command": tool.get("install_command", "") or "",
+        "sdk_packages": tool.get("sdk_packages", "") or "",
+        "env_vars": tool.get("env_vars", "") or "",
+        "frameworks_tested": tool.get("frameworks_tested", "") or "",
+        "verified_pairs": tool.get("verified_pairs", "") or "",
     }
 
+    # Add dynamic compatibility pairs from tool_pairs table
+    try:
+        pairs = await db.get_verified_pairs(d, slug)
+        if pairs:
+            result["compatible_tools"] = [
+                {"slug": p["pair_slug"], "success_count": p["success_count"], "verified": bool(p["verified"])}
+                for p in pairs
+            ]
+    except Exception:
+        pass
+
     return JSONResponse({"tool": result})
+
+
+@app.get("/cards/index.json")
+async def cards_index(request: Request):
+    """Index of all approved tool agent cards."""
+    d = request.state.db
+    try:
+        cursor = await d.execute(
+            """SELECT t.slug, t.name, t.tagline, c.slug as category_slug,
+                      t.source_type, t.api_type, t.health_status
+               FROM tools t JOIN categories c ON t.category_id = c.id
+               WHERE t.status = 'approved'
+               ORDER BY t.name"""
+        )
+        rows = await cursor.fetchall()
+    except Exception:
+        rows = []
+    tools = []
+    for r in rows:
+        tools.append({
+            "slug": r["slug"],
+            "name": r["name"],
+            "tagline": r["tagline"] or "",
+            "category": r["category_slug"],
+            "source_type": r["source_type"] or "saas",
+            "api_type": r.get("api_type") or "",
+            "health": r.get("health_status") or "",
+            "card_url": f"{BASE_URL}/cards/{r['slug']}.json",
+        })
+    return JSONResponse(
+        {
+            "schema_version": "1.0",
+            "total": len(tools),
+            "cards_base_url": f"{BASE_URL}/cards/",
+            "tools": tools,
+        },
+        headers={
+            "Cache-Control": "public, max-age=3600",
+            "Access-Control-Allow-Origin": "*",
+        },
+    )
+
+
+@app.get("/cards/{slug}.json")
+async def card_detail(request: Request, slug: str):
+    """A2A-compatible JSON capability card for a single tool."""
+    d = request.state.db
+    tool = await db.get_tool_by_slug(d, slug)
+    if not tool or tool.get("status") != "approved":
+        return JSONResponse({"error": "Tool not found"}, status_code=404)
+
+    # Compatibility pairs
+    try:
+        pairs_raw = await db.get_verified_pairs(d, slug)
+        pairs = [
+            {"slug": p["pair_slug"], "success_count": p["success_count"], "verified": bool(p["verified"])}
+            for p in (pairs_raw or [])[:10]
+        ]
+    except Exception:
+        pairs = []
+
+    # Parse JSON fields safely
+    import json as _json
+    sdk_packages = []
+    try:
+        val = tool.get("sdk_packages") or ""
+        if val:
+            parsed = _json.loads(val)
+            sdk_packages = parsed if isinstance(parsed, list) else [parsed]
+    except Exception:
+        if tool.get("sdk_packages"):
+            sdk_packages = [tool["sdk_packages"]]
+
+    env_vars = []
+    try:
+        val = tool.get("env_vars") or ""
+        if val:
+            parsed = _json.loads(val)
+            env_vars = parsed if isinstance(parsed, list) else [parsed]
+    except Exception:
+        if tool.get("env_vars"):
+            env_vars = [tool["env_vars"]]
+
+    # Rating
+    rating = await db.get_tool_rating(d, tool["id"])
+
+    # Build capabilities, stripping None values
+    capabilities = {}
+    for key in ("api_type", "auth_method", "install_command", "frameworks_tested"):
+        val = tool.get(key)
+        if val:
+            capabilities[key] = val
+    if sdk_packages:
+        capabilities["sdk_packages"] = sdk_packages
+    if env_vars:
+        capabilities["env_vars"] = env_vars
+
+    # Build health, stripping None values
+    health = {}
+    for key in ("health_status", "github_stars", "github_language", "github_last_commit"):
+        val = tool.get(key)
+        if val is not None:
+            health[key] = val
+    if tool.get("github_is_archived"):
+        health["github_is_archived"] = bool(tool["github_is_archived"])
+    # Rename health_status -> status in the output
+    if "health_status" in health:
+        health["status"] = health.pop("health_status")
+
+    price_pence = tool.get("price_pence") or 0
+
+    avg_rating = round(float(rating["avg_rating"]), 1) if rating["review_count"] else None
+    review_count = int(rating["review_count"])
+
+    # Build trust, stripping None values
+    trust = {
+        "is_verified": bool(tool.get("is_verified", 0)),
+        "is_ejectable": bool(tool.get("is_ejectable", 0)),
+        "upvote_count": int(tool.get("upvote_count", 0)),
+        "review_count": review_count,
+    }
+    if avg_rating is not None:
+        trust["avg_rating"] = avg_rating
+    mcp_recs = tool.get("mcp_view_count")
+    if mcp_recs:
+        trust["mcp_recommendations"] = int(mcp_recs)
+
+    card = {
+        "name": tool["name"],
+        "slug": tool["slug"],
+        "description": tool.get("tagline") or "",
+        "url": tool.get("url") or "",
+        "indiestack_url": f"{BASE_URL}/tool/{tool['slug']}",
+        "version": "1.0.0",
+        "provider": {
+            "name": tool.get("maker_name") or "Community Listed",
+            "type": "indie",
+        },
+        "category": {
+            "name": tool.get("category_name") or "",
+            "slug": tool.get("category_slug") or "",
+        },
+        "source_type": tool.get("source_type") or "saas",
+        "capabilities": capabilities,
+        "health": health,
+        "trust": trust,
+        "compatibility": pairs,
+        "pricing": {
+            "price_pence": int(price_pence),
+            "is_free": price_pence == 0,
+        },
+        "meta": {
+            "generated_by": "indiestack.ai",
+            "schema_version": "1.0",
+        },
+    }
+
+    return JSONResponse(
+        card,
+        headers={
+            "Cache-Control": "public, max-age=3600",
+            "Access-Control-Allow-Origin": "*",
+        },
+    )
+
+
+@app.post("/api/report-pair")
+async def api_report_pair(request: Request):
+    """Record that two tools were used together successfully."""
+    data = await request.json()
+    tool_a = data.get("tool_a", "").strip().lower()
+    tool_b = data.get("tool_b", "").strip().lower()
+    if not tool_a or not tool_b or tool_a == tool_b:
+        return JSONResponse({"error": "Two different tool slugs required"}, status_code=400)
+    d = request.state.db
+    # Validate both slugs exist as approved tools
+    cursor = await d.execute(
+        "SELECT slug FROM tools WHERE slug IN (?, ?) AND status = 'approved'",
+        (tool_a, tool_b),
+    )
+    found = [row[0] for row in await cursor.fetchall()]
+    if len(found) < 2:
+        return JSONResponse({"error": "Both tools must be valid approved tools"}, status_code=400)
+    await record_tool_pair(d, tool_a, tool_b, source="agent")
+    return JSONResponse({"status": "recorded", "pair": [tool_a, tool_b]})
 
 
 @app.post("/api/tools/submit")
@@ -2524,6 +2743,105 @@ async def api_github_fetch(request: Request):
     })
 
 
+@app.post("/api/subscribe/demand-pro")
+async def subscribe_demand_pro(request: Request):
+    """Create a Stripe Checkout session for Demand Pro subscription."""
+    user = request.state.user
+    if not user:
+        return JSONResponse({"error": "Login required"}, status_code=401)
+
+    import stripe
+    stripe.api_key = _os.environ.get("STRIPE_SECRET_KEY")
+
+    price_id = _os.environ.get("STRIPE_DEMAND_PRO_PRICE_ID")
+    if not price_id:
+        return JSONResponse({"error": "Subscription not configured"}, status_code=500)
+
+    try:
+        checkout = stripe.checkout.Session.create(
+            mode="subscription",
+            line_items=[{"price": price_id, "quantity": 1}],
+            success_url="https://indiestack.ai/demand?subscribed=true",
+            cancel_url="https://indiestack.ai/demand",
+            customer_email=user.get("email", ""),
+            metadata={"user_id": str(user["id"]), "plan": "demand_pro"},
+        )
+        return JSONResponse({"checkout_url": checkout.url})
+    except Exception as e:
+        logger.error(f"Stripe checkout error: {e}")
+        return JSONResponse({"error": "Payment service error"}, status_code=500)
+
+
+@app.post("/webhooks/stripe")
+async def stripe_webhook(request: Request):
+    """Handle Stripe webhook events — subscriptions, payments."""
+    from indiestack.payments import verify_webhook
+    payload = await request.body()
+    sig_header = request.headers.get("stripe-signature", "")
+    try:
+        event = verify_webhook(payload, sig_header)
+    except Exception as e:
+        logger.warning(f"Stripe webhook verification failed: {e}")
+        return JSONResponse({"error": "Invalid signature"}, status_code=400)
+
+    d = request.state.db
+
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
+        metadata = session.get("metadata", {})
+        plan = metadata.get("plan")
+        user_id = metadata.get("user_id")
+
+        if plan == "demand_pro" and user_id:
+            stripe_sub_id = session.get("subscription", "")
+            try:
+                await d.execute("""
+                    INSERT INTO subscriptions (user_id, stripe_subscription_id, plan, status)
+                    VALUES (?, ?, 'demand_pro', 'active')
+                """, (int(user_id), stripe_sub_id))
+                await d.commit()
+                logger.info(f"Demand Pro subscription created for user {user_id}")
+            except Exception as e:
+                logger.error(f"Failed to create subscription: {e}")
+
+    elif event["type"] == "customer.subscription.deleted":
+        sub = event["data"]["object"]
+        sub_id = sub.get("id", "")
+        if sub_id:
+            try:
+                await d.execute(
+                    "UPDATE subscriptions SET status = 'cancelled' WHERE stripe_subscription_id = ?",
+                    (sub_id,)
+                )
+                await d.commit()
+                logger.info(f"Subscription {sub_id} cancelled")
+            except Exception as e:
+                logger.error(f"Failed to cancel subscription: {e}")
+
+    return JSONResponse({"received": True})
+
+
+@app.get("/api/demand-export")
+async def demand_export(request: Request):
+    """Export demand clusters as JSON (pro only)."""
+    user = request.state.user
+    if not user:
+        return JSONResponse({"error": "Login required"}, status_code=401)
+
+    d = request.state.db
+    cursor = await d.execute(
+        "SELECT id FROM subscriptions WHERE user_id = ? AND status = 'active' AND plan IN ('demand_pro', 'pro')",
+        (user['id'],),
+    )
+    row = await cursor.fetchone()
+    if not row:
+        return JSONResponse({"error": "Pro subscription required"}, status_code=403)
+
+    from indiestack.db import get_demand_clusters
+    clusters = await get_demand_clusters(d, limit=50)
+    return JSONResponse({"demand_signals": clusters})
+
+
 @app.get("/api/click/{slug}")
 async def outbound_click(request: Request, slug: str):
     """Track outbound click and show brief interstitial with email capture."""
@@ -3093,3 +3411,4 @@ app.include_router(gaps.router)
 from indiestack.routes import pulse
 app.include_router(pulse.router)
 app.include_router(api_docs.router)
+app.include_router(geo.router)

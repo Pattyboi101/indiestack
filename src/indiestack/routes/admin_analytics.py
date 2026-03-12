@@ -456,10 +456,63 @@ async def render_search_section(db) -> str:
 
     volume_card = kpi_card("Search Volume (30 Days)", f"{search_volume:,}")
 
+    # ── Search source breakdown (30 days) ──
+    cursor = await db.execute(
+        """SELECT source, COUNT(*) as cnt FROM search_logs
+           WHERE created_at >= ? GROUP BY source ORDER BY cnt DESC""",
+        (since_30,)
+    )
+    source_rows = await cursor.fetchall()
+    source_counts = {str(r['source'] or 'web'): r['cnt'] for r in source_rows}
+    source_total = sum(source_counts.values()) or 1
+
+    mcp_30d = source_counts.get('mcp', 0)
+    web_30d = source_counts.get('web', 0)
+    api_30d = source_counts.get('api', 0)
+
+    mcp_pct = mcp_30d / source_total * 100
+    web_pct = web_30d / source_total * 100
+    api_pct = api_30d / source_total * 100
+
+    source_cards = f"""
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;">
+        <div style="background:var(--cream-dark);border-radius:var(--radius);padding:20px;">
+            <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--success-text);margin-bottom:8px;">MCP (AI Agents)</div>
+            <div style="font-size:28px;font-weight:700;color:var(--ink);font-family:var(--font-display);">{mcp_30d:,}</div>
+            <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">{mcp_pct:.1f}% of searches</div>
+        </div>
+        <div style="background:var(--cream-dark);border-radius:var(--radius);padding:20px;">
+            <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink-light);margin-bottom:8px;">Web</div>
+            <div style="font-size:28px;font-weight:700;color:var(--ink);font-family:var(--font-display);">{web_30d:,}</div>
+            <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">{web_pct:.1f}% of searches</div>
+        </div>
+        <div style="background:var(--cream-dark);border-radius:var(--radius);padding:20px;">
+            <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--info-text);margin-bottom:8px;">API</div>
+            <div style="font-size:28px;font-weight:700;color:var(--ink);font-family:var(--font-display);">{api_30d:,}</div>
+            <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">{api_pct:.1f}% of searches</div>
+        </div>
+    </div>
+    """
+
+    # ── All-time MCP searches ──
+    cursor = await db.execute(
+        "SELECT COUNT(*) as cnt FROM search_logs WHERE source = 'mcp'"
+    )
+    mcp_alltime = (await cursor.fetchone())['cnt']
+
+    mcp_alltime_card = f"""
+    <div style="background:var(--cream-dark);border-radius:var(--radius);padding:12px 20px;margin-bottom:32px;display:inline-block;">
+        <span style="font-size:13px;color:var(--ink-muted);">All-time MCP searches: </span>
+        <span style="font-size:15px;font-weight:700;color:var(--success-text);">{mcp_alltime:,}</span>
+    </div>
+    """
+
     return f"""
         <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:32px;">
             {volume_card}
         </div>
+        {source_cards}
+        {mcp_alltime_card}
         {gaps_table}
         {trends_table}
     """

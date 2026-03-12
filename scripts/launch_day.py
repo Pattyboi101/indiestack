@@ -81,6 +81,7 @@ SMOKE_TESTS = [
     ("GET", "/tool/simple-analytics", 200, "Tool page"),
     ("GET", "/tag/open-source", 200, "Tag page"),
     ("GET", "/alternatives/google-analytics", 200, "Alternatives page"),
+    ("GET", "/demand", 200, "Demand Pro"),
 ]
 
 

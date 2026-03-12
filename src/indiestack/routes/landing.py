@@ -107,7 +107,7 @@ async def landing(request: Request):
     launch_banner = (
         '<div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));padding:12px 24px;text-align:center;">'
         '    <a href="#mcp-install" style="color:white;text-decoration:none;font-size:14px;font-weight:600;">'
-        '        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> MCP Server v1.1 &mdash; ' + str(tool_count) + ' indie creations. '
+        '        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> MCP Server v1.3 &mdash; ' + str(tool_count) + ' indie creations. '
         '        <span style="text-decoration:underline;">Install in one command</span>'
         '    </a>'
         + (
@@ -182,7 +182,7 @@ async def landing(request: Request):
         '        <span class="hero-headline">Stop letting your AI reinvent the wheel.</span>'
         '    </h1>'
         '    <p style="font-size:20px;color:var(--ink-muted);max-width:560px;margin:16px auto 32px;line-height:1.6;">'
-        f'        {tool_count}+ indie creations &mdash; searchable by AI agents, browsable by everyone. Find what&rsquo;s already been built.'
+        f'        The open-source supply chain for AI agents &mdash; {tool_count}+ indie creations, ready to assemble.'
         '    </p>'
         # Hero visual — code conversation block
         '    <div class="hero-glow">'
@@ -218,25 +218,6 @@ async def landing(request: Request):
         '            Browse the Catalog'
         '        </a>'
         '    </div>'
-        # Product Hunt badge (activate with PH_FEATURED env var after launch)
-        + (
-        '    <div style="margin-bottom:16px;">'
-        '        <a href="' + os.environ.get("PH_URL", "https://www.producthunt.com/posts/indiestack") + '" target="_blank" rel="noopener"'
-        '           style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;'
-        '                  background:var(--card-bg);border:1px solid var(--border);border-radius:999px;'
-        '                  text-decoration:none;color:var(--ink);font-size:13px;font-weight:500;'
-        '                  transition:all 0.2s;"'
-        '           onmouseover="this.style.borderColor=\'#da552f\';this.style.boxShadow=\'0 2px 8px rgba(218,85,47,0.15)\'"'
-        '           onmouseout="this.style.borderColor=\'var(--border)\';this.style.boxShadow=\'none\'">'
-        '            <svg width="20" height="20" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">'
-        '                <circle cx="20" cy="20" r="20" fill="#DA552F"/>'
-        '                <path d="M22.667 20H17.333V13.333H22.667C24.508 13.333 26 14.825 26 16.667C26 18.508 24.508 20 22.667 20Z" fill="white"/>'
-        '                <path d="M17.333 13.333H14V26.667H17.333V22.222H22.667C25.612 22.222 28 19.834 28 16.778C28 13.721 25.612 13.333 22.667 13.333H17.333Z" fill="white"/>'
-        '            </svg>'
-        '            Featured on Product Hunt'
-        '        </a>'
-        '    </div>'
-        if os.environ.get("PH_FEATURED") else '')
         # Stats pills
         + f'    <div class="glass" style="display:inline-flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;'
         f'                padding:12px 24px;font-size:14px;color:var(--ink-light);">'

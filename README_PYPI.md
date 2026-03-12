@@ -1,6 +1,6 @@
 # IndieStack MCP Server
 
-The knowledge layer between AI agents and everything indie creators have built. 793+ creations across 25 categories — dev tools, games, utilities, newsletters, creative tools, learning apps, and more.
+The open-source supply chain for AI agents. 3,000+ indie creations with structured assembly metadata across 25 categories — dev tools, games, utilities, newsletters, creative tools, learning apps, and more.
 
 <!-- mcp-name: io.github.Pattyboi101/indiestack -->
 
@@ -25,14 +25,17 @@ That's it. Your AI searches what exists before building from scratch.
 
 Your AI spends thousands of tokens rebuilding auth, payments, and analytics from scratch — things indie creators already built. Meanwhile, those creations sit on GitHub with 12 stars, invisible to the AI agents that could be recommending them.
 
-IndieStack fixes both sides. Install the MCP server and your AI searches 793+ indie creations before writing boilerplate. Built something yourself? List it so other developers' AIs find it instead of reinventing it.
+IndieStack fixes both sides. Install the MCP server and your AI searches 3,000+ indie creations with structured assembly metadata before writing boilerplate. Tools include API types, auth methods, SDK packages, install commands, env vars, and framework compatibility — everything an agent needs to assemble proven building blocks instead of generating from scratch.
 
-### Tools (12)
+### Tools (15)
 
 | Tool | What it does |
 |------|-------------|
-| `find_tools` | Search 793+ creations by keyword, category, or source type |
-| `get_tool_details` | Full details with integration snippets and companion suggestions |
+| `find_tools` | Search 3,000+ creations by keyword, category, or source type |
+| `get_tool_details` | Full details with assembly metadata, integration snippets, and companions |
+| `scan_project` | Analyze a project description + tech stack → get a complete indie stack recommendation |
+| `report_compatibility` | Report that two tools work well together — builds the compatibility graph |
+| `check_health` | GitHub health audit — maintenance grade, last commit, stars, alternatives for stale tools |
 | `list_categories` | Browse all 25 categories — dev tools to games to newsletters |
 | `compare_tools` | Side-by-side comparison of any two creations |
 | `build_stack` | Assemble a complete indie stack from building blocks |
@@ -62,14 +65,26 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 793+ in
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie creators have built beyond dev tools |
 
-## What's new in v1.1.0
+## What's new in v1.3.0
 
-- **Beyond dev tools** — IndieStack now covers everything indie-built: games, utilities, newsletters, creative tools, learning apps. The constraint is "indie-built," not "developer tool."
-- **Broader search defaults** — `find_tools()` now defaults to `source_type='all'`, showing the full catalog instead of just open-source.
-- **New `discover-indie` prompt** — Explore the breadth of the catalog beyond your usual developer categories.
-- **Smarter market gap messages** — When nothing exists, agents now tell users they could build it and have every AI agent recommend it.
-- **Updated instructions** — Agents now search IndieStack not just before coding, but before recommending any software.
-- **793+ creations** — 509 open-source, 284 SaaS, across 25 categories.
+- **3,000+ tools** — Catalog grew from 830 to 3,000+ via automated GitHub discovery across 37 search queries. Every category now has deep coverage.
+- **500+ compatibility pairs** — Auto-generated from shared framework data. Tools tested with the same frameworks are paired so agents know what works together.
+- **README-inferred metadata** — Install commands, env vars, SDK packages, and framework compatibility auto-extracted from GitHub READMEs for 700+ tools.
+- **Smarter favicons** — "Works Well With" pills now show actual favicons from tool URLs.
+
+## What was new in v1.2.0
+
+- **Agentic Package Manager** — Structured assembly metadata: API type, auth method, SDK packages, install commands, env vars, and framework compatibility.
+- **`scan_project()` tool** — Describe what you're building + your tech stack, get a complete indie stack recommendation.
+- **`report_compatibility()` tool** — Agents report successful tool pairings, building a verified compatibility graph.
+- **`check_health()` tool** — GitHub-powered health audits with maintenance grades and alternatives for stale tools.
+
+## What was new in v1.1.0
+
+- **Beyond dev tools** — IndieStack now covers everything indie-built: games, utilities, newsletters, creative tools, learning apps.
+- **Broader search defaults** — `find_tools()` now defaults to `source_type='all'`.
+- **New `discover-indie` prompt** — Explore beyond developer categories.
+- **Smarter market gap messages** — Agents tell users they could build missing tools and get instant AI distribution.
 
 ## Links
 

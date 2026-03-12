@@ -171,7 +171,7 @@ async def api_docs(request: Request):
         <!-- Submit -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(59,130,246,0.15);color:#3B82F6;border-radius:4px;">POST</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:var(--info-bg);color:var(--info-text);border-radius:4px;">POST</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/submit</code>
             </div>
             <div style="padding:16px 20px;">
@@ -204,7 +204,7 @@ async def api_docs(request: Request):
         <!-- Citation Tracking -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(59,130,246,0.15);color:#3B82F6;border-radius:4px;">POST</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:var(--info-bg);color:var(--info-text);border-radius:4px;">POST</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/cite</code>
             </div>
             <div style="padding:16px 20px;">

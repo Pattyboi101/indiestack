@@ -83,6 +83,7 @@ def design_tokens() -> str:
             --success-border: #A7F3D0;
             --warning-bg: #FDF8EE;
             --warning-text: #92400E;
+            --warning-border: #FDE68A;
             --info-bg: #F0F9FF;
             --info-text: #0E7490;
             --info-border: #A5F3FC;
@@ -121,6 +122,7 @@ def design_tokens() -> str:
             --success-border: #166534;
             --warning-bg: #451A03;
             --warning-text: #FDE68A;
+            --warning-border: #92400E;
             --info-bg: #0C1929;
             --info-text: var(--slate);
             --info-border: var(--slate-dark);
@@ -660,10 +662,12 @@ def nav_html(user=None) -> str:
                                 left:50%;transform:translateX(-50%);background:var(--card-bg);
                                 border:1px solid var(--border);border-radius:var(--radius-sm);
                                 box-shadow:var(--shadow-md);padding:8px 0;min-width:180px;z-index:200;">
+                        <a href="/geo" class="nav-dropdown-item">AI Optimize</a>
                         <a href="/new" class="nav-dropdown-item">New Arrivals</a>
                         <a href="/tags" class="nav-dropdown-item">Tags</a>
                         <a href="/stacks" class="nav-dropdown-item">Stacks</a>
                         <a href="/pulse" class="nav-dropdown-item">AI Pulse &#128308;</a>
+                        <a href="/gaps" class="nav-dropdown-item">Demand Board</a>
                         <a href="/what-is-indiestack" class="nav-dropdown-item">What is IndieStack?</a>
                     </div>
                 </div>

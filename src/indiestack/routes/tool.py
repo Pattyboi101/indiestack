@@ -3,7 +3,7 @@
 import json
 from datetime import date
 from html import escape
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 
 from fastapi import APIRouter, Form, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
@@ -41,6 +41,7 @@ from indiestack.db import (
     get_outbound_click_count,
     toggle_reaction,
     get_reaction_counts,
+    get_verified_pairs,
 )
 
 router = APIRouter()
@@ -642,6 +643,72 @@ async def tool_detail(request: Request, slug: str):
     if pixel_data and len(pixel_data) == 49:
         detail_pixel_html = pixel_icon_svg(pixel_data, size=48)
 
+    # Build agent assembly metadata section
+    _api_type = str(tool.get('api_type', '') or '')
+    _auth_method = str(tool.get('auth_method', '') or '')
+    _sdk_packages = str(tool.get('sdk_packages', '') or '')
+    _env_vars = str(tool.get('env_vars', '') or '')
+    _install_cmd_meta = str(tool.get('install_command', '') or '')
+    _frameworks = str(tool.get('frameworks_tested', '') or '')
+
+    _has_assembly_meta = any([_api_type, _auth_method, _sdk_packages, _env_vars, _install_cmd_meta, _frameworks])
+
+    assembly_html = ''
+    if _has_assembly_meta:
+        assembly_html = '<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:24px 0;">'
+        assembly_html += '<h3 style="margin:0 0 16px;font-size:16px;font-family:var(--font-display);">Agent Assembly Metadata</h3>'
+        assembly_html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">'
+
+        if _api_type:
+            assembly_html += f'<div><span style="color:var(--ink-muted);font-size:13px;">API Type</span><br><strong>{escape(_api_type)}</strong></div>'
+        if _auth_method:
+            _auth_labels = {"api_key": "API Key", "oauth2": "OAuth 2.0", "bearer": "Bearer Token", "none": "None (open)"}
+            assembly_html += f'<div><span style="color:var(--ink-muted);font-size:13px;">Auth</span><br><strong>{_auth_labels.get(_auth_method, escape(_auth_method))}</strong></div>'
+        if _install_cmd_meta:
+            assembly_html += f'<div style="grid-column:1/-1;"><span style="color:var(--ink-muted);font-size:13px;">Install</span><br><code style="background:var(--cream-dark);padding:6px 12px;border-radius:6px;font-family:var(--font-mono);font-size:13px;display:inline-block;margin-top:4px;">{escape(_install_cmd_meta)}</code></div>'
+        if _sdk_packages:
+            assembly_html += f'<div style="grid-column:1/-1;"><span style="color:var(--ink-muted);font-size:13px;">SDK Packages</span><br><code style="background:var(--cream-dark);padding:6px 12px;border-radius:6px;font-family:var(--font-mono);font-size:13px;display:inline-block;margin-top:4px;">{escape(_sdk_packages)}</code></div>'
+        if _env_vars:
+            assembly_html += f'<div style="grid-column:1/-1;"><span style="color:var(--ink-muted);font-size:13px;">Required Env Vars</span><br><code style="background:var(--cream-dark);padding:6px 12px;border-radius:6px;font-family:var(--font-mono);font-size:13px;display:inline-block;margin-top:4px;">{escape(_env_vars)}</code></div>'
+        if _frameworks:
+            _fw_pills = ''.join(f'<span style="display:inline-block;background:var(--info-bg);color:var(--info-text);padding:2px 8px;border-radius:999px;font-size:12px;margin:2px 4px 2px 0;">{escape(f.strip())}</span>' for f in _frameworks.split(',') if f.strip())
+            assembly_html += f'<div style="grid-column:1/-1;"><span style="color:var(--ink-muted);font-size:13px;">Tested With</span><br><div style="margin-top:4px;">{_fw_pills}</div></div>'
+
+        assembly_html += '</div></div>'
+
+    # Build "Works Well With" section from compatibility pairs
+    compatible_html = ''
+    try:
+        _pairs = await get_verified_pairs(db, slug)
+        if _pairs:
+            _pair_items = ''
+            for _p in _pairs[:8]:  # limit to 8
+                _p_slug = escape(str(_p.get('pair_slug', '')))
+                _p_count = int(_p.get('success_count', 0))
+                _verified = bool(_p.get('verified', 0))
+                _p_url = str(_p.get('pair_url') or '')
+                _badge = '<span style="color:var(--success-text);font-size:11px;margin-left:4px;">&#10003;</span>' if _verified else ''
+                _favicon_html = ''
+                if _p_url:
+                    # Extract domain from the actual tool URL for favicon lookup
+                    _parsed = urlparse(_p_url)
+                    _domain = _parsed.netloc or _parsed.path.split('/')[0]
+                    if _domain:
+                        _favicon_html = f'<img src="https://www.google.com/s2/favicons?domain={_domain}&sz=16" width="16" height="16" style="border-radius:4px;" onerror="this.style.display=\'none\'">'
+                _pair_items += f'''<a href="/tool/{_p_slug}" style="display:inline-flex;align-items:center;gap:6px;
+                    background:var(--card-bg);border:1px solid var(--border);border-radius:999px;
+                    padding:6px 14px;text-decoration:none;color:var(--ink);font-size:13px;
+                    font-weight:500;transition:border-color 0.15s;"
+                    onmouseover="this.style.borderColor='var(--accent)'"
+                    onmouseout="this.style.borderColor='var(--border)'"
+                    >{_favicon_html}{_p_slug}{_badge}</a>'''
+            compatible_html = f'''<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:24px 0;">
+                <h3 style="margin:0 0 12px;font-size:16px;font-family:var(--font-display);">Works Well With</h3>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">{_pair_items}</div>
+            </div>'''
+    except Exception:
+        pass
+
     # Build maker story section
     maker_story_html = ''
     _story_fields = [
@@ -737,6 +804,10 @@ async def tool_detail(request: Request, slug: str):
         </div>
 
         {maker_story_html}
+
+        {assembly_html}
+
+        {compatible_html}
 
         {similar_html}
 

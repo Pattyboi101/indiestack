@@ -463,7 +463,8 @@ async def _render_tools_pending(db, request, pending):
                         </p>
                         <p style="color:var(--ink-muted);font-size:14px;">Maker: {maker} &middot; Category: {cat} &middot; Price: {price_str}</p>
                     </div>
-                    <div style="display:flex;gap:8px;">
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <a href="/admin/edit/{tid}" class="btn" style="background:var(--accent);color:white;padding:8px 16px;text-decoration:none;font-size:14px;">Edit</a>
                         <form method="post" action="/admin">
                             <input type="hidden" name="tool_id" value="{tid}">
                             <input type="hidden" name="action" value="approve">
@@ -1362,7 +1363,7 @@ async def admin_edit_tool_get(request: Request, tool_id: int):
         return RedirectResponse(url="/admin?tab=tools&toast=Tool+not+found", status_code=303)
     categories = await get_all_categories(db)
     toast = request.query_params.get("toast", "")
-    toast_html = f'<div style="background:#DCFCE7;color:#166534;padding:10px 16px;border-radius:var(--radius);margin-bottom:16px;font-size:14px;">{escape(toast)}</div>' if toast else ''
+    toast_html = f'<div style="background:var(--success-bg);color:var(--success-text);padding:10px 16px;border-radius:var(--radius);margin-bottom:16px;font-size:14px;">{escape(toast)}</div>' if toast else ''
 
     cat_options = ""
     for c in categories:
@@ -1422,6 +1423,47 @@ async def admin_edit_tool_get(request: Request, tool_id: int):
                     style="width:100%;font-family:var(--font-mono);font-size:13px;padding:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);resize:vertical;"
                     placeholder="Custom cURL integration code (leave empty for auto-generated)">{escape(str(tool.get('integration_curl', '') or ''))}</textarea>
             </div>
+
+            <div style="border-top:1px solid var(--border);margin-top:24px;padding-top:24px;">
+            <h3 style="margin:0 0 16px;font-family:var(--heading-font);">Agent Assembly Metadata</h3>
+
+            <label style="font-weight:600;display:block;margin-bottom:4px;">API Type</label>
+            <select name="api_type" style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:12px;background:var(--bg-card);color:var(--ink);">
+                <option value="">Not specified</option>
+                <option value="REST"{"" if (tool.get("api_type") or "") != "REST" else " selected"}>REST</option>
+                <option value="GraphQL"{"" if (tool.get("api_type") or "") != "GraphQL" else " selected"}>GraphQL</option>
+                <option value="SDK"{"" if (tool.get("api_type") or "") != "SDK" else " selected"}>SDK / Library</option>
+                <option value="CLI"{"" if (tool.get("api_type") or "") != "CLI" else " selected"}>CLI</option>
+                <option value="WebSocket"{"" if (tool.get("api_type") or "") != "WebSocket" else " selected"}>WebSocket</option>
+            </select>
+
+            <label style="font-weight:600;display:block;margin-bottom:4px;">Auth Method</label>
+            <select name="auth_method" style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:12px;background:var(--bg-card);color:var(--ink);">
+                <option value="">Not specified</option>
+                <option value="api_key"{"" if (tool.get("auth_method") or "") != "api_key" else " selected"}>API Key</option>
+                <option value="oauth2"{"" if (tool.get("auth_method") or "") != "oauth2" else " selected"}>OAuth 2.0</option>
+                <option value="bearer"{"" if (tool.get("auth_method") or "") != "bearer" else " selected"}>Bearer Token</option>
+                <option value="none"{"" if (tool.get("auth_method") or "") != "none" else " selected"}>None (open)</option>
+            </select>
+
+            <label style="font-weight:600;display:block;margin-bottom:4px;">SDK Packages <span style="color:var(--ink-muted);font-weight:400;">(JSON: {{"npm": "pkg", "pip": "pkg"}})</span></label>
+            <input type="text" name="sdk_packages" value="{escape(str(tool.get('sdk_packages','') or ''))}"
+                   style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:12px;font-family:var(--mono);">
+
+            <label style="font-weight:600;display:block;margin-bottom:4px;">Env Vars <span style="color:var(--ink-muted);font-weight:400;">(JSON array: ["VAR1", "VAR2"])</span></label>
+            <input type="text" name="env_vars" value="{escape(str(tool.get('env_vars','') or ''))}"
+                   style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:12px;font-family:var(--mono);">
+
+            <label style="font-weight:600;display:block;margin-bottom:4px;">Frameworks Tested <span style="color:var(--ink-muted);font-weight:400;">(comma-separated)</span></label>
+            <input type="text" name="frameworks_tested" value="{escape(str(tool.get('frameworks_tested','') or ''))}"
+                   placeholder="nextjs, fastapi, rails"
+                   style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:12px;">
+
+            <label style="font-weight:600;display:block;margin-bottom:4px;">Verified Compatible Tools <span style="color:var(--ink-muted);font-weight:400;">(comma-separated slugs)</span></label>
+            <input type="text" name="verified_pairs" value="{escape(str(tool.get('verified_pairs','') or ''))}"
+                   style="width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:12px;">
+            </div>
+
             <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;margin-top:24px;">
                 Save Changes
             </button>
@@ -1450,6 +1492,12 @@ async def admin_edit_tool_post(request: Request, tool_id: int):
     delivery_url = str(form.get("delivery_url", "")).strip()
     integration_python = str(form.get("integration_python", "")).strip()
     integration_curl = str(form.get("integration_curl", "")).strip()
+    api_type = str(form.get("api_type", "")).strip()
+    auth_method = str(form.get("auth_method", "")).strip()
+    sdk_packages = str(form.get("sdk_packages", "")).strip()
+    env_vars = str(form.get("env_vars", "")).strip()
+    frameworks_tested = str(form.get("frameworks_tested", "")).strip()
+    verified_pairs = str(form.get("verified_pairs", "")).strip()
 
     if not name or not url:
         return RedirectResponse(url=f"/admin/edit/{tool_id}?toast=Name+and+URL+are+required", status_code=303)
@@ -1463,6 +1511,12 @@ async def admin_edit_tool_post(request: Request, tool_id: int):
                       category_id=category_id,
                       delivery_url=delivery_url,
                       integration_python=integration_python,
-                      integration_curl=integration_curl)
+                      integration_curl=integration_curl,
+                      api_type=api_type,
+                      auth_method=auth_method,
+                      sdk_packages=sdk_packages,
+                      env_vars=env_vars,
+                      frameworks_tested=frameworks_tested,
+                      verified_pairs=verified_pairs)
 
     return RedirectResponse(url=f"/admin/edit/{tool_id}?toast=Tool+updated+successfully", status_code=303)

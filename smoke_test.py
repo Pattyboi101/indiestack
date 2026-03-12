@@ -61,6 +61,8 @@ TESTS = [
     ("GET", "/robots.txt", 200, "Robots.txt"),
     ("GET", "/sitemap.xml", 200, "Sitemap"),
     ("GET", "/feed/rss", 200, "RSS feed"),
+    ("GET", "/cards/index.json", 200, "Cards index"),
+    ("GET", "/geo", 200, "GEO lead magnet"),
 
     # SVG endpoints (200)
     ("GET", "/api/badge/simple-analytics.svg", 200, "Badge SVG"),

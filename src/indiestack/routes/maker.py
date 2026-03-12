@@ -191,13 +191,13 @@ async def leaderboard(request: Request):
 
         indie_pill = ''
         if indie == 'solo':
-            indie_pill = '<span style="font-size:11px;font-weight:700;color:#0D7377;background:#E0F7F7;padding:2px 8px;border-radius:999px;">Solo Maker</span>'
+            indie_pill = '<span style="font-size:11px;font-weight:700;color:var(--info-text);background:var(--info-bg);padding:2px 8px;border-radius:999px;">Solo Maker</span>'
         elif indie == 'small_team':
-            indie_pill = '<span style="font-size:11px;font-weight:700;color:#7C3AED;background:#EDE9FE;padding:2px 8px;border-radius:999px;">Small Team</span>'
+            indie_pill = '<span style="font-size:11px;font-weight:700;color:var(--info-text);background:var(--info-bg);padding:2px 8px;border-radius:999px;">Small Team</span>'
 
         active_pill = ''
         if m['has_changelog']:
-            active_pill = '<span style="font-size:11px;font-weight:700;color:#EA580C;background:#FFF7ED;padding:2px 8px;border-radius:999px;">&#128293; Active</span>'
+            active_pill = '<span style="font-size:11px;font-weight:700;color:var(--warning-text);background:var(--warning-bg);padding:2px 8px;border-radius:999px;">&#128293; Active</span>'
 
         row_bg = 'background:linear-gradient(135deg,rgba(0,212,245,0.05),rgba(26,45,74,0.03));' if rank <= 3 else ''
 

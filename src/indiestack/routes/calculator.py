@@ -108,14 +108,14 @@ async def calculator(request: Request):
         <!-- Results banner (hidden until selection) -->
         <div id="results-banner" style="display:none;background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);
              padding:28px 24px;margin-bottom:32px;text-align:center;">
-            <div style="font-size:14px;color:#94A3B8;margin-bottom:4px;">Your estimated annual SaaS spend</div>
+            <div style="font-size:14px;color:var(--ink-muted);margin-bottom:4px;">Your estimated annual SaaS spend</div>
             <div id="total-spend" style="font-family:var(--font-display);font-size:48px;color:var(--slate);font-weight:700;">
                 &pound;0
             </div>
-            <div id="tool-count-label" style="font-size:14px;color:#94A3B8;margin-top:4px;">across 0 tools</div>
+            <div id="tool-count-label" style="font-size:14px;color:var(--ink-muted);margin-top:4px;">across 0 tools</div>
             <div id="share-url" style="margin-top:12px;">
                 <button onclick="navigator.clipboard.writeText(window.location.href).then(()=>{{this.textContent='Link copied!';setTimeout(()=>this.textContent='Share this calculation',2000)}})"
-                        style="padding:8px 16px;font-size:12px;background:rgba(255,255,255,0.1);color:#94A3B8;border:1px solid rgba(255,255,255,0.2);
+                        style="padding:8px 16px;font-size:12px;background:rgba(255,255,255,0.1);color:var(--ink-muted);border:1px solid rgba(255,255,255,0.2);
                                border-radius:var(--radius-sm);cursor:pointer;">
                     Share this calculation
                 </button>
@@ -171,7 +171,7 @@ async def calculator(request: Request):
         if (slugs.length > 0) {{
             banner.style.display = 'block';
             breakdown.style.display = 'block';
-            document.getElementById('total-spend').innerHTML = '\u00a3' + total.toLocaleString() + '<span style="font-size:20px;color:#94A3B8;">/yr</span>';
+            document.getElementById('total-spend').innerHTML = '\u00a3' + total.toLocaleString() + '<span style="font-size:20px;color:var(--ink-muted);">/yr</span>';
             document.getElementById('tool-count-label').textContent = 'across ' + slugs.length + ' tool' + (slugs.length === 1 ? '' : 's');
             document.getElementById('breakdown-rows').innerHTML = rows;
         }} else {{

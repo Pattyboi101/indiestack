@@ -108,7 +108,7 @@ async def what_is_page(request: Request):
                     <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#e06c75;font-weight:700;margin-bottom:8px;">Games</div>
                     <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">Veloren</div>
                     <div style="font-size:14px;color:var(--ink-light);margin-bottom:8px;">Open-world multiplayer RPG in Rust</div>
-                    <span style="font-size:12px;padding:2px 8px;border-radius:999px;background:rgba(76,175,80,0.12);color:#4CAF50;font-weight:600;">Code</span>
+                    <span style="font-size:12px;padding:2px 8px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font-weight:600;">Code</span>
                 </div>
 
                 <div class="card" style="padding:20px;cursor:default;transition:all 0.2s ease;"
@@ -126,7 +126,7 @@ async def what_is_page(request: Request):
                     <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#c678dd;font-weight:700;margin-bottom:8px;">Creative Tools</div>
                     <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">Penpot</div>
                     <div style="font-size:14px;color:var(--ink-light);margin-bottom:8px;">Open-source design and prototyping</div>
-                    <span style="font-size:12px;padding:2px 8px;border-radius:999px;background:rgba(76,175,80,0.12);color:#4CAF50;font-weight:600;">Code</span>
+                    <span style="font-size:12px;padding:2px 8px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font-weight:600;">Code</span>
                 </div>
 
                 <div class="card" style="padding:20px;cursor:default;transition:all 0.2s ease;"

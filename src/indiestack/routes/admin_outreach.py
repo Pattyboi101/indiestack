@@ -120,7 +120,7 @@ def _render_ph_launch_panel(subscriber_count, user_count, tool_count):
     total = subscriber_count + user_count  # rough total (may overlap)
     return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #FF6154;">
     <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 4px;">Product Hunt Launch Announcement</h3>
-    <p style="color:var(--ink-muted);font-size:13px;margin:0 0 8px;">MCP v1.1 + PH launch. Sends to {subscriber_count} subscribers + {user_count} registered users (deduped).</p>
+    <p style="color:var(--ink-muted);font-size:13px;margin:0 0 8px;">MCP v1.3 + PH launch. Sends to {subscriber_count} subscribers + {user_count} registered users (deduped).</p>
     <div style="display:flex;gap:10px;">
         <form method="POST" action="/admin?tab=growth&section=email">
             <input type="hidden" name="action" value="send_ph_test">

@@ -293,7 +293,7 @@ async def dashboard_overview(request: Request):
             <div style="margin-bottom:12px;">
                 <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Markdown</label>
                 <div style="position:relative;margin-top:4px;">
-                    <pre style="background:rgba(0,0,0,0.3);color:#E2E8F0;padding:16px;border-radius:var(--radius-sm);font-size:13px;
+                    <pre style="background:rgba(0,0,0,0.3);color:var(--ink-light);padding:16px;border-radius:var(--radius-sm);font-size:13px;
                         font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;border:1px solid rgba(255,255,255,0.1);"><code>[![Built with IndieStack]({badge_url})]({BASE_URL})</code></pre>
                     <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                         data-code="[![Built with IndieStack]({badge_url})]({BASE_URL})"
@@ -304,7 +304,7 @@ async def dashboard_overview(request: Request):
             <div>
                 <label style="font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">HTML</label>
                 <div style="position:relative;margin-top:4px;">
-                    <pre style="background:rgba(0,0,0,0.3);color:#E2E8F0;padding:16px;border-radius:var(--radius-sm);font-size:13px;
+                    <pre style="background:rgba(0,0,0,0.3);color:var(--ink-light);padding:16px;border-radius:var(--radius-sm);font-size:13px;
                         font-family:var(--font-mono);overflow-x:auto;white-space:pre-wrap;word-break:break-all;border:1px solid rgba(255,255,255,0.1);"><code>&lt;a href="{BASE_URL}"&gt;&lt;img src="{badge_url}" alt="Built with IndieStack"&gt;&lt;/a&gt;</code></pre>
                     <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                         data-code='<a href="{BASE_URL}"><img src="{badge_url}" alt="Built with IndieStack"></a>'
@@ -582,13 +582,13 @@ async def dashboard_overview(request: Request):
     # ── Welcome perk banner (Perplexity Comet) ──────────────────────
     welcome_perk = '''<div id="comet-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,var(--terracotta-dark));border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
         <button onclick="localStorage.setItem('comet_dismissed','1');document.getElementById('comet-banner').remove();"
-                style="position:absolute;top:10px;right:12px;background:none;border:none;color:#94A3B8;font-size:18px;cursor:pointer;line-height:1;">&times;</button>
+                style="position:absolute;top:10px;right:12px;background:none;border:none;color:var(--ink-muted);font-size:18px;cursor:pointer;line-height:1;">&times;</button>
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
             <div style="flex:1;min-width:200px;">
                 <div style="font-family:var(--font-display);font-size:16px;color:white;margin-bottom:4px;">
                     Welcome to IndieStack &#127881;
                 </div>
-                <p style="font-size:13px;color:#94A3B8;margin:0;line-height:1.5;">
+                <p style="font-size:13px;color:var(--ink-muted);margin:0;line-height:1.5;">
                     As a thank you for joining, here&rsquo;s free access to <strong style="color:var(--slate);">Perplexity Comet</strong> &mdash; an AI-powered browser built for students and builders.
                 </p>
             </div>
@@ -624,7 +624,7 @@ async def dashboard_overview(request: Request):
     verify_banner = ''
     if not user.get('email_verified'):
         verify_banner = '''<div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-            <span style="color:#92400E;font-size:14px;font-weight:600;">Please verify your email to unlock all features.</span>
+            <span style="color:var(--warning-text);font-size:14px;font-weight:600;">Please verify your email to unlock all features.</span>
             <a href="/resend-verification" style="background:#D97706;color:white;padding:6px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;text-decoration:none;">Resend Verification Email</a>
         </div>'''
 
@@ -881,9 +881,9 @@ async def dashboard_tools(request: Request):
     tools = await get_tools_by_maker(db, maker_id)
 
     status_styles = {
-        'pending': 'background:#FDF8EE;color:#92400E;',
-        'approved': 'background:#DCFCE7;color:#166534;',
-        'rejected': 'background:#FEE2E2;color:#991B1B;',
+        'pending': 'background:var(--warning-bg);color:var(--warning-text);',
+        'approved': 'background:var(--success-bg);color:var(--success-text);',
+        'rejected': 'background:var(--error-bg);color:var(--error-text);',
     }
 
     rows = ''
@@ -986,6 +986,9 @@ async def edit_tool_post(
     pixel_icon: str = Form(""),
     story_motivation: str = Form(""), story_challenge: str = Form(""),
     story_advice: str = Form(""), story_fun_fact: str = Form(""),
+    api_type: str = Form(""), auth_method: str = Form(""),
+    install_command: str = Form(""), sdk_packages: str = Form(""),
+    env_vars: str = Form(""), frameworks_tested: str = Form(""),
 ):
     user = request.state.user
     redirect = require_login(user)
@@ -1038,7 +1041,13 @@ async def edit_tool_post(
                       description=description.strip(), url=url.strip(),
                       tags=tags.strip(), price_pence=price_pence,
                       delivery_url=delivery_url.strip(),
-                      pixel_icon=clean_pixel)
+                      pixel_icon=clean_pixel,
+                      api_type=api_type.strip(),
+                      auth_method=auth_method.strip(),
+                      install_command=install_command.strip(),
+                      sdk_packages=sdk_packages.strip(),
+                      env_vars=env_vars.strip(),
+                      frameworks_tested=frameworks_tested.strip())
 
     # Save maker story fields
     maker_id = user.get('maker_id')
@@ -1151,6 +1160,50 @@ def edit_tool_form(tool: dict, categories: list, error: str = "", changelogs: li
                 <input type="text" id="tags" name="tags" class="form-input"
                        value="{escape(str(tool.get('tags', '')))}">
             </div>
+            <div style="border-top:1px solid var(--border);margin-top:24px;padding-top:24px;">
+                <h3 style="margin:0 0 8px;font-family:var(--heading-font);">Agent Assembly Metadata</h3>
+                <p style="color:var(--ink-muted);font-size:14px;margin:0 0 16px;">Help AI agents integrate your tool. These fields tell agents exactly how to use your creation.</p>
+
+                <label style="font-weight:600;display:block;margin-bottom:4px;">API Type</label>
+                <select name="api_type" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;background:var(--bg-card);color:var(--ink);">
+                    <option value="">Not specified</option>
+                    <option value="REST"{' selected' if (tool.get('api_type') or '') == 'REST' else ''}>REST API</option>
+                    <option value="GraphQL"{' selected' if (tool.get('api_type') or '') == 'GraphQL' else ''}>GraphQL</option>
+                    <option value="SDK"{' selected' if (tool.get('api_type') or '') == 'SDK' else ''}>SDK / Library</option>
+                    <option value="CLI"{' selected' if (tool.get('api_type') or '') == 'CLI' else ''}>CLI Tool</option>
+                    <option value="WebSocket"{' selected' if (tool.get('api_type') or '') == 'WebSocket' else ''}>WebSocket</option>
+                </select>
+
+                <label style="font-weight:600;display:block;margin-bottom:4px;">Auth Method</label>
+                <select name="auth_method" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;background:var(--bg-card);color:var(--ink);">
+                    <option value="">Not specified</option>
+                    <option value="api_key"{' selected' if (tool.get('auth_method') or '') == 'api_key' else ''}>API Key</option>
+                    <option value="oauth2"{' selected' if (tool.get('auth_method') or '') == 'oauth2' else ''}>OAuth 2.0</option>
+                    <option value="bearer"{' selected' if (tool.get('auth_method') or '') == 'bearer' else ''}>Bearer Token</option>
+                    <option value="none"{' selected' if (tool.get('auth_method') or '') == 'none' else ''}>None (open)</option>
+                </select>
+
+                <label style="font-weight:600;display:block;margin-bottom:4px;">Install Command</label>
+                <input type="text" name="install_command" value="{escape(str(tool.get('install_command','') or ''))}"
+                       placeholder="npm install your-package / pip install your-package"
+                       style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;font-family:var(--mono);">
+
+                <label style="font-weight:600;display:block;margin-bottom:4px;">SDK Packages <span style="color:var(--ink-muted);font-weight:400;">(JSON)</span></label>
+                <input type="text" name="sdk_packages" value="{escape(str(tool.get('sdk_packages','') or ''))}"
+                       placeholder='{{"npm": "@your/package", "pip": "your-package"}}'
+                       style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;font-family:var(--mono);">
+
+                <label style="font-weight:600;display:block;margin-bottom:4px;">Env Vars <span style="color:var(--ink-muted);font-weight:400;">(JSON array)</span></label>
+                <input type="text" name="env_vars" value="{escape(str(tool.get('env_vars','') or ''))}"
+                       placeholder='["YOUR_API_KEY", "YOUR_SECRET"]'
+                       style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;font-family:var(--mono);">
+
+                <label style="font-weight:600;display:block;margin-bottom:4px;">Frameworks Tested</label>
+                <input type="text" name="frameworks_tested" value="{escape(str(tool.get('frameworks_tested','') or ''))}"
+                       placeholder="nextjs, fastapi, rails, django"
+                       style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;">
+            </div>
+
             <div class="form-group">
                 <label>Pixel Icon <span style="color:var(--ink-muted);font-weight:400;font-size:13px;">(7&times;7 pixel art for your tool)</span></label>
                 <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
@@ -1616,7 +1669,7 @@ async def stripe_connect(request: Request):
         <div class="container" style="padding:48px 24px;max-width:640px;text-align:center;">
             <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);">Stripe Connect Unavailable</h1>
             <p style="color:var(--ink-muted);margin-top:12px;">Stripe Connect isn't set up yet. The platform admin needs to enable Connect on the Stripe dashboard.</p>
-            <p style="color:#9CA3AF;font-size:13px;margin-top:16px;font-family:var(--font-mono);">{escape(error_msg)}</p>
+            <p style="color:var(--ink-muted);font-size:13px;margin-top:16px;font-family:var(--font-mono);">{escape(error_msg)}</p>
             <a href="/dashboard" class="btn btn-primary" style="margin-top:24px;">Back to Dashboard</a>
         </div>"""
         return HTMLResponse(page_shell("Stripe Connect", body, user=user))
@@ -1684,7 +1737,7 @@ async def my_stack_page(request: Request):
                 </div>
                 <form method="post" action="/dashboard/my-stack/remove" style="margin:0;">
                     <input type="hidden" name="tool_slug" value="{escape(str(t['slug']))}">
-                    <button type="submit" style="background:none;border:none;color:#EF4444;cursor:pointer;font-size:18px;padding:4px 8px;" title="Remove">&times;</button>
+                    <button type="submit" style="background:none;border:none;color:var(--error-text);cursor:pointer;font-size:18px;padding:4px 8px;" title="Remove">&times;</button>
                 </form>
             </div>"""
 

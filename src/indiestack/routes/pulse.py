@@ -59,7 +59,7 @@ def _event_html(event: dict) -> str:
         # Gap — no results found
         dot = '#EF4444'  # red
         icon = '&#9679;'
-        gap_link = f'<a href="/gaps" style="color:#EF4444;text-decoration:none;font-weight:600;">{query}</a>'
+        gap_link = f'<a href="/gaps" style="color:var(--error-text);text-decoration:none;font-weight:600;">{query}</a>'
         text = f'No tool found for &ldquo;{gap_link}&rdquo; &mdash; <a href="/submit?name={quote(query)}" style="color:var(--gold);text-decoration:none;font-weight:600;">fill this gap</a>'
 
     return f'''
@@ -139,9 +139,9 @@ async def pulse_page(request: Request):
     <section style="padding:0 24px 24px;">
         <div class="container" style="max-width:700px;">
             <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:13px;color:var(--ink-muted);">
-                <span><span style="color:#10B981;">&#9679;</span> AI recommended a tool</span>
-                <span><span style="color:#00D4F5;">&#9679;</span> Search found a match</span>
-                <span><span style="color:#EF4444;">&#9679;</span> No tool found (gap!)</span>
+                <span><span style="color:var(--success-text);">&#9679;</span> AI recommended a tool</span>
+                <span><span style="color:var(--accent);">&#9679;</span> Search found a match</span>
+                <span><span style="color:var(--error-text);">&#9679;</span> No tool found (gap!)</span>
             </div>
         </div>
     </section>
