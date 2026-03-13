@@ -1313,6 +1313,7 @@ async def init_db():
             await db.execute("SELECT scopes FROM api_keys LIMIT 1")
         except Exception:
             await db.execute("ALTER TABLE api_keys ADD COLUMN scopes TEXT NOT NULL DEFAULT 'read'")
+            await db.commit()
 
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
@@ -5217,21 +5218,21 @@ async def check_agent_daily_action(db: aiosqlite.Connection, user_id: int, actio
 async def count_agent_actions_today(db: aiosqlite.Connection, api_key_id: int, action: str) -> int:
     """Count how many times this action was taken today by this key."""
     cursor = await db.execute(
-        "SELECT COUNT(*) FROM agent_actions WHERE api_key_id = ? AND action = ? AND created_at >= date('now')",
+        "SELECT COUNT(*) as cnt FROM agent_actions WHERE api_key_id = ? AND action = ? AND created_at >= date('now')",
         (api_key_id, action),
     )
     row = await cursor.fetchone()
-    return row[0] if row else 0
+    return row['cnt'] if row else 0
 
 
 async def get_tool_recommendation_count(db: aiosqlite.Connection, tool_slug: str) -> int:
     """Get total recommendation count for a tool (across all agents)."""
     cursor = await db.execute(
-        "SELECT COUNT(*) FROM agent_actions WHERE tool_slug = ? AND action = 'recommend'",
+        "SELECT COUNT(*) as cnt FROM agent_actions WHERE tool_slug = ? AND action = 'recommend'",
         (tool_slug,),
     )
     row = await cursor.fetchone()
-    return row[0] if row else 0
+    return row['cnt'] if row else 0
 
 
 async def get_tool_success_rate(db: aiosqlite.Connection, tool_slug: str) -> dict:
