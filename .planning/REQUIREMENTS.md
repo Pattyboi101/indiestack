@@ -14,9 +14,9 @@
 
 ### Compatibility
 
-- [ ] **COMPAT-01**: Tool detail page shows "Confirmed Works With" section listing empirically-reported compatible tools
-- [ ] **COMPAT-02**: User can report a new compatibility pairing via one-click "I use this with..." button on tool page
-- [ ] **COMPAT-03**: Compatibility pair count is visible on each pairing (e.g., "47 makers confirmed")
+- [x] **COMPAT-01**: Tool detail page shows "Confirmed Works With" section listing empirically-reported compatible tools
+- [x] **COMPAT-02**: User can report a new compatibility pairing via one-click "I use this with..." button on tool page
+- [x] **COMPAT-03**: Compatibility pair count is visible on each pairing (e.g., "47 makers confirmed")
 - [ ] **COMPAT-04**: Explore page supports "compatible with [Tool X]" filter
 
 ### Stack Scan
@@ -81,9 +81,9 @@
 | AIVIZ-02 | Phase 1 | Complete |
 | AIVIZ-03 | Phase 1 | Complete |
 | AIVIZ-04 | Phase 1 | Complete |
-| COMPAT-01 | Phase 2 | Pending |
-| COMPAT-02 | Phase 2 | Pending |
-| COMPAT-03 | Phase 2 | Pending |
+| COMPAT-01 | Phase 2 | Complete |
+| COMPAT-02 | Phase 2 | Complete |
+| COMPAT-03 | Phase 2 | Complete |
 | COMPAT-04 | Phase 2 | Pending |
 | SCAN-01 | Phase 3 | Pending |
 | SCAN-02 | Phase 3 | Pending |
