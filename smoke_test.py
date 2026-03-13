@@ -70,6 +70,8 @@ TESTS = [
 
     # Sample content pages (200) - using known slugs
     ("GET", "/tool/simple-analytics", 200, "Tool page"),
+    # Compatibility Graph (Phase 2)
+    ("POST", "/tool/simple-analytics/compatible", 401, "Compat auth guard"),
     ("GET", "/tag/open-source", 302, "Tag page redirect"),
     ("GET", "/alternatives/google-analytics", 200, "Alternatives page"),
 ]
@@ -81,6 +83,7 @@ CONTENT_CHECKS = {
     "/sitemap.xml": ("<urlset", "contains <urlset"),
     "/api/tools/search?q=email": (lambda body: "tools" in json.loads(body), "JSON has 'tools' key"),
     "/best": ("Best Indie", "contains 'Best Indie'"),
+    "/tool/simple-analytics": ("Confirmed Works With", "has compat section"),
 }
 
 
@@ -90,7 +93,12 @@ def fetch(base_url, method, path):
     Handles redirects manually so we can detect 303s.
     """
     url = base_url.rstrip("/") + path
-    req = urllib.request.Request(url, method=method)
+    data = None
+    if method == "POST":
+        data = b"pair_slug=test"
+    req = urllib.request.Request(url, method=method, data=data)
+    if data:
+        req.add_header("Content-Type", "application/x-www-form-urlencoded")
     # Build an opener that does NOT follow redirects automatically
     class NoRedirectHandler(urllib.request.HTTPRedirectHandler):
         def redirect_request(self, req, fp, code, msg, headers, newurl):
