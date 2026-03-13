@@ -726,7 +726,7 @@ async def db_middleware(request: Request, call_next):
                         _logger.exception("Failed to log API usage")
             # No valid API key — apply IP-based daily limit (5/day)
             # Exempt non-query paths (embeddable badges, milestones, OpenAPI spec, categories)
-            _API_RATE_EXEMPT = ('/api/badge/', '/api/milestone/', '/api/openapi', '/api/categories', '/api/health')
+            _API_RATE_EXEMPT = ('/api/badge/', '/api/milestone/', '/api/openapi', '/api/categories', '/api/health', '/api/agent/')
             if not request.state.api_key and not path.startswith(_API_RATE_EXEMPT) and _check_api_ip_rate_limit(client_ip):
                 return JSONResponse(
                     {"error": "Daily API limit reached (15/day without a key). "
@@ -3748,7 +3748,7 @@ async def agent_shortlist(request: Request):
         return JSONResponse({"error": "Max 10 tool slugs per shortlist"}, status_code=400)
 
     count = await db.count_agent_actions_today(request.state.db, api_key["id"], "shortlist")
-    if count >= _AGENT_ACTION_LIMITS["shortlist"]:
+    if count + len(tool_slugs) > _AGENT_ACTION_LIMITS["shortlist"]:
         return JSONResponse({"error": "Daily shortlist limit reached (100/day)"}, status_code=429)
 
     recorded = 0
