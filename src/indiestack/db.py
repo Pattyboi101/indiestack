@@ -1254,6 +1254,22 @@ async def init_db():
         """)
         await db.commit()
 
+        # ── User tool pair reports (deduplication for community compatibility) ──
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS user_tool_pair_reports (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                tool_a_slug TEXT NOT NULL,
+                tool_b_slug TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(user_id, tool_a_slug, tool_b_slug)
+            )
+        """)
+        # Performance indexes on tool_pairs
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_pairs_a ON tool_pairs(tool_a_slug)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_pairs_b ON tool_pairs(tool_b_slug)")
+        await db.commit()
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 

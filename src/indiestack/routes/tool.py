@@ -42,6 +42,7 @@ from indiestack.db import (
     toggle_reaction,
     get_reaction_counts,
     get_verified_pairs,
+    record_tool_pair,
 )
 
 router = APIRouter()
@@ -870,3 +871,58 @@ async def react_to_tool(request: Request, tool_id: int):
         session_id=session_id,
     )
     return JSONResponse({"ok": True, **result})
+
+
+@router.post("/tool/{slug}/compatible")
+async def report_compatible(
+    request: Request,
+    slug: str,
+    pair_slug: str = Form(...),
+):
+    """Report that two tools work well together (community compatibility)."""
+    user = request.state.user
+    if not user:
+        return JSONResponse({"error": "Login required"}, status_code=401)
+
+    db = request.state.db
+
+    # Validate both tools exist
+    tool = await get_tool_by_slug(db, slug)
+    if not tool:
+        return JSONResponse({"error": f"Tool '{slug}' not found"}, status_code=404)
+
+    pair_tool = await get_tool_by_slug(db, pair_slug)
+    if not pair_tool:
+        return JSONResponse({"error": f"Tool '{pair_slug}' not found"}, status_code=404)
+
+    # Reject self-pairing
+    if slug == pair_slug:
+        return JSONResponse({"error": "Cannot pair a tool with itself"}, status_code=400)
+
+    # Sort alphabetically for consistent storage
+    a, b = sorted([slug, pair_slug])
+
+    # Check for duplicate report from this user
+    cursor = await db.execute(
+        "SELECT id FROM user_tool_pair_reports WHERE user_id = ? AND tool_a_slug = ? AND tool_b_slug = ?",
+        (user["id"], a, b),
+    )
+    existing = await cursor.fetchone()
+    if existing:
+        return JSONResponse({"error": "Already confirmed"}, status_code=409)
+
+    # Record the user's report
+    await db.execute(
+        "INSERT INTO user_tool_pair_reports (user_id, tool_a_slug, tool_b_slug) VALUES (?, ?, ?)",
+        (user["id"], a, b),
+    )
+
+    # Upsert into tool_pairs with source='user', incrementing success_count
+    await db.execute("""
+        INSERT INTO tool_pairs (tool_a_slug, tool_b_slug, source, success_count)
+        VALUES (?, ?, 'user', 1)
+        ON CONFLICT(tool_a_slug, tool_b_slug) DO UPDATE SET success_count = success_count + 1
+    """, (a, b))
+    await db.commit()
+
+    return JSONResponse({"ok": True, "pair": pair_slug})
