@@ -3579,6 +3579,7 @@ async def explore_tools(db: aiosqlite.Connection, *, category_id: int = None,
                          tag: str = "", price_filter: str = "", sort: str = "trending",
                          verified_only: bool = False, ejectable_only: bool = False,
                          source_type: str = "", query: str = "",
+                         compatible_with: str = "",
                          page: int = 1, per_page: int = 12):
     """Unified explore query with faceted filtering. Returns (tools, total)."""
     conditions = ["t.status = 'approved'"]
@@ -3614,6 +3615,16 @@ async def explore_tools(db: aiosqlite.Connection, *, category_id: int = None,
     if source_type in ("code", "saas"):
         conditions.append("t.source_type = ?")
         params.append(source_type)
+
+    if compatible_with:
+        conditions.append("""
+            t.slug IN (
+                SELECT CASE WHEN tp.tool_a_slug = ? THEN tp.tool_b_slug ELSE tp.tool_a_slug END
+                FROM tool_pairs tp
+                WHERE tp.tool_a_slug = ? OR tp.tool_b_slug = ?
+            )
+        """)
+        params.extend([compatible_with, compatible_with, compatible_with])
 
     where = " AND ".join(conditions)
 

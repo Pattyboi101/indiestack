@@ -8,7 +8,7 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.routes.components import page_shell, tool_card, pagination_html, email_sticky_bar
-from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_counts, get_new_for_user
+from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_counts, get_new_for_user, get_tool_by_slug
 
 router = APIRouter()
 
@@ -27,6 +27,7 @@ async def explore(request: Request):
     verified = ""
     ejectable = request.query_params.get("ejectable", "")
     source_type = request.query_params.get("source_type", "")
+    compatible_with = request.query_params.get("compatible_with", "").strip()
     try:
         page = int(request.query_params.get("page", "1") or "1")
     except (ValueError, TypeError):
@@ -55,6 +56,13 @@ async def explore(request: Request):
     tags = await get_all_tags_with_counts(db, min_count=1)
 
     per_page = 24
+    # Validate compatible_with slug against real tools
+    compat_tool = None
+    if compatible_with:
+        compat_tool = await get_tool_by_slug(db, compatible_with)
+        if not compat_tool:
+            compatible_with = ""  # Silently ignore invalid slugs
+
     results, total = await explore_tools(
         db,
         category_id=int(category) if category and category.isdigit() else None,
@@ -65,6 +73,7 @@ async def explore(request: Request):
         ejectable_only=bool(ejectable),
         source_type=source_type if source_type in ("code", "saas") else "",
         query=q,
+        compatible_with=compatible_with,
         page=page,
         per_page=per_page,
     )
@@ -78,6 +87,7 @@ async def explore(request: Request):
     if sort and sort != "hot": params["sort"] = sort
     if ejectable: params["ejectable"] = ejectable
     if source_type in ("code", "saas"): params["source_type"] = source_type
+    if compatible_with: params["compatible_with"] = compatible_with
     base_url = "/explore?" + urlencode(params) if params else "/explore"
 
     # ── Build filter bar HTML ──────────────────────────────
@@ -134,6 +144,15 @@ async def explore(request: Request):
             if str(c['id']) == category:
                 active_filters.append(f'Category: <strong>{escape(str(c["name"]))}</strong>')
                 break
+    if compatible_with and compat_tool:
+        compat_name = escape(str(compat_tool['name']))
+        # Build clear URL (current params minus compatible_with)
+        clear_params = {k: v for k, v in params.items() if k != 'compatible_with'}
+        clear_url = "/explore?" + urlencode(clear_params) if clear_params else "/explore"
+        active_filters.append(
+            f'Compatible with: <strong>{compat_name}</strong> '
+            f'<a href="{clear_url}" style="color:var(--ink-muted);text-decoration:none;font-size:14px;" title="Clear filter">&times;</a>'
+        )
     if ejectable:
         active_filters.append('<strong>Ejectable</strong>')
     if source_type == 'code':
