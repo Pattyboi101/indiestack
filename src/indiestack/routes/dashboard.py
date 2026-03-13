@@ -741,6 +741,65 @@ async def dashboard_overview(request: Request):
     </div>
     '''
 
+    # ── AI Visibility Card ─────────────────────────────────────
+    ai_visibility_card = ''
+    if maker_id:
+        top_5_queries = await get_maker_query_intelligence(db, maker_id, days=30)
+        top_5_queries = top_5_queries[:5]
+
+        # Percentile display
+        if citation_percentile and citation_percentile.get('percentile') is not None:
+            pct_val = 100 - citation_percentile['percentile']
+            pct_display = f'Top {pct_val}%'
+            pct_style = 'font-family:var(--font-display);font-size:28px;color:var(--ink);'
+        else:
+            pct_display = 'No data yet'
+            pct_style = 'font-size:14px;color:var(--ink-muted);'
+
+        # Query list
+        query_items = ''
+        if top_5_queries:
+            for q in top_5_queries:
+                query_items += f'''<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);">
+                    <span style="font-family:var(--font-mono);font-size:13px;color:var(--ink);">{escape(q['query'])}</span>
+                    <span style="background:var(--cream-dark);padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;color:var(--ink);flex-shrink:0;margin-left:12px;">{q['count']}</span>
+                </div>'''
+        else:
+            query_items = '<p style="color:var(--ink-muted);font-size:13px;">No search queries yet</p>'
+
+        query_count = len(top_5_queries)
+
+        ai_visibility_card = f'''
+        <style>.ai-viz-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;text-align:center;}}@media(max-width:600px){{.ai-viz-grid{{grid-template-columns:1fr;}}}}</style>
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin:0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-3px;margin-right:6px;"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+                    AI Visibility
+                </h3>
+                <span style="font-size:12px;color:var(--ink-muted);">(30 days)</span>
+            </div>
+            <div class="ai-viz-grid">
+                <div>
+                    <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations_30d}</div>
+                    <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">Agent Citations</div>
+                </div>
+                <div>
+                    <div style="{pct_style}">{pct_display}</div>
+                    <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">Category Rank</div>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-display);font-size:28px;color:var(--ink);">{query_count}</div>
+                    <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">Discovery Queries</div>
+                </div>
+            </div>
+            <div style="margin-top:4px;">
+                <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink-muted);margin-bottom:8px;font-weight:600;">Top Search Queries</div>
+                {query_items}
+            </div>
+        </div>
+        '''
+
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
         {stripe_launch_banner}
@@ -778,6 +837,7 @@ async def dashboard_overview(request: Request):
             </div>
         </div>
 
+        {ai_visibility_card}
         {readiness_html}
         {milestone_html}
         {boost_report_html}
