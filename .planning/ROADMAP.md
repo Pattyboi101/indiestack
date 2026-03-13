@@ -28,11 +28,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Maker sees the top 5 search queries that led AI agents to recommend their tool
   3. Maker sees their tool's citation percentile rank relative to other tools in the same category
   4. AI Visibility card is visually integrated into the existing maker dashboard layout
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md -- Add AI Visibility card with 30d citations, top-5 queries, and category percentile
 
 ### Phase 2: Compatibility Graph
 **Goal**: Developers can discover which tools work together based on empirical compatibility reports from the community
@@ -86,7 +85,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. AI Visibility Score | 0/0 | Not started | - |
+| 1. AI Visibility Score | 0/1 | Planning complete | - |
 | 2. Compatibility Graph | 0/0 | Not started | - |
 | 3. Stack Import + Vendor Risk | 0/0 | Not started | - |
 | 4. Maker Ego Pings | 0/0 | Not started | - |
