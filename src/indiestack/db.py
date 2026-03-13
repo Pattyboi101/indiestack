@@ -1886,6 +1886,38 @@ async def get_total_agent_citations(db: aiosqlite.Connection, maker_id: int, day
     return row['total'] if row else 0
 
 
+async def get_citation_percentile(db: aiosqlite.Connection, maker_id: int, days: int = 30):
+    """Get the maker's best-performing tool's citation percentile within its category."""
+    cursor = await db.execute("""
+        WITH tool_citations AS (
+            SELECT t.id, t.name, t.category_id,
+                   COUNT(ac.id) as cite_count
+            FROM tools t
+            LEFT JOIN agent_citations ac ON ac.tool_id = t.id
+                AND ac.created_at >= datetime('now', ?)
+            WHERE t.status = 'approved'
+            GROUP BY t.id
+        ),
+        ranked AS (
+            SELECT id, name, category_id, cite_count,
+                   PERCENT_RANK() OVER (PARTITION BY category_id ORDER BY cite_count) as pct_rank
+            FROM tool_citations
+        )
+        SELECT r.name, r.cite_count, CAST(r.pct_rank * 100 AS INTEGER) as percentile
+        FROM ranked r
+        JOIN tools t ON r.id = t.id
+        WHERE t.maker_id = ?
+        ORDER BY r.cite_count DESC
+        LIMIT 1
+    """, (f'-{days} days', maker_id))
+    row = await cursor.fetchone()
+    if not row:
+        return {'name': '', 'citations': 0, 'percentile': None}
+    if row['cite_count'] == 0:
+        return {'name': row['name'], 'citations': 0, 'percentile': None}
+    return {'name': row['name'], 'citations': row['cite_count'], 'percentile': row['percentile']}
+
+
 async def has_upvoted(db: aiosqlite.Connection, tool_id: int, ip: str) -> bool:
     ip_h = hash_ip(ip)
     cursor = await db.execute(

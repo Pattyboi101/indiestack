@@ -24,7 +24,7 @@ from indiestack.db import (
     ensure_referral_code, get_referral_count, claim_referral_boost,
     MILESTONE_THRESHOLDS,
     get_purchases_by_email,
-    get_total_agent_citations,
+    get_total_agent_citations, get_citation_percentile,
     get_maker_query_intelligence, get_maker_agent_breakdown, get_maker_daily_trend,
     create_api_key, get_api_keys_for_user, revoke_api_key, get_api_key_usage_stats,
     get_developer_profile, toggle_personalization, clear_developer_profile,
@@ -85,8 +85,9 @@ async def dashboard_overview(request: Request):
     user_tokens = await get_user_tokens_saved(db, user['id'])
     tokens_k = user_tokens // 1000 if user_tokens else 0
 
-    # Agent citations (7-day)
-    agent_citations = await get_total_agent_citations(db, maker_id, days=7) if maker_id else 0
+    # Agent citations (30-day)
+    agent_citations_30d = await get_total_agent_citations(db, maker_id, days=30) if maker_id else 0
+    citation_percentile = await get_citation_percentile(db, maker_id, days=30) if maker_id else None
 
     pro_badge = ''
     upgrade_html = ''
@@ -772,8 +773,8 @@ async def dashboard_overview(request: Request):
                 <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--slate-dark);">{'~' + str(tokens_k) + 'k' if tokens_k > 0 else '0'}</div>
             </div>
             <div class="card" style="text-align:center;padding:20px;">
-                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations}</div>
-                <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Agent Recs<br><span style="font-size:11px;opacity:0.7;">(7 days)</span></div>
+                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations_30d}</div>
+                <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Agent Recs<br><span style="font-size:11px;opacity:0.7;">(30 days)</span></div>
             </div>
         </div>
 
