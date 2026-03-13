@@ -3,6 +3,7 @@
 import asyncio
 import hashlib
 import logging
+import json as _json
 import os as _os
 import re
 import time as _time
@@ -29,13 +30,32 @@ from indiestack.config import BASE_URL
 
 from pathlib import Path
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, Response
 from starlette.middleware.gzip import GZipMiddleware
 
 # Rate limiting
 _rate_limits: dict[str, list[float]] = {}
 _rate_check_counter = 0
+
+# Agent action daily rate limits (per API key per day)
+_AGENT_ACTION_LIMITS = {
+    "recommend": 50,
+    "shortlist": 100,
+    "report_outcome": 20,
+    "confirm_integration": 10,
+    "submit_tool": 3,
+}
+
+
+def _require_scope(api_key: dict | None, scope: str) -> dict:
+    """Validate API key exists and has required scope. Returns key dict or raises."""
+    if not api_key:
+        raise HTTPException(status_code=401, detail="API key required. Get one at https://indiestack.ai/developer")
+    scopes = (api_key.get("scopes") or "read").split(",")
+    if scope not in scopes:
+        raise HTTPException(status_code=403, detail=f"This action requires '{scope}' scope. Enable it at https://indiestack.ai/dashboard")
+    return api_key
 
 
 def _check_rate_limit(ip: str, path: str, method: str) -> bool:
@@ -51,7 +71,7 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
             del _rate_limits[k]
 
     # Rate limit GET for auth and email-sending endpoints, POST for everything else
-    get_limited = {"/resend-verification", "/signup", "/login", "/auth/github", "/auth/github/callback"}
+    get_limited = {"/resend-verification", "/signup", "/login", "/auth/github", "/auth/github/callback", "/auth/magic"}
     if method == "GET" and path not in get_limited:
         return False
     if method not in ("POST", "GET"):
@@ -64,12 +84,14 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
         "/auth/github/callback": 10,
         "/submit": 3,
         "/forgot-password": 3,
+        "/auth/magic": 3,
         "/resend-verification": 3,
         "/admin": 60,
         "/api/upvote": 10,
         "/api/wishlist": 10,
         "/api/subscribe": 5,
         "/api/claim": 5,
+        "/api/tools/submit": 3,
     }
 
     # Check specific path limits
@@ -98,6 +120,51 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
 
     _rate_limits[key].append(now)
     return False
+
+# ── API Key Daily Rate Limiting ───────────────────────────────────────────
+_api_key_daily: dict[int, dict] = {}  # {key_id: {"date": "YYYY-MM-DD", "count": N}}
+_api_ip_daily: dict[str, dict] = {}  # {ip: {"date": "YYYY-MM-DD", "count": N}}
+
+API_DAILY_LIMITS = {
+    "free": 50,
+    "pro": 1000,
+}
+API_KEYLESS_DAILY_LIMIT = 15
+
+
+def _check_api_key_rate_limit(key_id: int, tier: str) -> bool:
+    """Returns True if API key has exceeded its daily limit."""
+    from datetime import date
+    today = date.today().isoformat()
+    entry = _api_key_daily.get(key_id)
+    if not entry or entry["date"] != today:
+        # Clean up stale entries from previous days (prevent memory leak)
+        if len(_api_key_daily) > 100:
+            _api_key_daily.clear()
+        _api_key_daily[key_id] = {"date": today, "count": 1}
+        return False
+    limit = API_DAILY_LIMITS.get(tier, 50)
+    if entry["count"] >= limit:
+        return True
+    entry["count"] += 1
+    return False
+
+
+def _check_api_ip_rate_limit(ip: str) -> bool:
+    """Returns True if keyless IP has exceeded its daily API limit (5/day)."""
+    from datetime import date
+    today = date.today().isoformat()
+    entry = _api_ip_daily.get(ip)
+    if not entry or entry["date"] != today:
+        if len(_api_ip_daily) > 500:
+            _api_ip_daily.clear()
+        _api_ip_daily[ip] = {"date": today, "count": 1}
+        return False
+    if entry["count"] >= API_KEYLESS_DAILY_LIMIT:
+        return True
+    entry["count"] += 1
+    return False
+
 
 # ── Admin Login Rate Limiting ────────────────────────────────────────────
 _admin_login_attempts = {}  # {ip: [timestamp, ...]}
@@ -145,7 +212,7 @@ from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge
 from indiestack.email import send_email, ego_ping_html, maker_welcome_html, email_verification_html
 from indiestack.auth import get_current_user
 from indiestack.routes import landing, browse, tool, search, submit, admin, purchase
-from indiestack.routes import verify, maker, collections, compare, new, account, dashboard, pricing, updates, alternatives
+from indiestack.routes import maker, collections, compare, new, account, dashboard, pricing, updates, alternatives
 from indiestack.routes import stacks
 from indiestack.routes import explore, tags
 
@@ -181,10 +248,10 @@ async def _periodic_session_cleanup():
 async def _weekly_ego_ping():
     """Send ego ping emails every Friday."""
     import aiosqlite
-    from datetime import datetime
+    from datetime import datetime, timezone
     while True:
         await asyncio.sleep(86400)  # Check daily
-        if datetime.utcnow().weekday() != 4:  # 4 = Friday
+        if datetime.now(timezone.utc).weekday() != 4:  # 4 = Friday
             continue
         try:
             async with aiosqlite.connect(db.DB_PATH) as conn:
@@ -359,7 +426,7 @@ async def _auto_weekly_digest():
                     """SELECT t.name, t.slug, COUNT(oc.id) as clicks
                        FROM tools t
                        JOIN outbound_clicks oc ON oc.tool_id = t.id
-                       WHERE oc.clicked_at >= datetime('now', '-7 days')
+                       WHERE oc.created_at >= datetime('now', '-7 days')
                        GROUP BY t.id
                        ORDER BY clicks DESC
                        LIMIT 5"""
@@ -389,7 +456,7 @@ async def _auto_weekly_digest():
                     tc_row = await conn.execute_fetchall(
                         """SELECT COUNT(*) as cnt FROM outbound_clicks oc
                            JOIN tools t ON oc.tool_id = t.id
-                           WHERE t.slug = ? AND oc.clicked_at >= datetime('now', '-7 days')""",
+                           WHERE t.slug = ? AND oc.created_at >= datetime('now', '-7 days')""",
                         (totw_slug,)
                     )
                     totw_clicks = tc_row[0]['cnt'] if tc_row else 0
@@ -426,6 +493,52 @@ async def _auto_weekly_digest():
             _alert_telegram("weekly digest", str(e))
 
 
+async def _weekly_citation_alert():
+    """Send citation alert emails to makers every Wednesday."""
+    await asyncio.sleep(120)  # Wait for app to fully start
+    while True:
+        try:
+            from datetime import datetime, timezone
+            now = datetime.now(timezone.utc)
+            if now.weekday() == 2 and now.hour == 10:  # Wednesday 10am UTC
+                import aiosqlite
+                from indiestack.db import get_weekly_citation_digest, check_pro
+                from indiestack.email import send_email, citation_alert_html
+                async with aiosqlite.connect(db.DB_PATH) as conn:
+                    conn.row_factory = aiosqlite.Row
+                    digests = await get_weekly_citation_digest(conn, days=7)
+                    sent = 0
+                    for d in digests:
+                        if d['citation_count'] == 0:
+                            continue
+                        is_pro = await check_pro(conn, d['user_id'])
+                        agent_list = d['agent_names'].split(',') if d['agent_names'] else []
+                        try:
+                            html = citation_alert_html(
+                                maker_name=d['maker_name'],
+                                tool_name=d['tool_name'],
+                                tool_slug=d['tool_slug'],
+                                citation_count=d['citation_count'],
+                                agent_names=agent_list,
+                                is_pro=is_pro,
+                                sample_context=d['sample_context'] or "",
+                            )
+                            await send_email(
+                                to=d['maker_email'],
+                                subject=f"AI agents cited {d['tool_name']} {d['citation_count']} times this week",
+                                html_body=html,
+                            )
+                            sent += 1
+                        except Exception as email_err:
+                            _logger.error(f"Citation email failed for {d.get('maker_email', '?')}: {email_err}")
+                    if sent:
+                        _logger.info(f"Sent {sent} citation alert emails")
+        except Exception as e:
+            _logger.exception("Background task failed: citation alert")
+            _alert_telegram("citation alert", str(e))
+        await asyncio.sleep(3600)  # Check every hour
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await db.init_db()
@@ -444,12 +557,14 @@ async def lifespan(app: FastAPI):
     totw_task = asyncio.create_task(_auto_tool_of_the_week())
     nudge_task = asyncio.create_task(_badge_nudge_check())
     digest_task = asyncio.create_task(_auto_weekly_digest())
+    citation_task = asyncio.create_task(_weekly_citation_alert())
     yield
     cleanup_task.cancel()
     ego_ping_task.cancel()
     totw_task.cancel()
     nudge_task.cancel()
     digest_task.cancel()
+    citation_task.cancel()
 
 
 app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
@@ -460,7 +575,7 @@ app.add_middleware(GZipMiddleware, minimum_size=500)
 
 # ── Security Headers ─────────────────────────────────────────────────────
 
-_CSRF_EXEMPT_PATHS = {"/webhooks/stripe", "/api/cite", "/api/tools/submit", "/api/follow-through"}
+_CSRF_EXEMPT_PATHS = {"/webhooks/stripe", "/api/cite", "/api/tools/submit", "/api/follow-through", "/api/agent/recommend", "/api/agent/shortlist", "/api/agent/outcome", "/api/agent/integration"}
 _ALLOWED_ORIGINS = {"https://indiestack.ai", "https://www.indiestack.ai", "https://indiestack.fly.dev", "https://www.indiestack.fly.dev", "http://localhost:8000", "http://127.0.0.1:8000"}
 
 
@@ -596,12 +711,30 @@ async def db_middleware(request: Request, call_next):
                 api_key_row = await db.get_api_key_by_key(request.state.db, raw_key)
                 if api_key_row:
                     request.state.api_key = api_key_row
+                    # Check daily rate limit for this API key
+                    if _check_api_key_rate_limit(api_key_row["id"], api_key_row.get("tier", "free")):
+                        return JSONResponse(
+                            {"error": "Daily API limit exceeded. Upgrade to Pro for higher limits.",
+                             "upgrade_url": "https://indiestack.ai/pricing"},
+                            status_code=429,
+                        )
                     try:
                         await db.touch_api_key(request.state.db, api_key_row["id"])
                         await db.log_api_usage(request.state.db, api_key_row["id"], path)
                         await request.state.db.commit()
                     except Exception:
-                        pass
+                        _logger.exception("Failed to log API usage")
+            # No valid API key — apply IP-based daily limit (5/day)
+            # Exempt non-query paths (embeddable badges, milestones, OpenAPI spec, categories)
+            _API_RATE_EXEMPT = ('/api/badge/', '/api/milestone/', '/api/openapi', '/api/categories', '/api/health')
+            if not request.state.api_key and not path.startswith(_API_RATE_EXEMPT) and _check_api_ip_rate_limit(client_ip):
+                return JSONResponse(
+                    {"error": "Daily API limit reached (15/day without a key). "
+                     "Create a free API key for 50/day, or upgrade to Pro for 1,000/day.",
+                     "get_key_url": "https://indiestack.ai/developer",
+                     "upgrade_url": "https://indiestack.ai/pricing"},
+                    status_code=429,
+                )
 
         # Track pageview (skip static assets, API calls, and auth pages)
         if not path.startswith(('/api/', '/health', '/favicon', '/logo', '/track', '/robots', '/sitemap', '/signup', '/login', '/auth/')):
@@ -611,11 +744,38 @@ async def db_middleware(request: Request, call_next):
             try:
                 await db.track_pageview(request.state.db, path, visitor_id, referrer)
             except Exception:
-                pass
+                _logger.exception("Failed to track pageview")
         response = await call_next(request)
     finally:
         await request.state.db.close()
     return response
+
+
+# ── Client Event Tracking ─────────────────────────────────────────────────
+
+@app.post("/api/track")
+async def track_client_event(request: Request):
+    """Track client-side events (install copies, etc.)."""
+    try:
+        data = await request.json()
+        event = data.get("event", "")
+        if event not in ("install_copied", "cta_clicked"):
+            return JSONResponse({"ok": False})
+        from indiestack.db import track_event
+        user = request.state.user
+        visitor_id = hashlib.sha256(request.client.host.encode()).hexdigest()[:16] if request.client else None
+        raw_meta = data.get("metadata")
+        if raw_meta and len(_json.dumps(raw_meta)) > 1024:
+            return JSONResponse({"ok": False})
+        await track_event(
+            request.state.db, event,
+            visitor_id=visitor_id,
+            user_id=user['id'] if user else None,
+            metadata=raw_meta,
+        )
+        return JSONResponse({"ok": True})
+    except Exception:
+        return JSONResponse({"ok": False})
 
 
 # ── Health ────────────────────────────────────────────────────────────────
@@ -857,31 +1017,37 @@ async def indexnow_key_file(key: str):
 async def sitemap(request: Request):
     if _sitemap_cache['xml'] and _time.time() < _sitemap_cache['expires']:
         return Response(content=_sitemap_cache['xml'], media_type="application/xml")
+    today = date.today().isoformat()
     urls = [
-        (f"{BASE_URL}/", "daily", "1.0"),
-        (f"{BASE_URL}/submit", "monthly", "0.5"),
-        (f"{BASE_URL}/new", "daily", "0.8"),
-        (f"{BASE_URL}/stacks", "weekly", "0.7"),
-        (f"{BASE_URL}/makers", "daily", "0.8"),
-        (f"{BASE_URL}/updates", "daily", "0.8"),
-        (f"{BASE_URL}/live", "always", "0.6"),
+        (f"{BASE_URL}/", "daily", "1.0", today),
+        (f"{BASE_URL}/submit", "monthly", "0.5", None),
+        (f"{BASE_URL}/new", "daily", "0.8", today),
+        (f"{BASE_URL}/stacks", "weekly", "0.7", None),
+        (f"{BASE_URL}/makers", "daily", "0.8", today),
+        (f"{BASE_URL}/updates", "daily", "0.8", today),
+        (f"{BASE_URL}/live", "always", "0.6", today),
+        (f"{BASE_URL}/pricing", "monthly", "0.6", None),
+        (f"{BASE_URL}/developer", "monthly", "0.6", None),
+        (f"{BASE_URL}/why-list", "monthly", "0.6", None),
+        (f"{BASE_URL}/geo", "monthly", "0.5", None),
+        (f"{BASE_URL}/changelog", "monthly", "0.6", None),
     ]
     for path in ["/about", "/terms", "/privacy", "/faq"]:
-        urls.append((f"{BASE_URL}{path}", "monthly", "0.5"))
-    urls.append((f"{BASE_URL}/blog", "weekly", "0.7"))
-    urls.append((f"{BASE_URL}/blog/stop-wasting-tokens", "monthly", "0.8"))
-    urls.append((f"{BASE_URL}/blog/zero-js-frameworks", "monthly", "0.8"))
-    urls.append((f"{BASE_URL}/blog/marketplace-launch", "monthly", "0.8"))
-    urls.append((f"{BASE_URL}/blog/tokens-saved", "monthly", "0.8"))
-    urls.append((f"{BASE_URL}/blog/agent-infrastructure", "monthly", "0.8"))
-    urls.append((f"{BASE_URL}/alternatives", "daily", "0.8"))
-    urls.append((f"{BASE_URL}/compare", "weekly", "0.7"))
+        urls.append((f"{BASE_URL}{path}", "monthly", "0.5", None))
+    urls.append((f"{BASE_URL}/blog", "weekly", "0.7", None))
+    urls.append((f"{BASE_URL}/blog/stop-wasting-tokens", "monthly", "0.8", "2026-02-15"))
+    urls.append((f"{BASE_URL}/blog/zero-js-frameworks", "monthly", "0.8", "2026-02-20"))
+    urls.append((f"{BASE_URL}/blog/marketplace-launch", "monthly", "0.8", "2026-02-22"))
+    urls.append((f"{BASE_URL}/blog/tokens-saved", "monthly", "0.8", "2026-02-25"))
+    urls.append((f"{BASE_URL}/blog/agent-infrastructure", "monthly", "0.8", "2026-02-27"))
+    urls.append((f"{BASE_URL}/alternatives", "daily", "0.8", today))
+    urls.append((f"{BASE_URL}/compare", "weekly", "0.7", None))
     # Individual alternatives pages
     d = request.state.db
     competitors = await db.get_all_competitors(d)
     for comp in competitors:
         comp_slug = comp.lower().replace(" ", "-").replace(".", "-")
-        urls.append((f"{BASE_URL}/alternatives/{comp_slug}", "weekly", "0.7"))
+        urls.append((f"{BASE_URL}/alternatives/{comp_slug}", "weekly", "0.7", None))
     # Deep comparison pages: /alternatives/{competitor}/vs/{tool}
     for comp in competitors:
         comp_slug = comp.lower().replace(" ", "-").replace(".", "-")
@@ -890,32 +1056,33 @@ async def sitemap(request: Request):
             (f'%{comp}%',))
         comp_tools_rows = await comp_tools_cursor.fetchall()
         for ct in comp_tools_rows:
-            urls.append((f"{BASE_URL}/alternatives/{comp_slug}/vs/{ct['slug']}", "weekly", "0.6"))
+            urls.append((f"{BASE_URL}/alternatives/{comp_slug}/vs/{ct['slug']}", "weekly", "0.6", None))
     # Use case pages
-    urls.append((f"{BASE_URL}/use-cases", "weekly", "0.8"))
+    urls.append((f"{BASE_URL}/use-cases", "weekly", "0.8", None))
     for uc_slug in db.NEED_MAPPINGS:
-        urls.append((f"{BASE_URL}/use-cases/{uc_slug}", "weekly", "0.7"))
+        urls.append((f"{BASE_URL}/use-cases/{uc_slug}", "weekly", "0.7", None))
     cats = await db.get_all_categories(d)
     for c in cats:
-        urls.append((f"{BASE_URL}/category/{c['slug']}", "daily", "0.8"))
+        urls.append((f"{BASE_URL}/category/{c['slug']}", "daily", "0.8", None))
     # Best-of programmatic SEO pages
-    urls.append((f"{BASE_URL}/best", "weekly", "0.8"))
+    urls.append((f"{BASE_URL}/best", "weekly", "0.8", None))
     for c in cats:
-        urls.append((f"{BASE_URL}/best/{c['slug']}", "weekly", "0.7"))
-    cursor = await d.execute("SELECT slug FROM tools WHERE status = 'approved' LIMIT 5000")
+        urls.append((f"{BASE_URL}/best/{c['slug']}", "weekly", "0.7", None))
+    cursor = await d.execute("SELECT slug, created_at as lastmod FROM tools WHERE status = 'approved' LIMIT 5000")
     tools = await cursor.fetchall()
     for t in tools:
-        urls.append((f"{BASE_URL}/tool/{t['slug']}", "weekly", "0.7"))
+        lm = t['lastmod'][:10] if t.get('lastmod') else None
+        urls.append((f"{BASE_URL}/tool/{t['slug']}", "weekly", "0.7", lm))
     # Maker profiles
     cursor2 = await d.execute("SELECT slug FROM makers LIMIT 5000")
     makers = await cursor2.fetchall()
     for m in makers:
-        urls.append((f"{BASE_URL}/maker/{m['slug']}", "weekly", "0.6"))
+        urls.append((f"{BASE_URL}/maker/{m['slug']}", "weekly", "0.6", None))
     # Stacks
     cursor_stacks = await d.execute("SELECT slug FROM stacks")
     all_stacks_list = await cursor_stacks.fetchall()
     for st in all_stacks_list:
-        urls.append((f"{BASE_URL}/stacks/{st['slug']}", "weekly", "0.7"))
+        urls.append((f"{BASE_URL}/stacks/{st['slug']}", "weekly", "0.7", None))
     # Compare pages (top pairs per category)
     for c in cats:
         cat_cursor = await d.execute(
@@ -925,18 +1092,23 @@ async def sitemap(request: Request):
         slugs = [t['slug'] for t in cat_tools]
         for i in range(len(slugs)):
             for j in range(i + 1, len(slugs)):
-                urls.append((f"{BASE_URL}/compare/{slugs[i]}-vs-{slugs[j]}", "weekly", "0.5"))
-    urls.append((f"{BASE_URL}/calculator", "weekly", "0.8"))
+                urls.append((f"{BASE_URL}/compare/{slugs[i]}-vs-{slugs[j]}", "weekly", "0.5", None))
+    urls.append((f"{BASE_URL}/calculator", "weekly", "0.8", None))
     # Explore
-    urls.append((f"{BASE_URL}/explore", "daily", "0.9"))
+    urls.append((f"{BASE_URL}/explore", "daily", "0.9", today))
     # Tags
-    urls.append((f"{BASE_URL}/tags", "weekly", "0.7"))
+    urls.append((f"{BASE_URL}/tags", "weekly", "0.7", None))
     all_tags = await db.get_all_tags_with_counts(d, min_count=1)
     for tag_item in all_tags:
-        urls.append((f"{BASE_URL}/tag/{tag_item['slug']}", "weekly", "0.6"))
+        urls.append((f"{BASE_URL}/tag/{tag_item['slug']}", "weekly", "0.6", None))
+    def _sitemap_entry(u, f, p, lm):
+        parts = [f"<loc>{u}</loc>", f"<changefreq>{f}</changefreq>", f"<priority>{p}</priority>"]
+        if lm:
+            parts.append(f"<lastmod>{lm}</lastmod>")
+        return "  <url>" + "".join(parts) + "</url>"
     entries = "\n".join(
-        f"  <url><loc>{u}</loc><changefreq>{f}</changefreq><priority>{p}</priority></url>"
-        for u, f, p in urls
+        _sitemap_entry(u, f, p, lm)
+        for u, f, p, lm in urls
     )
     xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -999,7 +1171,7 @@ async def api_upvote(request: Request):
                             f"/tool/{tool['slug']}"
                         )
         except Exception:
-            pass  # Don't break upvote if notification fails
+            _logger.exception("Failed to create upvote notification")
 
     return JSONResponse({"ok": True, "count": count, "upvoted": upvoted})
 
@@ -1020,10 +1192,15 @@ async def api_upvote_check(request: Request):
     tool_ids = [int(t) for t in tool_ids[:50] if isinstance(t, (int, float))]
 
     ip = request.headers.get("fly-client-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip() or request.client.host
-    upvoted = []
-    for tid in tool_ids:
-        if await db.has_upvoted(request.state.db, tid, ip):
-            upvoted.append(tid)
+    ip_hash = db.hash_ip(ip)
+    d = request.state.db
+    placeholders = ','.join('?' * len(tool_ids))
+    cursor = await d.execute(
+        f"SELECT DISTINCT tool_id FROM upvotes WHERE tool_id IN ({placeholders}) AND ip_hash = ?",
+        (*tool_ids, ip_hash)
+    )
+    upvoted_set = {r['tool_id'] for r in await cursor.fetchall()}
+    upvoted = [tid for tid in tool_ids if tid in upvoted_set]
 
     return JSONResponse({"upvoted": upvoted})
 
@@ -1098,7 +1275,7 @@ async def api_subscribe(request: Request):
         )
         await request.state.db.commit()
     except Exception:
-        pass
+        _logger.exception("Failed to save subscriber")
     if next_url:
         return _Redirect(url=next_url, status_code=303)
     return _Redirect(url="/?subscribed=1", status_code=303)
@@ -1313,6 +1490,28 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
             notice = "IndieStack is learning your preferences to improve recommendations. View or manage your profile at indiestack.ai/developer"
             await db.mark_notice_shown(d, api_key['id'])
 
+    # Pro MCP enrichment — add citation counts and compatible pairs for Pro keys
+    is_pro_key = api_key and api_key.get('tier') == 'pro'
+    if is_pro_key and results:
+        try:
+            tool_ids = [t['id'] for t in tools if t.get('id')]
+            tool_slugs = [r['slug'] for r in results]
+            slug_to_id = {t['slug']: t['id'] for t in tools if t.get('id')}
+            import asyncio as _asyncio
+            citation_counts, compat_pairs = await _asyncio.gather(
+                db.get_citation_counts_bulk(d, tool_ids),
+                db.get_compatible_pairs_bulk(d, tool_slugs),
+            )
+            for r in results:
+                tid = slug_to_id.get(r['slug'])
+                if tid:
+                    r['citation_count_7d'] = citation_counts.get(tid, 0)
+                pairs = compat_pairs.get(r['slug'], [])
+                if pairs:
+                    r['compatible_with'] = pairs
+        except Exception:
+            pass  # Don't fail the search if enrichment fails
+
     response = {
         "tools": results,
         "total": len(results),
@@ -1320,6 +1519,8 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
         "offset": offset,
         "personalized": personalized,
     }
+    if is_pro_key:
+        response["pro_enriched"] = True
     if notice:
         response["notice"] = notice
     if q.strip() and not results:
@@ -1947,6 +2148,27 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
     except Exception:
         pass
 
+    # Pro MCP enrichment — citation stats, category ranking, demand context
+    is_pro_key = request.state.api_key and request.state.api_key.get('tier') == 'pro'
+    if is_pro_key:
+        try:
+            import asyncio as _asyncio
+            citation_stats, demand_context, percentile = await _asyncio.gather(
+                db.get_tool_citation_stats(d, tool['id']),
+                db.get_tool_demand_context(d, slug),
+                db.get_tool_category_percentile(d, tool['id'], tool['category_id']),
+            )
+            result["citation_stats"] = citation_stats
+            result["category_percentile"] = percentile
+            if demand_context:
+                result["demand_context"] = [
+                    {"query": dc['query'], "search_count": dc['search_count']}
+                    for dc in demand_context
+                ]
+            result["pro_enriched"] = True
+        except Exception:
+            pass
+
     return JSONResponse({"tool": result})
 
 
@@ -2157,43 +2379,41 @@ async def api_submit_tool(request: Request):
     # Generate slug
     slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
 
-    d = await db.get_db()
-    try:
-        # Check for duplicate slug
-        existing = await d.execute("SELECT id FROM tools WHERE slug = ?", (slug,))
-        if await existing.fetchone():
-            return JSONResponse({"error": f"A tool with slug '{slug}' already exists", "slug": slug}, status_code=409)
+    d = request.state.db
 
-        # Match category by slug if provided
-        category_id = None
-        cat_slug = (data.get("category") or "").strip()
-        if cat_slug:
-            cat_row = await d.execute("SELECT id FROM categories WHERE slug = ?", (cat_slug,))
-            cat = await cat_row.fetchone()
-            if cat:
-                category_id = cat["id"]
+    # Check for duplicate slug
+    existing = await d.execute("SELECT id FROM tools WHERE slug = ?", (slug,))
+    if await existing.fetchone():
+        return JSONResponse({"error": f"A tool with slug '{slug}' already exists", "slug": slug}, status_code=409)
 
-        # If no category matched, use first category as default
-        if not category_id:
-            cat_row = await d.execute("SELECT id FROM categories ORDER BY id LIMIT 1")
-            cat = await cat_row.fetchone()
-            category_id = cat["id"] if cat else 1
+    # Match category by slug if provided
+    category_id = None
+    cat_slug = (data.get("category") or "").strip()
+    if cat_slug:
+        cat_row = await d.execute("SELECT id FROM categories WHERE slug = ?", (cat_slug,))
+        cat = await cat_row.fetchone()
+        if cat:
+            category_id = cat["id"]
 
-        tags = (data.get("tags") or "").strip()
-        replaces = (data.get("replaces") or "").strip()
+    # If no category matched, use first category as default
+    if not category_id:
+        cat_row = await d.execute("SELECT id FROM categories ORDER BY id LIMIT 1")
+        cat = await cat_row.fetchone()
+        category_id = cat["id"] if cat else 1
 
-        # Get IP for spam tracking
-        ip = request.headers.get("x-forwarded-for", request.client.host if request.client else "unknown")
+    tags = (data.get("tags") or "").strip()
+    replaces = (data.get("replaces") or "").strip()
 
-        await d.execute(
-            """INSERT INTO tools (name, slug, tagline, description, url, category_id, tags, replaces,
-               status, submitted_from_ip, created_at)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, CURRENT_TIMESTAMP)""",
-            (name, slug, tagline, description, url, category_id, tags, replaces, ip),
-        )
-        await d.commit()
-    finally:
-        await d.close()
+    # Get IP for spam tracking
+    ip = request.headers.get("x-forwarded-for", request.client.host if request.client else "unknown")
+
+    await d.execute(
+        """INSERT INTO tools (name, slug, tagline, description, url, category_id, tags, replaces,
+           status, submitted_from_ip, created_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?, CURRENT_TIMESTAMP)""",
+        (name, slug, tagline, description, url, category_id, tags, replaces, ip),
+    )
+    await d.commit()
 
     return JSONResponse({"success": True, "message": "Tool submitted for review", "slug": slug})
 
@@ -2773,6 +2993,57 @@ async def subscribe_demand_pro(request: Request):
         return JSONResponse({"error": "Payment service error"}, status_code=500)
 
 
+@app.post("/api/subscribe/pro")
+async def subscribe_pro(request: Request):
+    """Create a Stripe Checkout session for IndieStack Pro."""
+    user = request.state.user
+    if not user:
+        return JSONResponse({"error": "Login required"}, status_code=401)
+
+    body = {}
+    try:
+        body = await request.json()
+    except Exception:
+        pass
+    plan = body.get("plan", "pro")  # "pro" or "founder"
+
+    # Prevent duplicate subscriptions
+    from indiestack.db import check_pro
+    if await check_pro(request.state.db, user["id"]):
+        return JSONResponse({"error": "You already have an active Pro subscription"}, status_code=409)
+
+    import stripe
+    stripe.api_key = _os.environ.get("STRIPE_SECRET_KEY")
+
+    if plan == "founder":
+        price_id = _os.environ.get("STRIPE_FOUNDER_PRICE_ID")
+        # Check if founder seats are still available
+        from indiestack.db import get_founder_seat_count
+        seats_taken = await get_founder_seat_count(request.state.db)
+        if seats_taken >= 50:
+            return JSONResponse({"error": "All 50 Founding Member seats have been claimed!"}, status_code=410)
+    else:
+        price_id = _os.environ.get("STRIPE_PRO_PRICE_ID")
+        plan = "pro"
+
+    if not price_id:
+        return JSONResponse({"error": "Subscription not configured"}, status_code=500)
+
+    try:
+        checkout = stripe.checkout.Session.create(
+            mode="subscription",
+            line_items=[{"price": price_id, "quantity": 1}],
+            success_url="https://indiestack.ai/dashboard?subscribed=true",
+            cancel_url="https://indiestack.ai/pricing",
+            customer_email=user.get("email", ""),
+            metadata={"user_id": str(user["id"]), "plan": plan},
+        )
+        return JSONResponse({"checkout_url": checkout.url})
+    except Exception as e:
+        logger.error(f"Stripe checkout error: {e}")
+        return JSONResponse({"error": "Payment service error"}, status_code=500)
+
+
 @app.post("/webhooks/stripe")
 async def stripe_webhook(request: Request):
     """Handle Stripe webhook events — subscriptions, payments."""
@@ -2793,31 +3064,58 @@ async def stripe_webhook(request: Request):
         plan = metadata.get("plan")
         user_id = metadata.get("user_id")
 
-        if plan == "demand_pro" and user_id:
+        if plan in ("demand_pro", "pro", "founder") and user_id:
             stripe_sub_id = session.get("subscription", "")
             try:
                 await d.execute("""
-                    INSERT INTO subscriptions (user_id, stripe_subscription_id, plan, status)
-                    VALUES (?, ?, 'demand_pro', 'active')
-                """, (int(user_id), stripe_sub_id))
+                    INSERT OR IGNORE INTO subscriptions (user_id, stripe_subscription_id, plan, status)
+                    VALUES (?, ?, ?, 'active')
+                """, (int(user_id), stripe_sub_id, plan))
                 await d.commit()
-                logger.info(f"Demand Pro subscription created for user {user_id}")
+                logger.info(f"{plan} subscription created for user {user_id}")
+                # Upgrade API keys to pro tier
+                await d.execute(
+                    "UPDATE api_keys SET tier = 'pro' WHERE user_id = ? AND is_active = 1",
+                    (int(user_id),)
+                )
+                await d.commit()
             except Exception as e:
                 logger.error(f"Failed to create subscription: {e}")
+                return JSONResponse({"error": "Internal error"}, status_code=500)
 
     elif event["type"] == "customer.subscription.deleted":
         sub = event["data"]["object"]
         sub_id = sub.get("id", "")
         if sub_id:
             try:
+                # Find the user before updating status so we can downgrade their API keys
+                cursor = await d.execute(
+                    "SELECT user_id FROM subscriptions WHERE stripe_subscription_id = ?",
+                    (sub_id,)
+                )
+                sub_row = await cursor.fetchone()
                 await d.execute(
                     "UPDATE subscriptions SET status = 'cancelled' WHERE stripe_subscription_id = ?",
                     (sub_id,)
                 )
+                # Downgrade API keys back to free — but only if user has no other active subscription
+                if sub_row:
+                    cancelled_user_id = sub_row['user_id']
+                    other_active = await d.execute(
+                        "SELECT id FROM subscriptions WHERE user_id = ? AND status = 'active' LIMIT 1",
+                        (cancelled_user_id,)
+                    )
+                    if not await other_active.fetchone():
+                        await d.execute(
+                            "UPDATE api_keys SET tier = 'free' WHERE user_id = ? AND is_active = 1",
+                            (cancelled_user_id,)
+                        )
+                        logger.info(f"Downgraded API keys for user {cancelled_user_id}")
                 await d.commit()
                 logger.info(f"Subscription {sub_id} cancelled")
             except Exception as e:
                 logger.error(f"Failed to cancel subscription: {e}")
+                return JSONResponse({"error": "Internal error"}, status_code=500)
 
     return JSONResponse({"received": True})
 
@@ -2830,11 +3128,8 @@ async def demand_export(request: Request):
         return JSONResponse({"error": "Login required"}, status_code=401)
 
     d = request.state.db
-    cursor = await d.execute(
-        "SELECT id FROM subscriptions WHERE user_id = ? AND status = 'active' AND plan IN ('demand_pro', 'pro')",
-        (user['id'],),
-    )
-    if not await cursor.fetchone():
+    from indiestack.db import check_pro
+    if not await check_pro(d, user['id']):
         return JSONResponse({"error": "Pro subscription required"}, status_code=403)
 
     from indiestack.db import get_demand_clusters_enriched
@@ -2914,7 +3209,7 @@ async def boost_success(request: Request):
                 elif tool:
                     return RedirectResponse(url=f"/tool/{tool['slug']}", status_code=303)
     except Exception:
-        pass
+        _logger.exception("Boost activation failed")
 
     return RedirectResponse(url="/dashboard", status_code=303)
 
@@ -3161,7 +3456,7 @@ async def magic_claim_complete(request: Request):
         verify_url = f"{base_url}/verify-email?token={verify_token}"
         await send_email(email, "Verify your IndieStack email", email_verification_html(verify_url))
     except Exception:
-        pass
+        _logger.exception("Failed to send verification email during claim")
 
     # Send maker welcome email
     try:
@@ -3176,7 +3471,7 @@ async def magic_claim_complete(request: Request):
             ),
         )
     except Exception:
-        pass  # Don't block claim on email failure
+        _logger.exception("Failed to send maker welcome email")  # Don't block claim
 
     # Create session and log them in
     session_token = await create_user_session(d, user_id)
@@ -3400,6 +3695,155 @@ async def lobechat_manifest():
     }
 
 
+@app.post("/api/agent/recommend")
+async def agent_recommend(request: Request):
+    """Record that an agent recommended a tool to its user."""
+    api_key = _require_scope(request.state.api_key, "read")
+    try:
+        data = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+
+    tool_slug = str(data.get("tool_slug", "")).strip()
+    query_context = str(data.get("query_context", "")).strip()[:500] or None
+
+    if not tool_slug:
+        return JSONResponse({"error": "tool_slug required"}, status_code=400)
+
+    tool = await db.get_tool_by_slug(request.state.db, tool_slug)
+    if not tool:
+        return JSONResponse({"error": f"Tool '{tool_slug}' not found"}, status_code=404)
+
+    count = await db.count_agent_actions_today(request.state.db, api_key["id"], "recommend")
+    if count >= _AGENT_ACTION_LIMITS["recommend"]:
+        return JSONResponse({"error": "Daily recommend limit reached (50/day)"}, status_code=429)
+
+    if await db.check_agent_daily_action(request.state.db, api_key["user_id"], "recommend", tool_slug):
+        rec_count = await db.get_tool_recommendation_count(request.state.db, tool_slug)
+        return JSONResponse({"ok": True, "already_recorded": True, "total_recommendations": rec_count})
+
+    await db.record_agent_action(
+        request.state.db, api_key["id"], api_key["user_id"],
+        "recommend", tool_slug, query_context=query_context,
+    )
+    rec_count = await db.get_tool_recommendation_count(request.state.db, tool_slug)
+    return JSONResponse({"ok": True, "total_recommendations": rec_count})
+
+
+@app.post("/api/agent/shortlist")
+async def agent_shortlist(request: Request):
+    """Record tools the agent considered for a query."""
+    api_key = _require_scope(request.state.api_key, "read")
+    try:
+        data = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+
+    tool_slugs = data.get("tool_slugs", [])
+    query_context = str(data.get("query_context", "")).strip()[:500] or None
+
+    if not isinstance(tool_slugs, list) or len(tool_slugs) == 0:
+        return JSONResponse({"error": "tool_slugs must be a non-empty list"}, status_code=400)
+    if len(tool_slugs) > 10:
+        return JSONResponse({"error": "Max 10 tool slugs per shortlist"}, status_code=400)
+
+    count = await db.count_agent_actions_today(request.state.db, api_key["id"], "shortlist")
+    if count >= _AGENT_ACTION_LIMITS["shortlist"]:
+        return JSONResponse({"error": "Daily shortlist limit reached (100/day)"}, status_code=429)
+
+    recorded = 0
+    for slug in tool_slugs[:10]:
+        slug = str(slug).strip()
+        if not slug:
+            continue
+        tool = await db.get_tool_by_slug(request.state.db, slug)
+        if tool:
+            await db.record_agent_action(
+                request.state.db, api_key["id"], api_key["user_id"],
+                "shortlist", slug, query_context=query_context,
+            )
+            recorded += 1
+    return JSONResponse({"ok": True, "recorded": recorded})
+
+
+@app.post("/api/agent/outcome")
+async def agent_outcome(request: Request):
+    """Report whether a user successfully used a recommended tool."""
+    api_key = _require_scope(request.state.api_key, "write")
+    try:
+        data = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+
+    tool_slug = str(data.get("tool_slug", "")).strip()
+    success = data.get("success")
+    notes = str(data.get("notes", "")).strip()[:1000] or None
+
+    if not tool_slug:
+        return JSONResponse({"error": "tool_slug required"}, status_code=400)
+    if success is None or success not in (True, False, 0, 1):
+        return JSONResponse({"error": "success must be true or false"}, status_code=400)
+
+    tool = await db.get_tool_by_slug(request.state.db, tool_slug)
+    if not tool:
+        return JSONResponse({"error": f"Tool '{tool_slug}' not found"}, status_code=404)
+
+    count = await db.count_agent_actions_today(request.state.db, api_key["id"], "report_outcome")
+    if count >= _AGENT_ACTION_LIMITS["report_outcome"]:
+        return JSONResponse({"error": "Daily outcome report limit reached (20/day)"}, status_code=429)
+
+    if await db.check_agent_action_exists(request.state.db, api_key["user_id"], "report_outcome", tool_slug):
+        return JSONResponse({"ok": True, "already_recorded": True})
+
+    await db.record_agent_action(
+        request.state.db, api_key["id"], api_key["user_id"],
+        "report_outcome", tool_slug, success=int(bool(success)), notes=notes,
+    )
+    stats = await db.get_tool_success_rate(request.state.db, tool_slug)
+    return JSONResponse({"ok": True, "success_rate": stats})
+
+
+@app.post("/api/agent/integration")
+async def agent_integration(request: Request):
+    """Report that two tools were successfully integrated together."""
+    api_key = _require_scope(request.state.api_key, "write")
+    try:
+        data = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+
+    tool_a = str(data.get("tool_a_slug", "")).strip()
+    tool_b = str(data.get("tool_b_slug", "")).strip()
+    notes = str(data.get("notes", "")).strip()[:1000] or None
+
+    if not tool_a or not tool_b:
+        return JSONResponse({"error": "tool_a_slug and tool_b_slug required"}, status_code=400)
+    if tool_a == tool_b:
+        return JSONResponse({"error": "Cannot integrate a tool with itself"}, status_code=400)
+
+    ta = await db.get_tool_by_slug(request.state.db, tool_a)
+    tb = await db.get_tool_by_slug(request.state.db, tool_b)
+    if not ta:
+        return JSONResponse({"error": f"Tool '{tool_a}' not found"}, status_code=404)
+    if not tb:
+        return JSONResponse({"error": f"Tool '{tool_b}' not found"}, status_code=404)
+
+    count = await db.count_agent_actions_today(request.state.db, api_key["id"], "confirm_integration")
+    if count >= _AGENT_ACTION_LIMITS["confirm_integration"]:
+        return JSONResponse({"error": "Daily integration report limit reached (10/day)"}, status_code=429)
+
+    a, b = sorted([tool_a, tool_b])
+    if await db.check_agent_action_exists(request.state.db, api_key["user_id"], "confirm_integration", a, b):
+        return JSONResponse({"ok": True, "already_recorded": True})
+
+    await db.record_agent_action(
+        request.state.db, api_key["id"], api_key["user_id"],
+        "confirm_integration", a, tool_b_slug=b, notes=notes,
+    )
+    await record_tool_pair(request.state.db, a, b, source="agent")
+    return JSONResponse({"ok": True})
+
+
 # ── Mount routes ──────────────────────────────────────────────────────────
 
 app.include_router(landing.router)
@@ -3409,7 +3853,6 @@ app.include_router(search.router)
 app.include_router(submit.router)
 app.include_router(admin.router)
 app.include_router(purchase.router)
-app.include_router(verify.router)
 app.include_router(maker.router)
 app.include_router(collections.router)
 app.include_router(compare.router)
