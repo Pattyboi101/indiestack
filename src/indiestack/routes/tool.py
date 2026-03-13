@@ -677,21 +677,22 @@ async def tool_detail(request: Request, slug: str):
 
         assembly_html += '</div></div>'
 
-    # Build "Works Well With" section from compatibility pairs
+    # Build "Confirmed Works With" section from compatibility pairs
     compatible_html = ''
     try:
         _pairs = await get_verified_pairs(db, slug)
-        if _pairs:
-            _pair_items = ''
+        _has_pairs = bool(_pairs)
+        _pair_items = ''
+        if _has_pairs:
             for _p in _pairs[:8]:  # limit to 8
                 _p_slug = escape(str(_p.get('pair_slug', '')))
                 _p_count = int(_p.get('success_count', 0))
                 _verified = bool(_p.get('verified', 0))
                 _p_url = str(_p.get('pair_url') or '')
                 _badge = '<span style="color:var(--success-text);font-size:11px;margin-left:4px;">&#10003;</span>' if _verified else ''
+                _count_text = f' <span style="color:var(--ink-muted);font-size:11px;font-weight:400;">&middot; {_p_count} confirmed</span>' if _p_count >= 2 else ''
                 _favicon_html = ''
                 if _p_url:
-                    # Extract domain from the actual tool URL for favicon lookup
                     _parsed = urlparse(_p_url)
                     _domain = _parsed.netloc or _parsed.path.split('/')[0]
                     if _domain:
@@ -702,10 +703,108 @@ async def tool_detail(request: Request, slug: str):
                     font-weight:500;transition:border-color 0.15s;"
                     onmouseover="this.style.borderColor='var(--accent)'"
                     onmouseout="this.style.borderColor='var(--border)'"
-                    >{_favicon_html}{_p_slug}{_badge}</a>'''
+                    >{_favicon_html}{_p_slug}{_badge}{_count_text}</a>'''
+
+        # "I use this with..." button for logged-in users
+        _compat_button = ''
+        if user:
+            _tool_name = escape(str(tool.get('name', slug)))
+            _compat_button = f'''
+            <div id="compat-add" style="margin-top:12px;">
+                <button onclick="document.getElementById('compat-search-wrap').style.display='block';this.style.display='none';"
+                    style="display:inline-flex;align-items:center;gap:6px;background:transparent;
+                    border:1px dashed var(--border);border-radius:999px;padding:6px 14px;
+                    color:var(--ink-muted);font-size:13px;cursor:pointer;transition:border-color 0.15s;"
+                    onmouseover="this.style.borderColor='var(--accent)'"
+                    onmouseout="this.style.borderColor='var(--border)'">
+                    <span style="color:var(--accent);font-weight:600;font-size:15px;">+</span> I use this with&hellip;
+                </button>
+                <div id="compat-search-wrap" style="display:none;margin-top:8px;position:relative;">
+                    <input id="compat-search-input" type="text" placeholder="Search for a tool..."
+                        style="width:100%;max-width:300px;padding:8px 12px;border:1px solid var(--border);
+                        border-radius:8px;font-size:13px;background:var(--card-bg);color:var(--ink);
+                        outline:none;" autocomplete="off">
+                    <div id="compat-search-results" style="position:absolute;top:100%;left:0;width:100%;max-width:300px;
+                        background:var(--card-bg);border:1px solid var(--border);border-radius:8px;
+                        margin-top:4px;max-height:200px;overflow-y:auto;display:none;z-index:10;
+                        box-shadow:0 4px 12px rgba(0,0,0,0.1);"></div>
+                </div>
+                <div id="compat-msg" style="display:none;margin-top:8px;font-size:13px;"></div>
+            </div>
+            <script>
+            (function() {{
+                var input = document.getElementById('compat-search-input');
+                var results = document.getElementById('compat-search-results');
+                var msg = document.getElementById('compat-msg');
+                var timer = null;
+                var currentSlug = '{escape(slug)}';
+                input.addEventListener('input', function() {{
+                    clearTimeout(timer);
+                    var q = input.value.trim();
+                    if (q.length < 2) {{ results.style.display = 'none'; return; }}
+                    timer = setTimeout(function() {{
+                        fetch('/api/tools/search?q=' + encodeURIComponent(q))
+                            .then(function(r) {{ return r.json(); }})
+                            .then(function(data) {{
+                                var tools = data.tools || [];
+                                if (!tools.length) {{ results.innerHTML = '<div style="padding:8px 12px;color:var(--ink-muted);font-size:13px;">No tools found</div>'; results.style.display = 'block'; return; }}
+                                var html = '';
+                                for (var i = 0; i < Math.min(tools.length, 6); i++) {{
+                                    var t = tools[i];
+                                    if (t.slug === currentSlug) continue;
+                                    html += '<div class="compat-result" data-slug="' + t.slug + '" style="padding:8px 12px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border);" onmouseover="this.style.background=\\'var(--cream-dark)\\'" onmouseout="this.style.background=\\'transparent\\'">' + (t.name || t.slug) + '</div>';
+                                }}
+                                results.innerHTML = html || '<div style="padding:8px 12px;color:var(--ink-muted);font-size:13px;">No other tools found</div>';
+                                results.style.display = 'block';
+                                results.querySelectorAll('.compat-result').forEach(function(el) {{
+                                    el.addEventListener('click', function() {{
+                                        var pairSlug = el.getAttribute('data-slug');
+                                        results.style.display = 'none';
+                                        input.value = '';
+                                        var fd = new FormData();
+                                        fd.append('pair_slug', pairSlug);
+                                        fetch('/tool/' + currentSlug + '/compatible', {{ method: 'POST', body: fd }})
+                                            .then(function(r) {{
+                                                if (r.status === 409) {{ msg.textContent = 'You already confirmed this pairing'; msg.style.color = 'var(--ink-muted)'; msg.style.display = 'block'; return; }}
+                                                if (r.status === 401) {{ window.location = '/login?next=/tool/' + currentSlug; return; }}
+                                                if (!r.ok) {{ return r.json().then(function(d) {{ msg.textContent = d.error || 'Error'; msg.style.color = 'var(--error-text)'; msg.style.display = 'block'; }}); }}
+                                                return r.json().then(function(d) {{
+                                                    msg.innerHTML = '<span style="color:var(--success-text);">Confirmed!</span> ' + pairSlug + ' added.';
+                                                    msg.style.display = 'block';
+                                                    var pillsDiv = document.getElementById('compat-pills');
+                                                    if (pillsDiv) {{
+                                                        var newPill = document.createElement('a');
+                                                        newPill.href = '/tool/' + pairSlug;
+                                                        newPill.style.cssText = 'display:inline-flex;align-items:center;gap:6px;background:var(--card-bg);border:1px solid var(--border);border-radius:999px;padding:6px 14px;text-decoration:none;color:var(--ink);font-size:13px;font-weight:500;';
+                                                        newPill.textContent = pairSlug;
+                                                        pillsDiv.appendChild(newPill);
+                                                    }}
+                                                }});
+                                            }});
+                                    }});
+                                }});
+                            }});
+                    }}, 300);
+                }});
+                document.addEventListener('click', function(e) {{
+                    if (!e.target.closest('#compat-add')) results.style.display = 'none';
+                }});
+            }})();
+            </script>'''
+
+        if _has_pairs:
             compatible_html = f'''<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:24px 0;">
-                <h3 style="margin:0 0 12px;font-size:16px;font-family:var(--font-display);">Works Well With</h3>
-                <div style="display:flex;flex-wrap:wrap;gap:8px;">{_pair_items}</div>
+                <h3 style="margin:0 0 12px;font-size:16px;font-family:var(--font-display);">Confirmed Works With</h3>
+                <div id="compat-pills" style="display:flex;flex-wrap:wrap;gap:8px;">{_pair_items}</div>
+                {_compat_button}
+            </div>'''
+        elif user:
+            _tool_name = escape(str(tool.get('name', slug)))
+            compatible_html = f'''<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin:24px 0;">
+                <h3 style="margin:0 0 12px;font-size:16px;font-family:var(--font-display);">Confirmed Works With</h3>
+                <p style="color:var(--ink-muted);font-size:13px;margin:0 0 8px;">Know a tool that works with {_tool_name}?</p>
+                <div id="compat-pills" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+                {_compat_button}
             </div>'''
     except Exception:
         pass
