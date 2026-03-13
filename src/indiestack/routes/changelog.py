@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
-from indiestack.routes.components import page_shell, nav_html
+from indiestack.routes.components import page_shell
 
 router = APIRouter()
 
@@ -103,7 +103,6 @@ async def changelog_page(request: Request):
         </div>'''
 
     body = f'''
-    {nav_html(user)}
     <main style="max-width:720px;margin:0 auto;padding:48px 20px;">
         <div style="margin-bottom:40px;">
             <h1 style="font-family:var(--font-display);font-size:var(--heading-lg);color:var(--ink);margin:0 0 8px;">Changelog</h1>
