@@ -41,11 +41,11 @@ Plans:
   1. Tool detail page displays a "Confirmed Works With" section listing compatible tools with confirmation counts
   2. Logged-in user can report a new compatibility pairing via "I use this with..." button on any tool page
   3. Explore page filters results to show only tools compatible with a selected tool
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md -- Tool page compatibility reporting: schema, POST endpoint, "Confirmed Works With" display, smoke tests
+- [ ] 02-02-PLAN.md -- Explore page "compatible with" filter: DB query extension, UI indicator, smoke test
 
 ### Phase 3: Stack Import + Vendor Risk
 **Goal**: Developers can paste a dependency file and get a report showing indie alternatives and vendor risk for every dependency
@@ -86,6 +86,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. AI Visibility Score | 1/1 | Complete    | 2026-03-13 |
-| 2. Compatibility Graph | 0/0 | Not started | - |
+| 2. Compatibility Graph | 0/2 | Not started | - |
 | 3. Stack Import + Vendor Risk | 0/0 | Not started | - |
 | 4. Maker Ego Pings | 0/0 | Not started | - |
