@@ -6,7 +6,7 @@ import hashlib
 import secrets
 import re
 from typing import Optional
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import time as _time
 
 DB_PATH = os.environ.get("INDIESTACK_DB_PATH", "/data/indiestack.db")
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS reviews (
 CREATE TABLE IF NOT EXISTS subscriptions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL REFERENCES users(id),
-    stripe_subscription_id TEXT NOT NULL,
+    stripe_subscription_id TEXT NOT NULL UNIQUE,
     plan TEXT NOT NULL DEFAULT 'pro',
     status TEXT NOT NULL DEFAULT 'active',
     current_period_end TIMESTAMP,
@@ -184,6 +184,7 @@ CREATE INDEX IF NOT EXISTS idx_tools_upvotes ON tools(upvote_count DESC);
 CREATE INDEX IF NOT EXISTS idx_purchases_token ON purchases(purchase_token);
 CREATE INDEX IF NOT EXISTS idx_purchases_tool ON purchases(tool_id);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_purchases_stripe_session ON purchases(stripe_session_id) WHERE stripe_session_id != '';
+CREATE UNIQUE INDEX IF NOT EXISTS idx_subscriptions_stripe_id ON subscriptions(stripe_subscription_id);
 CREATE INDEX IF NOT EXISTS idx_collection_tools_coll ON collection_tools(collection_id);
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);
@@ -225,6 +226,15 @@ CREATE TABLE IF NOT EXISTS email_verification_tokens (
     user_id INTEGER NOT NULL REFERENCES users(id),
     token TEXT NOT NULL UNIQUE,
     expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS magic_link_tokens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL,
+    token TEXT NOT NULL UNIQUE,
+    expires_at TIMESTAMP NOT NULL,
+    used INTEGER NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -416,6 +426,34 @@ CREATE TABLE IF NOT EXISTS outbound_clicks (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_outbound_clicks_tool ON outbound_clicks(tool_id, created_at);
+
+CREATE TABLE IF NOT EXISTS events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    event TEXT NOT NULL,
+    visitor_id TEXT,
+    user_id INTEGER,
+    metadata TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_events_event ON events(event);
+CREATE INDEX IF NOT EXISTS idx_events_created ON events(created_at);
+CREATE TABLE IF NOT EXISTS agent_actions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    api_key_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    action TEXT NOT NULL CHECK(action IN ('recommend','shortlist','report_outcome','confirm_integration','submit_tool')),
+    tool_slug TEXT NOT NULL,
+    tool_b_slug TEXT,
+    success INTEGER,
+    notes TEXT,
+    query_context TEXT,
+    created_at TIMESTAMP DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_agent_actions_key ON agent_actions(api_key_id);
+CREATE INDEX IF NOT EXISTS idx_agent_actions_user ON agent_actions(user_id);
+CREATE INDEX IF NOT EXISTS idx_agent_actions_tool ON agent_actions(tool_slug);
+CREATE INDEX IF NOT EXISTS idx_agent_actions_action ON agent_actions(action);
+CREATE INDEX IF NOT EXISTS idx_agent_actions_date ON agent_actions(created_at);
 """
 
 FTS_SCHEMA = """
@@ -1270,6 +1308,12 @@ async def init_db():
         await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_pairs_b ON tool_pairs(tool_b_slug)")
         await db.commit()
 
+        # Migration: add scopes column to api_keys
+        try:
+            await db.execute("SELECT scopes FROM api_keys LIMIT 1")
+        except Exception:
+            await db.execute("ALTER TABLE api_keys ADD COLUMN scopes TEXT NOT NULL DEFAULT 'read'")
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
@@ -1285,6 +1329,19 @@ def slugify(text: str) -> str:
     text = re.sub(r'[\s_]+', '-', text)
     text = re.sub(r'-+', '-', text)
     return text.strip('-')
+
+
+# ── Event tracking ────────────────────────────────────────────────────────
+
+async def track_event(db, event: str, visitor_id: str = None, user_id: int = None, metadata: dict = None):
+    """Track a conversion/funnel event."""
+    import json
+    meta_str = json.dumps(metadata) if metadata else None
+    await db.execute(
+        "INSERT INTO events (event, visitor_id, user_id, metadata) VALUES (?, ?, ?, ?)",
+        (event, visitor_id, user_id, meta_str)
+    )
+    await db.commit()
 
 
 # ── Category queries ──────────────────────────────────────────────────────
@@ -1319,7 +1376,11 @@ async def get_trending_tools(db: aiosqlite.Connection, limit: int = 6):
     cursor = await db.execute(
         """SELECT t.*, c.name as category_name, c.slug as category_slug,
                   (t.upvote_count) as rank_score,
-                  EXISTS(SELECT 1 FROM maker_updates mu WHERE mu.tool_id = t.id AND mu.created_at >= datetime('now', '-14 days')) as has_changelog_14d
+                  EXISTS(SELECT 1 FROM maker_updates mu WHERE mu.tool_id = t.id AND mu.created_at >= datetime('now', '-14 days')) as has_changelog_14d,
+                  CASE WHEN EXISTS(
+                      SELECT 1 FROM subscriptions s JOIN users u ON u.id = s.user_id
+                      WHERE u.maker_id = t.maker_id AND s.status = 'active'
+                  ) THEN 1 ELSE 0 END AS maker_is_pro
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.status = 'approved'
            ORDER BY t.quality_score DESC, t.created_at DESC LIMIT ?""",
@@ -1331,7 +1392,11 @@ async def get_trending_tools(db: aiosqlite.Connection, limit: int = 6):
 async def get_tools_by_category(db: aiosqlite.Connection, category_id: int, page: int = 1, per_page: int = 12):
     offset = (page - 1) * per_page
     cursor = await db.execute(
-        """SELECT t.*, c.name as category_name, c.slug as category_slug
+        """SELECT t.*, c.name as category_name, c.slug as category_slug,
+                  CASE WHEN EXISTS(
+                      SELECT 1 FROM subscriptions s JOIN users u ON u.id = s.user_id
+                      WHERE u.maker_id = t.maker_id AND s.status = 'active'
+                  ) THEN 1 ELSE 0 END AS maker_is_pro
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.category_id = ? AND t.status = 'approved'
            ORDER BY t.upvote_count DESC, t.created_at DESC
@@ -1350,7 +1415,11 @@ async def get_tool_by_slug(db: aiosqlite.Connection, slug: str):
     cursor = await db.execute(
         """SELECT t.*, c.name as category_name, c.slug as category_slug,
                   m.indie_status, m.slug as maker_slug,
-                  m.story_motivation, m.story_challenge, m.story_advice, m.story_fun_fact
+                  m.story_motivation, m.story_challenge, m.story_advice, m.story_fun_fact,
+                  CASE WHEN EXISTS(
+                      SELECT 1 FROM subscriptions s JOIN users u ON u.id = s.user_id
+                      WHERE u.maker_id = t.maker_id AND s.status = 'active'
+                  ) THEN 1 ELSE 0 END AS maker_is_pro
            FROM tools t JOIN categories c ON t.category_id = c.id
            LEFT JOIN makers m ON t.maker_id = m.id
            WHERE t.slug = ?
@@ -1362,7 +1431,11 @@ async def get_tool_by_slug(db: aiosqlite.Connection, slug: str):
 
 async def get_related_tools(db: aiosqlite.Connection, tool_id: int, category_id: int, limit: int = 3):
     cursor = await db.execute(
-        """SELECT t.*, c.name as category_name, c.slug as category_slug
+        """SELECT t.*, c.name as category_name, c.slug as category_slug,
+                  CASE WHEN EXISTS(
+                      SELECT 1 FROM subscriptions s JOIN users u ON u.id = s.user_id
+                      WHERE u.maker_id = t.maker_id AND s.status = 'active'
+                  ) THEN 1 ELSE 0 END AS maker_is_pro
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.category_id = ? AND t.id != ? AND t.status = 'approved'
            ORDER BY t.upvote_count DESC LIMIT ?""",
@@ -1876,6 +1949,105 @@ async def log_agent_citations_bulk(db: aiosqlite.Connection, tool_ids: list[int]
     await db.commit()
 
 
+async def get_citation_counts_bulk(db: aiosqlite.Connection, tool_ids: list[int], days: int = 7) -> dict:
+    """Get citation counts for multiple tools. Returns {tool_id: count}."""
+    if not tool_ids:
+        return {}
+    placeholders = ','.join('?' * len(tool_ids))
+    cursor = await db.execute(f"""
+        SELECT tool_id, COUNT(*) as cnt
+        FROM agent_citations
+        WHERE tool_id IN ({placeholders})
+          AND created_at >= datetime('now', ?)
+        GROUP BY tool_id
+    """, (*tool_ids, f'-{days} days'))
+    return {r['tool_id']: r['cnt'] for r in await cursor.fetchall()}
+
+
+async def get_compatible_pairs_bulk(db: aiosqlite.Connection, slugs: list[str], limit_per_tool: int = 3) -> dict:
+    """Get top compatible pairs for multiple tools. Returns {slug: [pair_slugs]}."""
+    if not slugs:
+        return {}
+    placeholders = ','.join('?' * len(slugs))
+    cursor = await db.execute(f"""
+        SELECT tool_a_slug, tool_b_slug, success_count
+        FROM tool_pairs
+        WHERE tool_a_slug IN ({placeholders}) OR tool_b_slug IN ({placeholders})
+        ORDER BY success_count DESC
+    """, (*slugs, *slugs))
+    rows = await cursor.fetchall()
+    slug_set = set(slugs)
+    result = {}
+    for r in rows:
+        a, b = r['tool_a_slug'], r['tool_b_slug']
+        if a in slug_set:
+            result.setdefault(a, [])
+            if len(result[a]) < limit_per_tool:
+                result[a].append(b)
+        if b in slug_set:
+            result.setdefault(b, [])
+            if len(result[b]) < limit_per_tool:
+                result[b].append(a)
+    return result
+
+
+async def get_tool_citation_stats(db: aiosqlite.Connection, tool_id: int) -> dict:
+    """Get citation stats for a single tool (7d, 30d counts + agent breakdown)."""
+    c7 = await db.execute(
+        "SELECT COUNT(*) as cnt FROM agent_citations WHERE tool_id = ? AND created_at >= datetime('now', '-7 days')",
+        (tool_id,))
+    r7 = await c7.fetchone()
+    c30 = await db.execute(
+        "SELECT COUNT(*) as cnt FROM agent_citations WHERE tool_id = ? AND created_at >= datetime('now', '-30 days')",
+        (tool_id,))
+    r30 = await c30.fetchone()
+    ca = await db.execute("""
+        SELECT agent_name, COUNT(*) as count
+        FROM agent_citations
+        WHERE tool_id = ? AND created_at >= datetime('now', '-30 days')
+        GROUP BY agent_name ORDER BY count DESC LIMIT 5
+    """, (tool_id,))
+    agents = await ca.fetchall()
+    return {
+        "citations_7d": r7['cnt'] if r7 else 0,
+        "citations_30d": r30['cnt'] if r30 else 0,
+        "agents": [{"name": a['agent_name'], "count": a['count']} for a in agents],
+    }
+
+
+async def get_tool_demand_context(db: aiosqlite.Connection, slug: str, limit: int = 5) -> list:
+    """Get search queries that lead to this tool (what demand it fills)."""
+    cursor = await db.execute("""
+        SELECT query, COUNT(*) as search_count, MAX(created_at) as last_searched
+        FROM search_logs
+        WHERE top_result_slug = ?
+          AND LENGTH(query) >= 3
+        GROUP BY LOWER(query)
+        ORDER BY search_count DESC
+        LIMIT ?
+    """, (slug, limit))
+    return [dict(r) for r in await cursor.fetchall()]
+
+
+async def get_tool_category_percentile(db: aiosqlite.Connection, tool_id: int, category_id: int, days: int = 30) -> int:
+    """Get a tool's citation percentile within its category."""
+    cursor = await db.execute("""
+        WITH tool_citations AS (
+            SELECT t.id, COUNT(ac.id) as cite_count
+            FROM tools t
+            LEFT JOIN agent_citations ac ON ac.tool_id = t.id
+                AND ac.created_at >= datetime('now', ?)
+            WHERE t.category_id = ? AND t.status = 'approved'
+            GROUP BY t.id
+        )
+        SELECT CAST(PERCENT_RANK() OVER (ORDER BY cite_count) * 100 AS INTEGER) as percentile
+        FROM tool_citations
+        WHERE id = ?
+    """, (f'-{days} days', category_id, tool_id))
+    row = await cursor.fetchone()
+    return row['percentile'] if row else 0
+
+
 async def get_agent_citation_counts(db: aiosqlite.Connection, maker_id: int, days: int = 7):
     """Get citation counts per tool for a maker, last N days."""
     cursor = await db.execute("""
@@ -1932,6 +2104,39 @@ async def get_citation_percentile(db: aiosqlite.Connection, maker_id: int, days:
     if row['cite_count'] == 0:
         return {'name': row['name'], 'citations': 0, 'percentile': None}
     return {'name': row['name'], 'citations': row['cite_count'], 'percentile': row['percentile']}
+
+
+async def get_weekly_citation_digest(db, days: int = 7) -> list[dict]:
+    """Get citation data for all makers with cited tools in the last N days.
+
+    Returns a list of dicts, one per tool that was cited:
+    {maker_email, maker_name, tool_name, tool_slug, citation_count,
+     agent_names (comma-separated), sample_context, user_id}
+    """
+    cursor = await db.execute("""
+        SELECT
+            u.email AS maker_email,
+            m.name AS maker_name,
+            t.name AS tool_name,
+            t.slug AS tool_slug,
+            COUNT(ac.id) AS citation_count,
+            GROUP_CONCAT(DISTINCT ac.agent_name) AS agent_names,
+            MAX(ac.context) AS sample_context,
+            u.id AS user_id
+        FROM agent_citations ac
+        JOIN tools t ON t.id = ac.tool_id
+        JOIN makers m ON m.id = t.maker_id
+        JOIN users u ON u.maker_id = m.id
+        WHERE ac.created_at >= datetime('now', ?)
+          AND u.email IS NOT NULL
+          AND u.email != ''
+          AND COALESCE(u.email_opt_out, 0) = 0
+        GROUP BY t.id
+        ORDER BY citation_count DESC
+    """, (f'-{days} days',))
+    rows = await cursor.fetchall()
+    cols = [d[0] for d in cursor.description]
+    return [dict(zip(cols, r)) for r in rows]
 
 
 async def has_upvoted(db: aiosqlite.Connection, tool_id: int, ip: str) -> bool:
@@ -2139,29 +2344,39 @@ async def clear_featured_tool(db: aiosqlite.Connection):
 
 async def delete_tool(db: aiosqlite.Connection, tool_id: int):
     """Permanently delete a tool and all its referencing rows."""
+    # Look up slug for tool_pairs cleanup (references by slug, not id)
+    row = await db.execute("SELECT slug FROM tools WHERE id = ?", (tool_id,))
+    slug_row = await row.fetchone()
+    tool_slug = slug_row["slug"] if slug_row else None
+
     # Delete from all tables that reference tools(id)
     for table in [
         "upvotes", "purchases", "featured_tools", "collection_tools",
         "reviews", "tool_views", "wishlists", "maker_updates",
         "stack_tools", "user_stack_tools", "outbound_clicks",
         "claim_tokens", "magic_claim_tokens", "sponsored_placements",
-        "milestones",
+        "milestones", "claim_requests", "tool_reactions",
+        "agent_citations",
     ]:
         try:
             await db.execute(f"DELETE FROM {table} WHERE tool_id = ?", (tool_id,))
         except Exception:
-            pass  # Table may not have tool_id column
+            pass  # Table may not exist yet
+    # Delete from tool_pairs (references by slug, not id)
+    if tool_slug:
+        try:
+            await db.execute(
+                "DELETE FROM tool_pairs WHERE tool_a_slug = ? OR tool_b_slug = ?",
+                (tool_slug, tool_slug),
+            )
+        except Exception:
+            pass
     # Delete from FTS index
     try:
         await db.execute("DELETE FROM tools_fts WHERE rowid = ?", (tool_id,))
     except Exception:
         pass
-    # Temporarily disable FK checks to catch any remaining references
-    await db.execute("PRAGMA foreign_keys = OFF")
-    try:
-        await db.execute("DELETE FROM tools WHERE id = ?", (tool_id,))
-    finally:
-        await db.execute("PRAGMA foreign_keys = ON")
+    await db.execute("DELETE FROM tools WHERE id = ?", (tool_id,))
     await db.commit()
 
 
@@ -2532,17 +2747,27 @@ async def search_tools_advanced(db: aiosqlite.Connection, *, query: str = "",
         "price_high": "COALESCE(t.price_pence, 0) DESC, t.created_at DESC",
     }.get(sort, "t.upvote_count DESC, t.created_at DESC")
 
+    pro_boost_expr = ("rank + (CASE WHEN EXISTS(SELECT 1 FROM subscriptions s2 "
+                      "JOIN users u2 ON u2.id = s2.user_id "
+                      "WHERE u2.maker_id = t.maker_id AND s2.status = 'active') "
+                      "THEN -0.1 ELSE 0 END)")
+
     if query.strip():
         safe_q = sanitize_fts(query)
         if not safe_q:
             return [], 0
         # Use FTS
-        sql = f"""SELECT t.*, c.name as category_name, c.slug as category_slug, bm25(tools_fts) as rank
+        relevance_order = pro_boost_expr if sort == "relevance" else order_by
+        sql = f"""SELECT t.*, c.name as category_name, c.slug as category_slug, bm25(tools_fts) as rank,
+                         CASE WHEN EXISTS(
+                             SELECT 1 FROM subscriptions s JOIN users u ON u.id = s.user_id
+                             WHERE u.maker_id = t.maker_id AND s.status = 'active'
+                         ) THEN 1 ELSE 0 END AS maker_is_pro
                   FROM tools_fts fts
                   JOIN tools t ON t.id = fts.rowid
                   JOIN categories c ON t.category_id = c.id
                   WHERE tools_fts MATCH ? AND {where}
-                  ORDER BY {order_by if sort != 'relevance' else 'rank'}
+                  ORDER BY {relevance_order}
                   LIMIT ? OFFSET ?"""
         fts_params = [safe_q] + params + [per_page, (page - 1) * per_page]
         cursor = await db.execute(sql, fts_params)
@@ -2561,7 +2786,11 @@ async def search_tools_advanced(db: aiosqlite.Connection, *, query: str = "",
             raw_q = query.strip()
             like_q = f"%{raw_q}%"
             fallback_order = "t.upvote_count DESC, t.created_at DESC"
-            fallback_sql = f"""SELECT t.*, c.name as category_name, c.slug as category_slug
+            fallback_sql = f"""SELECT t.*, c.name as category_name, c.slug as category_slug,
+                                     CASE WHEN EXISTS(
+                                         SELECT 1 FROM subscriptions s JOIN users u ON u.id = s.user_id
+                                         WHERE u.maker_id = t.maker_id AND s.status = 'active'
+                                     ) THEN 1 ELSE 0 END AS maker_is_pro
                       FROM tools t
                       JOIN categories c ON t.category_id = c.id
                       WHERE LOWER(t.replaces) LIKE LOWER(?) AND {where}
@@ -2576,7 +2805,11 @@ async def search_tools_advanced(db: aiosqlite.Connection, *, query: str = "",
             count_cursor = await db.execute(fallback_count_sql, [like_q] + params)
             total = (await count_cursor.fetchone())['cnt']
     else:
-        sql = f"""SELECT t.*, c.name as category_name, c.slug as category_slug
+        sql = f"""SELECT t.*, c.name as category_name, c.slug as category_slug,
+                         CASE WHEN EXISTS(
+                             SELECT 1 FROM subscriptions s JOIN users u ON u.id = s.user_id
+                             WHERE u.maker_id = t.maker_id AND s.status = 'active'
+                         ) THEN 1 ELSE 0 END AS maker_is_pro
                   FROM tools t JOIN categories c ON t.category_id = c.id
                   WHERE {where}
                   ORDER BY {order_by}
@@ -2809,6 +3042,23 @@ async def update_subscription_status(db: aiosqlite.Connection, stripe_subscripti
         (status, stripe_subscription_id),
     )
     await db.commit()
+
+
+async def check_pro(db, user_id: int) -> bool:
+    """Check if a user has an active Pro subscription (any plan)."""
+    if not user_id:
+        return False
+    sub = await get_active_subscription(db, user_id)
+    return sub is not None
+
+
+async def get_founder_seat_count(db) -> int:
+    """Count how many founder subscriptions have been sold."""
+    cursor = await db.execute(
+        "SELECT COUNT(*) AS cnt FROM subscriptions WHERE plan = 'founder' AND status = 'active'"
+    )
+    row = await cursor.fetchone()
+    return row['cnt'] if row else 0
 
 
 # ── Maker by ID ──────────────────────────────────────────────────────────
@@ -3146,6 +3396,35 @@ async def verify_email_token(db, token: str):
     # Generate referral code on verification
     await ensure_referral_code(db, row['user_id'])
     return row['user_id']
+
+
+# ── Magic Link Auth ──────────────────────────────────────────────────────
+
+async def create_magic_link_token(db, email: str) -> str:
+    """Create a magic link token. Returns the token string. 15 minute expiry."""
+    token = secrets.token_urlsafe(32)
+    expires = (datetime.now(timezone.utc) + timedelta(minutes=15)).strftime('%Y-%m-%d %H:%M:%S')
+    await db.execute(
+        "INSERT INTO magic_link_tokens (email, token, expires_at) VALUES (?, ?, ?)",
+        (email.lower().strip(), token, expires)
+    )
+    await db.commit()
+    return token
+
+
+async def validate_magic_link_token(db, token: str):
+    """Validate and consume a magic link token. Returns email or None."""
+    cursor = await db.execute(
+        "SELECT email FROM magic_link_tokens WHERE token = ? AND used = 0 AND expires_at > datetime('now')",
+        (token,)
+    )
+    row = await cursor.fetchone()
+    if not row:
+        return None
+    # Mark as used
+    await db.execute("UPDATE magic_link_tokens SET used = 1 WHERE token = ?", (token,))
+    await db.commit()
+    return row['email'] if isinstance(row, dict) else row[0]
 
 
 # ── Tokens Saved ─────────────────────────────────────────────────────────
@@ -4779,18 +5058,21 @@ async def get_recently_claimed_tools(db, limit=20) -> list:
 async def create_api_key(db: aiosqlite.Connection, user_id: int, name: str = "Default") -> dict:
     """Create a new API key for a user. Returns the full key (only time it's visible)."""
     key = "isk_" + secrets.token_urlsafe(32)
+    # Check if user is Pro — new keys should inherit the correct tier
+    is_pro = await check_pro(db, user_id)
+    tier = "pro" if is_pro else "free"
     await db.execute(
-        "INSERT INTO api_keys (key, user_id, name) VALUES (?, ?, ?)",
-        (key, user_id, name),
+        "INSERT INTO api_keys (key, user_id, name, tier) VALUES (?, ?, ?, ?)",
+        (key, user_id, name, tier),
     )
     await db.commit()
-    return {"key": key, "name": name}
+    return {"key": key, "name": name, "tier": tier}
 
 
 async def get_api_keys_for_user(db: aiosqlite.Connection, user_id: int) -> list[dict]:
     """Get all API keys for a user (key masked to prefix + last 8 chars)."""
     cursor = await db.execute(
-        "SELECT id, key, name, tier, is_active, last_used_at, created_at "
+        "SELECT id, key, name, tier, scopes, is_active, last_used_at, created_at "
         "FROM api_keys WHERE user_id = ? ORDER BY created_at DESC",
         (user_id,),
     )
@@ -4803,6 +5085,7 @@ async def get_api_keys_for_user(db: aiosqlite.Connection, user_id: int) -> list[
             "key_preview": k[:4] + "..." + k[-8:] if len(k) > 12 else k,
             "name": r["name"],
             "tier": r["tier"],
+            "scopes": r["scopes"],
             "is_active": r["is_active"],
             "last_used_at": r["last_used_at"],
             "created_at": r["created_at"],
@@ -4813,7 +5096,7 @@ async def get_api_keys_for_user(db: aiosqlite.Connection, user_id: int) -> list[
 async def get_api_key_by_key(db: aiosqlite.Connection, key: str) -> dict | None:
     """Look up an active API key by its full key string."""
     cursor = await db.execute(
-        "SELECT ak.id, ak.key, ak.user_id, ak.name, ak.tier, ak.is_active, u.email "
+        "SELECT ak.id, ak.key, ak.user_id, ak.name, ak.tier, ak.scopes, ak.is_active, u.email "
         "FROM api_keys ak JOIN users u ON ak.user_id = u.id "
         "WHERE ak.key = ? AND ak.is_active = 1",
         (key,),
@@ -4846,6 +5129,134 @@ async def log_api_usage(db: aiosqlite.Connection, key_id: int, endpoint: str):
         "INSERT INTO api_usage_logs (key_id, endpoint) VALUES (?, ?)",
         (key_id, endpoint),
     )
+
+
+async def record_agent_action(
+    db: aiosqlite.Connection,
+    api_key_id: int,
+    user_id: int,
+    action: str,
+    tool_slug: str,
+    tool_b_slug: str | None = None,
+    success: int | None = None,
+    notes: str | None = None,
+    query_context: str | None = None,
+) -> int:
+    """Record an agent action. Returns the action ID."""
+    cursor = await db.execute(
+        """INSERT INTO agent_actions
+           (api_key_id, user_id, action, tool_slug, tool_b_slug, success, notes, query_context)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+        (api_key_id, user_id, action, tool_slug, tool_b_slug, success, notes, query_context),
+    )
+    await db.commit()
+    return cursor.lastrowid
+
+
+async def get_agent_action_counts(db: aiosqlite.Connection, user_id: int, days: int = 30) -> dict:
+    """Get agent action counts for a user's dashboard."""
+    cursor = await db.execute(
+        """SELECT action, COUNT(*) as cnt
+           FROM agent_actions
+           WHERE user_id = ? AND created_at >= datetime('now', ?)
+           GROUP BY action""",
+        (user_id, f'-{days} days'),
+    )
+    rows = await cursor.fetchall()
+    counts = {r['action']: r['cnt'] for r in rows}
+    cursor2 = await db.execute(
+        """SELECT success, COUNT(*) as cnt
+           FROM agent_actions
+           WHERE user_id = ? AND action = 'report_outcome' AND created_at >= datetime('now', ?)
+           GROUP BY success""",
+        (user_id, f'-{days} days'),
+    )
+    outcome_rows = await cursor2.fetchall()
+    counts['outcomes_success'] = sum(r['cnt'] for r in outcome_rows if r['success'] == 1)
+    counts['outcomes_fail'] = sum(r['cnt'] for r in outcome_rows if r['success'] == 0)
+    return counts
+
+
+async def get_agent_action_log(db: aiosqlite.Connection, user_id: int, limit: int = 50) -> list[dict]:
+    """Get recent agent actions for the activity log."""
+    cursor = await db.execute(
+        """SELECT action, tool_slug, tool_b_slug, success, notes, query_context, created_at
+           FROM agent_actions
+           WHERE user_id = ?
+           ORDER BY created_at DESC
+           LIMIT ?""",
+        (user_id, limit),
+    )
+    return [dict(r) for r in await cursor.fetchall()]
+
+
+async def check_agent_action_exists(db: aiosqlite.Connection, user_id: int, action: str, tool_slug: str, tool_b_slug: str | None = None) -> bool:
+    """Check if an agent action already exists (for dedup)."""
+    if tool_b_slug:
+        cursor = await db.execute(
+            "SELECT 1 FROM agent_actions WHERE user_id = ? AND action = ? AND tool_slug = ? AND tool_b_slug = ?",
+            (user_id, action, tool_slug, tool_b_slug),
+        )
+    else:
+        cursor = await db.execute(
+            "SELECT 1 FROM agent_actions WHERE user_id = ? AND action = ? AND tool_slug = ?",
+            (user_id, action, tool_slug),
+        )
+    return await cursor.fetchone() is not None
+
+
+async def check_agent_daily_action(db: aiosqlite.Connection, user_id: int, action: str, tool_slug: str) -> bool:
+    """Check if this action was already taken today (for daily dedup)."""
+    cursor = await db.execute(
+        "SELECT 1 FROM agent_actions WHERE user_id = ? AND action = ? AND tool_slug = ? AND created_at >= date('now')",
+        (user_id, action, tool_slug),
+    )
+    return await cursor.fetchone() is not None
+
+
+async def count_agent_actions_today(db: aiosqlite.Connection, api_key_id: int, action: str) -> int:
+    """Count how many times this action was taken today by this key."""
+    cursor = await db.execute(
+        "SELECT COUNT(*) FROM agent_actions WHERE api_key_id = ? AND action = ? AND created_at >= date('now')",
+        (api_key_id, action),
+    )
+    row = await cursor.fetchone()
+    return row[0] if row else 0
+
+
+async def get_tool_recommendation_count(db: aiosqlite.Connection, tool_slug: str) -> int:
+    """Get total recommendation count for a tool (across all agents)."""
+    cursor = await db.execute(
+        "SELECT COUNT(*) FROM agent_actions WHERE tool_slug = ? AND action = 'recommend'",
+        (tool_slug,),
+    )
+    row = await cursor.fetchone()
+    return row[0] if row else 0
+
+
+async def get_tool_success_rate(db: aiosqlite.Connection, tool_slug: str) -> dict:
+    """Get success rate for a tool from agent outcome reports."""
+    cursor = await db.execute(
+        "SELECT success, COUNT(*) as cnt FROM agent_actions WHERE tool_slug = ? AND action = 'report_outcome' GROUP BY success",
+        (tool_slug,),
+    )
+    rows = await cursor.fetchall()
+    success = sum(r['cnt'] for r in rows if r['success'] == 1)
+    fail = sum(r['cnt'] for r in rows if r['success'] == 0)
+    total = success + fail
+    return {"success": success, "fail": fail, "total": total, "rate": round(success / total * 100) if total else 0}
+
+
+async def update_api_key_scopes(db: aiosqlite.Connection, key_id: int, user_id: int, scopes: str) -> bool:
+    """Update API key scopes. user_id check prevents cross-user modification."""
+    if scopes not in ('read', 'read,write'):
+        return False
+    cursor = await db.execute(
+        "UPDATE api_keys SET scopes = ? WHERE id = ? AND user_id = ?",
+        (scopes, key_id, user_id),
+    )
+    await db.commit()
+    return cursor.rowcount > 0
 
 
 async def get_api_key_usage_stats(db: aiosqlite.Connection, user_id: int, days: int = 30) -> list[dict]:
