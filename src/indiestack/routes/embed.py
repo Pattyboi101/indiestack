@@ -82,7 +82,7 @@ async def embed_docs(request: Request):
                     font-family:var(--font-mono);font-size:13px;
                     overflow-x:auto;white-space:pre-wrap;word-break:break-all;
                 "></pre>
-                <button onclick="copyCode('script-code')" style="
+                <button id="copy-script" data-copy="" style="
                     position:absolute;top:8px;right:8px;background:var(--slate);color:#fff;
                     border:none;border-radius:var(--radius-sm);padding:8px 16px;font-size:12px;
                     font-weight:600;cursor:pointer;
@@ -104,7 +104,7 @@ async def embed_docs(request: Request):
                     font-family:var(--font-mono);font-size:13px;
                     overflow-x:auto;white-space:pre-wrap;word-break:break-all;
                 "></pre>
-                <button onclick="copyCode('iframe-code')" style="
+                <button id="copy-iframe" data-copy="" style="
                     position:absolute;top:8px;right:8px;background:var(--slate);color:#fff;
                     border:none;border-radius:var(--radius-sm);padding:8px 16px;font-size:12px;
                     font-weight:600;cursor:pointer;
@@ -145,24 +145,22 @@ async def embed_docs(request: Request):
     var iframeCode = document.getElementById("iframe-code");
     var previewIframe = document.getElementById("preview-iframe");
 
+    var copyScriptBtn = document.getElementById("copy-script");
+    var copyIframeBtn = document.getElementById("copy-iframe");
+
     function updateSnippets() {{
         var cat = catSelect.value;
-        scriptCode.textContent = '<script src="' + BASE + '/embed/widget.js" data-category="' + cat + '"></' + 'script>';
-        iframeCode.textContent = '<iframe src="' + BASE + '/embed/' + cat + '" style="width:100%;border:none;min-height:400px;" loading="lazy"></iframe>';
+        var scriptSnippet = '<script src="' + BASE + '/embed/widget.js" data-category="' + cat + '"></' + 'script>';
+        var iframeSnippet = '<iframe src="' + BASE + '/embed/' + cat + '" style="width:100%;border:none;min-height:400px;" loading="lazy"></iframe>';
+        scriptCode.textContent = scriptSnippet;
+        iframeCode.textContent = iframeSnippet;
+        copyScriptBtn.setAttribute("data-copy", scriptSnippet);
+        copyIframeBtn.setAttribute("data-copy", iframeSnippet);
         previewIframe.src = BASE + '/embed/' + cat;
     }}
 
     catSelect.addEventListener("change", updateSnippets);
     updateSnippets();
-
-    function copyCode(id) {{
-        var el = document.getElementById(id);
-        navigator.clipboard.writeText(el.textContent).then(function() {{
-            var btn = el.parentNode.querySelector("button");
-            btn.textContent = "Copied!";
-            setTimeout(function() {{ btn.textContent = "Copy"; }}, 2000);
-        }});
-    }}
     </script>
     """
 

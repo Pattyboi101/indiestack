@@ -680,6 +680,7 @@ def nav_html(user=None) -> str:
                         <a href="/what-is-indiestack" class="nav-dropdown-item">What is IndieStack?</a>
                         <a href="/gaps" class="nav-dropdown-item">Demand Board</a>
                         <a href="/stacks" class="nav-dropdown-item">Stacks</a>
+                        <a href="/changelog" class="nav-dropdown-item">Changelog</a>
                     </div>
                 </div>
                 <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Submit</a>
@@ -694,6 +695,7 @@ def nav_html(user=None) -> str:
             <a href="/stacks">Stacks</a>
             <a href="/gaps">Demand Board</a>
             <a href="/what-is-indiestack">What is IndieStack?</a>
+            <a href="/changelog">Changelog</a>
             <a href="/submit" class="btn btn-primary">Submit</a>
             <button onclick="toggleTheme()">Toggle Theme</button>
             {mobile_auth_links}
@@ -789,6 +791,7 @@ def footer_html() -> str:
             <a href="/about" class="footer-link">About</a>
             <a href="/faq" class="footer-link">FAQ</a>
             <a href="/submit" class="footer-link">Submit</a>
+            <a href="/changelog" class="footer-link">Changelog</a>
           </div>
           <!-- Legal -->
           <div>
@@ -1237,6 +1240,39 @@ def update_card(update: dict) -> str:
     """
 
 
+# ── Copy-to-Clipboard Script ─────────────────────────────────────────────
+
+def copy_js() -> str:
+    """Sitewide copy-to-clipboard with micro-interaction feedback."""
+    return '''<script>
+document.addEventListener('click', function(e) {
+    const btn = e.target.closest('[data-copy]');
+    if (!btn) return;
+    const text = btn.getAttribute('data-copy');
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(function() {
+        const orig = btn.innerHTML;
+        const origBg = btn.style.background;
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!';
+        btn.style.background = 'var(--accent)';
+        btn.style.transform = 'scale(1.05)';
+        btn.style.transition = 'transform 0.15s ease, background 0.15s ease';
+        setTimeout(function() {
+            btn.innerHTML = orig;
+            btn.style.background = origBg;
+            btn.style.transform = 'scale(1)';
+        }, 1500);
+    });
+});
+</script>'''
+
+
+def copy_button(text: str, label: str = "Copy") -> str:
+    """Render a copy button with data-copy attribute for the sitewide copy handler."""
+    safe = escape(text).replace("'", "&#39;").replace('"', "&quot;")
+    return f'<button data-copy="{safe}" style="background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:inline-flex;align-items:center;gap:4px;">{label}</button>'
+
+
 # ── Upvote Script ─────────────────────────────────────────────────────────
 
 def upvote_js() -> str:
@@ -1392,6 +1428,7 @@ def page_shell(title: str, body: str, *, description: str = "", extra_head: str 
     {upvote_js()}
     {wishlist_js()}
     {theme_js()}
+    {copy_js()}
     <div id="toast" class="toast" role="alert" aria-live="polite"></div>
     <script>
     function showToast(message) {{

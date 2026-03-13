@@ -213,16 +213,22 @@ async def tool_detail(request: Request, slug: str):
     if tool.get('github_url'):
         gh_stars = int(tool.get('github_stars', 0))
         gh_lang = tool.get('github_language', '')
-        gh_stars_text = f" &middot; &#9733; {gh_stars}" if gh_stars else ""
-        gh_lang_text = f" &middot; {escape(gh_lang)}" if gh_lang else ""
+        gh_meta_pills = ''
+        if gh_stars:
+            gh_meta_pills += f'<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:999px;font-size:12px;color:var(--ink-muted);font-weight:500;">&#9733; {gh_stars:,}</span>'
+        if gh_lang:
+            gh_meta_pills += f'<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--card-bg);border:1px solid var(--border);border-radius:999px;font-size:12px;color:var(--ink-muted);font-weight:500;">{escape(gh_lang)}</span>'
         github_badge = f'''
-        <a href="{escape(str(tool['github_url']))}" target="_blank" rel="noopener"
-           style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;margin-top:8px;
-                  background:var(--ink);color:white;border-radius:999px;font-size:13px;
-                  font-weight:600;text-decoration:none;">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View on GitHub{gh_stars_text}{gh_lang_text}
-        </a>'''
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;">
+            <a href="{escape(str(tool['github_url']))}" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;
+                      background:var(--ink);color:white;border-radius:999px;font-size:13px;
+                      font-weight:600;text-decoration:none;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                View on GitHub
+            </a>
+            {gh_meta_pills}
+        </div>'''
 
         # GitHub maintenance signals
         _gh_signals = []
@@ -619,11 +625,8 @@ async def tool_detail(request: Request, slug: str):
             f'margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;">'
             f'<code style="font-family:var(--font-mono);font-size:14px;color:var(--slate);white-space:nowrap;'
             f'overflow-x:auto;">{safe_cmd}</code>'
-            f'<button onclick="navigator.clipboard.writeText(\'{safe_cmd}\');'
-            f'this.textContent=\'Copied!\';setTimeout(()=>this.textContent=\'Copy\',2000)"'
-            f' style="background:var(--slate);color:white;border:none;border-radius:999px;'
-            f'padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;'
-            f'font-family:var(--font-body);min-height:36px;">Copy</button>'
+            f'<button data-copy="{safe_cmd}" style="background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;'
+            f'padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">Copy</button>'
             f'</div>'
         )
 
