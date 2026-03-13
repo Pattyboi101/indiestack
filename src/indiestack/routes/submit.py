@@ -143,11 +143,24 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
     """
 
     if logged_in:
+        email_field = ''
         submit_or_login_btn = '<button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Submit for Review</button>'
     else:
+        email_val = escape(str(v.get('email', '')))
+        email_field = f'''
+            <div class="form-group">
+                <label for="email">Your Email * <span style="color:var(--ink-muted);font-size:13px;font-weight:400;">(so we can follow up)</span></label>
+                <input type="email" id="email" name="email" class="form-input" required value="{email_val}"
+                       placeholder="you@example.com">
+            </div>
+            <div style="position:absolute;left:-9999px;" aria-hidden="true">
+                <input type="text" name="website2" tabindex="-1" autocomplete="off">
+            </div>
+        '''
         submit_or_login_btn = (
-            '<a href="/login" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;text-decoration:none;display:flex;align-items:center;">Log in to submit your creation</a>'
-            '<p style="text-align:center;color:var(--ink-muted);font-size:13px;margin-top:12px;">Takes 30 seconds. Then come back and submit.</p>'
+            '<button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Submit for Review</button>'
+            '<p style="text-align:center;color:var(--ink-muted);font-size:13px;margin-top:12px;">'
+            'No account needed. <a href="/login" style="color:var(--accent);">Log in with GitHub</a> to claim and manage your listing later.</p>'
         )
 
     github_js = """
@@ -343,6 +356,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                     </span>
                 </label>
             </div>
+            {email_field}
             {submit_or_login_btn}
         </form>
         {github_js}
@@ -433,7 +447,8 @@ async def submit_post(
                   tags=tags, replaces=replaces, price=price, delivery_type=delivery_type, delivery_url=delivery_url,
                   tool_type=tool_type if is_plugin else None,
                   platforms=platforms if is_plugin else '',
-                  install_command=install_command if is_plugin else '')
+                  install_command=install_command if is_plugin else '',
+                  email=email)
 
     # Auto-prepend https:// if missing protocol (mobile users often skip it)
     if url.strip() and not url.startswith("http"):
@@ -451,6 +466,8 @@ async def submit_post(
         errors.append("Description is required.")
     if not category_id or not str(category_id).isdigit():
         errors.append("Please select a category.")
+    if is_public and (not email.strip() or '@' not in email):
+        errors.append("A valid email is required.")
 
     # Parse price
     price_pence = None
@@ -470,7 +487,7 @@ async def submit_post(
         delivery_type = 'link'
 
     if errors:
-        body = submit_form(categories, values, error=" ".join(errors))
+        body = submit_form(categories, values, error=" ".join(errors), logged_in=not is_public)
         return HTMLResponse(page_shell("Make Your Creation Discoverable by AI", body, user=request.state.user))
 
     tool_id = await create_tool(
@@ -484,27 +501,21 @@ async def submit_post(
         install_command=install_command.strip() if is_plugin else '',
     )
 
-    # Auto-detect GitHub URL
+    # Post-create updates (single commit for all)
     if 'github.com/' in url:
         import re as _re
         gh_match = _re.match(r'https?://github\.com/([^/]+)/([^/]+)', url)
         if gh_match:
             await db.execute("UPDATE tools SET github_url = ? WHERE id = ?", (url.strip(), tool_id))
-            await db.commit()
-
-    # Save replaces field if provided
     if replaces.strip():
         await db.execute("UPDATE tools SET replaces = ? WHERE id = ?", (replaces.strip(), tool_id))
-        await db.commit()
-
-    # Store submitter email for public (no-login) submissions
     if is_public and email.strip():
         await db.execute(
             "UPDATE tools SET submitter_email = ?, submitted_from_ip = ? WHERE id = ?",
             (email.strip().lower(), request.client.host, tool_id),
         )
-        await db.commit()
         logger.info(f"Public submission: '{name.strip()}' from {email.strip()} ({request.client.host})")
+    await db.commit()
 
     # Get the tool slug for verification link
     tool = await get_tool_by_id(db, tool_id)

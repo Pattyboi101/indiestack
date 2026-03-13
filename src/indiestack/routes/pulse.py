@@ -72,6 +72,9 @@ async def pulse_api(request: Request):
     """JSON endpoint for auto-refresh polling (used by pro dashboard)."""
     db = request.state.db
     events = await get_pulse_feed(db, limit=30)
+    filter_type = request.query_params.get('filter', '')
+    if filter_type == 'gaps':
+        events = [e for e in events if e['type'] == 'gap']
     html = ''.join(_event_html(dict(e)) for e in events) if events else '''
         <div style="text-align:center;padding:40px 20px;color:var(--ink-muted);">
             <p style="font-size:14px;">Waiting for activity...</p>

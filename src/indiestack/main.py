@@ -2824,7 +2824,7 @@ async def stripe_webhook(request: Request):
 
 @app.get("/api/demand-export")
 async def demand_export(request: Request):
-    """Export demand clusters as JSON (pro only)."""
+    """Export demand clusters as JSON or CSV (pro only)."""
     user = request.state.user
     if not user:
         return JSONResponse({"error": "Login required"}, status_code=401)
@@ -2834,13 +2834,40 @@ async def demand_export(request: Request):
         "SELECT id FROM subscriptions WHERE user_id = ? AND status = 'active' AND plan IN ('demand_pro', 'pro')",
         (user['id'],),
     )
-    row = await cursor.fetchone()
-    if not row:
+    if not await cursor.fetchone():
         return JSONResponse({"error": "Pro subscription required"}, status_code=403)
 
-    from indiestack.db import get_demand_clusters
-    clusters = await get_demand_clusters(d, limit=50)
-    return JSONResponse({"demand_signals": clusters})
+    from indiestack.db import get_demand_clusters_enriched
+    clusters = await get_demand_clusters_enriched(d, limit=100)
+
+    fmt = request.query_params.get('format', 'json')
+    if fmt == 'csv':
+        import csv, io
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(['query', 'opportunity_score', 'zero_count', 'search_count', 'competitor_density', 'sources', 'first_searched', 'last_searched'])
+        for c in clusters:
+            writer.writerow([c['query'], c['opportunity_score'], c['zero_count'], c['search_count'], c['competitor_density'], c.get('sources', ''), c.get('first_searched', ''), c.get('last_searched', '')])
+        from fastapi.responses import Response
+        return Response(
+            content=output.getvalue(),
+            media_type='text/csv',
+            headers={'Content-Disposition': 'attachment; filename=indiestack-demand-signals.csv'},
+        )
+
+    return JSONResponse([
+        {
+            "query": c['query'],
+            "opportunity_score": c['opportunity_score'],
+            "zero_count": c['zero_count'],
+            "search_count": c['search_count'],
+            "competitor_density": c['competitor_density'],
+            "sources": c.get('sources', ''),
+            "first_searched": c.get('first_searched', ''),
+            "last_searched": c.get('last_searched', ''),
+        }
+        for c in clusters
+    ])
 
 
 @app.get("/api/click/{slug}")

@@ -8,11 +8,21 @@ router = APIRouter()
 CHANGELOG = [
     {
         "date": "2026-03-13",
-        "title": "Site Polish & Micro-Interactions",
+        "title": "Demand Signals Pro Upgrade & Site Polish",
         "items": [
+            ("feat", "Demand Signals Pro: Opportunity Score — algorithmic ranking of best gaps to fill"),
+            ("feat", "Demand Signals Pro: Inline SVG sparklines — 14-day trend per signal"),
+            ("feat", "Demand Signals Pro: Competitor density indicators — see market saturation at a glance"),
+            ("feat", "Demand Signals Pro: Top 3 insight cards with sparklines and build CTAs"),
+            ("feat", "Demand Signals Pro: Sortable columns (Score, Failed, Last Seen)"),
+            ("feat", "Demand Signals Pro: Gaps-only live feed — filtered to what matters"),
+            ("feat", "Demand Signals Pro: CSV export with enriched data"),
+            ("feat", "Public tool submissions — no login required, just an email"),
             ("feat", "Sitewide copy-to-clipboard with visual feedback on all code blocks"),
             ("feat", "This changelog page — build in public"),
             ("feat", "Demand signal SEO improvements"),
+            ("fix", "GitHub button readability on tool detail pages"),
+            ("fix", "Dropdown menu contrast in dark mode"),
         ],
     },
     {

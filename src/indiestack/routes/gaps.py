@@ -57,6 +57,48 @@ def _relative_time(timestamp: str) -> str:
         return timestamp[:10] if len(timestamp) >= 10 else timestamp
 
 
+def _sparkline_svg(daily_counts: list, width: int = 80, height: int = 20) -> str:
+    """Render a 14-day sparkline as inline SVG."""
+    if not daily_counts or all(v == 0 for v in daily_counts):
+        return '<span style="color:var(--ink-muted);font-size:11px;">no data</span>'
+    max_val = max(daily_counts) or 1
+    n = len(daily_counts)
+    step = width / max(n - 1, 1)
+    points = ' '.join(
+        f'{round(i * step, 1)},{round(height - (v / max_val) * (height - 2) - 1, 1)}'
+        for i, v in enumerate(daily_counts)
+    )
+    return (
+        f'<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
+        f'style="vertical-align:middle;">'
+        f'<polyline points="{points}" fill="none" stroke="var(--accent)" '
+        f'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'
+        f'</svg>'
+    )
+
+
+def _density_indicator(count: int) -> str:
+    """Render competitor density as 5 colored squares."""
+    if count == 0:
+        label = 'Empty market'
+        color = '#22C55E'
+    elif count <= 2:
+        label = f'{count} similar tool{"s" if count > 1 else ""}'
+        color = '#84CC16'
+    elif count <= 4:
+        label = f'{count} similar tools'
+        color = '#E2B764'
+    else:
+        label = f'{count}+ similar tools'
+        color = '#EF4444'
+    filled = min(count, 5)
+    squares = ''
+    for i in range(5):
+        bg = color if i < filled else 'var(--border)'
+        squares += f'<span style="display:inline-block;width:6px;height:6px;border-radius:1px;background:{bg};"></span>'
+    return f'<span title="{label}" style="display:inline-flex;gap:2px;align-items:center;">{squares}</span>'
+
+
 def _pulse_event_html(event: dict) -> str:
     """Render a single pulse event as a compact HTML row."""
     etype = event['type']
@@ -180,18 +222,34 @@ async def gaps_page(request: Request):
     upgrade_note = ''
     if remaining > 0:
         upgrade_note = f'''
-            <div style="margin-top:20px;padding:24px;background:var(--bg-card);border:2px dashed var(--border);
-                        border-radius:12px;text-align:center;">
-                <p style="font-size:15px;color:var(--ink);margin-bottom:8px;font-weight:600;">
-                    +{remaining} more demand signals available
+            <div style="margin-top:20px;padding:28px;background:var(--card-bg);border:2px solid var(--border);
+                        border-radius:12px;">
+                <p style="font-size:16px;color:var(--ink);margin-bottom:4px;font-weight:600;text-align:center;">
+                    +{remaining} more signals in Pro
                 </p>
-                <p style="font-size:13px;color:var(--ink-muted);margin-bottom:16px;">
-                    Get full demand data with exact counts, trend charts, source breakdowns, and JSON export.
+                <p style="font-size:13px;color:var(--ink-muted);margin-bottom:20px;text-align:center;">
+                    Stop guessing. Know exactly what to build.
                 </p>
-                <a href="/demand" style="display:inline-block;padding:10px 24px;background:var(--accent);color:white;
-                       border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
-                    Unlock Demand Signals Pro &rarr;
-                </a>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
+                    <div style="flex:1;min-width:140px;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px;">OPPORTUNITY SCORE</div>
+                        <div style="font-size:12px;color:var(--ink-muted);">Algorithmic ranking of the best gaps to fill</div>
+                    </div>
+                    <div style="flex:1;min-width:140px;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px;">TREND SPARKLINES</div>
+                        <div style="font-size:12px;color:var(--ink-muted);">14-day search trends per signal</div>
+                    </div>
+                    <div style="flex:1;min-width:140px;padding:12px;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px;">COMPETITION MAP</div>
+                        <div style="font-size:12px;color:var(--ink-muted);">See how saturated each gap is</div>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <a href="/demand" style="display:inline-block;padding:12px 28px;background:var(--accent);color:white;
+                           border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
+                        Unlock Demand Signals Pro &rarr;
+                    </a>
+                </div>
             </div>'''
 
     gap_list = f'''
@@ -510,9 +568,8 @@ async def demand_pro(request: Request):
                 Demand Signals Pro
             </h1>
             <p style="font-size:17px;color:var(--ink-muted);max-width:600px;margin:0 auto 48px;line-height:1.6;">
-                Real-time data on what AI agents search for and can&rsquo;t find.
-                Clustered signals, trend charts, source breakdowns &mdash; the data you need
-                to build exactly what the market wants.
+                Stop guessing what to build. Opportunity Scores rank every gap by demand vs. supply.
+                Sparklines show what&rsquo;s trending. Competition maps show what&rsquo;s empty.
             </p>
         </div>
     </section>
@@ -521,19 +578,19 @@ async def demand_pro(request: Request):
         <div class="container" style="max-width:740px;">
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
                 <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px;text-align:center;">
-                    <div style="font-size:28px;margin-bottom:12px;">&#x1f4ca;</div>
-                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">All Demand Signals</h3>
-                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">Every signal with exact search counts, sources, and timestamps. Not just the top 5.</p>
+                    <div style="font-size:28px;margin-bottom:12px;">&#x1f3af;</div>
+                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Opportunity Score</h3>
+                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">Every gap ranked algorithmically. Higher score = more demand, less competition. Know what to build first.</p>
                 </div>
                 <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px;text-align:center;">
                     <div style="font-size:28px;margin-bottom:12px;">&#x1f4c8;</div>
-                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Trend Charts</h3>
-                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">Daily search volume over 30 days. See what&rsquo;s rising before it peaks.</p>
+                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Trend Sparklines</h3>
+                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">14-day search trends per signal. See what&rsquo;s rising before it peaks.</p>
                 </div>
                 <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px 24px;text-align:center;">
-                    <div style="font-size:28px;margin-bottom:12px;">&#x1f310;</div>
-                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Live Agent Feed</h3>
-                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">Real-time feed of every agent search, recommendation, and gap &mdash; auto-refreshes.</p>
+                    <div style="font-size:28px;margin-bottom:12px;">&#x1f7e2;</div>
+                    <h3 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:8px;">Competition Map</h3>
+                    <p style="font-size:14px;color:var(--ink-muted);line-height:1.5;">See market saturation at a glance. Green = empty market, red = crowded. Find the gaps with no competition.</p>
                 </div>
             </div>
         </div>
@@ -601,189 +658,225 @@ async def demand_pro(request: Request):
         ))
 
     # ── Pro dashboard ──────────────────────────────────────────────────
+    from indiestack.db import get_demand_clusters_enriched, get_demand_trends, get_pulse_feed
+    clusters = await get_demand_clusters_enriched(db, limit=50)
     trends = await get_demand_trends(db, days=30)
-    clusters = await get_demand_clusters(db, limit=50)
     pulse_events = await get_pulse_feed(db, limit=30)
+
+    # Filter pulse to gaps only for cleaner default view
+    gap_events = [dict(e) for e in pulse_events if e['type'] == 'gap']
 
     # Stats
     total_searches_30d = sum(t['total_searches'] for t in trends) if trends else 0
     zero_results_30d = sum(t['zero_results'] for t in trends) if trends else 0
     fill_rate = round(((total_searches_30d - zero_results_30d) / total_searches_30d * 100) if total_searches_30d > 0 else 0, 1)
+    top_opp = clusters[0]['opportunity_score'] if clusters else 0
 
-    # Stats bar
+    # ── Hero ──
+    hero = f'''
+    <section style="padding:64px 24px 32px;text-align:center;">
+        <div class="container" style="max-width:900px;">
+            <p style="font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">
+                Pro Dashboard
+            </p>
+            <h1 style="font-family:var(--heading-font, var(--font-display));font-size:clamp(28px,4vw,42px);color:var(--ink);margin-bottom:16px;line-height:1.2;">
+                Demand Signals Pro
+            </h1>
+            <p style="font-size:17px;color:var(--ink-muted);max-width:600px;margin:0 auto 32px;line-height:1.6;">
+                What AI agents are searching for, scored by opportunity. Build what the market actually wants.
+            </p>
+        </div>
+    </section>
+    '''
+
+    # ── Stats bar (4 stats) ──
     stats_bar = f'''
     <section style="padding:0 24px 40px;">
         <div class="container" style="max-width:900px;">
-            <div style="display:flex;gap:1px;background:var(--border);border-radius:12px;overflow:hidden;
-                        border:1px solid var(--border);">
-                <div style="flex:1;background:var(--bg-card);padding:20px 24px;text-align:center;">
-                    <div style="font-family:var(--heading-font, var(--font-display));font-size:28px;font-weight:700;color:var(--accent);margin-bottom:4px;">
-                        {total_searches_30d:,}
-                    </div>
-                    <div style="font-size:13px;color:var(--ink-muted);">Searches (30d)</div>
+            <div style="display:flex;gap:1px;background:var(--border);border-radius:12px;overflow:hidden;border:1px solid var(--border);">
+                <div style="flex:1;background:var(--card-bg);padding:20px 16px;text-align:center;">
+                    <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);margin-bottom:4px;">{total_searches_30d:,}</div>
+                    <div style="font-size:12px;color:var(--ink-muted);">Searches (30d)</div>
                 </div>
-                <div style="flex:1;background:var(--bg-card);padding:20px 24px;text-align:center;">
-                    <div style="font-family:var(--heading-font, var(--font-display));font-size:28px;font-weight:700;color:var(--error-text, #EF4444);margin-bottom:4px;">
-                        {zero_results_30d:,}
-                    </div>
-                    <div style="font-size:13px;color:var(--ink-muted);">Zero Results</div>
+                <div style="flex:1;background:var(--card-bg);padding:20px 16px;text-align:center;">
+                    <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:#EF4444;margin-bottom:4px;">{zero_results_30d:,}</div>
+                    <div style="font-size:12px;color:var(--ink-muted);">Zero Results</div>
                 </div>
-                <div style="flex:1;background:var(--bg-card);padding:20px 24px;text-align:center;">
-                    <div style="font-family:var(--heading-font, var(--font-display));font-size:28px;font-weight:700;color:var(--accent);margin-bottom:4px;">
-                        {fill_rate}%
-                    </div>
-                    <div style="font-size:13px;color:var(--ink-muted);">Fill Rate</div>
+                <div style="flex:1;background:var(--card-bg);padding:20px 16px;text-align:center;">
+                    <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);margin-bottom:4px;">{fill_rate}%</div>
+                    <div style="font-size:12px;color:var(--ink-muted);">Fill Rate</div>
+                </div>
+                <div style="flex:1;background:var(--card-bg);padding:20px 16px;text-align:center;">
+                    <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);margin-bottom:4px;">{top_opp}</div>
+                    <div style="font-size:12px;color:var(--ink-muted);">Top Opp. Score</div>
                 </div>
             </div>
         </div>
     </section>
     '''
 
-    # Trend chart (CSS-only bar chart, last 14 days)
-    recent_trends = sorted(trends, key=lambda t: t['day'])[-14:]
-    max_searches = max((t['total_searches'] for t in recent_trends), default=1)
-
-    trend_bars = ''
-    for t in recent_trends:
-        day_label = t['day'][5:]  # MM-DD
-        pct = int(t['total_searches'] / max_searches * 100) if max_searches > 0 else 0
-        zero_pct = int(t['zero_results'] / max_searches * 100) if max_searches > 0 else 0
-        trend_bars += f'''
-            <div style="display:flex;align-items:end;gap:2px;flex:1;min-width:40px;flex-direction:column;">
-                <div style="width:100%;display:flex;align-items:end;gap:2px;height:120px;">
-                    <div style="flex:1;background:var(--accent);border-radius:4px 4px 0 0;height:{pct}%;min-height:2px;opacity:0.7;" title="{t['total_searches']} searches"></div>
-                    <div style="flex:1;background:var(--error-text, #EF4444);border-radius:4px 4px 0 0;height:{zero_pct}%;min-height:2px;opacity:0.7;" title="{t['zero_results']} zero results"></div>
+    # ── Insight cards (top 3 opportunities) ──
+    insight_cards_html = ''
+    for c in clusters[:3]:
+        q = escape(c['query'])
+        density_html = _density_indicator(c['competitor_density'])
+        spark = _sparkline_svg(c['daily_counts'])
+        density_label = 'Empty market' if c['competitor_density'] == 0 else f"{c['competitor_density']} similar tool{'s' if c['competitor_density'] != 1 else ''}"
+        insight_cards_html += f'''
+            <div style="flex:1;min-width:220px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:24px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                    <span title="Higher = more demand + less competition" style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;">Score {c['opportunity_score']}</span>
+                    {density_html}
                 </div>
-                <div style="font-size:10px;color:var(--ink-muted);text-align:center;width:100%;white-space:nowrap;">{day_label}</div>
+                <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin:0 0 8px;line-height:1.3;">
+                    &ldquo;{q}&rdquo;
+                </h3>
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                    {spark}
+                    <span style="font-size:12px;color:var(--ink-muted);">14d trend</span>
+                </div>
+                <div style="font-size:13px;color:var(--ink-muted);margin-bottom:16px;">
+                    {c['zero_count']} failed search{'es' if c['zero_count'] != 1 else ''} &middot; {density_label}
+                </div>
+                <a href="/submit?name={quote(c['query'])}"
+                   style="display:inline-block;padding:8px 18px;background:var(--accent);color:white;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
+                    Build This &rarr;
+                </a>
             </div>'''
 
-    trend_section = f'''
+    insights_section = f'''
     <section style="padding:0 24px 40px;">
         <div class="container" style="max-width:900px;">
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-                    <h2 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin:0;">Search Volume (14 days)</h2>
-                    <div style="display:flex;gap:16px;font-size:12px;">
-                        <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:10px;height:10px;background:var(--accent);border-radius:2px;opacity:0.7;"></span> Total</span>
-                        <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:10px;height:10px;background:var(--error-text, #EF4444);border-radius:2px;opacity:0.7;"></span> Zero results</span>
-                    </div>
-                </div>
-                <div style="display:flex;gap:4px;align-items:end;">
-                    {trend_bars}
-                </div>
+            <h2 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:16px;">Top Opportunities</h2>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;">
+                {insight_cards_html if insight_cards_html else '<p style="color:var(--ink-muted);">No signals yet.</p>'}
             </div>
         </div>
     </section>
     '''
 
-    # Clusters table
+    # ── Enriched signals table ──
     cluster_rows = ''
-    for c in clusters:
-        query = escape(c['query'])
-        zero = c['zero_count']
-        total = c['search_count']
+    for idx, c in enumerate(clusters):
+        q = escape(c['query'])
+        spark = _sparkline_svg(c['daily_counts'])
+        density_html = _density_indicator(c['competitor_density'])
         sources = escape(c['sources'] or 'web')
         first_seen = _relative_time(c['first_searched'])
         last_seen = _relative_time(c['last_searched'])
+        opp = c['opportunity_score']
 
-        if zero >= 10:
-            badge_label = 'HIGH'
-            badge_bg = 'var(--error-bg, rgba(239,68,68,0.12))'
-            badge_color = 'var(--error-text, #EF4444)'
-        elif zero >= 5:
-            badge_label = 'GROWING'
-            badge_bg = 'var(--warning-bg, rgba(226,183,100,0.12))'
-            badge_color = 'var(--warning-text, #E2B764)'
-        elif zero >= 2:
-            badge_label = 'EMERGING'
-            badge_bg = 'var(--info-bg, rgba(0,212,245,0.12))'
-            badge_color = 'var(--info-text, #00D4F5)'
+        if c['zero_count'] >= 10:
+            badge_label, badge_bg, badge_color = 'HIGH', 'rgba(239,68,68,0.12)', '#EF4444'
+        elif c['zero_count'] >= 5:
+            badge_label, badge_bg, badge_color = 'GROWING', 'rgba(226,183,100,0.12)', '#E2B764'
+        elif c['zero_count'] >= 2:
+            badge_label, badge_bg, badge_color = 'EMERGING', 'rgba(0,212,245,0.12)', 'var(--accent)'
         else:
-            badge_label = 'NEW'
-            badge_bg = 'var(--bg-card, rgba(255,255,255,0.04))'
-            badge_color = 'var(--ink-muted)'
+            badge_label, badge_bg, badge_color = 'NEW', 'rgba(255,255,255,0.04)', 'var(--ink-muted)'
 
         cluster_rows += f'''
-            <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:12px 16px;font-weight:500;color:var(--ink);">{query}</td>
-                <td style="padding:12px 16px;text-align:center;color:var(--error-text, #EF4444);font-weight:600;">{zero}</td>
-                <td style="padding:12px 16px;text-align:center;color:var(--ink-muted);">{total}</td>
-                <td style="padding:12px 16px;text-align:center;font-size:12px;color:var(--ink-muted);">{sources}</td>
-                <td style="padding:12px 16px;text-align:center;font-size:12px;color:var(--ink-muted);">{first_seen}</td>
+            <tr style="border-bottom:1px solid var(--border);" data-opp="{opp}" data-zero="{c['zero_count']}" data-last="{idx}">
+                <td style="padding:12px 16px;font-weight:500;color:var(--ink);">{q}</td>
+                <td style="padding:12px 16px;text-align:center;">
+                    <span style="font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--accent);">{opp}</span>
+                </td>
+                <td style="padding:12px 16px;text-align:center;">{spark}</td>
+                <td style="padding:12px 16px;text-align:center;">{density_html}</td>
+                <td style="padding:12px 16px;text-align:center;color:#EF4444;font-weight:600;">{c['zero_count']}</td>
+                <td style="padding:12px 16px;text-align:center;color:var(--ink-muted);">{c['search_count']}</td>
                 <td style="padding:12px 16px;text-align:center;font-size:12px;color:var(--ink-muted);">{last_seen}</td>
                 <td style="padding:12px 16px;text-align:center;">
-                    <span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;
-                                 font-weight:700;letter-spacing:0.5px;background:{badge_bg};color:{badge_color};">
-                        {badge_label}
-                    </span>
+                    <span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0.5px;background:{badge_bg};color:{badge_color};">{badge_label}</span>
                 </td>
             </tr>'''
+
+    sort_js = '''
+    <script>
+    (function() {
+        var table = document.getElementById('signals-table');
+        if (!table) return;
+        var headers = table.querySelectorAll('th[data-sort]');
+        headers.forEach(function(th) {
+            th.style.cursor = 'pointer';
+            th.addEventListener('click', function() {
+                var key = th.dataset.sort;
+                var tbody = table.querySelector('tbody');
+                var rows = Array.from(tbody.querySelectorAll('tr'));
+                var asc = th.dataset.dir !== 'asc';
+                th.dataset.dir = asc ? 'asc' : 'desc';
+                headers.forEach(function(h) { if (h !== th) h.dataset.dir = ''; });
+                rows.sort(function(a, b) {
+                    var va = parseFloat(a.dataset[key]) || 0;
+                    var vb = parseFloat(b.dataset[key]) || 0;
+                    return asc ? va - vb : vb - va;
+                });
+                rows.forEach(function(r) { tbody.appendChild(r); });
+            });
+        });
+    })();
+    </script>
+    '''
 
     clusters_section = f'''
     <section style="padding:0 24px 40px;">
         <div class="container" style="max-width:900px;">
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+            <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);">
-                    <h2 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin:0;">Top Demand Signals</h2>
-                    <a href="/api/demand-export" style="font-size:13px;color:var(--accent);text-decoration:none;">Export JSON</a>
+                    <h2 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin:0;">All Demand Signals</h2>
+                    <div style="display:flex;gap:12px;align-items:center;">
+                        <a href="/api/demand-export?format=csv" style="font-size:13px;color:var(--ink-muted);text-decoration:none;">CSV</a>
+                        <a href="/api/demand-export" style="font-size:13px;color:var(--accent);text-decoration:none;">JSON</a>
+                    </div>
                 </div>
                 <div style="overflow-x:auto;">
-                    <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                    <table id="signals-table" style="width:100%;border-collapse:collapse;font-size:14px;">
                         <thead>
-                            <tr style="border-bottom:2px solid var(--border);background:var(--bg-card);">
+                            <tr style="border-bottom:2px solid var(--border);background:var(--card-bg);">
                                 <th style="padding:12px 16px;text-align:left;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Query</th>
-                                <th style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Failed</th>
+                                <th data-sort="opp" title="Opportunity Score: higher = more demand + less supply. Combines search volume with zero-result rate." style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Score &#x25BE;</th>
+                                <th style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">14d Trend</th>
+                                <th style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Competition</th>
+                                <th data-sort="zero" style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Failed</th>
                                 <th style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Total</th>
-                                <th style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Sources</th>
-                                <th style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">First Seen</th>
-                                <th style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Last Seen</th>
+                                <th data-sort="last" style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Last Seen</th>
                                 <th style="padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;">Tier</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {cluster_rows if cluster_rows else '<tr><td colspan="7" style="padding:40px;text-align:center;color:var(--ink-muted);">No demand signals yet. Data populates as agents search.</td></tr>'}
+                            {cluster_rows if cluster_rows else '<tr><td colspan="8" style="padding:40px;text-align:center;color:var(--ink-muted);">No demand signals yet.</td></tr>'}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </section>
+    {sort_js}
     '''
 
-    # Live agent feed (full pulse — pro exclusive)
-    pulse_rows = ''.join(_pulse_event_html(dict(e)) for e in pulse_events) if pulse_events else '''
+    # ── Live feed (gaps only by default) ──
+    gap_pulse_rows = ''.join(_pulse_event_html(e) for e in gap_events) if gap_events else '''
         <div style="text-align:center;padding:40px 20px;color:var(--ink-muted);">
-            <p style="font-size:14px;">Waiting for activity...</p>
+            <p style="font-size:14px;">No gap events yet.</p>
         </div>'''
 
     pulse_section = f'''
     <style>
-        @keyframes blink {{
-            0%, 100% {{ opacity: 1; }}
-            50% {{ opacity: 0.3; }}
-        }}
-        .pulse-live-dot {{
-            display: inline-block;
-            width: 8px; height: 8px;
-            background: #EF4444;
-            border-radius: 50%;
-            animation: blink 1.5s ease-in-out infinite;
-        }}
+        @keyframes blink {{ 0%, 100% {{ opacity: 1; }} 50% {{ opacity: 0.3; }} }}
+        .pulse-live-dot {{ display:inline-block;width:8px;height:8px;background:#EF4444;border-radius:50%;animation:blink 1.5s ease-in-out infinite; }}
     </style>
     <section style="padding:0 24px 40px;">
         <div class="container" style="max-width:900px;">
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+            <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
                 <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-                    <span style="font-family:var(--heading-font, var(--font-display));font-size:17px;color:var(--ink);">
+                    <span style="font-family:var(--font-display);font-size:17px;color:var(--ink);">
                         <span class="pulse-live-dot" style="margin-right:8px;vertical-align:middle;"></span>
-                        Live Agent Feed
+                        Live Gap Feed
                     </span>
-                    <span style="font-size:12px;color:var(--ink-muted);font-family:var(--font-mono);" id="pulse-status">
-                        live &mdash; refreshes every 30s
-                    </span>
+                    <span style="font-size:12px;color:var(--ink-muted);font-family:var(--font-mono);">gaps only &mdash; refreshes every 30s</span>
                 </div>
                 <div id="pulse-events" style="max-height:400px;overflow-y:auto;">
-                    {pulse_rows}
+                    {gap_pulse_rows}
                 </div>
             </div>
         </div>
@@ -792,12 +885,10 @@ async def demand_pro(request: Request):
     <script>
     (function() {{
         setInterval(function() {{
-            fetch('/api/pulse')
+            fetch('/api/pulse?filter=gaps')
                 .then(function(r) {{ return r.json(); }})
                 .then(function(data) {{
-                    if (data.html) {{
-                        document.getElementById('pulse-events').innerHTML = data.html;
-                    }}
+                    if (data.html) document.getElementById('pulse-events').innerHTML = data.html;
                 }})
                 .catch(function() {{}});
         }}, 30000);
@@ -805,27 +896,11 @@ async def demand_pro(request: Request):
     </script>
     '''
 
-    hero = f'''
-    <section style="padding:64px 24px 32px;text-align:center;">
-        <div class="container" style="max-width:740px;">
-            <p style="font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">
-                Pro Dashboard
-            </p>
-            <h1 style="font-family:var(--heading-font, var(--font-display));font-size:clamp(28px,4vw,42px);color:var(--ink);margin-bottom:16px;line-height:1.2;">
-                Demand Signals Pro
-            </h1>
-            <p style="font-size:17px;color:var(--ink-muted);max-width:600px;margin:0 auto 32px;line-height:1.6;">
-                Deep analytics on what AI agents are searching for. Build what the market actually wants.
-            </p>
-        </div>
-    </section>
-    '''
-
-    body = hero + stats_bar + trend_section + clusters_section + pulse_section
+    body = hero + stats_bar + insights_section + clusters_section + pulse_section
 
     return HTMLResponse(page_shell(
         title="Demand Signals Pro Dashboard | IndieStack",
         body=body,
         user=user,
-        description="Pro demand signal analytics with clustered signals, trend data, and source breakdowns.",
+        description="Pro demand signal analytics — opportunity scores, trend sparklines, and competitor density for every gap.",
     ))

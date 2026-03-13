@@ -5140,6 +5140,61 @@ async def get_demand_clusters(db, limit: int = 50) -> list:
     return [dict(r) for r in await cursor.fetchall()]
 
 
+async def get_demand_clusters_enriched(db, limit: int = 50) -> list:
+    """Enriched demand clusters with opportunity score, competitor density, and sparkline data."""
+    from datetime import date, timedelta
+
+    cursor = await db.execute("""
+        SELECT LOWER(TRIM(query)) as query,
+               COUNT(*) as search_count,
+               SUM(CASE WHEN result_count = 0 THEN 1 ELSE 0 END) as zero_count,
+               MAX(created_at) as last_searched,
+               MIN(created_at) as first_searched,
+               COUNT(DISTINCT source) as source_count,
+               GROUP_CONCAT(DISTINCT source) as sources
+        FROM search_logs
+        WHERE LENGTH(TRIM(query)) >= 3
+          AND query NOT LIKE '%http%'
+          AND query NOT LIKE '%.com%'
+        GROUP BY LOWER(TRIM(query))
+        HAVING zero_count > 0
+        ORDER BY zero_count DESC, search_count DESC
+        LIMIT ?
+    """, (limit,))
+    clusters = [dict(r) for r in await cursor.fetchall()]
+
+    for c in clusters:
+        sc = max(c['search_count'], 1)
+        c['opportunity_score'] = round(c['zero_count'] * (1 + c['zero_count'] / sc), 1)
+
+        q_like = f"%{c['query']}%"
+        cur2 = await db.execute(
+            """SELECT COUNT(*) as cnt FROM tools
+               WHERE status = 'approved'
+               AND (LOWER(name) LIKE ? OR LOWER(tagline) LIKE ? OR LOWER(tags) LIKE ?)""",
+            (q_like, q_like, q_like),
+        )
+        row = await cur2.fetchone()
+        c['competitor_density'] = row['cnt'] if row else 0
+
+        cur3 = await db.execute(
+            """SELECT DATE(created_at) as day, COUNT(*) as cnt
+               FROM search_logs
+               WHERE LOWER(TRIM(query)) = ?
+                 AND created_at >= datetime('now', '-14 days')
+               GROUP BY DATE(created_at)
+               ORDER BY day""",
+            (c['query'],),
+        )
+        day_rows = await cur3.fetchall()
+        day_map = {r['day']: r['cnt'] for r in day_rows}
+        today = date.today()
+        c['daily_counts'] = [day_map.get((today - timedelta(days=13 - i)).isoformat(), 0) for i in range(14)]
+
+    clusters.sort(key=lambda c: c['opportunity_score'], reverse=True)
+    return clusters
+
+
 async def get_maker_daily_trend(db, maker_id: int, days: int = 30) -> list:
     """Get daily citation counts for trend chart."""
     cursor = await db.execute("""

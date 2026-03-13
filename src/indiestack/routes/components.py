@@ -533,9 +533,18 @@ def design_tokens() -> str:
         /* Dark mode select styling */
         [data-theme="dark"] select,
         [data-theme="dark"] .form-select-pill {
-            background-color: rgba(0,0,0,0.2);
+            background-color: #1a1a2e;
             border-color: rgba(255,255,255,0.1);
             color: var(--ink);
+        }
+        [data-theme="dark"] select option {
+            background-color: #1a1a2e;
+            color: #e2e8f0;
+        }
+        /* Light mode select option readability */
+        select option {
+            background-color: #ffffff;
+            color: #1A2D4A;
         }
         /* Global focus reset — no browser default rings */
         input:focus, textarea:focus, select:focus {
