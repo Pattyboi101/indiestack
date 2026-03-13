@@ -7,10 +7,10 @@
 
 ### AI Visibility
 
-- [ ] **AIVIZ-01**: Maker can see total AI agent citations for their tool (30-day count) on dashboard
-- [ ] **AIVIZ-02**: Maker can see top 5 search queries that triggered their tool in AI recommendations
-- [ ] **AIVIZ-03**: Maker can see their tool's citation percentile rank within its category
-- [ ] **AIVIZ-04**: AI Visibility card displays on the maker dashboard alongside existing analytics
+- [x] **AIVIZ-01**: Maker can see total AI agent citations for their tool (30-day count) on dashboard
+- [x] **AIVIZ-02**: Maker can see top 5 search queries that triggered their tool in AI recommendations
+- [x] **AIVIZ-03**: Maker can see their tool's citation percentile rank within its category
+- [x] **AIVIZ-04**: AI Visibility card displays on the maker dashboard alongside existing analytics
 
 ### Compatibility
 
@@ -77,10 +77,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AIVIZ-01 | Phase 1 | Pending |
-| AIVIZ-02 | Phase 1 | Pending |
-| AIVIZ-03 | Phase 1 | Pending |
-| AIVIZ-04 | Phase 1 | Pending |
+| AIVIZ-01 | Phase 1 | Complete |
+| AIVIZ-02 | Phase 1 | Complete |
+| AIVIZ-03 | Phase 1 | Complete |
+| AIVIZ-04 | Phase 1 | Complete |
 | COMPAT-01 | Phase 2 | Pending |
 | COMPAT-02 | Phase 2 | Pending |
 | COMPAT-03 | Phase 2 | Pending |
@@ -105,4 +105,4 @@
 
 ---
 *Requirements defined: 2026-03-13*
-*Last updated: 2026-03-13 after initial definition*
+*Last updated: 2026-03-13 after Phase 1 completion*

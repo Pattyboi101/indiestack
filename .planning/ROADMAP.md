@@ -12,7 +12,7 @@ Four features that surface hidden data as growth flywheels for IndieStack.ai. Ea
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: AI Visibility Score** - Surface citation analytics on maker dashboard
+- [x] **Phase 1: AI Visibility Score** - Surface citation analytics on maker dashboard
 - [ ] **Phase 2: Compatibility Graph** - Show "Works With" pairings on tool pages and explore filter
 - [ ] **Phase 3: Stack Import + Vendor Risk** - Web UI for dependency analysis with shareable reports
 - [ ] **Phase 4: Maker Ego Pings** - Automated milestone detection with shareable SVG cards
@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md -- Add AI Visibility card with 30d citations, top-5 queries, and category percentile
+- [x] 01-01-PLAN.md -- Add AI Visibility card with 30d citations, top-5 queries, and category percentile
 
 ### Phase 2: Compatibility Graph
 **Goal**: Developers can discover which tools work together based on empirical compatibility reports from the community
@@ -85,7 +85,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. AI Visibility Score | 0/1 | Planning complete | - |
+| 1. AI Visibility Score | 1/1 | Complete | 2026-03-13 |
 | 2. Compatibility Graph | 0/0 | Not started | - |
 | 3. Stack Import + Vendor Risk | 0/0 | Not started | - |
 | 4. Maker Ego Pings | 0/0 | Not started | - |
