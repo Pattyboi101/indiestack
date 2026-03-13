@@ -72,6 +72,7 @@ TESTS = [
     ("GET", "/tool/simple-analytics", 200, "Tool page"),
     # Compatibility Graph (Phase 2)
     ("POST", "/tool/simple-analytics/compatible", 401, "Compat auth guard"),
+    ("GET", "/explore?compatible_with=supabase", 200, "Explore compat filter"),
     ("GET", "/tag/open-source", 302, "Tag page redirect"),
     ("GET", "/alternatives/google-analytics", 200, "Alternatives page"),
 ]
