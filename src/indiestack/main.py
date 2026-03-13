@@ -161,6 +161,7 @@ from indiestack.routes import plugins
 from indiestack.routes import gaps
 from indiestack.routes import api_docs
 from indiestack.routes import geo
+from indiestack.routes import changelog
 
 
 async def _periodic_session_cleanup():
@@ -3412,3 +3413,4 @@ from indiestack.routes import pulse
 app.include_router(pulse.router)
 app.include_router(api_docs.router)
 app.include_router(geo.router)
+app.include_router(changelog.router)

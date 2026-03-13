@@ -132,9 +132,9 @@ async def gaps_page(request: Request):
                     transition:border-color 0.2s;">
             <div style="flex:1;min-width:220px;">
                 <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
-                    <span style="font-family:var(--heading-font, var(--font-display));font-size:18px;font-weight:600;color:var(--ink);">
-                        {query}
-                    </span>
+                    <a href="/gaps/{escape(gap['query'].lower().replace(' ', '-'))}" style="font-family:var(--heading-font, var(--font-display));font-size:18px;font-weight:600;color:var(--ink);text-decoration:none;">
+                        &ldquo;{query}&rdquo;
+                    </a>
                     <span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;
                                  font-weight:700;letter-spacing:0.5px;background:{badge_bg};color:{badge_color};">
                         {badge_label}
@@ -295,6 +295,189 @@ async def gaps_page(request: Request):
         body=body,
         user=user,
         description="Real-time demand signals from AI agents. See what tools were searched for and couldn't be found. Build one and get instant distribution.",
+    ))
+
+
+@router.get("/gaps/{query_slug}", response_class=HTMLResponse)
+async def gap_detail(request: Request, query_slug: str):
+    """Individual gap detail page — SEO-friendly page per demand signal."""
+    user = request.state.user
+    db = request.state.db
+
+    # Convert slug back to query
+    query_text = query_slug.replace("-", " ")
+
+    # Try exact match first
+    cursor = await db.execute(
+        """SELECT query, COUNT(*) as search_count, MAX(created_at) as last_searched
+           FROM search_logs
+           WHERE result_count = 0 AND LOWER(TRIM(query)) = LOWER(?)
+           GROUP BY LOWER(TRIM(query))""",
+        (query_text,),
+    )
+    row = await cursor.fetchone()
+
+    # If no exact match, try fuzzy match on slug
+    if not row:
+        cursor = await db.execute(
+            """SELECT query, COUNT(*) as search_count, MAX(created_at) as last_searched
+               FROM search_logs
+               WHERE result_count = 0 AND LOWER(REPLACE(TRIM(query), ' ', '-')) = LOWER(?)
+               GROUP BY LOWER(TRIM(query))""",
+            (query_slug,),
+        )
+        row = await cursor.fetchone()
+
+    if not row:
+        # 404 page
+        not_found_body = '''
+        <section style="padding:120px 24px 80px;text-align:center;">
+            <div class="container" style="max-width:600px;">
+                <h1 style="font-family:var(--heading-font, var(--font-display));font-size:36px;color:var(--ink);margin-bottom:16px;">
+                    Signal Not Found
+                </h1>
+                <p style="font-size:16px;color:var(--ink-muted);margin-bottom:32px;line-height:1.6;">
+                    This demand signal doesn&rsquo;t exist or hasn&rsquo;t been searched for yet.
+                </p>
+                <a href="/gaps" style="display:inline-block;padding:12px 28px;background:var(--accent);color:white;
+                       border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;">
+                    &larr; Back to Demand Board
+                </a>
+            </div>
+        </section>'''
+        return HTMLResponse(
+            page_shell(title="Signal Not Found | IndieStack", body=not_found_body, user=user),
+            status_code=404,
+        )
+
+    gap_query = row['query'] if isinstance(row, dict) else row[0]
+    search_count = row['search_count'] if isinstance(row, dict) else row[1]
+    last_searched = row['last_searched'] if isinstance(row, dict) else row[2]
+    last_display = _relative_time(last_searched) if last_searched else 'Recently'
+
+    # Demand tier
+    if search_count >= 10:
+        tier_label = 'HIGH DEMAND'
+        tier_color = '#EF4444'
+        tier_bg = 'rgba(239,68,68,0.12)'
+    elif search_count >= 5:
+        tier_label = 'GROWING'
+        tier_color = '#F59E0B'
+        tier_bg = 'rgba(245,158,11,0.12)'
+    elif search_count >= 2:
+        tier_label = 'EMERGING'
+        tier_color = 'var(--accent)'
+        tier_bg = 'var(--info-bg, rgba(0,212,245,0.12))'
+    else:
+        tier_label = 'NEW SIGNAL'
+        tier_color = 'var(--ink-muted)'
+        tier_bg = 'var(--bg-card, rgba(255,255,255,0.04))'
+
+    # Fetch 5 related gaps
+    raw_related = await get_search_gaps(db, limit=50)
+    related_gaps = [
+        g for g in raw_related
+        if _is_valid_gap(g['query']) and g['query'].lower() != gap_query.lower()
+    ][:5]
+
+    related_html = ''
+    if related_gaps:
+        related_items = ''
+        for rg in related_gaps:
+            rg_slug = rg['query'].lower().replace(' ', '-')
+            rg_count = rg['count']
+            if rg_count >= 10:
+                rg_badge = '<span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(239,68,68,0.12);color:#EF4444;">HIGH</span>'
+            elif rg_count >= 5:
+                rg_badge = '<span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(245,158,11,0.12);color:#F59E0B;">GROWING</span>'
+            elif rg_count >= 2:
+                rg_badge = '<span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:var(--info-bg, rgba(0,212,245,0.12));color:var(--accent);">EMERGING</span>'
+            else:
+                rg_badge = '<span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:var(--bg-card, rgba(255,255,255,0.04));color:var(--ink-muted);">NEW</span>'
+            related_items += f'''
+                <a href="/gaps/{escape(rg_slug)}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;
+                           border-bottom:1px solid var(--border);text-decoration:none;transition:background 0.15s;"
+                   onmouseover="this.style.background='var(--bg-card)'" onmouseout="this.style.background='transparent'">
+                    <span style="color:var(--ink);font-size:15px;font-weight:500;">&ldquo;{escape(rg['query'])}&rdquo;</span>
+                    {rg_badge}
+                </a>'''
+
+        related_html = f'''
+        <section style="padding:0 24px 48px;">
+            <div class="container" style="max-width:680px;">
+                <h2 style="font-family:var(--heading-font, var(--font-display));font-size:20px;color:var(--ink);margin-bottom:16px;">
+                    Related Gaps
+                </h2>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+                    {related_items}
+                </div>
+            </div>
+        </section>'''
+
+    body = f'''
+    <section style="padding:48px 24px 16px;">
+        <div class="container" style="max-width:680px;">
+            <a href="/gaps" style="font-size:14px;color:var(--accent);text-decoration:none;">&larr; Back to Demand Board</a>
+        </div>
+    </section>
+
+    <section style="padding:16px 24px 32px;">
+        <div class="container" style="max-width:680px;">
+            <div style="margin-bottom:16px;">
+                <span style="display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;
+                             font-weight:700;letter-spacing:0.5px;background:{tier_bg};color:{tier_color};">
+                    {tier_label}
+                </span>
+            </div>
+            <h1 style="font-family:var(--heading-font, var(--font-display));font-size:clamp(24px,4vw,36px);color:var(--ink);margin-bottom:16px;line-height:1.3;">
+                AI agents are searching for &ldquo;{escape(gap_query)}&rdquo;
+            </h1>
+            <p style="font-size:16px;color:var(--ink-muted);line-height:1.6;">
+                This query has been searched <strong style="color:var(--ink);">{search_count} time{"s" if search_count != 1 else ""}</strong>
+                by AI agents on IndieStack with zero results.
+                Last searched {last_display}.
+            </p>
+        </div>
+    </section>
+
+    <section style="padding:0 24px 32px;">
+        <div class="container" style="max-width:680px;">
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px;">
+                <h2 style="font-family:var(--heading-font, var(--font-display));font-size:18px;color:var(--ink);margin-bottom:12px;">
+                    Why this matters
+                </h2>
+                <p style="font-size:15px;color:var(--ink-muted);line-height:1.7;margin-bottom:0;">
+                    When a developer asks their AI coding assistant to find a tool for &ldquo;{escape(gap_query)}&rdquo;,
+                    the agent checks IndieStack &mdash; and comes up empty. This is a real, validated demand signal
+                    from actual AI workflows. If you build a tool that fills this gap, every future agent search
+                    will recommend <em>your</em> creation instead.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:0 24px 48px;">
+        <div class="container" style="max-width:680px;text-align:center;">
+            <a href="/submit?name={quote(gap_query)}"
+               style="display:inline-block;padding:14px 36px;background:var(--accent);color:white;
+                      border-radius:8px;font-size:16px;font-weight:600;text-decoration:none;
+                      transition:opacity 0.2s;">
+                Submit a Tool for This Gap &rarr;
+            </a>
+            <p style="font-size:13px;color:var(--ink-muted);margin-top:12px;">
+                Guaranteed distribution to AI agents searching for this.
+            </p>
+        </div>
+    </section>
+
+    {related_html}
+    '''
+
+    return HTMLResponse(page_shell(
+        title=f'"{escape(gap_query)}" — AI Agents Need This Tool | IndieStack',
+        body=body,
+        user=user,
+        description=f'AI agents searched for "{escape(gap_query)}" {search_count} times but nothing exists yet. Build it and get instant distribution.',
     ))
 
 

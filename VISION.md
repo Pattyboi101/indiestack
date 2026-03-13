@@ -1,6 +1,6 @@
 # IndieStack Vision
 
-> Written 2026-03-06. The full picture.
+> Written 2026-03-06. Updated 2026-03-13. The full picture.
 
 ---
 
@@ -28,7 +28,7 @@ Every day, millions of developers ask AI agents to build things. Those agents do
 
 But it's bigger than developers. As agents become general-purpose assistants (and they already are), *everyone* will ask their agent for recommendations. "Find me a recipe manager." "I need flashcards for studying." "What's a good indie game library?"
 
-**IndieStack is the knowledge layer that sits between AI agents and everything indie creators have built.** Not just dev tools — everything.
+**IndieStack is the open-source supply chain that sits between AI agents and everything indie creators have built.** Not just dev tools — everything.
 
 ---
 
@@ -44,14 +44,14 @@ The shift: from "AI generates" to "AI knows what exists and assembles."
 
 ---
 
-## The MCP Server — 12 Capabilities
+## The MCP Server — 15 Capabilities
 
 Not just `find_tools`:
 
 | Tool | What it does |
 |------|-------------|
 | `find_tools` | Search by keyword, category, source type |
-| `get_tool_details` | Full detail — integration snippets, pricing, similar tools |
+| `get_tool_details` | Full detail — integration snippets, pricing, similar tools, assembly metadata |
 | `compare_tools` | Side-by-side comparison |
 | `build_stack` | "I need auth + payments + analytics" -> complete stack |
 | `evaluate_build_vs_buy` | Should you build this or use an existing tool? |
@@ -62,8 +62,11 @@ Not just `find_tools`:
 | `list_tags` | Find by technology/tag |
 | `list_stacks` | Community-curated tool stacks |
 | `publish_tool` | Submit from inside your agent |
+| `scan_project` | Analyze a project and recommend a complete indie stack |
+| `report_compatibility` | Report tool pairs that work well together |
+| `check_health` | Check maintenance status of tools you've adopted |
 
-The stack builder is the sleeper. It turns "build me a SaaS" from a 50,000-token generation into a 2,000-token assembly.
+The stack builder is the sleeper. It turns "build me a SaaS" from a 50,000-token generation into a 2,000-token assembly. `scan_project` goes further — describe what you're building and get a complete recommendation.
 
 ---
 
@@ -72,7 +75,7 @@ The stack builder is the sleeper. It turns "build me a SaaS" from a 50,000-token
 - **Save money** — recommending a tool vs generating 2,000 lines saves $0.30-0.50 per interaction on paid AI APIs
 - **Better solutions** — Hanko's auth is maintained by security experts. AI-generated auth is maintained by nobody.
 - **Save hours** — assembly vs generation
-- **Discovery** — 793+ creations across 21+ categories. Nobody knows all of these.
+- **Discovery** — 3,095+ creations across 25 categories. Nobody knows all of these.
 - **Stack architecture in seconds** — complete recommendations with compatibility notes
 - **Works across agents** — Claude Code, Cursor, Windsurf. Knowledge follows you.
 - **Gets smarter** — agent memory learns your preferences and interests over time
@@ -143,13 +146,13 @@ Your creation becomes part of the shared knowledge that AI agents carry. It outl
 
 ## Roadmap
 
-**Now:** 793 tools, 21 categories, MCP server v1.0.0, agent memory, personalized recommendations.
+**Now (March 2026):** 3,095 tools, 25 categories, MCP server v1.3.1, agent memory, personalized recommendations, 1,272 compatibility pairs, per-tool Agent Cards, structured assembly metadata, Demand Signals Pro, GEO lead magnet, auto-indexer + enricher pipelines.
 
-**Near term:** Expand beyond dev tools. More categories (games, newsletters, creative, learning, lifestyle). Grow toward 1,500+ listings.
+**Near term:** Grow quality depth — integration recipes, richer metadata, more compatibility data. Build the flywheel: demand signals → maker submissions → agent recommendations → more demand signals.
 
-**Medium term:** Agents assemble complete applications from stacks. Verified compatibility. Integration recipes. Tool health monitoring. Community contributions.
+**Medium term:** Agents assemble complete applications from stacks. Verified compatibility. Agent-to-agent discovery. Community contributions. Revenue from data products (demand signals, compatibility intelligence).
 
-**Long term:** The canonical knowledge layer for ALL AI agents. Every new agent connects to IndieStack as a default. "AI recommendations" becomes a primary distribution channel bigger than SEO. The agent ecosystem flywheel: more agents -> more recommendations -> more makers -> better catalog -> more agents.
+**Long term:** The canonical supply chain for ALL AI agents. Every new agent connects to IndieStack as a default. "AI recommendations" becomes a primary distribution channel bigger than SEO. The agent ecosystem flywheel: more agents -> more recommendations -> more makers -> better catalog -> more agents.
 
 ---
 

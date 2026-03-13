@@ -618,11 +618,8 @@ async def tool_detail(request: Request, slug: str):
             f'margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;">'
             f'<code style="font-family:var(--font-mono);font-size:14px;color:var(--slate);white-space:nowrap;'
             f'overflow-x:auto;">{safe_cmd}</code>'
-            f'<button onclick="navigator.clipboard.writeText(\'{safe_cmd}\');'
-            f'this.textContent=\'Copied!\';setTimeout(()=>this.textContent=\'Copy\',2000)"'
-            f' style="background:var(--slate);color:white;border:none;border-radius:999px;'
-            f'padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;'
-            f'font-family:var(--font-body);min-height:36px;">Copy</button>'
+            f'<button data-copy="{safe_cmd}" style="background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;'
+            f'padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">Copy</button>'
             f'</div>'
         )
 

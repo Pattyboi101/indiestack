@@ -1,64 +1,76 @@
 # IndieStack Roadmap
 
-> Created 2026-03-06. Living document.
+> Created 2026-03-06. Updated 2026-03-13. Living document.
 
 See `VISION.md` for the full picture of where IndieStack is going.
 
 ---
 
-## Phase 1: Launch Ready (Before Saturday March 7)
+## Phase 1: Launch (Complete — March 7)
 
-- [x] **"What is IndieStack" page** (`/what-is-indiestack`) — full story: what, why, where it's going. Nav link.
-- [x] **Landing page hero update** — broadened from "dev tools" to "everything indie." Hints at bigger vision.
-- [x] **Expand categories** — added Games & Entertainment, Learning & Education, Newsletters & Content, Creative Tools. Moved Questarr, Minimalistic_Flashcards into correct categories. 25 total.
-- [x] **Submit page messaging** — "Submit your creation" not "Submit your tool." Welcomes anything indie-built.
-- [x] **Full site vision alignment** — "indie tools" → "indie creations" across 20+ files. CTAs, descriptions, SEO, footer, emails, social templates.
-- [x] **MCP Server v1.1.0** — Published to PyPI. Broader instructions, `source_type='all'` default, new `discover-indie` prompt, "creations" language.
-- [x] **PH welcome banner** — Auto-detects `?ref=producthunt`, persists via localStorage, dismissible.
-- [ ] **PH gallery screenshots** — 5 images at 1270x760px
-- [ ] **PH listing created** — all assets uploaded, first comment pre-written
+- [x] "What is IndieStack" page (`/what-is-indiestack`)
+- [x] Landing page hero — broadened from "dev tools" to "everything indie"
+- [x] 25 categories (added Games, Learning, Newsletters, Creative)
+- [x] Submit page — "Submit your creation" messaging
+- [x] Full site vision alignment — "indie tools" → "indie creations" across 20+ files
+- [x] MCP Server v1.1.0 on PyPI
+- [x] Product Hunt launch (March 7)
 
 ---
 
-## Phase 2: Post-Launch Week (March 8-14)
+## Phase 2: Post-Launch Growth (Complete — March 8-13)
 
-- [x] **"Surprise me" discovery button** on explore page — random creation on every click
-- [x] ~~**Public roadmap page**~~ — built then killed pre-launch (too much "not ready" energy for PH visitors)
-- [x] **"Featured on Product Hunt" badge** — prepped on landing page, activate with `PH_FEATURED` env var
-- [ ] Process PH-exclusive tool submissions (instant review)
-- [ ] Submit to Hacker News (3-5 days after PH, technical angle)
-- [x] **Seed 25 non-dev listings** — 7 games, 5 newsletters, 6 learning, 7 creative tools. All genuinely indie-built.
-- [ ] Write "what we learned launching on PH" Twitter thread
+- [x] "Surprise me" discovery button on explore page
+- [x] "Featured on Product Hunt" badge (env var gated)
+- [x] Seed 25 non-dev listings (games, newsletters, learning, creative)
+- [x] GitHub auto-indexer — 73 search queries, grew catalog 835 → 3,095
+- [x] README enricher — auto-extracted install commands, env vars, frameworks for 1,200+ tools
+- [x] Pair generator — 1,279 compatibility pairs
+- [x] Agentic Package Manager metadata — api_type, auth_method, sdk_packages, env_vars on every tool
+- [x] MCP Server v1.3.1 — scan_project, report_compatibility, check_health (15 tools total)
+- [x] Per-tool Agent Cards (`/cards/{slug}.json`)
+- [x] Demand Signals Pro ($15/month) — clusters, trends, source breakdown, JSON export
+- [x] GEO lead magnet (`/geo`) — generate llms.txt + Agent Card from any URL
+- [x] Pixel avatars — 7x7, 16 colors, admin approval
+- [x] Pixel art tool icons — 6x6, 8 colors, maker-editable on dashboard
 
 ---
 
-## Phase 3: Depth (March-April 2026)
+## Phase 3: Site Refresh & Quality (In Progress — March 13+)
 
-- [x] **Maker stories on tool detail pages** — questionnaire on dashboard (motivation, challenge, advice, fun fact). Displays as "About the Maker" on tool page.
-- [ ] "This Week in Indie" auto-generated digest page
+- [x] Nav restructure — Explore | For Makers ▾ | Resources ▾ | [Submit]
+- [x] Landing page refresh — demand teaser, updated hero, supply chain positioning
+- [x] Explore page simplification — search bar, collapsible filters
+- [x] "What is IndieStack?" rewrite for new positioning
+- [x] Sitewide copy pass — "knowledge layer" → "open-source supply chain"
+- [x] `/new` and `/tag/{slug}` redirects to `/explore`
+- [x] Maker stories on tool detail pages
+- [x] Tool health monitoring (GitHub API)
+- [x] Proactive recommendations ("New for you" on explore)
+- [x] REST API docs page (`/api`)
 - [ ] Integration recipes — "how to wire Hanko + Polar + Plausible into Next.js"
-- [x] **Tool health monitoring** — GitHub API checks for last commit, open issues, archive status. `/admin/github-health` trigger. Activity signals shown on tool detail page.
-- [ ] Backfill descriptions for 47 hidden/pending tools
-- [ ] Grow catalog toward 1,500 listings
+- [ ] "This Week in Indie" auto-generated digest
 - [ ] Community reviews and integration guides
+- [ ] Cross-domain discovery — "developers who use X also use Y"
 
 ---
 
-## Phase 4: Intelligence (Summer 2026)
+## Phase 4: Flywheel & Revenue (Next)
 
-- [ ] Compatibility matrix — track which tools work well together from usage data
-- [x] **Proactive recommendations** — "New for you" section on explore page based on bookmark history. Personalized, no-filter first page only.
-- [ ] Cross-domain discovery — "developers who use X also use Y"
-- [x] **REST API docs page** (`/api`) — documents all 15+ JSON endpoints with params, examples, and curl snippets
-- [x] **Browser extension scaffold** — Chrome Manifest V3, detects 21 SaaS sites, shows indie alternatives. `/extension/` directory.
-- [ ] Agent-to-agent protocol support
+- [ ] Ignite the growth flywheel — demand signals → maker submissions → agent recs → more signals
+- [ ] First real Demand Signals Pro customers
+- [ ] Measurable MCP server install/usage telemetry
+- [ ] Compatibility matrix from real agent usage data
+- [ ] Agent-to-agent discovery protocol
+- [ ] Content strategy for organic traffic (alternatives pages, comparison pages, guides)
+- [ ] Ed's role defined — clear ownership of a product area
 
 ---
 
 ## Phase 5: The Moat (Late 2026+)
 
 - [ ] "AI Recommendations" as a distribution channel (10K+ recs/day)
-- [ ] Every new AI agent connects to IndieStack as default knowledge source
+- [ ] Every new AI agent connects to IndieStack as default
 - [ ] Tool makers publish to IndieStack like devs publish to npm
-- [ ] IndieStack becomes the canonical knowledge layer for all AI agents
-- [ ] The flywheel: more agents -> more recs -> more makers -> better catalog -> more agents
+- [ ] IndieStack becomes the canonical supply chain for all AI agents
+- [ ] The flywheel: more agents → more recs → more makers → better catalog → more agents
