@@ -43,6 +43,8 @@ from indiestack.db import (
     get_reaction_counts,
     get_verified_pairs,
     record_tool_pair,
+    get_tool_success_rate,
+    get_tool_recommendation_count,
 )
 
 router = APIRouter()
@@ -93,6 +95,9 @@ async def tool_detail(request: Request, slug: str):
     platforms_raw = tool.get('platforms', '')
     install_command = tool.get('install_command', '')
     tool_id = tool['id']
+    slug_str = tool['slug']
+    success_rate = await get_tool_success_rate(db, slug_str)
+    recommendation_count = await get_tool_recommendation_count(db, slug_str)
     click_count = await get_outbound_click_count(db, tool_id, days=30)
     reactions = await get_reaction_counts(
         db, tool_id,
@@ -178,6 +183,23 @@ async def tool_detail(request: Request, slug: str):
             <span style="font-size:16px;">&#129302;</span>
             Recommended by AI agents {mcp_views} time{'s' if mcp_views != 1 else ''}
         </div>'''
+    outcome_badge = ''
+    if success_rate['total'] > 0:
+        rate_color = 'var(--success-text)' if success_rate['rate'] >= 70 else 'var(--warning-text)' if success_rate['rate'] >= 40 else 'var(--error-text)'
+        outcome_badge = f'''
+        <div style="margin-top:8px;padding:8px 16px;background:var(--card-bg);border-radius:var(--radius-sm);
+                    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-light);border:1px solid var(--border);">
+            <span style="font-size:16px;">&#127919;</span>
+            <span style="font-weight:600;color:{rate_color};">{success_rate['rate']}%</span> agent success rate
+            <span style="color:var(--ink-muted);font-size:12px;">({success_rate['total']} report{'s' if success_rate['total'] != 1 else ''})</span>
+        </div>'''
+    elif recommendation_count > 0:
+        outcome_badge = f'''
+        <div style="margin-top:8px;padding:8px 16px;background:var(--card-bg);border-radius:var(--radius-sm);
+                    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-muted);border:1px solid var(--border);">
+            <span style="font-size:16px;">&#127919;</span>
+            Recommended {recommendation_count} time{'s' if recommendation_count != 1 else ''} &mdash; no outcome reports yet
+        </div>'''
     token_hint_html = f'''
         <div style="margin-top:16px;padding:8px 16px;background:var(--cream-dark);border-radius:var(--radius-sm);
                     display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-light);">
@@ -185,6 +207,7 @@ async def tool_detail(request: Request, slug: str):
             Using this saves ~{token_k}k tokens vs building from scratch
         </div>
         {mcp_badge}
+        {outcome_badge}
     '''
 
     # GitHub freshness badge
@@ -495,8 +518,7 @@ async def tool_detail(request: Request, slug: str):
         "operatingSystem": "Web",
         "offers": {
             "@type": "Offer",
-            "price": str(tool.get('price_pence', 0) / 100 if tool.get('price_pence') else 0),
-            "priceCurrency": "GBP"
+            "availability": "https://schema.org/InStock"
         }
     }
     if review_count > 0:
@@ -1019,12 +1041,7 @@ async def report_compatible(
         (user["id"], a, b),
     )
 
-    # Upsert into tool_pairs with source='user', incrementing success_count
-    await db.execute("""
-        INSERT INTO tool_pairs (tool_a_slug, tool_b_slug, source, success_count)
-        VALUES (?, ?, 'user', 1)
-        ON CONFLICT(tool_a_slug, tool_b_slug) DO UPDATE SET success_count = success_count + 1
-    """, (a, b))
-    await db.commit()
+    # Upsert into tool_pairs using existing helper
+    await record_tool_pair(db, a, b, source="user")
 
     return JSONResponse({"ok": True, "pair": pair_slug})
