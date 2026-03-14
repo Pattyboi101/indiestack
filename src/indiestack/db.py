@@ -1898,7 +1898,8 @@ async def enrich_domain_age(db: aiosqlite.Connection, tool_id: int, url: str) ->
         # Strip subdomains to get registrable domain (e.g. app.example.com -> example.com)
         parts = hostname.split('.')
         domain = '.'.join(parts[-2:]) if len(parts) >= 2 else hostname
-        w = whois.whois(domain)
+        import asyncio as _aio
+        w = await _aio.to_thread(whois.whois, domain)
         creation = w.creation_date
         if isinstance(creation, list):
             creation = creation[0]

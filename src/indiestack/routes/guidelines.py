@@ -1,7 +1,7 @@
 """Submission guidelines — sets expectations before /submit."""
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
-from indiestack.components import page_shell
+from indiestack.routes.components import page_shell
 
 router = APIRouter()
 
