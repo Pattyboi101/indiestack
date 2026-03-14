@@ -452,6 +452,57 @@ async def _render_tools_pending(db, request, pending):
             cat = escape(str(t.get('category_name', '')))
             price_p = t.get('price_pence')
             price_str = f'\u00a3{price_p/100:.2f}' if price_p else 'Free'
+            source = t.get('source_type', 'saas')
+
+            # Enrichment badges
+            domain_age = t.get('domain_age_days')
+            if domain_age is not None:
+                if domain_age < 30:
+                    age_badge = f'<span style="background:#dc2626;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">{domain_age}d old</span>'
+                elif domain_age < 90:
+                    age_badge = f'<span style="background:#ca8a04;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">{domain_age}d old</span>'
+                else:
+                    yrs = domain_age // 365
+                    age_badge = f'<span style="background:#16a34a;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">{yrs}y old</span>' if yrs else f'<span style="background:#16a34a;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">{domain_age}d old</span>'
+            else:
+                age_badge = '<span style="background:#6b7280;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">Age?</span>'
+
+            free_tier = t.get('has_free_tier')
+            if free_tier == 1:
+                free_badge = '<span style="background:#16a34a;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">Free tier</span>'
+            elif free_tier == 0 and source == 'saas':
+                free_badge = '<span style="background:#ca8a04;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">No free tier</span>'
+            else:
+                free_badge = ''
+
+            social = t.get('social_mentions_count')
+            if social is not None and social > 0:
+                social_badge = f'<span style="background:#16a34a;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">{social} HN</span>'
+            elif social == 0:
+                social_badge = '<span style="background:#dc2626;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">0 HN</span>'
+            else:
+                social_badge = ''
+
+            health = t.get('health_status', 'unknown')
+            if health == 'dead':
+                health_badge = '<span style="background:#dc2626;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">Dead</span>'
+            elif health == 'alive':
+                health_badge = '<span style="background:#16a34a;color:white;padding:2px 8px;border-radius:999px;font-size:11px;">Alive</span>'
+            else:
+                health_badge = ''
+
+            source_badge = f'<span style="background:var(--accent);color:white;padding:2px 8px;border-radius:999px;font-size:11px;">{source}</span>'
+
+            badges = f'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;">{source_badge} {age_badge} {free_badge} {social_badge} {health_badge}</div>'
+
+            reject_options = ''.join(f'<option value="{r}">{r}</option>' for r in [
+                'Default deployment URL',
+                'No free tier or trial',
+                'Tool appears unmaintained',
+                'Insufficient documentation',
+                'Duplicate of existing tool',
+            ])
+
             html += f"""
             <div class="card" style="margin-bottom:12px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
@@ -462,17 +513,25 @@ async def _render_tools_pending(db, request, pending):
                             <a href="{t_url}" target="_blank" rel="noopener">{t_url}</a>
                         </p>
                         <p style="color:var(--ink-muted);font-size:14px;">Maker: {maker} &middot; Category: {cat} &middot; Price: {price_str}</p>
+                        {badges}
                     </div>
-                    <div style="display:flex;gap:8px;align-items:center;">
-                        <a href="/admin/edit/{tid}" class="btn" style="background:var(--accent);color:white;padding:8px 16px;text-decoration:none;font-size:14px;">Edit</a>
-                        <form method="post" action="/admin">
-                            <input type="hidden" name="tool_id" value="{tid}">
-                            <input type="hidden" name="action" value="approve">
-                            <button type="submit" class="btn" style="background:#16a34a;color:white;padding:8px 16px;">Approve</button>
-                        </form>
-                        <form method="post" action="/admin">
+                    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <a href="/admin/edit/{tid}" class="btn" style="background:var(--accent);color:white;padding:8px 16px;text-decoration:none;font-size:14px;">Edit</a>
+                            <form method="post" action="/admin">
+                                <input type="hidden" name="tool_id" value="{tid}">
+                                <input type="hidden" name="action" value="approve">
+                                <button type="submit" class="btn" style="background:#16a34a;color:white;padding:8px 16px;">Approve</button>
+                            </form>
+                        </div>
+                        <form method="post" action="/admin" style="display:flex;gap:6px;align-items:center;">
                             <input type="hidden" name="tool_id" value="{tid}">
                             <input type="hidden" name="action" value="reject">
+                            <select name="rejection_reason" style="padding:6px 8px;border-radius:8px;font-size:12px;border:1px solid var(--border);background:var(--cream);color:var(--ink);">
+                                <option value="">Reason...</option>
+                                {reject_options}
+                                <option value="other">Other</option>
+                            </select>
                             <button type="submit" class="btn" style="background:#dc2626;color:white;padding:8px 16px;">Reject</button>
                         </form>
                     </div>
@@ -1111,6 +1170,15 @@ async def admin_post(request: Request):
         elif tool_id_int and action in ("approve", "reject"):
             new_status = "approved" if action == "approve" else "rejected"
             await update_tool_status(db, tool_id_int, new_status)
+            # Store rejection reason if provided
+            if new_status == "rejected":
+                reason = str(form.get("rejection_reason", "")).strip()
+                if reason:
+                    await db.execute(
+                        "UPDATE tools SET rejection_reason = ? WHERE id = ?",
+                        (reason, tool_id_int),
+                    )
+                    await db.commit()
             if new_status == "approved":
                 # ── Competitor pings (dashboard notification, no email) ──
                 try:

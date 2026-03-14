@@ -2032,14 +2032,25 @@ async def get_pending_avatars(db: aiosqlite.Connection) -> list:
 
 async def get_pending_tools(db: aiosqlite.Connection):
     """Get pending tools sorted by quality signals — best submissions first.
-    Prioritizes: GitHub URLs, longer descriptions, tools with tags."""
+    Incorporates enrichment data: domain age, free tier, social proof, health."""
     cursor = await db.execute(
         """SELECT t.*, c.name as category_name,
            (CASE WHEN t.url LIKE '%github.com%' THEN 10 ELSE 0 END
             + CASE WHEN LENGTH(t.description) > 200 THEN 5 ELSE 0 END
             + CASE WHEN LENGTH(t.description) > 100 THEN 3 ELSE 0 END
-            + CASE WHEN t.tags != '' THEN 2 ELSE 0 END
-            + CASE WHEN t.maker_name != '' THEN 1 ELSE 0 END
+            + CASE WHEN t.tags != '' AND t.tags IS NOT NULL THEN 2 ELSE 0 END
+            + CASE WHEN t.maker_name != '' AND t.maker_name IS NOT NULL THEN 1 ELSE 0 END
+            + CASE WHEN t.domain_age_days > 90 THEN 15
+                   WHEN t.domain_age_days > 30 THEN 8
+                   WHEN t.domain_age_days IS NOT NULL THEN -10
+                   ELSE 0 END
+            + CASE WHEN t.has_free_tier = 1 THEN 5
+                   WHEN t.has_free_tier = 0 AND t.source_type = 'saas' THEN -5
+                   ELSE 0 END
+            + CASE WHEN t.social_mentions_count > 3 THEN 10
+                   WHEN t.social_mentions_count > 0 THEN 5
+                   ELSE 0 END
+            - CASE WHEN t.health_status = 'dead' THEN 10 ELSE 0 END
            ) AS submission_quality
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.status = 'pending'
