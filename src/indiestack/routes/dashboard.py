@@ -38,6 +38,7 @@ from indiestack.db import (
     check_pro,
     track_event,
     get_tool_success_rate,
+    get_listing_quality_score,
 )
 from indiestack.payments import create_connect_account, create_onboarding_link
 from indiestack.email import send_email, wishlist_update_html
@@ -109,6 +110,28 @@ async def dashboard_overview(request: Request):
             _sr_total += _sr.get('total', 0)
         if _sr_total > 0:
             maker_success_rate = round(_sr_success / _sr_total * 100)
+
+    # Listing Quality Score
+    quality_score = None
+    quality_tips = []
+    if maker_id:
+        _tools_for_qs = await get_tools_by_maker(db, maker_id)
+        _qs_scores = []
+        _qs_all_tips = []
+        for _t in _tools_for_qs[:10]:  # Cap at 10
+            _qs = await get_listing_quality_score(db, _t)
+            _qs_scores.append(_qs['score'])
+            _qs_all_tips.extend(_qs['tips'])
+        if _qs_scores:
+            quality_score = round(sum(_qs_scores) / len(_qs_scores))
+            # Deduplicate tips
+            _seen = set()
+            for _tip in _qs_all_tips:
+                if _tip not in _seen:
+                    _seen.add(_tip)
+                    quality_tips.append(_tip)
+                if len(quality_tips) >= 3:
+                    break
 
     sr_display = f'{maker_success_rate}%' if maker_success_rate is not None else '\u2014'
     sr_color = 'var(--accent)' if (maker_success_rate or 0) >= 70 else '#E2B764' if (maker_success_rate or 0) >= 40 else '#e74c3c'
@@ -994,6 +1017,26 @@ async def dashboard_overview(request: Request):
         </div>
         '''
 
+    # Build quality score card
+    quality_html = ''
+    if quality_score is not None:
+        bar_color = '#2ecc71' if quality_score >= 70 else '#E2B764' if quality_score >= 40 else '#e74c3c'
+        tips_html = ''.join(f'<li style="margin-bottom:6px;">{escape(tip)}</li>' for tip in quality_tips)
+        tips_section = f'<ul style="margin:12px 0 0;padding-left:20px;font-size:13px;color:var(--ink-muted);list-style:disc;">{tips_html}</ul>' if tips_html else ''
+
+        quality_html = f'''
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <h3 style="margin:0;font-family:var(--font-display);font-size:18px;">Listing Quality</h3>
+                <span style="font-family:var(--font-display);font-size:24px;color:{bar_color};">{quality_score}/100</span>
+            </div>
+            <div style="background:var(--border);border-radius:999px;height:8px;overflow:hidden;">
+                <div style="background:{bar_color};height:100%;width:{quality_score}%;border-radius:999px;transition:width 0.3s;"></div>
+            </div>
+            {tips_section}
+        </div>
+        '''
+
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
         {welcome_banner}
@@ -1013,6 +1056,8 @@ async def dashboard_overview(request: Request):
         {milestone_html}
         {boost_report_html}
         {readiness_html}
+
+        {quality_html}
 
         {analytics_section}
 
