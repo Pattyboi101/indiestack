@@ -439,7 +439,7 @@ CREATE INDEX IF NOT EXISTS idx_events_event ON events(event);
 CREATE INDEX IF NOT EXISTS idx_events_created ON events(created_at);
 CREATE TABLE IF NOT EXISTS agent_actions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    api_key_id INTEGER NOT NULL,
+    api_key_id INTEGER REFERENCES api_keys(id),
     user_id INTEGER NOT NULL,
     action TEXT NOT NULL CHECK(action IN ('recommend','shortlist','report_outcome','confirm_integration','submit_tool')),
     tool_slug TEXT NOT NULL,
@@ -1314,6 +1314,35 @@ async def init_db():
         except Exception:
             await db.execute("ALTER TABLE api_keys ADD COLUMN scopes TEXT NOT NULL DEFAULT 'read'")
             await db.commit()
+
+        # Migration: make agent_actions.api_key_id nullable for keyless outcome reporting
+        try:
+            row = await db.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name='agent_actions'")
+            schema = await row.fetchone()
+            if schema and 'api_key_id INTEGER NOT NULL' in (schema[0] or ''):
+                await db.execute("""CREATE TABLE agent_actions_new (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    api_key_id INTEGER REFERENCES api_keys(id),
+                    user_id INTEGER NOT NULL,
+                    action TEXT NOT NULL CHECK(action IN ('recommend','shortlist','report_outcome','confirm_integration','submit_tool')),
+                    tool_slug TEXT NOT NULL,
+                    tool_b_slug TEXT,
+                    success INTEGER,
+                    notes TEXT,
+                    query_context TEXT,
+                    created_at TIMESTAMP DEFAULT (datetime('now'))
+                )""")
+                await db.execute("INSERT INTO agent_actions_new SELECT * FROM agent_actions")
+                await db.execute("DROP TABLE agent_actions")
+                await db.execute("ALTER TABLE agent_actions_new RENAME TO agent_actions")
+                await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_actions_key ON agent_actions(api_key_id)")
+                await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_actions_user ON agent_actions(user_id)")
+                await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_actions_tool ON agent_actions(tool_slug)")
+                await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_actions_action ON agent_actions(action)")
+                await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_actions_date ON agent_actions(created_at)")
+                await db.commit()
+        except Exception:
+            pass
 
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
@@ -5134,7 +5163,7 @@ async def log_api_usage(db: aiosqlite.Connection, key_id: int, endpoint: str):
 
 async def record_agent_action(
     db: aiosqlite.Connection,
-    api_key_id: int,
+    api_key_id: int | None,
     user_id: int,
     action: str,
     tool_slug: str,

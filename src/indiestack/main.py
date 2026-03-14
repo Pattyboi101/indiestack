@@ -3769,7 +3769,23 @@ async def agent_shortlist(request: Request):
 @app.post("/api/agent/outcome")
 async def agent_outcome(request: Request):
     """Report whether a user successfully used a recommended tool."""
-    api_key = _require_scope(request.state.api_key, "write")
+    from datetime import date
+    api_key = request.state.api_key
+    if not api_key:
+        ip = request.client.host if request.client else "unknown"
+        rk = f"outcome_{ip}"
+        today = date.today().isoformat()
+        if not hasattr(request.app.state, '_outcome_ip_daily'):
+            request.app.state._outcome_ip_daily = {}
+        ip_counts = request.app.state._outcome_ip_daily
+        if rk not in ip_counts or ip_counts[rk][0] != today:
+            if len(ip_counts) > 500:
+                ip_counts.clear()
+            ip_counts[rk] = (today, 0)
+        if ip_counts[rk][1] >= 10:
+            raise HTTPException(429, detail="Keyless outcome reporting limit reached (10/day). Get a free API key at indiestack.ai/developer for higher limits.")
+        ip_counts[rk] = (today, ip_counts[rk][1] + 1)
+
     try:
         data = await request.json()
     except Exception:
@@ -3788,15 +3804,19 @@ async def agent_outcome(request: Request):
     if not tool:
         return JSONResponse({"error": f"Tool '{tool_slug}' not found"}, status_code=404)
 
-    count = await db.count_agent_actions_today(request.state.db, api_key["id"], "report_outcome")
-    if count >= _AGENT_ACTION_LIMITS["report_outcome"]:
-        return JSONResponse({"error": "Daily outcome report limit reached (20/day)"}, status_code=429)
+    api_key_id = api_key["id"] if api_key else None
+    user_id = api_key["user_id"] if api_key else 0
 
-    if await db.check_agent_action_exists(request.state.db, api_key["user_id"], "report_outcome", tool_slug):
+    if api_key_id:
+        count = await db.count_agent_actions_today(request.state.db, api_key_id, "report_outcome")
+        if count >= _AGENT_ACTION_LIMITS["report_outcome"]:
+            return JSONResponse({"error": "Daily outcome report limit reached (20/day)"}, status_code=429)
+
+    if user_id and await db.check_agent_action_exists(request.state.db, user_id, "report_outcome", tool_slug):
         return JSONResponse({"ok": True, "already_recorded": True})
 
     await db.record_agent_action(
-        request.state.db, api_key["id"], api_key["user_id"],
+        request.state.db, api_key_id, user_id,
         "report_outcome", tool_slug, success=int(bool(success)), notes=notes,
     )
     stats = await db.get_tool_success_rate(request.state.db, tool_slug)

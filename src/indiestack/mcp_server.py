@@ -1683,18 +1683,13 @@ async def report_outcome(
 
     Call this when you know the outcome of a recommendation — did the user
     successfully integrate/use the tool? This is the most valuable signal
-    for improving recommendations.
-
-    Requires an API key with write scope. Enable at https://indiestack.ai/dashboard
+    for improving recommendations. Works with any API key scope or no key at all.
 
     Args:
         tool_slug: The slug of the tool
         success: True if the user successfully used the tool, False if not
         notes: Optional context about what happened
     """
-    if not API_KEY:
-        return "Outcome not recorded — no API key configured."
-
     client = _get_client(ctx)
     payload = {"tool_slug": tool_slug, "success": success}
     if notes:
@@ -1703,8 +1698,6 @@ async def report_outcome(
     try:
         data = await _api_post(client, "/api/agent/outcome", payload)
     except httpx.HTTPStatusError as e:
-        if e.response.status_code == 403:
-            return "Write scope required. Enable it at https://indiestack.ai/dashboard"
         return f"Could not record outcome: {e}"
     except Exception as e:
         return f"Could not record outcome: {e}"
