@@ -2136,6 +2136,7 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
         "env_vars": tool.get("env_vars", "") or "",
         "frameworks_tested": tool.get("frameworks_tested", "") or "",
         "verified_pairs": tool.get("verified_pairs", "") or "",
+        "agent_instructions": tool.get("agent_instructions", "") or "",
     }
 
     # Add dynamic compatibility pairs from tool_pairs table

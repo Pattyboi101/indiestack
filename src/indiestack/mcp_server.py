@@ -722,6 +722,14 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
         f"**Tags:** {tool.get('tags', '')}\n"
         f"**Saves:** ~{tokens_k} tokens vs building from scratch\n\n"
         f"**Description:**\n{tool.get('description', 'No description available.')}\n\n"
+    )
+
+    # Agent Instructions (maker-authored)
+    agent_instructions = tool.get('agent_instructions', '').strip()
+    if agent_instructions:
+        result += f"**Agent Instructions (from the maker):**\n{agent_instructions}\n\n"
+
+    result += (
         f"**Website:** {website_url}\n"
         f"**IndieStack:** {tool.get('indiestack_url', '')}"
         f"{integration}"
