@@ -1344,6 +1344,13 @@ async def init_db():
         except Exception:
             pass
 
+        # Migration: add agent_client to search_logs for cross-platform tracking
+        try:
+            await db.execute("ALTER TABLE search_logs ADD COLUMN agent_client TEXT")
+            await db.commit()
+        except Exception:
+            pass
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
@@ -4454,14 +4461,15 @@ async def get_stack_preview_tools(db, stack_id: int, limit: int = 3):
 
 async def log_search(db, query: str, source: str = 'web', result_count: int = 0,
                      top_result_slug: str = None, top_result_name: str = None,
-                     api_key_id: int = None):
+                     api_key_id: int = None, agent_client: str = None):
     """Log a search query for the Live Wire feed and maker analytics."""
     if not query or not query.strip():
         return
     await db.execute(
-        """INSERT INTO search_logs (query, source, result_count, top_result_slug, top_result_name, api_key_id)
-           VALUES (?, ?, ?, ?, ?, ?)""",
-        (query.strip()[:200], source, result_count, top_result_slug, top_result_name, api_key_id))
+        """INSERT INTO search_logs (query, source, result_count, top_result_slug, top_result_name, api_key_id, agent_client)
+           VALUES (?, ?, ?, ?, ?, ?, ?)""",
+        (query.strip()[:200], source, result_count, top_result_slug, top_result_name, api_key_id,
+         str(agent_client)[:100] if agent_client else None))
     await db.commit()
 
 
@@ -5275,6 +5283,147 @@ async def get_tool_success_rate(db: aiosqlite.Connection, tool_slug: str) -> dic
     fail = sum(r['cnt'] for r in rows if r['success'] == 0)
     total = success + fail
     return {"success": success, "fail": fail, "total": total, "rate": round(success / total * 100) if total else 0}
+
+
+async def compute_implicit_signals(db: aiosqlite.Connection, hours: int = 24) -> list[dict]:
+    """Infer adoption/rejection from search→detail view sequences.
+
+    Adoption: agent searches, views tool detail (citation), no further search
+    in same category within 30 minutes.
+    Rejection: agent searches, views tool detail, searches same category again
+    within 10 minutes.
+    """
+    # Get recent MCP searches that had results, grouped by api_key_id
+    cursor = await db.execute("""
+        SELECT sl.id, sl.query, sl.top_result_slug, sl.api_key_id, sl.created_at,
+               t.category_id, t.slug as tool_slug
+        FROM search_logs sl
+        JOIN tools t ON sl.top_result_slug = t.slug
+        WHERE sl.source = 'mcp'
+          AND sl.api_key_id IS NOT NULL
+          AND sl.result_count > 0
+          AND sl.created_at >= datetime('now', ?)
+        ORDER BY sl.api_key_id, sl.created_at
+    """, (f'-{hours} hours',))
+    searches = await cursor.fetchall()
+    if not searches:
+        return []
+
+    signals = []
+    for i, search in enumerate(searches):
+        key_id = search['api_key_id']
+        cat_id = search['category_id']
+        ts = search['created_at']
+        slug = search['tool_slug']
+
+        # Check for citation (detail view) of the top result after this search
+        cite_cursor = await db.execute("""
+            SELECT 1 FROM agent_citations ac
+            JOIN tools t ON ac.tool_id = t.id
+            WHERE t.slug = ? AND ac.created_at >= ? AND ac.created_at <= datetime(?, '+30 minutes')
+            LIMIT 1
+        """, (slug, ts, ts))
+        was_viewed = await cite_cursor.fetchone()
+        if not was_viewed:
+            continue
+
+        # Check for follow-up search in same category by same key within 10 min
+        followup_cursor = await db.execute("""
+            SELECT 1 FROM search_logs sl2
+            JOIN tools t2 ON sl2.top_result_slug = t2.slug
+            WHERE sl2.api_key_id = ?
+              AND t2.category_id = ?
+              AND sl2.created_at > ?
+              AND sl2.created_at <= datetime(?, '+10 minutes')
+              AND sl2.id != ?
+            LIMIT 1
+        """, (key_id, cat_id, ts, ts, search['id']))
+        followup = await followup_cursor.fetchone()
+
+        if followup:
+            signals.append({
+                "tool_slug": slug, "signal_type": "implicit_rejection",
+                "confidence": 0.7, "api_key_id": key_id, "timestamp": ts,
+            })
+        else:
+            signals.append({
+                "tool_slug": slug, "signal_type": "implicit_adoption",
+                "confidence": 0.5, "api_key_id": key_id, "timestamp": ts,
+            })
+
+    return signals
+
+
+async def aggregate_tool_signals(db: aiosqlite.Connection, tool_slug: str) -> dict:
+    """Combined explicit + implicit outcome stats for a tool.
+
+    Returns {explicit: {...}, implicit: {...}, combined: {...}, confidence: str}
+    """
+    explicit = await get_tool_success_rate(db, tool_slug)
+
+    # Count implicit signals from recent agent behavior
+    adopt_cursor = await db.execute("""
+        SELECT COUNT(*) as cnt FROM search_logs sl
+        JOIN tools t ON sl.top_result_slug = t.slug
+        WHERE t.slug = ? AND sl.source = 'mcp' AND sl.result_count > 0
+          AND sl.api_key_id IS NOT NULL
+          AND NOT EXISTS (
+              SELECT 1 FROM search_logs sl2
+              JOIN tools t2 ON sl2.top_result_slug = t2.slug
+              WHERE sl2.api_key_id = sl.api_key_id
+                AND t2.category_id = t.category_id
+                AND sl2.created_at > sl.created_at
+                AND sl2.created_at <= datetime(sl.created_at, '+10 minutes')
+                AND sl2.id != sl.id
+          )
+    """, (tool_slug,))
+    adopt_row = await adopt_cursor.fetchone()
+    implicit_adoptions = adopt_row['cnt'] if adopt_row else 0
+
+    reject_cursor = await db.execute("""
+        SELECT COUNT(*) as cnt FROM search_logs sl
+        JOIN tools t ON sl.top_result_slug = t.slug
+        WHERE t.slug = ? AND sl.source = 'mcp' AND sl.result_count > 0
+          AND sl.api_key_id IS NOT NULL
+          AND EXISTS (
+              SELECT 1 FROM search_logs sl2
+              JOIN tools t2 ON sl2.top_result_slug = t2.slug
+              WHERE sl2.api_key_id = sl.api_key_id
+                AND t2.category_id = t.category_id
+                AND sl2.created_at > sl.created_at
+                AND sl2.created_at <= datetime(sl.created_at, '+10 minutes')
+                AND sl2.id != sl.id
+          )
+    """, (tool_slug,))
+    reject_row = await reject_cursor.fetchone()
+    implicit_rejections = reject_row['cnt'] if reject_row else 0
+
+    implicit_total = implicit_adoptions + implicit_rejections
+    implicit = {
+        "adoptions": implicit_adoptions, "rejections": implicit_rejections,
+        "total": implicit_total,
+        "rate": round(implicit_adoptions / implicit_total * 100) if implicit_total else 0,
+    }
+
+    # Combine: explicit weight 1.0, implicit weight 0.6
+    pos = explicit["success"] + (implicit_adoptions * 0.6)
+    neg = explicit["fail"] + (implicit_rejections * 0.6)
+    combined_total = pos + neg
+    combined = {
+        "positive": round(pos, 1), "negative": round(neg, 1),
+        "total": round(combined_total, 1),
+        "rate": round(pos / combined_total * 100) if combined_total else 0,
+    }
+
+    total_signals = explicit["total"] + implicit_total
+    if total_signals >= 20:
+        confidence = "high"
+    elif total_signals >= 5:
+        confidence = "medium"
+    else:
+        confidence = "low"
+
+    return {"explicit": explicit, "implicit": implicit, "combined": combined, "confidence": confidence}
 
 
 async def update_api_key_scopes(db: aiosqlite.Connection, key_id: int, user_id: int, scopes: str) -> bool:

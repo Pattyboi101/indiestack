@@ -1442,7 +1442,8 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
         top_slug = tools[0]['slug'] if tools else None
         top_name = tools[0]['name'] if tools else None
         api_key_id = request.state.api_key['id'] if request.state.api_key else None
-        await db.log_search(d, q, 'api', len(results), top_slug, top_name, api_key_id=api_key_id)
+        agent_client = request.headers.get("User-Agent", "")[:100] or None
+        await db.log_search(d, q, 'api', len(results), top_slug, top_name, api_key_id=api_key_id, agent_client=agent_client)
     except Exception:
         pass  # Don't fail the search if logging fails
 
