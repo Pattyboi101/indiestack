@@ -23,17 +23,23 @@ API_KEY = os.environ.get("INDIESTACK_API_KEY", "")
 # Each platform sets distinctive env vars when spawning child processes.
 
 def _detect_agent_platform() -> str:
-    """Detect the host agent platform from environment variables."""
-    # Claude Code
-    if os.environ.get("CLAUDE_CODE") or os.environ.get("CLAUDE_CODE_ENTRYPOINT"):
+    """Detect the host agent platform from environment variables.
+    MCP servers are spawned as child processes via stdio, so we check
+    env vars that each platform sets in its process tree."""
+    # Claude Code — check multiple possible env vars
+    if any(os.environ.get(k) for k in ("CLAUDE_CODE", "CLAUDE_CODE_ENTRYPOINT", "CLAUDE_API_KEY")):
         return "claude-code"
-    # Cursor (Electron-based, sets VSCODE vars + cursor-specific)
+    # Cursor — Electron-based, sets cursor-specific vars alongside VSCODE vars
+    if any(os.environ.get(k) for k in ("CURSOR_TRACE_DIR", "CURSOR_EDITOR")):
+        return "cursor"
     if "cursor" in os.environ.get("TERM_PROGRAM", "").lower():
         return "cursor"
     # Windsurf / Codeium
-    if os.environ.get("CODEIUM_API_KEY") or "windsurf" in os.environ.get("TERM_PROGRAM", "").lower():
+    if any(os.environ.get(k) for k in ("CODEIUM_API_KEY", "WINDSURF_EDITOR")):
         return "windsurf"
-    # VS Code (Copilot or other extensions)
+    if "windsurf" in os.environ.get("TERM_PROGRAM", "").lower():
+        return "windsurf"
+    # VS Code (Copilot or other extensions) — check last to avoid false-positives from Cursor
     if os.environ.get("VSCODE_PID") or os.environ.get("VSCODE_IPC_HOOK_CLI"):
         return "vscode"
     # Generic / unknown

@@ -1769,7 +1769,7 @@ def normalize_url(url: str) -> str:
 _MIN_TAGLINE_LENGTH = 10
 _MIN_DESCRIPTION_LENGTH = 50
 
-def validate_submission_quality(name: str, tagline: str, description: str, url: str) -> list[str]:
+def validate_submission_quality(name: str, tagline: str, description: str) -> list[str]:
     """Run quality checks on a submission. Returns list of error messages (empty = pass)."""
     errors = []
     if len(tagline.strip()) < _MIN_TAGLINE_LENGTH:
@@ -1778,21 +1778,34 @@ def validate_submission_quality(name: str, tagline: str, description: str, url: 
         errors.append(f"Description must be at least {_MIN_DESCRIPTION_LENGTH} characters (currently {len(description.strip())}).")
     if name.strip().lower() == tagline.strip().lower():
         errors.append("Tagline should be different from the name.")
+    # Catch obvious spam patterns
+    desc = description.strip()
+    if desc and desc == desc.upper() and len(desc) > 20:
+        errors.append("Description should not be all uppercase.")
+    if tagline.strip() and desc and tagline.strip().lower() in desc.lower() and len(desc) < len(tagline.strip()) + 20:
+        errors.append("Description should add more detail beyond the tagline.")
     return errors
 
 
 async def check_duplicate_url(db: aiosqlite.Connection, url: str) -> Optional[dict]:
     """Check if a tool with the same normalized URL already exists.
-    Returns the existing tool dict if found, None otherwise."""
+    Returns the existing tool dict if found, None otherwise.
+    Uses SQL-based normalization for efficiency (no full table scan in Python)."""
     normalized = normalize_url(url)
-    # Check against all non-rejected tools
+    # SQL-based URL normalization: strip scheme, www., trailing slashes, lowercase
     cursor = await db.execute(
-        "SELECT id, name, slug, url FROM tools WHERE status != 'rejected'"
+        """SELECT id, name, slug, url FROM tools
+           WHERE status != 'rejected'
+           AND RTRIM(
+               REPLACE(REPLACE(REPLACE(LOWER(url),
+                   'https://', ''), 'http://', ''), 'www.', ''),
+               '/'
+           ) = ?
+           LIMIT 1""",
+        (normalized,),
     )
-    for row in await cursor.fetchall():
-        if normalize_url(row['url']) == normalized:
-            return dict(row)
-    return None
+    row = await cursor.fetchone()
+    return dict(row) if row else None
 
 
 # ── Submissions ───────────────────────────────────────────────────────────
@@ -5341,7 +5354,9 @@ async def get_tool_success_rate(db: aiosqlite.Connection, tool_slug: str) -> dic
     success = sum(r['cnt'] for r in rows if r['success'] == 1)
     fail = sum(r['cnt'] for r in rows if r['success'] == 0)
     total = success + fail
-    return {"success": success, "fail": fail, "total": total, "rate": round(success / total * 100) if total else 0}
+    # Confidence: low (<5 signals), medium (5-20), high (>20)
+    confidence = "none" if total == 0 else "low" if total < 5 else "medium" if total <= 20 else "high"
+    return {"success": success, "fail": fail, "total": total, "rate": round(success / total * 100) if total else 0, "confidence": confidence}
 
 
 async def compute_implicit_signals(db: aiosqlite.Connection, hours: int = 24) -> list[dict]:

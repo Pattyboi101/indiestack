@@ -471,14 +471,14 @@ async def submit_post(
 
     # Quality gates — minimum content quality
     if not errors:
-        quality_errors = validate_submission_quality(name, tagline, description, url)
+        quality_errors = validate_submission_quality(name, tagline, description)
         errors.extend(quality_errors)
 
     # Duplicate URL check
     if not errors and url.strip():
         existing = await check_duplicate_url(db, url.strip())
         if existing:
-            errors.append(f"A tool with this URL already exists: {escape(existing['name'])} (/{existing['slug']}).")
+            errors.append(f"A tool with this URL already exists: {escape(existing['name'])} (/{escape(existing['slug'])}).")
 
     # Parse price
     price_pence = None

@@ -2404,7 +2404,7 @@ async def api_submit_tool(request: Request):
         return JSONResponse({"error": "URL must start with http:// or https://"}, status_code=400)
 
     # Quality gates — minimum content quality
-    quality_errors = db.validate_submission_quality(name, tagline, description, url)
+    quality_errors = db.validate_submission_quality(name, tagline, description)
     if quality_errors:
         return JSONResponse({"error": " ".join(quality_errors)}, status_code=400)
 
