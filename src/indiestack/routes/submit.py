@@ -471,7 +471,7 @@ async def submit_post(
 
     # Quality gates — minimum content quality
     if not errors:
-        quality_errors = validate_submission_quality(name, tagline, description)
+        quality_errors = validate_submission_quality(name, tagline, description, url)
         errors.extend(quality_errors)
 
     # Duplicate URL check

@@ -1779,8 +1779,12 @@ def normalize_url(url: str) -> str:
 
 _MIN_TAGLINE_LENGTH = 10
 _MIN_DESCRIPTION_LENGTH = 50
+_BLOCKED_SUBDOMAINS = (
+    '.vercel.app', '.netlify.app', '.herokuapp.com', '.fly.dev',
+    '.railway.app', '.render.com', '.surge.sh', '.pages.dev',
+)
 
-def validate_submission_quality(name: str, tagline: str, description: str) -> list[str]:
+def validate_submission_quality(name: str, tagline: str, description: str, url: str = '') -> list[str]:
     """Run quality checks on a submission. Returns list of error messages (empty = pass)."""
     errors = []
     if len(tagline.strip()) < _MIN_TAGLINE_LENGTH:
@@ -1795,6 +1799,18 @@ def validate_submission_quality(name: str, tagline: str, description: str) -> li
         errors.append("Description should not be all uppercase.")
     if tagline.strip() and desc and tagline.strip().lower() in desc.lower() and len(desc) < len(tagline.strip()) + 20:
         errors.append("Description should add more detail beyond the tagline.")
+    # Block default deployment subdomains
+    if url:
+        from urllib.parse import urlparse
+        try:
+            host = urlparse(url).hostname or ''
+            if any(host.endswith(blocked) for blocked in _BLOCKED_SUBDOMAINS):
+                errors.append(
+                    "IndieStack requires a custom domain. Default deployment URLs "
+                    "are not accepted. See /guidelines for submission requirements."
+                )
+        except Exception:
+            pass
     return errors
 
 
