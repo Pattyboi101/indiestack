@@ -5367,6 +5367,7 @@ async def aggregate_tool_signals(db: aiosqlite.Connection, tool_slug: str) -> di
         JOIN tools t ON sl.top_result_slug = t.slug
         WHERE t.slug = ? AND sl.source = 'mcp' AND sl.result_count > 0
           AND sl.api_key_id IS NOT NULL
+          AND sl.created_at >= datetime('now', '-90 days')
           AND NOT EXISTS (
               SELECT 1 FROM search_logs sl2
               JOIN tools t2 ON sl2.top_result_slug = t2.slug
@@ -5385,6 +5386,7 @@ async def aggregate_tool_signals(db: aiosqlite.Connection, tool_slug: str) -> di
         JOIN tools t ON sl.top_result_slug = t.slug
         WHERE t.slug = ? AND sl.source = 'mcp' AND sl.result_count > 0
           AND sl.api_key_id IS NOT NULL
+          AND sl.created_at >= datetime('now', '-90 days')
           AND EXISTS (
               SELECT 1 FROM search_logs sl2
               JOIN tools t2 ON sl2.top_result_slug = t2.slug

@@ -3781,7 +3781,6 @@ async def agent_shortlist(request: Request):
 @app.post("/api/agent/outcome")
 async def agent_outcome(request: Request):
     """Report whether a user successfully used a recommended tool."""
-    from datetime import date
     api_key = request.state.api_key
     if not api_key:
         ip = request.client.host if request.client else "unknown"
@@ -3824,8 +3823,17 @@ async def agent_outcome(request: Request):
         if count >= _AGENT_ACTION_LIMITS["report_outcome"]:
             return JSONResponse({"error": "Daily outcome report limit reached (20/day)"}, status_code=429)
 
-    if user_id and await db.check_agent_action_exists(request.state.db, user_id, "report_outcome", tool_slug):
-        return JSONResponse({"ok": True, "already_recorded": True})
+    if user_id:
+        if await db.check_agent_action_exists(request.state.db, user_id, "report_outcome", tool_slug):
+            return JSONResponse({"ok": True, "already_recorded": True})
+    else:
+        # Keyless dedup: max 1 report per tool per day from user_id=0
+        dup_cursor = await request.state.db.execute(
+            "SELECT 1 FROM agent_actions WHERE user_id = 0 AND action = 'report_outcome' AND tool_slug = ? AND created_at >= date('now') LIMIT 1",
+            (tool_slug,),
+        )
+        if await dup_cursor.fetchone():
+            return JSONResponse({"ok": True, "already_recorded": True})
 
     await db.record_agent_action(
         request.state.db, api_key_id, user_id,
