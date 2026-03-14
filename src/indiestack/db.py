@@ -5808,3 +5808,62 @@ async def get_maker_daily_trend(db, maker_id: int, days: int = 30) -> list:
         ORDER BY day ASC
     """, (maker_id, f'-{days} days'))
     return [dict(r) for r in await cursor.fetchall()]
+
+
+async def get_listing_quality_score(db, tool: dict) -> dict:
+    """Compute listing quality score (0-100) with breakdown."""
+    # Metadata completeness (40% weight)
+    metadata_fields = [
+        ('description', bool(tool.get('description', '').strip())),
+        ('tags', bool(tool.get('tags', '').strip())),
+        ('api_type', bool(tool.get('api_type', '').strip())),
+        ('auth_method', bool(tool.get('auth_method', '').strip())),
+        ('install_command', bool(tool.get('install_command', '').strip())),
+        ('agent_instructions', bool(tool.get('agent_instructions', '').strip())),
+    ]
+    filled = sum(1 for _, has in metadata_fields if has)
+    metadata_score = filled / len(metadata_fields) * 100
+
+    # Success rate (35% weight) — only if we have data
+    sr = await get_tool_success_rate(db, tool['slug'])
+    if sr['total'] > 0:
+        success_score = sr['rate']
+    else:
+        success_score = 50  # Neutral when no data
+
+    # Freshness (25% weight) — proxy via metadata completeness
+    # Real freshness would need an updated_at column
+    freshness_score = metadata_score
+
+    total = round(metadata_score * 0.40 + success_score * 0.35 + freshness_score * 0.25)
+
+    missing = [name for name, has in metadata_fields if not has]
+
+    return {
+        'score': min(total, 100),
+        'metadata_score': round(metadata_score),
+        'success_score': round(success_score),
+        'freshness_score': round(freshness_score),
+        'missing_fields': missing,
+        'tips': _quality_tips(missing, sr['total']),
+    }
+
+
+def _quality_tips(missing: list, outcome_count: int) -> list[str]:
+    """Generate actionable tips to improve listing quality."""
+    tips = []
+    if 'agent_instructions' in missing:
+        tips.append('Add Agent Instructions to tell AI agents exactly how to implement your tool')
+    if 'install_command' in missing:
+        tips.append('Add an install command so agents can set up your tool automatically')
+    if 'api_type' in missing:
+        tips.append('Specify your API type (REST, GraphQL, SDK, CLI)')
+    if 'tags' in missing:
+        tips.append('Add tags to help agents find your tool for the right queries')
+    if 'description' in missing:
+        tips.append('Write a description — agents use this to decide whether to recommend you')
+    if 'auth_method' in missing:
+        tips.append('Specify your auth method so agents can generate correct setup code')
+    if outcome_count == 0:
+        tips.append('No outcome data yet — agents will report success/failure as they recommend your tool')
+    return tips[:3]  # Top 3 most impactful
