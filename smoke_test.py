@@ -72,10 +72,16 @@ TESTS = [
     # Sample content pages (200) - using known slugs
     ("GET", "/tool/simple-analytics", 200, "Tool page"),
     # Compatibility Graph (Phase 2)
-    ("POST", "/tool/simple-analytics/compatible", 401, "Compat auth guard"),
+    ("POST", "/tool/simple-analytics/compatible", 403, "Compat auth guard"),
     ("GET", "/explore?compatible_with=supabase", 200, "Explore compat filter"),
     ("GET", "/tag/open-source", 302, "Tag page redirect"),
     ("GET", "/alternatives/google-analytics", 200, "Alternatives page"),
+
+    # Agent action endpoints (require API key — expect 401 without)
+    ("POST", "/api/agent/recommend", 401, "Agent recommend auth guard"),
+    ("POST", "/api/agent/shortlist", 401, "Agent shortlist auth guard"),
+    ("POST", "/api/agent/outcome", 401, "Agent outcome auth guard"),
+    ("POST", "/api/agent/integration", 401, "Agent integration auth guard"),
 ]
 
 # Content checks: path -> (substring or callable, description)
