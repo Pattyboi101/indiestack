@@ -1835,6 +1835,89 @@ async def check_duplicate_url(db: aiosqlite.Connection, url: str) -> Optional[di
     return dict(row) if row else None
 
 
+async def enrich_domain_age(db: aiosqlite.Connection, tool_id: int, url: str) -> Optional[int]:
+    """Look up domain age via WHOIS and store on tool record. Returns age in days or None."""
+    from urllib.parse import urlparse
+    from datetime import datetime
+    try:
+        import whois
+        hostname = urlparse(url).hostname
+        if not hostname:
+            return None
+        # Strip subdomains to get registrable domain (e.g. app.example.com -> example.com)
+        parts = hostname.split('.')
+        domain = '.'.join(parts[-2:]) if len(parts) >= 2 else hostname
+        w = whois.whois(domain)
+        creation = w.creation_date
+        if isinstance(creation, list):
+            creation = creation[0]
+        if creation:
+            now = datetime.now(creation.tzinfo) if creation.tzinfo else datetime.now()
+            age_days = (now - creation).days
+            await db.execute(
+                "UPDATE tools SET domain_age_days = ? WHERE id = ?",
+                (age_days, tool_id),
+            )
+            await db.commit()
+            return age_days
+    except Exception:
+        pass
+    return None
+
+
+async def enrich_free_tier(db: aiosqlite.Connection, tool_id: int, url: str) -> Optional[bool]:
+    """Scan a tool's landing page for free tier keywords. Returns True/False/None."""
+    import httpx
+    _FREE_KEYWORDS = (
+        'free tier', 'free plan', 'free trial', 'try free', 'get started free',
+        'no credit card', 'open source', 'open-source', 'free forever',
+        'free version', 'starter plan', 'hobby plan', 'community edition',
+    )
+    try:
+        async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+            resp = await client.get(url)
+            if resp.status_code < 400:
+                text = resp.text.lower()
+                has_free = 1 if any(kw in text for kw in _FREE_KEYWORDS) else 0
+                await db.execute(
+                    "UPDATE tools SET has_free_tier = ? WHERE id = ?",
+                    (has_free, tool_id),
+                )
+                await db.commit()
+                return bool(has_free)
+    except Exception:
+        pass
+    return None
+
+
+async def enrich_social_proof(db: aiosqlite.Connection, tool_id: int, url: str) -> Optional[int]:
+    """Query HackerNews Algolia API for mentions of this tool's domain. Returns mention count."""
+    import httpx
+    from urllib.parse import urlparse, quote
+    try:
+        hostname = urlparse(url).hostname
+        if not hostname:
+            return None
+        if hostname.startswith('www.'):
+            hostname = hostname[4:]
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.get(
+                f"https://hn.algolia.com/api/v1/search?query={quote(hostname)}&tags=story&hitsPerPage=0"
+            )
+            if resp.status_code == 200:
+                data = resp.json()
+                count = data.get('nbHits', 0)
+                await db.execute(
+                    "UPDATE tools SET social_mentions_count = ? WHERE id = ?",
+                    (count, tool_id),
+                )
+                await db.commit()
+                return count
+    except Exception:
+        pass
+    return None
+
+
 # ── Submissions ───────────────────────────────────────────────────────────
 
 async def create_tool(db: aiosqlite.Connection, *, name: str, tagline: str, description: str,
