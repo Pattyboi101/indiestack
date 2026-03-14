@@ -2403,10 +2403,20 @@ async def api_submit_tool(request: Request):
     if url and not (url.startswith("http://") or url.startswith("https://")):
         return JSONResponse({"error": "URL must start with http:// or https://"}, status_code=400)
 
+    # Quality gates — minimum content quality
+    quality_errors = db.validate_submission_quality(name, tagline, description, url)
+    if quality_errors:
+        return JSONResponse({"error": " ".join(quality_errors)}, status_code=400)
+
     # Generate slug
     slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
 
     d = request.state.db
+
+    # Check for duplicate URL
+    dup = await db.check_duplicate_url(d, url)
+    if dup:
+        return JSONResponse({"error": f"A tool with this URL already exists: {dup['name']}", "slug": dup['slug']}, status_code=409)
 
     # Check for duplicate slug
     existing = await d.execute("SELECT id FROM tools WHERE slug = ?", (slug,))

@@ -1752,6 +1752,49 @@ async def search_tools(db: aiosqlite.Connection, query: str, limit: int = 20, so
     return rows
 
 
+# ── Submission Quality Gates ──────────────────────────────────────────────
+
+def normalize_url(url: str) -> str:
+    """Normalize a URL for duplicate detection.
+    Strips scheme, www prefix, trailing slashes, and lowercases."""
+    u = url.strip().lower()
+    for prefix in ('https://', 'http://'):
+        if u.startswith(prefix):
+            u = u[len(prefix):]
+    if u.startswith('www.'):
+        u = u[4:]
+    return u.rstrip('/')
+
+
+_MIN_TAGLINE_LENGTH = 10
+_MIN_DESCRIPTION_LENGTH = 50
+
+def validate_submission_quality(name: str, tagline: str, description: str, url: str) -> list[str]:
+    """Run quality checks on a submission. Returns list of error messages (empty = pass)."""
+    errors = []
+    if len(tagline.strip()) < _MIN_TAGLINE_LENGTH:
+        errors.append(f"Tagline must be at least {_MIN_TAGLINE_LENGTH} characters (currently {len(tagline.strip())}).")
+    if len(description.strip()) < _MIN_DESCRIPTION_LENGTH:
+        errors.append(f"Description must be at least {_MIN_DESCRIPTION_LENGTH} characters (currently {len(description.strip())}).")
+    if name.strip().lower() == tagline.strip().lower():
+        errors.append("Tagline should be different from the name.")
+    return errors
+
+
+async def check_duplicate_url(db: aiosqlite.Connection, url: str) -> Optional[dict]:
+    """Check if a tool with the same normalized URL already exists.
+    Returns the existing tool dict if found, None otherwise."""
+    normalized = normalize_url(url)
+    # Check against all non-rejected tools
+    cursor = await db.execute(
+        "SELECT id, name, slug, url FROM tools WHERE status != 'rejected'"
+    )
+    for row in await cursor.fetchall():
+        if normalize_url(row['url']) == normalized:
+            return dict(row)
+    return None
+
+
 # ── Submissions ───────────────────────────────────────────────────────────
 
 async def create_tool(db: aiosqlite.Connection, *, name: str, tagline: str, description: str,
@@ -1865,10 +1908,19 @@ async def get_pending_avatars(db: aiosqlite.Connection) -> list:
 
 
 async def get_pending_tools(db: aiosqlite.Connection):
+    """Get pending tools sorted by quality signals — best submissions first.
+    Prioritizes: GitHub URLs, longer descriptions, tools with tags."""
     cursor = await db.execute(
-        """SELECT t.*, c.name as category_name
+        """SELECT t.*, c.name as category_name,
+           (CASE WHEN t.url LIKE '%github.com%' THEN 10 ELSE 0 END
+            + CASE WHEN LENGTH(t.description) > 200 THEN 5 ELSE 0 END
+            + CASE WHEN LENGTH(t.description) > 100 THEN 3 ELSE 0 END
+            + CASE WHEN t.tags != '' THEN 2 ELSE 0 END
+            + CASE WHEN t.maker_name != '' THEN 1 ELSE 0 END
+           ) AS submission_quality
            FROM tools t JOIN categories c ON t.category_id = c.id
-           WHERE t.status = 'pending' ORDER BY t.created_at DESC"""
+           WHERE t.status = 'pending'
+           ORDER BY submission_quality DESC, t.created_at DESC"""
     )
     return await cursor.fetchall()
 

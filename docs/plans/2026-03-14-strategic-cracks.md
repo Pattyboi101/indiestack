@@ -36,10 +36,14 @@
 - **Answer**: Cross-platform outcome data, assembly metadata, compatibility graph, health verification, and agent instructions — structured, token-efficient, and continuously improving from side-effect data
 
 ## (4) B2B SaaS Spam — Quality Control
-- [ ] Vibecoded SaaS submissions diluting catalog quality
-- Risk: becoming another Product Hunt / directory spam site
-- Options: keep broad ("indie-built"), tighten to open source, or add quality gates
+- [x] **Status: RESOLVED** — Automated quality gates, duplicate URL detection, quality-sorted admin queue
+- Three-tier enforcement: submission gates (min content + dedup) → smart queue sorting → post-approval decay
+- Minimum tagline (10 chars) and description (50 chars) on all 3 submission endpoints
+- Duplicate URL detection with normalization (strips scheme, www, trailing slashes)
+- Admin pending queue now sorted by quality signals (GitHub URL, description length, tags, maker)
+- Post-approval: health monitoring + quality score already demote dead/low-quality tools in search
 - **Core question**: What's the quality bar, and how do you enforce it at scale?
+- **Answer**: "Functional, maintained, genuinely useful." Automated gates catch garbage, health monitoring catches decay, outcome data catches tools that don't work. System self-corrects without needing manual curation at scale.
 
 ## (5) Pro Revenue — Why Pay?
 - [ ] Current Pro benefits are "more of the same" — not compelling

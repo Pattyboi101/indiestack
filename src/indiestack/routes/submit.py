@@ -12,7 +12,7 @@ from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell
 from urllib.parse import quote
 
-from indiestack.db import get_all_categories, create_tool, get_tool_by_id, slugify, get_maker_by_id, get_tool_by_slug
+from indiestack.db import get_all_categories, create_tool, get_tool_by_id, slugify, get_maker_by_id, get_tool_by_slug, track_event, validate_submission_quality, check_duplicate_url
 
 logger = logging.getLogger(__name__)
 
@@ -469,6 +469,17 @@ async def submit_post(
     if is_public and (not email.strip() or '@' not in email):
         errors.append("A valid email is required.")
 
+    # Quality gates — minimum content quality
+    if not errors:
+        quality_errors = validate_submission_quality(name, tagline, description, url)
+        errors.extend(quality_errors)
+
+    # Duplicate URL check
+    if not errors and url.strip():
+        existing = await check_duplicate_url(db, url.strip())
+        if existing:
+            errors.append(f"A tool with this URL already exists: {escape(existing['name'])} (/{existing['slug']}).")
+
     # Parse price
     price_pence = None
     if price.strip():
@@ -516,6 +527,11 @@ async def submit_post(
         )
         logger.info(f"Public submission: '{name.strip()}' from {email.strip()} ({request.client.host})")
     await db.commit()
+
+    # Track submission event
+    user = request.state.user
+    tool_slug_for_event = slugify(name.strip())
+    await track_event(db, 'tool_submitted', user_id=user['id'] if user else None, metadata={'slug': tool_slug_for_event})
 
     # Get the tool slug for verification link
     tool = await get_tool_by_id(db, tool_id)
