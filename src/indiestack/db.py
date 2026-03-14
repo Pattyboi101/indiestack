@@ -1079,6 +1079,17 @@ async def init_db():
             await db.commit()
         except Exception:
             pass
+        # Migration: quality gate enrichment columns
+        for col, ddl in [
+            ("domain_age_days", "ALTER TABLE tools ADD COLUMN domain_age_days INTEGER DEFAULT NULL"),
+            ("has_free_tier", "ALTER TABLE tools ADD COLUMN has_free_tier INTEGER DEFAULT NULL"),
+            ("social_mentions_count", "ALTER TABLE tools ADD COLUMN social_mentions_count INTEGER DEFAULT NULL"),
+            ("rejection_reason", "ALTER TABLE tools ADD COLUMN rejection_reason TEXT DEFAULT NULL"),
+        ]:
+            try:
+                await db.execute(f"SELECT {col} FROM tools LIMIT 1")
+            except Exception:
+                await db.execute(ddl)
         # Migration: add AI Dev Tools category if missing
         cursor = await db.execute("SELECT id FROM categories WHERE slug = 'ai-dev-tools'")
         if not await cursor.fetchone():
