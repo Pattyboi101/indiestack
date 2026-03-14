@@ -37,6 +37,7 @@ from indiestack.db import (
     update_user,
     check_pro,
     track_event,
+    get_tool_success_rate,
 )
 from indiestack.payments import create_connect_account, create_onboarding_link
 from indiestack.email import send_email, wishlist_update_html
@@ -95,6 +96,22 @@ async def dashboard_overview(request: Request):
     # Agent citations (30-day)
     agent_citations_30d = await get_total_agent_citations(db, maker_id, days=30) if maker_id else 0
     citation_percentile = await get_citation_percentile(db, maker_id, days=30) if maker_id else None
+
+    # Aggregate success rate across all maker's tools
+    maker_success_rate = None
+    if maker_id:
+        _tools_for_sr = await get_tools_by_maker(db, maker_id)
+        _sr_success = 0
+        _sr_total = 0
+        for _t in _tools_for_sr:
+            _sr = await get_tool_success_rate(db, _t['slug'])
+            _sr_success += _sr.get('success', 0)
+            _sr_total += _sr.get('total', 0)
+        if _sr_total > 0:
+            maker_success_rate = round(_sr_success / _sr_total * 100)
+
+    sr_display = f'{maker_success_rate}%' if maker_success_rate is not None else '\u2014'
+    sr_color = 'var(--accent)' if (maker_success_rate or 0) >= 70 else '#E2B764' if (maker_success_rate or 0) >= 40 else '#e74c3c'
 
     pro_badge = ' <span style="display:inline-block;background:var(--accent);color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:8px;">PRO</span>' if is_pro else ''
     upgrade_html = '' if is_pro else '<a href="/pricing" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent);color:white;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;margin-left:auto;">Upgrade to Pro</a>' if user else ''
@@ -827,6 +844,10 @@ async def dashboard_overview(request: Request):
                     <div style="font-family:var(--font-display);font-size:28px;color:var(--ink);">{query_count}</div>
                     <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">Discovery Queries</div>
                 </div>
+                <div>
+                    <div style="font-family:var(--font-display);font-size:28px;color:{sr_color};">{sr_display}</div>
+                    <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">Success Rate</div>
+                </div>
             </div>
             <div style="margin-top:4px;">
                 <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink-muted);margin-bottom:8px;font-weight:600;">Top Search Queries</div>
@@ -855,7 +876,7 @@ async def dashboard_overview(request: Request):
                 </div>
                 <span style="font-size:13px;color:rgba(255,255,255,0.4);">{plan_label}</span>
             </div>
-            <div class="pro-stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+            <div class="pro-stats-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
                 <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.07);border-radius:var(--radius-sm);">
                     <div style="font-family:var(--font-display);font-size:28px;color:white;">{tool_count}</div>
                     <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Tools</div>
@@ -872,6 +893,10 @@ async def dashboard_overview(request: Request):
                     <div style="font-family:var(--font-display);font-size:28px;color:white;">{_tokens_display}</div>
                     <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Tokens Saved</div>
                 </div>
+                <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.07);border-radius:var(--radius-sm);">
+                    <div style="font-family:var(--font-display);font-size:28px;color:{sr_color};">{sr_display}</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Success Rate</div>
+                </div>
             </div>
         </div>
         '''
@@ -884,7 +909,7 @@ async def dashboard_overview(request: Request):
             </div>
             {upgrade_html}
         </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px;">
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="color:var(--ink-muted);font-size:13px;">Tools</div>
                 <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--ink);">{tool_count}</div>
@@ -900,6 +925,10 @@ async def dashboard_overview(request: Request):
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations_30d}</div>
                 <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Agent Recs</div>
+            </div>
+            <div class="card" style="text-align:center;padding:20px;">
+                <div style="font-family:var(--font-display);font-size:28px;color:{sr_color};">{sr_display}</div>
+                <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Success Rate</div>
             </div>
         </div>
         '''
@@ -1097,11 +1126,18 @@ async def dashboard_tools(request: Request):
         # Get rating
         rating = await get_tool_rating(db, t['id'])
         rating_html = star_rating_html(rating['avg_rating'], rating['review_count'], size=14) if rating['review_count'] else '<span style="color:var(--ink-muted);font-size:12px;">No reviews</span>'
+        # Success rate badge
+        _tool_sr = await get_tool_success_rate(db, t['slug'])
+        if _tool_sr['total'] > 0:
+            _sr_badge_color = '#2ecc71' if _tool_sr['rate'] >= 70 else '#E2B764' if _tool_sr['rate'] >= 40 else '#e74c3c'
+            sr_badge = f' <span style="font-size:11px;padding:2px 6px;border-radius:4px;background:{_sr_badge_color}22;color:{_sr_badge_color};">{_tool_sr["rate"]}% success</span>'
+        else:
+            sr_badge = ''
 
         rows += f"""
         <tr style="border-bottom:1px solid var(--border);">
             <td style="padding:12px;">
-                <a href="/tool/{slug}" style="font-weight:600;color:var(--ink);">{name}</a>{totw_badge}
+                <a href="/tool/{slug}" style="font-weight:600;color:var(--ink);">{name}</a>{totw_badge}{sr_badge}
                 <p style="font-size:13px;color:var(--ink-muted);margin-top:8px;margin-bottom:0;">
                     <span style="color:var(--accent);display:inline-flex;align-items:center;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span> {mcp_views} AI recommendations{totw_line}
                 </p>
