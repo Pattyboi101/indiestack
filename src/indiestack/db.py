@@ -1531,11 +1531,13 @@ def compute_quality_score(tool: dict) -> float:
     engagement += min(review_count / 3, 0.2)
     engagement += min(click_count / 100, 0.2)
 
-    # Health (binary kill switch)
+    # Health (multiplier)
     health_status = str(tool.get('health_status') or 'unknown')
     if health_status == 'dead':
         dead_days = int(tool.get('dead_days') or 0)
         health = 0.0 if dead_days >= 7 else 1.0
+    elif health_status == 'degraded':
+        health = 0.3
     else:
         health = 1.0
 
@@ -1580,6 +1582,55 @@ async def recompute_all_quality_scores(db: aiosqlite.Connection) -> dict:
         'updated': count,
         'avg_score': round(total_score / count, 1) if count else 0,
     }
+
+
+async def auto_archive_dead_tools(db: aiosqlite.Connection) -> int:
+    """Archive tools that have been dead for 30+ consecutive days. Returns count archived."""
+    cursor = await db.execute("""
+        UPDATE tools SET status = 'archived'
+        WHERE status = 'approved'
+          AND health_status = 'dead'
+          AND first_dead_at IS NOT NULL
+          AND first_dead_at < datetime('now', '-30 days')
+    """)
+    await db.commit()
+    return cursor.rowcount
+
+
+async def check_outcome_demotion(db: aiosqlite.Connection) -> int:
+    """Demote tools with high agent failure rates to 'degraded' status. Returns count demoted."""
+    # Check which outcome table exists
+    cursor = await db.execute("""
+        SELECT name FROM sqlite_master
+        WHERE type='table' AND name LIKE '%outcome%'
+        LIMIT 1
+    """)
+    table_row = await cursor.fetchone()
+    if not table_row:
+        return 0
+    table_name = table_row[0]
+
+    cursor = await db.execute(f"""
+        SELECT tool_id,
+               COUNT(*) as total_signals,
+               SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes
+        FROM [{table_name}]
+        GROUP BY tool_id
+        HAVING total_signals >= 10
+    """)
+    rows = await cursor.fetchall()
+    demoted = 0
+    for row in rows:
+        success_rate = row['successes'] / row['total_signals'] if row['total_signals'] else 0
+        if success_rate < 0.2:
+            await db.execute(
+                "UPDATE tools SET health_status = 'degraded' WHERE id = ? AND health_status != 'degraded'",
+                (row['tool_id'],),
+            )
+            demoted += 1
+    if demoted:
+        await db.commit()
+    return demoted
 
 
 async def run_health_checks(db: aiosqlite.Connection, batch_size: int = 100) -> dict:

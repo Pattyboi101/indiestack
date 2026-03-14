@@ -987,12 +987,12 @@ async def publish_tool(
         raise ToolError("URL must start with http:// or https://")
 
     if not name or not url or not tagline or not description:
-        raise ToolError("name, url, tagline, and description are all required.")
+        raise ToolError("name, url, tagline, and description are all required. See https://indiestack.ai/guidelines")
 
     if len(str(tagline).strip()) < 10:
-        raise ToolError("Tagline must be at least 10 characters. Describe what the tool does in one sentence.")
+        raise ToolError("Tagline must be at least 10 characters. See https://indiestack.ai/guidelines")
     if len(str(description).strip()) < 50:
-        raise ToolError("Description must be at least 50 characters. Explain what the tool does and why it's useful.")
+        raise ToolError("Description must be at least 50 characters. See https://indiestack.ai/guidelines")
 
     payload = {
         "name": name,
