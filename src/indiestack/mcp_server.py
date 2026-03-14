@@ -1694,6 +1694,10 @@ async def report_outcome(
 
     try:
         data = await _api_post(client, "/api/agent/outcome", payload)
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code == 403:
+            return "Write scope required. Enable it at https://indiestack.ai/dashboard"
+        return f"Could not record outcome: {e}"
     except Exception as e:
         return f"Could not record outcome: {e}"
 
@@ -1703,10 +1707,7 @@ async def report_outcome(
         stats = data.get("success_rate", {})
         rate = stats.get("rate", "?")
         return f"Recorded! '{tool_slug}' now has a {rate}% success rate from agent reports."
-    error = data.get("error", "Unknown")
-    if "scope" in error.lower():
-        return "Write scope required. Enable it at https://indiestack.ai/dashboard"
-    return f"Error: {error}"
+    return f"Error: {data.get('error', 'Unknown')}"
 
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=False))
@@ -1739,6 +1740,10 @@ async def confirm_integration(
 
     try:
         data = await _api_post(client, "/api/agent/integration", payload)
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code == 403:
+            return "Write scope required. Enable it at https://indiestack.ai/dashboard"
+        return f"Could not record integration: {e}"
     except Exception as e:
         return f"Could not record integration: {e}"
 
@@ -1746,10 +1751,7 @@ async def confirm_integration(
         if data.get("already_recorded"):
             return "This integration pair was already recorded."
         return f"Recorded! '{tool_a_slug}' + '{tool_b_slug}' confirmed as compatible."
-    error = data.get("error", "Unknown")
-    if "scope" in error.lower():
-        return "Write scope required. Enable it at https://indiestack.ai/dashboard"
-    return f"Error: {error}"
+    return f"Error: {data.get('error', 'Unknown')}"
 
 
 def main():
