@@ -2278,6 +2278,9 @@ async def card_detail(request: Request, slug: str):
         capabilities["sdk_packages"] = sdk_packages
     if env_vars:
         capabilities["env_vars"] = env_vars
+    agent_instructions = tool.get('agent_instructions', '') or None
+    if agent_instructions:
+        capabilities["agent_instructions"] = agent_instructions
 
     # Build health, stripping None values
     health = {}
