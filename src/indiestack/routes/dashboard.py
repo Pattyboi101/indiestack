@@ -1186,6 +1186,7 @@ async def edit_tool_post(
     api_type: str = Form(""), auth_method: str = Form(""),
     install_command: str = Form(""), sdk_packages: str = Form(""),
     env_vars: str = Form(""), frameworks_tested: str = Form(""),
+    agent_instructions: str = Form(""),
 ):
     user = request.state.user
     redirect = require_login(user)
@@ -1244,7 +1245,8 @@ async def edit_tool_post(
                       install_command=install_command.strip(),
                       sdk_packages=sdk_packages.strip(),
                       env_vars=env_vars.strip(),
-                      frameworks_tested=frameworks_tested.strip())
+                      frameworks_tested=frameworks_tested.strip(),
+                      agent_instructions=agent_instructions.strip())
 
     # Save maker story fields
     maker_id = user.get('maker_id')
@@ -1399,6 +1401,16 @@ def edit_tool_form(tool: dict, categories: list, error: str = "", changelogs: li
                 <input type="text" name="frameworks_tested" value="{escape(str(tool.get('frameworks_tested','') or ''))}"
                        placeholder="nextjs, fastapi, rails, django"
                        style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;">
+
+                <div style="margin-bottom:20px;">
+                    <label style="display:block;font-weight:600;margin-bottom:6px;font-size:14px;">Agent Instructions</label>
+                    <p style="font-size:12px;color:var(--ink-muted);margin:0 0 8px;">
+                        Tell AI agents how to implement your tool correctly. This text is shown directly to agents when they recommend your tool. Include correct import syntax, common pitfalls, required setup steps, and version-specific notes.
+                    </p>
+                    <textarea name="agent_instructions" rows="6" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font-family:var(--font-mono);font-size:13px;resize:vertical;"
+                        placeholder="Example: Use v3 API (v2 is deprecated). Auth requires both API_KEY and PROJECT_ID env vars. For Next.js, wrap in useEffect — SSR is not supported."
+                    >{escape(str(tool.get('agent_instructions', '') or ''))}</textarea>
+                </div>
             </div>
 
             <div class="form-group">
