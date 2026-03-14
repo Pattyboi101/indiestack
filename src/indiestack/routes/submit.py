@@ -209,6 +209,9 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
         <div style="text-align:center;margin-bottom:40px;">
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Make Your Creation Discoverable by AI</h1>
             <p style="color:var(--ink-muted);margin-top:8px;">{f"{tool_count}+ creations are already discoverable by AI agents via our MCP server. List yours free — we'll review within 24 hours." if tool_count > 0 else "Creations listed here are discoverable by AI agents via our MCP server. List yours free — we'll review within 24 hours."}</p>
+            <p style="color:var(--ink-muted);font-size:14px;margin-top:12px;">
+                Before submitting, please read our <a href="/guidelines" style="color:var(--accent);font-weight:600;">submission guidelines</a>.
+            </p>
         </div>
 
         <div style="background:var(--info-bg);border:1px solid var(--info-border);border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;line-height:1.7;">
