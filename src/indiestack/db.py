@@ -1910,7 +1910,6 @@ async def enrich_domain_age(db: aiosqlite.Connection, tool_id: int, url: str) ->
                 "UPDATE tools SET domain_age_days = ? WHERE id = ?",
                 (age_days, tool_id),
             )
-            await db.commit()
             return age_days
     except Exception:
         pass
@@ -1935,7 +1934,6 @@ async def enrich_free_tier(db: aiosqlite.Connection, tool_id: int, url: str) -> 
                     "UPDATE tools SET has_free_tier = ? WHERE id = ?",
                     (has_free, tool_id),
                 )
-                await db.commit()
                 return bool(has_free)
     except Exception:
         pass
@@ -1963,7 +1961,6 @@ async def enrich_social_proof(db: aiosqlite.Connection, tool_id: int, url: str) 
                     "UPDATE tools SET social_mentions_count = ? WHERE id = ?",
                     (count, tool_id),
                 )
-                await db.commit()
                 return count
     except Exception:
         pass

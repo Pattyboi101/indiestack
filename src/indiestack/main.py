@@ -2409,8 +2409,18 @@ async def api_submit_tool(request: Request):
     if quality_errors:
         return JSONResponse({"error": " ".join(quality_errors)}, status_code=400)
 
-    # URL reachability check
+    # URL reachability check (with SSRF protection)
     import httpx as _httpx
+    import socket as _socket, ipaddress as _ipaddress
+    from urllib.parse import urlparse as _urlparse
+    try:
+        _host = _urlparse(url).hostname or ''
+        for _addr_info in _socket.getaddrinfo(_host, None):
+            _ip = _ipaddress.ip_address(_addr_info[4][0])
+            if _ip.is_private or _ip.is_loopback or _ip.is_link_local:
+                return JSONResponse({"error": "URL resolves to a private or internal address."}, status_code=400)
+    except Exception:
+        pass  # DNS failure will be caught by the HEAD request below
     try:
         async with _httpx.AsyncClient(timeout=10.0, follow_redirects=True) as _client:
             resp = await _client.head(url)
@@ -2476,6 +2486,7 @@ async def api_submit_tool(request: Request):
                 enrich_social_proof(d, row_enrich['id'], url),
                 return_exceptions=True,
             )
+            await d.commit()
         except Exception:
             pass
 

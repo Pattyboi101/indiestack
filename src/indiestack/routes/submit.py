@@ -480,13 +480,27 @@ async def submit_post(
     # URL reachability check — reject dead URLs before they enter the queue
     if not errors and url.strip():
         import httpx as _httpx
+        from urllib.parse import urlparse as _urlparse
+        import socket as _socket, ipaddress as _ipaddress
+        _skip_check = False
         try:
-            async with _httpx.AsyncClient(timeout=10.0, follow_redirects=True) as _client:
-                resp = await _client.head(url.strip())
-                if resp.status_code >= 400:
-                    errors.append(f"Your URL returned HTTP {resp.status_code}. Please check that your tool is live and accessible.")
+            _host = _urlparse(url.strip()).hostname or ''
+            for _addr_info in _socket.getaddrinfo(_host, None):
+                _ip = _ipaddress.ip_address(_addr_info[4][0])
+                if _ip.is_private or _ip.is_loopback or _ip.is_link_local:
+                    errors.append("URL resolves to a private or internal address.")
+                    _skip_check = True
+                    break
         except Exception:
-            errors.append("We couldn't reach your URL. Please check that your tool is live and accessible, then try again.")
+            pass  # DNS failure will be caught by the HEAD request below
+        if not _skip_check and not errors:
+            try:
+                async with _httpx.AsyncClient(timeout=10.0, follow_redirects=True) as _client:
+                    resp = await _client.head(url.strip())
+                    if resp.status_code >= 400:
+                        errors.append(f"Your URL returned HTTP {resp.status_code}. Please check that your tool is live and accessible.")
+            except Exception:
+                errors.append("We couldn't reach your URL. Please check that your tool is live and accessible, then try again.")
 
     # Duplicate URL check
     if not errors and url.strip():
@@ -552,6 +566,7 @@ async def submit_post(
             enrich_social_proof(db, tool_id, url.strip()),
             return_exceptions=True,
         )
+        await db.commit()
     except Exception:
         pass  # Enrichment is best-effort — don't block submission
 
