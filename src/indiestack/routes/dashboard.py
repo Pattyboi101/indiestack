@@ -98,13 +98,15 @@ async def dashboard_overview(request: Request):
     agent_citations_30d = await get_total_agent_citations(db, maker_id, days=30) if maker_id else 0
     citation_percentile = await get_citation_percentile(db, maker_id, days=30) if maker_id else None
 
+    # Fetch maker's tools once for success rate + quality score
+    _maker_tools = await get_tools_by_maker(db, maker_id) if maker_id else []
+
     # Aggregate success rate across all maker's tools
     maker_success_rate = None
-    if maker_id:
-        _tools_for_sr = await get_tools_by_maker(db, maker_id)
+    if _maker_tools:
         _sr_success = 0
         _sr_total = 0
-        for _t in _tools_for_sr:
+        for _t in _maker_tools:
             _sr = await get_tool_success_rate(db, _t['slug'])
             _sr_success += _sr.get('success', 0)
             _sr_total += _sr.get('total', 0)
@@ -114,11 +116,10 @@ async def dashboard_overview(request: Request):
     # Listing Quality Score
     quality_score = None
     quality_tips = []
-    if maker_id:
-        _tools_for_qs = await get_tools_by_maker(db, maker_id)
+    if _maker_tools:
         _qs_scores = []
         _qs_all_tips = []
-        for _t in _tools_for_qs[:10]:  # Cap at 10
+        for _t in _maker_tools[:10]:  # Cap at 10
             _qs = await get_listing_quality_score(db, _t)
             _qs_scores.append(_qs['score'])
             _qs_all_tips.extend(_qs['tips'])
@@ -156,9 +157,8 @@ async def dashboard_overview(request: Request):
     badge_section = ''
     if maker_id:
         # Get first tool slug for the embed example
-        maker_tools_list = await get_tools_by_maker(db, maker_id)
-        if maker_tools_list:
-            first_tool = maker_tools_list[0]
+        if _maker_tools:
+            first_tool = _maker_tools[0]
             first_slug = first_tool['slug']
             has_price = first_tool.get('price_pence') and first_tool['price_pence'] > 0
             has_stripe = bool(first_tool.get('stripe_account_id'))
@@ -1488,7 +1488,7 @@ def edit_tool_form(tool: dict, categories: list, error: str = "", changelogs: li
                     <p style="font-size:12px;color:var(--ink-muted);margin:0 0 8px;">
                         Tell AI agents how to implement your tool correctly. This text is shown directly to agents when they recommend your tool. Include correct import syntax, common pitfalls, required setup steps, and version-specific notes.
                     </p>
-                    <textarea name="agent_instructions" rows="6" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font-family:var(--font-mono);font-size:13px;resize:vertical;"
+                    <textarea name="agent_instructions" rows="6" maxlength="2000" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);font-family:var(--font-mono);font-size:13px;resize:vertical;"
                         placeholder="Example: Use v3 API (v2 is deprecated). Auth requires both API_KEY and PROJECT_ID env vars. For Next.js, wrap in useEffect — SSR is not supported."
                     >{escape(str(tool.get('agent_instructions', '') or ''))}</textarea>
                 </div>
