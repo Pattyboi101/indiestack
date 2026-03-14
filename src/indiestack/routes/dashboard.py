@@ -1,5 +1,6 @@
 """Maker dashboard — tool management, sales, analytics, settings."""
 
+from datetime import datetime, timezone
 from html import escape
 
 import csv
@@ -838,7 +839,7 @@ async def dashboard_overview(request: Request):
     _tokens_display = '~' + str(tokens_k) + 'k' if tokens_k > 0 else '0'
     _user_name = escape(str(user['name']))
     if is_pro:
-        plan_label = (sub['plan'] if sub else 'pro').replace('_', ' ').title()
+        plan_label = 'Pro'
         if plan_label == 'Founder':
             plan_label = 'Founding Member'
         header_html = f'''
@@ -2491,10 +2492,10 @@ async def toggle_key_scope(request: Request, key_id: int):
     keys = await get_api_keys_for_user(request.state.db, user['id'])
     current_key = next((k for k in keys if k['id'] == key_id), None)
     if not current_key:
-        return RedirectResponse(url="/dashboard?tab=developer", status_code=303)
+        return RedirectResponse(url="/developer", status_code=303)
     new_scopes = "read" if current_key.get('scopes', 'read') == 'read,write' else "read,write"
     await update_api_key_scopes(request.state.db, key_id, user['id'], new_scopes)
-    return RedirectResponse(url="/dashboard?tab=developer", status_code=303)
+    return RedirectResponse(url="/developer", status_code=303)
 
 
 @router.post("/developer/toggle-personalization")
@@ -2573,7 +2574,7 @@ async def dashboard_export(request: Request):
 
     if fmt == 'json':
         export = {
-            'exported_at': '2026-03-13',
+            'exported_at': datetime.now(timezone.utc).isoformat(),
             'user': user.get('username', user.get('email', '')),
             'tools': tools_data,
         }
