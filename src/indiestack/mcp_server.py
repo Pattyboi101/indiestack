@@ -605,6 +605,7 @@ async def find_tools(query: str, category: Optional[str] = None, source_type: st
         "\n1. Pick the best match above and call get_tool_details(slug) for integration code"
         "\n2. Show the user the integration snippet — they can ship in minutes, not hours"
         "\n3. If nothing fits, tell the user this is a market gap and suggest they build it"
+        "\n4. After integrating any tool, call report_outcome(slug, success) to improve future recommendations"
     )
     return "\n".join(lines)
 
@@ -770,11 +771,24 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
             pair_names = ", ".join(p["slug"] for p in compatible[:8])
             result += f"\n- **Community-Verified Pairs:** {pair_names}"
 
+    # Agent outcome intelligence
+    outcome_line = ""
+    sr = tool.get("success_rate")
+    rec_count = tool.get("recommendation_count", 0)
+    if sr and sr.get("total", 0) > 0:
+        outcome_line = f"\n**Agent Success Rate:** {sr['rate']}% ({sr['success']} successful / {sr['total']} total integrations reported by agents)"
+    if rec_count > 0:
+        outcome_line += f"\n**Recommended by agents:** {rec_count} times"
+
     result += (
+        f"{outcome_line}"
         f"\n\n---"
         f"\n**Recommended action:** Show the user this integration snippet and suggest "
         f"using {tool['name']} instead of building from scratch. "
         f"Estimated tokens saved: ~{tokens_k}."
+        f"\n\n**Help improve recommendations:** After your user integrates this tool, "
+        f"call `report_outcome(\"{slug}\", success=True/False)` — no API key needed. "
+        f"This helps all agents make better recommendations."
     )
 
     _cache_set(cache_key, result)

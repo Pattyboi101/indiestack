@@ -2148,6 +2148,17 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
     except Exception:
         pass
 
+    # Agent outcome intelligence — success rate from agent reports (all tiers)
+    try:
+        success_rate = await db.get_tool_success_rate(d, slug)
+        if success_rate["total"] > 0:
+            result["success_rate"] = success_rate
+        rec_count = await db.get_tool_recommendation_count(d, slug)
+        if rec_count > 0:
+            result["recommendation_count"] = rec_count
+    except Exception:
+        pass
+
     # Pro MCP enrichment — citation stats, category ranking, demand context
     is_pro_key = request.state.api_key and request.state.api_key.get('tier') == 'pro'
     if is_pro_key:
