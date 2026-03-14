@@ -54,7 +54,8 @@ CREATE TABLE IF NOT EXISTS tools (
     verified_at TIMESTAMP,
     verified_until TIMESTAMP,
     maker_id INTEGER REFERENCES makers(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    agent_instructions TEXT NOT NULL DEFAULT ''
 );
 
 CREATE TABLE IF NOT EXISTS upvotes (
@@ -1269,6 +1270,12 @@ async def init_db():
                 await db.execute(f"ALTER TABLE tools ADD COLUMN {col} {typedef}")
             except Exception:
                 pass
+        await db.commit()
+
+        try:
+            await db.execute("ALTER TABLE tools ADD COLUMN agent_instructions TEXT NOT NULL DEFAULT ''")
+        except Exception:
+            pass
         await db.commit()
 
         # Performance indexes
@@ -2943,7 +2950,7 @@ _ALLOWED_TOOL_FIELDS = {
     'stripe_account_id', 'tool_of_the_week', 'boost_active', 'boost_expires_at',
     'badge_nudge_sent', 'indie_score', 'mcp_view_count', 'pixel_icon',
     'api_type', 'auth_method', 'install_command', 'sdk_packages', 'env_vars', 'frameworks_tested',
-    'verified_pairs',
+    'verified_pairs', 'agent_instructions',
 }
 
 async def update_tool(db: aiosqlite.Connection, tool_id: int, **fields):
