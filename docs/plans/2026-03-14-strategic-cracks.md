@@ -26,10 +26,14 @@
 - **Answer**: Outcome data they can't get anywhere else + Agent Instructions that directly affect how agents recommend them
 
 ## (3) Autonomous Agents — Would They List?
-- [ ] Autonomous agents want to FIND tools, not PROMOTE them
-- Only incentive: feedback loop that benefits the agent's user
-- The MCP server is the right interface, but data must be richer than raw search
+- [x] **Status: RESOLVED** — Cross-platform detection, pre-flight verification positioning, agent-built tool promotion
+- Autonomous agents won't list — they'll consume, and their consumption IS the moat
+- Agent platform detection (Claude/Cursor/Windsurf/VSCode) via User-Agent for cross-platform intelligence
+- MCP instructions repositioned as "pre-flight verification" — security + health + success rates
+- publish_tool() promoted for agent-built tools (agent-as-maker pathway)
+- Agent Cards enriched with outcome_intelligence (success_rate, confidence, total_signals)
 - **Core question**: What does IndieStack offer an autonomous agent that GitHub/npm/PyPI doesn't?
+- **Answer**: Cross-platform outcome data, assembly metadata, compatibility graph, health verification, and agent instructions — structured, token-efficient, and continuously improving from side-effect data
 
 ## (4) B2B SaaS Spam — Quality Control
 - [ ] Vibecoded SaaS submissions diluting catalog quality

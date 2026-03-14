@@ -2269,6 +2269,9 @@ async def card_detail(request: Request, slug: str):
     # Rating
     rating = await db.get_tool_rating(d, tool["id"])
 
+    # Success rate from agent outcome reports
+    success_rate = await db.get_tool_success_rate(d, slug)
+
     # Build capabilities, stripping None values
     capabilities = {}
     for key in ("api_type", "auth_method", "install_command", "frameworks_tested"):
@@ -2339,9 +2342,17 @@ async def card_detail(request: Request, slug: str):
         },
         "meta": {
             "generated_by": "indiestack.ai",
-            "schema_version": "1.0",
+            "schema_version": "1.1",
         },
     }
+
+    # Add outcome intelligence only when data exists
+    if success_rate.get("total", 0) > 0:
+        card["outcome_intelligence"] = {
+            "success_rate": success_rate.get("rate"),
+            "total_signals": success_rate["total"],
+            "confidence": success_rate.get("confidence", "none"),
+        }
 
     return JSONResponse(
         card,
