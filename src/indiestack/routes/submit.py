@@ -539,6 +539,19 @@ async def submit_post(
         logger.info(f"Public submission: '{name.strip()}' from {email.strip()} ({request.client.host})")
     await db.commit()
 
+    # Async enrichment — gather quality signals for admin review
+    import asyncio as _asyncio
+    from indiestack.db import enrich_domain_age, enrich_free_tier, enrich_social_proof
+    try:
+        await _asyncio.gather(
+            enrich_domain_age(db, tool_id, url.strip()),
+            enrich_free_tier(db, tool_id, url.strip()),
+            enrich_social_proof(db, tool_id, url.strip()),
+            return_exceptions=True,
+        )
+    except Exception:
+        pass  # Enrichment is best-effort — don't block submission
+
     # Track submission event
     user = request.state.user
     tool_slug_for_event = slugify(name.strip())

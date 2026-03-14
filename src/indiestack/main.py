@@ -2462,6 +2462,22 @@ async def api_submit_tool(request: Request):
     )
     await d.commit()
 
+    # Async enrichment — gather quality signals for admin review
+    import asyncio as _asyncio
+    cursor_enrich = await d.execute("SELECT id FROM tools WHERE slug = ?", (slug,))
+    row_enrich = await cursor_enrich.fetchone()
+    if row_enrich:
+        from indiestack.db import enrich_domain_age, enrich_free_tier, enrich_social_proof
+        try:
+            await _asyncio.gather(
+                enrich_domain_age(d, row_enrich['id'], url),
+                enrich_free_tier(d, row_enrich['id'], url),
+                enrich_social_proof(d, row_enrich['id'], url),
+                return_exceptions=True,
+            )
+        except Exception:
+            pass
+
     return JSONResponse({"success": True, "message": "Tool submitted for review", "slug": slug})
 
 
