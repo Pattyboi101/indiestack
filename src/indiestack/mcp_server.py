@@ -1615,6 +1615,10 @@ async def recommend(
 
     try:
         data = await _api_post(client, "/api/agent/recommend", payload)
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code == 401:
+            return "API key required. Get one at https://indiestack.ai/developer"
+        return f"Could not record recommendation: {e}"
     except Exception as e:
         return f"Could not record recommendation: {e}"
 
@@ -1655,6 +1659,10 @@ async def shortlist(
 
     try:
         data = await _api_post(client, "/api/agent/shortlist", payload)
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code == 401:
+            return "API key required. Get one at https://indiestack.ai/developer"
+        return f"Could not record shortlist: {e}"
     except Exception as e:
         return f"Could not record shortlist: {e}"
 
