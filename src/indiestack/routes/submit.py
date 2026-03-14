@@ -474,6 +474,17 @@ async def submit_post(
         quality_errors = validate_submission_quality(name, tagline, description, url)
         errors.extend(quality_errors)
 
+    # URL reachability check — reject dead URLs before they enter the queue
+    if not errors and url.strip():
+        import httpx as _httpx
+        try:
+            async with _httpx.AsyncClient(timeout=10.0, follow_redirects=True) as _client:
+                resp = await _client.head(url.strip())
+                if resp.status_code >= 400:
+                    errors.append(f"Your URL returned HTTP {resp.status_code}. Please check that your tool is live and accessible.")
+        except Exception:
+            errors.append("We couldn't reach your URL. Please check that your tool is live and accessible, then try again.")
+
     # Duplicate URL check
     if not errors and url.strip():
         existing = await check_duplicate_url(db, url.strip())

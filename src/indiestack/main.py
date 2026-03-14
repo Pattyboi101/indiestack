@@ -2408,6 +2408,16 @@ async def api_submit_tool(request: Request):
     if quality_errors:
         return JSONResponse({"error": " ".join(quality_errors)}, status_code=400)
 
+    # URL reachability check
+    import httpx as _httpx
+    try:
+        async with _httpx.AsyncClient(timeout=10.0, follow_redirects=True) as _client:
+            resp = await _client.head(url)
+            if resp.status_code >= 400:
+                return JSONResponse({"error": f"URL returned HTTP {resp.status_code}. Please check your tool is live."}, status_code=400)
+    except Exception:
+        return JSONResponse({"error": "Could not reach URL. Please check your tool is accessible and try again."}, status_code=400)
+
     # Generate slug
     slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
 
