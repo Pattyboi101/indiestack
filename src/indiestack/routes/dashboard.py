@@ -2,8 +2,12 @@
 
 from html import escape
 
+import csv
+import io
+import json
+
 from fastapi import APIRouter, Request, Form
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, Response, JSONResponse
 
 from indiestack.config import BASE_URL
 
@@ -11,7 +15,7 @@ from indiestack.routes.components import page_shell, star_rating_html, tool_card
 from indiestack.db import (
     get_tools_by_maker, get_sales_by_maker, get_maker_revenue, get_maker_stats,
     get_tool_by_id, update_tool, get_all_categories, get_tool_rating,
-    get_tool_views_by_maker, get_active_subscription, get_maker_by_id, update_maker,
+    get_tool_views_by_maker, get_maker_by_id, update_maker,
     get_user_wishlist, get_updates_by_maker, create_maker_update,
     get_notifications, mark_notifications_read,
     get_tool_changelogs, update_maker_stripe_account,
@@ -27,8 +31,11 @@ from indiestack.db import (
     get_total_agent_citations, get_citation_percentile,
     get_maker_query_intelligence, get_maker_agent_breakdown, get_maker_daily_trend,
     create_api_key, get_api_keys_for_user, revoke_api_key, get_api_key_usage_stats,
+    get_agent_action_counts, get_agent_action_log, update_api_key_scopes,
     get_developer_profile, toggle_personalization, clear_developer_profile,
     update_user,
+    check_pro,
+    track_event,
 )
 from indiestack.payments import create_connect_account, create_onboarding_link
 from indiestack.email import send_email, wishlist_update_html
@@ -78,8 +85,7 @@ async def dashboard_overview(request: Request):
         total_sales = revenue['sale_count']
 
     # Pro subscription check
-    sub = await get_active_subscription(db, user['id'])
-    is_pro = sub is not None
+    is_pro = await check_pro(db, user['id'])
 
     # Tokens saved
     user_tokens = await get_user_tokens_saved(db, user['id'])
@@ -89,8 +95,18 @@ async def dashboard_overview(request: Request):
     agent_citations_30d = await get_total_agent_citations(db, maker_id, days=30) if maker_id else 0
     citation_percentile = await get_citation_percentile(db, maker_id, days=30) if maker_id else None
 
-    pro_badge = ''
-    upgrade_html = ''
+    pro_badge = ' <span style="display:inline-block;background:var(--accent);color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:8px;">PRO</span>' if is_pro else ''
+    upgrade_html = '' if is_pro else '<a href="/pricing" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent);color:white;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;margin-left:auto;">Upgrade to Pro</a>' if user else ''
+
+    just_subscribed_param = request.query_params.get('subscribed') == 'true'
+    just_subscribed = just_subscribed_param and is_pro
+    welcome_banner = ''
+    if just_subscribed:
+        welcome_banner = '<div style="background:#ECFDF5;border:1px solid #6EE7B7;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;color:#065F46;font-weight:600;font-size:14px;">Welcome to IndieStack Pro! Your account has been upgraded.</div>'
+    elif just_subscribed_param and not is_pro:
+        welcome_banner = '<div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;color:#92400E;font-weight:600;font-size:14px;">Payment received! Your Pro access is activating &mdash; refresh in a moment.</div>'
+
+    # Citation intel is now integrated into ai_intel_html below
 
     maker_stripe_id = None
     payment_card_html = ''
@@ -247,8 +263,27 @@ async def dashboard_overview(request: Request):
             </div>'''
 
         if queries or agents:
+            # Pre-compute agent card content to avoid nested f-string quote conflicts
+            if is_pro:
+                _agent_card_content = f"{agent_rows}{trend_html}"
+            elif agents or trend:
+                _blurred = agent_rows if agents else '<div style="height:80px;"></div>'
+                _agent_card_content = (
+                    '<div style="position:relative;min-height:120px;">'
+                    '<div style="filter:blur(4px);pointer-events:none;user-select:none;">'
+                    f'{_blurred}{trend_html}'
+                    '</div>'
+                    '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">'
+                    '<p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;">Unlock agent breakdown</p>'
+                    '<a href="/pricing" style="display:inline-block;padding:8px 20px;background:var(--accent);color:#0F1D30;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">Upgrade to Pro</a>'
+                    '</div>'
+                    '</div>'
+                )
+            else:
+                _agent_card_content = '<p style="color:var(--ink-muted);font-size:13px;">No citations yet. As agents recommend your tools, sources will appear here.</p>'
+
             ai_intel_html = f'''
-            <div style="margin-top:32px;">
+            <div id="ai-distribution" style="margin-top:32px;">
                 <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
                     &#129302; AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
                 </h2>
@@ -269,8 +304,7 @@ async def dashboard_overview(request: Request):
                     <div class="card">
                         <h3 style="font-size:15px;color:var(--ink);margin-bottom:12px;">Recommendation Sources</h3>
                         <p style="font-size:12px;color:var(--ink-muted);margin-bottom:12px;">Which AI agents and channels recommend your creations.</p>
-                        {agent_rows if agents else '<p style="color:var(--ink-muted);font-size:13px;">No citations yet. As agents recommend your tools, sources will appear here.</p>'}
-                        {trend_html}
+                        {_agent_card_content}
                     </div>
                 </div>
             </div>'''
@@ -800,25 +834,56 @@ async def dashboard_overview(request: Request):
         </div>
         '''
 
-    body = f"""
-    <div class="container" style="padding:48px 24px;max-width:960px;">
-        {stripe_launch_banner}
-        {welcome_perk}
-        {api_nudge}
-        {verify_banner}
-        {boost_success_banner}
-        {avatar_saved_banner}
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
+    # Build header based on Pro status
+    _tokens_display = '~' + str(tokens_k) + 'k' if tokens_k > 0 else '0'
+    _user_name = escape(str(user['name']))
+    if is_pro:
+        plan_label = (sub['plan'] if sub else 'pro').replace('_', ' ').title()
+        if plan_label == 'Founder':
+            plan_label = 'Founding Member'
+        header_html = f'''
+        <style>@media(max-width:600px){{.pro-stats-grid{{grid-template-columns:repeat(2,1fr) !important;}}}}</style>
+        <div style="background:linear-gradient(135deg,#1A2D4A 0%,#243B5E 100%);border-radius:var(--radius);padding:32px;margin-bottom:24px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
+                <div>
+                    <h1 style="font-family:var(--font-display);font-size:32px;color:white;margin:0 0 4px;">
+                        Dashboard
+                        <span style="display:inline-block;background:var(--accent);color:#0F1D30;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;vertical-align:middle;margin-left:8px;">PRO</span>
+                    </h1>
+                    <p style="color:rgba(255,255,255,0.6);margin:0;font-size:15px;">Welcome back, {_user_name}</p>
+                </div>
+                <span style="font-size:13px;color:rgba(255,255,255,0.4);">{plan_label}</span>
+            </div>
+            <div class="pro-stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+                <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.07);border-radius:var(--radius-sm);">
+                    <div style="font-family:var(--font-display);font-size:28px;color:white;">{tool_count}</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Tools</div>
+                </div>
+                <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.07);border-radius:var(--radius-sm);">
+                    <div style="font-family:var(--font-display);font-size:28px;color:white;">{total_upvotes}</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Upvotes</div>
+                </div>
+                <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.07);border-radius:var(--radius-sm);">
+                    <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations_30d}</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Agent Citations</div>
+                </div>
+                <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.07);border-radius:var(--radius-sm);">
+                    <div style="font-family:var(--font-display);font-size:28px;color:white;">{_tokens_display}</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Tokens Saved</div>
+                </div>
+            </div>
+        </div>
+        '''
+    else:
+        header_html = f'''
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
             <div>
-                <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">
-                    Dashboard{pro_badge}
-                </h1>
-                <p style="color:var(--ink-muted);margin-top:4px;">Welcome back, {escape(str(user['name']))}</p>
+                <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Dashboard</h1>
+                <p style="color:var(--ink-muted);margin-top:4px;">Welcome back, {_user_name}</p>
             </div>
             {upgrade_html}
         </div>
-
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="color:var(--ink-muted);font-size:13px;">Tools</div>
                 <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--ink);">{tool_count}</div>
@@ -828,40 +893,108 @@ async def dashboard_overview(request: Request):
                 <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--slate-dark);">{total_upvotes}</div>
             </div>
             <div class="card" style="text-align:center;padding:20px;">
-                <div style="color:var(--ink-muted);font-size:13px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Tokens Saved</div>
-                <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--slate-dark);">{'~' + str(tokens_k) + 'k' if tokens_k > 0 else '0'}</div>
+                <div style="color:var(--ink-muted);font-size:13px;">Tokens Saved</div>
+                <div style="font-family:var(--font-display);font-size:28px;margin-top:4px;color:var(--slate-dark);">{_tokens_display}</div>
             </div>
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations_30d}</div>
-                <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Agent Recs<br><span style="font-size:11px;opacity:0.7;">(30 days)</span></div>
+                <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Agent Recs</div>
             </div>
         </div>
+        '''
+
+    # Section divider
+    def _dash_section(title: str) -> str:
+        return f'<div style="margin-top:40px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);"><h2 style="font-family:var(--font-display);font-size:18px;color:var(--ink-muted);margin:0;">{title}</h2></div>'
+
+    actions_html = f'''
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;">
+        <a href="/dashboard/tools" class="btn btn-primary">My Tools</a>
+        <a href="/submit" class="btn btn-secondary">Submit New</a>
+        <a href="/dashboard/saved" class="btn btn-secondary">Bookmarks</a>
+        {'<a href="/dashboard/updates" class="btn btn-secondary">Post Update</a>' if maker_id else ''}
+        <a href="/dashboard/my-stack" class="btn btn-secondary">My Stack</a>
+    </div>
+    '''
+
+    # Build analytics section (only show heading if there's content)
+    has_analytics = bool(ai_intel_html or funnel_html or search_intent_html)
+    analytics_section = ''
+    if has_analytics:
+        analytics_section = f'''
+        {_dash_section('Analytics')}
+        {ai_intel_html}
+        {funnel_html}
+        {search_intent_html}
+        '''
+
+    # Pro features hub — shows Pro users where their features are
+    pro_hub_html = ''
+    if is_pro:
+        _hub_title = "Here's what you unlocked" if just_subscribed else 'Your Pro Features'
+        pro_hub_html = f'''
+        <div style="margin-bottom:32px;">
+            <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">{_hub_title}</h3>
+            <style>.pro-hub-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}}@media(max-width:600px){{.pro-hub-grid{{grid-template-columns:1fr;}}}}.pro-feat{{text-decoration:none;display:block;padding:20px;border-radius:var(--radius);transition:transform 0.15s ease;}}.pro-feat:hover{{transform:translateY(-1px);}}</style>
+            <div class="pro-hub-grid">
+                <a href="/gaps" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
+                    <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Demand Signals</div>
+                    <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Full opportunity scores, sparklines &amp; competition maps</div>
+                </a>
+                <a href="#ai-distribution" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
+                    <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Citation Intel</div>
+                    <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">See which AI agents recommend your tools &amp; how often</div>
+                </a>
+                <a href="/developer" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
+                    <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Priority API</div>
+                    <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">1,000 queries/day &mdash; 20x the free tier</div>
+                </a>
+                <div class="pro-feat" style="background:var(--card-bg);border:1px solid var(--border);cursor:default;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                        <span style="font-size:15px;font-weight:700;color:var(--ink);">Search Priority</span>
+                        <span style="font-size:10px;font-weight:600;color:var(--accent);text-transform:uppercase;">Always On</span>
+                    </div>
+                    <div style="font-size:13px;color:var(--ink-muted);line-height:1.4;">Your tools rank higher in search &amp; AI discovery</div>
+                </div>
+                <a href="/dashboard/export?format=json" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
+                    <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Data Export</div>
+                    <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Download your tools &amp; analytics as JSON or CSV</div>
+                </a>
+            </div>
+        </div>
+        '''
+
+    body = f"""
+    <div class="container" style="padding:48px 24px;max-width:960px;">
+        {welcome_banner}
+        {verify_banner}
+        {boost_success_banner}
+        {avatar_saved_banner}
+        {'' if is_pro else welcome_perk}
+        {'' if is_pro else api_nudge}
+        {stripe_launch_banner}
+
+        {header_html}
+        {actions_html}
+
+        {pro_hub_html}
 
         {ai_visibility_card}
-        {readiness_html}
         {milestone_html}
         {boost_report_html}
+        {readiness_html}
 
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="/dashboard/tools" class="btn btn-primary">My Tools</a>
-            <a href="/submit" class="btn btn-secondary">Submit New</a>
-            <a href="/dashboard/saved" class="btn btn-secondary">Bookmarks</a>
-            {'<a href="/dashboard/updates" class="btn btn-secondary">Post Update</a>' if maker_id else ''}
-            <a href="/dashboard/my-stack" class="btn btn-secondary">My Stack</a>
-            <!-- Developer API link hidden until key enforcement is enabled -->
-            <!-- <a href="/developer" class="btn btn-secondary" style="font-size:13px;padding:6px 16px;">Developer API</a> -->
-        </div>
+        {analytics_section}
 
-        {avatar_editor_html}
-
+        {_dash_section('Community') if (referral_html or matchmaker_html) else ''}
         {referral_html}
-        {funnel_html}
-        {ai_intel_html}
-        {search_intent_html}
         {matchmaker_html}
-        {payment_card_html}
+
+        {_dash_section('Profile')}
+        {avatar_editor_html}
         {badge_section}
         {buyer_badge_html}
+        {payment_card_html}
     </div>
     """
     return HTMLResponse(page_shell("Dashboard", body, user=user))
@@ -940,6 +1073,7 @@ async def dashboard_tools(request: Request):
         return HTMLResponse(page_shell("My Tools", body, user=user))
 
     tools = await get_tools_by_maker(db, maker_id)
+    is_pro = await check_pro(db, user['id'])
 
     status_styles = {
         'pending': 'background:var(--warning-bg);color:var(--warning-text);',
@@ -1002,8 +1136,9 @@ async def dashboard_tools(request: Request):
                 <tbody>{rows}</tbody>
             </table>
         </div>
-        <div style="margin-top:24px;">
+        <div style="margin-top:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
             <a href="/submit" class="btn btn-primary">Submit New</a>
+            {'<span style="font-size:13px;color:var(--ink-muted);">Export my data: <a href="/dashboard/export?format=json" style="color:var(--accent);font-weight:600;">JSON</a> | <a href="/dashboard/export?format=csv" style="color:var(--accent);font-weight:600;">CSV</a></span>' if is_pro else ''}
         </div>
     </div>
     """
@@ -1431,8 +1566,8 @@ async def dashboard_analytics(request: Request):
         return redirect
 
     db = request.state.db
-    sub = await get_active_subscription(db, user['id'])
-    if not sub:
+    is_pro = await check_pro(db, user['id'])
+    if not is_pro:
         body = """
         <div class="container" style="text-align:center;padding:80px 24px;">
             <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">Analytics</h1>
@@ -1974,9 +2109,83 @@ async def dashboard_purchases(request: Request):
 @router.get("/developer", response_class=HTMLResponse)
 async def developer_page(request: Request):
     user = request.state.user
-    redirect = require_login(user)
-    if redirect:
-        return redirect
+
+    # Public API docs for logged-out visitors
+    if not user:
+        public_body = f'''
+    <div class="container" style="max-width:800px;padding:48px 24px;">
+        <div style="margin-bottom:32px;">
+            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin:0;">Developer API</h1>
+            <p style="color:var(--ink-muted);font-size:15px;margin:8px 0 0;">
+                Query the IndieStack catalog from your code, scripts, or AI agents.
+            </p>
+        </div>
+
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 16px;color:var(--ink);">Endpoints</h2>
+
+            <div style="margin-bottom:20px;">
+                <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/tools/search?q=&lt;query&gt;</div>
+                <p style="font-size:13px;color:var(--ink-muted);margin:0;">Search the catalog by keyword. Returns matching tools with scores.</p>
+                <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);overflow-x:auto;margin:8px 0 0;">curl "{BASE_URL}/api/tools/search?q=analytics&amp;key=isk_your_key"</pre>
+            </div>
+
+            <div style="margin-bottom:20px;">
+                <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/tools/&lt;slug&gt;</div>
+                <p style="font-size:13px;color:var(--ink-muted);margin:0;">Get full details for a single tool by its slug.</p>
+                <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);overflow-x:auto;margin:8px 0 0;">curl "{BASE_URL}/api/tools/my-tool?key=isk_your_key"</pre>
+            </div>
+
+            <div style="margin-bottom:20px;">
+                <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/tools/index</div>
+                <p style="font-size:13px;color:var(--ink-muted);margin:0;">List all tools in the catalog. Supports pagination.</p>
+            </div>
+
+            <div>
+                <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/categories</div>
+                <p style="font-size:13px;color:var(--ink-muted);margin:0;">List all tool categories.</p>
+            </div>
+        </div>
+
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 16px;color:var(--ink);">Rate Limits</h2>
+            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                <thead><tr style="border-bottom:2px solid var(--border);">
+                    <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Tier</th>
+                    <th style="padding:10px;text-align:right;font-size:13px;color:var(--ink-muted);">Daily Limit</th>
+                </tr></thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:10px;color:var(--ink);">No API key</td>
+                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">5 requests</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:10px;color:var(--ink);">Free API key</td>
+                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">50 requests</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;color:var(--ink);">Pro <span style="background:var(--accent);color:white;font-size:10px;font-weight:700;padding:2px 6px;border-radius:999px;margin-left:4px;">PRO</span></td>
+                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--accent);">1,000 requests</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 12px;color:var(--ink);">MCP Server</h2>
+            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 12px;">
+                Add IndieStack as a tool source for Claude Code, Cursor, or any MCP-compatible agent.
+            </p>
+            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);overflow-x:auto;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</pre>
+        </div>
+
+        <div style="text-align:center;padding:16px 0;">
+            <a href="/login?next=/developer" class="btn btn-primary" style="font-size:15px;padding:12px 32px;">
+                Sign in to create your API key
+            </a>
+        </div>
+    </div>'''
+        return HTMLResponse(page_shell("Developer API — IndieStack", public_body, user=None))
 
     new_key = request.query_params.get("new", "")
     db = request.state.db
@@ -2090,6 +2299,16 @@ async def developer_page(request: Request):
                         style="font-size:11px;padding:3px 10px;"
                         onclick="return confirm('Revoke this key? This cannot be undone.')">Revoke</button>
             </form>'''
+        scope_label = k.get('scopes', 'read')
+        scope_badge = '<span style="font-size:11px;padding:2px 8px;background:var(--accent);color:#000;border-radius:999px;">read + write</span>' if scope_label == 'read,write' else '<span style="font-size:11px;padding:2px 8px;background:var(--surface-raised);border-radius:999px;">read only</span>'
+        scope_toggle = ""
+        if k['is_active']:
+            scope_toggle = f'''
+            <form method="POST" action="/dashboard/api-keys/{k['id']}/scope" style="display:inline;margin-left:6px;">
+                <button type="submit" class="btn btn-secondary" style="font-size:10px;padding:2px 6px;">
+                    {'Disable write' if scope_label == 'read,write' else 'Enable write'}
+                </button>
+            </form>'''
         key_rows += f'''
         <tr style="border-bottom:1px solid var(--border);">
             <td style="padding:10px;font-family:var(--font-mono);font-size:13px;">{escape(k['key_preview'])}</td>
@@ -2097,10 +2316,47 @@ async def developer_page(request: Request):
             <td style="padding:10px;">{status}</td>
             <td style="padding:10px;text-align:right;font-weight:600;">{count}</td>
             <td style="padding:10px;font-size:12px;color:var(--ink-muted);">{last_used}</td>
+            <td style="padding:10px;">{scope_badge}{scope_toggle}</td>
             <td style="padding:10px;">{revoke_btn}</td>
         </tr>'''
 
-    empty_row = '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--ink-muted);">No API keys yet. Create one to get started.</td></tr>'
+    empty_row = '<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--ink-muted);">No API keys yet. Create one to get started.</td></tr>'
+
+    # Agent Activity
+    action_counts = await get_agent_action_counts(db, user['id'], days=30)
+    action_log = await get_agent_action_log(db, user['id'], limit=10)
+
+    rec_count = action_counts.get('recommend', 0)
+    short_count = action_counts.get('shortlist', 0)
+    outcome_count = action_counts.get('report_outcome', 0)
+    ok_count = action_counts.get('outcomes_success', 0)
+    fail_count = action_counts.get('outcomes_fail', 0)
+    integ_count = action_counts.get('confirm_integration', 0)
+    submit_count = action_counts.get('submit_tool', 0)
+    has_activity = rec_count or short_count or outcome_count or integ_count or submit_count
+
+    log_rows = ''
+    for a in action_log:
+        ts = a['created_at'][:16].replace('T', ' ') if a.get('created_at') else ''
+        action_label = a['action'].replace('_', ' ').title()
+        tools = escape(a['tool_slug'])
+        if a.get('tool_b_slug'):
+            tools += f" + {escape(a['tool_b_slug'])}"
+        ctx = f" &mdash; {escape(a['query_context'][:80])}" if a.get('query_context') else ''
+        log_rows += f'<tr><td style="padding:8px 10px;color:var(--ink-muted);font-size:13px;white-space:nowrap;">{ts}</td><td style="padding:8px 10px;">{action_label}</td><td style="padding:8px 10px;">{tools}{ctx}</td></tr>'
+
+    agent_activity_html = f'''
+    <div class="card" style="margin-top:32px;">
+        <h2 style="font-family:var(--font-display);font-size:22px;margin-bottom:16px;">Agent Activity <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">last 30 days</span></h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:24px;">
+            <div style="text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--accent);">{rec_count}</div><div style="font-size:13px;color:var(--ink-muted);">Recommendations</div></div>
+            <div style="text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--ink);">{short_count}</div><div style="font-size:13px;color:var(--ink-muted);">Shortlisted</div></div>
+            <div style="text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--ink);">{outcome_count}</div><div style="font-size:13px;color:var(--ink-muted);">Outcomes ({ok_count} ok, {fail_count} fail)</div></div>
+            <div style="text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--ink);">{integ_count}</div><div style="font-size:13px;color:var(--ink-muted);">Integrations</div></div>
+        </div>
+        {"<table style='width:100%;font-size:14px;border-collapse:collapse;'><thead><tr><th style='text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);'>Time</th><th style='text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);'>Action</th><th style='text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);'>Tool(s)</th></tr></thead><tbody>" + log_rows + "</tbody></table>" if log_rows else "<p style='color:var(--ink-muted);font-size:14px;'>No agent actions yet. Configure your API key in your AI agent to get started.</p>"}
+    </div>
+    ''' if has_activity or action_log else ''
 
     body = f'''
     <div class="container" style="max-width:800px;padding:48px 24px;">
@@ -2136,12 +2392,15 @@ async def developer_page(request: Request):
                     <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Status</th>
                     <th style="padding:10px;text-align:right;font-size:13px;color:var(--ink-muted);">Requests (30d)</th>
                     <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Last Used</th>
+                    <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Scope</th>
                     <th style="padding:10px;font-size:13px;"></th>
                 </tr></thead>
                 <tbody>{key_rows if key_rows else empty_row}</tbody>
             </table>
             </div>
         </div>
+
+        {agent_activity_html}
 
         <div class="card" style="padding:24px;">
             <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 4px;color:var(--ink);">Quick Start</h2>
@@ -2194,13 +2453,16 @@ async def developer_create_key(request: Request):
     name = str(form.get("name", "Default")).strip()[:50] or "Default"
 
     db = request.state.db
-    # Max 5 active keys per user
+    # Max keys: 1 for free users, 5 for Pro
+    is_pro = await check_pro(db, user['id'])
+    max_keys = 5 if is_pro else 1
     keys = await get_api_keys_for_user(db, user['id'])
     active = [k for k in keys if k['is_active']]
-    if len(active) >= 5:
+    if len(active) >= max_keys:
         return RedirectResponse(url="/developer?error=max_keys", status_code=303)
 
     result = await create_api_key(db, user['id'], name)
+    await track_event(db, 'key_created', user_id=user['id'])
     return RedirectResponse(url=f"/developer?new={result['key']}", status_code=303)
 
 
@@ -2219,6 +2481,20 @@ async def developer_revoke_key(request: Request):
 
     await revoke_api_key(request.state.db, key_id, user['id'])
     return RedirectResponse(url="/developer", status_code=303)
+
+
+@router.post("/dashboard/api-keys/{key_id}/scope")
+async def toggle_key_scope(request: Request, key_id: int):
+    user = request.state.user
+    if not user:
+        return RedirectResponse(url="/login", status_code=303)
+    keys = await get_api_keys_for_user(request.state.db, user['id'])
+    current_key = next((k for k in keys if k['id'] == key_id), None)
+    if not current_key:
+        return RedirectResponse(url="/dashboard?tab=developer", status_code=303)
+    new_scopes = "read" if current_key.get('scopes', 'read') == 'read,write' else "read,write"
+    await update_api_key_scopes(request.state.db, key_id, user['id'], new_scopes)
+    return RedirectResponse(url="/dashboard?tab=developer", status_code=303)
 
 
 @router.post("/developer/toggle-personalization")
@@ -2243,3 +2519,82 @@ async def clear_profile_route(request: Request):
     if keys:
         await clear_developer_profile(db_conn, keys[0]['id'])
     return RedirectResponse("/developer", status_code=303)
+
+
+# ── Data Export (Pro) ────────────────────────────────────────────────────
+
+@router.get("/dashboard/export")
+async def dashboard_export(request: Request):
+    """Export tools & analytics data for Pro subscribers."""
+    user = request.state.user
+    redirect = require_login(user)
+    if redirect:
+        return redirect
+
+    db = request.state.db
+    is_pro = await check_pro(db, user['id'])
+    if not is_pro:
+        return Response(
+            content="Pro subscription required to export data.",
+            status_code=403,
+            media_type="text/plain",
+        )
+
+    maker_id = user.get('maker_id')
+    fmt = request.query_params.get('format', 'json').lower()
+    if fmt not in ('json', 'csv'):
+        fmt = 'json'
+
+    # Gather tools with basic analytics
+    tools_data = []
+    if maker_id:
+        tools = await get_tools_by_maker(db, maker_id)
+        for t in tools:
+            # Per-tool citation count (all time)
+            cit_cursor = await db.execute(
+                "SELECT COUNT(*) as cnt FROM agent_citations WHERE tool_id = ?",
+                (t['id'],),
+            )
+            cit_row = await cit_cursor.fetchone()
+            citation_count = cit_row['cnt'] if cit_row else 0
+
+            tools_data.append({
+                'name': t['name'],
+                'slug': t['slug'],
+                'category': t.get('category_name', ''),
+                'description': t.get('description', ''),
+                'created_at': t.get('created_at', ''),
+                'status': t.get('status', ''),
+                'upvotes': t.get('upvote_count', 0),
+                'saves': t.get('save_count', 0),
+                'mcp_views': t.get('mcp_view_count', 0),
+                'agent_citations': citation_count,
+            })
+
+    if fmt == 'json':
+        export = {
+            'exported_at': '2026-03-13',
+            'user': user.get('username', user.get('email', '')),
+            'tools': tools_data,
+        }
+        content = json.dumps(export, indent=2, default=str)
+        return Response(
+            content=content,
+            media_type="application/json",
+            headers={"Content-Disposition": 'attachment; filename="indiestack-export.json"'},
+        )
+
+    # CSV format
+    output = io.StringIO()
+    fieldnames = ['name', 'slug', 'category', 'description', 'created_at',
+                  'status', 'upvotes', 'saves', 'mcp_views', 'agent_citations']
+    writer = csv.DictWriter(output, fieldnames=fieldnames)
+    writer.writeheader()
+    for row in tools_data:
+        writer.writerow(row)
+
+    return Response(
+        content=output.getvalue(),
+        media_type="text/csv",
+        headers={"Content-Disposition": 'attachment; filename="indiestack-export.csv"'},
+    )
