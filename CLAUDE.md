@@ -47,3 +47,36 @@ IndieStack is professional but not corporate. It respects your time — no fluff
 - Pure Python string HTML templates (f-strings). No Jinja2, no React, no build step.
 - All CSS lives in `components.py` `:root` block or inline. No external stylesheets.
 - The landing page structure (hero → MCP walkthrough → search widget → trending → categories → maker CTA) is locked. Visual polish only, no structural changes.
+
+## Technical Patterns
+
+### Stack
+- Python 3 / FastAPI / SQLite (WAL mode) / Fly.io
+- Use `python3` not `python` on all systems
+- Pure Python string HTML templates (f-strings in route files)
+- All CSS in components.py :root block or inline
+
+### Auth
+- Always use `request.state.user` (populated by middleware via sessions table)
+- Never query users table by session_token — that column doesn't exist
+- Use `d = request.state.db` to avoid shadowing the db module import
+
+### Database
+- Parameterized queries always: `await db.execute("...WHERE x=?", (val,))`
+- Never f-string user input into SQL
+- aiosqlite Row objects are dict-like: use `row['col']` not `row[0]`
+- ALTER TABLE ADD COLUMN can't have UNIQUE — add column first, then CREATE UNIQUE INDEX separately
+
+### Deploy
+- `cd ~/indiestack && ~/.fly/bin/flyctl deploy --remote-only`
+- Always run `python3 smoke_test.py` before deploying
+- Use `--buildkit` flag if depot builder times out
+- Commit before deploying — never deploy uncommitted work
+- Deploy with background execution (builds take 2-4 minutes)
+
+### Code Style
+- Route files return HTMLResponse with f-string templates
+- Shared components live in components.py (page_shell, tool_card, etc.)
+- Design tokens are CSS variables in :root — never hardcode hex colors
+- Touch targets >= 44px for mobile
+- New routes: create file in src/indiestack/routes/, add router in main.py
