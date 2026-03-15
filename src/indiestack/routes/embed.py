@@ -134,7 +134,7 @@ async def embed_docs(request: Request):
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
                 Verified tools rank higher in every widget. Claim yours today.
             </p>
-            <a href="/submit" class="btn btn-primary">Submit Your Creation &rarr;</a>
+            <a href="/submit" class="btn btn-primary">Submit Your Tool &rarr;</a>
         </div>
     </div>
 
@@ -167,7 +167,7 @@ async def embed_docs(request: Request):
     return HTMLResponse(page_shell(
         "Embed IndieStack — Comparison Widget for Bloggers",
         body,
-        description="Add a curated indie creations comparison widget to your blog. Free backlinks, useful content.",
+        description="Add a curated developer tools comparison widget to your blog. Free backlinks, useful content.",
         user=request.state.user,
         canonical="/embed",
     ))
@@ -234,7 +234,7 @@ WIDGET_JS = '(function(){\n  var BASE = "' + BASE_URL + '";\n' + r"""
         + '<div class="is-head">Best <span>' + esc(category.replace(/-/g, " ").replace(/\b\w/g, function(l){return l.toUpperCase();})) + '</span> Tools</div>'
         + '<table><thead><tr><th>Tool</th><th>Score</th><th>Price</th><th></th></tr></thead>'
         + '<tbody>' + rows + '</tbody></table>'
-        + '<div class="is-foot">Powered by <a href="' + BASE + '?ref=embed" target="_blank" rel="noopener">IndieStack</a> &mdash; Curated indie creations</div>'
+        + '<div class="is-foot">Powered by <a href="' + BASE + '?ref=embed" target="_blank" rel="noopener">IndieStack</a> &mdash; Curated developer tools</div>'
         + '</div>';
     })
     .catch(function(){
@@ -388,7 +388,7 @@ tr:last-child td{{border-bottom:none;}}
 </table>
 <div class="footer">
   Powered by <a href="{BASE_URL}?ref=embed" target="_blank" rel="noopener">IndieStack</a>
-  &mdash; Curated indie creations
+  &mdash; Curated developer tools
 </div>
 </body>
 </html>"""

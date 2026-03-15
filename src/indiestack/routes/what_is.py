@@ -1,4 +1,4 @@
-"""What is IndieStack — explains the open-source supply chain for agentic workflows."""
+"""What is IndieStack — explains the discovery layer between AI coding agents and developer tools."""
 
 from html import escape
 
@@ -45,14 +45,14 @@ async def what_is_page(request: Request):
         <!-- ===== HERO ===== -->
         <div style="text-align:center;margin-bottom:64px;">
             <h1 style="font-family:var(--font-display);font-size:clamp(32px,5vw,48px);color:var(--ink);line-height:1.15;margin-bottom:16px;">
-                The Open-Source Supply Chain for AI Agents
+                The Discovery Layer for AI Coding Agents
             </h1>
             <p style="font-size:clamp(16px,2.5vw,20px);color:var(--ink-muted);line-height:1.6;max-width:640px;margin:0 auto 32px;">
                 AI agents shouldn&rsquo;t build from scratch when indie creators have already built the pieces.
                 IndieStack connects agents to what already exists &mdash; so they assemble from building blocks instead of reinventing them.
             </p>
             <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px 24px;font-size:15px;color:var(--ink-light);">
-                <span style="font-weight:600;color:var(--ink);">{tool_count}+ creations</span>
+                <span style="font-weight:600;color:var(--ink);">{tool_count}+ tools</span>
                 <span style="opacity:0.4;">|</span>
                 <span>{code_count} open-source</span>
                 <span style="opacity:0.4;">|</span>
@@ -179,8 +179,8 @@ async def what_is_page(request: Request):
 
             <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:20px;">
                 <div style="padding:20px;border-radius:var(--radius);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
-                    <div style="font-weight:700;color:#fff;margin-bottom:6px;">Search the supply chain</div>
-                    <div style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.5;">Your AI searches {tool_count}+ creations across {cat_count} categories. Every tool has an Agent Card with structured metadata at <code style="font-size:12px;color:var(--accent);">/cards/slug.json</code></div>
+                    <div style="font-weight:700;color:#fff;margin-bottom:6px;">Search the catalog</div>
+                    <div style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.5;">Your AI searches {tool_count}+ tools across {cat_count} categories. Every tool has an Agent Card with structured metadata at <code style="font-size:12px;color:var(--accent);">/cards/slug.json</code></div>
                 </div>
                 <div style="padding:20px;border-radius:var(--radius);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
                     <div style="font-weight:700;color:#fff;margin-bottom:6px;">Build vs. buy analysis</div>
@@ -226,13 +226,13 @@ async def what_is_page(request: Request):
             <div style="display:flex;flex-direction:column;gap:20px;">
                 <div style="line-height:1.7;color:var(--ink-light);font-size:16px;">
                     <strong style="color:var(--ink);">Your AI checks what exists first.</strong>
-                    {tool_count}+ indie creations. Your agent queries the catalog automatically &mdash;
+                    {tool_count}+ developer tools. Your agent queries the catalog automatically &mdash;
                     if someone already built it, you&rsquo;ll know before you write a line of code.
                 </div>
                 <div style="line-height:1.7;color:var(--ink-light);font-size:16px;">
                     <strong style="color:var(--ink);">The right component, mid-build.</strong>
                     Not browsing a directory. Your AI finds what you need at the exact moment you need it,
-                    and shows you what pairs well with it. A maintained creation beats generated code every time.
+                    and shows you what pairs well with it. A maintained tool beats generated code every time.
                 </div>
             </div>
         </div>
@@ -245,13 +245,13 @@ async def what_is_page(request: Request):
             <div style="display:flex;flex-direction:column;gap:20px;">
                 <div style="line-height:1.7;color:var(--ink-light);font-size:16px;">
                     <strong style="color:var(--ink);">Distribution without marketing.</strong>
-                    No ads, no SEO, no algorithm to game. List once and your creation gets recommended
+                    No ads, no SEO, no algorithm to game. List once and your tool gets recommended
                     at the exact moment an agent needs it &mdash; 12 GitHub stars or zero Twitter followers doesn&rsquo;t matter.
                 </div>
                 <div style="line-height:1.7;color:var(--ink-light);font-size:16px;">
                     <strong style="color:var(--ink);">Your work outlives your marketing.</strong>
                     Recommended next month, next year, to agents and developers you&rsquo;ll never meet.
-                    Your creation becomes a permanent building block in the indie ecosystem.
+                    Your tool becomes a permanent building block in the indie ecosystem.
                 </div>
             </div>
         </div>
@@ -262,7 +262,7 @@ async def what_is_page(request: Request):
     <div style="background:rgba(26,45,74,0.03);padding:64px 24px;">
         <div style="max-width:800px;margin:0 auto;">
             <h2 style="font-family:var(--font-display);font-size:clamp(22px,3.5vw,30px);color:var(--ink);margin-bottom:24px;">
-                The creation explosion is coming
+                The tool explosion is coming
             </h2>
             <div style="color:var(--ink-light);font-size:16px;line-height:1.8;">
                 <p style="margin-bottom:16px;">
@@ -276,7 +276,7 @@ async def what_is_page(request: Request):
                     that need existing components to build on.
                 </p>
                 <p style="margin-bottom:24px;">
-                    IndieStack is building that foundation now &mdash; {tool_count}+ creations indexed,
+                    IndieStack is building that foundation now &mdash; {tool_count}+ tools indexed,
                     Agent Cards for every tool, compatibility pairs mapped. So when your agent starts a workflow,
                     it assembles from what exists instead of reinventing from scratch.
                 </p>
@@ -294,7 +294,7 @@ async def what_is_page(request: Request):
                 Install the MCP Server
             </a>
             <a href="/submit" class="btn btn-lg" style="font-size:16px;padding:14px 28px;border:2px solid var(--border);color:var(--ink);background:transparent;border-radius:var(--radius);text-decoration:none;font-weight:600;">
-                Submit Your Creation
+                Submit Your Tool
             </a>
             <a href="/explore" class="btn btn-lg" style="font-size:16px;padding:14px 28px;border:2px solid var(--border);color:var(--ink);background:transparent;border-radius:var(--radius);text-decoration:none;font-weight:600;">
                 Browse the Catalog
@@ -308,13 +308,13 @@ async def what_is_page(request: Request):
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "What is IndieStack",
-        "description": "IndieStack is the open-source supply chain for agentic workflows — {tool_count}+ indie creations with Agent Cards, discoverable via MCP server.",
+        "description": "IndieStack is the discovery layer between AI coding agents and developer tools — {tool_count}+ tools with Agent Cards, discoverable via MCP server.",
         "url": "{BASE_URL}/what-is-indiestack",
         "mainEntity": {{
             "@type": "Organization",
             "name": "IndieStack",
             "url": "{BASE_URL}",
-            "description": "Open-source supply chain for agentic workflows. {tool_count}+ indie creations with Agent Cards and compatibility pairs, discoverable via MCP server."
+            "description": "The discovery layer between AI coding agents and developer tools. {tool_count}+ tools with Agent Cards and compatibility pairs, discoverable via MCP server."
         }}
     }}</script>'''
 
@@ -322,7 +322,7 @@ async def what_is_page(request: Request):
         "What is IndieStack",
         body,
         user=user,
-        description=f"IndieStack is the open-source supply chain for agentic workflows. {tool_count}+ indie creations — tools, games, utilities, newsletters — with Agent Cards, discoverable by Claude, Cursor, and Windsurf via MCP.",
+        description=f"IndieStack is the discovery layer between AI coding agents and developer tools. {tool_count}+ tools with Agent Cards, discoverable by Claude, Cursor, and Windsurf via MCP.",
         extra_head=json_ld,
         canonical="/what-is-indiestack",
     ))

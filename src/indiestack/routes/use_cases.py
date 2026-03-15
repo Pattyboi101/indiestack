@@ -119,7 +119,7 @@ async def use_cases_index(request: Request):
                 Use Cases
             </h1>
             <p style="color:var(--ink-muted);font-size:16px;max-width:560px;margin:0 auto;">
-                Compare indie creations by use case. Each page shows the best tools, token savings, and build-vs-buy analysis.
+                Compare developer tools by use case. Each page shows the best tools, token savings, and build-vs-buy analysis.
             </p>
         </div>
 
@@ -135,7 +135,7 @@ async def use_cases_index(request: Request):
     '''
 
     return HTMLResponse(page_shell(
-        "Use Cases — Compare Indie Creations",
+        "Use Cases — Compare Developer Tools",
         body,
         user=user,
         description="Compare indie developer tools by use case. Authentication, payments, analytics, and more.",
@@ -193,7 +193,7 @@ async def use_case_detail(request: Request, slug: str):
                 Replaces
             </h2>
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">
-                These indie creations are alternatives to:
+                These developer tools are alternatives to:
             </p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">{comp_links}</div>
         </div>
@@ -266,7 +266,7 @@ async def use_case_detail(request: Request, slug: str):
         <div style="display:flex;justify-content:center;gap:32px;margin-bottom:32px;flex-wrap:wrap;">
             <div style="text-align:center;">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--slate);">{len(tools)}</div>
-                <div style="font-size:12px;color:var(--ink-muted);">indie creations</div>
+                <div style="font-size:12px;color:var(--ink-muted);">developer tools</div>
             </div>
             <div style="text-align:center;">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--slate);">{tokens_saved:,}</div>
@@ -281,7 +281,7 @@ async def use_case_detail(request: Request, slug: str):
             </h2>
             <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;margin:0;">
                 Building {escape(title.lower())} from scratch takes roughly <strong>{escape(build_estimate)}</strong>
-                and ~<strong>{tokens_saved:,} tokens</strong> of AI-assisted development. Or use one of these indie creations
+                and ~<strong>{tokens_saved:,} tokens</strong> of AI-assisted development. Or use one of these developer tools
                 and ship today.
             </p>
         </div>

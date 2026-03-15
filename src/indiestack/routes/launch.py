@@ -45,7 +45,7 @@ async def launch_page(request: Request):
     <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin:32px 0;">
         <div style="text-align:center;">
             <div style="font-family:var(--font-display);font-size:32px;color:var(--slate);">{tool_count}</div>
-            <div style="color:var(--ink-muted);font-size:13px;">indie creations</div>
+            <div style="color:var(--ink-muted);font-size:13px;">developer tools</div>
         </div>
         <div style="text-align:center;">
             <div style="font-family:var(--font-display);font-size:32px;color:var(--slate);">{cat_count}</div>
@@ -64,7 +64,7 @@ async def launch_page(request: Request):
 
     values_html = f'''
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:40px 0;">
-        {_value_card("&#129302;", "AI-Native Discovery", "Your AI assistant checks IndieStack before building from scratch. It finds existing creations so you don't rebuild what already exists.")}
+        {_value_card("&#129302;", "AI-Native Discovery", "Your AI assistant checks IndieStack before building from scratch. It finds existing tools so you don't rebuild what already exists.")}
         {_value_card("&#128269;", "Search + Alternatives", "Search for any tool or competitor. Looking for Auth0? We'll show you indie alternatives. Looking for something that doesn't exist? We'll tell you.")}
         {_value_card('<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>', "Market Gap Intelligence", "Every failed search is a signal. See what developers and AI agents are looking for but can't find — and build it first.")}
     </div>
@@ -95,10 +95,10 @@ async def launch_page(request: Request):
                 Now Live
             </div>
             <h1 style="font-family:var(--font-display);font-size:42px;color:var(--ink);margin:0;line-height:1.1;">
-                The Open-Source Supply Chain<br>for Agentic Workflows
+                The Discovery Layer<br>for AI Coding Agents
             </h1>
             <p style="color:var(--ink-muted);font-size:18px;margin-top:12px;max-width:560px;display:inline-block;">
-                {tool_count} indie creations, searchable by AI coding assistants and developers.
+                {tool_count} developer tools, searchable by AI coding assistants and developers.
                 Stop building what already exists.
             </p>
         </div>
@@ -139,7 +139,7 @@ async def launch_page(request: Request):
                 See how often your tool gets picked.
             </p>
             <a href="/submit" class="btn" style="background:var(--slate);color:var(--terracotta-dark);font-weight:700;font-size:15px;padding:12px 24px;">
-                Submit Your Creation &rarr;
+                Submit Your Tool &rarr;
             </a>
         </div>
 
@@ -148,8 +148,8 @@ async def launch_page(request: Request):
     '''
 
     return HTMLResponse(page_shell(
-        "The Open-Source Supply Chain for Agentic Workflows",
+        "The Discovery Layer for AI Coding Agents",
         body,
         user=user,
-        description=f"IndieStack: {tool_count} indie creations searchable by AI coding assistants. The open-source supply chain for developers and AI agents.",
+        description=f"IndieStack: {tool_count} developer tools searchable by AI coding assistants. The discovery layer between AI coding agents and developer tools.",
     ))

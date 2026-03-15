@@ -336,11 +336,11 @@ async def gaps_page(request: Request):
                 Built something that fills a gap?
             </h2>
             <p style="font-size:15px;color:var(--ink-muted);margin-bottom:24px;line-height:1.6;">
-                Submit your creation and it&rsquo;ll start showing up in AI recommendations immediately.
+                Submit your tool and it&rsquo;ll start showing up in AI recommendations immediately.
                 You&rsquo;ll get a live badge showing how many times agents recommend it.
             </p>
             <a href="/submit" class="btn btn-primary" style="padding:14px 32px;font-size:15px;">
-                Submit Your Creation &rarr;
+                Submit Your Tool &rarr;
             </a>
         </div>
     </section>

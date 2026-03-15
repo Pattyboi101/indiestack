@@ -40,7 +40,7 @@ async def api_docs(request: Request):
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/search</code>
             </div>
             <div style="padding:16px 20px;">
-                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Search {tool_count}+ indie creations by keyword. Returns matching tools with metadata.</p>
+                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Search {tool_count}+ developer tools by keyword. Returns matching tools with metadata.</p>
                 <table style="width:100%;font-size:13px;border-collapse:collapse;">
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:8px 0;color:var(--ink-light);font-weight:600;">q</td>
@@ -72,7 +72,7 @@ async def api_docs(request: Request):
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/{{slug}}</code>
             </div>
             <div style="padding:16px 20px;">
-                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Full details for a specific creation including integration snippets, similar tools, and companion suggestions.</p>
+                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Full details for a specific tool including integration snippets, similar tools, and companion suggestions.</p>
                 <div style="margin-top:12px;background:var(--cream-dark);border-radius:8px;padding:12px 16px;">
                     <code style="font-family:var(--font-mono);font-size:13px;color:var(--ink-light);">curl "https://indiestack.ai/api/tools/simple-analytics"</code>
                 </div>
@@ -100,7 +100,7 @@ async def api_docs(request: Request):
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/new</code>
             </div>
             <div style="padding:16px 20px;">
-                <p style="color:var(--ink-muted);font-size:14px;">Recently added creations, newest first. Supports <code style="font-family:var(--font-mono);">limit</code> and <code style="font-family:var(--font-mono);">offset</code> params.</p>
+                <p style="color:var(--ink-muted);font-size:14px;">Recently added tools, newest first. Supports <code style="font-family:var(--font-mono);">limit</code> and <code style="font-family:var(--font-mono);">offset</code> params.</p>
             </div>
         </div>
 
@@ -133,7 +133,7 @@ async def api_docs(request: Request):
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/stack-builder</code>
             </div>
             <div style="padding:16px 20px;">
-                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Build a complete indie stack from building blocks. Describe what you need and get matched creations.</p>
+                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Build a complete indie stack from building blocks. Describe what you need and get matched tools.</p>
                 <table style="width:100%;font-size:13px;border-collapse:collapse;">
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:8px 0;color:var(--ink-light);font-weight:600;">needs</td>
@@ -181,11 +181,11 @@ async def api_docs(request: Request):
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/submit</code>
             </div>
             <div style="padding:16px 20px;">
-                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Submit a new creation programmatically. Requires API key.</p>
+                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">Submit a new tool programmatically. Requires API key.</p>
                 <table style="width:100%;font-size:13px;border-collapse:collapse;">
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:8px 0;color:var(--ink-light);font-weight:600;">name</td>
-                        <td style="padding:8px 0;color:var(--ink-muted);">Creation name (required)</td>
+                        <td style="padding:8px 0;color:var(--ink-muted);">Tool name (required)</td>
                     </tr>
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:8px 0;color:var(--ink-light);font-weight:600;">url</td>
@@ -214,7 +214,7 @@ async def api_docs(request: Request):
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/cite</code>
             </div>
             <div style="padding:16px 20px;">
-                <p style="color:var(--ink-muted);font-size:14px;">Track when an AI agent recommends a creation. Used by the MCP server automatically.</p>
+                <p style="color:var(--ink-muted);font-size:14px;">Track when an AI agent recommends a tool. Used by the MCP server automatically.</p>
             </div>
         </div>
 
@@ -255,7 +255,7 @@ async def api_docs(request: Request):
     return HTMLResponse(page_shell(
         title="REST API Documentation | IndieStack",
         body=body,
-        description=f"Query IndieStack's catalog of {tool_count}+ indie creations from any agent, script, or application. Search, browse, and submit via JSON API.",
+        description=f"Query IndieStack's catalog of {tool_count}+ developer tools from any agent, script, or application. Search, browse, and submit via JSON API.",
         user=user,
         canonical="/api",
     ))

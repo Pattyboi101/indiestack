@@ -58,7 +58,7 @@ async def guidelines(request: Request):
 
         <div style="text-align:center;margin-top:32px;">
             <a href="/submit" class="btn" style="background:var(--accent);color:white;padding:12px 32px;text-decoration:none;font-size:16px;font-weight:600;border-radius:999px;">
-                Submit Your Creation
+                Submit Your Tool
             </a>
         </div>
     </div>

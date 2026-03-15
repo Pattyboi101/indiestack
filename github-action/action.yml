@@ -1,0 +1,87 @@
+name: 'IndieStack Dependency Audit'
+description: 'Scan your dependencies for better indie alternatives. Finds lighter, maintained developer tools you might be missing.'
+branding:
+  icon: 'search'
+  color: 'blue'
+
+inputs:
+  github-token:
+    description: 'GitHub token for posting PR comments'
+    required: false
+    default: ${{ github.token }}
+  indiestack-api-key:
+    description: 'Optional IndieStack API key for higher rate limits'
+    required: false
+    default: ''
+  files:
+    description: 'Comma-separated dependency files to scan (auto-detected if not set)'
+    required: false
+    default: ''
+  comment:
+    description: 'Post results as a PR comment (true/false)'
+    required: false
+    default: 'true'
+
+outputs:
+  findings:
+    description: 'JSON array of dependency audit findings'
+    value: ${{ steps.audit.outputs.findings }}
+  count:
+    description: 'Number of dependencies with indie alternatives'
+    value: ${{ steps.audit.outputs.count }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Audit dependencies
+      id: audit
+      shell: bash
+      env:
+        INDIESTACK_API_KEY: ${{ inputs.indiestack-api-key }}
+        INPUT_FILES: ${{ inputs.files }}
+      run: bash ${{ github.action_path }}/audit.sh
+
+    - name: Post PR comment
+      if: inputs.comment == 'true' && github.event_name == 'pull_request' && steps.audit.outputs.count != '0'
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        FINDINGS_MD: ${{ steps.audit.outputs.findings_md }}
+      run: |
+        # Read the markdown from the temp file
+        if [ -f /tmp/indiestack-audit.md ]; then
+          BODY=$(cat /tmp/indiestack-audit.md)
+        else
+          echo "No audit results to post"
+          exit 0
+        fi
+
+        # Post or update PR comment
+        PR_NUMBER=${{ github.event.pull_request.number }}
+        REPO=${{ github.repository }}
+
+        # Check for existing comment
+        EXISTING=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments" \
+          | python3 -c "
+        import sys, json
+        comments = json.load(sys.stdin)
+        for c in comments:
+            if '<!-- indiestack-audit -->' in c.get('body', ''):
+                print(c['id'])
+                break
+        " 2>/dev/null || true)
+
+        if [ -n "$EXISTING" ]; then
+          curl -s -X PATCH \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.github.com/repos/$REPO/issues/comments/$EXISTING" \
+            -d "$(python3 -c "import json; print(json.dumps({'body': open('/tmp/indiestack-audit.md').read()}))")"
+        else
+          curl -s -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments" \
+            -d "$(python3 -c "import json; print(json.dumps({'body': open('/tmp/indiestack-audit.md').read()}))")"
+        fi

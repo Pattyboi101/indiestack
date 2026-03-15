@@ -275,7 +275,7 @@ async def leaderboard(request: Request):
         </div>
         {score_explainer}
         <div style="text-align:center;margin-top:32px;">
-            <a href="/submit" class="btn btn-slate" style="padding:16px 32px;font-size:16px;">Submit Your Creation &rarr;</a>
+            <a href="/submit" class="btn btn-slate" style="padding:16px 32px;font-size:16px;">Submit Your Tool &rarr;</a>
         </div>
     </div>
     """

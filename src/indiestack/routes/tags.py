@@ -43,7 +43,7 @@ async def tags_index(request: Request):
     <div class="container" style="padding:48px 24px;">
         <div style="text-align:center;margin-bottom:40px;">
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Browse by Tag</h1>
-            <p style="color:var(--ink-muted);font-size:16px;">{len(tags)} tags across all indie creations. Click any tag to explore.</p>
+            <p style="color:var(--ink-muted);font-size:16px;">{len(tags)} tags across all developer tools. Click any tag to explore.</p>
         </div>
         {tags_grid}
     </div>
@@ -57,7 +57,7 @@ async def tags_index(request: Request):
     </style>
     '''
     return HTMLResponse(page_shell(title="Browse by Tag — Indie Software Directory | IndieStack", body=body,
-                                    description="Browse indie creations by tag — find creations for APIs, analytics, automation, and more.",
+                                    description="Browse developer tools by tag — find tools for APIs, analytics, automation, and more.",
                                     user=user, canonical="/tags"))
 
 

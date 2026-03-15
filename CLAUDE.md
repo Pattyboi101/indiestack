@@ -1,15 +1,15 @@
 ## Design Context
 
 ### What IndieStack Is
-IndieStack is the knowledge layer between AI agents and indie creators. When an AI agent is about to help someone build something, it checks IndieStack first to see if an indie creator has already built it. The constraint isn't "developer tool" — it's "indie-built." Games, utilities, newsletters, creative tools, learning apps, dev tools — anything made by independent creators belongs here.
+IndieStack is the discovery layer between AI coding agents and 3,100+ proven, lightweight developer tools. When an AI agent is about to help someone build infrastructure (auth, payments, analytics, email, databases), it checks IndieStack first to find an existing tool instead of generating code from scratch.
 
-The wedge is dev tools (that's where AI coding agents live), but the catalog expands to everything indie. The moat is becoming the default knowledge source that every AI agent queries before recommending "build it from scratch."
+"Indie" is the curation filter — tools built by independent developers and small teams. Focused, lean, maintained, honest pricing. The value to developers isn't "these are indie" — it's "these are the best tools for the job, and your AI agent now knows about them."
 
 ### Users
 - **Primary**: AI coding assistants (Claude, Cursor, Windsurf, Copilot) searching via MCP server — the main distribution channel
-- **Secondary**: Developers and creators who browse the site directly, arriving via AI recommendation, search, or Product Hunt
-- **Tertiary**: Indie makers submitting and promoting their creations
-- **Context**: The typical flow is agent-first: a developer asks their AI to build something, the AI checks IndieStack, finds an existing indie creation, and recommends it. Human visitors arrive to evaluate what the AI found, or to explore/submit directly.
+- **Secondary**: Developers who browse the site directly, arriving via AI recommendation, search, or Product Hunt
+- **Tertiary**: Tool makers submitting and promoting their developer tools
+- **Context**: The typical flow is agent-first: a developer asks their AI to build something, the AI checks IndieStack, finds an existing tool, and recommends it with integration code. Human visitors arrive to evaluate what the AI found, or to explore/submit directly.
 
 ### Brand Personality
 **Trusted, Sharp, Human.**

@@ -129,7 +129,7 @@ async def landing(request: Request):
     launch_banner = (
         '<div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));padding:12px 24px;text-align:center;">'
         '    <a href="/explore" style="color:white;text-decoration:none;font-size:14px;font-weight:600;">'
-        '        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> ' + str(tool_count) + '+ indie creations &mdash; now with Agent Cards for every tool. '
+        '        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> ' + str(tool_count) + '+ developer tools &mdash; now with Agent Cards for every tool. '
         '        <span style="text-decoration:underline;">Explore the catalog</span>'
         '    </a>'
         + (
@@ -197,14 +197,14 @@ async def landing(request: Request):
         '    <div class="glow-sphere" style="width:400px;height:400px;background:radial-gradient(circle,rgba(226,183,100,0.08) 0%,transparent 70%);bottom:10%;right:15%;"></div>'
         '    <div style="position:relative;z-index:1;">'
         '    <div class="status-tag" style="margin-bottom:24px;justify-content:center;">'
-        '        <span class="dot"></span>OPEN-SOURCE SUPPLY CHAIN FOR AI'
+        '        <span class="dot"></span>DISCOVERY LAYER FOR AI CODING AGENTS'
         '    </div>'
         '    <h1 style="font-family:var(--font-display);font-size:clamp(36px,6vw,64px);'
         '               line-height:1.15;max-width:700px;margin:0 auto;color:var(--ink);letter-spacing:-0.03em;">'
-        '        <span class="hero-headline">The open-source supply chain for AI coding agents.</span>'
+        '        <span class="hero-headline">The discovery layer for AI coding agents.</span>'
         '    </h1>'
         '    <p style="font-size:20px;color:var(--ink-muted);max-width:560px;margin:16px auto 32px;line-height:1.6;">'
-        f'        {tool_count}+ indie creations your AI can discover, compare, and recommend &mdash; so it stops reinventing the wheel.'
+        f'        {tool_count}+ developer tools your AI can discover, compare, and recommend &mdash; so it stops reinventing the wheel.'
         '    </p>'
         # Hero visual — code conversation block
         '    <div class="hero-glow">'
@@ -266,7 +266,7 @@ async def landing(request: Request):
             </p>
             <p style="text-align:center;font-size:13px;color:var(--ink-light);margin-bottom:48px;max-width:480px;margin-left:auto;margin-right:auto;">
                 MCP (Model Context Protocol) lets AI assistants like Claude and Cursor use external tools.
-                IndieStack&rsquo;s MCP server gives your AI access to {tool_count}+ indie creations &mdash; so it finds existing solutions instead of building from scratch.
+                IndieStack&rsquo;s MCP server gives your AI access to {tool_count}+ developer tools &mdash; so it finds existing solutions instead of building from scratch.
             </p>
 
             <!-- 3-step flow -->
@@ -295,7 +295,7 @@ async def landing(request: Request):
                                 margin:0 auto 16px;">3</div>
                     <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">It finds what exists</h3>
                     <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;">
-                        Instead of writing 50k tokens of code, your AI suggests a vetted indie creation &mdash; and learns your preferences over time.
+                        Instead of writing 50k tokens of code, your AI suggests a vetted tool &mdash; and learns your preferences over time.
                     </p>
                 </div>
             </div>
@@ -555,7 +555,7 @@ async def landing(request: Request):
         '  <a href="/submit" style="display:inline-block;padding:14px 32px;'
         '     background:var(--accent);color:white;border-radius:999px;'
         '     font-size:15px;font-weight:600;text-decoration:none;">'
-        '    Submit Your Creation'
+        '    Submit Your Tool'
         '  </a>'
         '</section>'
     )
@@ -572,7 +572,7 @@ async def landing(request: Request):
         "@type": "WebSite",
         "name": "IndieStack",
         "url": BASE_URL,
-        "description": f"The open-source supply chain for agentic workflows. Search {tool_count}+ indie creations before building from scratch.",
+        "description": f"The discovery layer between AI coding agents and developer tools. Search {tool_count}+ tools before building from scratch.",
         "potentialAction": {
             "@type": "SearchAction",
             "target": f"{BASE_URL}/search?q={{search_term_string}}",
@@ -747,8 +747,8 @@ async def landing(request: Request):
         '</script>'
     )
 
-    response = HTMLResponse(page_shell("The open-source supply chain for agentic workflows", body,
-                                   description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if an indie creation already exists.",
+    response = HTMLResponse(page_shell("The discovery layer for AI coding agents", body,
+                                   description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if a developer tool already exists.",
                                    user=request.state.user, canonical="/", extra_head=extra_head,
                                    og_image=f"{BASE_URL}/logo.png"))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"

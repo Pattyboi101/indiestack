@@ -30,7 +30,7 @@ def _email_wrapper(html_body: str, preview_text: str = "", unsubscribe_url: str 
 a{{color:#C4714E;}}</style></head>
 <body><div class="container"><div class="card">{html_body}</div>
 <p style="text-align:center;font-size:12px;color:#9C958E;margin-top:24px;">
-IndieStack &mdash; Discover indie creations built by independent makers{unsub}</p></div></body></html>"""
+IndieStack &mdash; Discover developer tools built by independent makers{unsub}</p></div></body></html>"""
 
 
 async def send_email(to: str, subject: str, html_body: str, *, unsubscribe_url: str = "") -> bool:
@@ -496,7 +496,7 @@ def subscriber_digest_html(trending_tools: list, new_tool: dict, total_tokens_sa
             Your Weekly Vibe Check
         </h1>
         <p style="color:#8A8580;font-size:14px;margin-bottom:24px;">
-            The hottest indie creations this week on IndieStack
+            The hottest developer tools this week on IndieStack
         </p>
         {spotlight_html}
         <h2 style="font-size:18px;font-weight:700;color:#2D2926;margin-bottom:12px;">Trending This Week</h2>
@@ -505,7 +505,7 @@ def subscriber_digest_html(trending_tools: list, new_tool: dict, total_tokens_sa
         <div style="margin-top:32px;padding:20px;background:linear-gradient(135deg,#2D2926,#3D3936);border-radius:12px;text-align:center;">
             <p style="color:#C4714E;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Community Impact</p>
             <p style="color:white;font-size:28px;font-weight:800;">{tokens_k} tokens saved</p>
-            <p style="color:rgba(255,255,255,0.6);font-size:13px;">by developers using indie creations instead of building from scratch</p>
+            <p style="color:rgba(255,255,255,0.6);font-size:13px;">by developers using indie tools instead of building from scratch</p>
         </div>
         <div style="text-align:center;margin-top:32px;">
             <a href="{BASE_URL}/explore" style="display:inline-block;padding:14px 32px;background:#C4714E;

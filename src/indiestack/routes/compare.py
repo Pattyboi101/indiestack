@@ -131,7 +131,7 @@ async def compare_tools(request: Request, slugs: str):
             <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">
                 {name1} <span style="color:var(--ink-muted);font-weight:normal;">vs</span> {name2}
             </h1>
-            <p style="color:var(--ink-muted);margin-top:8px;">Side-by-side comparison of these indie creations</p>
+            <p style="color:var(--ink-muted);margin-top:8px;">Side-by-side comparison of these developer tools</p>
         </div>
         <div style="display:flex;gap:32px;flex-wrap:wrap;">
             {tool_column(tool1)}

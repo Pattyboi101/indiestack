@@ -91,7 +91,7 @@ async def stacks_index(request: Request):
     generator_cta = """
     <div class="card" style="padding:24px;text-align:center;margin-top:40px;">
         <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">Find indie alternatives to your dependencies</h3>
-        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">Paste your package.json or requirements.txt and we'll find matching indie creations.</p>
+        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">Paste your package.json or requirements.txt and we'll find matching developer tools.</p>
         <a href="/stacks/generator" class="btn btn-primary" style="font-size:14px;padding:12px 24px;">Try the Stack Generator &rarr;</a>
     </div>
     """
@@ -105,7 +105,7 @@ async def stacks_index(request: Request):
     </div>
     """
     return HTMLResponse(page_shell("Stacks — Curated Indie Bundles", body,
-                                   description="Curated indie creation bundles and community stacks. Find pre-built combinations for auth, analytics, payments, and more.",
+                                   description="Curated developer tool bundles and community stacks. Find pre-built combinations for auth, analytics, payments, and more.",
                                    user=request.state.user, canonical="/stacks"))
 
 
@@ -135,7 +135,7 @@ async def community_stacks(request: Request):
                 Community Stacks
             </h1>
             <p style="color:var(--ink-muted);font-size:18px;margin:0;">
-                See what indie creations other developers are using
+                See what developer tools other developers are using
             </p>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;">
@@ -203,7 +203,7 @@ async def stack_generator_form(request: Request):
 
 @router.post("/stacks/generator", response_class=HTMLResponse)
 async def stack_generator_results(request: Request, deps: str = Form("")):
-    """Parse pasted dependencies and find matching indie creations."""
+    """Parse pasted dependencies and find matching developer tools."""
     db = request.state.db
     pasted_text = deps.strip()
 
@@ -439,7 +439,7 @@ async def stack_detail(request: Request, slug: str):
     </div>
     """
     return HTMLResponse(page_shell(f"{stack['title']} — Stack", body,
-                                   description=f"Get {len(tools)} indie creations in one bundle at {discount_percent}% off. {stack.get('description', '')}",
+                                   description=f"Get {len(tools)} developer tools in one bundle at {discount_percent}% off. {stack.get('description', '')}",
                                    user=request.state.user))
 
 

@@ -517,15 +517,30 @@ async def tool_detail(request: Request, slug: str):
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": tool['name'],
-        "description": tool['tagline'],
+        "description": tool.get('description') or tool['tagline'],
         "url": f"{BASE_URL}/tool/{tool['slug']}",
         "applicationCategory": tool.get('category_name', 'WebApplication'),
         "operatingSystem": "Web",
         "offers": {
             "@type": "Offer",
-            "availability": "https://schema.org/InStock"
+            "availability": "https://schema.org/InStock",
+            "price": "0",
+            "priceCurrency": "GBP",
         }
     }
+    if tool.get('price_pence') and tool['price_pence'] > 0:
+        json_ld_data["offers"]["price"] = f"{tool['price_pence'] / 100:.2f}"
+    if tool.get('maker_name') and tool['maker_name'] != 'Community Curated':
+        json_ld_data["author"] = {
+            "@type": "Person",
+            "name": tool['maker_name'],
+        }
+        if tool.get('maker_url'):
+            json_ld_data["author"]["url"] = tool['maker_url']
+    if tool.get('url'):
+        json_ld_data["installUrl"] = tool['url']
+    if tool.get('source_type') == 'code' and tool.get('github_url'):
+        json_ld_data["codeRepository"] = tool['github_url']
     if review_count > 0:
         json_ld_data["aggregateRating"] = {
             "@type": "AggregateRating",

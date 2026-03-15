@@ -268,7 +268,7 @@ def signup_form(error: str = "", values: dict = None, next_url: str = "", ref: s
             <h1 style="font-family:var(--font-display);font-size:28px;text-align:center;margin-bottom:8px;color:var(--ink);">
                 Join IndieStack
             </h1>
-            <p style="text-align:center;color:var(--ink-muted);font-size:14px;margin-bottom:24px;">Search, discover, and get AI recommendations for 3,000+ indie creations.</p>
+            <p style="text-align:center;color:var(--ink-muted);font-size:14px;margin-bottom:24px;">Search, discover, and get AI recommendations for 3,000+ developer tools.</p>
             {alert}
             {_github_button(next_url)}
             <form method="post" action="/signup">

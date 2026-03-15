@@ -4,15 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "indiestack"
-version = "1.7.0"
-description = "MCP server for IndieStack — the open-source supply chain for AI agents. 3,000+ tools with structured assembly metadata, 1,200+ compatibility pairs. Search, compare, scan projects, build stacks, and report compatibility."
+version = "1.7.1"
+description = "MCP server for IndieStack — the discovery layer between AI coding agents and 3,100+ proven developer tools. Search, compare, scan projects, build stacks, and check compatibility before your AI generates boilerplate."
 readme = "README_PYPI.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [
     { name = "IndieStack", email = "hello@indiestack.ai" },
 ]
-keywords = ["mcp", "indie", "saas", "tools", "ai", "claude", "cursor", "windsurf", "knowledge-layer", "creations"]
+keywords = ["mcp", "indie", "developer-tools", "ai", "claude", "cursor", "windsurf", "discovery", "agent"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -32,7 +32,7 @@ indiestack = "indiestack.cli:main"
 
 [project.urls]
 Homepage = "https://indiestack.ai"
-Repository = "https://github.com/indiestack/indiestack"
+Repository = "https://github.com/Pattyboi101/indiestack"
 
 # Optional: full server dependencies (only needed for self-hosting)
 [project.optional-dependencies]

@@ -1,5 +1,6 @@
 """Unified explore page with faceted filtering."""
 
+import json
 from math import ceil
 from html import escape
 from urllib.parse import urlencode
@@ -7,6 +8,7 @@ from urllib.parse import urlencode
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 
+from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card, pagination_html, email_sticky_bar
 from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_counts, get_new_for_user, get_tool_by_slug
 
@@ -213,7 +215,7 @@ async def explore(request: Request):
     <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);padding:32px;
         margin:32px 0;text-align:center;color:#fff;">
         <h3 style="font-family:var(--font-display);font-size:24px;margin-bottom:8px;">
-            Get the best indie creations in your inbox
+            Get the best developer tools in your inbox
         </h3>
         <p style="color:rgba(255,255,255,0.7);font-size:14px;margin-bottom:24px;">
             Weekly curated picks, new launches, and maker stories.
@@ -234,7 +236,7 @@ async def explore(request: Request):
     # Results
     if results:
         cards_html = "".join(tool_card(t) for t in results)
-        result_label = f'{total} creation{"s" if total != 1 else ""}'
+        result_label = f'{total} tool{"s" if total != 1 else ""}'
         results_section = f'''
         <p style="font-size:14px;color:var(--ink-muted);margin-bottom:16px;">{result_label}</p>
         <div class="card-grid card-stagger">{cards_html}</div>
@@ -254,7 +256,7 @@ async def explore(request: Request):
     <div class="container" style="padding:48px 24px;overflow-x:hidden;">
         <div style="margin-bottom:32px;">
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Explore</h1>
-            <p style="color:var(--ink-muted);font-size:16px;">Community-curated catalog of indie creations. Makers can <a href="/submit" style="color:var(--accent);">claim their listing</a> to update details and verify ownership.</p>
+            <p style="color:var(--ink-muted);font-size:16px;">Community-curated catalog of developer tools. Makers can <a href="/submit" style="color:var(--accent);">claim their listing</a> to update details and verify ownership.</p>
         </div>
         <a href="/surprise" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;
             background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
@@ -271,8 +273,18 @@ async def explore(request: Request):
     </div>
     '''
 
-    desc = "Browse and filter indie creations by category, tags, verification status, and price. Find the perfect indie alternative."
-    response = HTMLResponse(page_shell(title="Explore Indie Creations | IndieStack", body=body + email_sticky_bar(), description=desc, user=user, canonical="/explore"))
+    desc = "Browse and filter developer tools by category, tags, verification status, and price. Find the perfect indie alternative."
+    explore_ld = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Explore Developer Tools",
+        "description": desc,
+        "url": f"{BASE_URL}/explore",
+        "isPartOf": {"@type": "WebSite", "name": "IndieStack", "url": BASE_URL},
+        "numberOfItems": total,
+    }, ensure_ascii=False)
+    explore_head = f'<script type="application/ld+json">{explore_ld}</script>'
+    response = HTMLResponse(page_shell(title="Explore Developer Tools | IndieStack", body=body + email_sticky_bar(), description=desc, user=user, canonical="/explore", extra_head=explore_head))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"
     return response
 

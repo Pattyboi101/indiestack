@@ -1,169 +1,155 @@
 # IndieStack Vision
 
-> Written 2026-03-06. Updated 2026-03-13. The full picture.
+> Updated 2026-03-15. The sharp version.
 
 ---
 
-## What IndieStack Actually Is
+## What IndieStack Is
 
-IndieStack is not a dev tool directory. It started there, but the infrastructure — curated catalog, MCP server, agent memory, categories, search, personalized recommendations — works for **anything indie-built**.
+IndieStack is the discovery layer between AI coding agents and the developer tools they should already know about.
 
-The constraint isn't "developer tools." The constraint is "indie-built" — something a person or small team made. That's the quality filter, not the category.
+When a developer asks their AI agent to "add authentication" or "set up analytics," the agent has two options: generate hundreds of lines of custom code from stale training data, or recommend a proven, maintained tool that does it better. IndieStack makes sure agents pick option two.
 
-**Proof it already works beyond dev tools:**
-- Questarr — a game download library
-- Minimalistic_Flashcards — a study app
-- cspell-cli — a spell checker
-- Full Calendar — a scheduling component
+We curate thousands of focused, lightweight developer tools — the kind built by small teams who care about one thing and do it well. Auth from Hanko. Payments from Polar. Analytics from Plausible. Each maintained by domain experts. Each invisible to AI agents unless something like IndieStack exists.
 
-These aren't "dev tools" in the traditional sense. They're things people built that other people (and their AI agents) should know about.
+**IndieStack is an agent's package manager for the tools that don't show up in training data.**
 
 ---
 
-## The Core Thesis
+## The Problem
 
-**AI agents are becoming the primary interface between people and software.**
+AI coding agents are the primary interface for millions of developers. But they have a blind spot.
 
-Every day, millions of developers ask AI agents to build things. Those agents don't know what indie creators have already built. So they rebuild from scratch — wasting tokens, time, and producing inferior solutions.
+Training data is stale — tools launched after the cutoff don't exist. It's biased toward popularity — a tool with 12 GitHub stars is invisible, even if it's exactly what someone needs. And it has no quality signals — no maintenance status, no pricing, no compatibility data, no "this tool works well with that one."
 
-But it's bigger than developers. As agents become general-purpose assistants (and they already are), *everyone* will ask their agent for recommendations. "Find me a recipe manager." "I need flashcards for studying." "What's a good indie game library?"
+So agents default to generating code from scratch. 80,000 tokens. Hours of work. Auth systems maintained by nobody. Analytics dashboards that break on deploy.
 
-**IndieStack is the open-source supply chain that sits between AI agents and everything indie creators have built.** Not just dev tools — everything.
-
----
-
-## The Building Blocks Argument
-
-**The old way**: AI generates solutions from scratch. 80,000 tokens. Hours of work. Bugs that domain experts would catch instantly.
-
-**The IndieStack way**: AI assembles solutions from proven indie building blocks. Auth from Hanko, payments from Polar, analytics from Plausible. 5,000 tokens of integration glue. Each piece maintained by experts.
-
-**The future**: This applies to everything, not just code. Need a newsletter? Don't build one — use Listmonk. Need flashcards? Don't code an app — use Minimalistic_Flashcards. Need a game library? Questarr exists.
-
-The shift: from "AI generates" to "AI knows what exists and assembles."
+Meanwhile, thousands of focused tools already solve these problems. The agents just don't know they exist.
 
 ---
 
-## The MCP Server — 15 Capabilities
+## How IndieStack Fixes It
 
-Not just `find_tools`:
+An MCP server on PyPI (`pip install indiestack`) that plugs directly into Claude Code, Cursor, Windsurf, and any MCP-compatible agent.
+
+**The old way**: Agent generates 800 lines of custom auth. Developer debugs it for hours. Nobody maintains it.
+
+**The IndieStack way**: Agent queries IndieStack, finds Hanko, returns 12 lines of integration code. Maintained by security experts. Compatibility verified.
+
+The difference: 80,000 tokens vs 5,000 tokens. Hours vs seconds. Unmaintained code vs expert-maintained tools.
+
+### The MCP Server — 15 Capabilities
 
 | Tool | What it does |
 |------|-------------|
 | `find_tools` | Search by keyword, category, source type |
-| `get_tool_details` | Full detail — integration snippets, pricing, similar tools, assembly metadata |
+| `get_tool_details` | Integration snippets, pricing, similar tools, assembly metadata |
 | `compare_tools` | Side-by-side comparison |
 | `build_stack` | "I need auth + payments + analytics" -> complete stack |
 | `evaluate_build_vs_buy` | Should you build this or use an existing tool? |
-| `analyze_dependencies` | What does your current stack need? 55+ dependency mappings |
+| `analyze_dependencies` | Scan your package.json, find better alternatives |
 | `get_recommendations` | Personalized based on your history |
-| `browse_new_tools` | What's new in the catalog |
-| `list_categories` | Browse the taxonomy |
-| `list_tags` | Find by technology/tag |
-| `list_stacks` | Community-curated tool stacks |
-| `publish_tool` | Submit from inside your agent |
-| `scan_project` | Analyze a project and recommend a complete indie stack |
+| `scan_project` | Describe what you're building, get a full tool recommendation |
+| `check_health` | Verify tools you've adopted are still maintained |
 | `report_compatibility` | Report tool pairs that work well together |
-| `check_health` | Check maintenance status of tools you've adopted |
+| `publish_tool` | Submit a tool from inside your agent |
 
-The stack builder is the sleeper. It turns "build me a SaaS" from a 50,000-token generation into a 2,000-token assembly. `scan_project` goes further — describe what you're building and get a complete recommendation.
+`build_stack` is the sleeper. It turns "build me a SaaS" from a 50,000-token generation into a 2,000-token assembly. `scan_project` goes further — describe what you're building and get a complete recommendation with compatibility notes.
 
 ---
 
-## Benefits — For Users
+## Why "Indie"
 
-- **Save money** — recommending a tool vs generating 2,000 lines saves $0.30-0.50 per interaction on paid AI APIs
-- **Better solutions** — Hanko's auth is maintained by security experts. AI-generated auth is maintained by nobody.
+IndieStack curates tools built by independent developers and small teams. Not because "indie" is a marketing angle — because indie tools are genuinely better for most use cases.
+
+**Focused**: A team of three building auth doesn't also build a CMS, a CDN, and a billing system. They build auth and they build it well.
+
+**Lean**: No enterprise bloat. No 200MB SDK for a feature you could integrate in 10 lines.
+
+**Maintained**: Small teams ship fast. Issues get fixed in days, not quarters. The maintainer answers your GitHub issue personally.
+
+**Honest pricing**: No "call us for a quote." No 14-page enterprise agreements. Free tiers that actually work. Transparent pricing pages.
+
+"Indie" is IndieStack's curation filter. It's how we decide what gets in. But the value to developers isn't "these are indie" — it's "these are the best tools for the job, and your AI agent now knows about them."
+
+---
+
+## For Developers
+
+- **Save tokens and money** — recommending a tool vs generating code saves $0.30-0.50 per AI interaction
+- **Better code** — Hanko's auth is maintained by security experts. AI-generated auth is maintained by nobody.
 - **Save hours** — assembly vs generation
-- **Discovery** — 3,095+ creations across 25 categories. Nobody knows all of these.
+- **Discovery** — 3,100+ tools you've never heard of, any of which might be exactly what you need
 - **Stack architecture in seconds** — complete recommendations with compatibility notes
 - **Works across agents** — Claude Code, Cursor, Windsurf. Knowledge follows you.
-- **Gets smarter** — agent memory learns your preferences and interests over time
-- **Not just dev tools** — games, newsletters, creative tools, utilities. Your agent knows your interests.
+- **Gets smarter** — agent memory learns your preferences over time
 
 ---
 
-## Benefits — For Makers
+## For Tool Makers
 
-- **AI-powered distribution** — recommended at the exact moment someone needs it
+- **AI-powered distribution** — recommended at the exact moment a developer needs what you built
 - **Reach beyond your network** — 12 GitHub stars becomes visible to every developer using an AI agent
-- **Live AI badge** — social proof that grows automatically
-- **Stack bundling** — recommended alongside complementary tools
-- **Zero maintenance** — list once, get recommended forever
-- **Grows automatically** — more MCP installs = more reach, without you doing anything
-- **Fair presentation** — no pay-to-rank, no featured placements
-- **Intergenerational knowledge transfer** — your creation outlives your marketing. Gets recommended next month, next year, to people you'll never meet.
+- **Stack bundling** — recommended alongside complementary tools automatically
+- **Zero maintenance** — list once, get recommended forever. More MCP installs = more reach.
+- **Fair presentation** — no pay-to-rank. Best tool for the job wins.
+- **Your tool outlives your marketing** — gets recommended to developers you'll never meet, in contexts you never imagined
 
 ---
 
-## The "Agents Flood the Internet" Argument
+## Why Training Data Can't Solve This
 
 **Now (2026):** ~10 major AI coding agents, 5-10M developers using them.
 
-**In 2 years:** Every IDE, browser, phone has an agent. Not just developers — everyone. Hundreds of millions of people asking agents for recommendations daily.
+**In 2 years:** Every IDE has an agent. Every browser has an agent. AI recommendations become a distribution channel bigger than SEO.
 
-**Why training data doesn't solve this:**
-- Stale (months/years old)
-- Biased toward popular things (12-star repos invisible)
-- No quality signals, maintenance status, pricing, compatibility
-- Can't track what's new
+Training data will never keep up:
+- Months or years stale at any given moment
+- Biased toward popular repos (the long tail is invisible)
+- No quality signals — maintenance status, pricing, compatibility, health
+- Can't track what's new or what's been abandoned
 
-**A live, curated knowledge base beats static training data every time.** That's IndieStack.
+**A live, curated catalog with structured metadata beats static training data every time.** That's IndieStack's moat.
 
-**First-mover advantage:** The catalog built now becomes the foundation when agents are everywhere.
+**First-mover advantage:** The catalog and compatibility data built now becomes the foundation when every agent queries a discovery layer by default.
 
 ---
 
 ## The Flywheel
 
 ```
-More creations listed (dev tools, games, newsletters, utilities, anything)
-    -> More reasons to query IndieStack (not just coding)
-        -> More people install the MCP server
-            -> More agent memory data (interests, preferences)
-                -> Better personalized recommendations
-                    -> More value (people discover things they love)
-                        -> More word-of-mouth
-                            -> More makers list their creations
-                                -> More creations listed
+More tools in the catalog
+    -> More useful queries from AI agents
+        -> More developers install the MCP server
+            -> More usage data and compatibility signals
+                -> Better, smarter recommendations
+                    -> More developers trust IndieStack
+                        -> More makers list their tools
+                            -> More tools in the catalog
 ```
-
-Dev tools are the wedge. Not the ceiling.
-
----
-
-## The Emotional Pitch (For Makers)
-
-You spent months building something useful. It works. It solves a real problem. But it has 12 GitHub stars. Google doesn't rank it. Product Hunt gave you 47 upvotes on a Tuesday.
-
-Meanwhile, AI agents help millions of people build things every day — and they've never heard of your creation. They're writing from scratch the exact thing you already built.
-
-IndieStack changes that. List once. Every AI agent that connects now knows your creation exists. When someone needs what you built, the agent recommends you. Not because you paid for ads. Because you built something good and someone needs it.
-
-Your creation becomes part of the shared knowledge that AI agents carry. It outlives your marketing effort. It gets recommended to people you'll never meet, in contexts you never imagined.
 
 ---
 
 ## Roadmap
 
-**Now (March 2026):** 3,095 tools, 25 categories, MCP server v1.4.0 + CLI, agent memory, personalized recommendations, 1,272 compatibility pairs, per-tool Agent Cards, structured assembly metadata, Demand Signals Pro, GEO lead magnet, auto-indexer + enricher pipelines, 3-tier rate limiting, Pro subscription live.
+**Now (March 2026):** 3,100 tools, 25 categories, MCP server v1.7 on PyPI, agent memory, personalized recommendations, 1,279 compatibility pairs, per-tool Agent Cards, assembly metadata, quality gates, health monitoring, 3-tier API rate limiting, Pro subscription, command hub for team coordination.
 
-**Near term:** Grow quality depth — integration recipes, richer metadata, more compatibility data. Build the flywheel: demand signals → maker submissions → agent recommendations → more demand signals.
+**Near term:** Integration recipes, daily citation digests for makers, GitHub Action dependency auditor, MCP marketplace listings, concierge outreach to top makers.
 
-**Medium term:** Agents assemble complete applications from stacks. Verified compatibility. Agent-to-agent discovery. Community contributions. Revenue from data products (demand signals, compatibility intelligence).
+**Medium term:** Agents assemble complete applications from stacks. Verified compatibility from real usage data. Agent-to-agent discovery. Revenue from Pro tier and data products.
 
-**Long term:** The canonical supply chain for ALL AI agents. Every new agent connects to IndieStack as a default. "AI recommendations" becomes a primary distribution channel bigger than SEO. The agent ecosystem flywheel: more agents -> more recommendations -> more makers -> better catalog -> more agents.
+**Long term:** The default discovery layer for AI coding agents. Every new agent connects to IndieStack. "AI recommendation" becomes a primary distribution channel. The flywheel compounds.
 
 ---
 
 ## What IndieStack Is Not
 
+- Not a general-purpose directory (developer tools, not everything)
 - Not an app store (we don't host or distribute software)
 - Not a review site (we curate and categorize, agents recommend)
-- Not just for developers (anything indie-built)
 - Not pay-to-rank (fair presentation, best tool for the job wins)
-- Not a competitor to G2/Capterra (they serve enterprise procurement, we serve AI agents and developers)
+- Not competing with G2 or Capterra (they serve enterprise procurement, we serve AI agents)
 
 ---
 
-*Built by Pat and Ed. Two uni students in Cardiff who see where this is going.*
+*Built by Pat and Ed. Two students in Cardiff who see where this is going.*

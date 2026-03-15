@@ -559,7 +559,7 @@ def _render_social_kit(totw, new_tools, tool_count, maker_count):
     if totw:
         totw_text = (
             f"\U0001f3c6 This week's Tool of the Week on IndieStack: {totw['name']} \u2014 {totw['tagline']}\n\n"
-            f"{tool_count}+ indie creations, all searchable by AI coding assistants.\n\n"
+            f"{tool_count}+ developer tools, all searchable by AI coding assistants.\n\n"
             f"{BASE_URL}/tool/{totw['slug']}"
         )
         cards += _social_card("social-totw", "Tool of the Week Tweet", totw_text, include_tweet=True)
@@ -568,7 +568,7 @@ def _render_social_kit(totw, new_tools, tool_count, maker_count):
     if new_tools:
         bullet_list = "\n".join(f"\u2022 {t['name']}" for t in new_tools)
         new_text = (
-            f"{len(new_tools)} new indie creations on IndieStack this week:\n\n"
+            f"{len(new_tools)} new developer tools on IndieStack this week:\n\n"
             f"{bullet_list}\n\n"
             f"All discoverable by AI coding assistants via our MCP server \U0001f916\n\n"
             f"{BASE_URL}/new"
@@ -578,7 +578,7 @@ def _render_social_kit(totw, new_tools, tool_count, maker_count):
     # Card 3: Launch Thread
     launch_text = (
         f"\U0001f680 IndieStack Marketplace is LIVE\n\n"
-        f"{tool_count} indie creations. {maker_count} makers. Zero big-tech gatekeepers.\n\n"
+        f"{tool_count} developer tools. {maker_count} makers. Zero big-tech gatekeepers.\n\n"
         f"Every tool is searchable by AI coding assistants (Cursor, Windsurf, Claude Code) through our MCP server.\n\n"
         f"0% commission for launch week (March 2-16).\n\n"
         f"List your tool free \u2192 {BASE_URL}/submit"
@@ -587,7 +587,7 @@ def _render_social_kit(totw, new_tools, tool_count, maker_count):
 
     # Card 4: Reddit Post
     reddit_text = (
-        f"Title: IndieStack Marketplace \u2014 {tool_count} indie creations discoverable by AI coding assistants\n\n"
+        f"Title: IndieStack Marketplace \u2014 {tool_count} developer tools discoverable by AI coding assistants\n\n"
         f"Body: We built IndieStack as a directory of indie SaaS tools, but with a twist: "
         f"every tool listed is instantly searchable by AI coding assistants (Cursor, Windsurf, Claude Code) "
         f"through our MCP server.\n\n"
@@ -938,7 +938,7 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
         tool_count = (await cursor.fetchone())["cnt"]
         cursor = await db.execute("SELECT COUNT(*) as cnt FROM makers")
         maker_count = (await cursor.fetchone())["cnt"]
-        subject = f"The IndieStack Marketplace is Live \u2014 Browse {tool_count} Indie Creations"
+        subject = f"The IndieStack Marketplace is Live \u2014 Browse {tool_count} Developer Tools"
 
         if action == "send_launch_test":
             smtp_from = os.environ.get("SMTP_FROM", "")
@@ -969,7 +969,7 @@ async def handle_outreach_post(db, form, request) -> RedirectResponse:
         ph_url = os.environ.get("PH_URL", "https://www.producthunt.com/products/indiestack-4")
         cursor = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
         tool_count = (await cursor.fetchone())["cnt"]
-        subject = f"IndieStack is live on Product Hunt \u2014 {tool_count} indie creations"
+        subject = f"IndieStack is live on Product Hunt \u2014 {tool_count} developer tools"
 
         if action == "send_ph_test":
             smtp_from = os.environ.get("SMTP_FROM", "")

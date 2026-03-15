@@ -893,20 +893,21 @@ async def llms_txt(request: Request):
         tool_count = 880
     return (
         "# IndieStack\n\n"
-        f"> The open-source supply chain for agentic workflows. Search {tool_count}+ indie creations — "
-        "from full SaaS products to tiny utilities — so agents recommend instead of rebuild.\n\n"
+        f"> The discovery layer between AI coding agents and {tool_count}+ proven, lightweight developer tools. "
+        "Search by keyword, category, or need — so agents recommend instead of rebuild.\n\n"
         "IndieStack plugs into Claude Code, Cursor, and Windsurf via MCP. "
-        "Before your AI builds from scratch, it checks if an indie creation already does it. "
-        "Saves 30k-120k tokens per use case.\n\n"
+        "Before your AI generates boilerplate for auth, payments, analytics, or email, "
+        "it checks IndieStack for an existing tool that does it better. "
+        "Saves 30,000-80,000 tokens per use case.\n\n"
         "## Install\n\n"
         f"- [MCP Server (PyPI)](https://pypi.org/project/indiestack/): "
         "`claude mcp add indiestack -- uvx --from indiestack indiestack-mcp`\n"
         f"- [OpenAPI Spec]({BASE_URL}/openapi.json): REST API for any client\n\n"
         "## API Endpoints\n\n"
-        f"- [Search Creations]({BASE_URL}/api/tools/search?q=analytics): "
+        f"- [Search Tools]({BASE_URL}/api/tools/search?q=analytics): "
         "`GET /api/tools/search?q=<query>&category=<slug>&source_type=<code|saas>&limit=<n>&offset=<n>`\n"
         f"- [Tool Details]({BASE_URL}/api/tools/simple-analytics): "
-        "`GET /api/tools/<slug>` — pricing, integration snippets, ratings\n"
+        "`GET /api/tools/<slug>` — pricing, integration snippets, compatibility data\n"
         f"- [Tool Index]({BASE_URL}/api/tools/index.json): "
         "`GET /api/tools/index.json` — compact full catalog for prompt caching\n"
         f"- [Categories]({BASE_URL}/api/categories): `GET /api/categories` — 25 categories with tool counts\n"
@@ -917,11 +918,11 @@ async def llms_txt(request: Request):
         f"- [Stacks]({BASE_URL}/api/stacks): `GET /api/stacks` — curated tool combinations\n"
         f"- [Collections]({BASE_URL}/api/collections): `GET /api/collections` — themed groupings\n\n"
         "## Key Pages\n\n"
-        f"- [Explore]({BASE_URL}/explore): Browse all creations with category/source filters\n"
+        f"- [Explore]({BASE_URL}/explore): Browse all tools with category/source filters\n"
         f"- [Alternatives]({BASE_URL}/alternatives): Indie alternatives to mainstream SaaS\n"
         f"- [Stacks]({BASE_URL}/stacks): Pre-built tool stacks for common architectures\n"
         f"- [Makers]({BASE_URL}/makers): Indie maker directory\n"
-        f"- [Submit]({BASE_URL}/submit): Free listing\n"
+        f"- [Submit]({BASE_URL}/submit): Free listing for developer tools\n"
         f"- [Gaps]({BASE_URL}/gaps): Unsolved problems ranked by developer demand\n\n"
         "## Categories\n\n"
         "Analytics & Metrics, Auth & Identity, Automation & Workflows, CMS & Content, "
@@ -934,7 +935,7 @@ async def llms_txt(request: Request):
         f"- Card Index: {BASE_URL}/cards/index.json\n"
         f"- Per-Tool Card: {BASE_URL}/cards/{{slug}}.json\n\n"
         "## Optional\n\n"
-        f"- [Blog]({BASE_URL}/blog): Articles about indie creations and the agent ecosystem\n"
+        f"- [Blog]({BASE_URL}/blog): Articles about developer tools and the agent ecosystem\n"
         f"- [RSS Feed]({BASE_URL}/feed/rss): Latest tools via RSS\n"
         f"- [Sitemap]({BASE_URL}/sitemap.xml): Full sitemap\n"
         f"- [AI Pulse]({BASE_URL}/pulse): Live feed of AI agent activity\n"
@@ -956,8 +957,8 @@ async def llms_full_txt(request: Request):
         tools = []
 
     lines = [
-        f"# IndieStack — Full Creation Catalog\n",
-        f"> {len(tools)} indie creations across 25 categories. "
+        f"# IndieStack — Full Tool Catalog\n",
+        f"> {len(tools)} developer tools across 25 categories. "
         "Use this for comprehensive tool lookup without API calls.\n",
     ]
 
@@ -985,7 +986,7 @@ async def agent_card(request: Request):
         tool_count = 880
     return JSONResponse({
         "name": "IndieStack",
-        "description": f"The open-source supply chain for agentic workflows. {tool_count}+ indie creations across 25 categories.",
+        "description": f"The discovery layer between AI coding agents and {tool_count}+ proven, lightweight developer tools.",
         "url": BASE_URL,
         "provider": {
             "organization": "IndieStack",
@@ -997,14 +998,14 @@ async def agent_card(request: Request):
             "pushNotifications": False,
         },
         "skills": [
-            {"id": "find_tools", "name": "Find Tools", "description": "Search indie creations by keyword or category"},
-            {"id": "get_tool_details", "name": "Get Tool Details", "description": "Full details with integration snippets"},
-            {"id": "analyze_dependencies", "name": "Analyze Dependencies", "description": "Parse package.json/requirements.txt for indie replacements"},
-            {"id": "evaluate_build_vs_buy", "name": "Build vs Buy", "description": "Financial comparison of building vs using an existing tool"},
-            {"id": "build_stack", "name": "Build Stack", "description": "Recommend a complete indie tool stack for your needs"},
-            {"id": "compare_tools", "name": "Compare Tools", "description": "Side-by-side tool comparison"},
-            {"id": "publish_tool", "name": "Publish Tool", "description": "Submit a new tool to IndieStack"},
-            {"id": "get_recommendations", "name": "Get Recommendations", "description": "Personalized tool suggestions based on search history"},
+            {"id": "find_tools", "name": "Find Tools", "description": "Search developer tools by keyword, category, or need"},
+            {"id": "get_tool_details", "name": "Get Tool Details", "description": "Integration code, pricing, API specs, and compatibility data"},
+            {"id": "analyze_dependencies", "name": "Analyze Dependencies", "description": "Scan package.json/requirements.txt for better alternatives"},
+            {"id": "evaluate_build_vs_buy", "name": "Build vs Buy", "description": "Should you generate code or use an existing tool?"},
+            {"id": "build_stack", "name": "Build Stack", "description": "Turn a 50k-token generation into a 2k-token assembly"},
+            {"id": "compare_tools", "name": "Compare Tools", "description": "Side-by-side tool comparison with pricing and features"},
+            {"id": "publish_tool", "name": "Publish Tool", "description": "Submit a developer tool to the catalog"},
+            {"id": "get_recommendations", "name": "Get Recommendations", "description": "Personalized suggestions based on your search history"},
         ],
         "interfaces": {
             "mcp": {
@@ -1063,6 +1064,9 @@ async def sitemap(request: Request):
         (f"{BASE_URL}/why-list", "monthly", "0.6", None),
         (f"{BASE_URL}/geo", "monthly", "0.5", None),
         (f"{BASE_URL}/changelog", "monthly", "0.6", None),
+        (f"{BASE_URL}/what-is-indiestack", "monthly", "0.7", None),
+        (f"{BASE_URL}/pulse", "daily", "0.6", today),
+        (f"{BASE_URL}/gaps", "weekly", "0.7", None),
     ]
     for path in ["/about", "/terms", "/privacy", "/faq"]:
         urls.append((f"{BASE_URL}{path}", "monthly", "0.5", None))
@@ -1559,7 +1563,7 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
     if q.strip() and not results:
         demand = await db.get_search_demand(d, q, days=30)
         response["market_gap"] = {
-            "message": f"No indie creations found for '{q.strip()}'. This is an unsolved market gap — consider building one.",
+            "message": f"No tools found for '{q.strip()}'. This is an unsolved market gap — consider building one.",
             "submit_url": f"{BASE_URL}/submit",
             "query": q.strip(),
             "searches_30d": demand,
@@ -2018,7 +2022,7 @@ async def openapi_spec(request: Request):
         "paths": {
             "/api/tools/search": {
                 "get": {
-                    "summary": "Search indie creations",
+                    "summary": "Search developer tools",
                     "description": "Full-text search across all approved tools. Returns results sorted by relevance. Without a query, returns trending tools.",
                     "parameters": [
                         {"name": "q", "in": "query", "schema": {"type": "string"}, "description": "Search query (e.g. 'analytics', 'auth', 'email marketing')"},
@@ -2067,14 +2071,14 @@ async def openapi_spec(request: Request):
             "/api/stacks": {
                 "get": {
                     "summary": "List curated stacks",
-                    "description": "Pre-built combinations of indie creations for common use cases.",
+                    "description": "Pre-built combinations of developer tools for common use cases.",
                     "responses": {"200": {"description": "List of stacks with tool counts"}},
                 }
             },
             "/api/collections": {
                 "get": {
                     "summary": "List curated collections",
-                    "description": "Themed groupings of indie creations curated by the IndieStack team.",
+                    "description": "Themed groupings of developer tools curated by the IndieStack team.",
                     "responses": {"200": {"description": "List of collections with tool counts"}},
                 }
             },
@@ -2882,7 +2886,7 @@ async def og_home_card():
   <text x="80" y="440" font-size="22" fill="rgba(255,255,255,0.6)" font-family="system-ui,sans-serif">Before your AI writes code, it checks what already exists.</text>
   <text x="80" y="540" font-size="18" fill="rgba(255,255,255,0.3)" font-family="system-ui,sans-serif">pip install indiestack</text>
   <text x="1120" y="540" font-size="18" fill="rgba(255,255,255,0.3)" text-anchor="end" font-family="system-ui,sans-serif">indiestack.ai</text>
-  <text x="80" y="580" font-size="16" fill="rgba(255,255,255,0.25)" font-family="system-ui,sans-serif">793+ indie creations &#183; 104 makers &#183; 25 categories</text>
+  <text x="80" y="580" font-size="16" fill="rgba(255,255,255,0.25)" font-family="system-ui,sans-serif">3,100+ developer tools &#183; 25 categories &#183; indie-built</text>
 </svg>'''
     return Response(content=svg, media_type="image/svg+xml",
                     headers={"Cache-Control": "public, max-age=86400"})
@@ -3794,8 +3798,8 @@ def _build_rss_xml(tools: list, title: str, description: str, link: str) -> str:
 async def rss_all(request: Request):
     """RSS feed of all recent approved tools."""
     tools = await db.get_tools_for_rss(request.state.db, limit=30)
-    xml = _build_rss_xml(tools, "IndieStack — New Indie Creations",
-                          "The latest indie SaaS tools on IndieStack",
+    xml = _build_rss_xml(tools, "IndieStack — New Developer Tools",
+                          "The latest developer tools on IndieStack",
                           f"{BASE_URL}/feed/rss")
     return Response(content=xml, media_type="application/rss+xml",
                     headers={"Cache-Control": "public, max-age=3600"})
@@ -3806,7 +3810,7 @@ async def rss_category(request: Request, slug: str):
     """RSS feed for a specific category."""
     tools = await db.get_tools_for_rss(request.state.db, category_slug=slug, limit=30)
     xml = _build_rss_xml(tools, f"IndieStack — {slug.replace('-', ' ').title()} Tools",
-                          f"Indie creations in the {slug.replace('-', ' ')} category",
+                          f"Developer tools in the {slug.replace('-', ' ')} category",
                           f"{BASE_URL}/category/{slug}/rss")
     return Response(content=xml, media_type="application/rss+xml",
                     headers={"Cache-Control": "public, max-age=3600"})
@@ -3817,7 +3821,7 @@ async def rss_tag(request: Request, slug: str):
     """RSS feed for a specific tag."""
     tools = await db.get_tools_for_rss(request.state.db, tag=slug.replace('-', ' '), limit=30)
     xml = _build_rss_xml(tools, f"IndieStack — #{slug} Tools",
-                          f"Indie creations tagged with {slug.replace('-', ' ')}",
+                          f"Developer tools tagged with {slug.replace('-', ' ')}",
                           f"{BASE_URL}/tag/{slug}/rss")
     return Response(content=xml, media_type="application/rss+xml",
                     headers={"Cache-Control": "public, max-age=3600"})

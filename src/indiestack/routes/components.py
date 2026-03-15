@@ -786,7 +786,7 @@ def footer_html() -> str:
           <!-- Brand -->
           <div>
             <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;">IndieStack</div>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">Discover indie creations built by independent makers and small teams.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">Discover developer tools built by independent makers and small teams.</p>
           </div>
           <!-- Product -->
           <div>
@@ -816,7 +816,7 @@ def footer_html() -> str:
         </div>
         <div class="footer-bottom">
           <div style="text-align:center;margin-bottom:24px;">
-    <p style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:600;margin-bottom:12px;">Get weekly picks — the best new indie creations in your inbox.</p>
+    <p style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:600;margin-bottom:12px;">Get weekly picks — the best new developer tools in your inbox.</p>
     <form action="/api/subscribe" method="POST" style="display:flex;gap:8px;justify-content:center;max-width:400px;margin:0 auto;">
         <input type="email" name="email" required placeholder="you@example.com"
                style="flex:1;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.3);
@@ -828,7 +828,7 @@ def footer_html() -> str:
                 font-family:var(--font-body);">Subscribe</button>
     </form>
 </div>
-          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">The open-source supply chain for AI agents and indie creators.</span>
+          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">The discovery layer between AI coding agents and developer tools.</span>
           <span class="footer-muted">&copy; 2026 IndieStack. All rights reserved.</span>
           <span class="footer-muted">Made with care for the indie maker community.</span>
         </div>
@@ -1434,7 +1434,7 @@ def theme_js() -> str:
 # ── Page Shell ────────────────────────────────────────────────────────────
 
 def page_shell(title: str, body: str, *, description: str = "", extra_head: str = "", user=None, og_image: str = f"{BASE_URL}/logo.png", canonical: str = "") -> str:
-    desc = escape(description) if description else "Discover indie creations built by independent makers and small teams."
+    desc = escape(description) if description else "Discover developer tools built by independent makers and small teams."
     canonical_tag = f'\n    <link rel="canonical" href="{BASE_URL}{escape(canonical)}">' if canonical else ""
     # Strip trailing " | IndieStack" or " — IndieStack" to avoid duplication
     clean_title = title
