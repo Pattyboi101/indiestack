@@ -3596,7 +3596,7 @@ async def send_weekly_digest(request: Request):
     import secrets as _secrets
     key = request.query_params.get("key", "")
     admin_key = _os.environ.get("ADMIN_SECRET", "")
-    if not _secrets.compare_digest(key, admin_key):
+    if not admin_key or not _secrets.compare_digest(key, admin_key):
         return JSONResponse({"error": "Unauthorized"}, status_code=401)
 
     d = request.state.db
@@ -3704,7 +3704,8 @@ async def api_follow_through(request: Request, days: int = 30):
     """Follow-through rate: MCP search → detail view conversion."""
     admin_key = request.query_params.get("admin_key", "")
     import secrets as _secrets_mod
-    if not _secrets_mod.compare_digest(admin_key, _os.environ.get("ADMIN_SECRET", "")):
+    _admin_secret = _os.environ.get("ADMIN_SECRET", "")
+    if not _admin_secret or not _secrets_mod.compare_digest(admin_key, _admin_secret):
         return JSONResponse({"error": "Unauthorized"}, status_code=401)
     d = request.state.db
     stats = await db.get_follow_through_rate(d, min(days, 365))

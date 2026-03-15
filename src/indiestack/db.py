@@ -3800,18 +3800,19 @@ async def create_magic_link_token(db, email: str) -> str:
 
 
 async def validate_magic_link_token(db, token: str):
-    """Validate and consume a magic link token. Returns email or None."""
+    """Validate and consume a magic link token atomically. Returns email or None."""
+    # Atomically mark as used and return email in one step to prevent race conditions
     cursor = await db.execute(
-        "SELECT email FROM magic_link_tokens WHERE token = ? AND used = 0 AND expires_at > datetime('now')",
+        "UPDATE magic_link_tokens SET used = 1 "
+        "WHERE token = ? AND used = 0 AND expires_at > datetime('now') "
+        "RETURNING email",
         (token,)
     )
     row = await cursor.fetchone()
     if not row:
         return None
-    # Mark as used
-    await db.execute("UPDATE magic_link_tokens SET used = 1 WHERE token = ?", (token,))
     await db.commit()
-    return row['email'] if isinstance(row, dict) else row[0]
+    return row[0]
 
 
 # ── Tokens Saved ─────────────────────────────────────────────────────────

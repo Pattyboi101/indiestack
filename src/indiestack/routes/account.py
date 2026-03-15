@@ -183,10 +183,11 @@ async def login_post(request: Request, email: str = Form(""), password: str = Fo
 async def request_magic_link(request: Request):
     form = await request.form()
     email = form.get("email", "").strip().lower()
-    next_url = form.get("next", "/dashboard")
+    next_url = _safe_next(form.get("next", "")) or "/dashboard"
 
     if not email or "@" not in email:
-        return RedirectResponse(f"/login?error=invalid_email&next={next_url}", status_code=303)
+        from urllib.parse import quote
+        return RedirectResponse(f"/login?error=invalid_email&next={quote(next_url, safe='/')}", status_code=303)
 
     db = request.state.db
     token = await create_magic_link_token(db, email)
