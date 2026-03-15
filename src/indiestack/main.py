@@ -240,8 +240,8 @@ from indiestack.routes import audit
 async def _periodic_health_refresh():
     """Run health checks every 4 hours to keep tool data fresh."""
     import aiosqlite
+    await asyncio.sleep(300)  # First run 5 min after startup
     while True:
-        await asyncio.sleep(4 * 3600)  # Every 4 hours
         try:
             async with aiosqlite.connect(db.DB_PATH) as conn:
                 conn.row_factory = aiosqlite.Row
@@ -254,6 +254,7 @@ async def _periodic_health_refresh():
         except Exception as e:
             _logger.exception("Background task failed: health refresh")
             _alert_telegram("health_refresh", str(e))
+        await asyncio.sleep(4 * 3600)  # Then every 4 hours
 
 
 async def _periodic_session_cleanup():

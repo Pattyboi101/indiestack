@@ -78,7 +78,14 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,000+ 
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie creators have built beyond dev tools |
 
-## What's new in v1.6.0
+## What's new in v1.7.0
+
+- **Trust tiers** — Every tool now shows a trust tier in MCP responses: `verified` (20+ outcome reports, 70%+ success), `tested` (5+ reports), or `new`. Agents can make informed decisions about tool reliability.
+- **Agent cards** — Machine-readable JSON cards at `/cards/{slug}.json` with full assembly metadata, health status, and success rates. Index at `/cards/index.json`. No auth required.
+- **Citation milestones** — Makers get notified when their tools cross citation thresholds (10, 25, 50, 100, 250, 500, 1000). Email alerts for significant milestones.
+- **Trust badges** — Tool cards in search results show visual trust indicators based on outcome data.
+
+## What was new in v1.6.0
 
 - **Outcome intelligence** — Tools now show agent success rates: "82% success rate from 14 agent reports." Report outcomes with `report_outcome(slug, success)` — no API key or special scope needed.
 - **Cross-agent intelligence** — Every outcome report improves recommendations for all agents across all platforms. IndieStack is becoming the neutral intelligence layer for tool discovery.
