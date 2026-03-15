@@ -455,6 +455,38 @@ CREATE INDEX IF NOT EXISTS idx_agent_actions_user ON agent_actions(user_id);
 CREATE INDEX IF NOT EXISTS idx_agent_actions_tool ON agent_actions(tool_slug);
 CREATE INDEX IF NOT EXISTS idx_agent_actions_action ON agent_actions(action);
 CREATE INDEX IF NOT EXISTS idx_agent_actions_date ON agent_actions(created_at);
+
+CREATE TABLE IF NOT EXISTS stack_roasts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    stack_name TEXT NOT NULL,
+    stack_json TEXT NOT NULL,
+    ai_roast_text TEXT,
+    upvotes INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS roast_comments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    roast_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    comment_text TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(roast_id) REFERENCES stack_roasts(id) ON DELETE CASCADE,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS roast_upvotes (
+    user_id INTEGER NOT NULL,
+    roast_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, roast_id),
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(roast_id) REFERENCES stack_roasts(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_roast_comments_roast ON roast_comments(roast_id);
+CREATE INDEX IF NOT EXISTS idx_stack_roasts_upvotes ON stack_roasts(upvotes DESC);
 """
 
 FTS_SCHEMA = """
@@ -1205,6 +1237,7 @@ async def init_db():
         await db.execute("CREATE INDEX IF NOT EXISTS idx_search_logs_query ON search_logs(query)")
         await db.execute("CREATE INDEX IF NOT EXISTS idx_search_logs_source ON search_logs(source)")
         await db.execute("CREATE INDEX IF NOT EXISTS idx_search_logs_created ON search_logs(created_at)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_search_logs_top_slug ON search_logs(top_result_slug)")
 
         await db.execute("""CREATE TABLE IF NOT EXISTS developer_profiles (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -6409,3 +6442,153 @@ async def get_new_tools_in_maker_categories(db, maker_id: int, days: int = 7) ->
         LIMIT 5
     """, (maker_id, maker_id, f'-{days} days'))
     return [dict(r) for r in await cursor.fetchall()]
+
+
+# ── Arena (Roast My Stack) ────────────────────────────────────────────────
+
+
+async def create_stack_roast(db, user_id: int, stack_name: str, stack_json: str, ai_roast_text: str) -> int:
+    """Create a new stack roast and return its ID."""
+    cursor = await db.execute(
+        "INSERT INTO stack_roasts (user_id, stack_name, stack_json, ai_roast_text) VALUES (?, ?, ?, ?)",
+        (user_id, stack_name, stack_json, ai_roast_text))
+    await db.commit()
+    return cursor.lastrowid
+
+
+async def get_arena_feed(db, limit: int = 50) -> list:
+    """Get arena feed sorted by upvotes."""
+    cursor = await db.execute("""
+        SELECT sr.*, u.name as author_name
+        FROM stack_roasts sr
+        JOIN users u ON sr.user_id = u.id
+        ORDER BY sr.upvotes DESC, sr.created_at DESC
+        LIMIT ?
+    """, (limit,))
+    return [dict(r) for r in await cursor.fetchall()]
+
+
+async def get_roast_details(db, roast_id: int):
+    """Get a single roast with its comments. Returns (roast_dict, comments_list) or (None, [])."""
+    cursor = await db.execute("""
+        SELECT sr.*, u.name as author_name
+        FROM stack_roasts sr
+        JOIN users u ON sr.user_id = u.id
+        WHERE sr.id = ?
+    """, (roast_id,))
+    roast = await cursor.fetchone()
+    if not roast:
+        return None, []
+    roast = dict(roast)
+    cursor = await db.execute("""
+        SELECT rc.*, u.name as author_name
+        FROM roast_comments rc
+        JOIN users u ON rc.user_id = u.id
+        WHERE rc.roast_id = ?
+        ORDER BY rc.created_at ASC
+    """, (roast_id,))
+    comments = [dict(r) for r in await cursor.fetchall()]
+    return roast, comments
+
+
+async def add_roast_comment(db, roast_id: int, user_id: int, comment_text: str):
+    """Add a comment to a roast."""
+    await db.execute(
+        "INSERT INTO roast_comments (roast_id, user_id, comment_text) VALUES (?, ?, ?)",
+        (roast_id, user_id, comment_text))
+    await db.commit()
+
+
+async def toggle_roast_upvote(db, roast_id: int, user_id: int) -> bool:
+    """Toggle upvote on a roast. Returns True if upvoted, False if removed."""
+    try:
+        await db.execute(
+            "INSERT INTO roast_upvotes (user_id, roast_id) VALUES (?, ?)",
+            (user_id, roast_id))
+        await db.execute(
+            "UPDATE stack_roasts SET upvotes = upvotes + 1 WHERE id = ?",
+            (roast_id,))
+        await db.commit()
+        return True
+    except Exception:
+        await db.execute(
+            "DELETE FROM roast_upvotes WHERE user_id = ? AND roast_id = ?",
+            (user_id, roast_id))
+        await db.execute(
+            "UPDATE stack_roasts SET upvotes = MAX(0, upvotes - 1) WHERE id = ?",
+            (roast_id,))
+        await db.commit()
+        return False
+
+
+async def has_user_upvoted_roast(db, roast_id: int, user_id: int) -> bool:
+    """Check if a user has upvoted a specific roast."""
+    cursor = await db.execute(
+        "SELECT 1 FROM roast_upvotes WHERE user_id = ? AND roast_id = ?",
+        (user_id, roast_id))
+    return await cursor.fetchone() is not None
+
+
+async def get_tool_analytics_wall_data(db, tool_slug: str, tool_id: int, detailed: bool = False) -> dict:
+    """Get aggregated AI agent usage stats for the claim-to-reveal analytics wall.
+    Returns safe aggregate totals always; detailed breakdowns only when detailed=True."""
+    # Aggregate totals from search_logs (agent/MCP queries that surfaced this tool)
+    cursor = await db.execute("""
+        SELECT
+            COUNT(*) as total_agent_queries,
+            COUNT(DISTINCT agent_client) as unique_platforms,
+            SUM(CASE WHEN created_at >= datetime('now', '-7 days') THEN 1 ELSE 0 END) as queries_last_7d
+        FROM search_logs
+        WHERE top_result_slug = ?
+          AND source IN ('api', 'mcp')
+    """, (tool_slug,))
+    row = await cursor.fetchone()
+    stats = dict(row) if row else {'total_agent_queries': 0, 'unique_platforms': 0, 'queries_last_7d': 0}
+
+    # Total citations from agent_citations
+    cursor = await db.execute(
+        "SELECT COUNT(*) as cnt FROM agent_citations WHERE tool_id = ?", (tool_id,))
+    cit_row = await cursor.fetchone()
+    stats['total_citations'] = cit_row['cnt'] if cit_row else 0
+
+    if not detailed:
+        stats['platform_breakdown'] = []
+        stats['top_queries'] = []
+        stats['daily_trend'] = []
+        return stats
+
+    # Platform breakdown
+    cursor = await db.execute("""
+        SELECT COALESCE(agent_client, 'Unknown') as platform, COUNT(*) as count
+        FROM search_logs
+        WHERE top_result_slug = ? AND source IN ('api', 'mcp')
+        GROUP BY COALESCE(agent_client, 'Unknown')
+        ORDER BY count DESC
+    """, (tool_slug,))
+    stats['platform_breakdown'] = [dict(r) for r in await cursor.fetchall()]
+
+    # Top queries leading to this tool
+    cursor = await db.execute("""
+        SELECT query, COUNT(*) as count, MAX(created_at) as last_seen
+        FROM search_logs
+        WHERE top_result_slug = ?
+          AND source IN ('api', 'mcp')
+          AND query IS NOT NULL AND query != ''
+        GROUP BY LOWER(query)
+        ORDER BY count DESC
+        LIMIT 10
+    """, (tool_slug,))
+    stats['top_queries'] = [dict(r) for r in await cursor.fetchall()]
+
+    # Daily trend (last 30 days)
+    cursor = await db.execute("""
+        SELECT DATE(created_at) as day, COUNT(*) as count
+        FROM search_logs
+        WHERE top_result_slug = ? AND source IN ('api', 'mcp')
+          AND created_at >= datetime('now', '-30 days')
+        GROUP BY DATE(created_at)
+        ORDER BY day ASC
+    """, (tool_slug,))
+    stats['daily_trend'] = [dict(r) for r in await cursor.fetchall()]
+
+    return stats
