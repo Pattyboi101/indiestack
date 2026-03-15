@@ -405,10 +405,41 @@ async def render_funnels_section(db) -> str:
 
     maker_table = data_table("Maker Leaderboard (30 Days)", ["Name", "Tools", "Views", "Clicks", "Last Update", "Status"], maker_rows)
 
+    # Conversion Events table
+    try:
+        cursor = await db.execute("""
+            SELECT event,
+                COUNT(*) as total_30d,
+                SUM(CASE WHEN created_at >= datetime('now', '-7 days') THEN 1 ELSE 0 END) as total_7d
+            FROM events
+            WHERE created_at >= datetime('now', '-30 days')
+            GROUP BY event
+            ORDER BY total_30d DESC
+        """)
+        event_rows_data = await cursor.fetchall()
+    except Exception:
+        event_rows_data = []
+
+    event_rows = ""
+    for idx, ev in enumerate(event_rows_data):
+        event_name = escape(str(ev['event']))
+        count_30 = ev['total_30d'] or 0
+        count_7 = ev['total_7d'] or 0
+        event_rows += f"""
+        <tr style="border-bottom:1px solid var(--border);{row_bg(idx)}">
+            <td style="padding:10px 12px;font-size:14px;color:var(--ink);font-weight:600;">{event_name}</td>
+            <td style="padding:10px 12px;font-size:14px;color:var(--ink);text-align:right;">{count_30:,}</td>
+            <td style="padding:10px 12px;font-size:14px;color:var(--ink);text-align:right;">{count_7:,}</td>
+        </tr>
+        """
+
+    events_table = data_table("Conversion Events", ["Event", "Count (30d)", "Count (7d)"], event_rows)
+
     return f"""
         {funnel_bar}
         {tool_funnel_table}
         {maker_table}
+        {events_table}
     """
 
 

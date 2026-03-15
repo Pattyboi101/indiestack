@@ -146,7 +146,7 @@ Your creation becomes part of the shared knowledge that AI agents carry. It outl
 
 ## Roadmap
 
-**Now (March 2026):** 3,095 tools, 25 categories, MCP server v1.3.1, agent memory, personalized recommendations, 1,272 compatibility pairs, per-tool Agent Cards, structured assembly metadata, Demand Signals Pro, GEO lead magnet, auto-indexer + enricher pipelines.
+**Now (March 2026):** 3,095 tools, 25 categories, MCP server v1.4.0 + CLI, agent memory, personalized recommendations, 1,272 compatibility pairs, per-tool Agent Cards, structured assembly metadata, Demand Signals Pro, GEO lead magnet, auto-indexer + enricher pipelines, 3-tier rate limiting, Pro subscription live.
 
 **Near term:** Grow quality depth — integration recipes, richer metadata, more compatibility data. Build the flywheel: demand signals → maker submissions → agent recommendations → more demand signals.
 

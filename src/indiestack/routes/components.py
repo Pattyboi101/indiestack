@@ -673,6 +673,7 @@ def nav_html(user=None) -> str:
                                 box-shadow:var(--shadow-md);padding:8px 0;min-width:180px;z-index:200;">
                         <a href="/geo" class="nav-dropdown-item">AI Optimize</a>
                         <a href="/submit" class="nav-dropdown-item">Submit a Tool</a>
+                        <a href="/pricing" class="nav-dropdown-item">Pricing</a>
                     </div>
                 </div>
                 <div class="nav-dropdown" style="position:relative;">
@@ -687,6 +688,7 @@ def nav_html(user=None) -> str:
                                 border:1px solid var(--border);border-radius:var(--radius-sm);
                                 box-shadow:var(--shadow-md);padding:8px 0;min-width:180px;z-index:200;">
                         <a href="/what-is-indiestack" class="nav-dropdown-item">What is IndieStack?</a>
+                        <a href="/developer" class="nav-dropdown-item">API &amp; Keys</a>
                         <a href="/gaps" class="nav-dropdown-item">Demand Board</a>
                         <a href="/stacks" class="nav-dropdown-item">Stacks</a>
                         <a href="/changelog" class="nav-dropdown-item">Changelog</a>
@@ -703,6 +705,8 @@ def nav_html(user=None) -> str:
             <a href="/geo">AI Optimize</a>
             <a href="/stacks">Stacks</a>
             <a href="/gaps">Demand Board</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/developer">API &amp; Keys</a>
             <a href="/what-is-indiestack">What is IndieStack?</a>
             <a href="/changelog">Changelog</a>
             <a href="/submit" class="btn btn-primary">Submit</a>
@@ -930,7 +934,7 @@ curl -s "{url}" -o /dev/null -w "%{{http_code}}"'''
 
 
 # Co-founder emails — update Ed's when he signs up
-COFOUNDER_EMAILS = {'ameyjonesP@gmail.com', 'ed@placeholder.com'}
+COFOUNDER_EMAILS = {'ameyjonesP@gmail.com', 'toedgamings@gmail.com'}
 
 
 def cofounder_badge_html() -> str:
@@ -1010,6 +1014,11 @@ def stack_card(stack: dict) -> str:
 
 def verified_badge_html() -> str:
     return ""
+
+
+def pro_badge_html() -> str:
+    """Small Pro badge for tool cards and maker cards."""
+    return '<span style="display:inline-block;background:var(--accent);color:white;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px;">Pro</span>'
 
 
 def boosted_badge_html():
@@ -1112,6 +1121,8 @@ def tool_card(tool: dict, compact: bool = False) -> str:
     price_pence = tool.get('price_pence')
     if price_pence and price_pence > 0 and not tool.get('stripe_account_id'):
         badge += f' <span class="pill-price">&pound;{price_pence // 100}/mo</span>'
+    if tool.get('maker_is_pro'):
+        badge += ' ' + pro_badge_html()
     # Pixel art icon takes priority over favicon
     pixel_icon = str(tool.get('pixel_icon', '') or '')
     pixel_svg = pixel_icon_svg(pixel_icon) if pixel_icon else ''
@@ -1266,6 +1277,7 @@ document.addEventListener('click', function(e) {
         btn.style.background = 'var(--accent)';
         btn.style.transform = 'scale(1.05)';
         btn.style.transition = 'transform 0.15s ease, background 0.15s ease';
+        fetch('/api/track', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({event:'install_copied', metadata:{text: text.substring(0, 50)}})});
         setTimeout(function() {
             btn.innerHTML = orig;
             btn.style.background = origBg;

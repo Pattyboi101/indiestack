@@ -201,10 +201,10 @@ async def landing(request: Request):
         '    </div>'
         '    <h1 style="font-family:var(--font-display);font-size:clamp(36px,6vw,64px);'
         '               line-height:1.15;max-width:700px;margin:0 auto;color:var(--ink);letter-spacing:-0.03em;">'
-        '        <span class="hero-headline">Stop letting your AI reinvent the wheel.</span>'
+        '        <span class="hero-headline">The open-source supply chain for AI coding agents.</span>'
         '    </h1>'
         '    <p style="font-size:20px;color:var(--ink-muted);max-width:560px;margin:16px auto 32px;line-height:1.6;">'
-        f'        {tool_count}+ indie creations your AI can discover, compare, and assemble &mdash; before building from scratch.'
+        f'        {tool_count}+ indie creations your AI can discover, compare, and recommend &mdash; so it stops reinventing the wheel.'
         '    </p>'
         # Hero visual — code conversation block
         '    <div class="hero-glow">'
@@ -326,6 +326,17 @@ async def landing(request: Request):
                     <span style="color:var(--ink-muted);"># Cursor / Windsurf / VS Code — add to mcp config:</span><br>
                     {{"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]}}
                 </div>
+                <p style="text-align:center;font-size:12px;color:var(--ink-light);margin-top:12px;">
+                    Want more than 15 queries/day? <a href="/developer" style="color:var(--accent);text-decoration:none;">Get a free API key</a> for 50/day &rarr;
+                </p>
+                <div style="max-width:480px;margin:20px auto 0;padding:16px 20px;background:rgba(0,212,245,0.06);
+                            border:1px solid rgba(0,212,245,0.15);border-radius:var(--radius-sm);text-align:left;">
+                    <p style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;">Then try it:</p>
+                    <p style="font-size:13px;color:var(--ink-muted);line-height:1.6;margin:0;">
+                        Ask your AI: <span style="font-family:var(--font-mono);color:var(--accent);font-size:12px;">&ldquo;Find me a privacy-friendly analytics tool&rdquo;</span>
+                        &mdash; it&rsquo;ll search IndieStack and suggest one before writing a line of code.
+                    </p>
+                </div>
             </div>
 
             <!-- Works out of the box -->
@@ -335,7 +346,8 @@ async def landing(request: Request):
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Works out of the box
                 </p>
                 <p style="font-size:13px;color:var(--ink-muted);line-height:1.6;">
-                    No API key needed. Install the MCP server and your AI starts searching immediately.
+                    No API key needed to start &mdash; you get 15 free queries a day instantly.
+                    <a href="/developer" style="color:var(--accent);text-decoration:none;font-weight:600;">Grab a free API key</a> for 50/day, or <a href="/pricing" style="color:var(--accent);text-decoration:none;font-weight:600;">go Pro</a> for 1,000/day with richer AI recommendations.
                 </p>
             </div>
 

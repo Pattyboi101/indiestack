@@ -15,6 +15,8 @@ from indiestack.db import (
     create_password_reset_token, get_valid_reset_token, mark_reset_token_used,
     create_email_verification_token, verify_email_token,
     get_user_by_github_id, create_github_user, link_github_to_user,
+    create_magic_link_token, validate_magic_link_token,
+    track_event,
 )
 from indiestack.email import send_email, password_reset_html, email_verification_html, welcome_signup_html
 
@@ -55,16 +57,32 @@ def _safe_next(url: str) -> str:
     return ""
 
 
-def login_form(error: str = "", email: str = "", next_url: str = "") -> str:
+def login_form(error: str = "", email: str = "", next_url: str = "", magic_sent: bool = False, magic_email: str = "") -> str:
     alert = f'<div class="alert alert-error">{escape(error)}</div>' if error else ''
     next_hidden = f'<input type="hidden" name="next" value="{escape(next_url)}">' if next_url else ''
     next_qs = f"?next={escape(next_url)}" if next_url else ""
+
+    # Magic link success message
+    magic_banner = ""
+    if magic_sent:
+        magic_banner = f'''<div style="background:rgba(0,212,245,0.1);border:1px solid var(--accent);border-radius:var(--radius-sm);
+            padding:16px;margin-bottom:24px;text-align:center;font-size:14px;color:var(--ink);">
+            Check your email! We sent a login link to <strong>{escape(magic_email)}</strong>
+        </div>'''
+
+    # Error messages for magic link flow
+    if error == "invalid_email":
+        alert = '<div class="alert alert-error">Please enter a valid email address.</div>'
+    elif error == "invalid_token":
+        alert = '<div class="alert alert-error">That link has expired or has already been used. Request a new one below.</div>'
+
     return f"""
     <div style="display:flex;justify-content:center;align-items:center;min-height:60vh;">
         <div class="card" style="max-width:420px;width:100%;">
             <h1 style="font-family:var(--font-display);font-size:28px;text-align:center;margin-bottom:24px;color:var(--ink);">
                 Log In
             </h1>
+            {magic_banner}
             {alert}
             {_github_button(next_url)}
             <form method="post" action="/login">
@@ -86,7 +104,23 @@ def login_form(error: str = "", email: str = "", next_url: str = "") -> str:
             <p style="text-align:center;margin-top:12px;font-size:14px;">
                 <a href="/forgot-password" style="color:var(--ink-muted);text-decoration:none;">Forgot your password?</a>
             </p>
-            <p style="text-align:center;margin-top:8px;font-size:14px;color:var(--ink-muted);">
+            <div style="display:flex;align-items:center;gap:12px;margin:24px 0 20px;">
+                <div style="flex:1;height:1px;background:var(--border);"></div>
+                <span style="color:var(--ink-muted);font-size:13px;">or sign in with a magic link</span>
+                <div style="flex:1;height:1px;background:var(--border);"></div>
+            </div>
+            <form method="post" action="/auth/magic">
+                {next_hidden}
+                <div class="form-group">
+                    <input type="email" name="email" class="form-input" required
+                           value="{escape(email or magic_email)}" placeholder="you@example.com" autocomplete="email">
+                </div>
+                <button type="submit" class="btn" style="width:100%;justify-content:center;padding:12px;
+                    background:transparent;border:1px solid var(--accent);color:var(--accent);font-weight:600;">
+                    Send me a link
+                </button>
+            </form>
+            <p style="text-align:center;margin-top:16px;font-size:14px;color:var(--ink-muted);">
                 Don't have an account? <a href="/signup{next_qs}" style="color:var(--terracotta);font-weight:600;">Sign up</a>
             </p>
         </div>
@@ -99,7 +133,12 @@ async def login_get(request: Request):
     if request.state.user:
         return RedirectResponse(url="/dashboard", status_code=303)
     next_url = _safe_next(request.query_params.get("next", ""))
-    return HTMLResponse(page_shell("Log In", login_form(next_url=next_url), user=request.state.user))
+    error = request.query_params.get("error", "")
+    magic_sent = request.query_params.get("magic_sent") == "1"
+    magic_email = request.query_params.get("email", "")
+    return HTMLResponse(page_shell("Log In", login_form(
+        error=error, next_url=next_url, magic_sent=magic_sent, magic_email=magic_email
+    ), user=request.state.user))
 
 
 @router.post("/login", response_class=HTMLResponse)
@@ -121,14 +160,95 @@ async def login_post(request: Request, email: str = Form(""), password: str = Fo
             "This account uses GitHub login. Click 'Sign in with GitHub' above.", email, next_url=next_url),
             user=request.state.user))
 
+    if user['password_hash'] == 'MAGIC_LINK_NO_PASSWORD':
+        return HTMLResponse(page_shell("Log In", login_form(
+            "This account uses magic link login. Use the 'Send me a link' option below.", email, next_url=next_url),
+            user=request.state.user))
+
     if not verify_password(password, user['password_hash']):
         return HTMLResponse(page_shell("Log In", login_form("Invalid email or password.", email, next_url=next_url),
                                        user=request.state.user))
 
     token = await create_user_session(db, user['id'])
+    await track_event(db, 'login', user_id=user['id'])
     redirect_to = next_url or "/dashboard"
     response = RedirectResponse(url=redirect_to, status_code=303)
     response.set_cookie(key="indiestack_session", value=token, httponly=True, samesite="lax", max_age=30*86400, secure=True)
+    return response
+
+
+# ── Magic Link Auth ──────────────────────────────────────────────────────
+
+@router.post("/auth/magic")
+async def request_magic_link(request: Request):
+    form = await request.form()
+    email = form.get("email", "").strip().lower()
+    next_url = form.get("next", "/dashboard")
+
+    if not email or "@" not in email:
+        return RedirectResponse(f"/login?error=invalid_email&next={next_url}", status_code=303)
+
+    db = request.state.db
+    token = await create_magic_link_token(db, email)
+
+    from indiestack.config import BASE_URL
+    link = f"{BASE_URL}/auth/magic/verify?token={token}&next={next_url}"
+    await send_email(
+        to=email,
+        subject="Your IndieStack login link",
+        html_body=f'''<div style="font-family:sans-serif;font-size:15px;line-height:1.6;">
+            <p>Here's your login link:</p>
+            <p><a href="{link}" style="display:inline-block;padding:12px 24px;background:#00D4F5;color:#0F1D30;border-radius:8px;font-weight:600;text-decoration:none;">Sign in to IndieStack</a></p>
+            <p style="color:#666;font-size:13px;">This link expires in 15 minutes. If you didn't request this, just ignore it.</p>
+        </div>'''
+    )
+
+    return RedirectResponse(f"/login?magic_sent=1&email={email}&next={next_url}", status_code=303)
+
+
+@router.get("/auth/magic/verify")
+async def verify_magic_link(request: Request):
+    token = request.query_params.get("token", "")
+    next_url = _safe_next(request.query_params.get("next", "")) or "/dashboard"
+
+    db = request.state.db
+    email = await validate_magic_link_token(db, token)
+
+    if not email:
+        return RedirectResponse("/login?error=invalid_token", status_code=303)
+
+    # Find or create user
+    cursor = await db.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email,))
+    user = await cursor.fetchone()
+
+    if not user:
+        # Create new user — no password needed
+        from indiestack.db import ensure_referral_code
+        await db.execute(
+            "INSERT INTO users (email, password_hash, name, email_verified) VALUES (?, ?, ?, 1)",
+            (email, 'MAGIC_LINK_NO_PASSWORD', email.split('@')[0])
+        )
+        await db.commit()
+        cursor = await db.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email,))
+        user = await cursor.fetchone()
+        user_id = user['id'] if isinstance(user, dict) else user[0]
+        await ensure_referral_code(db, user_id)
+    else:
+        user_id = user['id'] if isinstance(user, dict) else user[0]
+        # Auto-verify email if not already
+        if not (user['email_verified'] if isinstance(user, dict) else user[6]):
+            await db.execute("UPDATE users SET email_verified = 1 WHERE id = ?", (user_id,))
+            await db.commit()
+
+    # Create session
+    session_token = await create_user_session(db, user_id)
+
+    response = RedirectResponse(next_url, status_code=303)
+    response.set_cookie(
+        "indiestack_session", session_token,
+        httponly=True, secure=True, samesite="lax",
+        max_age=30 * 86400
+    )
     return response
 
 
@@ -144,9 +264,10 @@ def signup_form(error: str = "", values: dict = None, next_url: str = "", ref: s
     return f"""
     <div style="display:flex;justify-content:center;align-items:center;min-height:60vh;">
         <div class="card" style="max-width:420px;width:100%;">
-            <h1 style="font-family:var(--font-display);font-size:28px;text-align:center;margin-bottom:24px;color:var(--ink);">
-                Create Account
+            <h1 style="font-family:var(--font-display);font-size:28px;text-align:center;margin-bottom:8px;color:var(--ink);">
+                Join IndieStack
             </h1>
+            <p style="text-align:center;color:var(--ink-muted);font-size:14px;margin-bottom:24px;">Search, discover, and get AI recommendations for 3,000+ indie creations.</p>
             {alert}
             {_github_button(next_url)}
             <form method="post" action="/signup">
@@ -192,6 +313,9 @@ def signup_form(error: str = "", values: dict = None, next_url: str = "", ref: s
             <p style="text-align:center;margin-top:16px;font-size:14px;color:var(--ink-muted);">
                 Already have an account? <a href="/login{next_qs}" style="color:var(--terracotta);font-weight:600;">Log in</a>
             </p>
+            <p style="text-align:center;margin-top:8px;font-size:13px;color:var(--ink-muted);">
+                Or <a href="/login{next_qs}" style="color:var(--accent);">sign in with a magic link</a> — no password needed
+            </p>
         </div>
     </div>
     """
@@ -236,7 +360,7 @@ async def signup_post(
     # Check if email already exists
     existing = await get_user_by_email(db, email)
     if existing:
-        return HTMLResponse(page_shell("Sign Up", signup_form("An account with that email already exists.", values, next_url=next_url, ref=ref),
+        return HTMLResponse(page_shell("Sign Up", signup_form("If this email is already registered, please log in instead.", values, next_url=next_url, ref=ref),
                                        user=request.state.user))
 
     role = 'maker' if is_maker else 'buyer'
@@ -273,6 +397,7 @@ async def signup_post(
     # Send welcome email
     await send_email(email, "Welcome to IndieStack", welcome_signup_html())
 
+    await track_event(db, 'signup', user_id=user_id)
     token = await create_user_session(db, user_id)
     redirect_to = next_url or "/dashboard"
     response = RedirectResponse(url=redirect_to, status_code=303)
@@ -421,6 +546,9 @@ async def reset_password_submit(request: Request):
     new_hash = hash_password(password)
     await update_user(db, user_id, password_hash=new_hash)
     await mark_reset_token_used(db, token)
+    # Invalidate all existing sessions so stolen tokens can't survive a password reset
+    await db.execute("DELETE FROM sessions WHERE user_id = ?", (user_id,))
+    await db.commit()
 
     body = '''
     <div style="max-width:420px;margin:60px auto;padding:0 20px;text-align:center;">

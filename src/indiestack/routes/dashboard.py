@@ -2547,9 +2547,8 @@ async def developer_create_key(request: Request):
     name = str(form.get("name", "Default")).strip()[:50] or "Default"
 
     db = request.state.db
-    # Max keys: 1 for free users, 5 for Pro
-    is_pro = await check_pro(db, user['id'])
-    max_keys = 5 if is_pro else 1
+    # Max 1 active key per user — rate limit is per-user so multiple keys don't help
+    max_keys = 1
     keys = await get_api_keys_for_user(db, user['id'])
     active = [k for k in keys if k['is_active']]
     if len(active) >= max_keys:

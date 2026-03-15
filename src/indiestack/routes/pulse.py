@@ -1,4 +1,4 @@
-"""AI Pulse — now part of Demand Signals Pro."""
+"""AI Pulse — public real-time feed of AI agent activity across IndieStack."""
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse

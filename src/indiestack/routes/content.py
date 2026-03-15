@@ -501,13 +501,13 @@ async def blog_index(request: Request):
 
     body = f"""
     <div {_BLOG_CONTAINER}>
-        <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Blog</h1>
-        <p style="color:var(--ink-muted);font-size:16px;margin-bottom:40px;">Thoughts on indie creations, AI workflows, and building in public.</p>
+        <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">IndieStack Blog</h1>
+        <p style="color:var(--ink-muted);font-size:16px;margin-bottom:40px;">Indie tools, AI agent workflows, and building in public.</p>
         {cards}
     </div>
     """
     return HTMLResponse(page_shell(
-        "Blog", body,
+        "IndieStack Blog — Indie Tools, AI Agents & Building in Public", body,
         user=request.state.user,
         description="Thoughts on indie creations, AI workflows, and the future of software discovery.",
         canonical="/blog",

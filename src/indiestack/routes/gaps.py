@@ -545,16 +545,11 @@ async def demand_pro(request: Request):
     user = request.state.user
     db = request.state.db
 
-    # Check if user has active demand_pro (or pro) subscription
+    # Check if user has active Pro subscription
     is_pro = False
     if user:
-        cursor = await db.execute(
-            "SELECT id FROM subscriptions WHERE user_id = ? AND status = 'active' AND plan IN ('demand_pro', 'pro')",
-            (user['id'],),
-        )
-        sub = await cursor.fetchone()
-        if sub:
-            is_pro = True
+        from indiestack.db import check_pro
+        is_pro = await check_pro(db, user['id'])
 
     if not is_pro:
         # Show upgrade CTA page
@@ -600,54 +595,26 @@ async def demand_pro(request: Request):
         <div class="container" style="max-width:480px;text-align:center;">
             <div style="background:var(--bg-card);border:2px solid var(--accent);border-radius:16px;padding:40px 32px;">
                 <p style="font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">
-                    Demand Signals Pro
+                    Part of IndieStack Pro
                 </p>
                 <div style="font-family:var(--heading-font, var(--font-display));font-size:48px;font-weight:700;color:var(--ink);margin-bottom:4px;">
-                    $15<span style="font-size:18px;color:var(--ink-muted);font-weight:400;">/month</span>
+                    $19<span style="font-size:18px;color:var(--ink-muted);font-weight:400;">/month</span>
                 </div>
                 <p style="font-size:14px;color:var(--ink-muted);margin-bottom:24px;">
-                    Cancel anytime. Data updates in real-time.
+                    Demand signals + agent citations + priority API access. One subscription, everything unlocked.
                 </p>
-                <button onclick="subscribeDemandPro()" id="subscribe-btn"
+                <a href="/pricing"
                     style="display:inline-block;padding:14px 40px;background:var(--accent);color:white;
                            border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;
-                           transition:opacity 0.2s;width:100%;">
-                    Subscribe Now
-                </button>
-                <p id="subscribe-error" style="font-size:13px;color:var(--error-text, #EF4444);margin-top:12px;display:none;"></p>
+                           transition:opacity 0.2s;width:100%;text-decoration:none;box-sizing:border-box;">
+                    View Pricing
+                </a>
             </div>
             <p style="font-size:13px;color:var(--ink-muted);margin-top:16px;">
                 Want the basics? Check out the free <a href="/gaps" style="color:var(--accent);text-decoration:underline;">Demand Bounty Board</a>.
             </p>
         </div>
     </section>
-
-    <script>
-    async function subscribeDemandPro() {
-        const btn = document.getElementById('subscribe-btn');
-        const err = document.getElementById('subscribe-error');
-        btn.disabled = true;
-        btn.textContent = 'Loading...';
-        err.style.display = 'none';
-        try {
-            const res = await fetch('/api/subscribe/demand-pro', {method: 'POST'});
-            const data = await res.json();
-            if (data.checkout_url) {
-                window.location.href = data.checkout_url;
-            } else {
-                err.textContent = data.error || 'Something went wrong';
-                err.style.display = 'block';
-                btn.disabled = false;
-                btn.textContent = 'Subscribe Now';
-            }
-        } catch (e) {
-            err.textContent = 'Network error. Please try again.';
-            err.style.display = 'block';
-            btn.disabled = false;
-            btn.textContent = 'Subscribe Now';
-        }
-    }
-    </script>
 '''
 
         return HTMLResponse(page_shell(

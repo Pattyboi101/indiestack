@@ -27,12 +27,13 @@ See `VISION.md` for the full picture of where IndieStack is going.
 - [x] README enricher — auto-extracted install commands, env vars, frameworks for 1,200+ tools
 - [x] Pair generator — 1,279 compatibility pairs
 - [x] Agentic Package Manager metadata — api_type, auth_method, sdk_packages, env_vars on every tool
-- [x] MCP Server v1.3.1 — scan_project, report_compatibility, check_health (15 tools total)
+- [x] MCP Server v1.4.0 + CLI — 15 tools, terminal CLI, Pro MCP enrichment
+- [x] 3-tier rate limiting — keyless 15/day, free key 50/day, Pro key 1,000/day
+- [x] Pro subscription live — $19/month or $99/year Founder tier
 - [x] Per-tool Agent Cards (`/cards/{slug}.json`)
-- [x] Demand Signals Pro ($15/month) — clusters, trends, source breakdown, JSON export
+- [x] Demand Signals Pro — clusters, trends, source breakdown, JSON export
 - [x] GEO lead magnet (`/geo`) — generate llms.txt + Agent Card from any URL
-- [x] Pixel avatars — 7x7, 16 colors, admin approval
-- [x] Pixel art tool icons — 6x6, 8 colors, maker-editable on dashboard
+- [x] Pixel art icons — 7x7 grid, 16-color palette, maker-editable on dashboard
 
 ---
 

@@ -591,6 +591,97 @@ def ego_ping_html(*, maker_name: str, tool_name: str, tool_slug: str,
     """
 
 
+def citation_alert_html(*, maker_name: str, tool_name: str, tool_slug: str,
+                         citation_count: int, agent_names: list[str],
+                         is_pro: bool, sample_context: str = "") -> str:
+    """Email alerting a maker that AI agents cited their tool this week."""
+    maker_name = escape(maker_name)
+    tool_name = escape(tool_name)
+    sample_context = escape(sample_context)
+
+    if citation_count == 1:
+        headline = f"AI agents recommended {tool_name} 1 time this week"
+    else:
+        headline = f"AI agents recommended {tool_name} {citation_count} times this week"
+
+    agents_display = ", ".join(escape(a) for a in agent_names) if agent_names else "Unknown agents"
+
+    # Context section — the conversion mechanism
+    if is_pro and sample_context:
+        context_section = f"""
+    <div style="margin:28px 0;padding:20px;background:#F0F7FA;border-left:4px solid #00D4F5;border-radius:8px;">
+        <p style="font-size:12px;font-weight:700;color:#1A2D4A;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px;">
+            Sample Citation Context
+        </p>
+        <p style="color:#1A2D4A;font-size:14px;line-height:1.6;margin:0;font-style:italic;">
+            &ldquo;{sample_context}&rdquo;
+        </p>
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+        <a href="{BASE_URL}/dashboard" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            View All Citations
+        </a>
+    </div>"""
+    elif not is_pro:
+        context_section = f"""
+    <div style="margin:28px 0;padding:20px;background:#1A2D4A;border-radius:12px;text-align:center;">
+        <p style="color:#00D4F5;font-size:14px;font-weight:700;margin:0 0 4px;">
+            What did the agents say about your tool?
+        </p>
+        <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0;">
+            Upgrade to Pro to see the full context of every AI citation.
+        </p>
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+        <a href="{BASE_URL}/pricing" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            Upgrade to Pro &mdash; $19/mo
+        </a>
+    </div>"""
+    else:
+        # Pro but no sample context
+        context_section = f"""
+    <div style="text-align:center;margin-top:24px;">
+        <a href="{BASE_URL}/dashboard" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            View Dashboard
+        </a>
+    </div>"""
+
+    base = BASE_URL
+
+    return f"""
+    <div style="text-align:center;margin-bottom:24px;">
+        <div style="display:inline-block;background:#1A2D4A;color:#00D4F5;font-size:11px;font-weight:700;
+                    text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:999px;">
+            AI Citation Alert
+        </div>
+    </div>
+    <h2 style="font-family:serif;font-size:22px;color:#1A2D4A;margin-bottom:4px;text-align:center;">
+        {tool_name}
+    </h2>
+    <p style="color:#6B6560;font-size:15px;text-align:center;margin-bottom:24px;">
+        Hi {maker_name} &mdash; {headline}
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0;">
+        <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+            <div style="font-size:28px;font-weight:bold;color:#1A2D4A;">{citation_count}</div>
+            <div style="font-size:12px;color:#6B6560;margin-top:4px;">Citations</div>
+        </div>
+        <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+            <div style="font-size:16px;font-weight:bold;color:#00D4F5;line-height:1.4;">{agents_display}</div>
+            <div style="font-size:12px;color:#6B6560;margin-top:4px;">Citing Agents</div>
+        </div>
+    </div>
+    {context_section}
+    <p style="color:#9C958E;font-size:12px;text-align:center;margin-top:24px;">
+        You're receiving this because {tool_name} is listed on
+        <a href="{base}/tool/{tool_slug}" style="color:#00D4F5;">IndieStack</a>.
+    </p>
+    """
+
+
 def boost_expired_html(*, tool_name: str, tool_slug: str, views: int, upvotes: int, wishlists: int) -> str:
     """Email sent when a boost expires, highlighting the value delivered."""
     tool_name = escape(tool_name)

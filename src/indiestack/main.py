@@ -122,7 +122,7 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
     return False
 
 # ── API Key Daily Rate Limiting ───────────────────────────────────────────
-_api_key_daily: dict[int, dict] = {}  # {key_id: {"date": "YYYY-MM-DD", "count": N}}
+_api_user_daily: dict[int, dict] = {}  # {user_id: {"date": "YYYY-MM-DD", "count": N}}
 _api_ip_daily: dict[str, dict] = {}  # {ip: {"date": "YYYY-MM-DD", "count": N}}
 
 API_DAILY_LIMITS = {
@@ -132,16 +132,20 @@ API_DAILY_LIMITS = {
 API_KEYLESS_DAILY_LIMIT = 15
 
 
-def _check_api_key_rate_limit(key_id: int, tier: str) -> bool:
-    """Returns True if API key has exceeded its daily limit."""
+def _check_api_key_rate_limit(user_id: int, tier: str) -> bool:
+    """Returns True if user has exceeded their daily API limit.
+
+    Rate-limits by user_id (not key_id) so revoking and regenerating
+    keys cannot bypass the daily cap.
+    """
     from datetime import date
     today = date.today().isoformat()
-    entry = _api_key_daily.get(key_id)
+    entry = _api_user_daily.get(user_id)
     if not entry or entry["date"] != today:
         # Clean up stale entries from previous days (prevent memory leak)
-        if len(_api_key_daily) > 100:
-            _api_key_daily.clear()
-        _api_key_daily[key_id] = {"date": today, "count": 1}
+        if len(_api_user_daily) > 100:
+            _api_user_daily.clear()
+        _api_user_daily[user_id] = {"date": today, "count": 1}
         return False
     limit = API_DAILY_LIMITS.get(tier, 50)
     if entry["count"] >= limit:
@@ -230,6 +234,7 @@ from indiestack.routes import api_docs
 from indiestack.routes import geo
 from indiestack.routes import changelog
 from indiestack.routes import guidelines
+from indiestack.routes import audit
 
 
 async def _periodic_session_cleanup():
@@ -712,8 +717,8 @@ async def db_middleware(request: Request, call_next):
                 api_key_row = await db.get_api_key_by_key(request.state.db, raw_key)
                 if api_key_row:
                     request.state.api_key = api_key_row
-                    # Check daily rate limit for this API key
-                    if _check_api_key_rate_limit(api_key_row["id"], api_key_row.get("tier", "free")):
+                    # Check daily rate limit by user (not key — prevents revoke+regenerate bypass)
+                    if _check_api_key_rate_limit(api_key_row["user_id"], api_key_row.get("tier", "free")):
                         return JSONResponse(
                             {"error": "Daily API limit exceeded. Upgrade to Pro for higher limits.",
                              "upgrade_url": "https://indiestack.ai/pricing"},
@@ -2613,7 +2618,8 @@ async def milestone_card_svg(request: Request, slug: str, type: str = "first-too
     finally:
         await d.close()
 
-    tool_name = tool['name'] if tool else slug.replace('-', ' ').title()
+    from html import escape as _esc
+    tool_name = _esc(tool['name']) if tool else _esc(slug.replace('-', ' ').title())
 
     # Milestone configs
     milestones = {
@@ -3064,7 +3070,7 @@ async def subscribe_demand_pro(request: Request):
         )
         return JSONResponse({"checkout_url": checkout.url})
     except Exception as e:
-        logger.error(f"Stripe checkout error: {e}")
+        _logger.error(f"Stripe checkout error: {e}")
         return JSONResponse({"error": "Payment service error"}, status_code=500)
 
 
@@ -3115,7 +3121,7 @@ async def subscribe_pro(request: Request):
         )
         return JSONResponse({"checkout_url": checkout.url})
     except Exception as e:
-        logger.error(f"Stripe checkout error: {e}")
+        _logger.error(f"Stripe checkout error: {e}")
         return JSONResponse({"error": "Payment service error"}, status_code=500)
 
 
@@ -3400,7 +3406,8 @@ async def magic_claim(request: Request):
 
     # User not logged in — show a simple signup form pre-filled with the token
     # They just need name + email + password, then we auto-claim
-    tool_name_esc = tool['name'].replace("'", "\\'").replace('"', '&quot;')
+    from html import escape as _h_esc
+    tool_name_esc = _h_esc(tool['name'])
     body = f"""
     <div class="container" style="padding:64px 24px;max-width:480px;">
         <div style="text-align:center;margin-bottom:32px;">
@@ -3485,19 +3492,19 @@ async def magic_claim_complete(request: Request):
         body = f"""
         <div class="container" style="padding:64px 24px;max-width:480px;">
             <div style="text-align:center;margin-bottom:32px;">
-                <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);">Claim {tool['name']}</h1>
+                <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);">Claim {_h_esc(tool['name'])}</h1>
             </div>
             <div class="card" style="padding:24px;">
                 {error_html}
                 <form method="POST" action="/claim/magic/complete">
-                    <input type="hidden" name="token" value="{token}">
+                    <input type="hidden" name="token" value="{_h_esc(token)}">
                     <div class="form-group">
                         <label>Your Name</label>
-                        <input type="text" name="name" class="form-input" required value="{name}">
+                        <input type="text" name="name" class="form-input" required value="{_h_esc(name)}">
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" class="form-input" required value="{email}">
+                        <input type="email" name="email" class="form-input" required value="{_h_esc(email)}">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
@@ -3594,7 +3601,8 @@ async def send_weekly_digest(request: Request):
 async def api_follow_through(request: Request, days: int = 30):
     """Follow-through rate: MCP search → detail view conversion."""
     admin_key = request.query_params.get("admin_key", "")
-    if admin_key != _os.environ.get("ADMIN_SECRET", ""):
+    import secrets as _secrets_mod
+    if not _secrets_mod.compare_digest(admin_key, _os.environ.get("ADMIN_SECRET", "")):
         return JSONResponse({"error": "Unauthorized"}, status_code=401)
     d = request.state.db
     stats = await db.get_follow_through_rate(d, min(days, 365))
@@ -3988,3 +3996,4 @@ app.include_router(api_docs.router)
 app.include_router(geo.router)
 app.include_router(changelog.router)
 app.include_router(guidelines.router)
+app.include_router(audit.router)
