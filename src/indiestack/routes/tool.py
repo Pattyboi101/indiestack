@@ -45,6 +45,7 @@ from indiestack.db import (
     record_tool_pair,
     get_tool_success_rate,
     get_tool_recommendation_count,
+    get_tool_total_citations,
 )
 
 router = APIRouter()
@@ -174,14 +175,18 @@ async def tool_detail(request: Request, slug: str):
     cat_slug_val = str(tool.get('category_slug', ''))
     token_cost = CATEGORY_TOKEN_COSTS.get(cat_slug_val, 50_000)
     token_k = token_cost // 1000
+    # Citation count — use real agent_citations data (all-time)
+    citation_count = await get_tool_total_citations(db, tool_id)
     mcp_views = int(tool.get('mcp_view_count', 0))
+    # Use the higher of the two counts (citations are more accurate but mcp_views may be higher for older tools)
+    ai_rec_count = max(citation_count, mcp_views)
     mcp_badge = ''
-    if mcp_views > 0:
+    if ai_rec_count > 0:
         mcp_badge = f'''
-        <div style="margin-top:8px;padding:8px 16px;background:linear-gradient(135deg,var(--info-bg),var(--info-bg));border-radius:var(--radius-sm);
-                    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--info-text);border:1px solid var(--info-border);">
-            <span style="font-size:16px;">&#129302;</span>
-            Recommended by AI agents {mcp_views} time{'s' if mcp_views != 1 else ''}
+        <div style="margin-top:8px;padding:10px 16px;background:linear-gradient(135deg,var(--info-bg),var(--info-bg));border-radius:var(--radius-sm);
+                    display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--info-text);border:1px solid var(--info-border);font-weight:600;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Recommended by AI agents {ai_rec_count} time{'s' if ai_rec_count != 1 else ''}
         </div>'''
     outcome_badge = ''
     if success_rate['total'] > 0:
@@ -568,6 +573,8 @@ async def tool_detail(request: Request, slug: str):
         banners_html += '<div class="alert alert-success" style="margin-bottom:16px;">&#127881; You\'ve claimed this tool! You can now manage it from your <a href="/dashboard" style="font-weight:700;">dashboard</a>.</div>'
     elif request.query_params.get('claim') == 'sent' or request.query_params.get('claim_requested') == '1':
         banners_html += '<div class="alert alert-info" style="margin-bottom:16px;">&#9989; Claim request submitted! We\'ll review it and get back to you shortly.</div>'
+    if request.query_params.get('flagged') == '1':
+        banners_html += '<div class="alert alert-info" style="margin-bottom:16px;">Thanks for the report. We\'ll review it shortly.</div>'
     boosted_param = request.query_params.get('boosted')
     if boosted_param == '1':
         banners_html += '<div class="alert alert-success" style="margin-bottom:16px;">&#9733; <strong>Your tool is now boosted!</strong> It has priority placement for 30 days and will be featured in our weekly newsletter.</div>'
@@ -863,6 +870,58 @@ async def tool_detail(request: Request, slug: str):
         </div>
         '''
 
+    # Community flag / report section
+    safe_slug = escape(slug)
+    if user:
+        flag_trigger = (
+            '<button onclick="var p=document.getElementById(&#39;flag-panel&#39;);'
+            "p.style.display=p.style.display==='none'?'block':'none'\""
+            ' style="background:none;border:none;color:var(--ink-muted);font-size:13px;'
+            'cursor:pointer;text-decoration:underline;">Report a problem with this listing</button>'
+        )
+        flag_form = (
+            '<div id="flag-panel" style="display:none;margin-top:16px;text-align:left;'
+            'max-width:400px;margin-left:auto;margin-right:auto;background:var(--card-bg);'
+            'border:1px solid var(--border);border-radius:var(--radius);padding:20px;">'
+            f'<form method="POST" action="/tool/{safe_slug}/flag">'
+            '<p style="font-weight:600;font-size:14px;color:var(--ink);margin-bottom:12px;">'
+            "What's the issue?</p>"
+            '<label style="display:block;margin-bottom:8px;font-size:13px;color:var(--ink-light);cursor:pointer;">'
+            '<input type="radio" name="flag_type" value="abandoned" required style="margin-right:8px;">'
+            'Abandoned / Dead project</label>'
+            '<label style="display:block;margin-bottom:8px;font-size:13px;color:var(--ink-light);cursor:pointer;">'
+            '<input type="radio" name="flag_type" value="misleading" style="margin-right:8px;">'
+            'Misleading description</label>'
+            '<label style="display:block;margin-bottom:8px;font-size:13px;color:var(--ink-light);cursor:pointer;">'
+            '<input type="radio" name="flag_type" value="not_indie" style="margin-right:8px;">'
+            'Not indie-built (corporate / VC-backed)</label>'
+            '<label style="display:block;margin-bottom:8px;font-size:13px;color:var(--ink-light);cursor:pointer;">'
+            '<input type="radio" name="flag_type" value="spam" style="margin-right:8px;">'
+            'Spam</label>'
+            '<label style="display:block;margin-bottom:12px;font-size:13px;color:var(--ink-light);cursor:pointer;">'
+            '<input type="radio" name="flag_type" value="other" style="margin-right:8px;">'
+            'Other</label>'
+            '<textarea name="note" placeholder="Optional: anything else we should know?"'
+            ' style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);'
+            'font-size:13px;resize:vertical;height:60px;background:var(--card-bg);color:var(--ink);'
+            'font-family:var(--font-body);margin-bottom:12px;"></textarea>'
+            '<button type="submit" class="btn btn-secondary"'
+            ' style="width:100%;justify-content:center;font-size:13px;padding:8px;">Submit Report</button>'
+            '</form></div>'
+        )
+    else:
+        flag_trigger = (
+            '<span style="color:var(--ink-muted);font-size:13px;">Something wrong? '
+            f'<a href="/login?next=/tool/{safe_slug}" style="color:var(--ink-muted);text-decoration:underline;">'
+            'Log in</a> to report.</span>'
+        )
+        flag_form = ''
+
+    flag_section_html = (
+        '<div style="text-align:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);">'
+        f'{flag_trigger}{flag_form}</div>'
+    )
+
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:800px;">
         {breadcrumb_html}
@@ -939,6 +998,8 @@ async def tool_detail(request: Request, slug: str):
         {changelog_html}
 
         {reviews_html}
+
+        {flag_section_html}
     </div>
     """
     og_image_url = f"{BASE_URL}/logo.png"
@@ -978,6 +1039,32 @@ async def submit_review(
     )
 
     return RedirectResponse(f"/tool/{slug}", status_code=303)
+
+
+@router.post("/tool/{slug}/flag")
+async def flag_tool(
+    request: Request,
+    slug: str,
+    flag_type: str = Form(""),
+    note: str = Form(""),
+):
+    user = request.state.user
+    if not user:
+        return RedirectResponse(f"/login?next=/tool/{slug}", status_code=302)
+
+    db = request.state.db
+    tool = await get_tool_by_slug(db, slug)
+    if not tool:
+        return RedirectResponse("/", status_code=302)
+
+    valid_types = ('abandoned', 'misleading', 'not_indie', 'spam', 'other')
+    if flag_type not in valid_types:
+        return RedirectResponse(f"/tool/{slug}", status_code=303)
+
+    from indiestack.db import create_tool_flag
+    await create_tool_flag(db, tool['id'], user['id'], flag_type, note.strip()[:500])
+
+    return RedirectResponse(f"/tool/{slug}?flagged=1", status_code=303)
 
 
 @router.post("/api/react/{tool_id}")

@@ -1369,6 +1369,29 @@ async def init_db():
         except Exception:
             pass
 
+        # Migration: add quality_flags column to tools for pre-screening results
+        try:
+            await db.execute("ALTER TABLE tools ADD COLUMN quality_flags TEXT DEFAULT ''")
+            await db.commit()
+        except Exception:
+            pass
+
+        # Migration: create tool_flags table for community reports
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS tool_flags (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                tool_id INTEGER NOT NULL REFERENCES tools(id),
+                user_id INTEGER NOT NULL REFERENCES users(id),
+                flag_type TEXT NOT NULL CHECK(flag_type IN ('abandoned', 'misleading', 'not_indie', 'spam', 'other')),
+                note TEXT NOT NULL DEFAULT '',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(tool_id, user_id, flag_type)
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_flags_tool ON tool_flags(tool_id)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_flags_user ON tool_flags(user_id)")
+        await db.commit()
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
@@ -2215,6 +2238,11 @@ async def log_agent_citation(db: aiosqlite.Connection, tool_id: int, agent_name:
         (tool_id, agent_name, context[:200])
     )
     await db.commit()
+    # Check citation milestones in background (non-blocking)
+    try:
+        await check_citation_milestones(db, tool_id)
+    except Exception:
+        pass
 
 
 async def log_agent_citations_bulk(db: aiosqlite.Connection, tool_ids: list[int], agent_name: str = "unknown"):
@@ -2226,6 +2254,86 @@ async def log_agent_citations_bulk(db: aiosqlite.Connection, tool_ids: list[int]
         [(tid, agent_name) for tid in tool_ids]
     )
     await db.commit()
+    # Check citation milestones for each tool (non-blocking)
+    for tid in tool_ids:
+        try:
+            await check_citation_milestones(db, tid)
+        except Exception:
+            pass
+
+
+async def get_tool_total_citations(db: aiosqlite.Connection, tool_id: int) -> int:
+    """Get all-time citation count for a single tool."""
+    cursor = await db.execute(
+        "SELECT COUNT(*) as cnt FROM agent_citations WHERE tool_id = ?",
+        (tool_id,)
+    )
+    row = await cursor.fetchone()
+    return row['cnt'] if row else 0
+
+
+async def check_citation_milestones(db: aiosqlite.Connection, tool_id: int):
+    """Check if a tool has crossed citation milestones (10, 25, 50, 100, 250, 500, 1000).
+
+    Creates a notification and sends an email for significant milestones.
+    Uses the milestones table to avoid duplicate notifications.
+    """
+    CITATION_MILESTONES = [10, 25, 50, 100, 250, 500, 1000]
+    EMAIL_MILESTONES = {50, 100, 500, 1000}  # Only email for big ones
+
+    # Get total citation count
+    total = await get_tool_total_citations(db, tool_id)
+    if total < CITATION_MILESTONES[0]:
+        return
+
+    # Find the tool's maker and user
+    cursor = await db.execute("""
+        SELECT t.name, t.slug, t.maker_id, u.id as user_id, u.email,
+               m.name as maker_name
+        FROM tools t
+        JOIN makers m ON m.id = t.maker_id
+        JOIN users u ON u.maker_id = m.id
+        WHERE t.id = ?
+    """, (tool_id,))
+    row = await cursor.fetchone()
+    if not row:
+        return
+
+    user_id = row['user_id']
+    tool_name = row['name']
+    tool_slug = row['slug']
+    maker_name = row['maker_name']
+    email = row['email']
+
+    for milestone in CITATION_MILESTONES:
+        if total >= milestone:
+            milestone_type = f'citations-{milestone}'
+            awarded = await _award_milestone(db, user_id, tool_id, milestone_type)
+            if awarded:
+                # Create in-app notification
+                await create_notification(
+                    db, user_id, 'milestone',
+                    f'{tool_name} has been recommended by AI agents {milestone} times!',
+                    f'/tool/{tool_slug}'
+                )
+                # Send email for significant milestones
+                if milestone in EMAIL_MILESTONES and email:
+                    try:
+                        from indiestack.email import send_email, citation_milestone_html
+                        html = citation_milestone_html(
+                            maker_name=maker_name,
+                            tool_name=tool_name,
+                            tool_slug=tool_slug,
+                            milestone=milestone,
+                            total=total,
+                        )
+                        await send_email(
+                            email,
+                            f'{tool_name} hit {milestone} AI recommendations!',
+                            html,
+                        )
+                    except Exception:
+                        pass
 
 
 async def get_citation_counts_bulk(db: aiosqlite.Connection, tool_ids: list[int], days: int = 7) -> dict:
@@ -5056,7 +5164,9 @@ async def get_makers_for_ego_ping(db) -> list[dict]:
              AND created_at > datetime('now', '-7 days')) as weekly_clicks,
             (SELECT COUNT(*) FROM maker_updates WHERE tool_id = t.id) as changelog_count,
             (SELECT COUNT(*) FROM maker_updates WHERE tool_id = t.id
-             AND created_at > datetime('now', '-14 days')) as recent_updates
+             AND created_at > datetime('now', '-14 days')) as recent_updates,
+            (SELECT COUNT(*) FROM agent_citations WHERE tool_id = t.id
+             AND created_at > datetime('now', '-7 days')) as weekly_citations
         FROM makers m
         JOIN users u ON u.maker_id = m.id
         JOIN tools t ON t.maker_id = m.id AND t.status = 'approved'
@@ -6104,3 +6214,197 @@ def _quality_tips(missing: list, outcome_count: int) -> list[str]:
     if outcome_count == 0:
         tips.append('No outcome data yet — agents will report success/failure as they recommend your tool')
     return tips[:3]  # Top 3 most impactful
+
+
+async def get_batch_success_rates(db: aiosqlite.Connection, tool_slugs: list[str]) -> dict[str, dict]:
+    """Get success rates for multiple tools in one query. Returns {slug: {success, fail, total, rate}}."""
+    if not tool_slugs:
+        return {}
+    placeholders = ",".join("?" for _ in tool_slugs)
+    cursor = await db.execute(
+        f"SELECT tool_slug, success, COUNT(*) as cnt FROM agent_actions WHERE tool_slug IN ({placeholders}) AND action = 'report_outcome' GROUP BY tool_slug, success",
+        tool_slugs,
+    )
+    rows = await cursor.fetchall()
+    result: dict[str, dict] = {}
+    for r in rows:
+        slug = r['tool_slug']
+        if slug not in result:
+            result[slug] = {"success": 0, "fail": 0, "total": 0, "rate": 0}
+        if r['success'] == 1:
+            result[slug]["success"] += r['cnt']
+        else:
+            result[slug]["fail"] += r['cnt']
+    for slug, data in result.items():
+        data["total"] = data["success"] + data["fail"]
+        data["rate"] = round(data["success"] / data["total"] * 100) if data["total"] else 0
+    return result
+
+
+async def get_outcome_stats(db: aiosqlite.Connection) -> dict:
+    """Get aggregate outcome report statistics for the admin trust layer dashboard."""
+    # Total outcomes all time
+    cursor = await db.execute(
+        "SELECT COUNT(*) as cnt FROM agent_actions WHERE action = 'report_outcome'"
+    )
+    total_all = (await cursor.fetchone())['cnt']
+
+    # Total outcomes last 30 days
+    cursor = await db.execute(
+        "SELECT COUNT(*) as cnt FROM agent_actions WHERE action = 'report_outcome' AND created_at >= datetime('now', '-30 days')"
+    )
+    total_30d = (await cursor.fetchone())['cnt']
+
+    # Unique tools with outcome data
+    cursor = await db.execute(
+        "SELECT COUNT(DISTINCT tool_slug) as cnt FROM agent_actions WHERE action = 'report_outcome'"
+    )
+    unique_tools = (await cursor.fetchone())['cnt']
+
+    # Average success rate across all tools with data
+    cursor = await db.execute(
+        "SELECT tool_slug, SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as wins, COUNT(*) as total FROM agent_actions WHERE action = 'report_outcome' GROUP BY tool_slug"
+    )
+    tool_rows = await cursor.fetchall()
+    if tool_rows:
+        rates = [round(r['wins'] / r['total'] * 100) for r in tool_rows if r['total'] > 0]
+        avg_rate = round(sum(rates) / len(rates)) if rates else 0
+    else:
+        avg_rate = 0
+
+    # Top 10 most-reported tools with their success rates
+    cursor = await db.execute("""
+        SELECT aa.tool_slug, t.name,
+               SUM(CASE WHEN aa.success = 1 THEN 1 ELSE 0 END) as wins,
+               COUNT(*) as total
+        FROM agent_actions aa
+        LEFT JOIN tools t ON t.slug = aa.tool_slug
+        WHERE aa.action = 'report_outcome'
+        GROUP BY aa.tool_slug
+        ORDER BY total DESC
+        LIMIT 10
+    """)
+    top_tools = [dict(r) for r in await cursor.fetchall()]
+    for t in top_tools:
+        t['rate'] = round(t['wins'] / t['total'] * 100) if t['total'] > 0 else 0
+
+    return {
+        "total_all": total_all,
+        "total_30d": total_30d,
+        "unique_tools": unique_tools,
+        "avg_rate": avg_rate,
+        "top_tools": top_tools,
+    }
+
+
+# ── Community Flags ──────────────────────────────────────────────────────
+
+async def create_tool_flag(db: aiosqlite.Connection, tool_id: int, user_id: int,
+                           flag_type: str, note: str = '') -> bool:
+    """Create a community flag on a tool. Returns True if created, False if duplicate."""
+    try:
+        await db.execute(
+            "INSERT INTO tool_flags (tool_id, user_id, flag_type, note) VALUES (?, ?, ?, ?)",
+            (tool_id, user_id, flag_type, note),
+        )
+        await db.commit()
+        return True
+    except Exception:
+        return False
+
+
+async def get_flags_for_tool(db: aiosqlite.Connection, tool_id: int):
+    cursor = await db.execute(
+        """SELECT tf.*, u.name as user_name, u.email as user_email
+           FROM tool_flags tf JOIN users u ON tf.user_id = u.id
+           WHERE tf.tool_id = ? ORDER BY tf.created_at DESC""",
+        (tool_id,),
+    )
+    return await cursor.fetchall()
+
+
+async def get_flagged_tools(db: aiosqlite.Connection):
+    """Get tools with community flags, ordered by flag count."""
+    cursor = await db.execute(
+        """SELECT t.id, t.name, t.slug, t.status,
+                  COUNT(tf.id) as flag_count,
+                  GROUP_CONCAT(DISTINCT tf.flag_type) as flag_types
+           FROM tool_flags tf
+           JOIN tools t ON tf.tool_id = t.id
+           GROUP BY t.id
+           ORDER BY flag_count DESC"""
+    )
+    return await cursor.fetchall()
+
+
+async def get_pro_users_with_makers(db) -> list:
+    """Get all Pro users who have maker accounts, for weekly report emails."""
+    cursor = await db.execute("""
+        SELECT u.id as user_id, u.email, u.username, u.maker_id,
+               m.name as maker_name
+        FROM users u
+        JOIN subscriptions s ON s.user_id = u.id AND s.status = 'active'
+        LEFT JOIN makers m ON u.maker_id = m.id
+        WHERE u.email IS NOT NULL AND u.email != ''
+    """)
+    return [dict(r) for r in await cursor.fetchall()]
+
+
+async def get_weekly_citations_by_maker(db, maker_id: int) -> dict:
+    """Get citation stats for a maker over the past 7 days."""
+    # Total citations
+    cursor = await db.execute("""
+        SELECT COUNT(*) as total
+        FROM agent_citations ac
+        JOIN tools t ON ac.tool_id = t.id
+        WHERE t.maker_id = ? AND ac.created_at >= datetime('now', '-7 days')
+    """, (maker_id,))
+    total_row = await cursor.fetchone()
+    total = total_row['total'] if total_row else 0
+
+    # Top cited tool
+    cursor = await db.execute("""
+        SELECT t.name, t.slug, COUNT(*) as cnt
+        FROM agent_citations ac
+        JOIN tools t ON ac.tool_id = t.id
+        WHERE t.maker_id = ? AND ac.created_at >= datetime('now', '-7 days')
+        GROUP BY t.id
+        ORDER BY cnt DESC
+        LIMIT 1
+    """, (maker_id,))
+    top_tool = await cursor.fetchone()
+
+    # Agent breakdown
+    cursor = await db.execute("""
+        SELECT COALESCE(ac.agent_name, 'unknown') as agent_name, COUNT(*) as count
+        FROM agent_citations ac
+        JOIN tools t ON ac.tool_id = t.id
+        WHERE t.maker_id = ? AND ac.created_at >= datetime('now', '-7 days')
+        GROUP BY ac.agent_name
+        ORDER BY count DESC
+    """, (maker_id,))
+    agents = [dict(r) for r in await cursor.fetchall()]
+
+    return {
+        'total': total,
+        'top_tool_name': top_tool['name'] if top_tool else None,
+        'top_tool_slug': top_tool['slug'] if top_tool else None,
+        'top_tool_citations': top_tool['cnt'] if top_tool else 0,
+        'agents': agents,
+    }
+
+
+async def get_new_tools_in_maker_categories(db, maker_id: int, days: int = 7) -> list:
+    """Get new tools added to the same categories as a maker's tools in the past N days."""
+    cursor = await db.execute("""
+        SELECT DISTINCT t2.name, t2.slug, t2.tagline
+        FROM tools t1
+        JOIN tools t2 ON t2.category_id = t1.category_id
+        WHERE t1.maker_id = ?
+          AND t2.maker_id != ?
+          AND t2.status = 'approved'
+          AND t2.created_at >= datetime('now', ?)
+        ORDER BY t2.created_at DESC
+        LIMIT 5
+    """, (maker_id, maker_id, f'-{days} days'))
+    return [dict(r) for r in await cursor.fetchall()]

@@ -6,7 +6,7 @@ from html import escape
 from urllib.parse import urlencode
 
 from indiestack.routes.components import page_shell, tool_card, search_filters_html, pagination_html, email_sticky_bar
-from indiestack.db import search_tools_advanced, get_all_categories, log_search, get_search_demand
+from indiestack.db import search_tools_advanced, get_all_categories, log_search, get_search_demand, get_batch_success_rates
 
 router = APIRouter()
 
@@ -143,6 +143,17 @@ async def search(request: Request):
         </div>
         """
         return HTMLResponse(page_shell(title="Search", body=body + email_sticky_bar(), user=user))
+
+    # Inject trust badge data (success rates from agent outcome reports)
+    try:
+        slugs = [str(r.get('slug', '')) for r in results if r.get('slug')]
+        sr_map = await get_batch_success_rates(db, slugs)
+        for r in results:
+            s = str(r.get('slug', ''))
+            if s in sr_map:
+                r['_success_rate'] = sr_map[s]
+    except Exception:
+        pass
 
     cards_html = "".join(tool_card(tool) for tool in results)
     result_label = f'{total} result{"s" if total != 1 else ""}'

@@ -682,6 +682,63 @@ def citation_alert_html(*, maker_name: str, tool_name: str, tool_slug: str,
     """
 
 
+def citation_milestone_html(*, maker_name: str, tool_name: str, tool_slug: str,
+                            milestone: int, total: int) -> str:
+    """Email sent when a tool crosses a citation milestone."""
+    maker_name = escape(maker_name)
+    tool_name = escape(tool_name)
+    base = BASE_URL
+
+    # Contextual message based on milestone size
+    if milestone >= 500:
+        congrats = "This is exceptional."
+        cta_text = "See which AI agents are recommending your tool"
+        cta_sub = "Upgrade to Pro to unlock agent breakdown, daily trends, and more."
+    elif milestone >= 100:
+        congrats = "Your tool is building serious momentum."
+        cta_text = "Want to know which AI agents recommend you?"
+        cta_sub = "Pro makers get full agent breakdowns and daily citation trends."
+    else:
+        congrats = "Your tool is getting noticed by AI agents."
+        cta_text = "Keep the momentum going"
+        cta_sub = "Post a changelog update to stay top-of-mind for AI agents."
+
+    return f"""
+    <div style="text-align:center;margin-bottom:24px;">
+        <div style="display:inline-block;background:#1A2D4A;color:#00D4F5;font-size:11px;font-weight:700;
+                    text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:999px;">
+            Milestone Reached
+        </div>
+    </div>
+    <h2 style="font-family:serif;font-size:22px;color:#1A2D4A;margin-bottom:4px;text-align:center;">
+        {tool_name}
+    </h2>
+    <p style="color:#6B6560;font-size:15px;text-align:center;margin-bottom:24px;">
+        Hi {maker_name} &mdash; {congrats}
+    </p>
+    <div style="text-align:center;padding:32px;background:#F0F7FA;border-radius:12px;margin:24px 0;">
+        <div style="font-size:48px;font-weight:bold;color:#1A2D4A;">{total}</div>
+        <div style="font-size:14px;color:#6B6560;margin-top:4px;">
+            times recommended by AI agents
+        </div>
+    </div>
+    <div style="margin:28px 0;padding:20px;background:#1A2D4A;border-radius:12px;text-align:center;">
+        <p style="color:#00D4F5;font-size:14px;font-weight:700;margin:0 0 4px;">{cta_text}</p>
+        <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0;">{cta_sub}</p>
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+        <a href="{base}/tool/{tool_slug}" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            View Your Listing
+        </a>
+    </div>
+    <p style="color:#9C958E;font-size:12px;text-align:center;margin-top:24px;">
+        You're receiving this because you have a tool on
+        <a href="{base}" style="color:#00D4F5;">IndieStack</a>.
+    </p>
+    """
+
+
 def boost_expired_html(*, tool_name: str, tool_slug: str, views: int, upvotes: int, wishlists: int) -> str:
     """Email sent when a boost expires, highlighting the value delivered."""
     tool_name = escape(tool_name)
@@ -755,6 +812,126 @@ def wishlist_update_html(user_name: str, tool_name: str, update_title: str, tool
         <p style="color:#8A8580;font-size:13px;text-align:center;">
             You're receiving this because you bookmarked {tool_name} on IndieStack.
         </p>
+    """)
+
+
+def pro_weekly_report_html(
+    *,
+    maker_name: str,
+    total_citations: int,
+    top_tool_name: str | None,
+    top_tool_slug: str | None,
+    top_tool_citations: int,
+    agent_breakdown: list[dict],
+    new_tools_in_categories: list[dict],
+    quality_score: int | None,
+) -> str:
+    """Weekly AI Report email for Pro subscribers — citation stats, top tool, new competitors."""
+    maker_name = escape(maker_name)
+    base = BASE_URL
+
+    # Top tool section
+    top_tool_html = ""
+    if top_tool_name and top_tool_citations > 0:
+        top_tool_html = f"""
+    <div style="margin:24px 0;padding:20px;background:#F0F7FA;border-left:4px solid #00D4F5;border-radius:8px;">
+        <p style="font-size:12px;font-weight:700;color:#1A2D4A;text-transform:uppercase;letter-spacing:1px;margin:0 0 8px;">
+            Top Cited Tool
+        </p>
+        <p style="font-size:18px;font-weight:700;color:#1A2D4A;margin:0 0 4px;">
+            <a href="{base}/tool/{escape(top_tool_slug or '')}" style="color:#1A2D4A;text-decoration:none;">{escape(top_tool_name)}</a>
+        </p>
+        <p style="font-size:14px;color:#6B6560;margin:0;">
+            {top_tool_citations} AI recommendation{"s" if top_tool_citations != 1 else ""} this week
+        </p>
+    </div>"""
+
+    # Agent breakdown
+    agent_html = ""
+    if agent_breakdown:
+        agent_rows = ""
+        for ab in agent_breakdown:
+            label = {
+                "mcp": "MCP Server (Claude, Cursor, etc.)",
+                "api": "REST API",
+                "web": "Web Search",
+            }.get(ab.get("agent_name", ""), ab.get("agent_name", "Unknown"))
+            agent_rows += f"""
+        <tr>
+            <td style="padding:8px 0;font-size:14px;color:#1A2D4A;">{escape(label)}</td>
+            <td style="padding:8px 0;font-size:14px;color:#1A2D4A;text-align:right;font-weight:600;">{ab['count']}</td>
+        </tr>"""
+        agent_html = f"""
+    <div style="margin:24px 0;">
+        <p style="font-size:12px;font-weight:700;color:#1A2D4A;text-transform:uppercase;letter-spacing:1px;margin:0 0 12px;">
+            Recommendation Sources
+        </p>
+        <table style="width:100%;border-collapse:collapse;">
+            {agent_rows}
+        </table>
+    </div>"""
+
+    # New tools in your categories
+    new_tools_html = ""
+    if new_tools_in_categories:
+        items = ""
+        for nt in new_tools_in_categories[:5]:
+            items += f"""
+        <li style="margin-bottom:8px;">
+            <a href="{base}/tool/{escape(nt['slug'])}" style="color:#00D4F5;font-weight:600;text-decoration:none;">{escape(nt['name'])}</a>
+            <span style="color:#6B6560;font-size:13px;"> &mdash; {escape(nt.get('tagline', ''))}</span>
+        </li>"""
+        new_tools_html = f"""
+    <div style="margin:24px 0;">
+        <p style="font-size:12px;font-weight:700;color:#1A2D4A;text-transform:uppercase;letter-spacing:1px;margin:0 0 12px;">
+            New in Your Categories
+        </p>
+        <ul style="padding-left:20px;margin:0;list-style:disc;">
+            {items}
+        </ul>
+    </div>"""
+
+    # Quality score nudge
+    quality_html = ""
+    if quality_score is not None and quality_score < 70:
+        quality_html = f"""
+    <div style="margin:24px 0;padding:16px 20px;background:#FEF3C7;border-radius:8px;">
+        <p style="font-size:14px;color:#92400E;margin:0;">
+            Your listing quality score is <strong>{quality_score}/100</strong>.
+            <a href="{base}/dashboard" style="color:#92400E;font-weight:600;">Improve it</a> to rank higher in AI recommendations.
+        </p>
+    </div>"""
+
+    return _email_wrapper(f"""
+    <div style="text-align:center;margin-bottom:24px;">
+        <div style="display:inline-block;background:#1A2D4A;color:#00D4F5;font-size:11px;font-weight:700;
+                    text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:999px;">
+            Pro Weekly Report
+        </div>
+    </div>
+    <h2 style="font-family:serif;font-size:22px;color:#1A2D4A;margin-bottom:4px;text-align:center;">
+        Your AI Intelligence Report
+    </h2>
+    <p style="color:#6B6560;font-size:15px;text-align:center;margin-bottom:24px;">
+        Hi {maker_name} &mdash; here's how AI agents interacted with your tools this week.
+    </p>
+    <div style="text-align:center;padding:24px;background:#F0F7FA;border-radius:12px;margin-bottom:24px;">
+        <div style="font-size:42px;font-weight:800;color:#1A2D4A;">{total_citations}</div>
+        <div style="font-size:14px;color:#6B6560;margin-top:4px;">AI recommendations this week</div>
+    </div>
+    {top_tool_html}
+    {agent_html}
+    {new_tools_html}
+    {quality_html}
+    <div style="text-align:center;margin-top:32px;">
+        <a href="{base}/dashboard" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            View Full Dashboard
+        </a>
+    </div>
+    <p style="color:#9C958E;font-size:12px;text-align:center;margin-top:24px;">
+        You're receiving this as an IndieStack Pro subscriber.
+    </p>
     """)
 
 

@@ -1,6 +1,9 @@
 """Submission form."""
 
+import json
 import logging
+import os
+import re
 from datetime import date
 from html import escape
 from typing import Optional
@@ -15,6 +18,92 @@ from urllib.parse import quote
 from indiestack.db import get_all_categories, create_tool, get_tool_by_id, slugify, get_maker_by_id, get_tool_by_slug, track_event, validate_submission_quality, check_duplicate_url
 
 logger = logging.getLogger(__name__)
+
+
+# ── Pre-screening checks ─────────────────────────────────────────────────
+
+SPAM_DOMAINS = {'bit.ly', 'tinyurl.com', 'is.gd', 'rb.gy', 't.co', 'shorturl.at'}
+
+async def run_quality_checks(name: str, description: str, url: str) -> list[dict]:
+    """Run automated quality checks on a submission. Returns list of flag dicts."""
+    flags = []
+
+    # Check description length
+    if len(description.strip()) < 50:
+        flags.append({
+            'type': 'short_description',
+            'severity': 'warning',
+            'message': 'Description is under 50 characters — consider adding more detail.',
+        })
+
+    # Check for ALL CAPS title
+    if name.strip() and name.strip() == name.strip().upper() and len(name.strip()) > 3:
+        flags.append({
+            'type': 'caps_title',
+            'severity': 'warning',
+            'message': 'Title is in ALL CAPS.',
+        })
+
+    # Check for excessive exclamation marks
+    if name.count('!') >= 2 or description.count('!') >= 5:
+        flags.append({
+            'type': 'excessive_punctuation',
+            'severity': 'warning',
+            'message': 'Excessive exclamation marks detected.',
+        })
+
+    # Check for spam/shortener domains in URL
+    from urllib.parse import urlparse
+    try:
+        parsed = urlparse(url)
+        domain = parsed.netloc.lower().lstrip('www.')
+        if domain in SPAM_DOMAINS:
+            flags.append({
+                'type': 'spam_domain',
+                'severity': 'warning',
+                'message': f'URL uses a URL shortener ({domain}). Use your actual website URL.',
+            })
+    except Exception:
+        pass
+
+    # GitHub-specific checks (non-blocking)
+    if 'github.com/' in url:
+        gh_match = re.match(r'https?://github\.com/([^/]+)/([^/]+)', url)
+        if gh_match:
+            owner, repo = gh_match.group(1), gh_match.group(2).rstrip('/')
+            try:
+                import httpx
+                github_token = os.environ.get("GITHUB_TOKEN", "")
+                headers = {"Accept": "application/vnd.github.v3+json"}
+                if github_token:
+                    headers["Authorization"] = f"Bearer {github_token}"
+
+                async with httpx.AsyncClient(timeout=5, headers=headers) as client:
+                    resp = await client.get(f"https://api.github.com/repos/{owner}/{repo}")
+                    if resp.status_code == 404:
+                        flags.append({
+                            'type': 'github_not_found',
+                            'severity': 'error',
+                            'message': 'GitHub repository not found.',
+                        })
+                    elif resp.status_code == 200:
+                        data = resp.json()
+                        if data.get('archived'):
+                            flags.append({
+                                'type': 'github_archived',
+                                'severity': 'warning',
+                                'message': 'GitHub repository is archived.',
+                            })
+                        if not data.get('description') and len(description.strip()) < 50:
+                            flags.append({
+                                'type': 'github_no_description',
+                                'severity': 'info',
+                                'message': 'GitHub repo has no description.',
+                            })
+            except Exception:
+                pass  # GitHub API unavailable — let it through
+
+    return flags
 
 router = APIRouter()
 
@@ -213,6 +302,24 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                 Before submitting, please read our <a href="/guidelines" style="color:var(--accent);font-weight:600;">submission guidelines</a>.
             </p>
         </div>
+
+        <details style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;cursor:pointer;">
+            <summary style="font-weight:700;font-size:15px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:8px;">
+                <span style="font-size:16px;">&#128270;</span> What we look for
+                <span style="margin-left:auto;font-size:12px;color:var(--ink-muted);font-weight:400;">Guidelines, not hard rules</span>
+            </summary>
+            <div style="margin-top:16px;font-size:14px;color:var(--ink-light);line-height:1.7;">
+                <p style="margin-bottom:12px;">We're a curated directory, so we review every submission. Tools that meet these criteria are more likely to be approved quickly:</p>
+                <ul style="padding-left:20px;margin:0;">
+                    <li style="margin-bottom:8px;"><strong>Actively maintained</strong> &mdash; commits or updates within the last 6 months</li>
+                    <li style="margin-bottom:8px;"><strong>Has documentation</strong> &mdash; a README, docs page, or clear landing page</li>
+                    <li style="margin-bottom:8px;"><strong>Genuinely indie-built</strong> &mdash; solo founder, small team, or bootstrapped</li>
+                    <li style="margin-bottom:8px;"><strong>Provides real value</strong> &mdash; solves a real problem, not just a thin wrapper</li>
+                    <li style="margin-bottom:0;"><strong>Free tier or open source</strong> &mdash; accessible to try before you buy</li>
+                </ul>
+                <p style="margin-top:12px;color:var(--ink-muted);font-size:13px;">Don't stress if you don't tick every box &mdash; we're here to support indie makers, not gatekeep. If you've built something useful, we want to hear about it.</p>
+            </div>
+        </details>
 
         <div style="background:var(--info-bg);border:1px solid var(--info-border);border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;line-height:1.7;">
             <p style="font-size:14px;color:var(--info-text);margin:0;">
@@ -529,6 +636,9 @@ async def submit_post(
         body = submit_form(categories, values, error=" ".join(errors), logged_in=not is_public)
         return HTMLResponse(page_shell("Make Your Creation Discoverable by AI", body, user=request.state.user))
 
+    # Run automated pre-screening checks (non-blocking)
+    quality_flags = await run_quality_checks(name.strip(), description.strip(), url.strip())
+
     tool_id = await create_tool(
         db, name=name.strip(), tagline=tagline.strip(), description=description.strip(),
         url=url.strip(), maker_name=maker_name.strip(), maker_url=maker_url.strip(),
@@ -539,6 +649,13 @@ async def submit_post(
         platforms=platforms.strip() if is_plugin else '',
         install_command=install_command.strip() if is_plugin else '',
     )
+
+    # Store quality flags if any
+    if quality_flags:
+        await db.execute(
+            "UPDATE tools SET quality_flags = ? WHERE id = ?",
+            (json.dumps(quality_flags), tool_id),
+        )
 
     # Post-create updates (single commit for all)
     if 'github.com/' in url:

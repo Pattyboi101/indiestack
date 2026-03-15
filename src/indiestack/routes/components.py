@@ -1111,6 +1111,26 @@ def tool_card(tool: dict, compact: bool = False) -> str:
     if mcp_views > 0:
         ai_recs_html = f'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--accent);font-weight:600;margin-top:8px;" title="Recommended by AI agents {mcp_views} times"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> {mcp_views} AI recommendations</span>'
 
+    # Trust badge from agent outcome reports (only shown if success_rate data is present)
+    trust_html = ''
+    sr_data = tool.get('_success_rate')
+    if sr_data and sr_data.get('total', 0) >= 5:
+        sr_rate = sr_data['rate']
+        sr_total = sr_data['total']
+        if sr_rate < 50:
+            tr_color = 'var(--error-text, #DC2626)'
+            tr_icon = '&#9888;'
+            tr_title = f'Low agent success rate: {sr_rate}% from {sr_total} reports'
+        elif sr_rate >= 70 and sr_total >= 20:
+            tr_color = 'var(--success-text, #16a34a)'
+            tr_icon = '&#10003;'
+            tr_title = f'Verified: {sr_rate}% success from {sr_total} agent reports'
+        else:
+            tr_color = 'var(--ink-muted)'
+            tr_icon = '&#127919;'
+            tr_title = f'{sr_rate}% success from {sr_total} agent reports'
+        trust_html = f'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;color:{tr_color};margin-top:8px;" title="{tr_title}">{tr_icon} {sr_rate}% success ({sr_total})</span>'
+
     badge = ''
     is_boosted = bool(tool.get('is_boosted', 0))
     if is_boosted:
@@ -1174,6 +1194,7 @@ def tool_card(tool: dict, compact: bool = False) -> str:
                 {visit_html}
                 {gh_indicator}
                 {ai_recs_html}
+                {trust_html}
                 {streak_html}
             </div>
         </div>

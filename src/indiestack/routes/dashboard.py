@@ -1013,6 +1013,13 @@ async def dashboard_overview(request: Request):
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Data Export</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Download your tools &amp; analytics as JSON or CSV</div>
                 </a>
+                <div class="pro-feat" style="background:var(--card-bg);border:1px solid var(--border);cursor:default;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                        <span style="font-size:15px;font-weight:700;color:var(--ink);">Weekly AI Report</span>
+                        <span style="font-size:10px;font-weight:600;color:var(--accent);text-transform:uppercase;">To Your Inbox</span>
+                    </div>
+                    <div style="font-size:13px;color:var(--ink-muted);line-height:1.4;">Citation stats, competitor alerts &amp; new tools in your categories</div>
+                </div>
             </div>
         </div>
         '''

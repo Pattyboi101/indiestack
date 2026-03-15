@@ -454,10 +454,10 @@ def _results_html(
         <div style="background:#1A2D4A;border-radius:var(--radius);padding:32px 28px;margin-top:40px;
                     text-align:center;">
             <h3 style="font-family:var(--font-display);font-size:20px;color:#fff;margin-bottom:8px;">
-                Want this running automatically on every PR?
+                Want deeper intelligence?
             </h3>
             <p style="color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;margin-bottom:20px;max-width:480px;margin-left:auto;margin-right:auto;">
-                IndieStack Pro includes a CI audit command, GitHub Action integration, and weekly stack health reports &mdash; so your team always knows the indie options.
+                IndieStack Pro includes demand signal analytics, AI citation tracking, weekly AI reports to your inbox, and 1,000 API queries per day.
             </p>
             <a href="/pricing"
                style="display:inline-block;padding:12px 32px;background:var(--accent);color:#000;

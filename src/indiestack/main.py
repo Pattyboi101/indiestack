@@ -237,6 +237,25 @@ from indiestack.routes import guidelines
 from indiestack.routes import audit
 
 
+async def _periodic_health_refresh():
+    """Run health checks every 4 hours to keep tool data fresh."""
+    import aiosqlite
+    while True:
+        await asyncio.sleep(4 * 3600)  # Every 4 hours
+        try:
+            async with aiosqlite.connect(db.DB_PATH) as conn:
+                conn.row_factory = aiosqlite.Row
+                # HTTP HEAD checks on tool URLs (batch of 100)
+                await db.run_health_checks(conn, batch_size=100)
+                # GitHub API checks for stars, commits, archive status (batch of 50)
+                await db.run_github_health_checks(conn, batch_size=50)
+                # Recompute quality scores with fresh health data
+                await db.recompute_all_quality_scores(conn)
+        except Exception as e:
+            _logger.exception("Background task failed: health refresh")
+            _alert_telegram("health_refresh", str(e))
+
+
 async def _periodic_session_cleanup():
     """Run session cleanup every hour."""
     import aiosqlite
@@ -273,9 +292,13 @@ async def _weekly_ego_ping():
                         if user_row:
                             views = m['weekly_views']
                             clicks = m.get('weekly_clicks', 0)
+                            citations = m.get('weekly_citations', 0)
+                            parts = [f"{views} views", f"{clicks} clicks"]
+                            if citations > 0:
+                                parts.append(f"{citations} AI recommendations")
                             await create_notification(
                                 conn, user_row['id'], 'weekly_stats',
-                                f"{m['tool_name']}: {views} views, {clicks} clicks this week",
+                                f"{m['tool_name']}: {', '.join(parts)} this week",
                                 f"/tool/{m['tool_slug']}"
                             )
                     except Exception:
@@ -564,6 +587,7 @@ async def lifespan(app: FastAPI):
     nudge_task = asyncio.create_task(_badge_nudge_check())
     digest_task = asyncio.create_task(_auto_weekly_digest())
     citation_task = asyncio.create_task(_weekly_citation_alert())
+    health_task = asyncio.create_task(_periodic_health_refresh())
     yield
     cleanup_task.cancel()
     ego_ping_task.cancel()
@@ -571,6 +595,7 @@ async def lifespan(app: FastAPI):
     nudge_task.cancel()
     digest_task.cancel()
     citation_task.cancel()
+    health_task.cancel()
 
 
 app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
@@ -3595,6 +3620,82 @@ async def send_weekly_digest(request: Request):
             errors += 1
 
     return JSONResponse({"ok": True, "sent": sent, "errors": errors, "total_subscribers": len(subscribers)})
+
+
+@app.get("/admin/send-weekly-pro-reports")
+async def send_weekly_pro_reports(request: Request):
+    """Send weekly AI report to all Pro subscribers. Protected by ADMIN_SECRET."""
+    import secrets as _secrets
+    key = request.query_params.get("key", "")
+    admin_key = _os.environ.get("ADMIN_SECRET", "")
+    if not admin_key or not _secrets.compare_digest(key, admin_key):
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+
+    d = request.state.db
+    from indiestack.email import send_email, pro_weekly_report_html
+    from indiestack.db import (
+        get_pro_users_with_makers, get_weekly_citations_by_maker,
+        get_new_tools_in_maker_categories, get_listing_quality_score,
+        get_tools_by_maker,
+    )
+
+    pro_users = await get_pro_users_with_makers(d)
+    sent = 0
+    errors = 0
+    skipped = 0
+
+    for pu in pro_users:
+        maker_id = pu.get('maker_id')
+        if not maker_id:
+            skipped += 1
+            continue
+
+        try:
+            # Get citation stats for the week
+            citation_data = await get_weekly_citations_by_maker(d, maker_id)
+
+            # Get new tools in their categories
+            new_tools = await get_new_tools_in_maker_categories(d, maker_id, days=7)
+
+            # Get average listing quality score
+            quality_score = None
+            maker_tools = await get_tools_by_maker(d, maker_id)
+            if maker_tools:
+                scores = []
+                for t in maker_tools:
+                    qs = await get_listing_quality_score(d, t)
+                    scores.append(qs.get('total', 50))
+                if scores:
+                    quality_score = round(sum(scores) / len(scores))
+
+            html = pro_weekly_report_html(
+                maker_name=pu.get('maker_name') or pu.get('username') or 'there',
+                total_citations=citation_data['total'],
+                top_tool_name=citation_data['top_tool_name'],
+                top_tool_slug=citation_data['top_tool_slug'],
+                top_tool_citations=citation_data['top_tool_citations'],
+                agent_breakdown=citation_data['agents'],
+                new_tools_in_categories=new_tools,
+                quality_score=quality_score,
+            )
+
+            await send_email(
+                pu['email'],
+                "Your Weekly AI Report — IndieStack Pro",
+                html,
+            )
+            sent += 1
+        except Exception as e:
+            _logger.warning(f"Failed to send Pro report to {pu.get('email')}: {e}")
+            errors += 1
+
+    return JSONResponse({
+        "ok": True,
+        "sent": sent,
+        "errors": errors,
+        "skipped": skipped,
+        "total_pro_users": len(pro_users),
+    })
 
 
 @app.get("/api/follow-through")

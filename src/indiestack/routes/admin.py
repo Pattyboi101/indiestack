@@ -18,7 +18,7 @@ from indiestack.db import (get_pending_tools, get_all_tools_admin, update_tool_s
                            get_tool_by_id, get_makers_in_category, get_all_purchases_admin,
                            update_tool, get_all_categories, delete_tool, get_pro_subscriber_stats,
                            create_notification, get_pending_avatars, update_user,
-                           get_follow_through_rate)
+                           get_follow_through_rate, get_outcome_stats)
 from indiestack.email import send_email, tool_approved_html
 from indiestack.auth import check_admin_session, make_session_token, ADMIN_PASSWORD
 from indiestack.main import _check_admin_rate_limit, _record_admin_attempt, _clear_admin_attempts
@@ -162,12 +162,29 @@ async def render_overview(db, request, pending):
             tid = t['id']
             name = escape(str(t['name']))
             tagline = escape(str(t['tagline']))
+            # Quality flags from pre-screening
+            qf_html = ''
+            qf_raw = str(t.get('quality_flags', '') or '')
+            if qf_raw:
+                try:
+                    import json as _json
+                    qf_list = _json.loads(qf_raw)
+                    if qf_list:
+                        pills = ''
+                        for qf in qf_list:
+                            sev = qf.get('severity', 'info')
+                            sev_color = {'error': '#dc2626', 'warning': '#d97706', 'info': '#6b7280'}.get(sev, '#6b7280')
+                            pills += f'<span style="display:inline-block;font-size:10px;padding:2px 6px;border-radius:999px;background:{sev_color}22;color:{sev_color};font-weight:600;margin-right:4px;" title="{escape(str(qf.get("message", "")))}">{escape(str(qf.get("type", "")))}</span>'
+                        qf_html = f'<div style="margin-top:4px;">{pills}</div>'
+                except Exception:
+                    pass
             cards += f"""
             <div class="card" style="margin-bottom:8px;padding:12px 14px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
                     <div style="flex:1;min-width:180px;">
                         <strong style="font-size:14px;color:var(--ink);">{name}</strong>
                         <span style="color:var(--ink-muted);font-size:12px;margin-left:6px;">{tagline}</span>
+                        {qf_html}
                     </div>
                     <div style="display:flex;gap:6px;">
                         <form method="post" action="/admin" style="margin:0;">
@@ -272,8 +289,46 @@ async def render_overview(db, request, pending):
         </div>
         """
 
+    # Flagged tools section
+    from indiestack.db import get_flagged_tools
+    flagged = await get_flagged_tools(db)
+    flagged_html = ''
+    if flagged:
+        flag_type_labels = {
+            'abandoned': 'Abandoned', 'misleading': 'Misleading',
+            'not_indie': 'Not Indie', 'spam': 'Spam', 'other': 'Other'
+        }
+        flag_cards = ''
+        for f in flagged:
+            f_name = escape(str(f['name']))
+            f_slug = escape(str(f['slug']))
+            f_count = int(f['flag_count'])
+            f_types = str(f['flag_types'] or '')
+            type_pills = ''
+            for ft in f_types.split(','):
+                ft = ft.strip()
+                if ft:
+                    type_pills += f'<span style="display:inline-block;font-size:10px;padding:2px 6px;border-radius:999px;background:#dc262622;color:#dc2626;font-weight:600;margin-right:4px;">{escape(flag_type_labels.get(ft, ft))}</span>'
+            flag_cards += f'''
+            <div class="card" style="padding:10px 14px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+                <div>
+                    <a href="/tool/{f_slug}" style="font-weight:700;font-size:13px;color:var(--ink);">{f_name}</a>
+                    <span style="font-size:11px;color:var(--ink-muted);margin-left:4px;">{f_count} flag{"s" if f_count != 1 else ""}</span>
+                    <div style="margin-top:2px;">{type_pills}</div>
+                </div>
+                <span style="font-size:12px;color:var(--ink-muted);">{escape(str(f['status']))}</span>
+            </div>'''
+        flagged_html = f'''
+        <div style="margin-bottom:24px;">
+            <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:10px;">
+                Flagged by Community ({len(flagged)})
+            </h3>
+            {flag_cards}
+        </div>
+        '''
+
     # Build left column
-    left_col = pending_html + avatars_html + claims_html
+    left_col = pending_html + avatars_html + claims_html + flagged_html
     if not left_col.strip():
         left_col = '<div class="card" style="padding:32px;text-align:center;color:var(--ink-muted);font-size:15px;">All clear &mdash; nothing to review</div>'
 
@@ -378,12 +433,38 @@ async def render_overview(db, request, pending):
     except Exception:
         pass
 
+    # ── Trust Layer Stats ──
+    trust_html = ''
+    try:
+        outcome_stats = await get_outcome_stats(db)
+        top_rows = ''
+        for t in outcome_stats['top_tools']:
+            t_name = escape(str(t.get('name') or t['tool_slug']))
+            rate_color = '#16a34a' if t['rate'] >= 70 else '#D97706' if t['rate'] >= 40 else '#DC2626'
+            top_rows += f'<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;"><span style="color:var(--ink);">{t_name}</span><span><span style="color:{rate_color};font-weight:600;">{t["rate"]}%</span> <span style="color:var(--ink-muted);">({t["total"]})</span></span></div>'
+
+        trust_html = f'''
+        <div style="margin-top:12px;padding:12px;border-radius:8px;background:var(--surface-alt);">
+            <h4 style="font-size:13px;color:var(--ink-muted);margin-bottom:8px;font-weight:600;">Trust Layer</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:8px;">
+                <div style="color:var(--ink);">Reports (all): <strong>{outcome_stats["total_all"]}</strong></div>
+                <div style="color:var(--ink);">Reports (30d): <strong>{outcome_stats["total_30d"]}</strong></div>
+                <div style="color:var(--ink);">Tools with data: <strong>{outcome_stats["unique_tools"]}</strong></div>
+                <div style="color:var(--ink);">Avg success: <strong>{outcome_stats["avg_rate"]}%</strong></div>
+            </div>
+            {f'<div style="border-top:1px solid var(--border);padding-top:8px;"><div style="font-size:11px;color:var(--ink-muted);margin-bottom:4px;font-weight:600;">Top Reported Tools</div>{top_rows}</div>' if top_rows else '<div style="font-size:12px;color:var(--ink-muted);font-style:italic;">No outcome reports yet</div>'}
+        </div>
+        '''
+    except Exception:
+        pass
+
     right_col = f"""
     <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">Today's Pulse</h3>
     {kpi_grid}
     {alerts_html}
     {recent_html}
     {qs_html}
+    {trust_html}
     """
 
     return f"""

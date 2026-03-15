@@ -10,7 +10,7 @@ from fastapi.responses import HTMLResponse
 from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card, pagination_html
 from indiestack.routes.category_icons import category_icon
-from indiestack.db import get_category_by_slug, get_tools_by_category, get_category_tools_for_compare
+from indiestack.db import get_category_by_slug, get_tools_by_category, get_category_tools_for_compare, get_batch_success_rates
 
 router = APIRouter()
 
@@ -44,6 +44,17 @@ async def category_page(request: Request, slug: str, page: int = 1):
     desc = f"Discover indie {name} creations built by independent makers and small teams. Open-source, bootstrapped alternatives."
 
     if tools:
+        # Inject trust badge data
+        try:
+            slugs = [str(t.get('slug', '')) for t in tools if t.get('slug')]
+            sr_map = await get_batch_success_rates(db, slugs)
+            for t in tools:
+                s = str(t.get('slug', ''))
+                if s in sr_map:
+                    t['_success_rate'] = sr_map[s]
+        except Exception:
+            pass
+
         cards = '\n'.join(tool_card(t) for t in tools)
 
         # Compare links for categories with 2+ tools

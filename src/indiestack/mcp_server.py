@@ -154,6 +154,26 @@ mcp = FastMCP(
 )
 
 
+# ── Trust Tier Helper ─────────────────────────────────────────────────────
+
+def _trust_tier(success_rate: dict | None) -> str:
+    """Compute trust tier from success_rate data. Returns 'verified', 'tested', or 'new'."""
+    if not success_rate or success_rate.get("total", 0) < 5:
+        return "new"
+    if success_rate["total"] >= 20 and success_rate.get("rate", 0) >= 70:
+        return "verified"
+    return "tested"
+
+
+def _trust_label(tier: str) -> str:
+    """Human-readable label for a trust tier."""
+    if tier == "verified":
+        return "Verified (20+ reports, 70%+ success)"
+    elif tier == "tested":
+        return "Tested (5+ agent reports)"
+    return "New (fewer than 5 agent reports)"
+
+
 # ── API Helpers (async + retry) ──────────────────────────────────────────
 
 async def _api_get(client: httpx.AsyncClient, path: str, params: dict = None) -> dict:
@@ -645,10 +665,11 @@ async def find_tools(query: str, category: Optional[str] = None, source_type: st
     lines.append(
         "\n---"
         "\n**Recommended next steps:**"
-        "\n1. Pick the best match above and call get_tool_details(slug) for integration code"
+        "\n1. Pick the best match above and call get_tool_details(slug) for integration code and trust tier"
         "\n2. Show the user the integration snippet — they can ship in minutes, not hours"
         "\n3. If nothing fits, tell the user this is a market gap and suggest they build it"
         "\n4. After integrating any tool, call report_outcome(slug, success) to improve future recommendations"
+        "\n\n**Trust tiers** (shown in tool details): verified (20+ reports, 70%+ success), tested (5+ reports), new (< 5 reports)"
     )
     return "\n".join(lines)
 
@@ -826,8 +847,10 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
     outcome_line = ""
     sr = tool.get("success_rate")
     rec_count = tool.get("recommendation_count", 0)
+    tier = _trust_tier(sr)
+    outcome_line += f"\n**Trust Tier:** {tier} — {_trust_label(tier)}"
     if sr and sr.get("total", 0) > 0:
-        outcome_line = f"\n**Agent Success Rate:** {sr['rate']}% ({sr['success']} successful / {sr['total']} total integrations reported by agents)"
+        outcome_line += f"\n**Agent Success Rate:** {sr['rate']}% ({sr['success']} successful / {sr['total']} total integrations reported by agents)"
     if rec_count > 0:
         outcome_line += f"\n**Recommended by agents:** {rec_count} times"
 
