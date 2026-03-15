@@ -643,8 +643,8 @@ cd ~/indiestack-dev-setup && git add shared-skills/hub/ && git commit -m "feat: 
 cd ~/indiestack-dev-setup/command-hub
 ~/.fly/bin/flyctl secrets set \
   HUB_SECRET="<generate-secure-secret>" \
-  BOT_TOKEN_PAT="8708141998:AAFpYobIr3BCvuEQTat_pnwTwbOu_qVIHz0" \
-  CHAT_ID_PAT="8406588975" \
+  BOT_TOKEN_PAT="<revoked-regenerate-via-botfather>" \
+  CHAT_ID_PAT="<get-from-fly-secrets>" \
   BOT_TOKEN_ED="<ed-provides-after-botfather>" \
   CHAT_ID_ED="<ed-provides-after-botfather>" \
   -a govlink
