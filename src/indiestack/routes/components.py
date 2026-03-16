@@ -1060,17 +1060,30 @@ def stack_card(stack: dict) -> str:
         emoji = stack.get('cover_emoji', '') or '\U0001f4e6'
         icons_html = f'<span style="font-size:32px;display:block;margin-bottom:8px;">{emoji}</span>'
 
+    upvote_count = stack.get('upvote_count', 0) or 0
+    count_display = str(upvote_count) if upvote_count >= 3 else ''
+    stack_id = stack.get('id', 0)
+    upvote_html = (
+        f'<button class="upvote-btn" onclick="event.preventDefault();stackUpvote({stack_id})" id="stack-upvote-{stack_id}">'
+        f'<span class="arrow">&#9650;</span>'
+        f'<span id="stack-count-{stack_id}">{count_display}</span>'
+        f'</button>'
+    )
+
     return f"""
-    <a href="/stacks/{slug}" class="card" style="text-decoration:none;color:inherit;display:block;">
-        {icons_html}
-        <h3 style="font-family:var(--font-display);font-size:17px;margin-bottom:8px;color:var(--ink);">{title}</h3>
-        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;
-                  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{desc}</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
-            {badges_html}
-        </div>
-        {replaces_html}
-    </a>
+    <div class="card" style="position:relative;display:flex;gap:16px;">
+        <a href="/stacks/{slug}" style="flex:1;min-width:0;text-decoration:none;color:inherit;display:block;">
+            {icons_html}
+            <h3 style="font-family:var(--font-display);font-size:17px;margin-bottom:8px;color:var(--ink);">{title}</h3>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;
+                      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{desc}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+                {badges_html}
+            </div>
+            {replaces_html}
+        </a>
+        {upvote_html}
+    </div>
     """
 
 
@@ -1417,6 +1430,52 @@ def upvote_js() -> str:
             if (data.upvoted) {
                 data.upvoted.forEach(id => {
                     const btn = document.getElementById('upvote-' + id);
+                    if (btn) btn.classList.add('active');
+                });
+            }
+        } catch(e) {}
+    });
+    </script>
+    """
+
+
+# ── Stack Upvote Script ──────────────────────────────────────────────────
+
+def stack_upvote_js() -> str:
+    return """
+    <script>
+    async function stackUpvote(stackId) {
+        const btn = document.getElementById('stack-upvote-' + stackId);
+        const countEl = document.getElementById('stack-count-' + stackId);
+        try {
+            const res = await fetch('/api/stack-upvote', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({stack_id: stackId})
+            });
+            const data = await res.json();
+            if (data.ok) {
+                countEl.textContent = data.count >= 3 ? data.count : '';
+                btn.classList.toggle('active', data.upvoted);
+                showToast(data.upvoted ? '\u25b2 Upvoted!' : 'Vote removed');
+            }
+        } catch(e) { console.error(e); }
+    }
+    document.addEventListener('DOMContentLoaded', async () => {
+        const btns = document.querySelectorAll('[id^="stack-upvote-"]');
+        if (!btns.length) return;
+        const ids = Array.from(btns).map(b => parseInt(b.id.replace('stack-upvote-', ''))).filter(n => n > 0);
+        if (!ids.length) return;
+        try {
+            const res = await fetch('/api/stack-upvote-check', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({stack_ids: ids})
+            });
+            const data = await res.json();
+            if (data.upvoted) {
+                data.upvoted.forEach(id => {
+                    const btn = document.getElementById('stack-upvote-' + id);
                     if (btn) btn.classList.add('active');
                 });
             }

@@ -11,7 +11,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.config import BASE_URL
 
-from indiestack.routes.components import page_shell, tool_card, stack_card, user_stack_card
+from indiestack.routes.components import page_shell, tool_card, stack_card, user_stack_card, stack_upvote_js
 from indiestack.db import (
     get_stacks_by_source, get_stack_stats,
     get_stack_with_tools, get_stack_by_id,
@@ -212,6 +212,7 @@ async def stacks_index(request: Request):
         {community_html}
         {curated_html}
     </div>
+    {stack_upvote_js()}
     """
     return HTMLResponse(page_shell(
         "Stacks — Intelligence-Powered Tool Combinations",
@@ -475,9 +476,37 @@ async def stack_detail(request: Request, slug: str):
     confidence = stack.get('confidence_score', 0) or 0
     tokens_saved = stack.get('total_tokens_saved', 0) or 0
     tokens_k = tokens_saved // 1000
-    emoji = stack.get('cover_emoji', '') or '\U0001f4e6'
     title = escape(str(stack['title']))
     desc = escape(str(stack.get('description', '')))
+
+    # Category icons from tools (same SVG icons as stack cards)
+    from indiestack.routes.category_icons import category_icon
+    seen_cats = []
+    for t in tools:
+        cs = t.get('category_slug', '')
+        if cs and cs not in seen_cats:
+            seen_cats.append(cs)
+    if seen_cats:
+        detail_icon_items = [
+            f'<span style="color:var(--accent);display:flex;align-items:center;">{category_icon(cs, size=32)}</span>'
+            for cs in seen_cats[:6]
+        ]
+        detail_icons_html = '<div style="display:flex;gap:12px;align-items:center;">' + ''.join(detail_icon_items) + '</div>'
+    else:
+        emoji = stack.get('cover_emoji', '') or '\U0001f4e6'
+        detail_icons_html = f'<span style="font-size:48px;">{emoji}</span>'
+
+    # Stack upvote button for detail page
+    stack_id = stack.get('id', 0)
+    upvote_count = stack.get('upvote_count', 0) or 0
+    detail_count_display = str(upvote_count) if upvote_count >= 3 else ''
+    detail_upvote_html = (
+        f'<button class="upvote-btn" onclick="stackUpvote({stack_id})" id="stack-upvote-{stack_id}" '
+        f'style="position:absolute;top:0;right:0;">'
+        f'<span class="arrow">&#9650;</span>'
+        f'<span id="stack-count-{stack_id}">{detail_count_display}</span>'
+        f'</button>'
+    )
 
     # Source badge
     if source == 'auto-framework':
@@ -710,8 +739,9 @@ async def stack_detail(request: Request, slug: str):
     {jsonld}
     <div class="container" style="padding:48px 24px;max-width:900px;">
         <a href="/stacks" style="color:var(--ink-muted);font-size:14px;font-weight:600;">&larr; All Stacks</a>
-        <div style="margin-top:16px;margin-bottom:32px;">
-            <span style="font-size:48px;">{emoji}</span>
+        <div style="margin-top:16px;margin-bottom:32px;position:relative;">
+            {detail_icons_html}
+            {detail_upvote_html}
             <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);margin-top:12px;">
                 {title}
             </h1>
@@ -731,6 +761,7 @@ async def stack_detail(request: Request, slug: str):
         </h2>
         <div class="card-grid">{cards_html}</div>
     </div>
+    {stack_upvote_js()}
     """
     return HTMLResponse(page_shell(
         f"{stack['title']} — Stack",

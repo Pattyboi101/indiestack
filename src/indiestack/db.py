@@ -1480,11 +1480,22 @@ async def init_db():
             "ALTER TABLE stacks ADD COLUMN total_tokens_saved INTEGER NOT NULL DEFAULT 0",
             "ALTER TABLE stacks ADD COLUMN tool_count_cached INTEGER NOT NULL DEFAULT 0",
             "ALTER TABLE stacks ADD COLUMN generated_at TIMESTAMP",
+            "ALTER TABLE stacks ADD COLUMN upvote_count INTEGER NOT NULL DEFAULT 0",
         ]:
             try:
                 await db.execute(col_sql)
             except Exception:
                 pass
+        # Stack upvotes tracking table
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS stack_upvotes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                stack_id INTEGER NOT NULL REFERENCES stacks(id),
+                ip_hash TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(stack_id, ip_hash)
+            )
+        """)
         await db.commit()
 
         # Enrich well-known tools with structured metadata
@@ -2752,6 +2763,40 @@ async def get_weekly_citation_digest(db, days: int = 7) -> list[dict]:
     rows = await cursor.fetchall()
     cols = [d[0] for d in cursor.description]
     return [dict(zip(cols, r)) for r in rows]
+
+
+async def toggle_stack_upvote(db: aiosqlite.Connection, stack_id: int, ip: str) -> tuple[int, bool]:
+    """Toggle stack upvote. Returns (new_count, is_upvoted)."""
+    ip_h = hash_ip(ip)
+    await db.execute("BEGIN IMMEDIATE")
+    try:
+        cursor = await db.execute(
+            "SELECT id FROM stack_upvotes WHERE stack_id = ? AND ip_hash = ?", (stack_id, ip_h)
+        )
+        existing = await cursor.fetchone()
+        if existing:
+            await db.execute("DELETE FROM stack_upvotes WHERE id = ?", (existing['id'],))
+            await db.execute(
+                "UPDATE stacks SET upvote_count = MAX(0, upvote_count - 1) WHERE id = ?",
+                (stack_id,))
+            upvoted = False
+        else:
+            await db.execute(
+                "INSERT INTO stack_upvotes (stack_id, ip_hash) VALUES (?, ?)",
+                (stack_id, ip_h))
+            await db.execute(
+                "UPDATE stacks SET upvote_count = upvote_count + 1 WHERE id = ?",
+                (stack_id,))
+            upvoted = True
+        count_cursor = await db.execute(
+            "SELECT upvote_count FROM stacks WHERE id = ?", (stack_id,))
+        row = await count_cursor.fetchone()
+        count = row['upvote_count'] if row else 0
+        await db.commit()
+        return count, upvoted
+    except Exception:
+        await db.rollback()
+        raise
 
 
 async def has_upvoted(db: aiosqlite.Connection, tool_id: int, ip: str) -> bool:

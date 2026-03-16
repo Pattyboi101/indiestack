@@ -14,7 +14,7 @@ router = APIRouter()
 # Junk queries to filter out (typos, nonsense, non-tool searches)
 _BLOCKLIST = {
     'xbox game pass', 'akoraimagbuot', 'wace', 'test', 'asdf', 'hello',
-    'indiestack', 'xxx', 'porn', 'sex',
+    'indiestack', 'xxx', 'porn', 'sex', '{search_term_string}',
 }
 
 

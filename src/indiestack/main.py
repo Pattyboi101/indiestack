@@ -1255,6 +1255,43 @@ async def api_upvote_check(request: Request):
     return JSONResponse({"upvoted": upvoted})
 
 
+@app.post("/api/stack-upvote")
+async def api_stack_upvote(request: Request):
+    try:
+        body = await request.json()
+        stack_id = int(body.get("stack_id", 0))
+    except (ValueError, TypeError):
+        return JSONResponse({"ok": False, "error": "Invalid request"}, status_code=400)
+    if not stack_id:
+        return JSONResponse({"ok": False, "error": "Missing stack_id"}, status_code=400)
+    ip = request.headers.get("fly-client-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip() or request.client.host
+    count, upvoted = await db.toggle_stack_upvote(request.state.db, stack_id, ip)
+    return JSONResponse({"ok": True, "count": count, "upvoted": upvoted})
+
+
+@app.post("/api/stack-upvote-check")
+async def api_stack_upvote_check(request: Request):
+    """Check which stacks the current user has upvoted."""
+    try:
+        body = await request.json()
+        stack_ids = body.get("stack_ids", [])
+    except (ValueError, TypeError):
+        return JSONResponse({"upvoted": []})
+    if not stack_ids or not isinstance(stack_ids, list):
+        return JSONResponse({"upvoted": []})
+    stack_ids = [int(s) for s in stack_ids[:50] if isinstance(s, (int, float))]
+    ip = request.headers.get("fly-client-ip") or request.headers.get("x-forwarded-for", "").split(",")[0].strip() or request.client.host
+    ip_hash = db.hash_ip(ip)
+    d = request.state.db
+    placeholders = ','.join('?' * len(stack_ids))
+    cursor = await d.execute(
+        f"SELECT DISTINCT stack_id FROM stack_upvotes WHERE stack_id IN ({placeholders}) AND ip_hash = ?",
+        (*stack_ids, ip_hash)
+    )
+    upvoted_set = {r['stack_id'] for r in await cursor.fetchall()}
+    return JSONResponse({"upvoted": [sid for sid in stack_ids if sid in upvoted_set]})
+
+
 @app.post("/api/wishlist")
 async def api_wishlist(request: Request):
     user = request.state.user
