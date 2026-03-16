@@ -1277,9 +1277,12 @@ async def list_stacks(*, ctx: Context) -> str:
         confidence = s.get("confidence_score", 0)
         conf_str = f" | {confidence:.0%} confidence" if confidence else ""
         tokens = s.get("total_tokens_saved", 0)
-        tokens_str = f" | ~{tokens // 1000}k tokens saved" if tokens else ""
+        tokens_str = f" | ~{tokens // 1000}k tokens saved" if tokens and tokens >= 1000 else ""
         replaces = s.get("replaces", [])
-        replaces_str = f"\n  Replaces: {', '.join(replaces[:4])}" if replaces else ""
+        replaces_preview = ", ".join(replaces[:4])
+        if len(replaces) > 4:
+            replaces_preview += f" +{len(replaces) - 4} more"
+        replaces_str = f"\n  Replaces: {replaces_preview}" if replaces else ""
 
         lines.append(
             f"- {emoji} **{s['title']}** ({source_label}{conf_str}{tokens_str})\n"
