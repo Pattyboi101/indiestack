@@ -46,6 +46,7 @@ from indiestack.db import (
     get_tool_success_rate,
     get_tool_recommendation_count,
     get_tool_total_citations,
+    check_pro,
 )
 
 router = APIRouter()
@@ -100,6 +101,16 @@ async def tool_detail(request: Request, slug: str):
     success_rate = await get_tool_success_rate(db, slug_str)
     recommendation_count = await get_tool_recommendation_count(db, slug_str)
     click_count = await get_outbound_click_count(db, tool_id, days=30)
+
+    # Analytics wall — determine viewer's relationship to this tool
+    is_tool_owner = (
+        user and user.get('maker_id')
+        and tool.get('maker_id')
+        and user['maker_id'] == tool['maker_id']
+    )
+    is_claimed = bool(tool.get('claimed_at'))
+    show_analytics = is_claimed and is_tool_owner
+
     reactions = await get_reaction_counts(
         db, tool_id,
         user_id=user['id'] if user else None,
@@ -180,31 +191,65 @@ async def tool_detail(request: Request, slug: str):
     mcp_views = int(tool.get('mcp_view_count', 0))
     # Use the higher of the two counts (citations are more accurate but mcp_views may be higher for older tools)
     ai_rec_count = max(citation_count, mcp_views)
+    # Analytics badges — gated by ownership
     mcp_badge = ''
-    if ai_rec_count > 0:
-        mcp_badge = f'''
-        <div style="margin-top:8px;padding:10px 16px;background:linear-gradient(135deg,var(--info-bg),var(--info-bg));border-radius:var(--radius-sm);
+    outcome_badge = ''
+    analytics_teaser = ''
+    pro_analytics_link = ''
+
+    if show_analytics:
+        # Owner viewing their claimed tool — show full analytics
+        if ai_rec_count > 0:
+            mcp_badge = f'''
+            <div style="margin-top:8px;padding:10px 16px;background:linear-gradient(135deg,var(--info-bg),var(--info-bg));border-radius:var(--radius-sm);
+                        display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--info-text);border:1px solid var(--info-border);font-weight:600;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                Recommended by AI agents {ai_rec_count} time{'s' if ai_rec_count != 1 else ''}
+            </div>'''
+        if success_rate['total'] > 0:
+            rate_color = 'var(--success-text)' if success_rate['rate'] >= 70 else 'var(--warning-text)' if success_rate['rate'] >= 40 else 'var(--error-text)'
+            outcome_badge = f'''
+            <div style="margin-top:8px;padding:8px 16px;background:var(--card-bg);border-radius:var(--radius-sm);
+                        display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-light);border:1px solid var(--border);">
+                <span style="font-size:16px;">&#127919;</span>
+                <span style="font-weight:600;color:{rate_color};">{success_rate['rate']}%</span> agent success rate
+                <span style="color:var(--ink-muted);font-size:12px;">({success_rate['total']} report{'s' if success_rate['total'] != 1 else ''})</span>
+            </div>'''
+        elif recommendation_count > 0:
+            outcome_badge = f'''
+            <div style="margin-top:8px;padding:8px 16px;background:var(--card-bg);border-radius:var(--radius-sm);
+                        display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-muted);border:1px solid var(--border);">
+                <span style="font-size:16px;">&#127919;</span>
+                Recommended {recommendation_count} time{'s' if recommendation_count != 1 else ''} &mdash; no outcome reports yet
+            </div>'''
+        # Pro owners get a link to full analytics dashboard
+        if user and await check_pro(db, user['id']):
+            pro_analytics_link = '''
+            <div style="margin-top:8px;">
+                <a href="/dashboard#ai-distribution" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;">
+                    View full analytics &rarr;
+                </a>
+            </div>'''
+    elif is_claimed:
+        # Claimed but viewer is not the owner — generic teaser, no numbers
+        analytics_teaser = '''
+        <div style="margin-top:8px;padding:10px 16px;background:var(--info-bg);border-radius:var(--radius-sm);
                     display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--info-text);border:1px solid var(--info-border);font-weight:600;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            Recommended by AI agents {ai_rec_count} time{'s' if ai_rec_count != 1 else ''}
+            AI agents recommend this tool
         </div>'''
-    outcome_badge = ''
-    if success_rate['total'] > 0:
-        rate_color = 'var(--success-text)' if success_rate['rate'] >= 70 else 'var(--warning-text)' if success_rate['rate'] >= 40 else 'var(--error-text)'
-        outcome_badge = f'''
-        <div style="margin-top:8px;padding:8px 16px;background:var(--card-bg);border-radius:var(--radius-sm);
-                    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-light);border:1px solid var(--border);">
-            <span style="font-size:16px;">&#127919;</span>
-            <span style="font-weight:600;color:{rate_color};">{success_rate['rate']}%</span> agent success rate
-            <span style="color:var(--ink-muted);font-size:12px;">({success_rate['total']} report{'s' if success_rate['total'] != 1 else ''})</span>
+    else:
+        # Unclaimed — teaser + claim nudge
+        analytics_teaser = '''
+        <div style="margin-top:8px;padding:10px 16px;background:var(--info-bg);border-radius:var(--radius-sm);
+                    display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--info-text);border:1px solid var(--info-border);">
+            <div style="display:flex;align-items:center;gap:8px;font-weight:600;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                AI agents are recommending this tool
+            </div>
+            <span style="font-size:12px;font-weight:400;color:var(--ink-muted);">Claim this listing to see how many times and your success rate.</span>
         </div>'''
-    elif recommendation_count > 0:
-        outcome_badge = f'''
-        <div style="margin-top:8px;padding:8px 16px;background:var(--card-bg);border-radius:var(--radius-sm);
-                    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-muted);border:1px solid var(--border);">
-            <span style="font-size:16px;">&#127919;</span>
-            Recommended {recommendation_count} time{'s' if recommendation_count != 1 else ''} &mdash; no outcome reports yet
-        </div>'''
+
     token_hint_html = f'''
         <div style="margin-top:16px;padding:8px 16px;background:var(--cream-dark);border-radius:var(--radius-sm);
                     display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-light);">
@@ -213,6 +258,8 @@ async def tool_detail(request: Request, slug: str):
         </div>
         {mcp_badge}
         {outcome_badge}
+        {pro_analytics_link}
+        {analytics_teaser}
     '''
 
     # GitHub freshness badge
@@ -308,7 +355,7 @@ async def tool_detail(request: Request, slug: str):
                 <span style="font-size:24px;">&#128075;</span>
                 <div style="flex:1;min-width:200px;">
                     <p style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px;">Did you build this?</p>
-                    <p style="font-size:13px;color:var(--ink-light);margin-bottom:12px;">This is listed for free on IndieStack &mdash; no commission, no fees. Claim it to update details and track how often AI agents recommend it.</p>
+                    <p style="font-size:13px;color:var(--ink-light);margin-bottom:12px;">Claim your listing to see exactly how many AI agents recommend this tool, your success rate, and more. Free, no commission, no fees.</p>
                     {claim_action}
                 </div>
             </div>
