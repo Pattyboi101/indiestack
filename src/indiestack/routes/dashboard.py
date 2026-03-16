@@ -266,10 +266,10 @@ async def dashboard_overview(request: Request):
         ai_intel_html = '''
         <div id="ai-distribution" style="margin-top:32px;">
             <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
-                &#129302; AI Distribution Intelligence
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> AI Distribution Intelligence
             </h2>
             <div class="card" style="text-align:center;padding:48px 24px;">
-                <p style="font-size:32px;margin-bottom:12px;">&#128202;</p>
+                <div style="margin-bottom:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
                 <p style="font-weight:700;font-size:16px;color:var(--ink);margin-bottom:4px;">Claim your first tool to unlock analytics</p>
                 <p style="color:var(--ink-muted);font-size:14px;margin-bottom:20px;">See how often AI agents recommend your tools, your success rate, and which queries find you.</p>
                 <a href="/" style="display:inline-block;padding:10px 24px;background:var(--accent);color:#0F1D30;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
@@ -370,7 +370,7 @@ async def dashboard_overview(request: Request):
             ai_intel_html = f'''
             <div id="ai-distribution" style="margin-top:32px;">
                 <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
-                    &#129302; AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
                 </h2>
                 {_headline_html}
                 <style>.ai-intel-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}}@media(max-width:600px){{.ai-intel-grid{{grid-template-columns:1fr}}}}</style>
@@ -399,7 +399,7 @@ async def dashboard_overview(request: Request):
             ai_intel_html = f'''
             <div id="ai-distribution" style="margin-top:32px;">
                 <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
-                    &#129302; AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
                 </h2>
                 {_headline_html}
                 <p style="color:var(--ink-muted);font-size:13px;">As agents recommend your tools more, detailed breakdowns will appear here.</p>

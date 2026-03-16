@@ -211,7 +211,7 @@ async def tool_detail(request: Request, slug: str):
             outcome_badge = f'''
             <div style="margin-top:8px;padding:8px 16px;background:var(--card-bg);border-radius:var(--radius-sm);
                         display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-light);border:1px solid var(--border);">
-                <span style="font-size:16px;">&#127919;</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                 <span style="font-weight:600;color:{rate_color};">{success_rate['rate']}%</span> agent success rate
                 <span style="color:var(--ink-muted);font-size:12px;">({success_rate['total']} report{'s' if success_rate['total'] != 1 else ''})</span>
             </div>'''
@@ -219,7 +219,7 @@ async def tool_detail(request: Request, slug: str):
             outcome_badge = f'''
             <div style="margin-top:8px;padding:8px 16px;background:var(--card-bg);border-radius:var(--radius-sm);
                         display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-muted);border:1px solid var(--border);">
-                <span style="font-size:16px;">&#127919;</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                 Recommended {recommendation_count} time{'s' if recommendation_count != 1 else ''} &mdash; no outcome reports yet
             </div>'''
         # Pro owners get a link to full analytics dashboard
@@ -352,7 +352,7 @@ async def tool_detail(request: Request, slug: str):
         claim_html = f'''
         <div id="claim" style="margin:16px 0;padding:24px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);">
             <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
-                <span style="font-size:24px;">&#128075;</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 <div style="flex:1;min-width:200px;">
                     <p style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px;">Did you build this?</p>
                     <p style="font-size:13px;color:var(--ink-light);margin-bottom:12px;">Claim your listing to see exactly how many AI agents recommend this tool, your success rate, and more. Free, no commission, no fees.</p>
@@ -367,17 +367,17 @@ async def tool_detail(request: Request, slug: str):
     if request.query_params.get('claim_email_sent'):
         claim_message = '''
         <div style="margin:16px 0;padding:16px 24px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-sm);color:var(--success-text);font-size:14px;">
-            &#9989; Verification email sent! Check your inbox and click the link to claim this listing.
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Verification email sent! Check your inbox and click the link to claim this listing.
         </div>'''
     elif request.query_params.get('claimed'):
         claim_message = '''
         <div style="margin:16px 0;padding:16px 24px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-sm);color:var(--success-text);font-size:14px;">
-            &#127881; You've claimed this listing! Visit your <a href="/dashboard" style="color:var(--success-text);font-weight:600;">dashboard</a> to see your analytics.
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> You've claimed this listing! Visit your <a href="/dashboard" style="color:var(--success-text);font-weight:600;">dashboard</a> to see your analytics.
         </div>'''
     elif request.query_params.get('claim_requested'):
         claim_message = '''
         <div style="margin:16px 0;padding:16px 24px;background:var(--info-bg);border:1px solid var(--info-border);border-radius:var(--radius-sm);color:var(--info-text);font-size:14px;">
-            &#128233; Claim request submitted! We'll review it within 24 hours.
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Claim request submitted! We'll review it within 24 hours.
         </div>'''
 
     # Community listing notice — shown on tools listed by Community Curated maker
