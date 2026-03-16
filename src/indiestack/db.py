@@ -1799,40 +1799,171 @@ def sanitize_fts(query: str) -> str:
     return ' '.join(f'"{t[:40]}"*' for t in terms[:10])
 
 
-async def search_tools(db: aiosqlite.Connection, query: str, limit: int = 20, source_type: str = ""):
-    safe_q = sanitize_fts(query)
-    if not safe_q:
-        return []
-    st_filter = ""
-    st_params: list = []
-    if source_type in ("code", "saas"):
-        st_filter = " AND t.source_type = ?"
-        st_params = [source_type]
-    cursor = await db.execute(
-        f"""SELECT t.*, c.name as category_name, c.slug as category_slug,
-                  bm25(tools_fts) as rank
-           FROM tools_fts fts
-           JOIN tools t ON t.id = fts.rowid
-           JOIN categories c ON t.category_id = c.id
-           WHERE tools_fts MATCH ? AND t.status = 'approved'{st_filter}
-           ORDER BY rank - (t.quality_score / 50.0) LIMIT ?""",
-        (safe_q, *st_params, limit),
-    )
-    rows = await cursor.fetchall()
+async def search_tools(
+    db: aiosqlite.Connection,
+    query: str,
+    limit: int = 20,
+    source_type: str = "",
+    *,
+    compatible_with: str = "",
+    price: str = "",
+    min_success_rate: int = 0,
+    min_confidence: str = "",
+    has_api: bool = False,
+    language: str = "",
+    tags: str = "",
+    exclude: str = "",
+    health: str = "",
+    min_stars: int = 0,
+    sort: str = "",
+):
+    # Build dynamic WHERE clauses shared across FTS and fallback queries
+    extra_where = ""
+    extra_params: list = []
 
-    # Fallback: search 'replaces' field for big-name tool queries
-    if not rows:
-        like_q = f"%{query.strip()}%"
+    if source_type in ("code", "saas"):
+        extra_where += " AND t.source_type = ?"
+        extra_params.append(source_type)
+
+    if compatible_with:
+        extra_where += (
+            " AND t.slug IN (SELECT CASE WHEN tool_a_slug = ? THEN tool_b_slug"
+            " ELSE tool_a_slug END FROM tool_pairs"
+            " WHERE (tool_a_slug = ? OR tool_b_slug = ?) AND success_count >= 1)"
+        )
+        extra_params.extend([compatible_with, compatible_with, compatible_with])
+
+    if price == "free":
+        extra_where += " AND t.price_pence IS NULL"
+    elif price == "paid":
+        extra_where += " AND t.price_pence > 0"
+
+    if has_api:
+        extra_where += " AND t.api_type IS NOT NULL AND t.api_type != ''"
+
+    if language:
+        extra_where += " AND LOWER(t.github_language) = LOWER(?)"
+        extra_params.append(language)
+
+    if tags:
+        for tag in tags.split(","):
+            tag = tag.strip()
+            if tag:
+                extra_where += " AND (',' || LOWER(t.tags) || ',') LIKE LOWER(?)"
+                extra_params.append(f"%,{tag},%")
+
+    if exclude:
+        slugs = [s.strip() for s in exclude.split(",") if s.strip()]
+        if slugs:
+            placeholders = ",".join("?" for _ in slugs)
+            extra_where += f" AND t.slug NOT IN ({placeholders})"
+            extra_params.extend(slugs)
+
+    if health and health in ("active", "stale", "dead", "archived"):
+        extra_where += " AND t.health_status = ?"
+        extra_params.append(health)
+
+    if min_stars > 0:
+        extra_where += " AND t.github_stars >= ?"
+        extra_params.append(min_stars)
+
+    # Determine sort order
+    def _fts_order():
+        if sort == "stars":
+            return "COALESCE(t.github_stars, 0) DESC, t.quality_score DESC"
+        elif sort == "upvotes":
+            return "t.upvote_count DESC, t.quality_score DESC"
+        elif sort == "newest":
+            return "t.created_at DESC"
+        return "rank - (t.quality_score / 50.0)"
+
+    def _browse_order():
+        if sort == "stars":
+            return "COALESCE(t.github_stars, 0) DESC, t.quality_score DESC"
+        elif sort == "upvotes":
+            return "t.upvote_count DESC, t.quality_score DESC"
+        elif sort == "newest":
+            return "t.created_at DESC"
+        return "t.quality_score DESC"
+
+    safe_q = sanitize_fts(query)
+
+    # If no query text but filters are present, do a filter-only browse
+    has_filters = any([
+        compatible_with, price, has_api, language, tags, exclude,
+        health, min_stars, sort, source_type,
+    ])
+
+    if not safe_q and not has_filters:
+        return []
+
+    rows = []
+
+    if safe_q:
+        # Primary FTS query
+        cursor = await db.execute(
+            f"""SELECT t.*, c.name as category_name, c.slug as category_slug,
+                      bm25(tools_fts) as rank
+               FROM tools_fts fts
+               JOIN tools t ON t.id = fts.rowid
+               JOIN categories c ON t.category_id = c.id
+               WHERE tools_fts MATCH ? AND t.status = 'approved'{extra_where}
+               ORDER BY {_fts_order()} LIMIT ?""",
+            (safe_q, *extra_params, limit),
+        )
+        rows = await cursor.fetchall()
+
+        # Fallback: search 'replaces' field for big-name tool queries
+        if not rows:
+            like_q = f"%{query.strip()}%"
+            cursor = await db.execute(
+                f"""SELECT t.*, c.name as category_name, c.slug as category_slug
+                   FROM tools t
+                   JOIN categories c ON t.category_id = c.id
+                   WHERE LOWER(t.replaces) LIKE LOWER(?) AND t.status = 'approved'{extra_where}
+                   ORDER BY {_browse_order()}
+                   LIMIT ?""",
+                (like_q, *extra_params, limit),
+            )
+            rows = await cursor.fetchall()
+    else:
+        # Filter-only browse (no FTS)
         cursor = await db.execute(
             f"""SELECT t.*, c.name as category_name, c.slug as category_slug
                FROM tools t
                JOIN categories c ON t.category_id = c.id
-               WHERE LOWER(t.replaces) LIKE LOWER(?) AND t.status = 'approved'{st_filter}
-               ORDER BY t.quality_score DESC
+               WHERE t.status = 'approved'{extra_where}
+               ORDER BY {_browse_order()}
                LIMIT ?""",
-            (like_q, *st_params, limit),
+            (*extra_params, limit),
         )
         rows = await cursor.fetchall()
+
+    # Post-query soft filters: min_success_rate and min_confidence
+    if rows and (min_success_rate > 0 or min_confidence):
+        confidence_levels = {"none": 0, "low": 1, "medium": 2, "high": 3}
+        min_conf_level = confidence_levels.get(min_confidence, 0)
+
+        passed = []
+        failed = []
+        for row in rows:
+            rate_info = await get_tool_success_rate(db, row["slug"])
+            conf_level = confidence_levels.get(rate_info["confidence"], 0)
+            passes = True
+            if min_success_rate > 0 and rate_info["rate"] < min_success_rate:
+                passes = False
+            if min_conf_level > 0 and conf_level < min_conf_level:
+                passes = False
+            if passes:
+                passed.append(row)
+            else:
+                failed.append(row)
+
+        # If fewer than 3 results pass, return filtered first then unfiltered remainder
+        if len(passed) < 3:
+            rows = passed + failed
+        else:
+            rows = passed
 
     return rows
 
