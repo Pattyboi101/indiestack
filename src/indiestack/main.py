@@ -1645,11 +1645,28 @@ async def api_tools_search(
         response["notice"] = notice
     if q.strip() and not results:
         demand = await db.get_search_demand(d, q, days=30)
+        gap_data = {}
+        try:
+            normalized = db.normalize_search_query(q)
+            gap_cursor = await d.execute(
+                """SELECT COUNT(*) as cnt, COUNT(DISTINCT COALESCE(api_key_id, -1)) as unique_sources
+                   FROM search_logs WHERE normalized_query = ? AND result_count = 0
+                   AND created_at > datetime('now', '-30 days')""",
+                (normalized,),
+            )
+            gap_row = await gap_cursor.fetchone()
+            gap_data = {
+                "searches_30d": gap_row['cnt'] if gap_row else 0,
+                "unique_agents": gap_row['unique_sources'] if gap_row else 0,
+            }
+        except Exception:
+            gap_data = {}
         response["market_gap"] = {
             "message": f"No tools found for '{q.strip()}'. This is an unsolved market gap — consider building one.",
             "submit_url": f"{BASE_URL}/submit",
             "query": q.strip(),
-            "searches_30d": demand,
+            "searches_30d": gap_data.get("searches_30d", demand),
+            "unique_agents": gap_data.get("unique_agents", 0),
         }
     return JSONResponse(response)
 

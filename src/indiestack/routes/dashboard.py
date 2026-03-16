@@ -39,6 +39,7 @@ from indiestack.db import (
     track_event,
     get_tool_success_rate,
     get_listing_quality_score,
+    get_search_gaps,
 )
 from indiestack.payments import create_connect_account, create_onboarding_link
 from indiestack.email import send_email, wishlist_update_html
@@ -259,15 +260,27 @@ async def dashboard_overview(request: Request):
             </div>
             '''
 
+    # ── Gap signals for empty state ──────────────────────────
+    gaps = await get_search_gaps(db, days=30, min_searches=5, limit=3)
+    gap_hint = ""
+    if gaps:
+        gap_items = " · ".join(f"<strong>{escape(str(g['normalized_query']))}</strong> ({g['search_count']}x)" for g in gaps[:3])
+        gap_hint = f'''
+        <div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:24px;">
+            <p style="font-size:13px;color:var(--ink-muted);margin-bottom:4px;">AI agents searched for these but found nothing:</p>
+            <p style="font-size:14px;">{gap_items}</p>
+        </div>'''
+
     # ── AI Distribution Intelligence ──────────────────────────
     ai_intel_html = ''
     if not has_claimed_tools and maker_id:
         # Branch A: maker exists but no claimed tools — empty state
-        ai_intel_html = '''
+        ai_intel_html = f'''
         <div id="ai-distribution" style="margin-top:32px;">
             <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> AI Distribution Intelligence
             </h2>
+            {gap_hint}
             <div class="card" style="text-align:center;padding:48px 24px;">
                 <div style="margin-bottom:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
                 <p style="font-weight:700;font-size:16px;color:var(--ink);margin-bottom:4px;">Claim your first tool to unlock analytics</p>
