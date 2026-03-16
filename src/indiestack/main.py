@@ -680,7 +680,7 @@ async def custom_http_exception_handler(request: Request, exc: StarletteHTTPExce
         from fastapi.responses import HTMLResponse
         body = """
         <section style="text-align:center;padding:100px 24px 80px;max-width:560px;margin:0 auto;">
-            <div style="font-size:72px;margin-bottom:16px;">&#128270;</div>
+            <div style="margin-bottom:16px;"><svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
             <h1 style="font-family:var(--font-display);font-size:clamp(36px,5vw,48px);color:var(--ink);margin-bottom:12px;">
                 404 &mdash; Page not found
             </h1>
@@ -690,7 +690,7 @@ async def custom_http_exception_handler(request: Request, exc: StarletteHTTPExce
             <form action="/search" method="GET" style="max-width:440px;margin:0 auto 24px;">
                 <div style="display:flex;align-items:center;background:var(--card-bg, white);border:2px solid var(--border);
                             border-radius:999px;padding:6px 6px 6px 16px;gap:8px;">
-                    <span style="font-size:18px;color:var(--ink-muted);">&#128269;</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     <input type="text" name="q"
                            placeholder="Search for tools..."
                            style="flex:1;border:none;outline:none;font-size:15px;font-family:var(--font-body);
@@ -3444,7 +3444,7 @@ async def magic_claim(request: Request):
     body = f"""
     <div class="container" style="padding:64px 24px;max-width:480px;">
         <div style="text-align:center;margin-bottom:32px;">
-            <div style="font-size:48px;margin-bottom:12px;">&#128075;</div>
+            <div style="margin-bottom:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
             <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);margin-bottom:8px;">
                 Claim {tool['name']}
             </h1>

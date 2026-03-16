@@ -771,7 +771,7 @@ async def geo_claim_submit(request: Request):
 
         content = f"""
         <div style="max-width:600px;margin:0 auto;padding:48px 24px;text-align:center;">
-            <div style="font-size:56px;margin-bottom:16px;">&#9989;</div>
+            <div style="margin-bottom:16px;"><svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
             <h1 style="font-family:var(--font-display);font-size:var(--heading-lg);color:var(--ink);margin-bottom:12px;">
                 {escape(name)} Claimed!
             </h1>

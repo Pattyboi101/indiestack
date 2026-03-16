@@ -92,7 +92,7 @@ async def tool_detail(request: Request, slug: str):
     is_ejectable = bool(tool.get('is_ejectable', 0))
     source_type = tool.get('source_type', 'saas')
     is_totw = bool(tool.get('tool_of_the_week', 0))
-    totw_badge = '<span style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E2B764,#D4A84B);color:#1A2D4A;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;">&#127942; Tool of the Week</span>' if is_totw else ''
+    totw_badge = '<span style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E2B764,#D4A84B);color:#1A2D4A;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> Tool of the Week</span>' if is_totw else ''
     tool_type = tool.get('tool_type') or None
     platforms_raw = tool.get('platforms', '')
     install_command = tool.get('install_command', '')
@@ -281,7 +281,7 @@ async def tool_detail(request: Request, slug: str):
         freshness_badge = '''
         <span style="display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;
                      font-size:12px;font-weight:600;background:var(--error-bg);color:var(--error-text);border:1px solid var(--error-border);">
-            &#128308; Possibly unmaintained (180+ days)
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--error-text,#EF4444);vertical-align:middle;margin-right:4px;"></span> Possibly unmaintained (180+ days)
         </span>'''
 
     github_badge = ''
@@ -324,7 +324,7 @@ async def tool_detail(request: Request, slug: str):
             except Exception:
                 pass
         if _is_archived:
-            _gh_signals.append('<span style="color:var(--danger, #EF4444);">&#128451; Archived</span>')
+            _gh_signals.append('<span style="color:var(--danger, #EF4444);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><rect x="2" y="4" width="20" height="5" rx="1"/><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg> Archived</span>')
         if _open_issues:
             _gh_signals.append(f'<span style="color:var(--ink-muted, #888);">{_open_issues} open issues</span>')
         if _gh_signals:
@@ -476,7 +476,7 @@ async def tool_detail(request: Request, slug: str):
             _pill_text = "Available March 2" if date.today() < _launch else "Available soon"
             cta_pill = f'<div style="display:inline-block;background:var(--terracotta);color:var(--slate);font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;margin-bottom:8px;">{_pill_text} &middot; {cta_price}/mo</div>'
             if user:
-                notify_icon = '&#9989;' if wishlisted else '&#128276;'
+                notify_icon = '&#9989;' if wishlisted else '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>'
                 notify_text = 'Notified when available!' if wishlisted else f'Notify me when available ({cta_price})'
                 cta_html = f"""
                 {cta_pill}
@@ -515,7 +515,7 @@ async def tool_detail(request: Request, slug: str):
                 cta_html = f"""
                 {cta_pill}
                 <a href="/auth/github?next=/tool/{slug}" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
-                    &#128276; Notify me when available ({cta_price})
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg> Notify me when available ({cta_price})
                 </a>
                 """
         else:
@@ -538,7 +538,7 @@ async def tool_detail(request: Request, slug: str):
 
     click_badge = (
         f'<div style="font-size:12px;color:var(--ink-muted);margin-top:8px;">'
-        f'&#128101; {click_count} developer{"s" if click_count != 1 else ""} visited via IndieStack this month</div>'
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> {click_count} developer{"s" if click_count != 1 else ""} visited via IndieStack this month</div>'
     ) if click_count > 0 else ''
 
     use_active = 'use_this' in reactions['user_reactions']
@@ -647,7 +647,7 @@ async def tool_detail(request: Request, slug: str):
     # Success/info banners for claim flow
     banners_html = ''
     if request.query_params.get('claimed') == '1':
-        banners_html += '<div class="alert alert-success" style="margin-bottom:16px;">&#127881; You\'ve claimed this tool! You can now manage it from your <a href="/dashboard" style="font-weight:700;">dashboard</a>.</div>'
+        banners_html += '<div class="alert alert-success" style="margin-bottom:16px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> You\'ve claimed this tool! You can now manage it from your <a href="/dashboard" style="font-weight:700;">dashboard</a>.</div>'
     elif request.query_params.get('claim') == 'sent' or request.query_params.get('claim_requested') == '1':
         banners_html += '<div class="alert alert-info" style="margin-bottom:16px;">&#9989; Claim request submitted! We\'ll review it and get back to you shortly.</div>'
     if request.query_params.get('flagged') == '1':
@@ -679,14 +679,14 @@ async def tool_detail(request: Request, slug: str):
     <button onclick="navigator.clipboard.writeText('{safe_tool_url}');this.innerHTML='&#10003; Copied!';setTimeout(()=>this.innerHTML='&#128279; Copy Link',2000)"
             style="padding:8px 16px;min-height:44px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
                    font-size:12px;font-weight:600;cursor:pointer;color:var(--ink-light);font-family:var(--font-body);">
-        &#128279; Copy Link
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link
     </button>
     <a href="{twitter_url}" target="_blank" rel="noopener"
        style="padding:8px 16px;min-height:44px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
               font-size:12px;font-weight:600;text-decoration:none;color:var(--ink-light);display:inline-flex;align-items:center;gap:4px;">
         &#120143; Share
     </a>
-    {'<a href="/dashboard#badge" style="padding:8px 16px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;font-size:12px;font-weight:600;text-decoration:none;color:var(--ink-light);display:inline-flex;align-items:center;gap:4px;">&#128247; Get Badge</a>' if user and tool.get('maker_id') and user.get('maker_id') == tool.get('maker_id') else ''}
+    {'<a href="/dashboard#badge" style="padding:8px 16px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;font-size:12px;font-weight:600;text-decoration:none;color:var(--ink-light);display:inline-flex;align-items:center;gap:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg> Get Badge</a>' if user and tool.get('maker_id') and user.get('maker_id') == tool.get('maker_id') else ''}
 </div>
 '''
 
@@ -1015,7 +1015,7 @@ async def tool_detail(request: Request, slug: str):
                     {totw_badge}
                     {ejectable_badge_html() if is_ejectable else ''}
                     {type_badge}
-                    {'<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--success-bg);color:var(--success-text);border:1px solid var(--success-border);">&#128230; Open Source</span>' if source_type == 'code' else '<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--info-bg);color:var(--info-text);border:1px solid var(--info-border);">&#9729; SaaS</span>'}
+                    {'<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--success-bg);color:var(--success-text);border:1px solid var(--success-border);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> Open Source</span>' if source_type == 'code' else '<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--info-bg);color:var(--info-text);border:1px solid var(--info-border);">&#9729; SaaS</span>'}
                     {pulse_html}
 
                     {rating_display_html}

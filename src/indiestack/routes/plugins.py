@@ -94,7 +94,7 @@ async def plugins_page(request: Request, type: str = "", platform: str = ""):
     else:
         grid = (
             '<div style="text-align:center;padding:64px 24px;">'
-            '<p style="font-size:48px;margin-bottom:16px;">&#129302;</p>'
+            '<div style="margin-bottom:16px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg></div>'
             '<h2 style="font-family:var(--font-display);font-size:24px;margin-bottom:8px;">No plugins yet</h2>'
             '<p style="color:var(--ink-muted);margin-bottom:24px;">Be the first to list an agent plugin or MCP server.</p>'
             '<a href="/submit" class="btn btn-primary">Submit Your Plugin</a>'

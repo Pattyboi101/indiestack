@@ -83,7 +83,7 @@ async def why_list_page(request: Request):
         <!-- Section 1: AI Agent Discovery -->
         <div style="margin-bottom:40px;">
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
-                &#129302; Your tool shows up in AI conversations
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> Your tool shows up in AI conversations
             </h2>
             <p style="color:var(--ink-light);line-height:1.7;">
                 IndieStack has an <a href="https://pypi.org/project/indiestack/" style="color:var(--accent);">MCP server on PyPI</a>
@@ -116,7 +116,7 @@ async def why_list_page(request: Request):
         <!-- Section 3: Who's already here -->
         <div style="margin-bottom:40px;">
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
-                &#128100; Who&rsquo;s already here
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Who&rsquo;s already here
             </h2>
             <p style="color:var(--ink-light);line-height:1.7;">
                 {notable_html}, and {maker_count} makers total.
@@ -127,7 +127,7 @@ async def why_list_page(request: Request):
         <!-- Section 4: How it works -->
         <div style="margin-bottom:40px;">
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
-                &#128295; How to list your tool
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> How to list your tool
             </h2>
             <div style="display:flex;flex-direction:column;gap:16px;">
                 <div style="display:flex;gap:16px;align-items:flex-start;">
@@ -157,7 +157,7 @@ async def why_list_page(request: Request):
         <!-- Section 5: Real activity -->
         <div style="margin-bottom:40px;">
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
-                &#128200; Real activity this week
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> Real activity this week
             </h2>
             <p style="color:var(--ink-light);line-height:1.7;">
                 {searches_week} searches in the last 7 days. {clicks_30d} outbound clicks in the last 30 days.

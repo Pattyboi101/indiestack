@@ -43,7 +43,7 @@ def _built_this_form(error: str = "", url_val: str = "", desc_val: str = "",
     <div style="display:flex;justify-content:center;align-items:center;min-height:60vh;">
         <div class="card" style="max-width:520px;width:100%;">
             <div style="text-align:center;margin-bottom:28px;">
-                <p style="font-size:32px;margin-bottom:8px;">&#128736;&#65039;</p>
+                <div style="margin-bottom:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
                 <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);margin-bottom:8px;">
                     Just built something?
                 </h1>

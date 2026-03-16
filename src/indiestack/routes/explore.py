@@ -44,7 +44,7 @@ async def explore(request: Request):
             new_for_you_html = f'''
         <div style="margin-bottom:32px;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
-                <span style="font-size:18px;">&#10024;</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
                 <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:0;">New for you</h2>
                 <span style="font-size:12px;color:var(--ink-muted);background:var(--cream-dark);padding:4px 10px;border-radius:999px;">Based on your bookmarks</span>
             </div>
@@ -246,7 +246,7 @@ async def explore(request: Request):
     else:
         results_section = '''
         <div style="text-align:center;padding:64px 0;">
-            <div style="font-size:48px;margin-bottom:12px;">&#128270;</div>
+            <div style="margin-bottom:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
             <p style="color:var(--ink-muted);font-size:16px;">No tools match your filters.</p>
             <a href="/explore" class="btn btn-secondary mt-4">Clear filters</a>
         </div>
@@ -264,7 +264,7 @@ async def explore(request: Request):
             transition:all 0.2s;margin-bottom:16px;"
             onmouseover="this.style.background='var(--accent)';this.style.color='#fff';this.style.borderColor='var(--accent)'"
             onmouseout="this.style.background='var(--cream-dark)';this.style.color='var(--ink-light)';this.style.borderColor='var(--border)'">
-            &#127922; Surprise me
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/></svg> Surprise me
         </a>
         {filter_bar}
         {active_html}

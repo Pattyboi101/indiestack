@@ -239,7 +239,7 @@ async def dashboard_overview(request: Request):
             funnel_html = f'''
             <div style="margin-top:32px;">
                 <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
-                    &#128200; Funnel Analytics <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 7 days)</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> Funnel Analytics <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 7 days)</span>
                 </h2>
                 <div class="card" style="overflow-x:auto;">
                     <table style="width:100%;border-collapse:collapse;font-size:14px;">
@@ -255,7 +255,7 @@ async def dashboard_overview(request: Request):
                         <tbody>{funnel_rows}</tbody>
                     </table>
                 </div>
-                <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;">Tip: Active tools with changelogs rank higher in search and get a &#128293; streak badge.</p>
+                <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;">Tip: Active tools with changelogs rank higher in search and get a <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> streak badge.</p>
             </div>
             '''
 
@@ -414,7 +414,7 @@ async def dashboard_overview(request: Request):
         buyer_badge_html = f'''
         <div class="card" style="padding:24px;margin-top:24px;">
             <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
-                &#127991; Your Tokens Saved Badge
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"/><path d="M7 7h.01"/></svg> Your Tokens Saved Badge
             </h3>
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
                 Show off your indie stack! Embed this badge in your README or website.
@@ -493,7 +493,7 @@ async def dashboard_overview(request: Request):
             milestone_html = f"""
             <div style="margin-bottom:24px;">
                 <h3 style="font-family:var(--font-display);font-size:18px;color:var(--terracotta);margin-bottom:12px;">
-                    &#127942; New Achievements
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> New Achievements
                 </h3>
                 {cards}
             </div>"""
@@ -605,7 +605,7 @@ async def dashboard_overview(request: Request):
             search_intent_html = f"""
             <div style="background:var(--card-bg);border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:24px;">
                 <h3 style="font-family:var(--font-display);font-size:18px;color:var(--terracotta);margin-bottom:16px;">
-                    &#128269; How Developers Find Your Tools
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> How Developers Find Your Tools
                 </h3>
                 <table style="width:100%;border-collapse:collapse;">
                     <thead>
@@ -681,7 +681,7 @@ async def dashboard_overview(request: Request):
     referral_html = f'''
     <div style="margin-top:32px;">
         <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
-            &#127873; Referral Programme
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg> Referral Programme
         </h2>
         <div class="card">
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
@@ -718,7 +718,7 @@ async def dashboard_overview(request: Request):
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
             <div style="flex:1;min-width:200px;">
                 <div style="font-family:var(--font-display);font-size:16px;color:white;margin-bottom:4px;">
-                    Welcome to IndieStack &#127881;
+                    Welcome to IndieStack <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 </div>
                 <p style="font-size:13px;color:var(--ink-muted);margin:0;line-height:1.5;">
                     As a thank you for joining, here&rsquo;s free access to <strong style="color:var(--slate);">Perplexity Comet</strong> &mdash; an AI-powered browser built for students and builders.
@@ -1196,7 +1196,7 @@ async def dashboard_tools(request: Request):
         <div class="container" style="padding:48px 24px;max-width:960px;">
             <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin-bottom:16px;">My Tools</h1>
             <div class="card" style="text-align:center;padding:48px 32px;">
-                <div style="font-size:48px;margin-bottom:16px;">&#128640;</div>
+                <div style="margin-bottom:16px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
                 <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin-bottom:12px;">List your first creation</h2>
                 <p style="color:var(--ink-muted);font-size:15px;line-height:1.6;max-width:400px;margin:0 auto 8px;">
                     Listing takes under 2 minutes. Free to list, no hidden fees.
@@ -1229,8 +1229,8 @@ async def dashboard_tools(request: Request):
         upvotes = t.get('upvote_count', 0)
         is_totw = t.get('tool_of_the_week', 0) == 1
         mcp_views = t.get('mcp_view_count', 0)
-        totw_badge = ' <span style="background:linear-gradient(135deg,#E2B764,#D4A84B);color:#1A2D4A;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;">&#127942; Tool of the Week</span>' if is_totw else ''
-        totw_line = ' &mdash; <span style="color:var(--gold);font-weight:600;">&#127942; Currently Tool of the Week!</span>' if is_totw else ' &mdash; top tool each week gets featured on our homepage'
+        totw_badge = ' <span style="background:linear-gradient(135deg,#E2B764,#D4A84B);color:#1A2D4A;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> Tool of the Week</span>' if is_totw else ''
+        totw_line = ' &mdash; <span style="color:var(--gold);font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> Currently Tool of the Week!</span>' if is_totw else ' &mdash; top tool each week gets featured on our homepage'
         # Get rating
         rating = await get_tool_rating(db, t['id'])
         rating_html = star_rating_html(rating['avg_rating'], rating['review_count'], size=14) if rating['review_count'] else '<span style="color:var(--ink-muted);font-size:12px;">No reviews</span>'
@@ -1939,7 +1939,7 @@ async def dashboard_notifications(request: Request):
         is_unread = not n.get('is_read', 1)
         bold = 'font-weight:700;' if is_unread else ''
         bg = 'background:#EDF4F9;' if is_unread else ''
-        icon = type_icons.get(n.get('type', ''), '&#128276;')
+        icon = type_icons.get(n.get('type', ''), '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>')
         icon_style = type_colors.get(n.get('type', ''), '')
         message = escape(str(n.get('message', '')))
         link = escape(str(n.get('link', '')))

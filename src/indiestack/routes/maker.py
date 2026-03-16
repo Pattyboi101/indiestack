@@ -43,7 +43,7 @@ async def makers_directory(request: Request):
         </div>
         <form action="/makers" method="GET" style="max-width:480px;margin:0 auto 32px;">
             <div class="search-box">
-                <span class="search-icon">&#128269;</span>
+                <span class="search-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
                 <input type="text" name="q" value="{escape(q)}" placeholder="Search makers by name..." style="width:100%;padding:12px 20px 12px 48px;font-size:15px;font-family:var(--font-body);border:2px solid var(--border);border-radius:999px;background:white;">
             </div>
         </form>
@@ -172,11 +172,11 @@ async def leaderboard(request: Request):
     for i, m in enumerate(makers):
         rank = i + 1
         if rank == 1:
-            medal = '<span style="font-size:20px;">&#129351;</span>'
+            medal = '<span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#E2B764;color:#fff;font-size:11px;font-weight:700;">1</span>'
         elif rank == 2:
-            medal = '<span style="font-size:20px;">&#129352;</span>'
+            medal = '<span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#94A3B8;color:#fff;font-size:11px;font-weight:700;">2</span>'
         elif rank == 3:
-            medal = '<span style="font-size:20px;">&#129353;</span>'
+            medal = '<span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#CD7F32;color:#fff;font-size:11px;font-weight:700;">3</span>'
         else:
             medal = f'<span style="font-size:16px;font-weight:700;color:var(--ink-muted);">{rank}</span>'
 
@@ -197,7 +197,7 @@ async def leaderboard(request: Request):
 
         active_pill = ''
         if m['has_changelog']:
-            active_pill = '<span style="font-size:11px;font-weight:700;color:var(--warning-text);background:var(--warning-bg);padding:2px 8px;border-radius:999px;">&#128293; Active</span>'
+            active_pill = '<span style="font-size:11px;font-weight:700;color:var(--warning-text);background:var(--warning-bg);padding:2px 8px;border-radius:999px;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> Active</span>'
 
         row_bg = 'background:linear-gradient(135deg,rgba(0,212,245,0.05),rgba(26,45,74,0.03));' if rank <= 3 else ''
 

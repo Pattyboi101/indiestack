@@ -620,7 +620,7 @@ def nav_html(user=None) -> str:
         avatar_html = user_avatar_html(user, size=32, is_own=True)
         auth_links = f"""
                 <a href="/dashboard" style="color:var(--ink-light);">Dashboard</a>
-                <a href="/dashboard/notifications" style="position:relative;color:var(--ink-light);font-size:18px;text-decoration:none;">&#128276;</a>
+                <a href="/dashboard/notifications" style="position:relative;color:var(--ink-light);font-size:18px;text-decoration:none;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></a>
                 <div style="display:flex;align-items:center;gap:8px;">
                     {avatar_html}
                     <span style="color:var(--ink);font-size:13px;font-weight:600;">{user_name}</span>
@@ -850,7 +850,7 @@ def indie_badge_html(indie_status: str) -> str:
 
 def ejectable_badge_html() -> str:
     """Render Certified Ejectable badge — signals clean data export / no lock-in."""
-    return '<span class="badge badge-success">&#128275; Ejectable</span>'
+    return '<span class="badge badge-success"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg> Ejectable</span>'
 
 
 def maker_pulse_html(last_active: str) -> str:
@@ -881,7 +881,7 @@ def maker_pulse_html(last_active: str) -> str:
         badge_class = 'badge-muted'
         label = f'Updated {delta // 365}y ago'
 
-    return f'<span class="badge {badge_class}">&#128994; {label}</span>'
+    return f'<span class="badge {badge_class}"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success-text,#22C55E);vertical-align:middle;margin-right:4px;"></span> {label}</span>'
 
 
 def integration_snippet_html(tool: dict) -> str:
@@ -989,7 +989,7 @@ def indie_score_html(tool: dict) -> str:
 
 def stack_card(stack: dict) -> str:
     """Card component for a Vibe Stack bundle."""
-    emoji = stack.get('cover_emoji', '') or '&#128230;'
+    emoji = stack.get('cover_emoji', '') or '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'
     title = escape(str(stack['title']))
     desc = escape(str(stack.get('description', '')))
     slug = escape(str(stack['slug']))
@@ -1086,7 +1086,7 @@ def tool_card(tool: dict, compact: bool = False) -> str:
     # Changelog streak badge — fire emoji if updated in last 14 days
     streak_html = ''
     if tool.get('has_changelog_14d'):
-        streak_html = '<span class="badge badge-warning" style="font-weight:700;margin-top:8px;">&#128293; Active</span>'
+        streak_html = '<span class="badge badge-warning" style="font-weight:700;margin-top:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> Active</span>'
 
     # Add bookmark icon — positioned absolutely in top-right of card (hidden in compact mode)
     bookmark_html = ''
@@ -1127,7 +1127,7 @@ def tool_card(tool: dict, compact: bool = False) -> str:
             tr_title = f'Verified: {sr_rate}% success from {sr_total} agent reports'
         else:
             tr_color = 'var(--ink-muted)'
-            tr_icon = '&#127919;'
+            tr_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>'
             tr_title = f'{sr_rate}% success from {sr_total} agent reports'
         trust_html = f'<span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;color:{tr_color};margin-top:8px;" title="{tr_title}">{tr_icon} {sr_rate}% success ({sr_total})</span>'
 
@@ -1748,7 +1748,7 @@ def launch_readiness_bar(readiness):
     bar_color = 'var(--success-text)' if score >= 100 else 'var(--accent)'
     badge_html = ''
     if score >= 100:
-        badge_html = '<span style="background:var(--success-text);color:#fff;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;margin-left:12px;">&#128640; Launch Ready</span>'
+        badge_html = '<span style="background:var(--success-text);color:#fff;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;margin-left:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg> Launch Ready</span>'
 
     checklist_items = ''
     for item in items:

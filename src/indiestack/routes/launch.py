@@ -64,8 +64,8 @@ async def launch_page(request: Request):
 
     values_html = f'''
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:40px 0;">
-        {_value_card("&#129302;", "AI-Native Discovery", "Your AI assistant checks IndieStack before building from scratch. It finds existing tools so you don't rebuild what already exists.")}
-        {_value_card("&#128269;", "Search + Alternatives", "Search for any tool or competitor. Looking for Auth0? We'll show you indie alternatives. Looking for something that doesn't exist? We'll tell you.")}
+        {_value_card('<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg>', "AI-Native Discovery", "Your AI assistant checks IndieStack before building from scratch. It finds existing tools so you don't rebuild what already exists.")}
+        {_value_card('<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>', "Search + Alternatives", "Search for any tool or competitor. Looking for Auth0? We'll show you indie alternatives. Looking for something that doesn't exist? We'll tell you.")}
         {_value_card('<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>', "Market Gap Intelligence", "Every failed search is a signal. See what developers and AI agents are looking for but can't find — and build it first.")}
     </div>
     '''
@@ -117,7 +117,7 @@ async def launch_page(request: Request):
         {values_html}
 
         <div class="card" style="text-align:center;padding:28px;background:linear-gradient(135deg,var(--terracotta) 0%,var(--terracotta-dark) 100%);">
-            <p style="font-size:24px;margin-bottom:8px;">&#129302;</p>
+            <div style="margin-bottom:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg></div>
             <h2 style="font-family:var(--font-display);font-size:20px;color:white;margin:0 0 8px;">
                 Install the MCP Server
             </h2>

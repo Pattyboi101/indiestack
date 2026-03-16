@@ -129,7 +129,7 @@ def submit_success_page(tool_name, tool_slug, maker_slug="", tool_type=None):
     <div class="container" style="max-width:640px;padding:48px 24px;">
         <!-- Celebration header -->
         <div style="text-align:center;margin-bottom:32px;">
-            <div style="font-size:64px;margin-bottom:16px;">&#127881;</div>
+            <div style="margin-bottom:16px;"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
             <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin-bottom:8px;">
                 {escape(tool_name)} is listed!
             </h1>
@@ -139,7 +139,7 @@ def submit_success_page(tool_name, tool_slug, maker_slug="", tool_type=None):
         <!-- AI Discovery callout -->
         <div style="background:linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);border-radius:var(--radius);padding:24px;margin-bottom:24px;">
             <p style="color:white;font-size:15px;line-height:1.6;margin:0;">
-                &#129302; {"Your " + escape({"mcp_server": "MCP server", "plugin": "plugin", "extension": "extension", "skill": "skill"}.get(tool_type, "plugin")) + " is now discoverable by AI coding assistants through our MCP server and plugin directory." if tool_type else "Your creation is now discoverable by AI agents (Cursor, Windsurf, Claude Code) through our MCP server."}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> {"Your " + escape({"mcp_server": "MCP server", "plugin": "plugin", "extension": "extension", "skill": "skill"}.get(tool_type, "plugin")) + " is now discoverable by AI coding assistants through our MCP server and plugin directory." if tool_type else "Your creation is now discoverable by AI agents (Cursor, Windsurf, Claude Code) through our MCP server."}
             </p>
         </div>
 
@@ -305,7 +305,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
 
         <details style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;cursor:pointer;">
             <summary style="font-weight:700;font-size:15px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:8px;">
-                <span style="font-size:16px;">&#128270;</span> What we look for
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> What we look for
                 <span style="margin-left:auto;font-size:12px;color:var(--ink-muted);font-weight:400;">Guidelines, not hard rules</span>
             </summary>
             <div style="margin-top:16px;font-size:14px;color:var(--ink-light);line-height:1.7;">
@@ -329,7 +329,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                 Early listers get the most visibility as the catalog grows.
             </p>
             <p style="font-size:14px;color:var(--info-text);margin:12px 0 0 0;">
-                &#127942; <strong>Pick of the Week:</strong> The most AI-recommended creation each week gets featured
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> <strong>Pick of the Week:</strong> The most AI-recommended creation each week gets featured
                 on our homepage. The more agents discover yours, the higher your chances.
             </p>
         </div>
@@ -407,7 +407,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
                     <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;">
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-                            <span style="font-size:14px;">&#9989;</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                             <strong style="font-size:14px;color:var(--ink);">Free forever</strong>
                         </div>
                         <p style="color:var(--ink-muted);font-size:13px;line-height:1.5;margin:0;">
@@ -417,7 +417,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                     </div>
                     <div style="background:var(--card-bg);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:16px;">
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-                            <span style="font-size:14px;">&#129302;</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg>
                             <strong style="font-size:14px;color:var(--ink);">AI Discovery</strong>
                             <span style="font-size:11px;font-weight:700;color:var(--slate);background:rgba(0,212,245,0.1);padding:2px 8px;border-radius:999px;">Live</span>
                         </div>
@@ -461,7 +461,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                     <input type="checkbox" name="supports_export" value="1"
                            class="custom-checkbox">
                     <span>
-                        <strong style="font-size:14px;color:var(--ink);">&#128275; Supports full data export</strong>
+                        <strong style="font-size:14px;color:var(--ink);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg> Supports full data export</strong>
                         <br><span style="font-size:13px;color:var(--ink-muted);">Creations with clean data export get a &ldquo;Certified Ejectable&rdquo; badge after admin review.</span>
                     </span>
                 </label>

@@ -122,7 +122,7 @@ async def community_stacks(request: Request):
     else:
         cards_html = """
         <div style="text-align:center;padding:60px 20px;">
-            <p style="font-size:48px;margin-bottom:16px;">&#128218;</p>
+            <div style="margin-bottom:16px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
             <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);">No stacks yet</h2>
             <p style="color:var(--ink-muted);margin:8px 0 24px 0;">Be the first to create a public stack!</p>
             <a href="/dashboard/my-stack" class="btn btn-primary">Create Your Stack &rarr;</a>
@@ -156,7 +156,7 @@ async def stack_generator_form(request: Request):
     body = """
     <div class="container" style="max-width:760px;padding:48px 24px;">
         <div style="text-align:center;margin-bottom:36px;">
-            <span style="font-size:48px;display:block;margin-bottom:12px;">&#128270;</span>
+            <span style="display:block;margin-bottom:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
             <h1 style="font-family:var(--font-display);font-size:clamp(26px,4vw,38px);color:var(--ink);margin-bottom:12px;">
                 Stack Generator
             </h1>
@@ -230,7 +230,6 @@ async def stack_generator_results(request: Request, deps: str = Form("")):
     if not dependencies:
         body = """
         <div class="container" style="max-width:760px;padding:48px 24px;text-align:center;">
-            <span style="font-size:48px;display:block;margin-bottom:12px;">&#128533;</span>
             <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);">No dependencies found</h1>
             <p style="color:var(--ink-muted);margin-top:8px;">
                 We couldn&rsquo;t parse any package names from what you pasted.
@@ -360,7 +359,7 @@ async def stack_detail(request: Request, slug: str):
         return HTMLResponse(page_shell("Stack Not Found", body, user=request.state.user), status_code=404)
 
     discount_percent = stack.get('discount_percent', 15)
-    emoji = stack.get('cover_emoji', '') or '&#128230;'
+    emoji = stack.get('cover_emoji', '') or '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'
     title = escape(str(stack['title']))
     desc = escape(str(stack.get('description', '')))
 
@@ -591,7 +590,7 @@ async def stack_purchase_delivery(request: Request, token: str):
         """
         return HTMLResponse(page_shell("Purchase Not Found", body, user=request.state.user), status_code=404)
 
-    emoji = purchase.get('cover_emoji', '') or '&#128230;'
+    emoji = purchase.get('cover_emoji', '') or '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'
     stack_title = escape(str(purchase['stack_title']))
     amount = purchase['total_amount_pence']
 
@@ -631,7 +630,7 @@ async def stack_purchase_delivery(request: Request, token: str):
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:700px;">
         <div style="text-align:center;margin-bottom:32px;">
-            <span style="font-size:48px;display:block;margin-bottom:12px;">&#9989;</span>
+            <span style="display:block;margin-bottom:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
             <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);">
                 Stack Purchased!
             </h1>
@@ -682,7 +681,7 @@ async def public_user_stack(request: Request, username: str):
             note = t.get('note', '')
             cards_html += tool_card(t)
             if note:
-                cards_html += f'<div style="background:var(--surface,var(--cream));border-radius:var(--radius-sm);padding:12px 16px;margin:-8px 0 16px 0;font-size:14px;color:var(--ink-muted);border-left:3px solid var(--slate);">&#128172; {escape(str(note))}</div>'
+                cards_html += f'<div style="background:var(--surface,var(--cream));border-radius:var(--radius-sm);padding:12px 16px;margin:-8px 0 16px 0;font-size:14px;color:var(--ink-muted);border-left:3px solid var(--slate);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> {escape(str(note))}</div>'
     else:
         cards_html = '<p style="text-align:center;color:var(--ink-muted);padding:40px;">This stack is empty.</p>'
 

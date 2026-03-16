@@ -719,7 +719,7 @@ async def _render_tools_all(db, request):
                             style="padding:4px 12px;border-radius:999px;font-size:11px;font-weight:600;
                                    cursor:pointer;background:#00D4F5;color:#1A2D4A;border:none;
                                    font-family:var(--font-body);">
-                        &#128279; Copy Link
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link
                     </button>
                 </td>'''
             else:
