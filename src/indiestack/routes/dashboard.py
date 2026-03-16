@@ -90,6 +90,16 @@ async def dashboard_overview(request: Request):
     # Pro subscription check
     is_pro = await check_pro(db, user['id'])
 
+    # Check if user has any claimed tools
+    has_claimed_tools = False
+    if maker_id:
+        _claimed_cursor = await db.execute(
+            "SELECT COUNT(*) as cnt FROM tools WHERE maker_id = ? AND claimed_at IS NOT NULL AND status = 'approved'",
+            (maker_id,),
+        )
+        _claimed_row = await _claimed_cursor.fetchone()
+        has_claimed_tools = (_claimed_row['cnt'] or 0) > 0
+
     # Tokens saved
     user_tokens = await get_user_tokens_saved(db, user['id'])
     tokens_k = user_tokens // 1000 if user_tokens else 0
@@ -251,7 +261,24 @@ async def dashboard_overview(request: Request):
 
     # ── AI Distribution Intelligence ──────────────────────────
     ai_intel_html = ''
-    if user.get('maker_id'):
+    if not has_claimed_tools and maker_id:
+        # Branch A: maker exists but no claimed tools — empty state
+        ai_intel_html = '''
+        <div id="ai-distribution" style="margin-top:32px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
+                &#129302; AI Distribution Intelligence
+            </h2>
+            <div class="card" style="text-align:center;padding:48px 24px;">
+                <p style="font-size:32px;margin-bottom:12px;">&#128202;</p>
+                <p style="font-weight:700;font-size:16px;color:var(--ink);margin-bottom:4px;">Claim your first tool to unlock analytics</p>
+                <p style="color:var(--ink-muted);font-size:14px;margin-bottom:20px;">See how often AI agents recommend your tools, your success rate, and which queries find you.</p>
+                <a href="/" style="display:inline-block;padding:10px 24px;background:var(--accent);color:#0F1D30;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
+                    Find Your Tool
+                </a>
+            </div>
+        </div>'''
+    elif has_claimed_tools and maker_id:
+        # Branch B: has claimed tools — headline stats + full intel (with existing Pro gating)
         queries = await get_maker_query_intelligence(db, user['maker_id'], days=30)
         agents = await get_maker_agent_breakdown(db, user['maker_id'], days=30)
         trend = await get_maker_daily_trend(db, user['maker_id'], days=30)
@@ -303,6 +330,23 @@ async def dashboard_overview(request: Request):
                 <div style="display:flex;align-items:flex-end;gap:3px;height:44px;padding:2px 0;">{bars}</div>
             </div>'''
 
+        # Headline stats (visible to all claimed-tool makers)
+        _total_recs = sum(a['count'] for a in agents) if agents else 0
+        _headline_html = ''
+        if _total_recs > 0 or maker_success_rate is not None:
+            _sr_display = f'{maker_success_rate}%' if maker_success_rate is not None else '—'
+            _headline_html = f'''
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px;">
+                <div class="card" style="padding:20px;text-align:center;">
+                    <p style="font-size:28px;font-weight:700;color:var(--accent);">{_total_recs}</p>
+                    <p style="font-size:13px;color:var(--ink-muted);">AI Recommendations (30d)</p>
+                </div>
+                <div class="card" style="padding:20px;text-align:center;">
+                    <p style="font-size:28px;font-weight:700;color:var(--ink);">{_sr_display}</p>
+                    <p style="font-size:13px;color:var(--ink-muted);">Agent Success Rate</p>
+                </div>
+            </div>'''
+
         if queries or agents:
             # Pre-compute agent card content to avoid nested f-string quote conflicts
             if is_pro:
@@ -328,6 +372,7 @@ async def dashboard_overview(request: Request):
                 <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
                     &#129302; AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
                 </h2>
+                {_headline_html}
                 <style>.ai-intel-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}}@media(max-width:600px){{.ai-intel-grid{{grid-template-columns:1fr}}}}</style>
                 <div class="ai-intel-grid">
                     <div class="card">
@@ -349,6 +394,7 @@ async def dashboard_overview(request: Request):
                     </div>
                 </div>
             </div>'''
+    # Branch C (implicit): no maker_id — ai_intel_html stays empty string
 
     # Buyer badge embed section
     buyer_badge_html = ''
