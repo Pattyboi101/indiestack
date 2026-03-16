@@ -1891,6 +1891,8 @@ async def report_outcome(
     tool_slug: str,
     success: bool,
     notes: Optional[str] = None,
+    used_with: Optional[str] = None,
+    incompatible_with: Optional[str] = None,
     *,
     ctx: Context,
 ) -> str:
@@ -1908,11 +1910,17 @@ async def report_outcome(
         tool_slug: The slug of the tool you recommended
         success: True if the user successfully integrated/used it, False if not
         notes: Optional context (e.g. "integrated in 5 minutes" or "docs were outdated")
+        used_with: Optional comma-separated slugs of other tools used alongside this one (e.g. 'supabase,resend'). Records a verified stack and strengthens compatibility data.
+        incompatible_with: Optional slug of a tool that conflicted with this one. Records a known conflict for future warnings.
     """
     client = _get_client(ctx)
     payload = {"tool_slug": tool_slug, "success": success}
     if notes:
         payload["notes"] = str(notes)[:1000]
+    if used_with:
+        payload["used_with"] = used_with
+    if incompatible_with:
+        payload["incompatible_with"] = incompatible_with
 
     try:
         data = await _api_post(client, "/api/agent/outcome", payload)
