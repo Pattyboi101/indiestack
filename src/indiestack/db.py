@@ -5688,25 +5688,6 @@ async def get_maker_reputation_leaderboard(db) -> list:
     return [dict(r) for r in await cursor.fetchall()]
 
 
-async def get_search_gaps(db, limit: int = 30) -> list:
-    """Searches that returned 0 results — shows what tools to add."""
-    cursor = await db.execute("""
-        SELECT LOWER(TRIM(query)) as query, COUNT(*) as count, MAX(created_at) as last_searched
-        FROM search_logs
-        WHERE result_count = 0
-          AND LENGTH(TRIM(query)) >= 2
-          AND query NOT LIKE '%http%'
-          AND query NOT LIKE '%.com%'
-          AND query NOT LIKE '%.org%'
-          AND query NOT LIKE '%.net%'
-          AND query NOT LIKE '%.io%'
-          AND query NOT LIKE '@%'
-        GROUP BY LOWER(TRIM(query))
-        ORDER BY count DESC
-        LIMIT ?
-    """, (limit,))
-    return [dict(r) for r in await cursor.fetchall()]
-
 
 async def get_search_trends(db, days: int = 30, limit: int = 20) -> list:
     """Most popular searches with result counts."""
