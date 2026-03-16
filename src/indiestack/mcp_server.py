@@ -912,6 +912,89 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
 
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
+async def find_compatible(
+    slug: str,
+    category: Optional[str] = None,
+    min_success_count: int = 1,
+    *,
+    ctx: Context,
+) -> str:
+    """Find tools that are known to work well with a specific tool.
+
+    Call this after selecting a tool to discover what pairs well with it.
+    Returns compatible tools grouped by category, with integration report counts,
+    verified stacks (3+ tools proven together), and conflict warnings.
+
+    Use this for stack assembly: pick your first tool, then find_compatible()
+    to build around it. Much more reliable than guessing — these are
+    agent-verified integrations.
+
+    Args:
+        slug: The tool's URL slug (e.g. "supabase"). Get slugs from find_tools() results.
+        category: Optional category to filter companions (e.g. "authentication").
+        min_success_count: Minimum number of integration reports (default 1).
+    """
+    client = _get_client(ctx)
+    params = {"min_success_count": str(min_success_count)}
+    if category:
+        params["category"] = category
+
+    await ctx.report_progress(progress=0, total=1)
+    try:
+        data = await _api_get(client, f"/api/tools/{slug}/compatible", params)
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code == 404:
+            raise ToolError(f"Tool '{slug}' not found. Check the slug from find_tools() results.")
+        raise ToolError(f"Could not fetch compatibility data: {e}")
+    except Exception as e:
+        raise ToolError(f"Could not fetch compatibility data: {e}")
+    await ctx.report_progress(progress=1, total=1)
+
+    total = data.get("total_compatible", 0)
+    grouped = data.get("grouped", {})
+    stacks = data.get("verified_stacks", [])
+    conflicts = data.get("conflicts", [])
+    overlaps = data.get("overlaps", [])
+
+    if total == 0:
+        return (
+            f"No compatibility data yet for '{slug}'.\n\n"
+            "Help build the compatibility graph: after integrating tools together, "
+            "use report_outcome(tool_slug, success=True, used_with='other-tool-slug') "
+            "to record what works."
+        )
+
+    lines = [f"## Tools compatible with {slug} ({total} reported pairs)\n"]
+
+    for cat_name, tools in grouped.items():
+        lines.append(f"\n### {cat_name} ({len(tools)})")
+        for t in tools:
+            health_mark = " \u2713" if t.get("health_status") == "active" else ""
+            overlap = ""
+            if t["slug"] in overlaps:
+                overlap = f"\n  \u26a0\ufe0f Overlap: {slug} and {t['slug']} are both in {cat_name} \u2014 check they serve different needs"
+            lines.append(f"- **{t['name']}** \u2014 {t['success_count']} integration(s) reported{health_mark}{overlap}")
+
+    if stacks:
+        lines.append("\n### Verified Stacks")
+        for stack in stacks:
+            lines.append(f"- {' + '.join(stack)}")
+
+    if conflicts:
+        lines.append("\n### Known Conflicts")
+        for c in conflicts:
+            reason = f" ({c['reason']})" if c.get("reason") else ""
+            lines.append(f"- \u26a0\ufe0f **{c['slug']}** \u2014 {c['reports']} report(s){reason}")
+
+    lines.append(
+        "\n\ud83d\udca1 After integrating, use report_outcome(tool_slug, success=True, "
+        "used_with='companion-slug') to strengthen this data."
+    )
+
+    return "\n".join(lines)
+
+
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
 async def list_categories(*, ctx: Context) -> str:
     """List all 25 IndieStack categories with tool counts.
 

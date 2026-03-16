@@ -2194,6 +2194,45 @@ async def api_categories(request: Request):
     return JSONResponse({"categories": results, "total": len(results)})
 
 
+@app.get("/api/tools/{slug}/compatible")
+async def api_tools_compatible(request: Request, slug: str, category: str = "", min_success_count: int = 1):
+    """Get tools compatible with the given tool, grouped by category."""
+    d = request.state.db
+    tool = await db.get_tool_by_slug(d, slug)
+    if not tool:
+        return JSONResponse({"error": f"Tool '{slug}' not found"}, status_code=404)
+
+    data = await db.get_compatible_tools_grouped(d, slug, category_slug=category, min_success_count=min_success_count)
+    triangles = await db.find_stack_triangles(d, slug)
+    conflicts = await db.get_tool_conflicts(d, slug)
+
+    # Detect same-category overlaps
+    tool_cat_slug = tool.get('category_slug') or ''
+    overlaps = [p['pair_slug'] for p in data['pairs'] if p.get('category_slug') == tool_cat_slug]
+
+    return JSONResponse({
+        "tool": slug,
+        "total_compatible": data["total"],
+        "grouped": {
+            cat: [
+                {
+                    "slug": p["pair_slug"],
+                    "name": p["name"],
+                    "tagline": p.get("tagline", ""),
+                    "success_count": p["success_count"],
+                    "health_status": p.get("health_status", ""),
+                    "url": p.get("url", ""),
+                }
+                for p in pairs
+            ]
+            for cat, pairs in data["grouped"].items()
+        },
+        "verified_stacks": [t["tools"] for t in triangles],
+        "conflicts": [{"slug": c["conflict_slug"], "reason": c.get("reason"), "reports": c["report_count"]} for c in conflicts],
+        "overlaps": overlaps,
+    })
+
+
 @app.get("/api/tools/{slug}")
 async def api_tool_detail(request: Request, slug: str, source: str = ""):
     """JSON API for getting full tool details — used by MCP server."""

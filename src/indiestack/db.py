@@ -3569,6 +3569,70 @@ async def get_tool_conflicts(db: aiosqlite.Connection, slug: str) -> list:
     return [dict(r) for r in await cursor.fetchall()]
 
 
+async def get_compatible_tools_grouped(db: aiosqlite.Connection, slug: str, category_slug: str = "", min_success_count: int = 1) -> dict:
+    """Get tools compatible with the given slug, grouped by category, with metadata."""
+    cat_filter = ""
+    cat_params = []
+    if category_slug:
+        cat_filter = " AND c.slug = ?"
+        cat_params = [category_slug]
+
+    cursor = await db.execute(f"""
+        SELECT
+            CASE WHEN tp.tool_a_slug = ? THEN tp.tool_b_slug ELSE tp.tool_a_slug END as pair_slug,
+            tp.success_count,
+            t.name, t.tagline, t.url, t.health_status, t.github_stars,
+            c.name as category_name, c.slug as category_slug
+        FROM tool_pairs tp
+        JOIN tools t ON t.slug = CASE WHEN tp.tool_a_slug = ? THEN tp.tool_b_slug ELSE tp.tool_a_slug END
+        JOIN categories c ON t.category_id = c.id
+        WHERE (tp.tool_a_slug = ? OR tp.tool_b_slug = ?)
+          AND tp.success_count >= ?
+          AND t.status = 'approved'
+          {cat_filter}
+        ORDER BY tp.success_count DESC
+    """, (slug, slug, slug, slug, min_success_count, *cat_params))
+    rows = [dict(r) for r in await cursor.fetchall()]
+
+    grouped = {}
+    for r in rows:
+        cat = r['category_name']
+        if cat not in grouped:
+            grouped[cat] = []
+        grouped[cat].append(r)
+
+    return {"pairs": rows, "grouped": grouped, "total": len(rows)}
+
+
+async def find_stack_triangles(db: aiosqlite.Connection, slug: str, min_success: int = 1) -> list:
+    """Find triangles in the compatibility graph — 3 tools all mutually compatible."""
+    cursor = await db.execute("""
+        SELECT CASE WHEN tool_a_slug = ? THEN tool_b_slug ELSE tool_a_slug END as partner
+        FROM tool_pairs
+        WHERE (tool_a_slug = ? OR tool_b_slug = ?) AND success_count >= ?
+    """, (slug, slug, slug, min_success))
+    partners = [r[0] for r in await cursor.fetchall()]
+
+    if len(partners) < 2:
+        return []
+
+    triangles = []
+    for i, p1 in enumerate(partners):
+        for p2 in partners[i + 1:]:
+            a, b = sorted([p1, p2])
+            check = await db.execute(
+                "SELECT success_count FROM tool_pairs WHERE tool_a_slug = ? AND tool_b_slug = ? AND success_count >= ?",
+                (a, b, min_success),
+            )
+            row = await check.fetchone()
+            if row:
+                triangles.append({
+                    "tools": sorted([slug, p1, p2]),
+                    "mutual_success": row[0],
+                })
+    return triangles[:5]
+
+
 # ── Tool Views (Analytics) ───────────────────────────────────────────────
 
 async def record_tool_view(db: aiosqlite.Connection, tool_id: int, ip: str):
