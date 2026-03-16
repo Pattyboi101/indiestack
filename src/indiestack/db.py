@@ -1470,6 +1470,23 @@ async def init_db():
             import logging
             logging.getLogger(__name__).warning("Pair normalization migration: %s", e)
 
+        # ── Stacks intelligence columns ──
+        for col_sql in [
+            "ALTER TABLE stacks ADD COLUMN source TEXT NOT NULL DEFAULT 'curated'",
+            "ALTER TABLE stacks ADD COLUMN framework TEXT",
+            "ALTER TABLE stacks ADD COLUMN use_case TEXT",
+            "ALTER TABLE stacks ADD COLUMN replaces_json TEXT",
+            "ALTER TABLE stacks ADD COLUMN confidence_score REAL NOT NULL DEFAULT 0",
+            "ALTER TABLE stacks ADD COLUMN total_tokens_saved INTEGER NOT NULL DEFAULT 0",
+            "ALTER TABLE stacks ADD COLUMN tool_count_cached INTEGER NOT NULL DEFAULT 0",
+            "ALTER TABLE stacks ADD COLUMN generated_at TIMESTAMP",
+        ]:
+            try:
+                await db.execute(col_sql)
+            except Exception:
+                pass
+        await db.commit()
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
