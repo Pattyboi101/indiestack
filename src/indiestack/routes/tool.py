@@ -380,9 +380,6 @@ async def tool_detail(request: Request, slug: str):
             &#128233; Claim request submitted! We'll review it within 24 hours.
         </div>'''
 
-    # Boost upsell — hidden for now (re-enable when trust is established)
-    boost_html = ''
-
     # Community listing notice — shown on tools listed by Community Curated maker
     community_notice = ''
     maker_slug_val = tool.get('maker_slug', '') or ''
@@ -1039,7 +1036,6 @@ async def tool_detail(request: Request, slug: str):
         {claim_message}
         {claim_html}
         {community_notice}
-        {boost_html}
 
         <!-- Description -->
         <div style="margin-top:32px;">

@@ -2977,57 +2977,6 @@ async def api_claim_verify(request: Request, token: str):
     return RedirectResponse(url=f"/tool/{slug}?claimed=1", status_code=303)
 
 
-@app.post("/api/claim-and-boost")
-async def api_claim_and_boost(request: Request):
-    """Claim a tool and redirect to Stripe checkout for boost payment."""
-    from fastapi.responses import RedirectResponse
-    user = request.state.user
-    if not user:
-        return RedirectResponse(url="/login", status_code=303)
-
-    try:
-        form = await request.form()
-        tool_id = int(form.get("tool_id", 0))
-    except (ValueError, TypeError):
-        return RedirectResponse(url="/", status_code=303)
-
-    d = request.state.db
-    tool = await db.get_tool_by_id(d, tool_id)
-    if not tool:
-        return RedirectResponse(url="/", status_code=303)
-
-    # Instant claim first (if not already claimed)
-    if not tool.get('claimed_at'):
-        maker_name = user.get('name', '') or user.get('email', '').split('@')[0]
-        maker_id = await db.get_or_create_maker(d, maker_name, '')
-        await d.execute("UPDATE tools SET maker_id = ?, claimed_at = CURRENT_TIMESTAMP WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
-        if not user.get('maker_id'):
-            await d.execute("UPDATE users SET maker_id = ?, role = 'maker' WHERE id = ?", (maker_id, user['id']))
-        await d.commit()
-
-    # Create Stripe checkout for boost
-    from indiestack.payments import STRIPE_SECRET_KEY
-    if not STRIPE_SECRET_KEY:
-        return RedirectResponse(url=f"/tool/{tool['slug']}?claimed=1", status_code=303)
-
-    import stripe
-    stripe.api_key = STRIPE_SECRET_KEY
-
-    base_url = str(request.base_url).rstrip("/")
-    try:
-        session = stripe.checkout.Session.create(
-            mode="payment",
-            line_items=[{"price": _os.environ.get("STRIPE_BOOST_PRICE_ID", "price_1T3fB1KmQj1lkomlF8oBqGIg"), "quantity": 1}],
-            success_url=f"{base_url}/boost/success?session_id={{CHECKOUT_SESSION_ID}}",
-            cancel_url=f"{base_url}/tool/{tool['slug']}?claimed=1",
-            customer_email=user['email'],
-            metadata={"tool_id": str(tool['id']), "user_id": str(user['id']), "type": "boost"},
-        )
-        return RedirectResponse(url=session.url, status_code=303)
-    except Exception:
-        return RedirectResponse(url=f"/tool/{tool['slug']}?claimed=1", status_code=303)
-
-
 @app.post("/api/boost")
 async def api_boost(request: Request):
     """Boost an already-claimed tool — redirect to Stripe checkout."""
