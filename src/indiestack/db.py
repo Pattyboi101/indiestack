@@ -4424,7 +4424,7 @@ async def create_claim_token(db, tool_id: int, user_id: int) -> str:
 
 async def verify_claim_token(db, token: str):
     """Verify a claim token. Returns (tool_id, user_id) or None.
-    On success: marks token used, creates/links maker profile, updates tool."""
+    On success: marks token used, delegates claim completion to complete_claim()."""
     cursor = await db.execute(
         "SELECT tool_id, user_id, expires_at, used FROM claim_tokens WHERE token = ?", (token,))
     row = await cursor.fetchone()
@@ -4433,17 +4433,8 @@ async def verify_claim_token(db, token: str):
     if datetime.fromisoformat(row['expires_at']) < datetime.utcnow():
         return None
     tool_id, user_id = row['tool_id'], row['user_id']
-    # Get user info to create/link maker
-    user = await get_user_by_id(db, user_id)
-    if not user:
-        return None
-    maker_name = user.get('name', '') or user.get('email', '').split('@')[0]
-    maker_id = await get_or_create_maker(db, maker_name, '')
-    # Link tool to maker
-    await db.execute("UPDATE tools SET maker_id = ?, claimed_at = CURRENT_TIMESTAMP WHERE id = ? AND maker_id IS NULL", (maker_id, tool_id))
-    # Link user to maker if not already
-    if not user.get('maker_id'):
-        await db.execute("UPDATE users SET maker_id = ?, role = 'maker' WHERE id = ?", (maker_id, user_id))
+    # Complete the claim (single source of truth)
+    await complete_claim(db, tool_id, user_id)
     # Mark token used
     await db.execute("UPDATE claim_tokens SET used = 1 WHERE token = ?", (token,))
     await db.commit()

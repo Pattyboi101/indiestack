@@ -2937,7 +2937,10 @@ async def api_claim(request: Request):
             <p style="color:#999;font-size:13px;margin-top:16px;">This link expires in 24 hours.</p>
         </div>
         """
-        await send_email(user_email, f"Verify your claim for {tool_name} on IndieStack", html_body)
+        try:
+            await send_email(user_email, f"Verify your claim for {tool_name} on IndieStack", html_body)
+        except Exception:
+            return RedirectResponse(url=f"/tool/{tool['slug']}?claim_requested=1", status_code=303)
         return RedirectResponse(url=f"/tool/{tool['slug']}?claim_email_sent=1", status_code=303)
     else:
         # No domain match — fall back to admin approval
