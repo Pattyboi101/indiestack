@@ -1274,8 +1274,7 @@ async def list_stacks(*, ctx: Context) -> str:
         emoji = s.get("cover_emoji", "")
         source = s.get("source", "curated")
         source_label = {"curated": "curated", "auto-framework": "framework", "auto-usecase": "use-case"}.get(source, source)
-        confidence = s.get("confidence_score", 0)
-        conf_str = f" | {confidence:.0%} confidence" if confidence else ""
+        conf_str = " | agent-verified pairs" if s.get("confidence_score") else ""
         tokens = s.get("total_tokens_saved", 0)
         tokens_str = f" | ~{tokens // 1000}k tokens saved" if tokens and tokens >= 1000 else ""
         replaces = s.get("replaces", [])

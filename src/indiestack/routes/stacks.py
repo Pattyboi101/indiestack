@@ -86,14 +86,15 @@ async def stacks_index(request: Request):
     <div class="card" style="padding:32px;text-align:center;margin-bottom:48px;
                              border:2px solid var(--accent);background:var(--cream);">
         <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
-            Build Your Stack
+            Analyse Your Dependencies
         </h2>
-        <p style="color:var(--ink-muted);font-size:15px;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto;">
-            Paste your package.json or describe what you're building.
-            We'll find indie tools that work together and replace your big-tech dependencies.
+        <p style="color:var(--ink-muted);font-size:15px;margin-bottom:20px;max-width:540px;margin-left:auto;margin-right:auto;">
+            Paste your <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:13px;">package.json</code>
+            or <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:13px;">requirements.txt</code>
+            &mdash; we'll scan your deps and show you indie tools that can replace big-tech dependencies.
         </p>
         <a href="/stacks/generator" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
-            Try the Stack Generator &rarr;
+            Paste &amp; Scan &rarr;
         </a>
     </div>
     """
@@ -474,13 +475,6 @@ async def stack_detail(request: Request, slug: str):
             pass
 
     # Stats row
-    stats_items = [f'<span style="font-weight:600;">{len(tools)} tools</span>']
-    if confidence > 0:
-        stats_items.append(f'<span style="color:#065F46;font-weight:600;">{confidence:.0%} confidence</span>')
-    if tokens_k > 0:
-        stats_items.append(f'<span>~{tokens_k}k tokens saved</span>')
-    stats_html = ' &middot; '.join(stats_items)
-
     # ── Compatibility Matrix ──
     tool_slugs = [t['slug'] for t in tools]
     slug_set = tuple(tool_slugs)
@@ -508,6 +502,15 @@ async def stack_detail(request: Request, slug: str):
     verified_count = sum(1 for sc in pairs.values() if sc > 0)
     inferred_count = sum(1 for sc in pairs.values() if sc == 0)
     conflict_count = len(conflicts)
+
+    # Stats row (built after pair queries so we can show verified count)
+    stats_items = [f'<span style="font-weight:600;">{len(tools)} tools</span>']
+    total_pairs = verified_count + inferred_count
+    if total_pairs > 0:
+        stats_items.append(f'<span style="color:#065F46;font-weight:600;">{verified_count} of {max_pairs} pairs verified</span>')
+    if tokens_k > 0:
+        stats_items.append(f'<span>~{tokens_k}k tokens saved</span>')
+    stats_html = ' &middot; '.join(stats_items)
 
     if 2 <= n <= 6:
         # Full grid matrix

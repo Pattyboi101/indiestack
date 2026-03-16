@@ -86,6 +86,21 @@ FRAMEWORK_NAMES = {
     "nuxt": "Nuxt", "angular": "Angular", "sveltekit": "SvelteKit",
 }
 
+FRAMEWORK_EMOJIS = {
+    "nextjs": "\u25b2", "next.js": "\u25b2", "react": "\u269b\ufe0f",
+    "react-native": "\u269b\ufe0f", "vue": "\U0001f49a", "nuxt": "\U0001f49a",
+    "svelte": "\U0001f525", "sveltekit": "\U0001f525",
+    "django": "\U0001f40d", "flask": "\U0001f40d", "fastapi": "\u26a1",
+    "rails": "\U0001f6e4\ufe0f", "laravel": "\U0001f534",
+    "express": "\U0001f4e6", "angular": "\U0001f6e1\ufe0f",
+    "electron": "\u26a1", "flutter": "\U0001f426", "tauri": "\U0001f980",
+    "spring": "\U0001f33f", "spring-boot": "\U0001f33f",
+    "gin": "\U0001f943", "echo-go": "\U0001f943", "fiber": "\U0001f943",
+    "koa": "\U0001f4e6", "rocket-rs": "\U0001f680", "remix": "\U0001f4bf",
+    "astro": "\U0001f680", "bootstrap": "\U0001f3a8", "tailwind": "\U0001f3a8",
+    "supabase": "\u26a1", "pocketbase": "\U0001f4e6", "firebase": "\U0001f525",
+}
+
 CATEGORY_COMPETITORS = {
     "authentication": ["Auth0", "Firebase Auth", "Okta", "Cognito"],
     "payments": ["Stripe", "PayPal", "Square"],
@@ -302,7 +317,7 @@ async def main(dry_run=False, verbose=False):
                 f"Replaces {repl_preview}{repl_extra}.")
 
         await upsert_stack(
-            db, slug, title, desc, FRAMEWORK_NAMES.get(fw, "\U0001f4e6"),
+            db, slug, title, desc, FRAMEWORK_EMOJIS.get(fw, "\U0001f4e6"),
             "auto-framework", fw, None, replaces, confidence, tokens_saved,
             [t["id"] for t in selected], dry_run, verbose,
         )
