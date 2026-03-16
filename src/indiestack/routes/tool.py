@@ -23,6 +23,8 @@ from indiestack.routes.components import (
     update_card,
     maker_discount_badge_html,
     email_sticky_bar,
+    analytics_wall_blurred,
+    analytics_wall_revealed,
 )
 from indiestack.db import (
     get_tool_by_slug,
@@ -47,6 +49,7 @@ from indiestack.db import (
     get_tool_recommendation_count,
     get_tool_total_citations,
     check_pro,
+    get_tool_analytics_wall_data,
 )
 
 router = APIRouter()
@@ -142,6 +145,19 @@ async def tool_detail(request: Request, slug: str):
     # Maker pulse
     last_active = await get_tool_last_activity(db, tool_id)
     pulse_html = maker_pulse_html(last_active)
+
+    # Analytics wall (claim-to-reveal)
+    analytics_wall_html = ''
+    is_tool_owner = (
+        user and tool.get('claimed_at') and tool.get('maker_id')
+        and user.get('maker_id') == tool.get('maker_id')
+    )
+    wall_stats = await get_tool_analytics_wall_data(db, slug_str, tool_id, detailed=is_tool_owner)
+    if wall_stats['total_agent_queries'] > 0 or wall_stats['total_citations'] > 0:
+        if is_tool_owner:
+            analytics_wall_html = analytics_wall_revealed(wall_stats, tool['name'])
+        elif not tool.get('claimed_at'):
+            analytics_wall_html = analytics_wall_blurred(wall_stats, tool['name'], slug_str, user_logged_in=bool(user), tool_id=tool_id)
 
     # Build rating display
     avg_rating = float(rating_info['avg_rating'])
@@ -1036,6 +1052,8 @@ async def tool_detail(request: Request, slug: str):
         {claim_message}
         {claim_html}
         {community_notice}
+        {analytics_wall_html}
+        {boost_html}
 
         <!-- Description -->
         <div style="margin-top:32px;">

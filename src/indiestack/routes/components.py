@@ -1966,3 +1966,435 @@ def launch_readiness_bar(readiness):
         <div style="font-size:13px;color:var(--ink-muted);margin-bottom:16px;">{completed} of {total} completed</div>
         <div>{checklist_items}</div>
     </div>"""
+
+
+# ── Arena (Roast My Stack) ────────────────────────────────────────────────
+
+
+def render_arena_feed(roasts: list, user=None, error: str = "") -> str:
+    """Render the arena feed page with publish form and roast cards."""
+    error_html = ""
+    if error:
+        error_html = f'<div style="background:#FEE2E2;color:#991B1B;padding:12px 16px;border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;">{escape(error)}</div>'
+
+    # Publish form (only for logged-in users)
+    if user:
+        form_html = f"""
+        <div class="card" style="padding:24px;margin-bottom:32px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
+                Publish Your Stack
+            </h2>
+            {error_html}
+            <form method="post" action="/arena/publish">
+                <div style="margin-bottom:16px;">
+                    <label for="stack_name" style="display:block;font-weight:600;color:var(--ink);font-size:14px;margin-bottom:6px;">
+                        Stack Name
+                    </label>
+                    <input type="text" id="stack_name" name="stack_name"
+                           placeholder="My SaaS Stack" required maxlength="100"
+                           style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);
+                                  font-size:15px;background:var(--card-bg);color:var(--ink);box-sizing:border-box;">
+                </div>
+                <div style="margin-bottom:16px;">
+                    <label for="stack_json" style="display:block;font-weight:600;color:var(--ink);font-size:14px;margin-bottom:6px;">
+                        Tools (JSON array of tool names)
+                    </label>
+                    <textarea id="stack_json" name="stack_json" rows="5" required
+                              placeholder='["Next.js", "Supabase", "Stripe", "Vercel", "Tailwind CSS"]'
+                              style="width:100%;font-family:var(--font-mono);font-size:14px;padding:12px 16px;
+                                     border:2px solid var(--border);border-radius:var(--radius-sm);
+                                     background:var(--card-bg);color:var(--ink);resize:vertical;box-sizing:border-box;"></textarea>
+                    <p style="font-size:12px;color:var(--ink-muted);margin-top:4px;">
+                        JSON array of tool/framework names, e.g. ["React", "PostgreSQL", "Redis"]
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-primary" style="font-size:15px;padding:14px 32px;">
+                    Publish &amp; Get Roasted
+                </button>
+            </form>
+        </div>
+        """
+    else:
+        form_html = f"""
+        <div class="card" style="padding:24px;text-align:center;margin-bottom:32px;">
+            <p style="color:var(--ink-muted);font-size:15px;margin-bottom:12px;">
+                Got a hot take on your tech stack? Submit it and let the community roast your choices.
+            </p>
+            <a href="/login?next=/arena" class="btn btn-primary" style="font-size:14px;padding:12px 24px;">
+                Log in to Publish Your Stack
+            </a>
+        </div>
+        """
+
+    # Roast cards
+    cards_html = ""
+    if roasts:
+        for r in roasts:
+            rid = int(r['id'])
+            name = escape(str(r['stack_name']))
+            author = escape(str(r.get('author_name', 'Anonymous')))
+            upvotes = int(r.get('upvotes', 0))
+            roast_preview = escape(str(r.get('ai_roast_text', '')))[:120]
+            if len(str(r.get('ai_roast_text', ''))) > 120:
+                roast_preview += "..."
+            created = str(r.get('created_at', ''))[:10]
+
+            cards_html += f"""
+            <a href="/arena/{rid}" style="text-decoration:none;display:block;">
+                <div class="card" style="padding:20px;transition:transform .15s,box-shadow .15s;cursor:pointer;"
+                     onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)'"
+                     onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                        <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin:0;">
+                            {name}
+                        </h3>
+                        <span style="font-family:var(--font-mono);font-size:13px;color:var(--slate);white-space:nowrap;
+                                     display:flex;align-items:center;gap:4px;">
+                            &#9650; {upvotes}
+                        </span>
+                    </div>
+                    <p style="font-size:14px;color:var(--ink-muted);margin:0 0 8px 0;font-style:italic;">
+                        &ldquo;{roast_preview}&rdquo;
+                    </p>
+                    <div style="font-size:12px;color:var(--ink-muted);">
+                        by {author} &middot; {created}
+                    </div>
+                </div>
+            </a>
+            """
+    else:
+        cards_html = """
+        <div style="text-align:center;padding:60px 20px;">
+            <p style="font-size:48px;margin-bottom:16px;">&#128293;</p>
+            <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);">No stacks roasted yet</h2>
+            <p style="color:var(--ink-muted);margin:8px 0;">Be the first to submit your stack for roasting!</p>
+        </div>"""
+
+    return f"""
+    {form_html}
+    <div style="display:flex;flex-direction:column;gap:16px;">
+        {cards_html}
+    </div>
+    """
+
+
+def render_roast_detail(roast: dict, comments: list, user=None, has_upvoted: bool = False) -> str:
+    """Render a single roast detail page with comments and voting."""
+    rid = int(roast['id'])
+    name = escape(str(roast['stack_name']))
+    author = escape(str(roast.get('author_name', 'Anonymous')))
+    roast_text = escape(str(roast.get('ai_roast_text', '')))
+    upvotes = int(roast.get('upvotes', 0))
+    created = str(roast.get('created_at', ''))[:10]
+
+    # Parse stack tools from JSON
+    tools_html = ""
+    try:
+        import json
+        tools_list = json.loads(roast.get('stack_json', '[]'))
+        if isinstance(tools_list, list):
+            pills = " ".join(
+                f'<span style="display:inline-block;font-family:var(--font-mono);font-size:13px;background:var(--cream-dark);'
+                f'padding:6px 14px;border-radius:999px;color:var(--ink);margin:4px 2px;">{escape(str(t))}</span>'
+                for t in tools_list
+            )
+            tools_html = f'<div style="margin-bottom:24px;line-height:2.2;">{pills}</div>'
+    except (json.JSONDecodeError, TypeError):
+        tools_html = '<p style="color:var(--ink-muted);font-size:14px;">Could not parse stack tools.</p>'
+
+    # Upvote button
+    upvote_color = "var(--slate)" if has_upvoted else "var(--ink-muted)"
+    upvote_bg = "var(--slate-light)" if has_upvoted else "var(--cream-dark)"
+    if user:
+        upvote_html = f"""
+        <form method="post" action="/arena/{rid}/upvote" style="display:inline;">
+            <button type="submit" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;
+                    border-radius:999px;border:2px solid {upvote_color};background:{upvote_bg};
+                    color:{upvote_color};font-weight:700;font-size:15px;cursor:pointer;transition:all .15s;">
+                &#9650; {upvotes}
+            </button>
+        </form>
+        """
+    else:
+        upvote_html = f"""
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;
+                border-radius:999px;border:2px solid var(--border);background:var(--cream-dark);
+                color:var(--ink-muted);font-weight:700;font-size:15px;">
+            &#9650; {upvotes}
+        </span>
+        """
+
+    # AI Roast callout
+    roast_callout = f"""
+    <div style="background:linear-gradient(135deg,#FFF7ED,#FEF3C7);border:2px solid var(--gold);
+                border-radius:var(--radius);padding:24px;margin-bottom:24px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span style="font-size:20px;">&#128293;</span>
+            <span style="font-weight:700;color:var(--gold-dark);font-size:14px;text-transform:uppercase;letter-spacing:0.5px;">
+                AI Roast
+            </span>
+        </div>
+        <p style="font-size:17px;color:#78350F;line-height:1.6;margin:0;font-style:italic;">
+            &ldquo;{roast_text}&rdquo;
+        </p>
+    </div>
+    """
+
+    # Comments section
+    comments_html = ""
+    if comments:
+        for c in comments:
+            c_author = escape(str(c.get('author_name', 'Anonymous')))
+            c_text = escape(str(c['comment_text']))
+            c_date = str(c.get('created_at', ''))[:10]
+            comments_html += f"""
+            <div style="padding:16px;border-bottom:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                    <span style="font-weight:600;color:var(--ink);font-size:14px;">{c_author}</span>
+                    <span style="font-size:12px;color:var(--ink-muted);">{c_date}</span>
+                </div>
+                <p style="color:var(--ink);font-size:15px;line-height:1.5;margin:0;">{c_text}</p>
+            </div>
+            """
+    else:
+        comments_html = '<p style="text-align:center;color:var(--ink-muted);padding:24px;font-size:14px;">No comments yet. Be the first to weigh in!</p>'
+
+    # Comment form
+    if user:
+        comment_form = f"""
+        <form method="post" action="/arena/{rid}/comment" style="margin-top:16px;">
+            <textarea name="comment_text" rows="3" required maxlength="1000"
+                      placeholder="What do you think of this stack?"
+                      style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--radius-sm);
+                             font-size:14px;background:var(--card-bg);color:var(--ink);resize:vertical;
+                             box-sizing:border-box;margin-bottom:8px;"></textarea>
+            <button type="submit" class="btn btn-primary" style="font-size:14px;padding:10px 24px;">
+                Post Comment
+            </button>
+        </form>
+        """
+    else:
+        comment_form = f"""
+        <div style="text-align:center;padding:16px;margin-top:16px;border:1px dashed var(--border);border-radius:var(--radius-sm);">
+            <a href="/login?next=/arena/{rid}" style="color:var(--slate);font-weight:600;text-decoration:none;">
+                Log in to comment
+            </a>
+        </div>
+        """
+
+    return f"""
+    <div>
+        <a href="/arena" style="color:var(--ink-muted);font-size:14px;font-weight:600;text-decoration:none;">&larr; Back to Arena</a>
+
+        <div style="margin-top:20px;margin-bottom:24px;">
+            <h1 style="font-family:var(--font-display);font-size:clamp(26px,4vw,36px);color:var(--ink);margin-bottom:8px;">
+                {name}
+            </h1>
+            <div style="font-size:14px;color:var(--ink-muted);">
+                by {author} &middot; {created} &middot; {upvote_html}
+            </div>
+        </div>
+
+        {tools_html}
+        {roast_callout}
+
+        <div class="card" style="padding:0;overflow:hidden;">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--border);">
+                <h2 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin:0;">
+                    Comments ({len(comments)})
+                </h2>
+            </div>
+            {comments_html}
+            {comment_form}
+        </div>
+    </div>
+    """
+
+
+def analytics_wall_blurred(stats: dict, tool_name: str, slug: str, user_logged_in: bool, tool_id: int = 0) -> str:
+    """Render blurred AI agent analytics wall for unclaimed tools. Drives claim activation via loss aversion."""
+    from html import escape
+    total = stats.get('total_agent_queries', 0)
+    citations = stats.get('total_citations', 0)
+    platforms = stats.get('unique_platforms', 0)
+    last_7d = stats.get('queries_last_7d', 0)
+    safe_name = escape(str(tool_name))
+
+    if user_logged_in:
+        cta_btn = f'''<form method="POST" action="/api/claim" style="margin:0;">
+            <input type="hidden" name="tool_id" value="{tool_id}">
+            <button type="submit" class="btn btn-primary" style="padding:14px 32px;font-size:15px;font-weight:700;border-radius:999px;cursor:pointer;">
+                Claim This Listing
+            </button>
+        </form>'''
+    else:
+        cta_btn = f'''<a href="/signup?next=/tool/{escape(slug)}" class="btn btn-primary"
+            style="display:inline-block;padding:14px 32px;font-size:15px;font-weight:700;border-radius:999px;text-decoration:none;">
+            Sign Up to Claim
+        </a>'''
+
+    # Fake platform bars for the blurred section (visual tease only)
+    fake_bars = ''
+    for label, pct in [('Claude Code', 45), ('Cursor', 28), ('Windsurf', 15), ('Other', 12)]:
+        fake_bars += f'''<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-muted);">
+            <span style="min-width:80px;">{label}</span>
+            <div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;">
+                <div style="width:{pct}%;height:100%;background:var(--accent);border-radius:4px;"></div>
+            </div>
+            <span style="min-width:30px;text-align:right;">{pct}%</span>
+        </div>'''
+
+    return f'''
+    <div style="margin:16px 0;padding:24px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);position:relative;overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+            <span style="font-size:18px;">&#128274;</span>
+            <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0;">AI Agent Activity</h3>
+        </div>
+
+        <!-- Blurred stats -->
+        <div style="filter:blur(6px);user-select:none;pointer-events:none;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px;">
+                <div style="text-align:center;padding:12px;background:var(--card-bg);border-radius:8px;border:1px solid var(--border);">
+                    <div style="font-size:24px;font-weight:800;color:var(--accent);font-family:var(--font-mono);">{total}</div>
+                    <div style="font-size:11px;color:var(--ink-muted);margin-top:2px;">Agent Queries</div>
+                </div>
+                <div style="text-align:center;padding:12px;background:var(--card-bg);border-radius:8px;border:1px solid var(--border);">
+                    <div style="font-size:24px;font-weight:800;color:var(--accent);font-family:var(--font-mono);">{citations}</div>
+                    <div style="font-size:11px;color:var(--ink-muted);margin-top:2px;">Citations</div>
+                </div>
+                <div style="text-align:center;padding:12px;background:var(--card-bg);border-radius:8px;border:1px solid var(--border);">
+                    <div style="font-size:24px;font-weight:800;color:var(--accent);font-family:var(--font-mono);">{platforms}</div>
+                    <div style="font-size:11px;color:var(--ink-muted);margin-top:2px;">Platforms</div>
+                </div>
+                <div style="text-align:center;padding:12px;background:var(--card-bg);border-radius:8px;border:1px solid var(--border);">
+                    <div style="font-size:24px;font-weight:800;color:var(--accent);font-family:var(--font-mono);">{last_7d}</div>
+                    <div style="font-size:11px;color:var(--ink-muted);margin-top:2px;">Last 7 days</div>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+                {fake_bars}
+            </div>
+        </div>
+
+        <!-- CTA overlay -->
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+                    background:var(--cream-dark);opacity:0.88;z-index:1;">
+            <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;text-align:center;padding:0 20px;">
+                AI agents evaluated {safe_name} {last_7d} time{"s" if last_7d != 1 else ""} this week
+            </p>
+            <p style="font-size:13px;color:var(--ink-muted);margin-bottom:16px;text-align:center;padding:0 20px;">
+                Claim this listing to see which agents, what they searched, and your recommendation trend.
+            </p>
+            {cta_btn}
+        </div>
+    </div>
+    '''
+
+
+def analytics_wall_revealed(stats: dict, tool_name: str) -> str:
+    """Render full unblurred AI agent analytics for claimed tool owners."""
+    from html import escape
+    total = stats.get('total_agent_queries', 0)
+    citations = stats.get('total_citations', 0)
+    platforms = stats.get('unique_platforms', 0)
+    last_7d = stats.get('queries_last_7d', 0)
+    platform_breakdown = stats.get('platform_breakdown', [])
+    top_queries = stats.get('top_queries', [])
+    daily_trend = stats.get('daily_trend', [])
+    safe_name = escape(str(tool_name))
+
+    # Platform breakdown bars
+    platform_html = ''
+    if platform_breakdown:
+        max_count = max(p['count'] for p in platform_breakdown) if platform_breakdown else 1
+        for p in platform_breakdown:
+            pct = round(p['count'] / max(max_count, 1) * 100)
+            platform_html += f'''<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-muted);">
+                <span style="min-width:90px;font-weight:600;color:var(--ink);">{escape(str(p["platform"]))}</span>
+                <div style="flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;">
+                    <div style="width:{pct}%;height:100%;background:var(--accent);border-radius:4px;"></div>
+                </div>
+                <span style="min-width:30px;text-align:right;font-family:var(--font-mono);font-size:12px;">{p["count"]}</span>
+            </div>'''
+
+    # Top queries table
+    queries_html = ''
+    if top_queries:
+        rows = ''
+        for q in top_queries:
+            last_seen = str(q.get('last_seen', ''))[:10]
+            rows += f'''<tr>
+                <td style="padding:6px 8px;font-size:13px;color:var(--ink);">{escape(str(q["query"]))}</td>
+                <td style="padding:6px 8px;font-size:13px;color:var(--ink-muted);text-align:center;font-family:var(--font-mono);">{q["count"]}</td>
+                <td style="padding:6px 8px;font-size:12px;color:var(--ink-muted);text-align:right;">{last_seen}</td>
+            </tr>'''
+        queries_html = f'''
+        <div style="margin-top:16px;">
+            <h4 style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">Top Queries</h4>
+            <table style="width:100%;border-collapse:collapse;">
+                <thead><tr style="border-bottom:1px solid var(--border);">
+                    <th style="padding:6px 8px;font-size:11px;color:var(--ink-muted);text-align:left;">Query</th>
+                    <th style="padding:6px 8px;font-size:11px;color:var(--ink-muted);text-align:center;">Count</th>
+                    <th style="padding:6px 8px;font-size:11px;color:var(--ink-muted);text-align:right;">Last Seen</th>
+                </tr></thead>
+                <tbody>{rows}</tbody>
+            </table>
+        </div>'''
+
+    # Daily trend sparkline (CSS bars)
+    trend_html = ''
+    if daily_trend:
+        max_day = max(d['count'] for d in daily_trend) if daily_trend else 1
+        bars = ''
+        for d in daily_trend:
+            h = max(round(d['count'] / max(max_day, 1) * 32), 2)
+            bars += f'<div title="{d["day"]}: {d["count"]}" style="width:6px;height:{h}px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>'
+        trend_html = f'''
+        <div style="margin-top:16px;">
+            <h4 style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">30-Day Trend</h4>
+            <div style="display:flex;align-items:flex-end;gap:2px;height:40px;padding:4px 0;">
+                {bars}
+            </div>
+        </div>'''
+
+    return f'''
+    <div style="margin:16px 0;padding:24px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+            <span style="font-size:18px;">&#128202;</span>
+            <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0;">AI Agent Activity</h3>
+            <span class="badge badge-success" style="font-size:11px;">&#10003; Your listing</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px;">
+            <div style="text-align:center;padding:12px;background:var(--card-bg);border-radius:8px;border:1px solid var(--border);">
+                <div style="font-size:24px;font-weight:800;color:var(--accent);font-family:var(--font-mono);">{total}</div>
+                <div style="font-size:11px;color:var(--ink-muted);margin-top:2px;">Agent Queries</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:var(--card-bg);border-radius:8px;border:1px solid var(--border);">
+                <div style="font-size:24px;font-weight:800;color:var(--accent);font-family:var(--font-mono);">{citations}</div>
+                <div style="font-size:11px;color:var(--ink-muted);margin-top:2px;">Citations</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:var(--card-bg);border-radius:8px;border:1px solid var(--border);">
+                <div style="font-size:24px;font-weight:800;color:var(--accent);font-family:var(--font-mono);">{platforms}</div>
+                <div style="font-size:11px;color:var(--ink-muted);margin-top:2px;">Platforms</div>
+            </div>
+            <div style="text-align:center;padding:12px;background:var(--card-bg);border-radius:8px;border:1px solid var(--border);">
+                <div style="font-size:24px;font-weight:800;color:var(--accent);font-family:var(--font-mono);">{last_7d}</div>
+                <div style="font-size:11px;color:var(--ink-muted);margin-top:2px;">Last 7 days</div>
+            </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:6px;">
+            {platform_html}
+        </div>
+
+        {queries_html}
+        {trend_html}
+
+        <div style="margin-top:16px;text-align:right;">
+            <a href="/dashboard" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;">
+                View full dashboard &#8594;
+            </a>
+        </div>
+    </div>
+    '''
