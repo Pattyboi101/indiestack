@@ -5317,7 +5317,7 @@ async def get_recent_searches(db, limit: int = 30):
 async def get_search_gaps(db: aiosqlite.Connection, days: int = 30, min_searches: int = 3, limit: int = 20) -> list:
     """Get zero-result search queries as demand signals."""
     cursor = await db.execute("""
-        SELECT normalized_query, COUNT(*) as search_count,
+        SELECT normalized_query as query, COUNT(*) as count,
                MAX(created_at) as last_searched,
                COUNT(DISTINCT COALESCE(api_key_id, -1)) as unique_sources,
                GROUP_CONCAT(DISTINCT source) as sources
