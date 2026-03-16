@@ -1955,6 +1955,7 @@ async def search_tools(
     health: str = "",
     min_stars: int = 0,
     sort: str = "",
+    frameworks: str = "",
 ):
     # Build dynamic WHERE clauses shared across FTS and fallback queries
     extra_where = ""
@@ -2005,6 +2006,13 @@ async def search_tools(
     if min_stars > 0:
         extra_where += " AND t.github_stars >= ?"
         extra_params.append(min_stars)
+
+    if frameworks:
+        fw_list = [f.strip().lower() for f in frameworks.split(",") if f.strip()]
+        if fw_list:
+            fw_conditions = " OR ".join(["LOWER(t.frameworks_tested) LIKE ?" for _ in fw_list])
+            extra_where += f" AND ({fw_conditions})"
+            extra_params.extend([f"%{fw}%" for fw in fw_list])
 
     # Determine sort order
     def _fts_order():

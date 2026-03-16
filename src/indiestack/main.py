@@ -1509,6 +1509,7 @@ async def api_tools_search(
     health: str = "",
     min_stars: int = 0,
     sort: str = "",
+    frameworks: str = "",
 ):
     """JSON API for searching tools — used by MCP server and integrations."""
     d = request.state.db
@@ -1531,6 +1532,7 @@ async def api_tools_search(
             min_success_rate=min_success_rate, min_confidence=min_confidence,
             has_api=has_api, language=language, tags=tags,
             exclude=exclude, health=health, min_stars=min_stars, sort=sort,
+            frameworks=frameworks,
         )
         tools = tools[offset:]
     elif category.strip():
