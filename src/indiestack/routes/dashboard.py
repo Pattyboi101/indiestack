@@ -394,6 +394,16 @@ async def dashboard_overview(request: Request):
                     </div>
                 </div>
             </div>'''
+        elif _headline_html:
+            # Has claimed tools but no query/agent detail yet
+            ai_intel_html = f'''
+            <div id="ai-distribution" style="margin-top:32px;">
+                <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
+                    &#129302; AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
+                </h2>
+                {_headline_html}
+                <p style="color:var(--ink-muted);font-size:13px;">As agents recommend your tools more, detailed breakdowns will appear here.</p>
+            </div>'''
     # Branch C (implicit): no maker_id — ai_intel_html stays empty string
 
     # Buyer badge embed section
