@@ -25,6 +25,8 @@ from indiestack.payments import (
     calculate_commission, PLATFORM_FEE_PERCENT, PRO_FEE_PERCENT,
 )
 
+from indiestack.routes.compare import _health_badge
+
 logger = logging.getLogger("indiestack.stacks")
 router = APIRouter()
 
@@ -430,7 +432,7 @@ async def stack_generator_results(request: Request, deps: str = Form("")):
 
 @router.get("/stacks/{slug}", response_class=HTMLResponse)
 async def stack_detail(request: Request, slug: str):
-    """Stack detail page with tools, pricing, and Buy button."""
+    """Stack detail page with compatibility matrix and intelligence data."""
     db = request.state.db
     stack, tools = await get_stack_with_tools(db, slug)
 
@@ -444,65 +446,241 @@ async def stack_detail(request: Request, slug: str):
         """
         return HTMLResponse(page_shell("Stack Not Found", body, user=request.state.user), status_code=404)
 
-    discount_percent = stack.get('discount_percent', 15)
-    emoji = stack.get('cover_emoji', '') or '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'
+    source = stack.get('source', 'curated')
+    confidence = stack.get('confidence_score', 0) or 0
+    tokens_saved = stack.get('total_tokens_saved', 0) or 0
+    tokens_k = tokens_saved // 1000
+    emoji = stack.get('cover_emoji', '') or '\U0001f4e6'
     title = escape(str(stack['title']))
     desc = escape(str(stack.get('description', '')))
 
-    # Calculate pricing
-    full_price = sum(t.get('price_pence', 0) or 0 for t in tools)
-    discount_amount = full_price * discount_percent // 100
-    bundle_price = full_price - discount_amount
-    has_paid = full_price > 0
+    # Source badge
+    if source == 'auto-framework':
+        source_badge = '<span style="font-size:12px;font-weight:600;color:#1E40AF;background:#DBEAFE;padding:4px 12px;border-radius:999px;">Auto-generated from framework data</span>'
+    elif source == 'auto-usecase':
+        source_badge = '<span style="font-size:12px;font-weight:600;color:#7C3AED;background:#EDE9FE;padding:4px 12px;border-radius:999px;">Auto-generated from compatibility data</span>'
+    else:
+        source_badge = '<span style="font-size:12px;font-weight:600;color:#065F46;background:#D1FAE5;padding:4px 12px;border-radius:999px;">Curated by IndieStack</span>'
 
-    # Calculate tokens saved
-    tokens_saved = 0
-    for t in tools:
-        cat_slug = t.get('category_slug', '')
-        tokens_saved += CATEGORY_TOKEN_COSTS.get(cat_slug, 50_000)
-    tokens_k = tokens_saved // 1000
+    # Replaces list
+    replaces_html = ""
+    replaces_raw = stack.get('replaces_json')
+    if replaces_raw:
+        try:
+            replaces = json.loads(replaces_raw) if isinstance(replaces_raw, str) else replaces_raw
+            if replaces:
+                replaces_html = f'<span style="color:var(--ink-muted);font-size:14px;">Replaces: {escape(", ".join(replaces))}</span>'
+        except (json.JSONDecodeError, TypeError):
+            pass
 
-    # Tool cards
-    cards_html = "\n".join(tool_card(t) for t in tools)
+    # Stats row
+    stats_items = [f'<span style="font-weight:600;">{len(tools)} tools</span>']
+    if confidence > 0:
+        stats_items.append(f'<span style="color:#065F46;font-weight:600;">{confidence:.0%} confidence</span>')
+    if tokens_k > 0:
+        stats_items.append(f'<span>~{tokens_k}k tokens saved</span>')
+    stats_html = ' &middot; '.join(stats_items)
 
-    # Pricing section
-    if MARKETPLACE_ENABLED and has_paid:
-        pricing_html = f"""
-        <div class="card" style="text-align:center;padding:32px;">
-            <div style="font-size:14px;color:var(--ink-muted);text-decoration:line-through;margin-bottom:4px;">
-                {format_price(full_price)}
+    # ── Compatibility Matrix ──
+    tool_slugs = [t['slug'] for t in tools]
+    slug_set = tuple(tool_slugs)
+
+    pairs = {}
+    conflicts = set()
+    if len(slug_set) >= 2:
+        placeholders = ",".join("?" * len(slug_set))
+        cursor = await db.execute(
+            f"SELECT tool_a_slug, tool_b_slug, success_count FROM tool_pairs WHERE tool_a_slug IN ({placeholders}) AND tool_b_slug IN ({placeholders})",
+            slug_set + slug_set,
+        )
+        pair_rows = await cursor.fetchall()
+        pairs = {(r['tool_a_slug'], r['tool_b_slug']): r['success_count'] for r in pair_rows}
+
+        cursor = await db.execute(
+            f"SELECT tool_a_slug, tool_b_slug FROM tool_conflicts WHERE tool_a_slug IN ({placeholders}) AND tool_b_slug IN ({placeholders})",
+            slug_set + slug_set,
+        )
+        conflict_rows = await cursor.fetchall()
+        conflicts = {(r['tool_a_slug'], r['tool_b_slug']) for r in conflict_rows}
+
+    n = len(tools)
+    max_pairs = n * (n - 1) // 2
+    verified_count = sum(1 for sc in pairs.values() if sc > 0)
+    inferred_count = sum(1 for sc in pairs.values() if sc == 0)
+    conflict_count = len(conflicts)
+
+    if 2 <= n <= 6:
+        # Full grid matrix
+        header_cells = ''.join(
+            f'<th style="font-size:11px;font-weight:600;padding:6px 8px;color:var(--ink-muted);transform:rotate(-45deg);white-space:nowrap;">{escape(str(t["name"])[:12])}</th>'
+            for t in tools
+        )
+        rows_html = ""
+        for i, t1 in enumerate(tools):
+            cells = f'<td style="font-size:12px;font-weight:600;padding:6px 8px;color:var(--ink);">{escape(str(t1["name"])[:12])}</td>'
+            for j, t2 in enumerate(tools):
+                if i == j:
+                    cells += '<td style="text-align:center;color:var(--ink-muted);">&mdash;</td>'
+                else:
+                    a, b = sorted([t1['slug'], t2['slug']])
+                    key = (a, b)
+                    if key in conflicts:
+                        cells += '<td style="text-align:center;color:#DC2626;font-weight:700;" title="Known conflict">&#10007;</td>'
+                    elif key in pairs:
+                        if pairs[key] > 0:
+                            cells += '<td style="text-align:center;color:#059669;font-weight:700;" title="Verified compatible">&#10003;</td>'
+                        else:
+                            cells += '<td style="text-align:center;color:var(--ink-muted);" title="Inferred compatible">&middot;</td>'
+                    else:
+                        cells += '<td style="text-align:center;"></td>'
+            rows_html += f'<tr>{cells}</tr>'
+
+        matrix_html = f"""
+        <div style="margin-bottom:40px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:12px;">
+                Compatibility Matrix
+            </h2>
+            <div style="overflow-x:auto;">
+                <table style="border-collapse:collapse;width:auto;">
+                    <thead><tr><th></th>{header_cells}</tr></thead>
+                    <tbody>{rows_html}</tbody>
+                </table>
             </div>
-            <div style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:4px;">
-                {format_price(bundle_price)}
+            <div style="display:flex;gap:16px;margin-top:12px;font-size:12px;color:var(--ink-muted);">
+                <span><span style="color:#059669;font-weight:700;">&#10003;</span> Verified</span>
+                <span><span style="color:var(--ink-muted);">&middot;</span> Inferred</span>
+                <span><span style="color:#DC2626;font-weight:700;">&#10007;</span> Conflict</span>
             </div>
-            <div style="font-size:13px;font-weight:700;color:var(--success-text);background:var(--success-bg);
-                         display:inline-block;padding:4px 16px;border-radius:999px;margin-bottom:16px;">
-                Save {discount_percent}% &middot; {format_price(discount_amount)} off
-            </div>
-            <div style="margin-bottom:16px;font-size:14px;color:var(--ink-muted);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Saves ~{tokens_k}k tokens vs building from scratch
-            </div>
-            <form method="post" action="/api/checkout-stack">
-                <input type="hidden" name="stack_id" value="{stack['id']}">
-                <button type="submit" class="btn btn-primary" style="font-size:16px;padding:16px 40px;">
-                    Buy This Stack &rarr;
-                </button>
-            </form>
+        </div>
+        """
+    elif n >= 2:
+        total_known = verified_count + inferred_count
+        matrix_html = f"""
+        <div class="card" style="padding:20px;margin-bottom:40px;">
+            <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">Compatibility</h3>
+            <p style="color:var(--ink-muted);font-size:14px;">
+                {total_known} of {max_pairs} possible pairs have compatibility data.
+                {f'<span style="color:#059669;font-weight:600;">{verified_count} verified</span>, ' if verified_count else ''}
+                {f'<span>{inferred_count} inferred</span>' if inferred_count else ''}
+                {f', <span style="color:#DC2626;font-weight:600;">{conflict_count} conflicts</span>' if conflict_count else ''}
+            </p>
         </div>
         """
     else:
-        pricing_html = f"""
-        <div class="card" style="text-align:center;padding:32px;">
-            <div style="font-family:var(--font-display);font-size:24px;color:var(--ink);margin-bottom:8px;">
-                Free Stack
+        matrix_html = ""
+
+    # ── Batch-query success rates ──
+    success_rates = {}
+    if tool_slugs:
+        placeholders = ",".join("?" * len(tool_slugs))
+        cursor = await db.execute(
+            f"""SELECT tool_slug,
+                       SUM(CASE WHEN success=1 THEN 1 ELSE 0 END) as wins,
+                       COUNT(*) as total
+                FROM agent_actions
+                WHERE action='report_outcome' AND tool_slug IN ({placeholders})
+                GROUP BY tool_slug""",
+            tuple(tool_slugs),
+        )
+        for r in await cursor.fetchall():
+            total = r['total']
+            rate = round(r['wins'] / total * 100) if total > 0 else 0
+            success_rates[r['tool_slug']] = {"rate": rate, "total": total}
+
+    # ── Enhanced tool cards ──
+    tool_cards = []
+    for t in tools:
+        name = escape(str(t['name']))
+        tagline = escape(str(t.get('tagline', '')))
+        t_slug = escape(str(t['slug']))
+        cat_name = escape(str(t.get('category_name', '')))
+
+        health = t.get('health_status') or 'unknown'
+        health_html = _health_badge(health)
+
+        mcp_views = t.get('mcp_view_count') or 0
+        citation_html = f'<span style="font-size:13px;color:var(--ink-muted);">Cited by agents {mcp_views:,}x</span>' if mcp_views > 0 else ''
+
+        sr = success_rates.get(t['slug'])
+        sr_html = ''
+        if sr and sr['total'] >= 3:
+            sr_html = f'<span style="font-size:13px;color:#059669;font-weight:600;">{sr["rate"]}% success rate ({sr["total"]} reports)</span>'
+
+        compat_count = 0
+        for other in tools:
+            if other['slug'] != t['slug']:
+                key = tuple(sorted([t['slug'], other['slug']]))
+                if key in pairs:
+                    compat_count += 1
+        compat_html = f'<span style="font-size:12px;color:var(--ink-muted);">Compatible with {compat_count}/{len(tools)-1} tools in stack</span>' if len(tools) > 1 else ''
+
+        pp = t.get('price_pence', 0) or 0
+        price_str = f"\u00a3{pp/100:.2f}" if pp > 0 else "Free"
+
+        tool_cards.append(f"""
+        <a href="/tool/{t_slug}" class="card" style="text-decoration:none;color:inherit;display:block;padding:20px;">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
+                <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin:0;">{name}</h3>
+                {health_html}
             </div>
-            <div style="font-size:14px;color:var(--ink-muted);margin-bottom:16px;">
-                All tools in this stack are free. <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Saves ~{tokens_k}k tokens.
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;">{tagline}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px;">
+                <span style="font-size:12px;font-weight:600;color:var(--ink-light);background:var(--cream-dark);padding:3px 10px;border-radius:999px;">{cat_name}</span>
+                <span style="font-size:13px;font-weight:600;color:var(--ink);">{price_str}</span>
             </div>
-        </div>
-        """
+            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+                {citation_html}
+                {sr_html}
+            </div>
+            {f'<div style="margin-top:8px;">{compat_html}</div>' if compat_html else ''}
+        </a>
+        """)
+
+    cards_html = "\n".join(tool_cards)
+
+    # ── Pricing (curated only) ──
+    if source == 'curated' and MARKETPLACE_ENABLED:
+        discount_percent = stack.get('discount_percent', 15)
+        full_price = sum(t.get('price_pence', 0) or 0 for t in tools)
+        discount_amount = full_price * discount_percent // 100
+        bundle_price = full_price - discount_amount
+        has_paid = full_price > 0
+        if has_paid:
+            pricing_html = f"""
+            <div class="card" style="text-align:center;padding:32px;margin-bottom:40px;">
+                <div style="font-size:14px;color:var(--ink-muted);text-decoration:line-through;">{format_price(full_price)}</div>
+                <div style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:4px;">{format_price(bundle_price)}</div>
+                <div class="badge badge-success" style="font-weight:700;margin-bottom:16px;">Save {discount_percent}%</div>
+                <form method="post" action="/api/checkout-stack">
+                    <input type="hidden" name="stack_id" value="{stack['id']}">
+                    <button type="submit" class="btn btn-primary" style="font-size:16px;padding:16px 40px;">Buy This Stack &rarr;</button>
+                </form>
+            </div>
+            """
+        else:
+            pricing_html = ""
+    else:
+        pricing_html = ""
+
+    # ── JSON-LD ──
+    tools_jsonld = ",".join(
+        f'{{"@type":"SoftwareApplication","name":"{escape(str(t["name"]))}","url":"{BASE_URL}/tool/{escape(str(t["slug"]))}"}}' for t in tools
+    )
+    jsonld = f"""
+    <script type="application/ld+json">
+    {{
+        "@context":"https://schema.org",
+        "@type":"ItemList",
+        "name":"{title}",
+        "description":"{escape(desc[:200])}",
+        "numberOfItems":{len(tools)},
+        "itemListElement":[{tools_jsonld}]
+    }}
+    </script>
+    """
 
     body = f"""
+    {jsonld}
     <div class="container" style="padding:48px 24px;max-width:900px;">
         <a href="/stacks" style="color:var(--ink-muted);font-size:14px;font-weight:600;">&larr; All Stacks</a>
         <div style="margin-top:16px;margin-bottom:32px;">
@@ -510,22 +688,30 @@ async def stack_detail(request: Request, slug: str):
             <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);margin-top:12px;">
                 {title}
             </h1>
+            <div style="margin-top:8px;margin-bottom:8px;">{source_badge}</div>
             <p style="color:var(--ink-muted);font-size:17px;margin-top:8px;max-width:600px;">{desc}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;font-size:14px;color:var(--ink-muted);">
+                {stats_html}
+            </div>
+            {f'<div style="margin-top:8px;">{replaces_html}</div>' if replaces_html else ''}
         </div>
 
         {pricing_html}
+        {matrix_html}
 
-        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:40px 0 20px;">
+        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:0 0 20px;">
             What&rsquo;s in the Stack
         </h2>
         <div class="card-grid">{cards_html}</div>
-
-        {pricing_html}
     </div>
     """
-    return HTMLResponse(page_shell(f"{stack['title']} — Stack", body,
-                                   description=f"Get {len(tools)} developer tools in one bundle at {discount_percent}% off. {stack.get('description', '')}",
-                                   user=request.state.user))
+    return HTMLResponse(page_shell(
+        f"{stack['title']} — Stack",
+        body,
+        description=f"{len(tools)} indie developer tools that work together. {stack.get('description', '')}",
+        user=request.state.user,
+        canonical=f"/stacks/{slug}",
+    ))
 
 
 @router.post("/api/checkout-stack")
