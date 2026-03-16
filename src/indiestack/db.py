@@ -5328,7 +5328,7 @@ async def get_search_gaps(db: aiosqlite.Connection, days: int = 30, min_searches
           AND created_at > datetime('now', '-' || ? || ' days')
         GROUP BY normalized_query
         HAVING COUNT(*) >= ?
-        ORDER BY search_count DESC
+        ORDER BY count DESC
         LIMIT ?
     """, (days, min_searches, limit))
     return [dict(r) for r in await cursor.fetchall()]
