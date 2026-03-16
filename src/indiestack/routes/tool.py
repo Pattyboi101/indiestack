@@ -230,7 +230,7 @@ async def tool_detail(request: Request, slug: str):
                     View full analytics &rarr;
                 </a>
             </div>'''
-    elif is_claimed:
+    elif is_claimed and ai_rec_count > 0:
         # Claimed but viewer is not the owner — generic teaser, no numbers
         analytics_teaser = '''
         <div style="margin-top:8px;padding:10px 16px;background:var(--info-bg);border-radius:var(--radius-sm);
@@ -238,7 +238,7 @@ async def tool_detail(request: Request, slug: str):
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             AI agents recommend this tool
         </div>'''
-    else:
+    elif not is_claimed and ai_rec_count > 0:
         # Unclaimed — teaser + claim nudge
         analytics_teaser = '''
         <div style="margin-top:8px;padding:10px 16px;background:var(--info-bg);border-radius:var(--radius-sm);
