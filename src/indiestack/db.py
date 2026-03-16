@@ -1891,7 +1891,7 @@ async def search_tools(
     # If no query text but filters are present, do a filter-only browse
     has_filters = any([
         compatible_with, price, has_api, language, tags, exclude,
-        health, min_stars, sort, source_type,
+        health, min_stars, source_type,
     ])
 
     if not safe_q and not has_filters:
@@ -1940,6 +1940,8 @@ async def search_tools(
         rows = await cursor.fetchall()
 
     # Post-query soft filters: min_success_rate and min_confidence
+    if min_confidence and min_confidence not in ("low", "medium", "high"):
+        min_confidence = ""
     if rows and (min_success_rate > 0 or min_confidence):
         confidence_levels = {"none": 0, "low": 1, "medium": 2, "high": 3}
         min_conf_level = confidence_levels.get(min_confidence, 0)
