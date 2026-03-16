@@ -305,6 +305,7 @@ async def main(dry_run=False, verbose=False):
         tokens_saved = sum(CATEGORY_TOKEN_COSTS.get(cat, 50000) for cat in categories_covered)
         confidence = stack_confidence(selected_slugs, pair_index, conflict_index)
 
+
         fw_display = FRAMEWORK_NAMES.get(fw, fw.title())
         slug = f"{fw.replace('.', '').replace(' ', '-')}-stack"
         title = f"{fw_display} Stack"
@@ -374,6 +375,11 @@ async def main(dry_run=False, verbose=False):
 
         tokens_saved = sum(CATEGORY_TOKEN_COSTS.get(cat, 50000) for cat in categories_covered)
         confidence = stack_confidence(selected_slugs, pair_index, conflict_index)
+
+        if confidence < MIN_CONFIDENCE:
+            if verbose:
+                print(f"  SKIP {slug}: confidence {confidence:.0%} below {MIN_CONFIDENCE:.0%} floor")
+            continue
 
         await upsert_stack(
             db, slug, spec["title"], spec["description"], spec["emoji"],

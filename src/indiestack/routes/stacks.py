@@ -108,20 +108,33 @@ async def stacks_index(request: Request):
     """
 
     generator_html = """
-    <div class="card" style="padding:32px;text-align:center;margin-bottom:48px;
-                             border:2px solid var(--accent);background:var(--cream);">
-        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
-            Analyse Your Dependencies
-        </h2>
-        <p style="color:var(--ink-muted);font-size:15px;margin-bottom:20px;max-width:540px;margin-left:auto;margin-right:auto;">
-            Paste your <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:13px;">package.json</code>
-            or <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:13px;">requirements.txt</code>
-            &mdash; we'll scan your deps and show you indie tools that can replace big-tech dependencies.
-        </p>
-        <a href="/stacks/generator" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
-            Paste &amp; Scan &rarr;
-        </a>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:48px;">
+        <div class="card" style="padding:28px;text-align:center;border:2px solid var(--accent);background:var(--cream);">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:8px;">
+                Analyse Your Dependencies
+            </h2>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
+                Paste your <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:12px;">package.json</code>
+                or <code style="font-family:var(--font-mono);background:var(--cream-dark);padding:2px 6px;border-radius:4px;font-size:12px;">requirements.txt</code>
+                and find indie replacements.
+            </p>
+            <a href="/stacks/generator" class="btn btn-primary" style="font-size:15px;padding:12px 28px;">
+                Paste &amp; Scan &rarr;
+            </a>
+        </div>
+        <div class="card" style="padding:28px;text-align:center;border:2px solid var(--border);background:var(--cream);">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:8px;">
+                Share Your Stack
+            </h2>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
+                Show what you build with &mdash; share your tools, help other developers discover what works.
+            </p>
+            <a href="/dashboard/my-stack" class="btn" style="font-size:15px;padding:12px 28px;border:2px solid var(--accent);color:var(--accent);background:transparent;">
+                Create Your Stack &rarr;
+            </a>
+        </div>
     </div>
+    <style>@media(max-width:600px){.container > div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}}</style>
     """
 
     if framework_stacks:
@@ -188,21 +201,7 @@ async def stacks_index(request: Request):
         </div>
         """
     else:
-        community_html = """
-        <div style="margin-bottom:48px;">
-            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
-                Community Stacks
-            </h2>
-            <div class="card" style="padding:32px;text-align:center;">
-                <p style="color:var(--ink-muted);font-size:15px;margin-bottom:16px;">
-                    Share your stack &mdash; show what tools you use and why.
-                </p>
-                <a href="/dashboard/my-stack" class="btn btn-primary" style="font-size:14px;padding:12px 24px;">
-                    Create Your Stack &rarr;
-                </a>
-            </div>
-        </div>
-        """
+        community_html = ""
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:1000px;">
@@ -210,8 +209,8 @@ async def stacks_index(request: Request):
         {generator_html}
         {framework_html}
         {usecase_html}
-        {curated_html}
         {community_html}
+        {curated_html}
     </div>
     """
     return HTMLResponse(page_shell(
