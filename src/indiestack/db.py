@@ -3631,7 +3631,7 @@ async def find_stack_triangles(db: aiosqlite.Connection, slug: str, min_success:
         WHERE (tool_a_slug = ? OR tool_b_slug = ?) AND success_count >= ?
         ORDER BY success_count DESC LIMIT 30
     """, (slug, slug, slug, min_success))
-    partners = [r[0] for r in await cursor.fetchall()]
+    partners = [r['partner'] for r in await cursor.fetchall()]
 
     if len(partners) < 2:
         return []
@@ -3648,7 +3648,7 @@ async def find_stack_triangles(db: aiosqlite.Connection, slug: str, min_success:
             if row:
                 triangles.append({
                     "tools": sorted([slug, p1, p2]),
-                    "mutual_success": row[0],
+                    "mutual_success": row['success_count'],
                 })
     return triangles[:5]
 
