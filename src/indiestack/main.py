@@ -1119,7 +1119,18 @@ async def sitemap(request: Request):
     all_stacks_list = await cursor_stacks.fetchall()
     for st in all_stacks_list:
         urls.append((f"{BASE_URL}/stacks/{st['slug']}", "weekly", "0.7", None))
-    # Compare pages (top pairs per category)
+    # Compare pages: verified tool pairs from tool_pairs table (success_count > 0)
+    pairs_cursor = await d.execute(
+        "SELECT tool_a_slug, tool_b_slug FROM tool_pairs WHERE success_count > 0"
+    )
+    verified_pairs = await pairs_cursor.fetchall()
+    compare_seen = set()
+    for p in verified_pairs:
+        pair_key = f"{p['tool_a_slug']}-vs-{p['tool_b_slug']}"
+        if pair_key not in compare_seen:
+            compare_seen.add(pair_key)
+            urls.append((f"{BASE_URL}/compare/{pair_key}", "weekly", "0.6", None))
+    # Compare pages (top pairs per category, as fallback for pairs not in tool_pairs)
     for c in cats:
         cat_cursor = await d.execute(
             "SELECT slug FROM tools WHERE category_id = ? AND status = 'approved' ORDER BY upvote_count DESC LIMIT 6",
@@ -1128,7 +1139,10 @@ async def sitemap(request: Request):
         slugs = [t['slug'] for t in cat_tools]
         for i in range(len(slugs)):
             for j in range(i + 1, len(slugs)):
-                urls.append((f"{BASE_URL}/compare/{slugs[i]}-vs-{slugs[j]}", "weekly", "0.5", None))
+                pair_key = f"{slugs[i]}-vs-{slugs[j]}"
+                if pair_key not in compare_seen:
+                    compare_seen.add(pair_key)
+                    urls.append((f"{BASE_URL}/compare/{pair_key}", "weekly", "0.5", None))
     urls.append((f"{BASE_URL}/calculator", "weekly", "0.8", None))
     # Explore
     urls.append((f"{BASE_URL}/explore", "daily", "0.9", today))
