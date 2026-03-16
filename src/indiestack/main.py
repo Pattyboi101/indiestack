@@ -888,9 +888,9 @@ async def llms_txt(request: Request):
     try:
         d = request.state.db
         row = await db.execute_fetchone(d, "SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
-        tool_count = row['cnt'] if row else 880
+        tool_count = row['cnt'] if row else 3000
     except Exception:
-        tool_count = 880
+        tool_count = 3000
     return (
         "# IndieStack\n\n"
         f"> The discovery layer between AI coding agents and {tool_count}+ proven, lightweight developer tools. "
@@ -981,9 +981,9 @@ async def agent_card(request: Request):
     d = request.state.db
     try:
         row = await db.execute_fetchone(d, "SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
-        tool_count = row["cnt"] if row else 880
+        tool_count = row["cnt"] if row else 3000
     except Exception:
-        tool_count = 880
+        tool_count = 3000
     return JSONResponse({
         "name": "IndieStack",
         "description": f"The discovery layer between AI coding agents and {tool_count}+ proven, lightweight developer tools.",
@@ -2896,7 +2896,7 @@ async def og_home_card():
 
 @app.post("/api/claim")
 async def api_claim(request: Request):
-    """Request to claim an unclaimed tool — requires admin approval."""
+    """Claim an unclaimed tool — instant via email domain match, otherwise admin approval."""
     from fastapi.responses import RedirectResponse
     user = request.state.user
     if not user:
@@ -2913,14 +2913,65 @@ async def api_claim(request: Request):
     if not tool or tool.get('claimed_at'):
         return RedirectResponse(url=f"/tool/{tool['slug']}" if tool else "/", status_code=303)
 
-    # Record claim request for admin approval (don't auto-assign)
-    await d.execute(
-        "INSERT OR IGNORE INTO claim_requests (tool_id, user_id, created_at) VALUES (?, ?, CURRENT_TIMESTAMP)",
-        (tool_id, user['id']),
-    )
-    await d.commit()
+    user_email = user.get('email', '')
+    user_email_domain = user_email.split('@')[-1].lower() if '@' in user_email else ''
+    tool_url = tool.get('url', '') or ''
+    tool_domain = db.extract_domain(tool_url)
 
-    return RedirectResponse(url=f"/tool/{tool['slug']}?claim_requested=1", status_code=303)
+    if user_email_domain and tool_domain and user_email_domain == tool_domain:
+        # Domain match — send verification email for instant claim
+        token = await db.create_claim_token(d, tool_id, user['id'])
+        base_url = str(request.base_url).rstrip('/')
+        verify_url = f"{base_url}/api/claim/verify/{token}"
+        tool_name = tool.get('name', 'your tool')
+        html_body = f"""
+        <div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:32px;">
+            <h2 style="color:#1A2D4A;margin-bottom:16px;">Verify your claim for {tool_name}</h2>
+            <p style="color:#555;line-height:1.6;font-size:15px;">
+                You requested to claim <strong>{tool_name}</strong> on IndieStack.
+                Since your email domain matches the tool's domain, click below to verify and complete your claim instantly.
+            </p>
+            <a href="{verify_url}" style="display:inline-block;margin:24px 0;padding:14px 28px;background:#1A2D4A;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:15px;">
+                Verify &amp; Claim
+            </a>
+            <p style="color:#999;font-size:13px;margin-top:16px;">This link expires in 24 hours.</p>
+        </div>
+        """
+        await send_email(user_email, f"Verify your claim for {tool_name} on IndieStack", html_body)
+        return RedirectResponse(url=f"/tool/{tool['slug']}?claim_email_sent=1", status_code=303)
+    else:
+        # No domain match — fall back to admin approval
+        await d.execute(
+            "INSERT OR IGNORE INTO claim_requests (tool_id, user_id, created_at) VALUES (?, ?, CURRENT_TIMESTAMP)",
+            (tool_id, user['id']),
+        )
+        await d.commit()
+        return RedirectResponse(url=f"/tool/{tool['slug']}?claim_requested=1", status_code=303)
+
+
+@app.get("/api/claim/verify/{token}")
+async def api_claim_verify(request: Request, token: str):
+    """Verify a claim token from email and complete the claim."""
+    from fastapi.responses import RedirectResponse, HTMLResponse
+    from indiestack.routes.components import page_shell
+
+    d = request.state.db
+    result = await db.verify_claim_token(d, token)
+    if not result:
+        user = request.state.user
+        body = '''
+        <div style="max-width:520px;margin:60px auto;text-align:center;padding:32px;">
+            <h2 style="color:var(--ink);margin-bottom:12px;">Invalid or Expired Link</h2>
+            <p style="color:var(--ink-light);line-height:1.6;">This claim verification link is invalid, expired, or has already been used.</p>
+            <a href="/" style="display:inline-block;margin-top:24px;padding:12px 24px;background:var(--navy);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;">Back to IndieStack</a>
+        </div>
+        '''
+        return HTMLResponse(page_shell("Invalid Link — IndieStack", body, user=user), status_code=400)
+
+    tool_id, user_id = result
+    tool = await db.get_tool_by_id(d, tool_id)
+    slug = tool['slug'] if tool else ''
+    return RedirectResponse(url=f"/tool/{slug}?claimed=1", status_code=303)
 
 
 @app.post("/api/claim-and-boost")

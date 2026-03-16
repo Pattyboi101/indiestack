@@ -362,6 +362,24 @@ async def tool_detail(request: Request, slug: str):
         </div>
         '''
 
+    # Claim status messages
+    claim_message = ''
+    if request.query_params.get('claim_email_sent'):
+        claim_message = '''
+        <div style="margin:16px 0;padding:16px 24px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-sm);color:var(--success-text);font-size:14px;">
+            &#9989; Verification email sent! Check your inbox and click the link to claim this listing.
+        </div>'''
+    elif request.query_params.get('claimed'):
+        claim_message = '''
+        <div style="margin:16px 0;padding:16px 24px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-sm);color:var(--success-text);font-size:14px;">
+            &#127881; You've claimed this listing! Visit your <a href="/dashboard" style="color:var(--success-text);font-weight:600;">dashboard</a> to see your analytics.
+        </div>'''
+    elif request.query_params.get('claim_requested'):
+        claim_message = '''
+        <div style="margin:16px 0;padding:16px 24px;background:var(--info-bg);border:1px solid var(--info-border);border-radius:var(--radius-sm);color:var(--info-text);font-size:14px;">
+            &#128233; Claim request submitted! We'll review it within 24 hours.
+        </div>'''
+
     # Boost upsell — hidden for now (re-enable when trust is established)
     boost_html = ''
 
@@ -1018,6 +1036,7 @@ async def tool_detail(request: Request, slug: str):
         </div>
         </div>
 
+        {claim_message}
         {claim_html}
         {community_notice}
         {boost_html}

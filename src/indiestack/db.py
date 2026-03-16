@@ -4380,6 +4380,37 @@ async def get_similar_tools(db: aiosqlite.Connection, tool_id: int, category_id:
 
 # ── Round 9: Retention & Engagement ──────────────────────────────────────
 
+def extract_domain(url: str) -> str:
+    """Extract base domain from a URL. 'https://www.example.com/path' -> 'example.com'"""
+    from urllib.parse import urlparse
+    try:
+        parsed = urlparse(url if '://' in url else f'https://{url}')
+        host = parsed.hostname or ''
+        if host.startswith('www.'):
+            host = host[4:]
+        return host.lower()
+    except Exception:
+        return ''
+
+
+async def complete_claim(db, tool_id: int, user_id: int):
+    """Finalize a tool claim — set maker_id, claimed_at, and user role."""
+    cursor = await db.execute("SELECT name, email FROM users WHERE id = ?", (user_id,))
+    user_row = await cursor.fetchone()
+    maker_name = user_row['name'] or user_row['email'].split('@')[0]
+    maker_id = await get_or_create_maker(db, maker_name)
+    await db.execute(
+        "UPDATE tools SET maker_id = ?, claimed_at = CURRENT_TIMESTAMP WHERE id = ? AND claimed_at IS NULL",
+        (maker_id, tool_id),
+    )
+    await db.execute(
+        "UPDATE users SET maker_id = COALESCE(maker_id, ?), role = 'maker' WHERE id = ?",
+        (maker_id, user_id),
+    )
+    await db.commit()
+    return maker_id
+
+
 async def create_claim_token(db, tool_id: int, user_id: int) -> str:
     """Create a claim token for a user wanting to claim a tool. 24h expiry."""
     token = secrets.token_urlsafe(32)
