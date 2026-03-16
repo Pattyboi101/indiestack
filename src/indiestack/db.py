@@ -1392,6 +1392,64 @@ async def init_db():
         await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_flags_user ON tool_flags(user_id)")
         await db.commit()
 
+        # ── Verified stacks table (Agentic Package Manager) ──
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS verified_stacks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                tool_slugs TEXT NOT NULL,
+                use_case TEXT,
+                success_count INTEGER NOT NULL DEFAULT 1,
+                source TEXT NOT NULL DEFAULT 'agent',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(tool_slugs)
+            )
+        """)
+        await db.commit()
+
+        # ── Tool conflicts table (Agentic Package Manager) ──
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS tool_conflicts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                tool_a_slug TEXT NOT NULL,
+                tool_b_slug TEXT NOT NULL,
+                reason TEXT,
+                report_count INTEGER NOT NULL DEFAULT 1,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(tool_a_slug, tool_b_slug)
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_conflicts_a ON tool_conflicts(tool_a_slug)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_conflicts_b ON tool_conflicts(tool_b_slug)")
+        await db.commit()
+
+        # ── Normalize tool_pairs: ensure tool_a_slug < tool_b_slug alphabetically ──
+        try:
+            cursor = await db.execute(
+                "SELECT id, tool_a_slug, tool_b_slug, success_count FROM tool_pairs WHERE tool_a_slug > tool_b_slug"
+            )
+            bad_rows = await cursor.fetchall()
+            for row in bad_rows:
+                existing = await db.execute(
+                    "SELECT id, success_count FROM tool_pairs WHERE tool_a_slug = ? AND tool_b_slug = ?",
+                    (row['tool_b_slug'], row['tool_a_slug']),
+                )
+                existing_row = await existing.fetchone()
+                if existing_row:
+                    await db.execute(
+                        "UPDATE tool_pairs SET success_count = success_count + ? WHERE id = ?",
+                        (row['success_count'], existing_row['id']),
+                    )
+                    await db.execute("DELETE FROM tool_pairs WHERE id = ?", (row['id'],))
+                else:
+                    await db.execute(
+                        "UPDATE tool_pairs SET tool_a_slug = ?, tool_b_slug = ? WHERE id = ?",
+                        (row['tool_b_slug'], row['tool_a_slug'], row['id']),
+                    )
+            if bad_rows:
+                await db.commit()
+        except Exception:
+            pass
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
@@ -3464,6 +3522,44 @@ async def record_tool_pair(db: aiosqlite.Connection, slug_a: str, slug_b: str, s
         ON CONFLICT(tool_a_slug, tool_b_slug) DO UPDATE SET success_count = success_count + 1
     """, (a, b, source))
     await db.commit()
+
+
+async def record_verified_stack(db: aiosqlite.Connection, tool_slugs: list[str], use_case: str = None, source: str = "agent"):
+    """Record a verified stack (set of tools used together successfully)."""
+    import json
+    sorted_slugs = json.dumps(sorted(tool_slugs))
+    await db.execute(
+        """INSERT INTO verified_stacks (tool_slugs, use_case, source)
+           VALUES (?, ?, ?)
+           ON CONFLICT(tool_slugs) DO UPDATE SET success_count = success_count + 1""",
+        (sorted_slugs, use_case, source),
+    )
+    await db.commit()
+
+
+async def record_tool_conflict(db: aiosqlite.Connection, slug_a: str, slug_b: str, reason: str = None):
+    """Record an incompatibility between two tools."""
+    a, b = sorted([slug_a, slug_b])
+    await db.execute(
+        """INSERT INTO tool_conflicts (tool_a_slug, tool_b_slug, reason)
+           VALUES (?, ?, ?)
+           ON CONFLICT(tool_a_slug, tool_b_slug) DO UPDATE SET report_count = report_count + 1,
+           reason = COALESCE(NULLIF(excluded.reason, ''), tool_conflicts.reason)""",
+        (a, b, reason),
+    )
+    await db.commit()
+
+
+async def get_tool_conflicts(db: aiosqlite.Connection, slug: str) -> list:
+    """Get known conflicts for a tool."""
+    cursor = await db.execute("""
+        SELECT CASE WHEN tool_a_slug = ? THEN tool_b_slug ELSE tool_a_slug END as conflict_slug,
+               reason, report_count
+        FROM tool_conflicts
+        WHERE tool_a_slug = ? OR tool_b_slug = ?
+        ORDER BY report_count DESC
+    """, (slug, slug, slug))
+    return [dict(r) for r in await cursor.fetchall()]
 
 
 # ── Tool Views (Analytics) ───────────────────────────────────────────────
