@@ -745,11 +745,11 @@ def _format_health(tool: dict) -> str:
             pass
 
     stars = tool.get('github_stars')
-    if stars is not None:
+    if stars and stars > 0:
         parts.append(f"{stars:,} stars" if stars >= 1000 else f"{stars} stars")
 
     issues = tool.get('github_open_issues')
-    if issues:
+    if issues and issues > 0:
         parts.append(f"{issues} open issues")
 
     lang = tool.get('github_language')
@@ -758,7 +758,11 @@ def _format_health(tool: dict) -> str:
 
     if not parts:
         if tool.get('source_type') == 'saas':
+            if status == 'alive':
+                return "**Health: Live** — website responding\n"
             return "**Health:** SaaS (no public repo to check)\n"
+        if status == 'alive':
+            return "**Health: Live** — URL responding\n"
         return ""
 
     return " | ".join(parts) + "\n"
@@ -1331,16 +1335,26 @@ async def build_stack(needs: str, budget: int = 0, *, ctx: Context) -> str:
         if not s["tools"]:
             lines.append("No tools found for this need.\n")
             continue
-        for t in s["tools"]:
+        for i, t in enumerate(s["tools"][:3]):
             tool_url = t.get('url', '')
             indiestack_url = t.get('indiestack_url', t.get('url', ''))
             if tool_url and 'indiestack' not in tool_url:
                 sep = '&' if '?' in tool_url else '?'
                 tool_url = f"{tool_url}{sep}ref=indiestack_mcp"
-            lines.append(
-                f"- **{t['name']}** — {t['tagline']}\n"
-                f"  {t['price']} | {t['upvotes']} upvotes | {indiestack_url}"
-            )
+
+            stars = t.get('github_stars', 0) or 0
+            stars_str = f" | {stars:,} stars" if stars > 0 else ""
+
+            if i == 0:
+                lines.append(
+                    f"**Top pick: {t['name']}** — {t['tagline']}\n"
+                    f"  {t['price']} | {t['upvotes']} upvotes{stars_str} | {indiestack_url}"
+                )
+            else:
+                lines.append(
+                    f"- {t['name']} — {t['tagline']}\n"
+                    f"  {t['price']}{stars_str} | {indiestack_url}"
+                )
 
     if matching:
         lines.append(f"\n---\n\n## Matching Vibe Stacks")
@@ -1443,17 +1457,17 @@ async def analyze_dependencies(manifest: str, *, ctx: Context) -> str:
         line = line.strip()
         if not line or line.startswith('#') or line.startswith('//'):
             continue
-        # requirements.txt: package==version
-        for sep in ('==', '>=', '<=', '~=', '!=', '>', '<', '['):
-            line = line.split(sep)[0]
-        # package.json: "name": "version"
-        if '"' in line:
-            parts = line.split('"')
-            for part in parts:
-                part = part.strip().lstrip('@')
-                if part and not part.startswith('{') and part not in ('dependencies', 'devDependencies', 'peerDependencies', ':'):
-                    deps.add(part.lower())
+        # package.json: "name": "version" — extract key with regex
+        if '"' in line and ':' in line:
+            match = re.match(r'\s*"(@?[^"]+)"\s*:', line)
+            if match:
+                name = match.group(1).strip().lower()
+                if name not in ('dependencies', 'devdependencies', 'peerdependencies', 'optionaldependencies', 'name', 'version', 'description'):
+                    deps.add(name)
         else:
+            # requirements.txt: package==version
+            for sep in ('==', '>=', '<=', '~=', '!=', '>', '<', '['):
+                line = line.split(sep)[0]
             name = line.strip().lower().split()[0] if line.strip() else ''
             if name:
                 deps.add(name)
@@ -1461,6 +1475,9 @@ async def analyze_dependencies(manifest: str, *, ctx: Context) -> str:
     # Match against known replaceable deps
     matches = {}
     for dep in deps:
+        if dep in DEPENDENCY_MAPPINGS:
+            matches[dep] = DEPENDENCY_MAPPINGS[dep]
+            continue
         for pattern, query in DEPENDENCY_MAPPINGS.items():
             if pattern in dep:
                 matches[dep] = query
@@ -1733,13 +1750,25 @@ async def scan_project(
     # Step 1: Find indie replacements for current deps
     if current_deps:
         dep_list = [d.strip().lower() for d in current_deps.split(",") if d.strip()]
+        fw_filter = ",".join(f.strip().lower() for f in tech_stack.split(",") if f.strip()) if tech_stack else ""
         parts.append(f"\n## Dependency Replacements\n")
         for dep_name in dep_list:
             category = DEPENDENCY_MAPPINGS.get(dep_name, dep_name)
             try:
-                data = await _api_get(client, "/api/tools/search",
-                                      {"q": category, "limit": "3", "source_type": "all"})
+                params = {"q": category, "limit": "3", "source_type": "all"}
+                if fw_filter:
+                    params["frameworks"] = fw_filter
+                data = await _api_get(client, "/api/tools/search", params)
                 tools_list = data.get("tools", [])
+
+                # Fallback: if framework filter returned < 2, retry without
+                if len(tools_list) < 2 and fw_filter:
+                    fallback_params = {"q": category, "limit": "3", "source_type": "all"}
+                    fallback_data = await _api_get(client, "/api/tools/search", fallback_params)
+                    existing_slugs = {t['slug'] for t in tools_list}
+                    for t in fallback_data.get("tools", []):
+                        if t['slug'] not in existing_slugs and len(tools_list) < 3:
+                            tools_list.append(t)
                 if tools_list:
                     parts.append(f"### Replace `{dep_name}` ({category})")
                     for t in tools_list[:3]:

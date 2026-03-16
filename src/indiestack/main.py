@@ -2058,6 +2058,7 @@ async def api_stack_builder(request: Request, needs: str = "", budget: int = 0):
                 "price_monthly": price_monthly,
                 "verified": bool(t.get('is_verified', 0)),
                 "upvotes": int(t.get('upvote_count', 0)),
+                "github_stars": int(t.get('github_stars', 0) or 0),
                 "url": f"{BASE_URL}/tool/{t['slug']}",
             })
 
