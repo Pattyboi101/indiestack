@@ -18,7 +18,7 @@ from indiestack.db import (get_pending_tools, get_all_tools_admin, update_tool_s
                            get_tool_by_id, get_makers_in_category, get_all_purchases_admin,
                            update_tool, get_all_categories, delete_tool, get_pro_subscriber_stats,
                            create_notification, get_pending_avatars, update_user,
-                           get_follow_through_rate, get_outcome_stats)
+                           get_follow_through_rate, get_outcome_stats, get_search_gaps)
 from indiestack.email import send_email, tool_approved_html
 from indiestack.auth import check_admin_session, make_session_token, ADMIN_PASSWORD
 from indiestack.main import _check_admin_rate_limit, _record_admin_attempt, _clear_admin_attempts
@@ -458,6 +458,32 @@ async def render_overview(db, request, pending):
     except Exception:
         pass
 
+    # ── Demand Gaps Panel ──
+    gaps = await get_search_gaps(db, days=30, min_searches=2, limit=10)
+    gaps_html = ""
+    if gaps:
+        gap_rows = "".join(
+            f'<tr><td style="padding:8px 12px;font-weight:500;">{escape(str(g["normalized_query"]))}</td>'
+            f'<td style="padding:8px 12px;text-align:center;">{g["search_count"]}</td>'
+            f'<td style="padding:8px 12px;text-align:center;">{g["unique_sources"]}</td>'
+            f'<td style="padding:8px 12px;color:var(--ink-muted);font-size:13px;">{escape(str(g["sources"]))}</td></tr>'
+            for g in gaps
+        )
+        gaps_html = f'''
+        <div style="margin-top:32px;">
+            <h3 style="font-size:16px;font-weight:600;margin-bottom:12px;">Demand Gaps (30d)</h3>
+            <p style="font-size:13px;color:var(--ink-muted);margin-bottom:12px;">Queries where agents found nothing — your tool acquisition priority list.</p>
+            <table style="width:100%;border-collapse:collapse;">
+                <thead><tr style="border-bottom:1px solid var(--border);">
+                    <th style="padding:8px 12px;text-align:left;font-size:13px;">Query</th>
+                    <th style="padding:8px 12px;text-align:center;font-size:13px;">Searches</th>
+                    <th style="padding:8px 12px;text-align:center;font-size:13px;">Unique Agents</th>
+                    <th style="padding:8px 12px;text-align:left;font-size:13px;">Source</th>
+                </tr></thead>
+                <tbody>{gap_rows}</tbody>
+            </table>
+        </div>'''
+
     right_col = f"""
     <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">Today's Pulse</h3>
     {kpi_grid}
@@ -465,6 +491,7 @@ async def render_overview(db, request, pending):
     {recent_html}
     {qs_html}
     {trust_html}
+    {gaps_html}
     """
 
     return f"""

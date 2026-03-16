@@ -12,6 +12,16 @@ import time as _time
 DB_PATH = os.environ.get("INDIESTACK_DB_PATH", "/data/indiestack.db")
 _UPVOTE_SALT = os.environ.get("INDIESTACK_UPVOTE_SALT", "indiestack-default-salt-change-me")
 
+_SEARCH_STOP_WORDS = {"tool", "tools", "for", "best", "top", "the", "a", "an", "and", "or", "with", "in", "to"}
+
+def normalize_search_query(query: str) -> str:
+    """Normalize a search query for grouping: lowercase, strip punctuation, remove stop words."""
+    q = query.lower().strip()
+    q = re.sub(r'[^a-z0-9\s]', ' ', q)
+    q = re.sub(r'\s+', ' ', q).strip()
+    words = [w for w in q.split() if w not in _SEARCH_STOP_WORDS]
+    return " ".join(words) if words else q
+
 # ── Schema ────────────────────────────────────────────────────────────────
 
 SCHEMA = """
@@ -1365,6 +1375,15 @@ async def init_db():
         # Migration: add agent_client to search_logs for cross-platform tracking
         try:
             await db.execute("ALTER TABLE search_logs ADD COLUMN agent_client TEXT")
+            await db.commit()
+        except Exception:
+            pass
+
+        # Migration: add normalized_query to search_logs for gap detection
+        try:
+            await db.execute("ALTER TABLE search_logs ADD COLUMN normalized_query TEXT")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_search_logs_normalized ON search_logs(normalized_query)")
+            await db.execute("UPDATE search_logs SET normalized_query = LOWER(TRIM(query)) WHERE normalized_query IS NULL")
             await db.commit()
         except Exception:
             pass
@@ -5139,10 +5158,11 @@ async def log_search(db, query: str, source: str = 'web', result_count: int = 0,
     """Log a search query for the Live Wire feed and maker analytics."""
     if not query or not query.strip():
         return
+    normalized = normalize_search_query(query)
     await db.execute(
-        """INSERT INTO search_logs (query, source, result_count, top_result_slug, top_result_name, api_key_id, agent_client)
-           VALUES (?, ?, ?, ?, ?, ?, ?)""",
-        (query.strip()[:200], source, result_count, top_result_slug, top_result_name, api_key_id,
+        """INSERT INTO search_logs (query, normalized_query, source, result_count, top_result_slug, top_result_name, api_key_id, agent_client)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+        (query.strip()[:200], normalized, source, result_count, top_result_slug, top_result_name, api_key_id,
          str(agent_client)[:100] if agent_client else None))
     await db.commit()
 
@@ -5167,6 +5187,26 @@ async def get_recent_searches(db, limit: int = 30):
            ORDER BY created_at DESC LIMIT ?""",
         (limit,))
     return await cursor.fetchall()
+
+
+async def get_search_gaps(db: aiosqlite.Connection, days: int = 30, min_searches: int = 3, limit: int = 20) -> list:
+    """Get zero-result search queries as demand signals."""
+    cursor = await db.execute("""
+        SELECT normalized_query, COUNT(*) as search_count,
+               MAX(created_at) as last_searched,
+               COUNT(DISTINCT COALESCE(api_key_id, -1)) as unique_sources,
+               GROUP_CONCAT(DISTINCT source) as sources
+        FROM search_logs
+        WHERE result_count = 0
+          AND normalized_query IS NOT NULL
+          AND normalized_query != ''
+          AND created_at > datetime('now', '-' || ? || ' days')
+        GROUP BY normalized_query
+        HAVING COUNT(*) >= ?
+        ORDER BY search_count DESC
+        LIMIT ?
+    """, (days, min_searches, limit))
+    return [dict(r) for r in await cursor.fetchall()]
 
 
 async def get_search_stats(db):

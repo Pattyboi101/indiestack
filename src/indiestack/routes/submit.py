@@ -15,7 +15,7 @@ from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell
 from urllib.parse import quote
 
-from indiestack.db import get_all_categories, create_tool, get_tool_by_id, slugify, get_maker_by_id, get_tool_by_slug, track_event, validate_submission_quality, check_duplicate_url
+from indiestack.db import get_all_categories, create_tool, get_tool_by_id, slugify, get_maker_by_id, get_tool_by_slug, track_event, validate_submission_quality, check_duplicate_url, get_search_gaps
 
 logger = logging.getLogger(__name__)
 
@@ -180,7 +180,7 @@ def submit_success_page(tool_name, tool_slug, maker_slug="", tool_type=None):
     """
 
 
-def submit_form(categories, values: dict = None, error: str = "", success: str = "", tool_count: int = 0, logged_in: bool = True) -> str:
+def submit_form(categories, values: dict = None, error: str = "", success: str = "", tool_count: int = 0, logged_in: bool = True, gap_hint: str = "") -> str:
     v = values or {}
     name_val = escape(str(v.get('name', '')))
     tagline_val = escape(str(v.get('tagline', '')))
@@ -333,6 +333,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                 on our homepage. The more agents discover yours, the higher your chances.
             </p>
         </div>
+        {gap_hint}
         {alert}
         {github_import}
         <form method="post" action="/submit">
@@ -511,7 +512,22 @@ async def submit_get(request: Request):
     cursor = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
     row = await cursor.fetchone()
     tool_count = row['cnt'] if row else 0
-    body = submit_form(categories, values=values, tool_count=tool_count, logged_in=logged_in)
+
+    # Demand gap hints — show makers what agents are searching for
+    gaps = await get_search_gaps(db, days=30, min_searches=5, limit=3)
+    gap_hint = ""
+    if gaps:
+        gap_items = " &middot; ".join(
+            f"<strong>{escape(str(g['normalized_query']))}</strong> ({g['search_count']}x)"
+            for g in gaps[:3]
+        )
+        gap_hint = f'''
+        <div style="background:var(--surface-raised, var(--cream-dark));border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:24px;">
+            <p style="font-size:13px;color:var(--ink-muted);margin-bottom:4px;">AI agents searched for these but found nothing:</p>
+            <p style="font-size:14px;margin:0;">{gap_items}</p>
+        </div>'''
+
+    body = submit_form(categories, values=values, tool_count=tool_count, logged_in=logged_in, gap_hint=gap_hint)
     return HTMLResponse(page_shell("Make Your Creation Discoverable by AI", body, user=user))
 
 
