@@ -13,7 +13,7 @@ from indiestack.config import BASE_URL
 
 from indiestack.routes.components import page_shell, tool_card, stack_card, user_stack_card
 from indiestack.db import (
-    get_all_stacks, get_stacks_by_source, get_stack_stats,
+    get_stacks_by_source, get_stack_stats,
     get_stack_with_tools, get_stack_by_id,
     create_stack_purchase, get_stack_purchase_by_session,
     get_stack_purchase_by_token, get_active_subscription,
@@ -189,7 +189,7 @@ async def stacks_index(request: Request):
     return HTMLResponse(page_shell(
         "Stacks — Intelligence-Powered Tool Combinations",
         body,
-        description="Stacks built from 5,000+ compatibility pairs. Framework stacks, use-case bundles, and community stacks — all backed by agent-verified data.",
+        description=f"Stacks built from {stats['pair_count']:,}+ compatibility pairs. Framework stacks, use-case bundles, and community stacks — all backed by agent-verified data.",
         user=request.state.user,
         canonical="/stacks",
     ))

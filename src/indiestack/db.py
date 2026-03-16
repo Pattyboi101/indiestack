@@ -4401,17 +4401,15 @@ async def get_stacks_by_source(db, source: str):
 
 
 async def get_stack_stats(db):
-    """Get aggregate stats for the stacks page hero."""
-    stats = {}
-    c = await db.execute("SELECT COUNT(*) as cnt FROM tool_pairs")
-    stats["pair_count"] = (await c.fetchone())["cnt"]
-    c = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
-    stats["tool_count"] = (await c.fetchone())["cnt"]
-    c = await db.execute("SELECT COUNT(*) as cnt FROM stacks WHERE source LIKE 'auto-%'")
-    stats["auto_stack_count"] = (await c.fetchone())["cnt"]
-    c = await db.execute("SELECT COUNT(DISTINCT framework) as cnt FROM stacks WHERE framework IS NOT NULL")
-    stats["framework_count"] = (await c.fetchone())["cnt"]
-    return stats
+    """Get aggregate stats for the stacks page hero (single query)."""
+    c = await db.execute("""
+        SELECT
+            (SELECT COUNT(*) FROM tool_pairs) as pair_count,
+            (SELECT COUNT(*) FROM tools WHERE status='approved') as tool_count,
+            (SELECT COUNT(*) FROM stacks WHERE source LIKE 'auto-%') as auto_stack_count,
+            (SELECT COUNT(DISTINCT framework) FROM stacks WHERE framework IS NOT NULL) as framework_count
+    """)
+    return await c.fetchone()
 
 
 async def get_stack_by_slug(db, slug: str):
