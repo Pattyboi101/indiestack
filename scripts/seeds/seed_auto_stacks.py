@@ -138,10 +138,10 @@ async def get_pair_index(db):
 
 
 async def get_conflict_index(db):
-    """Build a set of conflicting pairs."""
+    """Build a set of conflicting pairs, normalized to alphabetical order."""
     cursor = await db.execute("SELECT tool_a_slug, tool_b_slug FROM tool_conflicts")
     rows = await cursor.fetchall()
-    return {(r["tool_a_slug"], r["tool_b_slug"]) for r in rows}
+    return {tuple(sorted([r["tool_a_slug"], r["tool_b_slug"]])) for r in rows}
 
 
 def stack_confidence(tool_slugs, pair_index, conflict_index):
@@ -229,8 +229,6 @@ async def main(dry_run=False, verbose=False):
     pair_index = await get_pair_index(db)
     conflict_index = await get_conflict_index(db)
     print(f"Loaded {len(pair_index)} pairs, {len(conflict_index)} conflicts")
-
-    tool_by_slug = {t["slug"]: t for t in all_tools}
 
     pair_counts = defaultdict(int)
     for (a, b) in pair_index:
