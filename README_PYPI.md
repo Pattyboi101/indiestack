@@ -82,7 +82,16 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie developers have built |
 
-## What's new in v1.8.0
+## What's new in v1.9.0
+
+- **Smarter ranking** — Tools are now ranked by quality score and GitHub stars instead of recency. Category listings, search results, and `build_stack` all surface the best tools first.
+- **Tech stack filtering** — `scan_project` now filters recommendations by framework compatibility. Ask for Next.js tools and get Next.js tools, not Django tools.
+- **Better dependency analysis** — `analyze_dependencies` correctly handles scoped npm packages (`@sentry/node`, `@stripe/stripe-js`) instead of breaking on the `@` prefix.
+- **Health display overhaul** — `check_health` no longer shows misleading "0 stars" for SaaS tools. Shows "Health: Live — website responding" for SaaS tools with confirmed uptime.
+- **Top picks in build_stack** — First result per need is labelled "Top pick", results include star counts, and output is capped at 3 per need to reduce noise.
+- **Health data coverage** — Backfilled health status for 800+ tools. 97% of approved tools now have health data.
+
+## What was new in v1.8.0
 
 - **Super filters** — `find_tools` now accepts 11 optional filters: `compatible_with`, `price`, `min_success_rate`, `min_confidence`, `has_api`, `language`, `tags`, `exclude`, `health`, `min_stars`, and `sort`. Agents can narrow results precisely without multiple round-trips.
 - **Compatibility graph** — New `find_compatible` tool returns tools that work well together, grouped by category, with verified 3-tool stacks (triangle detection), conflict warnings, and overlap detection.

@@ -7,12 +7,12 @@
     "url": "https://github.com/Pattyboi101/indiestack",
     "source": "github"
   },
-  "version": "1.7.1",
+  "version": "1.9.0",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "indiestack",
-      "version": "1.7.1",
+      "version": "1.9.0",
       "transport": {
         "type": "stdio"
       }

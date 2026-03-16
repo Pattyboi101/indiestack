@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "indiestack"
-version = "1.8.0"
+version = "1.9.0"
 description = "MCP server for IndieStack — the discovery layer between AI coding agents and 3,100+ proven developer tools. Search, compare, scan projects, build stacks, and check compatibility before your AI generates boilerplate."
 readme = "README_PYPI.md"
 requires-python = ">=3.10"
