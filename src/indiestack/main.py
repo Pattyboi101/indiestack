@@ -4143,27 +4143,31 @@ async def agent_outcome(request: Request):
         "report_outcome", tool_slug, success=int(bool(success)), notes=notes,
     )
 
-    # Record stack if used_with provided
-    used_with_str = str(data.get("used_with", "")).strip()
-    if used_with_str and success:
-        companions = [s.strip() for s in used_with_str.split(",") if s.strip()]
-        valid_companions = []
-        for comp_slug in companions[:5]:  # Limit to 5 companions per report
-            comp = await db.get_tool_by_slug(request.state.db, comp_slug)
-            if comp:
-                valid_companions.append(comp_slug)
-                # Record pairwise compatibility
-                await db.record_tool_pair(request.state.db, tool_slug, comp_slug, source="agent")
-        if valid_companions:
-            all_slugs = [tool_slug] + valid_companions
-            await db.record_verified_stack(request.state.db, all_slugs, source="agent")
+    # Enrichment is best-effort; primary outcome already recorded
+    try:
+        # Record stack if used_with provided
+        used_with_str = str(data.get("used_with", "")).strip()
+        if used_with_str and success:
+            companions = [s.strip() for s in used_with_str.split(",") if s.strip()]
+            valid_companions = []
+            for comp_slug in companions[:5]:  # Limit to 5 companions per report
+                comp = await db.get_tool_by_slug(request.state.db, comp_slug)
+                if comp:
+                    valid_companions.append(comp_slug)
+                    # Record pairwise compatibility
+                    await db.record_tool_pair(request.state.db, tool_slug, comp_slug, source="agent")
+            if valid_companions:
+                all_slugs = [tool_slug] + valid_companions
+                await db.record_verified_stack(request.state.db, all_slugs, source="agent")
 
-    # Record conflict if incompatible_with provided
-    incompatible_with_str = str(data.get("incompatible_with", "")).strip()
-    if incompatible_with_str and not success:
-        inc_tool = await db.get_tool_by_slug(request.state.db, incompatible_with_str)
-        if inc_tool:
-            await db.record_tool_conflict(request.state.db, tool_slug, incompatible_with_str, reason=notes)
+        # Record conflict if incompatible_with provided
+        incompatible_with_str = str(data.get("incompatible_with", "")).strip()
+        if incompatible_with_str and not success:
+            inc_tool = await db.get_tool_by_slug(request.state.db, incompatible_with_str)
+            if inc_tool:
+                await db.record_tool_conflict(request.state.db, tool_slug, incompatible_with_str, reason=notes)
+    except Exception:
+        pass
 
     stats = await db.get_tool_success_rate(request.state.db, tool_slug)
     return JSONResponse({"ok": True, "success_rate": stats})
