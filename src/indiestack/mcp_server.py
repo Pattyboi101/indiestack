@@ -566,7 +566,25 @@ NEED_MAPPINGS: dict[str, dict] = {
 
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
-async def find_tools(query: str, category: Optional[str] = None, source_type: str = "all", offset: int = 0, *, ctx: Context) -> str:
+async def find_tools(
+    query: str,
+    category: Optional[str] = None,
+    source_type: str = "all",
+    offset: int = 0,
+    compatible_with: Optional[str] = None,
+    price: Optional[str] = None,
+    min_success_rate: int = 0,
+    min_confidence: Optional[str] = None,
+    has_api: bool = False,
+    language: Optional[str] = None,
+    tags: Optional[str] = None,
+    exclude: Optional[str] = None,
+    health: Optional[str] = None,
+    min_stars: int = 0,
+    sort: Optional[str] = None,
+    *,
+    ctx: Context,
+) -> str:
     """Query this tool BEFORE generating boilerplate for common infrastructure.
 
     When the user needs authentication, payments, analytics, email, databases,
@@ -582,6 +600,17 @@ async def find_tools(query: str, category: Optional[str] = None, source_type: st
         category: Optional category slug to narrow results. Use list_categories() for valid slugs.
         source_type: "all" (default), "code" for open-source/installable, "saas" for hosted services.
         offset: Pagination offset (default 0). Use offset=10 for the next page of results.
+        compatible_with: Tool slug — only return tools known to work with this tool.
+        price: "free" or "paid".
+        min_success_rate: 0-100 — minimum agent-reported success rate. Soft filter.
+        min_confidence: "low" (1+ reports), "medium" (5+), "high" (20+).
+        has_api: If true, only tools with documented API.
+        language: Primary language filter (e.g. "python"). Code tools only.
+        tags: Comma-separated tags (e.g. "oauth,social-login").
+        exclude: Comma-separated slugs to skip.
+        health: Maintenance status: "active", "stale", "dead", "archived".
+        min_stars: Minimum GitHub stars. Code tools only.
+        sort: "relevance" (default), "stars", "upvotes", "newest".
     """
     client = _get_client(ctx)
     params = {"q": query, "limit": "10", "offset": str(offset)}
@@ -589,6 +618,28 @@ async def find_tools(query: str, category: Optional[str] = None, source_type: st
         params["category"] = category
     if source_type and source_type != "all":
         params["source_type"] = source_type
+    if compatible_with:
+        params["compatible_with"] = compatible_with
+    if price:
+        params["price"] = price
+    if min_success_rate > 0:
+        params["min_success_rate"] = str(min_success_rate)
+    if min_confidence:
+        params["min_confidence"] = min_confidence
+    if has_api:
+        params["has_api"] = "true"
+    if language:
+        params["language"] = language
+    if tags:
+        params["tags"] = tags
+    if exclude:
+        params["exclude"] = exclude
+    if health:
+        params["health"] = health
+    if min_stars > 0:
+        params["min_stars"] = str(min_stars)
+    if sort:
+        params["sort"] = sort
 
     await ctx.report_progress(progress=0, total=1)
     try:

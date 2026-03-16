@@ -1413,7 +1413,27 @@ def _personalize_results(tools: list[dict], profile: dict) -> list[dict]:
 
 
 @app.get("/api/tools/search")
-async def api_tools_search(request: Request, q: str = "", category: str = "", limit: int = 20, offset: int = 0, source: str = "", source_type: str = ""):
+async def api_tools_search(
+    request: Request,
+    q: str = "",
+    category: str = "",
+    limit: int = 20,
+    offset: int = 0,
+    source: str = "",
+    source_type: str = "",
+    # Intelligence filters
+    compatible_with: str = "",
+    price: str = "",
+    min_success_rate: int = 0,
+    min_confidence: str = "",
+    has_api: bool = False,
+    language: str = "",
+    tags: str = "",
+    exclude: str = "",
+    health: str = "",
+    min_stars: int = 0,
+    sort: str = "",
+):
     """JSON API for searching tools — used by MCP server and integrations."""
     d = request.state.db
     if limit < 1:
@@ -1429,18 +1449,62 @@ async def api_tools_search(request: Request, q: str = "", category: str = "", li
         st = ""
 
     if q.strip():
-        tools = await db.search_tools(d, q.strip(), limit=offset + limit, source_type=st)
+        tools = await db.search_tools(
+            d, q.strip(), limit=offset + limit, source_type=st,
+            compatible_with=compatible_with, price=price,
+            min_success_rate=min_success_rate, min_confidence=min_confidence,
+            has_api=has_api, language=language, tags=tags,
+            exclude=exclude, health=health, min_stars=min_stars, sort=sort,
+        )
         tools = tools[offset:]
     elif category.strip():
         cat = await db.get_category_by_slug(d, category.strip())
         if cat:
             page = (offset // limit) + 1
             tools, _ = await db.get_tools_by_category(d, cat['id'], page=page, per_page=limit)
+            # Apply post-filters for category browsing
+            if price == "free":
+                tools = [t for t in tools if not t.get('price_pence')]
+            elif price == "paid":
+                tools = [t for t in tools if t.get('price_pence') and t['price_pence'] > 0]
+            if health:
+                tools = [t for t in tools if t.get('health_status') == health]
+            if exclude:
+                excluded_slugs = {s.strip() for s in exclude.split(",") if s.strip()}
+                tools = [t for t in tools if t['slug'] not in excluded_slugs]
+            if has_api:
+                tools = [t for t in tools if t.get('api_type')]
+            if min_stars > 0:
+                tools = [t for t in tools if (t.get('github_stars') or 0) >= min_stars]
+            if language:
+                tools = [t for t in tools if (t.get('github_language') or '').lower() == language.lower()]
+            if tags:
+                filter_tags = {tag.strip().lower() for tag in tags.split(",") if tag.strip()}
+                tools = [t for t in tools if filter_tags & {tag.strip().lower() for tag in (t.get('tags') or '').split(",") if tag.strip()}]
         else:
             tools = []
     else:
         tools = await db.get_trending_tools(d, limit=offset + limit)
         tools = tools[offset:]
+        # Apply post-filters for trending browsing
+        if price == "free":
+            tools = [t for t in tools if not t.get('price_pence')]
+        elif price == "paid":
+            tools = [t for t in tools if t.get('price_pence') and t['price_pence'] > 0]
+        if health:
+            tools = [t for t in tools if t.get('health_status') == health]
+        if exclude:
+            excluded_slugs = {s.strip() for s in exclude.split(",") if s.strip()}
+            tools = [t for t in tools if t['slug'] not in excluded_slugs]
+        if has_api:
+            tools = [t for t in tools if t.get('api_type')]
+        if min_stars > 0:
+            tools = [t for t in tools if (t.get('github_stars') or 0) >= min_stars]
+        if language:
+            tools = [t for t in tools if (t.get('github_language') or '').lower() == language.lower()]
+        if tags:
+            filter_tags = {tag.strip().lower() for tag in tags.split(",") if tag.strip()}
+            tools = [t for t in tools if filter_tags & {tag.strip().lower() for tag in (t.get('tags') or '').split(",") if tag.strip()}]
 
     results = []
     for t in tools:
