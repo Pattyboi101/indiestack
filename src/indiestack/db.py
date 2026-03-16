@@ -3610,6 +3610,7 @@ async def find_stack_triangles(db: aiosqlite.Connection, slug: str, min_success:
         SELECT CASE WHEN tool_a_slug = ? THEN tool_b_slug ELSE tool_a_slug END as partner
         FROM tool_pairs
         WHERE (tool_a_slug = ? OR tool_b_slug = ?) AND success_count >= ?
+        ORDER BY success_count DESC LIMIT 30
     """, (slug, slug, slug, min_success))
     partners = [r[0] for r in await cursor.fetchall()]
 
