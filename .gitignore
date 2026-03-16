@@ -44,7 +44,17 @@ PyPI*
 src/indiestack/payments.py
 src/indiestack/routes/pricing.py
 src/indiestack/routes/purchase.py
+src/indiestack/routes/stacks.py
 src/indiestack/routes/verify.py
+
+# Strategy & internal docs
+docs/plans/
+docs/founders-questionnaire*.md
+.planning/
+VISION.md
+ROADMAP.md
+ARCHITECTURE.md
+drafts/
 
 # Database backups
 backups/

@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "IndieStack — Find Indie Alternatives",
+  "version": "0.1.0",
+  "description": "Discover indie alternatives when visiting big SaaS products. Powered by IndieStack.",
+  "permissions": ["activeTab"],
+  "host_permissions": ["https://indiestack.ai/*"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.google.com/analytics/*",
+        "*://analytics.google.com/*",
+        "*://*.mailchimp.com/*",
+        "*://*.zendesk.com/*",
+        "*://*.intercom.com/*",
+        "*://*.hubspot.com/*",
+        "*://*.salesforce.com/*",
+        "*://*.mixpanel.com/*",
+        "*://*.amplitude.com/*",
+        "*://*.datadog.com/*",
+        "*://*.auth0.com/*",
+        "*://*.typeform.com/*",
+        "*://*.calendly.com/*",
+        "*://*.stripe.com/docs*",
+        "*://*.figma.com/*",
+        "*://*.notion.so/*",
+        "*://*.airtable.com/*",
+        "*://*.sendgrid.com/*",
+        "*://*.twilio.com/*",
+        "*://*.hotjar.com/*",
+        "*://*.freshdesk.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  }
+}
