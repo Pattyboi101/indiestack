@@ -17,7 +17,7 @@ router = APIRouter()
 # Junk query filter for demand gaps (mirrors gaps.py)
 _GAP_BLOCKLIST = {
     'xbox game pass', 'akoraimagbuot', 'wace', 'test', 'asdf', 'hello',
-    'indiestack', 'xxx', 'porn', 'sex',
+    'indiestack', 'xxx', 'porn', 'sex', '{search_term_string}',
 }
 
 def _is_valid_gap(query: str) -> bool:
@@ -107,7 +107,7 @@ async def landing(request: Request):
 
         # Fetch demand gaps for the teaser (top 4 valid gaps)
         raw_gaps = await get_search_gaps(db, limit=20)
-        demand_gaps = [g for g in raw_gaps if _is_valid_gap(g['query'])][:4]
+        demand_gaps = [g for g in raw_gaps if _is_valid_gap(g['normalized_query'])][:4]
 
         _landing_cache['data'] = {
             'tool_count': tool_count,
@@ -243,7 +243,7 @@ async def landing(request: Request):
         # Stats pills
         + f'    <div class="glass" style="display:inline-flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;'
         f'                padding:12px 24px;font-size:14px;color:var(--ink-light);">'
-        f'        <span>{tool_count}+ creations</span>'
+        f'        <span>{tool_count}+ developer tools</span>'
         f'        <span style="color:var(--border);">|</span>'
         f'        <span style="color:var(--accent);">{ai_recs:,}+ AI recommendations &amp; counting</span>'
         f'    </div>'
@@ -517,9 +517,9 @@ async def landing(request: Request):
                 '<div style="display:flex;align-items:center;justify-content:space-between;'
                 'padding:14px 0;border-bottom:1px solid var(--border);">'
                 '  <span style="font-size:15px;color:var(--ink);font-weight:500;">'
-                f'    &ldquo;{escape(g["query"])}&rdquo;'
+                f'    &ldquo;{escape(g["normalized_query"])}&rdquo;'
                 '  </span>'
-                f'  <a href="/submit?name={_url_quote(g["query"])}" style="font-size:13px;font-weight:600;'
+                f'  <a href="/submit?name={_url_quote(g["normalized_query"])}" style="font-size:13px;font-weight:600;'
                 '     color:var(--accent);text-decoration:none;white-space:nowrap;">'
                 '    Build This &rarr;'
                 '  </a>'
