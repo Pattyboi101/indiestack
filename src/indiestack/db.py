@@ -4390,6 +4390,30 @@ async def get_all_stacks(db):
     return await cursor.fetchall()
 
 
+async def get_stacks_by_source(db, source: str):
+    """Get stacks filtered by source, with tool counts, ordered by confidence."""
+    cursor = await db.execute(
+        """SELECT s.*, COUNT(st.tool_id) as tool_count
+           FROM stacks s LEFT JOIN stack_tools st ON st.stack_id = s.id
+           WHERE s.source = ?
+           GROUP BY s.id ORDER BY s.confidence_score DESC""", (source,))
+    return await cursor.fetchall()
+
+
+async def get_stack_stats(db):
+    """Get aggregate stats for the stacks page hero."""
+    stats = {}
+    c = await db.execute("SELECT COUNT(*) as cnt FROM tool_pairs")
+    stats["pair_count"] = (await c.fetchone())["cnt"]
+    c = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
+    stats["tool_count"] = (await c.fetchone())["cnt"]
+    c = await db.execute("SELECT COUNT(*) as cnt FROM stacks WHERE source LIKE 'auto-%'")
+    stats["auto_stack_count"] = (await c.fetchone())["cnt"]
+    c = await db.execute("SELECT COUNT(DISTINCT framework) as cnt FROM stacks WHERE framework IS NOT NULL")
+    stats["framework_count"] = (await c.fetchone())["cnt"]
+    return stats
+
+
 async def get_stack_by_slug(db, slug: str):
     """Get a stack by its slug."""
     cursor = await db.execute("SELECT * FROM stacks WHERE slug = ?", (slug,))

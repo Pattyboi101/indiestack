@@ -13,7 +13,8 @@ from indiestack.config import BASE_URL
 
 from indiestack.routes.components import page_shell, tool_card, stack_card, user_stack_card
 from indiestack.db import (
-    get_all_stacks, get_stack_with_tools, get_stack_by_id,
+    get_all_stacks, get_stacks_by_source, get_stack_stats,
+    get_stack_with_tools, get_stack_by_id,
     create_stack_purchase, get_stack_purchase_by_session,
     get_stack_purchase_by_token, get_active_subscription,
     create_purchase, CATEGORY_TOKEN_COSTS,
@@ -40,73 +41,158 @@ def format_price(pence: int) -> str:
 
 @router.get("/stacks", response_class=HTMLResponse)
 async def stacks_index(request: Request):
-    """Browse all Stacks."""
+    """Browse all Stacks — intelligence-powered discovery hub."""
     db = request.state.db
-    stacks = await get_all_stacks(db)
+
+    stats = await get_stack_stats(db)
+    framework_stacks = await get_stacks_by_source(db, "auto-framework")
+    usecase_stacks = await get_stacks_by_source(db, "auto-usecase")
+    curated_stacks_list = await get_stacks_by_source(db, "curated")
     community_stacks_list = await get_public_stacks(db, limit=6)
 
-    # Header
-    header_html = """
-    <div style="text-align:center;margin-bottom:40px;">
-        <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);">
-            Stacks
+    hero_html = f"""
+    <div style="text-align:center;margin-bottom:48px;">
+        <h1 style="font-family:var(--font-display);font-size:clamp(28px,5vw,48px);color:var(--ink);margin-bottom:12px;">
+            Stacks That Actually Work
         </h1>
-        <p style="color:var(--ink-muted);font-size:17px;margin-top:12px;max-width:560px;margin-left:auto;margin-right:auto;">
-            Curated tool bundles and community stacks.
+        <p style="color:var(--ink-muted);font-size:18px;max-width:600px;margin:0 auto 32px;">
+            Built from {stats['pair_count']:,} compatibility pairs across {stats['tool_count']:,} tools.
+            Every stack is backed by agent-verified data, not self-reported profiles.
         </p>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;">
+            <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{stats['pair_count']:,}+</div>
+                <div style="font-size:13px;color:var(--ink-muted);font-weight:600;">Compatibility Pairs</div>
+            </div>
+            <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{stats['tool_count']:,}+</div>
+                <div style="font-size:13px;color:var(--ink-muted);font-weight:600;">Tools Indexed</div>
+            </div>
+            <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{stats['auto_stack_count']}</div>
+                <div style="font-size:13px;color:var(--ink-muted);font-weight:600;">Auto-Generated Stacks</div>
+            </div>
+            <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{stats['framework_count']}</div>
+                <div style="font-size:13px;color:var(--ink-muted);font-weight:600;">Frameworks Covered</div>
+            </div>
+        </div>
     </div>
     """
 
-    # Featured Stacks section
-    if stacks:
-        featured_cards = "\n".join(stack_card(s) for s in stacks)
-        featured_html = f"""
-        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:20px;">Featured</h2>
-        <div class="card-grid">{featured_cards}</div>
+    generator_html = """
+    <div class="card" style="padding:32px;text-align:center;margin-bottom:48px;
+                             border:2px solid var(--accent);background:var(--cream);">
+        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
+            Build Your Stack
+        </h2>
+        <p style="color:var(--ink-muted);font-size:15px;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto;">
+            Paste your package.json or describe what you're building.
+            We'll find indie tools that work together and replace your big-tech dependencies.
+        </p>
+        <a href="/stacks/generator" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
+            Try the Stack Generator &rarr;
+        </a>
+    </div>
+    """
+
+    if framework_stacks:
+        fw_cards = "\n".join(stack_card(s) for s in framework_stacks)
+        framework_html = f"""
+        <div style="margin-bottom:48px;">
+            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
+                Framework Stacks
+            </h2>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:20px;">
+                Tools grouped by framework compatibility — auto-generated from {stats['pair_count']:,} verified pairs.
+            </p>
+            <div class="card-grid">{fw_cards}</div>
+        </div>
         """
     else:
-        featured_html = ""
+        framework_html = ""
 
-    # Community Stacks section
+    if usecase_stacks:
+        uc_cards = "\n".join(stack_card(s) for s in usecase_stacks)
+        usecase_html = f"""
+        <div style="margin-bottom:48px;">
+            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
+                Use Case Stacks
+            </h2>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:20px;">
+                Pre-built combinations for common project types — every tool has compatibility data with the others.
+            </p>
+            <div class="card-grid">{uc_cards}</div>
+        </div>
+        """
+    else:
+        usecase_html = ""
+
+    if curated_stacks_list:
+        curated_cards = "\n".join(stack_card(s) for s in curated_stacks_list)
+        curated_html = f"""
+        <div style="margin-bottom:48px;">
+            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
+                Curated Bundles
+            </h2>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:20px;">
+                Hand-picked tool bundles with bundle discounts.
+            </p>
+            <div class="card-grid">{curated_cards}</div>
+        </div>
+        """
+    else:
+        curated_html = ""
+
     if community_stacks_list:
         community_cards = "\n".join(user_stack_card(s) for s in community_stacks_list)
         community_html = f"""
-        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:40px 0 20px;">Community Stacks</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;">
-            {community_cards}
+        <div style="margin-bottom:48px;">
+            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
+                Community Stacks
+            </h2>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:20px;">
+                See what other developers are building with.
+            </p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;">
+                {community_cards}
+            </div>
         </div>
         """
     else:
         community_html = """
-        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:40px 0 20px;">Community Stacks</h2>
-        <div class="card" style="padding:32px;text-align:center;">
-            <p style="color:var(--ink-muted);font-size:15px;margin-bottom:16px;">
-                Share your stack &mdash; show what tools you use and why
-            </p>
-            <a href="/dashboard" class="btn btn-primary" style="font-size:14px;padding:12px 24px;">Create Your Stack &rarr;</a>
+        <div style="margin-bottom:48px;">
+            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
+                Community Stacks
+            </h2>
+            <div class="card" style="padding:32px;text-align:center;">
+                <p style="color:var(--ink-muted);font-size:15px;margin-bottom:16px;">
+                    Share your stack &mdash; show what tools you use and why.
+                </p>
+                <a href="/dashboard/my-stack" class="btn btn-primary" style="font-size:14px;padding:12px 24px;">
+                    Create Your Stack &rarr;
+                </a>
+            </div>
         </div>
         """
 
-    # Generator CTA
-    generator_cta = """
-    <div class="card" style="padding:24px;text-align:center;margin-top:40px;">
-        <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">Find indie alternatives to your dependencies</h3>
-        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">Paste your package.json or requirements.txt and we'll find matching developer tools.</p>
-        <a href="/stacks/generator" class="btn btn-primary" style="font-size:14px;padding:12px 24px;">Try the Stack Generator &rarr;</a>
-    </div>
-    """
-
     body = f"""
-    <div class="container" style="padding:48px 24px;max-width:900px;">
-        {header_html}
-        {featured_html}
+    <div class="container" style="padding:48px 24px;max-width:1000px;">
+        {hero_html}
+        {generator_html}
+        {framework_html}
+        {usecase_html}
+        {curated_html}
         {community_html}
-        {generator_cta}
     </div>
     """
-    return HTMLResponse(page_shell("Stacks — Curated Indie Bundles", body,
-                                   description="Curated developer tool bundles and community stacks. Find pre-built combinations for auth, analytics, payments, and more.",
-                                   user=request.state.user, canonical="/stacks"))
+    return HTMLResponse(page_shell(
+        "Stacks — Intelligence-Powered Tool Combinations",
+        body,
+        description="Stacks built from 5,000+ compatibility pairs. Framework stacks, use-case bundles, and community stacks — all backed by agent-verified data.",
+        user=request.state.user,
+        canonical="/stacks",
+    ))
 
 
 @router.get("/stacks/community", response_class=HTMLResponse)

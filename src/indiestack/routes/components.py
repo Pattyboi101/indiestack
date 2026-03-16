@@ -1,5 +1,6 @@
 """Design system and shared components for IndieStack."""
 
+import json
 from html import escape
 
 from indiestack.config import BASE_URL
@@ -988,24 +989,64 @@ def indie_score_html(tool: dict) -> str:
 
 
 def stack_card(stack: dict) -> str:
-    """Card component for a Vibe Stack bundle."""
-    emoji = stack.get('cover_emoji', '') or '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>'
+    """Card component for a stack — shows intelligence metadata for auto stacks."""
+    emoji = stack.get('cover_emoji', '') or '\U0001f4e6'
     title = escape(str(stack['title']))
     desc = escape(str(stack.get('description', '')))
     slug = escape(str(stack['slug']))
-    count = stack.get('tool_count', 0)
-    discount = stack.get('discount_percent', 15)
+    count = stack.get('tool_count', 0) or stack.get('tool_count_cached', 0)
+    confidence = stack.get('confidence_score', 0) or 0
+    tokens_k = (stack.get('total_tokens_saved', 0) or 0) // 1000
+    source = stack.get('source', 'curated')
+
+    badges = []
+    badges.append(
+        f'<span style="font-size:12px;font-weight:600;color:var(--ink-light);background:var(--cream-dark);'
+        f'padding:4px 12px;border-radius:999px;">{count} tool{"s" if count != 1 else ""}</span>'
+    )
+    if confidence > 0:
+        conf_pct = f"{confidence:.0%}"
+        badges.append(
+            f'<span style="font-size:12px;font-weight:600;color:#065F46;background:#D1FAE5;'
+            f'padding:4px 12px;border-radius:999px;">{conf_pct} confidence</span>'
+        )
+    if tokens_k > 0:
+        badges.append(
+            f'<span style="font-size:12px;font-weight:600;color:#92400E;background:#FEF3C7;'
+            f'padding:4px 12px;border-radius:999px;">~{tokens_k}k tokens saved</span>'
+        )
+    discount = stack.get('discount_percent', 0)
+    if discount and discount > 0 and source == 'curated':
+        badges.append(f'<span class="badge badge-success" style="font-weight:700;">{discount}% off</span>')
+
+    badges_html = "\n".join(badges)
+
+    replaces_html = ""
+    replaces_raw = stack.get('replaces_json')
+    if replaces_raw:
+        try:
+            replaces = json.loads(replaces_raw) if isinstance(replaces_raw, str) else replaces_raw
+            if replaces:
+                preview = ", ".join(replaces[:3])
+                if len(replaces) > 3:
+                    preview += f" +{len(replaces) - 3} more"
+                replaces_html = (
+                    f'<p style="color:var(--ink-muted);font-size:12px;margin-top:8px;">'
+                    f'Replaces: {escape(preview)}</p>'
+                )
+        except (json.JSONDecodeError, TypeError):
+            pass
+
     return f"""
     <a href="/stacks/{slug}" class="card" style="text-decoration:none;color:inherit;display:block;">
         <span style="font-size:32px;display:block;margin-bottom:8px;">{emoji}</span>
         <h3 style="font-family:var(--font-display);font-size:17px;margin-bottom:8px;color:var(--ink);">{title}</h3>
         <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;
                   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{desc}</p>
-        <div style="display:flex;gap:8px;align-items:center;">
-            <span style="font-size:12px;font-weight:600;color:var(--ink-light);background:var(--cream-dark);
-                         padding:4px 12px;border-radius:999px;">{count} tool{"s" if count != 1 else ""}</span>
-            {f'<span class="badge badge-success" style="font-weight:700;">{discount}% off</span>' if stack.get('discount_percent', 0) > 0 else ''}
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+            {badges_html}
         </div>
+        {replaces_html}
     </a>
     """
 
