@@ -1251,30 +1251,41 @@ async def list_tags(*, ctx: Context) -> str:
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
 async def list_stacks(*, ctx: Context) -> str:
-    """List all curated stacks on IndieStack.
+    """List all stacks on IndieStack — curated bundles and auto-generated combinations.
 
-    Stacks are pre-built combinations of developer tools for common use cases
-    (e.g. "SaaS Starter Stack", "Privacy-First Stack"). Each stack is a proven
-    set of building blocks that work well together.
+    Stacks are pre-built combinations of developer tools for common use cases.
+    Auto-generated stacks are built from 5,000+ compatibility pairs — every tool
+    has verified or inferred compatibility data with the others in the stack.
     """
     client = _get_client(ctx)
     await ctx.report_progress(progress=0, total=1)
     try:
-        data = await _api_get(client, "/api/stacks")
+        data = await _api_get(client, "/api/stacks", {"sort": "confidence"})
     except Exception as e:
         raise ToolError(f"Could not fetch stacks: {e}")
     await ctx.report_progress(progress=1, total=1)
 
     stacks = data.get("stacks", [])
     if not stacks:
-        return "No curated stacks available yet. Use build_stack(needs='auth,payments,...') to generate a custom stack for your requirements."
+        return "No stacks available yet. Use build_stack(needs='auth,payments,...') to generate a custom stack for your requirements."
 
     lines = [f"# IndieStack Stacks ({len(stacks)} stacks)\n"]
     for s in stacks:
         emoji = s.get("cover_emoji", "")
+        source = s.get("source", "curated")
+        source_label = {"curated": "curated", "auto-framework": "framework", "auto-usecase": "use-case"}.get(source, source)
+        confidence = s.get("confidence_score", 0)
+        conf_str = f" | {confidence:.0%} confidence" if confidence else ""
+        tokens = s.get("total_tokens_saved", 0)
+        tokens_str = f" | ~{tokens // 1000}k tokens saved" if tokens else ""
+        replaces = s.get("replaces", [])
+        replaces_str = f"\n  Replaces: {', '.join(replaces[:4])}" if replaces else ""
+
         lines.append(
-            f"- {emoji} **{s['title']}** — {s.get('description', '')}\n"
+            f"- {emoji} **{s['title']}** ({source_label}{conf_str}{tokens_str})\n"
+            f"  {s.get('description', '')}\n"
             f"  {s.get('tool_count', 0)} tools | {s.get('indiestack_url', '')}"
+            f"{replaces_str}"
         )
     return "\n".join(lines)
 

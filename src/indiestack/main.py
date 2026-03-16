@@ -1853,20 +1853,45 @@ async def api_tags(request: Request):
 
 
 @app.get("/api/stacks")
-async def api_stacks(request: Request):
-    """JSON API for curated tool stacks."""
+async def api_stacks(request: Request, source: str = "", framework: str = "", sort: str = ""):
+    """JSON API for tool stacks — curated and auto-generated."""
     d = request.state.db
-    stacks = await db.get_all_stacks(d)
+    if source:
+        stacks = await db.get_stacks_by_source(d, source)
+    else:
+        stacks = await db.get_all_stacks(d)
+
+    if framework:
+        stacks = [s for s in stacks if (s.get('framework') or '').lower() == framework.lower()]
+
+    if sort == "confidence":
+        stacks.sort(key=lambda s: s.get('confidence_score', 0) or 0, reverse=True)
+
     results = []
     for s in stacks:
-        results.append({
+        entry = {
             "title": s['title'],
             "slug": s.get('slug', ''),
             "description": s.get('description', ''),
             "cover_emoji": s.get('cover_emoji', ''),
-            "tool_count": int(s.get('tool_count', 0)),
+            "tool_count": int(s.get('tool_count', 0) or s.get('tool_count_cached', 0)),
             "indiestack_url": f"{BASE_URL}/stacks/{s.get('slug', '')}",
-        })
+            "source": s.get('source', 'curated'),
+        }
+        # Add intelligence fields if present
+        if s.get('confidence_score'):
+            entry["confidence_score"] = round(s['confidence_score'], 3)
+        if s.get('total_tokens_saved'):
+            entry["total_tokens_saved"] = s['total_tokens_saved']
+        if s.get('framework'):
+            entry["framework"] = s['framework']
+        if s.get('replaces_json'):
+            try:
+                entry["replaces"] = _json.loads(s['replaces_json']) if isinstance(s['replaces_json'], str) else s['replaces_json']
+            except (_json.JSONDecodeError, TypeError):
+                pass
+        results.append(entry)
+
     return JSONResponse({"stacks": results, "total": len(results)})
 
 
