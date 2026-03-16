@@ -42,14 +42,16 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 
 "Indie" is the curation filter — tools built by independent developers and small teams. Focused, lean, maintained, honest pricing.
 
-### Tools (19)
+### Tools (20)
 
 | Tool | What it does |
 |------|-------------|
-| `find_tools` | Search 3,100+ developer tools by keyword, category, or source type |
+| `find_tools` | Search 3,100+ developer tools with 11 filters: price, health, stars, success rate, language, tags, compatibility |
+| `find_compatible` | Find tools compatible with a given tool — grouped by category, with verified stacks and conflict warnings |
 | `get_tool_details` | Integration code, pricing, API specs, and compatibility data |
 | `scan_project` | Analyze a project description + tech stack, get a complete tool recommendation |
 | `report_compatibility` | Report that two tools work well together — builds the compatibility graph |
+| `report_outcome` | Report success/failure with `used_with` and `incompatible_with` — feeds the compatibility graph |
 | `check_health` | GitHub health audit — maintenance grade, last commit, stars, alternatives for stale tools |
 | `list_categories` | Browse all 25 categories |
 | `compare_tools` | Side-by-side comparison of any two tools |
@@ -80,7 +82,14 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie developers have built |
 
-## What's new in v1.7.0
+## What's new in v1.8.0
+
+- **Super filters** — `find_tools` now accepts 11 optional filters: `compatible_with`, `price`, `min_success_rate`, `min_confidence`, `has_api`, `language`, `tags`, `exclude`, `health`, `min_stars`, and `sort`. Agents can narrow results precisely without multiple round-trips.
+- **Compatibility graph** — New `find_compatible` tool returns tools that work well together, grouped by category, with verified 3-tool stacks (triangle detection), conflict warnings, and overlap detection.
+- **Outcome enrichment** — `report_outcome` now accepts `used_with` (auto-records compatibility pairs + verified stacks on success) and `incompatible_with` (records conflicts on failure).
+- **Blank search intelligence** — Zero-result queries are mined as demand signals. Gaps surface in admin, maker dashboards, and the submit form to guide new submissions.
+
+## What was new in v1.7.0
 
 - **Trust tiers** — Every tool now shows a trust tier: `verified` (20+ outcome reports, 70%+ success), `tested` (5+ reports), or `new`. Agents can make informed decisions about tool reliability.
 - **Agent cards** — Machine-readable JSON cards at `/cards/{slug}.json` with full assembly metadata, health status, and success rates. Index at `/cards/index.json`. No auth required.
