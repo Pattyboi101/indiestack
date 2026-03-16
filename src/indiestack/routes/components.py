@@ -1047,35 +1047,16 @@ def stack_card(stack: dict) -> str:
         except (json.JSONDecodeError, TypeError):
             pass
 
-    # Tool icon previews (pixel_icon > favicon > skip)
-    tool_icons = stack.get('_tool_icons', [])
-    icons_html = ""
-    if tool_icons:
-        icon_items = []
-        for ti in tool_icons[:4]:
-            pi = str(ti.get('pixel_icon', '') or '')
-            svg = pixel_icon_svg(pi, size=28) if pi else ''
-            if svg:
-                icon_items.append(svg)
-            else:
-                tool_url = str(ti.get('url', '') or '')
-                if tool_url:
-                    try:
-                        from urllib.parse import urlparse
-                        domain = urlparse(tool_url).netloc or urlparse('https://' + tool_url).netloc
-                        if domain:
-                            icon_items.append(
-                                f'<img src="https://www.google.com/s2/favicons?domain={domain}&sz=32" '
-                                f'alt="" width="28" height="28" loading="lazy" '
-                                f'style="border-radius:4px;border:1px solid var(--border);flex-shrink:0;" '
-                                f'onerror="this.style.display=\'none\'">'
-                            )
-                    except Exception:
-                        pass
-        if icon_items:
-            icons_html = '<div style="display:flex;gap:6px;align-items:center;margin-bottom:10px;">' + ''.join(icon_items) + '</div>'
-
-    if not icons_html:
+    # Category icons from the stack's tools (same SVG icons as "Browse by Category")
+    from indiestack.routes.category_icons import category_icon
+    cat_slugs = stack.get('_category_slugs', [])
+    if cat_slugs:
+        icon_items = [
+            f'<span style="color:var(--accent);display:flex;align-items:center;">{category_icon(cs, size=22)}</span>'
+            for cs in cat_slugs[:4]
+        ]
+        icons_html = '<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">' + ''.join(icon_items) + '</div>'
+    else:
         emoji = stack.get('cover_emoji', '') or '\U0001f4e6'
         icons_html = f'<span style="font-size:32px;display:block;margin-bottom:8px;">{emoji}</span>'
 
