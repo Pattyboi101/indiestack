@@ -1447,8 +1447,9 @@ async def init_db():
                     )
             if bad_rows:
                 await db.commit()
-        except Exception:
-            pass
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning("Pair normalization migration: %s", e)
 
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
@@ -3526,6 +3527,8 @@ async def record_tool_pair(db: aiosqlite.Connection, slug_a: str, slug_b: str, s
 
 async def record_verified_stack(db: aiosqlite.Connection, tool_slugs: list[str], use_case: str = None, source: str = "agent"):
     """Record a verified stack (set of tools used together successfully)."""
+    if not tool_slugs or len(tool_slugs) < 2:
+        return
     import json
     sorted_slugs = json.dumps(sorted(tool_slugs))
     await db.execute(
@@ -3539,6 +3542,8 @@ async def record_verified_stack(db: aiosqlite.Connection, tool_slugs: list[str],
 
 async def record_tool_conflict(db: aiosqlite.Connection, slug_a: str, slug_b: str, reason: str = None):
     """Record an incompatibility between two tools."""
+    if not slug_a or not slug_b or slug_a == slug_b:
+        return
     a, b = sorted([slug_a, slug_b])
     await db.execute(
         """INSERT INTO tool_conflicts (tool_a_slug, tool_b_slug, reason)
@@ -3552,6 +3557,8 @@ async def record_tool_conflict(db: aiosqlite.Connection, slug_a: str, slug_b: st
 
 async def get_tool_conflicts(db: aiosqlite.Connection, slug: str) -> list:
     """Get known conflicts for a tool."""
+    if not slug:
+        return []
     cursor = await db.execute("""
         SELECT CASE WHEN tool_a_slug = ? THEN tool_b_slug ELSE tool_a_slug END as conflict_slug,
                reason, report_count
