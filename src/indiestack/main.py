@@ -1412,6 +1412,31 @@ def _personalize_results(tools: list[dict], profile: dict) -> list[dict]:
     return scored
 
 
+def _apply_post_filters(tools, *, price="", health="", exclude="", has_api=False, min_stars=0, language="", tags=""):
+    if price == "free":
+        tools = [t for t in tools if not t.get('price_pence')]
+    elif price == "paid":
+        tools = [t for t in tools if t.get('price_pence') and t['price_pence'] > 0]
+    if health and health in ("active", "stale", "dead", "archived"):
+        tools = [t for t in tools if t.get('health_status') == health]
+    if exclude:
+        excluded_slugs = {s.strip() for s in exclude.split(",") if s.strip()}
+        tools = [t for t in tools if t['slug'] not in excluded_slugs]
+    if has_api:
+        tools = [t for t in tools if t.get('api_type')]
+    if min_stars > 0:
+        tools = [t for t in tools if (t.get('github_stars') or 0) >= min_stars]
+    if language:
+        tools = [t for t in tools if (t.get('github_language') or '').lower() == language.lower()]
+    if tags:
+        filter_tags = {tg.strip().lower() for tg in tags.split(",") if tg.strip()}
+        if filter_tags:
+            tools = [t for t in tools if filter_tags.intersection(
+                {tg.strip().lower() for tg in (t.get('tags') or '').split(",") if tg.strip()}
+            )]
+    return tools
+
+
 @app.get("/api/tools/search")
 async def api_tools_search(
     request: Request,
@@ -1463,48 +1488,42 @@ async def api_tools_search(
             page = (offset // limit) + 1
             tools, _ = await db.get_tools_by_category(d, cat['id'], page=page, per_page=limit)
             # Apply post-filters for category browsing
-            if price == "free":
-                tools = [t for t in tools if not t.get('price_pence')]
-            elif price == "paid":
-                tools = [t for t in tools if t.get('price_pence') and t['price_pence'] > 0]
-            if health:
-                tools = [t for t in tools if t.get('health_status') == health]
-            if exclude:
-                excluded_slugs = {s.strip() for s in exclude.split(",") if s.strip()}
-                tools = [t for t in tools if t['slug'] not in excluded_slugs]
-            if has_api:
-                tools = [t for t in tools if t.get('api_type')]
-            if min_stars > 0:
-                tools = [t for t in tools if (t.get('github_stars') or 0) >= min_stars]
-            if language:
-                tools = [t for t in tools if (t.get('github_language') or '').lower() == language.lower()]
-            if tags:
-                filter_tags = {tag.strip().lower() for tag in tags.split(",") if tag.strip()}
-                tools = [t for t in tools if filter_tags & {tag.strip().lower() for tag in (t.get('tags') or '').split(",") if tag.strip()}]
+            tools = _apply_post_filters(tools, price=price, health=health, exclude=exclude, has_api=has_api, min_stars=min_stars, language=language, tags=tags)
+            if compatible_with:
+                pair_cursor = await d.execute(
+                    """SELECT CASE WHEN tool_a_slug = ? THEN tool_b_slug ELSE tool_a_slug END as pair_slug
+                       FROM tool_pairs WHERE (tool_a_slug = ? OR tool_b_slug = ?) AND success_count >= 1""",
+                    (compatible_with, compatible_with, compatible_with),
+                )
+                compatible_slugs = {r[0] for r in await pair_cursor.fetchall()}
+                tools = [t for t in tools if t['slug'] in compatible_slugs]
+            if sort == "stars":
+                tools.sort(key=lambda t: t.get('github_stars') or 0, reverse=True)
+            elif sort == "upvotes":
+                tools.sort(key=lambda t: t.get('upvote_count') or 0, reverse=True)
+            elif sort == "newest":
+                tools.sort(key=lambda t: t.get('created_at') or '', reverse=True)
         else:
             tools = []
     else:
         tools = await db.get_trending_tools(d, limit=offset + limit)
         tools = tools[offset:]
         # Apply post-filters for trending browsing
-        if price == "free":
-            tools = [t for t in tools if not t.get('price_pence')]
-        elif price == "paid":
-            tools = [t for t in tools if t.get('price_pence') and t['price_pence'] > 0]
-        if health:
-            tools = [t for t in tools if t.get('health_status') == health]
-        if exclude:
-            excluded_slugs = {s.strip() for s in exclude.split(",") if s.strip()}
-            tools = [t for t in tools if t['slug'] not in excluded_slugs]
-        if has_api:
-            tools = [t for t in tools if t.get('api_type')]
-        if min_stars > 0:
-            tools = [t for t in tools if (t.get('github_stars') or 0) >= min_stars]
-        if language:
-            tools = [t for t in tools if (t.get('github_language') or '').lower() == language.lower()]
-        if tags:
-            filter_tags = {tag.strip().lower() for tag in tags.split(",") if tag.strip()}
-            tools = [t for t in tools if filter_tags & {tag.strip().lower() for tag in (t.get('tags') or '').split(",") if tag.strip()}]
+        tools = _apply_post_filters(tools, price=price, health=health, exclude=exclude, has_api=has_api, min_stars=min_stars, language=language, tags=tags)
+        if compatible_with:
+            pair_cursor = await d.execute(
+                """SELECT CASE WHEN tool_a_slug = ? THEN tool_b_slug ELSE tool_a_slug END as pair_slug
+                   FROM tool_pairs WHERE (tool_a_slug = ? OR tool_b_slug = ?) AND success_count >= 1""",
+                (compatible_with, compatible_with, compatible_with),
+            )
+            compatible_slugs = {r[0] for r in await pair_cursor.fetchall()}
+            tools = [t for t in tools if t['slug'] in compatible_slugs]
+        if sort == "stars":
+            tools.sort(key=lambda t: t.get('github_stars') or 0, reverse=True)
+        elif sort == "upvotes":
+            tools.sort(key=lambda t: t.get('upvote_count') or 0, reverse=True)
+        elif sort == "newest":
+            tools.sort(key=lambda t: t.get('created_at') or '', reverse=True)
 
     results = []
     for t in tools:
