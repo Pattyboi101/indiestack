@@ -281,9 +281,135 @@ async def alternatives_index(request: Request):
                                    extra_head=alt_head))
 
 
+def _stackshare_comparison_page(request: Request) -> HTMLResponse:
+    """Render a custom IndieStack vs StackShare comparison landing page."""
+    jsonld = _json.dumps({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "IndieStack vs StackShare — AI-Native Developer Tool Discovery",
+        "description": "Compare IndieStack and StackShare. IndieStack uses agent-verified data, not stale self-reports. Free MCP server for Claude, Cursor, and Windsurf.",
+        "url": f"{BASE_URL}/alternatives/stackshare",
+    }, ensure_ascii=False)
+    jsonld_script = f'<script type="application/ld+json">{jsonld}</script>'
+
+    body = """
+    <div class="container" style="padding:48px 24px;max-width:860px;">
+
+        <!-- Breadcrumb -->
+        <div style="margin-bottom:8px;">
+            <a href="/alternatives" style="color:var(--ink-muted);font-size:14px;font-weight:600;">&larr; All Alternatives</a>
+        </div>
+
+        <!-- Hero -->
+        <div style="margin-bottom:48px;">
+            <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);margin-bottom:12px;">
+                IndieStack vs StackShare
+            </h1>
+            <p style="color:var(--ink-muted);font-size:18px;max-width:600px;line-height:1.6;">
+                StackShare shows what devs <em>say</em> they use. IndieStack shows what actually works.
+            </p>
+        </div>
+
+        <!-- Comparison table -->
+        <div class="card" style="padding:0;overflow:hidden;margin-bottom:48px;">
+            <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                    <thead>
+                        <tr style="background:var(--cream-dark);">
+                            <th style="text-align:left;padding:14px 20px;font-family:var(--font-display);font-size:15px;color:var(--ink);border-bottom:1px solid var(--border);width:35%;">Feature</th>
+                            <th style="text-align:left;padding:14px 20px;font-size:13px;color:var(--ink-muted);border-bottom:1px solid var(--border);font-weight:600;width:32.5%;">StackShare</th>
+                            <th style="text-align:left;padding:14px 20px;font-size:13px;color:var(--accent);border-bottom:1px solid var(--border);font-weight:700;width:32.5%;">IndieStack</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Data source</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-muted);">Self-reported (stale)</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">Agent-verified (live)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">AI integration</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-muted);">None</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">MCP server for all agents</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Tool count</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-muted);">7,000</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">3,100+ (indie-focused)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Compatibility data</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-muted);">None (just lists)</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">Verified pairs + conflict detection</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Health monitoring</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-muted);">None</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">Active/stale/dead tracking</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Success rates</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-muted);">None</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">Agent outcome tracking</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Last updated</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-muted);">2024 (acquired by FOSSA)</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">Updated daily</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:12px 20px;font-weight:600;color:var(--ink);">API</td>
+                            <td style="padding:12px 20px;color:var(--ink-muted);">Dead ($99/mo, closed beta)</td>
+                            <td style="padding:12px 20px;color:var(--ink);">Free MCP server</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CTA: MCP Server -->
+        <div style="margin-bottom:48px;padding:32px;background:var(--cream-dark);border-radius:var(--radius);border:1px solid var(--border);">
+            <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:8px;">
+                Install the MCP Server
+            </h2>
+            <p style="color:var(--ink-muted);font-size:15px;margin-bottom:20px;line-height:1.6;">
+                Give your AI agent access to 3,100+ developer tools. Works with Claude, Cursor, and Windsurf.
+            </p>
+            <div style="background:var(--ink);border-radius:var(--radius-sm);padding:16px 20px;overflow-x:auto;">
+                <code style="font-family:var(--font-mono);font-size:14px;color:var(--accent);white-space:nowrap;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code>
+            </div>
+        </div>
+
+        <!-- CTA: Explore -->
+        <div style="text-align:center;padding:32px;background:var(--cream-dark);border-radius:var(--radius);">
+            <p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
+                See what&rsquo;s in the database
+            </p>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
+                Browse 3,100+ indie developer tools across 40+ categories.
+            </p>
+            <a href="/explore" class="btn btn-primary">Explore Tools &rarr;</a>
+        </div>
+    </div>
+    """
+
+    return HTMLResponse(page_shell(
+        "IndieStack vs StackShare — AI-Native Developer Tool Discovery",
+        body,
+        description="Compare IndieStack and StackShare. IndieStack uses agent-verified data, not stale self-reports. Free MCP server for Claude, Cursor, and Windsurf.",
+        user=request.state.user,
+        canonical="/alternatives/stackshare",
+        extra_head=jsonld_script,
+    ))
+
+
 @router.get("/alternatives/{competitor_slug}", response_class=HTMLResponse)
 async def alternatives_for(request: Request, competitor_slug: str):
     """Show all developer tools that replace a specific competitor."""
+    # Special case: StackShare is a platform, not a tool in our DB
+    if competitor_slug == "stackshare":
+        return _stackshare_comparison_page(request)
+
     db = request.state.db
 
     # Reconstruct competitor name from slug — search broadly
