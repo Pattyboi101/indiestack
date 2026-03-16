@@ -1616,7 +1616,7 @@ async def get_tools_by_category(db: aiosqlite.Connection, category_id: int, page
                   ) THEN 1 ELSE 0 END AS maker_is_pro
            FROM tools t JOIN categories c ON t.category_id = c.id
            WHERE t.category_id = ? AND t.status = 'approved'
-           ORDER BY t.upvote_count DESC, t.created_at DESC
+           ORDER BY t.quality_score DESC, t.github_stars DESC, t.upvote_count DESC
            LIMIT ? OFFSET ?""",
         (category_id, per_page, offset),
     )
@@ -4666,7 +4666,7 @@ async def get_tools_by_tag(db: aiosqlite.Connection, tag: str, *, page: int = 1,
              FROM tools t JOIN categories c ON t.category_id = c.id
              WHERE t.status = 'approved'
                AND (LOWER(TRIM(t.tags)) = ? OR LOWER(t.tags) LIKE ? OR LOWER(t.tags) LIKE ? OR LOWER(t.tags) LIKE ?)
-             ORDER BY t.upvote_count DESC, t.created_at DESC
+             ORDER BY t.quality_score DESC, t.github_stars DESC, t.upvote_count DESC
              LIMIT ? OFFSET ?"""
     cursor = await db.execute(sql, (like_exact, like_start, like_end, like_mid, per_page, offset))
     rows = await cursor.fetchall()
