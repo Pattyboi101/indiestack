@@ -52,6 +52,33 @@ async def stacks_index(request: Request):
     curated_stacks_list = await get_stacks_by_source(db, "curated")
     community_stacks_list = await get_public_stacks(db, limit=6)
 
+    # Batch-fetch top 3 tool icons per stack for card previews
+    all_stacks_for_icons = list(framework_stacks) + list(usecase_stacks) + list(curated_stacks_list)
+    stack_ids = [s['id'] for s in all_stacks_for_icons if s.get('id')]
+    tool_icons_by_stack = {}
+    if stack_ids:
+        placeholders = ",".join("?" * len(stack_ids))
+        cursor = await db.execute(
+            f"""SELECT st.stack_id, t.pixel_icon, t.website, t.name
+                FROM stack_tools st JOIN tools t ON t.id = st.tool_id
+                WHERE st.stack_id IN ({placeholders})
+                ORDER BY st.stack_id, st.position
+            """, tuple(stack_ids))
+        rows = await cursor.fetchall()
+        for r in rows:
+            sid = r['stack_id']
+            if sid not in tool_icons_by_stack:
+                tool_icons_by_stack[sid] = []
+            if len(tool_icons_by_stack[sid]) < 4:
+                tool_icons_by_stack[sid].append({
+                    'pixel_icon': r.get('pixel_icon', ''),
+                    'website': r.get('website', ''),
+                    'name': r.get('name', ''),
+                })
+    # Attach icons to stack dicts
+    for s in all_stacks_for_icons:
+        s['_tool_icons'] = tool_icons_by_stack.get(s.get('id'), [])
+
     hero_html = f"""
     <div style="text-align:center;margin-bottom:48px;">
         <h1 style="font-family:var(--font-display);font-size:clamp(28px,5vw,48px);color:var(--ink);margin-bottom:12px;">

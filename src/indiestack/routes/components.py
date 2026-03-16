@@ -990,7 +990,6 @@ def indie_score_html(tool: dict) -> str:
 
 def stack_card(stack: dict) -> str:
     """Card component for a stack — shows intelligence metadata for auto stacks."""
-    emoji = stack.get('cover_emoji', '') or '\U0001f4e6'
     title = escape(str(stack['title']))
     desc = escape(str(stack.get('description', '')))
     slug = escape(str(stack['slug']))
@@ -1048,9 +1047,41 @@ def stack_card(stack: dict) -> str:
         except (json.JSONDecodeError, TypeError):
             pass
 
+    # Tool icon previews (pixel_icon > favicon > skip)
+    tool_icons = stack.get('_tool_icons', [])
+    icons_html = ""
+    if tool_icons:
+        icon_items = []
+        for ti in tool_icons[:4]:
+            pi = str(ti.get('pixel_icon', '') or '')
+            svg = pixel_icon_svg(pi, size=28) if pi else ''
+            if svg:
+                icon_items.append(svg)
+            else:
+                website = str(ti.get('website', '') or '')
+                if website:
+                    try:
+                        from urllib.parse import urlparse
+                        domain = urlparse(website).netloc or urlparse('https://' + website).netloc
+                        if domain:
+                            icon_items.append(
+                                f'<img src="https://www.google.com/s2/favicons?domain={domain}&sz=32" '
+                                f'alt="" width="28" height="28" loading="lazy" '
+                                f'style="border-radius:4px;border:1px solid var(--border);flex-shrink:0;" '
+                                f'onerror="this.style.display=\'none\'">'
+                            )
+                    except Exception:
+                        pass
+        if icon_items:
+            icons_html = '<div style="display:flex;gap:6px;align-items:center;margin-bottom:10px;">' + ''.join(icon_items) + '</div>'
+
+    if not icons_html:
+        emoji = stack.get('cover_emoji', '') or '\U0001f4e6'
+        icons_html = f'<span style="font-size:32px;display:block;margin-bottom:8px;">{emoji}</span>'
+
     return f"""
     <a href="/stacks/{slug}" class="card" style="text-decoration:none;color:inherit;display:block;">
-        <span style="font-size:32px;display:block;margin-bottom:8px;">{emoji}</span>
+        {icons_html}
         <h3 style="font-family:var(--font-display);font-size:17px;margin-bottom:8px;color:var(--ink);">{title}</h3>
         <p style="color:var(--ink-muted);font-size:14px;margin-bottom:12px;
                   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{desc}</p>
