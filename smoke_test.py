@@ -80,7 +80,7 @@ TESTS = [
     # Agent action endpoints (require API key — expect 401 without)
     ("POST", "/api/agent/recommend", 401, "Agent recommend auth guard"),
     ("POST", "/api/agent/shortlist", 401, "Agent shortlist auth guard"),
-    ("POST", "/api/agent/outcome", 401, "Agent outcome auth guard"),
+    ("POST", "/api/agent/outcome", 400, "Agent outcome (keyless allowed, empty body = 400)"),
     ("POST", "/api/agent/integration", 401, "Agent integration auth guard"),
 ]
 
