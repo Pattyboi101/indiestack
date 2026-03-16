@@ -13,6 +13,56 @@ from indiestack.db import get_tools_replacing, get_all_competitors, slugify, get
 router = APIRouter()
 
 
+def _alt_health_badge(status: str) -> str:
+    """Render a colored health-status pill for alternatives pages."""
+    colors = {
+        'active': ('var(--success-bg, #D1FAE5)', 'var(--success-text, #065F46)'),
+        'stale': ('#FEF3C7', '#92400E'),
+        'dead': ('#FEE2E2', '#991B1B'),
+    }
+    bg, fg = colors.get(status, ('#F3F4F6', '#6B7280'))
+    label = escape(status.capitalize()) if status else 'Unknown'
+    return (
+        f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;'
+        f'font-size:12px;font-weight:600;background:{bg};color:{fg};">{label}</span>'
+    )
+
+
+def _alt_github_stars(tool: dict) -> str:
+    """Render GitHub stars badge if available."""
+    stars = tool.get('github_stars')
+    if not stars or int(stars) <= 0:
+        return ''
+    star_count = int(stars)
+    github_url = tool.get('github_url', '')
+    inner = f'{star_count:,}'
+    if github_url:
+        return (
+            f'<a href="{escape(str(github_url))}" target="_blank" rel="noopener" '
+            f'style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;'
+            f'font-weight:600;background:var(--cream-dark);color:var(--ink);text-decoration:none;'
+            f'border:1px solid var(--border);">&#9733; {inner}</a>'
+        )
+    return (
+        f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;'
+        f'font-weight:600;background:var(--cream-dark);color:var(--ink);border:1px solid var(--border);">'
+        f'&#9733; {inner}</span>'
+    )
+
+
+def _alt_agent_citations(tool: dict) -> str:
+    """Render agent citation badge if mcp_view_count > 0."""
+    mcp_views = tool.get('mcp_view_count')
+    if not mcp_views or int(mcp_views) <= 0:
+        return ''
+    count = int(mcp_views)
+    return (
+        f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;'
+        f'font-weight:600;background:#EDE9FE;color:#7C3AED;">'
+        f'AI agents recommend this {count:,} time{"s" if count != 1 else ""}</span>'
+    )
+
+
 @router.get("/compare", response_class=HTMLResponse)
 async def compare_index(request: Request):
     """SEO index page listing all tool-vs-competitor comparison pairs, grouped by category."""
@@ -604,6 +654,12 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
             </div>
             <p style="font-size:16px;color:var(--ink);margin-bottom:12px;font-weight:500;">{safe_tagline}</p>
             <p style="font-size:14px;color:var(--ink-light);line-height:1.7;margin-bottom:20px;">{safe_desc}</p>
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:20px;">
+                {_alt_health_badge(tool.get('health_status') or 'unknown')}
+                {_alt_github_stars(tool)}
+                {_alt_agent_citations(tool)}
+            </div>
 
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
                 <a href="/api/click/{tool_slug_safe}" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:14px;">
