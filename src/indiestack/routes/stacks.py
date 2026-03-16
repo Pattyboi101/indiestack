@@ -59,7 +59,7 @@ async def stacks_index(request: Request):
     if stack_ids:
         placeholders = ",".join("?" * len(stack_ids))
         cursor = await db.execute(
-            f"""SELECT st.stack_id, t.pixel_icon, t.website, t.name
+            f"""SELECT st.stack_id, t.pixel_icon, t.url, t.name
                 FROM stack_tools st JOIN tools t ON t.id = st.tool_id
                 WHERE st.stack_id IN ({placeholders})
                 ORDER BY st.stack_id, st.position
@@ -72,7 +72,7 @@ async def stacks_index(request: Request):
             if len(tool_icons_by_stack[sid]) < 4:
                 tool_icons_by_stack[sid].append({
                     'pixel_icon': r.get('pixel_icon', ''),
-                    'website': r.get('website', ''),
+                    'url': r.get('url', ''),
                     'name': r.get('name', ''),
                 })
     # Attach icons to stack dicts

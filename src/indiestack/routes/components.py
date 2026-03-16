@@ -1058,11 +1058,11 @@ def stack_card(stack: dict) -> str:
             if svg:
                 icon_items.append(svg)
             else:
-                website = str(ti.get('website', '') or '')
-                if website:
+                tool_url = str(ti.get('url', '') or '')
+                if tool_url:
                     try:
                         from urllib.parse import urlparse
-                        domain = urlparse(website).netloc or urlparse('https://' + website).netloc
+                        domain = urlparse(tool_url).netloc or urlparse('https://' + tool_url).netloc
                         if domain:
                             icon_items.append(
                                 f'<img src="https://www.google.com/s2/favicons?domain={domain}&sz=32" '
