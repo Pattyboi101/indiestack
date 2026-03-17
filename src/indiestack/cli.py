@@ -340,7 +340,7 @@ def cmd_config(args: list[str], use_json: bool = False):
             source = "env var" if os.environ.get("INDIESTACK_API_KEY") else "config file"
             print(f"  {_dim('Key source:')}  {source}")
         else:
-            print(f"  {_dim('API key:')}     {_yellow('not set')} (using keyless tier: 15/day)")
+            print(f"  {_dim('API key:')}     {_yellow('not set')} (using keyless tier: 3/day)")
             print(f"\n  Get a free key: {_cyan('https://indiestack.ai/developer')}")
         print()
         return
@@ -402,7 +402,7 @@ HELP = f"""\
   --json                              Output raw JSON (for piping)
 
 {_bold('API Keys:')}
-  No key needed to start (15 queries/day).
+  No key needed to start (3 queries/day).
   Get a free key for 50/day: {_cyan('https://indiestack.ai/developer')}
   Upgrade to Pro for 1,000/day: {_cyan('https://indiestack.ai/pricing')}
 

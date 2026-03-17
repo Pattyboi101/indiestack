@@ -327,7 +327,7 @@ async def landing(request: Request):
                     {{"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]}}
                 </div>
                 <p style="text-align:center;font-size:12px;color:var(--ink-light);margin-top:12px;">
-                    Want more than 15 queries/day? <a href="/developer" style="color:var(--accent);text-decoration:none;">Get a free API key</a> for 50/day &rarr;
+                    Want more than 3 queries/day? <a href="/developer" style="color:var(--accent);text-decoration:none;">Get a free API key</a> for 50/day &rarr;
                 </p>
                 <div style="max-width:480px;margin:20px auto 0;padding:16px 20px;background:rgba(0,212,245,0.06);
                             border:1px solid rgba(0,212,245,0.15);border-radius:var(--radius-sm);text-align:left;">
@@ -346,7 +346,7 @@ async def landing(request: Request):
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Works out of the box
                 </p>
                 <p style="font-size:13px;color:var(--ink-muted);line-height:1.6;">
-                    No API key needed to start &mdash; you get 15 free queries a day instantly.
+                    No API key needed to start &mdash; you get 3 free queries a day instantly.
                     <a href="/developer" style="color:var(--accent);text-decoration:none;font-weight:600;">Grab a free API key</a> for 50/day, or <a href="/pricing" style="color:var(--accent);text-decoration:none;font-weight:600;">go Pro</a> for 1,000/day with richer AI recommendations.
                 </p>
             </div>
