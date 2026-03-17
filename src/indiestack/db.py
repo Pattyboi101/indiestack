@@ -1115,6 +1115,12 @@ async def init_db():
             await db.commit()
         except Exception:
             pass
+        # Migration: add trial_ends_at to users (7-day free Pro trial)
+        try:
+            await db.execute("ALTER TABLE users ADD COLUMN trial_ends_at TIMESTAMP DEFAULT NULL")
+            await db.commit()
+        except Exception:
+            pass
         # Migration: add tool_of_the_week to tools
         try:
             await db.execute("ALTER TABLE tools ADD COLUMN tool_of_the_week INTEGER DEFAULT 0")
@@ -3277,11 +3283,11 @@ async def get_user_by_github_id(db: aiosqlite.Connection, github_id: int):
 
 async def create_github_user(db: aiosqlite.Connection, email: str, name: str,
                               github_id: int, github_username: str, github_avatar_url: str):
-    """Create a user from GitHub OAuth — no password, auto-verified email."""
+    """Create a user from GitHub OAuth — no password, auto-verified email, 7-day Pro trial."""
     cursor = await db.execute(
         """INSERT INTO users (email, password_hash, name, role, email_verified,
-                              github_id, github_username, github_avatar_url)
-           VALUES (?, 'GITHUB_OAUTH_NO_PASSWORD', ?, 'buyer', 1, ?, ?, ?)""",
+                              github_id, github_username, github_avatar_url, trial_ends_at)
+           VALUES (?, 'GITHUB_OAUTH_NO_PASSWORD', ?, 'buyer', 1, ?, ?, ?, datetime('now', '+7 days'))""",
         (email, name, github_id, github_username, github_avatar_url),
     )
     await db.commit()
@@ -3855,11 +3861,19 @@ async def update_subscription_status(db: aiosqlite.Connection, stripe_subscripti
 
 
 async def check_pro(db, user_id: int) -> bool:
-    """Check if a user has an active Pro subscription (any plan)."""
+    """Check if a user has an active Pro subscription (any plan) or active trial."""
     if not user_id:
         return False
     sub = await get_active_subscription(db, user_id)
-    return sub is not None
+    if sub is not None:
+        return True
+    # Check for active free trial
+    cursor = await db.execute(
+        "SELECT trial_ends_at FROM users WHERE id = ? AND trial_ends_at > datetime('now')",
+        (user_id,),
+    )
+    trial = await cursor.fetchone()
+    return trial is not None
 
 
 async def get_founder_seat_count(db) -> int:

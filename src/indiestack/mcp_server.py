@@ -46,7 +46,7 @@ def _detect_agent_platform() -> str:
     return "unknown"
 
 AGENT_PLATFORM = _detect_agent_platform()
-_USER_AGENT = f"indiestack-mcp/1.8.0 ({AGENT_PLATFORM})"
+_USER_AGENT = f"indiestack-mcp/1.9.1 ({AGENT_PLATFORM})"
 
 # ── TTL Cache ────────────────────────────────────────────────────────────
 

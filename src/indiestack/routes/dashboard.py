@@ -91,6 +91,31 @@ async def dashboard_overview(request: Request):
     # Pro subscription check
     is_pro = await check_pro(db, user['id'])
 
+    # Trial banner for users on free trial
+    trial_banner = ''
+    if is_pro:
+        _trial_cursor = await db.execute(
+            "SELECT trial_ends_at FROM users WHERE id = ? AND trial_ends_at > datetime('now')",
+            (user['id'],),
+        )
+        _trial_row = await _trial_cursor.fetchone()
+        if _trial_row and _trial_row['trial_ends_at']:
+            # Check they don't have a real subscription
+            from indiestack.db import get_active_subscription
+            _real_sub = await get_active_subscription(db, user['id'])
+            if not _real_sub:
+                from datetime import datetime, timezone
+                _trial_end = datetime.fromisoformat(_trial_row['trial_ends_at'].replace('Z', '+00:00')) if 'Z' in str(_trial_row['trial_ends_at']) else datetime.fromisoformat(str(_trial_row['trial_ends_at']))
+                _days_left = max(0, (_trial_end - datetime.now(timezone.utc).replace(tzinfo=None)).days)
+                trial_banner = f'''
+                <div style="background:linear-gradient(135deg,#065F46,#064E3B);border:1px solid rgba(110,231,183,0.3);border-radius:var(--radius);padding:14px 24px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                    <div>
+                        <p style="color:#fff;font-size:14px;font-weight:600;margin:0;">Pro Trial — {_days_left} days remaining</p>
+                        <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:4px 0 0;">You have full Pro access. Keep it forever from $99 (Founder deal) or $19/mo.</p>
+                    </div>
+                    <a href="/pricing" style="display:inline-block;padding:8px 16px;background:#6EE7B7;color:#064E3B;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;">Keep Pro Access</a>
+                </div>'''
+
     # Pro upsell banner for non-Pro users with recent citations
     pro_banner = ''
     if not is_pro and maker_id:
@@ -1130,6 +1155,7 @@ async def dashboard_overview(request: Request):
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
         {welcome_banner}
+        {trial_banner}
         {pro_banner}
         {verify_banner}
         {boost_success_banner}
