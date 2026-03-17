@@ -396,6 +396,9 @@ async def tool_detail(request: Request, slug: str):
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Claim request submitted! We'll review it within 24 hours.
         </div>'''
 
+    # Boost section (placeholder for future referral boost feature)
+    boost_html = ''
+
     # Community listing notice — shown on tools listed by Community Curated maker
     community_notice = ''
     maker_slug_val = tool.get('maker_slug', '') or ''
