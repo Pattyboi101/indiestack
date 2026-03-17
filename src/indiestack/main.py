@@ -523,6 +523,31 @@ async def _auto_weekly_digest():
             _alert_telegram("weekly digest", str(e))
 
 
+async def _weekly_pair_generator():
+    """Regenerate tool compatibility pairs every Sunday."""
+    await asyncio.sleep(600)  # Wait for app to fully start
+    while True:
+        try:
+            from datetime import datetime, timezone
+            now = datetime.now(timezone.utc)
+            if now.weekday() == 6 and now.hour == 6:  # Sunday 6am UTC
+                import subprocess
+                result = subprocess.run(
+                    ["python3", "-m", "indiestack.pair_generator", "--apply"],
+                    capture_output=True, text=True, timeout=300,
+                    cwd="/app",
+                )
+                if result.returncode == 0:
+                    _logger.info(f"Pair generator completed: {result.stdout[-200:]}")
+                else:
+                    _logger.error(f"Pair generator failed: {result.stderr[-200:]}")
+                    _alert_telegram("pair_generator", result.stderr[-200:])
+        except Exception as e:
+            _logger.exception("Background task failed: pair generator")
+            _alert_telegram("pair_generator", str(e))
+        await asyncio.sleep(3600)  # Check every hour
+
+
 async def _weekly_citation_alert():
     """Send citation alert emails to makers every Wednesday."""
     await asyncio.sleep(120)  # Wait for app to fully start
@@ -588,6 +613,7 @@ async def lifespan(app: FastAPI):
     nudge_task = asyncio.create_task(_badge_nudge_check())
     digest_task = asyncio.create_task(_auto_weekly_digest())
     citation_task = asyncio.create_task(_weekly_citation_alert())
+    pairs_task = asyncio.create_task(_weekly_pair_generator())
     health_task = asyncio.create_task(_periodic_health_refresh())
     yield
     cleanup_task.cancel()
@@ -596,6 +622,7 @@ async def lifespan(app: FastAPI):
     nudge_task.cancel()
     digest_task.cancel()
     citation_task.cancel()
+    pairs_task.cancel()
     health_task.cancel()
 
 
