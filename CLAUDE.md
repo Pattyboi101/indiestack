@@ -1,82 +1,61 @@
-## Design Context
+# IndieStack
 
-### What IndieStack Is
-IndieStack is the discovery layer between AI coding agents and 3,100+ proven, lightweight developer tools. When an AI agent is about to help someone build infrastructure (auth, payments, analytics, email, databases), it checks IndieStack first to find an existing tool instead of generating code from scratch.
+The discovery layer between AI coding agents and 3,100+ developer tools.
+Python 3 / FastAPI / SQLite / Fly.io. Two founders (Patrick + Ed).
 
-"Indie" is the curation filter — tools built by independent developers and small teams. Focused, lean, maintained, honest pricing. The value to developers isn't "these are indie" — it's "these are the best tools for the job, and your AI agent now knows about them."
+## How This Project Works
 
-### Users
-- **Primary**: AI coding assistants (Claude, Cursor, Windsurf, Copilot) searching via MCP server — the main distribution channel
-- **Secondary**: Developers who browse the site directly, arriving via AI recommendation, search, or Product Hunt
-- **Tertiary**: Tool makers submitting and promoting their developer tools
-- **Context**: The typical flow is agent-first: a developer asks their AI to build something, the AI checks IndieStack, finds an existing tool, and recommends it with integration code. Human visitors arrive to evaluate what the AI found, or to explore/submit directly.
+- Routes in `src/indiestack/routes/` return HTMLResponse with Python f-string templates
+- Shared components in `src/indiestack/routes/components.py` (page_shell, tool_card, upvote_js, category_icon)
+- Database logic in `src/indiestack/db.py` — SQLite with aiosqlite, WAL mode
+- MCP server in `src/indiestack/mcp_server.py` — published on PyPI as `indiestack`
+- Auth in `src/indiestack/auth.py` — GitHub OAuth, sessions
+- Payments in `src/indiestack/payments.py` — Stripe subscriptions
+- Deploy to Fly.io. Always smoke test first. See rules/deploy.md.
 
-### Brand Personality
-**Trusted, Sharp, Human.**
+## Key Commands
 
-IndieStack is professional but not corporate. It respects your time — no fluff, no marketing speak. It feels like something built by makers for makers, with enough warmth to remind you there are real people behind every listing. Two uni students in Cardiff who smashed a laptop arguing over prompts.
+- `/deploy` — smoke test + deploy to Fly.io
+- `/publish-mcp` — bump version + publish MCP server to PyPI
+- `/status` — health check dashboard
+- `/backup` — backup production database
+- `/hub` — query the command hub (tasks, activity, decisions)
 
-### Aesthetic Direction
-- **Visual tone**: Linear.app-inspired — clean, precise, intentional. Every element earns its place.
-- **Not minimalist for minimalism's sake** — has personality and warmth, but nothing gratuitous.
-- **References**: Linear (precision, dark mode confidence, typography), Stripe Docs (spacing, code blocks)
-- **Anti-references**: Generic SaaS templates (gradient blobs, stock photos), enterprise/corporate (Salesforce bloat), over-designed (parallax, excessive animations, style over substance)
-- **Theme**: Dark mode default on landing, user-selectable elsewhere. Both modes must look intentional.
+## Rules (auto-loaded from .claude/rules/)
 
-### Design Principles
+Domain knowledge is split into focused rules files that auto-load:
 
-1. **Earn every pixel.** No decorative elements that don't serve a purpose. If a gradient, shadow, or animation doesn't help the user understand or navigate, remove it.
+**Always loaded:**
+- `vision.md` — product identity, positioning, revenue constraint
+- `stack.md` — tech patterns, auth, code style, route creation
+- `deploy.md` — deployment procedures, Fly.io
+- `gotchas.md` — **past mistakes — CHECK THIS, it grows over time**
 
-2. **Consistent rhythm.** Spacing, typography, and color should follow the token system. No magic numbers. 8px base unit, deliberate hierarchy.
+**Loaded when editing matching files:**
+- `design.md` — design system, tokens, brand (routes + components)
+- `database.md` — SQLite patterns, migrations (db.py + scripts)
+- `mcp.md` — MCP server architecture, versioning (mcp_server.py + pyproject.toml)
+- `stripe.md` — payment logic, webhooks (payments.py + pricing.py)
 
-3. **Confidence over cleverness.** Bold typography choices, strong contrast, decisive layout. Don't hedge with soft grays and rounded everything — commit to the design.
+## Memory
 
-4. **Warm precision.** Linear's precision + indie personality. The UI should feel crafted, not generated. Small details (hover states, transitions, copy) should feel human.
+Dynamic state lives in memory files — updated each session:
+- `sprint.md` — current work, priorities, blockers
+- `decisions.md` — key decisions with rationale (prevents re-litigating)
+- `ed.md` — co-founder's current focus
 
-5. **Function preserves form.** Never sacrifice usability for aesthetics. Interactive elements (search widget, upvote buttons, nav) must remain fully functional through any visual changes.
+**Update memory when:** decisions are made, sprint status changes, work is completed.
+**Update gotchas.md when:** mistakes are discovered or corrections are made.
 
-### Design Tokens (Reference)
-- **Colors**: Navy `#1A2D4A` (primary), Cyan `#00D4F5` (accent), Gold `#E2B764` (highlights), Terracotta naming is legacy — these are navy-based
-- **Fonts**: DM Serif Display (headings), DM Sans (body), JetBrains Mono (code)
-- **Shadows**: 3-tier system (sm/md/lg), subtle in light mode, deeper in dark
-- **Radius**: 12px cards/buttons, 8px inputs, 999px pills/badges
-- **Spacing**: 8px base (8, 16, 20, 24, 32, 48px scale)
-- **Breakpoints**: 768px (mobile nav), 900px (3→2 col), 600px (2→1 col)
+## Ed (Co-founder)
 
-### Constraints
-- Pure Python string HTML templates (f-strings). No Jinja2, no React, no build step.
-- All CSS lives in `components.py` `:root` block or inline. No external stylesheets.
-- The landing page structure (hero → MCP walkthrough → search widget → trending → categories → maker CTA) is locked. Visual polish only, no structural changes.
+Email: toedgamings@gmail.com. GitHub: rupert61622-blip.
+Handles Reddit/social + maker outreach. Check memory/ed.md for his current focus.
 
-## Technical Patterns
+## Key Links
 
-### Stack
-- Python 3 / FastAPI / SQLite (WAL mode) / Fly.io
-- Use `python3` not `python` on all systems
-- Pure Python string HTML templates (f-strings in route files)
-- All CSS in components.py :root block or inline
-
-### Auth
-- Always use `request.state.user` (populated by middleware via sessions table)
-- Never query users table by session_token — that column doesn't exist
-- Use `d = request.state.db` to avoid shadowing the db module import
-
-### Database
-- Parameterized queries always: `await db.execute("...WHERE x=?", (val,))`
-- Never f-string user input into SQL
-- aiosqlite Row objects are dict-like: use `row['col']` not `row[0]`
-- ALTER TABLE ADD COLUMN can't have UNIQUE — add column first, then CREATE UNIQUE INDEX separately
-
-### Deploy
-- `cd ~/indiestack && ~/.fly/bin/flyctl deploy --remote-only`
-- Always run `python3 smoke_test.py` before deploying
-- Use `--buildkit` flag if depot builder times out
-- Commit before deploying — never deploy uncommitted work
-- Deploy with background execution (builds take 2-4 minutes)
-
-### Code Style
-- Route files return HTMLResponse with f-string templates
-- Shared components live in components.py (page_shell, tool_card, etc.)
-- Design tokens are CSS variables in :root — never hardcode hex colors
-- Touch targets >= 44px for mobile
-- New routes: create file in src/indiestack/routes/, add router in main.py
+- Production: indiestack.ai (indiestack.fly.dev fallback)
+- GitHub: Pattyboi101/indiestack (public, sensitive files gitignored)
+- PyPI: indiestack (MCP server, current v1.9.0)
+- Command Hub: govlink.fly.dev
+- Telegram: `bash ~/.claude/telegram.sh "message"`
