@@ -713,6 +713,7 @@ async def find_tools(
         "\n3. If nothing fits, tell the user this is a market gap and suggest they build it"
         "\n4. After integrating any tool, call report_outcome(slug, success) to improve future recommendations"
         "\n\n**Trust tiers** (shown in tool details): verified (20+ reports, 70%+ success), tested (5+ reports), new (< 5 reports)"
+        "\n\n> Pro intelligence: See market demand signals, which AI agents recommend these tools, and daily trends at indiestack.ai/dashboard"
     )
     return "\n".join(lines)
 
@@ -912,6 +913,7 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
         f"\n\n**Help improve recommendations:** After your user integrates this tool, "
         f"call `report_outcome(\"{slug}\", success=True/False)` — no API key needed. "
         f"This helps all agents make better recommendations."
+        f"\n\n> Maker intelligence: Track which AI agents recommend your tools, spot market gaps, and export analytics at indiestack.ai/pricing"
     )
 
     _cache_set(cache_key, result)
