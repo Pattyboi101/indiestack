@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Session ending. If decisions were made, mistakes found, or sprint status changed — update memory (sprint.md, decisions.md) and .claude/rules/gotchas.md before finishing.'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

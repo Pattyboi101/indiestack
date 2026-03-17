@@ -10,6 +10,7 @@ build/
 .claude/*
 !.claude/commands/
 !.claude/rules/
+!.claude/settings.json
 
 # IDE
 .vscode/
@@ -65,3 +66,4 @@ backups/
 *.jpeg
 *.mp4
 *.JPG
+.claude/settings.local.json
