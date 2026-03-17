@@ -179,8 +179,16 @@ async def compare_tools(request: Request, slugs: str):
 
     name1 = escape(str(tool1['name']))
     name2 = escape(str(tool2['name']))
+    cat1 = escape(str(tool1.get('category_name', '')))
+    cat2 = escape(str(tool2.get('category_name', '')))
+    price1 = format_price(tool1.get('price_pence'))
+    price2 = format_price(tool2.get('price_pence'))
+    upvotes1 = int(tool1.get('upvote_count', 0))
+    upvotes2 = int(tool2.get('upvote_count', 0))
+    health1 = tool1.get('health_status') or 'unknown'
+    health2 = tool2.get('health_status') or 'unknown'
 
-    # --- Compatibility banner ---
+    # --- Compatibility banner (Patrick's feature) ---
     a_slug, b_slug = sorted([slug1, slug2])
     pair_cursor = await d.execute(
         "SELECT success_count, source FROM tool_pairs WHERE tool_a_slug = ? AND tool_b_slug = ?",
@@ -225,7 +233,44 @@ async def compare_tools(request: Request, slugs: str):
             <span style="font-size:14px;color:var(--ink-muted);font-weight:500;">No compatibility data yet</span>
         </div>'''
 
-    # --- JSON-LD structured data ---
+    # --- Quick comparison table ---
+    table_html = f"""
+    <div style="overflow-x:auto;margin-bottom:40px;">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+            <thead>
+                <tr style="border-bottom:2px solid var(--border);">
+                    <th style="text-align:left;padding:12px 16px;color:var(--ink-muted);font-size:12px;text-transform:uppercase;font-weight:600;"></th>
+                    <th style="text-align:center;padding:12px 16px;font-family:var(--font-display);font-size:16px;color:var(--ink);">{name1}</th>
+                    <th style="text-align:center;padding:12px 16px;font-family:var(--font-display);font-size:16px;color:var(--ink);">{name2}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:12px 16px;font-weight:600;color:var(--ink-muted);font-size:13px;">Category</td>
+                    <td style="padding:12px 16px;text-align:center;color:var(--ink);">{cat1}</td>
+                    <td style="padding:12px 16px;text-align:center;color:var(--ink);">{cat2}</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:12px 16px;font-weight:600;color:var(--ink-muted);font-size:13px;">Price</td>
+                    <td style="padding:12px 16px;text-align:center;color:var(--ink);">{price1}</td>
+                    <td style="padding:12px 16px;text-align:center;color:var(--ink);">{price2}</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:12px 16px;font-weight:600;color:var(--ink-muted);font-size:13px;">Upvotes</td>
+                    <td style="padding:12px 16px;text-align:center;color:var(--ink);">&#9650; {upvotes1}</td>
+                    <td style="padding:12px 16px;text-align:center;color:var(--ink);">&#9650; {upvotes2}</td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:12px 16px;font-weight:600;color:var(--ink-muted);font-size:13px;">Health</td>
+                    <td style="padding:12px 16px;text-align:center;">{_health_badge(health1)}</td>
+                    <td style="padding:12px 16px;text-align:center;">{_health_badge(health2)}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    """
+
+    # --- JSON-LD: WebPage + SoftwareApplication (Patrick's) + FAQ (Ed's) ---
     def _software_ld(tool):
         ld = {
             "@type": "SoftwareApplication",
@@ -239,34 +284,114 @@ async def compare_tools(request: Request, slugs: str):
             ld["offers"] = {"@type": "Offer", "price": "0", "priceCurrency": "GBP"}
         return ld
 
-    jsonld = _json.dumps({
+    webpage_ld = _json.dumps({
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": f"{tool1['name']} vs {tool2['name']} — Indie Tool Comparison",
-        "description": f"Compare {tool1['name']} vs {tool2['name']} side-by-side.",
+        "name": f"{tool1['name']} vs {tool2['name']} -- Agent-Verified Comparison",
+        "description": f"Compare {tool1['name']} vs {tool2['name']} side-by-side with real community data.",
         "url": f"{BASE_URL}/compare/{slug1}-vs-{slug2}",
         "mainEntity": [_software_ld(tool1), _software_ld(tool2)],
     })
-    extra_head = f'<script type="application/ld+json">{jsonld}</script>'
+
+    faq_ld = _json.dumps({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": f"Which is better, {tool1['name']} or {tool2['name']}?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": f"{tool1['name']} and {tool2['name']} are both developer tools on IndieStack. {tool1['name']} has {upvotes1} upvotes while {tool2['name']} has {upvotes2}. See the full comparison at IndieStack."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": f"What is the difference between {tool1['name']} and {tool2['name']}?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": f"{tool1['name']}: {tool1.get('tagline', '')}. {tool2['name']}: {tool2.get('tagline', '')}. Compare features, pricing, and community ratings side-by-side on IndieStack."
+                }
+            }
+        ]
+    })
+
+    extra_head = (
+        f'<script type="application/ld+json">{webpage_ld}</script>\n'
+        f'    <script type="application/ld+json">{faq_ld}</script>'
+    )
+
+    # --- FAQ HTML section ---
+    faq_html = f"""
+    <div style="margin-top:40px;">
+        <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:16px;">
+            Frequently Asked Questions
+        </h2>
+        <details style="margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;">
+            <summary style="padding:14px 16px;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                Which is better, {name1} or {name2}?
+                <span style="font-size:18px;color:var(--ink-muted);">+</span>
+            </summary>
+            <div style="padding:0 16px 14px;font-size:14px;color:var(--ink-light);line-height:1.6;">
+                It depends on your use case. {name1} has {upvotes1} community upvotes while {name2} has {upvotes2}.
+                Browse each tool&rsquo;s full listing to see which fits your stack.
+            </div>
+        </details>
+        <details style="margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;">
+            <summary style="padding:14px 16px;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                What is the difference between {name1} and {name2}?
+                <span style="font-size:18px;color:var(--ink-muted);">+</span>
+            </summary>
+            <div style="padding:0 16px 14px;font-size:14px;color:var(--ink-light);line-height:1.6;">
+                {name1}: {escape(str(tool1.get('tagline', '')))}.<br>
+                {name2}: {escape(str(tool2.get('tagline', '')))}.
+            </div>
+        </details>
+    </div>
+    """
+
+    # --- MCP CTA ---
+    mcp_cta = f"""
+    <div style="text-align:center;margin-top:48px;padding:32px;background:var(--cream-dark);border-radius:var(--radius);">
+        <p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
+            Get this comparison inside your AI coding agent
+        </p>
+        <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
+            Install the IndieStack MCP server: <code style="font-family:var(--font-mono);background:var(--border);padding:2px 8px;border-radius:4px;">pip install indiestack</code>
+        </p>
+        <a href="/mcp" class="btn btn-primary">Learn More &rarr;</a>
+    </div>
+    """
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:900px;">
         <div style="text-align:center;margin-bottom:24px;">
-            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);">
+            <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,38px);color:var(--ink);">
                 {name1} <span style="color:var(--ink-muted);font-weight:normal;">vs</span> {name2}
             </h1>
-            <p style="color:var(--ink-muted);margin-top:8px;">Side-by-side comparison of these developer tools</p>
+            <p style="color:var(--ink-muted);font-size:17px;margin-top:8px;max-width:600px;margin-left:auto;margin-right:auto;">
+                Side-by-side comparison with real community data from IndieStack.
+                Not opinions -- upvotes, pricing, and tool details.
+            </p>
         </div>
         {compat_banner}
+        {table_html}
         <div style="display:flex;gap:32px;flex-wrap:wrap;">
             {tool_column(tool1)}
             <div style="width:1px;background:var(--border);align-self:stretch;flex-shrink:0;"></div>
             {tool_column(tool2)}
         </div>
+
+        {faq_html}
+        {mcp_cta}
     </div>
     """
-    return HTMLResponse(page_shell(f"{name1} vs {name2} — Indie Tool Comparison | IndieStack", body,
+
+    seo_title = f"{tool1['name']} vs {tool2['name']} (2026) -- Agent-Verified Comparison | IndieStack"
+    seo_desc = f"Compare {tool1['name']} and {tool2['name']} with real community data. Pricing, upvotes, features, and compatibility -- not opinions."
+
+    return HTMLResponse(page_shell(seo_title, body,
                                     user=request.state.user,
-                                    description=f"Compare {tool1['name']} vs {tool2['name']} side-by-side. Features, pricing, and community ratings on IndieStack.",
+                                    description=seo_desc,
                                     canonical=f"/compare/{slug1}-vs-{slug2}",
                                     extra_head=extra_head))
