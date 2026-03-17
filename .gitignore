@@ -9,6 +9,7 @@ build/
 *.log
 .claude/*
 !.claude/commands/
+!.claude/rules/
 
 # IDE
 .vscode/
