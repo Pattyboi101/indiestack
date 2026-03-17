@@ -91,6 +91,20 @@ async def dashboard_overview(request: Request):
     # Pro subscription check
     is_pro = await check_pro(db, user['id'])
 
+    # Pro upsell banner for non-Pro users with recent citations
+    pro_banner = ''
+    if not is_pro and maker_id:
+        _banner_citations = await get_total_agent_citations(db, maker_id, days=7)
+        if _banner_citations > 0:
+            pro_banner = f'''
+            <div id="pro-banner" style="background:linear-gradient(135deg,#1A2D4A,#0F1D30);border:1px solid rgba(0,212,245,0.2);border-radius:var(--radius);padding:16px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                <div>
+                    <p style="color:#fff;font-size:15px;font-weight:600;margin:0;">AI agents recommended your tools {_banner_citations} times this week</p>
+                    <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:4px 0 0;">See which agents, daily trends, and competitor insights</p>
+                </div>
+                <a href="/pricing" style="display:inline-block;padding:10px 20px;background:var(--accent);color:#0F1D30;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">Upgrade to Pro</a>
+            </div>'''
+
     # Check if user has any claimed tools
     has_claimed_tools = False
     if maker_id:
@@ -1116,6 +1130,7 @@ async def dashboard_overview(request: Request):
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
         {welcome_banner}
+        {pro_banner}
         {verify_banner}
         {boost_success_banner}
         {avatar_saved_banner}
