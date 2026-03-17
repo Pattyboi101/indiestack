@@ -23,6 +23,11 @@ If there are uncommitted changes, ask the user if they want to commit first. Do 
 Run in background:
 
 ```bash
+cd ~/indiestack && ~/.fly/bin/flyctl deploy --local-only
+```
+
+If local Docker fails, fall back to remote:
+```bash
 cd ~/indiestack && ~/.fly/bin/flyctl deploy --remote-only
 ```
 
@@ -48,5 +53,5 @@ Skip if HUB_URL is not set.
 
 ```bash
 curl -s -X POST -H "X-Hub-Secret: $HUB_SECRET" -H "Content-Type: application/json" \
-  "$HUB_URL/activity" -d '{"actor":"patrick","action":"deployed to production","detail":"flyctl deploy --remote-only"}'
+  "$HUB_URL/activity" -d '{"actor":"patrick","action":"deployed to production","detail":"flyctl deploy --local-only"}'
 ```

@@ -6,10 +6,11 @@
 
 ## Deploy Command
 ```bash
-cd ~/indiestack && ~/.fly/bin/flyctl deploy --remote-only
+cd ~/indiestack && ~/.fly/bin/flyctl deploy --local-only
 ```
+- `--local-only` builds with local Docker (avoids Depot/BuildKit builder outages)
+- Fallback: `--remote-only` if local Docker is unavailable
 - Run deploy in background (builds take 2-4 minutes)
-- Use `--buildkit` flag if depot builder times out
 
 ## Post-Deploy
 - Verify: `curl -sL -o /dev/null -w "%{http_code}" https://indiestack.fly.dev/`
