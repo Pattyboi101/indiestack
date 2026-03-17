@@ -518,7 +518,7 @@ async def submit_get(request: Request):
     gap_hint = ""
     if gaps:
         gap_items = " &middot; ".join(
-            f"<strong>{escape(str(g['normalized_query']))}</strong> ({g['search_count']}x)"
+            f"<strong>{escape(str(g['query']))}</strong> ({g['count']}x)"
             for g in gaps[:3]
         )
         gap_hint = f'''

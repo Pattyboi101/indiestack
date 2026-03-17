@@ -463,8 +463,8 @@ async def render_overview(db, request, pending):
     gaps_html = ""
     if gaps:
         gap_rows = "".join(
-            f'<tr><td style="padding:8px 12px;font-weight:500;">{escape(str(g["normalized_query"]))}</td>'
-            f'<td style="padding:8px 12px;text-align:center;">{g["search_count"]}</td>'
+            f'<tr><td style="padding:8px 12px;font-weight:500;">{escape(str(g["query"]))}</td>'
+            f'<td style="padding:8px 12px;text-align:center;">{g["count"]}</td>'
             f'<td style="padding:8px 12px;text-align:center;">{g["unique_sources"]}</td>'
             f'<td style="padding:8px 12px;color:var(--ink-muted);font-size:13px;">{escape(str(g["sources"]))}</td></tr>'
             for g in gaps

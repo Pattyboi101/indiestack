@@ -264,7 +264,7 @@ async def dashboard_overview(request: Request):
     gaps = await get_search_gaps(db, days=30, min_searches=5, limit=3)
     gap_hint = ""
     if gaps:
-        gap_items = " · ".join(f"<strong>{escape(str(g['normalized_query']))}</strong> ({g['search_count']}x)" for g in gaps[:3])
+        gap_items = " · ".join(f"<strong>{escape(str(g['query']))}</strong> ({g['count']}x)" for g in gaps[:3])
         gap_hint = f'''
         <div style="background:var(--surface-raised);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:24px;">
             <p style="font-size:13px;color:var(--ink-muted);margin-bottom:4px;">AI agents searched for these but found nothing:</p>
