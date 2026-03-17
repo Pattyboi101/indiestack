@@ -129,7 +129,7 @@ API_DAILY_LIMITS = {
     "free": 50,
     "pro": 1000,
 }
-API_KEYLESS_DAILY_LIMIT = 15
+API_KEYLESS_DAILY_LIMIT = 3
 
 
 def _check_api_key_rate_limit(user_id: int, tier: str) -> bool:
@@ -756,13 +756,13 @@ async def db_middleware(request: Request, call_next):
                         await request.state.db.commit()
                     except Exception:
                         _logger.exception("Failed to log API usage")
-            # No valid API key — apply IP-based daily limit (5/day)
+            # No valid API key — apply IP-based daily limit (3/day)
             # Exempt non-query paths (embeddable badges, milestones, OpenAPI spec, categories)
             _API_RATE_EXEMPT = ('/api/badge/', '/api/milestone/', '/api/openapi', '/api/categories', '/api/health', '/api/agent/')
             if not request.state.api_key and not path.startswith(_API_RATE_EXEMPT) and _check_api_ip_rate_limit(client_ip):
                 return JSONResponse(
-                    {"error": "Daily API limit reached (15/day without a key). "
-                     "Create a free API key for 50/day, or upgrade to Pro for 1,000/day.",
+                    {"error": "You've used your 3 free daily queries. "
+                     "Create a free API key in 10 seconds for 50 queries/day — just sign in with GitHub.",
                      "get_key_url": "https://indiestack.ai/developer",
                      "upgrade_url": "https://indiestack.ai/pricing"},
                     status_code=429,
