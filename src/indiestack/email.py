@@ -1605,17 +1605,28 @@ def reengagement_march_html(*, user_name: str, has_tools: bool) -> str:
     </div>"""
 
     return f"""
-    <div style="text-align:center;margin-bottom:24px;">
-        <div style="display:inline-block;background:#1A2D4A;color:#00D4F5;font-size:11px;font-weight:700;
-                    text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:999px;">
-            What's New
-        </div>
-    </div>
     <h2 style="font-family:serif;font-size:22px;color:#1A2D4A;margin-bottom:4px;text-align:center;">
-        IndieStack just hit 3,099 tools
+        Thank you for your early support
     </h2>
     <p style="color:#6B6560;font-size:15px;text-align:center;margin-bottom:24px;">
-        Hi {user_name} &mdash; a lot has changed since you signed up. Here's what's new.
+        Hi {user_name} &mdash; you signed up for IndieStack when we were just getting started, and we haven't forgotten that. As a thank you, we've activated a <strong style="color:#1A2D4A;">7-day free Pro trial</strong> on your account.
+    </p>
+
+    <div style="margin:24px 0;padding:24px;background:#1A2D4A;border-radius:12px;text-align:center;">
+        <p style="color:#00D4F5;font-size:16px;font-weight:700;margin:0 0 4px;">
+            Your Pro trial is active now
+        </p>
+        <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 16px;">
+            Full access to AI citation tracking, market gaps, data export, and 1,000 API queries/month.
+        </p>
+        <a href="{BASE_URL}/dashboard" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            Explore Your Dashboard
+        </a>
+    </div>
+
+    <p style="color:#6B6560;font-size:15px;text-align:center;margin:28px 0 16px;">
+        A lot has changed since you last visited. IndieStack has grown from a small directory to a full discovery layer for AI coding agents.
     </p>
 
     <div style="margin:24px 0;">
@@ -1639,35 +1650,22 @@ def reengagement_march_html(*, user_name: str, has_tools: bool) -> str:
         </div>
     </div>
 
-    <h3 style="font-size:16px;color:#1A2D4A;margin:28px 0 12px;">New since you joined</h3>
+    <h3 style="font-size:16px;color:#1A2D4A;margin:28px 0 12px;">What's new</h3>
     <ul style="color:#6B6560;font-size:14px;line-height:2;padding-left:20px;margin:0;">
         <li><strong style="color:#1A2D4A;">MCP Server</strong> &mdash; Claude, Cursor, and Windsurf can search IndieStack directly while you code</li>
         <li><strong style="color:#1A2D4A;">Stack Auditor</strong> &mdash; paste your package.json to find indie replacements for your dependencies</li>
         <li><strong style="color:#1A2D4A;">Compatibility Pairs</strong> &mdash; see which tools work well together, verified by AI agents</li>
         <li><strong style="color:#1A2D4A;">Health Monitoring</strong> &mdash; every tool shows maintenance status (Active, Stale, Archived)</li>
-        <li><strong style="color:#1A2D4A;">AI Citation Tracking</strong> &mdash; see which AI agents recommend which tools</li>
-        <li><strong style="color:#1A2D4A;">Market Gap Detection</strong> &mdash; discover what developers are searching for but can't find</li>
+        <li><strong style="color:#1A2D4A;">AI Citation Tracking</strong> &mdash; see which AI agents recommend which tools (Pro)</li>
+        <li><strong style="color:#1A2D4A;">Market Gap Detection</strong> &mdash; discover what developers search for but can't find (Pro)</li>
     </ul>
 
     {maker_section}
 
-    <div style="margin:28px 0;padding:24px;background:#1A2D4A;border-radius:12px;text-align:center;">
-        <p style="color:#00D4F5;font-size:16px;font-weight:700;margin:0 0 4px;">
-            You have a 7-day free Pro trial waiting
-        </p>
-        <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 16px;">
-            Full access to citation tracking, market gaps, data export, and 1,000 API queries/month.
-        </p>
-        <a href="{BASE_URL}/dashboard" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
-           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
-            Explore Your Dashboard
-        </a>
-    </div>
-
     <div style="margin:24px 0;padding:20px;border:1px solid #E2B764;border-radius:12px;text-align:center;background:linear-gradient(135deg,#FEF9EF,#FFF7E6);">
-        <p style="font-size:14px;font-weight:700;color:#1A2D4A;margin:0 0 4px;">Founding Member &mdash; $99 lifetime deal</p>
+        <p style="font-size:14px;font-weight:700;color:#1A2D4A;margin:0 0 4px;">Want to keep Pro forever? Founding Member &mdash; $99 one-time</p>
         <p style="font-size:13px;color:#6B6560;margin:0 0 12px;line-height:1.5;">
-            Pay once, keep Pro forever. Only 50 seats available &mdash; once they're gone, it's $19/month.
+            50 seats only. Pay once, never again. After they fill, Pro is $19/month.
         </p>
         <a href="{BASE_URL}/pricing" style="display:inline-block;background:#E2B764;color:#1A2D4A;
            padding:10px 24px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">
@@ -1676,7 +1674,7 @@ def reengagement_march_html(*, user_name: str, has_tools: bool) -> str:
     </div>
 
     <p style="color:#6B6560;font-size:14px;line-height:1.6;text-align:center;margin-top:24px;">
-        Thanks for being part of this,<br>
+        Thanks for being here early,<br>
         <strong style="color:#1A2D4A;">Patrick &amp; Ed</strong>
     </p>
     """
