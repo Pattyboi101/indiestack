@@ -2332,6 +2332,14 @@ async def developer_page(request: Request):
             </p>
         </div>
 
+        <div style="text-align:center;padding:20px;margin-bottom:24px;background:linear-gradient(135deg,#1A2D4A,#0F1D30);border-radius:var(--radius);border:1px solid rgba(0,212,245,0.2);">
+            <p style="color:#fff;font-size:16px;font-weight:600;margin:0 0 4px;">Get your free API key + 7-day Pro trial</p>
+            <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 16px;">10 queries/month free. Pro gets 1,000/month + citation tracking.</p>
+            <a href="/login?next=/developer" class="btn btn-primary" style="font-size:15px;padding:12px 32px;background:var(--accent);color:#0F1D30;border:none;border-radius:8px;font-weight:600;text-decoration:none;">
+                Sign in to create your API key
+            </a>
+        </div>
+
         <div class="card" style="padding:24px;margin-bottom:24px;">
             <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 16px;color:var(--ink);">Endpoints</h2>
 
