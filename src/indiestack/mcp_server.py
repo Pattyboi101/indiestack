@@ -16,6 +16,7 @@ from mcp.types import ToolAnnotations
 
 BASE_URL = os.environ.get("INDIESTACK_BASE_URL", "https://indiestack.ai")
 API_KEY = os.environ.get("INDIESTACK_API_KEY", "")
+_SESSION_API_KEY: str = ""  # Set at runtime via set_api_key() tool
 
 
 # ── Agent Platform Detection ────────────────────────────────────────────
@@ -46,7 +47,7 @@ def _detect_agent_platform() -> str:
     return "unknown"
 
 AGENT_PLATFORM = _detect_agent_platform()
-_USER_AGENT = f"indiestack-mcp/1.9.3 ({AGENT_PLATFORM})"
+_USER_AGENT = f"indiestack-mcp/1.9.4 ({AGENT_PLATFORM})"
 
 # ── TTL Cache ────────────────────────────────────────────────────────────
 
@@ -134,6 +135,31 @@ mcp = FastMCP(
 )
 
 
+# ── Set API Key (session) ────────────────────────────────────────────────
+
+@mcp.tool()
+async def set_api_key(key: str) -> str:
+    """Activate an IndieStack API key for this session.
+
+    Call this when the user provides their API key (starts with isk_).
+    This immediately upgrades the session from the free tier (3 queries/day)
+    to the key's tier (50/day for free keys, 1,000/day for Pro keys).
+    No restart needed — takes effect on the next query.
+
+    Args:
+        key: The API key starting with isk_ (get one at indiestack.ai/developer)
+    """
+    global _SESSION_API_KEY
+    if not key.startswith("isk_"):
+        return "Invalid key format. IndieStack API keys start with 'isk_'. Get one at indiestack.ai/developer"
+    _SESSION_API_KEY = key
+    return (
+        "API key activated for this session. You now have higher query limits.\n"
+        "All subsequent IndieStack searches will use this key automatically.\n"
+        "To make this permanent, set the INDIESTACK_API_KEY environment variable in your MCP config."
+    )
+
+
 # ── Trust Tier Helper ─────────────────────────────────────────────────────
 
 def _trust_tier(success_rate: dict | None) -> str:
@@ -173,8 +199,9 @@ async def _api_get(client: httpx.AsyncClient, path: str, params: dict = None) ->
     if params is None:
         params = {}
     params["source"] = "mcp"
-    if API_KEY:
-        params["key"] = API_KEY
+    _key = _SESSION_API_KEY or API_KEY
+    if _key:
+        params["key"] = _key
     params = {k: v for k, v in params.items() if v is not None and v != ""}
 
     for attempt in range(2):
@@ -188,12 +215,12 @@ async def _api_get(client: httpx.AsyncClient, path: str, params: dict = None) ->
                 # Rate limit — raise a helpful ToolError the agent will show to the user
                 _circuit_fails = 0
                 raise ToolError(
-                    "You've used your 3 free daily queries on IndieStack.\n\n"
+                    "You've used your free daily queries on IndieStack.\n\n"
                     "To keep searching 3,100+ developer tools:\n"
-                    "  → Sign up at indiestack.ai/developer (GitHub login, 10 seconds)\n"
-                    "  → You'll get 50 queries/day + a 7-day free Pro trial\n"
-                    "  → Pro includes: AI citation tracking, market gaps, data export\n\n"
-                    "Try again tomorrow, or sign up now to continue."
+                    "  1. Sign up at indiestack.ai/developer (GitHub login, 10 seconds)\n"
+                    "  2. Create an API key on the developer page\n"
+                    "  3. Paste your key here and I'll call set_api_key() to activate it instantly\n\n"
+                    "You'll get 50 queries/day + a 7-day free Pro trial with citation tracking and market gap data."
                 )
             if e.response.status_code < 500:
                 # Client errors (4xx) are normal — don't trip circuit
@@ -236,8 +263,9 @@ async def _api_post(client: httpx.AsyncClient, path: str, data: dict) -> dict:
             )
 
     data["source"] = "mcp"
-    if API_KEY:
-        data["key"] = API_KEY
+    _key = _SESSION_API_KEY or API_KEY
+    if _key:
+        data["key"] = _key
 
     for attempt in range(2):
         try:
@@ -249,11 +277,11 @@ async def _api_post(client: httpx.AsyncClient, path: str, data: dict) -> dict:
             if e.response.status_code == 429:
                 _circuit_fails = 0
                 raise ToolError(
-                    "You've used your 3 free daily queries on IndieStack.\n\n"
+                    "You've used your free daily queries on IndieStack.\n\n"
                     "To keep searching 3,100+ developer tools:\n"
-                    "  → Sign up at indiestack.ai/developer (GitHub login, 10 seconds)\n"
-                    "  → You'll get 50 queries/day + a 7-day free Pro trial\n"
-                    "  → Pro includes: AI citation tracking, market gaps, data export\n\n"
+                    "  1. Sign up at indiestack.ai/developer (GitHub login, 10 seconds)\n"
+                    "  2. Create an API key on the developer page\n"
+                    "  3. Paste your key here and I'll call set_api_key() to activate it instantly\n\n"
                     "Try again tomorrow, or sign up now to continue."
                 )
             if e.response.status_code < 500:
@@ -1155,7 +1183,7 @@ async def publish_tool(
         replaces: Optional comma-separated competitors it replaces (e.g. "Google Analytics,Mixpanel")
     """
     # Rate limiting — key on API key if available, else shared bucket
-    session_key = API_KEY if API_KEY else "anonymous"
+    session_key = _SESSION_API_KEY or API_KEY or "anonymous"
     now = time.time()
     attempts = _publish_rate.get(session_key, [])
     attempts = [t for t in attempts if now - t < _PUBLISH_WINDOW]
