@@ -46,7 +46,7 @@ def _detect_agent_platform() -> str:
     return "unknown"
 
 AGENT_PLATFORM = _detect_agent_platform()
-_USER_AGENT = f"indiestack-mcp/1.9.2 ({AGENT_PLATFORM})"
+_USER_AGENT = f"indiestack-mcp/1.9.3 ({AGENT_PLATFORM})"
 
 # ── TTL Cache ────────────────────────────────────────────────────────────
 
@@ -660,6 +660,10 @@ async def find_tools(
     await ctx.report_progress(progress=0, total=1)
     try:
         data = await _api_get(client, "/api/tools/search", params)
+    except ToolError:
+        raise  # Pass through rate limit and other ToolErrors (e.g. signup pitch)
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Search failed: {e}. Try again, or use list_categories() to browse by category.")
     await ctx.report_progress(progress=1, total=1)
@@ -806,6 +810,8 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
     await ctx.report_progress(progress=0, total=1)
     try:
         data = await _api_get(client, f"/api/tools/{slug}")
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Could not fetch details: {e}. Check the slug is correct — use find_tools() to find valid slugs.")
     await ctx.report_progress(progress=1, total=1)
@@ -971,6 +977,8 @@ async def find_compatible(
         if e.response.status_code == 404:
             raise ToolError(f"Tool '{slug}' not found. Check the slug from find_tools() results.")
         raise ToolError(f"Could not fetch compatibility data: {e}")
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Could not fetch compatibility data: {e}")
     await ctx.report_progress(progress=1, total=1)
@@ -1035,6 +1043,8 @@ async def list_categories(*, ctx: Context) -> str:
     await ctx.report_progress(progress=0, total=1)
     try:
         data = await _api_get(client, "/api/categories")
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Could not fetch categories: {e}. Try find_tools() without a category filter.")
     await ctx.report_progress(progress=1, total=1)
@@ -1075,6 +1085,8 @@ async def compare_tools(slug_a: str, slug_b: str, *, ctx: Context) -> str:
     async def _fetch(slug: str) -> dict:
         try:
             data = await _api_get(client, f"/api/tools/{slug}")
+        except ToolError:
+            raise  # Pass through signup pitch
         except Exception as e:
             raise ToolError(f"Could not fetch '{slug}': {e}. Use find_tools() to find valid slugs.")
         tool = data.get("tool")
@@ -1183,6 +1195,8 @@ async def publish_tool(
     await ctx.report_progress(progress=0, total=1)
     try:
         data = await _api_post(client, "/api/tools/submit", payload)
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Submission failed: {e}. Check the URL is valid and try again.")
     await ctx.report_progress(progress=1, total=1)
@@ -1216,6 +1230,8 @@ async def browse_new_tools(limit: int = 10, offset: int = 0, *, ctx: Context) ->
     await ctx.report_progress(progress=0, total=1)
     try:
         data = await _api_get(client, "/api/new", params)
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Could not fetch new tools: {e}")
     await ctx.report_progress(progress=1, total=1)
@@ -1252,6 +1268,8 @@ async def list_tags(*, ctx: Context) -> str:
     await ctx.report_progress(progress=0, total=1)
     try:
         data = await _api_get(client, "/api/tags")
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Could not fetch tags: {e}")
     await ctx.report_progress(progress=1, total=1)
@@ -1283,6 +1301,8 @@ async def list_stacks(*, ctx: Context) -> str:
     await ctx.report_progress(progress=0, total=1)
     try:
         data = await _api_get(client, "/api/stacks", {"sort": "confidence"})
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Could not fetch stacks: {e}")
     await ctx.report_progress(progress=1, total=1)
@@ -1336,6 +1356,8 @@ async def build_stack(needs: str, budget: int = 0, *, ctx: Context) -> str:
     await ctx.report_progress(progress=0, total=1)
     try:
         data = await _api_get(client, "/api/stack-builder", params)
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Could not build stack: {e}")
     await ctx.report_progress(progress=1, total=1)
@@ -1415,6 +1437,8 @@ async def get_recommendations(category: str = "", limit: int = 5, *, ctx: Contex
     await ctx.report_progress(progress=0, total=1)
     try:
         data = await _api_get(client, "/api/recommendations", params)
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Could not fetch recommendations: {e}")
     await ctx.report_progress(progress=1, total=1)
@@ -1671,6 +1695,8 @@ async def evaluate_build_vs_buy(slug: str, estimated_hours: int = 20, hourly_rat
 
     try:
         data = await _api_get(client, f"/api/tools/{slug}")
+    except ToolError:
+        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Could not fetch tool details: {e}. Use find_tools() to find valid slugs.")
     await ctx.report_progress(progress=1, total=1)
