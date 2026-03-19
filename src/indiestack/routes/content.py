@@ -477,6 +477,13 @@ _BLOG_POSTS = [
         "reading_time": "5 min read",
         "excerpt": "Every day, developers burn thousands of tokens asking AI to build invoicing, analytics, and feedback widgets from scratch — when battle-tested developer tools already exist.",
     },
+    {
+        "slug": "indiestack-vs-stackshare",
+        "title": "IndieStack vs StackShare: Why Developers Are Switching in 2026",
+        "date": "2026-03-19",
+        "reading_time": "6 min read",
+        "excerpt": "StackShare showed what developers said they used. IndieStack shows what actually works — verified by AI agents, updated daily, and free to query via MCP.",
+    },
 ]
 
 _BLOG_CONTAINER = 'style="max-width:720px; margin:64px auto; padding:0 24px;"'
@@ -1826,6 +1833,280 @@ async def about_page(request: Request):
         user=request.state.user,
         description=post['excerpt'],
         canonical="/blog/zero-js-frameworks",
+        extra_head=extra_head,
+    ))
+
+
+@router.get("/blog/indiestack-vs-stackshare", response_class=HTMLResponse)
+async def blog_indiestack_vs_stackshare(request: Request):
+    post = _BLOG_POSTS[5]
+
+    json_ld = """{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "IndieStack vs StackShare: Why Developers Are Switching in 2026",
+        "datePublished": "2026-03-19",
+        "dateModified": "2026-03-19",
+        "author": {
+            "@type": "Organization",
+            "name": "IndieStack",
+            "url": "_BASE_URL_PLACEHOLDER_"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "IndieStack",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "_BASE_URL_PLACEHOLDER_/logo.png"
+            }
+        },
+        "description": "StackShare showed what developers said they used. IndieStack shows what actually works — verified by AI agents, updated daily, and free to query via MCP.",
+        "mainEntityOfPage": "_BASE_URL_PLACEHOLDER_/blog/indiestack-vs-stackshare",
+        "keywords": ["stackshare alternative", "stackshare alternative 2026", "indiestack vs stackshare", "better than stackshare", "stackshare open source alternative"],
+        "wordCount": 1100
+    }""".replace("_BASE_URL_PLACEHOLDER_", BASE_URL)
+
+    extra_head = f"""
+    <script type="application/ld+json">{json_ld}</script>
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2026-03-19">
+    <meta property="article:author" content="IndieStack">
+    <style>
+        .blog-article h2 {{
+            font-family: var(--font-display);
+            font-size: 24px;
+            color: var(--ink);
+            margin: 40px 0 16px;
+        }}
+        .blog-article p {{
+            margin-bottom: 24px;
+        }}
+        .blog-article blockquote {{
+            border-left: 4px solid var(--slate);
+            margin: 32px 0;
+            padding: 16px 24px;
+            background: var(--cream-dark);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--ink);
+            line-height: 1.7;
+        }}
+        .blog-article pre {{
+            background: var(--terracotta);
+            color: var(--cream);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin: 24px 0;
+        }}
+        .blog-article pre code {{
+            color: var(--cream);
+        }}
+        .blog-article code {{
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+            background: var(--cream-dark);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }}
+        .blog-article a {{
+            color: var(--slate-dark);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }}
+        .blog-article a:hover {{
+            color: var(--terracotta);
+        }}
+    </style>
+    """
+
+    tweet_text = "StackShare%20showed%20what%20devs%20said%20they%20used.%20IndieStack%20shows%20what%20actually%20works%20%E2%80%94%20verified%20by%20AI%20agents%2C%20updated%20daily.%0A%0Ahttps%3A%2F%2Findiestack.ai%2Fblog%2Findiestack-vs-stackshare"
+
+    body = f"""
+    <article class="blog-article" {_BLOG_CONTAINER}>
+        <header style="margin-bottom:40px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <time style="font-family:var(--font-mono);font-size:13px;color:var(--ink-muted);">{post['date']}</time>
+                <span style="font-family:var(--font-mono);font-size:13px;color:var(--slate-dark);">{post['reading_time']}</span>
+            </div>
+            <h1 {_BLOG_TITLE}>{post['title']}</h1>
+            <p style="font-size:17px;color:var(--ink-muted);line-height:1.6;margin-top:12px;">{post['excerpt']}</p>
+        </header>
+
+        <div {_BLOG_BODY}>
+
+            <p>
+                For years, <strong>StackShare</strong> was the default answer when someone asked
+                &ldquo;what tools is this company using?&rdquo; It pioneered the idea of public
+                tech stacks and built a community around sharing infrastructure decisions. That
+                contribution matters and deserves acknowledgment.
+            </p>
+            <p>
+                But the developer tooling landscape in 2026 looks nothing like it did when
+                StackShare launched. AI coding agents now write a significant share of production
+                code. Tools get created, forked, and abandoned faster than any human-curated
+                directory can track. And the way developers discover tools has fundamentally
+                shifted &mdash; from browsing directories to asking an AI assistant mid-session.
+            </p>
+            <p>
+                StackShare was not designed for this world. <a href="/explore">IndieStack</a> was.
+            </p>
+
+            <h2>The Stale Data Problem</h2>
+            <p>
+                StackShare relies on self-reported data. A company creates a profile, lists the
+                tools they use, and that profile sits there indefinitely. Nobody is required to
+                update it when they migrate off a tool, swap out a database, or shut down entirely.
+                The result is a directory where a significant portion of the listed stacks are
+                months or years out of date.
+            </p>
+            <p>
+                IndieStack takes a different approach. Every tool in the catalog has automated
+                health monitoring: we check GitHub activity, archive status, last commit date,
+                and maintenance signals on a rolling basis. Tools are flagged as
+                <strong>Active</strong>, <strong>Stale</strong>, or <strong>Archived</strong>
+                based on real signals, not self-reported claims. When you find a tool on
+                IndieStack, you know whether it is actually maintained &mdash; not whether
+                someone remembered to update a profile page two years ago.
+            </p>
+
+            <h2>AI Agents Cannot Use StackShare</h2>
+            <p>
+                This is the fundamental gap. When a developer asks Claude, Cursor, or Windsurf
+                to &ldquo;add analytics to my app,&rdquo; the agent needs to find the right tool
+                programmatically. StackShare has no API that AI agents can query. Their API was
+                listed at $99/month in a closed beta that, as of early 2026, appears to be
+                inactive.
+            </p>
+            <p>
+                IndieStack ships a free
+                <a href="https://pypi.org/project/indiestack/">MCP server</a> that any AI
+                coding agent can install in one command. The agent searches 3,099 tools across
+                25 categories, gets structured data back (pricing, API type, SDK packages,
+                environment variables, compatible tools), and can recommend the right tool
+                in-context. No tab switching. No copy-pasting from a browser. The recommendation
+                happens inside the coding session, exactly where it is useful.
+            </p>
+<pre><code>claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code></pre>
+            <p>
+                That one line gives your AI assistant access to the entire catalog. StackShare
+                has no equivalent.
+            </p>
+
+            <h2>Compatibility Data That Is Actually Verified</h2>
+            <p>
+                StackShare shows lists of tools grouped by category. It does not tell you whether
+                two tools work well together. If you pick an auth provider and a database from
+                StackShare, you are on your own to figure out whether they integrate cleanly.
+            </p>
+            <p>
+                IndieStack tracks <strong>compatibility pairs</strong> &mdash; which tools have
+                been verified to work together in real projects. This data comes from AI agent
+                sessions: when an agent successfully integrates two tools in a project, it
+                reports the pairing back. Over time, this builds a compatibility graph that no
+                self-reported directory can replicate, because it is based on what actually
+                worked in production code, not what someone listed on a profile.
+            </p>
+
+            <h2>Curation vs. Volume</h2>
+            <p>
+                StackShare lists roughly 7,000 tools and services, including enterprise
+                platforms, legacy infrastructure, and tools that have not been updated in years.
+                Volume is the strategy &mdash; list everything, let users sort it out.
+            </p>
+            <p>
+                IndieStack catalogs 3,099 tools across 25 categories with an explicit curation
+                filter: focused, lean, actively maintained, and honestly priced. We are not
+                trying to list every tool that has ever existed. We are trying to list the tools
+                that a developer should actually consider using today. That means excluding
+                abandoned projects, tools with deceptive pricing, and enterprise platforms that
+                require a sales call to get started.
+            </p>
+            <p>
+                For AI agents, this curation is not a nice-to-have &mdash; it is essential. An
+                agent recommending a dead tool wastes tokens and erodes trust. Every tool in
+                IndieStack has a health status that the agent can check before recommending it.
+            </p>
+
+            <h2>What Happened to StackShare</h2>
+            <p>
+                StackShare was acquired by FOSSA in 2022. Since the acquisition, the platform
+                has received minimal visible updates. The community features that made it
+                valuable &mdash; stack decisions, trending tools, active discussions &mdash;
+                have largely gone quiet. The data that was current in 2021 is still what you
+                see today.
+            </p>
+            <p>
+                This is not a criticism of the team. Acquisitions change priorities, and FOSSA
+                has its own product to focus on. But for developers looking for a
+                <strong>StackShare alternative in 2026</strong>, the practical reality is that
+                the platform is no longer actively maintained as a discovery tool.
+            </p>
+
+            <h2>Free to Use, Pro When You Need It</h2>
+            <p>
+                IndieStack is free. Browse the catalog, search by category, install the MCP
+                server, get recommendations &mdash; all without paying anything. The
+                <a href="/pricing">Pro tier</a> adds citation tracking (see when AI agents
+                recommend your tool), market gap reports, and priority placement. But the core
+                discovery experience is and will remain free.
+            </p>
+            <p>
+                StackShare&rsquo;s free tier was limited, and their paid plans were oriented
+                toward enterprise teams managing internal stack documentation. For an individual
+                developer or a small team trying to find the right tool for a project, the value
+                proposition was unclear.
+            </p>
+
+            <h2>Side-by-Side Comparison</h2>
+            <p>
+                For a detailed feature comparison table, see our
+                <a href="/alternatives/stackshare">IndieStack vs StackShare comparison page</a>.
+                The short version: IndieStack offers agent-verified data, a free MCP server,
+                daily health monitoring, compatibility tracking, and active development. StackShare
+                offers a large but increasingly stale directory with no AI integration.
+            </p>
+
+            <h2>The Bottom Line</h2>
+            <p>
+                StackShare solved the right problem at the right time: making tech stack decisions
+                visible and shareable. But developer tooling discovery in 2026 requires live
+                data, AI-native interfaces, and health-aware recommendations. Developers are not
+                browsing directories anymore &mdash; they are asking their AI assistant to find
+                the right tool while they are building.
+            </p>
+            <p>
+                If you are looking for a <strong>StackShare alternative</strong> that is built for
+                how developers actually work today, <a href="/explore">explore IndieStack</a>.
+                Install the MCP server. Let your AI agent do the searching.
+            </p>
+
+            <blockquote>
+                StackShare showed what developers said they used. IndieStack shows what
+                actually works.
+            </blockquote>
+        </div>
+
+        <footer style="margin-top:48px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <a href="https://twitter.com/intent/tweet?text={tweet_text}"
+               target="_blank" rel="noopener"
+               class="btn btn-primary" style="padding:12px 24px;border-radius:999px;text-decoration:none;">
+                Share on X
+            </a>
+            <a href="/blog" style="color:var(--ink-muted);font-size:14px;">&#8592; Back to blog</a>
+        </footer>
+    </article>
+    """
+
+    return HTMLResponse(page_shell(
+        post['title'], body,
+        user=request.state.user,
+        description="Looking for a StackShare alternative? IndieStack offers agent-verified data, a free MCP server, and daily health monitoring for 3,099 developer tools.",
+        canonical="/blog/indiestack-vs-stackshare",
         extra_head=extra_head,
     ))
 
