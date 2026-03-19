@@ -1587,3 +1587,85 @@ def ph_launch_announcement_html(ph_url: str, tool_count: int = 828) -> str:
         <strong style="color:#1A2D4A;">Patrick &amp; Ed</strong>
     </p>
     """
+
+
+def reengagement_march_html(*, user_name: str, has_tools: bool) -> str:
+    """March 2026 re-engagement email — highlight growth from 300 to 3,099 tools + free Pro trial."""
+    user_name = escape(user_name)
+
+    maker_section = ""
+    if has_tools:
+        maker_section = f"""
+    <div style="margin:24px 0;padding:20px;background:#F0F7FA;border-left:4px solid #00D4F5;border-radius:8px;">
+        <p style="font-size:14px;font-weight:700;color:#1A2D4A;margin:0 0 4px;">For makers</p>
+        <p style="font-size:13px;color:#1A2D4A;line-height:1.6;margin:0;">
+            AI agents are now recommending tools from IndieStack. Your Pro trial includes
+            <strong>AI citation tracking</strong> &mdash; see which agents recommend your tools, how often, and to whom.
+        </p>
+    </div>"""
+
+    return f"""
+    <div style="text-align:center;margin-bottom:24px;">
+        <div style="display:inline-block;background:#1A2D4A;color:#00D4F5;font-size:11px;font-weight:700;
+                    text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:999px;">
+            What's New
+        </div>
+    </div>
+    <h2 style="font-family:serif;font-size:22px;color:#1A2D4A;margin-bottom:4px;text-align:center;">
+        IndieStack just hit 3,099 tools
+    </h2>
+    <p style="color:#6B6560;font-size:15px;text-align:center;margin-bottom:24px;">
+        Hi {user_name} &mdash; a lot has changed since you signed up. Here's what's new.
+    </p>
+
+    <div style="margin:24px 0;">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+            <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+                <div style="font-size:28px;font-weight:bold;color:#00D4F5;">3,099</div>
+                <div style="font-size:12px;color:#6B6560;margin-top:4px;">Tools Indexed</div>
+            </div>
+            <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+                <div style="font-size:28px;font-weight:bold;color:#00D4F5;">25</div>
+                <div style="font-size:12px;color:#6B6560;margin-top:4px;">Categories</div>
+            </div>
+            <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+                <div style="font-size:28px;font-weight:bold;color:#1A2D4A;">5,031</div>
+                <div style="font-size:12px;color:#6B6560;margin-top:4px;">Compatibility Pairs</div>
+            </div>
+            <div style="text-align:center;padding:16px 8px;background:#F0F7FA;border-radius:12px;">
+                <div style="font-size:28px;font-weight:bold;color:#1A2D4A;">30K+</div>
+                <div style="font-size:12px;color:#6B6560;margin-top:4px;">Tool Clicks</div>
+            </div>
+        </div>
+    </div>
+
+    <h3 style="font-size:16px;color:#1A2D4A;margin:28px 0 12px;">New since you joined</h3>
+    <ul style="color:#6B6560;font-size:14px;line-height:2;padding-left:20px;margin:0;">
+        <li><strong style="color:#1A2D4A;">MCP Server</strong> &mdash; Claude, Cursor, and Windsurf can search IndieStack directly while you code</li>
+        <li><strong style="color:#1A2D4A;">Stack Auditor</strong> &mdash; paste your package.json to find indie replacements for your dependencies</li>
+        <li><strong style="color:#1A2D4A;">Compatibility Pairs</strong> &mdash; see which tools work well together, verified by AI agents</li>
+        <li><strong style="color:#1A2D4A;">Health Monitoring</strong> &mdash; every tool shows maintenance status (Active, Stale, Archived)</li>
+        <li><strong style="color:#1A2D4A;">AI Citation Tracking</strong> &mdash; see which AI agents recommend which tools</li>
+        <li><strong style="color:#1A2D4A;">Market Gap Detection</strong> &mdash; discover what developers are searching for but can't find</li>
+    </ul>
+
+    {maker_section}
+
+    <div style="margin:28px 0;padding:24px;background:#1A2D4A;border-radius:12px;text-align:center;">
+        <p style="color:#00D4F5;font-size:16px;font-weight:700;margin:0 0 4px;">
+            You have a 7-day free Pro trial waiting
+        </p>
+        <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 16px;">
+            Full access to citation tracking, market gaps, data export, and 1,000 API queries/month.
+        </p>
+        <a href="{BASE_URL}/dashboard" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            Explore Your Dashboard
+        </a>
+    </div>
+
+    <p style="color:#6B6560;font-size:14px;line-height:1.6;text-align:center;margin-top:24px;">
+        Thanks for being part of this,<br>
+        <strong style="color:#1A2D4A;">Patrick &amp; Ed</strong>
+    </p>
+    """

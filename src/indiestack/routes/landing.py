@@ -254,6 +254,30 @@ async def landing(request: Request):
     # ── Video Section (disabled — waiting for better video) ──────────
     video_section = ""
 
+    # ── Social Proof Stats Bar ────────────────────────────────────────
+    stats_bar = f"""
+    <section style="padding:32px 24px 0;background:var(--cream);">
+        <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin:0 auto 32px;max-width:600px;">
+            <div style="text-align:center;min-width:100px;">
+                <div style="font-size:28px;font-weight:700;color:var(--accent);">{tool_count}+</div>
+                <div style="font-size:12px;color:var(--ink-muted);">Developer Tools</div>
+            </div>
+            <div style="text-align:center;min-width:100px;">
+                <div style="font-size:28px;font-weight:700;color:var(--accent);">30K+</div>
+                <div style="font-size:12px;color:var(--ink-muted);">Outbound Clicks</div>
+            </div>
+            <div style="text-align:center;min-width:100px;">
+                <div style="font-size:28px;font-weight:700;color:var(--accent);">5K+</div>
+                <div style="font-size:12px;color:var(--ink-muted);">Compatibility Pairs</div>
+            </div>
+            <div style="text-align:center;min-width:100px;">
+                <div style="font-size:28px;font-weight:700;color:var(--accent);">25</div>
+                <div style="font-size:12px;color:var(--ink-muted);">Categories</div>
+            </div>
+        </div>
+    </section>
+    """
+
     # ── MCP Walkthrough ──────────────────────────────────────────────
     mcp_walkthrough = f"""
     <section id="mcp-install" class="noise-overlay" style="padding:64px 24px;background:var(--cream-dark);">
@@ -564,7 +588,7 @@ async def landing(request: Request):
     def _reveal(html):
         return f'<div class="reveal">{html}</div>'
 
-    body = hero + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(maker_cta)
+    body = hero + stats_bar + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(maker_cta)
 
     import json as _json
     website_ld = _json.dumps({
