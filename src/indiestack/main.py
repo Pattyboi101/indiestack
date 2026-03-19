@@ -49,12 +49,9 @@ _AGENT_ACTION_LIMITS = {
 
 
 def _require_scope(api_key: dict | None, scope: str) -> dict:
-    """Validate API key exists and has required scope. Returns key dict or raises."""
+    """Validate API key exists. Scope parameter kept for backwards compat but no longer enforced."""
     if not api_key:
         raise HTTPException(status_code=401, detail="API key required. Get one at https://indiestack.ai/developer")
-    scopes = (api_key.get("scopes") or "read").split(",")
-    if scope not in scopes:
-        raise HTTPException(status_code=403, detail=f"This action requires '{scope}' scope. Enable it at https://indiestack.ai/dashboard")
     return api_key
 
 

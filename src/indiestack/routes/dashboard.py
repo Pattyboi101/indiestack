@@ -2510,16 +2510,6 @@ async def developer_page(request: Request):
                         style="font-size:11px;padding:3px 10px;"
                         onclick="return confirm('Revoke this key? This cannot be undone.')">Revoke</button>
             </form>'''
-        scope_label = k.get('scopes', 'read')
-        scope_badge = '<span style="font-size:11px;padding:2px 8px;background:var(--accent);color:#000;border-radius:999px;">read + write</span>' if scope_label == 'read,write' else '<span style="font-size:11px;padding:2px 8px;background:var(--surface-raised);border-radius:999px;">read only</span>'
-        scope_toggle = ""
-        if k['is_active']:
-            scope_toggle = f'''
-            <form method="POST" action="/dashboard/api-keys/{k['id']}/scope" style="display:inline;margin-left:6px;">
-                <button type="submit" class="btn btn-secondary" style="font-size:10px;padding:2px 6px;">
-                    {'Disable write' if scope_label == 'read,write' else 'Enable write'}
-                </button>
-            </form>'''
         key_rows += f'''
         <tr style="border-bottom:1px solid var(--border);">
             <td style="padding:10px;font-family:var(--font-mono);font-size:13px;">{escape(k['key_preview'])}</td>
@@ -2527,11 +2517,10 @@ async def developer_page(request: Request):
             <td style="padding:10px;">{status}</td>
             <td style="padding:10px;text-align:right;font-weight:600;">{count}</td>
             <td style="padding:10px;font-size:12px;color:var(--ink-muted);">{last_used}</td>
-            <td style="padding:10px;">{scope_badge}{scope_toggle}</td>
             <td style="padding:10px;">{revoke_btn}</td>
         </tr>'''
 
-    empty_row = '<tr><td colspan="7" style="padding:24px;text-align:center;color:var(--ink-muted);">No API keys yet. Create one to get started.</td></tr>'
+    empty_row = '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--ink-muted);">No API keys yet. Create one to get started.</td></tr>'
 
     # Agent Activity
     action_counts = await get_agent_action_counts(db, user['id'], days=30)
@@ -2603,7 +2592,6 @@ async def developer_page(request: Request):
                     <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Status</th>
                     <th style="padding:10px;text-align:right;font-size:13px;color:var(--ink-muted);">Requests (30d)</th>
                     <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Last Used</th>
-                    <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Scope</th>
                     <th style="padding:10px;font-size:13px;"></th>
                 </tr></thead>
                 <tbody>{key_rows if key_rows else empty_row}</tbody>
