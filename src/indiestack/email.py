@@ -1664,6 +1664,17 @@ def reengagement_march_html(*, user_name: str, has_tools: bool) -> str:
         </a>
     </div>
 
+    <div style="margin:24px 0;padding:20px;border:1px solid #E2B764;border-radius:12px;text-align:center;background:linear-gradient(135deg,#FEF9EF,#FFF7E6);">
+        <p style="font-size:14px;font-weight:700;color:#1A2D4A;margin:0 0 4px;">Founding Member &mdash; $99 lifetime deal</p>
+        <p style="font-size:13px;color:#6B6560;margin:0 0 12px;line-height:1.5;">
+            Pay once, keep Pro forever. Only 50 seats available &mdash; once they're gone, it's $19/month.
+        </p>
+        <a href="{BASE_URL}/pricing" style="display:inline-block;background:#E2B764;color:#1A2D4A;
+           padding:10px 24px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">
+            Claim Your Seat
+        </a>
+    </div>
+
     <p style="color:#6B6560;font-size:14px;line-height:1.6;text-align:center;margin-top:24px;">
         Thanks for being part of this,<br>
         <strong style="color:#1A2D4A;">Patrick &amp; Ed</strong>
