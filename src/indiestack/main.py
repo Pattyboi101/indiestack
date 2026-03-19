@@ -1074,7 +1074,7 @@ async def indexnow_key_file(key: str):
 @app.get("/sitemap.xml")
 async def sitemap(request: Request):
     if _sitemap_cache['xml'] and _time.time() < _sitemap_cache['expires']:
-        return Response(content=_sitemap_cache['xml'], media_type="application/xml")
+        return Response(content=_sitemap_cache['xml'], media_type="application/xml", headers={"Content-Type": "application/xml; charset=utf-8"})
     today = date.today().isoformat()
     urls = [
         (f"{BASE_URL}/", "daily", "1.0", today),
@@ -1191,7 +1191,7 @@ async def sitemap(request: Request):
 </urlset>"""
     _sitemap_cache['xml'] = xml
     _sitemap_cache['expires'] = _time.time() + 3600  # 1 hour
-    return Response(content=xml, media_type="application/xml")
+    return Response(content=xml, media_type="application/xml", headers={"Content-Type": "application/xml; charset=utf-8"})
 
 
 FAVICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
