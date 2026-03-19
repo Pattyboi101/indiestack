@@ -127,7 +127,10 @@ async def dashboard_overview(request: Request):
                     <p style="color:#fff;font-size:15px;font-weight:600;margin:0;">AI agents recommended your tools {_banner_citations} times this week</p>
                     <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:4px 0 0;">See which agents, daily trends, and competitor insights</p>
                 </div>
-                <a href="/pricing" style="display:inline-block;padding:10px 20px;background:var(--accent);color:#0F1D30;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">Upgrade to Pro</a>
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                    <a href="/pricing" style="display:inline-block;padding:10px 20px;background:var(--accent);color:#0F1D30;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">Upgrade to Pro</a>
+                    <span style="color:rgba(255,255,255,0.5);font-size:12px;">or <a href="/pricing" style="color:#E2B764;font-weight:600;text-decoration:none;">$99 lifetime</a></span>
+                </div>
             </div>'''
 
     # Check if user has any claimed tools

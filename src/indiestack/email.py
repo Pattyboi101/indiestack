@@ -638,6 +638,7 @@ def citation_alert_html(*, maker_name: str, tool_name: str, tool_slug: str,
            padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
             Upgrade to Pro &mdash; $19/mo
         </a>
+        <p style="color:#9C958E;font-size:12px;margin-top:8px;">or <a href="{BASE_URL}/pricing" style="color:#E2B764;font-weight:600;">$99 one-time</a> as a Founding Member</p>
     </div>"""
     else:
         # Pro but no sample context
