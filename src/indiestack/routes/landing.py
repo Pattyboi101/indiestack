@@ -327,7 +327,7 @@ async def landing(request: Request):
                     {{"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]}}
                 </div>
                 <p style="text-align:center;font-size:12px;color:var(--ink-light);margin-top:12px;">
-                    Want more than 3 queries/day? <a href="/developer" style="color:var(--accent);text-decoration:none;">Get a free API key</a> for 50/day &rarr;
+                    Want more queries? <a href="/developer" style="color:var(--accent);text-decoration:none;">Get a free API key</a> for 10/month + a 7-day Pro trial &rarr;
                 </p>
                 <div style="max-width:480px;margin:20px auto 0;padding:16px 20px;background:rgba(0,212,245,0.06);
                             border:1px solid rgba(0,212,245,0.15);border-radius:var(--radius-sm);text-align:left;">
@@ -347,7 +347,7 @@ async def landing(request: Request):
                 </p>
                 <p style="font-size:13px;color:var(--ink-muted);line-height:1.6;">
                     No API key needed to start &mdash; you get 3 free queries a day instantly.
-                    <a href="/developer" style="color:var(--accent);text-decoration:none;font-weight:600;">Grab a free API key</a> for 50/day, or <a href="/pricing" style="color:var(--accent);text-decoration:none;font-weight:600;">go Pro</a> for 1,000/day with richer AI recommendations.
+                    <a href="/developer" style="color:var(--accent);text-decoration:none;font-weight:600;">Grab a free API key</a> for 10/month, or <a href="/pricing" style="color:var(--accent);text-decoration:none;font-weight:600;">go Pro</a> for 1,000/month with AI citation tracking and market gap data.
                 </p>
             </div>
 

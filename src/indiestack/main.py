@@ -121,33 +121,33 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
     _rate_limits[key].append(now)
     return False
 
-# ── API Key Daily Rate Limiting ───────────────────────────────────────────
-_api_user_daily: dict[int, dict] = {}  # {user_id: {"date": "YYYY-MM-DD", "count": N}}
+# ── API Rate Limiting ─────────────────────────────────────────────────────
+_api_user_monthly: dict[int, dict] = {}  # {user_id: {"month": "YYYY-MM", "count": N}}
 _api_ip_daily: dict[str, dict] = {}  # {ip: {"date": "YYYY-MM-DD", "count": N}}
 
-API_DAILY_LIMITS = {
-    "free": 50,
+API_MONTHLY_LIMITS = {
+    "free": 10,
     "pro": 1000,
 }
 API_KEYLESS_DAILY_LIMIT = 3
 
 
 def _check_api_key_rate_limit(user_id: int, tier: str) -> bool:
-    """Returns True if user has exceeded their daily API limit.
+    """Returns True if user has exceeded their monthly API limit.
 
     Rate-limits by user_id (not key_id) so revoking and regenerating
-    keys cannot bypass the daily cap.
+    keys cannot bypass the cap. Free tier: 10/month, Pro: 1,000/month.
     """
     from datetime import date
-    today = date.today().isoformat()
-    entry = _api_user_daily.get(user_id)
-    if not entry or entry["date"] != today:
-        # Clean up stale entries from previous days (prevent memory leak)
-        if len(_api_user_daily) > 100:
-            _api_user_daily.clear()
-        _api_user_daily[user_id] = {"date": today, "count": 1}
+    this_month = date.today().strftime("%Y-%m")
+    entry = _api_user_monthly.get(user_id)
+    if not entry or entry["month"] != this_month:
+        # Clean up stale entries from previous months (prevent memory leak)
+        if len(_api_user_monthly) > 200:
+            _api_user_monthly.clear()
+        _api_user_monthly[user_id] = {"month": this_month, "count": 1}
         return False
-    limit = API_DAILY_LIMITS.get(tier, 50)
+    limit = API_MONTHLY_LIMITS.get(tier, 10)
     if entry["count"] >= limit:
         return True
     entry["count"] += 1
@@ -155,7 +155,7 @@ def _check_api_key_rate_limit(user_id: int, tier: str) -> bool:
 
 
 def _check_api_ip_rate_limit(ip: str) -> bool:
-    """Returns True if keyless IP has exceeded its daily API limit (5/day)."""
+    """Returns True if keyless IP has exceeded its daily API limit (3/day)."""
     from datetime import date
     today = date.today().isoformat()
     entry = _api_ip_daily.get(ip)
@@ -773,7 +773,8 @@ async def db_middleware(request: Request, call_next):
                     # Check daily rate limit by user (not key — prevents revoke+regenerate bypass)
                     if _check_api_key_rate_limit(api_key_row["user_id"], api_key_row.get("tier", "free")):
                         return JSONResponse(
-                            {"error": "Daily API limit exceeded. Upgrade to Pro for higher limits.",
+                            {"error": "Monthly API limit reached (10/month on free tier). "
+                             "Upgrade to Pro for 1,000/month + citation tracking, market gaps, and data export.",
                              "upgrade_url": "https://indiestack.ai/pricing"},
                             status_code=429,
                         )
@@ -789,7 +790,7 @@ async def db_middleware(request: Request, call_next):
             if not request.state.api_key and not path.startswith(_API_RATE_EXEMPT) and _check_api_ip_rate_limit(client_ip):
                 return JSONResponse(
                     {"error": "You've used your 3 free daily queries. "
-                     "Create a free API key in 10 seconds for 50 queries/day — just sign in with GitHub.",
+                     "Create a free API key in 10 seconds for 10 queries/month — just sign in with GitHub.",
                      "get_key_url": "https://indiestack.ai/developer",
                      "upgrade_url": "https://indiestack.ai/pricing"},
                     status_code=429,

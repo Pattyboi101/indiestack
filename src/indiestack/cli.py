@@ -403,8 +403,8 @@ HELP = f"""\
 
 {_bold('API Keys:')}
   No key needed to start (3 queries/day).
-  Get a free key for 50/day: {_cyan('https://indiestack.ai/developer')}
-  Upgrade to Pro for 1,000/day: {_cyan('https://indiestack.ai/pricing')}
+  Get a free key for 10/month: {_cyan('https://indiestack.ai/developer')}
+  Upgrade to Pro for 1,000/month: {_cyan('https://indiestack.ai/pricing')}
 
 {_bold('Examples:')}
   indiestack search "privacy analytics"

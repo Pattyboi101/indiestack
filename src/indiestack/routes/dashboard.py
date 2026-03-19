@@ -2363,20 +2363,20 @@ async def developer_page(request: Request):
             <table style="width:100%;border-collapse:collapse;font-size:14px;">
                 <thead><tr style="border-bottom:2px solid var(--border);">
                     <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Tier</th>
-                    <th style="padding:10px;text-align:right;font-size:13px;color:var(--ink-muted);">Daily Limit</th>
+                    <th style="padding:10px;text-align:right;font-size:13px;color:var(--ink-muted);">Limit</th>
                 </tr></thead>
                 <tbody>
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:10px;color:var(--ink);">No API key</td>
-                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">5 requests</td>
+                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">3 / day</td>
                     </tr>
                     <tr style="border-bottom:1px solid var(--border);">
                         <td style="padding:10px;color:var(--ink);">Free API key</td>
-                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">50 requests</td>
+                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">10 / month</td>
                     </tr>
                     <tr>
                         <td style="padding:10px;color:var(--ink);">Pro <span style="background:var(--accent);color:white;font-size:10px;font-weight:700;padding:2px 6px;border-radius:999px;margin-left:4px;">PRO</span></td>
-                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--accent);">1,000 requests</td>
+                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--accent);">1,000 / month</td>
                     </tr>
                 </tbody>
             </table>
