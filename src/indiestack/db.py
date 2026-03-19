@@ -3205,7 +3205,7 @@ async def get_recent_tools(db: aiosqlite.Connection, limit: int = 6, days: int =
 async def create_user(db: aiosqlite.Connection, *, email: str, password_hash: str,
                       name: str, role: str = 'buyer', maker_id: Optional[int] = None) -> int:
     cursor = await db.execute(
-        "INSERT INTO users (email, password_hash, name, role, maker_id) VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO users (email, password_hash, name, role, maker_id, trial_ends_at) VALUES (?, ?, ?, ?, ?, datetime('now', '+7 days'))",
         (email.lower().strip(), password_hash, name.strip(), role, maker_id),
     )
     await db.commit()

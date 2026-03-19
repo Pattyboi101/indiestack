@@ -226,7 +226,7 @@ async def verify_magic_link(request: Request):
         # Create new user — no password needed
         from indiestack.db import ensure_referral_code
         await db.execute(
-            "INSERT INTO users (email, password_hash, name, email_verified) VALUES (?, ?, ?, 1)",
+            "INSERT INTO users (email, password_hash, name, email_verified, trial_ends_at) VALUES (?, ?, ?, 1, datetime('now', '+7 days'))",
             (email, 'MAGIC_LINK_NO_PASSWORD', email.split('@')[0])
         )
         await db.commit()
