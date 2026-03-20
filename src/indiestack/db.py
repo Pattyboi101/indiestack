@@ -2020,24 +2020,44 @@ async def search_tools(
             extra_where += f" AND ({fw_conditions})"
             extra_params.extend([f"%{fw}%" for fw in fw_list])
 
-    # Determine sort order
+    # Engagement-weighted scoring expression for ORDER BY.
+    # Uses columns available on the tools table: upvote_count, mcp_view_count,
+    # github_stars, health_status, created_at.  Name-match boost requires
+    # two extra LIKE params (exact match + prefix match) injected into the
+    # parameter tuple — see `_engagement_params` below.
+    _engagement_expr = (
+        "(CASE WHEN LOWER(t.name) = LOWER(?) THEN 100 ELSE 0 END)"
+        " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 50 ELSE 0 END)"
+        " + (t.upvote_count * 2)"
+        " + (COALESCE(t.mcp_view_count, 0) * 3)"
+        " + (COALESCE(t.github_stars, 0) / 100.0)"
+        " + (CASE WHEN t.health_status = 'alive' THEN 5 ELSE 0 END)"
+        " + (CASE WHEN t.created_at > datetime('now', '-14 days') THEN"
+        "     5.0 * (1.0 - (julianday('now') - julianday(t.created_at)) / 14.0)"
+        "    ELSE 0 END)"
+    )
+    # The two params consumed by _engagement_expr (exact name, prefix)
+    _engagement_params: list = [query.strip(), query.strip()]
+
+    # Determine sort order — returns (sql_fragment, extra_params)
     def _fts_order():
         if sort == "stars":
-            return "COALESCE(t.github_stars, 0) DESC, t.quality_score DESC"
+            return ("COALESCE(t.github_stars, 0) DESC, t.quality_score DESC", [])
         elif sort == "upvotes":
-            return "t.upvote_count DESC, t.quality_score DESC"
+            return ("t.upvote_count DESC, t.quality_score DESC", [])
         elif sort == "newest":
-            return "t.created_at DESC"
-        return "rank - (t.quality_score / 50.0)"
+            return ("t.created_at DESC", [])
+        # Blend FTS rank with engagement scoring
+        return (f"rank - ({_engagement_expr} / 50.0)", list(_engagement_params))
 
     def _browse_order():
         if sort == "stars":
-            return "COALESCE(t.github_stars, 0) DESC, t.quality_score DESC"
+            return ("COALESCE(t.github_stars, 0) DESC, t.quality_score DESC", [])
         elif sort == "upvotes":
-            return "t.upvote_count DESC, t.quality_score DESC"
+            return ("t.upvote_count DESC, t.quality_score DESC", [])
         elif sort == "newest":
-            return "t.created_at DESC"
-        return "t.quality_score DESC"
+            return ("t.created_at DESC", [])
+        return (f"{_engagement_expr} DESC", list(_engagement_params))
 
     safe_q = sanitize_fts(query)
 
@@ -2054,6 +2074,7 @@ async def search_tools(
 
     if safe_q:
         # Primary FTS query
+        fts_sql, fts_ord_params = _fts_order()
         cursor = await db.execute(
             f"""SELECT t.*, c.name as category_name, c.slug as category_slug,
                       bm25(tools_fts) as rank
@@ -2061,34 +2082,36 @@ async def search_tools(
                JOIN tools t ON t.id = fts.rowid
                JOIN categories c ON t.category_id = c.id
                WHERE tools_fts MATCH ? AND t.status = 'approved'{extra_where}
-               ORDER BY {_fts_order()} LIMIT ?""",
-            (safe_q, *extra_params, limit),
+               ORDER BY {fts_sql} LIMIT ?""",
+            (safe_q, *extra_params, *fts_ord_params, limit),
         )
         rows = await cursor.fetchall()
 
         # Fallback: search 'replaces' field for big-name tool queries
         if not rows:
             like_q = f"%{query.strip()}%"
+            brw_sql, brw_ord_params = _browse_order()
             cursor = await db.execute(
                 f"""SELECT t.*, c.name as category_name, c.slug as category_slug
                    FROM tools t
                    JOIN categories c ON t.category_id = c.id
                    WHERE LOWER(t.replaces) LIKE LOWER(?) AND t.status = 'approved'{extra_where}
-                   ORDER BY {_browse_order()}
+                   ORDER BY {brw_sql}
                    LIMIT ?""",
-                (like_q, *extra_params, limit),
+                (like_q, *extra_params, *brw_ord_params, limit),
             )
             rows = await cursor.fetchall()
     else:
         # Filter-only browse (no FTS)
+        brw_sql, brw_ord_params = _browse_order()
         cursor = await db.execute(
             f"""SELECT t.*, c.name as category_name, c.slug as category_slug
                FROM tools t
                JOIN categories c ON t.category_id = c.id
                WHERE t.status = 'approved'{extra_where}
-               ORDER BY {_browse_order()}
+               ORDER BY {brw_sql}
                LIMIT ?""",
-            (*extra_params, limit),
+            (*extra_params, *brw_ord_params, limit),
         )
         rows = await cursor.fetchall()
 
