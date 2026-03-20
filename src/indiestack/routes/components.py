@@ -213,8 +213,8 @@ def design_tokens() -> str:
         .btn-primary:hover { background: var(--accent); color: #000; filter: brightness(1.1); }
         .btn-secondary { background: var(--cream-dark); color: var(--ink); border: 1px solid var(--border); }
         .btn-secondary:hover { background: var(--border); }
-        [data-theme="dark"] .btn-secondary { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
-        [data-theme="dark"] .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); }
+        [data-theme="dark"] .btn-secondary { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #fff; }
+        [data-theme="dark"] .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); color: #fff; }
         .btn-slate { background: var(--slate); color: white; }
         .btn-slate:hover { background: var(--slate-dark); color: white; }
         .btn-lg { padding: 16px 32px; font-size: 16px; }
