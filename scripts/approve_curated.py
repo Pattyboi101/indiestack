@@ -12,6 +12,11 @@ CURATED_SOURCES = {
     "analytics": "https://raw.githubusercontent.com/newTendermint/awesome-analytics/master/README.md",
 }
 
+# Sitemap-based sources (match by slug from sitemap URLs)
+SITEMAP_SOURCES = {
+    "openalternative": "https://openalternative.co/sitemap/tools.xml",
+}
+
 db_path = "/data/indiestack.db" if os.path.exists("/data/indiestack.db") else "data/indiestack.db"
 conn = sqlite3.connect(db_path)
 
@@ -42,7 +47,28 @@ for name, url in CURATED_SOURCES.items():
     total_approved += approved
     print(f"  {name}: approved {approved} tools")
 
+# Sitemap-based approval (match by slug)
+for name, sitemap_url in SITEMAP_SOURCES.items():
+    print(f"\nProcessing {name} (sitemap)...")
+    body = urllib.request.urlopen(sitemap_url).read().decode()
+    # Extract slugs from sitemap URLs like <loc>https://openalternative.co/toolname</loc>
+    sitemap_slugs = set()
+    for m in re.finditer(r'<loc>https?://[^/]+/([^/<]+)</loc>', body):
+        sitemap_slugs.add(m.group(1).lower())
+
+    approved = 0
+    pending = conn.execute("SELECT id, slug FROM tools WHERE status='pending'").fetchall()
+    for row in pending:
+        if row[1].lower() in sitemap_slugs:
+            conn.execute("UPDATE tools SET status='approved' WHERE id=?", (row[0],))
+            approved += 1
+    conn.commit()
+    total_approved += approved
+    print(f"  {name}: approved {approved} tools")
+
 pending_after = conn.execute("SELECT COUNT(*) FROM tools WHERE status='pending'").fetchone()[0]
-print(f"\nTotal approved: {total_approved}")
+approved_total = conn.execute("SELECT COUNT(*) FROM tools WHERE status='approved'").fetchone()[0]
+print(f"\nTotal approved this run: {total_approved}")
+print(f"Total approved tools in DB: {approved_total}")
 print(f"Pending remaining: {pending_after}")
 conn.close()
