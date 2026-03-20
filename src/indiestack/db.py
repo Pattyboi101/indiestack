@@ -1373,6 +1373,9 @@ async def init_db():
         # Performance indexes on tool_pairs
         await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_pairs_a ON tool_pairs(tool_a_slug)")
         await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_pairs_b ON tool_pairs(tool_b_slug)")
+        # Composite indexes for OR + success_count queries (find_compatible, get_verified_pairs)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_pairs_a_success ON tool_pairs(tool_a_slug, success_count DESC)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_pairs_b_success ON tool_pairs(tool_b_slug, success_count DESC)")
         await db.commit()
 
         # Migration: add scopes column to api_keys
@@ -2025,9 +2028,11 @@ async def search_tools(
     # github_stars, health_status, created_at.  Name-match boost requires
     # two extra LIKE params (exact match + prefix match) injected into the
     # parameter tuple — see `_engagement_params` below.
+    # Category-name boost: tools whose category matches the query rank higher.
     _engagement_expr = (
         "(CASE WHEN LOWER(t.name) = LOWER(?) THEN 100 ELSE 0 END)"
         " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 50 ELSE 0 END)"
+        " + (CASE WHEN LOWER(c.name) LIKE ('%' || LOWER(?) || '%') THEN 20 ELSE 0 END)"
         " + (t.upvote_count * 2)"
         " + (COALESCE(t.mcp_view_count, 0) * 3)"
         " + (COALESCE(t.github_stars, 0) / 100.0)"
@@ -2036,8 +2041,8 @@ async def search_tools(
         "     5.0 * (1.0 - (julianday('now') - julianday(t.created_at)) / 14.0)"
         "    ELSE 0 END)"
     )
-    # The two params consumed by _engagement_expr (exact name, prefix)
-    _engagement_params: list = [query.strip(), query.strip()]
+    # The three params consumed by _engagement_expr (exact name, prefix, category)
+    _engagement_params: list = [query.strip(), query.strip(), query.strip()]
 
     # Determine sort order — returns (sql_fragment, extra_params)
     def _fts_order():
@@ -2087,7 +2092,50 @@ async def search_tools(
         )
         rows = await cursor.fetchall()
 
-        # Fallback: search 'replaces' field for big-name tool queries
+        # Fallback 1: OR-based FTS for multi-word queries that returned 0 results
+        # "email sending transactional" → "email" OR "sending" OR "transactional"
+        words = query.strip().split()
+        if not rows and len(words) > 1:
+            clean_words = [re.sub(r'[^\w]', '', w)[:40] for w in words[:10]]
+            clean_words = [w for w in clean_words if w]
+            or_q = ' OR '.join(f'"{w}"*' for w in clean_words)
+            if or_q:
+                fts_sql2, fts_ord_params2 = _fts_order()
+                cursor = await db.execute(
+                    f"""SELECT t.*, c.name as category_name, c.slug as category_slug,
+                              bm25(tools_fts) as rank
+                           FROM tools_fts fts
+                           JOIN tools t ON t.id = fts.rowid
+                           JOIN categories c ON t.category_id = c.id
+                           WHERE tools_fts MATCH ? AND t.status = 'approved'{extra_where}
+                           ORDER BY {fts_sql2} LIMIT ?""",
+                    (or_q, *extra_params, *fts_ord_params2, limit),
+                )
+                rows = await cursor.fetchall()
+
+        # Fallback 2: LIKE-based search on individual words
+        if not rows and words:
+            like_conditions = " OR ".join(
+                "(LOWER(t.name) LIKE LOWER(?) OR LOWER(t.tagline) LIKE LOWER(?) OR LOWER(t.description) LIKE LOWER(?))"
+                for _ in words[:5]
+            )
+            like_params: list = []
+            for w in words[:5]:
+                pat = f"%{w}%"
+                like_params.extend([pat, pat, pat])
+            brw_sql, brw_ord_params = _browse_order()
+            cursor = await db.execute(
+                f"""SELECT t.*, c.name as category_name, c.slug as category_slug
+                   FROM tools t
+                   JOIN categories c ON t.category_id = c.id
+                   WHERE ({like_conditions}) AND t.status = 'approved'{extra_where}
+                   ORDER BY {brw_sql}
+                   LIMIT ?""",
+                (*like_params, *extra_params, *brw_ord_params, limit),
+            )
+            rows = await cursor.fetchall()
+
+        # Fallback 3: search 'replaces' field for big-name tool queries
         if not rows:
             like_q = f"%{query.strip()}%"
             brw_sql, brw_ord_params = _browse_order()
@@ -3651,7 +3699,7 @@ async def update_tool(db: aiosqlite.Connection, tool_id: int, **fields):
 
 # ── Tool Pairs (Agentic Package Manager) ─────────────────────────────────
 
-async def get_verified_pairs(db: aiosqlite.Connection, slug: str) -> list:
+async def get_verified_pairs(db: aiosqlite.Connection, slug: str, limit: int = 50) -> list:
     """Get tools verified to work well with this tool."""
     cursor = await db.execute("""
         SELECT CASE WHEN tp.tool_a_slug = ? THEN tp.tool_b_slug ELSE tp.tool_a_slug END as pair_slug,
@@ -3661,7 +3709,8 @@ async def get_verified_pairs(db: aiosqlite.Connection, slug: str) -> list:
         LEFT JOIN tools t ON t.slug = CASE WHEN tp.tool_a_slug = ? THEN tp.tool_b_slug ELSE tp.tool_a_slug END
         WHERE (tp.tool_a_slug = ? OR tp.tool_b_slug = ?)
         ORDER BY tp.success_count DESC
-    """, (slug, slug, slug, slug))
+        LIMIT ?
+    """, (slug, slug, slug, slug, limit))
     return [dict(r) for r in await cursor.fetchall()]
 
 
@@ -3706,7 +3755,7 @@ async def record_tool_conflict(db: aiosqlite.Connection, slug_a: str, slug_b: st
     await db.commit()
 
 
-async def get_tool_conflicts(db: aiosqlite.Connection, slug: str) -> list:
+async def get_tool_conflicts(db: aiosqlite.Connection, slug: str, limit: int = 20) -> list:
     """Get known conflicts for a tool."""
     if not slug:
         return []
@@ -3716,11 +3765,12 @@ async def get_tool_conflicts(db: aiosqlite.Connection, slug: str) -> list:
         FROM tool_conflicts
         WHERE tool_a_slug = ? OR tool_b_slug = ?
         ORDER BY report_count DESC
-    """, (slug, slug, slug))
+        LIMIT ?
+    """, (slug, slug, slug, limit))
     return [dict(r) for r in await cursor.fetchall()]
 
 
-async def get_compatible_tools_grouped(db: aiosqlite.Connection, slug: str, category_slug: str = "", min_success_count: int = 1) -> dict:
+async def get_compatible_tools_grouped(db: aiosqlite.Connection, slug: str, category_slug: str = "", min_success_count: int = 1, limit: int = 100) -> dict:
     """Get tools compatible with the given slug, grouped by category, with metadata."""
     cat_filter = ""
     cat_params = []
@@ -3742,7 +3792,8 @@ async def get_compatible_tools_grouped(db: aiosqlite.Connection, slug: str, cate
           AND t.status = 'approved'
           {cat_filter}
         ORDER BY tp.success_count DESC
-    """, (slug, slug, slug, slug, min_success_count, *cat_params))
+        LIMIT ?
+    """, (slug, slug, slug, slug, min_success_count, *cat_params, limit))
     rows = [dict(r) for r in await cursor.fetchall()]
 
     grouped = {}
@@ -3756,33 +3807,48 @@ async def get_compatible_tools_grouped(db: aiosqlite.Connection, slug: str, cate
 
 
 async def find_stack_triangles(db: aiosqlite.Connection, slug: str, min_success: int = 1) -> list:
-    """Find triangles in the compatibility graph — 3 tools all mutually compatible."""
+    """Find triangles in the compatibility graph — 3 tools all mutually compatible.
+
+    Limits to top 15 partners and uses a batch query to check mutual pairs
+    instead of O(n^2) individual queries.
+    """
     cursor = await db.execute("""
         SELECT CASE WHEN tool_a_slug = ? THEN tool_b_slug ELSE tool_a_slug END as partner
         FROM tool_pairs
         WHERE (tool_a_slug = ? OR tool_b_slug = ?) AND success_count >= ?
-        ORDER BY success_count DESC LIMIT 30
+        ORDER BY success_count DESC LIMIT 15
     """, (slug, slug, slug, min_success))
     partners = [r['partner'] for r in await cursor.fetchall()]
 
     if len(partners) < 2:
         return []
 
+    # Batch-fetch all mutual pairs among the partners in one query
+    placeholders = ",".join("?" for _ in partners)
+    mutual_cursor = await db.execute(f"""
+        SELECT tool_a_slug, tool_b_slug, success_count
+        FROM tool_pairs
+        WHERE tool_a_slug IN ({placeholders})
+          AND tool_b_slug IN ({placeholders})
+          AND success_count >= ?
+    """, (*partners, *partners, min_success))
+    mutual_set = {}
+    for r in await mutual_cursor.fetchall():
+        mutual_set[(r['tool_a_slug'], r['tool_b_slug'])] = r['success_count']
+
     triangles = []
     for i, p1 in enumerate(partners):
         for p2 in partners[i + 1:]:
             a, b = sorted([p1, p2])
-            check = await db.execute(
-                "SELECT success_count FROM tool_pairs WHERE tool_a_slug = ? AND tool_b_slug = ? AND success_count >= ?",
-                (a, b, min_success),
-            )
-            row = await check.fetchone()
-            if row:
+            sc = mutual_set.get((a, b))
+            if sc is not None:
                 triangles.append({
                     "tools": sorted([slug, p1, p2]),
-                    "mutual_success": row['success_count'],
+                    "mutual_success": sc,
                 })
-    return triangles[:5]
+                if len(triangles) >= 5:
+                    return triangles
+    return triangles
 
 
 # ── Tool Views (Analytics) ───────────────────────────────────────────────
@@ -4770,7 +4836,7 @@ async def explore_tools(db: aiosqlite.Connection, *, category_id: int = None,
             t.slug IN (
                 SELECT CASE WHEN tp.tool_a_slug = ? THEN tp.tool_b_slug ELSE tp.tool_a_slug END
                 FROM tool_pairs tp
-                WHERE tp.tool_a_slug = ? OR tp.tool_b_slug = ?
+                WHERE (tp.tool_a_slug = ? OR tp.tool_b_slug = ?) AND tp.success_count >= 1
             )
         """)
         params.extend([compatible_with, compatible_with, compatible_with])

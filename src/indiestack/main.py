@@ -2358,9 +2358,14 @@ async def api_tools_compatible(request: Request, slug: str, category: str = "", 
     if not tool:
         return JSONResponse({"error": f"Tool '{slug}' not found"}, status_code=404)
 
-    data = await db.get_compatible_tools_grouped(d, slug, category_slug=category, min_success_count=min_success_count)
-    triangles = await db.find_stack_triangles(d, slug)
-    conflicts = await db.get_tool_conflicts(d, slug)
+    try:
+        data = await db.get_compatible_tools_grouped(d, slug, category_slug=category, min_success_count=min_success_count)
+        triangles = await db.find_stack_triangles(d, slug)
+        conflicts = await db.get_tool_conflicts(d, slug)
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error("compatible query failed for %s: %s", slug, e)
+        return JSONResponse({"error": "Compatibility query failed", "tool": slug}, status_code=500)
 
     # Detect same-category overlaps
     tool_cat_slug = tool.get('category_slug') or ''

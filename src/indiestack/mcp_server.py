@@ -1008,7 +1008,15 @@ async def find_compatible(
 
     await ctx.report_progress(progress=0, total=1)
     try:
-        data = await _api_get(client, f"/api/tools/{slug}/compatible", params)
+        data = await asyncio.wait_for(
+            _api_get(client, f"/api/tools/{slug}/compatible", params),
+            timeout=15.0,
+        )
+    except asyncio.TimeoutError:
+        raise ToolError(
+            f"Compatibility query for '{slug}' timed out. "
+            "Try narrowing with a category filter: find_compatible(slug, category='authentication')"
+        )
     except httpx.HTTPStatusError as e:
         if e.response.status_code == 404:
             raise ToolError(f"Tool '{slug}' not found. Check the slug from find_tools() results.")
