@@ -625,8 +625,43 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
 
+
+# ── HEAD request support ─────────────────────────────────────────────────
+# FastAPI routes only define GET, so HEAD requests return 405 with
+# content-type: application/json.  This pure-ASGI middleware rewrites
+# HEAD → GET and strips the response body, giving crawlers / monitoring
+# tools the correct status code and content-type headers.
+
+class _HeadMethodMiddleware:
+    """Convert HEAD requests to GET and suppress the response body."""
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http" or scope["method"] != "HEAD":
+            await self.app(scope, receive, send)
+            return
+
+        # Rewrite method so downstream routers match GET handlers
+        scope["method"] = "GET"
+        body_sent = False
+
+        async def send_no_body(message):
+            nonlocal body_sent
+            if message["type"] == "http.response.start":
+                await send(message)
+            elif message["type"] == "http.response.body" and not body_sent:
+                # Send a single empty body to complete the response
+                body_sent = True
+                await send({"type": "http.response.body", "body": b"", "more_body": False})
+            # Drop subsequent body chunks (streaming responses send multiple)
+
+        await self.app(scope, receive, send_no_body)
+
 # ── Compression ──────────────────────────────────────────────────────────
 app.add_middleware(GZipMiddleware, minimum_size=500)
+app.add_middleware(_HeadMethodMiddleware)
 
 
 # ── Security Headers ─────────────────────────────────────────────────────
