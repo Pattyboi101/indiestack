@@ -125,29 +125,7 @@ async def landing(request: Request):
         }
         _landing_cache['expires'] = _time.time() + 300  # 5 minutes
 
-    # ── Top Banner ──────────────────────────────────────────────────
-    launch_banner = (
-        '<div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));padding:12px 24px;text-align:center;">'
-        '    <a href="/explore" style="color:white;text-decoration:none;font-size:14px;font-weight:600;">'
-        '        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> ' + str(tool_count) + '+ developer tools &mdash; now with Agent Cards for every tool. '
-        '        <span style="text-decoration:underline;">Explore the catalog</span>'
-        '    </a>'
-        + (
-        '    <span class="pulse-banner-sep" style="color:rgba(255,255,255,0.4);margin:0 12px;font-size:14px;">&middot;</span>'
-        '    <a href="/pulse" class="pulse-banner-link" style="color:rgba(255,255,255,0.9);text-decoration:none;font-size:14px;font-weight:500;white-space:nowrap;">'
-        '        <span style="display:inline-block;width:8px;height:8px;background:#FF3B30;border-radius:50%;'
-        '                     animation:pulse-dot 1.5s ease-in-out infinite;margin-right:6px;vertical-align:middle;"></span>'
-        f'       {today_ai_count:,} AI lookups today &rarr;'
-        '    </a>'
-        if today_ai_count >= 100 else '')
-        + '</div>'
-    )
-    launch_banner += (
-        '<style>'
-        '@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}'
-        '@media(max-width:600px){.pulse-banner-sep,.pulse-banner-link{display:none!important}}'
-        '</style>'
-    )
+    # ── Top Banner (removed — duplicated hero content) ──────────────
 
     # ── Hero code block — dynamic Tool of the Week ─────────────────
     _CATEGORY_PROMPTS = {
@@ -189,13 +167,9 @@ async def landing(request: Request):
 
     # ── Hero ──────────────────────────────────────────────────────────
     hero = (
-        launch_banner
-        + '<section id="hero-section" class="noise-overlay" style="text-align:center;padding:64px 24px 48px;'
-        '                background:var(--cream);position:relative;overflow:hidden;">'
-        '    <canvas id="grid-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>'
-        '    <div class="glow-sphere" style="width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,245,0.12) 0%,transparent 70%);top:10%;left:20%;"></div>'
-        '    <div class="glow-sphere" style="width:400px;height:400px;background:radial-gradient(circle,rgba(226,183,100,0.08) 0%,transparent 70%);bottom:10%;right:15%;"></div>'
-        '    <div style="position:relative;z-index:1;">'
+        '<section id="hero-section" style="text-align:center;padding:64px 24px 48px;'
+        '                background:var(--cream);">'
+        '    <div>'
         '    <div class="status-tag" style="margin-bottom:24px;justify-content:center;">'
         '        <span class="dot"></span>DISCOVERY LAYER FOR AI CODING AGENTS'
         '    </div>'
@@ -207,8 +181,7 @@ async def landing(request: Request):
         f'        {tool_count}+ developer tools your AI can discover, compare, and recommend &mdash; so it stops reinventing the wheel.'
         '    </p>'
         # Hero visual — code conversation block
-        '    <div class="hero-glow">'
-        '    <div class="glass-strong" style="max-width:560px;margin:0 auto 24px;text-align:left;background:rgba(10,14,26,0.8);'
+        '    <div style="max-width:560px;margin:0 auto 24px;text-align:left;background:rgba(10,14,26,0.8);'
         '                padding:24px 24px;font-family:var(--font-mono);font-size:15px;line-height:1.9;'
         '                box-shadow:var(--shadow-floating);position:relative;z-index:1;overflow:hidden;">'
         '        <div style="position:absolute;top:16px;left:16px;display:flex;gap:8px;">'
@@ -227,13 +200,12 @@ async def landing(request: Request):
         '            <span style="color:rgba(255,255,255,0.85);">&#160;&#160;&#160;&#160;&#160;Use it instead?&rdquo;</span>'
         '        </div>'
         '    </div>'
-        '    </div>'
         f'    <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;margin-bottom:0;">'
         f'        &#9733; <a href="/tool/{_hero_tool_slug}" style="color:var(--accent);text-decoration:none;font-weight:600;">{_hero_tool_name}</a> is this week&rsquo;s Pick of the Week &mdash; featured right here.'
         f'    </p>'
         # Inline install command in hero
         '    <div style="max-width:500px;margin:0 auto 16px;">'
-        '        <div class="glass-strong" style="display:flex;align-items:center;gap:12px;padding:12px 16px;'
+        '        <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-sm);'
         '                    font-family:var(--font-mono);font-size:12px;color:var(--slate);overflow:hidden;">'
         '            <code style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'
         '                claude mcp add indiestack -- uvx --from indiestack indiestack-mcp'
@@ -253,62 +225,33 @@ async def landing(request: Request):
         '            Browse the Catalog'
         '        </a>'
         '    </div>'
-        # Stats pills
-        + f'    <div class="glass" style="display:inline-flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;'
-        f'                padding:12px 24px;font-size:14px;color:var(--ink-light);">'
-        f'        <span>{tool_count}+ developer tools</span>'
-        f'        <span style="color:var(--border);">|</span>'
-        f'        <span style="color:var(--accent);">{ai_recs:,}+ AI recommendations &amp; counting</span>'
-        f'    </div>'
-        '    </div>'  # close z-index:1 content wrapper
+        + f'    <p style="font-size:13px;color:var(--ink-light);margin-top:16px;">'
+        f'        {tool_count}+ tools &middot; {ai_recs:,}+ AI recommendations'
+        f'    </p>'
+        '    </div>'  # close content wrapper
         '</section>'
     )
 
     # ── Video Section (disabled — waiting for better video) ──────────
     video_section = ""
 
-    # ── Social Proof Stats Bar ────────────────────────────────────────
-    stats_bar = f"""
-    <section style="padding:32px 24px 0;background:var(--cream);">
-        <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin:0 auto 32px;max-width:600px;">
-            <div style="text-align:center;min-width:100px;">
-                <div style="font-size:28px;font-weight:700;color:var(--accent);">{tool_count}+</div>
-                <div style="font-size:12px;color:var(--ink-muted);">Developer Tools</div>
-            </div>
-            <div style="text-align:center;min-width:100px;">
-                <div style="font-size:28px;font-weight:700;color:var(--accent);">30K+</div>
-                <div style="font-size:12px;color:var(--ink-muted);">Outbound Clicks</div>
-            </div>
-            <div style="text-align:center;min-width:100px;">
-                <div style="font-size:28px;font-weight:700;color:var(--accent);">5K+</div>
-                <div style="font-size:12px;color:var(--ink-muted);">Compatibility Pairs</div>
-            </div>
-            <div style="text-align:center;min-width:100px;">
-                <div style="font-size:28px;font-weight:700;color:var(--accent);">25</div>
-                <div style="font-size:12px;color:var(--ink-muted);">Categories</div>
-            </div>
-        </div>
-    </section>
-    """
+    # ── Stats Bar (removed — duplicated hero) ──────────────────────
+    stats_bar = ""
 
-    # ── MCP Walkthrough ──────────────────────────────────────────────
+    # ── MCP Walkthrough (simplified) ────────────────────────────────
     mcp_walkthrough = f"""
-    <section id="mcp-install" class="noise-overlay" style="padding:64px 24px;background:var(--cream-dark);">
-        <div class="container" style="max-width:800px;position:relative;z-index:1;">
+    <section id="mcp-install" style="padding:64px 24px;background:var(--cream-dark);">
+        <div class="container" style="max-width:800px;">
             <h2 style="font-family:var(--font-display);font-size:clamp(24px,3.5vw,32px);text-align:center;margin-bottom:8px;color:var(--ink);">
                 How it works
             </h2>
-            <p style="text-align:center;color:var(--ink-muted);font-size:16px;margin-bottom:16px;max-width:520px;margin-left:auto;margin-right:auto;">
+            <p style="text-align:center;color:var(--ink-muted);font-size:16px;margin-bottom:48px;max-width:520px;margin-left:auto;margin-right:auto;">
                 Three steps. Your AI stops reinventing the wheel.
-            </p>
-            <p style="text-align:center;font-size:13px;color:var(--ink-light);margin-bottom:48px;max-width:480px;margin-left:auto;margin-right:auto;">
-                MCP (Model Context Protocol) lets AI assistants like Claude and Cursor use external tools.
-                IndieStack&rsquo;s MCP server gives your AI access to {tool_count}+ developer tools &mdash; so it finds existing solutions instead of building from scratch.
             </p>
 
             <!-- 3-step flow -->
-            <div class="card-stagger" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;margin-bottom:48px;">
-                <div class="glass" style="text-align:center;padding:32px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;margin-bottom:48px;">
+                <div style="text-align:center;padding:24px;">
                     <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;
                                 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;
                                 margin:0 auto 16px;">1</div>
@@ -317,7 +260,7 @@ async def landing(request: Request):
                         One command. Works with Claude&nbsp;Code, Cursor, and Windsurf.
                     </p>
                 </div>
-                <div class="glass" style="text-align:center;padding:32px;">
+                <div style="text-align:center;padding:24px;">
                     <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;
                                 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;
                                 margin:0 auto 16px;">2</div>
@@ -326,73 +269,29 @@ async def landing(request: Request):
                         When you ask your AI to build something, it checks IndieStack first.
                     </p>
                 </div>
-                <div class="glass" style="text-align:center;padding:32px;">
+                <div style="text-align:center;padding:24px;">
                     <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;
                                 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;
                                 margin:0 auto 16px;">3</div>
                     <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">It finds what exists</h3>
                     <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;">
-                        Instead of writing 50k tokens of code, your AI suggests a vetted tool &mdash; and learns your preferences over time.
+                        Instead of writing 50k tokens of code, your AI suggests a vetted tool.
                     </p>
                 </div>
             </div>
 
-            <!-- Install cards -->
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin-bottom:32px;">
-                <div class="glass" style="padding:24px;border-left:3px solid var(--slate);">
-                    <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:8px;">Claude Code</h3>
-                    <code style="font-family:var(--font-mono);font-size:12px;color:var(--ink-muted);word-break:break-all;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code>
-                </div>
-                <div class="glass" style="padding:24px;border-left:3px solid var(--slate);">
-                    <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:8px;">Cursor / Windsurf</h3>
-                    <code style="font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);word-break:break-all;">Add to .cursor/mcp.json or mcp_config.json</code>
-                </div>
-                <div class="glass" style="padding:24px;border-left:3px solid var(--slate);">
-                    <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin-bottom:8px;">VS Code Copilot</h3>
-                    <code style="font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);word-break:break-all;">Add to .vscode/mcp.json</code>
-                </div>
-            </div>
-
-            <!-- Quick install block -->
-            <div style="max-width:600px;margin:0 auto 32px;">
-                <p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;">Quick install:</p>
-                <div class="glass-strong" style="color:var(--slate);border-radius:var(--radius-sm);padding:16px 24px;
-                            font-family:var(--font-mono);font-size:13px;line-height:1.8;overflow-x:auto;">
+            <!-- Install code block -->
+            <div style="max-width:600px;margin:0 auto;">
+                <div style="color:var(--slate);border-radius:var(--radius-sm);padding:16px 24px;border:1px solid rgba(255,255,255,0.12);
+                            background:rgba(10,14,26,0.6);font-family:var(--font-mono);font-size:13px;line-height:1.8;overflow-x:auto;">
                     <span style="color:var(--ink-muted);"># Claude Code (one command)</span><br>
                     claude mcp add indiestack -- uvx --from indiestack indiestack-mcp<br><br>
                     <span style="color:var(--ink-muted);"># Cursor / Windsurf / VS Code — add to mcp config:</span><br>
                     {{"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]}}
                 </div>
-                <p style="text-align:center;font-size:12px;color:var(--ink-light);margin-top:12px;">
-                    Want more queries? <a href="/developer" style="color:var(--accent);text-decoration:none;">Get a free API key</a> for 10/month + a 7-day Pro trial &rarr;
+                <p style="text-align:center;font-size:13px;color:var(--ink-light);margin-top:12px;">
+                    Want more queries? <a href="/developer" style="color:var(--accent);text-decoration:none;">Get a free API key</a> for 10/month &rarr;
                 </p>
-                <div style="max-width:480px;margin:20px auto 0;padding:16px 20px;background:rgba(0,212,245,0.06);
-                            border:1px solid rgba(0,212,245,0.15);border-radius:var(--radius-sm);text-align:left;">
-                    <p style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;">Then try it:</p>
-                    <p style="font-size:13px;color:var(--ink-muted);line-height:1.6;margin:0;">
-                        Ask your AI: <span style="font-family:var(--font-mono);color:var(--accent);font-size:12px;">&ldquo;Find me a privacy-friendly analytics tool&rdquo;</span>
-                        &mdash; it&rsquo;ll search IndieStack and suggest one before writing a line of code.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Works out of the box -->
-            <div style="max-width:560px;margin:0 auto 32px;padding:20px 24px;background:var(--card-bg);
-                        border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
-                <p style="font-size:14px;color:var(--ink);margin-bottom:4px;font-weight:600;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Works out of the box
-                </p>
-                <p style="font-size:13px;color:var(--ink-muted);line-height:1.6;">
-                    No API key needed to start &mdash; you get 3 free queries a day instantly.
-                    <a href="/developer" style="color:var(--accent);text-decoration:none;font-weight:600;">Grab a free API key</a> for 10/month, or <a href="/pricing" style="color:var(--accent);text-decoration:none;font-weight:600;">go Pro</a> for 1,000/month with AI citation tracking and market gap data.
-                </p>
-            </div>
-
-            <!-- Proof stats -->
-            <div style="display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:center;font-size:14px;color:var(--ink-muted);">
-                <span><strong style="color:var(--accent);">{ai_recs:,}+</strong> AI recommendations</span>
-                <span style="color:var(--border);">&middot;</span>
-                <span><strong style="color:var(--ink);">{category_count}</strong> categories and growing</span>
             </div>
         </div>
     </section>
@@ -520,9 +419,10 @@ async def landing(request: Request):
         </section>
         """
 
-    # ── Compact Category Grid ────────────────────────────────────────
+    # ── Compact Category Grid (top 8) ────────────────────────────────
+    _top_cats = sorted(categories, key=lambda c: c.get('tool_count', 0), reverse=True)[:8]
     cat_items = ''
-    for c in categories:
+    for c in _top_cats:
         count = c.get('tool_count', 0)
         cat_items += (
             f'<a href="/category/{escape(str(c["slug"]))}" class="cat-compact-item"'
@@ -539,62 +439,23 @@ async def landing(request: Request):
 
     categories_compact = f"""
     <section class="container" style="padding:48px 24px;">
-        <h2 style="font-family:var(--font-display);font-size:24px;margin-bottom:24px;color:var(--ink);">Browse by category</h2>
-        <div class="cat-compact-grid card-stagger">{cat_items}</div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;">
+            <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);">Browse by category</h2>
+            <a href="/explore" style="color:var(--accent);font-size:14px;font-weight:600;text-decoration:none;">
+                All {category_count} categories &rarr;
+            </a>
+        </div>
+        <div class="cat-compact-grid">{cat_items}</div>
     </section>
     """
 
-    # ── Demand Teaser + Slim Maker CTA ───────────────────────────────
-    demand_teaser = ''
-    if demand_gaps:
-        from urllib.parse import quote as _url_quote
-        gap_items = ''
-        for g in demand_gaps:
-            gap_items += (
-                '<div style="display:flex;align-items:center;justify-content:space-between;'
-                'padding:14px 0;border-bottom:1px solid var(--border);">'
-                '  <span style="font-size:15px;color:var(--ink);font-weight:500;">'
-                f'    &ldquo;{escape(g["query"])}&rdquo;'
-                '  </span>'
-                f'  <a href="/submit?name={_url_quote(g["query"])}" style="font-size:13px;font-weight:600;'
-                '     color:var(--accent);text-decoration:none;white-space:nowrap;">'
-                '    Build This &rarr;'
-                '  </a>'
-                '</div>'
-            )
-        demand_teaser = (
-            '<section style="text-align:center;padding:48px 24px 24px;">'
-            '  <div style="max-width:700px;margin:0 auto;">'
-            '    <h2 style="font-family:var(--font-display);font-size:clamp(22px,3vw,28px);'
-            '               color:var(--ink);margin-bottom:8px;">'
-            '      What agents are searching for'
-            '    </h2>'
-            '    <p style="font-size:15px;color:var(--ink-muted);margin-bottom:24px;">'
-            '      Real queries from AI agents that found no matching tool'
-            '    </p>'
-            '    <div style="border:1px solid var(--border);border-radius:12px;'
-            '                background:var(--card-bg);padding:4px 24px;text-align:left;">'
-            f'      {gap_items}'
-            '    </div>'
-            '    <a href="/gaps" style="display:inline-block;margin-top:16px;font-size:14px;'
-            '       color:var(--accent);text-decoration:none;font-weight:600;">'
-            '      See more on the Demand Board &rarr;'
-            '    </a>'
-            '  </div>'
-            '</section>'
-        )
-
-    maker_cta = demand_teaser + (
-        '<section style="text-align:center;padding:32px 24px 48px;">'
-        '  <p style="font-size:16px;color:var(--ink-muted);margin-bottom:16px;">'
-        '    Built something indie? Get it discovered by AI agents.'
+    # ── Maker CTA (slim) ────────────────────────────────────────────
+    maker_cta = (
+        '<div style="text-align:center;padding:32px 24px 48px;">'
+        '  <p style="font-size:14px;color:var(--ink-muted);">'
+        '    Built something indie? <a href="/submit" style="color:var(--accent);font-weight:600;text-decoration:none;">Submit your tool</a> &rarr;'
         '  </p>'
-        '  <a href="/submit" style="display:inline-block;padding:14px 32px;'
-        '     background:var(--accent);color:white;border-radius:999px;'
-        '     font-size:15px;font-weight:600;text-decoration:none;">'
-        '    Submit Your Tool'
-        '  </a>'
-        '</section>'
+        '</div>'
     )
 
     # ── Assembly ─────────────────────────────────────────────────────
@@ -635,22 +496,9 @@ async def landing(request: Request):
         '-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}'
         '[data-theme="dark"] .hero-headline{background:linear-gradient(135deg,var(--slate) 0%,#fff 100%);'
         '-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}'
-        '.hero-glow{position:relative;}'
-        '.hero-glow::before{content:\'\';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);'
-        'width:800px;height:800px;background:radial-gradient(circle,rgba(64,232,255,0.15) 0%,rgba(64,232,255,0.05) 40%,transparent 70%);'
-        'pointer-events:none;z-index:0;}'
         '.cat-compact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}'
         '@media(max-width:768px){.cat-compact-grid{grid-template-columns:repeat(2,1fr);}}'
         '@media(max-width:480px){.cat-compact-grid{grid-template-columns:1fr;}}'
-        '/* Glassmorphism system */'
-        '.glass{background:rgba(255,255,255,0.03);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;}'
-        '.glass:hover{border-color:rgba(0,212,245,0.3);}'
-        '.glass-strong{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:16px;}'
-        '/* Noise texture overlay */'
-        '.noise-overlay{position:relative;overflow:hidden;}'
-        '.noise-overlay::after{content:\'\';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.15\'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4;mix-blend-mode:overlay;}'
-        '/* Glow sphere */'
-        '.glow-sphere{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;}'
         '/* System status tag */'
         '.status-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.15em;font-size:11px;font-weight:600;color:#1A2D4A;}'
         '[data-theme="dark"] .status-tag{color:rgba(255,255,255,0.5);}'
@@ -673,115 +521,6 @@ async def landing(request: Request):
         '});'
         '</script>'
         '<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>'
-        # Interactive grid pattern (canvas-based, adapted from shadcn interactive-grid-pattern)
-        '<script>'
-        'document.addEventListener("DOMContentLoaded",function(){'
-        'var canvas=document.getElementById("grid-canvas");'
-        'if(!canvas)return;'
-        'var ctx=canvas.getContext("2d");'
-        'var section=document.getElementById("hero-section");'
-        'var cellSize=50;'
-        'var proximity=120;'
-        'var mouseX=-1000,mouseY=-1000;'
-        'var cells=[];'  # track cell glow for trailing fade
-        'var dpr=window.devicePixelRatio||1;'
-        'var cols=0,rows=0;'
-        'var animating=false;'
-        ''
-        'function resize(){'
-        '  var rect=section.getBoundingClientRect();'
-        '  canvas.width=rect.width*dpr;'
-        '  canvas.height=rect.height*dpr;'
-        '  ctx.setTransform(dpr,0,0,dpr,0,0);'
-        '  cols=Math.ceil(rect.width/cellSize)+1;'
-        '  rows=Math.ceil(rect.height/cellSize)+1;'
-        '  var total=cols*rows;'
-        '  while(cells.length<total)cells.push(0);'
-        '  cells.length=total;'
-        '}'
-        ''
-        'function getColors(){'
-        '  var theme=document.documentElement.getAttribute("data-theme");'
-        '  var isDark=theme==="dark";'
-        '  return{'
-        '    glow:isDark?"0,212,245":"0,168,198",'  # cyan, slightly muted for light
-        '    border:isDark?"rgba(255,255,255,0.06)":"rgba(26,45,74,0.06)",'
-        '    glowAlpha:isDark?0.4:0.25'
-        '  };'
-        '}'
-        ''
-        'function drawStatic(){'
-        '  var rect=section.getBoundingClientRect();'
-        '  ctx.clearRect(0,0,rect.width,rect.height);'
-        '  var c=getColors();'
-        '  ctx.strokeStyle=c.border;ctx.lineWidth=0.5;'
-        '  for(var r=0;r<rows;r++)for(var col=0;col<cols;col++){'
-        '    ctx.strokeRect(col*cellSize,r*cellSize,cellSize,cellSize);'
-        '  }'
-        '}'
-        ''
-        'function draw(){'
-        '  var rect=section.getBoundingClientRect();'
-        '  var w=rect.width,h=rect.height;'
-        '  ctx.clearRect(0,0,w,h);'
-        '  var c=getColors();'
-        '  var anyActive=false;'
-        ''
-        '  for(var r=0;r<rows;r++){'
-        '    for(var col=0;col<cols;col++){'
-        '      var idx=r*cols+col;'
-        '      var cx=col*cellSize+cellSize/2;'
-        '      var cy=r*cellSize+cellSize/2;'
-        '      var dx=mouseX-cx,dy=mouseY-cy;'
-        '      var dist=Math.sqrt(dx*dx+dy*dy);'
-        '      var target=0;'
-        '      if(dist<cellSize*0.7){target=c.glowAlpha;}'  # direct hover
-        '      else if(dist<proximity){target=Math.max(0,(1-dist/proximity)*0.15);}'
-        '      cells[idx]+=(target-cells[idx])*0.08;'  # smooth lerp (creates trail)
-        '      if(cells[idx]<0.002){cells[idx]=0;}'
-        '      if(cells[idx]>0)anyActive=true;'
-        ''
-        '      var x=col*cellSize,y=r*cellSize;'
-        '      ctx.strokeStyle=c.border;'
-        '      ctx.lineWidth=0.5;'
-        '      ctx.strokeRect(x,y,cellSize,cellSize);'
-        ''
-        '      if(cells[idx]>0){'
-        '        ctx.fillStyle="rgba("+c.glow+","+cells[idx]+")";'
-        '        ctx.fillRect(x,y,cellSize,cellSize);'
-        '        if(cells[idx]>0.2){'  # box shadow glow for hovered cell
-        '          ctx.shadowColor="rgba("+c.glow+","+cells[idx]+")";'
-        '          ctx.shadowBlur=20;'
-        '          ctx.fillRect(x,y,cellSize,cellSize);'
-        '          ctx.shadowBlur=0;'
-        '        }'
-        '      }'
-        '    }'
-        '  }'
-        '  if(anyActive||mouseX>-999){requestAnimationFrame(draw);}'
-        '  else{animating=false;}'  # stop loop when idle
-        '}'
-        ''
-        'section.addEventListener("mousemove",function(e){'
-        '  var rect=section.getBoundingClientRect();'
-        '  mouseX=e.clientX-rect.left;'
-        '  mouseY=e.clientY-rect.top;'
-        '  if(!animating){animating=true;requestAnimationFrame(draw);}'
-        '});'
-        'section.addEventListener("mouseleave",function(){'
-        '  mouseX=-1000;mouseY=-1000;'
-        '});'
-        ''
-        # Respect prefers-reduced-motion
-        'if(window.matchMedia("(prefers-reduced-motion:reduce)").matches){'
-        '  resize();drawStatic();return;'  # static grid only, no animation
-        '}'
-        ''
-        'resize();'
-        'drawStatic();'  # draw grid lines once; animation starts on first mousemove
-        'window.addEventListener("resize",function(){resize();if(!animating)drawStatic();});'
-        '});'  # close DOMContentLoaded
-        '</script>'
     )
 
     response = HTMLResponse(page_shell("The discovery layer for AI coding agents", body,

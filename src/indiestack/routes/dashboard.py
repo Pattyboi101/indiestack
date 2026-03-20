@@ -1182,33 +1182,16 @@ async def dashboard_overview(request: Request):
         {verify_banner}
         {boost_success_banner}
         {avatar_saved_banner}
-        {'' if is_pro else welcome_perk}
         {'' if is_pro else api_nudge}
-        {stripe_launch_banner}
 
         {header_html}
         {actions_html}
 
         {pro_hub_html}
 
-        {ai_visibility_card}
-        {milestone_html}
-        {boost_report_html}
-        {readiness_html}
-
         {quality_html}
 
         {analytics_section}
-
-        {_dash_section('Community') if (referral_html or matchmaker_html) else ''}
-        {referral_html}
-        {matchmaker_html}
-
-        {_dash_section('Profile')}
-        {avatar_editor_html}
-        {badge_section}
-        {buyer_badge_html}
-        {payment_card_html}
     </div>
     """
     return HTMLResponse(page_shell("Dashboard", body, user=user))

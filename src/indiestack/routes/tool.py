@@ -1088,7 +1088,6 @@ async def tool_detail(request: Request, slug: str):
         {claim_html}
         {community_notice}
         {analytics_wall_html}
-        {boost_html}
 
         <!-- Description -->
         <div style="margin-top:32px;">
@@ -1119,13 +1118,7 @@ async def tool_detail(request: Request, slug: str):
             {f'<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">' + alternatives_links_html + '</div>' if alternatives_links_html else ''}
         </div>
 
-        {maker_story_html}
-
-        {assembly_html}
-
         {compatible_html}
-
-        {similar_html}
 
         {changelog_html}
 

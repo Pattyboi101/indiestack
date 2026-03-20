@@ -661,40 +661,8 @@ def nav_html(user=None) -> str:
             </a>
             <div class="nav-links">
                 <a href="/explore" style="color:var(--ink-light);">Explore</a>
-                <div class="nav-dropdown" style="position:relative;">
-                    <button onclick="this.parentElement.classList.toggle('open')"
-                            style="background:none;border:none;cursor:pointer;font-family:var(--font-body);
-                                   font-size:14px;font-weight:500;color:var(--ink-light);display:flex;
-                                   align-items:center;gap:4px;padding:0;">
-                        For Makers <span style="font-size:10px;">&#9660;</span>
-                    </button>
-                    <div class="nav-dropdown-menu" style="display:none;position:absolute;top:calc(100% + 8px);
-                                left:50%;transform:translateX(-50%);background:var(--card-bg);
-                                border:1px solid var(--border);border-radius:var(--radius-sm);
-                                box-shadow:var(--shadow-md);padding:8px 0;min-width:180px;z-index:200;">
-                        <a href="/geo" class="nav-dropdown-item">AI Optimize</a>
-                        <a href="/submit" class="nav-dropdown-item">Submit a Tool</a>
-                        <a href="/pricing" class="nav-dropdown-item">Pricing</a>
-                    </div>
-                </div>
-                <div class="nav-dropdown" style="position:relative;">
-                    <button onclick="this.parentElement.classList.toggle('open')"
-                            style="background:none;border:none;cursor:pointer;font-family:var(--font-body);
-                                   font-size:14px;font-weight:500;color:var(--ink-light);display:flex;
-                                   align-items:center;gap:4px;padding:0;">
-                        Resources <span style="font-size:10px;">&#9660;</span>
-                    </button>
-                    <div class="nav-dropdown-menu" style="display:none;position:absolute;top:calc(100% + 8px);
-                                left:50%;transform:translateX(-50%);background:var(--card-bg);
-                                border:1px solid var(--border);border-radius:var(--radius-sm);
-                                box-shadow:var(--shadow-md);padding:8px 0;min-width:180px;z-index:200;">
-                        <a href="/what-is-indiestack" class="nav-dropdown-item">What is IndieStack?</a>
-                        <a href="/developer" class="nav-dropdown-item">API &amp; Keys</a>
-                        <a href="/gaps" class="nav-dropdown-item">Demand Board</a>
-                        <a href="/stacks" class="nav-dropdown-item">Stacks</a>
-                        <a href="/changelog" class="nav-dropdown-item">Changelog</a>
-                    </div>
-                </div>
+                <a href="/pricing" style="color:var(--ink-light);">Pricing</a>
+                <a href="/developer" style="color:var(--ink-light);">API</a>
                 <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Submit</a>
                 <button onclick="toggleTheme()" id="theme-toggle" style="background:none;border:1px solid var(--border);border-radius:999px;padding:8px 12px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all 0.15s ease;min-width:44px;min-height:44px;" title="Toggle dark mode">&#9790;</button>
                 {auth_links}
@@ -703,13 +671,8 @@ def nav_html(user=None) -> str:
         </div>
         <div class="mobile-menu" id="mobile-menu">
             <a href="/explore">Explore</a>
-            <a href="/geo">AI Optimize</a>
-            <a href="/stacks">Stacks</a>
-            <a href="/gaps">Demand Board</a>
             <a href="/pricing">Pricing</a>
-            <a href="/developer">API &amp; Keys</a>
-            <a href="/what-is-indiestack">What is IndieStack?</a>
-            <a href="/changelog">Changelog</a>
+            <a href="/developer">API</a>
             <a href="/submit" class="btn btn-primary">Submit</a>
             <button onclick="toggleTheme()">Toggle Theme</button>
             {mobile_auth_links}
