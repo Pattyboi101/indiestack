@@ -625,7 +625,7 @@ def nav_html(user=None) -> str:
                 <div style="display:flex;align-items:center;gap:8px;">
                     {avatar_html}
                     <span style="color:var(--ink);font-size:13px;font-weight:600;">{user_name}</span>
-                    {cofounder_badge_html() if user.get('email', '').lower() in {e.lower() for e in COFOUNDER_EMAILS} else ''}
+                    {cofounder_badge_html() if user.get('email', '').lower() in {e.lower() for e in COFOUNDER_EMAILS} else pro_badge_html() if user.get('is_pro') else ''}
                 </div>
                 <a href="/logout" style="color:var(--ink-muted);font-size:13px;">Log out</a>
         """

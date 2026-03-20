@@ -61,6 +61,8 @@ async def get_current_user(request: Request, db) -> dict | None:
     row = await get_session_by_token(db, token)
     if not row:
         return None
+    from indiestack.db import check_pro
+    is_pro = await check_pro(db, row['uid'])
     return {
         'id': row['uid'],
         'email': row['email'],
@@ -70,6 +72,7 @@ async def get_current_user(request: Request, db) -> dict | None:
         'email_verified': row['email_verified'],
         'pixel_avatar': row['pixel_avatar'],
         'pixel_avatar_approved': row['pixel_avatar_approved'],
+        'is_pro': is_pro,
     }
 
 
