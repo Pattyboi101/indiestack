@@ -224,7 +224,7 @@ async def landing(request: Request):
         '        <a href="/signup?next=/welcome" class="btn btn-lg btn-primary landing-neon">'
         '            Get Started Free'
         '        </a>'
-        '        <a href="/explore" class="btn btn-lg btn-secondary">'
+        '        <a href="/explore" class="btn btn-lg btn-secondary" style="color:#fff;border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);">'
         '            Browse the Catalog'
         '        </a>'
         '    </div>'
