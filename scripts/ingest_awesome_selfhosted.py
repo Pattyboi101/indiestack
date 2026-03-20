@@ -179,7 +179,8 @@ def parse_readme(text: str) -> list[dict]:
 
 def main():
     parser = argparse.ArgumentParser(description="Import awesome-selfhosted tools into IndieStack")
-    parser.add_argument('--db', default=os.environ.get('INDIESTACK_DB_PATH', 'data/indiestack.db'),
+    _default_db = os.environ.get('INDIESTACK_DB_PATH', '/data/indiestack.db' if os.path.exists('/data/indiestack.db') else 'data/indiestack.db')
+    parser.add_argument('--db', default=_default_db,
                         help='Path to IndieStack SQLite database')
     parser.add_argument('--dry-run', action='store_true',
                         help='Print what would be inserted without writing to DB')

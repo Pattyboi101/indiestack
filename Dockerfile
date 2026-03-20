@@ -11,6 +11,7 @@ WORKDIR /app
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=builder /usr/local/bin/uvicorn /usr/local/bin/uvicorn
 COPY src/ src/
+COPY scripts/ scripts/
 COPY logo/ logo/
 COPY founder-photos/ founder-photos/
 
