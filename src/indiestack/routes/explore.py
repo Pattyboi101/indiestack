@@ -210,28 +210,44 @@ async def explore(request: Request):
     </form>
     '''
 
-    # Newsletter signup banner (inline JS to avoid redirect away from explore)
-    newsletter_banner = """
-    <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);padding:32px;
-        margin:32px 0;text-align:center;color:#fff;">
-        <h3 style="font-family:var(--font-display);font-size:24px;margin-bottom:8px;">
-            Get the best developer tools in your inbox
-        </h3>
-        <p style="color:rgba(255,255,255,0.7);font-size:14px;margin-bottom:24px;">
-            Weekly curated picks, new launches, and maker stories.
-        </p>
-        <form id="explore-subscribe" style="display:flex;gap:8px;max-width:400px;margin:0 auto;flex-wrap:wrap;justify-content:center;"
-              onsubmit="event.preventDefault();var f=this;var em=f.email.value;fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'email='+encodeURIComponent(em)}).then(function(){f.innerHTML='<p style=&quot;color:var(--success-text);font-weight:600;font-size:16px;&quot;>You\\'re in! Check your inbox.</p>'}).catch(function(){f.innerHTML='<p style=&quot;color:var(--danger);&quot;>Something went wrong. Try again.</p>'})">
-            <input type="email" name="email" placeholder="you@example.com" required
-                style="flex:1;min-width:200px;padding:12px 16px;border:none;border-radius:999px;font-size:14px;
-                    font-family:inherit;">
-            <button type="submit" style="background:var(--slate);color:var(--terracotta);border:none;padding:12px 24px;
-                border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">
-                Subscribe Free
-            </button>
-        </form>
-    </div>
-    """
+    # Banner — signup CTA for logged-out, newsletter for logged-in
+    if not user:
+        mid_page_banner = '''
+        <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);padding:32px;
+            margin:32px 0;text-align:center;color:#fff;">
+            <h3 style="font-family:var(--font-display);font-size:22px;margin:0 0 8px;">
+                Track the tools AI agents actually recommend
+            </h3>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0 0 20px;">
+                Create a free account to save tools, get AI recommendations, and a 7-day Pro trial.
+            </p>
+            <a href="/signup?next=/explore" style="display:inline-block;padding:14px 32px;background:var(--slate);color:var(--terracotta);
+                border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;">
+                Sign Up Free &rarr;
+            </a>
+        </div>'''
+    else:
+        mid_page_banner = """
+        <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);padding:32px;
+            margin:32px 0;text-align:center;color:#fff;">
+            <h3 style="font-family:var(--font-display);font-size:24px;margin-bottom:8px;">
+                Get the best developer tools in your inbox
+            </h3>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin-bottom:24px;">
+                Weekly curated picks, new launches, and maker stories.
+            </p>
+            <form id="explore-subscribe" style="display:flex;gap:8px;max-width:400px;margin:0 auto;flex-wrap:wrap;justify-content:center;"
+                  onsubmit="event.preventDefault();var f=this;var em=f.email.value;fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'email='+encodeURIComponent(em)}).then(function(){f.innerHTML='<p style=&quot;color:var(--success-text);font-weight:600;font-size:16px;&quot;>You\\'re in! Check your inbox.</p>'}).catch(function(){f.innerHTML='<p style=&quot;color:var(--danger);&quot;>Something went wrong. Try again.</p>'})">
+                <input type="email" name="email" placeholder="you@example.com" required
+                    style="flex:1;min-width:200px;padding:12px 16px;border:none;border-radius:999px;font-size:14px;
+                        font-family:inherit;">
+                <button type="submit" style="background:var(--slate);color:var(--terracotta);border:none;padding:12px 24px;
+                    border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">
+                    Subscribe Free
+                </button>
+            </form>
+        </div>
+        """
 
     # Results
     if results:
@@ -241,7 +257,7 @@ async def explore(request: Request):
         <p style="font-size:14px;color:var(--ink-muted);margin-bottom:16px;">{result_label}</p>
         <div class="card-grid card-stagger">{cards_html}</div>
         {pagination_html(page, total_pages, base_url)}
-        {newsletter_banner}
+        {mid_page_banner}
         '''
     else:
         results_section = '''

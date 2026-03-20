@@ -219,11 +219,13 @@ async def verify_magic_link(request: Request):
         return RedirectResponse("/login?error=invalid_token", status_code=303)
 
     # Find or create user
+    is_new_user = False
     cursor = await db.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email,))
     user = await cursor.fetchone()
 
     if not user:
         # Create new user — no password needed
+        is_new_user = True
         from indiestack.db import ensure_referral_code
         await db.execute(
             "INSERT INTO users (email, password_hash, name, email_verified, trial_ends_at) VALUES (?, ?, ?, 1, datetime('now', '+7 days'))",
@@ -244,7 +246,11 @@ async def verify_magic_link(request: Request):
     # Create session
     session_token = await create_user_session(db, user_id)
 
-    response = RedirectResponse(next_url, status_code=303)
+    if is_new_user and next_url == "/dashboard":
+        redirect_to = "/welcome"
+    else:
+        redirect_to = next_url
+    response = RedirectResponse(redirect_to, status_code=303)
     response.set_cookie(
         "indiestack_session", session_token,
         httponly=True, secure=True, samesite="lax",
@@ -400,7 +406,7 @@ async def signup_post(
 
     await track_event(db, 'signup', user_id=user_id)
     token = await create_user_session(db, user_id)
-    redirect_to = next_url or "/dashboard"
+    redirect_to = next_url or "/welcome"
     response = RedirectResponse(url=redirect_to, status_code=303)
     response.set_cookie(key="indiestack_session", value=token, httponly=True, samesite="lax", max_age=30*86400, secure=True)
     return response
@@ -641,6 +647,7 @@ async def github_callback(request: Request):
         db = request.state.db
 
         # Three-way user matching
+        is_new_user = False
         existing = await get_user_by_github_id(db, github_id)
         if existing:
             user_id = existing["id"]
@@ -651,10 +658,16 @@ async def github_callback(request: Request):
                 user_id = existing_email["id"]
             else:
                 user_id = await create_github_user(db, email, name, github_id, github_username, github_avatar)
+                is_new_user = True
 
         # Create session and redirect
         token = await create_user_session(db, user_id)
-        redirect_to = next_url or "/dashboard"
+        if next_url:
+            redirect_to = next_url
+        elif is_new_user:
+            redirect_to = "/welcome"
+        else:
+            redirect_to = "/dashboard"
         response = RedirectResponse(url=redirect_to, status_code=303)
         response.set_cookie(key="indiestack_session", value=token, httponly=True, samesite="lax", max_age=30*86400, secure=True)
         response.delete_cookie("github_oauth_state")

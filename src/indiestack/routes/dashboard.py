@@ -107,25 +107,44 @@ async def dashboard_overview(request: Request):
                 from datetime import datetime, timezone
                 _trial_end = datetime.fromisoformat(_trial_row['trial_ends_at'].replace('Z', '+00:00')) if 'Z' in str(_trial_row['trial_ends_at']) else datetime.fromisoformat(str(_trial_row['trial_ends_at']))
                 _days_left = max(0, (_trial_end - datetime.now(timezone.utc).replace(tzinfo=None)).days)
+                _urgency_color = '#e74c3c' if _days_left <= 1 else '#E2B764' if _days_left <= 4 else 'var(--accent)'
                 trial_banner = f'''
-                <div style="background:linear-gradient(135deg,#065F46,#064E3B);border:1px solid rgba(110,231,183,0.3);border-radius:var(--radius);padding:14px 24px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-                    <div>
-                        <p style="color:#fff;font-size:14px;font-weight:600;margin:0;">Pro Trial — {_days_left} days remaining</p>
-                        <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:4px 0 0;">You have full Pro access. Keep it forever from $99 (Founder deal) or $19/mo.</p>
+                <div style="background:linear-gradient(135deg,#065F46,#064E3B);border:1px solid rgba(110,231,183,0.3);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+                        <div style="flex:1;min-width:200px;">
+                            <p style="color:{_urgency_color};font-size:20px;font-weight:700;margin:0 0 4px;">
+                                {_days_left} day{"s" if _days_left != 1 else ""} left on your Pro trial
+                            </p>
+                            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">
+                                You have full access to market gaps, citation tracking, and priority API. Keep it from $99 once.
+                            </p>
+                        </div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <a href="/pricing" style="display:inline-flex;align-items:center;padding:12px 20px;background:#6EE7B7;color:#064E3B;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;min-height:44px;">$99 Lifetime Deal</a>
+                            <a href="/pricing" style="display:inline-flex;align-items:center;padding:12px 20px;background:rgba(255,255,255,0.1);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,0.2);min-height:44px;">or $19/mo</a>
+                        </div>
                     </div>
-                    <a href="/pricing" style="display:inline-block;padding:8px 16px;background:#6EE7B7;color:#064E3B;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;">Keep Pro Access</a>
                 </div>'''
 
-    # Pro upsell banner for non-Pro users with recent citations
+    # Pro upsell banner for non-Pro users
     pro_banner = ''
-    if not is_pro and maker_id:
-        _banner_citations = await get_total_agent_citations(db, maker_id, days=7)
-        if _banner_citations > 0:
-            pro_banner = f'''
+    if not is_pro:
+        if maker_id:
+            _banner_citations = await get_total_agent_citations(db, maker_id, days=7)
+            if _banner_citations > 0:
+                _banner_headline = f'AI agents recommended your tools {_banner_citations} times this week'
+                _banner_sub = 'See which agents, daily trends, and competitor insights'
+            else:
+                _banner_headline = 'See which AI agents discover tools like yours'
+                _banner_sub = 'Track recommendations, spot market gaps, and get weekly reports'
+        else:
+            _banner_headline = 'See what AI agents search for when developers need tools'
+            _banner_sub = 'Find market gaps, track trends, and export intelligence data'
+        pro_banner = f'''
             <div id="pro-banner" style="background:linear-gradient(135deg,#1A2D4A,#0F1D30);border:1px solid rgba(0,212,245,0.2);border-radius:var(--radius);padding:16px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
                 <div>
-                    <p style="color:#fff;font-size:15px;font-weight:600;margin:0;">AI agents recommended your tools {_banner_citations} times this week</p>
-                    <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:4px 0 0;">See which agents, daily trends, and competitor insights</p>
+                    <p style="color:#fff;font-size:15px;font-weight:600;margin:0;">{_banner_headline}</p>
+                    <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:4px 0 0;">{_banner_sub}</p>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
                     <a href="/pricing" style="display:inline-block;padding:10px 20px;background:var(--accent);color:#0F1D30;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">Upgrade to Pro</a>
@@ -2318,6 +2337,90 @@ async def dashboard_purchases(request: Request):
     return RedirectResponse(url="/dashboard", status_code=303)
 
 
+# ── Welcome / Onboarding ───────────────────────────────────────────────
+
+@router.get("/welcome", response_class=HTMLResponse)
+async def welcome_page(request: Request):
+    user = request.state.user
+    redirect = require_login(user)
+    if redirect:
+        return redirect
+    d = request.state.db
+    keys = await get_api_keys_for_user(d, user['id'])
+    has_key = any(k['is_active'] for k in keys)
+    new_key = request.query_params.get("new", "")
+
+    _tc = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
+    tool_count = (await _tc.fetchone())['cnt']
+
+    from html import escape as _esc
+    snippet_key = _esc(new_key) if (new_key and new_key.startswith('isk_')) else 'YOUR_KEY_HERE'
+
+    # Step 1 content
+    if new_key and new_key.startswith('isk_'):
+        step1 = f'''<div style="background:rgba(110,231,183,0.1);border:1px solid rgba(110,231,183,0.3);border-radius:var(--radius-sm);padding:16px;margin-top:12px;">
+            <p style="color:var(--ink);font-size:14px;font-weight:600;margin:0 0 8px;">Key created — copy it now:</p>
+            <code id="welcome-key" style="display:block;padding:10px 14px;background:var(--ink);color:var(--slate);border-radius:var(--radius-sm);font-size:14px;word-break:break-all;">{_esc(new_key)}</code>
+            <button onclick="navigator.clipboard.writeText(document.getElementById('welcome-key').textContent);this.textContent='Copied!'"
+                class="btn btn-primary" style="margin-top:8px;font-size:13px;">Copy to Clipboard</button>
+        </div>'''
+    elif has_key:
+        step1 = '<p style="color:var(--accent);font-weight:600;font-size:14px;margin-top:8px;">Done — you have an active API key.</p>'
+    else:
+        step1 = '''<form method="POST" action="/developer/create-key" style="margin-top:12px;">
+            <input type="hidden" name="name" value="Default">
+            <input type="hidden" name="redirect" value="/welcome">
+            <button type="submit" class="btn btn-primary" style="font-size:15px;padding:12px 24px;">Create Free API Key</button>
+        </form>
+        <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;">Unlocks 10 queries/month + personalized recommendations.</p>'''
+
+    body = f'''
+    <div class="container" style="max-width:640px;padding:48px 24px;">
+        <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin:0 0 8px;">Welcome to IndieStack</h1>
+        <p style="color:var(--ink-muted);font-size:16px;margin:0 0 32px;">Three steps to give your AI access to {tool_count}+ developer tools.</p>
+
+        <div class="card" style="padding:24px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">1</div>
+                <h2 style="font-family:var(--font-display);font-size:18px;margin:0;color:var(--ink);">Create your API key</h2>
+            </div>
+            <p style="font-size:14px;color:var(--ink-muted);margin:4px 0 0;padding-left:44px;">More queries, personalized recommendations, citation tracking.</p>
+            <div style="padding-left:44px;">{step1}</div>
+        </div>
+
+        <div class="card" style="padding:24px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+                <div style="width:32px;height:32px;border-radius:50%;background:{"var(--accent)" if has_key or new_key else "var(--border)"};color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">2</div>
+                <h2 style="font-family:var(--font-display);font-size:18px;margin:0;color:var(--ink);">Install the MCP server</h2>
+            </div>
+            <div style="padding-left:44px;margin-top:8px;">
+                <pre style="background:var(--ink);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:12px;font-family:var(--font-mono);overflow-x:auto;line-height:1.6;position:relative;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</pre>
+                <p style="font-size:12px;color:var(--ink-muted);margin:8px 0 0;">Works with Claude Code, Cursor, Windsurf, and VS Code.</p>
+            </div>
+        </div>
+
+        <div class="card" style="padding:24px;margin-bottom:32px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--border);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;">3</div>
+                <h2 style="font-family:var(--font-display);font-size:18px;margin:0;color:var(--ink);">Try a search</h2>
+            </div>
+            <div style="padding-left:44px;margin-top:8px;">
+                <p style="font-size:14px;color:var(--ink-muted);margin:0;">Ask your AI agent:</p>
+                <code style="display:block;padding:12px 16px;background:var(--cream-dark);border-radius:var(--radius-sm);font-size:14px;color:var(--accent);margin-top:8px;">
+                    "Find me a privacy-friendly analytics tool"
+                </code>
+            </div>
+        </div>
+
+        <div style="display:flex;gap:12px;justify-content:center;">
+            <a href="/dashboard" class="btn btn-primary" style="padding:12px 24px;">Go to Dashboard</a>
+            <a href="/explore" class="btn btn-secondary" style="padding:12px 24px;">Explore the Catalog</a>
+        </div>
+    </div>'''
+
+    return HTMLResponse(page_shell("Welcome — IndieStack", body, user=user))
+
+
 # ── Developer API Keys ──────────────────────────────────────────────────
 
 @router.get("/developer", response_class=HTMLResponse)
@@ -2328,84 +2431,84 @@ async def developer_page(request: Request):
     if not user:
         public_body = f'''
     <div class="container" style="max-width:800px;padding:48px 24px;">
-        <div style="margin-bottom:32px;">
-            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin:0;">Developer API</h1>
-            <p style="color:var(--ink-muted);font-size:15px;margin:8px 0 0;">
-                Query the IndieStack catalog from your code, scripts, or AI agents.
+        <div style="margin-bottom:32px;text-align:center;">
+            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin:0 0 12px;">Give your AI agent access to 3,100+ developer tools</h1>
+            <p style="color:var(--ink-muted);font-size:17px;margin:0;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;">
+                Without IndieStack, your AI writes infrastructure from scratch. With IndieStack, it finds proven tools first.
             </p>
         </div>
 
-        <div style="text-align:center;padding:20px;margin-bottom:24px;background:linear-gradient(135deg,#1A2D4A,#0F1D30);border-radius:var(--radius);border:1px solid rgba(0,212,245,0.2);">
-            <p style="color:#fff;font-size:16px;font-weight:600;margin:0 0 4px;">Get your free API key + 7-day Pro trial</p>
-            <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 16px;">10 queries/month free. Pro gets 1,000/month + citation tracking.</p>
-            <a href="/login?next=/developer" class="btn btn-primary" style="font-size:15px;padding:12px 32px;background:var(--accent);color:#0F1D30;border:none;border-radius:8px;font-weight:600;text-decoration:none;">
+        <div style="text-align:center;padding:24px;margin-bottom:32px;background:linear-gradient(135deg,#1A2D4A,#0F1D30);border-radius:var(--radius);border:1px solid rgba(0,212,245,0.2);">
+            <p style="color:#fff;font-size:16px;font-weight:600;margin:0 0 4px;">Start free &mdash; 10 queries/month, upgrade anytime</p>
+            <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 16px;">Pro gets 1,000/month + citation tracking + market gap data.</p>
+            <a href="/login?next=/welcome" class="btn btn-primary" style="font-size:15px;padding:12px 32px;background:var(--accent);color:#0F1D30;border:none;border-radius:8px;font-weight:600;text-decoration:none;">
                 Sign in to create your API key
             </a>
         </div>
 
-        <div class="card" style="padding:24px;margin-bottom:24px;">
-            <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 16px;color:var(--ink);">Endpoints</h2>
+        <details style="margin-bottom:24px;">
+            <summary style="cursor:pointer;font-family:var(--font-display);font-size:20px;color:var(--ink);padding:12px 0;list-style:none;">
+                <span style="margin-right:8px;">&#9654;</span> API Documentation
+            </summary>
 
-            <div style="margin-bottom:20px;">
-                <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/tools/search?q=&lt;query&gt;</div>
-                <p style="font-size:13px;color:var(--ink-muted);margin:0;">Search the catalog by keyword. Returns matching tools with scores.</p>
-                <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);overflow-x:auto;margin:8px 0 0;">curl "{BASE_URL}/api/tools/search?q=analytics&amp;key=isk_your_key"</pre>
+            <div class="card" style="padding:24px;margin-top:12px;margin-bottom:24px;">
+                <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 16px;color:var(--ink);">Endpoints</h2>
+
+                <div style="margin-bottom:20px;">
+                    <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/tools/search?q=&lt;query&gt;</div>
+                    <p style="font-size:13px;color:var(--ink-muted);margin:0;">Search the catalog by keyword. Returns matching tools with scores.</p>
+                    <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);overflow-x:auto;margin:8px 0 0;">curl "{BASE_URL}/api/tools/search?q=analytics&amp;key=isk_your_key"</pre>
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/tools/&lt;slug&gt;</div>
+                    <p style="font-size:13px;color:var(--ink-muted);margin:0;">Get full details for a single tool by its slug.</p>
+                    <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);overflow-x:auto;margin:8px 0 0;">curl "{BASE_URL}/api/tools/my-tool?key=isk_your_key"</pre>
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/tools/index</div>
+                    <p style="font-size:13px;color:var(--ink-muted);margin:0;">List all tools in the catalog. Supports pagination.</p>
+                </div>
+
+                <div>
+                    <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/categories</div>
+                    <p style="font-size:13px;color:var(--ink-muted);margin:0;">List all tool categories.</p>
+                </div>
             </div>
 
-            <div style="margin-bottom:20px;">
-                <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/tools/&lt;slug&gt;</div>
-                <p style="font-size:13px;color:var(--ink-muted);margin:0;">Get full details for a single tool by its slug.</p>
-                <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);overflow-x:auto;margin:8px 0 0;">curl "{BASE_URL}/api/tools/my-tool?key=isk_your_key"</pre>
+            <div class="card" style="padding:24px;margin-bottom:24px;">
+                <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 16px;color:var(--ink);">Rate Limits</h2>
+                <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                    <thead><tr style="border-bottom:2px solid var(--border);">
+                        <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Tier</th>
+                        <th style="padding:10px;text-align:right;font-size:13px;color:var(--ink-muted);">Limit</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:10px;color:var(--ink);">No API key</td>
+                            <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">3 / day</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:10px;color:var(--ink);">Free API key</td>
+                            <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">10 / month</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px;color:var(--ink);">Pro <span style="background:var(--accent);color:white;font-size:10px;font-weight:700;padding:2px 6px;border-radius:999px;margin-left:4px;">PRO</span></td>
+                            <td style="padding:10px;text-align:right;font-weight:600;color:var(--accent);">1,000 / month</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
-            <div style="margin-bottom:20px;">
-                <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/tools/index</div>
-                <p style="font-size:13px;color:var(--ink-muted);margin:0;">List all tools in the catalog. Supports pagination.</p>
+            <div class="card" style="padding:24px;margin-bottom:24px;">
+                <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 12px;color:var(--ink);">MCP Server</h2>
+                <p style="font-size:13px;color:var(--ink-muted);margin:0 0 12px;">
+                    Add IndieStack as a tool source for Claude Code, Cursor, or any MCP-compatible agent.
+                </p>
+                <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);overflow-x:auto;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</pre>
             </div>
-
-            <div>
-                <div style="font-size:13px;font-weight:700;color:var(--accent);font-family:var(--font-mono);margin-bottom:4px;">GET /api/categories</div>
-                <p style="font-size:13px;color:var(--ink-muted);margin:0;">List all tool categories.</p>
-            </div>
-        </div>
-
-        <div class="card" style="padding:24px;margin-bottom:24px;">
-            <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 16px;color:var(--ink);">Rate Limits</h2>
-            <table style="width:100%;border-collapse:collapse;font-size:14px;">
-                <thead><tr style="border-bottom:2px solid var(--border);">
-                    <th style="padding:10px;text-align:left;font-size:13px;color:var(--ink-muted);">Tier</th>
-                    <th style="padding:10px;text-align:right;font-size:13px;color:var(--ink-muted);">Limit</th>
-                </tr></thead>
-                <tbody>
-                    <tr style="border-bottom:1px solid var(--border);">
-                        <td style="padding:10px;color:var(--ink);">No API key</td>
-                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">3 / day</td>
-                    </tr>
-                    <tr style="border-bottom:1px solid var(--border);">
-                        <td style="padding:10px;color:var(--ink);">Free API key</td>
-                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--ink);">10 / month</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:10px;color:var(--ink);">Pro <span style="background:var(--accent);color:white;font-size:10px;font-weight:700;padding:2px 6px;border-radius:999px;margin-left:4px;">PRO</span></td>
-                        <td style="padding:10px;text-align:right;font-weight:600;color:var(--accent);">1,000 / month</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="card" style="padding:24px;margin-bottom:24px;">
-            <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 12px;color:var(--ink);">MCP Server</h2>
-            <p style="font-size:13px;color:var(--ink-muted);margin:0 0 12px;">
-                Add IndieStack as a tool source for Claude Code, Cursor, or any MCP-compatible agent.
-            </p>
-            <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);overflow-x:auto;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</pre>
-        </div>
-
-        <div style="text-align:center;padding:16px 0;">
-            <a href="/login?next=/developer" class="btn btn-primary" style="font-size:15px;padding:12px 32px;">
-                Sign in to create your API key
-            </a>
-        </div>
+        </details>
     </div>'''
         return HTMLResponse(page_shell("Developer API — IndieStack", public_body, user=None))
 
@@ -2533,6 +2636,28 @@ async def developer_page(request: Request):
 
     empty_row = '<tr><td colspan="6" style="padding:24px;text-align:center;color:var(--ink-muted);">No API keys yet. Create one to get started.</td></tr>'
 
+    onboarding_card = ''
+    if not keys:
+        onboarding_card = '''
+        <div style="background:linear-gradient(135deg,#1A2D4A,#0F1D30);border:1px solid rgba(0,212,245,0.2);
+                    border-radius:var(--radius);padding:32px;margin-bottom:24px;text-align:center;">
+            <h2 style="font-family:var(--font-display);font-size:24px;color:#fff;margin:0 0 8px;">
+                Create your API key
+            </h2>
+            <p style="color:rgba(255,255,255,0.7);font-size:15px;margin:0 0 24px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.6;">
+                An API key unlocks more queries, personalized recommendations, and citation tracking.
+            </p>
+            <form method="POST" action="/developer/create-key">
+                <input type="hidden" name="name" value="Default">
+                <button type="submit" class="btn btn-primary" style="font-size:16px;padding:14px 32px;">
+                    Create Free API Key
+                </button>
+            </form>
+            <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:12px 0 0;">
+                Without a key: 3 queries/day. With a key: 10/month free, 1,000/month Pro.
+            </p>
+        </div>'''
+
     # Agent Activity
     action_counts = await get_agent_action_counts(db, user['id'], days=30)
     action_log = await get_agent_action_log(db, user['id'], limit=10)
@@ -2586,6 +2711,8 @@ async def developer_page(request: Request):
         {new_key_html}
 
         {profile_html}
+
+        {onboarding_card}
 
         <div class="card" style="margin-bottom:24px;padding:24px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
@@ -2672,7 +2799,10 @@ async def developer_create_key(request: Request):
 
     result = await create_api_key(db, user['id'], name)
     await track_event(db, 'key_created', user_id=user['id'])
-    return RedirectResponse(url=f"/developer?new={result['key']}", status_code=303)
+    redir = str(form.get("redirect", "/developer")).strip()
+    if not redir.startswith("/") or redir.startswith("//"):
+        redir = "/developer"
+    return RedirectResponse(url=f"{redir}?new={result['key']}", status_code=303)
 
 
 @router.post("/developer/revoke-key")

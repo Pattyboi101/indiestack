@@ -207,6 +207,8 @@ async def tool_detail(request: Request, slug: str):
     mcp_views = int(tool.get('mcp_view_count', 0))
     # Use the higher of the two counts (citations are more accurate but mcp_views may be higher for older tools)
     ai_rec_count = max(citation_count, mcp_views)
+    is_pro_user = await check_pro(db, user['id']) if user else False
+
     # Analytics badges — gated by ownership
     mcp_badge = ''
     outcome_badge = ''
@@ -239,7 +241,7 @@ async def tool_detail(request: Request, slug: str):
                 Recommended {recommendation_count} time{'s' if recommendation_count != 1 else ''} &mdash; no outcome reports yet
             </div>'''
         # Pro owners get a link to full analytics dashboard
-        if user and await check_pro(db, user['id']):
+        if user and is_pro_user:
             pro_analytics_link = '''
             <div style="margin-top:8px;">
                 <a href="/dashboard#ai-distribution" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;">
@@ -266,6 +268,15 @@ async def tool_detail(request: Request, slug: str):
             <span style="font-size:12px;font-weight:400;color:var(--ink-muted);">Claim this listing to see how many times and your success rate.</span>
         </div>'''
 
+    pro_upsell_html = ''
+    if user and not is_pro_user and ai_rec_count > 0:
+        pro_upsell_html = f'''
+        <div style="margin-top:12px;padding:10px 16px;background:var(--cream-dark);border-radius:var(--radius-sm);
+                    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-light);border:1px solid var(--border);">
+            See which AI agents recommend {name}
+            <a href="/pricing" style="color:var(--accent);font-weight:600;text-decoration:none;">Upgrade &rarr;</a>
+        </div>'''
+
     token_hint_html = f'''
         <div style="margin-top:16px;padding:8px 16px;background:var(--cream-dark);border-radius:var(--radius-sm);
                     display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-light);">
@@ -276,6 +287,7 @@ async def tool_detail(request: Request, slug: str):
         {outcome_badge}
         {pro_analytics_link}
         {analytics_teaser}
+        {pro_upsell_html}
     '''
 
     # GitHub freshness badge
@@ -1018,6 +1030,26 @@ async def tool_detail(request: Request, slug: str):
         f'{flag_trigger}{flag_form}</div>'
     )
 
+    signup_cta_html = ''
+    if not user:
+        signup_cta_html = f'''
+        <div style="margin-top:24px;padding:20px 24px;background:var(--cream-dark);
+            border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;">
+                <p style="font-weight:600;font-size:15px;color:var(--ink);margin:0 0 4px;">
+                    Save tools &amp; get AI recommendations
+                </p>
+                <p style="font-size:13px;color:var(--ink-muted);margin:0;">
+                    Free account includes a 7-day Pro trial.
+                </p>
+            </div>
+            <a href="/signup?next=/tool/{escape(slug)}" style="display:inline-flex;padding:12px 24px;background:var(--accent);color:white;
+                border-radius:var(--radius-sm);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap;min-height:44px;
+                align-items:center;">
+                Sign Up Free
+            </a>
+        </div>'''
+
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:800px;">
         {breadcrumb_html}
@@ -1062,6 +1094,8 @@ async def tool_detail(request: Request, slug: str):
         <div style="margin-top:32px;">
             <p style="white-space:pre-line;color:var(--ink-light);line-height:1.8;font-size:16px;">{description}</p>
         </div>
+
+        {signup_cta_html}
 
         <!-- CTA + Maker -->
         <div style="margin-top:24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
