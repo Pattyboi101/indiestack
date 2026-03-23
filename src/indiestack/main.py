@@ -700,7 +700,11 @@ async def csrf_protection(request: Request, call_next):
                     origin = f"{parsed.scheme}://{parsed.netloc}" if parsed.scheme and parsed.netloc else ""
 
             if not origin:
-                return JSONResponse({"error": "Origin required"}, status_code=403)
+                # SameSite=Lax cookies already prevent cross-site POST, so if a
+                # session cookie is present the request is same-origin even when
+                # the browser strips Origin/Referer (privacy extensions, etc.)
+                if not request.cookies.get("indiestack_session"):
+                    return JSONResponse({"error": "Origin required"}, status_code=403)
             if origin not in _ALLOWED_ORIGINS:
                 return JSONResponse({"error": "Cross-origin request blocked"}, status_code=403)
     response = await call_next(request)
