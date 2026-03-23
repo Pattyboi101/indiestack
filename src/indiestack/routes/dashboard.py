@@ -813,9 +813,59 @@ async def dashboard_overview(request: Request):
     </div>
     <script>if(!localStorage.getItem('comet_dismissed')){document.getElementById('comet-banner').style.display='block';}</script>'''
 
-    # ── API nudge for users without API keys ─────────────────────
-    api_nudge = ''
+    # ── API key section for dashboard ────────────────────────────
     user_keys = await get_api_keys_for_user(db, user['id'])
+    active_keys = [k for k in user_keys if k['is_active']]
+    _usage = await get_api_key_usage_stats(db, user['id'], days=30)
+    _usage_map = {u['id']: u['request_count'] for u in _usage}
+
+    if not active_keys:
+        api_key_html = '''
+        <div class="card" style="padding:24px;margin-bottom:24px;border:1px solid var(--accent);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                <div>
+                    <h3 style="margin:0 0 4px;font-family:var(--font-display);font-size:18px;">API Key</h3>
+                    <p style="margin:0;font-size:13px;color:var(--ink-muted);">Unlock 10 queries/month and personalized recommendations.</p>
+                </div>
+                <form method="POST" action="/developer/create-key">
+                    <input type="hidden" name="name" value="Default">
+                    <input type="hidden" name="redirect" value="/dashboard">
+                    <button type="submit" class="btn btn-primary" style="font-size:13px;padding:10px 20px;">Create Free Key</button>
+                </form>
+            </div>
+        </div>'''
+    else:
+        _k = active_keys[0]
+        _k_count = _usage_map.get(_k['id'], 0)
+        _k_last = _k['last_used_at'][:10] if _k.get('last_used_at') else 'Never'
+        api_key_html = f'''
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+                <h3 style="margin:0;font-family:var(--font-display);font-size:18px;">API Key</h3>
+                <span style="font-size:13px;color:var(--ink-muted);">{_k_count} requests this month</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                <code style="font-family:var(--font-mono);font-size:13px;background:var(--cream-dark);padding:8px 14px;border-radius:var(--radius-sm);color:var(--ink);">{escape(_k["key_preview"])}</code>
+                <span style="font-size:12px;color:var(--ink-muted);">Last used: {_k_last}</span>
+            </div>
+        </div>'''
+
+    # Show new key banner if just created
+    _new_key_param = request.query_params.get("new", "")
+    _new_key_banner = ''
+    if _new_key_param and _new_key_param.startswith("isk_"):
+        _new_key_banner = f'''
+        <div class="card" style="border-left:4px solid var(--success-text);margin-bottom:24px;padding:20px;">
+            <h3 style="margin:0 0 8px;font-family:var(--font-display);font-size:18px;color:var(--ink);">Key Created</h3>
+            <p style="color:var(--ink-muted);font-size:14px;margin:0 0 12px;">Copy this key now — you won't be able to see it again.</p>
+            <code id="dash-new-key" style="font-family:var(--font-mono);font-size:14px;background:var(--cream-dark);
+                         color:var(--ink);padding:10px 14px;border-radius:var(--radius-sm);display:block;
+                         word-break:break-all;">{escape(_new_key_param)}</code>
+            <button onclick="navigator.clipboard.writeText(document.getElementById('dash-new-key').textContent);this.textContent='Copied!'"
+                    class="btn btn-primary" style="margin-top:12px;font-size:13px;">Copy to Clipboard</button>
+        </div>'''
+
+    api_nudge = ''
     if not user_keys:
         api_nudge = '''<div style="background:linear-gradient(135deg,var(--card-bg),var(--cream-dark));border:1px solid var(--accent);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;">
             <div style="display:flex;align-items:center;gap:12px;">
@@ -1134,9 +1184,9 @@ async def dashboard_overview(request: Request):
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Citation Intel</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">See which AI agents recommend your tools &amp; how often</div>
                 </a>
-                <a href="/developer" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
+                <a href="/setup" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Priority API</div>
-                    <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">1,000 queries/day &mdash; 20x the free tier</div>
+                    <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">1,000 queries/month + personalized recommendations</div>
                 </a>
                 <div class="pro-feat" style="background:var(--card-bg);border:1px solid var(--border);cursor:default;">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
@@ -1192,6 +1242,9 @@ async def dashboard_overview(request: Request):
 
         {header_html}
         {actions_html}
+
+        {_new_key_banner}
+        {api_key_html}
 
         {pro_hub_html}
 
@@ -2416,6 +2469,11 @@ async def welcome_page(request: Request):
 async def developer_page(request: Request):
     user = request.state.user
 
+    # Logged-in users go to dashboard (API key management lives there now)
+    if user:
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url="/dashboard", status_code=302)
+
     # Public API docs for logged-out visitors
     if not user:
         public_body = f'''
@@ -2784,11 +2842,11 @@ async def developer_create_key(request: Request):
     keys = await get_api_keys_for_user(db, user['id'])
     active = [k for k in keys if k['is_active']]
     if len(active) >= max_keys:
-        return RedirectResponse(url="/developer?error=max_keys", status_code=303)
+        return RedirectResponse(url="/dashboard", status_code=303)
 
     result = await create_api_key(db, user['id'], name)
     await track_event(db, 'key_created', user_id=user['id'])
-    redir = str(form.get("redirect", "/developer")).strip()
+    redir = str(form.get("redirect", "/dashboard")).strip()
     if not redir.startswith("/") or redir.startswith("//"):
         redir = "/developer"
     return RedirectResponse(url=f"{redir}?new={result['key']}", status_code=303)
