@@ -271,18 +271,10 @@ async def landing(request: Request):
                 </div>
             </div>
 
-            <!-- Install code block -->
-            <div style="max-width:600px;margin:0 auto;">
-                <div style="color:var(--slate);border-radius:var(--radius-sm);padding:16px 24px;border:1px solid rgba(255,255,255,0.12);
-                            background:rgba(10,14,26,0.6);font-family:var(--font-mono);font-size:13px;line-height:1.8;overflow-x:auto;">
-                    <span style="color:var(--ink-muted);"># Claude Code (one command)</span><br>
-                    claude mcp add indiestack -- uvx --from indiestack indiestack-mcp<br><br>
-                    <span style="color:var(--ink-muted);"># Cursor / Windsurf / VS Code — add to mcp config:</span><br>
-                    {{"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]}}
-                </div>
-                <p style="text-align:center;font-size:13px;color:var(--ink-light);margin-top:12px;">
-                    Want more queries? <a href="/developer" style="color:var(--accent);text-decoration:none;">Get a free API key</a> for 10/month &rarr;
-                </p>
+            <div style="text-align:center;">
+                <a href="/setup" class="btn btn-primary" style="font-size:16px;padding:14px 32px;text-decoration:none;">
+                    Get install instructions
+                </a>
             </div>
         </div>
     </section>
