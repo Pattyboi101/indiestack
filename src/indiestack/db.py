@@ -1157,6 +1157,12 @@ async def init_db():
             await db.commit()
         except Exception:
             pass
+        # Migration: track when a tool last won TOTW (4-week cooldown)
+        try:
+            await db.execute("ALTER TABLE tools ADD COLUMN totw_last_won TIMESTAMP")
+            await db.commit()
+        except Exception:
+            pass
         # Migration: quality gate enrichment columns
         for col, ddl in [
             ("domain_age_days", "ALTER TABLE tools ADD COLUMN domain_age_days INTEGER DEFAULT NULL"),

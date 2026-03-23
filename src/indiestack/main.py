@@ -337,6 +337,7 @@ async def _auto_tool_of_the_week():
                        ) ac ON ac.tool_id = t.id
                        WHERE t.status = 'approved'
                          AND (COALESCE(sl.cnt, 0) + COALESCE(ac.cnt, 0)) > 0
+                         AND (t.totw_last_won IS NULL OR t.totw_last_won < datetime('now', '-28 days'))
                        ORDER BY mentions DESC
                        LIMIT 1"""
                 )
@@ -345,7 +346,7 @@ async def _auto_tool_of_the_week():
                 tool = dict(row[0])
                 clicks = tool['mentions']
                 await conn.execute("UPDATE tools SET tool_of_the_week = 0 WHERE tool_of_the_week = 1")
-                await conn.execute("UPDATE tools SET tool_of_the_week = 1 WHERE id = ?", (tool['id'],))
+                await conn.execute("UPDATE tools SET tool_of_the_week = 1, totw_last_won = datetime('now') WHERE id = ?", (tool['id'],))
                 await conn.commit()
                 # Try to email the maker
                 try:
