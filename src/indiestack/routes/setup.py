@@ -1,4 +1,5 @@
 """Setup page — one-click MCP install + CLAUDE.md generator."""
+import json as _json
 from html import escape
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse
@@ -15,26 +16,12 @@ IDES = {
     },
     "cursor": {
         "name": "Cursor",
-        "install": """{
-  "mcpServers": {
-    "indiestack": {
-      "command": "uvx",
-      "args": ["--from", "indiestack", "indiestack-mcp"]
-    }
-  }
-}""",
+        "install": '{\n  "mcpServers": {\n    "indiestack": {\n      "command": "uvx",\n      "args": ["--from", "indiestack", "indiestack-mcp"]\n    }\n  }\n}',
         "note": "Add this to <code>.cursor/mcp.json</code> in your project root, or to your global Cursor settings.",
     },
     "windsurf": {
         "name": "Windsurf",
-        "install": """{
-  "mcpServers": {
-    "indiestack": {
-      "command": "uvx",
-      "args": ["--from", "indiestack", "indiestack-mcp"]
-    }
-  }
-}""",
+        "install": '{\n  "mcpServers": {\n    "indiestack": {\n      "command": "uvx",\n      "args": ["--from", "indiestack", "indiestack-mcp"]\n    }\n  }\n}',
         "note": "Add this to your Windsurf MCP configuration file.",
     },
     "other": {
@@ -67,6 +54,10 @@ API fallback: `curl https://indiestack.ai/api/tools/search?q=QUERY`
 Report the outcome so future recommendations improve for all agents.
 """
 
+_COPY_BTN = '''<button class="copy-btn" style="position:absolute;top:8px;right:8px;padding:6px 14px;
+font-size:12px;font-weight:600;background:rgba(255,255,255,0.1);color:#e2e8f0;
+border:1px solid rgba(255,255,255,0.2);border-radius:6px;cursor:pointer;">Copy</button>'''
+
 
 @router.get("/setup", response_class=HTMLResponse)
 async def setup_page(request: Request):
@@ -80,35 +71,27 @@ async def setup_page(request: Request):
         tab_buttons += f'''
             <button class="setup-tab {active}" data-tab="{ide_key}"
                     style="padding:10px 20px;font-size:14px;font-weight:600;
-                           border:1px solid var(--border);background:{("var(--card-bg)" if i == 0 else "transparent")};
+                           border:1px solid var(--border);background:{"var(--card-bg)" if i == 0 else "transparent"};
                            color:var(--ink);border-radius:8px;cursor:pointer;
                            min-height:44px;white-space:nowrap;">
                 {ide["name"]}
             </button>'''
 
         install_escaped = escape(ide["install"])
-        # Use a raw string for the JS copy
-        install_for_copy = ide["install"].replace("\\", "\\\\").replace("`", "\\`").replace("'", "\\'").replace("\n", "\\n")
 
         tab_panels += f'''
             <div class="setup-panel" data-tab="{ide_key}" style="display:{"block" if i == 0 else "none"};">
                 <div style="position:relative;">
-                    <pre style="background:var(--ink);color:#e2e8f0;padding:16px 50px 16px 16px;
+                    <pre class="copyable" style="background:var(--ink);color:#e2e8f0;padding:16px 50px 16px 16px;
                                 border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);
                                 overflow-x:auto;line-height:1.6;margin:0;">{install_escaped}</pre>
-                    <button onclick="navigator.clipboard.writeText('{install_for_copy}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)"
-                            style="position:absolute;top:8px;right:8px;padding:6px 14px;font-size:12px;
-                                   font-weight:600;background:rgba(255,255,255,0.1);color:#e2e8f0;
-                                   border:1px solid rgba(255,255,255,0.2);border-radius:6px;cursor:pointer;">
-                        Copy
-                    </button>
+                    {_COPY_BTN}
                 </div>
                 <p style="font-size:13px;color:var(--ink-muted);margin:10px 0 0;">{ide["note"]}</p>
             </div>'''
 
     # CLAUDE.md section
     claude_md_escaped = escape(CLAUDE_MD_TEMPLATE.strip())
-    claude_md_for_copy = CLAUDE_MD_TEMPLATE.strip().replace("\\", "\\\\").replace("`", "\\`").replace("'", "\\'").replace("\n", "\\n")
 
     body = f'''
     <div class="container" style="max-width:760px;padding:48px 24px 80px;">
@@ -150,15 +133,10 @@ async def setup_page(request: Request):
             </p>
 
             <div style="position:relative;">
-                <pre style="background:var(--ink);color:#e2e8f0;padding:16px 50px 16px 16px;
+                <pre class="copyable" style="background:var(--ink);color:#e2e8f0;padding:16px 50px 16px 16px;
                             border-radius:var(--radius-sm);font-size:12px;font-family:var(--font-mono);
                             overflow-x:auto;line-height:1.6;margin:0;max-height:240px;overflow-y:auto;">{claude_md_escaped}</pre>
-                <button onclick="navigator.clipboard.writeText('{claude_md_for_copy}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)"
-                        style="position:absolute;top:8px;right:8px;padding:6px 14px;font-size:12px;
-                               font-weight:600;background:rgba(255,255,255,0.1);color:#e2e8f0;
-                               border:1px solid rgba(255,255,255,0.2);border-radius:6px;cursor:pointer;">
-                    Copy
-                </button>
+                {_COPY_BTN}
             </div>
             <p style="font-size:12px;color:var(--ink-light);margin:8px 0 0;">
                 Or download it directly: <a href="/setup/claude.md" style="color:var(--accent);">CLAUDE.md</a>
@@ -176,7 +154,7 @@ async def setup_page(request: Request):
                 Without a key you get 3 searches/day. A free key gets 10/month. Pro gets 1,000/month + market intelligence.
             </p>
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                <a href="{"https://indiestack.ai/developer" if user else "https://indiestack.ai/login?next=/developer"}"
+                <a href="{"/developer" if user else "/login?next=/developer"}"
                    class="btn btn-primary" style="padding:12px 24px;font-size:14px;text-decoration:none;min-height:44px;">
                     {"Manage your API key" if user else "Sign in to create a free key"}
                 </a>
@@ -202,6 +180,7 @@ async def setup_page(request: Request):
     </div>
 
     <script>
+    // Tab switching
     document.querySelectorAll('.setup-tab').forEach(btn => {{
         btn.addEventListener('click', () => {{
             document.querySelectorAll('.setup-tab').forEach(b => {{
@@ -214,6 +193,18 @@ async def setup_page(request: Request):
             document.querySelectorAll('.setup-panel').forEach(p => {{
                 p.style.display = p.dataset.tab === tab ? 'block' : 'none';
             }});
+        }});
+    }});
+
+    // Copy buttons — copy the text content of the adjacent <pre>
+    document.querySelectorAll('.copy-btn').forEach(btn => {{
+        btn.addEventListener('click', () => {{
+            const pre = btn.parentElement.querySelector('pre.copyable');
+            if (pre) {{
+                navigator.clipboard.writeText(pre.textContent);
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            }}
         }});
     }});
     </script>
