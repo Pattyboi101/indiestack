@@ -1749,6 +1749,22 @@ async def api_tools_search(
         except Exception:
             pass  # Don't fail the search if enrichment fails
 
+    # Enrich with all categories (multi-category support)
+    try:
+        tool_ids_for_cats = [t['id'] for t in tools if t.get('id')]
+        if tool_ids_for_cats:
+            all_cats_map = await db.get_tool_categories_bulk(d, tool_ids_for_cats)
+            slug_to_id_cats = {t['slug']: t['id'] for t in tools if t.get('id')}
+            for r in results:
+                tid = slug_to_id_cats.get(r['slug'])
+                if tid and tid in all_cats_map:
+                    r['all_categories'] = [
+                        {"name": c['name'], "slug": c['slug'], "is_primary": bool(c['is_primary'])}
+                        for c in all_cats_map[tid]
+                    ]
+    except Exception:
+        pass
+
     response = {
         "tools": results,
         "total": len(results),
@@ -2461,6 +2477,17 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
         "verified_pairs": tool.get("verified_pairs", "") or "",
         "agent_instructions": tool.get("agent_instructions", "") or "",
     }
+
+    # All categories (multi-category support)
+    try:
+        tool_cats = await db.get_tool_categories(d, tool['id'])
+        if tool_cats:
+            result["all_categories"] = [
+                {"name": c['name'], "slug": c['slug'], "is_primary": bool(c['is_primary'])}
+                for c in tool_cats
+            ]
+    except Exception:
+        pass
 
     # Add dynamic compatibility pairs from tool_pairs table
     try:
