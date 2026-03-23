@@ -105,6 +105,11 @@ async def tool_detail(request: Request, slug: str):
     recommendation_count = await get_tool_recommendation_count(db, slug_str)
     click_count = await get_outbound_click_count(db, tool_id, days=30)
 
+    # Multi-category support
+    from indiestack.db import get_tool_categories as _get_tool_cats
+    _tool_cats = await _get_tool_cats(db, tool_id)
+    _secondary_cats = [c for c in _tool_cats if not c['is_primary']]
+
     # Analytics wall — determine viewer's relationship to this tool
     is_tool_owner = (
         user and user.get('maker_id')
@@ -1059,7 +1064,10 @@ async def tool_detail(request: Request, slug: str):
                     border:1px solid var(--border);margin-bottom:24px;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;">
             <div style="flex:1;">
-                <a href="/category/{cat_slug}" class="tag mb-2" style="display:inline-block;">{cat_name}</a>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+                    <a href="/category/{cat_slug}" class="tag" style="display:inline-block;">{cat_name}</a>
+                    {''.join(f'<a href="/category/{escape(str(c["slug"]))}" class="tag" style="display:inline-block;opacity:0.7;">{escape(str(c["name"]))}</a>' for c in _secondary_cats)}
+                </div>
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px;">
                     {detail_pixel_html}
                     <h1 style="font-family:var(--font-display);font-size:36px;">{name}</h1>
