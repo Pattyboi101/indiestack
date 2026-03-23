@@ -1238,13 +1238,15 @@ async def dashboard_overview(request: Request):
         {verify_banner}
         {boost_success_banner}
         {avatar_saved_banner}
+        {_new_key_banner}
+        {api_key_html if not active_keys else ''}
+
         {'' if is_pro else api_nudge}
 
         {header_html}
         {actions_html}
 
-        {_new_key_banner}
-        {api_key_html}
+        {api_key_html if active_keys else ''}
 
         {pro_hub_html}
 
