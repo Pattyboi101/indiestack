@@ -247,7 +247,7 @@ async def verify_magic_link(request: Request):
     session_token = await create_user_session(db, user_id)
 
     if is_new_user and next_url == "/dashboard":
-        redirect_to = "/welcome"
+        redirect_to = "/setup?welcome=1"
     else:
         redirect_to = next_url
     response = RedirectResponse(redirect_to, status_code=303)
@@ -665,7 +665,7 @@ async def github_callback(request: Request):
         if next_url:
             redirect_to = next_url
         elif is_new_user:
-            redirect_to = "/welcome"
+            redirect_to = "/setup?welcome=1"
         else:
             redirect_to = "/dashboard"
         response = RedirectResponse(url=redirect_to, status_code=303)

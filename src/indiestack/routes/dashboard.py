@@ -2383,8 +2383,16 @@ async def dashboard_purchases(request: Request):
 
 # ── Welcome / Onboarding ───────────────────────────────────────────────
 
-@router.get("/welcome", response_class=HTMLResponse)
+@router.get("/welcome")
 async def welcome_page(request: Request):
+    """Redirect to /setup — welcome content lives there now."""
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/setup?welcome=1", status_code=302)
+
+
+@router.get("/welcome-old", response_class=HTMLResponse)
+async def welcome_page_old(request: Request):
+    """Old welcome page — kept for reference, not linked anywhere."""
     user = request.state.user
     redirect = require_login(user)
     if redirect:
@@ -2438,8 +2446,8 @@ async def welcome_page(request: Request):
                 <h2 style="font-family:var(--font-display);font-size:18px;margin:0;color:var(--ink);">Install the MCP server</h2>
             </div>
             <div style="padding-left:44px;margin-top:8px;">
-                <pre style="background:var(--ink);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:12px;font-family:var(--font-mono);overflow-x:auto;line-height:1.6;position:relative;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</pre>
-                <p style="font-size:12px;color:var(--ink-muted);margin:8px 0 0;">Works with Claude Code, Cursor, Windsurf, and VS Code.</p>
+                <a href="/setup" class="btn btn-primary" style="font-size:14px;padding:10px 20px;text-decoration:none;">View install instructions</a>
+                <p style="font-size:12px;color:var(--ink-muted);margin:8px 0 0;">Claude Code, Cursor, Windsurf, and more.</p>
             </div>
         </div>
 

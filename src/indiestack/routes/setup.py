@@ -82,8 +82,22 @@ async def setup_page(request: Request):
     # CLAUDE.md section
     claude_md_escaped = escape(CLAUDE_MD_TEMPLATE.strip())
 
+    is_welcome = request.query_params.get("welcome") == "1"
+    welcome_banner = ''
+    if is_welcome and user:
+        from html import escape as _esc
+        _name = _esc(user.get('name', '').split()[0] or 'there')
+        welcome_banner = f'''
+        <div style="background:linear-gradient(135deg,#065F46,#064E3B);border:1px solid rgba(110,231,183,0.3);
+                    border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;text-align:center;">
+            <p style="color:#6EE7B7;font-size:20px;font-weight:700;margin:0 0 4px;">Welcome to IndieStack, {_name}!</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 6,500+ developer tools.</p>
+        </div>'''
+
     body = f'''
     <div class="container" style="max-width:760px;padding:48px 24px 80px;">
+
+        {welcome_banner}
 
         <div style="text-align:center;margin-bottom:40px;">
             <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,40px);color:var(--ink);margin:0 0 12px;">
