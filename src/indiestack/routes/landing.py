@@ -221,8 +221,8 @@ async def landing(request: Request):
         '    </div>'
         # CTAs
         '    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;margin-top:16px;">'
-        '        <a href="/signup?next=/welcome" class="btn btn-lg btn-primary landing-neon">'
-        '            Get Started Free'
+        '        <a href="/setup" class="btn btn-lg btn-primary landing-neon">'
+        '            Set Up in 30 Seconds'
         '        </a>'
         '        <a href="/explore" class="btn btn-lg btn-secondary">'
         '            Browse the Catalog'
