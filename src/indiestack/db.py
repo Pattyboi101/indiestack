@@ -1663,10 +1663,13 @@ async def get_all_categories(db: aiosqlite.Connection):
     if _categories_cache['data'] is not None and now < _categories_cache['expires']:
         return _categories_cache['data']
     cursor = await db.execute(
-        """SELECT c.*, COUNT(t.id) as tool_count
-           FROM categories c
-           LEFT JOIN tools t ON t.category_id = c.id AND t.status = 'approved'
-           GROUP BY c.id ORDER BY c.name"""
+        """SELECT c.*, (
+               SELECT COUNT(DISTINCT tc.tool_id)
+               FROM tool_categories tc
+               JOIN tools t ON t.id = tc.tool_id AND t.status = 'approved'
+               WHERE tc.category_id = c.id
+           ) as tool_count
+           FROM categories c ORDER BY c.name"""
     )
     result = await cursor.fetchall()
     _categories_cache['data'] = result
@@ -1761,20 +1764,26 @@ async def get_trending_tools(db: aiosqlite.Connection, limit: int = 6):
 async def get_tools_by_category(db: aiosqlite.Connection, category_id: int, page: int = 1, per_page: int = 12):
     offset = (page - 1) * per_page
     cursor = await db.execute(
-        """SELECT t.*, c.name as category_name, c.slug as category_slug,
+        """SELECT DISTINCT t.*, c.name as category_name, c.slug as category_slug,
                   CASE WHEN EXISTS(
                       SELECT 1 FROM subscriptions s JOIN users u ON u.id = s.user_id
                       WHERE u.maker_id = t.maker_id AND s.status = 'active'
-                  ) THEN 1 ELSE 0 END AS maker_is_pro
-           FROM tools t JOIN categories c ON t.category_id = c.id
-           WHERE t.category_id = ? AND t.status = 'approved'
-           ORDER BY t.quality_score DESC, t.github_stars DESC, t.upvote_count DESC
+                  ) THEN 1 ELSE 0 END AS maker_is_pro,
+                  tc_match.is_primary as is_primary_in_category
+           FROM tools t
+           JOIN categories c ON t.category_id = c.id
+           JOIN tool_categories tc_match ON tc_match.tool_id = t.id AND tc_match.category_id = ?
+           WHERE t.status = 'approved'
+           ORDER BY tc_match.is_primary DESC, t.quality_score DESC, t.github_stars DESC, t.upvote_count DESC
            LIMIT ? OFFSET ?""",
         (category_id, per_page, offset),
     )
     rows = await cursor.fetchall()
     count_cursor = await db.execute(
-        "SELECT COUNT(*) as cnt FROM tools WHERE category_id = ? AND status = 'approved'", (category_id,)
+        """SELECT COUNT(DISTINCT t.id) as cnt
+           FROM tools t
+           JOIN tool_categories tc ON tc.tool_id = t.id AND tc.category_id = ?
+           WHERE t.status = 'approved'""", (category_id,)
     )
     total = (await count_cursor.fetchone())['cnt']
     return rows, total
@@ -2175,7 +2184,7 @@ async def search_tools(
     _engagement_expr = (
         "(CASE WHEN LOWER(t.name) = LOWER(?) THEN 100 ELSE 0 END)"
         " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 50 ELSE 0 END)"
-        " + (CASE WHEN LOWER(c.name) LIKE ('%' || LOWER(?) || '%') THEN 20 ELSE 0 END)"
+        " + (CASE WHEN EXISTS(SELECT 1 FROM tool_categories tc2 JOIN categories c2 ON c2.id=tc2.category_id WHERE tc2.tool_id=t.id AND LOWER(c2.name) LIKE ('%' || LOWER(?) || '%')) THEN 20 ELSE 0 END)"
         " + (t.upvote_count * 2)"
         " + (COALESCE(t.mcp_view_count, 0) * 3)"
         " + (COALESCE(t.github_stars, 0) / 100.0)"
@@ -2527,8 +2536,12 @@ async def create_tool(db: aiosqlite.Connection, *, name: str, tagline: str, desc
          price_pence, delivery_type, delivery_url, stripe_account_id, maker_id,
          tool_type, platforms, install_command, source_type),
     )
+    tool_id = cursor.lastrowid
+    await db.execute(
+        "INSERT OR IGNORE INTO tool_categories (tool_id, category_id, is_primary) VALUES (?, ?, 1)",
+        (tool_id, category_id))
     await db.commit()
-    return cursor.lastrowid
+    return tool_id
 
 
 async def get_category_by_name(db: aiosqlite.Connection, name: str):
@@ -3655,7 +3668,7 @@ async def search_tools_advanced(db: aiosqlite.Connection, *, query: str = "",
         conditions.append("t.is_verified = 1")
 
     if category_id:
-        conditions.append("t.category_id = ?")
+        conditions.append("EXISTS(SELECT 1 FROM tool_categories tc_f WHERE tc_f.tool_id = t.id AND tc_f.category_id = ?)")
         params.append(category_id)
 
     where = " AND ".join(conditions)
@@ -4949,7 +4962,7 @@ async def explore_tools(db: aiosqlite.Connection, *, category_id: int = None,
         params.extend([q_like, q_like])
 
     if category_id:
-        conditions.append("t.category_id = ?")
+        conditions.append("EXISTS(SELECT 1 FROM tool_categories tc_f WHERE tc_f.tool_id = t.id AND tc_f.category_id = ?)")
         params.append(category_id)
 
     if tag:
