@@ -232,6 +232,7 @@ from indiestack.routes import geo
 from indiestack.routes import changelog
 from indiestack.routes import guidelines
 from indiestack.routes import audit
+from indiestack.routes import setup
 
 
 async def _periodic_health_refresh():
@@ -4448,3 +4449,4 @@ app.include_router(geo.router)
 app.include_router(changelog.router)
 app.include_router(guidelines.router)
 app.include_router(audit.router)
+app.include_router(setup.router)
