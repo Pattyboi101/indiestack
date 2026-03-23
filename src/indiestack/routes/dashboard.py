@@ -865,20 +865,7 @@ async def dashboard_overview(request: Request):
                     class="btn btn-primary" style="margin-top:12px;font-size:13px;">Copy to Clipboard</button>
         </div>'''
 
-    api_nudge = ''
-    if not user_keys:
-        api_nudge = '''<div style="background:linear-gradient(135deg,var(--card-bg),var(--cream-dark));border:1px solid var(--accent);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;">
-            <div style="display:flex;align-items:center;gap:12px;">
-                <span style="color:var(--slate);display:inline-block;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
-                <div>
-                    <strong style="font-size:14px;">Get personalized recommendations</strong>
-                    <p style="font-size:13px;color:var(--ink-muted);margin:4px 0 0;">
-                        Create an API key to unlock AI-powered tool recommendations tailored to your workflow.
-                        <a href="/developer" style="color:var(--accent);font-weight:600;">Set up your Developer API &rarr;</a>
-                    </p>
-                </div>
-            </div>
-        </div>'''
+    # api_nudge removed — api_key_html card handles this now
 
     stripe_launch_banner = ''
 
@@ -1241,7 +1228,6 @@ async def dashboard_overview(request: Request):
         {_new_key_banner}
         {api_key_html if not active_keys else ''}
 
-        {'' if is_pro else api_nudge}
 
         {header_html}
         {actions_html}
