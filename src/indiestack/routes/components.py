@@ -675,9 +675,10 @@ def nav_html(user=None) -> str:
         <div class="mobile-menu" id="mobile-menu">
             <a href="/explore">Explore</a>
             <a href="/pricing">Pricing</a>
-            <a href="/submit" class="btn btn-primary">Submit</a>
-            <button onclick="toggleTheme()">Toggle Theme</button>
+            <a href="/setup">Set Up</a>
             {mobile_auth_links}
+            <a href="/submit">Submit a Tool</a>
+            <button onclick="toggleTheme()">Toggle Theme</button>
         </div>
     </nav>
     {verification_banner}
