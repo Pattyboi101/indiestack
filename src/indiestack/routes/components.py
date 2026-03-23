@@ -573,10 +573,11 @@ def design_tokens() -> str:
             .hamburger { display: block; }
             .mobile-menu.open {
                 display: flex; flex-direction: column; gap: 0;
-                position: absolute; top: 64px; left: 0; right: 0;
+                position: fixed; top: 64px; left: 0; right: 0;
                 background: var(--nav-bg); border-bottom: 1px solid var(--border);
                 padding: 8px 0; z-index: 99;
                 box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+                max-height: calc(100vh - 64px); overflow-y: auto;
             }
             .mobile-menu a, .mobile-menu button {
                 display: block; padding: 12px 24px; color: var(--ink-light);
