@@ -666,7 +666,6 @@ def nav_html(user=None) -> str:
             <div class="nav-links">
                 <a href="/explore" style="color:var(--ink-light);">Explore</a>
                 <a href="/pricing" style="color:var(--ink-light);">Pricing</a>
-                <a href="/developer" style="color:var(--ink-light);">API</a>
                 <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Submit</a>
                 <button onclick="toggleTheme()" id="theme-toggle" style="background:none;border:1px solid var(--border);border-radius:999px;padding:8px 12px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all 0.15s ease;min-width:44px;min-height:44px;" title="Toggle dark mode">&#9790;</button>
                 {auth_links}
@@ -676,7 +675,6 @@ def nav_html(user=None) -> str:
         <div class="mobile-menu" id="mobile-menu">
             <a href="/explore">Explore</a>
             <a href="/pricing">Pricing</a>
-            <a href="/developer">API</a>
             <a href="/submit" class="btn btn-primary">Submit</a>
             <button onclick="toggleTheme()">Toggle Theme</button>
             {mobile_auth_links}
