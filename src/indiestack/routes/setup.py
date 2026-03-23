@@ -143,14 +143,9 @@ async def setup_page(request: Request):
                 Without a key you get 3 searches/day. A free key gets 10/month. Pro gets 1,000/month + market intelligence.
             </p>
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                <a href="{"/developer" if user else "/login?next=/developer"}"
+                <a href="{"/dashboard" if user else "/login?next=/dashboard"}"
                    class="btn btn-primary" style="padding:12px 24px;font-size:14px;text-decoration:none;min-height:44px;">
-                    {"Manage your API key" if user else "Sign in to create a free key"}
-                </a>
-                <a href="/pricing" style="display:inline-flex;align-items:center;padding:12px 24px;
-                         font-size:13px;color:var(--ink-muted);text-decoration:none;border:1px solid var(--border);
-                         border-radius:8px;min-height:44px;">
-                    Compare plans
+                    {"Get your API key" if user else "Sign in to get your API key"}
                 </a>
             </div>
         </div>
