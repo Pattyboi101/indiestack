@@ -822,7 +822,7 @@ async def db_middleware(request: Request, call_next):
                         _logger.exception("Failed to log API usage")
             # No valid API key — apply IP-based daily limit (3/day)
             # Exempt non-query paths (embeddable badges, milestones, OpenAPI spec, categories)
-            _API_RATE_EXEMPT = ('/api/badge/', '/api/milestone/', '/api/openapi', '/api/categories', '/api/health', '/api/agent/')
+            _API_RATE_EXEMPT = ('/api/badge/', '/api/milestone/', '/api/openapi', '/api/categories', '/api/health', '/api/agent/', '/api/claim', '/api/upvote', '/api/wishlist', '/api/subscribe', '/api/follow-through')
             if not request.state.api_key and not path.startswith(_API_RATE_EXEMPT) and _check_api_ip_rate_limit(client_ip):
                 return JSONResponse(
                     {"error": "You've used your 3 free daily queries. "
