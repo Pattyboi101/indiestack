@@ -587,7 +587,10 @@ def design_tokens() -> str:
             .mobile-menu a:hover, .mobile-menu button:hover { background: var(--cream-dark); }
             .mobile-menu .btn-primary {
                 margin: 8px 24px; width: auto; text-align: center;
-                border-radius: 999px; color: white !important;
+                border-radius: 999px; color: #000 !important;
+            }
+            [data-theme="dark"] .mobile-menu .btn-primary {
+                color: #000 !important;
             }
         }
         details > summary::-webkit-details-marker { display: none; }
