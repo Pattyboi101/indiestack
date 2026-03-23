@@ -575,6 +575,21 @@ SEED_CATEGORIES = [
     ("Learning & Education", "learning-education", "Flashcards, courses, and educational tools", "📚"),
     ("Newsletters & Content", "newsletters-content", "Publishing platforms, newsletters, and content tools", "📰"),
     ("Creative Tools", "creative-tools", "Music, art, video, and creative software", "🎭"),
+    ("Database", "database", "Databases, ORMs, and data storage tools", ""),
+    ("Headless CMS", "headless-cms", "API-first content management systems", ""),
+    ("Media Server", "media-server", "Streaming, transcoding, and media management", ""),
+    ("DevOps & Infrastructure", "devops-infrastructure", "CI/CD, containers, and infrastructure tools", ""),
+    ("Security Tools", "security-tools", "Security scanning, encryption, and compliance", ""),
+    ("Search Engine", "search-engine", "Full-text search, vector search, and indexing", ""),
+    ("Message Queue", "message-queue", "Message brokers, event streaming, and async communication", ""),
+    ("Testing Tools", "testing-tools", "Test automation, mocking, and QA tools", ""),
+    ("Documentation", "documentation", "API docs, wikis, and knowledge bases", ""),
+    ("CLI Tools", "cli-tools", "Command-line utilities and terminal tools", ""),
+    ("Logging", "logging", "Log aggregation, analysis, and management", ""),
+    ("Feature Flags", "feature-flags", "Feature toggles, A/B testing, and gradual rollouts", ""),
+    ("Notifications", "notifications", "Push notifications, in-app messaging, and alerts", ""),
+    ("Background Jobs", "background-jobs", "Task queues, cron jobs, and workflow orchestration", ""),
+    ("Localization", "localization", "Translation, i18n, and multilingual content", ""),
 ]
 
 # ── Token cost estimates per category ────────────────────────────────────
@@ -604,6 +619,21 @@ CATEGORY_TOKEN_COSTS = {
     "learning-education": 80_000,
     "newsletters-content": 60_000,
     "creative-tools": 100_000,
+    "database": 60_000,
+    "headless-cms": 50_000,
+    "media-server": 80_000,
+    "devops-infrastructure": 70_000,
+    "security-tools": 60_000,
+    "search-engine": 50_000,
+    "message-queue": 40_000,
+    "testing-tools": 45_000,
+    "documentation": 30_000,
+    "cli-tools": 35_000,
+    "logging": 40_000,
+    "feature-flags": 30_000,
+    "notifications": 35_000,
+    "background-jobs": 40_000,
+    "localization": 30_000,
 }
 
 # Maps common need keywords to category slugs, search terms, and competitors.
@@ -1540,6 +1570,59 @@ async def init_db():
         """)
         await db.commit()
 
+        # ── Multi-category junction table ──
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS tool_categories (
+                tool_id INTEGER NOT NULL REFERENCES tools(id),
+                category_id INTEGER NOT NULL REFERENCES categories(id),
+                is_primary INTEGER NOT NULL DEFAULT 0,
+                PRIMARY KEY (tool_id, category_id)
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_categories_category ON tool_categories(category_id)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_tool_categories_tool ON tool_categories(tool_id)")
+        await db.commit()
+
+        # Migration: backfill tool_categories from tools.category_id
+        try:
+            cursor = await db.execute("SELECT COUNT(*) as cnt FROM tool_categories")
+            count = (await cursor.fetchone())['cnt']
+            if count == 0:
+                await db.execute("""
+                    INSERT OR IGNORE INTO tool_categories (tool_id, category_id, is_primary)
+                    SELECT id, category_id, 1 FROM tools WHERE category_id IS NOT NULL
+                """)
+                await db.commit()
+        except Exception:
+            pass
+
+        # Migration: add expanded v2 categories if missing
+        for _cat_name, _cat_slug, _cat_desc, _cat_icon in [
+            ("Database", "database", "Databases, ORMs, and data storage tools", ""),
+            ("Headless CMS", "headless-cms", "API-first content management systems", ""),
+            ("Media Server", "media-server", "Streaming, transcoding, and media management", ""),
+            ("DevOps & Infrastructure", "devops-infrastructure", "CI/CD, containers, and infrastructure tools", ""),
+            ("Security Tools", "security-tools", "Security scanning, encryption, and compliance", ""),
+            ("Search Engine", "search-engine", "Full-text search, vector search, and indexing", ""),
+            ("Message Queue", "message-queue", "Message brokers, event streaming, and async communication", ""),
+            ("Testing Tools", "testing-tools", "Test automation, mocking, and QA tools", ""),
+            ("Documentation", "documentation", "API docs, wikis, and knowledge bases", ""),
+            ("CLI Tools", "cli-tools", "Command-line utilities and terminal tools", ""),
+            ("Logging", "logging", "Log aggregation, analysis, and management", ""),
+            ("Feature Flags", "feature-flags", "Feature toggles, A/B testing, and gradual rollouts", ""),
+            ("Notifications", "notifications", "Push notifications, in-app messaging, and alerts", ""),
+            ("Background Jobs", "background-jobs", "Task queues, cron jobs, and workflow orchestration", ""),
+            ("Localization", "localization", "Translation, i18n, and multilingual content", ""),
+        ]:
+            try:
+                await db.execute(
+                    "INSERT INTO categories (name, slug, description, icon) VALUES (?, ?, ?, ?)",
+                    (_cat_name, _cat_slug, _cat_desc, _cat_icon),
+                )
+            except Exception:
+                pass  # already exists
+        await db.commit()
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
@@ -1594,6 +1677,66 @@ async def get_all_categories(db: aiosqlite.Connection):
 async def get_category_by_slug(db: aiosqlite.Connection, slug: str):
     cursor = await db.execute("SELECT * FROM categories WHERE slug = ?", (slug,))
     return await cursor.fetchone()
+
+
+# ── Multi-category helpers ───────────────────────────────────────────────
+
+async def get_tool_categories(db: aiosqlite.Connection, tool_id: int) -> list:
+    """Get all categories for a tool (primary first, then secondary)."""
+    cursor = await db.execute("""
+        SELECT c.id, c.name, c.slug, tc.is_primary
+        FROM tool_categories tc
+        JOIN categories c ON c.id = tc.category_id
+        WHERE tc.tool_id = ?
+        ORDER BY tc.is_primary DESC, c.name
+    """, (tool_id,))
+    return await cursor.fetchall()
+
+
+async def get_tool_categories_bulk(db: aiosqlite.Connection, tool_ids: list) -> dict:
+    """Get all categories for multiple tools. Returns {tool_id: [category_rows]}."""
+    if not tool_ids:
+        return {}
+    placeholders = ','.join('?' for _ in tool_ids)
+    cursor = await db.execute(f"""
+        SELECT tc.tool_id, c.id, c.name, c.slug, tc.is_primary
+        FROM tool_categories tc
+        JOIN categories c ON c.id = tc.category_id
+        WHERE tc.tool_id IN ({placeholders})
+        ORDER BY tc.is_primary DESC, c.name
+    """, tool_ids)
+    rows = await cursor.fetchall()
+    result = {}
+    for r in rows:
+        result.setdefault(r['tool_id'], []).append(r)
+    return result
+
+
+async def set_tool_categories(db: aiosqlite.Connection, tool_id: int, primary_category_id: int,
+                              secondary_category_ids: list = None):
+    """Set all categories for a tool. Replaces existing entries."""
+    await db.execute("DELETE FROM tool_categories WHERE tool_id = ?", (tool_id,))
+    await db.execute(
+        "INSERT INTO tool_categories (tool_id, category_id, is_primary) VALUES (?, ?, 1)",
+        (tool_id, primary_category_id))
+    for cat_id in (secondary_category_ids or []):
+        if cat_id != primary_category_id:
+            await db.execute(
+                "INSERT OR IGNORE INTO tool_categories (tool_id, category_id, is_primary) VALUES (?, ?, 0)",
+                (tool_id, cat_id))
+    # Keep tools.category_id in sync
+    await db.execute("UPDATE tools SET category_id = ? WHERE id = ?", (primary_category_id, tool_id))
+    await db.commit()
+    _categories_cache['data'] = None  # bust cache
+
+
+async def add_secondary_category(db: aiosqlite.Connection, tool_id: int, category_id: int):
+    """Add a secondary category to a tool."""
+    await db.execute(
+        "INSERT OR IGNORE INTO tool_categories (tool_id, category_id, is_primary) VALUES (?, ?, 0)",
+        (tool_id, category_id))
+    await db.commit()
+    _categories_cache['data'] = None
 
 
 # ── Tool queries ──────────────────────────────────────────────────────────

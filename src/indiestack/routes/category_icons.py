@@ -211,6 +211,131 @@ def category_icon(slug: str, size: int = 20) -> str:
             '<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>'
             '</svg>'
         ),
+        # Database cylinder
+        'database': (
+            f'<svg {_attrs}>'
+            '<ellipse cx="12" cy="5" rx="9" ry="3"/>'
+            '<path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>'
+            '<path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>'
+            '</svg>'
+        ),
+        # Document with brackets
+        'headless-cms': (
+            f'<svg {_attrs}>'
+            '<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5z"/>'
+            '<polyline points="14 2 14 8 20 8"/>'
+            '<path d="m10 13-2 2 2 2"/>'
+            '<path d="m14 17 2-2-2-2"/>'
+            '</svg>'
+        ),
+        # Play button in screen
+        'media-server': (
+            f'<svg {_attrs}>'
+            '<rect x="2" y="3" width="20" height="14" rx="2"/>'
+            '<path d="m10 8 5 3.5-5 3.5z"/>'
+            '<line x1="2" y1="20" x2="22" y2="20"/>'
+            '</svg>'
+        ),
+        # Container/server stack
+        'devops-infrastructure': (
+            f'<svg {_attrs}>'
+            '<rect x="2" y="2" width="20" height="6" rx="1"/>'
+            '<rect x="2" y="10" width="20" height="6" rx="1"/>'
+            '<circle cx="6" cy="5" r="1"/>'
+            '<circle cx="6" cy="13" r="1"/>'
+            '<path d="M10 18v4"/><path d="M14 18v4"/>'
+            '</svg>'
+        ),
+        # Shield with lock
+        'security-tools': (
+            f'<svg {_attrs}>'
+            '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'
+            '<rect x="9" y="10" width="6" height="5" rx="1"/>'
+            '<path d="M10 10V8a2 2 0 0 1 4 0v2"/>'
+            '</svg>'
+        ),
+        # Magnifying glass with lines
+        'search-engine': (
+            f'<svg {_attrs}>'
+            '<circle cx="11" cy="11" r="8"/>'
+            '<line x1="21" y1="21" x2="16.65" y2="16.65"/>'
+            '<line x1="8" y1="9" x2="14" y2="9"/>'
+            '<line x1="8" y1="13" x2="12" y2="13"/>'
+            '</svg>'
+        ),
+        # Arrow right into box (queue)
+        'message-queue': (
+            f'<svg {_attrs}>'
+            '<path d="M3 12h10"/>'
+            '<path d="m9 8 4 4-4 4"/>'
+            '<rect x="15" y="4" width="7" height="16" rx="1"/>'
+            '<line x1="18.5" y1="8" x2="18.5" y2="8.01"/>'
+            '<line x1="18.5" y1="12" x2="18.5" y2="12.01"/>'
+            '<line x1="18.5" y1="16" x2="18.5" y2="16.01"/>'
+            '</svg>'
+        ),
+        # Beaker/flask
+        'testing-tools': (
+            f'<svg {_attrs}>'
+            '<path d="M9 2h6"/>'
+            '<path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/>'
+            '</svg>'
+        ),
+        # Book/document
+        'documentation': (
+            f'<svg {_attrs}>'
+            '<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>'
+            '<path d="M8 7h6"/>'
+            '<path d="M8 11h8"/>'
+            '</svg>'
+        ),
+        # Terminal/command prompt
+        'cli-tools': (
+            f'<svg {_attrs}>'
+            '<rect x="2" y="4" width="20" height="16" rx="2"/>'
+            '<path d="m7 10 3 2-3 2"/>'
+            '<line x1="13" y1="14" x2="17" y2="14"/>'
+            '</svg>'
+        ),
+        # Scroll/log lines
+        'logging': (
+            f'<svg {_attrs}>'
+            '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>'
+            '<polyline points="14 2 14 8 20 8"/>'
+            '<line x1="8" y1="13" x2="16" y2="13"/>'
+            '<line x1="8" y1="17" x2="14" y2="17"/>'
+            '<line x1="8" y1="9" x2="10" y2="9"/>'
+            '</svg>'
+        ),
+        # Flag
+        'feature-flags': (
+            f'<svg {_attrs}>'
+            '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>'
+            '<line x1="4" y1="22" x2="4" y2="15"/>'
+            '</svg>'
+        ),
+        # Bell
+        'notifications': (
+            f'<svg {_attrs}>'
+            '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>'
+            '<path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>'
+            '</svg>'
+        ),
+        # Clock with gear
+        'background-jobs': (
+            f'<svg {_attrs}>'
+            '<circle cx="12" cy="12" r="10"/>'
+            '<polyline points="12 6 12 12 16 14"/>'
+            '</svg>'
+        ),
+        # Globe
+        'localization': (
+            f'<svg {_attrs}>'
+            '<circle cx="12" cy="12" r="10"/>'
+            '<line x1="2" y1="12" x2="22" y2="12"/>'
+            '<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>'
+            '</svg>'
+        ),
     }
     # Generic grid fallback
     fallback = (
