@@ -108,8 +108,14 @@ async def dashboard_overview(request: Request):
                 _trial_end = datetime.fromisoformat(_trial_row['trial_ends_at'].replace('Z', '+00:00')) if 'Z' in str(_trial_row['trial_ends_at']) else datetime.fromisoformat(str(_trial_row['trial_ends_at']))
                 _days_left = max(0, (_trial_end - datetime.now(timezone.utc).replace(tzinfo=None)).days)
                 _urgency_color = '#e74c3c' if _days_left <= 1 else '#E2B764' if _days_left <= 4 else 'var(--accent)'
+                # Trial extension notice (temporary — remove after April 2 2026)
+                _extension_notice = '''
+                <div style="background:rgba(110,231,183,0.1);border:1px solid rgba(110,231,183,0.25);border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:13px;color:rgba(255,255,255,0.85);">
+                    We extended everyone's trial by 7 days while we fixed a few things. Enjoy the extra time.
+                </div>''' if _days_left > 3 else ''
                 trial_banner = f'''
                 <div style="background:linear-gradient(135deg,#065F46,#064E3B);border:1px solid rgba(110,231,183,0.3);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;">
+                    {_extension_notice}
                     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
                         <div style="flex:1;min-width:200px;">
                             <p style="color:{_urgency_color};font-size:20px;font-weight:700;margin:0 0 4px;">
