@@ -67,3 +67,4 @@ backups/
 *.mp4
 *.JPG
 .claude/settings.local.json
+.claude/commands/hub.md
