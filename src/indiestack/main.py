@@ -233,6 +233,7 @@ from indiestack.routes import changelog
 from indiestack.routes import guidelines
 from indiestack.routes import audit
 from indiestack.routes import setup
+from indiestack.routes import analyze as analyze_route
 
 
 async def _periodic_health_refresh():
@@ -668,7 +669,7 @@ app.add_middleware(_HeadMethodMiddleware)
 
 # ── Security Headers ─────────────────────────────────────────────────────
 
-_CSRF_EXEMPT_PATHS = {"/webhooks/stripe", "/api/cite", "/api/tools/submit", "/api/follow-through", "/api/agent/recommend", "/api/agent/shortlist", "/api/agent/outcome", "/api/agent/integration"}
+_CSRF_EXEMPT_PATHS = {"/webhooks/stripe", "/api/cite", "/api/tools/submit", "/api/follow-through", "/api/agent/recommend", "/api/agent/shortlist", "/api/agent/outcome", "/api/agent/integration", "/api/analyze"}
 _ALLOWED_ORIGINS = {"https://indiestack.ai", "https://www.indiestack.ai", "https://indiestack.fly.dev", "https://www.indiestack.fly.dev", "http://localhost:8000", "http://127.0.0.1:8000"}
 
 
@@ -824,7 +825,7 @@ async def db_middleware(request: Request, call_next):
                         _logger.exception("Failed to log API usage")
             # No valid API key — apply IP-based daily limit (3/day)
             # Exempt non-query paths (embeddable badges, milestones, OpenAPI spec, categories)
-            _API_RATE_EXEMPT = ('/api/badge/', '/api/milestone/', '/api/openapi', '/api/categories', '/api/health', '/api/agent/', '/api/claim', '/api/upvote', '/api/wishlist', '/api/subscribe', '/api/follow-through')
+            _API_RATE_EXEMPT = ('/api/badge/', '/api/milestone/', '/api/openapi', '/api/categories', '/api/health', '/api/agent/', '/api/claim', '/api/upvote', '/api/wishlist', '/api/subscribe', '/api/follow-through', '/api/analyze')
             if not request.state.api_key and not path.startswith(_API_RATE_EXEMPT) and _check_api_ip_rate_limit(client_ip):
                 return JSONResponse(
                     {"error": "You've used your 3 free daily queries. "
@@ -4451,3 +4452,4 @@ app.include_router(changelog.router)
 app.include_router(guidelines.router)
 app.include_router(audit.router)
 app.include_router(setup.router)
+app.include_router(analyze_route.router)

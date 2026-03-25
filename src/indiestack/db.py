@@ -497,6 +497,22 @@ CREATE TABLE IF NOT EXISTS roast_upvotes (
 );
 CREATE INDEX IF NOT EXISTS idx_roast_comments_roast ON roast_comments(roast_id);
 CREATE INDEX IF NOT EXISTS idx_stack_roasts_upvotes ON stack_roasts(upvotes DESC);
+
+CREATE TABLE IF NOT EXISTS dependency_analyses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES users(id),
+    session_id TEXT,
+    manifest_type TEXT NOT NULL CHECK(manifest_type IN ('package.json', 'requirements.txt')),
+    package_count INTEGER NOT NULL,
+    score_freshness INTEGER NOT NULL,
+    score_cohesion INTEGER NOT NULL,
+    score_modernity INTEGER NOT NULL,
+    score_total INTEGER NOT NULL,
+    results_json TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_dep_analyses_session ON dependency_analyses(session_id);
+CREATE INDEX IF NOT EXISTS idx_dep_analyses_user ON dependency_analyses(user_id);
 """
 
 FTS_SCHEMA = """

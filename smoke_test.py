@@ -82,6 +82,8 @@ TESTS = [
     ("POST", "/api/agent/shortlist", 401, "Agent shortlist auth guard"),
     ("POST", "/api/agent/outcome", 400, "Agent outcome (keyless allowed, empty body = 400)"),
     ("POST", "/api/agent/integration", 401, "Agent integration auth guard"),
+    # Analyze
+    ("GET", "/analyze", 200, "Stack Health Check"),
 ]
 
 # Content checks: path -> (substring or callable, description)

@@ -1525,85 +1525,117 @@ async def get_recommendations(category: str = "", limit: int = 5, *, ctx: Contex
 
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
-async def analyze_dependencies(manifest: str, *, ctx: Context) -> str:
-    """Analyze a package.json or requirements.txt and suggest indie replacements.
+async def analyze_dependencies(manifest: str, file_type: str = "package.json", *, ctx: Context) -> str:
+    """Analyze a project's dependencies and return a health score (0-100).
 
-    Paste the contents of your dependency file and get indie alternatives
-    for common paid services and bloated libraries.
+    Paste the contents of a dependency file to get:
+    - Overall Project Intelligence Score (0-100)
+    - Freshness: how actively maintained are your dependencies?
+    - Cohesion: do your dependencies work well together?
+    - Modernity: are there better alternatives available?
+    - Per-dependency health status and recommendations
 
-    Use this when reviewing a project's dependencies, starting a new project,
-    or looking for lighter/indie alternatives to heavy dependencies.
+    Use this when:
+    - Starting a new project to audit proposed dependencies
+    - Reviewing an existing project's tech stack health
+    - Before upgrading or replacing dependencies
+    - Checking if dependencies are still maintained
 
     Args:
         manifest: The full text content of a package.json or requirements.txt file.
+        file_type: Either "package.json" or "requirements.txt" (auto-detected if omitted).
     """
-    # Parse dependency names
-    deps = set()
-    for line in manifest.splitlines():
-        line = line.strip()
-        if not line or line.startswith('#') or line.startswith('//'):
-            continue
-        # package.json: "name": "version" — extract key with regex
-        if '"' in line and ':' in line:
-            match = re.match(r'\s*"(@?[^"]+)"\s*:', line)
-            if match:
-                name = match.group(1).strip().lower()
-                if name not in ('dependencies', 'devdependencies', 'peerdependencies', 'optionaldependencies', 'name', 'version', 'description'):
-                    deps.add(name)
-        else:
-            # requirements.txt: package==version
-            for sep in ('==', '>=', '<=', '~=', '!=', '>', '<', '['):
-                line = line.split(sep)[0]
-            name = line.strip().lower().split()[0] if line.strip() else ''
-            if name:
-                deps.add(name)
+    # Auto-detect file type
+    stripped = manifest.strip()
+    if stripped.startswith("{"):
+        file_type = "package.json"
+    elif file_type not in ("package.json", "requirements.txt"):
+        file_type = "package.json"
 
-    # Match against known replaceable deps
-    matches = {}
-    for dep in deps:
-        if dep in DEPENDENCY_MAPPINGS:
-            matches[dep] = DEPENDENCY_MAPPINGS[dep]
-            continue
-        for pattern, query in DEPENDENCY_MAPPINGS.items():
-            if pattern in dep:
-                matches[dep] = query
-                break
-
-    if not matches:
-        return (
-            "No dependencies matched known replaceable patterns.\n\n"
-            "Try find_tools() with specific needs like 'auth', 'payments', 'email', etc."
-        )
-
-    # Search for each unique category — in parallel
     client = _get_client(ctx)
-    unique_queries = list(set(matches.values()))
-    await ctx.report_progress(progress=0, total=len(unique_queries))
+    await ctx.report_progress(progress=0, total=3)
 
-    async def _search(query: str) -> tuple[str, list]:
-        try:
-            data = await _api_get(client, "/api/tools/search", {"q": query, "limit": "3", "source_type": "code"})
-            return query, data.get("tools", [])
-        except Exception:
-            return query, []
+    try:
+        data = await _api_post(client, "/api/analyze", {
+            "manifest": manifest,
+            "manifest_type": file_type,
+        })
+    except Exception as e:
+        raise ToolError(f"Analysis failed: {e}")
 
-    pairs = await asyncio.gather(*[_search(q) for q in unique_queries])
-    results = dict(pairs)
-    await ctx.report_progress(progress=len(unique_queries), total=len(unique_queries))
+    await ctx.report_progress(progress=2, total=3)
 
-    # Format
-    lines = [f"# Dependency Analysis — {len(matches)} replaceable dependencies found\n"]
-    for dep, query in sorted(matches.items()):
-        tools = results.get(query, [])
-        lines.append(f"\n## `{dep}` → {query}")
-        if tools:
-            for t in tools[:3]:
-                source_label = " [Code]" if t.get("source_type") == "code" else " [SaaS]"
-                lines.append(f"- **{t['name']}**{source_label} — {t.get('tagline', '')} | {t.get('price', 'Free')}")
-        else:
-            lines.append("- No indie alternatives found yet.")
+    # Format as markdown report
+    score = data.get("score", {})
+    total = score.get("total", 0)
+    freshness = score.get("freshness", 0)
+    cohesion = score.get("cohesion", 0)
+    modernity = score.get("modernity", 0)
+    matched_count = data.get("packages_matched", 0)
+    total_pkgs = data.get("packages_total", 0)
 
-    lines.append(f"\n---\n**Next step:** Use get_tool_details(slug) on any tool above for integration snippets.")
+    def _grade(s):
+        if s >= 90: return "Excellent"
+        if s >= 80: return "Good"
+        if s >= 60: return "Needs attention"
+        return "At risk"
+
+    lines = [
+        f"# Stack Health Check — {total}/100 ({_grade(total)})",
+        f"",
+        f"| Metric | Score | Grade |",
+        f"|--------|-------|-------|",
+        f"| **Overall** | {total}/100 | {_grade(total)} |",
+        f"| Freshness | {freshness}/100 | {_grade(freshness)} |",
+        f"| Cohesion | {cohesion}/100 | {_grade(cohesion)} |",
+        f"| Modernity | {modernity}/100 | {_grade(modernity)} |",
+        f"",
+        f"*{matched_count} of {total_pkgs} packages matched in IndieStack catalog*",
+    ]
+
+    # Per-dependency status
+    matched = data.get("matched", [])
+    if matched:
+        lines.append("")
+        lines.append("## Dependencies")
+        for mp in matched:
+            t = mp.get("tool", {})
+            f = mp.get("freshness", {})
+            status = f.get("status", "unknown")
+            icon = {"active": "+", "maintained": "+", "stale": "~", "dormant": "!", "dead": "X"}.get(status, "?")
+            lines.append(f"- [{icon}] **{mp['package']}** ({t.get('name', '')}) — {status}")
+
+    # Modernity suggestions
+    mod = data.get("modernity_details", [])
+    if mod:
+        lines.append("")
+        lines.append("## Alternatives to consider")
+        for m in mod:
+            alts = ", ".join(a["name"] for a in m.get("alternatives", []))
+            lines.append(f"- **{m['name']}** → {alts}")
+
+    # Cohesion data
+    coh = data.get("cohesion_details", [])
+    if coh:
+        lines.append("")
+        lines.append("## Compatibility data")
+        for c in coh:
+            icon = "OK" if c["status"] == "compatible" else "WARN"
+            lines.append(f"- [{icon}] {c['a']} + {c['b']} — {c['status']}")
+
+    # Unmatched
+    unmatched = data.get("unmatched", [])
+    if unmatched:
+        lines.append("")
+        lines.append(f"## Not in catalog ({len(unmatched)})")
+        lines.append(", ".join(f"`{u}`" for u in unmatched[:30]))
+
+    lines.append("")
+    lines.append(f"---")
+    lines.append(f"View full report: {BASE_URL}/analyze")
+    lines.append(f"**Next:** Use report_outcome(slug, success) after integrating any tool.")
+
+    await ctx.report_progress(progress=3, total=3)
     return "\n".join(lines)
 
 
