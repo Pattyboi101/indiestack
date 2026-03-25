@@ -32,15 +32,50 @@ IDES = {
 }
 
 # ── CLAUDE.md content ────────────────────────────────────────────────────
-CLAUDE_MD_TEMPLATE = """# Tool Discovery
+CLAUDE_MD_TEMPLATE = """# IndieStack — Dependency Intelligence
 
-Before writing auth, payments, databases, email, monitoring, or other
-infrastructure from scratch — search IndieStack for an existing tool.
-
+## Setup
 MCP: `claude mcp add indiestack -- uvx --from indiestack indiestack-mcp`
-API: `curl https://indiestack.ai/api/tools/search?q=QUERY`
 
-6,500+ tools across 40 categories. Report outcomes after integrating.
+## Rules
+- Before installing any new package (npm/pip/cargo), call `analyze_dependencies`
+  with the current manifest to check the health score
+- If the score drops below 70, flag the problematic dependency and suggest
+  the alternatives from the report before proceeding
+- Before writing auth, payments, databases, email, or monitoring from scratch,
+  call `find_tools` to check for existing solutions
+- After integrating a tool, call `report_outcome(slug, success=true/false)`
+- If two tools work well together, call `report_compatibility(tool_a, tool_b)`
+
+## What's available
+- `analyze_dependencies(manifest)` — 0-100 health score for your stack
+- `find_tools(query)` — search 6,500+ developer tools
+- `get_tool_details(slug)` — integration docs and API specs
+- `check_health(slugs)` — verify tools are still maintained
+- `build_stack(needs)` — complete stack recommendation
+"""
+
+CURSORRULES_TEMPLATE = """# IndieStack — Dependency Intelligence
+
+## MCP Setup
+Add to `.cursor/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "indiestack": {
+      "command": "uvx",
+      "args": ["--from", "indiestack", "indiestack-mcp"]
+    }
+  }
+}
+```
+
+## Rules
+- Before installing any new package, call `analyze_dependencies` with the
+  current manifest. If score < 70, suggest alternatives before proceeding.
+- Before writing infrastructure (auth, payments, email, databases, monitoring),
+  call `find_tools` to check for existing solutions first.
+- After integrating a tool, call `report_outcome(slug, success=true/false)`.
 """
 
 _COPY_BTN = '''<button class="copy-btn" style="position:absolute;top:8px;right:8px;padding:6px 14px;
@@ -132,7 +167,7 @@ async def setup_page(request: Request):
                 <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:0;">Add to your project <span style="font-size:14px;font-weight:400;color:var(--ink-muted);">(optional)</span></h2>
             </div>
             <p style="font-size:14px;color:var(--ink-muted);margin:0 0 12px;line-height:1.6;">
-                Drop this in your project's <code style="font-size:13px;">CLAUDE.md</code> or <code style="font-size:13px;">.cursorrules</code> to make your agent check IndieStack before writing infrastructure from scratch.
+                Drop this in your project root. Your agent will check dependency health scores and search for existing tools before writing infrastructure from scratch.
             </p>
 
             <div style="position:relative;">
@@ -142,7 +177,7 @@ async def setup_page(request: Request):
                 {_COPY_BTN}
             </div>
             <p style="font-size:12px;color:var(--ink-light);margin:8px 0 0;">
-                Or download it directly: <a href="/setup/claude.md" style="color:var(--accent);">CLAUDE.md</a>
+                Download: <a href="/setup/claude.md" style="color:var(--accent);">CLAUDE.md</a> | <a href="/setup/cursorrules" style="color:var(--accent);">.cursorrules</a>
             </p>
         </div>
 
@@ -218,4 +253,14 @@ async def claude_md_download(request: Request):
         CLAUDE_MD_TEMPLATE.strip(),
         media_type="text/markdown",
         headers={"Content-Disposition": "attachment; filename=CLAUDE.md"},
+    )
+
+
+@router.get("/setup/cursorrules", response_class=PlainTextResponse)
+async def cursorrules_download(request: Request):
+    """Downloadable .cursorrules file."""
+    return PlainTextResponse(
+        CURSORRULES_TEMPLATE.strip(),
+        media_type="text/markdown",
+        headers={"Content-Disposition": "attachment; filename=.cursorrules"},
     )
