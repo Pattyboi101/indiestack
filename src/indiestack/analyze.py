@@ -448,16 +448,17 @@ async def count_analyses(db, user_id=None, session_id=None) -> int:
     """Count analyses this month for rate limiting."""
     if user_id:
         c = await db.execute(
-            """SELECT COUNT(*) FROM dependency_analyses
+            """SELECT COUNT(*) as cnt FROM dependency_analyses
                WHERE user_id = ? AND created_at > datetime('now', '-30 days')""",
             (user_id,),
         )
     elif session_id:
         c = await db.execute(
-            """SELECT COUNT(*) FROM dependency_analyses
+            """SELECT COUNT(*) as cnt FROM dependency_analyses
                WHERE session_id = ? AND created_at > datetime('now', '-30 days')""",
             (session_id,),
         )
     else:
         return 0
-    return (await c.fetchone())[0]
+    row = await c.fetchone()
+    return row["cnt"] if row else 0
