@@ -514,7 +514,6 @@ CREATE TABLE IF NOT EXISTS dependency_analyses (
 );
 CREATE INDEX IF NOT EXISTS idx_dep_analyses_session ON dependency_analyses(session_id);
 CREATE INDEX IF NOT EXISTS idx_dep_analyses_user ON dependency_analyses(user_id);
-CREATE INDEX IF NOT EXISTS idx_dep_analyses_uuid ON dependency_analyses(share_uuid);
 """
 
 FTS_SCHEMA = """
