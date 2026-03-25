@@ -4,12 +4,12 @@ import json
 from html import escape
 from urllib.parse import quote
 from fastapi import APIRouter, Request, Form
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
 from indiestack.routes.components import page_shell
 from indiestack import db as db_module
 from indiestack.analyze import (
-    run_analysis, save_analysis, count_analyses, parse_manifest,
+    run_analysis, save_analysis, load_analysis, count_analyses, parse_manifest,
 )
 
 router = APIRouter()
@@ -132,7 +132,7 @@ def _render_form(prefill: str = "") -> str:
     </script>'''
 
 
-def _render_results(result: dict, user=None) -> str:
+def _render_results(result: dict, user=None, share_uuid: str = "") -> str:
     s = result["score"]
     total = s["total"]
     color = _score_color(total)
@@ -226,7 +226,8 @@ def _render_results(result: dict, user=None) -> str:
 
     # Share URL
     share_text = f"My stack scored {total}/100 on IndieStack Stack Health Check"
-    share_url = f"https://twitter.com/intent/tweet?text={quote(share_text)}&url=https://indiestack.ai/analyze"
+    result_link = f"https://indiestack.ai/analyze/{share_uuid}" if share_uuid else "https://indiestack.ai/analyze"
+    share_url = f"https://twitter.com/intent/tweet?text={quote(share_text)}&url={quote(result_link)}"
 
     return f'''
     <div style="max-width:700px;margin:0 auto;">
@@ -361,11 +362,28 @@ async def analyze_submit(request: Request, manifest: str = Form(...), manifest_t
         </div>'''
         return HTMLResponse(page_shell("Error | IndieStack", body, user=user))
 
-    # Save analysis
-    await save_analysis(d, user_id, session_id, manifest_type, result)
+    # Save analysis and redirect to shareable URL
+    share_uuid = await save_analysis(d, user_id, session_id, manifest_type, result)
+    return RedirectResponse(url=f"/analyze/{share_uuid}", status_code=303)
 
-    body = _render_results(result, user=user)
+
+@router.get("/analyze/{share_uuid}", response_class=HTMLResponse)
+async def analyze_view(request: Request, share_uuid: str):
+    """View a cached analysis by share UUID."""
+    user = request.state.user
+    d = request.state.db
+
+    result = await load_analysis(d, share_uuid)
+    if not result:
+        body = f'''<div style="max-width:600px;margin:40px auto;text-align:center;">
+            <h1 style="font-family:var(--font-display);font-size:var(--heading-md);">Analysis not found</h1>
+            <p style="color:var(--ink-muted);">This analysis may have expired or the link is invalid.</p>
+            <a href="/analyze" class="btn-primary" style="margin-top:16px;display:inline-block;padding:12px 24px;text-decoration:none;">Run a new analysis</a>
+        </div>'''
+        return HTMLResponse(page_shell("Not Found | IndieStack", body, user=user), status_code=404)
+
     score = result["score"]["total"]
+    body = _render_results(result, user=user, share_uuid=share_uuid)
     return HTMLResponse(page_shell(
         f"Score: {score}/100 | Stack Health Check",
         body,
@@ -414,5 +432,6 @@ async def analyze_api(request: Request):
     except ValueError as e:
         return JSONResponse({"error": str(e)}, status_code=400)
 
-    await save_analysis(d, user_id, session_id, manifest_type, result)
+    share_uuid = await save_analysis(d, user_id, session_id, manifest_type, result)
+    result["share_url"] = f"https://indiestack.ai/analyze/{share_uuid}"
     return JSONResponse(result)

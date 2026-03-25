@@ -594,17 +594,20 @@ async def run_analysis(db, manifest_content: str, manifest_type: str) -> dict[st
     }
 
 
-async def save_analysis(db, user_id, session_id, manifest_type, result: dict):
-    """Persist an analysis for rate limiting and history."""
+async def save_analysis(db, user_id, session_id, manifest_type, result: dict) -> str:
+    """Persist an analysis for rate limiting and history. Returns share_uuid."""
+    import secrets
+    share_uuid = secrets.token_urlsafe(8)
     await db.execute(
         """INSERT INTO dependency_analyses
-           (user_id, session_id, manifest_type, package_count,
+           (user_id, session_id, share_uuid, manifest_type, package_count,
             score_freshness, score_cohesion, score_modernity, score_total,
             results_json)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (
             user_id,
             session_id,
+            share_uuid,
             manifest_type,
             result["packages_total"],
             result["score"]["freshness"],
@@ -615,6 +618,21 @@ async def save_analysis(db, user_id, session_id, manifest_type, result: dict):
         ),
     )
     await db.commit()
+    return share_uuid
+
+
+async def load_analysis(db, share_uuid: str) -> dict | None:
+    """Load a cached analysis by share UUID."""
+    c = await db.execute(
+        "SELECT results_json, created_at FROM dependency_analyses WHERE share_uuid = ?",
+        (share_uuid,),
+    )
+    row = await c.fetchone()
+    if not row:
+        return None
+    result = json.loads(row["results_json"])
+    result["created_at"] = row["created_at"]
+    return result
 
 
 async def count_analyses(db, user_id=None, session_id=None) -> int:
