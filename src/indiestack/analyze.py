@@ -491,7 +491,7 @@ def calculate_freshness(mapped_tools: list[dict]) -> tuple[int, list[dict]]:
         tool_score = 50  # default for unknown
         status = "unknown"
 
-        if t.get("github_is_archived") or t.get("health_status") == "dead":
+        if t.get("github_is_archived"):
             tool_score = 0
             status = "dead"
         elif t.get("github_last_commit"):
@@ -512,6 +512,8 @@ def calculate_freshness(mapped_tools: list[dict]) -> tuple[int, list[dict]]:
                 pass
         elif t.get("health_status") == "alive":
             tool_score, status = 80, "maintained"
+        elif t.get("health_status") == "dead":
+            tool_score, status = 10, "dormant"
 
         total += tool_score
         details.append({
