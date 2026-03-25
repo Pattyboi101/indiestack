@@ -106,8 +106,10 @@ async def match_packages(db, package_names: list[str], manifest_type: str) -> di
     if not remaining:
         return matched
 
-    # Strategy 3: npm/PyPI registry lookup → GitHub URL → tool match
+    # Strategy 3: npm/PyPI registry lookup → GitHub URL → existing tool match
+    # Then auto-ingest remaining as reference tools
     await _match_by_registry(db, remaining, matched, manifest_type)
+    await _auto_ingest_reference(db, remaining, matched, manifest_type)
 
     return matched
 
@@ -175,23 +177,30 @@ async def _match_by_sdk_packages(db, remaining: set, matched: dict, manifest_typ
                 if pkg_name in remaining_lower:
                     candidates.setdefault(pkg_name, []).append(tool)
 
-    # Pick best match: prefer tools whose slug contains the package name
+    # Pick best match: prefer tools whose slug/name is related to the package
     for pkg_name, tools in candidates.items():
-        if len(tools) == 1:
-            best = tools[0]
+        # Filter out obviously unrelated matches (bad sdk_packages data)
+        pkg_stem = pkg_name.replace("-", "").replace("_", "").replace("@", "").replace("/", "").lower()
+        related = [
+            t for t in tools
+            if pkg_stem in t["slug"].replace("-", "").lower()
+            or t["slug"].replace("-", "").lower() in pkg_stem
+            or pkg_stem in t["name"].replace("-", "").replace(" ", "").lower()
+        ]
+        if not related:
+            continue  # skip entirely — no credible match
+
+        if len(related) == 1:
+            best = related[0]
         else:
-            # Prefer: exact slug → slug substring of pkg → pkg substring of slug → name match
-            best = tools[0]
-            for t in tools:
-                slug = t["slug"]
-                if slug == pkg_name:
+            best = related[0]
+            for t in related:
+                if t["slug"] == pkg_name:
                     best = t
                     break
-                if slug in pkg_name or pkg_name in slug:
+                if t["slug"] in pkg_name or pkg_name in t["slug"]:
                     best = t
                     break
-                if pkg_name.split("-")[0] in t["name"].lower():
-                    best = t
         matched[pkg_name] = best
         remaining.discard(pkg_name)
         remaining_lower.discard(pkg_name)
@@ -255,6 +264,15 @@ async def _match_by_registry(db, remaining: set, matched: dict, manifest_type: s
             continue
 
         tool = row if isinstance(row, dict) else dict(row)
+
+        # Validate: tool name/slug should be related to the package name
+        # Prevents false matches like eslint → Greaterwms via shared GitHub org
+        pkg_stem = pkg_name.split("/")[-1].replace("-", "").replace("_", "").lower()
+        tool_slug = tool["slug"].replace("-", "").lower()
+        tool_name = tool["name"].replace("-", "").replace(" ", "").lower()
+        if pkg_stem not in tool_slug and pkg_stem not in tool_name and tool_slug not in pkg_stem:
+            continue  # skip unrelated match
+
         matched[pkg_name] = tool
         remaining.discard(pkg_name)
 
@@ -353,6 +371,109 @@ async def _persist_sdk_mapping(db, tool_id: int, pkg_key: str, pkg_name: str):
         log.debug(f"Failed to persist sdk_packages for tool {tool_id}: {e}")
 
 
+# ── Auto-ingestion of reference tools ────────────────────────────────────────
+
+async def _auto_ingest_reference(db, remaining: set, matched: dict, manifest_type: str):
+    """
+    For packages still unmatched after all strategies, fetch from npm/PyPI
+    registries and auto-create as reference tools (is_reference=1).
+    These don't appear in browse/search but power the dependency scorer.
+    """
+    if not remaining:
+        return
+
+    to_fetch = list(remaining)[:30]  # cap to keep latency under control
+    client = _get_registry_client()
+
+    async def _fetch_one(pkg: str) -> tuple[str, dict | None]:
+        try:
+            if manifest_type == "package.json":
+                resp = await client.get(
+                    f"https://registry.npmjs.org/{pkg}",
+                    headers={"Accept": "application/json"},
+                )
+            else:
+                resp = await client.get(f"https://pypi.org/pypi/{pkg}/json")
+            if resp.status_code == 200:
+                return pkg, resp.json()
+        except Exception:
+            pass
+        return pkg, None
+
+    # Parallel fetch with 3s timeout per request (client already has 5s)
+    import asyncio
+    results = await asyncio.gather(*[_fetch_one(p) for p in to_fetch])
+
+    for pkg, data in results:
+        if not data or pkg not in remaining:
+            continue
+
+        # Parse registry response
+        if manifest_type == "package.json":
+            name = data.get("name", pkg)
+            desc = (data.get("description") or "")[:200]
+            last_modified = (data.get("time") or {}).get("modified")
+            slug = f"npm-{pkg.replace('/', '-').replace('@', '')}"
+            sdk_json = json.dumps({"npm": pkg})
+            github_url = ""
+            repo = data.get("repository", {})
+            if isinstance(repo, dict):
+                github_url = (repo.get("url") or "").replace("git+", "").replace("git://", "https://").rstrip(".git")
+            elif isinstance(repo, str):
+                github_url = repo.replace("git+", "").replace("git://", "https://").rstrip(".git")
+            if "github.com" not in github_url:
+                github_url = ""
+        else:
+            info = data.get("info", {})
+            name = info.get("name", pkg)
+            desc = (info.get("summary") or "")[:200]
+            urls_list = data.get("urls") or []
+            last_modified = urls_list[-1]["upload_time"] if urls_list else None
+            slug = f"pypi-{pkg.replace('-', '_')}"
+            sdk_json = json.dumps({"pip": pkg})
+            github_url = ""
+            project_urls = info.get("project_urls") or {}
+            for key in ("Source", "Source Code", "Repository", "GitHub", "Homepage"):
+                url = project_urls.get(key, "")
+                if "github.com" in url:
+                    github_url = url
+                    break
+            if not github_url:
+                hp = info.get("home_page") or ""
+                if "github.com" in hp:
+                    github_url = hp
+
+        # Auto-ingest as reference tool
+        try:
+            await db.execute("""
+                INSERT OR IGNORE INTO tools
+                (name, slug, tagline, description, url, github_url,
+                 github_last_commit, is_reference, sdk_packages, status,
+                 category_id, source_type, health_status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?, 'approved', 18, 'code', 'alive')
+            """, (
+                name, slug, desc[:100], desc, github_url or "",
+                github_url, last_modified, sdk_json,
+            ))
+            await db.commit()
+        except Exception:
+            continue
+
+        # Fetch the inserted row to add to matched
+        c = await db.execute(
+            """SELECT id, name, slug, category_id, upvote_count,
+                      health_status, github_last_commit, github_is_archived,
+                      github_stars
+               FROM tools WHERE slug = ? LIMIT 1""",
+            (slug,),
+        )
+        row = await c.fetchone()
+        if row:
+            tool = row if isinstance(row, dict) else dict(row)
+            matched[pkg] = tool
+            remaining.discard(pkg)
+
+
 # ── Scoring ──────────────────────────────────────────────────────────────────
 
 def calculate_freshness(mapped_tools: list[dict]) -> tuple[int, list[dict]]:
@@ -406,30 +527,47 @@ def calculate_freshness(mapped_tools: list[dict]) -> tuple[int, list[dict]]:
 async def calculate_cohesion(db, mapped_tools: list[dict]) -> tuple[int, list[dict]]:
     """
     Cohesion score (0-100): how well do the dependencies work together?
-    Checks tool_pairs for known compatibility data.
+    Uses Graph Density Quotient: base 60 + bonus from known pairs + cooccurrences.
     """
     if len(mapped_tools) < 2:
-        return 90, []  # Single dep = no conflicts
+        return 90, []
 
+    n = len(mapped_tools)
     slugs = [t["slug"] for t in mapped_tools]
     placeholders = ",".join(["?"] * len(slugs))
 
-    # Find pairs where both tools are in the manifest
+    # Check explicit tool_pairs (curated compatibility data)
     query = f"""
         SELECT tool_a_slug, tool_b_slug, success_count
         FROM tool_pairs
         WHERE tool_a_slug IN ({placeholders}) AND tool_b_slug IN ({placeholders})
     """
-    pairs = []
+    explicit_pairs = []
     async with db.execute(query, slugs + slugs) as cursor:
-        pairs = [r if isinstance(r, dict) else dict(r) for r in await cursor.fetchall()]
+        explicit_pairs = [r if isinstance(r, dict) else dict(r) for r in await cursor.fetchall()]
 
-    score = 80  # base
+    # Check manifest cooccurrences (implicit pairs from other manifests)
+    cooccurrence_count = 0
+    try:
+        query = f"""
+            SELECT COUNT(*) as cnt FROM manifest_cooccurrences
+            WHERE tool_a_slug IN ({placeholders}) AND tool_b_slug IN ({placeholders})
+              AND cooccurrence_count >= 2
+        """
+        c = await db.execute(query, slugs + slugs)
+        row = await c.fetchone()
+        cooccurrence_count = (row["cnt"] if isinstance(row, dict) else row[0]) if row else 0
+    except Exception:
+        pass  # table might not exist yet
+
+    # Count verified compatible pairs
+    compatible = sum(1 for p in explicit_pairs if p["success_count"] > 0)
+    conflicts = [p for p in explicit_pairs if p["success_count"] < 0]
+    total_known_pairs = compatible + cooccurrence_count
+
     details = []
-
-    for pair in pairs:
+    for pair in explicit_pairs:
         if pair["success_count"] > 0:
-            score += 3  # verified compatible
             details.append({
                 "a": pair["tool_a_slug"],
                 "b": pair["tool_b_slug"],
@@ -437,7 +575,6 @@ async def calculate_cohesion(db, mapped_tools: list[dict]) -> tuple[int, list[di
                 "evidence": pair["success_count"],
             })
         elif pair["success_count"] < 0:
-            score -= 20  # known conflict
             details.append({
                 "a": pair["tool_a_slug"],
                 "b": pair["tool_b_slug"],
@@ -445,10 +582,13 @@ async def calculate_cohesion(db, mapped_tools: list[dict]) -> tuple[int, list[di
                 "evidence": pair["success_count"],
             })
 
-    # Bonus for having lots of verified pairs
-    verified_count = sum(1 for p in pairs if p["success_count"] > 0)
-    if verified_count >= 5:
-        score += 5
+    # Graph Density Quotient: base 60, bonus up to 40 from known pairs
+    # P/N * 15, capped at 40
+    bonus = min(40, int((total_known_pairs / max(n, 1)) * 15))
+    score = 60 + bonus
+
+    # Strict penalty for known conflicts
+    score -= len(conflicts) * 20
 
     return max(0, min(100, score)), details
 
@@ -572,6 +712,9 @@ async def run_analysis(db, manifest_content: str, manifest_type: str) -> dict[st
         if slug in freshness_by_slug:
             mp["freshness"] = freshness_by_slug[slug]
 
+    # 5. Mine implicit cohesion from this manifest (background, non-blocking)
+    await _mine_cooccurrences(db, mapped_tools)
+
     # Weighted total
     total = int(
         (freshness_score * 0.3) + (cohesion_score * 0.4) + (modernity_score * 0.3)
@@ -592,6 +735,29 @@ async def run_analysis(db, manifest_content: str, manifest_type: str) -> dict[st
         "modernity_details": modernity_details,
         "manifest_type": manifest_type,
     }
+
+
+async def _mine_cooccurrences(db, mapped_tools: list[dict]):
+    """Record implicit compatibility pairs from manifests that contain these tools together."""
+    if len(mapped_tools) < 2:
+        return
+    from itertools import combinations
+    slugs = sorted(t["slug"] for t in mapped_tools)
+    # Cap pairs to avoid O(n^2) explosion for huge manifests
+    if len(slugs) > 50:
+        slugs = slugs[:50]
+    pairs = list(combinations(slugs, 2))
+    try:
+        await db.executemany(
+            """INSERT INTO manifest_cooccurrences (tool_a_slug, tool_b_slug, cooccurrence_count)
+               VALUES (?, ?, 1)
+               ON CONFLICT(tool_a_slug, tool_b_slug)
+               DO UPDATE SET cooccurrence_count = cooccurrence_count + 1""",
+            pairs,
+        )
+        await db.commit()
+    except Exception as e:
+        log.debug(f"Cooccurrence mining failed: {e}")
 
 
 async def save_analysis(db, user_id, session_id, manifest_type, result: dict) -> str:

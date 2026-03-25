@@ -1654,6 +1654,25 @@ async def init_db():
         except Exception:
             pass
 
+        # Migration: add is_reference flag to tools (reference tools = registry-ingested, not shown in browse)
+        try:
+            await db.execute("ALTER TABLE tools ADD COLUMN is_reference INTEGER DEFAULT 0")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_tools_reference ON tools(is_reference)")
+            await db.commit()
+        except Exception:
+            pass
+
+        # Manifest cooccurrence mining table (implicit compatibility pairs)
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS manifest_cooccurrences (
+                tool_a_slug TEXT NOT NULL,
+                tool_b_slug TEXT NOT NULL,
+                cooccurrence_count INTEGER DEFAULT 1,
+                PRIMARY KEY (tool_a_slug, tool_b_slug)
+            )
+        """)
+        await db.commit()
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
