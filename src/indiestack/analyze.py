@@ -6,9 +6,14 @@ to IndieStack tools, and returns a 0-100 Project Intelligence Score.
 """
 
 import json
+import logging
 import re
 from datetime import datetime, timezone
 from typing import Any
+
+import httpx
+
+log = logging.getLogger(__name__)
 
 
 # ── Manifest parsing ─────────────────────────────────────────────────────────
@@ -98,6 +103,12 @@ async def match_packages(db, package_names: list[str], manifest_type: str) -> di
     # Strategy 2: sdk_packages field (both dict and array formats)
     await _match_by_sdk_packages(db, remaining, matched, manifest_type)
 
+    if not remaining:
+        return matched
+
+    # Strategy 3: npm/PyPI registry lookup → GitHub URL → tool match
+    await _match_by_registry(db, remaining, matched, manifest_type)
+
     return matched
 
 
@@ -184,6 +195,162 @@ async def _match_by_sdk_packages(db, remaining: set, matched: dict, manifest_typ
         matched[pkg_name] = best
         remaining.discard(pkg_name)
         remaining_lower.discard(pkg_name)
+
+
+# ── Registry fallback ────────────────────────────────────────────────────────
+
+_REGISTRY_CLIENT: httpx.AsyncClient | None = None
+
+
+def _get_registry_client() -> httpx.AsyncClient:
+    global _REGISTRY_CLIENT
+    if _REGISTRY_CLIENT is None or _REGISTRY_CLIENT.is_closed:
+        _REGISTRY_CLIENT = httpx.AsyncClient(timeout=5.0, follow_redirects=True)
+    return _REGISTRY_CLIENT
+
+
+async def _match_by_registry(db, remaining: set, matched: dict, manifest_type: str):
+    """
+    For unmatched packages, query npm/PyPI to find the GitHub URL,
+    then match against tools.github_url. Persist new mappings to sdk_packages.
+    """
+    if not remaining:
+        return
+
+    # Limit registry lookups per analysis to avoid slowing things down
+    to_lookup = list(remaining)[:20]
+    client = _get_registry_client()
+    pkg_key = "npm" if manifest_type == "package.json" else "pip"
+
+    for pkg_name in to_lookup:
+        if pkg_name not in remaining:  # might have been matched during loop
+            continue
+
+        try:
+            github_url = await _resolve_github_url(client, pkg_name, manifest_type)
+        except Exception:
+            continue
+
+        if not github_url:
+            continue
+
+        # Extract owner/repo
+        m = re.match(r"https?://github\.com/([^/]+)/([^/?#]+)", github_url)
+        if not m:
+            continue
+        owner_repo = f"{m.group(1)}/{m.group(2).rstrip('.git')}"
+
+        # Look up in tools by github_url
+        c = await db.execute(
+            """SELECT id, name, slug, category_id, upvote_count,
+                      health_status, github_last_commit, github_is_archived,
+                      github_stars
+               FROM tools
+               WHERE github_url LIKE ? AND status = 'approved'
+               LIMIT 1""",
+            (f"%{owner_repo}%",),
+        )
+        row = await c.fetchone()
+        if not row:
+            continue
+
+        tool = row if isinstance(row, dict) else dict(row)
+        matched[pkg_name] = tool
+        remaining.discard(pkg_name)
+
+        # Persist the mapping so we don't hit the registry next time
+        await _persist_sdk_mapping(db, tool["id"], pkg_key, pkg_name)
+
+
+async def _resolve_github_url(client: httpx.AsyncClient, pkg_name: str, manifest_type: str) -> str | None:
+    """Resolve a package name to its GitHub URL via npm/PyPI registry."""
+    if manifest_type == "package.json":
+        return await _resolve_npm(client, pkg_name)
+    else:
+        return await _resolve_pypi(client, pkg_name)
+
+
+async def _resolve_npm(client: httpx.AsyncClient, pkg_name: str) -> str | None:
+    """Query npm registry for a package's GitHub URL."""
+    try:
+        # Full metadata needed — abbreviated strips repository field
+        resp = await client.get(
+            f"https://registry.npmjs.org/{pkg_name}",
+            headers={"Accept": "application/json"},
+        )
+        if resp.status_code != 200:
+            return None
+        data = resp.json()
+        repo = data.get("repository", {})
+        if isinstance(repo, dict):
+            url = repo.get("url", "")
+        elif isinstance(repo, str):
+            url = repo
+        else:
+            return None
+        # Clean up git+https://github.com/foo/bar.git → https://github.com/foo/bar
+        url = url.replace("git+", "").replace("git://", "https://").rstrip(".git")
+        if "github.com" in url:
+            return url
+    except Exception:
+        pass
+    return None
+
+
+async def _resolve_pypi(client: httpx.AsyncClient, pkg_name: str) -> str | None:
+    """Query PyPI for a package's GitHub URL."""
+    try:
+        resp = await client.get(f"https://pypi.org/pypi/{pkg_name}/json")
+        if resp.status_code != 200:
+            return None
+        data = resp.json()
+        info = data.get("info", {})
+        # Check project_urls first
+        urls = info.get("project_urls") or {}
+        for key in ("Source", "Source Code", "Repository", "GitHub", "Code", "Homepage"):
+            url = urls.get(key, "")
+            if "github.com" in url:
+                return url
+        # Fallback to home_page
+        hp = info.get("home_page", "")
+        if "github.com" in hp:
+            return hp
+    except Exception:
+        pass
+    return None
+
+
+async def _persist_sdk_mapping(db, tool_id: int, pkg_key: str, pkg_name: str):
+    """Save a discovered package→tool mapping back to sdk_packages."""
+    try:
+        c = await db.execute("SELECT sdk_packages FROM tools WHERE id = ?", (tool_id,))
+        row = await c.fetchone()
+        current = (row.get("sdk_packages") if isinstance(row, dict) else row[0]) if row else None
+
+        if current:
+            try:
+                parsed = json.loads(current)
+            except (json.JSONDecodeError, TypeError):
+                parsed = {}
+        else:
+            parsed = {}
+
+        # Ensure it's a dict format for structured storage
+        if isinstance(parsed, list):
+            # Convert old array format to dict, preserving existing
+            parsed = {pkg_key: parsed[0] if parsed else pkg_name}
+
+        if isinstance(parsed, dict):
+            if pkg_key not in parsed:
+                parsed[pkg_key] = pkg_name
+                await db.execute(
+                    "UPDATE tools SET sdk_packages = ? WHERE id = ?",
+                    (json.dumps(parsed), tool_id),
+                )
+                await db.commit()
+                log.info(f"Persisted sdk_packages mapping: {pkg_name} -> tool {tool_id}")
+    except Exception as e:
+        log.debug(f"Failed to persist sdk_packages for tool {tool_id}: {e}")
 
 
 # ── Scoring ──────────────────────────────────────────────────────────────────
@@ -294,47 +461,53 @@ async def calculate_modernity(db, mapped_tools: list[dict]) -> tuple[int, list[d
     if not mapped_tools:
         return 0, []
 
-    category_ids = list({t["category_id"] for t in mapped_tools if t.get("category_id")})
-    if not category_ids:
-        return 85, []
-
     mapped_slugs = {t["slug"] for t in mapped_tools}
-    placeholders = ",".join(["?"] * len(category_ids))
-
-    # Get top tools per category (approved only)
-    query = f"""
-        SELECT t.slug, t.name, t.category_id, t.upvote_count, t.github_stars,
-               t.health_status
-        FROM tools t
-        WHERE t.category_id IN ({placeholders})
-          AND t.status = 'approved'
-          AND t.health_status IN ('alive', 'unknown')
-        ORDER BY t.upvote_count DESC
-    """
-    competitors = []
-    async with db.execute(query, category_ids) as cursor:
-        competitors = [r if isinstance(r, dict) else dict(r) for r in await cursor.fetchall()]
+    mapped_ids = [t["id"] for t in mapped_tools]
 
     deductions = 0
     details = []
 
     for t in mapped_tools:
-        cat_id = t.get("category_id")
-        if not cat_id:
+        tool_id = t.get("id")
+        if not tool_id:
             continue
 
-        cat_competitors = [
-            c for c in competitors
-            if c["category_id"] == cat_id and c["slug"] not in mapped_slugs
-        ]
+        # Find competitors in the SAME PRIMARY category only (most precise)
+        # Skip mega-category "Developer Tools" (id=18) — too broad for meaningful comparison
+        cat_id = t.get("category_id")
+        if not cat_id or cat_id == 18:
+            continue
+        query = """
+            SELECT t2.slug, t2.name, t2.upvote_count, t2.github_stars,
+                   t2.github_last_commit
+            FROM tools t2
+            WHERE t2.category_id = ?
+              AND t2.id != ?
+              AND t2.status = 'approved'
+              AND t2.health_status IN ('alive', 'unknown')
+              AND t2.github_last_commit > datetime('now', '-6 months')
+            ORDER BY (COALESCE(t2.github_stars, 0) + COALESCE(t2.upvote_count, 0) * 100) DESC
+            LIMIT 15
+        """
+        competitors = []
+        try:
+            async with db.execute(query, (cat_id, tool_id)) as cursor:
+                competitors = [r if isinstance(r, dict) else dict(r) for r in await cursor.fetchall()]
+        except Exception:
+            # Fallback if tool_categories table doesn't exist yet
+            continue
 
-        # Find significantly better alternatives
-        t_score = (t.get("upvote_count") or 0) + (t.get("github_stars") or 0) // 100
+        # Only suggest alternatives with 3x traction AND >500 combined score
+        t_traction = (t.get("github_stars") or 0) + (t.get("upvote_count") or 0) * 100
         better = []
-        for c in cat_competitors[:10]:  # top 10 in category
-            c_score = (c.get("upvote_count") or 0) + (c.get("github_stars") or 0) // 100
-            if c_score > t_score * 1.5 and c_score > 3:
+        for c in competitors:
+            if c["slug"] in mapped_slugs:
+                continue
+            c_traction = (c.get("github_stars") or 0) + (c.get("upvote_count") or 0) * 100
+            if c_traction > t_traction * 3 and c_traction > 500:
                 better.append(c)
+            if len(better) >= 3:
+                break
 
         if better:
             deductions += 10
@@ -343,7 +516,7 @@ async def calculate_modernity(db, mapped_tools: list[dict]) -> tuple[int, list[d
                 "name": t["name"],
                 "alternatives": [
                     {"slug": b["slug"], "name": b["name"]}
-                    for b in better[:3]
+                    for b in better
                 ],
             })
 
