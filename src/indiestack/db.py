@@ -1649,8 +1649,8 @@ async def init_db():
 
         # Migration: add share_uuid to dependency_analyses
         try:
-            await db.execute("ALTER TABLE dependency_analyses ADD COLUMN share_uuid TEXT UNIQUE")
-            await db.execute("CREATE INDEX IF NOT EXISTS idx_dep_analyses_uuid ON dependency_analyses(share_uuid)")
+            await db.execute("ALTER TABLE dependency_analyses ADD COLUMN share_uuid TEXT")
+            await db.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_dep_analyses_uuid ON dependency_analyses(share_uuid)")
             await db.commit()
         except Exception:
             pass
