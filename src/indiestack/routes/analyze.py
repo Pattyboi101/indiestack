@@ -242,7 +242,7 @@ def _render_results(result: dict, user=None, share_uuid: str = "") -> str:
         </div>
 
         <!-- Score dials -->
-        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px;text-align:center;">
+        <div style="position:relative;background:linear-gradient(145deg, var(--card-bg), var(--cream-dark));border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px;text-align:center;overflow:hidden;">
             <div style="margin-bottom:24px;">
                 {main_dial}
             </div>
@@ -250,6 +250,7 @@ def _render_results(result: dict, user=None, share_uuid: str = "") -> str:
             <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;">
                 {sub_dials}
             </div>
+            <div style="position:absolute;bottom:8px;right:12px;opacity:0.35;font-family:var(--font-body);font-size:11px;font-weight:600;color:var(--ink-muted);">indiestack.ai</div>
         </div>
 
         <!-- Share + Reanalyze -->
@@ -383,11 +384,15 @@ async def analyze_view(request: Request, share_uuid: str):
         return HTMLResponse(page_shell("Not Found | IndieStack", body, user=user), status_code=404)
 
     score = result["score"]["total"]
+    matched_count = result.get("packages_matched", 0)
+    total_pkgs = result.get("packages_total", 0)
     body = _render_results(result, user=user, share_uuid=share_uuid)
     return HTMLResponse(page_shell(
         f"Score: {score}/100 | Stack Health Check",
         body,
-        description=f"This stack scored {score}/100 on IndieStack's dependency health check.",
+        description=f"This stack scored {score}/100 — {matched_count} dependencies analyzed for freshness, compatibility, and modernity.",
+        og_image=f"https://indiestack.ai/api/og/analyze/{share_uuid}.svg",
+        canonical=f"https://indiestack.ai/analyze/{share_uuid}",
         user=user,
     ))
 
@@ -435,3 +440,76 @@ async def analyze_api(request: Request):
     share_uuid = await save_analysis(d, user_id, session_id, manifest_type, result)
     result["share_url"] = f"https://indiestack.ai/analyze/{share_uuid}"
     return JSONResponse(result)
+
+
+@router.get("/api/og/analyze/{share_uuid}.svg")
+async def og_image(request: Request, share_uuid: str):
+    """Dynamic SVG social card for shared analyses."""
+    d = request.state.db
+    result = await load_analysis(d, share_uuid)
+    if not result:
+        from fastapi.responses import Response
+        return Response(status_code=404)
+
+    score = result["score"]["total"]
+    freshness = result["score"]["freshness"]
+    cohesion = result["score"]["cohesion"]
+    modernity = result["score"]["modernity"]
+    matched = result.get("packages_matched", 0)
+    total = result.get("packages_total", 0)
+
+    color = "#10B981" if score >= 80 else ("#E2B764" if score >= 60 else "#EF4444")
+    label = "Excellent" if score >= 90 else ("Good" if score >= 80 else ("Needs attention" if score >= 60 else "At risk"))
+
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F1D30"/>
+      <stop offset="100%" style="stop-color:#1A2D4A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" rx="0"/>
+
+  <!-- Score circle -->
+  <circle cx="300" cy="300" r="120" fill="none" stroke="#2B4A6E" stroke-width="12"/>
+  <circle cx="300" cy="300" r="120" fill="none" stroke="{color}" stroke-width="12"
+    stroke-dasharray="{2 * 3.14159 * 120:.0f}"
+    stroke-dashoffset="{2 * 3.14159 * 120 - (score / 100) * 2 * 3.14159 * 120:.0f}"
+    stroke-linecap="round" transform="rotate(-90 300 300)"/>
+  <text x="300" y="290" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="bold" fill="white">{score}</text>
+  <text x="300" y="330" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#94A3B8">/100</text>
+
+  <!-- Label -->
+  <text x="300" y="470" text-anchor="middle" font-family="Georgia,serif" font-size="28" fill="{color}">{label}</text>
+
+  <!-- Sub scores -->
+  <text x="650" y="200" font-family="sans-serif" font-size="22" fill="#94A3B8">Freshness</text>
+  <text x="1050" y="200" text-anchor="end" font-family="Georgia,serif" font-size="28" font-weight="bold" fill="white">{freshness}</text>
+  <rect x="650" y="215" width="400" height="4" rx="2" fill="#2B4A6E"/>
+  <rect x="650" y="215" width="{freshness * 4}" height="4" rx="2" fill="{color}"/>
+
+  <text x="650" y="280" font-family="sans-serif" font-size="22" fill="#94A3B8">Cohesion</text>
+  <text x="1050" y="280" text-anchor="end" font-family="Georgia,serif" font-size="28" font-weight="bold" fill="white">{cohesion}</text>
+  <rect x="650" y="295" width="400" height="4" rx="2" fill="#2B4A6E"/>
+  <rect x="650" y="295" width="{cohesion * 4}" height="4" rx="2" fill="{color}"/>
+
+  <text x="650" y="360" font-family="sans-serif" font-size="22" fill="#94A3B8">Modernity</text>
+  <text x="1050" y="360" text-anchor="end" font-family="Georgia,serif" font-size="28" font-weight="bold" fill="white">{modernity}</text>
+  <rect x="650" y="375" width="400" height="4" rx="2" fill="#2B4A6E"/>
+  <rect x="650" y="375" width="{modernity * 4}" height="4" rx="2" fill="{color}"/>
+
+  <!-- Footer -->
+  <text x="650" y="460" font-family="sans-serif" font-size="18" fill="#64748B">{matched} of {total} packages analyzed</text>
+
+  <!-- Branding -->
+  <text x="60" y="590" font-family="Georgia,serif" font-size="24" font-weight="bold" fill="#E2B764">IndieStack</text>
+  <text x="255" y="590" font-family="sans-serif" font-size="18" fill="#64748B">Stack Health Check</text>
+  <text x="1140" y="590" text-anchor="end" font-family="sans-serif" font-size="16" fill="#475569">indiestack.ai/analyze</text>
+</svg>'''
+
+    from fastapi.responses import Response
+    return Response(
+        content=svg,
+        media_type="image/svg+xml",
+        headers={"Cache-Control": "public, max-age=86400"},
+    )
