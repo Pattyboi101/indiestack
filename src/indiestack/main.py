@@ -234,6 +234,7 @@ from indiestack.routes import guidelines
 from indiestack.routes import audit
 from indiestack.routes import setup
 from indiestack.routes import analyze as analyze_route
+from indiestack.routes import trending_stacks
 
 
 async def _periodic_health_refresh():
@@ -4453,3 +4454,4 @@ app.include_router(guidelines.router)
 app.include_router(audit.router)
 app.include_router(setup.router)
 app.include_router(analyze_route.router)
+app.include_router(trending_stacks.router)
