@@ -410,25 +410,17 @@ async def analyze_api(request: Request):
     if manifest_type not in ("package.json", "requirements.txt"):
         return JSONResponse({"error": "Invalid manifest_type"}, status_code=400)
 
-    # GitHub Actions get unlimited analyses (we want the data volume)
-    is_github_action = request.headers.get("x-github-action") == "true"
+    # Track source for analytics — all analyses are free (data collection IS the product)
     github_repo = body.get("repo", "") or request.headers.get("x-github-repo", "")
-
-    # Rate limiting (exempt GitHub Actions)
-    if not is_github_action:
-        user_id = user["id"] if user else None
+    is_github_action = request.headers.get("x-github-action") == "true"
+    user_id = user["id"] if user else None
+    if is_github_action:
+        session_id = f"gh:{github_repo}" if github_repo else None
+    else:
         session_id = request.cookies.get("session") if not user else None
         if not user_id and not session_id:
             client_ip = request.headers.get("fly-client-ip", request.client.host if request.client else "unknown")
             session_id = f"ip:{client_ip}"
-        usage = await count_analyses(d, user_id=user_id, session_id=session_id)
-        is_pro = user and user.get("is_pro")
-        limit = 10000 if is_pro else 100
-        if usage >= limit:
-            return JSONResponse({"error": "Analysis limit reached", "usage": usage, "limit": limit}, status_code=429)
-    else:
-        user_id = None
-        session_id = f"gh:{github_repo}" if github_repo else None
 
     try:
         result = await run_analysis(d, manifest, manifest_type)
@@ -651,3 +643,240 @@ async def analyze_stats(request: Request):
     }
 
     return JSONResponse(stats)
+
+
+# ── Technographic API ────────────────────────────────────────────────────
+
+@router.get("/api/technographics/{tool_slug}")
+async def technographic_data(request: Request, tool_slug: str):
+    """What tools are used alongside a given tool? Sell this to tool makers."""
+    d = request.state.db
+
+    # Auth: require API key for technographic data (this is the paid product)
+    api_key = request.query_params.get("key", "")
+    if not api_key:
+        auth_header = request.headers.get("authorization", "")
+        if auth_header.startswith("Bearer "):
+            api_key = auth_header[7:]
+
+    if not api_key:
+        return JSONResponse({
+            "error": "API key required for technographic data",
+            "get_key": "https://indiestack.ai/developer",
+            "pricing": "Contact hello@indiestack.ai for technographic API access",
+        }, status_code=401)
+
+    # Verify API key exists
+    c = await d.execute("SELECT id, user_id FROM api_keys WHERE key_hash = ?",
+                        (api_key,))
+    key_row = await c.fetchone()
+    if not key_row:
+        # Try unhashed (legacy)
+        c = await d.execute("SELECT id, user_id FROM api_keys WHERE key_hash = ? OR key_hash = ?",
+                            (api_key, api_key))
+        key_row = await c.fetchone()
+    if not key_row:
+        return JSONResponse({"error": "Invalid API key"}, status_code=401)
+
+    # Look up the tool
+    c = await d.execute(
+        "SELECT id, name, slug, category_id FROM tools WHERE slug = ? AND status = 'approved' LIMIT 1",
+        (tool_slug,),
+    )
+    tool = await c.fetchone()
+    if not tool:
+        return JSONResponse({"error": f"Tool '{tool_slug}' not found"}, status_code=404)
+
+    tool_name = tool["name"]
+
+    # Get cooccurrence data — what's used alongside this tool
+    c = await d.execute("""
+        SELECT
+            CASE WHEN tool_a_slug = ? THEN tool_b_slug ELSE tool_a_slug END as companion_slug,
+            cooccurrence_count
+        FROM manifest_cooccurrences
+        WHERE (tool_a_slug = ? OR tool_b_slug = ?)
+          AND cooccurrence_count >= 2
+        ORDER BY cooccurrence_count DESC
+        LIMIT 50
+    """, (tool_slug, tool_slug, tool_slug))
+    raw_companions = await c.fetchall()
+
+    # Enrich with tool names and categories
+    companions = []
+    for r in raw_companions:
+        slug = r["companion_slug"]
+        count = r["cooccurrence_count"]
+        c2 = await d.execute(
+            """SELECT name, category_id, github_stars, health_status, is_reference
+               FROM tools WHERE slug = ? LIMIT 1""",
+            (slug,),
+        )
+        info = await c2.fetchone()
+        if not info:
+            continue
+
+        # Get category name
+        cat_name = ""
+        if info.get("category_id"):
+            c3 = await d.execute("SELECT name FROM categories WHERE id = ?", (info["category_id"],))
+            cat_row = await c3.fetchone()
+            cat_name = cat_row["name"] if cat_row else ""
+
+        companions.append({
+            "slug": slug,
+            "name": info["name"],
+            "category": cat_name,
+            "cooccurrence_count": count,
+            "github_stars": info.get("github_stars") or 0,
+            "health": info.get("health_status", "unknown"),
+            "is_mainstream": bool(info.get("is_reference", 0)),
+        })
+
+    # Also check curated compatibility pairs
+    c = await d.execute("""
+        SELECT
+            CASE WHEN tool_a_slug = ? THEN tool_b_slug ELSE tool_a_slug END as pair_slug,
+            success_count
+        FROM tool_pairs
+        WHERE (tool_a_slug = ? OR tool_b_slug = ?)
+          AND success_count > 0
+        ORDER BY success_count DESC
+    """, (tool_slug, tool_slug, tool_slug))
+    verified_pairs = []
+    for r in await c.fetchall():
+        verified_pairs.append({
+            "slug": r["pair_slug"],
+            "verified_success_count": r["success_count"],
+        })
+
+    # Compute market share within category
+    category_id = tool.get("category_id")
+    category_stats = None
+    if category_id:
+        c = await d.execute(
+            "SELECT COUNT(*) as cnt FROM tools WHERE category_id = ? AND status = 'approved' AND is_reference = 0",
+            (category_id,),
+        )
+        total_in_cat = (await c.fetchone())["cnt"]
+        # How many manifests include this tool vs competitors
+        c = await d.execute("""
+            SELECT SUM(cooccurrence_count) as total
+            FROM manifest_cooccurrences
+            WHERE tool_a_slug = ? OR tool_b_slug = ?
+        """, (tool_slug, tool_slug))
+        row = await c.fetchone()
+        tool_appearances = row["total"] if row and row["total"] else 0
+
+        c2 = await d.execute("SELECT name FROM categories WHERE id = ?", (category_id,))
+        cat_row = await c2.fetchone()
+
+        category_stats = {
+            "category": cat_row["name"] if cat_row else "",
+            "total_tools_in_category": total_in_cat,
+            "manifest_appearances": tool_appearances,
+        }
+
+    return JSONResponse({
+        "tool": {
+            "slug": tool_slug,
+            "name": tool_name,
+        },
+        "companions": companions,
+        "verified_compatible": verified_pairs,
+        "category_stats": category_stats,
+        "data_sources": {
+            "manifest_analyses": "Real package.json and requirements.txt files analyzed",
+            "cooccurrence_pairs": "Tools that appear together in the same manifest",
+            "verified_pairs": "Curated compatibility data from GitHub repo analysis",
+        },
+    })
+
+
+# ── Audit Report API ─────────────────────────────────────────────────────
+
+@router.get("/api/audit/{owner}/{repo}")
+async def repo_audit(request: Request, owner: str, repo: str):
+    """Full dependency health audit for a repo. The consulting product."""
+    d = request.state.db
+
+    # Fetch manifest from GitHub
+    async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+        manifest = None
+        manifest_type = "package.json"
+        for fname, mtype in [("package.json", "package.json"), ("requirements.txt", "requirements.txt")]:
+            for branch in ["main", "master"]:
+                resp = await client.get(f"https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{fname}")
+                if resp.status_code == 200 and len(resp.text) > 10:
+                    manifest = resp.text
+                    manifest_type = mtype
+                    break
+            if manifest:
+                break
+
+    if not manifest:
+        return JSONResponse({"error": "No package.json or requirements.txt found"}, status_code=404)
+
+    # Run analysis
+    try:
+        result = await run_analysis(d, manifest, manifest_type)
+    except ValueError as e:
+        return JSONResponse({"error": str(e)}, status_code=400)
+
+    # Save with repo tracking
+    share_uuid = await save_analysis(d, None, f"audit:{owner}/{repo}", manifest_type, result)
+
+    # Enrich with audit-specific data
+    score = result["score"]
+    matched = result.get("matched", [])
+
+    # Risk assessment
+    risks = []
+    for m in matched:
+        f = m.get("freshness", {})
+        if f.get("status") in ("dead", "dormant"):
+            risks.append({
+                "package": m["package"],
+                "tool": m["tool"]["name"],
+                "severity": "high" if f["status"] == "dead" else "medium",
+                "issue": f"Package is {f['status']} — last activity unknown or over 12 months ago",
+                "recommendation": "Replace with an actively maintained alternative",
+            })
+
+    # Migration suggestions
+    migrations = []
+    for md in result.get("modernity_details", []):
+        migrations.append({
+            "from": md["name"],
+            "to": [a["name"] for a in md.get("alternatives", [])],
+            "reason": "More actively maintained alternatives with higher community traction",
+        })
+
+    audit = {
+        "repo": f"{owner}/{repo}",
+        "generated_at": "2026-03-26",
+        "share_url": f"https://indiestack.ai/analyze/{share_uuid}",
+        "summary": {
+            "score": score["total"],
+            "grade": "Excellent" if score["total"] >= 90 else ("Good" if score["total"] >= 80 else ("Needs attention" if score["total"] >= 60 else "At risk")),
+            "freshness": score["freshness"],
+            "cohesion": score["cohesion"],
+            "modernity": score["modernity"],
+            "total_dependencies": result["packages_total"],
+            "matched_dependencies": result["packages_matched"],
+        },
+        "dependencies": [
+            {
+                "package": m["package"],
+                "tool": m["tool"]["name"],
+                "status": m.get("freshness", {}).get("status", "unknown"),
+                "freshness_score": m.get("freshness", {}).get("freshness", 50),
+            }
+            for m in matched
+        ],
+        "risks": risks,
+        "recommended_migrations": migrations,
+        "compatibility": result.get("cohesion_details", []),
+    }
+
+    return JSONResponse(audit)
