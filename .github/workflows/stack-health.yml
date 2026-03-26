@@ -4,7 +4,6 @@ on:
     paths:
       - 'package.json'
       - 'requirements.txt'
-      - 'pyproject.toml'
 
 permissions:
   pull-requests: write
