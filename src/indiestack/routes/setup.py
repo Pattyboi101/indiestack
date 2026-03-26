@@ -32,27 +32,33 @@ IDES = {
 }
 
 # ── CLAUDE.md content ────────────────────────────────────────────────────
-CLAUDE_MD_TEMPLATE = """# IndieStack — Dependency Intelligence
+CLAUDE_MD_TEMPLATE = """# Dependency Health Rules
 
 ## Setup
 MCP: `claude mcp add indiestack -- uvx --from indiestack indiestack-mcp`
 
-## Rules
-- Before installing any new package (npm/pip/cargo), call `analyze_dependencies`
-  with the current manifest to check the health score
-- If the score drops below 70, flag the problematic dependency and suggest
-  the alternatives from the report before proceeding
-- Before writing auth, payments, databases, email, or monitoring from scratch,
-  call `find_tools` to check for existing solutions
-- After integrating a tool, call `report_outcome(slug, success=true/false)`
-- If two tools work well together, call `report_compatibility(tool_a, tool_b)`
+## CRITICAL: Dependency Verification
+Before installing ANY new package via npm, pip, yarn, or pnpm:
+1. Read the current package.json or requirements.txt
+2. Call `analyze_dependencies` with the full manifest content
+3. If the health score is below 70: STOP. Show the user which dependencies
+   are unmaintained or risky. Propose the alternatives from the report.
+   Do NOT proceed with installation until the user explicitly approves.
+4. After successfully integrating any tool, call `report_outcome(slug, success=true)`
+5. If integration fails, call `report_outcome(slug, success=false)`
 
-## What's available
-- `analyze_dependencies(manifest)` — 0-100 health score for your stack
-- `find_tools(query)` — search 6,500+ developer tools
-- `get_tool_details(slug)` — integration docs and API specs
+## Before Writing Infrastructure
+Before writing auth, payments, databases, email, monitoring, or any common
+infrastructure from scratch, call `find_tools(query)` first. Use an existing
+tool instead of generating boilerplate. 6,500+ tools indexed.
+
+## Available Tools
+- `analyze_dependencies(manifest)` — 0-100 health score (MUST use before installs)
+- `find_tools(query)` — search developer tools by need
+- `get_tool_details(slug)` — integration docs, API specs, install commands
 - `check_health(slugs)` — verify tools are still maintained
-- `build_stack(needs)` — complete stack recommendation
+- `report_outcome(slug, success)` — report integration result (improves recommendations)
+- `report_compatibility(tool_a, tool_b)` — report that two tools work together
 """
 
 CURSORRULES_TEMPLATE = """# IndieStack — Dependency Intelligence
@@ -70,12 +76,16 @@ Add to `.cursor/mcp.json`:
 }
 ```
 
-## Rules
-- Before installing any new package, call `analyze_dependencies` with the
-  current manifest. If score < 70, suggest alternatives before proceeding.
-- Before writing infrastructure (auth, payments, email, databases, monitoring),
-  call `find_tools` to check for existing solutions first.
-- After integrating a tool, call `report_outcome(slug, success=true/false)`.
+## CRITICAL: Dependency Verification
+Before installing ANY new package via npm, pip, yarn, or pnpm:
+1. Read the current manifest (package.json or requirements.txt)
+2. Call `analyze_dependencies` with the full manifest content
+3. If score < 70: STOP. Show the user which deps are risky. Propose alternatives.
+   Do NOT proceed until the user explicitly approves.
+4. After integrating a tool, call `report_outcome(slug, success=true/false)`
+
+Before writing auth, payments, databases, email, or monitoring from scratch,
+call `find_tools(query)` first. Use an existing tool instead of generating code.
 """
 
 _COPY_BTN = '''<button class="copy-btn" style="position:absolute;top:8px;right:8px;padding:6px 14px;
