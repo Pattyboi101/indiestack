@@ -320,23 +320,12 @@ async def analyze_submit(request: Request, manifest: str = Form(...), manifest_t
     user = request.state.user
     d = request.state.db
 
-    # Rate limiting
+    # Track usage for analytics (no rate limit — we want volume for the data moat)
     user_id = user["id"] if user else None
     session_id = request.cookies.get("session") if not user else None
     if not user_id and not session_id:
         client_ip = request.headers.get("fly-client-ip", request.client.host if request.client else "unknown")
         session_id = f"ip:{client_ip}"
-    usage = await count_analyses(d, user_id=user_id, session_id=session_id)
-
-    is_pro = user and user.get("is_pro")
-    limit = 1000 if is_pro else 10
-    if usage >= limit:
-        body = f'''<div style="max-width:600px;margin:40px auto;text-align:center;">
-            <h1 style="font-family:var(--font-display);font-size:var(--heading-md);">Analysis limit reached</h1>
-            <p style="color:var(--ink-muted);">You've used {usage} of {limit} analyses this month.</p>
-            <a href="/pricing" class="btn-primary" style="margin-top:16px;display:inline-block;padding:12px 24px;text-decoration:none;">Upgrade to Pro</a>
-        </div>'''
-        return HTMLResponse(page_shell("Limit Reached | IndieStack", body, user=user))
 
     # Validate
     manifest = manifest.strip()
@@ -434,7 +423,7 @@ async def analyze_api(request: Request):
             session_id = f"ip:{client_ip}"
         usage = await count_analyses(d, user_id=user_id, session_id=session_id)
         is_pro = user and user.get("is_pro")
-        limit = 1000 if is_pro else 10
+        limit = 10000 if is_pro else 100
         if usage >= limit:
             return JSONResponse({"error": "Analysis limit reached", "usage": usage, "limit": limit}, status_code=429)
     else:
