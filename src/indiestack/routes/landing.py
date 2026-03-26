@@ -441,11 +441,23 @@ async def landing(request: Request):
         '</div>'
     )
 
+    # ── Stack Health Check CTA ────────────────────────────────────────
+    analyze_cta = (
+        '<section style="padding:48px 24px;text-align:center;">'
+        '  <div style="max-width:600px;margin:0 auto;">'
+        '    <h2 style="font-family:var(--font-display);font-size:var(--heading-md);color:var(--ink);margin:0 0 12px;">How healthy is your stack?</h2>'
+        '    <p style="font-family:var(--font-body);color:var(--ink-muted);font-size:var(--text-md);margin:0 0 20px;line-height:1.6;">'
+        '      Paste your package.json or requirements.txt and get a dependency health score in seconds. Free, no signup required.</p>'
+        '    <a href="/analyze" class="btn-primary" style="padding:14px 32px;font-size:var(--text-md);text-decoration:none;display:inline-block;">Check your stack</a>'
+        '  </div>'
+        '</section>'
+    )
+
     # ── Assembly ─────────────────────────────────────────────────────
     def _reveal(html):
         return f'<div class="reveal">{html}</div>'
 
-    body = hero + stats_bar + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(maker_cta)
+    body = hero + stats_bar + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(analyze_cta) + _reveal(maker_cta)
 
     import json as _json
     website_ld = _json.dumps({
