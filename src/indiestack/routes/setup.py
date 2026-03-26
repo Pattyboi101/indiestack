@@ -181,11 +181,46 @@ async def setup_page(request: Request):
             </p>
         </div>
 
-        <!-- Step 3: Get API key -->
+        <!-- Step 3: GitHub Action -->
         <div style="margin-bottom:40px;">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
                 <span style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#0F1D30;
                              display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;">3</span>
+                <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:0;">Add CI health check <span style="font-size:14px;font-weight:400;color:var(--ink-muted);">(optional)</span></h2>
+            </div>
+            <p style="font-size:14px;color:var(--ink-muted);margin:0 0 12px;line-height:1.6;">
+                Automatically score dependency health on every pull request that changes your manifest.
+            </p>
+
+            <div style="position:relative;">
+                <pre class="copyable" style="background:var(--ink);color:#e2e8f0;padding:16px 50px 16px 16px;
+                            border-radius:var(--radius-sm);font-size:12px;font-family:var(--font-mono);
+                            overflow-x:auto;line-height:1.6;margin:0;">name: Stack Health Check
+on:
+  pull_request:
+    paths:
+      - &#x27;package.json&#x27;
+      - &#x27;requirements.txt&#x27;
+permissions:
+  pull-requests: write
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Pattyboi101/stack-health-check@master</pre>
+                {_COPY_BTN}
+            </div>
+            <p style="font-size:13px;color:var(--ink-muted);margin:10px 0 0;">
+                Add this to <code>.github/workflows/stack-health.yml</code> — every PR that changes dependencies gets a health score comment.
+            </p>
+        </div>
+
+        <!-- Step 4: Get API key -->
+        <div style="margin-bottom:40px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <span style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#0F1D30;
+                             display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;">4</span>
                 <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:0;">Get your API key <span style="font-size:14px;font-weight:400;color:var(--ink-muted);">(free)</span></h2>
             </div>
             <p style="font-size:14px;color:var(--ink-muted);margin:0 0 16px;line-height:1.6;">
