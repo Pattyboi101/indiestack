@@ -1,0 +1,4828 @@
+[
+  {
+    "id": 1218,
+    "name": "2Fauth",
+    "slug": "2fauth",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 4,
+    "matches": [
+      "tagline:authentication",
+      "tagline:2fa",
+      "tagline:two-factor",
+      "tag:2factor"
+    ]
+  },
+  {
+    "id": 1302,
+    "name": "Ai Crm",
+    "slug": "ai-crm",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "name:crm"
+    ]
+  },
+  {
+    "id": 1938,
+    "name": "Ai Engineering Hub",
+    "slug": "ai-engineering-hub",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 3,
+    "matches": [
+      "tagline:lms",
+      "tag:machine-learning",
+      "tag:llms"
+    ]
+  },
+  {
+    "id": 2194,
+    "name": "Aimeos Core",
+    "slug": "aimeos-core",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 3,
+    "matches": [
+      "tagline:e-commerce",
+      "tagline:marketplace",
+      "tag:ecommerce"
+    ]
+  },
+  {
+    "id": 2186,
+    "name": "Aimeos Laravel",
+    "slug": "aimeos-laravel",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 3,
+    "matches": [
+      "tagline:ecommerce",
+      "tagline:marketplace",
+      "tag:ecommerce-framework"
+    ]
+  },
+  {
+    "id": 2523,
+    "name": "Alchemy Cms",
+    "slug": "alchemy-cms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "name:cms",
+      "tag:alchemy-cms"
+    ]
+  },
+  {
+    "id": 2339,
+    "name": "Algermusicplayer",
+    "slug": "algermusicplayer",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:music",
+      "tag:music-player"
+    ]
+  },
+  {
+    "id": 3066,
+    "name": "Ant Media Server",
+    "slug": "ant-media-server",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "name:media server",
+      "tag:ant-media"
+    ]
+  },
+  {
+    "id": 3206,
+    "name": "Antennapod",
+    "slug": "antennapod",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:podcast-manager",
+      "tag:podcasting20"
+    ]
+  },
+  {
+    "id": 2126,
+    "name": "Apisix",
+    "slug": "apisix",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway"
+    ]
+  },
+  {
+    "id": 3363,
+    "name": "Apollo Server",
+    "slug": "apollo-server",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tag:apollographql",
+      "tag:express-graphql"
+    ]
+  },
+  {
+    "id": 1212,
+    "name": "App",
+    "slug": "app",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 3,
+    "matches": [
+      "tagline:authentication",
+      "tagline:2fa",
+      "tagline:two-factor"
+    ]
+  },
+  {
+    "id": 2516,
+    "name": "Atomic Server",
+    "slug": "atomic-server",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tagline:headless cms"
+    ]
+  },
+  {
+    "id": 3159,
+    "name": "Awesome Ai In Finance",
+    "slug": "awesome-ai-in-finance",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tagline:lms",
+      "tag:deep-learning"
+    ]
+  },
+  {
+    "id": 1531,
+    "name": "Awesome Ai Newsletters",
+    "slug": "awesome-ai-newsletters",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 3,
+    "matches": [
+      "tagline:newsletter",
+      "tag:ai-newsletter",
+      "tag:ai-newsletters"
+    ]
+  },
+  {
+    "id": 2569,
+    "name": "Awesome English Ebooks",
+    "slug": "awesome-english-ebooks",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:ebooks",
+      "tag:economist-ebooks"
+    ]
+  },
+  {
+    "id": 1530,
+    "name": "Awesome Newsletter Tools",
+    "slug": "awesome-newsletter-tools",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 2,
+    "matches": [
+      "name:newsletter"
+    ]
+  },
+  {
+    "id": 3432,
+    "name": "Awesome Nlp",
+    "slug": "awesome-nlp",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:machine-learning"
+    ]
+  },
+  {
+    "id": 3276,
+    "name": "Awesome Self Evolving Agents",
+    "slug": "awesome-self-evolving-agents",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:llms",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 3259,
+    "name": "Awesome Text2Sql",
+    "slug": "awesome-text2sql",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 3286,
+    "name": "Beads Viewer",
+    "slug": "beads-viewer",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 3,
+    "matches": [
+      "tagline:kanban",
+      "tagline:issue tracker",
+      "tag:issue-tracker"
+    ]
+  },
+  {
+    "id": 1707,
+    "name": "Bevy",
+    "slug": "bevy",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 6767,
+    "name": "Black Candy",
+    "slug": "black-candy",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:streaming server",
+      "tagline:music streaming"
+    ]
+  },
+  {
+    "id": 2153,
+    "name": "Blog Post Workflow",
+    "slug": "blog-post-workflow",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 7,
+    "new_category_name": "Social Media",
+    "score": 2,
+    "matches": [
+      "tag:activity",
+      "tag:blog"
+    ]
+  },
+  {
+    "id": 1646,
+    "name": "Brainwave",
+    "slug": "brainwave",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:animation",
+      "tag:css-animation"
+    ]
+  },
+  {
+    "id": 2381,
+    "name": "Brightroom",
+    "slug": "brightroom",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tagline:image editor",
+      "tag:editor"
+    ]
+  },
+  {
+    "id": 1847,
+    "name": "Btcpayserver",
+    "slug": "btcpayserver",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 3,
+    "matches": [
+      "tagline:payment",
+      "tag:bitcoin-payment-gateway",
+      "tag:bitcoin-payment-processor"
+    ]
+  },
+  {
+    "id": 2051,
+    "name": "Btw",
+    "slug": "btw",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:note-taking",
+      "tag:notes-app"
+    ]
+  },
+  {
+    "id": 1918,
+    "name": "Bulk Email Sender",
+    "slug": "bulk-email-sender",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 2,
+    "new_category_name": "Email Marketing",
+    "score": 4,
+    "matches": [
+      "name:email",
+      "tagline:bulk email",
+      "tag:bulk-email"
+    ]
+  },
+  {
+    "id": 1917,
+    "name": "Business Leads Ai Automation",
+    "slug": "business-leads-ai-automation",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "tag:crm-tools",
+      "tag:b2b-sales"
+    ]
+  },
+  {
+    "id": 997,
+    "name": "CONTEXT",
+    "slug": "context",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 2,
+    "new_category_name": "Email Marketing",
+    "score": 2,
+    "matches": [
+      "tag:ai",
+      "tag:marketing"
+    ]
+  },
+  {
+    "id": 2291,
+    "name": "Calendar",
+    "slug": "calendar",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tag:calendar",
+      "tag:calendar-library"
+    ]
+  },
+  {
+    "id": 2286,
+    "name": "Calendarview",
+    "slug": "calendarview",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tag:calendar",
+      "tag:calendar-api"
+    ]
+  },
+  {
+    "id": 1904,
+    "name": "Card",
+    "slug": "card",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 2,
+    "new_category_name": "Email Marketing",
+    "score": 3,
+    "matches": [
+      "tagline:email template",
+      "tag:email-marketing",
+      "tag:email-template"
+    ]
+  },
+  {
+    "id": 3175,
+    "name": "Cesium",
+    "slug": "cesium",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:3d",
+      "tag:3d-globe"
+    ]
+  },
+  {
+    "id": 2309,
+    "name": "Chatbox",
+    "slug": "chatbox",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:chatbot",
+      "tag:chatgpt"
+    ]
+  },
+  {
+    "id": 2167,
+    "name": "Classicpress",
+    "slug": "classicpress",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tag:cms-framework"
+    ]
+  },
+  {
+    "id": 1262,
+    "name": "Claude Code Usage Monitor",
+    "slug": "claude-code-usage-monitor",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 2,
+    "matches": [
+      "name:monitor"
+    ]
+  },
+  {
+    "id": 1331,
+    "name": "Clearml",
+    "slug": "clearml",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:deeplearning"
+    ]
+  },
+  {
+    "id": 1725,
+    "name": "Cocos Engine",
+    "slug": "cocos-engine",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-development",
+      "tag:engine"
+    ]
+  },
+  {
+    "id": 2835,
+    "name": "Cogito",
+    "slug": "cogito",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-development",
+      "tag:gamedev"
+    ]
+  },
+  {
+    "id": 2216,
+    "name": "Colossalai",
+    "slug": "colossalai",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 2859,
+    "name": "Copyparty",
+    "slug": "copyparty",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 2,
+    "matches": [
+      "tagline:file server",
+      "tag:file-sharing"
+    ]
+  },
+  {
+    "id": 2522,
+    "name": "Core",
+    "slug": "core",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:content management system",
+      "tag:cms",
+      "tag:dotcms"
+    ]
+  },
+  {
+    "id": 2954,
+    "name": "Cosyvoice",
+    "slug": "cosyvoice",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:chatbot",
+      "tag:chatgpt"
+    ]
+  },
+  {
+    "id": 7058,
+    "name": "Counter",
+    "slug": "counter",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tagline:analytics",
+      "tagline:web analytics"
+    ]
+  },
+  {
+    "id": 1959,
+    "name": "Coze Studio",
+    "slug": "coze-studio",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:chatbot",
+      "tag:chatbot-framework"
+    ]
+  },
+  {
+    "id": 7253,
+    "name": "Craft CMS",
+    "slug": "craft-cms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:cms"
+    ]
+  },
+  {
+    "id": 1308,
+    "name": "Crash Course Crm",
+    "slug": "crash-course-crm",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "name:crm"
+    ]
+  },
+  {
+    "id": 1932,
+    "name": "Crewai",
+    "slug": "crewai",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:llms",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 276,
+    "name": "Crowdin",
+    "slug": "crowdin",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tagline:agile",
+      "tag:collaboration"
+    ]
+  },
+  {
+    "id": 1232,
+    "name": "Cube",
+    "slug": "cube",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tagline:analytics",
+      "tag:agentic-analytics"
+    ]
+  },
+  {
+    "id": 1140,
+    "name": "D2",
+    "slug": "d2",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tag:diagramming",
+      "tag:diagrams"
+    ]
+  },
+  {
+    "id": 2514,
+    "name": "Daptin",
+    "slug": "daptin",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:cms",
+      "tagline:headless cms",
+      "tag:content-management"
+    ]
+  },
+  {
+    "id": 1529,
+    "name": "Dawn",
+    "slug": "dawn",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 2,
+    "matches": [
+      "tagline:newsletter",
+      "tag:publishing"
+    ]
+  },
+  {
+    "id": 2132,
+    "name": "Decap Cms",
+    "slug": "decap-cms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 4,
+    "matches": [
+      "name:cms",
+      "tagline:static site",
+      "tag:decap-cms"
+    ]
+  },
+  {
+    "id": 2898,
+    "name": "Deeplake",
+    "slug": "deeplake",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tagline:lms",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 1734,
+    "name": "Defold",
+    "slug": "defold",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 1130,
+    "name": "Devdocs",
+    "slug": "devdocs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tagline:api documentation",
+      "tag:api-documentation"
+    ]
+  },
+  {
+    "id": 2580,
+    "name": "Dex",
+    "slug": "dex",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 3,
+    "matches": [
+      "tagline:openid",
+      "tagline:oidc",
+      "tag:identity-provider"
+    ]
+  },
+  {
+    "id": 2137,
+    "name": "Django Cms",
+    "slug": "django-cms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "name:cms",
+      "tag:django-cms"
+    ]
+  },
+  {
+    "id": 2189,
+    "name": "Django Oscar",
+    "slug": "django-oscar",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:e-commerce",
+      "tag:ecommerce"
+    ]
+  },
+  {
+    "id": 1880,
+    "name": "Django Paypal",
+    "slug": "django-paypal",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:payment",
+      "tag:paypal-express-checkout"
+    ]
+  },
+  {
+    "id": 346,
+    "name": "Dkron",
+    "slug": "dkron",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tagline:scheduling",
+      "tag:scheduler"
+    ]
+  },
+  {
+    "id": 3452,
+    "name": "Dlib",
+    "slug": "dlib",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:machine-learning"
+    ]
+  },
+  {
+    "id": 1378,
+    "name": "Dockerfiles",
+    "slug": "dockerfiles",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 2,
+    "matches": [
+      "tagline:invoice",
+      "tag:invoice-ninja"
+    ]
+  },
+  {
+    "id": 2274,
+    "name": "Docsify",
+    "slug": "docsify",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tag:doc",
+      "tag:documentation"
+    ]
+  },
+  {
+    "id": 1405,
+    "name": "E Invoice Eu",
+    "slug": "e-invoice-eu",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 3,
+    "matches": [
+      "name:invoice",
+      "tag:e-invoice"
+    ]
+  },
+  {
+    "id": 3324,
+    "name": "Easegress",
+    "slug": "easegress",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tag:api-gateway",
+      "tag:gateway"
+    ]
+  },
+  {
+    "id": 1884,
+    "name": "Ecommerceapi",
+    "slug": "ecommerceapi",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:e-commerce",
+      "tagline:ecommerce"
+    ]
+  },
+  {
+    "id": 1397,
+    "name": "Electronic Invoicing And Warehouse Management System",
+    "slug": "electronic-invoicing-and-warehouse-management-system",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 4,
+    "matches": [
+      "name:invoicing",
+      "tag:invoice-generator",
+      "tag:invoice-management"
+    ]
+  },
+  {
+    "id": 37,
+    "name": "Email Builder JS",
+    "slug": "email-builder-js",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 2,
+    "new_category_name": "Email Marketing",
+    "score": 2,
+    "matches": [
+      "name:email"
+    ]
+  },
+  {
+    "id": 1919,
+    "name": "Email Marketing Bible",
+    "slug": "email-marketing-bible",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 2,
+    "new_category_name": "Email Marketing",
+    "score": 2,
+    "matches": [
+      "name:email"
+    ]
+  },
+  {
+    "id": 3329,
+    "name": "Emissary",
+    "slug": "emissary",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 3,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway",
+      "tag:api-management"
+    ]
+  },
+  {
+    "id": 1717,
+    "name": "Engine",
+    "slug": "engine",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 1307,
+    "name": "Erp Pro",
+    "slug": "erp-pro",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 3,
+    "matches": [
+      "name:erp",
+      "tagline:crm"
+    ]
+  },
+  {
+    "id": 5244,
+    "name": "Euterpe",
+    "slug": "euterpe",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:streaming server",
+      "tagline:music streaming"
+    ]
+  },
+  {
+    "id": 2185,
+    "name": "Evershop",
+    "slug": "evershop",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 3,
+    "matches": [
+      "tagline:e-commerce",
+      "tag:ecommerce",
+      "tag:ecommerce-framework"
+    ]
+  },
+  {
+    "id": 435,
+    "name": "Exa MCP Server",
+    "slug": "exa-mcp-server",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 20,
+    "new_category_name": "Feedback & Reviews",
+    "score": 2,
+    "matches": [
+      "tag:search",
+      "tag:research"
+    ]
+  },
+  {
+    "id": 1389,
+    "name": "Factur X",
+    "slug": "factur-x",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 2,
+    "matches": [
+      "tagline:invoicing",
+      "tag:e-invoice"
+    ]
+  },
+  {
+    "id": 1274,
+    "name": "Fat Free Crm",
+    "slug": "fat-free-crm",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "name:crm"
+    ]
+  },
+  {
+    "id": 2515,
+    "name": "Faustjs",
+    "slug": "faustjs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tag:headless-cms",
+      "tag:headless"
+    ]
+  },
+  {
+    "id": 1394,
+    "name": "Faveo Invoicing Community",
+    "slug": "faveo-invoicing-community",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 2,
+    "matches": [
+      "name:invoicing"
+    ]
+  },
+  {
+    "id": 4122,
+    "name": "Feather Wiki",
+    "slug": "feather-wiki",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:wiki"
+    ]
+  },
+  {
+    "id": 1338,
+    "name": "Fedml",
+    "slug": "fedml",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:federated-learning"
+    ]
+  },
+  {
+    "id": 1051,
+    "name": "Filebrowser",
+    "slug": "filebrowser",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 3,
+    "matches": [
+      "tagline:file browser",
+      "tag:file-sharing",
+      "tag:file-manager"
+    ]
+  },
+  {
+    "id": 2519,
+    "name": "Firecms",
+    "slug": "firecms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tag:headless-cms"
+    ]
+  },
+  {
+    "id": 2032,
+    "name": "Flatnotes",
+    "slug": "flatnotes",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:note",
+      "tag:note-taking"
+    ]
+  },
+  {
+    "id": 1731,
+    "name": "Flaxengine",
+    "slug": "flaxengine",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:game engine",
+      "tag:engine"
+    ]
+  },
+  {
+    "id": 2013,
+    "name": "Foam",
+    "slug": "foam",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 3,
+    "matches": [
+      "tagline:knowledge management",
+      "tag:note-taking",
+      "tag:notes-app"
+    ]
+  },
+  {
+    "id": 7287,
+    "name": "Frappe Builder",
+    "slug": "frappe-builder",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:website builder",
+      "tagline:site builder"
+    ]
+  },
+  {
+    "id": 3170,
+    "name": "Freecad",
+    "slug": "freecad",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:3d",
+      "tag:3d-printing"
+    ]
+  },
+  {
+    "id": 2018,
+    "name": "Fsnotes",
+    "slug": "fsnotes",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:note-taking",
+      "tag:notes-app"
+    ]
+  },
+  {
+    "id": 2770,
+    "name": "Fumadocs",
+    "slug": "fumadocs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 2,
+    "matches": [
+      "tag:content-collections",
+      "tag:contentlayer"
+    ]
+  },
+  {
+    "id": 1727,
+    "name": "Fyrox",
+    "slug": "fyrox",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 1344,
+    "name": "Gantt Schedule Timeline Calendar",
+    "slug": "gantt-schedule-timeline-calendar",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tag:booking",
+      "tag:calendar"
+    ]
+  },
+  {
+    "id": 3508,
+    "name": "Garmin Grafana",
+    "slug": "garmin-grafana",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 2,
+    "matches": [
+      "name:grafana"
+    ]
+  },
+  {
+    "id": 2455,
+    "name": "Get Subscribe",
+    "slug": "get-subscribe",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:sr",
+      "tag:ssr"
+    ]
+  },
+  {
+    "id": 2289,
+    "name": "Git Stats",
+    "slug": "git-stats",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tag:calendar",
+      "tag:contributions-calendar"
+    ]
+  },
+  {
+    "id": 1125,
+    "name": "Githubdaily",
+    "slug": "githubdaily",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 9,
+    "new_category_name": "Forms & Surveys",
+    "score": 2,
+    "matches": [
+      "tag:ai",
+      "tag:backend"
+    ]
+  },
+  {
+    "id": 1056,
+    "name": "Glance",
+    "slug": "glance",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 2,
+    "matches": [
+      "tag:feed-reader",
+      "tag:aggregator"
+    ]
+  },
+  {
+    "id": 1200,
+    "name": "Go Backend Clean Architecture",
+    "slug": "go-backend-clean-architecture",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 2,
+    "matches": [
+      "tagline:authentication",
+      "tagline:jwt auth"
+    ]
+  },
+  {
+    "id": 1329,
+    "name": "Gocron",
+    "slug": "gocron",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tagline:scheduling",
+      "tag:golang-job-scheduling"
+    ]
+  },
+  {
+    "id": 1740,
+    "name": "Godot Docs",
+    "slug": "godot-docs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 1749,
+    "name": "Godot Minimal Theme",
+    "slug": "godot-minimal-theme",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-engine",
+      "tag:gamedev"
+    ]
+  },
+  {
+    "id": 3707,
+    "name": "Gofs",
+    "slug": "gofs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 3,
+    "matches": [
+      "tagline:file sync",
+      "tag:file-manager",
+      "tag:file-synchronization"
+    ]
+  },
+  {
+    "id": 1560,
+    "name": "Gojs",
+    "slug": "gojs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tagline:design tool",
+      "tag:diagram"
+    ]
+  },
+  {
+    "id": 1081,
+    "name": "Gpt Researcher",
+    "slug": "gpt-researcher",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:llms",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 3355,
+    "name": "Graphql Js",
+    "slug": "graphql-js",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tag:graphql",
+      "tag:graphql-js"
+    ]
+  },
+  {
+    "id": 3408,
+    "name": "H2O 3",
+    "slug": "h2o-3",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tagline:learning platform",
+      "tag:deep-learning"
+    ]
+  },
+  {
+    "id": 2130,
+    "name": "Halo",
+    "slug": "halo",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tag:cms",
+      "tag:content-management-system"
+    ]
+  },
+  {
+    "id": 1874,
+    "name": "Hayroo",
+    "slug": "hayroo",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:e-commerce",
+      "tag:ecommerce-website"
+    ]
+  },
+  {
+    "id": 2532,
+    "name": "Hexo Theme Icarus",
+    "slug": "hexo-theme-icarus",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:static site",
+      "tag:static-site"
+    ]
+  },
+  {
+    "id": 2022,
+    "name": "Heynote",
+    "slug": "heynote",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:note-taking",
+      "tag:notes"
+    ]
+  },
+  {
+    "id": 1548,
+    "name": "Hf Daily Paper Newsletter",
+    "slug": "hf-daily-paper-newsletter",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 2,
+    "matches": [
+      "name:newsletter"
+    ]
+  },
+  {
+    "id": 3322,
+    "name": "Higress",
+    "slug": "higress",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway"
+    ]
+  },
+  {
+    "id": 1292,
+    "name": "Horilla",
+    "slug": "horilla",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tag:hr-analytics",
+      "tag:biometrics"
+    ]
+  },
+  {
+    "id": 3177,
+    "name": "Hunyuan3D 2",
+    "slug": "hunyuan3d-2",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:3d",
+      "tag:3d-aigc"
+    ]
+  },
+  {
+    "id": 1225,
+    "name": "Influxdb",
+    "slug": "influxdb",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tagline:analytics",
+      "tagline:metrics"
+    ]
+  },
+  {
+    "id": 1392,
+    "name": "Invoice Builder",
+    "slug": "invoice-builder",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 2,
+    "matches": [
+      "name:invoice"
+    ]
+  },
+  {
+    "id": 1369,
+    "name": "Invoice2Data",
+    "slug": "invoice2data",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 2,
+    "matches": [
+      "name:invoice"
+    ]
+  },
+  {
+    "id": 1364,
+    "name": "Invoify",
+    "slug": "invoify",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 3,
+    "matches": [
+      "tagline:invoice",
+      "tag:invoice-app",
+      "tag:invoice-generator"
+    ]
+  },
+  {
+    "id": 2091,
+    "name": "Jellyfin",
+    "slug": "jellyfin",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "name:jellyfin"
+    ]
+  },
+  {
+    "id": 1723,
+    "name": "Joltphysics",
+    "slug": "joltphysics",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 3395,
+    "name": "Jsoncrack.Com",
+    "slug": "jsoncrack.com",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tag:graph",
+      "tag:diagrams"
+    ]
+  },
+  {
+    "id": 1403,
+    "name": "Jspdf Invoice Template",
+    "slug": "jspdf-invoice-template",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 2,
+    "matches": [
+      "name:invoice"
+    ]
+  },
+  {
+    "id": 1744,
+    "name": "Kaiju",
+    "slug": "kaiju",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-engine",
+      "tag:game-engine-2d"
+    ]
+  },
+  {
+    "id": 3289,
+    "name": "Kanban.Bash",
+    "slug": "kanban.bash",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 3,
+    "matches": [
+      "name:kanban",
+      "tag:nestedkanban"
+    ]
+  },
+  {
+    "id": 3060,
+    "name": "Kavita",
+    "slug": "kavita",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:comicinfo",
+      "tag:comics"
+    ]
+  },
+  {
+    "id": 2138,
+    "name": "Keystone",
+    "slug": "keystone",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:cms",
+      "tagline:headless cms",
+      "tag:cms-framework"
+    ]
+  },
+  {
+    "id": 3325,
+    "name": "Kgateway",
+    "slug": "kgateway",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 3,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway",
+      "tag:api-management"
+    ]
+  },
+  {
+    "id": 2302,
+    "name": "Khal",
+    "slug": "khal",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tagline:calendar app",
+      "tag:icalendar"
+    ]
+  },
+  {
+    "id": 1505,
+    "name": "Kill The Newsletter",
+    "slug": "kill-the-newsletter",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 2,
+    "matches": [
+      "name:newsletter"
+    ]
+  },
+  {
+    "id": 2517,
+    "name": "Kirby",
+    "slug": "kirby",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tag:cms",
+      "tag:cms-framework"
+    ]
+  },
+  {
+    "id": 2873,
+    "name": "Kodbox",
+    "slug": "kodbox",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 3,
+    "matches": [
+      "tagline:file manager",
+      "tag:file-sharing",
+      "tag:file-manager"
+    ]
+  },
+  {
+    "id": 3065,
+    "name": "Komga",
+    "slug": "komga",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:media server",
+      "tag:comics"
+    ]
+  },
+  {
+    "id": 1971,
+    "name": "Kopia",
+    "slug": "kopia",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 2,
+    "matches": [
+      "tag:cloud",
+      "tag:google-cloud-storage"
+    ]
+  },
+  {
+    "id": 2572,
+    "name": "Koreader",
+    "slug": "koreader",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:ebook reader",
+      "tag:ebook-reader"
+    ]
+  },
+  {
+    "id": 3336,
+    "name": "Krakend Ce",
+    "slug": "krakend-ce",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway"
+    ]
+  },
+  {
+    "id": 1178,
+    "name": "Kratos",
+    "slug": "kratos",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 3,
+    "matches": [
+      "tagline:authentication",
+      "tag:identity",
+      "tag:identity-management"
+    ]
+  },
+  {
+    "id": 1613,
+    "name": "Landy React Template",
+    "slug": "landy-react-template",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "tag:boilerplate",
+      "tag:boilerplate-template"
+    ]
+  },
+  {
+    "id": 466,
+    "name": "Langfuse",
+    "slug": "langfuse",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 2,
+    "matches": [
+      "tagline:observability",
+      "tag:tracing"
+    ]
+  },
+  {
+    "id": 3446,
+    "name": "Learnopencv",
+    "slug": "learnopencv",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 2538,
+    "name": "Lektor",
+    "slug": "lektor",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:content management system",
+      "tag:cms"
+    ]
+  },
+  {
+    "id": 1483,
+    "name": "Limesurvey",
+    "slug": "limesurvey",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 9,
+    "new_category_name": "Forms & Surveys",
+    "score": 2,
+    "matches": [
+      "tagline:survey platform",
+      "tag:limesurvey"
+    ]
+  },
+  {
+    "id": 1746,
+    "name": "Littlejs",
+    "slug": "littlejs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 2932,
+    "name": "Loguru",
+    "slug": "loguru",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 2,
+    "matches": [
+      "tag:log",
+      "tag:logging"
+    ]
+  },
+  {
+    "id": 1565,
+    "name": "Luban H5",
+    "slug": "luban-h5",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 3,
+    "matches": [
+      "tagline:design tool",
+      "tag:ant-design",
+      "tag:design-tool"
+    ]
+  },
+  {
+    "id": 1753,
+    "name": "Lumixengine",
+    "slug": "lumixengine",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:3d-game-engine",
+      "tag:game-development"
+    ]
+  },
+  {
+    "id": 2197,
+    "name": "Lunar",
+    "slug": "lunar",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:e-commerce",
+      "tag:ecommerce"
+    ]
+  },
+  {
+    "id": 3323,
+    "name": "Lura",
+    "slug": "lura",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 3,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway",
+      "tag:gateway"
+    ]
+  },
+  {
+    "id": 1742,
+    "name": "Mach",
+    "slug": "mach",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 3423,
+    "name": "Machine Learning Refined",
+    "slug": "machine-learning-refined",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:machine-learning"
+    ]
+  },
+  {
+    "id": 1743,
+    "name": "Macroquad",
+    "slug": "macroquad",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 2180,
+    "name": "Magento2",
+    "slug": "magento2",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tag:ecommerce",
+      "tag:ecommerce-platform"
+    ]
+  },
+  {
+    "id": 1910,
+    "name": "Maho",
+    "slug": "maho",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:ecommerce",
+      "tag:ecommerce-framework"
+    ]
+  },
+  {
+    "id": 2058,
+    "name": "Many Notes",
+    "slug": "many-notes",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 3,
+    "matches": [
+      "tagline:note-taking",
+      "tag:knowledge-base",
+      "tag:collaboration"
+    ]
+  },
+  {
+    "id": 7344,
+    "name": "Marble CMS",
+    "slug": "marble-cms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "name:cms",
+      "tagline:headless cms"
+    ]
+  },
+  {
+    "id": 3068,
+    "name": "Media Server",
+    "slug": "media-server",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "name:media server"
+    ]
+  },
+  {
+    "id": 3056,
+    "name": "Mediamtx",
+    "slug": "mediamtx",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:media server",
+      "tag:media-server"
+    ]
+  },
+  {
+    "id": 2292,
+    "name": "Meetingbar",
+    "slug": "meetingbar",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tag:calendar",
+      "tag:google-calendar"
+    ]
+  },
+  {
+    "id": 1732,
+    "name": "Melonjs",
+    "slug": "melonjs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:2d-game-engine",
+      "tag:game-development"
+    ]
+  },
+  {
+    "id": 2380,
+    "name": "Memories",
+    "slug": "memories",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:photo management",
+      "tag:gallery",
+      "tag:photo-gallery"
+    ]
+  },
+  {
+    "id": 2198,
+    "name": "Microweber",
+    "slug": "microweber",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 4,
+    "matches": [
+      "tagline:website builder",
+      "tagline:site builder",
+      "tag:cms",
+      "tag:content-management"
+    ]
+  },
+  {
+    "id": 1782,
+    "name": "Miniob",
+    "slug": "miniob",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:education",
+      "tag:classroom"
+    ]
+  },
+  {
+    "id": 2486,
+    "name": "Mix.Core",
+    "slug": "mix.core",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tag:asp-net-core-content-management-system"
+    ]
+  },
+  {
+    "id": 3434,
+    "name": "Ml Nlp",
+    "slug": "ml-nlp",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:machine-learning"
+    ]
+  },
+  {
+    "id": 3384,
+    "name": "Mockingbird",
+    "slug": "mockingbird",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 3188,
+    "name": "Motion",
+    "slug": "motion",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:animation",
+      "tag:animation-js"
+    ]
+  },
+  {
+    "id": 1765,
+    "name": "Mr. Ranedeer Ai Tutor",
+    "slug": "mr.-ranedeer-ai-tutor",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:education",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 1760,
+    "name": "Murder",
+    "slug": "murder",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-engine",
+      "tag:gamedev"
+    ]
+  },
+  {
+    "id": 2340,
+    "name": "Musescore",
+    "slug": "musescore",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:music-notation",
+      "tag:musicxml"
+    ]
+  },
+  {
+    "id": 2349,
+    "name": "Musicfreedesktop",
+    "slug": "musicfreedesktop",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:music",
+      "tag:music-player"
+    ]
+  },
+  {
+    "id": 4125,
+    "name": "Mycorrhiza Wiki",
+    "slug": "mycorrhiza-wiki",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:wiki"
+    ]
+  },
+  {
+    "id": 3649,
+    "name": "Namida",
+    "slug": "namida",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:video player",
+      "tag:android-music-player"
+    ]
+  },
+  {
+    "id": 3405,
+    "name": "Netron",
+    "slug": "netron",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:deeplearning"
+    ]
+  },
+  {
+    "id": 1523,
+    "name": "Newsletter",
+    "slug": "newsletter",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 2,
+    "matches": [
+      "name:newsletter"
+    ]
+  },
+  {
+    "id": 2785,
+    "name": "Nextjs Admin Dashboard",
+    "slug": "nextjs-admin-dashboard",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tag:design-system",
+      "tag:graph"
+    ]
+  },
+  {
+    "id": 3640,
+    "name": "Nim",
+    "slug": "nim",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:website template",
+      "tag:blog"
+    ]
+  },
+  {
+    "id": 1142,
+    "name": "Nnn",
+    "slug": "nnn",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 2,
+    "matches": [
+      "tagline:file manager",
+      "tag:c"
+    ]
+  },
+  {
+    "id": 3064,
+    "name": "Node Media Server",
+    "slug": "node-media-server",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "name:media server"
+    ]
+  },
+  {
+    "id": 2589,
+    "name": "Node Oidc Provider",
+    "slug": "node-oidc-provider",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 4,
+    "matches": [
+      "tagline:oauth",
+      "tagline:openid",
+      "tagline:oidc",
+      "tag:oauth2"
+    ]
+  },
+  {
+    "id": 2184,
+    "name": "Nopcommerce",
+    "slug": "nopcommerce",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 3,
+    "matches": [
+      "tagline:ecommerce",
+      "tagline:shopping cart",
+      "tag:cart"
+    ]
+  },
+  {
+    "id": 2061,
+    "name": "Notabase",
+    "slug": "notabase",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:note-taking",
+      "tag:knowledge-base"
+    ]
+  },
+  {
+    "id": 2016,
+    "name": "Note Gen",
+    "slug": "note-gen",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 3,
+    "matches": [
+      "tagline:note-taking",
+      "tag:knowledge-base",
+      "tag:chatbot"
+    ]
+  },
+  {
+    "id": 2336,
+    "name": "Nuclear",
+    "slug": "nuclear",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:music player",
+      "tag:music-player"
+    ]
+  },
+  {
+    "id": 1176,
+    "name": "Oauth2 Proxy",
+    "slug": "oauth2-proxy",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 5,
+    "matches": [
+      "name:oauth",
+      "tagline:authentication",
+      "tagline:openid",
+      "tag:oauth2-proxy"
+    ]
+  },
+  {
+    "id": 3282,
+    "name": "Obsidian Kanban",
+    "slug": "obsidian-kanban",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "name:kanban"
+    ]
+  },
+  {
+    "id": 2136,
+    "name": "October",
+    "slug": "october",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tag:cms-platform"
+    ]
+  },
+  {
+    "id": 1401,
+    "name": "Online Invoice",
+    "slug": "online-invoice",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 2,
+    "matches": [
+      "name:invoice"
+    ]
+  },
+  {
+    "id": 1554,
+    "name": "Onlook",
+    "slug": "onlook",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tagline:design tool",
+      "tag:design-to-code"
+    ]
+  },
+  {
+    "id": 1072,
+    "name": "Onyx",
+    "slug": "onyx",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:ai-chat",
+      "tag:chatgpt"
+    ]
+  },
+  {
+    "id": 3454,
+    "name": "Open Clip",
+    "slug": "open-clip",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:multi-modal-learning"
+    ]
+  },
+  {
+    "id": 2012,
+    "name": "Open Notebook",
+    "slug": "open-notebook",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:note-taking",
+      "tag:notes-app"
+    ]
+  },
+  {
+    "id": 3176,
+    "name": "Open3D",
+    "slug": "open3d",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:3d",
+      "tag:3d-perception"
+    ]
+  },
+  {
+    "id": 1185,
+    "name": "Opencode Antigravity Auth",
+    "slug": "opencode-antigravity-auth",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 3,
+    "matches": [
+      "name:auth",
+      "tagline:oauth"
+    ]
+  },
+  {
+    "id": 2586,
+    "name": "Openiddict Core",
+    "slug": "openiddict-core",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 3,
+    "matches": [
+      "tagline:oauth",
+      "tagline:openid",
+      "tag:oauth2"
+    ]
+  },
+  {
+    "id": 2157,
+    "name": "Openlivewriter",
+    "slug": "openlivewriter",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tag:static-site-cms",
+      "tag:static-site"
+    ]
+  },
+  {
+    "id": 3185,
+    "name": "Openscad",
+    "slug": "openscad",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:3d",
+      "tag:3d-graphics"
+    ]
+  },
+  {
+    "id": 2178,
+    "name": "Opensource Ecommerce Mobile App",
+    "slug": "opensource-ecommerce-mobile-app",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 4,
+    "matches": [
+      "name:ecommerce",
+      "tag:ecommerce-mobile",
+      "tag:ecommerce-mobile-app"
+    ]
+  },
+  {
+    "id": 1754,
+    "name": "Opentk",
+    "slug": "opentk",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 3178,
+    "name": "Orcaslicer",
+    "slug": "orcaslicer",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:3d-printer",
+      "tag:3d-printing"
+    ]
+  },
+  {
+    "id": 4127,
+    "name": "Otter Wiki",
+    "slug": "otter-wiki",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:wiki"
+    ]
+  },
+  {
+    "id": 282,
+    "name": "Outline",
+    "slug": "outline",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:knowledge-base",
+      "tag:collaboration"
+    ]
+  },
+  {
+    "id": 3587,
+    "name": "Overmorrow",
+    "slug": "overmorrow",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tag:material-design",
+      "tag:material-design-3"
+    ]
+  },
+  {
+    "id": 1811,
+    "name": "Pagelm",
+    "slug": "pagelm",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:education",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 1631,
+    "name": "Pagetemplatify",
+    "slug": "pagetemplatify",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:landing page",
+      "tagline:static site",
+      "tag:website"
+    ]
+  },
+  {
+    "id": 1739,
+    "name": "Panda3D",
+    "slug": "panda3d",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 1071,
+    "name": "Pangolin",
+    "slug": "pangolin",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 2,
+    "matches": [
+      "tag:oidc",
+      "tag:identity-management"
+    ]
+  },
+  {
+    "id": 3354,
+    "name": "Parse Server",
+    "slug": "parse-server",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tag:graphql",
+      "tag:graphql-api"
+    ]
+  },
+  {
+    "id": 1853,
+    "name": "Pay",
+    "slug": "pay",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tag:pay",
+      "tag:payment"
+    ]
+  },
+  {
+    "id": 139,
+    "name": "Payload CMS",
+    "slug": "payload-cms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "name:cms",
+      "tagline:headless cms"
+    ]
+  },
+  {
+    "id": 2528,
+    "name": "Pelican",
+    "slug": "pelican",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:static site",
+      "tag:static-site-generator"
+    ]
+  },
+  {
+    "id": 6728,
+    "name": "Pepperminty Wiki",
+    "slug": "pepperminty-wiki",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:wiki"
+    ]
+  },
+  {
+    "id": 2371,
+    "name": "Photoview",
+    "slug": "photoview",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:photo gallery",
+      "tag:gallery"
+    ]
+  },
+  {
+    "id": 2892,
+    "name": "Pillow",
+    "slug": "pillow",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tag:c",
+      "tag:image"
+    ]
+  },
+  {
+    "id": 2196,
+    "name": "Pimcore",
+    "slug": "pimcore",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tag:cms-framework"
+    ]
+  },
+  {
+    "id": 3226,
+    "name": "Pinepods",
+    "slug": "pinepods",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:podcast-player",
+      "tag:podcasts"
+    ]
+  },
+  {
+    "id": 2513,
+    "name": "Piranha.Core",
+    "slug": "piranha.core",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tag:cms-framework"
+    ]
+  },
+  {
+    "id": 2379,
+    "name": "Piwigo",
+    "slug": "piwigo",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:photo gallery",
+      "tag:photo-gallery"
+    ]
+  },
+  {
+    "id": 1653,
+    "name": "Pkgpage.Jl",
+    "slug": "pkgpage.jl",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:landing page",
+      "tag:static-site-generator"
+    ]
+  },
+  {
+    "id": 1564,
+    "name": "Plasmic",
+    "slug": "plasmic",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tag:design",
+      "tag:design-systems"
+    ]
+  },
+  {
+    "id": 6963,
+    "name": "Plex Prerolls",
+    "slug": "plex-prerolls",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "name:plex"
+    ]
+  },
+  {
+    "id": 1520,
+    "name": "Podcast Maker",
+    "slug": "podcast-maker",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:podcast",
+      "tag:podcast-maker"
+    ]
+  },
+  {
+    "id": 6745,
+    "name": "Polaris",
+    "slug": "polaris",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:streaming server",
+      "tagline:music streaming"
+    ]
+  },
+  {
+    "id": 2148,
+    "name": "Ponzu",
+    "slug": "ponzu",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tagline:headless cms"
+    ]
+  },
+  {
+    "id": 2140,
+    "name": "Prestashop",
+    "slug": "prestashop",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 3,
+    "matches": [
+      "tagline:e-commerce",
+      "tag:ecommerce",
+      "tag:ecommerce-framework"
+    ]
+  },
+  {
+    "id": 1045,
+    "name": "Puter",
+    "slug": "puter",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 2,
+    "matches": [
+      "tag:cloud",
+      "tag:cloud-storage"
+    ]
+  },
+  {
+    "id": 1929,
+    "name": "Qingchenmail",
+    "slug": "qingchenmail",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 2,
+    "new_category_name": "Email Marketing",
+    "score": 2,
+    "matches": [
+      "tagline:smtp",
+      "tag:email-marketing"
+    ]
+  },
+  {
+    "id": 2135,
+    "name": "Qloapps",
+    "slug": "qloapps",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tag:booking-engine",
+      "tag:booking-website"
+    ]
+  },
+  {
+    "id": 1399,
+    "name": "Quba Viewer",
+    "slug": "quba-viewer",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 3,
+    "matches": [
+      "tagline:invoice",
+      "tag:electronic-invoices",
+      "tag:invoices"
+    ]
+  },
+  {
+    "id": 5494,
+    "name": "Rauthy",
+    "slug": "rauthy",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 2,
+    "matches": [
+      "tagline:single sign-on",
+      "tagline:openid"
+    ]
+  },
+  {
+    "id": 1708,
+    "name": "Raylib",
+    "slug": "raylib",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 2712,
+    "name": "React Bits",
+    "slug": "react-bits",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:animations",
+      "tag:3d"
+    ]
+  },
+  {
+    "id": 2288,
+    "name": "React Day Picker",
+    "slug": "react-day-picker",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 6,
+    "new_category_name": "Scheduling & Booking",
+    "score": 2,
+    "matches": [
+      "tag:calendar",
+      "tag:calendar-component"
+    ]
+  },
+  {
+    "id": 1592,
+    "name": "React Design Editor",
+    "slug": "react-design-editor",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 3,
+    "matches": [
+      "tagline:design tool",
+      "tag:ant-design",
+      "tag:editor"
+    ]
+  },
+  {
+    "id": 1537,
+    "name": "React Email Workflow",
+    "slug": "react-email-workflow",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 2,
+    "new_category_name": "Email Marketing",
+    "score": 2,
+    "matches": [
+      "name:email"
+    ]
+  },
+  {
+    "id": 3169,
+    "name": "React Three Fiber",
+    "slug": "react-three-fiber",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:animation",
+      "tag:3d"
+    ]
+  },
+  {
+    "id": 2179,
+    "name": "Reaction",
+    "slug": "reaction",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tag:commerce",
+      "tag:ecommerce"
+    ]
+  },
+  {
+    "id": 1735,
+    "name": "Redot Engine",
+    "slug": "redot-engine",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 1141,
+    "name": "Repomix",
+    "slug": "repomix",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:chatbot",
+      "tag:chatgpt"
+    ]
+  },
+  {
+    "id": 3255,
+    "name": "Rspapers",
+    "slug": "rspapers",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:deep-learning-based-rs"
+    ]
+  },
+  {
+    "id": 3213,
+    "name": "Rssguard",
+    "slug": "rssguard",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 3,
+    "matches": [
+      "tagline:feed reader",
+      "tag:feed-reader",
+      "tag:aggregator"
+    ]
+  },
+  {
+    "id": 4062,
+    "name": "SQLPage",
+    "slug": "sqlpage",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:website builder",
+      "tagline:site builder"
+    ]
+  },
+  {
+    "id": 1750,
+    "name": "Sbox Public",
+    "slug": "sbox-public",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:game engine",
+      "tag:gamedev"
+    ]
+  },
+  {
+    "id": 2679,
+    "name": "Scira",
+    "slug": "scira",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 3,
+    "matches": [
+      "tagline:erp",
+      "tag:open-source-perplexity-ai",
+      "tag:perplexity-ai"
+    ]
+  },
+  {
+    "id": 2360,
+    "name": "Screentogif",
+    "slug": "screentogif",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:editor",
+      "tag:video"
+    ]
+  },
+  {
+    "id": 3071,
+    "name": "Seanime",
+    "slug": "seanime",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:media server",
+      "tag:anime-streaming"
+    ]
+  },
+  {
+    "id": 2687,
+    "name": "Search Plugins",
+    "slug": "search-plugins",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 14,
+    "new_category_name": "SEO Tools",
+    "score": 2,
+    "matches": [
+      "tag:search",
+      "tag:search-engine"
+    ]
+  },
+  {
+    "id": 3411,
+    "name": "Seldon Core",
+    "slug": "seldon-core",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:machine-learning",
+      "tag:machine-learning-operations"
+    ]
+  },
+  {
+    "id": 620,
+    "name": "Self-Hosted-Wiki.js-on-AWS-EC2-with-Docker",
+    "slug": "self-hosted-wiki-js-on-aws-ec2-with-docker",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:wiki"
+    ]
+  },
+  {
+    "id": 1908,
+    "name": "Senlo",
+    "slug": "senlo",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 2,
+    "new_category_name": "Email Marketing",
+    "score": 2,
+    "matches": [
+      "tag:email-builder",
+      "tag:email-marketing"
+    ]
+  },
+  {
+    "id": 3326,
+    "name": "Serverless Express",
+    "slug": "serverless-express",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway"
+    ]
+  },
+  {
+    "id": 1379,
+    "name": "Serverless Invoices",
+    "slug": "serverless-invoices",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 4,
+    "matches": [
+      "tagline:invoice",
+      "tagline:invoicing",
+      "tag:invoice-generator",
+      "tag:invoice-maker"
+    ]
+  },
+  {
+    "id": 3406,
+    "name": "Shap",
+    "slug": "shap",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:machine-learning"
+    ]
+  },
+  {
+    "id": 3413,
+    "name": "Shapash",
+    "slug": "shapash",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "tagline:erp",
+      "tag:interpretability"
+    ]
+  },
+  {
+    "id": 3320,
+    "name": "Shenyu",
+    "slug": "shenyu",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway"
+    ]
+  },
+  {
+    "id": 1891,
+    "name": "Shkeeper.Io",
+    "slug": "shkeeper.io",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:payment",
+      "tag:accept-crypto-payments"
+    ]
+  },
+  {
+    "id": 2199,
+    "name": "Shopware",
+    "slug": "shopware",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tag:ecommerce",
+      "tag:ecommerce-platform"
+    ]
+  },
+  {
+    "id": 1044,
+    "name": "Siyuan",
+    "slug": "siyuan",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tagline:knowledge management",
+      "tag:chatgpt"
+    ]
+  },
+  {
+    "id": 1291,
+    "name": "Skyeye",
+    "slug": "skyeye",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "tag:crm",
+      "tag:erp"
+    ]
+  },
+  {
+    "id": 283,
+    "name": "Slite",
+    "slug": "slite",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tag:knowledge-base",
+      "tag:team"
+    ]
+  },
+  {
+    "id": 2191,
+    "name": "Solidus",
+    "slug": "solidus",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:ecommerce",
+      "tag:ecommerce-framework"
+    ]
+  },
+  {
+    "id": 2518,
+    "name": "Sonicjs",
+    "slug": "sonicjs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tagline:headless cms"
+    ]
+  },
+  {
+    "id": 1671,
+    "name": "Sosec",
+    "slug": "sosec",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:facebook",
+      "tag:facebook-bruteforce"
+    ]
+  },
+  {
+    "id": 3429,
+    "name": "Spacy",
+    "slug": "spacy",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 1221,
+    "name": "Spark",
+    "slug": "spark",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tagline:analytics",
+      "tag:r"
+    ]
+  },
+  {
+    "id": 3063,
+    "name": "Splayer",
+    "slug": "splayer",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:music player",
+      "tag:media-server"
+    ]
+  },
+  {
+    "id": 4245,
+    "name": "Split",
+    "slug": "split",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tagline:analytics",
+      "tagline:feature flag"
+    ]
+  },
+  {
+    "id": 2330,
+    "name": "Spotify Downloader",
+    "slug": "spotify-downloader",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:music",
+      "tag:download-music"
+    ]
+  },
+  {
+    "id": 2326,
+    "name": "Spotube",
+    "slug": "spotube",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:music streaming",
+      "tag:android-music-player"
+    ]
+  },
+  {
+    "id": 2177,
+    "name": "Spree",
+    "slug": "spree",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:ecommerce",
+      "tag:ecommerce-api"
+    ]
+  },
+  {
+    "id": 3328,
+    "name": "Spring Cloud Gateway",
+    "slug": "spring-cloud-gateway",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway"
+    ]
+  },
+  {
+    "id": 1593,
+    "name": "Spritefusion Pixel Snapper",
+    "slug": "spritefusion-pixel-snapper",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-development",
+      "tag:gamedev"
+    ]
+  },
+  {
+    "id": 2511,
+    "name": "Squidex",
+    "slug": "squidex",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:cms",
+      "tagline:headless cms",
+      "tag:headless-cms"
+    ]
+  },
+  {
+    "id": 2159,
+    "name": "Statiq",
+    "slug": "statiq",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:static site",
+      "tag:blog",
+      "tag:blog-engine"
+    ]
+  },
+  {
+    "id": 4246,
+    "name": "Statsig",
+    "slug": "statsig",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tagline:analytics",
+      "tagline:feature flag"
+    ]
+  },
+  {
+    "id": 3061,
+    "name": "Streama",
+    "slug": "streama",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tagline:media server",
+      "tag:media-server"
+    ]
+  },
+  {
+    "id": 1729,
+    "name": "Stride",
+    "slug": "stride",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:game engine",
+      "tag:game-development",
+      "tag:game-engine"
+    ]
+  },
+  {
+    "id": 1570,
+    "name": "Style Dictionary",
+    "slug": "style-dictionary",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tag:design-systems",
+      "tag:design-tokens"
+    ]
+  },
+  {
+    "id": 1049,
+    "name": "Sunshine",
+    "slug": "sunshine",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 2,
+    "matches": [
+      "tag:game-stream",
+      "tag:game-streaming"
+    ]
+  },
+  {
+    "id": 3014,
+    "name": "Superbin",
+    "slug": "superbin",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 2,
+    "matches": [
+      "tagline:file sharing",
+      "tag:file-sharing"
+    ]
+  },
+  {
+    "id": 2512,
+    "name": "Sveltia Cms",
+    "slug": "sveltia-cms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 4,
+    "matches": [
+      "name:cms",
+      "tagline:headless cms",
+      "tag:content-management"
+    ]
+  },
+  {
+    "id": 1887,
+    "name": "Svg Credit Card Payment Icons",
+    "slug": "svg-credit-card-payment-icons",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 3,
+    "matches": [
+      "name:payment",
+      "tag:payment-icons"
+    ]
+  },
+  {
+    "id": 2187,
+    "name": "Sylius",
+    "slug": "sylius",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:ecommerce",
+      "tag:api-ecommerce"
+    ]
+  },
+  {
+    "id": 2405,
+    "name": "Syncthing Macos",
+    "slug": "syncthing-macos",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 2,
+    "matches": [
+      "tag:file-sharing",
+      "tag:file-sync"
+    ]
+  },
+  {
+    "id": 1598,
+    "name": "Systemizer",
+    "slug": "systemizer",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tagline:design tool",
+      "tag:design-tool"
+    ]
+  },
+  {
+    "id": 2369,
+    "name": "Tagstudio",
+    "slug": "tagstudio",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 2,
+    "matches": [
+      "tag:file-manager",
+      "tag:document-management-system"
+    ]
+  },
+  {
+    "id": 436,
+    "name": "Tavily MCP Server",
+    "slug": "tavily-mcp-server",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 20,
+    "new_category_name": "Feedback & Reviews",
+    "score": 2,
+    "matches": [
+      "tag:search",
+      "tag:research"
+    ]
+  },
+  {
+    "id": 1372,
+    "name": "Taxhacker",
+    "slug": "taxhacker",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 1,
+    "new_category_name": "Invoicing & Billing",
+    "score": 4,
+    "matches": [
+      "tagline:invoice",
+      "tagline:accounting",
+      "tagline:receipt",
+      "tag:invoices"
+    ]
+  },
+  {
+    "id": 2955,
+    "name": "Tfjs",
+    "slug": "tfjs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:deep-learning",
+      "tag:machine-learning"
+    ]
+  },
+  {
+    "id": 6924,
+    "name": "Tianji",
+    "slug": "tianji",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tagline:analytics",
+      "tagline:web analytics"
+    ]
+  },
+  {
+    "id": 482,
+    "name": "TinaCMS",
+    "slug": "tinacms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:cms",
+      "tagline:headless cms",
+      "tag:headless-cms"
+    ]
+  },
+  {
+    "id": 2864,
+    "name": "Tinyfilemanager",
+    "slug": "tinyfilemanager",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 11,
+    "new_category_name": "File Management",
+    "score": 3,
+    "matches": [
+      "tagline:file manager",
+      "tag:file-management-system",
+      "tag:file-manager"
+    ]
+  },
+  {
+    "id": 3172,
+    "name": "Tinyrenderer",
+    "slug": "tinyrenderer",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:3d",
+      "tag:3d-graphics"
+    ]
+  },
+  {
+    "id": 3074,
+    "name": "Tubesync",
+    "slug": "tubesync",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 43,
+    "new_category_name": "Games & Entertainment",
+    "score": 3,
+    "matches": [
+      "tagline:media server",
+      "tag:media-server",
+      "tag:plex"
+    ]
+  },
+  {
+    "id": 3284,
+    "name": "Twake",
+    "slug": "twake",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tagline:collaboration platform",
+      "tag:chat"
+    ]
+  },
+  {
+    "id": 2509,
+    "name": "Twill",
+    "slug": "twill",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:cms",
+      "tag:cms-framework"
+    ]
+  },
+  {
+    "id": 379,
+    "name": "Tyk",
+    "slug": "tyk",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tagline:api gateway",
+      "tag:api-gateway"
+    ]
+  },
+  {
+    "id": 1441,
+    "name": "Typo3",
+    "slug": "typo3",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:content management system",
+      "tag:cms",
+      "tag:content-management"
+    ]
+  },
+  {
+    "id": 314,
+    "name": "Unleash",
+    "slug": "unleash",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "tagline:erp",
+      "tag:enterprise"
+    ]
+  },
+  {
+    "id": 2662,
+    "name": "Urql",
+    "slug": "urql",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 16,
+    "new_category_name": "API Tools",
+    "score": 2,
+    "matches": [
+      "tag:graphql",
+      "tag:graphql-client"
+    ]
+  },
+  {
+    "id": 2448,
+    "name": "V2Rayfree",
+    "slug": "v2rayfree",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tag:ss",
+      "tag:ssr"
+    ]
+  },
+  {
+    "id": 2320,
+    "name": "Vanna",
+    "slug": "vanna",
+    "old_category_id": 19,
+    "old_category_name": "AI & Automation",
+    "new_category_id": 44,
+    "new_category_name": "Learning & Education",
+    "score": 2,
+    "matches": [
+      "tagline:lms",
+      "tag:ai"
+    ]
+  },
+  {
+    "id": 2188,
+    "name": "Vendure",
+    "slug": "vendure",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tag:ecommerce",
+      "tag:ecommerce-api"
+    ]
+  },
+  {
+    "id": 1632,
+    "name": "Vex Hugo",
+    "slug": "vex-hugo",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tag:ecommerce-theme",
+      "tag:e-commerce"
+    ]
+  },
+  {
+    "id": 3279,
+    "name": "Vibe Kanban",
+    "slug": "vibe-kanban",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 3,
+    "matches": [
+      "name:kanban",
+      "tag:management"
+    ]
+  },
+  {
+    "id": 2362,
+    "name": "Video2X",
+    "slug": "video2x",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "tagline:erp",
+      "tag:frame-interpolation"
+    ]
+  },
+  {
+    "id": 2015,
+    "name": "Vnote",
+    "slug": "vnote",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tagline:note-taking",
+      "tag:note"
+    ]
+  },
+  {
+    "id": 2743,
+    "name": "Vue Chartjs",
+    "slug": "vue-chartjs",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 17,
+    "new_category_name": "Design & Creative",
+    "score": 2,
+    "matches": [
+      "tag:diagram",
+      "tag:diagrams"
+    ]
+  },
+  {
+    "id": 3291,
+    "name": "Vue Kanban",
+    "slug": "vue-kanban",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "name:kanban"
+    ]
+  },
+  {
+    "id": 2165,
+    "name": "Vvveb",
+    "slug": "vvveb",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:cms",
+      "tag:blog",
+      "tag:blog-engine"
+    ]
+  },
+  {
+    "id": 7444,
+    "name": "Vvveb CMS",
+    "slug": "vvveb-cms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:cms"
+    ]
+  },
+  {
+    "id": 2131,
+    "name": "Wagtail",
+    "slug": "wagtail",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "tagline:content management system",
+      "tag:cms"
+    ]
+  },
+  {
+    "id": 2344,
+    "name": "Wavesurfer.Js",
+    "slug": "wavesurfer.js",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 46,
+    "new_category_name": "Creative Tools",
+    "score": 2,
+    "matches": [
+      "tag:audio",
+      "tag:music"
+    ]
+  },
+  {
+    "id": 2599,
+    "name": "We Mp Rss",
+    "slug": "we-mp-rss",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 45,
+    "new_category_name": "Newsletters & Content",
+    "score": 2,
+    "matches": [
+      "tag:rss-feed",
+      "tag:rss-hub"
+    ]
+  },
+  {
+    "id": 1462,
+    "name": "Webiny Js",
+    "slug": "webiny-js",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:page builder",
+      "tagline:cms",
+      "tagline:headless cms"
+    ]
+  },
+  {
+    "id": 1287,
+    "name": "Webvella Erp",
+    "slug": "webvella-erp",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "name:erp"
+    ]
+  },
+  {
+    "id": 4134,
+    "name": "Wiki-Go",
+    "slug": "wiki-go",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:wiki"
+    ]
+  },
+  {
+    "id": 281,
+    "name": "Wiki.js",
+    "slug": "wiki-js",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:wiki"
+    ]
+  },
+  {
+    "id": 1475,
+    "name": "Winforms",
+    "slug": "winforms",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 9,
+    "new_category_name": "Forms & Surveys",
+    "score": 2,
+    "matches": [
+      "tag:windows-forms",
+      "tag:winforms"
+    ]
+  },
+  {
+    "id": 2183,
+    "name": "Woocommerce",
+    "slug": "woocommerce",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:ecommerce",
+      "tag:ecommerce-platform"
+    ]
+  },
+  {
+    "id": 2562,
+    "name": "Wreq",
+    "slug": "wreq",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "tagline:erp",
+      "tag:fingerprint"
+    ]
+  },
+  {
+    "id": 1406,
+    "name": "Xendit Go",
+    "slug": "xendit-go",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:payment",
+      "tagline:recurring payments"
+    ]
+  },
+  {
+    "id": 1398,
+    "name": "Xendit Php",
+    "slug": "xendit-php",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tagline:payment",
+      "tagline:recurring payments"
+    ]
+  },
+  {
+    "id": 1309,
+    "name": "Yshop Crm",
+    "slug": "yshop-crm",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "name:crm"
+    ]
+  },
+  {
+    "id": 1276,
+    "name": "Yudao Ui Admin Vue3",
+    "slug": "yudao-ui-admin-vue3",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 10,
+    "new_category_name": "CRM & Sales",
+    "score": 2,
+    "matches": [
+      "tagline:crm",
+      "tagline:erp"
+    ]
+  },
+  {
+    "id": 2931,
+    "name": "Zap",
+    "slug": "zap",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 2,
+    "matches": [
+      "tag:logging",
+      "tag:structured-logging"
+    ]
+  },
+  {
+    "id": 1265,
+    "name": "Zeppelin",
+    "slug": "zeppelin",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tagline:analytics",
+      "tagline:data analytics"
+    ]
+  },
+  {
+    "id": 2034,
+    "name": "Zk",
+    "slug": "zk",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 2,
+    "matches": [
+      "tagline:note-taking",
+      "tag:notes"
+    ]
+  },
+  {
+    "id": 2133,
+    "name": "Zola",
+    "slug": "zola",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 3,
+    "matches": [
+      "tagline:static site",
+      "tag:cms",
+      "tag:content-management-system"
+    ]
+  },
+  {
+    "id": 2316,
+    "name": "Zulip",
+    "slug": "zulip",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 4,
+    "new_category_name": "Project Management",
+    "score": 3,
+    "matches": [
+      "tagline:team chat",
+      "tag:collaboration",
+      "tag:chat"
+    ]
+  },
+  {
+    "id": 5471,
+    "name": "defguard",
+    "slug": "defguard",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 12,
+    "new_category_name": "Authentication",
+    "score": 3,
+    "matches": [
+      "tagline:sso",
+      "tagline:mfa",
+      "tagline:2fa"
+    ]
+  },
+  {
+    "id": 4118,
+    "name": "django-wiki",
+    "slug": "django-wiki",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 8,
+    "new_category_name": "Landing Pages",
+    "score": 2,
+    "matches": [
+      "name:wiki"
+    ]
+  },
+  {
+    "id": 146,
+    "name": "fetchlyhub",
+    "slug": "fetchlyhub",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 13,
+    "new_category_name": "Payments",
+    "score": 2,
+    "matches": [
+      "tag:shopping",
+      "tag:online"
+    ]
+  },
+  {
+    "id": 6046,
+    "name": "insight",
+    "slug": "insight",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 2,
+    "matches": [
+      "tagline:analytics",
+      "tagline:metrics"
+    ]
+  },
+  {
+    "id": 6447,
+    "name": "netdata",
+    "slug": "netdata",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 2,
+    "matches": [
+      "tagline:monitoring",
+      "tagline:performance monitoring"
+    ]
+  },
+  {
+    "id": 5252,
+    "name": "nginx-prometheus",
+    "slug": "nginx-prometheus",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 2,
+    "matches": [
+      "name:prometheus"
+    ]
+  },
+  {
+    "id": 866,
+    "name": "odin",
+    "slug": "odin",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 2,
+    "matches": [
+      "tagline:monitoring",
+      "tagline:uptime"
+    ]
+  },
+  {
+    "id": 679,
+    "name": "plausible-docker",
+    "slug": "plausible-docker",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 3,
+    "new_category_name": "Analytics & Metrics",
+    "score": 3,
+    "matches": [
+      "name:plausible",
+      "tagline:analytics"
+    ]
+  },
+  {
+    "id": 4705,
+    "name": "prometheus",
+    "slug": "prometheus",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 3,
+    "matches": [
+      "name:prometheus",
+      "tagline:monitoring"
+    ]
+  },
+  {
+    "id": 5506,
+    "name": "temps",
+    "slug": "temps",
+    "old_category_id": 18,
+    "old_category_name": "Developer Tools",
+    "new_category_id": 15,
+    "new_category_name": "Monitoring & Uptime",
+    "score": 2,
+    "matches": [
+      "tagline:monitoring",
+      "tagline:error tracking"
+    ]
+  }
+]
