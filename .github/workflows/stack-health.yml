@@ -1,0 +1,17 @@
+name: Stack Health Check
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'requirements.txt'
+      - 'pyproject.toml'
+
+permissions:
+  pull-requests: write
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Pattyboi101/stack-health-check@master
