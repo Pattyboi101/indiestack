@@ -420,17 +420,25 @@ async def analyze_api(request: Request):
     if manifest_type not in ("package.json", "requirements.txt"):
         return JSONResponse({"error": "Invalid manifest_type"}, status_code=400)
 
-    # Rate limiting (fall back to IP for programmatic clients)
-    user_id = user["id"] if user else None
-    session_id = request.cookies.get("session") if not user else None
-    if not user_id and not session_id:
-        client_ip = request.headers.get("fly-client-ip", request.client.host if request.client else "unknown")
-        session_id = f"ip:{client_ip}"
-    usage = await count_analyses(d, user_id=user_id, session_id=session_id)
-    is_pro = user and user.get("is_pro")
-    limit = 1000 if is_pro else 10
-    if usage >= limit:
-        return JSONResponse({"error": "Analysis limit reached", "usage": usage, "limit": limit}, status_code=429)
+    # GitHub Actions get unlimited analyses (we want the data volume)
+    is_github_action = request.headers.get("x-github-action") == "true"
+    github_repo = body.get("repo", "") or request.headers.get("x-github-repo", "")
+
+    # Rate limiting (exempt GitHub Actions)
+    if not is_github_action:
+        user_id = user["id"] if user else None
+        session_id = request.cookies.get("session") if not user else None
+        if not user_id and not session_id:
+            client_ip = request.headers.get("fly-client-ip", request.client.host if request.client else "unknown")
+            session_id = f"ip:{client_ip}"
+        usage = await count_analyses(d, user_id=user_id, session_id=session_id)
+        is_pro = user and user.get("is_pro")
+        limit = 1000 if is_pro else 10
+        if usage >= limit:
+            return JSONResponse({"error": "Analysis limit reached", "usage": usage, "limit": limit}, status_code=429)
+    else:
+        user_id = None
+        session_id = f"gh:{github_repo}" if github_repo else None
 
     try:
         result = await run_analysis(d, manifest, manifest_type)
