@@ -292,10 +292,10 @@ def _render_results(result: dict, user=None, share_uuid: str = "") -> str:
         <!-- CTA -->
         <div style="margin-top:32px;padding:24px;background:var(--cream-dark);border-radius:var(--radius-lg);text-align:center;">
             <p style="font-family:var(--font-body);font-size:var(--text-md);color:var(--ink);margin:0 0 12px;">
-                Want continuous stack monitoring via AI agents?
+                Check your dependencies on every PR automatically
             </p>
-            <a href="/pricing" class="btn-primary" style="padding:12px 24px;text-decoration:none;">
-                Upgrade to Pro
+            <a href="/setup" class="btn-primary" style="padding:12px 24px;text-decoration:none;">
+                Set up GitHub Action
             </a>
         </div>
     </div>'''

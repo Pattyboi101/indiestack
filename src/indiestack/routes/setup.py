@@ -234,7 +234,7 @@ jobs:
                 <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:0;">Get your API key <span style="font-size:14px;font-weight:400;color:var(--ink-muted);">(free)</span></h2>
             </div>
             <p style="font-size:14px;color:var(--ink-muted);margin:0 0 16px;line-height:1.6;">
-                Without a key you get 3 searches/day. A free key gets 10/month. Pro gets 1,000/month + market intelligence.
+                An API key unlocks personalized recommendations and tracks your tool discovery history.
             </p>
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
                 <a href="{"/dashboard" if user else "/login?next=/dashboard"}"

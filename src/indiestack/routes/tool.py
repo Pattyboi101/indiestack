@@ -1045,7 +1045,7 @@ async def tool_detail(request: Request, slug: str):
                     Save tools &amp; get AI recommendations
                 </p>
                 <p style="font-size:13px;color:var(--ink-muted);margin:0;">
-                    Free account includes a 7-day Pro trial.
+                    Free forever. No credit card required.
                 </p>
             </div>
             <a href="/signup?next=/tool/{escape(slug)}" style="display:inline-flex;padding:12px 24px;background:var(--accent);color:white;

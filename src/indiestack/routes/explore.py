@@ -219,7 +219,7 @@ async def explore(request: Request):
                 Track the tools AI agents actually recommend
             </h3>
             <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0 0 20px;">
-                Create a free account to save tools, get AI recommendations, and a 7-day Pro trial.
+                Create a free account to save tools and get AI-powered recommendations.
             </p>
             <a href="/signup?next=/explore" style="display:inline-block;padding:14px 32px;background:var(--slate);color:var(--terracotta);
                 border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;">
