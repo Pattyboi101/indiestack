@@ -3,6 +3,7 @@
 import json
 from html import escape
 from urllib.parse import quote
+import httpx
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
@@ -520,4 +521,88 @@ async def og_image(request: Request, share_uuid: str):
         content=svg,
         media_type="image/svg+xml",
         headers={"Cache-Control": "public, max-age=86400"},
+    )
+
+
+@router.get("/api/badge/health/{owner}/{repo}.svg")
+async def repo_health_badge(request: Request, owner: str, repo: str):
+    """Dynamic shields.io-style badge showing a repo's stack health score."""
+    from fastapi.responses import Response
+    d = request.state.db
+
+    # Check cache first (analysis from GitHub Action or previous badge request)
+    c = await d.execute(
+        """SELECT score_total FROM dependency_analyses
+           WHERE session_id = ? ORDER BY created_at DESC LIMIT 1""",
+        (f"gh:{owner}/{repo}",),
+    )
+    row = await c.fetchone()
+
+    if row:
+        score = row["score_total"] if isinstance(row, dict) else row[0]
+    else:
+        # Fetch manifest from GitHub and analyze on-the-fly
+        try:
+            client = httpx.AsyncClient(timeout=10.0)
+            # Try package.json first, then requirements.txt
+            manifest = None
+            manifest_type = "package.json"
+            for fname, mtype in [("package.json", "package.json"), ("requirements.txt", "requirements.txt")]:
+                resp = await client.get(f"https://raw.githubusercontent.com/{owner}/{repo}/main/{fname}")
+                if resp.status_code == 200:
+                    manifest = resp.text
+                    manifest_type = mtype
+                    break
+                # Try master branch
+                resp = await client.get(f"https://raw.githubusercontent.com/{owner}/{repo}/master/{fname}")
+                if resp.status_code == 200:
+                    manifest = resp.text
+                    manifest_type = mtype
+                    break
+            await client.aclose()
+
+            if not manifest:
+                return _badge_svg("stack health", "no manifest", "#999")
+
+            result = await run_analysis(d, manifest, manifest_type)
+            score = result["score"]["total"]
+            # Cache it
+            await save_analysis(d, None, f"gh:{owner}/{repo}", manifest_type, result)
+        except Exception:
+            return _badge_svg("stack health", "error", "#999")
+
+    # Generate badge
+    color = "#10B981" if score >= 80 else ("#E2B764" if score >= 60 else "#EF4444")
+    return _badge_svg("stack health", f"{score}/100", color)
+
+
+def _badge_svg(label: str, value: str, color: str) -> "Response":
+    """Generate a shields.io-style SVG badge."""
+    from fastapi.responses import Response
+    label_width = len(label) * 7 + 12
+    value_width = len(value) * 7 + 12
+    total_width = label_width + value_width
+
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{total_width}" height="20" viewBox="0 0 {total_width} 20">
+  <linearGradient id="s" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <clipPath id="r"><rect width="{total_width}" height="20" rx="3" fill="#fff"/></clipPath>
+  <g clip-path="url(#r)">
+    <rect width="{label_width}" height="20" fill="#555"/>
+    <rect x="{label_width}" width="{value_width}" height="20" fill="{color}"/>
+    <rect width="{total_width}" height="20" fill="url(#s)"/>
+  </g>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11">
+    <text x="{label_width / 2}" y="15" fill="#010101" fill-opacity=".3">{label}</text>
+    <text x="{label_width / 2}" y="14">{label}</text>
+    <text x="{label_width + value_width / 2}" y="15" fill="#010101" fill-opacity=".3">{value}</text>
+    <text x="{label_width + value_width / 2}" y="14">{value}</text>
+  </g>
+</svg>'''
+    return Response(
+        content=svg,
+        media_type="image/svg+xml",
+        headers={"Cache-Control": "public, max-age=3600"},
     )
