@@ -606,3 +606,59 @@ def _badge_svg(label: str, value: str, color: str) -> "Response":
         media_type="image/svg+xml",
         headers={"Cache-Control": "public, max-age=3600"},
     )
+
+
+@router.get("/api/analyze/stats")
+async def analyze_stats(request: Request):
+    """Kill criteria dashboard — track analyses, repos, conversions."""
+    user = request.state.user
+    if not user or not user.get("is_admin"):
+        return JSONResponse({"error": "Admin only"}, status_code=403)
+
+    d = request.state.db
+
+    stats = {}
+
+    # Total analyses
+    c = await d.execute("SELECT COUNT(*) as cnt FROM dependency_analyses")
+    stats["total_analyses"] = (await c.fetchone())["cnt"]
+
+    # Analyses last 14 days
+    c = await d.execute("SELECT COUNT(*) as cnt FROM dependency_analyses WHERE created_at > datetime('now', '-14 days')")
+    stats["analyses_14d"] = (await c.fetchone())["cnt"]
+
+    # Unique repos (GitHub Action sessions)
+    c = await d.execute("SELECT COUNT(DISTINCT session_id) as cnt FROM dependency_analyses WHERE session_id LIKE 'gh:%'")
+    stats["unique_repos"] = (await c.fetchone())["cnt"]
+
+    # Unique IPs
+    c = await d.execute("SELECT COUNT(DISTINCT session_id) as cnt FROM dependency_analyses WHERE session_id LIKE 'ip:%'")
+    stats["unique_ips"] = (await c.fetchone())["cnt"]
+
+    # Analyses per day (last 14 days)
+    c = await d.execute("""
+        SELECT DATE(created_at) as day, COUNT(*) as cnt
+        FROM dependency_analyses
+        WHERE created_at > datetime('now', '-14 days')
+        GROUP BY DATE(created_at) ORDER BY day DESC
+    """)
+    stats["daily"] = [{"day": r["day"], "count": r["cnt"]} for r in await c.fetchall()]
+
+    # Reference tools created (auto-ingested)
+    c = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE is_reference = 1")
+    stats["reference_tools"] = (await c.fetchone())["cnt"]
+
+    # Cooccurrence pairs
+    c = await d.execute("SELECT COUNT(*) as cnt FROM manifest_cooccurrences")
+    stats["cooccurrence_pairs"] = (await c.fetchone())["cnt"]
+
+    # Kill criteria thresholds
+    stats["kill_criteria"] = {
+        "uploads_target": 250,
+        "uploads_actual": stats["analyses_14d"],
+        "uploads_on_track": stats["analyses_14d"] >= 250,
+        "conversions_target": 1,
+        "note": "14-day window. Kill if <250 uploads or 0 conversions after 500 analyses."
+    }
+
+    return JSONResponse(stats)
