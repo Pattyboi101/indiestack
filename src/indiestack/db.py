@@ -1673,6 +1673,56 @@ async def init_db():
         """)
         await db.commit()
 
+        # Migration paths mined from git history (GitHub Autopsy)
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS migration_paths (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                from_package TEXT NOT NULL,
+                to_package TEXT NOT NULL,
+                repo TEXT NOT NULL,
+                commit_sha TEXT NOT NULL,
+                committed_at TIMESTAMP,
+                confidence TEXT NOT NULL DEFAULT 'swap'
+                    CHECK(confidence IN ('swap', 'likely', 'inferred')),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(from_package, to_package, repo, commit_sha)
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_migration_from ON migration_paths(from_package)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_migration_to ON migration_paths(to_package)")
+
+        # Verified package combinations (packages coexisting in real repos)
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS verified_combos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                package_a TEXT NOT NULL,
+                package_b TEXT NOT NULL,
+                repo TEXT NOT NULL,
+                repo_stars INTEGER DEFAULT 0,
+                last_seen_at TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(package_a, package_b, repo)
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_combos_a ON verified_combos(package_a)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_combos_b ON verified_combos(package_b)")
+
+        # CI build outcomes reported by GitHub Action
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS build_outcomes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                repo TEXT NOT NULL,
+                manifest_hash TEXT NOT NULL,
+                packages_json TEXT NOT NULL,
+                ci_passed INTEGER NOT NULL,
+                action_version TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_outcomes_repo ON build_outcomes(repo)")
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_outcomes_hash ON build_outcomes(manifest_hash)")
+        await db.commit()
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 

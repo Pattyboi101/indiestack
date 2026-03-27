@@ -1121,3 +1121,145 @@ async def repo_audit(request: Request, owner: str, repo: str):
     }
 
     return JSONResponse(audit)
+
+
+# ── CI Outcome Reporting ─────────────────────────────────────────────────
+
+@router.post("/api/outcomes", response_class=JSONResponse)
+async def report_outcome(request: Request):
+    """Receive CI build outcome from GitHub Action.
+
+    Every install of our GitHub Action becomes a Waze-like outcome sensor.
+    No auth required — this is public data collection for the moat.
+    """
+    d = request.state.db
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+
+    repo = body.get("repo", "").strip()
+    manifest_hash = body.get("manifest_hash", "").strip()
+    packages_json = body.get("packages_json", "")
+    ci_passed = body.get("ci_passed")
+    action_version = body.get("action_version", "")
+
+    if not repo or ci_passed is None:
+        return JSONResponse({"error": "repo and ci_passed are required"}, status_code=400)
+
+    # Normalize packages_json to string
+    if isinstance(packages_json, (dict, list)):
+        packages_json = json.dumps(packages_json)
+
+    await d.execute(
+        """INSERT INTO build_outcomes (repo, manifest_hash, packages_json, ci_passed, action_version)
+           VALUES (?, ?, ?, ?, ?)""",
+        (repo, manifest_hash, packages_json, 1 if ci_passed else 0, action_version)
+    )
+    await d.commit()
+
+    return JSONResponse({"status": "recorded", "repo": repo, "ci_passed": bool(ci_passed)})
+
+
+@router.get("/api/migrations", response_class=JSONResponse)
+async def get_migrations(request: Request):
+    """Query migration paths for a package. The moat data endpoint."""
+    d = request.state.db
+    package = request.query_params.get("package", "").strip()
+    if not package:
+        return JSONResponse({"error": "package parameter required"}, status_code=400)
+
+    # Migrations FROM this package (people leaving it)
+    cursor = await d.execute(
+        """SELECT to_package, COUNT(*) as count, confidence,
+                  GROUP_CONCAT(DISTINCT repo) as repos
+           FROM migration_paths WHERE from_package = ?
+           GROUP BY to_package, confidence
+           ORDER BY count DESC LIMIT 20""",
+        (package,)
+    )
+    from_rows = await cursor.fetchall()
+
+    # Migrations TO this package (people adopting it)
+    cursor = await d.execute(
+        """SELECT from_package, COUNT(*) as count, confidence,
+                  GROUP_CONCAT(DISTINCT repo) as repos
+           FROM migration_paths WHERE to_package = ?
+           GROUP BY from_package, confidence
+           ORDER BY count DESC LIMIT 20""",
+        (package,)
+    )
+    to_rows = await cursor.fetchall()
+
+    return JSONResponse({
+        "package": package,
+        "migrating_from": [
+            {"to": r[0], "count": r[1], "confidence": r[2], "sample_repos": r[3].split(",")[:5] if r[3] else []}
+            for r in from_rows
+        ],
+        "migrating_to": [
+            {"from": r[0], "count": r[1], "confidence": r[2], "sample_repos": r[3].split(",")[:5] if r[3] else []}
+            for r in to_rows
+        ],
+    })
+
+
+@router.get("/api/combos", response_class=JSONResponse)
+async def get_combos(request: Request):
+    """Query verified package combinations. What actually works together in production."""
+    d = request.state.db
+    package = request.query_params.get("package", "").strip()
+    if not package:
+        return JSONResponse({"error": "package parameter required"}, status_code=400)
+
+    cursor = await d.execute(
+        """SELECT
+               CASE WHEN package_a = ? THEN package_b ELSE package_a END as partner,
+               COUNT(*) as repo_count,
+               SUM(repo_stars) as total_stars,
+               GROUP_CONCAT(DISTINCT repo) as repos
+           FROM verified_combos
+           WHERE package_a = ? OR package_b = ?
+           GROUP BY partner
+           ORDER BY repo_count DESC, total_stars DESC
+           LIMIT 30""",
+        (package, package, package)
+    )
+    rows = await cursor.fetchall()
+
+    return JSONResponse({
+        "package": package,
+        "verified_with": [
+            {
+                "package": r[0],
+                "repo_count": r[1],
+                "total_stars": r[2] or 0,
+                "sample_repos": r[3].split(",")[:5] if r[3] else [],
+            }
+            for r in rows
+        ],
+    })
+
+
+@router.get("/api/moat/stats", response_class=JSONResponse)
+async def moat_stats(request: Request):
+    """Aggregate stats on the data moat — how much unique data we've collected."""
+    d = request.state.db
+
+    migrations = await (await d.execute("SELECT COUNT(*) FROM migration_paths")).fetchone()
+    combos = await (await d.execute("SELECT COUNT(*) FROM verified_combos")).fetchone()
+    outcomes = await (await d.execute("SELECT COUNT(*) FROM build_outcomes")).fetchone()
+    unique_migrations = await (await d.execute(
+        "SELECT COUNT(DISTINCT from_package || '→' || to_package) FROM migration_paths"
+    )).fetchone()
+    repos_scanned = await (await d.execute(
+        "SELECT COUNT(DISTINCT repo) FROM verified_combos"
+    )).fetchone()
+
+    return JSONResponse({
+        "migration_paths": migrations[0],
+        "unique_migrations": unique_migrations[0],
+        "verified_combos": combos[0],
+        "build_outcomes": outcomes[0],
+        "repos_scanned": repos_scanned[0],
+    })
