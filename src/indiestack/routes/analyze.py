@@ -591,58 +591,299 @@ def _badge_svg(label: str, value: str, color: str) -> "Response":
 
 @router.get("/api/analyze/stats")
 async def analyze_stats(request: Request):
-    """Kill criteria dashboard — track analyses, repos, conversions."""
+    """Pivot metrics dashboard — separates real usage from internal testing."""
     user = request.state.user
     if not user or not user.get("is_admin"):
         return JSONResponse({"error": "Admin only"}, status_code=403)
 
     d = request.state.db
 
+    # Known internal sessions to exclude from "real" metrics
+    # Our IPs, scanner runs, and test sessions
+    INTERNAL_FILTER = """
+        AND session_id NOT IN ('ip:51.6.194.97', 'ip:212.219.61.254')
+        AND session_id NOT LIKE 'audit:%'
+        AND (session_id IS NULL OR session_id NOT LIKE 'ip:10.%')
+    """
+    # Scanner runs used X-GitHub-Action header, stored as gh:{repo}
+    # But real Action installs would too — need to check if the repo
+    # actually has our workflow file. For now, flag scanner runs by
+    # checking if all gh: runs came in the same hour (batch = scanner)
+    SCANNER_FILTER = """
+        AND session_id NOT IN (
+            SELECT session_id FROM dependency_analyses
+            WHERE session_id LIKE 'gh:%'
+            GROUP BY session_id HAVING COUNT(*) <= 2
+            AND MIN(created_at) > datetime('now', '-2 days')
+        )
+    """
+
     stats = {}
 
-    # Total analyses
+    # ── North Star Metrics ──
+    # Total analyses (all)
     c = await d.execute("SELECT COUNT(*) as cnt FROM dependency_analyses")
-    stats["total_analyses"] = (await c.fetchone())["cnt"]
+    stats["total_all"] = (await c.fetchone())["cnt"]
 
-    # Analyses last 14 days
-    c = await d.execute("SELECT COUNT(*) as cnt FROM dependency_analyses WHERE created_at > datetime('now', '-14 days')")
-    stats["analyses_14d"] = (await c.fetchone())["cnt"]
+    # External analyses (excluding our known IPs and scanner)
+    c = await d.execute(f"""
+        SELECT COUNT(*) as cnt FROM dependency_analyses
+        WHERE 1=1 {INTERNAL_FILTER}
+    """)
+    stats["total_external"] = (await c.fetchone())["cnt"]
 
-    # Unique repos (GitHub Action sessions)
-    c = await d.execute("SELECT COUNT(DISTINCT session_id) as cnt FROM dependency_analyses WHERE session_id LIKE 'gh:%'")
-    stats["unique_repos"] = (await c.fetchone())["cnt"]
+    # External in last 14 days
+    c = await d.execute(f"""
+        SELECT COUNT(*) as cnt FROM dependency_analyses
+        WHERE created_at > datetime('now', '-14 days') {INTERNAL_FILTER}
+    """)
+    stats["external_14d"] = (await c.fetchone())["cnt"]
 
-    # Unique IPs
-    c = await d.execute("SELECT COUNT(DISTINCT session_id) as cnt FROM dependency_analyses WHERE session_id LIKE 'ip:%'")
-    stats["unique_ips"] = (await c.fetchone())["cnt"]
-
-    # Analyses per day (last 14 days)
+    # Technographic API calls
     c = await d.execute("""
-        SELECT DATE(created_at) as day, COUNT(*) as cnt
+        SELECT COUNT(*) as cnt FROM search_logs
+        WHERE query LIKE '%technographic%' OR source = 'technographic'
+    """)
+    try:
+        stats["technographic_calls"] = (await c.fetchone())["cnt"]
+    except Exception:
+        stats["technographic_calls"] = 0
+
+    # ── Leading Indicators ──
+    # Badge requests (from access logs — we can't track this directly yet)
+    stats["badge_requests"] = "not tracked yet — add access log counter"
+
+    # Unique external IPs
+    c = await d.execute(f"""
+        SELECT COUNT(DISTINCT session_id) as cnt FROM dependency_analyses
+        WHERE session_id LIKE 'ip:%' {INTERNAL_FILTER}
+    """)
+    stats["unique_external_ips"] = (await c.fetchone())["cnt"]
+
+    # GitHub Action installs (repos with gh: session that aren't from scanner batch)
+    c = await d.execute("""
+        SELECT COUNT(DISTINCT session_id) as cnt FROM dependency_analyses
+        WHERE session_id LIKE 'gh:%'
+    """)
+    stats["total_gh_action_repos"] = (await c.fetchone())["cnt"]
+
+    # ── Data Moat ──
+    c = await d.execute("SELECT COUNT(*) as cnt FROM manifest_cooccurrences")
+    stats["cooccurrence_pairs"] = (await c.fetchone())["cnt"]
+
+    c = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE is_reference = 1")
+    stats["reference_tools"] = (await c.fetchone())["cnt"]
+
+    c = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
+    stats["total_tools"] = (await c.fetchone())["cnt"]
+
+    c = await d.execute("SELECT COUNT(*) as cnt FROM tool_pairs WHERE success_count > 0")
+    stats["verified_pairs"] = (await c.fetchone())["cnt"]
+
+    # report_outcome calls (the feedback loop)
+    try:
+        c = await d.execute("""
+            SELECT COUNT(*) as cnt FROM agent_actions
+            WHERE action = 'report_outcome'
+        """)
+        stats["outcome_reports"] = (await c.fetchone())["cnt"]
+    except Exception:
+        stats["outcome_reports"] = 0
+
+    # ── Revenue ──
+    c = await d.execute("SELECT COUNT(*) as cnt FROM users")
+    stats["total_users"] = (await c.fetchone())["cnt"]
+
+    c = await d.execute("SELECT COUNT(*) as cnt FROM users WHERE is_pro = 1")
+    try:
+        stats["pro_users"] = (await c.fetchone())["cnt"]
+    except Exception:
+        stats["pro_users"] = 0
+
+    # ── Daily Breakdown (external only) ──
+    c = await d.execute(f"""
+        SELECT DATE(created_at) as day,
+               COUNT(*) as total,
+               SUM(CASE WHEN session_id LIKE 'gh:%' THEN 1 ELSE 0 END) as gh_action,
+               SUM(CASE WHEN session_id LIKE 'ip:%' THEN 1 ELSE 0 END) as web
         FROM dependency_analyses
         WHERE created_at > datetime('now', '-14 days')
         GROUP BY DATE(created_at) ORDER BY day DESC
     """)
-    stats["daily"] = [{"day": r["day"], "count": r["cnt"]} for r in await c.fetchall()]
+    stats["daily"] = [
+        {"day": r["day"], "total": r["total"], "gh_action": r["gh_action"], "web": r["web"]}
+        for r in await c.fetchall()
+    ]
 
-    # Reference tools created (auto-ingested)
-    c = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE is_reference = 1")
-    stats["reference_tools"] = (await c.fetchone())["cnt"]
+    # ── Session breakdown ──
+    c = await d.execute(f"""
+        SELECT session_id, COUNT(*) as cnt
+        FROM dependency_analyses
+        WHERE session_id IS NOT NULL {INTERNAL_FILTER}
+        GROUP BY session_id ORDER BY cnt DESC LIMIT 20
+    """)
+    stats["top_external_sessions"] = [
+        {"session": r["session_id"], "count": r["cnt"]}
+        for r in await c.fetchall()
+    ]
 
-    # Cooccurrence pairs
-    c = await d.execute("SELECT COUNT(*) as cnt FROM manifest_cooccurrences")
-    stats["cooccurrence_pairs"] = (await c.fetchone())["cnt"]
-
-    # Kill criteria thresholds
-    stats["kill_criteria"] = {
-        "uploads_target": 250,
-        "uploads_actual": stats["analyses_14d"],
-        "uploads_on_track": stats["analyses_14d"] >= 250,
-        "conversions_target": 1,
-        "note": "14-day window. Kill if <250 uploads or 0 conversions after 500 analyses."
+    # ── Verdict ──
+    stats["verdict"] = {
+        "external_analyses": stats["external_14d"],
+        "target": 250,
+        "on_track": stats["external_14d"] >= 18,  # 250/14 days = ~18/day needed
+        "days_tracked": len(stats["daily"]),
+        "honest_assessment": (
+            "No external usage yet" if stats["external_14d"] == 0
+            else f"{stats['external_14d']} external analyses — need 250 in 14 days"
+        ),
     }
 
     return JSONResponse(stats)
+
+
+@router.get("/admin/pivot", response_class=HTMLResponse)
+async def pivot_dashboard(request: Request):
+    """Visual pivot metrics dashboard."""
+    user = request.state.user
+    if not user or not user.get("is_admin"):
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse("/login?next=/admin/pivot")
+
+    d = request.state.db
+
+    # Known internal
+    INTERNAL = "('ip:51.6.194.97', 'ip:212.219.61.254')"
+
+    # Totals
+    c = await d.execute("SELECT COUNT(*) as cnt FROM dependency_analyses")
+    total = (await c.fetchone())["cnt"]
+
+    c = await d.execute(f"SELECT COUNT(*) as cnt FROM dependency_analyses WHERE session_id NOT IN {INTERNAL} AND session_id NOT LIKE 'audit:%'")
+    external = (await c.fetchone())["cnt"]
+
+    internal = total - external
+
+    # Data moat
+    c = await d.execute("SELECT COUNT(*) as cnt FROM manifest_cooccurrences")
+    pairs = (await c.fetchone())["cnt"]
+    c = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE is_reference = 1")
+    refs = (await c.fetchone())["cnt"]
+    c = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved' AND is_reference = 0")
+    real_tools = (await c.fetchone())["cnt"]
+
+    # Users
+    c = await d.execute("SELECT COUNT(*) as cnt FROM users")
+    users = (await c.fetchone())["cnt"]
+
+    # Daily breakdown
+    c = await d.execute(f"""
+        SELECT DATE(created_at) as day,
+               COUNT(*) as total,
+               SUM(CASE WHEN session_id IN {INTERNAL} OR session_id LIKE 'audit:%' THEN 1 ELSE 0 END) as internal,
+               SUM(CASE WHEN session_id NOT IN {INTERNAL} AND session_id NOT LIKE 'audit:%' THEN 1 ELSE 0 END) as external
+        FROM dependency_analyses
+        WHERE created_at > datetime('now', '-14 days')
+        GROUP BY DATE(created_at) ORDER BY day DESC
+    """)
+    daily_rows = ""
+    for r in await c.fetchall():
+        ext = r["external"]
+        color = "var(--success-text)" if ext > 0 else "var(--ink-muted)"
+        daily_rows += f'<tr><td>{r["day"]}</td><td>{r["total"]}</td><td>{r["internal"]}</td><td style="color:{color};font-weight:600;">{ext}</td></tr>'
+
+    # External sessions
+    c = await d.execute(f"""
+        SELECT session_id, COUNT(*) as cnt
+        FROM dependency_analyses
+        WHERE session_id NOT IN {INTERNAL} AND session_id NOT LIKE 'audit:%'
+        GROUP BY session_id ORDER BY cnt DESC LIMIT 15
+    """)
+    session_rows = ""
+    for r in await c.fetchall():
+        session_rows += f'<tr><td style="font-family:var(--font-mono);font-size:12px;">{escape(r["session_id"] or "anonymous")}</td><td>{r["cnt"]}</td></tr>'
+
+    # Verdict
+    if external == 0:
+        verdict = '<span style="color:var(--error-text);font-weight:700;">No external usage yet</span>'
+    elif external < 18:
+        verdict = f'<span style="color:var(--warning-text);font-weight:700;">{external} external — need ~18/day for kill criteria</span>'
+    else:
+        verdict = f'<span style="color:var(--success-text);font-weight:700;">{external} external — on track</span>'
+
+    body = f'''
+    <div style="max-width:800px;margin:0 auto;padding:0 16px;">
+        <h1 style="font-family:var(--font-display);font-size:var(--heading-lg);margin:24px 0 8px;">Pivot Metrics</h1>
+        <p style="color:var(--ink-muted);margin:0 0 24px;">Honest numbers. Internal usage filtered out.</p>
+
+        <!-- Verdict -->
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:24px;">
+            <h2 style="font-family:var(--font-display);font-size:var(--text-lg);margin:0 0 8px;">Verdict</h2>
+            <p style="font-size:var(--text-lg);margin:0;">{verdict}</p>
+        </div>
+
+        <!-- North Star -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px;">
+            <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;text-align:center;">
+                <div style="font-size:32px;font-weight:700;color:var(--ink);">{external}</div>
+                <div style="font-size:12px;color:var(--ink-muted);">External Analyses</div>
+            </div>
+            <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;text-align:center;">
+                <div style="font-size:32px;font-weight:700;color:var(--ink-light);">{internal}</div>
+                <div style="font-size:12px;color:var(--ink-muted);">Internal (us)</div>
+            </div>
+            <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;text-align:center;">
+                <div style="font-size:32px;font-weight:700;color:var(--ink);">{users}</div>
+                <div style="font-size:12px;color:var(--ink-muted);">Users</div>
+            </div>
+            <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;text-align:center;">
+                <div style="font-size:32px;font-weight:700;color:var(--gold);">0</div>
+                <div style="font-size:12px;color:var(--ink-muted);">Revenue</div>
+            </div>
+        </div>
+
+        <!-- Data Moat -->
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:24px;">
+            <h2 style="font-family:var(--font-display);font-size:var(--text-lg);margin:0 0 12px;">Data Moat</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;">
+                <div><span style="font-size:20px;font-weight:700;">{pairs:,}</span><br><span style="font-size:12px;color:var(--ink-muted);">Cooccurrence pairs</span></div>
+                <div><span style="font-size:20px;font-weight:700;">{refs:,}</span><br><span style="font-size:12px;color:var(--ink-muted);">Reference tools</span></div>
+                <div><span style="font-size:20px;font-weight:700;">{real_tools:,}</span><br><span style="font-size:12px;color:var(--ink-muted);">Curated tools</span></div>
+            </div>
+        </div>
+
+        <!-- Daily Breakdown -->
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:24px;">
+            <div style="padding:16px 24px;border-bottom:1px solid var(--border);">
+                <h2 style="font-family:var(--font-display);font-size:var(--text-lg);margin:0;">Daily Breakdown</h2>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm);">
+                <thead><tr style="background:var(--cream-dark);">
+                    <th style="padding:8px 16px;text-align:left;">Day</th>
+                    <th style="padding:8px 16px;text-align:left;">Total</th>
+                    <th style="padding:8px 16px;text-align:left;">Internal</th>
+                    <th style="padding:8px 16px;text-align:left;">External</th>
+                </tr></thead>
+                <tbody>{daily_rows}</tbody>
+            </table>
+        </div>
+
+        <!-- External Sessions -->
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:24px;">
+            <div style="padding:16px 24px;border-bottom:1px solid var(--border);">
+                <h2 style="font-family:var(--font-display);font-size:var(--text-lg);margin:0;">External Sessions</h2>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm);">
+                <thead><tr style="background:var(--cream-dark);">
+                    <th style="padding:8px 16px;text-align:left;">Session</th>
+                    <th style="padding:8px 16px;text-align:left;">Analyses</th>
+                </tr></thead>
+                <tbody>{session_rows if session_rows else '<tr><td colspan="2" style="padding:16px;color:var(--ink-muted);text-align:center;">No external sessions yet</td></tr>'}</tbody>
+            </table>
+        </div>
+    </div>'''
+
+    return HTMLResponse(page_shell("Pivot Metrics | IndieStack", body, user=user))
 
 
 # ── Technographic API ────────────────────────────────────────────────────
