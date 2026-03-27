@@ -338,6 +338,62 @@ def extract_combos_from_manifest(pkg_json: dict, repo: str, stars: int) -> list:
     return combos
 
 
+# Package category mapping — only migrations within the same category make sense
+PACKAGE_CATEGORY = {}
+_CATEGORY_GROUPS = {
+    "auth": ["passport", "next-auth", "lucia", "@clerk/nextjs", "@clerk/clerk-react",
+             "@auth0/auth0-react", "@auth0/nextjs-auth0", "@kinde-oss/kinde-auth-nextjs",
+             "@supabase/auth-helpers-nextjs", "jsonwebtoken", "bcrypt", "bcryptjs",
+             "@hanko/elements", "@logto/next", "@ory/client"],
+    "orm": ["prisma", "@prisma/client", "drizzle-orm", "mongoose", "sequelize",
+            "typeorm", "knex", "mikro-orm", "@libsql/client", "@neondatabase/serverless",
+            "pg", "mysql2", "better-sqlite3", "kysely", "mongodb"],
+    "payments": ["stripe", "@stripe/stripe-js", "@lemonsqueezy/lemonsqueezy.js",
+                 "@paddle/paddle-js", "paddle-sdk", "@polar-sh/sdk"],
+    "email": ["resend", "nodemailer", "@sendgrid/mail", "mailgun.js", "postmark",
+              "@plunk/node", "@react-email/components"],
+    "analytics": ["posthog-js", "@posthog/react", "posthog-node", "@vercel/analytics",
+                  "plausible-tracker", "@umami/node", "fathom-client", "@aptabase/web",
+                  "mixpanel", "amplitude-js", "@segment/analytics-next", "simple-analytics-script"],
+    "errors": ["@sentry/node", "@sentry/react", "@sentry/nextjs", "@highlight-run/next",
+               "bugsnag", "@rollbar/react"],
+    "css": ["tailwindcss", "styled-components", "@emotion/react", "@emotion/styled",
+            "sass", "less", "@chakra-ui/react", "@mantine/core", "daisyui",
+            "@radix-ui/themes", "@headlessui/react", "bootstrap", "bulma",
+            "@mui/material", "antd"],
+    "date": ["moment", "dayjs", "date-fns", "luxon"],
+    "http": ["axios", "got", "node-fetch", "undici", "ky", "superagent"],
+    "state": ["redux", "@reduxjs/toolkit", "zustand", "jotai", "recoil",
+              "mobx", "valtio", "xstate"],
+    "testing": ["jest", "vitest", "mocha", "ava", "@testing-library/react",
+                "cypress", "playwright", "@playwright/test"],
+    "validation": ["zod", "yup", "joi", "ajv", "valibot", "superstruct"],
+    "build": ["webpack", "vite", "esbuild", "rollup", "parcel", "turbo", "tsup"],
+    "framework": ["next", "express", "fastify", "hono", "koa", "nestjs", "@nestjs/core",
+                  "nuxt", "remix", "@remix-run/node", "astro", "sveltekit"],
+    "logging": ["@axiomhq/js", "@logtail/node", "pino", "winston", "bunyan"],
+    "upload": ["multer", "@uploadthing/react", "uploadthing", "formidable"],
+    "flags": ["@growthbook/growthbook", "flagsmith", "unleash-client"],
+    "jobs": ["bullmq", "bull", "inngest", "@trigger.dev/sdk", "agenda"],
+    "api": ["@trpc/server", "@trpc/client", "graphql", "graphql-yoga",
+            "@apollo/server", "@apollo/client"],
+    "animation": ["framer-motion"],
+    "realtime": ["socket.io", "pusher", "ably", "@supabase/realtime-js"],
+}
+for cat, pkgs in _CATEGORY_GROUPS.items():
+    for pkg in pkgs:
+        PACKAGE_CATEGORY[pkg] = cat
+
+
+def same_category(pkg_a: str, pkg_b: str) -> bool:
+    """Check if two packages serve the same function (plausible migration)."""
+    cat_a = PACKAGE_CATEGORY.get(pkg_a)
+    cat_b = PACKAGE_CATEGORY.get(pkg_b)
+    if not cat_a or not cat_b:
+        return False  # Unknown category — skip
+    return cat_a == cat_b
+
+
 def classify_migration(removed: str, added: str) -> str:
     """Classify the confidence level of a migration."""
     pair = (removed, added)
@@ -347,7 +403,9 @@ def classify_migration(removed: str, added: str) -> str:
         return "swap"  # High confidence — known migration pattern
     if reverse_pair in KNOWN_MIGRATIONS:
         return "swap"  # Reverse of known migration (unusual but valid)
-    return "likely"  # Same-commit removal + addition, likely a migration
+    if same_category(removed, added):
+        return "likely"  # Same category removal + addition
+    return "inferred"  # Cross-category — low confidence, probably not a migration
 
 
 def run_autopsy(args):
@@ -437,12 +495,16 @@ def run_autopsy(args):
             added, removed = parse_diff_for_migrations(diff)
 
             # A migration = something removed AND something added in same commit
+            # Only record if packages are in the same functional category
             if removed and added:
                 for rm_pkg in removed:
                     for add_pkg in added:
                         if rm_pkg == add_pkg:
                             continue
                         confidence = classify_migration(rm_pkg, add_pkg)
+                        # Skip cross-category noise (e.g., cypress → astro)
+                        if confidence == "inferred":
+                            continue
                         migration_summary[f"{rm_pkg} → {add_pkg}"] += 1
                         total_migrations += 1
                         repo_migrations += 1
