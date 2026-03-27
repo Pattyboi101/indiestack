@@ -670,7 +670,7 @@ app.add_middleware(_HeadMethodMiddleware)
 
 # ── Security Headers ─────────────────────────────────────────────────────
 
-_CSRF_EXEMPT_PATHS = {"/webhooks/stripe", "/api/cite", "/api/tools/submit", "/api/follow-through", "/api/agent/recommend", "/api/agent/shortlist", "/api/agent/outcome", "/api/agent/integration", "/api/analyze"}
+_CSRF_EXEMPT_PATHS = {"/webhooks/stripe", "/api/cite", "/api/tools/submit", "/api/follow-through", "/api/agent/recommend", "/api/agent/shortlist", "/api/agent/outcome", "/api/agent/integration", "/api/analyze", "/api/outcomes"}
 _ALLOWED_ORIGINS = {"https://indiestack.ai", "https://www.indiestack.ai", "https://indiestack.fly.dev", "https://www.indiestack.fly.dev", "http://localhost:8000", "http://127.0.0.1:8000"}
 
 

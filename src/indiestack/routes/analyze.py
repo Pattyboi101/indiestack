@@ -1194,11 +1194,13 @@ async def get_migrations(request: Request):
     return JSONResponse({
         "package": package,
         "migrating_from": [
-            {"to": r[0], "count": r[1], "confidence": r[2], "sample_repos": r[3].split(",")[:5] if r[3] else []}
+            {"to": r["to_package"], "count": r["count"], "confidence": r["confidence"],
+             "sample_repos": r["repos"].split(",")[:5] if r["repos"] else []}
             for r in from_rows
         ],
         "migrating_to": [
-            {"from": r[0], "count": r[1], "confidence": r[2], "sample_repos": r[3].split(",")[:5] if r[3] else []}
+            {"from": r["from_package"], "count": r["count"], "confidence": r["confidence"],
+             "sample_repos": r["repos"].split(",")[:5] if r["repos"] else []}
             for r in to_rows
         ],
     })
@@ -1231,10 +1233,10 @@ async def get_combos(request: Request):
         "package": package,
         "verified_with": [
             {
-                "package": r[0],
-                "repo_count": r[1],
-                "total_stars": r[2] or 0,
-                "sample_repos": r[3].split(",")[:5] if r[3] else [],
+                "package": r["partner"],
+                "repo_count": r["repo_count"],
+                "total_stars": r["total_stars"] or 0,
+                "sample_repos": r["repos"].split(",")[:5] if r["repos"] else [],
             }
             for r in rows
         ],
@@ -1246,20 +1248,20 @@ async def moat_stats(request: Request):
     """Aggregate stats on the data moat — how much unique data we've collected."""
     d = request.state.db
 
-    migrations = await (await d.execute("SELECT COUNT(*) FROM migration_paths")).fetchone()
-    combos = await (await d.execute("SELECT COUNT(*) FROM verified_combos")).fetchone()
-    outcomes = await (await d.execute("SELECT COUNT(*) FROM build_outcomes")).fetchone()
+    migrations = await (await d.execute("SELECT COUNT(*) as n FROM migration_paths")).fetchone()
+    combos = await (await d.execute("SELECT COUNT(*) as n FROM verified_combos")).fetchone()
+    outcomes = await (await d.execute("SELECT COUNT(*) as n FROM build_outcomes")).fetchone()
     unique_migrations = await (await d.execute(
-        "SELECT COUNT(DISTINCT from_package || '→' || to_package) FROM migration_paths"
+        "SELECT COUNT(DISTINCT from_package || '→' || to_package) as n FROM migration_paths"
     )).fetchone()
     repos_scanned = await (await d.execute(
-        "SELECT COUNT(DISTINCT repo) FROM verified_combos"
+        "SELECT COUNT(DISTINCT repo) as n FROM verified_combos"
     )).fetchone()
 
     return JSONResponse({
-        "migration_paths": migrations[0],
-        "unique_migrations": unique_migrations[0],
-        "verified_combos": combos[0],
-        "build_outcomes": outcomes[0],
-        "repos_scanned": repos_scanned[0],
+        "migration_paths": migrations["n"],
+        "unique_migrations": unique_migrations["n"],
+        "verified_combos": combos["n"],
+        "build_outcomes": outcomes["n"],
+        "repos_scanned": repos_scanned["n"],
     })
