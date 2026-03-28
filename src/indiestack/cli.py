@@ -402,9 +402,8 @@ HELP = f"""\
   --json                              Output raw JSON (for piping)
 
 {_bold('API Keys:')}
-  No key needed to start (3 queries/day).
-  Get a free key for 10/month: {_cyan('https://indiestack.ai/developer')}
-  Upgrade to Pro for 1,000/month: {_cyan('https://indiestack.ai/pricing')}
+  All searches are free and unlimited.
+  Get a key for personalized recommendations: {_cyan('https://indiestack.ai/developer')}
 
 {_bold('Examples:')}
   indiestack search "privacy analytics"

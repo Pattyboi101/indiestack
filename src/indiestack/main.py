@@ -123,47 +123,19 @@ _api_user_monthly: dict[int, dict] = {}  # {user_id: {"month": "YYYY-MM", "count
 _api_ip_daily: dict[str, dict] = {}  # {ip: {"date": "YYYY-MM-DD", "count": N}}
 
 API_MONTHLY_LIMITS = {
-    "free": 10,
-    "pro": 1000,
+    "free": 999999,
+    "pro": 999999,
 }
-API_KEYLESS_DAILY_LIMIT = 3
+API_KEYLESS_DAILY_LIMIT = 999999
 
 
 def _check_api_key_rate_limit(user_id: int, tier: str) -> bool:
-    """Returns True if user has exceeded their monthly API limit.
-
-    Rate-limits by user_id (not key_id) so revoking and regenerating
-    keys cannot bypass the cap. Free tier: 10/month, Pro: 1,000/month.
-    """
-    from datetime import date
-    this_month = date.today().strftime("%Y-%m")
-    entry = _api_user_monthly.get(user_id)
-    if not entry or entry["month"] != this_month:
-        # Clean up stale entries from previous months (prevent memory leak)
-        if len(_api_user_monthly) > 200:
-            _api_user_monthly.clear()
-        _api_user_monthly[user_id] = {"month": this_month, "count": 1}
-        return False
-    limit = API_MONTHLY_LIMITS.get(tier, 10)
-    if entry["count"] >= limit:
-        return True
-    entry["count"] += 1
+    """All API access is unlimited — data collection IS the product."""
     return False
 
 
 def _check_api_ip_rate_limit(ip: str) -> bool:
-    """Returns True if keyless IP has exceeded its daily API limit (3/day)."""
-    from datetime import date
-    today = date.today().isoformat()
-    entry = _api_ip_daily.get(ip)
-    if not entry or entry["date"] != today:
-        if len(_api_ip_daily) > 500:
-            _api_ip_daily.clear()
-        _api_ip_daily[ip] = {"date": today, "count": 1}
-        return False
-    if entry["count"] >= API_KEYLESS_DAILY_LIMIT:
-        return True
-    entry["count"] += 1
+    """All API access is unlimited — data collection IS the product."""
     return False
 
 

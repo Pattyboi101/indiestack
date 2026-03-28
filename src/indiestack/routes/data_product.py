@@ -141,7 +141,7 @@ async def data_product_page(request: Request):
                     <div style="font-size:var(--text-xs);color:var(--ink-muted);margin-bottom:20px;">For indie devs and researchers</div>
                     <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:var(--text-sm);color:var(--ink-light);line-height:2;">
                         <li>&#10003; Browse /migrations page</li>
-                        <li>&#10003; 10 API queries/month</li>
+                        <li>&#10003; Unlimited API queries</li>
                         <li>&#10003; Migration data in /analyze results</li>
                     </ul>
                     <a href="/developer" class="btn-secondary" style="display:block;text-align:center;padding:10px;text-decoration:none;font-size:var(--text-sm);">

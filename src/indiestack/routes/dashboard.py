@@ -825,7 +825,7 @@ async def dashboard_overview(request: Request):
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
                 <div>
                     <h3 style="margin:0 0 4px;font-family:var(--font-display);font-size:18px;">API Key</h3>
-                    <p style="margin:0;font-size:13px;color:var(--ink-muted);">Unlock 10 queries/month and personalized recommendations.</p>
+                    <p style="margin:0;font-size:13px;color:var(--ink-muted);">Unlock personalized recommendations and migration intelligence.</p>
                 </div>
                 <form method="POST" action="/developer/create-key">
                     <input type="hidden" name="name" value="Default">
@@ -2410,7 +2410,7 @@ async def welcome_page_old(request: Request):
             <input type="hidden" name="redirect" value="/welcome">
             <button type="submit" class="btn btn-primary" style="font-size:15px;padding:12px 24px;">Create Free API Key</button>
         </form>
-        <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;">Unlocks 10 queries/month + personalized recommendations.</p>'''
+        <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;">Unlocks personalized recommendations and migration intelligence.</p>'''
 
     body = f'''
     <div class="container" style="max-width:640px;padding:48px 24px;">
@@ -2482,8 +2482,8 @@ async def developer_page(request: Request):
         </div>
 
         <div style="text-align:center;padding:24px;margin-bottom:32px;background:linear-gradient(135deg,#1A2D4A,#0F1D30);border-radius:var(--radius);border:1px solid rgba(0,212,245,0.2);">
-            <p style="color:#fff;font-size:16px;font-weight:600;margin:0 0 4px;">Start free &mdash; 10 queries/month, upgrade anytime</p>
-            <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 16px;">Pro gets 1,000/month + citation tracking + market gap data.</p>
+            <p style="color:#fff;font-size:16px;font-weight:600;margin:0 0 4px;">Everything is free &mdash; unlimited searches</p>
+            <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 16px;">Create a key for personalized recommendations and migration intelligence.</p>
             <a href="/login?next=/welcome" class="btn btn-primary" style="font-size:15px;padding:12px 32px;background:var(--accent);color:#0F1D30;border:none;border-radius:8px;font-weight:600;text-decoration:none;">
                 Sign in to create your API key
             </a>
@@ -2697,7 +2697,7 @@ async def developer_page(request: Request):
                 </button>
             </form>
             <p style="color:rgba(255,255,255,0.4);font-size:12px;margin:12px 0 0;">
-                Without a key: 3 queries/day. With a key: 10/month free, 1,000/month Pro.
+                All searches are free and unlimited. Create a key for personalized recommendations.
             </p>
         </div>'''
 
