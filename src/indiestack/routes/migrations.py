@@ -64,6 +64,41 @@ async def migrations_page(request: Request):
         {_stat_card(f"{total_outcomes:,}", "CI Outcomes")}
     </div>'''
 
+    # Key insights — auto-generated from top migration data
+    insights_html = ""
+    if migrations and len(migrations) >= 3:
+        top = migrations[0]
+        top_from = top["from_package"]
+        top_to = top["to_package"]
+        top_count = top["repo_count"]
+
+        # Top combo
+        top_combo_text = ""
+        if combos:
+            tc = combos[0]
+            top_combo_text = f'<strong>{escape(tc["package_a"])} + {escape(tc["package_b"])}</strong> is the most common production pairing ({tc["repo_count"]} repos).'
+
+        insight_items = [
+            f'The #1 migration: <strong>{escape(top_from)}</strong> to <strong>{escape(top_to)}</strong> — seen in {top_count} repos.',
+        ]
+        if top_combo_text:
+            insight_items.append(top_combo_text)
+        insight_items.append(
+            f'Data sourced from {repos_scanned:,} public GitHub repos, updated continuously.'
+        )
+
+        items_html = "".join(
+            f'<li style="margin-bottom:8px;line-height:1.5;">{item}</li>'
+            for item in insight_items
+        )
+        insights_html = f'''
+        <div style="margin-bottom:32px;padding:20px 24px;background:linear-gradient(135deg, rgba(0,212,245,0.05), rgba(226,183,100,0.05));border:1px solid var(--border);border-radius:var(--radius-lg);">
+            <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:0 0 12px;color:var(--ink);">Key Insights</h3>
+            <ul style="margin:0;padding-left:20px;font-size:var(--text-sm);color:var(--ink-light);">
+                {items_html}
+            </ul>
+        </div>'''
+
     # Migration paths table
     if migrations:
         migration_rows = ""
@@ -208,6 +243,7 @@ async def migrations_page(request: Request):
         </div>
 
         {stats_html}
+        {insights_html}
         {migrations_html}
         {combos_html}
         {api_cta}

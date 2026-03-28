@@ -2517,6 +2517,46 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
     except Exception:
         pass
 
+    # Migration intelligence — what's this tool replacing / being replaced by?
+    try:
+        sdk = tool.get("sdk_packages", "") or ""
+        tool_packages = [p.strip() for p in sdk.split(",") if p.strip()]
+        tool_packages.append(slug)  # Also check slug as package name
+        if tool_packages:
+            placeholders = ",".join("?" for _ in tool_packages)
+            # People migrating TO this tool
+            c = await d.execute(f"""
+                SELECT from_package, COUNT(DISTINCT repo) as repo_count, confidence
+                FROM migration_paths WHERE to_package IN ({placeholders})
+                GROUP BY from_package ORDER BY repo_count DESC LIMIT 5
+            """, tool_packages)
+            migrating_to = [dict(r) for r in await c.fetchall()]
+            # People migrating FROM this tool
+            c = await d.execute(f"""
+                SELECT to_package, COUNT(DISTINCT repo) as repo_count, confidence
+                FROM migration_paths WHERE from_package IN ({placeholders})
+                GROUP BY to_package ORDER BY repo_count DESC LIMIT 5
+            """, tool_packages)
+            migrating_from = [dict(r) for r in await c.fetchall()]
+            # Verified combos
+            c = await d.execute(f"""
+                SELECT CASE WHEN package_a IN ({placeholders}) THEN package_b ELSE package_a END as partner,
+                       COUNT(DISTINCT repo) as repo_count
+                FROM verified_combos
+                WHERE package_a IN ({placeholders}) OR package_b IN ({placeholders})
+                GROUP BY partner ORDER BY repo_count DESC LIMIT 5
+            """, tool_packages + tool_packages + tool_packages)
+            verified_with = [dict(r) for r in await c.fetchall()]
+
+            if migrating_to:
+                result["migration_gaining_from"] = migrating_to
+            if migrating_from:
+                result["migration_losing_to"] = migrating_from
+            if verified_with:
+                result["verified_combos"] = verified_with
+    except Exception:
+        pass
+
     # Pro MCP enrichment — citation stats, category ranking, demand context
     is_pro_key = request.state.api_key and request.state.api_key.get('tier') == 'pro'
     if is_pro_key:

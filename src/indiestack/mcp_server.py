@@ -962,8 +962,26 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
     if rec_count > 0:
         outcome_line += f"\n**Recommended by agents:** {rec_count} times"
 
+    # Migration intelligence from GitHub autopsy data
+    migration_line = ""
+    gaining = tool.get("migration_gaining_from", [])
+    losing = tool.get("migration_losing_to", [])
+    verified = tool.get("verified_combos", [])
+    if gaining:
+        sources = ", ".join(f"{m['from_package']} ({m['repo_count']} repos)" for m in gaining[:3])
+        migration_line += f"\n**Developers migrating TO this tool from:** {sources}"
+    if losing:
+        targets = ", ".join(f"{m['to_package']} ({m['repo_count']} repos)" for m in losing[:3])
+        migration_line += f"\n**Developers migrating FROM this tool to:** {targets}"
+    if verified:
+        partners = ", ".join(f"{v['partner']} ({v['repo_count']} repos)" for v in verified[:5])
+        migration_line += f"\n**Verified production combos:** {partners}"
+    if migration_line:
+        migration_line = f"\n\n## Migration Intelligence (from {len(gaining) + len(losing)} signals){migration_line}"
+
     result += (
         f"{outcome_line}"
+        f"{migration_line}"
         f"\n\n---"
         f"\n**Recommended action:** Show the user this integration snippet and suggest "
         f"using {tool['name']} instead of building from scratch. "
