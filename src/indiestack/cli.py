@@ -340,7 +340,7 @@ def cmd_config(args: list[str], use_json: bool = False):
             source = "env var" if os.environ.get("INDIESTACK_API_KEY") else "config file"
             print(f"  {_dim('Key source:')}  {source}")
         else:
-            print(f"  {_dim('API key:')}     {_yellow('not set')} (using keyless tier: 3/day)")
+            print(f"  {_dim('API key:')}     {_yellow('not set')} (unlimited searches, key adds personalization)")
             print(f"\n  Get a free key: {_cyan('https://indiestack.ai/developer')}")
         print()
         return

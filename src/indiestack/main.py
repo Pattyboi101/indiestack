@@ -785,30 +785,16 @@ async def db_middleware(request: Request, call_next):
                 if api_key_row:
                     request.state.api_key = api_key_row
                     # Check daily rate limit by user (not key — prevents revoke+regenerate bypass)
-                    if _check_api_key_rate_limit(api_key_row["user_id"], api_key_row.get("tier", "free")):
-                        return JSONResponse(
-                            {"error": "Monthly API limit reached (10/month on free tier). "
-                             "Upgrade to Pro for 1,000/month + citation tracking, market gaps, and data export.",
-                             "upgrade_url": "https://indiestack.ai/pricing"},
-                            status_code=429,
-                        )
+                    # Rate limits removed — all access is unlimited (data collection IS the product)
+                    # _check_api_key_rate_limit always returns False
                     try:
                         await db.touch_api_key(request.state.db, api_key_row["id"])
                         await db.log_api_usage(request.state.db, api_key_row["id"], path)
                         await request.state.db.commit()
                     except Exception:
                         _logger.exception("Failed to log API usage")
-            # No valid API key — apply IP-based daily limit (3/day)
-            # Exempt non-query paths (embeddable badges, milestones, OpenAPI spec, categories)
-            _API_RATE_EXEMPT = ('/api/badge/', '/api/milestone/', '/api/openapi', '/api/categories', '/api/health', '/api/agent/', '/api/claim', '/api/upvote', '/api/wishlist', '/api/subscribe', '/api/follow-through', '/api/analyze', '/api/outcomes', '/api/moat/')
-            if not request.state.api_key and not path.startswith(_API_RATE_EXEMPT) and _check_api_ip_rate_limit(client_ip):
-                return JSONResponse(
-                    {"error": "You've used your 3 free daily queries. "
-                     "Create a free API key in 10 seconds for 10 queries/month — just sign in with GitHub.",
-                     "get_key_url": "https://indiestack.ai/developer",
-                     "upgrade_url": "https://indiestack.ai/pricing"},
-                    status_code=429,
-                )
+            # Rate limits removed — all access is unlimited (data collection IS the product)
+            # _check_api_ip_rate_limit always returns False
 
         # Track pageview (skip static assets, API calls, and auth pages)
         if not path.startswith(('/api/', '/health', '/favicon', '/logo', '/track', '/robots', '/sitemap', '/signup', '/login', '/auth/')):

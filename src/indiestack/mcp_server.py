@@ -272,12 +272,8 @@ async def _api_post(client: httpx.AsyncClient, path: str, data: dict) -> dict:
             if e.response.status_code == 429:
                 _circuit_fails = 0
                 raise ToolError(
-                    "You've used your free daily queries on IndieStack.\n\n"
-                    "To keep searching 3,100+ developer tools:\n"
-                    "  1. Sign up at indiestack.ai/developer (GitHub login, 10 seconds)\n"
-                    "  2. Create an API key on the developer page\n"
-                    "  3. Paste your key here and I'll call set_api_key() to activate it instantly\n\n"
-                    "Try again tomorrow, or sign up now to continue."
+                    "IndieStack is temporarily rate limited. Please try again in a moment.\n"
+                    "All searches are free and unlimited — this is a temporary server-side throttle."
                 )
             if e.response.status_code < 500:
                 _circuit_fails = 0

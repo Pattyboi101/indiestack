@@ -132,31 +132,8 @@ async def dashboard_overview(request: Request):
                     </div>
                 </div>'''
 
-    # Pro upsell banner for non-Pro users
+    # Pro upsell banner removed — everything is free now
     pro_banner = ''
-    if not is_pro:
-        if maker_id:
-            _banner_citations = await get_total_agent_citations(db, maker_id, days=7)
-            if _banner_citations > 0:
-                _banner_headline = f'AI agents recommended your tools {_banner_citations} times this week'
-                _banner_sub = 'See which agents, daily trends, and competitor insights'
-            else:
-                _banner_headline = 'See which AI agents discover tools like yours'
-                _banner_sub = 'Track recommendations, spot market gaps, and get weekly reports'
-        else:
-            _banner_headline = 'See what AI agents search for when developers need tools'
-            _banner_sub = 'Find market gaps, track trends, and export intelligence data'
-        pro_banner = f'''
-            <div id="pro-banner" style="background:linear-gradient(135deg,#1A2D4A,#0F1D30);border:1px solid rgba(0,212,245,0.2);border-radius:var(--radius);padding:16px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-                <div>
-                    <p style="color:#fff;font-size:15px;font-weight:600;margin:0;">{_banner_headline}</p>
-                    <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:4px 0 0;">{_banner_sub}</p>
-                </div>
-                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-                    <a href="/pricing" style="display:inline-block;padding:10px 20px;background:var(--accent);color:#0F1D30;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">Upgrade to Pro</a>
-                    <span style="color:rgba(255,255,255,0.5);font-size:12px;">or <a href="/pricing" style="color:#E2B764;font-weight:600;text-decoration:none;">$99 lifetime</a></span>
-                </div>
-            </div>'''
 
     # Check if user has any claimed tools
     has_claimed_tools = False
@@ -216,7 +193,7 @@ async def dashboard_overview(request: Request):
     sr_color = 'var(--accent)' if (maker_success_rate or 0) >= 70 else '#E2B764' if (maker_success_rate or 0) >= 40 else '#e74c3c'
 
     pro_badge = ' <span style="display:inline-block;background:var(--accent);color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:8px;">PRO</span>' if is_pro else ''
-    upgrade_html = '' if is_pro else '<a href="/pricing" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:var(--accent);color:white;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;margin-left:auto;">Upgrade to Pro</a>' if user else ''
+    upgrade_html = ''
 
     just_subscribed_param = request.query_params.get('subscribed') == 'true'
     just_subscribed = just_subscribed_param and is_pro
@@ -429,21 +406,8 @@ async def dashboard_overview(request: Request):
 
         if queries or agents:
             # Pre-compute agent card content to avoid nested f-string quote conflicts
-            if is_pro:
+            if agents or trend:
                 _agent_card_content = f"{agent_rows}{trend_html}"
-            elif agents or trend:
-                _blurred = agent_rows if agents else '<div style="height:80px;"></div>'
-                _agent_card_content = (
-                    '<div style="position:relative;min-height:120px;">'
-                    '<div style="filter:blur(4px);pointer-events:none;user-select:none;">'
-                    f'{_blurred}{trend_html}'
-                    '</div>'
-                    '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">'
-                    '<p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;">Unlock agent breakdown</p>'
-                    '<a href="/pricing" style="display:inline-block;padding:8px 20px;background:var(--accent);color:#0F1D30;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">Upgrade to Pro</a>'
-                    '</div>'
-                    '</div>'
-                )
             else:
                 _agent_card_content = '<p style="color:var(--ink-muted);font-size:13px;">No citations yet. As agents recommend your tools, sources will appear here.</p>'
 
@@ -1173,7 +1137,7 @@ async def dashboard_overview(request: Request):
                 </a>
                 <a href="/setup" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Priority API</div>
-                    <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">1,000 queries/month + personalized recommendations</div>
+                    <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Unlimited searches + personalized recommendations</div>
                 </a>
                 <div class="pro-feat" style="background:var(--card-bg);border:1px solid var(--border);cursor:default;">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
@@ -2914,14 +2878,7 @@ async def dashboard_export(request: Request):
         return redirect
 
     db = request.state.db
-    is_pro = await check_pro(db, user['id'])
-    if not is_pro:
-        return Response(
-            content="Pro subscription required to export data.",
-            status_code=403,
-            media_type="text/plain",
-        )
-
+    # Export is free for everyone now
     maker_id = user.get('maker_id')
     fmt = request.query_params.get('format', 'json').lower()
     if fmt not in ('json', 'csv'):

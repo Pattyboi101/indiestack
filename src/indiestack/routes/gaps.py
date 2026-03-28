@@ -136,7 +136,7 @@ async def gaps_page(request: Request):
     # Get all zero-result searches, then filter — but only show top 5
     raw_gaps = await get_search_gaps(db, limit=100)
     all_gaps = [g for g in raw_gaps if _is_valid_gap(g['query'])]
-    gaps = all_gaps[:5]  # Free tier: top 5 only
+    gaps = all_gaps[:20]  # No limits — show all gaps
     total_gap_count = len(all_gaps)
 
     # Get a few recent pulse events for the activity preview
@@ -545,13 +545,7 @@ async def demand_pro(request: Request):
     user = request.state.user
     db = request.state.db
 
-    # Check if user has active Pro subscription
-    is_pro = False
-    if user:
-        from indiestack.db import check_pro
-        is_pro = await check_pro(db, user['id'])
-
-    if not is_pro:
+    if False:  # Pro gate removed — all data is free now
         # Show upgrade CTA page
         cta_page = '''
     <section style="padding:80px 24px 48px;text-align:center;">
