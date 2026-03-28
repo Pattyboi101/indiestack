@@ -665,6 +665,7 @@ def nav_html(user=None) -> str:
             </a>
             <div class="nav-links">
                 <a href="/explore" style="color:var(--ink-light);">Explore</a>
+                <a href="/migrations" style="color:var(--ink-light);">Migrations</a>
                 <a href="/pricing" style="color:var(--ink-light);">Pricing</a>
                 <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Submit</a>
                 <button onclick="toggleTheme()" id="theme-toggle" style="background:none;border:1px solid var(--border);border-radius:999px;padding:8px 12px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all 0.15s ease;min-width:44px;min-height:44px;" title="Toggle dark mode">&#9790;</button>
@@ -674,6 +675,7 @@ def nav_html(user=None) -> str:
         </div>
         <div class="mobile-menu" id="mobile-menu">
             <a href="/explore">Explore</a>
+            <a href="/migrations">Migrations</a>
             <a href="/pricing">Pricing</a>
             <a href="/setup">Set Up</a>
             {mobile_auth_links}
@@ -760,10 +762,10 @@ def footer_html() -> str:
             <div class="footer-heading">Product</div>
             <a href="/explore" class="footer-link">Explore</a>
             <a href="/explore?sort=newest" class="footer-link">New Arrivals</a>
+            <a href="/migrations" class="footer-link">Migrations</a>
+            <a href="/analyze" class="footer-link">Stack Health</a>
             <a href="/stacks" class="footer-link">Stacks</a>
-            <a href="/makers" class="footer-link">Makers</a>
-            <a href="/blog" class="footer-link">Blog</a>
-            <a href="/best" class="footer-link">Best Indie</a>
+            <a href="/data" class="footer-link">API Data</a>
           </div>
           <!-- Company -->
           <div>
