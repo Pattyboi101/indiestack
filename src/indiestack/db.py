@@ -2284,11 +2284,12 @@ async def search_tools(
     _engagement_expr = (
         "(CASE WHEN LOWER(t.name) = LOWER(?) THEN 100 ELSE 0 END)"
         " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 50 ELSE 0 END)"
-        " + (CASE WHEN EXISTS(SELECT 1 FROM tool_categories tc2 JOIN categories c2 ON c2.id=tc2.category_id WHERE tc2.tool_id=t.id AND LOWER(c2.name) LIKE ('%' || LOWER(?) || '%')) THEN 20 ELSE 0 END)"
+        " + (CASE WHEN EXISTS(SELECT 1 FROM tool_categories tc2 JOIN categories c2 ON c2.id=tc2.category_id WHERE tc2.tool_id=t.id AND LOWER(c2.name) LIKE ('%' || LOWER(?) || '%')) THEN 80 ELSE 0 END)"
         " + (t.upvote_count * 2)"
         " + (COALESCE(t.mcp_view_count, 0) * 3)"
         " + (COALESCE(t.github_stars, 0) / 100.0)"
         " + (CASE WHEN t.health_status = 'alive' THEN 5 ELSE 0 END)"
+        " + (CASE WHEN COALESCE(t.is_reference, 0) = 1 THEN -30 ELSE 0 END)"
         " + (CASE WHEN t.created_at > datetime('now', '-14 days') THEN"
         "     5.0 * (1.0 - (julianday('now') - julianday(t.created_at)) / 14.0)"
         "    ELSE 0 END)"
