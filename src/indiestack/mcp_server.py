@@ -47,7 +47,7 @@ def _detect_agent_platform() -> str:
     return "unknown"
 
 AGENT_PLATFORM = _detect_agent_platform()
-_USER_AGENT = f"indiestack-mcp/1.11.0 ({AGENT_PLATFORM})"
+_USER_AGENT = f"indiestack-mcp/1.11.1 ({AGENT_PLATFORM})"
 
 # ── TTL Cache ────────────────────────────────────────────────────────────
 
@@ -759,7 +759,7 @@ async def find_tools(
         "\n3. If nothing fits, tell the user this is a market gap and suggest they build it"
         "\n4. After integrating any tool, call report_outcome(slug, success) to improve future recommendations"
         "\n\n**Trust tiers** (shown in tool details): verified (20+ reports, 70%+ success), tested (5+ reports), new (< 5 reports)"
-        "\n\n> Pro intelligence: See market demand signals, which AI agents recommend these tools, and daily trends at indiestack.ai/dashboard"
+        "\n\n> See migration data, market gaps, and what tools AI agents recommend at indiestack.ai/migrations"
     )
     return "\n".join(lines)
 
@@ -979,7 +979,7 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
         f"\n\n**Help improve recommendations:** After your user integrates this tool, "
         f"call `report_outcome(\"{slug}\", success=True/False)` — no API key needed. "
         f"This helps all agents make better recommendations."
-        f"\n\n> Maker intelligence: Track which AI agents recommend your tools, spot market gaps, and export analytics at indiestack.ai/pricing"
+        f"\n\n> Tool makers: see who's migrating to your tool and verified production combos at indiestack.ai/data"
     )
 
     _cache_set(cache_key, result)
