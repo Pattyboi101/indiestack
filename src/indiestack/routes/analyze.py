@@ -133,7 +133,45 @@ def _render_form(prefill: str = "") -> str:
     </script>'''
 
 
-def _render_results(result: dict, user=None, share_uuid: str = "") -> str:
+def _render_migration_intel(migration_data: list = None) -> str:
+    """Render migration intelligence cards for analyze results."""
+    if not migration_data:
+        return ""
+
+    items = ""
+    for m in migration_data[:5]:
+        from_pkg = escape(m["from_package"])
+        to_pkg = escape(m["to_package"])
+        count = m["repo_count"]
+        confidence = m["confidence"]
+        conf_color = "var(--slate)" if confidence == "swap" else "var(--gold)"
+
+        items += f'''
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
+            <code style="font-family:var(--font-mono);font-size:var(--text-sm);color:#EF4444;">{from_pkg}</code>
+            <span style="color:var(--ink-muted);">&#8594;</span>
+            <code style="font-family:var(--font-mono);font-size:var(--text-sm);color:#10B981;">{to_pkg}</code>
+            <span style="margin-left:auto;font-family:var(--font-mono);font-size:var(--text-xs);color:{conf_color};font-weight:600;">{count} repos</span>
+        </div>'''
+
+    return f'''
+    <div style="margin-top:24px;">
+        <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:0 0 4px;">
+            Migration intelligence
+        </h3>
+        <p style="color:var(--ink-muted);font-size:var(--text-xs);margin:0 0 12px;">
+            Packages in your stack that developers are actively migrating from — based on real git history.
+        </p>
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:4px 16px;">
+            {items}
+        </div>
+        <a href="/migrations" style="display:inline-block;margin-top:8px;font-size:var(--text-xs);color:var(--slate);text-decoration:none;">
+            View all migration data &#8594;
+        </a>
+    </div>'''
+
+
+def _render_results(result: dict, user=None, share_uuid: str = "", migration_data: list = None) -> str:
     s = result["score"]
     total = s["total"]
     color = _score_color(total)
@@ -288,6 +326,7 @@ def _render_results(result: dict, user=None, share_uuid: str = "") -> str:
         {unmatched_html}
         {cohesion_html}
         {modernity_html}
+        {_render_migration_intel(migration_data)}
 
         <!-- CTA -->
         <div style="margin-top:32px;padding:24px;background:var(--cream-dark);border-radius:var(--radius-lg);text-align:center;">
@@ -376,7 +415,25 @@ async def analyze_view(request: Request, share_uuid: str):
     score = result["score"]["total"]
     matched_count = result.get("packages_matched", 0)
     total_pkgs = result.get("packages_total", 0)
-    body = _render_results(result, user=user, share_uuid=share_uuid)
+
+    # Query migration intelligence for packages in this analysis
+    user_packages = [m["package"] for m in result.get("matched", [])]
+    user_packages += result.get("unmatched", [])
+    migration_data = []
+    if user_packages:
+        placeholders = ",".join("?" for _ in user_packages)
+        c = await d.execute(f"""
+            SELECT from_package, to_package, confidence,
+                   COUNT(DISTINCT repo) as repo_count
+            FROM migration_paths
+            WHERE from_package IN ({placeholders})
+            GROUP BY from_package, to_package
+            ORDER BY repo_count DESC
+            LIMIT 10
+        """, user_packages)
+        migration_data = [dict(r) for r in await c.fetchall()]
+
+    body = _render_results(result, user=user, share_uuid=share_uuid, migration_data=migration_data)
     return HTMLResponse(page_shell(
         f"Score: {score}/100 | Stack Health Check",
         body,

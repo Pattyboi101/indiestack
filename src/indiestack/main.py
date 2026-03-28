@@ -235,6 +235,8 @@ from indiestack.routes import audit
 from indiestack.routes import setup
 from indiestack.routes import analyze as analyze_route
 from indiestack.routes import trending_stacks
+from indiestack.routes import migrations
+from indiestack.routes import data_product
 
 
 async def _periodic_health_refresh():
@@ -4455,3 +4457,5 @@ app.include_router(audit.router)
 app.include_router(setup.router)
 app.include_router(analyze_route.router)
 app.include_router(trending_stacks.router)
+app.include_router(migrations.router)
+app.include_router(data_product.router)

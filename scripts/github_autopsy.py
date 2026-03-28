@@ -241,7 +241,11 @@ def get_commit_diff(token: str, repo: str, sha: str) -> str:
     url = f"{GITHUB_API}/repos/{repo}/commits/{sha}"
     headers = get_headers(token)
     headers["Accept"] = "application/vnd.github.v3.diff"
-    r = requests.get(url, headers=headers)
+    try:
+        r = requests.get(url, headers=headers, timeout=30)
+    except (requests.exceptions.RequestException, Exception) as e:
+        print(f"   ⚠ Diff fetch failed: {type(e).__name__}")
+        return ""
 
     if r.status_code != 200:
         return ""
