@@ -2282,20 +2282,21 @@ async def search_tools(
     # parameter tuple — see `_engagement_params` below.
     # Category-name boost: tools whose category matches the query rank higher.
     _engagement_expr = (
-        "(CASE WHEN LOWER(t.name) = LOWER(?) THEN 100 ELSE 0 END)"
-        " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 50 ELSE 0 END)"
-        " + (CASE WHEN EXISTS(SELECT 1 FROM tool_categories tc2 JOIN categories c2 ON c2.id=tc2.category_id WHERE tc2.tool_id=t.id AND LOWER(c2.name) LIKE ('%' || LOWER(?) || '%')) THEN 80 ELSE 0 END)"
+        "(CASE WHEN LOWER(t.name) = LOWER(?) THEN 150 ELSE 0 END)"
+        " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 60 ELSE 0 END)"
+        " + (CASE WHEN EXISTS(SELECT 1 FROM tool_categories tc2 JOIN categories c2 ON c2.id=tc2.category_id WHERE tc2.tool_id=t.id AND LOWER(c2.name) LIKE ('%' || LOWER(?) || '%')) THEN 100 ELSE 0 END)"
+        " + (CASE WHEN (',' || LOWER(t.tags) || ',') LIKE ('%,' || LOWER(?) || ',%') THEN 40 ELSE 0 END)"
         " + (t.upvote_count * 2)"
         " + (COALESCE(t.mcp_view_count, 0) * 3)"
-        " + (COALESCE(t.github_stars, 0) / 100.0)"
+        " + (MIN(COALESCE(t.github_stars, 0), 5000) / 100.0)"
         " + (CASE WHEN t.health_status = 'alive' THEN 5 ELSE 0 END)"
         " + (CASE WHEN COALESCE(t.is_reference, 0) = 1 THEN -30 ELSE 0 END)"
         " + (CASE WHEN t.created_at > datetime('now', '-14 days') THEN"
         "     5.0 * (1.0 - (julianday('now') - julianday(t.created_at)) / 14.0)"
         "    ELSE 0 END)"
     )
-    # The three params consumed by _engagement_expr (exact name, prefix, category)
-    _engagement_params: list = [query.strip(), query.strip(), query.strip()]
+    # The four params consumed by _engagement_expr (exact name, prefix, category, tags)
+    _engagement_params: list = [query.strip(), query.strip(), query.strip(), query.strip()]
 
     # Determine sort order — returns (sql_fragment, extra_params)
     def _fts_order():
