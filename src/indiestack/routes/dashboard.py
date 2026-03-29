@@ -91,46 +91,8 @@ async def dashboard_overview(request: Request):
     # Pro subscription check
     is_pro = await check_pro(db, user['id'])
 
-    # Trial banner for users on free trial
+    # Trial banner removed — everything is free now
     trial_banner = ''
-    if is_pro:
-        _trial_cursor = await db.execute(
-            "SELECT trial_ends_at FROM users WHERE id = ? AND trial_ends_at > datetime('now')",
-            (user['id'],),
-        )
-        _trial_row = await _trial_cursor.fetchone()
-        if _trial_row and _trial_row['trial_ends_at']:
-            # Check they don't have a real subscription
-            from indiestack.db import get_active_subscription
-            _real_sub = await get_active_subscription(db, user['id'])
-            if not _real_sub:
-                from datetime import datetime, timezone
-                _trial_end = datetime.fromisoformat(_trial_row['trial_ends_at'].replace('Z', '+00:00')) if 'Z' in str(_trial_row['trial_ends_at']) else datetime.fromisoformat(str(_trial_row['trial_ends_at']))
-                _days_left = max(0, (_trial_end - datetime.now(timezone.utc).replace(tzinfo=None)).days)
-                _urgency_color = '#e74c3c' if _days_left <= 1 else '#E2B764' if _days_left <= 4 else 'var(--accent)'
-                # Trial extension notice (temporary — remove after April 2 2026)
-                _extension_notice = '''
-                <div style="background:rgba(110,231,183,0.1);border:1px solid rgba(110,231,183,0.25);border-radius:8px;padding:12px 16px;margin-bottom:12px;font-size:13px;color:rgba(255,255,255,0.85);">
-                    We extended everyone's trial by 7 days while we fixed a few things. Enjoy the extra time.
-                </div>''' if _days_left > 3 else ''
-                trial_banner = f'''
-                <div style="background:linear-gradient(135deg,#065F46,#064E3B);border:1px solid rgba(110,231,183,0.3);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;">
-                    {_extension_notice}
-                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-                        <div style="flex:1;min-width:200px;">
-                            <p style="color:{_urgency_color};font-size:20px;font-weight:700;margin:0 0 4px;">
-                                {_days_left} day{"s" if _days_left != 1 else ""} left on your Pro trial
-                            </p>
-                            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">
-                                You have full access to market gaps, citation tracking, and priority API. Keep it from $99 once.
-                            </p>
-                        </div>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                            <a href="/pricing" style="display:inline-flex;align-items:center;padding:12px 20px;background:#6EE7B7;color:#064E3B;border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;min-height:44px;">$99 Lifetime Deal</a>
-                            <a href="/pricing" style="display:inline-flex;align-items:center;padding:12px 20px;background:rgba(255,255,255,0.1);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,0.2);min-height:44px;">or $19/mo</a>
-                        </div>
-                    </div>
-                </div>'''
 
     # Pro upsell banner removed — everything is free now
     pro_banner = ''

@@ -1,7 +1,7 @@
 # IndieStack Mind Map
 
-> What we've built, how it makes money, and who owns what.
-> Updated: 2026-03-28
+> What we've built and who owns what.
+> Updated: 2026-03-29
 
 ## The Big Picture
 
@@ -38,7 +38,7 @@
 
 ---
 
-## 2. INTELLIGENCE LAYER (our moat)
+## 2. INTELLIGENCE LAYER (what makes us better)
 
 | Feature | URL | What it does | Revenue path |
 |---------|-----|-------------|--------------|
@@ -51,7 +51,7 @@
 | Gap Analysis | /gaps | What tools are missing from catalog | Market intelligence |
 | Moat Stats | /api/moat/stats | How much unique data we have | Internal tracking |
 
-**Owner:** Patrick (building) — this is the core strategic asset
+**Owner:** Patrick (building)
 
 ### Data Collection Flywheel
 ```
@@ -62,24 +62,23 @@ More tool makers notice -> list their tools -> more tools in catalog
 ```
 
 ### Current Data (growing 24/7)
-- 57 verified migration paths (jest->vitest, webpack->vite, etc.)
-- 6,100+ verified package combinations
-- 318 repos scanned (targeting 10,000)
+- 258 migration events (123 unique paths)
+- 57,974 verified package combinations
+- 5,589 repos scanned (targeting 10,000 — 56%)
 - Script: `python3 scripts/github_autopsy.py --status`
 
 ---
 
-## 3. DATA PRODUCT (how we sell the moat)
+## 3. DATA PRODUCT (intelligence we can sell — pricing TBD)
 
-| Feature | URL | Target buyer | Price |
-|---------|-----|-------------|-------|
-| Migration API | /api/migrations?package=X | Tool maker marketing teams | $299/mo |
-| Combo API | /api/combos?package=X | Tool maker marketing teams | $299/mo |
-| Consulting Audits | /api/audit/{owner}/{repo} | Engineering teams | $500-1k one-off |
-| Data Licensing | Contact | VCs, market intelligence | $500-2k/mo |
-| Marketing Page | /data | Sell API access | Lead gen |
+| Feature | URL | What it does |
+|---------|-----|-------------|
+| Migration API | /api/migrations?package=X | Who's migrating from/to a package |
+| Combo API | /api/combos?package=X | Verified working combinations |
+| Repo Audits | /api/audit/{owner}/{repo} | Full dependency health audit |
+| Marketing Page | /data | Explains the data product |
 
-**Phase status:** PHASE 1 (building data volume). See command hub for full roadmap.
+**Pricing:** Not finalised. Strategy is to build the best product first, figure out pricing when we have users. Don't oversell what we don't know.
 
 ---
 
@@ -152,7 +151,7 @@ More tool makers notice -> list their tools -> more tools in catalog
 |-----------|---------|
 | Stack | Python 3 / FastAPI / SQLite (WAL) / Fly.io |
 | Domain | indiestack.ai (fly.dev fallback) |
-| MCP Server | PyPI package `indiestack` v1.9.5 |
+| MCP Server | PyPI package `indiestack` v1.11.1 |
 | Auth | GitHub OAuth + magic links + email/password |
 | Payments | Stripe (subscriptions + one-off + Connect) |
 | Email | Gmail SMTP (production only) |
@@ -162,31 +161,29 @@ More tool makers notice -> list their tools -> more tools in catalog
 
 ---
 
-## Revenue Summary
+## Revenue
 
-| Stream | Status | Revenue | Effort to activate |
-|--------|--------|---------|-------------------|
-| Consulting audits | READY NOW | $500-1k/each | Just need clients |
-| Migration API | PHASE 1 | $299/mo | Need 10k repos first |
-| Data licensing | PHASE 2 | $500-2k/mo | Need volume + buyers |
-| Tool maker dashboards | PHASE 2 | $99-299/mo | Need the data to sell |
-| Pro subscriptions | DEPRIORITIZED | $19/mo | Not enough value yet |
-| Stack bundles | BUILT | Variable | Need maker adoption |
-| Sponsored placements | BUILT | Per-placement | Need traffic |
+**Status:** 0 paying customers. Pricing not finalised. Strategy: build the best product, figure out money later.
+
+**Possible streams (unvalidated):**
+- Sponsored placements (tool makers pay to rank higher in agent results)
+- Data reports (one-off migration/competitive reports)
+- Premium API tiers (when we have volume to justify it)
+- Maker verified badges
+
+**What NOT to do:** Don't invent pricing for things nobody has asked to buy yet.
 
 ---
 
 ## What Ed Should Focus On
 
-1. **Run the autopsy** — `python3 scripts/github_autopsy.py --mode all --limit 2000` (builds the moat)
-2. **Maker outreach** — get tools listed, especially from categories with migration data
-3. **Content** — blog posts using migration data ("We scanned 500 repos...")
-4. **Social** — share /migrations page findings, NOT on Reddit/HN (organic only)
-5. **GitHub Action installs** — every install = free data sensor
+1. **Maker outreach** — get tools listed, especially well-known ones with thin metadata
+2. **Content** — share interesting findings from /migrations (organic, not spam)
+3. **His 5 open tasks** — #103-105, #112-113
 
 ## What Patrick Should Focus On
 
-1. **Scale the autopsy to 10k repos** — the moat IS the product
-2. **MCP server improvements** — make agent recommendations data-backed
-3. **Consulting audits** — can sell NOW, no scale needed
-4. **CI outcome collection** — upgrade GitHub Action to report pass/fail
+1. **Tool metadata quality** — backfill install commands, env vars, integration snippets for top 100 tools
+2. **MCP experience** — make agent responses so good that agents come back
+3. **Autopsy to 10k** — more data = better recommendations
+4. **Distribution** — how do we get MCP installs?
