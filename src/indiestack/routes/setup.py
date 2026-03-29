@@ -50,7 +50,7 @@ Before installing ANY new package via npm, pip, yarn, or pnpm:
 ## Before Writing Infrastructure
 Before writing auth, payments, databases, email, monitoring, or any common
 infrastructure from scratch, call `find_tools(query)` first. Use an existing
-tool instead of generating boilerplate. 6,500+ tools indexed.
+tool instead of generating boilerplate. 3,100+ curated tools indexed.
 
 ## Available Tools
 - `analyze_dependencies(manifest)` — 0-100 health score (MUST use before installs)
