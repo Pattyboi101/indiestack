@@ -186,21 +186,59 @@ for _cat, _pkgs in _CATEGORY_GROUPS.items():
 
 # High-signal packages to search for specifically (mode=packages)
 SEARCH_PACKAGES = [
+    # Batch 1 (done)
     "prisma", "drizzle-orm", "next-auth", "lucia", "stripe",
     "tailwindcss", "vitest", "zod", "trpc", "hono",
     "supabase", "clerk", "resend", "posthog", "sentry",
     "playwright", "vite", "zustand", "tanstack",
     "uploadthing", "inngest", "convex", "turso",
+    # Batch 2 — more packages to search
+    "mongoose", "sequelize", "typeorm", "kysely",
+    "express", "fastify", "koa", "nestjs",
+    "jest", "mocha", "cypress", "webpack", "esbuild", "rollup",
+    "redux", "jotai", "recoil", "mobx",
+    "axios", "got", "undici",
+    "moment", "dayjs", "date-fns",
+    "passport", "bcrypt", "jsonwebtoken",
+    "nodemailer", "sendgrid", "mailgun", "postmark",
+    "socket.io", "pusher", "ably",
+    "meilisearch", "typesense", "algolia",
+    "pino", "winston", "bunyan",
+    "bullmq", "agenda",
+    "yup", "joi", "ajv", "valibot",
+    "framer-motion", "daisyui", "mantine", "chakra",
+    "astro", "nuxt", "remix", "sveltekit",
+    "payload", "strapi", "sanity", "contentful",
+    "flagsmith", "growthbook", "unleash",
 ]
 
 # Awesome lists to scrape for repos (mode=awesome)
 AWESOME_LISTS = [
+    # Batch 1 (done)
     "sindresorhus/awesome-nodejs",
     "enaqx/awesome-react",
     "unicodeveloper/awesome-nextjs",
     "vinta/awesome-python",
     "humiaozuzu/awesome-flask",
     "awesome-selfhosted/awesome-selfhosted",
+    # Batch 2 — more curated lists
+    "sorrycc/awesome-javascript",
+    "dzharii/awesome-typescript",
+    "avelino/awesome-go",
+    "rust-unofficial/awesome-rust",
+    "ziadoz/awesome-php",
+    "akullpp/awesome-java",
+    "viatsko/awesome-vscode",
+    "jaywcjlove/awesome-mac",
+    "trimstray/the-book-of-secret-knowledge",
+    "awesome-css-group/awesome-css",
+    "veggiemonk/awesome-docker",
+    "agarrharr/awesome-cli-apps",
+    "iCHAIT/awesome-macOS",
+    "jondot/awesome-react-native",
+    "brillout/awesome-react-components",
+    "vuejs/awesome-vue",
+    "nuxt-community/awesome-nuxt",
 ]
 
 
@@ -410,6 +448,10 @@ def discover_by_stars(token: str, limit: int, conn: sqlite3.Connection) -> list:
         "language:JavaScript stars:>200",
         "language:TypeScript stars:>50",
         "language:JavaScript stars:>50",
+        "language:TypeScript stars:>10",
+        "language:JavaScript stars:>10",
+        "language:TypeScript stars:>5 fork:false",
+        "language:JavaScript stars:>5 fork:false",
     ]
     for query in queries:
         if len(repos) >= limit:
