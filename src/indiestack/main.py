@@ -1043,7 +1043,7 @@ async def agent_card(request: Request):
             "mcp": {
                 "install": "claude mcp add indiestack -- uvx --from indiestack indiestack-mcp",
                 "pypi": "https://pypi.org/project/indiestack/",
-                "tools": 13,
+                "tools": 21,
                 "prompts": 4,
                 "resources": 3,
             },
