@@ -168,7 +168,7 @@ async def explore(request: Request):
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
             <span style="font-size:13px;color:var(--ink-muted);">Filters:</span>
             {" &middot; ".join(active_filters)}
-            <a href="/explore" style="font-size:12px;color:var(--ink-muted);text-decoration:underline;">Clear all</a>
+            <a href="/explore" style="font-size:12px;color:var(--ink-muted);text-decoration:underline;display:inline-flex;align-items:center;padding:10px 12px;min-height:44px;box-sizing:border-box;">Clear all</a>
         </div>
         '''
 

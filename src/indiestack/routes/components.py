@@ -397,20 +397,21 @@ def design_tokens() -> str:
 
         /* ── Pill Filter ──────────── */
         .pill-filter {
-            display: inline-block; padding: 4px 12px; border-radius: 999px;
+            display: inline-flex; align-items: center; padding: 10px 16px; min-height: 44px; border-radius: 999px;
             font-size: 12px; font-weight: 600; cursor: pointer;
             border: 1px solid var(--border); background: var(--card-bg); color: var(--ink-light);
             font-family: var(--font-body); transition: all var(--duration-fast) ease;
-            text-decoration: none; white-space: nowrap;
+            text-decoration: none; white-space: nowrap; box-sizing: border-box;
         }
         .pill-filter:hover { border-color: var(--terracotta); color: var(--ink); }
         .pill-filter.active { background: var(--terracotta); color: white; border-color: var(--terracotta); }
 
         /* ── Copy Button ──────────── */
         .copy-btn {
-            font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 999px;
+            font-size: 11px; font-weight: 600; padding: 10px 16px; min-height: 44px; min-width: 44px; border-radius: 999px;
             border: 1px solid var(--border); background: var(--card-bg); cursor: pointer;
             color: var(--ink-muted); font-family: var(--font-body); transition: all var(--duration-fast) ease;
+            box-sizing: border-box;
         }
         .copy-btn:hover { border-color: var(--terracotta); color: var(--ink); }
         .copy-btn:active { transform: scale(0.96); }
@@ -705,7 +706,7 @@ def email_sticky_bar():
                 font-weight:700;border:none;border-radius:999px;padding:10px 20px;
                 cursor:pointer;white-space:nowrap;">Subscribe</button>
             <button type="button" id="sticky-dismiss" style="color:rgba(255,255,255,0.6);font-size:20px;
-                cursor:pointer;background:none;border:none;padding:4px 8px;">&times;</button>
+                cursor:pointer;background:none;border:none;padding:10px 12px;min-height:44px;min-width:44px;box-sizing:border-box;">&times;</button>
         </form>
     </div>
     <style>
@@ -1142,7 +1143,7 @@ def tool_card(tool: dict, compact: bool = False) -> str:
         onmouseleave="if(!this.dataset.wishlisted){{this.style.color='var(--ink-muted)';this.style.opacity='0.5';this.style.transform='scale(1)';}}else{{this.style.transform='scale(1)';}}"
         title="Bookmark">&#9734;</button>'''
 
-    visit_html = f'<a href="/api/click/{slug}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:12px;color:var(--accent);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:2px;">Visit&nbsp;&rarr;</a>'
+    visit_html = f'<a href="/api/click/{slug}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:12px;color:var(--accent);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:2px;padding:10px 12px;min-height:44px;box-sizing:border-box;">Visit&nbsp;&rarr;</a>'
 
     gh_indicator = ''
     if tool.get('github_url'):
