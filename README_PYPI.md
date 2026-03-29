@@ -42,7 +42,7 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 
 "Indie" is the curation filter — tools built by independent developers and small teams. Focused, lean, maintained, honest pricing.
 
-### Tools (20)
+### Tools (21)
 
 | Tool | What it does |
 |------|-------------|
@@ -82,21 +82,21 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie developers have built |
 
-## What's new in v1.9.0
+## What's new in v1.11
 
-- **Smarter ranking** — Tools are now ranked by quality score and GitHub stars instead of recency. Category listings, search results, and `build_stack` all surface the best tools first.
-- **Tech stack filtering** — `scan_project` now filters recommendations by framework compatibility. Ask for Next.js tools and get Next.js tools, not Django tools.
-- **Better dependency analysis** — `analyze_dependencies` correctly handles scoped npm packages (`@sentry/node`, `@stripe/stripe-js`) instead of breaking on the `@` prefix.
-- **Health display overhaul** — `check_health` no longer shows misleading "0 stars" for SaaS tools. Shows "Health: Live — website responding" for SaaS tools with confirmed uptime.
-- **Top picks in build_stack** — First result per need is labelled "Top pick", results include star counts, and output is capped at 3 per need to reduce noise.
-- **Health data coverage** — Backfilled health status for 800+ tools. 97% of approved tools now have health data.
+- **Migration intelligence** — Tool details now include real migration data from 5,000+ GitHub repos. "jest → vitest: 27 repos", "webpack → vite: 13 repos". Agents can recommend tools backed by what developers actually switch to.
+- **Verified combos** — 60,000+ verified package combinations from production repos. Know what actually works together, not what docs say works together.
+- **Unlimited searches** — All rate limits removed. Free tier, Pro tier, no limits. Every query is valuable data.
+- **Better search relevance** — Category-aware scoring. Searching "auth" returns auth tools, not Airflow.
+- **2,100+ install commands** — 26% of tools now have `install_command` populated. Agents can show `npm install X` immediately.
 
-## What was new in v1.8.0
+## What was new in v1.9-1.10
 
-- **Super filters** — `find_tools` now accepts 11 optional filters: `compatible_with`, `price`, `min_success_rate`, `min_confidence`, `has_api`, `language`, `tags`, `exclude`, `health`, `min_stars`, and `sort`. Agents can narrow results precisely without multiple round-trips.
-- **Compatibility graph** — New `find_compatible` tool returns tools that work well together, grouped by category, with verified 3-tool stacks (triangle detection), conflict warnings, and overlap detection.
-- **Outcome enrichment** — `report_outcome` now accepts `used_with` (auto-records compatibility pairs + verified stacks on success) and `incompatible_with` (records conflicts on failure).
-- **Blank search intelligence** — Zero-result queries are mined as demand signals. Gaps surface in admin, maker dashboards, and the submit form to guide new submissions.
+- **Smarter ranking** — Quality score + GitHub stars ranking.
+- **Tech stack filtering** — `scan_project` filters by framework compatibility.
+- **Super filters** — 11 optional filters on `find_tools`: `compatible_with`, `price`, `min_success_rate`, `has_api`, `language`, `tags`, `exclude`, `health`, `min_stars`, and `sort`.
+- **Compatibility graph** — `find_compatible` returns tools that work together with conflict warnings.
+- **Agent outcome tracking** — `report_outcome` with `used_with` and `incompatible_with` feeds the compatibility graph.
 
 ## What was new in v1.7.0
 
