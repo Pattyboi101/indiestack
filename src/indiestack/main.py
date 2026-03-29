@@ -952,6 +952,10 @@ async def llms_txt(request: Request):
         f"- [Makers]({BASE_URL}/makers): Indie maker directory\n"
         f"- [Submit]({BASE_URL}/submit): Free listing for developer tools\n"
         f"- [Gaps]({BASE_URL}/gaps): Unsolved problems ranked by developer demand\n\n"
+        "## Migration Intelligence\n\n"
+        f"- [Migrations]({BASE_URL}/migrations): Real migration paths between developer tools — step-by-step guides with effort estimates\n"
+        f"- [Data]({BASE_URL}/data): Aggregated tool data, search trends, and market intelligence from agent interactions\n"
+        f"- [Analyze]({BASE_URL}/analyze): Analyze your project dependencies and get migration recommendations\n\n"
         "## Categories\n\n"
         "Analytics & Metrics, Auth & Identity, Automation & Workflows, CMS & Content, "
         "Customer Support, Database & Backend, Design & UI, DevOps & Hosting, "
@@ -1095,6 +1099,9 @@ async def sitemap(request: Request):
         (f"{BASE_URL}/what-is-indiestack", "monthly", "0.7", None),
         (f"{BASE_URL}/pulse", "daily", "0.6", today),
         (f"{BASE_URL}/gaps", "weekly", "0.7", None),
+        (f"{BASE_URL}/migrations", "daily", "0.8", today),
+        (f"{BASE_URL}/data", "daily", "0.8", today),
+        (f"{BASE_URL}/analyze", "weekly", "0.7", None),
     ]
     for path in ["/about", "/terms", "/privacy", "/faq"]:
         urls.append((f"{BASE_URL}{path}", "monthly", "0.5", None))
