@@ -511,8 +511,21 @@ async def alternatives_for(request: Request, competitor_slug: str):
     top_tool = tools[0] if tools else None
 
     faq_entries = []
+
+    # Q1: "What are the best alternatives to X?" — always present
+    top_names = ", ".join(str(t['name']) for t in tools[:5])
+    faq_entries.append({
+        "@type": "Question",
+        "name": f"What are the best alternatives to {competitor_name}?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": f"Top alternatives to {competitor_name} on IndieStack include {top_names}. All {tool_count} options are indie and bootstrapped developer tools with transparent pricing."
+        }
+    })
+
+    # Q2: "Is there a free alternative to X?" — only if free tools exist
     if free_tools:
-        free_names = ", ".join(escape(str(t['name'])) for t in free_tools[:5])
+        free_names = ", ".join(str(t['name']) for t in free_tools[:5])
         faq_entries.append({
             "@type": "Question",
             "name": f"Is there a free alternative to {competitor_name}?",
@@ -521,6 +534,19 @@ async def alternatives_for(request: Request, competitor_slug: str):
                 "text": f"Yes! {len(free_tools)} free indie alternatives to {competitor_name} are available on IndieStack, including {free_names}."
             }
         })
+
+    # Q3: "What do developers use instead of X?" — always present
+    dev_names = ", ".join(str(t['name']) for t in tools[:3])
+    faq_entries.append({
+        "@type": "Question",
+        "name": f"What do developers use instead of {competitor_name}?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": f"Developers looking for {competitor_name} alternatives commonly choose {dev_names}. These indie tools offer similar functionality with better pricing and direct maker support."
+        }
+    })
+
+    # Q4: "What is the best open-source alternative to X?" — only if top_tool exists
     if top_tool:
         faq_entries.append({
             "@type": "Question",
@@ -544,6 +570,21 @@ async def alternatives_for(request: Request, competitor_slug: str):
 
     # Build HTML FAQ section
     faq_html = ""
+
+    # Q1: "What are the best alternatives to X?" — always present
+    top_names_html = ", ".join(f'<a href="/tool/{t["slug"]}" style="color:var(--terracotta);text-decoration:underline;">{escape(str(t["name"]))}</a>' for t in tools[:5])
+    faq_html += f'''
+        <details style="margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;">
+            <summary style="padding:14px 16px;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                What are the best alternatives to {safe_name}?
+                <span style="font-size:18px;color:var(--ink-muted);">+</span>
+            </summary>
+            <div style="padding:0 16px 14px;font-size:14px;color:var(--ink-light);line-height:1.6;">
+                Top alternatives to {safe_name} on IndieStack include {top_names_html}. All {tool_count} options are indie and bootstrapped developer tools with transparent pricing.
+            </div>
+        </details>'''
+
+    # Q2: "Is there a free alternative to X?" — only if free tools exist
     if free_tools:
         free_names_html = ", ".join(f'<a href="/tool/{t["slug"]}" style="color:var(--terracotta);text-decoration:underline;">{escape(str(t["name"]))}</a>' for t in free_tools[:5])
         faq_html += f'''
@@ -556,6 +597,21 @@ async def alternatives_for(request: Request, competitor_slug: str):
                 Yes! {len(free_tools)} free indie alternatives to {safe_name} are available, including {free_names_html}.
             </div>
         </details>'''
+
+    # Q3: "What do developers use instead of X?" — always present
+    dev_names_html = ", ".join(f'<a href="/tool/{t["slug"]}" style="color:var(--terracotta);text-decoration:underline;">{escape(str(t["name"]))}</a>' for t in tools[:3])
+    faq_html += f'''
+        <details style="margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;">
+            <summary style="padding:14px 16px;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;">
+                What do developers use instead of {safe_name}?
+                <span style="font-size:18px;color:var(--ink-muted);">+</span>
+            </summary>
+            <div style="padding:0 16px 14px;font-size:14px;color:var(--ink-light);line-height:1.6;">
+                Developers looking for {safe_name} alternatives commonly choose {dev_names_html}. These indie tools offer similar functionality with better pricing and direct maker support.
+            </div>
+        </details>'''
+
+    # Q4: "What is the best open-source alternative to X?" — only if top_tool exists
     if top_tool:
         faq_html += f'''
         <details style="margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;">
