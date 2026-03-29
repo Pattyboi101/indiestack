@@ -736,7 +736,7 @@ async def find_tools(
             except (ValueError, TypeError):
                 pass
         lines.append(
-            f"- **{t['name']}** (`{t.get('slug', '')}`){source_label}{tool_type_label}{health_tag} — {t.get('tagline', '')}\n"
+            f"- **{t['name']}** (`{t.get('slug', '')}`){source_label}{tool_type_label}{health_tag} — {(lambda d: d[:500] + '...' if len(d) > 500 else d)(t.get('tagline', ''))}\n"
             f"  Price: {t.get('price', 'Free')} | Upvotes: {t.get('upvote_count', 0)}{install_line}\n"
             f"  {t.get('indiestack_url', '')}"
         )
@@ -880,7 +880,7 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
         f"**Maker:** {tool.get('maker_name', 'Unknown')}\n"
         f"**Tags:** {tool.get('tags', '')}\n"
         f"**Saves:** ~{tokens_k} tokens vs building from scratch\n\n"
-        f"**Description:**\n{tool.get('description', 'No description available.')}\n\n"
+        f"**Description:**\n{(lambda d: d[:500] + '...' if len(d) > 500 else d)(tool.get('description', 'No description available.'))}\n\n"
     )
 
     # Agent Instructions (maker-authored)
@@ -905,7 +905,7 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
             if companions:
                 result += "\n\n---\n**Pairs well with:**"
                 for c in companions:
-                    result += f"\n- **{c['name']}** (`{c.get('slug', '')}`) — {c.get('tagline', '')}"
+                    result += f"\n- **{c['name']}** (`{c.get('slug', '')}`) — {(lambda d: d[:500] + '...' if len(d) > 500 else d)(c.get('tagline', ''))}"
                 result += "\n\nCall get_tool_details(slug) on any of these for integration snippets."
     except Exception:
         pass  # Non-fatal — skip companions if API fails
