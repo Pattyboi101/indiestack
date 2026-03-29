@@ -2319,6 +2319,52 @@ async def openapi_spec(request: Request):
                     "responses": {"200": {"description": "RSS XML feed"}},
                 }
             },
+            "/api/migrations": {
+                "get": {
+                    "summary": "Migration paths",
+                    "description": "Query migration paths for a package. Shows what developers are migrating from/to, with repo counts and confidence levels. Mined from real GitHub commit history.",
+                    "parameters": [
+                        {"name": "package", "in": "query", "required": True, "schema": {"type": "string"}, "description": "Package name (e.g. 'jest', 'express', 'mongoose')"},
+                    ],
+                    "responses": {"200": {"description": "Migration paths from and to this package"}},
+                }
+            },
+            "/api/combos": {
+                "get": {
+                    "summary": "Verified package combinations",
+                    "description": "Query verified package combinations — packages that coexist in production repos. Weighted by repo stars.",
+                    "parameters": [
+                        {"name": "package", "in": "query", "required": True, "schema": {"type": "string"}, "description": "Package name (e.g. 'prisma', 'vitest')"},
+                    ],
+                    "responses": {"200": {"description": "Verified combinations with repo counts"}},
+                }
+            },
+            "/api/moat/stats": {
+                "get": {
+                    "summary": "Data intelligence stats",
+                    "description": "Aggregate stats on migration paths, verified combos, CI outcomes, and repos scanned.",
+                    "responses": {"200": {"description": "Intelligence data counts"}},
+                }
+            },
+            "/api/outcomes": {
+                "post": {
+                    "summary": "Report CI build outcome",
+                    "description": "Report whether a CI build passed or failed. Used by the IndieStack GitHub Action to collect execution outcome data.",
+                    "requestBody": {"content": {"application/json": {"schema": {"type": "object", "properties": {"repo": {"type": "string"}, "manifest_hash": {"type": "string"}, "packages_json": {"type": "string"}, "ci_passed": {"type": "boolean"}}, "required": ["repo", "ci_passed"]}}}},
+                    "responses": {"200": {"description": "Outcome recorded"}},
+                }
+            },
+            "/api/audit/{owner}/{repo}": {
+                "get": {
+                    "summary": "Repository dependency audit",
+                    "description": "Full dependency health audit for a GitHub repo. Fetches package.json/requirements.txt, scores freshness, cohesion, and modernity, and returns risks and migration suggestions.",
+                    "parameters": [
+                        {"name": "owner", "in": "path", "required": True, "schema": {"type": "string"}},
+                        {"name": "repo", "in": "path", "required": True, "schema": {"type": "string"}},
+                    ],
+                    "responses": {"200": {"description": "Full audit report"}, "404": {"description": "No manifest found"}},
+                }
+            },
         },
     }
     return JSONResponse(spec, headers={"Cache-Control": "public, max-age=3600"})
