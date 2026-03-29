@@ -288,7 +288,7 @@ jobs:
     </script>
     '''
 
-    return HTMLResponse(page_shell("Set up IndieStack", body, user=user))
+    return HTMLResponse(page_shell("Set up IndieStack", body, description="Connect IndieStack to Claude Code, Cursor, or Windsurf in 30 seconds. Your AI agent searches 3,100+ developer tools before writing infrastructure from scratch.", user=user))
 
 
 @router.get("/setup/claude.md", response_class=PlainTextResponse)

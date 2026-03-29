@@ -528,7 +528,7 @@ async def submit_get(request: Request):
         </div>'''
 
     body = submit_form(categories, values=values, tool_count=tool_count, logged_in=logged_in, gap_hint=gap_hint)
-    return HTMLResponse(page_shell("Make Your Creation Discoverable by AI", body, user=user))
+    return HTMLResponse(page_shell("Make Your Creation Discoverable by AI", body, description="Submit your developer tool to IndieStack. Get discovered by AI coding agents searching for auth, payments, analytics, and 25 other categories.", user=user))
 
 
 @router.post("/submit", response_class=HTMLResponse)
