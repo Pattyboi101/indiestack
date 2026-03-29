@@ -1637,11 +1637,14 @@ async def api_tools_search(
             "github_last_commit": t.get('github_last_commit'),
             "health_status": t.get('health_status'),
         }
+        # Always include install_command if present — agents need this
+        install_cmd = t.get('install_command', '')
+        if install_cmd:
+            result["install_command"] = install_cmd
         # Add plugin metadata if present
         if t.get('tool_type'):
             result["tool_type"] = t['tool_type']
             result["platforms"] = t.get('platforms', '')
-            result["install_command"] = t.get('install_command', '')
         results.append(result)
 
     # Log the search for Live Wire
