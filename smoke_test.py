@@ -42,7 +42,7 @@ TESTS = [
     ("GET", "/blog/stop-wasting-tokens", 200, "Blog post"),
 
     # Best & curated pages (200)
-    ("GET", "/best", 200, "Best Indie"),
+    ("GET", "/best", 200, "Best Developer Tools"),
     ("GET", "/best/analytics-metrics", 200, "Best: Analytics"),
     ("GET", "/best/developer-tools", 200, "Best: Developer Tools"),
 
@@ -92,7 +92,7 @@ CONTENT_CHECKS = {
     "/health": (lambda body: json.loads(body).get("status") == "ok", "returns {\"status\": \"ok\"}"),
     "/sitemap.xml": ("<urlset", "contains <urlset"),
     "/api/tools/search?q=email": (lambda body: "tools" in json.loads(body), "JSON has 'tools' key"),
-    "/best": ("Best Indie", "contains 'Best Indie'"),
+    "/best": ("Best Developer Tools", "contains 'Best Developer Tools'"),
     "/tool/simple-analytics": ("Confirmed Works With", "has compat section"),
 }
 
