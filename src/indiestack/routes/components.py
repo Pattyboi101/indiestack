@@ -535,18 +535,18 @@ def design_tokens() -> str:
         /* Dark mode select styling */
         [data-theme="dark"] select,
         [data-theme="dark"] .form-select-pill {
-            background-color: #1a1a2e;
+            background-color: var(--card-bg);
             border-color: rgba(255,255,255,0.1);
             color: var(--ink);
         }
         [data-theme="dark"] select option {
-            background-color: #1a1a2e;
-            color: #e2e8f0;
+            background-color: var(--card-bg);
+            color: var(--ink);
         }
         /* Light mode select option readability */
         select option {
-            background-color: #ffffff;
-            color: #1A2D4A;
+            background-color: var(--card-bg);
+            color: var(--terracotta);
         }
         /* Global focus reset — no browser default rings */
         input:focus, textarea:focus, select:focus {
@@ -980,18 +980,18 @@ def stack_card(stack: dict) -> str:
         # For display, show "agent-verified pairs" as a positive signal
         if max_pairs > 0:
             badges.append(
-                f'<span style="font-size:12px;font-weight:600;color:#065F46;background:#D1FAE5;'
+                f'<span style="font-size:12px;font-weight:600;color:var(--success-text);background:var(--success-bg);'
                 f'padding:4px 12px;border-radius:999px;">agent-verified pairs</span>'
             )
     elif confidence > 0:
         conf_pct = f"{confidence:.0%}"
         badges.append(
-            f'<span style="font-size:12px;font-weight:600;color:#065F46;background:#D1FAE5;'
+            f'<span style="font-size:12px;font-weight:600;color:var(--success-text);background:var(--success-bg);'
             f'padding:4px 12px;border-radius:999px;">{conf_pct} confidence</span>'
         )
     if tokens_k > 0:
         badges.append(
-            f'<span style="font-size:12px;font-weight:600;color:#92400E;background:#FEF3C7;'
+            f'<span style="font-size:12px;font-weight:600;color:var(--warning-text);background:var(--warning-bg);'
             f'padding:4px 12px;border-radius:999px;">~{tokens_k}k tokens saved</span>'
         )
     discount = stack.get('discount_percent', 0)
@@ -1203,7 +1203,7 @@ def tool_card(tool: dict, compact: bool = False) -> str:
                 from urllib.parse import urlparse
                 domain = urlparse(website).netloc or urlparse('https://' + website).netloc
                 if domain:
-                    favicon_html = f'<img src="https://www.google.com/s2/favicons?domain={domain}&sz=32" alt="" width="24" height="24" loading="lazy" style="border-radius:4px;border:1px solid var(--border);flex-shrink:0;" onerror="this.style.display=\'none\'">'
+                    favicon_html = f'<img src="https://www.google.com/s2/favicons?domain={escape(domain, quote=True)}&sz=32" alt="" width="24" height="24" loading="lazy" style="border-radius:4px;border:1px solid var(--border);flex-shrink:0;" onerror="this.style.display=\'none\'">'
             except Exception:
                 pass
 
@@ -1944,7 +1944,7 @@ def render_arena_feed(roasts: list, user=None, error: str = "") -> str:
     """Render the arena feed page with publish form and roast cards."""
     error_html = ""
     if error:
-        error_html = f'<div style="background:#FEE2E2;color:#991B1B;padding:12px 16px;border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;">{escape(error)}</div>'
+        error_html = f'<div style="background:var(--error-bg);color:var(--error-text);padding:12px 16px;border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;">{escape(error)}</div>'
 
     # Publish form (only for logged-in users)
     if user:
@@ -2103,7 +2103,7 @@ def render_roast_detail(roast: dict, comments: list, user=None, has_upvoted: boo
                 AI Roast
             </span>
         </div>
-        <p style="font-size:17px;color:#78350F;line-height:1.6;margin:0;font-style:italic;">
+        <p style="font-size:17px;color:var(--gold-dark);line-height:1.6;margin:0;font-style:italic;">
             &ldquo;{roast_text}&rdquo;
         </p>
     </div>
