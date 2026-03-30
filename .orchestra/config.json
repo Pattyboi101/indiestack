@@ -1,0 +1,75 @@
+{
+  "budget_cap_usd": 5.00,
+  "require_approval_for_deploy": true,
+  "require_approval_for_commit": false,
+  "models": {
+    "master": "opus",
+    "frontend": "sonnet",
+    "backend": "sonnet",
+    "devops": "haiku",
+    "content": "sonnet",
+    "mcp": "sonnet",
+    "strategy": "opus"
+  },
+  "departments": {
+    "frontend": {
+      "name": "Frontend",
+      "emoji": "⚡",
+      "allowed_paths": [
+        "src/indiestack/routes/",
+        "src/indiestack/routes/components.py"
+      ],
+      "description": "HTML templates, CSS, UX, f-string routes, components"
+    },
+    "backend": {
+      "name": "Backend",
+      "emoji": "🔧",
+      "allowed_paths": [
+        "src/indiestack/db.py",
+        "src/indiestack/auth.py",
+        "src/indiestack/payments.py",
+        "src/indiestack/main.py",
+        "src/indiestack/config.py",
+        "src/indiestack/email.py",
+        "scripts/"
+      ],
+      "description": "Database, auth, payments, API logic, data processing"
+    },
+    "devops": {
+      "name": "DevOps",
+      "emoji": "🚀",
+      "allowed_paths": [
+        "Dockerfile",
+        "fly.toml",
+        "smoke_test.py",
+        ".github/"
+      ],
+      "description": "Deployment, health checks, infrastructure, Fly.io"
+    },
+    "content": {
+      "name": "Content/SEO",
+      "emoji": "📝",
+      "allowed_paths": [
+        "src/indiestack/routes/"
+      ],
+      "description": "Copy, meta tags, JSON-LD, SEO, landing page text"
+    },
+    "mcp": {
+      "name": "MCP/Integration",
+      "emoji": "🔌",
+      "allowed_paths": [
+        "src/indiestack/mcp_server.py",
+        "pyproject.toml",
+        "src/indiestack/indexer.py",
+        "src/indiestack/enricher.py"
+      ],
+      "description": "MCP server, PyPI publishing, external API integrations"
+    },
+    "strategy": {
+      "name": "Strategy & QA",
+      "emoji": "🎯",
+      "allowed_paths": ["*"],
+      "description": "Reviews all plans before execution. Challenges assumptions, audits output, flags overconfidence. Read-only access to everything."
+    }
+  }
+}
