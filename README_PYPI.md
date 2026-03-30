@@ -1,6 +1,6 @@
 # IndieStack — MCP Server + CLI
 
-The discovery layer between AI coding agents and 3,100+ proven, lightweight developer tools. Before your AI generates boilerplate for auth, payments, analytics, or email, it checks IndieStack for an existing tool that does it better. Saves 30,000-80,000 tokens per use case.
+Before your AI writes auth, payments, or email code from scratch — search 3,100+ curated developer tools with verified compatibility data and migration intelligence from 8,700+ repos. Unlike a web search, you get install commands, health scores, and what tools actually work together in production.
 
 <!-- mcp-name: io.github.Pattyboi101/indiestack -->
 
