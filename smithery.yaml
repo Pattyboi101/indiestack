@@ -1,7 +1,11 @@
+# Smithery configuration: https://smithery.ai/docs/deployments
 startCommand:
   type: stdio
-  configSchema:
-    type: object
-    properties: {}
-  commandFunction: |-
-    config => ({ command: 'python', args: ['-m', 'indiestack.mcp_server'], env: {} })
+
+configSchema:
+  type: object
+  properties: {}
+
+commandFunction:
+  |-
+  (config) => ({ command: 'uvx', args: ['--from', 'indiestack', 'indiestack-mcp'] })

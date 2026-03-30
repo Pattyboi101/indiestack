@@ -757,7 +757,7 @@ def footer_html() -> str:
           <!-- Brand -->
           <div>
             <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;">IndieStack</div>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">Discover developer tools built by independent makers and small teams.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">The discovery layer between AI coding agents and 3,100+ developer tools.</p>
           </div>
           <!-- Product -->
           <div>
@@ -773,16 +773,16 @@ def footer_html() -> str:
           <div>
             <div class="footer-heading">Company</div>
             <a href="/about" class="footer-link">About</a>
-            <a href="/faq" class="footer-link">FAQ</a>
             <a href="/submit" class="footer-link">Submit</a>
             <a href="/changelog" class="footer-link">Changelog</a>
+            <a href="https://github.com/Pattyboi101/indiestack" class="footer-link">GitHub</a>
           </div>
           <!-- Legal -->
           <div>
             <div class="footer-heading">Legal</div>
             <a href="/terms" class="footer-link">Terms of Service</a>
             <a href="/privacy" class="footer-link">Privacy Policy</a>
-            <a href="mailto:pajebay1@gmail.com?subject=Bug%20Report%20%E2%80%94%20IndieStack&body=What%20happened%3A%0A%0AWhat%20I%20expected%3A%0A%0APage%20URL%3A%0A" class="footer-link">Report a Bug</a>
+            <a href="mailto:patrick@indiestack.ai?subject=Bug%20Report%20%E2%80%94%20IndieStack&body=What%20happened%3A%0A%0AWhat%20I%20expected%3A%0A%0APage%20URL%3A%0A" class="footer-link">Report a Bug</a>
           </div>
         </div>
         <div class="footer-bottom">
