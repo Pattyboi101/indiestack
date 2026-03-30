@@ -178,13 +178,14 @@ async def explore(request: Request):
     filter_bar = f'''
     <form action="/explore" method="GET" style="margin-bottom:24px;">
         <input type="text" name="q" value="{escaped_query}" placeholder="Search tools..."
+            aria-label="Search tools"
             style="width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:var(--card-bg);color:var(--ink);font-family:var(--font-body);margin-bottom:16px;"
         />
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
-            <select name="category" class="form-select-pill" onchange="this.form.submit()">
+            <select name="category" class="form-select-pill" aria-label="Filter by category" onchange="this.form.submit()">
                 {cat_options}
             </select>
-            <select name="sort" class="form-select-pill" onchange="this.form.submit()">
+            <select name="sort" class="form-select-pill" aria-label="Sort by" onchange="this.form.submit()">
                 {sort_options}
             </select>
         </div>
@@ -239,10 +240,11 @@ async def explore(request: Request):
             <form id="explore-subscribe" style="display:flex;gap:8px;max-width:400px;margin:0 auto;flex-wrap:wrap;justify-content:center;"
                   onsubmit="event.preventDefault();var f=this;var em=f.email.value;fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'email='+encodeURIComponent(em)}).then(function(){f.innerHTML='<p style=&quot;color:var(--success-text);font-weight:600;font-size:16px;&quot;>You\\'re in! Check your inbox.</p>'}).catch(function(){f.innerHTML='<p style=&quot;color:var(--danger);&quot;>Something went wrong. Try again.</p>'})">
                 <input type="email" name="email" placeholder="you@example.com" required
+                    aria-label="Email address"
                     style="flex:1;min-width:200px;padding:12px 16px;border:none;border-radius:999px;font-size:14px;
                         font-family:inherit;">
                 <button type="submit" style="background:var(--slate);color:var(--terracotta);border:none;padding:12px 24px;
-                    border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">
+                    min-height:44px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">
                     Subscribe Free
                 </button>
             </form>

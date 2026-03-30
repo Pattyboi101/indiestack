@@ -295,6 +295,7 @@ async def landing(request: Request):
             </p>
             <div style="display:flex;gap:8px;max-width:560px;margin:0 auto;">
                 <input type="text" id="landing-search"
+                       aria-label="Search tools"
                        placeholder="e.g. invoicing, design, games..."
                        style="flex:1;padding:16px 16px;font-size:16px;font-family:var(--font-body);
                               border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-sm);
@@ -309,25 +310,25 @@ async def landing(request: Request):
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:560px;margin:12px auto 0;">
                 <button class="search-pill" onclick="document.getElementById('landing-search').value='analytics';document.getElementById('landing-search-btn').click();"
-                        style="padding:6px 16px;font-size:13px;font-family:var(--font-body);background:rgba(255,255,255,0.05);
+                        style="padding:6px 16px;min-height:44px;font-size:13px;font-family:var(--font-body);background:rgba(255,255,255,0.05);
                                border:1px solid rgba(255,255,255,0.1);border-radius:999px;color:var(--ink-muted);cursor:pointer;
                                transition:all 0.15s;"
                         onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'"
                         onmouseleave="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--ink-muted)'">analytics</button>
                 <button class="search-pill" onclick="document.getElementById('landing-search').value='design';document.getElementById('landing-search-btn').click();"
-                        style="padding:6px 16px;font-size:13px;font-family:var(--font-body);background:rgba(255,255,255,0.05);
+                        style="padding:6px 16px;min-height:44px;font-size:13px;font-family:var(--font-body);background:rgba(255,255,255,0.05);
                                border:1px solid rgba(255,255,255,0.1);border-radius:999px;color:var(--ink-muted);cursor:pointer;
                                transition:all 0.15s;"
                         onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'"
                         onmouseleave="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--ink-muted)'">design</button>
                 <button class="search-pill" onclick="document.getElementById('landing-search').value='invoicing';document.getElementById('landing-search-btn').click();"
-                        style="padding:6px 16px;font-size:13px;font-family:var(--font-body);background:rgba(255,255,255,0.05);
+                        style="padding:6px 16px;min-height:44px;font-size:13px;font-family:var(--font-body);background:rgba(255,255,255,0.05);
                                border:1px solid rgba(255,255,255,0.1);border-radius:999px;color:var(--ink-muted);cursor:pointer;
                                transition:all 0.15s;"
                         onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'"
                         onmouseleave="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='var(--ink-muted)'">invoicing</button>
                 <button class="search-pill" onclick="document.getElementById('landing-search').value='newsletter';document.getElementById('landing-search-btn').click();"
-                        style="padding:6px 16px;font-size:13px;font-family:var(--font-body);background:rgba(255,255,255,0.05);
+                        style="padding:6px 16px;min-height:44px;font-size:13px;font-family:var(--font-body);background:rgba(255,255,255,0.05);
                                border:1px solid rgba(255,255,255,0.1);border-radius:999px;color:var(--ink-muted);cursor:pointer;
                                transition:all 0.15s;"
                         onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'"

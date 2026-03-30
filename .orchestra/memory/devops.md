@@ -12,3 +12,16 @@ Result: Perfect! All health checks passed. Here's the summary:
 - All 47 production endpoints returned correct status codes
 - 0 failures
 - Content valid
+
+## 2026-03-30 02:03
+Task: Secrets audit: check git-tracked files for exposed secrets — scan for API keys, tokens, passwords, database credentials, Stripe keys, OAuth secrets, SMTP passwords in all tracked files. Review .gitignore to confirm sensitive files (*.env, credentials, stacks.py, plans/) are excluded. Check Dockerfile and fly.toml for hardcoded secrets. For git history, do a TARGETED search using pattern-matching (grep for key prefixes like sk_live, sk_test, password=, SECRET, SMTP, API_KEY across recent git log -p — cap at last 200 commits to control cost). Report any findings with file path and remediation steps.
+Result: Perfect! Secrets audit complete. Here's the final summary:
+
+## 🔐 **Secrets Audit Report — IndieStack**
+
+**Date:** 2026-03-30  
+**Status:** ✅ **MOSTLY SECURE — 1 HIGH ISSUE REMEDIATED**
+
+---
+
+### **Sum

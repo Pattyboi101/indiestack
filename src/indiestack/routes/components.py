@@ -669,7 +669,7 @@ def nav_html(user=None) -> str:
                 <a href="/migrations" style="color:var(--ink-light);">Migrations</a>
                 <a href="/pricing" style="color:var(--ink-light);">Pricing</a>
                 <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Submit</a>
-                <button onclick="toggleTheme()" id="theme-toggle" style="background:none;border:1px solid var(--border);border-radius:999px;padding:8px 12px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all 0.15s ease;min-width:44px;min-height:44px;" title="Toggle dark mode">&#9790;</button>
+                <button onclick="toggleTheme()" id="theme-toggle" aria-label="Toggle dark mode" style="background:none;border:1px solid var(--border);border-radius:999px;padding:8px 12px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all 0.15s ease;min-width:44px;min-height:44px;" title="Toggle dark mode">&#9790;</button>
                 {auth_links}
             </div>
             <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu">&#9776;</button>
@@ -700,12 +700,13 @@ def email_sticky_bar():
             <span style="color:white;font-size:14px;font-weight:500;white-space:nowrap;">
                 Get weekly indie picks straight to your inbox</span>
             <input type="email" name="email" placeholder="you@example.com" required
+                aria-label="Email address"
                 style="border:none;border-radius:999px;padding:10px 16px;font-size:14px;
                 min-width:200px;flex:1;outline:none;">
             <button type="submit" style="background:var(--slate);color:var(--terracotta);
-                font-weight:700;border:none;border-radius:999px;padding:10px 20px;
+                font-weight:700;border:none;border-radius:999px;padding:10px 20px;min-height:44px;
                 cursor:pointer;white-space:nowrap;">Subscribe</button>
-            <button type="button" id="sticky-dismiss" style="color:rgba(255,255,255,0.6);font-size:20px;
+            <button type="button" id="sticky-dismiss" aria-label="Dismiss" style="color:rgba(255,255,255,0.6);font-size:20px;
                 cursor:pointer;background:none;border:none;padding:10px 12px;min-height:44px;min-width:44px;box-sizing:border-box;">&times;</button>
         </form>
     </div>
@@ -1033,7 +1034,7 @@ def stack_card(stack: dict) -> str:
     count_display = str(upvote_count) if upvote_count >= 3 else ''
     stack_id = stack.get('id', 0)
     upvote_html = (
-        f'<button class="upvote-btn" onclick="event.preventDefault();stackUpvote({stack_id})" id="stack-upvote-{stack_id}">'
+        f'<button class="upvote-btn" onclick="event.preventDefault();stackUpvote({stack_id})" id="stack-upvote-{stack_id}" aria-label="Upvote {title}">'
         f'<span class="arrow">&#9650;</span>'
         f'<span id="stack-count-{stack_id}">{count_display}</span>'
         f'</button>'
@@ -1138,6 +1139,7 @@ def tool_card(tool: dict, compact: bool = False) -> str:
     bookmark_html = ''
     if not compact:
         bookmark_html = f'''<button class="wishlist-btn" onclick="event.stopPropagation();toggleWishlist({tool['id']})" id="wishlist-{tool['id']}"
+        aria-label="Bookmark {name}"
         style="position:absolute;top:12px;right:12px;z-index:2;background:none;border:none;cursor:pointer;padding:8px;font-size:20px;line-height:1;color:var(--ink-muted);opacity:0.5;transition:color 0.2s,transform 0.2s,opacity 0.2s;min-width:44px;min-height:44px;"
         onmouseenter="this.style.color='#E2B764';this.style.opacity='1';this.style.transform='scale(1.1)';"
         onmouseleave="if(!this.dataset.wishlisted){{this.style.color='var(--ink-muted)';this.style.opacity='0.5';this.style.transform='scale(1)';}}else{{this.style.transform='scale(1)';}}"
@@ -1214,7 +1216,7 @@ def tool_card(tool: dict, compact: bool = False) -> str:
         # Hide count when low (< 3) — show just the arrow, count appears after voting
         count_display = str(upvotes) if upvotes >= 3 else ''
         upvote_html = (
-            f'<button class="upvote-btn" onclick="upvote({tool["id"]})" id="upvote-{tool["id"]}">'
+            f'<button class="upvote-btn" onclick="upvote({tool["id"]})" id="upvote-{tool["id"]}" aria-label="Upvote {name}">'
             f'<span class="arrow">&#9650;</span>'
             f'<span id="count-{tool["id"]}">{count_display}</span>'
             f'</button>'
@@ -1358,7 +1360,7 @@ document.addEventListener('click', function(e) {
 def copy_button(text: str, label: str = "Copy") -> str:
     """Render a copy button with data-copy attribute for the sitewide copy handler."""
     safe = escape(text).replace("'", "&#39;").replace('"', "&quot;")
-    return f'<button data-copy="{safe}" style="background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:inline-flex;align-items:center;gap:4px;">{label}</button>'
+    return f'<button data-copy="{safe}" style="background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;padding:6px 14px;min-height:44px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:inline-flex;align-items:center;gap:4px;">{label}</button>'
 
 
 # ── Upvote Script ─────────────────────────────────────────────────────────

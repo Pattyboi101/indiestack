@@ -24,3 +24,19 @@ Results:
 - ⚡ frontend: done ($1.1502)
 - 🔧 backend: done ($0.6905)
 - 📝 content: done ($0.2296)
+
+## 2026-03-30 02:03
+Task: Security review: check for SQL injection in any raw f-string queries, missing html.escape on user input, exposed secrets in git-tracked files, any endpoints missing auth that should have it.
+Verdict: approve
+Total cost: $3.9620
+Results:
+- 🔧 backend: done ($1.2407)
+- ⚡ frontend: done ($2.3742)
+- 🚀 devops: done ($0.1921)
+
+## 2026-03-30 02:13
+Task: Check 3 key pages (landing, explore, tool detail) for accessibility: missing alt text, low contrast text, touch targets under 44px, missing ARIA labels on interactive elements. Fix anything clear-cut.
+Verdict: approve
+Total cost: $1.6966
+Results:
+- ⚡ frontend: done ($1.5559)

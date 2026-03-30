@@ -768,7 +768,7 @@ async def tool_detail(request: Request, slug: str):
             f'<code style="font-family:var(--font-mono);font-size:14px;color:var(--slate);white-space:nowrap;'
             f'overflow-x:auto;">{safe_cmd}</code>'
             f'<button data-copy="{safe_cmd}" style="background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;'
-            f'padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">Copy</button>'
+            f'padding:8px 16px;min-height:44px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">Copy</button>'
             f'</div>'
         )
 
@@ -841,10 +841,10 @@ async def tool_detail(request: Request, slug: str):
                     _parsed = urlparse(_p_url)
                     _domain = _parsed.netloc or _parsed.path.split('/')[0]
                     if _domain:
-                        _favicon_html = f'<img src="https://www.google.com/s2/favicons?domain={_domain}&sz=16" width="16" height="16" style="border-radius:4px;" onerror="this.style.display=\'none\'">'
+                        _favicon_html = f'<img src="https://www.google.com/s2/favicons?domain={_domain}&sz=16" alt="" width="16" height="16" style="border-radius:4px;" onerror="this.style.display=\'none\'">'
                 _pair_items += f'''<a href="/tool/{_p_slug}" style="display:inline-flex;align-items:center;gap:6px;
                     background:var(--card-bg);border:1px solid var(--border);border-radius:999px;
-                    padding:6px 14px;text-decoration:none;color:var(--ink);font-size:13px;
+                    padding:6px 14px;min-height:44px;text-decoration:none;color:var(--ink);font-size:13px;
                     font-weight:500;transition:border-color 0.15s;"
                     onmouseover="this.style.borderColor='var(--accent)'"
                     onmouseout="this.style.borderColor='var(--border)'"
@@ -858,7 +858,7 @@ async def tool_detail(request: Request, slug: str):
             <div id="compat-add" style="margin-top:12px;">
                 <button onclick="document.getElementById('compat-search-wrap').style.display='block';this.style.display='none';"
                     style="display:inline-flex;align-items:center;gap:6px;background:transparent;
-                    border:1px dashed var(--border);border-radius:999px;padding:6px 14px;
+                    border:1px dashed var(--border);border-radius:999px;padding:6px 14px;min-height:44px;
                     color:var(--ink-muted);font-size:13px;cursor:pointer;transition:border-color 0.15s;"
                     onmouseover="this.style.borderColor='var(--accent)'"
                     onmouseout="this.style.borderColor='var(--border)'">
@@ -866,6 +866,7 @@ async def tool_detail(request: Request, slug: str):
                 </button>
                 <div id="compat-search-wrap" style="display:none;margin-top:8px;position:relative;">
                     <input id="compat-search-input" type="text" placeholder="Search for a tool..."
+                        aria-label="Search for a compatible tool"
                         style="width:100%;max-width:300px;padding:8px 12px;border:1px solid var(--border);
                         border-radius:8px;font-size:13px;background:var(--card-bg);color:var(--ink);
                         outline:none;" autocomplete="off">
