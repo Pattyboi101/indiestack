@@ -410,6 +410,17 @@ async def dashboard_overview(request: Request):
                 {_headline_html}
                 <p style="color:var(--ink-muted);font-size:13px;">As agents recommend your tools more, detailed breakdowns will appear here.</p>
             </div>'''
+        else:
+            # Has claimed tools but zero citations and no success rate yet — show encouraging empty state
+            ai_intel_html = '''
+<div id="ai-distribution" style="margin-top:32px;">
+    <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">AI Distribution Intelligence</h2>
+    <div class="card" style="padding:32px;text-align:center;">
+        <p style="font-size:16px;color:var(--ink);font-weight:600;margin:0 0 8px;">You are set up. Data is coming.</p>
+        <p style="font-size:14px;color:var(--ink-muted);margin:0 0 16px;max-width:400px;margin-left:auto;margin-right:auto;">As AI agents recommend your tool to developers, you will see which agents, what queries, and daily trends here.</p>
+        <p style="font-size:13px;color:var(--ink-muted);margin:0;">Improve your listing quality score above to get recommended more often.</p>
+    </div>
+</div>'''
     # Branch C (implicit): no maker_id — ai_intel_html stays empty string
 
     # Buyer badge embed section

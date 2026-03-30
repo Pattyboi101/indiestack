@@ -683,7 +683,26 @@ async def tool_detail(request: Request, slug: str):
     # Success/info banners for claim flow
     banners_html = ''
     if request.query_params.get('claimed') == '1':
-        banners_html += '<div class="alert alert-success" style="margin-bottom:16px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> You\'ve claimed this tool! You can now manage it from your <a href="/dashboard" style="font-weight:700;">dashboard</a>.</div>'
+        _tool_url = f"https://indiestack.ai/tool/{slug_str}"
+        _tweet_text = "Just claimed " + tool['name'] + " on IndieStack — AI agents are now recommending it to developers " + _tool_url
+        _tweet_url = "https://twitter.com/intent/tweet?text=" + quote(_tweet_text)
+        banners_html += f'''
+    <div style="margin:0 0 24px;padding:24px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-lg);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--success-text);flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <strong style="font-size:16px;color:var(--success-text);">You claimed {name}! Here&rsquo;s how to make it shine:</strong>
+      </div>
+      <ol style="margin:0 0 16px;padding-left:20px;font-size:14px;color:var(--ink);line-height:2.2;">
+        <li><a href="/dashboard" style="color:var(--accent);font-weight:600;text-decoration:none;">Complete your maker profile</a> &mdash; name, bio, and logo</li>
+        <li><a href="/dashboard/updates" style="color:var(--accent);font-weight:600;text-decoration:none;">Post a changelog update</a> &mdash; show developers the tool is active</li>
+        <li><a href="/dashboard/tools/{tool_id}/edit" style="color:var(--accent);font-weight:600;text-decoration:none;">Add which tools yours replaces</a> &mdash; helps AI agents recommend you during migrations</li>
+      </ol>
+      <div style="padding-top:12px;border-top:1px solid var(--success-border);font-size:13px;color:var(--ink-muted);">
+        Tell other makers:
+        <a href="{_tweet_url}" target="_blank" rel="noopener"
+           style="color:var(--accent);font-weight:600;text-decoration:none;margin-left:4px;">Share on X &rarr;</a>
+      </div>
+    </div>'''
     elif request.query_params.get('claim') == 'sent' or request.query_params.get('claim_requested') == '1':
         banners_html += '<div class="alert alert-info" style="margin-bottom:16px;">&#9989; Claim request submitted! We\'ll review it and get back to you shortly.</div>'
     if request.query_params.get('flagged') == '1':
