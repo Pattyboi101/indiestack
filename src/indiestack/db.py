@@ -7413,3 +7413,68 @@ async def get_tool_analytics_wall_data(db, tool_slug: str, tool_id: int, detaile
     stats['daily_trend'] = [dict(r) for r in await cursor.fetchall()]
 
     return stats
+
+
+async def get_maker_follow_up_data(db: aiosqlite.Connection, tool_id: int) -> dict | None:
+    """Return data for maker follow-up emails.
+
+    Powers:
+    - Day 3 email: quality score + how to improve
+    - Day 7 email: agent recommendation count + top search queries
+    """
+    cursor = await db.execute(
+        """SELECT name, slug, quality_score, mcp_view_count, sdk_packages
+           FROM tools WHERE id = ?""",
+        (tool_id,),
+    )
+    tool = await cursor.fetchone()
+    if not tool:
+        return None
+
+    slug = tool["slug"]
+    sdk = tool["sdk_packages"] or ""
+    tool_packages = [p.strip() for p in sdk.split(",") if p.strip()]
+    tool_packages.append(slug)
+    placeholders = ",".join("?" * len(tool_packages))
+
+    result = {
+        "name": tool["name"],
+        "slug": slug,
+        "quality_score": round(float(tool["quality_score"] or 0.0), 2),
+        "mcp_view_count": int(tool["mcp_view_count"] or 0),
+    }
+
+    # Repos that migrated TO this tool
+    cursor = await db.execute(
+        f"SELECT COUNT(DISTINCT repo) as n FROM migration_paths WHERE to_package IN ({placeholders})",
+        tool_packages,
+    )
+    row = await cursor.fetchone()
+    result["migration_repos_gained"] = int(row["n"] or 0) if row else 0
+
+    # Verified combos count
+    cursor = await db.execute(
+        f"""SELECT COUNT(DISTINCT repo) as n FROM verified_combos
+            WHERE package_a IN ({placeholders}) OR package_b IN ({placeholders})""",
+        tool_packages + tool_packages,
+    )
+    row = await cursor.fetchone()
+    result["verified_combos_count"] = int(row["n"] or 0) if row else 0
+
+    # Top search queries this tool appeared as top result (last 30 days)
+    cursor = await db.execute(
+        """SELECT query, COUNT(*) as count FROM search_logs
+           WHERE top_result_slug = ? AND source IN ('api', 'mcp')
+             AND created_at >= datetime('now', '-30 days')
+             AND query IS NOT NULL AND query != ''
+           GROUP BY LOWER(query)
+           ORDER BY count DESC
+           LIMIT 5""",
+        (slug,),
+    )
+    result["top_search_queries"] = [
+        {"query": r["query"], "count": r["count"]}
+        for r in await cursor.fetchall()
+    ]
+
+    return result

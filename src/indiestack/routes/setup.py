@@ -149,9 +149,57 @@ async def setup_page(request: Request):
                 Set up IndieStack
             </h1>
             <p style="color:var(--ink-muted);font-size:17px;line-height:1.6;max-width:520px;margin:0 auto;">
-                Give your AI agent access to 3,100+ developer tools.
-                One command. Works in seconds.
+                Stop your AI from reinventing infrastructure.
+                Connect it to curated tools, real migration data, and verified combinations — one command.
             </p>
+        </div>
+
+        <!-- Why IndieStack -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px;">
+
+          <div class="card" style="padding:20px;">
+            <p style="font-weight:700;color:var(--ink);font-size:14px;margin:0 0 6px;">
+              Curated, not crawled
+            </p>
+            <p style="color:var(--ink-muted);font-size:13px;line-height:1.7;margin:0;">
+              Every tool is reviewed by a human before listing. No abandoned projects, no spam,
+              no enterprise products dressed up as indie. What your agent finds is actually maintained.
+            </p>
+          </div>
+
+          <div class="card" style="padding:20px;">
+            <p style="font-weight:700;color:var(--ink);font-size:14px;margin:0 0 6px;">
+              Migration data from 8,700+ repos
+            </p>
+            <p style="color:var(--ink-muted);font-size:13px;line-height:1.7;margin:0;">
+              Not opinions &mdash; git history. We parsed real repos to find what developers are
+              actually switching to. Your agent gets recommendations backed by 422 confirmed
+              migration paths, not blog posts.
+            </p>
+          </div>
+
+          <div class="card" style="padding:20px;">
+            <p style="font-weight:700;color:var(--ink);font-size:14px;margin:0 0 6px;">
+              Verified tool combinations
+            </p>
+            <p style="color:var(--ink-muted);font-size:13px;line-height:1.7;margin:0;">
+              93,000+ tool pairings observed in real projects. When your agent recommends
+              Supabase + Prisma, it&rsquo;s because they coexist in hundreds of repos &mdash; not because
+              both have &ldquo;database&rdquo; in their description.
+            </p>
+          </div>
+
+          <div class="card" style="padding:20px;">
+            <p style="font-weight:700;color:var(--ink);font-size:14px;margin:0 0 6px;">
+              Built for agent workflows
+            </p>
+            <p style="color:var(--ink-muted);font-size:13px;line-height:1.7;margin:0;">
+              21 purpose-built MCP tools: search by need, get integration docs, analyze
+              dependency health, report outcomes. Agents get structured data, not HTML
+              to parse.
+            </p>
+          </div>
+
         </div>
 
         <!-- Step 1: Install MCP -->
@@ -288,7 +336,7 @@ jobs:
     </script>
     '''
 
-    return HTMLResponse(page_shell("Set up IndieStack", body, description="Connect IndieStack to Claude Code, Cursor, or Windsurf in 30 seconds. Your AI agent searches 3,100+ developer tools before writing infrastructure from scratch.", user=user))
+    return HTMLResponse(page_shell("Set up IndieStack", body, description="IndieStack gives your AI agent curated access to 3,100+ developer tools, migration data from 8,700+ repos, and 93,000+ verified tool combinations. One command.", user=user))
 
 
 @router.get("/setup/claude.md", response_class=PlainTextResponse)
