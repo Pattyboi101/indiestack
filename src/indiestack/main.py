@@ -1677,15 +1677,15 @@ async def api_tools_search(
 
             gaining_map = {}
             for row in gaining_rows:
-                slug = pkg_to_slug.get(row[0])
+                slug = pkg_to_slug.get(row["to_package"])
                 if slug:
-                    gaining_map.setdefault(slug, []).append((row[1], row[2]))
+                    gaining_map.setdefault(slug, []).append((row["from_package"], row["n"]))
 
             losing_map = {}
             for row in losing_rows:
-                slug = pkg_to_slug.get(row[0])
+                slug = pkg_to_slug.get(row["from_package"])
                 if slug:
-                    losing_map.setdefault(slug, []).append((row[1], row[2]))
+                    losing_map.setdefault(slug, []).append((row["to_package"], row["n"]))
 
             for r in results:
                 slug = r['slug']
