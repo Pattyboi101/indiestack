@@ -3813,6 +3813,14 @@ async def magic_claim(request: Request):
 
     token = request.query_params.get("token", "")
     if not token:
+        # Fallback: accept ?tool=slug (used in outreach emails)
+        slug = request.query_params.get("tool", "")
+        if slug:
+            d = request.state.db
+            tool = await db.get_tool_by_slug(d, slug)
+            if tool:
+                new_token = await db.create_magic_claim_token(d, tool['id'], days=7)
+                return RedirectResponse(url=f"/claim/magic?token={new_token}", status_code=303)
         return RedirectResponse(url="/", status_code=303)
 
     d = request.state.db

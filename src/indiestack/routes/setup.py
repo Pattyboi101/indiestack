@@ -136,7 +136,7 @@ async def setup_page(request: Request):
         <div style="background:linear-gradient(135deg,#065F46,#064E3B);border:1px solid rgba(110,231,183,0.3);
                     border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;text-align:center;">
             <p style="color:#6EE7B7;font-size:20px;font-weight:700;margin:0 0 4px;">Welcome to IndieStack, {_name}!</p>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 6,500+ developer tools.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 3,100+ developer tools.</p>
         </div>'''
 
     body = f'''
@@ -149,7 +149,7 @@ async def setup_page(request: Request):
                 Set up IndieStack
             </h1>
             <p style="color:var(--ink-muted);font-size:17px;line-height:1.6;max-width:520px;margin:0 auto;">
-                Give your AI agent access to 6,500+ developer tools.
+                Give your AI agent access to 3,100+ developer tools.
                 One command. Works in seconds.
             </p>
         </div>
@@ -250,7 +250,7 @@ jobs:
             <div style="font-size:14px;color:var(--ink-muted);line-height:1.8;">
                 Your AI agent will automatically search IndieStack when you need developer infrastructure.
                 Instead of generating auth code from scratch, it finds Clerk or Lucia. Instead of writing
-                a payment flow, it finds LemonSqueezy or Polar. 40 categories, 6,500+ tools, verified
+                a payment flow, it finds LemonSqueezy or Polar. 40 categories, 3,100+ tools, verified
                 compatibility data.
             </div>
         </div>

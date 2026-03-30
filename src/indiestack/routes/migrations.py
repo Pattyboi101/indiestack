@@ -226,6 +226,11 @@ async def migrations_page(request: Request):
         {stats_html}
         {insights_html}
         {migrations_html}
+        <div style="text-align:center;margin:24px 0;">
+          <a href="/analyze" style="color:var(--slate);font-size:var(--text-sm);text-decoration:none;">
+            Want to check your own stack? Analyze for free &rarr;
+          </a>
+        </div>
         {combos_html}
         {api_cta}
     </div>'''
