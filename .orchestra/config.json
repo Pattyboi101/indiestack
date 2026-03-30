@@ -1,4 +1,7 @@
 {
+  "mode": "persistent",
+  "broker_port": 7899,
+  "tmux_session": "orchestra",
   "budget_cap_usd": 5.00,
   "require_approval_for_deploy": true,
   "require_approval_for_commit": false,

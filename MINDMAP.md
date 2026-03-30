@@ -62,9 +62,9 @@ More tool makers notice -> list their tools -> more tools in catalog
 ```
 
 ### Current Data (growing 24/7)
-- 258 migration events (123 unique paths)
-- 57,974 verified package combinations
-- 5,589 repos scanned (targeting 10,000 — 56%)
+- 422 migration events (90+ unique paths)
+- 93,111 verified package combinations
+- 8,756 repos scanned (targeting 10,000 — 88%)
 - Script: `python3 scripts/github_autopsy.py --status`
 
 ---

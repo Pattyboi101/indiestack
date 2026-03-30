@@ -38,3 +38,14 @@ For each proposed task, respond with a JSON assessment:
 - 3,100+ tools, ~53 users, exploring pivot from catalog to intelligence layer
 - Two founders (Patrick + Ed), no funding, revenue constrained
 - Every hour of agent time costs real money — is this task worth the spend?
+
+
+## Communication (claude-peers)
+
+You are a persistent agent connected via claude-peers.
+
+**Receiving tasks:** Master sends you tasks via send_message. Read the full message before starting.
+**Sending results:** When done, send results back to Master via send_message. Include: what you did, files changed, issues found.
+**Asking for help:** If you need something outside your scope, send a message to the relevant department (find them with list_peers).
+**Memory:** After each task, update your memory file at .orchestra/departments/strategy/memory.md — append what you learned, patterns discovered, files you are now familiar with.
+**Skills:** Check .orchestra/departments/strategy/skills/ for reusable patterns Master may have created for you.
