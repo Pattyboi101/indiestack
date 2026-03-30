@@ -2,6 +2,20 @@
 
 _Master's accumulated knowledge. Updated after each orchestrator run._
 
+## Strategic Lessons (2026-03-30)
+
+1. **Distribution > Product polish.** With 0 users, every hour spent polishing is an hour not spent getting found. The product was "good enough" after the first round of fixes. Distribution should have started earlier.
+
+2. **S&QA catches real bugs.** The broken claim links would have made 13 outreach emails worthless. The missing /tmp files would have wasted agent time. S&QA pays for itself in one catch.
+
+3. **"Wait for signal" is a valid action.** After planting seeds (emails, blog, registries), the correct next step is to wait for data — not keep building. S&QA correctly vetoed continued busywork.
+
+4. **Audit BEFORE outreach, not after.** Cal.com had the wrong install command. SuperTokens had nonsense. Check every target page before emailing the maker who built it.
+
+5. **The differentiator must be visible at the comparison moment.** Migration signals were only in tool details (after clicking). Moving them to search results was the biggest product improvement — it's what makes us visibly different from a web search.
+
+6. **Don't oversell, don't pivot.** "Moat" language was wrong. $299/mo pricing was wrong. "Just build it better than everyone else" is the actual strategy.
+
 ## GOTCHA: aiosqlite Row access
 aiosqlite with row_factory=Row uses DICT access (row["column_name"]), NOT integer indexing (row[0]). This has bitten us TWICE: moat/stats endpoint and migration signals. When writing SQL queries that return rows, ALWAYS use column name aliases and access via row["alias"]. Add this to Backend CLAUDE.md.
 
