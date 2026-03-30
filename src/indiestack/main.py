@@ -2434,11 +2434,49 @@ async def api_tools_compatible(request: Request, slug: str, category: str = "", 
     })
 
 
+# ---------------------------------------------------------------------------
+# Slug resolution — fallback when exact slug lookup fails
+# ---------------------------------------------------------------------------
+# Explicit aliases for commonly-searched slugs that don't match DB slugs.
+# Explicit > clever. Add new entries here as agents surface mismatches.
+# NOTE: If this grows large, consider moving to a DB table.
+SLUG_ALIASES: dict[str, str] = {
+    "stripe":   "stripe-payments",   # agents say 'stripe', DB slug is 'stripe-payments'
+    "next-js":  "nextjs",            # hyphenated vs no-hyphen variant
+    "drizzle":  "drizzle-orm",       # short name vs full slug with -orm suffix
+}
+
+
+async def _resolve_tool_slug(d, slug: str):
+    """Try aliases, heuristic transforms, then name lookup before returning None.
+
+    Called only after an exact slug lookup has already failed.
+    Returns an approved tool row or None.
+    """
+    # 1. Explicit aliases (highest confidence, zero ambiguity)
+    if slug in SLUG_ALIASES:
+        tool = await db.get_tool_by_slug(d, SLUG_ALIASES[slug])
+        if tool and tool.get("status") == "approved":
+            return tool
+
+    # 2. Remove hyphens: 'next-js' → 'nextjs', 'tailwind-css' → 'tailwindcss'
+    no_hyphens = slug.replace("-", "")
+    if no_hyphens != slug:
+        tool = await db.get_tool_by_slug(d, no_hyphens)
+        if tool and tool.get("status") == "approved":
+            return tool
+
+    # 3. Name-based exact match (last resort): 'tailwind-css' → name 'Tailwind CSS'
+    return await db.get_tool_by_name_exact(d, slug)
+
+
 @app.get("/api/tools/{slug}")
 async def api_tool_detail(request: Request, slug: str, source: str = ""):
     """JSON API for getting full tool details — used by MCP server."""
     d = request.state.db
     tool = await db.get_tool_by_slug(d, slug)
+    if not tool or tool.get('status') != 'approved':
+        tool = await _resolve_tool_slug(d, slug)
     if not tool or tool.get('status') != 'approved':
         return JSONResponse({"error": "Tool not found"}, status_code=404)
 

@@ -1907,6 +1907,30 @@ async def get_tool_by_slug(db: aiosqlite.Connection, slug: str):
     return await cursor.fetchone()
 
 
+async def get_tool_by_name_exact(db: aiosqlite.Connection, slug: str):
+    """Case-insensitive exact name lookup — converts slug hyphens to spaces.
+
+    Used as a last-resort fallback in slug resolution. Only returns approved tools.
+    e.g. 'tailwind-css' → looks for name 'Tailwind CSS' (exact, case-insensitive).
+    """
+    name_guess = slug.replace("-", " ")
+    cursor = await db.execute(
+        """SELECT t.*, c.name as category_name, c.slug as category_slug,
+                  m.indie_status, m.slug as maker_slug,
+                  m.story_motivation, m.story_challenge, m.story_advice, m.story_fun_fact,
+                  CASE WHEN EXISTS(
+                      SELECT 1 FROM subscriptions s JOIN users u ON u.id = s.user_id
+                      WHERE u.maker_id = t.maker_id AND s.status = 'active'
+                  ) THEN 1 ELSE 0 END AS maker_is_pro
+           FROM tools t JOIN categories c ON t.category_id = c.id
+           LEFT JOIN makers m ON t.maker_id = m.id
+           WHERE LOWER(t.name) = LOWER(?) AND t.status = 'approved'
+        """,
+        (name_guess,),
+    )
+    return await cursor.fetchone()
+
+
 async def get_related_tools(db: aiosqlite.Connection, tool_id: int, category_id: int, limit: int = 3):
     cursor = await db.execute(
         """SELECT t.*, c.name as category_name, c.slug as category_slug,
