@@ -735,9 +735,12 @@ async def find_tools(
                     health_tag = " \u26a0\ufe0f Stale"
             except (ValueError, TypeError):
                 pass
+        migration_line = ""
+        if t.get("migration_signal"):
+            migration_line = f"\n  Migration: {t['migration_signal']}"
         lines.append(
             f"- **{t['name']}** (`{t.get('slug', '')}`){source_label}{tool_type_label}{health_tag} — {(lambda d: d[:500] + '...' if len(d) > 500 else d)(t.get('tagline', ''))}\n"
-            f"  Price: {t.get('price', 'Free')} | Upvotes: {t.get('upvote_count', 0)}{install_line}\n"
+            f"  Price: {t.get('price', 'Free')} | Upvotes: {t.get('upvote_count', 0)}{install_line}{migration_line}\n"
             f"  {t.get('indiestack_url', '')}"
         )
 

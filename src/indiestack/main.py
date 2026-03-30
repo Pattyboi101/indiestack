@@ -1647,6 +1647,61 @@ async def api_tools_search(
             result["platforms"] = t.get('platforms', '')
         results.append(result)
 
+    # Migration signals — batch queries across all results
+    try:
+        pkg_to_slug = {}
+        for t in tools:
+            sdk = t.get('sdk_packages', '') or ''
+            pkgs = [p.strip() for p in sdk.split(',') if p.strip()]
+            pkgs.append(t['slug'])
+            for p in pkgs:
+                pkg_to_slug[p] = t['slug']
+
+        all_packages = list(pkg_to_slug.keys())
+        if all_packages:
+            placeholders = ','.join('?' * len(all_packages))
+
+            gaining_cursor = await d.execute(f"""
+                SELECT to_package, from_package, COUNT(DISTINCT repo) as n
+                FROM migration_paths WHERE to_package IN ({placeholders})
+                GROUP BY to_package, from_package ORDER BY n DESC
+            """, all_packages)
+            gaining_rows = await gaining_cursor.fetchall()
+
+            losing_cursor = await d.execute(f"""
+                SELECT from_package, to_package, COUNT(DISTINCT repo) as n
+                FROM migration_paths WHERE from_package IN ({placeholders})
+                GROUP BY from_package, to_package ORDER BY n DESC
+            """, all_packages)
+            losing_rows = await losing_cursor.fetchall()
+
+            gaining_map = {}
+            for row in gaining_rows:
+                slug = pkg_to_slug.get(row[0])
+                if slug:
+                    gaining_map.setdefault(slug, []).append((row[1], row[2]))
+
+            losing_map = {}
+            for row in losing_rows:
+                slug = pkg_to_slug.get(row[0])
+                if slug:
+                    losing_map.setdefault(slug, []).append((row[1], row[2]))
+
+            for r in results:
+                slug = r['slug']
+                gaining = gaining_map.get(slug, [])
+                losing = losing_map.get(slug, [])
+                if gaining:
+                    top_count = gaining[0][1]
+                    top_froms = ', '.join(g[0] for g in gaining[:3])
+                    r['migration_signal'] = f"{top_count} repos migrated to this from {top_froms}"
+                elif losing:
+                    top_count = losing[0][1]
+                    top_tos = ', '.join(l[0] for l in losing[:3])
+                    r['migration_signal'] = f"{top_count} repos moved from this to {top_tos}"
+    except Exception:
+        pass  # Don't fail search if migration signals unavailable
+
     # Log the search for Live Wire
     try:
         top_slug = tools[0]['slug'] if tools else None
