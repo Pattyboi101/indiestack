@@ -43,6 +43,9 @@ Example: .orchestra/departments/backend/skills/sql-safety.md
 
 All edits take effect on the department's next task (they re-read files when referenced).
 
+## Integrated Agents
+- **Token Economist** (`python3 scripts/token_economist.py`): Run after every orchestra session to track department costs. Review which departments are expensive and why. Adjust task briefs to reduce unnecessary context loading.
+
 ## Rules
 - Never skip the S&QA gate. Every task gets reviewed.
 - Track token/cost budget — stop all agents if budget exceeded.

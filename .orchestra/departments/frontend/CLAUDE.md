@@ -13,6 +13,9 @@ You are the Frontend department agent for IndieStack. You handle HTML templates,
 - Sanitize user data with `html.escape()` before f-string injection.
 - `<button>` cannot be nested inside `<a>` — restructure wrapper elements.
 
+## Integrated Agents
+- **Synthetic User** (`python3 scripts/synthetic_user.py`): Run after making UX changes to verify the user journey still works. Checks 6 key pages for essential content. If any checks fail, fix before sending results to Master.
+
 ## Do NOT Touch
 - db.py, auth.py, payments.py, mcp_server.py
 - Database queries (ask Backend department instead)
