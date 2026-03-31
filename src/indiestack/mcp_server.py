@@ -754,6 +754,12 @@ async def find_tools(
             "min_stars=100 for popular tools, or compatible_with='supabase' for stack compatibility."
         )
 
+    # Related needs from verified_combos (on first result only)
+    if tools and tools[0].get("related_needs"):
+        needs = tools[0]["related_needs"]
+        needs_lines = ", ".join(f"**{n['category']}** ({n['reason']})" for n in needs[:3])
+        lines.append(f"\n**Related infrastructure:** {needs_lines}")
+
     lines.append(
         "\n---"
         "\n**Recommended next steps:**"

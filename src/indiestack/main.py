@@ -1702,6 +1702,43 @@ async def api_tools_search(
     except Exception:
         pass  # Don't fail search if migration signals unavailable
 
+    # Related needs — categories that coexist with the top result in real repos
+    try:
+        if results and tools:
+            top_tool = tools[0]
+            sdk = top_tool.get('sdk_packages', '') or ''
+            top_pkgs = [p.strip() for p in sdk.split(',') if p.strip()]
+            top_pkgs.append(top_tool['slug'])
+            placeholders_n = ','.join('?' * len(top_pkgs))
+            cursor = await d.execute(f"""
+                SELECT cat.name as category, cat.slug as category_slug,
+                       COUNT(DISTINCT vc.repo) as repo_count
+                FROM verified_combos vc
+                JOIN tools t ON t.slug = CASE
+                    WHEN vc.package_a IN ({placeholders_n}) THEN vc.package_b
+                    ELSE vc.package_a END
+                JOIN categories cat ON cat.id = t.category_id
+                WHERE (vc.package_a IN ({placeholders_n}) OR vc.package_b IN ({placeholders_n}))
+                  AND t.category_id != COALESCE(
+                        (SELECT category_id FROM tools WHERE slug = ?), -1)
+                GROUP BY cat.id
+                HAVING repo_count >= 5
+                ORDER BY repo_count DESC
+                LIMIT 3
+            """, top_pkgs + top_pkgs + top_pkgs + [top_tool['slug']])
+            related = await cursor.fetchall()
+            if related:
+                results[0]['related_needs'] = [
+                    {
+                        "category": r["category"],
+                        "category_slug": r["category_slug"],
+                        "reason": f"{r['repo_count']} repos using this also use {r['category'].lower()} tools",
+                    }
+                    for r in related
+                ]
+    except Exception:
+        pass  # Don't fail search if related_needs unavailable
+
     # Log the search for Live Wire
     try:
         top_slug = tools[0]['slug'] if tools else None
