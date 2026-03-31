@@ -1739,6 +1739,19 @@ async def api_tools_search(
     except Exception:
         pass  # Don't fail search if related_needs unavailable
 
+    # Agent success rates — inject trust signal into results
+    try:
+        slugs = [r["slug"] for r in results if r.get("slug")]
+        if slugs:
+            rates = await db.get_batch_success_rates(d, slugs)
+            for r in results:
+                rate_data = rates.get(r["slug"])
+                if rate_data and rate_data["total"] >= 3:
+                    r["agent_success_rate"] = rate_data["rate"]
+                    r["agent_outcomes"] = rate_data["total"]
+    except Exception:
+        pass  # Don't fail search if success rates unavailable
+
     # Log the search for Live Wire
     try:
         top_slug = tools[0]['slug'] if tools else None

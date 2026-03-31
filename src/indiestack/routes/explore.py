@@ -10,7 +10,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card, pagination_html, email_sticky_bar
-from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_counts, get_new_for_user, get_tool_by_slug
+from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_counts, get_new_for_user, get_tool_by_slug, get_batch_success_rates
 
 router = APIRouter()
 
@@ -250,6 +250,18 @@ async def explore(request: Request):
             </form>
         </div>
         """
+
+    # Inject agent success rates for trust badges
+    try:
+        slugs = [str(r.get('slug', '')) for r in results if r.get('slug')]
+        if slugs:
+            sr_map = await get_batch_success_rates(db, slugs)
+            for r in results:
+                s = str(r.get('slug', ''))
+                if s in sr_map:
+                    r['_success_rate'] = sr_map[s]
+    except Exception:
+        pass
 
     # Results
     if results:

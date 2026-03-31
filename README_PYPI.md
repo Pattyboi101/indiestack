@@ -42,7 +42,7 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 
 "Indie" is the curation filter — tools built by independent developers and small teams. Focused, lean, maintained, honest pricing.
 
-### Tools (21)
+### Tools (22)
 
 | Tool | What it does |
 |------|-------------|
@@ -59,6 +59,7 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 | `publish_tool` | Submit a developer tool so other agents can recommend it |
 | `browse_new_tools` | Recently added tools with pagination |
 | `list_tags` | All tags sorted by popularity |
+| `get_market_gaps` | Top unmet needs — what developers search for but can't find. Useful for tool makers deciding what to build. |
 | `list_stacks` | Curated stacks for common use cases |
 | `analyze_dependencies` | Scan package.json/requirements.txt for better alternatives |
 | `evaluate_build_vs_buy` | Financial breakdown: build from scratch vs use what exists |
@@ -81,6 +82,12 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 | `save-tokens` | Audit your project for token-saving opportunities |
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie developers have built |
+
+## What's new in v1.12
+
+- **Market gaps** — New `get_market_gaps()` tool exposes zero-result queries ranked by search volume. Agents and makers can see what tools are missing from the ecosystem. API: `/api/gaps`.
+- **Trust-weighted search** — Tools with higher agent success rates now rank higher in search results. Real outcome data influences sort order, not just star count.
+- **Agent success badges** — Search results and explore cards now show agent success rate badges ("93% agent success") when outcome data is available.
 
 ## What's new in v1.11
 
