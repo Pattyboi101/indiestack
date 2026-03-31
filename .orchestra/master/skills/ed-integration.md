@@ -12,6 +12,17 @@ metadata:
 
 Ed is the co-founder handling outreach, social, and community. The orchestra is 1000x faster at code/data tasks, but Ed does things we can't: human presence on social media, face-to-face networking, judgment calls on brand voice, physical demos.
 
+## How This Skill Works
+
+### Mode 1: Morning Handoff
+Prepare Ed's daily task list from overnight orchestra output.
+
+### Mode 2: Real-Time Coordination
+Ed reports results, Master adjusts strategy and prepares next deliverables.
+
+### Mode 3: Campaign Planning
+Plan a multi-day outreach campaign splitting human+AI tasks.
+
 ## The Problem
 
 The orchestra can:
@@ -87,3 +98,19 @@ Example:
 | Maker responded | Draft reply for Ed to send |
 | Content ready | Pre-written copy Ed can paste |
 | Ed reports results | Update playbook with what worked |
+
+## Example Morning Handoff
+
+```
+bash ~/.claude/telegram.sh "Morning Ed! Overnight work:
+1. TWEET READY: [paste exact text] — post from @indaboraai
+2. SMITHERY: go to smithery.ai/new, connect GitHub repo Pattyboi101/indiestack
+3. MAKER REPLIED: [name] responded to claim email — draft reply at /tmp/reply_draft.md
+Let me know engagement numbers later so we can adjust."
+```
+
+## Gotchas (2026-03-30)
+- Ed had 5 open tasks showing 0 completions — actually had done 7 but hadn't updated the hub
+- Hub must be updated by the person who did the work, not by Master assuming
+- Ed's badge PRs to repos (fastify, strapi) were getting rejected — unsolicited README changes are a hard sell
+- Ed only has access to certain platforms — check before assigning
