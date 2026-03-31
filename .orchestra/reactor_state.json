@@ -1,0 +1,21 @@
+{
+  "last_check": "2026-03-31T12:37:58.250000+00:00",
+  "known_users": 0,
+  "known_claims": 0,
+  "known_signups": [],
+  "known_claim_tools": [],
+  "reactions_sent": [
+    {
+      "type": "traffic_spike",
+      "timestamp": "2026-03-31T12:37:58.249828+00:00",
+      "details": {
+        "type": "traffic_spike",
+        "hourly_views": 8892,
+        "average": 50,
+        "multiplier": 177.8
+      }
+    }
+  ],
+  "avg_hourly_views": 934,
+  "last_hour_searches": 2
+}

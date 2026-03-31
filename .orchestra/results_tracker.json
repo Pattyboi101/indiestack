@@ -1,0 +1,366 @@
+{
+  "contacts": [
+    {
+      "channel": "email",
+      "target": "founders@ssoready.com",
+      "tool": "ssoready",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:20.050245",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "info@authjs.dev",
+      "tool": "next-auth",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:20.184924",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "support@cal.com",
+      "tool": "cal.com",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:20.303834",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "team@supertokens.io",
+      "tool": "supertokens-core",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:20.448274",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "im.amruth@gmail.com",
+      "tool": "reactive-resume",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:20.547747",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "heartcombo.oss@gmail.com",
+      "tool": "devise",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:20.677587",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "hello@reinisch.io",
+      "tool": "ocular",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:20.847982",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "tymon148@gmail.com",
+      "tool": "jwt-auth",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:20.981389",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "pilcrow@pilcrowonpaper.com",
+      "tool": "arctic",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:21.055752",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "raymond.penners@intenct.nl",
+      "tool": "django-allauth",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:21.218416",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "hello@autonomy.computer",
+      "tool": "ockam",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:21.341612",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "join@ithaca.xyz",
+      "tool": "porto",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:21.402518",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "ajin@opensecurity.in",
+      "tool": "mobsf",
+      "template": "mcp-views",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:21.506408",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "contact@langflow.org",
+      "tool": "langflow",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:21.593298",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "jasonsaayman@gmail.com",
+      "tool": "axios",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:21.689866",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "hi@zed.dev",
+      "tool": "zed",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:21.740694",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "contact@stirlingpdf.com",
+      "tool": "stirling-pdf",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:21.890187",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "support@daytona.io",
+      "tool": "daytona",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:22.059038",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "mail@thdxr.com",
+      "tool": "opencode",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:22.198786",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "appleboy.tw@gmail.com",
+      "tool": "gin",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:22.367545",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "evert.timberg+github@gmail.com",
+      "tool": "chart.js",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:22.433442",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "developer@affine.pro",
+      "tool": "affine",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:22.537617",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "hello@openbb.co",
+      "tool": "openbb",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:22.593623",
+      "updated_at": null,
+      "notes": ""
+    },
+    {
+      "channel": "email",
+      "target": "security@syncthing.net",
+      "tool": "syncthing",
+      "template": "stars-hook",
+      "status": "sent",
+      "sent_at": "2026-03-31T13:45:22.657600",
+      "updated_at": null,
+      "notes": ""
+    }
+  ],
+  "events": [
+    {
+      "type": "outreach",
+      "target": "founders@ssoready.com",
+      "timestamp": "2026-03-31T13:45:20.050271"
+    },
+    {
+      "type": "outreach",
+      "target": "info@authjs.dev",
+      "timestamp": "2026-03-31T13:45:20.184946"
+    },
+    {
+      "type": "outreach",
+      "target": "support@cal.com",
+      "timestamp": "2026-03-31T13:45:20.303857"
+    },
+    {
+      "type": "outreach",
+      "target": "team@supertokens.io",
+      "timestamp": "2026-03-31T13:45:20.448297"
+    },
+    {
+      "type": "outreach",
+      "target": "im.amruth@gmail.com",
+      "timestamp": "2026-03-31T13:45:20.547773"
+    },
+    {
+      "type": "outreach",
+      "target": "heartcombo.oss@gmail.com",
+      "timestamp": "2026-03-31T13:45:20.677611"
+    },
+    {
+      "type": "outreach",
+      "target": "hello@reinisch.io",
+      "timestamp": "2026-03-31T13:45:20.848033"
+    },
+    {
+      "type": "outreach",
+      "target": "tymon148@gmail.com",
+      "timestamp": "2026-03-31T13:45:20.981413"
+    },
+    {
+      "type": "outreach",
+      "target": "pilcrow@pilcrowonpaper.com",
+      "timestamp": "2026-03-31T13:45:21.055777"
+    },
+    {
+      "type": "outreach",
+      "target": "raymond.penners@intenct.nl",
+      "timestamp": "2026-03-31T13:45:21.218441"
+    },
+    {
+      "type": "outreach",
+      "target": "hello@autonomy.computer",
+      "timestamp": "2026-03-31T13:45:21.341639"
+    },
+    {
+      "type": "outreach",
+      "target": "join@ithaca.xyz",
+      "timestamp": "2026-03-31T13:45:21.402542"
+    },
+    {
+      "type": "outreach",
+      "target": "ajin@opensecurity.in",
+      "timestamp": "2026-03-31T13:45:21.506433"
+    },
+    {
+      "type": "outreach",
+      "target": "contact@langflow.org",
+      "timestamp": "2026-03-31T13:45:21.593325"
+    },
+    {
+      "type": "outreach",
+      "target": "jasonsaayman@gmail.com",
+      "timestamp": "2026-03-31T13:45:21.689892"
+    },
+    {
+      "type": "outreach",
+      "target": "hi@zed.dev",
+      "timestamp": "2026-03-31T13:45:21.740719"
+    },
+    {
+      "type": "outreach",
+      "target": "contact@stirlingpdf.com",
+      "timestamp": "2026-03-31T13:45:21.890221"
+    },
+    {
+      "type": "outreach",
+      "target": "support@daytona.io",
+      "timestamp": "2026-03-31T13:45:22.059064"
+    },
+    {
+      "type": "outreach",
+      "target": "mail@thdxr.com",
+      "timestamp": "2026-03-31T13:45:22.198817"
+    },
+    {
+      "type": "outreach",
+      "target": "appleboy.tw@gmail.com",
+      "timestamp": "2026-03-31T13:45:22.367569"
+    },
+    {
+      "type": "outreach",
+      "target": "evert.timberg+github@gmail.com",
+      "timestamp": "2026-03-31T13:45:22.433467"
+    },
+    {
+      "type": "outreach",
+      "target": "developer@affine.pro",
+      "timestamp": "2026-03-31T13:45:22.537641"
+    },
+    {
+      "type": "outreach",
+      "target": "hello@openbb.co",
+      "timestamp": "2026-03-31T13:45:22.593648"
+    },
+    {
+      "type": "outreach",
+      "target": "security@syncthing.net",
+      "timestamp": "2026-03-31T13:45:22.657626"
+    }
+  ]
+}

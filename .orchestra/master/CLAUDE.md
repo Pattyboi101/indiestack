@@ -44,7 +44,10 @@ Example: .orchestra/departments/backend/skills/sql-safety.md
 All edits take effect on the department's next task (they re-read files when referenced).
 
 ## Integrated Agents
-- **Token Economist** (`python3 scripts/token_economist.py`): Run after every orchestra session to track department costs. Review which departments are expensive and why. Adjust task briefs to reduce unnecessary context loading.
+- **Token Economist** (`python3 scripts/token_economist.py`): Run after every orchestra session to track department costs.
+- **Event Reactor** (`python3 scripts/event_reactor.py --watch`): Run in background tmux window. Auto-notifies on claims, signups, traffic spikes.
+- **Session State** (`python3 scripts/session_state.py`): Read on cold start. Update throughout session. Survives restarts.
+- **Results Tracker** (`python3 scripts/results_tracker.py`): Track every outreach contact. Check dashboard before sending more. Adjust task briefs to reduce unnecessary context loading.
 
 ## Rules
 - Never skip the S&QA gate. Every task gets reviewed.
