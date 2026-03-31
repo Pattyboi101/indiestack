@@ -1,47 +1,117 @@
-# Production Data Patch — Backend Skill
+---
+name: production-data-patch
+description: "Safely update data on the production IndieStack database via Fly SSH. Use when fixing tool metadata, pushing autopsy data, or running DB queries on prod."
+metadata:
+  version: 2.0.0
+  author: Master Agent
+  category: operations
+  updated: 2026-03-31
+---
 
-How to safely update data on the production IndieStack database.
+# Production Data Patch — Backend Department
 
-## Access
+You are responsible for safely modifying production data on IndieStack's SQLite database via Fly SSH.
+
+## Before Starting
+
+Check:
+- Is Fly SSH tunnel available? `~/.fly/bin/fly ssh console -a indiestack -C 'echo ok'`
+- What exactly needs changing? (Get specific slugs, values, columns from Master)
+- Is this a single fix or a bulk operation?
+- Has Master/S&QA approved this change?
+
+## How This Skill Works
+
+### Mode 1: Single Tool Fix
+Update one or a few specific tools — install_command, description, name, etc.
+
+### Mode 2: Bulk Data Push
+Push autopsy data (migration_paths, verified_combos) from local to production.
+
+### Mode 3: Query & Report
+Read-only queries to check analytics, find targets, or audit data quality.
+
+## Access Pattern
+
 ```bash
-~/.fly/bin/fly ssh console -a indiestack -C 'python3 -c "..."'
+~/.fly/bin/fly ssh console -a indiestack -C 'python3 -c "
+import sqlite3
+conn = sqlite3.connect(\"/data/indiestack.db\")
+conn.execute(\"PRAGMA journal_mode=WAL\")
+# ... queries here ...
+conn.commit()
+conn.close()
+"'
 ```
-Production DB: `/data/indiestack.db`
 
-## Rules
-1. ALWAYS use parameterized queries when values come from variables
-2. ALWAYS use `row["column_name"]` not `row[0]` — aiosqlite Row objects use dict access
-3. ALWAYS verify after updating: query the row back and print it
-4. NEVER use `DELETE` without Master approval
-5. NEVER update `status` column without Master approval
-6. Use `INSERT OR IGNORE` for idempotent inserts (safe to re-run)
-7. Use `ON CONFLICT ... DO UPDATE` for upserts
+## CRITICAL: aiosqlite Row Access
 
-## Common Patches
+**ALWAYS use column name access, NEVER integer indexing:**
+```python
+# BAD — causes silent bugs
+row[0], row[1], row[2]
 
-### Update a tool's install_command
+# GOOD — explicit column names
+row["slug"], row["name"], row["count"]
+```
+
+This has caused production bugs TWICE. Always use `SELECT ... as alias` and `row["alias"]`.
+
+## Common Operations
+
+### Update a tool
 ```sql
 UPDATE tools SET install_command = 'npm install X' WHERE slug = 'tool-slug';
 ```
 
-### Update a tool's description
+### Verify after update
 ```sql
-UPDATE tools SET description = 'New description' WHERE slug = 'tool-slug';
+SELECT slug, install_command FROM tools WHERE slug = 'tool-slug';
 ```
 
-### Fix a tool's name
+### Bulk push (autopsy data)
+```python
+# Generate SQL locally, pipe via SSH
+cat /tmp/data.sql | ~/.fly/bin/fly ssh console -a indiestack -C 'python3 -c "
+import sys, sqlite3
+conn = sqlite3.connect(\"/data/indiestack.db\")
+conn.execute(\"PRAGMA journal_mode=WAL\")
+sql = sys.stdin.read()
+stmts = [s.strip() for s in sql.split(\";\") if s.strip()]
+for s in stmts:
+    try: conn.execute(s)
+    except: pass
+conn.commit()
+conn.close()
+"'
+```
+
+### Find unclaimed high-star tools
 ```sql
-UPDATE tools SET name = 'Correct Name' WHERE slug = 'tool-slug';
+SELECT slug, name, github_stars FROM tools
+WHERE status='approved' AND maker_id IS NULL AND github_stars > 1000
+ORDER BY github_stars DESC LIMIT 20;
 ```
 
-### Bulk push autopsy data
-Generate SQL file locally, pipe via SSH:
-```bash
-cat /tmp/data.sql | ~/.fly/bin/fly ssh console -a indiestack -C 'python3 -c "import sys, sqlite3; ..."'
-```
+## Proactive Triggers
 
-## Gotchas
-- Shell quoting is painful for inline python via SSH. For complex queries, write a script file and pipe it: `cat script.py | fly ssh console -C 'python3 -'`
-- Em dashes (—) and curly quotes cause SyntaxError in inline python. Use -- and straight quotes.
-- `PRAGMA journal_mode=WAL` should be set before bulk operations
-- The Fly SSH tunnel can go down transiently — retry after 5-10 minutes
+- **Master says "fix install command"** → Always verify the CORRECT command first (Cal.com had mailhog!)
+- **Bulk push requested** → Use INSERT OR IGNORE for idempotency
+- **SSH tunnel down** → Report to Master, retry in 5-10 minutes, don't block on it
+- **Em dash or curly quotes in data** → Use straight quotes and -- in inline Python (avoids SyntaxError)
+
+## Output Artifacts
+
+| Request | Deliverable |
+|---------|------------|
+| "Fix tool X" | Confirmation with before/after values |
+| "Push autopsy data" | Row counts: N migrations, N combos pushed |
+| "Find outreach targets" | slug, name, stars, email list |
+| "Check analytics" | Claim token counts, page views, signup counts |
+
+## Gotchas (2026-03-30)
+- Cal.com had mailhog install command — ALWAYS verify correctness before updating
+- SuperTokens had "docker pull stats" — nonsense command that slipped through auto-generation
+- Shell quoting is painful for inline Python via SSH — for complex queries, pipe a script file
+- Fly SSH tunnel can go down for 15+ minutes — site stays up, just can't SSH
+- `PRAGMA journal_mode=WAL` should be set before bulk writes

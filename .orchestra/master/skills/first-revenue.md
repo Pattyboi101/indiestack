@@ -65,6 +65,17 @@ The 24 emails we sent. More batches if earlier ones show signal.
 - Pro: high-value for marketing teams at bigger tools
 - Con: pricing is unvalidated, market size unknown
 
+## How This Skill Works
+
+### Mode 1: Pre-Revenue (current stage)
+No paying customers yet. Focus on getting first conversation, not first payment.
+
+### Mode 2: First Conversations
+A maker has claimed their tool. Turn that into a pricing conversation.
+
+### Mode 3: First Payment
+Someone expressed willingness to pay. Close it.
+
 ## What NOT to Do
 - Don't build Stripe integration until someone says "shut up and take my money"
 - Don't invent pricing tiers without talking to a real maker
@@ -75,9 +86,29 @@ The 24 emails we sent. More batches if earlier ones show signal.
 
 **Talk to a maker.** Not email them a claim link — TALK to them. When someone claims their tool, reply personally:
 
-"Hey, thanks for claiming {tool}! I'm Pat, one of the founders. Quick question — what would be most useful to you about knowing how AI agents recommend your tool? We're figuring out what's worth building next."
+```
+Hey, thanks for claiming {tool}! I'm Pat, one of the founders. Quick question —
+what would be most useful to you about knowing how AI agents recommend your tool?
+We're figuring out what's worth building next.
+```
 
 That conversation tells us what to charge for. Everything else is guessing.
+
+## Proactive Triggers
+
+- **Maker claims a tool** → Draft a personal reply (Mode 2)
+- **Someone asks "do you have a paid plan?"** → This is the buy signal. Don't deflect.
+- **Tempted to build pricing page** → Check: has anyone asked to pay? If no, stop.
+- **Strategy discussion mentions "$299/mo"** → Challenge. Who said they'd pay that?
+
+## Output Artifacts
+
+| Situation | Deliverable |
+|-----------|------------|
+| Pre-revenue planning | Priority list: who to talk to first |
+| Maker claimed | Personal reply email draft |
+| Pricing conversation | Proposed price point with reasoning |
+| First payment | Stripe setup checklist |
 
 ## Pricing (from Sahil)
 - There is a massive difference between free and $1
