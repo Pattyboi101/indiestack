@@ -2483,6 +2483,27 @@ async def api_categories(request: Request):
     return JSONResponse({"categories": results, "total": len(results)})
 
 
+_GAP_BLOCKLIST = {
+    'xbox game pass', 'akoraimagbuot', 'wace', 'test', 'asdf', 'hello',
+    'indiestack', 'xxx', 'porn', 'sex', '{search_term_string}',
+}
+
+
+def _is_valid_gap(query: str) -> bool:
+    q = query.strip().lower()
+    if len(q) < 3 or len(q) > 60:
+        return False
+    if q in _GAP_BLOCKLIST:
+        return False
+    if not any(c.isalpha() for c in q):
+        return False
+    # Filter XSS/injection payloads
+    for pattern in ('script', 'alert(', 'onerror', 'onload', '<svg', 'union select', "' or ", 'drop table'):
+        if pattern in q:
+            return False
+    return True
+
+
 @app.get("/api/gaps")
 async def api_gaps(request: Request, days: int = 30, min_searches: int = 3, limit: int = 20):
     """Market gaps — queries that returned zero results, ranked by search volume.
@@ -2492,7 +2513,8 @@ async def api_gaps(request: Request, days: int = 30, min_searches: int = 3, limi
     """
     d = request.state.db
     try:
-        gaps = await get_search_gaps(d, days=days, min_searches=min_searches, limit=min(limit, 50))
+        raw = await get_search_gaps(d, days=days, min_searches=min_searches, limit=min(limit, 50) * 3)
+        gaps = [g for g in raw if _is_valid_gap(g.get("query", ""))][:min(limit, 50)]
     except Exception:
         gaps = []
     return JSONResponse({
