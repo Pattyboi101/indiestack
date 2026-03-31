@@ -1831,10 +1831,11 @@ async def api_tools_search(
     except Exception:
         pass
 
+    from html import escape as _h_esc
     response = {
         "tools": results,
         "total": len(results),
-        "query": q,
+        "query": _h_esc(q) if q else "",
         "offset": offset,
         "personalized": personalized,
     }
@@ -1861,9 +1862,9 @@ async def api_tools_search(
         except Exception:
             gap_data = {}
         response["market_gap"] = {
-            "message": f"No tools found for '{q.strip()}'. This is an unsolved market gap — consider building one.",
+            "message": f"No tools found for '{_h_esc(q.strip())}'. This is an unsolved market gap — consider building one.",
             "submit_url": f"{BASE_URL}/submit",
-            "query": q.strip(),
+            "query": _h_esc(q.strip()),
             "searches_30d": gap_data.get("searches_30d", demand),
             "unique_agents": gap_data.get("unique_agents", 0),
         }
