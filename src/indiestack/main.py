@@ -181,7 +181,7 @@ _FOUNDER_PHOTO_DIR_CANDIDATES = [
 _founder_photo_cache: dict[str, bytes] = {}
 
 from indiestack import db
-from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping, create_notification, record_tool_pair
+from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping, create_notification, record_tool_pair, get_search_gaps
 from indiestack.email import send_email, ego_ping_html, maker_welcome_html, email_verification_html
 from indiestack.auth import get_current_user
 from indiestack.routes import landing, browse, tool, search, submit, admin, purchase
@@ -2481,6 +2481,26 @@ async def api_categories(request: Request):
             "tool_count": int(c.get("tool_count", 0)),
         })
     return JSONResponse({"categories": results, "total": len(results)})
+
+
+@app.get("/api/gaps")
+async def api_gaps(request: Request, days: int = 30, min_searches: int = 3, limit: int = 20):
+    """Market gaps — queries that returned zero results, ranked by search volume.
+
+    These represent unmet demand: things developers and AI agents are looking for
+    but can't find on IndieStack. Useful for tool makers deciding what to build.
+    """
+    d = request.state.db
+    try:
+        gaps = await get_search_gaps(d, days=days, min_searches=min_searches, limit=min(limit, 50))
+    except Exception:
+        gaps = []
+    return JSONResponse({
+        "gaps": gaps,
+        "total": len(gaps),
+        "period_days": days,
+        "min_searches": min_searches,
+    })
 
 
 @app.get("/api/tools/{slug}/compatible")

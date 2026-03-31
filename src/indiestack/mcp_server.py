@@ -1351,6 +1351,57 @@ async def list_tags(*, ctx: Context) -> str:
 
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
+async def get_market_gaps(days: int = 30, limit: int = 10, *, ctx: Context) -> str:
+    """Get market gaps — things developers and AI agents search for but can't find.
+
+    Returns zero-result queries ranked by search volume. These represent
+    unmet demand: tools that don't exist yet (or aren't on IndieStack).
+    Useful for tool makers deciding what to build next, or for agents
+    understanding what categories have coverage gaps.
+
+    Args:
+        days: Look back period in days (default 30, max 90).
+        limit: Number of gaps to return (default 10, max 50).
+    """
+    cached = _cache_get(f"gaps_{days}_{limit}", 300)
+    if cached:
+        return cached
+
+    client = _get_client(ctx)
+    await ctx.report_progress(progress=0, total=1)
+    try:
+        data = await _api_get(client, "/api/gaps", {
+            "days": min(days, 90),
+            "limit": min(limit, 50),
+            "min_searches": 3,
+        })
+    except Exception as e:
+        return f"Error fetching market gaps: {e}"
+    finally:
+        await ctx.report_progress(progress=1, total=1)
+
+    gaps = data.get("gaps", [])
+    if not gaps:
+        return "No significant market gaps found in the selected period."
+
+    lines = [f"# Market Gaps ({len(gaps)} unmet needs, last {days} days)\n"]
+    lines.append("These queries returned zero results — tools people want but can't find:\n")
+    for i, g in enumerate(gaps, 1):
+        searches = g.get("count", 0)
+        sources = g.get("unique_sources", 1)
+        query = g.get("query", "unknown")
+        lines.append(f"{i}. **{query}** — {searches} searches from {sources} source(s)")
+
+    lines.append("\n---")
+    lines.append("*If you're building a developer tool in one of these categories,")
+    lines.append("submit it at indiestack.ai/submit to get discovered by AI agents.*")
+
+    result = "\n".join(lines)
+    _cache_set(f"gaps_{days}_{limit}", result)
+    return result
+
+
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
 async def list_stacks(*, ctx: Context) -> str:
     """List all stacks on IndieStack — curated bundles and auto-generated combinations.
 
