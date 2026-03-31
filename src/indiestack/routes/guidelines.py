@@ -63,4 +63,4 @@ async def guidelines(request: Request):
         </div>
     </div>
     """
-    return HTMLResponse(page_shell("Submission Guidelines", body, user=request.state.user))
+    return HTMLResponse(page_shell("Submission Guidelines", body, user=request.state.user, description="What we look for when reviewing tool submissions. IndieStack is a curated directory — AI agents rely on our curation to make reliable recommendations."))

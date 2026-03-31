@@ -1238,7 +1238,7 @@ def tool_card(tool: dict, compact: bool = False) -> str:
                                                               font-family:var(--font-mono);">{cat_name}</a>
             {tag_html}
             <div style="display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:12px;flex-wrap:wrap;">
-                {f'<a href="/maker/{escape(str(tool.get("maker_slug", "")))}" style="font-size:12px;color:var(--ink-muted);text-decoration:none;display:flex;align-items:center;gap:4px;" title="Made by {escape(str(tool.get("maker_name", "")))}"><span style="color:var(--ink-muted);">by</span> <span style="color:var(--cyan);font-weight:600;">{escape(str(tool.get("maker_name", "")))}</span></a>' if tool.get('maker_name') and tool.get('maker_slug') else ''}
+                {f'<a href="/maker/{escape(str(tool.get("maker_slug", "")))}" style="font-size:12px;color:var(--ink-muted);text-decoration:none;display:flex;align-items:center;gap:4px;" title="Made by {escape(str(tool.get("maker_name", "")))}"><span style="color:var(--ink-muted);">by</span> <span style="color:var(--accent);font-weight:600;">{escape(str(tool.get("maker_name", "")))}</span></a>' if tool.get('maker_name') and tool.get('maker_slug') else ''}
                 {visit_html}
                 {gh_indicator}
                 {ai_recs_html}

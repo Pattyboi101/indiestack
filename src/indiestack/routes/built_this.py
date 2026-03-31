@@ -78,7 +78,7 @@ def _built_this_form(error: str = "", url_val: str = "", desc_val: str = "",
             </form>
             <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--ink-muted);line-height:1.5;">
                 We'll review it within 24 hours. Your project gets discovered<br>
-                by AI agents via our <a href="/explore" style="color:var(--cyan);text-decoration:none;">MCP server</a>.
+                by AI agents via our <a href="/explore" style="color:var(--accent);text-decoration:none;">MCP server</a>.
             </p>
         </div>
     </div>
