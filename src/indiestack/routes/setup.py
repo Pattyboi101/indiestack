@@ -50,7 +50,7 @@ Before installing ANY new package via npm, pip, yarn, or pnpm:
 ## Before Writing Infrastructure
 Before writing auth, payments, databases, email, monitoring, or any common
 infrastructure from scratch, call `find_tools(query)` first. Use an existing
-tool instead of generating boilerplate. 3,100+ curated tools indexed.
+tool instead of generating boilerplate. 3,100+ curated tools indexed. 10,000+ installs.
 
 ## Available Tools
 - `analyze_dependencies(manifest)` — 0-100 health score (MUST use before installs)
@@ -136,7 +136,7 @@ async def setup_page(request: Request):
         <div style="background:linear-gradient(135deg,#065F46,#064E3B);border:1px solid rgba(110,231,183,0.3);
                     border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;text-align:center;">
             <p style="color:#6EE7B7;font-size:20px;font-weight:700;margin:0 0 4px;">Welcome to IndieStack, {_name}!</p>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 3,100+ developer tools.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 3,100+ developer tools. 10,000+ installs and growing.</p>
         </div>'''
 
     body = f'''
