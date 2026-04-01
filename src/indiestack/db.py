@@ -2319,6 +2319,7 @@ async def search_tools(
         " + (MIN(COALESCE(t.github_stars, 0), 5000) / 500.0)"
         " + (CASE WHEN t.health_status = 'alive' THEN 5 ELSE 0 END)"
         " + (CASE WHEN t.maker_id IS NOT NULL THEN 15 ELSE 0 END)"
+        " + (CASE WHEN COALESCE(t.install_command, '') = '' THEN -40 ELSE 10 END)"
         " + (CASE WHEN COALESCE(t.is_reference, 0) = 1 THEN -30 ELSE 0 END)"
         " + (CASE WHEN (SELECT COUNT(*) FROM agent_actions aa WHERE aa.tool_slug = t.slug AND aa.action = 'report_outcome') >= 3"
         "     THEN (SELECT CAST(SUM(CASE WHEN aa2.success = 1 THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) * 30"
