@@ -67,9 +67,11 @@ Rule: react to their post → reply publicly → THEN DM. Never cold DM.
 Adapt for each channel but the core is:
 
 > Your tool + IndieStack = AI agents recommend it to developers automatically.
-> 3,100+ tools indexed. Free to list. Takes 2 min.
+> 3,100+ tools indexed. 10,000+ installs. Free to list. Takes 2 min.
 
 You're OFFERING free distribution through AI agents. Not asking for anything.
+
+**Key stat to always include: "10,000+ installs from PyPI, 370+ downloads/day."** This is real traction, not a pitch — it's verifiable at pepy.tech/projects/indiestack.
 
 ---
 

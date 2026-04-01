@@ -218,7 +218,7 @@ async def landing(request: Request):
         '        </a>'
         '    </div>'
         + f'    <p style="font-size:13px;color:var(--ink-light);margin-top:16px;">'
-        f'        {tool_count}+ tools &middot; {ai_recs:,}+ AI queries &middot; 100% free'
+        f'        {tool_count}+ tools &middot; 10,000+ installs &middot; {ai_recs:,}+ AI queries &middot; 100% free'
         f'    </p>'
         '    </div>'  # close content wrapper
         '</section>'
