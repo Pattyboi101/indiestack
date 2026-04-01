@@ -34,7 +34,7 @@ BG_GREEN = "\033[42m"
 BG_BLUE = "\033[44m"
 BG_CYAN = "\033[46m"
 
-CONFIG = {"base_url": "https://indiestack.fly.dev"}
+CONFIG = {"base_url": "https://indiestack.ai"}
 
 
 def base_url():

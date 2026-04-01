@@ -9,7 +9,7 @@ conn.execute("""
     VALUES (
         'Community Curated',
         'community',
-        'Tools listed by the IndieStack community. Not affiliated with or endorsed by the tool creators. If you built one of these tools, claim your listing at indiestack.fly.dev.',
+        'Tools listed by the IndieStack community. Not affiliated with or endorsed by the tool creators. If you built one of these tools, claim your listing at indiestack.ai.',
         'Community'
     )
 """)

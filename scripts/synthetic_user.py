@@ -9,7 +9,7 @@ Usage:
   python3 scripts/synthetic_user.py [target_url]
 
 Example:
-  python3 scripts/synthetic_user.py https://indiestack.fly.dev
+  python3 scripts/synthetic_user.py https://indiestack.ai
   python3 scripts/synthetic_user.py http://localhost:8080
 """
 
@@ -243,7 +243,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         BASE_URL = sys.argv[1].rstrip('/')
     else:
-        BASE_URL = "https://indiestack.fly.dev"
+        BASE_URL = "https://indiestack.ai"
 
     print(f"Running synthetic user tests against {BASE_URL}...")
     print()

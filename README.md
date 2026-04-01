@@ -1,176 +1,120 @@
 # IndieStack
 
-[![txt_to_fasta.py on IndieStack](https://indiestack.fly.dev/api/badge/txt-to-fasta.svg)](https://indiestack.fly.dev/tool/txt-to-fasta)
+Your AI agent searches 3,100 developer tools before writing code from scratch.
 
-A curated directory of 880+ indie tools with a built-in MCP server that lets AI coding assistants search the catalog before generating boilerplate.
+```bash
+claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
+```
 
-**Your AI is writing code you don't need.** Instead of generating 47,000 tokens of analytics boilerplate, IndieStack finds an existing indie tool in 700 tokens.
-
-[Website](https://indiestack.fly.dev)
+Then ask your agent:
+- "Find an auth solution for my Next.js app"
+- "What's the lightest open-source payments library?"
+- "Show me migration paths away from Webpack"
 
 ---
 
-## MCP Server Quick Start
+## What it does
 
-IndieStack is published on PyPI as a Model Context Protocol (MCP) server. Install it and connect it to your AI coding assistant in under a minute.
+Before your AI writes auth, payments, or email boilerplate — IndieStack searches 3,100+ curated developer tools with real compatibility data from 8,700+ repos. You get install commands, health scores, and what tools actually work together in production.
 
-### Claude Code
+"Indie" is the curation filter: independent developers and small teams. Focused, lean, maintained, honest pricing.
 
+---
+
+## Install
+
+**Claude Code** (zero install — runs via uvx):
+```bash
+claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
+```
+
+**Cursor / Windsurf** — add to your MCP config:
+```json
+{"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]}
+```
+
+**Persistent install:**
+```bash
+pipx install indiestack
+claude mcp add indiestack -- indiestack-mcp
+```
+
+**CLI (terminal use):**
 ```bash
 pip install indiestack
-claude mcp add indiestack -- python -m indiestack.mcp_server
+
+indiestack search "analytics"
+indiestack details simple-analytics
+indiestack stack "auth, payments, email"
 ```
 
-### Cursor
+---
 
-Add to your `.cursor/mcp.json`:
+## Tools (22)
 
-```json
-{
-  "mcpServers": {
-    "indiestack": {
-      "command": "python",
-      "args": ["-m", "indiestack.mcp_server"]
-    }
-  }
-}
-```
-
-### Windsurf
-
-Add to your `~/.windsurf/mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "indiestack": {
-      "command": "python",
-      "args": ["-m", "indiestack.mcp_server"]
-    }
-  }
-}
-```
-
-### Available Tools
-
-The MCP server exposes two tools via stdio transport:
-
-| Tool | Description |
+| Tool | What it does |
 |------|-------------|
-| `search_indie_tools(query)` | Search the directory by keyword, category, or use case |
-| `get_tool_details(slug)` | Get full details for a specific tool |
+| `find_tools` | Search 3,100+ developer tools with 11 filters: price, health, stars, success rate, language, tags, compatibility |
+| `find_compatible` | Find tools compatible with a given tool — grouped by category, with verified stacks and conflict warnings |
+| `get_tool_details` | Integration code, pricing, API specs, and compatibility data |
+| `scan_project` | Analyze a project description + tech stack, get a complete tool recommendation |
+| `report_compatibility` | Report that two tools work well together — builds the compatibility graph |
+| `report_outcome` | Report success/failure with `used_with` and `incompatible_with` — feeds the compatibility graph |
+| `check_health` | GitHub health audit — maintenance grade, last commit, stars, alternatives for stale tools |
+| `list_categories` | Browse all 25 categories |
+| `compare_tools` | Side-by-side comparison of any two tools |
+| `build_stack` | Turn a 50,000-token generation into a 2,000-token assembly |
+| `publish_tool` | Submit a developer tool so other agents can recommend it |
+| `browse_new_tools` | Recently added tools with pagination |
+| `list_tags` | All tags sorted by popularity |
+| `get_market_gaps` | Top unmet needs — what developers search for but can't find |
+| `list_stacks` | Curated stacks for common use cases |
+| `analyze_dependencies` | Scan package.json/requirements.txt for better alternatives |
+| `evaluate_build_vs_buy` | Financial breakdown: build from scratch vs use what exists |
+| `get_recommendations` | Personalized suggestions based on your search history |
+
+### Resources
+
+| Resource | What it provides |
+|----------|-----------------|
+| `indiestack://categories` | All 25 categories with slugs for filtering |
+| `indiestack://trending` | Top 10 trending developer tools this week |
+| `indiestack://tools-index` | Complete index for prompt caching — include once, reference forever |
+
+### Prompts
+
+| Prompt | When to use |
+|--------|-------------|
+| `before-you-build` | Check IndieStack before building common functionality |
+| `find-alternatives` | Find indie alternatives to mainstream SaaS products |
+| `save-tokens` | Audit your project for token-saving opportunities |
+| `architect-feature` | Plan a feature using existing indie building blocks |
+| `discover-indie` | Explore what indie developers have built |
 
 ---
 
-## What It Does
+## What's new in v1.12
 
-IndieStack is a web directory and discovery platform for independent software products.
+- **Market gaps** — `get_market_gaps()` exposes zero-result queries ranked by search volume. See what tools are missing from the ecosystem.
+- **Trust-weighted search** — Tools with higher agent success rates rank higher. Real outcome data, not just star count.
+- **Agent success badges** — Search results show success rate badges when outcome data is available.
 
-- **Browse and search** 130+ curated indie SaaS tools across categories like analytics, auth, payments, email, and more
-- **MCP integration** lets AI assistants recommend existing tools instead of generating boilerplate code
-- **Maker profiles** for indie developers to showcase their products
-- **Alternatives pages** for programmatic SEO (e.g., "IndieStack alternatives to Segment")
-- **Stack analyzer** to evaluate tool combinations
-- **Stripe Connect** payments for premium placements and Pro maker accounts
-- **Reviews, wishlists, and changelogs** for community engagement
+## What's new in v1.11
 
----
-
-## Project Structure
-
-```
-src/indiestack/
-├── main.py            # FastAPI app + route registration
-├── db.py              # SQLite database layer
-├── auth.py            # Authentication
-├── payments.py        # Stripe Connect integration
-├── email.py           # Transactional email (SMTP)
-├── mcp_server.py      # MCP server (PyPI package entry point)
-├── routes/
-│   ├── components.py  # Shared UI components (page shell, nav, footer)
-│   ├── landing.py     # Homepage
-│   ├── browse.py      # Category browsing
-│   ├── tool.py        # Tool detail pages
-│   ├── search.py      # Search
-│   ├── submit.py      # Tool submission
-│   ├── admin.py       # Admin panel
-│   ├── dashboard.py   # User dashboard
-│   ├── maker.py       # Maker profiles
-│   ├── alternatives.py# Programmatic SEO pages
-│   ├── stacks.py      # Stack analyzer
-│   └── ...            # Other routes
-```
-
-The frontend uses pure Python string templates with a shared component system -- no Jinja2 or JS framework required.
+- **Migration intelligence** — Tool details include real migration data from 5,000+ GitHub repos. "jest → vitest: 27 repos", "webpack → vite: 13 repos".
+- **Verified combos** — 60,000+ verified package combinations from production repos.
+- **Unlimited searches** — All rate limits removed.
+- **2,100+ install commands** — 26% of tools have `install_command` populated.
 
 ---
 
-## Self-Hosting
+## Links
 
-### Requirements
-
-- Python 3.11+
-- SQLite
-
-### Setup
-
-```bash
-git clone https://github.com/Pattyboi101/indiestack.git
-cd indiestack
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -e ".[server]"
-```
-
-### Environment Variables
-
-Create a `.env` file:
-
-```
-SECRET_KEY=your-secret-key
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_PUBLISHABLE_KEY=pk_test_...
-SMTP_HOST=smtp.gmail.com
-SMTP_USER=you@example.com
-SMTP_PASSWORD=your-app-password
-SMTP_FROM=you@example.com
-```
-
-### Run
-
-```bash
-uvicorn src.indiestack.main:app --reload
-```
-
-The app will be available at `http://localhost:8000`.
-
-### Seed Data
-
-```bash
-python3 seed_tools.py
-```
-
-Populates the database with sample indie tools for development.
-
-### Deploy to Fly.io
-
-```bash
-fly deploy --remote-only
-```
+- [indiestack.ai](https://indiestack.ai)
+- [Explore Tools](https://indiestack.ai/explore)
+- [Submit Your Tool](https://indiestack.ai/submit)
+- [What is IndieStack?](https://indiestack.ai/what-is-indiestack)
 
 ---
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Commit your changes
-4. Open a pull request
-
-Please keep PRs focused and include a clear description of what changed and why.
-
----
-
-## License
-
-MIT
+MIT License

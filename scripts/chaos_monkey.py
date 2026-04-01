@@ -18,7 +18,7 @@ import threading
 import datetime
 import sys
 
-TARGET = "https://indiestack.fly.dev"
+TARGET = "https://indiestack.ai"
 REPORT_PATH = "/tmp/chaos_monkey_report.md"
 TIMEOUT = 5
 
@@ -85,8 +85,12 @@ def test_xss():
         ("svg xss", "<svg/onload=alert(1)>"),
     ]
     for label, payload in payloads:
-        path = "/api/tools/search?q=" + urllib.parse.quote(payload)
+        path = "/api/tools/search?q=" + urllib.parse.quote(payload, safe="")
         code, body = req("GET", path)
+        if code is None:
+            record(f"XSS ({label})", False,
+                   f"HTTP None — request failed (inconclusive, manual check required)")
+            continue
         # API returns JSON — check the raw payload isn't reflected unescaped
         raw_reflected = payload.lower() in body.lower()
         if raw_reflected:
@@ -143,7 +147,10 @@ def test_auth_bypass():
         code, body = req("GET", path)
         # PASS: 401, 403, or redirect to /login (302/303)
         # FAIL: 200 with protected content rendered
-        if code == 200:
+        if code is None:
+            record(f"Auth bypass ({label})", False,
+                   f"HTTP None — request failed (inconclusive)")
+        elif code == 200:
             # Heuristic: if "log in", "login", "sign in" appears it's the login page
             looks_like_login = any(k in body.lower() for k in ["log in", "login", "sign in", "github"])
             if looks_like_login:
