@@ -1,6 +1,6 @@
 # IndieStack — MCP Server + CLI
 
-Before your AI writes auth, payments, or email code from scratch — search 3,100+ curated developer tools with verified compatibility data and migration intelligence from 8,700+ repos. Unlike a web search, you get install commands, health scores, and what tools actually work together in production.
+Before your AI writes auth, payments, or email code from scratch — search 3,100+ curated developer tools with verified compatibility data and migration intelligence from 8,700+ repos. 10,000+ installs. Unlike a web search, you get install commands, health scores, and what tools actually work together in production.
 
 <!-- mcp-name: io.github.Pattyboi101/indiestack -->
 
