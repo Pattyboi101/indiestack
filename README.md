@@ -1,6 +1,6 @@
 # IndieStack
 
-Your AI agent searches 3,100 developer tools before writing code from scratch.
+Your AI agent searches 3,100 developer tools before writing code from scratch. 10,000+ installs.
 
 ```bash
 claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
