@@ -1732,7 +1732,7 @@ async def api_tools_search(
                     {
                         "category": r["category"],
                         "category_slug": r["category_slug"],
-                        "reason": f"{r['repo_count']} repos using this also use {r['category'].lower()} tools",
+                        "reason": f"{r['repo_count']} repos using this also use {r['category'].lower()}" + ("" if "tool" in r['category'].lower() else " tools"),
                     }
                     for r in related
                 ]
