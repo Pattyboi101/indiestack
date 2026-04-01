@@ -2305,15 +2305,20 @@ async def search_tools(
     # two extra LIKE params (exact match + prefix match) injected into the
     # parameter tuple — see `_engagement_params` below.
     # Category-name boost: tools whose category matches the query rank higher.
+    # Engagement scoring: category match and tag match dominate. Stars are a
+    # weak tiebreaker — SaaS tools (Stripe, Resend) have 0 stars but should
+    # rank above open-source tools with stars in unrelated categories.
+    # MCP views indicate real agent usage and get a strong boost.
     _engagement_expr = (
         "(CASE WHEN LOWER(t.name) = LOWER(?) THEN 150 ELSE 0 END)"
         " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 60 ELSE 0 END)"
         " + (CASE WHEN EXISTS(SELECT 1 FROM tool_categories tc2 JOIN categories c2 ON c2.id=tc2.category_id WHERE tc2.tool_id=t.id AND LOWER(c2.name) LIKE ('%' || LOWER(?) || '%')) THEN 100 ELSE 0 END)"
         " + (CASE WHEN (',' || LOWER(t.tags) || ',') LIKE ('%,' || LOWER(?) || ',%') THEN 40 ELSE 0 END)"
         " + (t.upvote_count * 2)"
-        " + (COALESCE(t.mcp_view_count, 0) * 3)"
-        " + (MIN(COALESCE(t.github_stars, 0), 5000) / 100.0)"
+        " + (COALESCE(t.mcp_view_count, 0) * 5)"
+        " + (MIN(COALESCE(t.github_stars, 0), 5000) / 500.0)"
         " + (CASE WHEN t.health_status = 'alive' THEN 5 ELSE 0 END)"
+        " + (CASE WHEN t.maker_id IS NOT NULL THEN 15 ELSE 0 END)"
         " + (CASE WHEN COALESCE(t.is_reference, 0) = 1 THEN -30 ELSE 0 END)"
         " + (CASE WHEN (SELECT COUNT(*) FROM agent_actions aa WHERE aa.tool_slug = t.slug AND aa.action = 'report_outcome') >= 3"
         "     THEN (SELECT CAST(SUM(CASE WHEN aa2.success = 1 THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) * 30"
