@@ -2310,7 +2310,8 @@ async def search_tools(
     # rank above open-source tools with stars in unrelated categories.
     # MCP views indicate real agent usage and get a strong boost.
     _engagement_expr = (
-        "(CASE WHEN LOWER(t.name) = LOWER(?) THEN 150 ELSE 0 END)"
+        "(CASE WHEN LOWER(t.name) = LOWER(?) AND COALESCE(t.install_command, '') != '' THEN 150"
+        "  WHEN LOWER(t.name) = LOWER(?) THEN 30 ELSE 0 END)"
         " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 60 ELSE 0 END)"
         " + (CASE WHEN EXISTS(SELECT 1 FROM tool_categories tc2 JOIN categories c2 ON c2.id=tc2.category_id WHERE tc2.tool_id=t.id AND LOWER(c2.name) LIKE ('%' || LOWER(?) || '%')) THEN 100 ELSE 0 END)"
         " + (CASE WHEN (',' || LOWER(t.tags) || ',') LIKE ('%,' || LOWER(?) || ',%') THEN 40 ELSE 0 END)"
@@ -2329,8 +2330,8 @@ async def search_tools(
         "     5.0 * (1.0 - (julianday('now') - julianday(t.created_at)) / 14.0)"
         "    ELSE 0 END)"
     )
-    # The four params consumed by _engagement_expr (exact name, prefix, category, tags)
-    _engagement_params: list = [query.strip(), query.strip(), query.strip(), query.strip()]
+    # The five params consumed by _engagement_expr (exact name w/install, exact name w/o, prefix, category, tags)
+    _engagement_params: list = [query.strip(), query.strip(), query.strip(), query.strip(), query.strip()]
 
     # Determine sort order — returns (sql_fragment, extra_params)
     def _fts_order():
