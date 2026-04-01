@@ -10,6 +10,7 @@ set -e
 REPO_DIR="$HOME/indiestack"
 SESSION="outreach"
 CLAUDE_FLAGS="--dangerously-skip-permissions"
+# Add claude-peers if installed: --dangerously-load-development-channels server:claude-peers
 
 declare -a DEPT_ORDER=(master research copy tracking)
 declare -A MODELS=(
