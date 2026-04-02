@@ -2308,6 +2308,23 @@ async def search_tools(
     sort: str = "",
     frameworks: str = "",
 ):
+    # Detect "[tool] alternative" pattern — auto-exclude the named tool
+    # "stripe alternative" → search "stripe" but exclude stripe from results
+    # "alternative to stripe" → same
+    _alt_patterns = re.match(
+        r'^(.+?)\s+alternatives?\s*$|^alternatives?\s+(?:to|for)\s+(.+)$',
+        query.strip(), re.IGNORECASE)
+    if _alt_patterns:
+        _alt_tool = (_alt_patterns.group(1) or _alt_patterns.group(2) or '').strip().lower()
+        if _alt_tool and not exclude:
+            # Find the tool's slug and add to exclude list
+            _slug_cursor = await db.execute(
+                "SELECT slug FROM tools WHERE LOWER(name) = ? AND status = 'approved' LIMIT 1",
+                (_alt_tool,))
+            _slug_row = await _slug_cursor.fetchone()
+            if _slug_row:
+                exclude = _slug_row['slug']
+
     # Build dynamic WHERE clauses shared across FTS and fallback queries
     extra_where = ""
     extra_params: list = []
