@@ -1671,6 +1671,30 @@ async def init_db():
         except Exception:
             pass
 
+        # Migration: visitor_id on search_logs for anonymous personalisation
+        try:
+            await db.execute("ALTER TABLE search_logs ADD COLUMN visitor_id TEXT")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_search_logs_visitor ON search_logs(visitor_id)")
+            await db.commit()
+        except Exception:
+            pass
+
+        # Anonymous visitor profiles for silent personalisation
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS visitor_profiles (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                visitor_id TEXT NOT NULL UNIQUE,
+                interests TEXT NOT NULL DEFAULT '{}',
+                tech_stack TEXT NOT NULL DEFAULT '[]',
+                favorite_tools TEXT NOT NULL DEFAULT '[]',
+                search_count INTEGER NOT NULL DEFAULT 0,
+                last_rebuilt_at TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_visitor_profiles_vid ON visitor_profiles(visitor_id)")
+        await db.commit()
+
         # Manifest cooccurrence mining table (implicit compatibility pairs)
         await db.execute("""
             CREATE TABLE IF NOT EXISTS manifest_cooccurrences (
@@ -5723,16 +5747,18 @@ async def get_stack_preview_tools(db, stack_id: int, limit: int = 3):
 
 async def log_search(db, query: str, source: str = 'web', result_count: int = 0,
                      top_result_slug: str = None, top_result_name: str = None,
-                     api_key_id: int = None, agent_client: str = None):
+                     api_key_id: int = None, agent_client: str = None,
+                     visitor_id: str = None):
     """Log a search query for the Live Wire feed and maker analytics."""
     if not query or not query.strip():
         return
     normalized = normalize_search_query(query)
     await db.execute(
-        """INSERT INTO search_logs (query, normalized_query, source, result_count, top_result_slug, top_result_name, api_key_id, agent_client)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+        """INSERT INTO search_logs (query, normalized_query, source, result_count, top_result_slug, top_result_name, api_key_id, agent_client, visitor_id)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (query.strip()[:200], normalized, source, result_count, top_result_slug, top_result_name, api_key_id,
-         str(agent_client)[:100] if agent_client else None))
+         str(agent_client)[:100] if agent_client else None,
+         str(visitor_id)[:16] if visitor_id else None))
     await db.commit()
 
 
@@ -6923,6 +6949,87 @@ async def build_developer_profile(db, api_key_id: int) -> dict:
                (api_key_id, interests, tech_stack, favorite_tools, search_count, last_rebuilt_at)
                VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)""",
             (api_key_id, json.dumps(interests), json.dumps(tech_stack),
+             json.dumps(favorite_tools), search_count))
+    await db.commit()
+
+    return {'interests': interests, 'tech_stack': tech_stack,
+            'favorite_tools': favorite_tools, 'search_count': search_count}
+
+
+async def _get_visitor_profile(db, visitor_id: str):
+    """Get an anonymous visitor's personalisation profile."""
+    cursor = await db.execute(
+        "SELECT * FROM visitor_profiles WHERE visitor_id = ?", (visitor_id,))
+    row = await cursor.fetchone()
+    return dict(row) if row else None
+
+
+async def build_visitor_profile(db, visitor_id: str) -> dict:
+    """Build a profile from anonymous search history (keyed on visitor_id).
+
+    Same logic as build_developer_profile but uses visitor_id instead of api_key_id.
+    Only builds after 10+ searches to avoid noise from drive-by visitors.
+    """
+    import json
+    from collections import Counter
+
+    cursor = await db.execute(
+        """SELECT query, top_result_slug, created_at,
+                  julianday('now') - julianday(created_at) as days_ago
+           FROM search_logs
+           WHERE visitor_id = ? AND created_at >= datetime('now', '-90 days')
+           ORDER BY created_at DESC""",
+        (visitor_id,))
+    searches = [dict(r) for r in await cursor.fetchall()]
+
+    search_count = len(searches)
+    if search_count < 10:
+        return {'interests': {}, 'tech_stack': [], 'favorite_tools': [], 'search_count': search_count}
+
+    category_scores = Counter()
+    tech_found = Counter()
+    tool_slugs = Counter()
+
+    for s in searches:
+        q = (s['query'] or '').lower()
+        days = s['days_ago'] or 0
+        weight = 3.0 if days <= 7 else (2.0 if days <= 30 else 1.0)
+
+        for keyword, mapping in NEED_MAPPINGS.items():
+            terms = [keyword] + mapping.get('terms', [])
+            for term in terms:
+                if term.lower() in q:
+                    category_scores[mapping['category']] += weight
+                    break
+
+        for kw in TECH_KEYWORDS:
+            if kw in q:
+                tech_found[kw] += weight
+
+        if s['top_result_slug']:
+            tool_slugs[s['top_result_slug']] += 1
+
+    max_score = max(category_scores.values()) if category_scores else 1
+    interests = {cat: round(score / max_score, 2) for cat, score in category_scores.most_common(10)}
+    tech_stack = [kw for kw, _ in tech_found.most_common(10)]
+    favorite_tools = [slug for slug, count in tool_slugs.most_common(20) if count >= 2]
+
+    # Upsert visitor profile
+    existing = await _get_visitor_profile(db, visitor_id)
+    if existing:
+        await db.execute(
+            """UPDATE visitor_profiles
+               SET interests = ?, tech_stack = ?, favorite_tools = ?,
+                   search_count = ?, last_rebuilt_at = CURRENT_TIMESTAMP
+               WHERE visitor_id = ?""",
+            (json.dumps(interests), json.dumps(tech_stack), json.dumps(favorite_tools),
+             search_count, visitor_id))
+    else:
+        await db.execute(
+            """INSERT INTO visitor_profiles
+               (visitor_id, interests, tech_stack, favorite_tools, search_count, last_rebuilt_at)
+               VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)""",
+            (visitor_id, json.dumps(interests), json.dumps(tech_stack),
              json.dumps(favorite_tools), search_count))
     await db.commit()
 

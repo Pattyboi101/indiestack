@@ -1752,13 +1752,17 @@ async def api_tools_search(
     except Exception:
         pass  # Don't fail search if success rates unavailable
 
+    # Compute visitor_id for search logging + anonymous personalisation
+    _visitor_raw = f"{request.headers.get('fly-client-ip', '') or request.headers.get('x-forwarded-for', '').split(',')[0].strip() or (request.client.host if request.client else '')}:{request.headers.get('user-agent', '')}"
+    _search_visitor_id = hashlib.sha256(_visitor_raw.encode()).hexdigest()[:16] if _visitor_raw != ':' else None
+
     # Log the search for Live Wire
     try:
         top_slug = tools[0]['slug'] if tools else None
         top_name = tools[0]['name'] if tools else None
         api_key_id = request.state.api_key['id'] if request.state.api_key else None
         agent_client = request.headers.get("User-Agent", "")[:100] or None
-        await db.log_search(d, q, 'api', len(results), top_slug, top_name, api_key_id=api_key_id, agent_client=agent_client)
+        await db.log_search(d, q, 'api', len(results), top_slug, top_name, api_key_id=api_key_id, agent_client=agent_client, visitor_id=_search_visitor_id)
     except Exception:
         pass  # Don't fail the search if logging fails
 
@@ -1805,6 +1809,39 @@ async def api_tools_search(
         if profile and not profile.get('notice_shown', 0):
             notice = "IndieStack is learning your preferences to improve recommendations. View or manage your profile at indiestack.ai/developer"
             await db.mark_notice_shown(d, api_key['id'])
+
+    # Silent anonymous personalisation — uses visitor_id from IP+UA hash
+    # No announcement, no nudge — just quietly better results after 10+ searches
+    if not personalized and results and _search_visitor_id:
+        try:
+            visitor_profile = await db._get_visitor_profile(d, _search_visitor_id)
+            should_rebuild_visitor = False
+            if not visitor_profile:
+                # Check if enough searches to justify building a profile
+                count_cursor = await d.execute(
+                    "SELECT COUNT(*) as cnt FROM search_logs WHERE visitor_id = ?",
+                    (_search_visitor_id,))
+                count_row = await count_cursor.fetchone()
+                if count_row and count_row['cnt'] >= 10:
+                    should_rebuild_visitor = True
+            elif visitor_profile.get('last_rebuilt_at'):
+                from datetime import datetime as _dt, timedelta as _td
+                try:
+                    rebuilt = _dt.fromisoformat(visitor_profile['last_rebuilt_at'])
+                    if _dt.utcnow() - rebuilt > _td(hours=2):
+                        should_rebuild_visitor = True
+                except (ValueError, TypeError):
+                    should_rebuild_visitor = True
+
+            if should_rebuild_visitor:
+                await db.build_visitor_profile(d, _search_visitor_id)
+                visitor_profile = await db._get_visitor_profile(d, _search_visitor_id)
+
+            if visitor_profile and visitor_profile.get('search_count', 0) >= 10:
+                results = _personalize_results(results, visitor_profile)
+                personalized = True
+        except Exception:
+            pass  # Never fail search for personalisation
 
     # Pro MCP enrichment — add citation counts and compatible pairs for Pro keys
     is_pro_key = api_key and api_key.get('tier') == 'pro'
