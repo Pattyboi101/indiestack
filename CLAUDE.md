@@ -20,6 +20,9 @@ Python 3 / FastAPI / SQLite / Fly.io. Two founders (Patrick + Ed).
 - `/status` — health check dashboard
 - `/backup` — backup production database
 - `/hub` — query the command hub (tasks, activity, decisions)
+- `/orchestrate` — dispatch tasks to the 6-department orchestra
+- `/brainstorm` — generate growth/marketing/feature ideas
+- `/weekly-stats` — send stats digest to Telegram
 
 ## Rules (auto-loaded from .claude/rules/)
 
@@ -47,6 +50,13 @@ Dynamic state lives in memory files — updated each session:
 **Update memory when:** decisions are made, sprint status changes, work is completed.
 **Update gotchas.md when:** mistakes are discovered or corrections are made.
 
+## Orchestra
+
+6-department agent system in tmux (launch with `orchestra` alias):
+- Frontend (Sonnet), Backend (Sonnet), DevOps (Haiku), Content (Sonnet), MCP (Sonnet), Strategy & QA (Opus)
+- Agents write results to `/tmp/orchestra-{dept}.txt`
+- 3-hourly cron trigger runs autonomous improvements (search quality, data quality, content)
+
 ## Ed (Co-founder)
 
 Email: toedgamings@gmail.com. GitHub: rupert61622-blip.
@@ -56,6 +66,6 @@ Handles Reddit/social + maker outreach. Check memory/ed.md for his current focus
 
 - Production: indiestack.ai (indiestack.fly.dev fallback)
 - GitHub: Pattyboi101/indiestack (public, sensitive files gitignored)
-- PyPI: indiestack (MCP server, current v1.9.0)
+- PyPI: indiestack (MCP server, current v1.12.0)
 - Command Hub: govlink.fly.dev
 - Telegram: `bash ~/.claude/telegram.sh "message"`
