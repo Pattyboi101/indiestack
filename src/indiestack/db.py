@@ -2225,6 +2225,7 @@ _FTS_STOP_WORDS = {
     'indie', 'developer', 'developers', 'project', 'projects',
     'lightweight', 'simple', 'easy', 'fast', 'modern', 'new',
     'free', 'alternative', 'alternatives',
+    'open', 'source',
 }
 
 
@@ -2238,10 +2239,11 @@ def sanitize_fts(query: str) -> str:
     meaningful = [t for t in terms if t not in _FTS_STOP_WORDS]
     if not meaningful:
         meaningful = terms[:1]
-    # For 3+ meaningful terms, use OR instead of AND to avoid over-constraining.
+    # For 4+ meaningful terms, use OR instead of AND to avoid over-constraining.
     # "cron job scheduler nodejs" AND-matched returns garbage because few tools have
     # all 4 terms. OR-matching lets the engagement scoring (category, tags) rank relevance.
-    if len(meaningful) > 2:
+    # 3-term queries stay AND — they're specific enough to work (e.g. "self hosted auth").
+    if len(meaningful) > 3:
         return ' OR '.join(f'"{t[:40]}"*' for t in meaningful[:10])
     return ' '.join(f'"{t[:40]}"*' for t in meaningful[:10])
 
