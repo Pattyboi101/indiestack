@@ -2317,13 +2317,13 @@ async def search_tools(
     if _alt_patterns:
         _alt_tool = (_alt_patterns.group(1) or _alt_patterns.group(2) or '').strip().lower()
         if _alt_tool and not exclude:
-            # Find the tool's slug and add to exclude list
+            # Find all matching slugs — by name or slug — and exclude them all
             _slug_cursor = await db.execute(
-                "SELECT slug FROM tools WHERE LOWER(name) = ? AND status = 'approved' LIMIT 1",
-                (_alt_tool,))
-            _slug_row = await _slug_cursor.fetchone()
-            if _slug_row:
-                exclude = _slug_row['slug']
+                "SELECT slug FROM tools WHERE (LOWER(name) = ? OR slug = ? OR slug = ?) AND status = 'approved'",
+                (_alt_tool, _alt_tool, f"pypi-{_alt_tool}"))
+            _exclude_slugs = [r['slug'] for r in await _slug_cursor.fetchall()]
+            if _exclude_slugs:
+                exclude = ','.join(_exclude_slugs)
 
     # Build dynamic WHERE clauses shared across FTS and fallback queries
     extra_where = ""

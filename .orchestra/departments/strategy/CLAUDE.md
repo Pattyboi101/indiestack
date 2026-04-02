@@ -35,7 +35,7 @@ For each proposed task, respond with a JSON assessment:
 - Every feature must have a concrete revenue path. No "build it and they will pay."
 
 ## IndieStack Context
-- 3,100+ tools, ~53 users, exploring pivot from catalog to intelligence layer
+- 8,000+ tools, 60 users, exploring pivot from catalog to intelligence layer
 - Two founders (Patrick + Ed), no funding, revenue constrained
 - Every hour of agent time costs real money — is this task worth the spend?
 
