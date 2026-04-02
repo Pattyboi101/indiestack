@@ -2238,6 +2238,11 @@ def sanitize_fts(query: str) -> str:
     meaningful = [t for t in terms if t not in _FTS_STOP_WORDS]
     if not meaningful:
         meaningful = terms[:1]
+    # For 3+ meaningful terms, use OR instead of AND to avoid over-constraining.
+    # "cron job scheduler nodejs" AND-matched returns garbage because few tools have
+    # all 4 terms. OR-matching lets the engagement scoring (category, tags) rank relevance.
+    if len(meaningful) > 2:
+        return ' OR '.join(f'"{t[:40]}"*' for t in meaningful[:10])
     return ' '.join(f'"{t[:40]}"*' for t in meaningful[:10])
 
 
@@ -2404,11 +2409,13 @@ async def search_tools(
         rows = await cursor.fetchall()
 
         # Fallback 1: OR-based FTS for multi-word queries that returned 0 results
-        # "email sending transactional" → "email" OR "sending" OR "transactional"
+        # Uses meaningful terms (stop words stripped) for better matching
         words = query.strip().split()
         if not rows and len(words) > 1:
             clean_words = [re.sub(r'[^\w]', '', w)[:40] for w in words[:10]]
-            clean_words = [w for w in clean_words if w]
+            clean_words = [w for w in clean_words if w and w.lower() not in _FTS_STOP_WORDS]
+            if not clean_words:
+                clean_words = [re.sub(r'[^\w]', '', w)[:40] for w in words[:3] if re.sub(r'[^\w]', '', w)]
             or_q = ' OR '.join(f'"{w}"*' for w in clean_words)
             if or_q:
                 fts_sql2, fts_ord_params2 = _fts_order()
