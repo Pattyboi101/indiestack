@@ -1,4 +1,4 @@
-"""Pricing page — everything free for developers, data products for tool makers."""
+"""Pricing page — free for developers, makers pay for visibility and analytics."""
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -27,11 +27,11 @@ async def pricing_page(request: Request):
     if user:
         free_cta = '<a href="/dashboard" class="btn-secondary" style="display:block;text-align:center;padding:12px;text-decoration:none;">Go to Dashboard</a>'
     else:
-        free_cta = '<a href="/signup" class="btn-primary" style="display:block;text-align:center;padding:12px;text-decoration:none;">Create Free Account</a>'
+        free_cta = '<a href="/signup" class="btn-primary" style="display:block;text-align:center;padding:12px;text-decoration:none;">Get Started Free</a>'
 
     body = f"""
 <style>
-.pricing-grid {{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; max-width:880px; margin:0 auto; }}
+.pricing-grid {{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; max-width:700px; margin:0 auto; }}
 .pricing-card {{ background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius-lg); padding:32px; }}
 .pricing-card.highlight {{ border:2px solid var(--slate); position:relative; }}
 .pricing-card h2 {{ font-family:var(--font-display); font-size:20px; margin:0 0 8px; color:var(--ink); }}
@@ -46,11 +46,11 @@ async def pricing_page(request: Request):
 
   <div style="text-align:center;padding:48px 0 40px;">
     <h1 style="font-family:var(--font-display);font-size:var(--heading-lg);color:var(--ink);margin:0 0 12px;">
-      Free for developers. Data for tool makers.
+      Free for developers. Visibility for makers.
     </h1>
     <p style="font-size:var(--text-md);color:var(--ink-muted);margin:0;max-width:550px;margin-left:auto;margin-right:auto;line-height:1.6;">
-      Every search, every analysis, every MCP query is free and unlimited.
-      We make money by selling the intelligence this data creates.
+      Search, analyse, and discover tools with no limits.
+      Tool makers pay for analytics on how AI agents recommend their tools.
     </p>
   </div>
 
@@ -68,9 +68,7 @@ async def pricing_page(request: Request):
         {_feature_row("Stack health analysis")}
         {_feature_row("Migration intelligence")}
         {_feature_row("Verified package combinations")}
-        {_feature_row("GitHub Action — auto-check PRs")}
-        {_feature_row("Personalized recommendations")}
-        {_feature_row("Data export")}
+        {_feature_row("Personalised recommendations")}
       </ul>
       {free_cta}
     </div>
@@ -78,38 +76,22 @@ async def pricing_page(request: Request):
     <!-- Tool Makers -->
     <div class="pricing-card">
       <h2>Tool Makers</h2>
-      <div class="price">$299<span> / month</span></div>
-      <div class="desc">Competitive intelligence from real migration data.</div>
+      <div class="price">$49<span> / month</span></div>
+      <div class="desc">See how AI agents recommend your tool.</div>
       <ul>
-        {_feature_row("See who's migrating FROM your competitors")}
-        {_feature_row("See who's migrating TO you")}
-        {_feature_row("Verified production combos for your tool")}
-        {_feature_row("CI outcome data — what actually works")}
-        {_feature_row("Weekly competitive reports")}
-        {_feature_row("Repo-level migration detail")}
-        {_feature_row("CSV data exports")}
+        {_feature_row("Claim and manage your listing")}
+        {_feature_row("Agent citation analytics — how often agents recommend you")}
+        {_feature_row("Search query data — what developers ask for in your category")}
+        {_feature_row("Verified badge on your listing")}
+        {_feature_row("Competitor comparison — how you rank vs alternatives")}
+        {_feature_row("Priority placement in search results")}
       </ul>
-      <a href="mailto:patrick@indiestack.ai?subject=Migration%20Intelligence" class="btn-primary" style="display:block;text-align:center;padding:12px;text-decoration:none;">
-        Contact Us
+      <a href="/claim" class="btn-primary" style="display:block;text-align:center;padding:12px;text-decoration:none;">
+        Claim Your Tool
       </a>
-    </div>
-
-    <!-- Enterprise -->
-    <div class="pricing-card">
-      <h2>Enterprise</h2>
-      <div class="price">Custom</div>
-      <div class="desc">Raw data licensing for VCs and market intelligence.</div>
-      <ul>
-        {_feature_row("Everything in Tool Makers")}
-        {_feature_row("Raw data licensing")}
-        {_feature_row("Custom repo scanning targets")}
-        {_feature_row("CI outcome data feed")}
-        {_feature_row("Dedicated support")}
-        {_feature_row("Custom integrations")}
-      </ul>
-      <a href="mailto:patrick@indiestack.ai?subject=Enterprise%20Data%20Licensing" class="btn-secondary" style="display:block;text-align:center;padding:12px;text-decoration:none;">
-        Let's Talk
-      </a>
+      <p style="font-size:12px;color:var(--ink-muted);text-align:center;margin:8px 0 0;">
+        Claiming is free. Pro analytics is $49/mo.
+      </p>
     </div>
 
   </div>
@@ -117,13 +99,14 @@ async def pricing_page(request: Request):
   <!-- Try it CTA -->
   <div style="max-width:600px;margin:48px auto 0;text-align:center;padding:32px 24px;background:var(--cream-dark);border-radius:var(--radius-lg);">
     <h2 style="font-family:var(--font-display);font-size:var(--heading-sm);color:var(--ink);margin:0 0 8px;">
-      See the data in action
+      Try it now
     </h2>
     <p style="color:var(--ink-muted);font-size:var(--text-sm);margin:0 0 16px;">
-      Paste a package.json and get instant migration intelligence, health scores, and compatibility data.
+      One command. Your AI agent searches 8,000+ developer tools before writing code from scratch.
     </p>
-    <a href="/analyze" class="btn-primary" style="padding:12px 32px;text-decoration:none;">
-      Analyze Your Stack
+    <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);margin:0 0 16px;text-align:left;overflow-x:auto;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</pre>
+    <a href="/analyze" class="btn-secondary" style="padding:10px 24px;text-decoration:none;font-size:14px;">
+      Or analyse your stack
     </a>
   </div>
 
@@ -133,6 +116,6 @@ async def pricing_page(request: Request):
     return HTMLResponse(page_shell(
         "Pricing — IndieStack",
         body,
-        description="Free for developers. Unlimited searches, analyses, and MCP queries. Data products for tool makers starting at $299/mo.",
+        description="Free for developers — unlimited searches, MCP queries, and stack analysis. Tool makers get AI agent analytics starting at $49/mo.",
         user=user,
     ))
