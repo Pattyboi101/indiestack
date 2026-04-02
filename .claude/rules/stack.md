@@ -22,7 +22,10 @@
 `mcp_server.py`, `email.py` (Gmail SMTP), `payments.py`, `auth.py`
 
 ## Key Route Files
-landing, explore, tool, search, admin, admin_analytics, admin_outreach, dashboard, stacks, gaps, submit, pricing, compare, new, updates, collections, plugins, pulse, what_is, account, verify, calculator, content, built_this, embed, use_cases, gaps, maker, alternatives, developer
+landing, explore, tool, search, admin, admin_analytics, admin_outreach, dashboard, stacks, gaps, submit, pricing, compare, new, updates, collections, plugins, pulse, what_is, account, calculator, content, built_this, embed, use_cases, maker, alternatives, setup, browse, analyze, audit, data_product, tags, migrations, trending_stacks, changelog
+
+## Supporting Route Files
+components (shared UI), admin_helpers, category_icons, api_docs, geo, guidelines, launch, launch_with_me, stripe_guide, purchase, why_list
 
 ## Fly.io
 - `min_machines_running = 1`, health check at `/health`

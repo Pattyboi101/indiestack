@@ -10,10 +10,13 @@ IndieStack is **the discovery layer between AI coding agents and 8,000+ develope
 ## Curation & Scope
 - "Indie" is the curation filter (focused, lean, maintained, honest pricing) — NOT the value prop
 - Dev tools only — no games, newsletters, creative tools
-- Production: 8,197 tools, 25 categories
+- Production: 8,000+ tools, 25+ categories. Verify exact counts against DB before publishing.
+- MCP server: 10,000+ PyPI installs, 22 tools, primary distribution channel
 
-## Revenue Constraint
-Every feature must have a concrete revenue path. No "build it and they will pay."
+## Revenue
+- Free for developers (unlimited, no API key required — gating kills adoption)
+- Maker Pro $49/mo: agent citation analytics, search query data, verified badge, priority placement
+- Every feature must have a concrete revenue path. No "build it and they will pay."
 
 ## Infrastructure
 - Domain: `indiestack.ai` (`indiestack.fly.dev` fallback — Cardiff Uni WiFi blocks .ai TLD)

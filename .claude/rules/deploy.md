@@ -1,7 +1,7 @@
 # IndieStack — Deploy
 
 ## Pre-Deploy
-- Always run `python3 smoke_test.py` before deploying (47 endpoints)
+- Always run `python3 smoke_test.py` before deploying (48 endpoints)
 - Commit before deploying — never deploy uncommitted work
 
 ## Deploy Command
