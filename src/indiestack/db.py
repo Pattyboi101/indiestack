@@ -2346,7 +2346,11 @@ async def search_tools(
         "    ELSE 0 END)"
     )
     # The five params consumed by _engagement_expr (exact name w/install, exact name w/o, prefix, category, tags)
-    _engagement_params: list = [query.strip(), query.strip(), query.strip(), query.strip(), query.strip()]
+    # For category and tag matching, use the first meaningful term so "auth for nextjs" matches "Authentication"
+    _q = query.strip()
+    _meaningful = [t for t in _q.lower().split() if t not in _FTS_STOP_WORDS]
+    _cat_term = _meaningful[0] if _meaningful else _q
+    _engagement_params: list = [_q, _q, _q, _cat_term, _cat_term]
 
     # Determine sort order — returns (sql_fragment, extra_params)
     def _fts_order():
