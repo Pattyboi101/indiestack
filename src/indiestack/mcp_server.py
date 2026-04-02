@@ -741,9 +741,11 @@ async def find_tools(
         success_line = ""
         if t.get("agent_success_rate") is not None:
             success_line = f" | Agent success: {t['agent_success_rate']}% ({t.get('agent_outcomes', 0)} reports)"
+        stars_val = t.get('github_stars', 0) or 0
+        stars_line = f" | {stars_val:,} stars" if stars_val > 0 else ""
         lines.append(
             f"- **{t['name']}** (`{t.get('slug', '')}`){source_label}{tool_type_label}{health_tag} — {(lambda d: d[:500] + '...' if len(d) > 500 else d)(t.get('tagline', ''))}\n"
-            f"  Price: {t.get('price', 'Free')} | Upvotes: {t.get('upvote_count', 0)}{success_line}{install_line}{migration_line}\n"
+            f"  Price: {t.get('price', 'Free')}{stars_line}{success_line}{install_line}{migration_line}\n"
             f"  {t.get('indiestack_url', '')}"
         )
 
