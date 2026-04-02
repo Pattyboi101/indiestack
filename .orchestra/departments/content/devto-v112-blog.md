@@ -32,7 +32,7 @@ Works with Cursor and Windsurf too:
 
 AI agents spend thousands of tokens rebuilding auth, payments, and email from scratch — things indie developers already built and maintain. IndieStack sits between the agent and the code generation step: "before you build, check if it already exists."
 
-3,100+ tools. Compatibility data from 8,700+ GitHub repos. Migration intelligence showing what developers actually switch between. All searchable by your AI in one MCP call.
+3,100+ tools. Compatibility data from 4,500+ GitHub repos. Migration intelligence showing what developers actually switch between. All searchable by your AI in one MCP call.
 
 Free. No account needed. No rate limits.
 

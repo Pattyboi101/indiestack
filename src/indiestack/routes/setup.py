@@ -169,7 +169,7 @@ async def setup_page(request: Request):
 
           <div class="card" style="padding:20px;">
             <p style="font-weight:700;color:var(--ink);font-size:14px;margin:0 0 6px;">
-              Migration data from 8,700+ repos
+              Migration data from 4,500+ repos
             </p>
             <p style="color:var(--ink-muted);font-size:13px;line-height:1.7;margin:0;">
               Not opinions &mdash; git history. We parsed real repos to find what developers are
@@ -336,7 +336,7 @@ jobs:
     </script>
     '''
 
-    return HTMLResponse(page_shell("Set up IndieStack", body, description="IndieStack gives your AI agent curated access to 3,100+ developer tools, migration data from 8,700+ repos, and 93,000+ verified tool combinations. One command.", user=user))
+    return HTMLResponse(page_shell("Set up IndieStack", body, description="IndieStack gives your AI agent curated access to 3,100+ developer tools, migration data from 4,500+ repos, and 93,000+ verified tool combinations. One command.", user=user))
 
 
 @router.get("/setup/claude.md", response_class=PlainTextResponse)

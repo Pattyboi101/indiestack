@@ -1,6 +1,6 @@
 # IndieStack
 
-Your AI agent searches 3,100 developer tools before writing code from scratch. 10,000+ installs.
+Your AI agent searches 3,100+ developer tools before writing code from scratch. 10,000+ installs.
 
 ```bash
 claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
@@ -15,7 +15,7 @@ Then ask your agent:
 
 ## What it does
 
-Before your AI writes auth, payments, or email boilerplate — IndieStack searches 3,100+ curated developer tools with real compatibility data from 8,700+ repos. You get install commands, health scores, and what tools actually work together in production.
+Before your AI writes auth, payments, or email boilerplate — IndieStack searches 3,100+ curated developer tools with real compatibility data from 4,500+ repos. You get install commands, health scores, and what tools actually work together in production.
 
 "Indie" is the curation filter: independent developers and small teams. Focused, lean, maintained, honest pricing.
 
@@ -101,10 +101,10 @@ indiestack stack "auth, payments, email"
 
 ## What's new in v1.11
 
-- **Migration intelligence** — Tool details include real migration data from 5,000+ GitHub repos. "jest → vitest: 27 repos", "webpack → vite: 13 repos".
-- **Verified combos** — 60,000+ verified package combinations from production repos.
+- **Migration intelligence** — Tool details include real migration data from 4,500+ GitHub repos. "jest → vitest: 27 repos", "webpack → vite: 13 repos".
+- **Verified combos** — 93,000+ verified package combinations from production repos.
 - **Unlimited searches** — All rate limits removed.
-- **2,100+ install commands** — 26% of tools have `install_command` populated.
+- **2,100+ install commands** populated across the catalog.
 
 ---
 

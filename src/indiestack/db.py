@@ -2214,13 +2214,28 @@ async def run_github_health_checks(db_conn: aiosqlite.Connection, batch_size: in
 
 # ── Search ────────────────────────────────────────────────────────────────
 
+_FTS_STOP_WORDS = {
+    'best', 'top', 'good', 'for', 'the', 'a', 'an', 'my', 'your', 'our',
+    'with', 'and', 'or', 'in', 'on', 'to', 'of', 'is', 'it', 'that',
+    'integration', 'solution', 'alternative', 'tool', 'tools', 'library',
+    'framework', 'platform', 'service', 'software', 'app', 'application',
+    'like', 'similar', 'recommend', 'suggestion', 'find', 'search', 'need',
+    'want', 'looking', 'what', 'which', 'how', 'can', 'should', 'would',
+    'use', 'using', 'build', 'building', 'add', 'adding', 'implement',
+}
+
+
 def sanitize_fts(query: str) -> str:
-    """Sanitize input for FTS5 — strip special chars, add prefix matching."""
+    """Sanitize input for FTS5 — strip special chars, stop words, add prefix matching."""
     query = re.sub(r'[^\w\s]', '', query).strip()
     if not query:
         return ''
-    terms = query.split()
-    return ' '.join(f'"{t[:40]}"*' for t in terms[:10])
+    terms = query.lower().split()
+    # Strip stop words but keep at least one term
+    meaningful = [t for t in terms if t not in _FTS_STOP_WORDS]
+    if not meaningful:
+        meaningful = terms[:1]
+    return ' '.join(f'"{t[:40]}"*' for t in meaningful[:10])
 
 
 async def search_tools(
