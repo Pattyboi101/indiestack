@@ -59,8 +59,8 @@ def days_ago_label(days):
     return f"{years}y ago"
 
 
-def kpi_card(label, value, color="var(--slate)", link="", sublabel=""):
-    """Stat card with colored left border, large value, and muted label."""
+def kpi_card(label, value, color="var(--slate)", link="", sublabel="", delta=None):
+    """Stat card with colored left border, large value, muted label, and optional trend delta."""
     inner = f'''
         <div style="font-family:var(--font-display);font-size:28px;color:var(--ink);line-height:1.2;">
             {value}
@@ -75,6 +75,18 @@ def kpi_card(label, value, color="var(--slate)", link="", sublabel=""):
             {escape(str(sublabel))}
         </div>
         '''
+    if delta is not None:
+        try:
+            delta_num = float(str(delta).replace("%", "").replace("+", ""))
+            if delta_num > 0:
+                delta_color, arrow = "#16a34a", "▲"
+            elif delta_num < 0:
+                delta_color, arrow = "#DC2626", "▼"
+            else:
+                delta_color, arrow = "var(--ink-muted)", "—"
+        except (ValueError, TypeError):
+            delta_color, arrow = "var(--ink-muted)", ""
+        inner += f'<div style="font-size:11px;color:{delta_color};margin-top:4px;font-weight:600;">{arrow} {escape(str(delta))}</div>'
 
     style = f"border-left:3px solid {color};padding:16px 20px;"
 
@@ -191,17 +203,18 @@ def tab_nav(active_tab, pending_count=0):
 
 
 def growth_sub_nav(active_section):
-    """Lighter sub-nav within the Growth tab."""
+    """Sub-nav within the Growth tab — 4 consolidated sections."""
+    _aliases = {
+        "charts": "traffic", "tables": "traffic",
+        "email": "outreach", "magic": "outreach",
+        "makers": "outreach", "stale": "outreach", "social": "outreach",
+    }
+    active_section = _aliases.get((active_section or "").lower(), active_section)
     sections = [
-        ("charts", "Charts"),
-        ("tables", "Tables"),
+        ("traffic", "Traffic"),
         ("funnels", "Funnels"),
         ("search", "Search"),
-        ("email", "Email"),
-        ("magic", "Magic Links"),
-        ("makers", "Makers"),
-        ("stale", "Stale Tools"),
-        ("social", "Social"),
+        ("outreach", "Outreach"),
     ]
     items = []
     for slug, label in sections:
@@ -258,7 +271,7 @@ def bar_chart(data, title, value_prefix="", value_suffix=""):
     max_val = max((v for _, v in data), default=1) or 1
     bars = []
     for label, value in data:
-        height = max(int((value / max_val) * 120), 2)
+        height = max(int((value / max_val) * 200), 2)
         bars.append(
             f'<div style="display:flex;flex-direction:column;align-items:center;'
             f'flex:1;min-width:0;gap:6px;">'
@@ -275,8 +288,8 @@ def bar_chart(data, title, value_prefix="", value_suffix=""):
         f'<div class="card" style="padding:20px;">'
         f'<h3 style="font-family:var(--font-display);font-size:18px;margin:0 0 16px 0;'
         f'color:var(--ink);">{escape(str(title))}</h3>'
-        f'<div style="display:flex;align-items:flex-end;gap:8px;height:180px;'
-        f'padding-top:20px;">{"".join(bars)}</div></div>'
+        f'<div style="display:flex;align-items:flex-end;gap:8px;height:260px;'
+        f'padding-top:20px;border-top:1px solid var(--border);margin-top:auto;">{"".join(bars)}</div></div>'
     )
 
 

@@ -112,10 +112,13 @@ async def admin_get(request: Request):
         section_html = await render_overview(db, request, pending)
 
     body = f"""
-    <div class="container" style="padding:48px 24px;max-width:1000px;">
-        <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);margin-bottom:24px;">
-            Admin Command Center
-        </h1>
+    <div class="container" style="padding:48px 24px;max-width:1280px;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;">
+            <h1 style="font-family:var(--font-display);font-size:32px;color:var(--ink);margin:0;">
+                Command Center
+            </h1>
+            <span style="font-size:13px;color:var(--ink-muted);">{datetime.utcnow().strftime("%A, %d %b %Y · %H:%M UTC")}</span>
+        </div>
         {toast_html}
         {tab_nav(tab, pending_count)}
         {pending_alert_bar(pending_count) if tab != 'tools' else ''}
@@ -484,17 +487,102 @@ async def render_overview(db, request, pending):
             </table>
         </div>'''
 
+    # ── Hero stat strip queries ──
+    cursor = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
+    total_tools = (await cursor.fetchone())['cnt']
+
+    cursor = await db.execute("SELECT COUNT(*) as cnt FROM users")
+    total_users_count = (await cursor.fetchone())['cnt']
+
+    cursor = await db.execute(
+        "SELECT COUNT(*) as cnt FROM search_logs WHERE source='mcp' AND date(created_at)=date('now')"
+    )
+    mcp_today = (await cursor.fetchone())['cnt']
+
+    pro_stats = await get_pro_subscriber_stats(db)
+    pro_count = pro_stats.get('active_count', 0) or 0
+    mrr_pence = pro_stats.get('mrr_pence', 0) or 0
+
+    # ── Activity feed (last 48h: signups, MCP searches, claims) ──
+    cursor = await db.execute(
+        "SELECT name as label, created_at FROM users "
+        "WHERE created_at >= datetime('now', '-48 hours') ORDER BY created_at DESC LIMIT 15"
+    )
+    signup_feed = [('signup', str(r['label'] or ''), str(r['created_at'])) for r in await cursor.fetchall()]
+
+    cursor = await db.execute(
+        "SELECT query as label, created_at FROM search_logs "
+        "WHERE source='mcp' AND created_at >= datetime('now', '-48 hours') ORDER BY created_at DESC LIMIT 15"
+    )
+    mcp_feed = [('mcp', str(r['label'] or ''), str(r['created_at'])) for r in await cursor.fetchall()]
+
+    cursor = await db.execute(
+        """SELECT t.name as label, cr.created_at FROM claim_requests cr
+           JOIN tools t ON t.id=cr.tool_id
+           WHERE cr.created_at >= datetime('now', '-48 hours')
+           ORDER BY cr.created_at DESC LIMIT 8"""
+    )
+    claim_feed = [('claim', str(r['label'] or ''), str(r['created_at'])) for r in await cursor.fetchall()]
+
+    feed_items = signup_feed + mcp_feed + claim_feed
+    feed_items.sort(key=lambda x: x[2], reverse=True)
+    feed_items = feed_items[:25]
+
+    feed_rows = ''
+    _type_cfg = {'signup': ('#16a34a', 'User'), 'mcp': ('#00D4F5', 'MCP'), 'claim': ('#E2B764', 'Claim')}
+    for evt_type, lbl, ts in feed_items:
+        color, badge = _type_cfg.get(evt_type, ('#6b7280', evt_type))
+        ago = time_ago(ts)
+        lbl_display = escape(lbl[:50] + ('…' if len(lbl) > 50 else ''))
+        feed_rows += (
+            f'<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">'
+            f'<span style="display:inline-block;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:700;background:{color}22;color:{color};flex-shrink:0;">{badge}</span>'
+            f'<span style="font-size:13px;color:var(--ink);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{lbl_display}</span>'
+            f'<span style="font-size:11px;color:var(--ink-muted);white-space:nowrap;">{ago}</span>'
+            f'</div>'
+        )
+
+    if feed_rows:
+        activity_html = (
+            '<div style="margin-bottom:20px;">'
+            '<h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">Live Activity</h3>'
+            '<div class="card" style="padding:16px;max-height:400px;overflow-y:auto;">'
+            + feed_rows +
+            '</div></div>'
+        )
+    else:
+        activity_html = (
+            '<div style="margin-bottom:20px;">'
+            '<h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">Live Activity</h3>'
+            '<div class="card" style="padding:32px;text-align:center;color:var(--ink-muted);font-size:14px;">No activity in the last 48 hours</div>'
+            '</div>'
+        )
+
+    hero_strip = f"""
+    <div class="hero-strip" style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:32px;">
+        {kpi_card("Total Tools", f"{total_tools:,}", color="#1A2D4A")}
+        {kpi_card("Total Users", f"{total_users_count:,}", color="var(--terracotta)")}
+        {kpi_card("Searches Today", f"{searches_today:,}", color="var(--slate)")}
+        {kpi_card("MCP Today", f"{mcp_today:,}", color="#16a34a")}
+        {kpi_card("Pro Subscribers", f"{pro_count:,}", color="#7C3AED")}
+        {kpi_card("MRR", f"£{mrr_pence / 100:.0f}", color="#E2B764")}
+    </div>
+    <style>
+        @media(max-width:900px){{.hero-strip{{grid-template-columns:repeat(3,1fr)!important;}}}}
+        @media(max-width:600px){{.hero-strip{{grid-template-columns:repeat(2,1fr)!important;}}}}
+    </style>
+    """
+
     right_col = f"""
-    <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">Today's Pulse</h3>
-    {kpi_grid}
+    {activity_html}
     {alerts_html}
-    {recent_html}
     {qs_html}
     {trust_html}
     {gaps_html}
     """
 
     return f"""
+    {hero_strip}
     <div style="display:grid;grid-template-columns:3fr 2fr;gap:32px;align-items:start;">
         <div>{left_col}</div>
         <div>{right_col}</div>
@@ -1180,30 +1268,32 @@ async def render_people_tab(db, request):
 # ── Growth Tab ───────────────────────────────────────────────────────────
 
 async def render_growth_tab(db, request):
-    """Growth tab: 9 sub-nav sections."""
-    section = request.query_params.get('section', 'charts')
+    """Growth tab: 4 consolidated sections (Traffic, Funnels, Search, Outreach)."""
+    section = request.query_params.get('section', 'traffic')
+    _aliases = {
+        'charts': 'traffic', 'tables': 'traffic',
+        'email': 'outreach', 'magic': 'outreach',
+        'makers': 'outreach', 'stale': 'outreach', 'social': 'outreach',
+    }
+    section = _aliases.get(section, section)
     html = growth_sub_nav(section)
 
-    if section == 'charts':
+    if section == 'traffic':
         html += await render_charts_section(db, request)
-    elif section == 'tables':
         html += await render_tables_section(db, request)
     elif section == 'funnels':
         html += await render_funnels_section(db)
     elif section == 'search':
         html += await render_search_section(db)
-    elif section == 'email':
+    elif section == 'outreach':
         html += await render_email_section(db, request)
-    elif section == 'magic':
         html += await render_magic_section(db, request)
-    elif section == 'makers':
         html += await render_makers_section(db, request)
-    elif section == 'stale':
         html += await render_stale_section(db, request)
-    elif section == 'social':
         html += await render_social_section(db)
     else:
         html += await render_charts_section(db, request)
+        html += await render_tables_section(db, request)
 
     return html
 
