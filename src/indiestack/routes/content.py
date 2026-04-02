@@ -206,10 +206,11 @@ async def terms_page(request: Request):
 
         <li>
           <h2 {_HEADING}>Payments</h2>
-          <p>IndieStack is currently free to use. There are no listing fees, subscription charges,
-          or transaction fees. If we introduce paid features in the future, we will notify users
-          in advance and update these terms accordingly. Any future payments will be processed
-          securely through Stripe.</p>
+          <p>IndieStack offers both free and paid tiers. Core features including tool search,
+          browsing, and MCP server access are free. Optional paid plans provide additional
+          capabilities such as enhanced analytics and priority support. All payments are processed
+          securely through Stripe. We do not store your payment card details — these are handled
+          entirely by Stripe.</p>
         </li>
 
         <li>
@@ -275,24 +276,29 @@ async def privacy_page(request: Request):
     body = f"""
     <div {_CONTAINER}>
       <h1 {_HEADING}>Privacy Policy</h1>
-      <p {_TEXT}>Last updated: February 2026</p>
+      <p {_TEXT}>Last updated: April 2026</p>
 
       <h2 {_HEADING}>Data We Collect</h2>
       <p {_TEXT}>We collect the following information:</p>
       <ul {_TEXT}>
         <li><strong>Account information:</strong> your email address and display name when you create
         an account.</li>
-        <li><strong>Session cookie:</strong> a session identifier stored in your browser to keep you
-        logged in. Anonymous visitors also receive a session cookie so that features like tool
-        reactions work without an account.</li>
-        <li><strong>IP address:</strong> used for rate limiting and abuse prevention. We do not build
-        profiles from IP addresses.</li>
+        <li><strong>Session cookie:</strong> a session identifier (<code>indiestack_session</code>)
+        stored in your browser to keep you logged in. Anonymous visitors also receive a session
+        cookie so that features like tool reactions work without an account.</li>
+        <li><strong>IP address and User-Agent:</strong> your IP address and browser User-Agent string
+        are hashed together to produce an anonymous visitor identifier used for aggregate analytics
+        (e.g. unique visitor counts). We do not store raw IP addresses or build individual profiles.</li>
         <li><strong>Usage data:</strong> page views, search queries, outbound clicks to tool websites,
         and tool reactions ("I use this" / "Bookmarked"). This data is stored in our database and
         used to power activity feeds, search rankings, and aggregate statistics shown on the site.</li>
         <li><strong>MCP server queries:</strong> when an AI agent searches our catalog via the MCP
-        server, we log the search query and increment view counts. No personal data from the
-        agent's user is collected.</li>
+        server, we log the search query, the agent platform identifier (e.g. "Claude Desktop"),
+        and increment view counts. No personal data from the agent's user is collected.</li>
+        <li><strong>MCP agent feedback:</strong> AI agents may optionally report tool integration
+        outcomes (success/failure) and tool compatibility data via <code>report_outcome</code>
+        and <code>report_compatibility</code> functions. This data is used to improve tool
+        recommendations and build trust signals. No personal data is included in these reports.</li>
       </ul>
 
       <h2 {_HEADING}>How We Use Your Data</h2>
@@ -306,17 +312,19 @@ async def privacy_page(request: Request):
       <ul {_TEXT}>
         <li><strong>Fly.io</strong> — hosting. Your requests are processed on Fly.io infrastructure.</li>
         <li><strong>Gmail SMTP</strong> — transactional emails are sent from our Gmail account.</li>
-        <li><strong>Stripe</strong> — if and when we introduce paid features, payments will be processed
-        by Stripe. We do not currently collect or store any payment information.</li>
+        <li><strong>Stripe</strong> — payments for paid plans are processed by Stripe. We do not
+        store your payment card details — these are handled entirely by Stripe.</li>
       </ul>
       <p {_TEXT}>We do not sell your personal data. We do not use any third-party analytics,
       advertising, or tracking services.</p>
 
       <h2 {_HEADING}>Cookies</h2>
-      <p {_TEXT}>IndieStack uses a single session cookie (<code>session_id</code>) for authentication
-      and anonymous feature access (e.g. reactions). We do not use tracking cookies, advertising
-      cookies, or any third-party cookie-based analytics. No cookie consent banner is needed because
-      we only use strictly necessary cookies.</p>
+      <p {_TEXT}>IndieStack uses a single session cookie (<code>indiestack_session</code>) for
+      authentication and anonymous feature access (e.g. reactions). A temporary
+      <code>github_oauth_state</code> cookie is used during GitHub login for security (expires
+      after 10 minutes). We do not use tracking cookies, advertising cookies, or any third-party
+      cookie-based analytics. No cookie consent banner is needed because we only use strictly
+      necessary cookies.</p>
 
       <h2 {_HEADING}>Data Retention</h2>
       <p {_TEXT}>Account data is retained for as long as your account is active. If you delete your

@@ -1180,6 +1180,15 @@ async def init_db():
             await db.commit()
         except Exception:
             pass
+        # Migration: tool_of_week_history — permanent record of every TOTW winner
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS tool_of_week_history (
+                id INTEGER PRIMARY KEY,
+                tool_id INTEGER NOT NULL REFERENCES tools(id),
+                featured_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        await db.commit()
         # Migration: quality gate enrichment columns
         for col, ddl in [
             ("domain_age_days", "ALTER TABLE tools ADD COLUMN domain_age_days INTEGER DEFAULT NULL"),
@@ -1967,15 +1976,20 @@ def compute_quality_score(tool: dict) -> float:
         completeness += 0.15
 
     # Engagement Boost (0.0–1.0)
+    # Uses real usage signals: tool page views, outbound clicks, MCP agent views,
+    # upvotes, and reviews. Views and clicks are the primary drivers since
+    # upvotes and reviews are near-zero across the catalog.
     upvotes = int(tool.get('upvote_count') or 0)
     mcp_views = int(tool.get('mcp_view_count') or 0)
     review_count = int(tool.get('review_count') or 0)
     click_count = int(tool.get('click_count') or 0)
+    view_count = int(tool.get('view_count') or 0)
     engagement = 0.0
-    engagement += min(upvotes / 10, 0.3)
-    engagement += min(mcp_views / 50, 0.3)
-    engagement += min(review_count / 3, 0.2)
-    engagement += min(click_count / 100, 0.2)
+    engagement += min(view_count / 200, 0.25)    # tool page views (78k total)
+    engagement += min(click_count / 100, 0.25)    # outbound clicks (60k total)
+    engagement += min(mcp_views / 50, 0.2)        # agent detail lookups
+    engagement += min(upvotes / 10, 0.15)         # human upvotes
+    engagement += min(review_count / 3, 0.15)     # reviews
 
     # Health (multiplier)
     health_status = str(tool.get('health_status') or 'unknown')
@@ -1997,6 +2011,7 @@ async def recompute_all_quality_scores(db: aiosqlite.Connection) -> dict:
         SELECT t.*,
                COALESCE(r.review_count, 0) as review_count,
                COALESCE(oc.click_count, 0) as click_count,
+               COALESCE(tv.view_count, 0) as view_count,
                CASE
                    WHEN t.health_status = 'dead' AND t.first_dead_at IS NOT NULL THEN
                        CAST(julianday('now') - julianday(t.first_dead_at) AS INTEGER)
@@ -2009,6 +2024,9 @@ async def recompute_all_quality_scores(db: aiosqlite.Connection) -> dict:
         LEFT JOIN (
             SELECT tool_id, COUNT(*) as click_count FROM outbound_clicks GROUP BY tool_id
         ) oc ON oc.tool_id = t.id
+        LEFT JOIN (
+            SELECT tool_id, COUNT(*) as view_count FROM tool_views GROUP BY tool_id
+        ) tv ON tv.tool_id = t.id
         WHERE t.status = 'approved'
     """)
     tools = await cursor.fetchall()

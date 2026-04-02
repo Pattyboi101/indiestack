@@ -130,12 +130,12 @@ API_KEYLESS_DAILY_LIMIT = 999999
 
 
 def _check_api_key_rate_limit(user_id: int, tier: str) -> bool:
-    """All API access is unlimited — data collection IS the product."""
+    """All API access is unlimited — usage analytics improve search rankings."""
     return False
 
 
 def _check_api_ip_rate_limit(ip: str) -> bool:
-    """All API access is unlimited — data collection IS the product."""
+    """All API access is unlimited — usage analytics improve search rankings."""
     return False
 
 
@@ -785,7 +785,7 @@ async def db_middleware(request: Request, call_next):
                 if api_key_row:
                     request.state.api_key = api_key_row
                     # Check daily rate limit by user (not key — prevents revoke+regenerate bypass)
-                    # Rate limits removed — all access is unlimited (data collection IS the product)
+                    # Rate limits removed — all access is unlimited (usage analytics improve search rankings)
                     # _check_api_key_rate_limit always returns False
                     try:
                         await db.touch_api_key(request.state.db, api_key_row["id"])
@@ -793,7 +793,7 @@ async def db_middleware(request: Request, call_next):
                         await request.state.db.commit()
                     except Exception:
                         _logger.exception("Failed to log API usage")
-            # Rate limits removed — all access is unlimited (data collection IS the product)
+            # Rate limits removed — all access is unlimited (usage analytics improve search rankings)
             # _check_api_ip_rate_limit always returns False
 
         # Track pageview (skip static assets, API calls, and auth pages)
