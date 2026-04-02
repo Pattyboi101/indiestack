@@ -405,7 +405,10 @@ async def landing(request: Request):
         """
 
     # ── Compact Category Grid (top 8) ────────────────────────────────
-    _top_cats = sorted(categories, key=lambda c: c.get('tool_count', 0), reverse=True)[:8]
+    _top_cats = sorted(
+        [c for c in categories if (c.get('tool_count', 0) or 0) >= 10],
+        key=lambda c: c.get('tool_count', 0) or 0, reverse=True
+    )
     cat_items = ''
     for c in _top_cats:
         count = c.get('tool_count', 0)

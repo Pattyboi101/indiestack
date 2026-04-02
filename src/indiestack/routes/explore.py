@@ -10,6 +10,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell, tool_card, pagination_html, email_sticky_bar
+from indiestack.routes.category_icons import category_icon
 from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_counts, get_new_for_user, get_tool_by_slug, get_batch_success_rates
 
 router = APIRouter()
@@ -56,6 +57,43 @@ async def explore(request: Request):
     # Fetch filter data
     categories = await get_all_categories(db)
     tags = await get_all_tags_with_counts(db, min_count=1)
+
+    # ── Visual category grid — shown when no filters active ──────────────
+    if not any([q, category, tag, source_type, ejectable, compatible_with]):
+        visible_cats = sorted(
+            [c for c in categories if (c.get('tool_count') or 0) >= 10],
+            key=lambda c: c.get('tool_count', 0) or 0, reverse=True
+        )
+        if len(visible_cats) < 8:
+            visible_cats = sorted(categories, key=lambda c: c.get('tool_count', 0) or 0, reverse=True)[:12]
+        cat_grid_items = ''
+        for c in visible_cats:
+            c_id = escape(str(c['id']))
+            c_name = escape(str(c['name']))
+            c_count = c.get('tool_count', 0) or 0
+            icon_html = category_icon(str(c['slug']), size=28)
+            cat_grid_items += (
+                f'<a href="/explore?category={c_id}" style="display:flex;flex-direction:column;align-items:center;'
+                f'gap:8px;padding:20px 12px;background:var(--card-bg);border:1px solid var(--border);'
+                f'border-radius:var(--radius);text-decoration:none;text-align:center;'
+                f'transition:border-color 0.15s,box-shadow 0.15s;"'
+                f' onmouseover="this.style.borderColor=\'var(--slate)\';this.style.boxShadow=\'var(--shadow-md)\'"'
+                f' onmouseout="this.style.borderColor=\'var(--border)\';this.style.boxShadow=\'none\'">'
+                f'<span style="color:var(--slate);">{icon_html}</span>'
+                f'<span style="font-size:13px;font-weight:600;color:var(--ink);">{c_name}</span>'
+                f'<span style="font-size:11px;color:var(--ink-muted);">{c_count:,} tools</span>'
+                f'</a>'
+            )
+        category_grid_html = (
+            '<div style="margin-bottom:32px;">'
+            '<h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:0 0 16px 0;">Browse by category</h2>'
+            '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;">'
+            + cat_grid_items +
+            '</div>'
+            '</div>'
+        )
+    else:
+        category_grid_html = ''
 
     per_page = 24
     # Validate compatible_with slug against real tools
@@ -296,6 +334,7 @@ async def explore(request: Request):
             onmouseout="this.style.background='var(--cream-dark)';this.style.color='var(--ink-light)';this.style.borderColor='var(--border)'">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/></svg> Surprise me
         </a>
+        {category_grid_html}
         {filter_bar}
         {active_html}
         {new_for_you_html}
