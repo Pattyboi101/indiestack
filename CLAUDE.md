@@ -1,6 +1,6 @@
 # IndieStack
 
-The discovery layer between AI coding agents and 3,100+ developer tools.
+The discovery layer between AI coding agents and 8,000+ developer tools.
 Python 3 / FastAPI / SQLite / Fly.io. Two founders (Patrick + Ed).
 
 ## How This Project Works

@@ -1,6 +1,6 @@
 # IndieStack — MCP Server + CLI
 
-Before your AI writes auth, payments, or email code from scratch — search 3,100+ curated developer tools with verified compatibility data and migration intelligence from 4,500+ repos. 10,000+ installs. Unlike a web search, you get install commands, health scores, and what tools actually work together in production.
+Before your AI writes auth, payments, or email code from scratch — search 8,000+ curated developer tools with verified compatibility data and migration intelligence from 4,500+ repos. 10,000+ installs. Unlike a web search, you get install commands, health scores, and what tools actually work together in production.
 
 <!-- mcp-name: io.github.Pattyboi101/indiestack -->
 
@@ -38,7 +38,7 @@ Both tools ship in the same package. Your AI searches what exists before buildin
 
 Your AI spends thousands of tokens rebuilding auth, payments, and analytics from scratch — things independent developers already built and maintain. Meanwhile, those tools sit on GitHub with 12 stars, invisible to the AI agents that could be recommending them.
 
-IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ developer tools with structured assembly metadata before writing boilerplate. Tools include API types, auth methods, SDK packages, install commands, env vars, and framework compatibility — everything an agent needs to assemble proven building blocks instead of generating from scratch.
+IndieStack fixes both sides. Install the MCP server and your AI searches 8,000+ developer tools with structured assembly metadata before writing boilerplate. Tools include API types, auth methods, SDK packages, install commands, env vars, and framework compatibility — everything an agent needs to assemble proven building blocks instead of generating from scratch.
 
 "Indie" is the curation filter — tools built by independent developers and small teams. Focused, lean, maintained, honest pricing.
 
@@ -46,7 +46,7 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 
 | Tool | What it does |
 |------|-------------|
-| `find_tools` | Search 3,100+ developer tools with 11 filters: price, health, stars, success rate, language, tags, compatibility |
+| `find_tools` | Search 8,000+ developer tools with 11 filters: price, health, stars, success rate, language, tags, compatibility |
 | `find_compatible` | Find tools compatible with a given tool — grouped by category, with verified stacks and conflict warnings |
 | `get_tool_details` | Integration code, pricing, API specs, and compatibility data |
 | `scan_project` | Analyze a project description + tech stack, get a complete tool recommendation |
@@ -131,7 +131,7 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 3,100+ 
 
 ## What was new in v1.3.0
 
-- **3,100+ tools** — Catalog grew from 830 to 3,100+ via automated GitHub discovery across 37 search queries. Every category now has deep coverage.
+- **8,000+ tools** — Catalog grew from 830 to 8,000+ via automated GitHub discovery across 37 search queries. Every category now has deep coverage.
 - **500+ compatibility pairs** — Auto-generated from shared framework data.
 - **README-inferred metadata** — Install commands, env vars, SDK packages, and framework compatibility auto-extracted from GitHub READMEs for 700+ tools.
 

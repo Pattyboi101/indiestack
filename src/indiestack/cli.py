@@ -1,4 +1,4 @@
-"""IndieStack CLI — search 3,100+ developer tools from your terminal."""
+"""IndieStack CLI — search 8,000+ developer tools from your terminal."""
 
 import json
 import os
@@ -387,7 +387,7 @@ COMMANDS = {
 VERSION = "1.4.0"
 
 HELP = f"""\
-{_bold('indiestack')} — search 3,100+ developer tools from your terminal
+{_bold('indiestack')} — search 8,000+ developer tools from your terminal
 
 {_bold('Usage:')}
   indiestack search <query>           Search for tools

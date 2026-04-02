@@ -1,6 +1,6 @@
 # IndieStack — Vision
 
-IndieStack is **the discovery layer between AI coding agents and 3,100+ developer tools**. When an AI agent is about to help someone build infrastructure (auth, payments, analytics, email, databases), it checks IndieStack first to find an existing tool instead of generating code from scratch.
+IndieStack is **the discovery layer between AI coding agents and 8,000+ developer tools**. When an AI agent is about to help someone build infrastructure (auth, payments, analytics, email, databases), it checks IndieStack first to find an existing tool instead of generating code from scratch.
 
 ## Three User Tiers
 - **AI agents** (primary) — search via MCP server, the main distribution channel
@@ -10,7 +10,7 @@ IndieStack is **the discovery layer between AI coding agents and 3,100+ develope
 ## Curation & Scope
 - "Indie" is the curation filter (focused, lean, maintained, honest pricing) — NOT the value prop
 - Dev tools only — no games, newsletters, creative tools
-- Production: 3,099 tools, 25 categories
+- Production: 8,197 tools, 25 categories
 
 ## Revenue Constraint
 Every feature must have a concrete revenue path. No "build it and they will pay."

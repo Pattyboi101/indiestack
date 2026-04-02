@@ -1,6 +1,6 @@
 # IndieStack
 
-Your AI agent searches 3,100+ developer tools before writing code from scratch. 10,000+ installs.
+Your AI agent searches 8,000+ developer tools before writing code from scratch. 10,000+ installs.
 
 ```bash
 claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
@@ -15,7 +15,7 @@ Then ask your agent:
 
 ## What it does
 
-Before your AI writes auth, payments, or email boilerplate — IndieStack searches 3,100+ curated developer tools with real compatibility data from 4,500+ repos. You get install commands, health scores, and what tools actually work together in production.
+Before your AI writes auth, payments, or email boilerplate — IndieStack searches 8,000+ curated developer tools with real compatibility data from 4,500+ repos. You get install commands, health scores, and what tools actually work together in production.
 
 "Indie" is the curation filter: independent developers and small teams. Focused, lean, maintained, honest pricing.
 
@@ -54,7 +54,7 @@ indiestack stack "auth, payments, email"
 
 | Tool | What it does |
 |------|-------------|
-| `find_tools` | Search 3,100+ developer tools with 11 filters: price, health, stars, success rate, language, tags, compatibility |
+| `find_tools` | Search 8,000+ developer tools with 11 filters: price, health, stars, success rate, language, tags, compatibility |
 | `find_compatible` | Find tools compatible with a given tool — grouped by category, with verified stacks and conflict warnings |
 | `get_tool_details` | Integration code, pricing, API specs, and compatibility data |
 | `scan_project` | Analyze a project description + tech stack, get a complete tool recommendation |

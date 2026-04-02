@@ -757,7 +757,7 @@ def footer_html() -> str:
           <!-- Brand -->
           <div>
             <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;">IndieStack</div>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">The discovery layer between AI coding agents and 3,100+ developer tools.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">The discovery layer between AI coding agents and 8,000+ developer tools.</p>
           </div>
           <!-- Product -->
           <div>

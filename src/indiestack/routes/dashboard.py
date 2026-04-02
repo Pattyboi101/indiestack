@@ -2412,7 +2412,7 @@ async def developer_page(request: Request):
         public_body = f'''
     <div class="container" style="max-width:800px;padding:48px 24px;">
         <div style="margin-bottom:32px;text-align:center;">
-            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin:0 0 12px;">Give your AI agent access to 3,100+ developer tools</h1>
+            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin:0 0 12px;">Give your AI agent access to 8,000+ developer tools</h1>
             <p style="color:var(--ink-muted);font-size:17px;margin:0;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;">
                 Without IndieStack, your AI writes infrastructure from scratch. With IndieStack, it finds proven tools first.
             </p>
