@@ -2222,6 +2222,9 @@ _FTS_STOP_WORDS = {
     'like', 'similar', 'recommend', 'suggestion', 'find', 'search', 'need',
     'want', 'looking', 'what', 'which', 'how', 'can', 'should', 'would',
     'use', 'using', 'build', 'building', 'add', 'adding', 'implement',
+    'indie', 'developer', 'developers', 'project', 'projects',
+    'lightweight', 'simple', 'easy', 'fast', 'modern', 'new',
+    'free', 'alternative', 'alternatives',
 }
 
 
