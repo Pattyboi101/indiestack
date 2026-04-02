@@ -19,3 +19,11 @@
 - When a shared DB function's return shape changes (column aliases renamed), search for ALL callers across ALL route files before deploying. The function is a data contract.
 
 - The `scripts/` directory is not copied in the Dockerfile. To run scripts on production, either add a COPY line or pipe inline via `python3 -c "..."` on SSH.
+
+- FTS5 multi-word queries use AND by default. "payments integration" requires BOTH words to match, returning tools that mention "integration" in descriptions (like scheduling apps) instead of actual payment tools. Fix: strip common stop/filler words (best, alternative, integration, solution, for, etc.) via `_FTS_STOP_WORDS` in db.py's `sanitize_fts()`.
+
+- The engagement scoring passes the raw query for category/tag matching. For multi-word queries, the category match should use the FIRST meaningful term ("auth" from "auth for nextjs") so it matches "Authentication" category. See `_cat_term` in db.py.
+
+- Stats in copy go stale fast. Tool count was "3,100+" when we had 8,197 approved. Repo count was "8,700+" when actual was 4,535. Verify claims against production DB before publishing.
+
+- After fixing data on production (tags, categories, install commands), ALWAYS rebuild the FTS index: `INSERT INTO tools_fts(tools_fts) VALUES('rebuild')` + `PRAGMA wal_checkpoint(TRUNCATE)`. Otherwise the search API serves stale cached results until the next deploy.
