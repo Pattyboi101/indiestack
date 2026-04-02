@@ -1764,10 +1764,9 @@ async def get_all_categories(db: aiosqlite.Connection):
         return _categories_cache['data']
     cursor = await db.execute(
         """SELECT c.*, (
-               SELECT COUNT(DISTINCT tc.tool_id)
-               FROM tool_categories tc
-               JOIN tools t ON t.id = tc.tool_id AND t.status = 'approved'
-               WHERE tc.category_id = c.id
+               SELECT COUNT(*)
+               FROM tools t
+               WHERE t.category_id = c.id AND t.status = 'approved'
            ) as tool_count
            FROM categories c ORDER BY c.name"""
     )
