@@ -68,3 +68,4 @@ backups/
 *.JPG
 .claude/settings.local.json
 .claude/commands/hub.md
+.rag/

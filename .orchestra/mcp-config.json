@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "indiestack-rag": {
+      "command": "python3",
+      "args": ["/home/patty/indiestack/.orchestra/rag_server.py"]
+    }
+  }
+}

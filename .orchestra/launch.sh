@@ -1,23 +1,27 @@
 #!/bin/bash
-# Launch the IndieStack Persistent Orchestra
-# Opens 7 Claude Code sessions in tmux panes connected via claude-peers
+# Launch the IndieStack Orchestra — Dynamic Model Architecture
+# CEO (Opus) + 5 departments in tmux, Manager runs separately as Patrick's session
 #
 # Usage:
-#   .orchestra/launch.sh          # launch all 7
-#   .orchestra/launch.sh master   # launch just master
-#   .orchestra/launch.sh frontend backend  # launch specific departments
+#   .orchestra/launch.sh              # launch CEO + all 5 departments
+#   .orchestra/launch.sh frontend backend  # launch specific departments only (no CEO)
 
 set -e
 
 REPO_DIR="$HOME/indiestack"
 SESSION="orchestra"
+MCP_CONFIG="$REPO_DIR/.orchestra/mcp-config.json"
 CLAUDE_FLAGS="--dangerously-skip-permissions --dangerously-load-development-channels server:claude-peers"
 
-# Department order and models
-declare -a DEPT_ORDER=(master strategy frontend backend devops content mcp)
+# Add MCP config for RAG if it exists
+if [ -f "$MCP_CONFIG" ]; then
+  CLAUDE_FLAGS="$CLAUDE_FLAGS --mcp-config $MCP_CONFIG"
+fi
+
+# Department order (CEO is separate, launched first)
+declare -a DEPT_ORDER=(frontend backend devops content mcp)
 declare -A MODELS=(
-  [master]="opus"
-  [strategy]="opus"
+  [ceo]="opus"
   [frontend]="sonnet"
   [backend]="sonnet"
   [devops]="haiku"
@@ -25,8 +29,7 @@ declare -A MODELS=(
   [mcp]="sonnet"
 )
 declare -A LABELS=(
-  [master]="MASTER"
-  [strategy]="S&QA"
+  [ceo]="CEO"
   [frontend]="FRONTEND"
   [backend]="BACKEND"
   [devops]="DEVOPS"
@@ -34,67 +37,84 @@ declare -A LABELS=(
   [mcp]="MCP"
 )
 
-# Filter departments if args provided
+# If specific departments are requested, skip CEO
+LAUNCH_CEO=true
 if [ $# -gt 0 ]; then
   DEPT_ORDER=("$@")
+  LAUNCH_CEO=false
 fi
 
 # Kill existing session if running
 tmux kill-session -t "$SESSION" 2>/dev/null || true
 
-echo "╔══════════════════════════════════════════╗"
-echo "║   IndieStack Orchestra — Launching...    ║"
-echo "╠══════════════════════════════════════════╣"
+echo ""
+echo "  IndieStack Orchestra — Dynamic Model Architecture"
+echo "  =================================================="
+echo ""
 
 FIRST=true
+
+# Launch CEO first (unless specific departments requested)
+if [ "$LAUNCH_CEO" = true ]; then
+  ceo_cmd="cd $REPO_DIR && claude $CLAUDE_FLAGS --model opus"
+
+  tmux new-session -d -s "$SESSION" -n "ceo" "$ceo_cmd"
+  FIRST=false
+  echo "  CEO (opus) — strategic brain + S&QA gate"
+fi
+
+# Launch departments
 for dept in "${DEPT_ORDER[@]}"; do
   model="${MODELS[$dept]}"
   label="${LABELS[$dept]}"
 
   if [ -z "$model" ]; then
-    echo "║  Unknown department: $dept — skipping    ║"
+    echo "  Unknown department: $dept — skipping"
     continue
   fi
 
-  # Build the init prompt file path
-  if [ "$dept" = "master" ]; then
-    init_file="$REPO_DIR/.orchestra/master/init-prompt.md"
-  else
-    init_file="$REPO_DIR/.orchestra/departments/$dept/init-prompt.md"
-  fi
-
-  # Build the claude command
   cmd="cd $REPO_DIR && claude $CLAUDE_FLAGS --model $model"
 
   if [ "$FIRST" = true ]; then
-    # Create session with first window
     tmux new-session -d -s "$SESSION" -n "$dept" "$cmd"
     FIRST=false
   else
-    # Add new window for each department
     tmux new-window -t "$SESSION" -n "$dept" "$cmd"
   fi
 
-  echo "║  ✓ ${label} (${model})                        ║" | head -c 45
-  echo "║"
+  echo "  ${label} (${model})"
 done
 
-echo "╠══════════════════════════════════════════╣"
-echo "║  ${#DEPT_ORDER[@]} agents launched in tmux session     ║"
-echo "║                                          ║"
-echo "║  Attach:  tmux attach -t orchestra       ║"
-echo "║  Switch:  Ctrl+B then window number      ║"
-echo "║  List:    Ctrl+B then W                  ║"
-echo "║  Detach:  Ctrl+B then D                  ║"
-echo "╚══════════════════════════════════════════╝"
 echo ""
-echo "Once attached, paste each agent's init prompt:"
+echo "  Launched in tmux session: orchestra"
+echo "  Attach:  tmux attach -t orchestra"
+echo "  Switch:  Ctrl+B then window number"
+echo "  Detach:  Ctrl+B then D"
+echo ""
+
+# Wait for agents to start, then send init prompts
+echo "  Waiting 8 seconds for agents to start..."
+sleep 8
+
+# Send CEO init prompt
+if [ "$LAUNCH_CEO" = true ]; then
+  ceo_init=$(cat "$REPO_DIR/.orchestra/ceo/init-prompt.md")
+  tmux send-keys -t "$SESSION:ceo" "$ceo_init" Enter
+  echo "  Sent init prompt to CEO"
+  sleep 2
+fi
+
+# Send department init prompts
 for dept in "${DEPT_ORDER[@]}"; do
-  if [ "$dept" = "master" ]; then
-    echo "  $dept: cat .orchestra/master/init-prompt.md"
-  else
-    echo "  $dept: cat .orchestra/departments/$dept/init-prompt.md"
+  init_file="$REPO_DIR/.orchestra/departments/$dept/init-prompt.md"
+  if [ -f "$init_file" ]; then
+    init_content=$(cat "$init_file")
+    tmux send-keys -t "$SESSION:$dept" "$init_content" Enter
+    echo "  Sent init prompt to $dept"
+    sleep 2
   fi
 done
+
 echo ""
-echo "Or send init prompts manually in each window."
+echo "  All agents initialized. Manager (you) runs separately."
+echo "  Attach with: tmux attach -t orchestra"

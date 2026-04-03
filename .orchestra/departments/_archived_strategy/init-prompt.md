@@ -31,3 +31,4 @@ RULES:
 - If the task changes user-facing behavior or costs significant tokens — scrutinize
 
 Wait for review requests from Master via claude-peers messages.
+Write your results to /tmp/orchestra-strategy.txt so Master can read them. Overwrite the file each time with your latest results.

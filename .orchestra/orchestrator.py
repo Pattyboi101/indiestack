@@ -164,7 +164,8 @@ class Orchestrator:
     ) -> AgentResult:
         """Spawn a claude -p subprocess and parse the JSON result."""
         dept = self.departments.get(dept_key)
-        model = "opus" if is_master else (dept.model if dept else "sonnet")
+        # Manager runs on Sonnet (not Opus) — CEO handles strategic decisions
+        model = "sonnet" if is_master else (dept.model if dept else "sonnet")
         system_prompt = ""
 
         if is_master:
@@ -328,15 +329,16 @@ Rules:
     async def run_strategy_review(
         self, task: str, assignments: dict, dashboard: Any
     ) -> dict:
-        """Send all assignments to Strategy & QA for review."""
-        strategy_dept = self.departments.get("strategy")
-        if not strategy_dept:
-            dashboard.log("WARNING: No strategy department, skipping review")
-            return {"verdict": "approve", "approved_tasks": assignments}
-
-        strategy_dept.status = "reviewing"
-        strategy_dept.current_task = "Reviewing all assignments"
-        dashboard.draw()
+        """Send all assignments to CEO (Opus) for S&QA review."""
+        # CEO absorbs the old Strategy & QA role
+        ceo_dept = self.departments.get("ceo")
+        if not ceo_dept:
+            # If CEO not in departments, still run review as Opus subprocess
+            dashboard.log("CEO not in departments, running Opus review directly")
+        else:
+            ceo_dept.status = "reviewing"
+            ceo_dept.current_task = "Reviewing all assignments"
+            dashboard.draw()
 
         playbook = self._read_file(PLAYBOOK_PATH)
         prompt = f"""Review these proposed department assignments for IndieStack.
@@ -360,14 +362,23 @@ Respond ONLY with valid JSON:
   "alternative": "suggested alternative if challenging or vetoing"
 }}"""
 
-        dashboard.log("S&QA reviewing assignments...")
-        result = await self.run_agent("strategy", prompt)
-        strategy_dept.result = result
+        dashboard.log("CEO reviewing assignments (Opus)...")
+        # CEO always runs as Opus regardless of department model config
+        # Temporarily override to use opus for this review
+        if ceo_dept:
+            original_model = ceo_dept.model
+            ceo_dept.model = "opus"
+            result = await self.run_agent("ceo", prompt)
+            ceo_dept.model = original_model
+            ceo_dept.result = result
+        else:
+            result = await self.run_agent("ceo", prompt)
 
         if result.is_error:
-            dashboard.log(f"S&QA error: {result.output[:200]}")
-            strategy_dept.status = "error"
-            dashboard.draw()
+            dashboard.log(f"CEO review error: {result.output[:200]}")
+            if ceo_dept:
+                ceo_dept.status = "error"
+                dashboard.draw()
             return {"verdict": "error", "reasoning": result.output[:200]}
 
         # Parse S&QA response
@@ -381,18 +392,20 @@ Respond ONLY with valid JSON:
                 try:
                     review = json.loads(text[start:end])
                 except json.JSONDecodeError:
-                    dashboard.log("WARNING: Could not parse S&QA response, auto-approving")
-                    strategy_dept.status = "done"
+                    dashboard.log("WARNING: Could not parse CEO response, auto-approving")
+                    if ceo_dept:
+                        ceo_dept.status = "done"
                     dashboard.draw()
                     return {"verdict": "approve", "approved_tasks": assignments}
             else:
-                dashboard.log("WARNING: No JSON in S&QA response, auto-approving")
-                strategy_dept.status = "done"
+                dashboard.log("WARNING: No JSON in CEO response, auto-approving")
+                if ceo_dept:
+                    ceo_dept.status = "done"
                 dashboard.draw()
                 return {"verdict": "approve", "approved_tasks": assignments}
 
         verdict = review.get("verdict", "approve")
-        dashboard.log(f"S&QA verdict: {verdict} (${result.cost_usd:.4f})")
+        dashboard.log(f"CEO verdict: {verdict} (${result.cost_usd:.4f})")
 
         if review.get("risk_flags"):
             for flag in review["risk_flags"]:
@@ -401,7 +414,8 @@ Respond ONLY with valid JSON:
             for cond in review["conditions"]:
                 dashboard.log(f"  Condition: {cond}")
 
-        strategy_dept.status = "done" if verdict != "error" else "error"
+        if ceo_dept:
+            ceo_dept.status = "done" if verdict != "error" else "error"
         dashboard.draw()
         return review
 

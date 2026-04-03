@@ -6,18 +6,18 @@
   "require_approval_for_deploy": true,
   "require_approval_for_commit": false,
   "models": {
-    "master": "opus",
+    "manager": "sonnet",
+    "ceo": "opus",
     "frontend": "sonnet",
     "backend": "sonnet",
     "devops": "haiku",
     "content": "sonnet",
-    "mcp": "sonnet",
-    "strategy": "opus"
+    "mcp": "sonnet"
   },
   "departments": {
     "frontend": {
       "name": "Frontend",
-      "emoji": "⚡",
+      "emoji": "\u26a1",
       "allowed_paths": [
         "src/indiestack/routes/",
         "src/indiestack/routes/components.py"
@@ -26,7 +26,7 @@
     },
     "backend": {
       "name": "Backend",
-      "emoji": "🔧",
+      "emoji": "\ud83d\udd27",
       "allowed_paths": [
         "src/indiestack/db.py",
         "src/indiestack/auth.py",
@@ -40,7 +40,7 @@
     },
     "devops": {
       "name": "DevOps",
-      "emoji": "🚀",
+      "emoji": "\ud83d\ude80",
       "allowed_paths": [
         "Dockerfile",
         "fly.toml",
@@ -51,7 +51,7 @@
     },
     "content": {
       "name": "Content/SEO",
-      "emoji": "📝",
+      "emoji": "\ud83d\udcdd",
       "allowed_paths": [
         "src/indiestack/routes/"
       ],
@@ -59,7 +59,7 @@
     },
     "mcp": {
       "name": "MCP/Integration",
-      "emoji": "🔌",
+      "emoji": "\ud83d\udd0c",
       "allowed_paths": [
         "src/indiestack/mcp_server.py",
         "pyproject.toml",
@@ -67,12 +67,6 @@
         "src/indiestack/enricher.py"
       ],
       "description": "MCP server, PyPI publishing, external API integrations"
-    },
-    "strategy": {
-      "name": "Strategy & QA",
-      "emoji": "🎯",
-      "allowed_paths": ["*"],
-      "description": "Reviews all plans before execution. Challenges assumptions, audits output, flags overconfidence. Read-only access to everything."
     }
   }
 }
