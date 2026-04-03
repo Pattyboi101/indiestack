@@ -83,6 +83,12 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 8,000+ 
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie developers have built |
 
+## What's new in v1.13
+
+- **GitHub stars in results** — Search results and tool details now show GitHub star counts. Filter by `min_stars` to surface popular tools instantly.
+- **Smarter category aliases** — Searching "cron", "oauth", "smtp", or "uptime" now correctly maps to Scheduling, Authentication, Email, and Monitoring categories.
+- **Better alternative exclusions** — "[tool] alternatives" queries now exclude wrapper packages (e.g. dj-stripe, laravel-stripe-webhooks) as well as the tool itself.
+
 ## What's new in v1.12
 
 - **Market gaps** — New `get_market_gaps()` tool exposes zero-result queries ranked by search volume. Agents and makers can see what tools are missing from the ecosystem. API: `/api/gaps`.
