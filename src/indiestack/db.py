@@ -2406,6 +2406,31 @@ _FTS_STOP_WORDS = {
     'open', 'source',
 }
 
+# Framework qualifier terms in queries (e.g. "auth for nextjs", "payments django").
+# FTS5 tokenizes "Next.js" as "next"+"js" separately, so "nextjs" won't FTS-match
+# descriptions. These terms are auto-routed to frameworks_tested LIKE filter instead.
+# Maps normalised query word → value stored in frameworks_tested column.
+_FRAMEWORK_QUERY_TERMS: dict[str, str] = {
+    "nextjs": "nextjs",           # "next.js" → "nextjs" after punctuation strip
+    "react": "react", "reactjs": "react",
+    "vue": "vue", "vuejs": "vue",
+    "svelte": "svelte", "sveltekit": "sveltekit",
+    "nuxt": "nuxt",
+    "astro": "astro",
+    "angular": "angular",
+    "gatsby": "gatsby",
+    "remix": "remix",
+    "django": "django",
+    "flask": "flask",
+    "fastapi": "fastapi",
+    "express": "express",
+    "rails": "rails",
+    "laravel": "laravel",
+    "spring": "spring",
+    "electron": "electron",
+    "tauri": "tauri",
+}
+
 
 def sanitize_fts(query: str) -> str:
     """Sanitize input for FTS5 — strip special chars, stop words, add prefix matching."""
@@ -2595,6 +2620,26 @@ async def search_tools(
         return (f"{_engagement_expr} DESC", list(_engagement_params))
 
     safe_q = sanitize_fts(query)
+
+    # Auto-detect framework qualifier terms (e.g. "auth for nextjs", "payments django").
+    # FTS5 tokenises "Next.js" as "next"+"js", so "nextjs" never FTS-matches descriptions.
+    # Route detected framework terms to a frameworks_tested LIKE filter and strip them from
+    # the FTS query so they don't AND-constrain results into zero-return territory.
+    # Only applies when no explicit `frameworks` param was passed by the caller.
+    if not frameworks:
+        _q_words_raw = re.sub(r'[^\w\s]', '', query.lower()).split()
+        _fw_detected = list(dict.fromkeys(  # deduplicate, preserve order
+            _FRAMEWORK_QUERY_TERMS[w] for w in _q_words_raw if w in _FRAMEWORK_QUERY_TERMS
+        ))
+        _non_fw_words = [w for w in _q_words_raw
+                         if w not in _FRAMEWORK_QUERY_TERMS and w not in _FTS_STOP_WORDS]
+        if _fw_detected and _non_fw_words:
+            # "auth for nextjs" → FTS searches "auth", filter to frameworks_tested LIKE '%nextjs%'
+            fw_conditions = " OR ".join("LOWER(t.frameworks_tested) LIKE ?" for _ in _fw_detected)
+            extra_where += f" AND ({fw_conditions})"
+            extra_params.extend(f"%{fw}%" for fw in _fw_detected)
+            # Rebuild safe_q without framework terms so FTS stays tight
+            safe_q = sanitize_fts(" ".join(_non_fw_words))
 
     # If no query text but filters are present, do a filter-only browse
     has_filters = any([
