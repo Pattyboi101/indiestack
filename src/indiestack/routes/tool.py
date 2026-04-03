@@ -262,15 +262,15 @@ async def tool_detail(request: Request, slug: str):
             AI agents recommend this tool
         </div>'''
     elif not is_claimed and ai_rec_count > 0:
-        # Unclaimed — teaser + claim nudge
-        analytics_teaser = '''
+        # Unclaimed — show count (specific number is the hook) + claim nudge for breakdown
+        analytics_teaser = f'''
         <div style="margin-top:8px;padding:10px 16px;background:var(--info-bg);border-radius:var(--radius-sm);
                     display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--info-text);border:1px solid var(--info-border);">
             <div style="display:flex;align-items:center;gap:8px;font-weight:600;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                AI agents are recommending this tool
+                AI agents recommended this tool {ai_rec_count} time{"s" if ai_rec_count != 1 else ""}
             </div>
-            <span style="font-size:12px;font-weight:400;color:var(--ink-muted);">Claim this listing to see how many times and your success rate.</span>
+            <span style="font-size:12px;font-weight:400;color:var(--ink-muted);">Claim this listing to see which queries drove this and your success rate.</span>
         </div>'''
 
     pro_upsell_html = ''
