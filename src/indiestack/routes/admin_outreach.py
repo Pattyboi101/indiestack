@@ -319,10 +319,14 @@ def _render_magic_tab(tools, generated_links=None, csv_text=None, recently_claim
             </form>"""
             copy_cell = ""
 
+        mcp_views = int(t.get("mcp_view_count") or 0)
+        mcp_cell = f'<span style="color:var(--terracotta);font-weight:600;">{mcp_views:,}</span>' if mcp_views else '<span style="color:var(--ink-muted);">—</span>'
+
         rows += f"""<tr style="border-bottom:1px solid var(--border);">
             <td style="padding:10px 8px;font-size:13px;font-weight:600;">{name}</td>
             <td style="padding:10px 8px;font-size:13px;">{maker}</td>
             <td style="padding:10px 8px;font-size:13px;">{maker_link}</td>
+            <td style="padding:10px 8px;font-size:13px;text-align:right;">{mcp_cell}</td>
             <td style="padding:10px 8px;font-size:13px;">{link_cell}</td>
             <td style="padding:10px 8px;font-size:13px;">{copy_cell}</td>
         </tr>"""
@@ -355,6 +359,7 @@ def _render_magic_tab(tools, generated_links=None, csv_text=None, recently_claim
             <th style="padding:10px 8px;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;">Tool Name</th>
             <th style="padding:10px 8px;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;">Maker Name</th>
             <th style="padding:10px 8px;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;">Maker URL</th>
+            <th style="padding:10px 8px;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;text-align:right;">AI Recs</th>
             <th style="padding:10px 8px;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;">Magic Link</th>
             <th style="padding:10px 8px;font-size:12px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;">Copy</th>
         </tr>

@@ -6706,12 +6706,14 @@ async def get_all_subscribers_with_dates(db) -> list:
 
 
 async def get_unclaimed_tools_for_outreach(db) -> list:
-    """Unclaimed approved tools for bulk magic link outreach."""
+    """Unclaimed approved tools for bulk magic link outreach.
+    Sorted by mcp_view_count DESC so outreach targets the most AI-recommended tools first."""
     cursor = await db.execute("""
-        SELECT t.id, t.name, t.slug, t.maker_name, t.maker_url
+        SELECT t.id, t.name, t.slug, t.maker_name, t.maker_url,
+               COALESCE(t.mcp_view_count, 0) AS mcp_view_count
         FROM tools t
         WHERE t.maker_id IS NULL AND t.status = 'approved'
-        ORDER BY t.upvote_count DESC
+        ORDER BY t.mcp_view_count DESC, t.upvote_count DESC
     """)
     return [dict(r) for r in await cursor.fetchall()]
 
