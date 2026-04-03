@@ -961,7 +961,7 @@ async def technographic_data(request: Request, tool_slug: str):
         return JSONResponse({
             "error": "API key required for technographic data",
             "get_key": "https://indiestack.ai/developer",
-            "pricing": "Contact hello@indiestack.ai for technographic API access",
+            "pricing": "Contact pajebay1@gmail.com for technographic API access",
         }, status_code=401)
 
     # Verify API key exists

@@ -162,7 +162,7 @@ async def data_product_page(request: Request):
                         <li>&#10003; Repo-level detail</li>
                         <li>&#10003; Combo verification data</li>
                     </ul>
-                    <a href="mailto:patrick@indiestack.ai?subject=Migration%20Intelligence%20Pro" class="btn-primary" style="display:block;text-align:center;padding:10px;text-decoration:none;font-size:var(--text-sm);">
+                    <a href="mailto:pajebay1@gmail.com?subject=Migration%20Intelligence%20Pro" class="btn-primary" style="display:block;text-align:center;padding:10px;text-decoration:none;font-size:var(--text-sm);">
                         Contact Us
                     </a>
                 </div>
@@ -179,7 +179,7 @@ async def data_product_page(request: Request):
                         <li>&#10003; CI outcome data feed</li>
                         <li>&#10003; Dedicated support</li>
                     </ul>
-                    <a href="mailto:patrick@indiestack.ai?subject=Migration%20Intelligence%20Enterprise" class="btn-secondary" style="display:block;text-align:center;padding:10px;text-decoration:none;font-size:var(--text-sm);">
+                    <a href="mailto:pajebay1@gmail.com?subject=Migration%20Intelligence%20Enterprise" class="btn-secondary" style="display:block;text-align:center;padding:10px;text-decoration:none;font-size:var(--text-sm);">
                         Let's Talk
                     </a>
                 </div>

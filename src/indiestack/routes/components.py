@@ -782,7 +782,7 @@ def footer_html() -> str:
             <div class="footer-heading">Legal</div>
             <a href="/terms" class="footer-link">Terms of Service</a>
             <a href="/privacy" class="footer-link">Privacy Policy</a>
-            <a href="mailto:patrick@indiestack.ai?subject=Bug%20Report%20%E2%80%94%20IndieStack&body=What%20happened%3A%0A%0AWhat%20I%20expected%3A%0A%0APage%20URL%3A%0A" class="footer-link">Report a Bug</a>
+            <a href="mailto:pajebay1@gmail.com?subject=Bug%20Report%20%E2%80%94%20IndieStack&body=What%20happened%3A%0A%0AWhat%20I%20expected%3A%0A%0APage%20URL%3A%0A" class="footer-link">Report a Bug</a>
           </div>
         </div>
         <div class="footer-bottom">

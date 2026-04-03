@@ -8,6 +8,15 @@ from indiestack.routes.components import page_shell
 router = APIRouter()
 
 
+@router.get("/claim")
+async def claim_redirect(request: Request):
+    """Redirect /claim to explore so makers can search for and claim their tool."""
+    user = request.state.user
+    if user:
+        return RedirectResponse("/dashboard", status_code=302)
+    return RedirectResponse("/signup?next=/dashboard", status_code=302)
+
+
 def _check_icon() -> str:
     return (
         '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">'
