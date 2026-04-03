@@ -2555,10 +2555,15 @@ async def search_tools(
         _alt_tool = (_alt_patterns.group(1) or _alt_patterns.group(2) or '').strip().lower()
         if _alt_tool and not exclude:
             if len(_alt_tool) >= 4:
-                # Exclude all tools whose name/slug contains the target — these are wrappers, not alternatives
+                # Exclude tools whose name/slug contains the target (wrappers)
+                # AND tools tagged with the target (complements built ON the target,
+                # e.g. WorkAid Dunning tagged "Stripe" should not appear in "stripe alternative").
                 _slug_cursor = await db.execute(
-                    "SELECT slug FROM tools WHERE (LOWER(name) LIKE ? OR slug LIKE ?) AND status = 'approved'",
-                    (f"%{_alt_tool}%", f"%{_alt_tool}%"))
+                    """SELECT slug FROM tools
+                       WHERE (LOWER(name) LIKE ? OR slug LIKE ?
+                              OR (',' || LOWER(tags) || ',') LIKE ?)
+                       AND status = 'approved'""",
+                    (f"%{_alt_tool}%", f"%{_alt_tool}%", f"%,{_alt_tool},%"))
             else:
                 # Short names (< 4 chars) — exact match only to avoid over-excluding
                 _slug_cursor = await db.execute(
