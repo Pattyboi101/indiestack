@@ -2352,6 +2352,44 @@ _CAT_SYNONYMS: dict[str, str] = {
     "langchain": "ai",
     "agent": "ai",
     "mcp": "ai",
+    # Direct category name fragments (for non-first-position terms like "self hosted auth")
+    "auth": "authentication",
+    "authentication": "authentication",
+    "payment": "payments",
+    "pay": "payments",
+    "email": "email",
+    "emails": "email",
+    "monitor": "monitoring",
+    "monitoring": "monitoring",
+    "analytics": "analytics",
+    "database": "database",
+    "storage": "file",
+    "hosting": "hosting",
+    "deploy": "deployment",
+    "deployment": "deployment",
+    "cache": "caching",
+    "caching": "caching",
+    "search": "search",
+    "notification": "notifications",
+    "notifications": "notifications",
+    "chat": "chat",
+    "cms": "cms",
+    "testing": "testing",
+    "test": "testing",
+    "ci": "ci-cd",
+    "cicd": "ci-cd",
+    "form": "forms",
+    "forms": "forms",
+    "feature": "feature-flags",
+    "flags": "feature-flags",
+    "logging": "monitoring",
+    "error": "monitoring",
+    "errors": "monitoring",
+    "video": "video",
+    "maps": "maps",
+    "map": "maps",
+    "geo": "maps",
+    "location": "maps",
 }
 
 _FTS_STOP_WORDS = {
@@ -2521,12 +2559,19 @@ async def search_tools(
         "    ELSE 0 END)"
     )
     # The five params consumed by _engagement_expr (exact name w/install, exact name w/o, prefix, category, tags)
-    # For category and tag matching, use the first meaningful term so "auth for nextjs" matches "Authentication"
+    # For category and tag matching, find the best synonym match across all meaningful terms.
     _q = query.strip()
     _meaningful = [t for t in _q.lower().split() if t not in _FTS_STOP_WORDS]
     _raw_cat = _meaningful[0] if _meaningful else _q
-    # Map synonyms so "cron" → "background" matches "Background Jobs" category
-    _cat_term = _CAT_SYNONYMS.get(_raw_cat, _raw_cat)
+    # Map synonyms so "cron" → "background" matches "Background Jobs" category.
+    # For queries like "self hosted auth", the first meaningful term ("self") has no
+    # synonym — scan all terms and prefer the first with a known synonym so "auth"
+    # from "self hosted auth" gets the 100-point Authentication category boost.
+    _syn_term = next((t for t in _meaningful if t in _CAT_SYNONYMS), None)
+    if _syn_term:
+        _cat_term = _CAT_SYNONYMS[_syn_term]
+    else:
+        _cat_term = _raw_cat
     _engagement_params: list = [_q, _q, _q, _cat_term, _cat_term]
 
     # Determine sort order — returns (sql_fragment, extra_params)
