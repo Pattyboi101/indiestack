@@ -19,37 +19,6 @@ _Master's accumulated knowledge. Updated after each orchestrator run._
 ## GOTCHA: aiosqlite Row access
 aiosqlite with row_factory=Row uses DICT access (row["column_name"]), NOT integer indexing (row[0]). This has bitten us TWICE: moat/stats endpoint and migration signals. When writing SQL queries that return rows, ALWAYS use column name aliases and access via row["alias"]. Add this to Backend CLAUDE.md.
 
-## 2026-03-30 01:35
-Task: check the landing page title tag and suggest if it could be improved for SEO
-Verdict: approve
-Total cost: $0.4542
-Results:
-- 📝 content: done ($0.1853)
-
-## 2026-03-30 01:49
-Task: Health check: run smoke tests, verify the site loads, check /health endpoint returns 200. If anything fails, describe what's wrong.
-Verdict: approve
-Total cost: $0.3206
-Results:
-- 🚀 devops: done ($0.0540)
-
-## 2026-03-30 02:01
-Task: Quick cleanup: find and fix any obvious issues in files changed in the last 3 git commits: typos in user-facing text, missing html.escape calls, hardcoded colors that should use CSS variables.
-Verdict: approve
-Total cost: $2.2148
-Results:
-- ⚡ frontend: done ($1.1502)
-- 🔧 backend: done ($0.6905)
-- 📝 content: done ($0.2296)
-
-## 2026-03-30 02:03
-Task: Security review: check for SQL injection in any raw f-string queries, missing html.escape on user input, exposed secrets in git-tracked files, any endpoints missing auth that should have it.
-Verdict: approve
-Total cost: $3.9620
-Results:
-- 🔧 backend: done ($1.2407)
-- ⚡ frontend: done ($2.3742)
-- 🚀 devops: done ($0.1921)
 
 ## 2026-03-30 02:13
 Task: Check 3 key pages (landing, explore, tool detail) for accessibility: missing alt text, low contrast text, touch targets under 44px, missing ARIA labels on interactive elements. Fix anything clear-cut.
@@ -105,3 +74,7 @@ Total cost: $1.1492
 Results:
 - 🔧 backend: done ($0.6631)
 - ⚡ frontend: done ($0.3106)
+
+## 2026-03-31 — Dream consolidation
+Recent activity: 20 commits in last 24h.
+Features: 16. Fixes: 4.

@@ -1,0 +1,56 @@
+{
+  "run_id": "8e78f22217fd",
+  "timestamp": "2026-03-30T02:30:37.832186",
+  "task": "The MCP API returns 404 for 'tailwind-css' even though Tailwind CSS exists in our catalog as a different slug. Investigate: what slug does Tailwind CSS actually have? Check if other commonly-searched tools have the same problem (agents searching for 'stripe', 'supabase', 'nextjs', 'prisma' etc and getting 404 because the slug doesn't match). If possible, add slug aliases or improve the /api/tools/{slug} endpoint to try common variations (npm-X, X-js, etc) before returning 404.",
+  "decomposition": {
+    "assignments": {
+      "backend": "Investigate and fix slug resolution in the /api/tools/{slug} endpoint. 1) Query the SQLite database to find Tailwind CSS's actual slug (check db.py and the tools table). 2) Test these commonly-searched slugs against the DB: 'tailwind-css', 'stripe', 'supabase', 'nextjs', 'next-js', 'prisma', 'vercel', 'clerk', 'drizzle'. Document which ones 404 vs resolve. 3) Implement a slug fallback mechanism in the API endpoint (likely in src/indiestack/routes/ \u2014 find which route handles /api/tools/{slug}). Before returning 404, try common variations: strip '-js'/'-css' suffixes, try adding them, try 'x-js'\u2192'xjs', handle 'nextjs'\u2192'next-js' style mismatches. Consider also doing a case-insensitive LIKE query on the tool name as a last resort. 4) If the catalog has an aliases/redirects pattern already, extend it; if not, add a slug_aliases dict or DB table for known mappings (e.g. 'tailwind-css' \u2192 actual slug).",
+      "mcp": "After backend fix is deployed, verify the MCP server's get_tool_details function works for previously-failing slugs. Check src/indiestack/mcp_server.py to see how it constructs the API call \u2014 does it do any slug normalization itself, or does it pass the user's query straight through? If the MCP server does its own slug construction (e.g. from search results), verify it uses the correct slugs. Test by calling the production API for: tailwind-css, stripe, supabase, nextjs, prisma, next-auth."
+    },
+    "parallel_groups": [
+      [
+        "backend"
+      ],
+      [
+        "mcp"
+      ]
+    ],
+    "reasoning": "This is primarily a backend data + API issue \u2014 the slug lookup endpoint returns 404 when agents use reasonable-but-wrong slugs. Backend investigates the actual DB state and implements fallback resolution. MCP runs second to verify the fix works end-to-end through the MCP server path, and to check if the MCP server itself does any slug normalization that might need updating. No frontend/content/devops needed \u2014 this is purely API logic."
+  },
+  "strategy_review": {
+    "verdict": "challenge",
+    "reasoning": "The bug is real and worth fixing \u2014 the previous MCP audit (02:19) already proved 'tailwind-css' 404s, and every failed slug lookup is a broken experience for IndieStack's primary user tier (AI agents). The backend task is well-scoped and directly improves product quality. However, the MCP task is problematic: it says 'After backend fix is deployed, verify...' which means it CANNOT run in parallel with backend. Assigning it in the same batch means paying for an MCP agent that either (a) blocks waiting for deploy, or (b) only reads mcp_server.py code \u2014 which the backend agent can trivially do as part of their investigation. Fold the MCP code review into the backend task and do post-deploy verification as a quick manual curl, not a separate department run.",
+    "approved_tasks": {
+      "backend": "Investigate and fix slug resolution in the /api/tools/{slug} endpoint. 1) Query the SQLite database to find Tailwind CSS's actual slug and test these commonly-searched slugs: 'tailwind-css', 'stripe', 'supabase', 'nextjs', 'next-js', 'prisma', 'vercel', 'clerk', 'drizzle'. Document which 404 vs resolve. 2) Also check src/indiestack/mcp_server.py to understand how it constructs API calls \u2014 does it normalize slugs or pass them straight through? This determines whether the fix needs to be server-side only or both. 3) Implement a slug fallback mechanism in the API endpoint: before returning 404, try common variations (strip/add '-js'/'-css' suffixes, handle 'nextjs'\u2192'next-js' style mismatches, case-insensitive name lookup as last resort). A slug_aliases dict for known mappings is preferred over complex heuristics \u2014 explicit > clever. 4) Test the fix against all previously-failing slugs before committing.",
+      "mcp": null
+    },
+    "conditions": [
+      "Don't over-engineer the normalization \u2014 a simple aliases dict plus 2-3 string transforms is enough. Don't build a fuzzy matching system.",
+      "Test against the actual DB, not assumptions about what slugs exist.",
+      "Commit the fix but do NOT deploy \u2014 Patrick should review slug resolution logic before it hits production since it affects the primary API contract."
+    ],
+    "risk_flags": [
+      "Slug normalization that's too aggressive could map to the WRONG tool (e.g. 'stripe-js' \u2192 'stripe' when they're different tools). Keep it conservative.",
+      "If implementing a name-based fallback (LIKE query), ensure it returns exact matches only \u2014 not partial matches that could surprise agents.",
+      "The aliases dict will need ongoing maintenance as new tools are added. Consider whether a DB table is more sustainable than a hardcoded dict."
+    ],
+    "alternative": "Drop MCP as a separate department. The backend task now includes checking mcp_server.py. Post-deploy verification is a 30-second curl test, not a $0.15+ agent run."
+  },
+  "total_cost_usd": 1.091324,
+  "total_input_tokens": 1758452,
+  "total_output_tokens": 19570,
+  "budget_cap_usd": 5.0,
+  "results": {
+    "backend": {
+      "status": "done",
+      "summary": "Done. Here's the full picture:\n\n---\n\n**Investigation results:**\n\n| Slug | Before | After | How |\n|---|---|---|---|\n| `tailwind-css` | 404 | **404** | No tool in DB \u2014 Tailwind is a CSS framework, not a SaaS/indie tool |\n| `stripe` | 404 | **200** | Alias \u2192 `stripe-payments` |\n| `supabase` | 200 | 200",
+      "files_changed": [],
+      "cost_usd": 0.911052,
+      "input_tokens": 38,
+      "output_tokens": 16891,
+      "cache_read_tokens": 1707349,
+      "duration_ms": 444573,
+      "is_error": false
+    }
+  }
+}

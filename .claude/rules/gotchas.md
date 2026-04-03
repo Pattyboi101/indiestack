@@ -26,4 +26,6 @@
 
 - Stats in copy go stale fast. Tool count was "3,100+" when we had 8,197 approved. Repo count was "8,700+" when actual was 4,535. Verify claims against production DB before publishing.
 
+- DO NOT gate MCP features behind API keys or accounts. We tried this before and it tanked MCP adoption. Keep the MCP server fully anonymous and frictionless. If we want accounts, use soft nudges after repeated use — never degrade the anonymous experience.
+
 - After fixing data on production (tags, categories, install commands), ALWAYS rebuild the FTS index: `INSERT INTO tools_fts(tools_fts) VALUES('rebuild')` + `PRAGMA wal_checkpoint(TRUNCATE)`. Otherwise the search API serves stale cached results until the next deploy.

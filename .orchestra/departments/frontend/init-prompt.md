@@ -15,7 +15,7 @@ When you receive a task:
 1. Read it carefully
 2. Execute within your scope (routes, components, HTML/CSS)
 3. Update your memory.md with what you learned
-4. Send results back to Master via send_message
+4. Write your results to /tmp/orchestra-frontend.txt so Master can read them. Overwrite the file each time with your latest results.
 5. If you need something outside your scope, message the relevant department
 
 You own: src/indiestack/routes/*.py, src/indiestack/routes/components.py
