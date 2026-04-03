@@ -2,18 +2,18 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Pattyboi101/indiestack",
   "title": "IndieStack",
-  "description": "Search 3,100+ developer tools via MCP. Install commands, compatibility data, health scores.",
+  "description": "Search 8,000+ developer tools via MCP before your AI writes code from scratch. Install commands, GitHub health scores, compatibility data, and migration intelligence. 10,000+ PyPI installs.",
   "websiteUrl": "https://indiestack.ai",
   "repository": {
     "url": "https://github.com/Pattyboi101/indiestack",
     "source": "github"
   },
-  "version": "1.12.0",
+  "version": "1.13.0",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "indiestack",
-      "version": "1.12.0",
+      "version": "1.13.0",
       "runtimeHint": "uvx",
       "runtimeArguments": [
         {
