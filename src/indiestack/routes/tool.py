@@ -253,6 +253,29 @@ async def tool_detail(request: Request, slug: str):
                     View full analytics &rarr;
                 </a>
             </div>'''
+        # Badge embed snippet for claimed owners (always visible, not Pro-gated)
+        if ai_rec_count > 0:
+            badge_url = f"{BASE_URL}/api/badge/ai-recs/{escape(slug)}.svg"
+            tool_url = f"{BASE_URL}/tool/{escape(slug)}"
+            badge_md = f"[![IndieStack AI recs]({badge_url})]({tool_url})"
+            mcp_badge += f'''
+            <details style="margin-top:12px;">
+                <summary style="cursor:pointer;font-size:13px;color:var(--ink-muted);user-select:none;">
+                    Share badge in README
+                </summary>
+                <div style="margin-top:8px;padding:12px;background:var(--cream-dark);border-radius:var(--radius-sm);border:1px solid var(--border);">
+                    <p style="font-size:12px;color:var(--ink-muted);margin:0 0 8px;">Add this to your project README to show AI recommendation count:</p>
+                    <div style="position:relative;">
+                        <code id="badge-md" style="display:block;font-family:var(--font-mono);font-size:11px;
+                            background:var(--card-bg);padding:8px 10px;border-radius:4px;border:1px solid var(--border);
+                            word-break:break-all;white-space:pre-wrap;color:var(--ink);">{escape(badge_md)}</code>
+                        <button onclick="navigator.clipboard.writeText(document.getElementById(\'badge-md\').textContent.trim());this.textContent=\'Copied!\';setTimeout(()=>this.textContent=\'Copy\',1500);"
+                            style="position:absolute;top:6px;right:6px;padding:3px 8px;font-size:11px;border:1px solid var(--border);
+                                border-radius:4px;background:var(--card-bg);cursor:pointer;color:var(--ink-muted);">Copy</button>
+                    </div>
+                    <img src="{badge_url}" alt="IndieStack AI recs" style="margin-top:8px;height:20px;" loading="lazy">
+                </div>
+            </details>'''
     elif is_claimed and ai_rec_count > 0:
         # Claimed but viewer is not the owner — generic teaser, no numbers
         analytics_teaser = '''
@@ -1285,3 +1308,57 @@ async def report_compatible(
     await record_tool_pair(db, a, b, source="user")
 
     return JSONResponse({"ok": True, "pair": pair_slug})
+
+
+@router.get("/api/badge/ai-recs/{slug}.svg")
+async def ai_recs_badge(request: Request, slug: str):
+    """Shields.io-style SVG badge: 'IndieStack | 127 AI recs'. Embeddable in READMEs."""
+    from fastapi.responses import Response
+
+    d = request.state.db
+    c = await d.execute(
+        "SELECT mcp_view_count FROM tools WHERE slug = ? AND status = 'approved'",
+        (slug,),
+    )
+    row = await c.fetchone()
+    if not row:
+        count = 0
+    else:
+        count = int(row["mcp_view_count"] or 0)
+
+    if count >= 1000:
+        value = f"{count / 1000:.1f}k AI recs"
+    elif count > 0:
+        value = f"{count} AI recs"
+    else:
+        value = "0 AI recs"
+
+    label = "IndieStack"
+    color = "#00D4F5" if count > 0 else "#999"
+    label_width = len(label) * 7 + 12
+    value_width = len(value) * 7 + 12
+    total_width = label_width + value_width
+
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{total_width}" height="20" viewBox="0 0 {total_width} 20">
+  <linearGradient id="s" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <clipPath id="r"><rect width="{total_width}" height="20" rx="3" fill="#fff"/></clipPath>
+  <g clip-path="url(#r)">
+    <rect width="{label_width}" height="20" fill="#555"/>
+    <rect x="{label_width}" width="{value_width}" height="20" fill="{color}"/>
+    <rect width="{total_width}" height="20" fill="url(#s)"/>
+  </g>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11">
+    <text x="{label_width / 2}" y="15" fill="#010101" fill-opacity=".3">{label}</text>
+    <text x="{label_width / 2}" y="14">{label}</text>
+    <text x="{label_width + value_width / 2}" y="15" fill="#010101" fill-opacity=".3">{value}</text>
+    <text x="{label_width + value_width / 2}" y="14">{value}</text>
+  </g>
+</svg>'''
+    return Response(
+        content=svg,
+        media_type="image/svg+xml",
+        headers={"Cache-Control": "public, max-age=3600"},
+    )
