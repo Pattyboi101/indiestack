@@ -2390,6 +2390,69 @@ _CAT_SYNONYMS: dict[str, str] = {
     "map": "maps",
     "geo": "maps",
     "location": "maps",
+    # Named tools → their primary category (fixes "[tool] alternative" queries so
+    # the category/tag boost targets the RIGHT category instead of tools tagged
+    # with the target tool name, which are complements not alternatives)
+    # Payment processors
+    "stripe": "payments",
+    "paddle": "payments",
+    "paypal": "payments",
+    "lemonsqueezy": "payments",
+    "gumroad": "payments",
+    "braintree": "payments",
+    # Auth providers
+    "clerk": "authentication",
+    "auth0": "authentication",
+    "okta": "authentication",
+    "keycloak": "authentication",
+    "supertokens": "authentication",
+    "zitadel": "authentication",
+    # Databases / BaaS
+    "supabase": "database",
+    "firebase": "database",
+    "neon": "database",
+    "planetscale": "database",
+    "cockroachdb": "database",
+    "dynamodb": "database",
+    "redis": "database",
+    "mongodb": "database",
+    # Hosting / DevOps
+    "vercel": "devops",
+    "netlify": "devops",
+    "railway": "devops",
+    "render": "devops",
+    "heroku": "devops",
+    "fly.io": "devops",
+    # Email / messaging
+    "mailchimp": "email",
+    "postmark": "email",
+    "mailerlite": "email",
+    "convertkit": "email",
+    "twilio": "notifications",
+    "vonage": "notifications",
+    # Monitoring / observability
+    "sentry": "monitoring",
+    "datadog": "monitoring",
+    "newrelic": "monitoring",
+    "grafana": "monitoring",
+    "pagerduty": "monitoring",
+    # Search
+    "algolia": "search",
+    "elasticsearch": "search",
+    "typesense": "search",
+    "meilisearch": "search",
+    # CMS
+    "contentful": "cms",
+    "strapi": "cms",
+    "sanity": "cms",
+    "directus": "cms",
+    # Analytics
+    "mixpanel": "analytics",
+    "amplitude": "analytics",
+    "segment": "analytics",
+    "posthog": "analytics",
+    "plausible": "analytics",
+    "fathom": "analytics",
 }
 
 _FTS_STOP_WORDS = {
