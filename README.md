@@ -2,6 +2,8 @@
 
 Your AI agent searches 8,000+ developer tools before writing code from scratch. 10,000+ installs.
 
+> **Context-efficient AI coding:** One `find_tools()` call finds a 3-line install command instead of generating hundreds of lines of boilerplate. Less code generated = less context consumed.
+
 ```bash
 claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
 ```
