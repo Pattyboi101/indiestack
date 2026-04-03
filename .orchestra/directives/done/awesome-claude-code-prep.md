@@ -33,15 +33,15 @@ Repo: hesreallyhim/awesome-claude-code (35k stars)
 
 | # | Task | Owner | Deadline | Status |
 |---|------|-------|----------|--------|
-| 1 | Get 5+ GitHub stars | Patrick + Ed | April 5 | **NOT DONE** (still 0) |
+| 1 | Get 5+ GitHub stars | Patrick + Ed | April 5 | **NOT DONE** — Patrick starred, Ed needed + 3 more |
 | 2 | Rewrite GitHub README.md | Content dept | April 5 | **DONE** |
 | 3 | Record 30-sec demo video | Patrick | April 6 | **NOT DONE** |
 | 4 | Draft submission form answers | Strategy | April 6 | **DONE** (see below) |
 | 5 | Remove "marketplace" language | Content | April 5 | **DONE** (README rewrite) |
 | 6 | Fix .fly.dev → .ai links | Backend dept | April 4 | **DONE** |
-| 7 | Add MIT LICENSE file to repo | Patrick/Backend | April 4 | **NOT DONE** (new blocker!) |
-| 8 | Run maintainer's evaluation prompt | Strategy | April 5 | **NOT DONE** (new task) |
-| 9 | Disclose network requests in submission | Strategy | April 6 | **NOT DONE** (new requirement) |
+| 7 | Add MIT LICENSE file to repo | Patrick/Backend | April 4 | **DONE** (committed 2026-04-02) |
+| 8 | Run maintainer's evaluation prompt | Strategy | April 5 | **NOT DONE** |
+| 9 | Disclose network requests in submission | Strategy | April 6 | **DONE** (in form draft below) |
 
 ## Submission Form Draft (updated to match actual form fields)
 
