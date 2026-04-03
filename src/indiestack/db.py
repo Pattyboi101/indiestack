@@ -682,6 +682,9 @@ NEED_MAPPINGS = {
     "learning": {"category": "learning-education", "terms": ["learning", "education", "flashcards", "course", "quiz", "tutorial"], "competitors": ["Coursera", "Udemy", "Anki", "Duolingo"], "title": "Learning & Education", "description": "Flashcard apps, course platforms, and educational tools.", "build_estimate": "3-5 weeks", "icon": "\U0001f4da"},
     "publishing": {"category": "newsletters-content", "terms": ["publishing platform", "blog platform", "newsletter platform", "writer tool", "substack alternative"], "competitors": ["Substack", "Ghost", "Medium", "Hashnode"], "title": "Publishing & Newsletters", "description": "Run newsletters, publish blogs, and build writing platforms.", "build_estimate": "3-4 weeks", "icon": "\U0001f4f0"},
     "creative": {"category": "creative-tools", "terms": ["music production", "video editor", "audio tool", "3d modeling", "pixel art", "creative software"], "competitors": ["Adobe Creative Suite", "DaVinci Resolve", "Blender", "Logic Pro"], "title": "Creative Tools", "description": "Music, video, art, and creative software from indie makers.", "build_estimate": "varies", "icon": "\U0001f3ad"},
+    "database": {"category": "database", "terms": ["database", "orm", "sql", "nosql", "postgres", "mysql", "sqlite", "migration"], "competitors": ["PlanetScale", "Supabase", "MongoDB Atlas", "Neon"], "title": "Databases", "description": "Indie databases, ORMs, and data storage tools for your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f5c4\ufe0f"},
+    "background": {"category": "background-jobs", "terms": ["cron job", "task queue", "background job", "job scheduler", "workflow", "queue worker"], "competitors": ["Celery", "Bull", "Sidekiq", "AWS SQS"], "title": "Background Jobs", "description": "Schedule cron jobs, run task queues, and orchestrate workflows.", "build_estimate": "1-2 weeks", "icon": "\u2699\ufe0f"},
+    "hosting": {"category": "hosting-infrastructure", "terms": ["hosting", "deployment", "vps", "cloud", "infrastructure", "paas"], "competitors": ["AWS", "Heroku", "Vercel", "Railway", "Render"], "title": "Hosting & Infrastructure", "description": "Deploy apps, manage servers, and scale infrastructure without enterprise overhead.", "build_estimate": "1-2 weeks", "icon": "\U0001f30d"},
 }
 
 TECH_KEYWORDS = {
@@ -2255,6 +2258,102 @@ async def run_github_health_checks(db_conn: aiosqlite.Connection, batch_size: in
 
 # ── Search ────────────────────────────────────────────────────────────────
 
+# Maps query terms → category name fragment for engagement scoring boost.
+# Needed because category names don't always contain the search term:
+# "cron" → "background" matches "Background Jobs"; "checkout" → "payments" etc.
+_CAT_SYNONYMS: dict[str, str] = {
+    # Background jobs / task queues
+    "cron": "background",
+    "queue": "background",
+    "worker": "background",
+    "celery": "background",
+    "sidekiq": "background",
+    "bullmq": "background",
+    "inngest": "background",
+    "trigger": "background",
+    # Auth synonyms
+    "oauth": "authentication",
+    "saml": "authentication",
+    "sso": "authentication",
+    "mfa": "authentication",
+    "2fa": "authentication",
+    "login": "authentication",
+    "signup": "authentication",
+    "session": "authentication",
+    "jwt": "authentication",
+    "passkey": "authentication",
+    "passwordless": "authentication",
+    # Payment synonyms
+    "checkout": "payments",
+    "billing": "payments",
+    "subscription": "payments",
+    "invoice": "invoicing",
+    "receipt": "invoicing",
+    # Email synonyms
+    "smtp": "email",
+    "newsletter": "email",
+    "drip": "email",
+    "transactional": "email",
+    "sendgrid": "email",
+    "resend": "email",
+    "mailgun": "email",
+    # Database synonyms
+    "db": "database",
+    "postgres": "database",
+    "mysql": "database",
+    "mongodb": "database",
+    "sqlite": "database",
+    "orm": "database",
+    "migration": "database",
+    "prisma": "database",
+    "drizzle": "database",
+    # Monitoring synonyms
+    "uptime": "monitoring",
+    "alerting": "monitoring",
+    "logging": "monitoring",
+    "logs": "monitoring",
+    "observability": "monitoring",
+    "tracing": "monitoring",
+    "apm": "monitoring",
+    "sentry": "monitoring",
+    "datadog": "monitoring",
+    # Scheduling synonyms
+    "booking": "scheduling",
+    "calendar": "scheduling",
+    "appointment": "scheduling",
+    "availability": "scheduling",
+    # File / storage synonyms
+    "upload": "file",
+    "s3": "file",
+    "cdn": "file",
+    "media": "file",
+    "assets": "file",
+    # CMS synonyms
+    "blog": "cms",
+    "headless": "cms",
+    "content": "cms",
+    # Project management synonyms
+    "kanban": "project",
+    "todo": "project",
+    "sprint": "project",
+    "agile": "project",
+    "scrum": "project",
+    # API synonyms
+    "webhook": "api",
+    "rest": "api",
+    "graphql": "api",
+    "openapi": "api",
+    "sdk": "api",
+    # AI synonyms
+    "llm": "ai",
+    "gpt": "ai",
+    "claude": "ai",
+    "openai": "ai",
+    "langchain": "ai",
+    "agent": "ai",
+    "mcp": "ai",
+}
+
 _FTS_STOP_WORDS = {
     'best', 'top', 'good', 'for', 'the', 'a', 'an', 'my', 'your', 'our',
     'with', 'and', 'or', 'in', 'on', 'to', 'of', 'is', 'it', 'that',
@@ -2417,7 +2516,9 @@ async def search_tools(
     # For category and tag matching, use the first meaningful term so "auth for nextjs" matches "Authentication"
     _q = query.strip()
     _meaningful = [t for t in _q.lower().split() if t not in _FTS_STOP_WORDS]
-    _cat_term = _meaningful[0] if _meaningful else _q
+    _raw_cat = _meaningful[0] if _meaningful else _q
+    # Map synonyms so "cron" → "background" matches "Background Jobs" category
+    _cat_term = _CAT_SYNONYMS.get(_raw_cat, _raw_cat)
     _engagement_params: list = [_q, _q, _q, _cat_term, _cat_term]
 
     # Determine sort order — returns (sql_fragment, extra_params)
