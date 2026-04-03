@@ -18,7 +18,8 @@ from indiestack.db import (get_pending_tools, get_all_tools_admin, update_tool_s
                            get_tool_by_id, get_makers_in_category, get_all_purchases_admin,
                            update_tool, get_all_categories, delete_tool, get_pro_subscriber_stats,
                            create_notification, get_pending_avatars, update_user,
-                           get_follow_through_rate, get_outcome_stats, get_search_gaps)
+                           get_follow_through_rate, get_outcome_stats, get_search_gaps,
+                           get_rate_metrics)
 from indiestack.email import send_email, tool_approved_html
 from indiestack.auth import check_admin_session, make_session_token, ADMIN_PASSWORD
 from indiestack.main import _check_admin_rate_limit, _record_admin_attempt, _clear_admin_attempts
@@ -503,6 +504,8 @@ async def render_overview(db, request, pending):
     pro_count = pro_stats.get('active_count', 0) or 0
     mrr_pence = pro_stats.get('mrr_pence', 0) or 0
 
+    rates = await get_rate_metrics(db, 30)
+
     # ── Activity feed (last 48h: signups, MCP searches, claims) ──
     cursor = await db.execute(
         "SELECT name as label, created_at FROM users "
@@ -559,7 +562,7 @@ async def render_overview(db, request, pending):
         )
 
     hero_strip = f"""
-    <div class="hero-strip" style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:32px;">
+    <div class="hero-strip" style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:12px;">
         {kpi_card("Total Tools", f"{total_tools:,}", color="#1A2D4A")}
         {kpi_card("Total Users", f"{total_users_count:,}", color="var(--terracotta)")}
         {kpi_card("Searches Today", f"{searches_today:,}", color="var(--slate)")}
@@ -567,9 +570,17 @@ async def render_overview(db, request, pending):
         {kpi_card("Pro Subscribers", f"{pro_count:,}", color="#7C3AED")}
         {kpi_card("MRR", f"£{mrr_pence / 100:.0f}", color="#E2B764")}
     </div>
+    <div class="rates-strip" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;">
+        {kpi_card("Click-through Rate", f"{rates['ctr']}%", color="var(--accent)", sublabel=f"{rates['clicks']:,} clicks / {rates['views']:,} views (30d)")}
+        {kpi_card("Claim Rate", f"{rates['claim_rate']}%", color="#E2B764", sublabel=f"{rates['claimed']:,} of {rates['total_tools']:,} tools claimed")}
+        {kpi_card("Catalog Growth", f"{rates['growth_rate']}%", color="#16a34a", sublabel=f"{rates['new_tools']:,} new tools in 30d")}
+        {kpi_card("Churn Rate", f"{rates['churn_rate']}%", color="var(--terracotta)", sublabel=f"{rates['churned']} churned / {rates['total_subs']} total subs")}
+    </div>
     <style>
         @media(max-width:900px){{.hero-strip{{grid-template-columns:repeat(3,1fr)!important;}}}}
         @media(max-width:600px){{.hero-strip{{grid-template-columns:repeat(2,1fr)!important;}}}}
+        @media(max-width:900px){{.rates-strip{{grid-template-columns:repeat(2,1fr)!important;}}}}
+        @media(max-width:600px){{.rates-strip{{grid-template-columns:repeat(1,1fr)!important;}}}}
     </style>
     """
 

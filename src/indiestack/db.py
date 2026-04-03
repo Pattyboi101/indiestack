@@ -6338,6 +6338,61 @@ async def get_pro_subscriber_stats(db) -> dict:
     return {'active_count': active, 'mrr_pence': active * 900}
 
 
+async def get_rate_metrics(db, days: int = 30) -> dict:
+    """Key rate metrics: CTR, claim rate, catalog growth rate, churn rate."""
+    days_param = f'-{days} days'
+
+    # CTR: outbound clicks / tool views
+    cursor = await db.execute("""
+        SELECT
+            (SELECT COUNT(*) FROM outbound_clicks WHERE created_at >= datetime('now', ?)) as clicks,
+            (SELECT COUNT(*) FROM tool_views WHERE viewed_at >= datetime('now', ?)) as views
+    """, (days_param, days_param))
+    row = await cursor.fetchone()
+    clicks = (row['clicks'] if row else 0) or 0
+    views = (row['views'] if row else 0) or 0
+    ctr = round(clicks / views * 100, 1) if views > 0 else 0
+
+    # Claim rate: tools with a maker (claimed) / total approved
+    cursor = await db.execute("""
+        SELECT
+            COUNT(*) as total,
+            COUNT(maker_id) as claimed
+        FROM tools WHERE status = 'approved'
+    """)
+    row = await cursor.fetchone()
+    total_tools = (row['total'] if row else 0) or 0
+    claimed_tools = (row['claimed'] if row else 0) or 0
+    claim_rate = round(claimed_tools / total_tools * 100, 1) if total_tools > 0 else 0
+
+    # Catalog growth rate: new approved tools in period / total approved
+    cursor = await db.execute(
+        "SELECT COUNT(*) as cnt FROM tools WHERE status='approved' AND created_at >= datetime('now', ?)",
+        (days_param,)
+    )
+    row = await cursor.fetchone()
+    new_tools = (row['cnt'] if row else 0) or 0
+    growth_rate = round(new_tools / total_tools * 100, 1) if total_tools > 0 else 0
+
+    # Churn: non-active subscriptions / total subscriptions
+    cursor = await db.execute("SELECT status, COUNT(*) as cnt FROM subscriptions GROUP BY status")
+    sub_counts: dict = {}
+    for r in await cursor.fetchall():
+        sub_counts[r['status']] = r['cnt']
+    total_subs = sum(sub_counts.values()) or 0
+    active_subs = sub_counts.get('active', 0)
+    churned_subs = total_subs - active_subs
+    churn_rate = round(churned_subs / total_subs * 100, 1) if total_subs > 0 else 0
+
+    return {
+        'ctr': ctr, 'clicks': clicks, 'views': views,
+        'claim_rate': claim_rate, 'claimed': claimed_tools, 'total_tools': total_tools,
+        'growth_rate': growth_rate, 'new_tools': new_tools,
+        'churn_rate': churn_rate, 'churned': churned_subs, 'total_subs': total_subs,
+        'days': days,
+    }
+
+
 async def get_platform_funnel(db, days: int = 30) -> list:
     """Platform-wide funnel: views -> clicks -> wishlists -> purchases per tool."""
     days_param = f'-{int(days)} days'
