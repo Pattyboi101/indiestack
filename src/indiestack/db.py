@@ -2410,16 +2410,24 @@ async def search_tools(
     # Detect "[tool] alternative" pattern — auto-exclude the named tool
     # "stripe alternative" → search "stripe" but exclude stripe from results
     # "alternative to stripe" → same
+    # Also exclude tools whose name contains the target (e.g. "dj-stripe",
+    # "laravel-stripe-webhooks") — these are wrappers, not alternatives.
     _alt_patterns = re.match(
         r'^(.+?)\s+alternatives?\s*$|^alternatives?\s+(?:to|for)\s+(.+)$',
         query.strip(), re.IGNORECASE)
     if _alt_patterns:
         _alt_tool = (_alt_patterns.group(1) or _alt_patterns.group(2) or '').strip().lower()
         if _alt_tool and not exclude:
-            # Find all matching slugs — by name or slug — and exclude them all
-            _slug_cursor = await db.execute(
-                "SELECT slug FROM tools WHERE (LOWER(name) = ? OR slug = ? OR slug = ?) AND status = 'approved'",
-                (_alt_tool, _alt_tool, f"pypi-{_alt_tool}"))
+            if len(_alt_tool) >= 4:
+                # Exclude all tools whose name/slug contains the target — these are wrappers, not alternatives
+                _slug_cursor = await db.execute(
+                    "SELECT slug FROM tools WHERE (LOWER(name) LIKE ? OR slug LIKE ?) AND status = 'approved'",
+                    (f"%{_alt_tool}%", f"%{_alt_tool}%"))
+            else:
+                # Short names (< 4 chars) — exact match only to avoid over-excluding
+                _slug_cursor = await db.execute(
+                    "SELECT slug FROM tools WHERE (LOWER(name) = ? OR slug = ? OR slug = ?) AND status = 'approved'",
+                    (_alt_tool, _alt_tool, f"pypi-{_alt_tool}"))
             _exclude_slugs = [r['slug'] for r in await _slug_cursor.fetchall()]
             if _exclude_slugs:
                 exclude = ','.join(_exclude_slugs)
