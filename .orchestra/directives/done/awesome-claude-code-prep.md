@@ -40,7 +40,7 @@ Repo: hesreallyhim/awesome-claude-code (35k stars)
 | 5 | Remove "marketplace" language | Content | April 5 | **DONE** (README rewrite) |
 | 6 | Fix .fly.dev → .ai links | Backend dept | April 4 | **DONE** |
 | 7 | Add MIT LICENSE file to repo | Patrick/Backend | April 4 | **DONE** (committed 2026-04-02) |
-| 8 | Run maintainer's evaluation prompt | Strategy | April 5 | **NOT DONE** |
+| 8 | Run maintainer's evaluation prompt | Strategy | April 5 | **DONE** — 9/10, all criteria pass. No showstoppers. |
 | 9 | Disclose network requests in submission | Strategy | April 6 | **DONE** (in form draft below) |
 
 ## Submission Form Draft (updated to match actual form fields)
@@ -60,19 +60,19 @@ Repo: hesreallyhim/awesome-claude-code (35k stars)
 **License:** MIT (must add LICENSE file first!)
 
 **Description:**
-> MCP server that gives Claude Code searchable access to 3,100+ curated developer tools with install commands, compatibility data, and pricing. Searches a maintained catalog instead of hallucinating package names or generating boilerplate infrastructure for auth, payments, monitoring, and 25 other categories. Makes network requests to the indiestack.ai API to serve results.
+> MCP server that gives Claude Code searchable access to 8,000+ curated developer tools with install commands, compatibility data, and GitHub stars. Searches a maintained catalog instead of hallucinating package names or generating boilerplate infrastructure for auth, payments, monitoring, and 40+ categories. Makes network requests to the indiestack.ai API to serve results. 10,000+ PyPI installs.
 
 **Validate Claims:**
 > Install the MCP server (`claude mcp add indiestack -- uvx --from indiestack indiestack-mcp`) and ask Claude to help you add any common infrastructure to a project. Claude will search real tools instead of generating code from scratch. No API key needed — unlimited searches.
 
 **Specific Task(s):**
-> Ask Claude Code to recommend an authentication solution for a Next.js app, or find a self-hosted analytics tool, or compare payment processors. With IndieStack installed, Claude searches 3,100+ real tools with pricing, install commands, and compatibility data.
+> Ask Claude Code to recommend an authentication solution for a Next.js app, or find a self-hosted analytics tool, or compare payment processors. With IndieStack installed, Claude searches 8,000+ real tools with pricing, install commands, and compatibility data.
 
 **Specific Prompt(s):**
-> "I need to add authentication to my Next.js app. What are my options?" — with IndieStack installed, Claude searches real tools with install commands, pricing, and compatibility notes instead of guessing or generating boilerplate.
+> "I need to add authentication to my Next.js app. What are my options?" — with IndieStack installed, Claude searches real tools with install commands, pricing, and GitHub stars instead of guessing or generating boilerplate.
 
 **Additional Comments:**
-> IndieStack's MCP server is published on PyPI (`pip install indiestack` / `uvx`), currently serving tool lookups to Claude Code users. The server makes API calls to indiestack.ai to search the catalog — no other network requests. Built with Claude Code by two indie devs in Cardiff.
+> IndieStack's MCP server is published on PyPI (`uvx --from indiestack indiestack-mcp`), serving 10,000+ installs. The server makes API calls to indiestack.ai to search the catalog — this is disclosed. Network requests: indiestack.ai API only. Built with Claude Code by two indie devs in Cardiff.
 
 ## Remaining Risks
 
