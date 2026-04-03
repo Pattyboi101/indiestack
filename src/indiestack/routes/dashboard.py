@@ -94,8 +94,15 @@ async def dashboard_overview(request: Request):
     # Trial banner removed — everything is free now
     trial_banner = ''
 
-    # Pro upsell banner removed — everything is free now
     pro_banner = ''
+    if not is_pro and maker_id:
+        pro_banner = '''<div style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div>
+                <strong style="color:var(--ink);font-size:14px;">Maker Pro &mdash; $49/mo</strong>
+                <span style="color:var(--ink-muted);font-size:13px;margin-left:8px;">See how AI agents recommend your tool. Citation analytics, search query data, verified badge.</span>
+            </div>
+            <a href="/pricing" style="color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;">Learn more &rarr;</a>
+        </div>'''
 
     # Check if user has any claimed tools
     has_claimed_tools = False
@@ -156,6 +163,22 @@ async def dashboard_overview(request: Request):
 
     pro_badge = ' <span style="display:inline-block;background:var(--accent);color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:8px;">PRO</span>' if is_pro else ''
     upgrade_html = ''
+    if not is_pro and has_claimed_tools:
+        upgrade_html = '''<button onclick="startProCheckout()" class="btn-primary" style="padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;border:none;">
+            Upgrade to Maker Pro &mdash; $49/mo
+        </button>
+        <script>
+        async function startProCheckout() {
+            const btn = event.target;
+            btn.disabled = true; btn.textContent = "Redirecting...";
+            try {
+                const r = await fetch("/api/subscribe/pro", {method:"POST", headers:{"Content-Type":"application/json"}, body:"{}"});
+                const d = await r.json();
+                if (d.checkout_url) { window.location.href = d.checkout_url; }
+                else { alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $49/mo"; }
+            } catch(e) { alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $49/mo"; }
+        }
+        </script>'''
 
     just_subscribed_param = request.query_params.get('subscribed') == 'true'
     just_subscribed = just_subscribed_param and is_pro
