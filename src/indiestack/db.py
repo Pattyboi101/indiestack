@@ -2376,20 +2376,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cms": "cms",
     "testing": "testing",
     "test": "testing",
-    "ci": "ci-cd",
-    "cicd": "ci-cd",
+    "ci": "devops",
+    "cicd": "devops",
     "form": "forms",
     "forms": "forms",
-    "feature": "feature-flags",
-    "flags": "feature-flags",
+    # "feature-flags" won't LIKE-match "Feature Flags" category name — use "feature" instead
+    "feature": "feature",
+    "flags": "feature",
+    "flag": "feature",
     "logging": "monitoring",
     "error": "monitoring",
     "errors": "monitoring",
-    "video": "video",
+    "video": "media",
     "maps": "maps",
     "map": "maps",
     "geo": "maps",
     "location": "maps",
+    # Hosting/deploy → DevOps & Infrastructure category
+    "hosting": "devops",
+    "deployment": "devops",
+    "deploy": "devops",
+    "serverless": "devops",
+    # Caching → Database (no dedicated caching category)
+    "caching": "database",
+    "cache": "database",
     # Named tools → their primary category (fixes "[tool] alternative" queries so
     # the category/tag boost targets the RIGHT category instead of tools tagged
     # with the target tool name, which are complements not alternatives)
