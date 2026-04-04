@@ -682,8 +682,6 @@ async def find_tools(
         data = await _api_get(client, "/api/tools/search", params)
     except ToolError:
         raise  # Pass through rate limit and other ToolErrors (e.g. signup pitch)
-    except ToolError:
-        raise  # Pass through signup pitch
     except Exception as e:
         raise ToolError(f"Search failed: {e}. Try again, or use list_categories() to browse by category.")
     await ctx.report_progress(progress=1, total=1)
