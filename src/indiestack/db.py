@@ -2577,6 +2577,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "streaming": "media",
     # Frontend frameworks / bundlers / state management
     # "state management" → first meaningful term is "state" → frontend-frameworks category
+    # "react framework" → "react" is also in _FRAMEWORK_QUERY_TERMS but falls back to _meaningful
+    # when stripped list is empty, so this synonym still fires correctly.
+    "react": "frontend",
+    "reactjs": "frontend",
+    "vue": "frontend",
+    "vuejs": "frontend",
+    "svelte": "frontend",
+    "sveltekit": "frontend",
+    "angular": "frontend",
+    "nextjs": "frontend",
+    "nuxt": "frontend",
+    "astro": "frontend",
+    "remix": "frontend",
     "state": "frontend",
     "bundler": "frontend",
     "vite": "frontend",
@@ -2609,6 +2622,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "upstash": "caching",
     "dragonfly": "caching",     # Redis-compatible, faster
     "keydb": "caching",
+    "redis": "caching",         # Redis is the canonical caching tool (overrides earlier "database" entry)
     # Boilerplates / starter kits
     "boilerplate": "boilerplate",
     "starter": "boilerplate",
