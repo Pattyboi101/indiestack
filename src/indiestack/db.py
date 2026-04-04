@@ -2266,6 +2266,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cron": "background",
     "queue": "background",
     "worker": "background",
+    "scheduler": "background",
+    "scheduled": "background",
     "celery": "background",
     "sidekiq": "background",
     "bullmq": "background",
@@ -2502,6 +2504,10 @@ _FRAMEWORK_QUERY_TERMS: dict[str, str] = {
     "spring": "spring",
     "electron": "electron",
     "tauri": "tauri",
+    # Newer frameworks likely to appear in frameworks_tested
+    "solid": "solid", "solidjs": "solid",
+    "qwik": "qwik",
+    "hono": "hono",
 }
 
 
