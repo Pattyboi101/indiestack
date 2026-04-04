@@ -2252,7 +2252,9 @@ def analytics_wall_blurred(stats: dict, tool_name: str, slug: str, user_logged_i
         <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
                     background:var(--cream-dark);opacity:0.88;z-index:1;">
             <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px;text-align:center;padding:0 20px;">
-                AI agents evaluated {safe_name} {last_7d} time{"s" if last_7d != 1 else ""} this week
+                {f"AI agents evaluated {safe_name} {last_7d} time{'s' if last_7d != 1 else ''} this week"
+                 if last_7d > 0
+                 else f"AI agents have recommended {safe_name} {total} time{'s' if total != 1 else ''}"}
             </p>
             <p style="font-size:13px;color:var(--ink-muted);margin-bottom:16px;text-align:center;padding:0 20px;">
                 Claim this listing to see which agents, what they searched, and your recommendation trend.
