@@ -2296,7 +2296,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "newsletter": "email",
     "drip": "email",
     "transactional": "email",
-    "sending": "transactional",
+    "sending": "email",
     "sendgrid": "email",
     "resend": "email",
     "mailgun": "email",
@@ -2349,8 +2349,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "openapi": "api",
     "sdk": "api",
     "rate": "api",       # "rate limiting" → API Tools category
-    # Message queue synonyms
-    "queue": "message",  # LIKE '%message%' matches "Message Queue" category
+    # Message queue synonyms — "message" self-maps so "message queue" query gets correct boost
+    # ("queue" singular stays mapped to "background" above for job queue queries)
+    "message": "message",
     "queues": "message",
     "pubsub": "message",
     "kafka": "message",
@@ -2381,7 +2382,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "analytics": "analytics",
     "database": "database",
     "storage": "file",
-    "search": "search",
+    # "search" is stripped by _FTS_STOP_WORDS before synonym lookup — use specific terms instead
+    # "search" → covered by "algolia", "elasticsearch", etc. in named-tool synonyms below
     "notification": "notifications",
     "notifications": "notifications",
     "chat": "chat",
@@ -2436,7 +2438,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cockroachdb": "database",
     "dynamodb": "database",
     "redis": "database",
-    "mongodb": "database",
     # Hosting / DevOps
     "vercel": "devops",
     "netlify": "devops",
@@ -2452,8 +2453,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "twilio": "notifications",
     "vonage": "notifications",
     # Monitoring / observability
-    "sentry": "monitoring",
-    "datadog": "monitoring",
     "newrelic": "monitoring",
     "grafana": "monitoring",
     "pagerduty": "monitoring",
