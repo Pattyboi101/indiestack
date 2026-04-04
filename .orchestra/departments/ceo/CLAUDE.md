@@ -11,7 +11,7 @@ Review department assignments BEFORE they execute. Your job is to:
 
 ## IndieStack Context
 - Python/FastAPI/SQLite (WAL mode)/Fly.io
-- MCP server on PyPI (v1.12.0) — changes need a separate PyPI publish
+- MCP server on PyPI (v1.14.0) — changes need a separate PyPI publish
 - Production DB at /data/indiestack.db on Fly.io — data fixes need FTS rebuild after
 - Revenue model: free for devs, $49/mo Maker Pro analytics
 - Never gate MCP behind API keys — it killed adoption before
@@ -22,6 +22,8 @@ Review department assignments BEFORE they execute. Your job is to:
 - Deploying uncommitted code
 - Substring LIKE matching (LIKE '%orm%' catches 'platform', 'format', 'transform')
 - SSH commands using `cd` (shell builtin) — use absolute paths
+- `flyctl ssh console -C "python3 -c \"...\""` ALWAYS fails — nested quotes break. Correct pattern: write script to /tmp, sftp put it, then run it. Flag this if any department plans inline SSH python.
+- Backend tasks that involve both code changes (db.py) AND production data changes should be split into two steps in the briefing — agents that try to do both often produce analysis-only output instead of executing
 
 ## Response Format
 Respond ONLY with valid JSON. No markdown, no preamble.

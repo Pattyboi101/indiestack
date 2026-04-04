@@ -54,11 +54,14 @@ _Focus on: file locations, patterns, gotchas, past decisions, domain knowledge._
 
 ### footer (components.py footer_html())
 - Footer has 4 columns: Brand, Product, Company, Legal
-- Bug report email is `pajebay1@gmail.com` — should be `patrick@indiestack.ai` (line ~785)
-- Footer brand blurb says "indie makers and small teams" — old positioning (line ~760)
-- Footer links to /about and /faq — both 404 (no route files exist for either)
-- No GitHub link in footer
-- /changelog exists; /about, /faq do NOT exist and are not in main.py
+- Bug report email is `pajebay1@gmail.com` — may want updating (line ~785)
+- Footer brand blurb says indie makers — positioning (line ~760)
+- /about ✅ EXISTS — served from content.py (was previously noted as 404 — STALE)
+- /terms ✅ EXISTS — served from content.py
+- /privacy ✅ EXISTS — served from content.py
+- /faq NOT in footer (was removed), so no dead link there
+- GitHub link IS in footer (line ~778)
+- /changelog ✅ exists
 
 ### landing.py
 - Hero tool count is live from DB (tool_count variable) — accurate
@@ -104,5 +107,22 @@ _Focus on: file locations, patterns, gotchas, past decisions, domain knowledge._
 - Never gate features behind payment — free analytics always visible
 - Nudge copy should be specific about what Pro adds ("search query breakdown", "daily digest") not vague
 - "No contract · Cancel any time" below CTA buttons removes friction
-- $49/mo confirmed across vision.md AND pricing.py — stripe.md "$19/mo" appears outdated
+- Maker Pro is **$19/mo** — gotchas.md and vision.md are canonical. Previous memory entry saying $49 was WRONG.
+
+## 2026-04-04 (maker pages + nav audit)
+
+### maker.py
+- Route: `/maker/{slug}` — calls `get_maker_with_tools(db, slug)` + `get_maker_stats(db, maker_id)`
+- 404 branch: returns proper 404 status code, not just a 404-looking page
+- All user data escaped via `html.escape()` in name, bio, url
+- Production has 12+ real makers with slugs like: ramz404, cirosantilli, patrick-jones, simon, dan
+- `cirosantilli` has adversarial name with `<script>alert(1)</script>` — properly escaped, no vuln
+- Stats bar renders: tool_count + total_upvotes from `get_maker_stats()`
+- `/makers` directory returns 302 without -L flag (redirect to login or similar) — use `-sL` for curl
+
+### nav/footer dead-link audit (2026-04-04)
+- All nav links verified 200: /explore, /migrations, /pricing, /submit, /login, /signup, /dashboard, /dashboard/notifications, /logout, /setup
+- All footer links verified 200: /explore, /analyze, /stacks, /data, /about, /submit, /changelog, /terms, /privacy
+- /about → content.py ✅  |  /terms → content.py ✅  |  /privacy → content.py ✅  |  /data → data_product.py ✅
+- NO dead links found anywhere in nav or footer as of this date
 

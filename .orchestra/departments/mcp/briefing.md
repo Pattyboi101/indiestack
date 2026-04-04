@@ -1,12 +1,13 @@
-# Briefing — 2026-04-04 15:27
+# Briefing — 2026-04-04 22:28
 
 ## Task
-Audit the top 5 MCP tool descriptions in src/indiestack/mcp_server.py: find_tools, get_tool_details, build_stack, scan_project, list_categories. Check: (1) are descriptions accurate and compelling? (2) do they mention the 8,000+ tool catalog? (3) are there improvements that would make tools more discoverable/useful to AI agents? Propose and implement improvements directly in mcp_server.py. IMPORTANT: Note that any changes to mcp_server.py require a separate PyPI publish to take effect — do NOT deploy, just make the code changes and flag that a /publish-mcp is needed.
+Search quality spot check: run 5 queries against production API (https://indiestack.fly.dev/api/tools?q=QUERY&limit=3) for: 'react', 'frontend', 'css', 'animation', 'state management'. Report top 3 results for each query. Flag any obvious misfires (wrong category, irrelevant tools). If fixes are needed on production data, use the SSH file-upload pattern (write script to /tmp, sftp put, run) — do NOT use inline flyctl ssh python. Rebuild FTS if any changes made.
 
 ## S&QA Conditions
-- MCP department must NOT attempt a PyPI publish or deploy — only edit the file and note that /publish-mcp is needed afterward
-- Content department should verify any stat claims (tool counts, install numbers) against what's in the codebase rather than hardcoding new numbers they can't verify
+- MCP agent MUST use SSH file-upload pattern if making any production DB changes — added explicitly to their brief
+- Content agent must verify any pricing references against stripe.md — $19/mo not $49
+- Backend should exclude trpc from moves if its description is clearly 'API framework' rather than 'frontend framework' — let the slug query inform the decision
 
 ## Risk Flags
-- Gotcha: stats in copy go stale fast — pricing page may claim outdated tool counts. Content dept should flag any numbers they can't verify rather than guessing new ones
-- Gotcha: MCP changes need PyPI publish to take effect — without it, edits are dead code until someone remembers to publish
+- trpc is arguably an API/RPC layer, not a frontend framework — backend should use judgment after reading its description
+- MCP original brief didn't specify file-upload SSH pattern — corrected in approved version to prevent the nested-quotes gotcha

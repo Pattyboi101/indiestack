@@ -1,14 +1,14 @@
-# Briefing — 2026-04-04 16:07
+# Briefing — 2026-04-04 22:51
 
 ## Task
-Review src/indiestack/routes/updates.py and src/indiestack/routes/what_is.py. Check: (1) Is the copy accurate and up-to-date (no stale stats, outdated feature claims)? (2) Is the page well-structured with clear purpose? (3) Are there any obvious copy issues, typos, or confusing sections? Fix anything clear-cut directly in the files. CONDITION: Before updating ANY stats (tool counts, category counts, install numbers), verify the actual numbers against the production DB or known current figures (8,000+ tools, 25+ categories, 10,000+ PyPI installs). Do NOT guess or leave old numbers.
+Task 1 — Migration pitch outreach: SSH into production DB and run SELECT name, github_url, website FROM tools WHERE slug IN ('vitest', 'vite', 'jest', 'rollup', 'ava'). Read /tmp/migration-intel-outreach.txt as the base template. Write 5 personalised outreach notes to /tmp/migration-pitch-5.txt — one per tool, addressed to that tool's DevRel/maintainer lead, personalised with actual adoption numbers (Vitest: 65 adoptions, Vite: 36, Jest: 25, rollup: 15, Ava: 11) and the tool's real GitHub URL and website from the DB query. For the SSH query, use sqlite3 directly: flyctl ssh console -C "sqlite3 /data/indiestack.db 'SELECT name, github_url, website FROM tools WHERE slug IN (\"vitest\",\"vite\",\"jest\",\"rollup\",\"ava\")'" — or if quoting gets messy, use the file-upload SSH pattern (write .sql to /tmp, sftp put, run sqlite3 < file).
 
 ## S&QA Conditions
-- Backend: use absolute paths for any SSH commands — 'cd' is a shell builtin and will fail in flyctl ssh
-- Backend: throttle API requests slightly to avoid 429 rate limiting from rapid-fire queries
-- Content: verify all stats against production DB before updating copy — stale stats have bitten us multiple times
-- DevOps: new smoke tests must be read-only — no POST/PUT/DELETE against production endpoints
+- Backend MUST complete Task 2 (local sitemap/route fixes) fully before starting Task 3 (production search quality fixes) — do not interleave
+- Backend MUST use file-upload SSH pattern for any production DB writes in Task 3 — no inline python3 -c via SSH
+- Content should verify /tmp/migration-intel-outreach.txt exists before trying to read it — it was created in pass 12 but confirm
+- If any search query returns acceptable results (relevant top 3), skip it — only fix actual misfires
 
 ## Risk Flags
-- Backend hitting production API 15+ times in quick succession could trigger rate limiting (known gotcha)
-- Content editing f-string templates — a stray quote or bracket breaks the whole page, so test locally or at least eyeball the diff carefully
+- Content SSH query: if sqlite3 quoting gets messy with IN clause, fall back to file-upload pattern rather than fighting nested quotes
+- Backend Task 2: if /terms and /privacy content already exists at different URLs (e.g. /legal), prefer updating the sitemap over creating redirect routes — less code surface

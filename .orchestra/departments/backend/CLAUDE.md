@@ -24,6 +24,14 @@ This has caused production bugs TWICE. Never use integer indexing on query resul
 - ALTER TABLE ADD COLUMN can't include UNIQUE — add column first, then CREATE UNIQUE INDEX.
 - Use `python3` not `python`.
 
+## Production SSH Pattern (CRITICAL)
+`flyctl ssh console -C "python3 -c \"...nested quotes\""` ALWAYS fails with SyntaxError.
+The only reliable pattern:
+1. Write your script to a local temp file: `cat > /tmp/fix.py << 'PYEOF'\n...\nPYEOF`
+2. Upload it: `~/.fly/bin/flyctl ssh sftp put /tmp/fix.py /tmp/fix.py -a indiestack`
+3. Run it: `~/.fly/bin/flyctl ssh console -a indiestack -C "python3 /tmp/fix.py"`
+Never use `cd` in SSH commands — it's a shell builtin and won't work with `-C`.
+
 ## Do NOT Touch
 - Route HTML templates (ask Frontend)
 - mcp_server.py (ask MCP department)

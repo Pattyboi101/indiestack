@@ -97,3 +97,25 @@ those tools receive. Harder to fix — needs description cleaning or category-mi
 **Production DB path:** `/data/indiestack.db` (NOT /app/data/)
 **SSH inline python:** Use `-C 'python3 -c "..."'` with proper quoting
 
+
+## 2026-04-04 — Added get_migration_data tool (v1.15.0)
+
+**Task:** Cross-reference data-moat.md + mcp-roadmap.md vs current tool list, implement highest-value missing improvement.
+
+**Decision:** `get_migration_data` — surfaces IndieStack's #1 data moat via MCP for the first time.
+
+**Key finding:** Backend API `/api/migrations?package=X` already exists in `src/indiestack/routes/analyze.py` (line 1222). Returns `migrating_from` (departures) and `migrating_to` (adoptions). Live test: jest returns 3 departures, 6 adoptions.
+
+**Pattern:** For new MCP tools that query existing backend routes, the workflow is:
+1. Check routes/ for existing JSON API endpoint
+2. Verify it returns data with `curl https://indiestack.ai/api/...`
+3. Add tool to mcp_server.py after the closest thematic neighbor (market intelligence → after get_market_gaps)
+4. Bump pyproject.toml AND server.json version together
+5. DO NOT publish — leave for /publish-mcp
+
+**Other roadmap items (blocked):**
+- `get_trending_migrations` — no backend endpoint yet. Backend needs `/api/trending-migrations`.
+- `get_session_stack` / `add_to_session_stack` — stack memory tools. Complex, v1.16.
+- License/setup snippet in get_tool_details — needs backend DB columns.
+
+**Files changed:** mcp_server.py, pyproject.toml, server.json (1.14.2 → 1.15.0)

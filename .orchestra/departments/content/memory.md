@@ -6,6 +6,22 @@ _Focus on: file locations, patterns, gotchas, past decisions, domain knowledge._
 
 ---
 
+## About Page Audit — 2026-04-04
+- No `/about` route existed — 404 despite being in sitemap. Fixed: added 301 redirect `/about` → `/what-is-indiestack` in what_is.py
+- Removed `/about` from sitemap URL list in main.py (was a broken sitemap entry; `/what-is-indiestack` already present at priority 0.7)
+- `what_is.py` is the "about" page — fully dynamic stats, no hardcoded numbers, story is accurate
+- All "8,000+" refs swept — none found in routes (previous passes cleaned all)
+- "$49" only appears in changelog.py as a historical fix entry — correct, no change needed
+- Side flag: `/terms`, `/privacy`, `/faq` also in sitemap with no handlers — same problem, outside current scope
+
+## data_product.py (/data route) — 2026-04-04
+- Route: `/data` (NOT `/data-product`)
+- Target: tool maker marketing teams at $299/mo (separate from Maker Pro at $19/mo)
+- Pricing on this page: Free (50q/day), Pro $299/mo, Enterprise custom — all separate from stripe.md $19/mo Maker Pro
+- Live stats pulled from DB: repos, migrations, combos, unique_paths — all pre-computed as _fmt variables
+- Key fix: Added "What is Migration Intelligence?" section — was completely missing, critical for cold visitors
+- Key copy lesson: For premium data products ($299+), explaining METHODOLOGY builds more trust than listing features
+
 ## Production DB Stats (as of 2026-03-30)
 - 4,535 repos with verified combos
 - 93,111 verified combos
@@ -119,6 +135,44 @@ Files reviewed: pricing.py, submit.py
 ### Gotcha learned:
 - Submit page "note from us" was a long-standing broken promise. The page title ("Make Your Creation Discoverable by AI") is intentionally broad but body copy must stay in scope.
 
+## Category Meta + High-Traffic Route Audit (2026-04-04)
+Files changed: explore.py, analyze.py, gaps.py, compare.py
+
+### explore.py — per-category meta descriptions added
+- Was: single generic description for ALL category pages (including /explore?category=4)
+- Now: `_CAT_META` dict at module level maps 10 category slugs to keyword-rich descriptions with `{count}` placeholder
+- Dynamic logic at route bottom: if category filter active, look up category from `categories` list, get slug + tool_count from DB (already fetched), format the description
+- Title also changes: `f"{_c_name} Tools — {_c_count}+ Options | IndieStack"` when category active
+- Canonical set to `/explore?category={id}` when category active (helps Google understand category pages)
+- Fallback (no category): original generic description + title unchanged
+- Counts sourced from production API (verified 2026-04-04):
+  authentication=265, payments=138, database=63, analytics-metrics=233, monitoring-uptime=245,
+  email-marketing=133, devops-infrastructure=20, headless-cms=8, search-engine=12, testing-tools=16
+- All descriptions verified under 160 chars including count values
+
+### analyze.py — description improved + canonical added
+- Was: 89 chars, no mention of IndieStack or AI agents, no canonical
+- Now: 156-char desc mentioning IndieStack, freshness/compatibility/modernity keywords
+- Added `canonical="/analyze"` — this generates og:url which was missing
+
+### gaps.py — canonical added to main /gaps page
+- Was: no canonical → no og:url in OG tags
+- Now: `canonical="/gaps"` → og:url included
+
+### compare.py — em dash fix + AI-agent mention
+- Was: `--` double dashes in both seo_title and seo_desc (typography bug)
+- Now: `—` em dashes, description mentions "AI-agent compatibility" as differentiator
+- Length verified safe for typical tool names (tested: Plausible Analytics + Google Analytics 4 = 133 chars)
+
+### Stale stats check
+- updates.py: no stale stats (no hardcoded numbers)
+- what_is.py: all stats from live DB queries, no hardcoded numbers ✓
+
+### Patterns learned:
+- Category pages in IndieStack use ID-based URLs (/explore?category=4), not slug-based — look up slug from `categories` list that's already fetched in the route
+- page_shell only adds og:url when `canonical` is passed — pages without canonical lack og:url
+- compare.py seo_desc has no length truncation — keep base template under 100 chars to safely accommodate two tool names
+
 ## updates.py + what_is.py Audit (2026-04-04)
 Files reviewed: updates.py, what_is.py
 Files changed: what_is.py only
@@ -151,9 +205,101 @@ Files changed: what_is.py only
 - what_is.py used to pitch IndieStack as "anything indie" (not just dev tools). This theme may recur — always cross-check copy scope against vision.md (dev tools only).
 - Same issue was found in submit.py previously (fixed 2026-04-04). Pattern: enthusiastic broad copy creeps in, needs pruning.
 
+## Stats/Copy Audit — landing.py, explore.py, updates.py (2026-04-04)
+Files changed: explore.py, updates.py
+
+### Production DB check (2026-04-04)
+- 8,195 approved tools (up from 8,197 at earlier check — normal churn)
+- 40 categories
+- DB path: /data/indiestack.db
+
+### Issues found and fixed:
+
+**updates.py** (2 fixes):
+1. Meta description was 48 chars ("Latest updates from indie makers on IndieStack.") — way too thin.
+   - New: "See what indie makers are shipping — changelogs, launches, and updates from the IndieStack community. Follow the tools you care about as they evolve." (149 chars ✓)
+2. Missing canonical tag — added `canonical="/updates"` to page_shell call.
+
+**explore.py** (1 fix):
+- Description claimed "verification status, and price" as active filters — but both `verified` and `price` are hardcoded to `""` in the route (disabled). This was a false claim.
+   - Removed those two filter names. New desc: "Browse and filter 8,000+ developer tools by category, tag, type, and compatibility. Find the right auth, payments, analytics, or email tool for your stack." (161→159 chars ✓)
+
+**landing.py** — no changes needed:
+- `tool_count` is live from DB → accurate (8,195)
+- `10,000+ installs` hardcoded but matches PyPI milestone noted in memory
+- Meta description 156 chars ✓
+- Canonical "/" ✓
+- "847 repos migrated" in hero is illustrative demo UI copy, not a factual claim — OK.
+
+### Pattern learned:
+- Disabled UI filters (price, verified) can leave stale claims in meta descriptions. Always cross-check active query params against the description text.
+- updates.py previously had no canonical — add to all pages that have a stable URL.
+
+## Stat Audit + analyze.py Copy Rewrite (2026-04-04)
+Files changed: landing.py, analyze.py
+
+### landing.py stat audit
+- tool_count — always dynamic from DB ✅
+- 10,000+ installs — PyPI actual: 10,945 with mirrors (checked pypistats.org) ✅
+- ai_recs — dynamic ✅
+- **"847 repos migrated to it last month" (line 204) — WAS a fake hardcoded number. NOW fixed: "real GitHub data shows developers moving toward it"**
+  - Previous memory incorrectly said this was "OK as illustrative copy" — it was a real number claim in fictional dialogue. Removed.
+- NOTE: `sqlite3` is NOT in PATH on Fly machines (fly ssh console will fail with "executable file not found"). Use production API instead: curl -sL "https://indiestack.ai/api/categories" gives tool counts.
+- Actual tool count 2026-04-04: 8,177 (from category tool_count sum via API)
+
+### analyze.py copy rewrite for "check dependency health" organic traffic
+1. h1: "Stack Health Check" → "Dependency Health Check" (matches search query)
+2. Subtitle rewritten to explain output: 0–100 score, freshness per package, migration warnings, alternatives — "Free, no login"
+3. Added 4-item "what you get" checkmarks row below form (0–100 health score / Freshness per package / Migration signals / Better alternatives)
+4. Page title: "Stack Health Check | IndieStack" → "Dependency Health Check | IndieStack"
+5. Meta desc: 158 chars, explains inputs + outputs + "Free, no login"
+
+### Patterns learned:
+- sqlite3 is NOT available on Fly SSH — use production API endpoints for stat verification
+- The page_shell call for analyze.py already had canonical — no change needed there
+
 ## Patterns / Notes
 - DB is at /data/indiestack.db on production — query via fly ssh console
 - Migration data lives in `migration_paths` table: from_package, to_package, repo columns
 - Verified combos in `verified_combos` table
 - The master agent sent the exact SQL queries — use them as templates for future data pulls
+
+## Sitemap Knowledge (2026-04-04)
+- Sitemap is dynamically generated in main.py (NOT a route file) — lines ~1081-1204
+- Had a CRITICAL bug: `LIMIT 5000` on approved tools query — was missing ~3,000+ tool pages. FIXED.
+- Maker profiles also had `LIMIT 5000` — removed.
+- robots.txt is also in main.py (~line 896), NOT a static file
+- robots.txt already referenced sitemap — added auth route disallows (/login, /signup, etc.)
+- Category pages use `/category/{slug}` route (browse.py), NOT `/explore/{cat}`
+- /explore is a single discovery page; /category/{slug} is per-category browsing
+- collections → all 301 redirect to /stacks (don't include in sitemap)
+- Sitemap uses 1-hour cache (`_sitemap_cache` dict at top of main.py)
+- Estimated total URLs post-fix: ~10,000–12,000 (well under 50k sitemap limit)
 - Title accuracy matters: use real numbers (4,535 not "5,000") for data journalism credibility
+
+## 2026-04-04 — Collections, Plugins, Changelog, Updates audit
+- collections.py: pure 301 redirects (/collections, /collection/{slug}) → /stacks. No HTML, no SEO work needed.
+- plugins.py: real content page (MCP servers, extensions, skills from DB). Had good title/description but missing canonical. Added canonical="/plugins".
+- changelog.py: was STALE — last entry 2026-03-13 when today is 2026-04-04. Added 2 new entries:
+  - 2026-04-04: MCP v1.15.0 (get_migration_data), v1.14.0, claim-to-Pro, sitemap fix, $19 pricing fix, search quality, SEO pass
+  - 2026-04-03: AI Recs badge + outreach table sorting
+  - Also added canonical="/changelog"
+- updates.py: dynamic maker feed from DB. Title/description fine. No changes needed.
+- Changelog maintenance pattern: git log --format="%ad %s" --date=short to find what shipped, group into meaningful entries by date, add at TOP of CHANGELOG list.
+- Gotcha: changelog.py uses hardcoded CHANGELOG list (not DB). Must be updated manually after each significant ship day.
+- page_shell strips " | IndieStack" or " — IndieStack" suffix then re-appends " — IndieStack". Pass clean title or with suffix — both work.
+
+## 2026-04-04 — submit.py audit
+- **submit.py** — "What You Get" section had NO Maker Pro mention. Classic missed conversion. Added horizontal callout with $19/mo badge + "See plans →" link. Always check submit, pricing, and landing pages for Maker Pro consistency.
+- Hero H1 was "Make Your Creation Discoverable by AI" — changed to "Get Your Tool in Front of AI Coding Agents". More specific, action-oriented, names the destination.
+- The 10,000+ MCP installs figure is the best credibility signal for tool maker pages. Always surface it on submit, pricing, what_is pages.
+- "creation" is the intentional word choice for submissions page (covers plugins/extensions/MCPs not just "tools") — don't wholesale replace it, but "tool" is fine in the H1/meta.
+
+## 2026-04-04 — Migration Intelligence outreach template
+Task: Draft Migration Intelligence outreach email for DevRel leads at tools gaining migration momentum.
+Result: Template saved to /tmp/migration-intel-outreach.txt.
+- monetisation.md shows $299/mo for Migration Intelligence tier (not $99/mo as task brief stated — FLAG to Patrick before sending)
+- Real data hook: Vitest has 38 repos migrated FROM jest, 13 from mocha (via get_migration_data("vitest"))
+- Email body ~90 words (well under 150 limit)
+- Method credibility: "We mine GitHub package.json diffs" is stronger than "we track migrations" — leads with proof
+- Before each send: run get_migration_data(package) via MCP to pull fresh numbers per tool
