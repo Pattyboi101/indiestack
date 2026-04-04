@@ -15,6 +15,20 @@ from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_c
 
 router = APIRouter()
 
+# Per-category SEO meta descriptions — keyword-rich, mention IndieStack, under 160 chars with count inserted
+_CAT_META: dict[str, str] = {
+    "authentication": "Browse {count}+ authentication tools on IndieStack — OAuth, SSO, passkeys, and magic link auth solutions recommended by AI agents.",
+    "payments": "Explore {count}+ payment tools on IndieStack — Stripe alternatives, billing, subscriptions, and checkout for indie developers.",
+    "database": "Find {count}+ database tools on IndieStack — SQLite, Postgres, NoSQL, embedded DBs, and BaaS backends for your stack.",
+    "analytics-metrics": "Discover {count}+ analytics tools on IndieStack — privacy-first, cookie-free alternatives to Google Analytics for developers.",
+    "monitoring-uptime": "Browse {count}+ monitoring and uptime tools on IndieStack — status pages, alerting, and observability for indie projects.",
+    "email-marketing": "Find {count}+ email tools on IndieStack — transactional APIs, newsletter platforms, and SMTP alternatives for developers.",
+    "devops-infrastructure": "Explore {count}+ DevOps and infrastructure tools on IndieStack — CI/CD, deployment, and hosting solutions for indie developers.",
+    "headless-cms": "Browse {count}+ headless CMS tools on IndieStack — API-first and git-based content management systems for developers.",
+    "search-engine": "Discover {count}+ search engine tools on IndieStack — self-hosted and cloud search APIs. Meilisearch, Typesense, and more.",
+    "testing-tools": "Find {count}+ testing tools on IndieStack — unit testing, E2E testing, and QA tools recommended by AI coding agents.",
+}
+
 
 @router.get("/explore", response_class=HTMLResponse)
 async def explore(request: Request):
@@ -342,7 +356,29 @@ async def explore(request: Request):
     </div>
     '''
 
-    desc = "Browse and filter 8,000+ developer tools by category, tag, type, and compatibility. Find the right auth, payments, analytics, or email tool for your stack."
+    # Build category-specific meta if a category filter is active
+    _active_cat_obj = None
+    if category:
+        for _c in categories:
+            if str(_c['id']) == category:
+                _active_cat_obj = _c
+                break
+
+    if _active_cat_obj:
+        _c_slug = str(_active_cat_obj.get('slug', ''))
+        _c_name = str(_active_cat_obj.get('name', 'Tools'))
+        _c_count = _active_cat_obj.get('tool_count', 0) or 0
+        if _c_slug in _CAT_META:
+            desc = _CAT_META[_c_slug].format(count=_c_count)
+        else:
+            desc = f"Browse {_c_count}+ {_c_name} tools on IndieStack — curated developer tools discoverable by AI coding agents."
+        explore_page_title = f"{_c_name} Tools — {_c_count}+ Options | IndieStack"
+        explore_canonical = f"/explore?category={category}"
+    else:
+        desc = "Browse and filter 8,000+ developer tools by category, tag, type, and compatibility. Find the right auth, payments, analytics, or email tool for your stack."
+        explore_page_title = "Explore 8,000+ Developer Tools by Category | IndieStack"
+        explore_canonical = "/explore"
+
     explore_ld = json.dumps({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -353,7 +389,7 @@ async def explore(request: Request):
         "numberOfItems": total,
     }, ensure_ascii=False)
     explore_head = f'<script type="application/ld+json">{explore_ld}</script>'
-    response = HTMLResponse(page_shell(title="Explore 8,000+ Developer Tools by Category | IndieStack", body=body + email_sticky_bar(), description=desc, user=user, canonical="/explore", extra_head=explore_head))
+    response = HTMLResponse(page_shell(title=explore_page_title, body=body + email_sticky_bar(), description=desc, user=user, canonical=explore_canonical, extra_head=explore_head))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"
     return response
 

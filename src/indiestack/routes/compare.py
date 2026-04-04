@@ -387,8 +387,8 @@ async def compare_tools(request: Request, slugs: str):
     </div>
     """
 
-    seo_title = f"{tool1['name']} vs {tool2['name']} (2026) -- Agent-Verified Comparison | IndieStack"
-    seo_desc = f"Compare {tool1['name']} and {tool2['name']} with real community data. Pricing, upvotes, features, and compatibility -- not opinions."
+    seo_title = f"{tool1['name']} vs {tool2['name']} (2026) — Agent-Verified Comparison | IndieStack"
+    seo_desc = f"Compare {tool1['name']} and {tool2['name']} with real community data — pricing, upvotes, features, and AI-agent compatibility."
 
     return HTMLResponse(page_shell(seo_title, body,
                                     user=request.state.user,

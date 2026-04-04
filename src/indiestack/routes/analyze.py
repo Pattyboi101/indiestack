@@ -349,7 +349,8 @@ async def analyze_page(request: Request):
     return HTMLResponse(page_shell(
         "Stack Health Check | IndieStack",
         body,
-        description="Paste your package.json or requirements.txt and get a dependency health score in seconds.",
+        description="Check your dependency stack health on IndieStack — analyze package.json or requirements.txt for freshness, compatibility, and modernity. Free instant score.",
+        canonical="/analyze",
         user=user,
     ))
 

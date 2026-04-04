@@ -353,6 +353,7 @@ async def gaps_page(request: Request):
         body=body,
         user=user,
         description="Real-time demand signals from AI agents. See what tools were searched for and couldn't be found. Build one and get instant distribution.",
+        canonical="/gaps",
     ))
 
 
