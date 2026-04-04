@@ -2342,11 +2342,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "scrum": "project",
     # API synonyms
     "webhook": "api",
+    "webhooks": "api",   # plural form
     "rest": "api",
     "graphql": "api",
     "openapi": "api",
     "sdk": "api",
     "rate": "api",       # "rate limiting" → API Tools category
+    # Message queue synonyms
+    "queue": "message",  # LIKE '%message%' matches "Message Queue" category
+    "queues": "message",
+    "pubsub": "message",
+    "kafka": "message",
+    "rabbitmq": "message",
+    "nats": "message",
     # AI synonyms
     "llm": "ai",
     "gpt": "ai",
