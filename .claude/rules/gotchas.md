@@ -29,3 +29,5 @@
 - DO NOT gate MCP features behind API keys or accounts. We tried this before and it tanked MCP adoption. Keep the MCP server fully anonymous and frictionless. If we want accounts, use soft nudges after repeated use — never degrade the anonymous experience.
 
 - After fixing data on production (tags, categories, install commands), ALWAYS rebuild the FTS index: `INSERT INTO tools_fts(tools_fts) VALUES('rebuild')` + `PRAGMA wal_checkpoint(TRUNCATE)`. Otherwise the search API serves stale cached results until the next deploy.
+
+- `LIKE '%orm%'` substring matching is dangerously broad — "transform", "platform", "format", "performance", "information" all contain "orm". When finding tools by name pattern, use exact word matching: check `slug IN (...)` explicit list, or use `LIKE '%,orm,%'` tag matching (which requires "orm" as a standalone comma-delimited tag). Do NOT use `LOWER(name) LIKE '%orm%'` for categorization queries.
