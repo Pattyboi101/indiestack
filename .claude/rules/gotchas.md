@@ -1,5 +1,7 @@
 # Mistakes We've Made — Don't Repeat These
 
+- Maker Pro is **$19/mo**. Not $49. The $49 figure appears in old planning docs and keeps getting copy-pasted. The canonical source is stripe.md. Any agent touching pricing.py, landing.py, or copy must verify against stripe.md first.
+
 - When renaming SQL column aliases in a shared function (like `get_search_gaps`), grep ALL consumers across the entire codebase — not just the file that triggered the original bug. Every route file that calls the function needs updating.
 
 - `flyctl ssh console -C "cd /app && ..."` fails because `cd` is a shell builtin. Use absolute paths instead: `python3 /app/scripts/foo.py`

@@ -86,10 +86,11 @@ def _render_form(prefill: str = "") -> str:
     <div style="max-width:700px;margin:0 auto;">
         <div style="text-align:center;margin-bottom:32px;">
             <h1 style="font-family:var(--font-display);font-size:var(--heading-lg);color:var(--ink);margin:0 0 8px;">
-                Stack Health Check
+                Dependency Health Check
             </h1>
-            <p style="font-family:var(--font-body);color:var(--ink-muted);font-size:var(--text-md);margin:0;">
-                Paste your dependency file. Get a health score in seconds.
+            <p style="font-family:var(--font-body);color:var(--ink-muted);font-size:var(--text-md);margin:0 0 4px;">
+                Paste your <code style="font-family:var(--font-mono);font-size:0.9em;background:var(--cream-dark);padding:1px 5px;border-radius:4px;">package.json</code> or <code style="font-family:var(--font-mono);font-size:0.9em;background:var(--cream-dark);padding:1px 5px;border-radius:4px;">requirements.txt</code> and get a 0–100 health score,
+                per-package freshness status, migration warnings, and smarter alternative suggestions. Free, no login.
             </p>
         </div>
 
@@ -123,6 +124,13 @@ def _render_form(prefill: str = "") -> str:
                 </button>
             </div>
         </form>
+
+        <div style="display:flex;gap:20px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+            <span style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--ink-muted);">&#10003;&nbsp;0–100 health score</span>
+            <span style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--ink-muted);">&#10003;&nbsp;Freshness per package</span>
+            <span style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--ink-muted);">&#10003;&nbsp;Migration signals</span>
+            <span style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--ink-muted);">&#10003;&nbsp;Better alternatives</span>
+        </div>
     </div>
 
     <script>
@@ -347,9 +355,9 @@ async def analyze_page(request: Request):
     user = request.state.user
     body = _render_form()
     return HTMLResponse(page_shell(
-        "Stack Health Check | IndieStack",
+        "Dependency Health Check | IndieStack",
         body,
-        description="Check your dependency stack health on IndieStack — analyze package.json or requirements.txt for freshness, compatibility, and modernity. Free instant score.",
+        description="Paste your package.json or requirements.txt. Get a 0–100 health score, per-package freshness, migration warnings, and alternative suggestions. Free, no login.",
         canonical="/analyze",
         user=user,
     ))
