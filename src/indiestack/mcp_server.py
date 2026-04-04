@@ -1408,6 +1408,117 @@ async def get_market_gaps(days: int = 30, limit: int = 10, *, ctx: Context) -> s
 
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
+async def get_migration_data(package: str, *, ctx: Context) -> str:
+    """Query real migration data from GitHub repos for a specific package.
+
+    Returns which packages developers are migrating FROM (abandoning) and
+    TO (adopting) — mined from real package.json / requirements.txt diffs
+    across thousands of GitHub repos. This is ground truth, not marketing.
+
+    Use this when:
+    - Deciding between two tools ("are devs actually moving from Jest to Vitest?")
+    - Validating a migration decision before recommending it to a user
+    - Checking whether a tool is gaining or losing momentum in the ecosystem
+    - Answering "what's the industry moving toward?" for a given category
+
+    Returns momentum signal (gaining/losing/stable), adoption sources, and
+    departure destinations — all sourced from verified package diff analysis.
+
+    Args:
+        package: The package name to query (e.g. "jest", "express", "prisma", "stripe").
+                 Use the npm/pip package name (not the IndieStack slug). Check
+                 get_tool_details() → "SDK Packages" field if unsure of the package name.
+    """
+    cache_key = f"migration:{package}"
+    cached = _cache_get(cache_key, 300)
+    if cached:
+        return cached
+
+    client = _get_client(ctx)
+    await ctx.report_progress(progress=0, total=1)
+    try:
+        data = await asyncio.wait_for(
+            _api_get(client, "/api/migrations", {"package": package.strip()}),
+            timeout=15.0,
+        )
+    except asyncio.TimeoutError:
+        raise ToolError(f"Migration query for '{package}' timed out. Try again.")
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code == 400:
+            raise ToolError(
+                f"Invalid package name '{package}'. "
+                "Use the exact npm/pip package name (e.g. 'jest', 'prisma', 'stripe')."
+            )
+        raise ToolError(f"Could not fetch migration data: {e}")
+    except Exception as e:
+        raise ToolError(f"Could not fetch migration data: {e}")
+    await ctx.report_progress(progress=1, total=1)
+
+    # migrating_from: repos that removed this package → went to something else
+    # migrating_to:   repos that adopted this package ← came from something else
+    migrating_from = data.get("migrating_from", [])
+    migrating_to = data.get("migrating_to", [])
+
+    if not migrating_from and not migrating_to:
+        result = (
+            f"No migration data found for '{package}'.\n\n"
+            "This could mean:\n"
+            "- The package name doesn't match (use exact npm/pip name, not slug)\n"
+            "- No migrations for this tool detected in our GitHub dataset yet\n\n"
+            "Tip: call get_tool_details(slug) and check the 'SDK Packages' field "
+            "for the correct package name to query here."
+        )
+        _cache_set(cache_key, result)
+        return result
+
+    lines = [
+        f"## Migration Intelligence: `{package}`",
+        "_Sourced from real GitHub repo diffs — not self-reported marketing._\n",
+    ]
+
+    # Momentum signal
+    total_in = sum(r.get("count", 0) for r in migrating_to)
+    total_out = sum(r.get("count", 0) for r in migrating_from)
+    if total_in > total_out * 1.5:
+        lines.append(
+            f"**Momentum: \u2191 GAINING** — {total_in} adoption event(s) vs "
+            f"{total_out} departure(s). Developers are actively moving TO this package."
+        )
+    elif total_out > total_in * 1.5:
+        lines.append(
+            f"**Momentum: \u2193 LOSING** — {total_out} departure event(s) vs "
+            f"{total_in} adoption(s). Developers are moving AWAY from this package."
+        )
+    else:
+        lines.append(
+            f"**Momentum: \u2192 STABLE** — {total_in} adoption event(s), "
+            f"{total_out} departure(s). Roughly balanced migration flow."
+        )
+
+    if migrating_to:
+        lines.append(f"\n### Repos ADOPTING `{package}` (came from:)")
+        for r in migrating_to[:10]:
+            conf = f" [{r['confidence']} confidence]" if r.get("confidence") else ""
+            lines.append(f"- From **{r['from']}** \u2192 `{package}`: {r['count']} repo(s){conf}")
+
+    if migrating_from:
+        lines.append(f"\n### Repos LEAVING `{package}` (moving to:)")
+        for r in migrating_from[:10]:
+            conf = f" [{r['confidence']} confidence]" if r.get("confidence") else ""
+            lines.append(f"- `{package}` \u2192 **{r['to']}**: {r['count']} repo(s){conf}")
+
+    lines.append(
+        "\n---\n"
+        "Source: IndieStack migration dataset (GitHub package.json/requirements.txt diffs).\n"
+        "Use find_tools() to discover alternatives, or get_tool_details(slug) for integration details."
+    )
+
+    result = "\n".join(lines)
+    _cache_set(cache_key, result)
+    return result
+
+
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
 async def list_stacks(*, ctx: Context) -> str:
     """List all stacks on IndieStack — curated bundles and auto-generated combinations.
 
