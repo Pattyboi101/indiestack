@@ -386,7 +386,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
                 See what&rsquo;s in the database
             </p>
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
-                Browse 8,000+ indie developer tools across 40+ categories.
+                Browse 6,500+ indie developer tools across 29 categories.
             </p>
             <a href="/explore" class="btn btn-primary">Explore Tools &rarr;</a>
         </div>

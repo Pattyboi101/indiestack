@@ -685,6 +685,9 @@ NEED_MAPPINGS = {
     "database": {"category": "database", "terms": ["database", "orm", "sql", "nosql", "postgres", "mysql", "sqlite", "migration"], "competitors": ["PlanetScale", "Supabase", "MongoDB Atlas", "Neon"], "title": "Databases", "description": "Indie databases, ORMs, and data storage tools for your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f5c4\ufe0f"},
     "background": {"category": "background-jobs", "terms": ["cron job", "task queue", "background job", "job scheduler", "workflow", "queue worker"], "competitors": ["Celery", "Bull", "Sidekiq", "AWS SQS"], "title": "Background Jobs", "description": "Schedule cron jobs, run task queues, and orchestrate workflows.", "build_estimate": "1-2 weeks", "icon": "\u2699\ufe0f"},
     "hosting": {"category": "hosting-infrastructure", "terms": ["hosting", "deployment", "vps", "cloud", "infrastructure", "paas"], "competitors": ["AWS", "Heroku", "Vercel", "Railway", "Render"], "title": "Hosting & Infrastructure", "description": "Deploy apps, manage servers, and scale infrastructure without enterprise overhead.", "build_estimate": "1-2 weeks", "icon": "\U0001f30d"},
+    "frontend": {"category": "frontend-frameworks", "terms": ["react", "vue", "svelte", "angular", "bundler", "build tool", "state management", "ui framework"], "competitors": ["React", "Vue", "Svelte", "Angular", "Vite", "Webpack"], "title": "Frontend Frameworks", "description": "UI frameworks, bundlers, and state management tools for building modern web apps.", "build_estimate": "varies", "icon": "\u26db\ufe0f"},
+    "mcp": {"category": "mcp-servers", "terms": ["mcp server", "model context protocol", "claude tool", "agent tool", "mcp"], "competitors": ["Custom MCP servers", "OpenAI plugins", "LangChain tools"], "title": "MCP Servers", "description": "Model Context Protocol servers that give AI agents access to tools, data, and APIs.", "build_estimate": "varies", "icon": "\U0001f50c"},
+    "caching": {"category": "caching", "terms": ["cache", "caching", "redis", "memcached", "edge cache", "cdn cache"], "competitors": ["Redis", "Memcached", "Upstash", "Cloudflare"], "title": "Caching", "description": "Add caching layers to speed up your app with Redis, Memcached, and edge tools.", "build_estimate": "1-2 weeks", "icon": "\u26a1"},
 }
 
 TECH_KEYWORDS = {
@@ -2444,9 +2447,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "deployment": "devops",
     "deploy": "devops",
     "serverless": "devops",
-    # Caching → Database (no dedicated caching category)
-    "caching": "database",
-    "cache": "database",
+    # Caching → moved to dedicated section below (caching category now exists)
     # Named tools → their primary category (fixes "[tool] alternative" queries so
     # the category/tag boost targets the RIGHT category instead of tools tagged
     # with the target tool name, which are complements not alternatives)
@@ -2565,6 +2566,47 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cloudinary": "media",
     "transcoding": "media",
     "streaming": "media",
+    # Frontend frameworks / bundlers / state management
+    # "state management" → first meaningful term is "state" → frontend-frameworks category
+    "state": "frontend",
+    "bundler": "frontend",
+    "vite": "frontend",
+    "rollup": "frontend",
+    "parcel": "frontend",
+    "turbopack": "frontend",
+    "esbuild": "frontend",
+    "webpack": "frontend",
+    "zustand": "frontend",
+    "mobx": "frontend",
+    "jotai": "frontend",
+    "redux": "frontend",
+    "recoil": "frontend",
+    "pinia": "frontend",        # Vue state management
+    "xstate": "frontend",       # State machines
+    "nanostores": "frontend",
+    # Realtime / WebSockets — typically API-layer tools (Pusher, Ably, PartyKit)
+    "realtime": "api",
+    "websocket": "api",
+    "websockets": "api",
+    "sse": "api",               # Server-Sent Events
+    "pusher": "api",
+    "ably": "api",
+    "livekit": "api",           # WebRTC / realtime video
+    "partykit": "api",
+    # Caching — dedicated category now exists
+    "caching": "caching",
+    "cache": "caching",
+    "memcached": "caching",
+    "upstash": "caching",
+    "dragonfly": "caching",     # Redis-compatible, faster
+    "keydb": "caching",
+    # Boilerplates / starter kits
+    "boilerplate": "boilerplate",
+    "starter": "boilerplate",
+    "scaffold": "boilerplate",
+    "template": "boilerplate",
+    # MCP servers — dedicated category
+    "protocol": "mcp",          # "model context protocol" → first term after stop words
 }
 
 _FTS_STOP_WORDS = {
