@@ -38,3 +38,14 @@ paths:
 
 ## Distribution
 - Tracker: `marketing/mcp-directories.md`. 17/20 directories submitted.
+
+## New Categories (Pass 13)
+Three categories added to production DB — `list_categories` now returns these:
+
+| Slug | Display Name |
+|------|-------------|
+| `caching` | Caching & In-Memory |
+| `mcp-servers` | MCP Servers |
+| `ai-standards` | AI Standards & Specs |
+
+Agents querying for caching tools (Redis alternatives, in-memory stores) should find them under `caching`. Agents looking for MCP servers to compose with should find them under `mcp-servers`. Pass 13 guidance: leave `ai-standards` empty if fewer than 3 genuinely AI-specific standards tools qualify — do NOT move OpenAPI/AsyncAPI into it.
