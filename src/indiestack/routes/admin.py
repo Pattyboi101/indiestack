@@ -562,11 +562,12 @@ async def render_overview(db, request, pending):
         )
 
     hero_strip = f"""
-    <div class="hero-strip" style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:12px;">
+    <div class="hero-strip" style="display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-bottom:12px;">
         {kpi_card("Total Tools", f"{total_tools:,}", color="#1A2D4A")}
         {kpi_card("Total Users", f"{total_users_count:,}", color="var(--terracotta)")}
+        {kpi_card("Sign Ups Today", f"{signups_today:,}", color="#16a34a")}
         {kpi_card("Searches Today", f"{searches_today:,}", color="var(--slate)")}
-        {kpi_card("MCP Today", f"{mcp_today:,}", color="#16a34a")}
+        {kpi_card("MCP Today", f"{mcp_today:,}", color="#00D4F5")}
         {kpi_card("Pro Subscribers", f"{pro_count:,}", color="#7C3AED")}
         {kpi_card("MRR", f"£{mrr_pence / 100:.0f}", color="#E2B764")}
     </div>
@@ -577,6 +578,7 @@ async def render_overview(db, request, pending):
         {kpi_card("Churn Rate", f"{rates['churn_rate']}%", color="var(--terracotta)", sublabel=f"{rates['churned']} churned / {rates['total_subs']} total subs")}
     </div>
     <style>
+        @media(max-width:1100px){{.hero-strip{{grid-template-columns:repeat(4,1fr)!important;}}}}
         @media(max-width:900px){{.hero-strip{{grid-template-columns:repeat(3,1fr)!important;}}}}
         @media(max-width:600px){{.hero-strip{{grid-template-columns:repeat(2,1fr)!important;}}}}
         @media(max-width:900px){{.rates-strip{{grid-template-columns:repeat(2,1fr)!important;}}}}
