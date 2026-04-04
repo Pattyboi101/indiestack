@@ -296,8 +296,8 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
     return f"""
     <div class="container" style="max-width:640px;padding:48px 24px;">
         <div style="text-align:center;margin-bottom:40px;">
-            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Make Your Creation Discoverable by AI</h1>
-            <p style="color:var(--ink-muted);margin-top:8px;">{f"{tool_count}+ creations are already discoverable by AI agents via our MCP server. List yours free — we'll review within 24 hours." if tool_count > 0 else "Creations listed here are discoverable by AI agents via our MCP server. List yours free — we'll review within 24 hours."}</p>
+            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);">Get Your Tool in Front of AI Coding Agents</h1>
+            <p style="color:var(--ink-muted);margin-top:8px;">{f"AI agents in Cursor, Windsurf, and Claude Code search {tool_count}+ listed tools via our MCP server — 10,000+ installs — before writing infrastructure from scratch." if tool_count > 0 else "AI agents in Cursor, Windsurf, and Claude Code search IndieStack via our MCP server — 10,000+ installs — before writing infrastructure from scratch."} Free listing. Reviewed within 24 hours.</p>
             <p style="color:var(--ink-muted);font-size:14px;margin-top:12px;">
                 Before submitting, please read our <a href="/guidelines" style="color:var(--accent);font-weight:600;">submission guidelines</a>.
             </p>
@@ -429,6 +429,17 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
                     </div>
                 </div>
 
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;">
+                    <div>
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                            <strong style="font-size:14px;color:var(--ink);">Maker Pro</strong>
+                            <span style="font-size:11px;font-weight:700;color:var(--gold);background:rgba(226,183,100,0.15);padding:2px 8px;border-radius:999px;">$19/mo</span>
+                        </div>
+                        <p style="color:var(--ink-muted);font-size:13px;line-height:1.5;margin:0;">See which AI agents are recommending your tool and what queries surface it. Includes a verified badge and priority placement in search results.</p>
+                    </div>
+                    <a href="/pricing" style="flex-shrink:0;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;white-space:nowrap;padding-top:2px;">See plans &rarr;</a>
+                </div>
+
                 <input type="hidden" id="price" name="price" value="">
                 <input type="hidden" id="delivery_type" name="delivery_type" value="link">
                 <input type="hidden" id="delivery_url" name="delivery_url" value="{delivery_url_val}">
@@ -528,7 +539,7 @@ async def submit_get(request: Request):
         </div>'''
 
     body = submit_form(categories, values=values, tool_count=tool_count, logged_in=logged_in, gap_hint=gap_hint)
-    return HTMLResponse(page_shell("Make Your Creation Discoverable by AI", body, description="Submit your developer tool to IndieStack. Get discovered by AI coding agents searching for auth, payments, analytics, and 25 other categories.", user=user))
+    return HTMLResponse(page_shell("List Your Developer Tool on IndieStack", body, description="List your developer tool on IndieStack — get discovered by AI agents in Cursor, Windsurf, and Claude Code. Free listing, reviewed within 24 hours.", user=user))
 
 
 @router.post("/submit", response_class=HTMLResponse)
