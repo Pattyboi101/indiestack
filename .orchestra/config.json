@@ -67,6 +67,12 @@
         "src/indiestack/enricher.py"
       ],
       "description": "MCP server, PyPI publishing, external API integrations"
+    },
+    "ceo": {
+      "name": "Strategy & QA",
+      "emoji": "\ud83e\udde0",
+      "allowed_paths": [],
+      "description": "Strategic review, risk assessment, quality assurance. Reviews all department assignments before execution. Can approve, challenge, or veto."
     }
   }
 }
