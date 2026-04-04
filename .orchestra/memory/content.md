@@ -34,3 +34,13 @@ Result: ```json
     "src/indiestack/routes/landing.py",
     "src/indiestack/routes/explore.py",
     "src/indiestack/routes
+
+## 2026-04-04 15:30
+Task: Review src/indiestack/routes/pricing.py for copy accuracy — check for stale claims, broken promises, outdated stats (tool counts, pricing figures). Cross-check any numeric claims against production DB if possible. Also review src/indiestack/routes/submit.py — assess whether the CTA is clear and trust-building. Fix any obvious copy issues directly in the files.
+Result: Done. Here's the summary:
+
+```json
+{
+  "status": "done",
+  "files_changed": ["src/indiestack/routes/submit.py"],
+  "summary": "Pricing page is clean — $49/mo matches vision.md, 8,000+ verified against

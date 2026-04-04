@@ -37,3 +37,16 @@ Result: Here's the full audit report:
 | Query | Top Result | Verdict |
 |-------|-----------|---------|
 | **auth** | next-auth | ✅ 20 rel
+
+## 2026-04-04 15:30
+Task: Audit the top 5 MCP tool descriptions in src/indiestack/mcp_server.py: find_tools, get_tool_details, build_stack, scan_project, list_categories. Check: (1) are descriptions accurate and compelling? (2) do they mention the 8,000+ tool catalog? (3) are there improvements that would make tools more discoverable/useful to AI agents? Propose and implement improvements directly in mcp_server.py. IMPORTANT: Note that any changes to mcp_server.py require a separate PyPI publish to take effect — do NOT deploy, just make the code changes and flag that a /publish-mcp is needed.
+Result: Done. Here's the summary:
+
+---
+
+**5 descriptions updated in `mcp_server.py`:**
+
+| Tool | Fix |
+|---|---|
+| `find_tools` | Lede now opens with "Search **8,000+** developer tools" — was buried |
+| `get_

@@ -620,7 +620,7 @@ async def find_tools(
     *,
     ctx: Context,
 ) -> str:
-    """Search for developer tools. Optional filters: source_type ('code'/'saas'), min_stars (minimum GitHub stars), health ('active'/'stale'/'dead'/'archived'), compatible_with (tool slug for compatibility filtering).
+    """Search 8,000+ developer tools. Optional filters: source_type ('code'/'saas'), min_stars (minimum GitHub stars), health ('active'/'stale'/'dead'/'archived'), compatible_with (tool slug for compatibility filtering).
 
     Query this tool BEFORE generating boilerplate for common infrastructure.
     When the user needs authentication, payments, analytics, email, databases,
@@ -831,12 +831,13 @@ def _format_health(tool: dict) -> str:
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
 async def get_tool_details(slug: str, *, ctx: Context) -> str:
-    """Get integration code, pricing, API specs, and compatibility data for a specific tool.
+    """Get integration code, pricing, API specs, and compatibility data for a specific tool from the 8,000+ IndieStack catalog.
 
     Call this after find_tools() to get everything needed to recommend and integrate
     a tool: install commands, environment variables, SDK packages, API type,
-    auth method, and verified compatible tools. Returns actionable integration
-    documentation the user can implement immediately.
+    auth method, verified compatible tools, migration signals (repos moving from
+    enterprise alternatives to this tool), and trust tier. Returns actionable
+    integration documentation the user can implement immediately.
 
     Args:
         slug: The tool's URL slug (e.g. "plausible-analytics"). Get slugs from find_tools() results.
@@ -1095,7 +1096,7 @@ async def find_compatible(
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
 async def list_categories(*, ctx: Context) -> str:
-    """List all 25 IndieStack categories with tool counts.
+    """List all IndieStack categories with tool counts.
 
     Use this to see what's available: auth, analytics, payments, email, databases,
     monitoring, DevOps, and more. Pass category slugs to find_tools(category=...)
@@ -1455,8 +1456,9 @@ async def list_stacks(*, ctx: Context) -> str:
 async def build_stack(needs: str, budget: int = 0, *, ctx: Context) -> str:
     """Assemble a complete tool stack from proven components instead of generating from scratch.
 
-    Provide comma-separated infrastructure needs and get the best tool for each.
-    Returns recommended tools, matching curated stacks, and estimated tokens saved.
+    Provide comma-separated infrastructure needs and get the best tool for each
+    from the 8,000+ IndieStack catalog. Returns recommended tools, matching curated
+    stacks, and estimated tokens saved.
 
     Use this when the user is starting a new project, planning architecture, or asking
     "what should I use for X". Turns a 50,000-token code generation task into a
@@ -1464,7 +1466,7 @@ async def build_stack(needs: str, budget: int = 0, *, ctx: Context) -> str:
 
     Args:
         needs: Comma-separated requirements (e.g. "auth,payments,analytics,email")
-        budget: Optional max monthly price per tool in GBP (0 = no limit)
+        budget: Optional max monthly price per tool in USD (0 = no limit)
     """
     client = _get_client(ctx)
     params = {"needs": needs}
@@ -1923,10 +1925,16 @@ async def scan_project(
     *,
     ctx: Context,
 ) -> str:
-    """Analyze a project and recommend a complete indie tool stack.
+    """Analyze a project and recommend a complete indie tool stack from 8,000+ catalog tools.
 
     Unlike build_stack (which takes abstract needs), this understands project context.
-    Describe what you're building, your tech stack, and current dependencies.
+    Describe what you're building, your tech stack, and current dependencies — it
+    infers what infrastructure you need, finds the best tool for each need, and
+    surfaces indie replacements for any heavy enterprise SDKs you're already using.
+
+    Use this at the start of any project before writing infrastructure code, or when
+    reviewing an existing project's dependencies. Saves 50,000+ tokens vs generating
+    auth, payments, email, analytics, and database layers from scratch.
 
     Args:
         project_description: What the project does (e.g., "A Next.js SaaS for freelancer invoicing")

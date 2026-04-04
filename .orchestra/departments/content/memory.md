@@ -100,6 +100,25 @@ Files changed: components.py, landing.py, explore.py, tool.py
 - `og:site_name` was missing entirely — now added to page_shell, applies to all pages.
 - `twitter:site` was not added (no handle known in codebase).
 
+## Copy Accuracy Audit (2026-04-04)
+Files reviewed: pricing.py, submit.py
+
+### Pricing page — all clear
+- "$49/mo" ✓ matches vision.md
+- "8,000+" ✓ DB shows 8,195 approved tools (queried via fly ssh)
+- "Unlimited MCP searches / API queries" — unchecked but no evidence of rate limits for anon users
+- Features listed (agent citation analytics, search query data, verified badge, etc.) match vision.md Pro features
+
+### Submit page — 1 issue fixed
+- **FIXED**: "note from us" paragraph claimed "Games, utilities, newsletters, dev tools — anything you've built" — directly contradicts vision.md (dev tools only, no games/newsletters).
+  - Changed to: "Libraries, CLIs, APIs, SaaS tools — if developers use it, we want it in here."
+- "Pick of the Week" claim ✓ confirmed real (landing.py references `_hero_tool_name` as this week's pick)
+- "we'll review within 24 hours" — unverifiable from codebase, flagged but not changed (Patrick's call)
+- `tool_count` is live from DB — 8,195 — shows accurately as "8195+" on the page
+
+### Gotcha learned:
+- Submit page "note from us" was a long-standing broken promise. The page title ("Make Your Creation Discoverable by AI") is intentionally broad but body copy must stay in scope.
+
 ## Patterns / Notes
 - DB is at /data/indiestack.db on production — query via fly ssh console
 - Migration data lives in `migration_paths` table: from_package, to_package, repo columns

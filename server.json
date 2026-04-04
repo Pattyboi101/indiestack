@@ -8,12 +8,12 @@
     "url": "https://github.com/Pattyboi101/indiestack",
     "source": "github"
   },
-  "version": "1.13.0",
+  "version": "1.14.0",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "indiestack",
-      "version": "1.13.0",
+      "version": "1.14.0",
       "runtimeHint": "uvx",
       "runtimeArguments": [
         {
