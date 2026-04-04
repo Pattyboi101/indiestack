@@ -239,6 +239,7 @@ async def migrations_page(request: Request):
         "Migration Intelligence — IndieStack",
         body,
         description=f"Live migration data from {repos_scanned:,} GitHub repos. See what packages developers are migrating to and which combinations work in production.",
+        canonical="/migrations",
         user=user,
     ))
 
