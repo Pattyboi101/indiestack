@@ -100,6 +100,12 @@ TESTS = [
 
     # Trending stacks (ranking algorithm)
     ("GET", "/trending-stacks", 200, "Trending stacks"),
+
+    # Additional pages added since initial smoke tests
+    ("GET", "/what-is-indiestack", 200, "What is IndieStack"),
+    ("GET", "/setup", 200, "Setup / Claude.md"),
+    ("GET", "/calculator", 200, "Cost calculator"),
+    ("GET", "/embed", 200, "Embed landing"),
 ]
 
 # Content checks: path -> (substring or callable, description)

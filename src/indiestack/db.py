@@ -2320,6 +2320,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Logging is a separate category with tools like Fluentd, Logrus, lnav
     "logging": "logging",
     "logs": "logging",
+    "log": "logging",       # "log management", "log aggregation" → Logging category (not "Blog")
+    "loki": "logging",
+    "logtail": "logging",
+    "logrus": "logging",
+    "fluentd": "logging",
+    "papertrail": "logging",
     "observability": "monitoring",
     "tracing": "monitoring",
     "apm": "monitoring",
@@ -2395,10 +2401,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cms": "cms",
     "testing": "testing",
     "test": "testing",
+    "qa": "testing",
+    "e2e": "testing",
+    "coverage": "testing",
+    "mock": "testing",
+    "mocking": "testing",
+    "cypress": "testing",
+    "playwright": "testing",
+    "jest": "testing",
+    "vitest": "testing",
+    "selenium": "testing",
+    "storybook": "testing",     # component testing / UI development
     "ci": "devops",
     "cicd": "devops",
     "form": "forms",
     "forms": "forms",
+    "survey": "forms",
+    "surveys": "forms",
+    "typeform": "forms",
+    "tally": "forms",
+    # Customer support
+    "helpdesk": "support",
+    "ticketing": "support",
+    "support": "support",
+    "intercom": "support",
+    "zendesk": "support",
+    "freshdesk": "support",
+    "crisp": "support",
     # "feature-flags" won't LIKE-match "Feature Flags" category name — use "feature" instead
     "feature": "feature",
     "flags": "feature",
@@ -2513,6 +2542,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Background job tools
     "temporal": "background",
     "trigger.dev": "background",
+    # Security tools — "security" as raw term already LIKE-matches "Security Tools",
+    # but named tools and non-obvious terms need explicit mapping
+    "security": "security",
+    "vulnerability": "security",
+    "pentest": "security",
+    "firewall": "security",
+    "waf": "security",
+    "snyk": "security",
+    "sonarqube": "security",
+    "vault": "security",        # HashiCorp Vault — secrets management
+    "secrets": "security",
+    # Invoicing — "invoice"/"receipt" already mapped above (line ~2295); add named tools + new terms
+    "invoicing": "invoicing",
+    "accounting": "invoicing",
+    "freshbooks": "invoicing",
+    "xero": "invoicing",
+    "wave": "invoicing",
+    # Media/uploads — image and audio are common queries beyond just "video"
+    "image": "media",
+    "audio": "media",
+    "cloudinary": "media",
+    "transcoding": "media",
+    "streaming": "media",
 }
 
 _FTS_STOP_WORDS = {
