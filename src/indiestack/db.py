@@ -2342,7 +2342,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # File / storage synonyms
     "upload": "file",
     "s3": "file",
-    "cdn": "file",
+    "cdn": "devops",    # CDN → DevOps & Infrastructure (Cloudflare, BunnyCDN, Fastly live there)
     "media": "file",
     "assets": "file",
     # CMS synonyms
@@ -2575,7 +2575,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cloudinary": "media",
     "transcoding": "media",
     "streaming": "media",
-    # Frontend frameworks / bundlers / state management
+    # Frontend frameworks / bundlers / state management / CSS
     # "state management" → first meaningful term is "state" → frontend-frameworks category
     # "react framework" → "react" is also in _FRAMEWORK_QUERY_TERMS but falls back to _meaningful
     # when stripped list is empty, so this synonym still fires correctly.
@@ -2593,6 +2593,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "state": "frontend",
     "bundler": "frontend",
     "vite": "frontend",
+    # CSS frameworks/libraries
+    "css": "frontend",
+    "tailwind": "frontend",
+    "tailwindcss": "frontend",
+    "bootstrap": "frontend",
+    "shadcn": "frontend",
+    "daisyui": "frontend",
+    "bulma": "frontend",
+    "styling": "frontend",
+    "stylesheet": "frontend",
     "rollup": "frontend",
     "parcel": "frontend",
     "turbopack": "frontend",
