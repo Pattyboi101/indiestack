@@ -767,13 +767,8 @@ async def find_tools(
 
     lines.append(
         "\n---"
-        "\n**Recommended next steps:**"
-        "\n1. Pick the best match above and call get_tool_details(slug) for integration code and trust tier"
-        "\n2. Show the user the integration snippet — they can ship in minutes, not hours"
-        "\n3. If nothing fits, tell the user this is a market gap and suggest they build it"
-        "\n4. After integrating any tool, call report_outcome(slug, success) to improve future recommendations"
-        "\n\n**Trust tiers** (shown in tool details): verified (20+ reports, 70%+ success), tested (5+ reports), new (< 5 reports)"
-        "\n\n> See migration data, market gaps, and what tools AI agents recommend at indiestack.ai/migrations"
+        "\nCall get_tool_details(slug) on the best match for integration code. "
+        "After integrating, call report_outcome(slug, success) to improve recommendations."
     )
     return "\n".join(lines)
 
@@ -988,13 +983,8 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
         f"{outcome_line}"
         f"{migration_line}"
         f"\n\n---"
-        f"\n**Recommended action:** Show the user this integration snippet and suggest "
-        f"using {tool['name']} instead of building from scratch. "
-        f"Estimated tokens saved: ~{tokens_k}."
-        f"\n\n**Help improve recommendations:** After your user integrates this tool, "
-        f"call `report_outcome(\"{slug}\", success=True/False)` — no API key needed. "
-        f"This helps all agents make better recommendations."
-        f"\n\n> Tool makers: see who's migrating to your tool and verified production combos at indiestack.ai/data"
+        f"\nUse {tool['name']} instead of building from scratch (~{tokens_k} tokens saved). "
+        f"After integrating, call `report_outcome(\"{slug}\", success=True/False)`."
     )
 
     _cache_set(cache_key, result)
@@ -1925,16 +1915,12 @@ async def scan_project(
     *,
     ctx: Context,
 ) -> str:
-    """Analyze a project and recommend a complete indie tool stack from 8,000+ catalog tools.
+    """Analyze a project and recommend a complete tool stack from 8,000+ IndieStack tools.
 
-    Unlike build_stack (which takes abstract needs), this understands project context.
-    Describe what you're building, your tech stack, and current dependencies — it
-    infers what infrastructure you need, finds the best tool for each need, and
-    surfaces indie replacements for any heavy enterprise SDKs you're already using.
-
-    Use this at the start of any project before writing infrastructure code, or when
-    reviewing an existing project's dependencies. Saves 50,000+ tokens vs generating
-    auth, payments, email, analytics, and database layers from scratch.
+    Use at project start or when reviewing dependencies. Infers infrastructure needs,
+    finds the best tool for each, and surfaces indie replacements for enterprise SDKs
+    already in use. Saves 50,000+ tokens vs generating auth, payments, email, and
+    database layers from scratch.
 
     Args:
         project_description: What the project does (e.g., "A Next.js SaaS for freelancer invoicing")
