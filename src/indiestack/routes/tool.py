@@ -427,8 +427,10 @@ async def tool_detail(request: Request, slug: str):
         </div>'''
     elif request.query_params.get('claimed'):
         claim_message = '''
-        <div style="margin:16px 0;padding:16px 24px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-sm);color:var(--success-text);font-size:14px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> You've claimed this listing! Visit your <a href="/dashboard" style="color:var(--success-text);font-weight:600;">dashboard</a> to see your analytics.
+        <div style="margin:16px 0;padding:16px 24px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-sm);color:var(--success-text);font-size:14px;line-height:1.6;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <strong>Listing claimed!</strong> Visit your <a href="/dashboard" style="color:var(--success-text);font-weight:600;text-decoration:underline;">dashboard</a> to see your analytics.
+            Upgrade to <a href="/pricing" style="color:var(--success-text);font-weight:600;text-decoration:underline;">Maker Pro ($49/mo)</a> for full citation intel, search query data, and a verified badge.
         </div>'''
     elif request.query_params.get('claim_requested'):
         claim_message = '''
@@ -1179,7 +1181,13 @@ async def tool_detail(request: Request, slug: str):
     </div>
     """
     og_image_url = f"{BASE_URL}/logo.png"
-    response = HTMLResponse(page_shell(f"{tool['name']} — {tagline} | IndieStack", body + email_sticky_bar(), description=tagline, extra_head=extra_head, user=user, og_image=og_image_url, canonical=f"/tool/{slug}"))
+    # Build a richer meta description: tagline + category context, capped at 160 chars
+    _raw_tagline = str(tool.get('tagline') or tool['name'])
+    _cat_name = str(tool.get('category_name') or 'developer').lower()
+    _meta_suffix = f" — a {_cat_name} tool. Discover pricing, reviews, alternatives, and AI-agent recommendations on IndieStack."
+    _meta_enriched = _raw_tagline + _meta_suffix
+    _meta_desc = _meta_enriched if len(_meta_enriched) <= 160 else _meta_enriched[:157] + "..."
+    response = HTMLResponse(page_shell(f"{tool['name']} — {tagline} | IndieStack", body + email_sticky_bar(), description=_meta_desc, extra_head=extra_head, user=user, og_image=og_image_url, canonical=f"/tool/{slug}"))
     response.headers["Cache-Control"] = "public, max-age=120, stale-while-revalidate=600"
     return response
 

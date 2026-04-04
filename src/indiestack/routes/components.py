@@ -1528,7 +1528,7 @@ def theme_js() -> str:
 # ── Page Shell ────────────────────────────────────────────────────────────
 
 def page_shell(title: str, body: str, *, description: str = "", extra_head: str = "", user=None, og_image: str = f"{BASE_URL}/logo.png", canonical: str = "") -> str:
-    desc = escape(description) if description else "Discover developer tools built by independent makers and small teams."
+    desc = escape(description) if description else "Discover 8,000+ developer tools for AI coding agents. Find indie alternatives for auth, payments, analytics, email, and more — curated for developers."
     canonical_tag = f'\n    <link rel="canonical" href="{BASE_URL}{escape(canonical)}">' if canonical else ""
     # Strip trailing " | IndieStack" or " — IndieStack" to avoid duplication
     clean_title = title
@@ -1544,6 +1544,7 @@ def page_shell(title: str, body: str, *, description: str = "", extra_head: str 
     <title>{escape(clean_title)} — IndieStack</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta name="description" content="{desc}">{canonical_tag}
+    <meta property="og:site_name" content="IndieStack">
     <meta property="og:title" content="{escape(clean_title)} — IndieStack">
     <meta property="og:description" content="{desc}">
     <meta property="og:type" content="website">

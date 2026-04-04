@@ -3571,7 +3571,8 @@ async def api_claim_verify(request: Request, token: str):
     tool_id, user_id = result
     tool = await db.get_tool_by_id(d, tool_id)
     slug = tool['slug'] if tool else ''
-    return RedirectResponse(url=f"/tool/{slug}?claimed=1", status_code=303)
+    # Redirect to dashboard so the user lands on their analytics + Pro upgrade CTA
+    return RedirectResponse(url=f"/dashboard?just_claimed=1&tool={slug}", status_code=303)
 
 
 @app.post("/api/boost")

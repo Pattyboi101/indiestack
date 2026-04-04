@@ -164,19 +164,21 @@ async def dashboard_overview(request: Request):
     pro_badge = ' <span style="display:inline-block;background:var(--accent);color:white;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:8px;">PRO</span>' if is_pro else ''
     upgrade_html = ''
     if not is_pro and has_claimed_tools:
-        upgrade_html = '''<button onclick="startProCheckout()" class="btn-primary" style="padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;border:none;">
+        upgrade_html = '''<button onclick="startProCheckout()" class="btn-primary" style="padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;border:none;min-height:44px;">
             Upgrade to Maker Pro &mdash; $49/mo
         </button>
         <script>
-        async function startProCheckout() {
-            const btn = event.target;
-            btn.disabled = true; btn.textContent = "Redirecting...";
-            try {
-                const r = await fetch("/api/subscribe/pro", {method:"POST", headers:{"Content-Type":"application/json"}, body:"{}"});
-                const d = await r.json();
-                if (d.checkout_url) { window.location.href = d.checkout_url; }
-                else { alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $49/mo"; }
-            } catch(e) { alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $49/mo"; }
+        if (typeof startProCheckout === "undefined") {
+            window.startProCheckout = async function() {
+                const btn = event.target;
+                btn.disabled = true; btn.textContent = "Redirecting...";
+                try {
+                    const r = await fetch("/api/subscribe/pro", {method:"POST", headers:{"Content-Type":"application/json"}, body:"{}"});
+                    const d = await r.json();
+                    if (d.checkout_url) { window.location.href = d.checkout_url; }
+                    else { alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $49/mo"; }
+                } catch(e) { alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $49/mo"; }
+            };
         }
         </script>'''
 
@@ -187,6 +189,53 @@ async def dashboard_overview(request: Request):
         welcome_banner = '<div style="background:#ECFDF5;border:1px solid #6EE7B7;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;color:#065F46;font-weight:600;font-size:14px;">Welcome to IndieStack Pro! Your account has been upgraded.</div>'
     elif just_subscribed_param and not is_pro:
         welcome_banner = '<div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;color:#92400E;font-weight:600;font-size:14px;">Payment received! Your Pro access is activating &mdash; refresh in a moment.</div>'
+
+    # Post-claim celebration banner
+    just_claimed_param = request.query_params.get('just_claimed') == '1'
+    just_claimed_tool_slug = escape(str(request.query_params.get('tool', '')))
+    just_claimed_banner = ''
+    if just_claimed_param and not is_pro:
+        _tool_link = f'<a href="/tool/{just_claimed_tool_slug}" style="color:var(--accent);text-decoration:none;font-weight:700;">{just_claimed_tool_slug}</a>' if just_claimed_tool_slug else 'your tool'
+        just_claimed_banner = f'''
+        <div style="background:linear-gradient(135deg,var(--navy) 0%,#243B5E 100%);border:1px solid rgba(0,212,245,0.25);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+                <div style="flex:1;min-width:200px;">
+                    <div style="font-family:var(--font-display);font-size:20px;color:white;margin-bottom:6px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Listing claimed! You&rsquo;re in the system.
+                    </div>
+                    <p style="font-size:14px;color:rgba(255,255,255,0.65);margin:0 0 12px;line-height:1.5;">
+                        AI agents will now surface {_tool_link} when developers search for tools like yours.
+                        You can see basic citation counts below &mdash; Maker Pro unlocks the full picture.
+                    </p>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:0;">
+                        <span style="font-size:12px;color:rgba(255,255,255,0.5);padding:4px 0;">Pro adds:</span>
+                        <span style="font-size:12px;background:rgba(0,212,245,0.12);color:var(--accent);padding:3px 10px;border-radius:999px;border:1px solid rgba(0,212,245,0.2);">Search query breakdown</span>
+                        <span style="font-size:12px;background:rgba(0,212,245,0.12);color:var(--accent);padding:3px 10px;border-radius:999px;border:1px solid rgba(0,212,245,0.2);">Daily email digest</span>
+                        <span style="font-size:12px;background:rgba(0,212,245,0.12);color:var(--accent);padding:3px 10px;border-radius:999px;border:1px solid rgba(0,212,245,0.2);">Verified badge</span>
+                        <span style="font-size:12px;background:rgba(0,212,245,0.12);color:var(--accent);padding:3px 10px;border-radius:999px;border:1px solid rgba(0,212,245,0.2);">Priority placement</span>
+                    </div>
+                </div>
+                <div style="flex-shrink:0;text-align:center;">
+                    <button onclick="startProCheckout()" style="background:var(--accent);color:#0F1D30;border:none;padding:13px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;min-height:44px;display:block;width:100%;margin-bottom:6px;">
+                        Upgrade to Pro &mdash; $49/mo
+                    </button>
+                    <span style="font-size:11px;color:rgba(255,255,255,0.35);">Cancel any time &middot; No contract</span>
+                </div>
+            </div>
+        </div>
+        <script>
+        window.startProCheckout = async function() {{
+            const btn = event.target;
+            btn.disabled = true; btn.textContent = "Redirecting...";
+            try {{
+                const r = await fetch("/api/subscribe/pro", {{method:"POST", headers:{{"Content-Type":"application/json"}}, body:"{{}}"}});
+                const d = await r.json();
+                if (d.checkout_url) {{ window.location.href = d.checkout_url; }}
+                else {{ alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Pro — $49/mo"; }}
+            }} catch(e) {{ alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Pro — $49/mo"; }}
+        }};
+        </script>'''
 
     # Citation intel is now integrated into ai_intel_html below
 
@@ -1177,9 +1226,53 @@ async def dashboard_overview(request: Request):
         </div>
         '''
 
+    # Pro upgrade nudge card — shown to non-Pro makers with claimed tools (not on first-claim, which shows just_claimed_banner already)
+    pro_nudge_card = ''
+    if not is_pro and has_claimed_tools and not just_claimed_param:
+        pro_nudge_card = '''
+        <div style="border:1px solid rgba(0,212,245,0.2);border-radius:var(--radius);padding:24px 28px;margin-bottom:24px;background:linear-gradient(to right,rgba(0,212,245,0.04),transparent);">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+                <div style="flex:1;min-width:200px;">
+                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin:0 0 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+                        Maker Pro unlocks the full picture
+                    </h3>
+                    <p style="font-size:13px;color:var(--ink-muted);margin:0 0 12px;line-height:1.5;">You can see who&rsquo;s citing you. Pro shows you <em>exactly</em> what they searched for, which agents sent them, and how you compare.</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                        <span style="font-size:12px;color:var(--ink-muted);background:var(--cream-dark);padding:3px 10px;border-radius:999px;">Verified badge</span>
+                        <span style="font-size:12px;color:var(--ink-muted);background:var(--cream-dark);padding:3px 10px;border-radius:999px;">Search query breakdown</span>
+                        <span style="font-size:12px;color:var(--ink-muted);background:var(--cream-dark);padding:3px 10px;border-radius:999px;">Weekly email digest</span>
+                        <span style="font-size:12px;color:var(--ink-muted);background:var(--cream-dark);padding:3px 10px;border-radius:999px;">Priority search placement</span>
+                        <span style="font-size:12px;color:var(--ink-muted);background:var(--cream-dark);padding:3px 10px;border-radius:999px;">Data export</span>
+                    </div>
+                </div>
+                <div style="flex-shrink:0;">
+                    <button onclick="startProCheckout()" style="background:var(--accent);color:#0F1D30;border:none;padding:12px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;min-height:44px;display:block;margin-bottom:5px;">
+                        Upgrade &mdash; $49/mo
+                    </button>
+                    <span style="font-size:11px;color:var(--ink-muted);display:block;text-align:center;">No contract &middot; Cancel any time</span>
+                </div>
+            </div>
+        </div>
+        <script>
+        if (typeof startProCheckout === "undefined") {
+            async function startProCheckout() {
+                const btn = event.target;
+                btn.disabled = true; btn.textContent = "Redirecting...";
+                try {
+                    const r = await fetch("/api/subscribe/pro", {method:"POST", headers:{"Content-Type":"application/json"}, body:"{}"});
+                    const d = await r.json();
+                    if (d.checkout_url) { window.location.href = d.checkout_url; }
+                    else { alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade — $49/mo"; }
+                } catch(e) { alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade — $49/mo"; }
+            }
+        }
+        </script>'''
+
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
         {welcome_banner}
+        {just_claimed_banner}
         {trial_banner}
         {pro_banner}
         {verify_banner}
@@ -1195,6 +1288,8 @@ async def dashboard_overview(request: Request):
         {api_key_html if active_keys else ''}
 
         {pro_hub_html}
+
+        {pro_nudge_card}
 
         {quality_html}
 

@@ -83,6 +83,23 @@ Polished devto-v112-blog.md draft.
 - Kept Patrick's casual, direct voice — no preamble, numbers up front
 - Draft file: .orchestra/departments/content/devto-v112-blog.md (original unchanged — polished version sent to Master)
 
+## SEO Audit Completed (2026-04-04)
+Files changed: components.py, landing.py, explore.py, tool.py
+
+### What was fixed:
+- **components.py page_shell**: Added `og:site_name` tag. Improved default desc fallback from 70 chars ("Discover developer tools...") to 150 chars (mentions AI coding agents + 8,000+ tools).
+- **landing.py**: Desc extended from 134 → 156 chars by appending " — 8,000+ tools indexed."
+- **explore.py**: Title extended from 38 → 55 chars ("Explore 8,000+ Developer Tools by Category — IndieStack"). Desc from 120 → 156 chars.
+- **tool.py**: Meta desc changed from raw tagline only (40-80 chars) to tagline + category context suffix, capped at 160 chars with ellipsis truncation on the full enriched string.
+
+### Patterns learned:
+- page_shell strips " | IndieStack" and " — IndieStack" from title to avoid duplication — always pass title WITH one of these suffixes; it strips cleanly.
+- `og:url` in page_shell is only included if canonical is passed — landing/explore/tool all pass canonical so ✅.
+- Tool detail pages: `tagline` var (line 85) is already html.escape()'d. page_shell also escapes its `description` param — double-escaping exists for tool taglines but doesn't break simple ASCII taglines. Don't pass pre-escaped content as `description`.
+- For tool.py description enrichment, use `tool.get('tagline')` (raw) not the `tagline` variable (pre-escaped).
+- `og:site_name` was missing entirely — now added to page_shell, applies to all pages.
+- `twitter:site` was not added (no handle known in codebase).
+
 ## Patterns / Notes
 - DB is at /data/indiestack.db on production — query via fly ssh console
 - Migration data lives in `migration_paths` table: from_package, to_package, repo columns

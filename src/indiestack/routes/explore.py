@@ -342,7 +342,7 @@ async def explore(request: Request):
     </div>
     '''
 
-    desc = "Browse and filter developer tools by category, tags, verification status, and price. Find the perfect indie alternative."
+    desc = "Browse and filter 8,000+ indie developer tools by category, tags, verification status, and price. Find the perfect auth, payments, or analytics alternative."
     explore_ld = json.dumps({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -353,7 +353,7 @@ async def explore(request: Request):
         "numberOfItems": total,
     }, ensure_ascii=False)
     explore_head = f'<script type="application/ld+json">{explore_ld}</script>'
-    response = HTMLResponse(page_shell(title="Explore Developer Tools | IndieStack", body=body + email_sticky_bar(), description=desc, user=user, canonical="/explore", extra_head=explore_head))
+    response = HTMLResponse(page_shell(title="Explore 8,000+ Developer Tools by Category | IndieStack", body=body + email_sticky_bar(), description=desc, user=user, canonical="/explore", extra_head=explore_head))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"
     return response
 

@@ -1,10 +1,15 @@
-# Briefing — 2026-04-04 14:52
+# Briefing — 2026-04-04 15:04
 
 ## Task
-Fix 3 search quality issues: (1) 'email' query returns Logto as #1 — check db.py engagement scoring and FTS weighting; if Logto's description is keyword-stuffed with email terms, UPDATE its description in the production DB to be accurate without email-heavy language, then check if a scoring fix in db.py (e.g. category penalty for auth tools on 'email' queries) is needed; (2) 'payments' returns laravel-stripe-webhooks as #1 — investigate its category assignment and FTS rank vs Stripe; fix by correcting its category_id to a more specific one (e.g. webhooks/integration) or adjusting engagement scoring to boost tools whose primary category matches the query term; (3) Duplicate cleanup — query the DB for (btcpay-server, btcpayserver) and (kill-bill, killbill): compare upvotes, view counts, and data completeness; UPDATE the weaker duplicate's status to 'pending' in each pair. After ALL DB changes, run: INSERT INTO tools_fts(tools_fts) VALUES('rebuild') and PRAGMA wal_checkpoint(TRUNCATE) to rebuild the FTS index.
+Data quality pass ONLY. Run queries against the LOCAL database to find: (A) top 20 approved tools with zero tags — suggest and apply appropriate tags based on name/description/category, (B) tools with obviously wrong categories — fix the most egregious mismatches. IMPORTANT: Do NOT use LIKE '%keyword%' for category matching — it catches substrings (gotcha). Use explicit slug lists or exact word matching. After all local DB changes, rebuild FTS: INSERT INTO tools_fts(tools_fts) VALUES('rebuild'). Note: these are LOCAL changes only — they'll need a separate production data fix later via SSH with absolute paths.
 
 ## S&QA Conditions
-None
+- Dashboard work goes to frontend ONLY — backend must not touch dashboard.py
+- Backend must not use LIKE '%keyword%' for finding miscategorized tools — use explicit checks or tag-based matching
+- Backend data quality changes are LOCAL only this run — production DB fixes need a separate SSH step with FTS rebuild
+- Frontend should read vision.md and pricing context before implementing upgrade CTAs — the nudge must be soft, not a gate
 
 ## Risk Flags
-None
+- Original plan had two agents editing dashboard.py — guaranteed conflict
+- Backend LIKE substring matching gotcha is relevant for finding miscategorized tools
+- If backend accidentally runs data changes on production without FTS rebuild, search serves stale results
