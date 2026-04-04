@@ -1799,3 +1799,15 @@ async def admin_edit_tool_post(request: Request, tool_id: int):
                       verified_pairs=verified_pairs)
 
     return RedirectResponse(url=f"/admin/edit/{tool_id}?toast=Tool+updated+successfully", status_code=303)
+
+
+@router.post("/admin/rebuild-fts")
+async def admin_rebuild_fts(request: Request):
+    if not check_admin_session(request):
+        from fastapi.responses import JSONResponse
+        return JSONResponse({"error": "unauthorized"}, status_code=403)
+    d = request.state.db
+    await d.execute("INSERT INTO tools_fts(tools_fts) VALUES('rebuild')")
+    await d.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+    await d.commit()
+    return JSONResponse({"ok": True, "message": "FTS index rebuilt"})
