@@ -1,7 +1,5 @@
 """What is IndieStack — explains the discovery layer between AI coding agents and developer tools."""
 
-from html import escape
-
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
@@ -89,10 +87,10 @@ async def what_is_page(request: Request):
         <!-- ===== WHAT BELONGS HERE ===== -->
         <div style="margin-bottom:56px;">
             <h2 style="font-family:var(--font-display);font-size:clamp(22px,3.5vw,30px);color:var(--ink);margin-bottom:8px;">
-                If someone made it, it belongs here
+                Developer tools, every shape and size
             </h2>
             <p style="color:var(--ink-muted);font-size:16px;line-height:1.6;margin-bottom:24px;">
-                The only constraint is &ldquo;indie-built.&rdquo; Not &ldquo;developer tool.&rdquo; Not &ldquo;SaaS.&rdquo; Anything an independent creator has shipped becomes a building block agents can discover.
+                If developers use it to build, it belongs here &mdash; from authentication libraries and search engines to payments, databases, and developer education. Indie-focused, curated for quality, discoverable by AI agents.
             </p>
             <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));gap:16px;">
 
@@ -108,27 +106,27 @@ async def what_is_page(request: Request):
                 <div class="card" style="padding:20px;cursor:default;transition:all 0.2s ease;"
                      onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)'"
                      onmouseleave="this.style.transform='';this.style.boxShadow=''">
-                    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#e06c75;font-weight:700;margin-bottom:8px;">Games</div>
-                    <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">Veloren</div>
-                    <div style="font-size:14px;color:var(--ink-light);margin-bottom:8px;">Open-world multiplayer RPG in Rust</div>
+                    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#e06c75;font-weight:700;margin-bottom:8px;">Databases</div>
+                    <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">PocketBase</div>
+                    <div style="font-size:14px;color:var(--ink-light);margin-bottom:8px;">Open-source backend in a single file</div>
                     <span style="font-size:12px;padding:2px 8px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font-weight:600;">Code</span>
                 </div>
 
                 <div class="card" style="padding:20px;cursor:default;transition:all 0.2s ease;"
                      onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)'"
                      onmouseleave="this.style.transform='';this.style.boxShadow=''">
-                    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:700;margin-bottom:8px;">Newsletters</div>
-                    <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">Buttondown</div>
-                    <div style="font-size:14px;color:var(--ink-light);margin-bottom:8px;">The easiest way to run a newsletter</div>
+                    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:700;margin-bottom:8px;">Email API</div>
+                    <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">Resend</div>
+                    <div style="font-size:14px;color:var(--ink-light);margin-bottom:8px;">Email API built for developers</div>
                     <span style="font-size:12px;padding:2px 8px;border-radius:999px;background:rgba(0,212,245,0.12);color:var(--accent);font-weight:600;">SaaS</span>
                 </div>
 
                 <div class="card" style="padding:20px;cursor:default;transition:all 0.2s ease;"
                      onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)'"
                      onmouseleave="this.style.transform='';this.style.boxShadow=''">
-                    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#c678dd;font-weight:700;margin-bottom:8px;">Creative Tools</div>
-                    <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">Penpot</div>
-                    <div style="font-size:14px;color:var(--ink-light);margin-bottom:8px;">Open-source design and prototyping</div>
+                    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#c678dd;font-weight:700;margin-bottom:8px;">Search</div>
+                    <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">Meilisearch</div>
+                    <div style="font-size:14px;color:var(--ink-light);margin-bottom:8px;">Lightning-fast open-source search engine</div>
                     <span style="font-size:12px;padding:2px 8px;border-radius:999px;background:var(--success-bg);color:var(--success-text);font-weight:600;">Code</span>
                 </div>
 
@@ -212,7 +210,7 @@ async def what_is_page(request: Request):
                 </div>
                 <div style="line-height:1.7;color:var(--ink-light);font-size:16px;">
                     <strong style="color:var(--ink);">Just ask.</strong>
-                    &ldquo;Find me a privacy-friendly analytics tool.&rdquo; &ldquo;What indie games are built in Rust?&rdquo;
+                    &ldquo;Find me a privacy-friendly analytics tool.&rdquo; &ldquo;What&rsquo;s a good open-source search engine for Next.js?&rdquo;
                     Your AI searches IndieStack and brings back real options. Every recommendation tells a creator their work matters.
                 </div>
             </div>

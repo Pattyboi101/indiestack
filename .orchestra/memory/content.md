@@ -44,3 +44,15 @@ Result: Done. Here's the summary:
   "status": "done",
   "files_changed": ["src/indiestack/routes/submit.py"],
   "summary": "Pricing page is clean — $49/mo matches vision.md, 8,000+ verified against
+
+## 2026-04-04 16:13
+Task: Review src/indiestack/routes/updates.py and src/indiestack/routes/what_is.py. Check: (1) Is the copy accurate and up-to-date (no stale stats, outdated feature claims)? (2) Is the page well-structured with clear purpose? (3) Are there any obvious copy issues, typos, or confusing sections? Fix anything clear-cut directly in the files. CONDITION: Before updating ANY stats (tool counts, category counts, install numbers), verify the actual numbers against the production DB or known current figures (8,000+ tools, 25+ categories, 10,000+ PyPI installs). Do NOT guess or leave old numbers.
+Result: Done. Here's the full summary:
+
+---
+
+```json
+{
+  "status": "done",
+  "files_changed": ["src/indiestack/routes/what_is.py"],
+  "summary": "updates.py was clean — no changes needed. what_is.py had 3 acc

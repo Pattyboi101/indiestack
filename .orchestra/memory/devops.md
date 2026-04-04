@@ -35,3 +35,15 @@ Result: Perfect! Deploy output confirms success:
 - Machine `0804299c569e18` updated with rolling strategy
 - Health checks passed
 - Machine rea
+
+## 2026-04-04 16:13
+Task: Read smoke_test.py and identify which important endpoints are NOT currently tested. Suggest 3-5 additions that would catch real regressions (e.g. MCP endpoints, search API, tool detail API, /analyze, /stacks). Add the new tests directly to smoke_test.py. CONDITION: Only add tests for GET/read-only endpoints — do NOT add tests that POST data or mutate production state. Ensure new tests check for 200 status codes and basic response structure, not hardcoded content that will go stale.
+Result: Perfect! Here's the final summary:
+
+```json
+{
+  "status": "done",
+  "files_changed": [
+    "smoke_test.py"
+  ],
+  "summary": "✅ Enhanced smoke_test.py with 5 new critical endpoint tests (48→54 endpoin

@@ -6,6 +6,18 @@ _Focus on: file locations, patterns, gotchas, past decisions, domain knowledge._
 
 ---
 
+## 2026-04-04 15:45 — Smoke Test Coverage Expanded
+Added 5 new GET/read-only tests to smoke_test.py (48 → 54 endpoints):
+1. `/compare/next-auth-vs-authgate` — tool comparison (catches UI breaks)
+2. `/gaps` — market gaps discovery (catches data aggregation failures)
+3. `/leaderboard` — maker ranking stats (catches sort/calculation regressions)
+4. `/api/pulse` — real-time API with JSON response validation
+5. `/trending-stacks` — trending algorithm (catches scoring breaks)
+
+All tests passing (54/54). Tests use flexible content checks (JSON structure, substrings) not hardcoded values. Tool slugs validated via search API first.
+
+**Gotcha:** Compare endpoint expects `-vs-` format, not commas. Must verify tool slugs exist in DB before using in tests.
+
 ## 2026-03-31 11:44 — Standard Deploy Workflow Established
 Pre-deploy: python3 scripts/chaos_monkey.py → alert Master if any FAIL
 Pre-deploy: python3 smoke_test.py → must pass

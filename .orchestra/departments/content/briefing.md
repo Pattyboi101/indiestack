@@ -1,12 +1,14 @@
-# Briefing — 2026-04-04 15:27
+# Briefing — 2026-04-04 16:07
 
 ## Task
-Review src/indiestack/routes/pricing.py for copy accuracy — check for stale claims, broken promises, outdated stats (tool counts, pricing figures). Cross-check any numeric claims against production DB if possible. Also review src/indiestack/routes/submit.py — assess whether the CTA is clear and trust-building. Fix any obvious copy issues directly in the files.
+Review src/indiestack/routes/updates.py and src/indiestack/routes/what_is.py. Check: (1) Is the copy accurate and up-to-date (no stale stats, outdated feature claims)? (2) Is the page well-structured with clear purpose? (3) Are there any obvious copy issues, typos, or confusing sections? Fix anything clear-cut directly in the files. CONDITION: Before updating ANY stats (tool counts, category counts, install numbers), verify the actual numbers against the production DB or known current figures (8,000+ tools, 25+ categories, 10,000+ PyPI installs). Do NOT guess or leave old numbers.
 
 ## S&QA Conditions
-- MCP department must NOT attempt a PyPI publish or deploy — only edit the file and note that /publish-mcp is needed afterward
-- Content department should verify any stat claims (tool counts, install numbers) against what's in the codebase rather than hardcoding new numbers they can't verify
+- Backend: use absolute paths for any SSH commands — 'cd' is a shell builtin and will fail in flyctl ssh
+- Backend: throttle API requests slightly to avoid 429 rate limiting from rapid-fire queries
+- Content: verify all stats against production DB before updating copy — stale stats have bitten us multiple times
+- DevOps: new smoke tests must be read-only — no POST/PUT/DELETE against production endpoints
 
 ## Risk Flags
-- Gotcha: stats in copy go stale fast — pricing page may claim outdated tool counts. Content dept should flag any numbers they can't verify rather than guessing new ones
-- Gotcha: MCP changes need PyPI publish to take effect — without it, edits are dead code until someone remembers to publish
+- Backend hitting production API 15+ times in quick succession could trigger rate limiting (known gotcha)
+- Content editing f-string templates — a stray quote or bracket breaks the whole page, so test locally or at least eyeball the diff carefully

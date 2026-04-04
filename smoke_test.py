@@ -85,6 +85,21 @@ TESTS = [
     ("POST", "/api/agent/integration", 401, "Agent integration auth guard"),
     # Analyze
     ("GET", "/analyze", 200, "Stack Health Check"),
+
+    # Compare endpoint (critical for user feature)
+    ("GET", "/compare/next-auth-vs-authgate", 200, "Compare tools"),
+
+    # Market gaps page (data-driven discovery)
+    ("GET", "/gaps", 200, "Market gaps"),
+
+    # Leaderboard (ranking + stats)
+    ("GET", "/leaderboard", 200, "Maker leaderboard"),
+
+    # API pulse endpoint (real-time data)
+    ("GET", "/api/pulse", 200, "API pulse"),
+
+    # Trending stacks (ranking algorithm)
+    ("GET", "/trending-stacks", 200, "Trending stacks"),
 ]
 
 # Content checks: path -> (substring or callable, description)
@@ -95,6 +110,11 @@ CONTENT_CHECKS = {
     "/api/tools/search?q=email": (lambda body: "tools" in json.loads(body), "JSON has 'tools' key"),
     "/best": ("Best Developer Tools", "contains 'Best Developer Tools'"),
     "/tool/simple-analytics": ("Confirmed Works With", "has compat section"),
+    "/compare/next-auth-vs-authgate": ("Compare", "compare page shows comparison"),
+    "/gaps": ("Gap", "gaps page shows market gaps data"),
+    "/leaderboard": ("Maker", "leaderboard has maker data"),
+    "/api/pulse": (lambda body: "html" in json.loads(body), "pulse API returns JSON with 'html' key"),
+    "/trending-stacks": ("Stack", "trending page shows stack content"),
 }
 
 

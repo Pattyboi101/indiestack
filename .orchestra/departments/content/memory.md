@@ -119,6 +119,38 @@ Files reviewed: pricing.py, submit.py
 ### Gotcha learned:
 - Submit page "note from us" was a long-standing broken promise. The page title ("Make Your Creation Discoverable by AI") is intentionally broad but body copy must stay in scope.
 
+## updates.py + what_is.py Audit (2026-04-04)
+Files reviewed: updates.py, what_is.py
+Files changed: what_is.py only
+
+### updates.py — all clear
+- Copy is clean. Empty state link `/makers` is valid (maker.py registers `@router.get("/makers", ...)`).
+- Meta desc: "Latest updates from indie makers on IndieStack." — functional, 54 chars.
+- No stale stats (no hardcoded numbers).
+
+### what_is.py — 3 issues fixed
+1. **Removed unused `from html import escape` import** — escape is never called anywhere in the file.
+2. **"What Belongs Here" section overhauled** — critical accuracy fix:
+   - Old heading: "If someone made it, it belongs here" → **New: "Developer tools, every shape and size"**
+   - Old copy: "The only constraint is 'indie-built.' Not 'developer tool.'" — directly contradicted vision.md
+   - New copy: "If developers use it to build, it belongs here — from auth libraries and search engines to payments, databases, and developer education."
+   - Replaced 3 example cards that showed excluded categories:
+     - Games/Veloren → **Databases/PocketBase**
+     - Newsletters/Buttondown → **Email API/Resend**
+     - Creative Tools/Penpot → **Search/Meilisearch**
+3. **"Just ask" example updated** — "What indie games are built in Rust?" (wrong scope) → "What's a good open-source search engine for Next.js?"
+
+### what_is.py is mostly good
+- All stats (tool_count, cat_count, code_count, saas_count, ai_recs) are dynamic from DB — safe.
+- JSON-LD valid, uses dynamic tool_count.
+- Meta description uses f-string with live tool_count — under 160 chars.
+- "VS Code Copilot" in "Works everywhere" card — MCP is supported, claim is accurate.
+- DB: 8,195 tools, 40 categories (queried 2026-04-04).
+
+### Pattern learned:
+- what_is.py used to pitch IndieStack as "anything indie" (not just dev tools). This theme may recur — always cross-check copy scope against vision.md (dev tools only).
+- Same issue was found in submit.py previously (fixed 2026-04-04). Pattern: enthusiastic broad copy creeps in, needs pruning.
+
 ## Patterns / Notes
 - DB is at /data/indiestack.db on production — query via fly ssh console
 - Migration data lives in `migration_paths` table: from_package, to_package, repo columns
