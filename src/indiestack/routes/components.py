@@ -757,7 +757,7 @@ def footer_html() -> str:
           <!-- Brand -->
           <div>
             <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;">IndieStack</div>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">The discovery layer between AI coding agents and 8,000+ developer tools.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">The discovery layer between AI coding agents and 6,500+ developer tools.</p>
           </div>
           <!-- Product -->
           <div>
@@ -1528,7 +1528,7 @@ def theme_js() -> str:
 # ── Page Shell ────────────────────────────────────────────────────────────
 
 def page_shell(title: str, body: str, *, description: str = "", extra_head: str = "", user=None, og_image: str = f"{BASE_URL}/logo.png", canonical: str = "") -> str:
-    desc = escape(description) if description else "Discover 8,000+ developer tools for AI coding agents. Find indie alternatives for auth, payments, analytics, email, and more — curated for developers."
+    desc = escape(description) if description else "Discover 6,500+ developer tools for AI coding agents. Find indie alternatives for auth, payments, analytics, email, and more — curated for developers."
     canonical_tag = f'\n    <link rel="canonical" href="{BASE_URL}{escape(canonical)}">' if canonical else ""
     # Strip trailing " | IndieStack" or " — IndieStack" to avoid duplication
     clean_title = title

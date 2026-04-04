@@ -13,7 +13,7 @@ CHANGELOG = [
             ("feat", "MCP v1.15.0 — new get_migration_data tool: see which packages devs are migrating from/to, sourced from real GitHub diffs"),
             ("feat", "MCP v1.14.0 — 22 tools, improved descriptions, ~300 tokens saved per tool call"),
             ("feat", "Claim-to-Pro flow — smoother path from claiming a listing to Maker Pro"),
-            ("feat", "Sitemap now indexes all 8,000+ approved tools (was hard-capped at 5,000 — fixed)"),
+            ("feat", "Sitemap now indexes all 6,500+ approved tools (was hard-capped at 5,000 — fixed)"),
             ("fix", "Maker Pro pricing corrected to $19/mo sitewide — $49 crept in from old planning docs"),
             ("fix", "20 tool recategorisations for search accuracy"),
             ("improve", "Search quality — stronger category weighting, 20+ new query synonyms, stop word tuning"),

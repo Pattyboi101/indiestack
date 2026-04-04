@@ -142,7 +142,7 @@ async def search(request: Request):
             {no_results_msg}
         </div>
         """
-        return HTMLResponse(page_shell(title="Search", body=body + email_sticky_bar(), user=user, description="Search 8,000+ developer tools. Find the right indie tool for auth, payments, analytics, databases, and more."))
+        return HTMLResponse(page_shell(title="Search", body=body + email_sticky_bar(), user=user, description="Search 6,500+ developer tools. Find the right indie tool for auth, payments, analytics, databases, and more."))
 
     # Inject trust badge data (success rates from agent outcome reports)
     try:
@@ -196,5 +196,5 @@ async def search(request: Request):
         {pagination}
     </div>
     """
-    desc = f"Search results for '{safe_query}' — {total} developer tools found on IndieStack." if query else "Search 8,000+ developer tools. Find the right indie tool for auth, payments, analytics, databases, and more."
+    desc = f"Search results for '{safe_query}' — {total} developer tools found on IndieStack." if query else "Search 6,500+ developer tools. Find the right indie tool for auth, payments, analytics, databases, and more."
     return HTMLResponse(page_shell(title=f"Search: {safe_query}" if query else "Search", body=body + email_sticky_bar(), user=user, description=desc))

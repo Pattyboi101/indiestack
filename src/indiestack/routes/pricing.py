@@ -111,7 +111,7 @@ async def pricing_page(request: Request):
       Try it now
     </h2>
     <p style="color:var(--ink-muted);font-size:var(--text-sm);margin:0 0 16px;">
-      One command. Your AI agent searches 8,000+ developer tools before writing code from scratch.
+      One command. Your AI agent searches 6,500+ developer tools before writing code from scratch.
     </p>
     <pre style="background:var(--terracotta);color:var(--slate);padding:14px;border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);margin:0 0 16px;text-align:left;overflow-x:auto;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</pre>
     <a href="/analyze" class="btn-secondary" style="padding:10px 24px;text-decoration:none;font-size:14px;">

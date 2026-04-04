@@ -623,7 +623,7 @@ async def landing(request: Request):
     )
 
     response = HTMLResponse(page_shell("The discovery layer for AI coding agents", body,
-                                   description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if a developer tool already exists — 8,000+ tools indexed.",
+                                   description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if a developer tool already exists — 6,500+ tools indexed.",
                                    user=request.state.user, canonical="/", extra_head=extra_head,
                                    og_image=f"{BASE_URL}/logo.png"))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"
