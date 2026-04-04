@@ -900,6 +900,12 @@ async def robots():
         "Allow: /",
         "Disallow: /admin",
         "Disallow: /dashboard",
+        "Disallow: /auth/",
+        "Disallow: /login",
+        "Disallow: /logout",
+        "Disallow: /signup",
+        "Disallow: /reset-password",
+        "Disallow: /verify-email",
         f"Sitemap: {BASE_URL}/sitemap.xml",
         f"# LLMs: {BASE_URL}/llms.txt",
         f"# LLMs Full: {BASE_URL}/llms-full.txt",
@@ -1102,6 +1108,18 @@ async def sitemap(request: Request):
         (f"{BASE_URL}/migrations", "daily", "0.8", today),
         (f"{BASE_URL}/data", "daily", "0.8", today),
         (f"{BASE_URL}/analyze", "weekly", "0.7", None),
+        (f"{BASE_URL}/audit", "weekly", "0.7", None),
+        (f"{BASE_URL}/plugins", "monthly", "0.6", None),
+        (f"{BASE_URL}/setup", "monthly", "0.6", None),
+        (f"{BASE_URL}/trending-stacks", "daily", "0.7", today),
+        (f"{BASE_URL}/stacks/generator", "weekly", "0.7", None),
+        (f"{BASE_URL}/stacks/community", "weekly", "0.7", None),
+        (f"{BASE_URL}/leaderboard", "weekly", "0.6", None),
+        (f"{BASE_URL}/demand", "weekly", "0.7", None),
+        (f"{BASE_URL}/launch", "monthly", "0.6", None),
+        (f"{BASE_URL}/built-this", "monthly", "0.5", None),
+        (f"{BASE_URL}/guidelines", "monthly", "0.5", None),
+        (f"{BASE_URL}/api", "monthly", "0.6", None),
     ]
     for path in ["/about", "/terms", "/privacy", "/faq"]:
         urls.append((f"{BASE_URL}{path}", "monthly", "0.5", None))
@@ -1139,13 +1157,13 @@ async def sitemap(request: Request):
     urls.append((f"{BASE_URL}/best", "weekly", "0.8", None))
     for c in cats:
         urls.append((f"{BASE_URL}/best/{c['slug']}", "weekly", "0.7", None))
-    cursor = await d.execute("SELECT slug, created_at as lastmod FROM tools WHERE status = 'approved' LIMIT 5000")
+    cursor = await d.execute("SELECT slug, created_at as lastmod FROM tools WHERE status = 'approved'")
     tools = await cursor.fetchall()
     for t in tools:
         lm = t['lastmod'][:10] if t.get('lastmod') else None
         urls.append((f"{BASE_URL}/tool/{t['slug']}", "weekly", "0.7", lm))
     # Maker profiles
-    cursor2 = await d.execute("SELECT slug FROM makers LIMIT 5000")
+    cursor2 = await d.execute("SELECT slug FROM makers")
     makers = await cursor2.fetchall()
     for m in makers:
         urls.append((f"{BASE_URL}/maker/{m['slug']}", "weekly", "0.6", None))

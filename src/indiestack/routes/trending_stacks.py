@@ -1,5 +1,6 @@
 """Trending Stacks — live data from dependency analyses."""
 
+import datetime
 from html import escape
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
@@ -64,39 +65,74 @@ async def trending_stacks_page(request: Request):
 
     top_tools = sorted(tool_freq.items(), key=lambda x: x[1], reverse=True)[:15]
 
-    # Get names for top tools
+    # Get names for top tools — track which slugs exist in our DB
     tool_names = {}
+    tool_in_db = set()
     for slug, _ in top_tools:
         c = await d.execute("SELECT name FROM tools WHERE slug = ? LIMIT 1", (slug,))
         row = await c.fetchone()
-        name = row["name"] if row else slug.replace("npm-", "").replace("pypi-", "")
-        tool_names[slug] = name
+        if row:
+            tool_names[slug] = row["name"]
+            tool_in_db.add(slug)
+        else:
+            tool_names[slug] = slug.replace("npm-", "").replace("pypi-", "")
 
-    # Build pairs table
-    pairs_html = ""
-    for p in top_pairs:
-        name_a = (p["name_a"] if isinstance(p, dict) else p[3]) or p["tool_a_slug"].replace("npm-", "")
-        name_b = (p["name_b"] if isinstance(p, dict) else p[4]) or p["tool_b_slug"].replace("npm-", "")
-        count = p["cooccurrence_count"] if isinstance(p, dict) else p[2]
-        pairs_html += f'''<tr>
-            <td style="padding:10px 16px;font-family:var(--font-mono);font-size:var(--text-sm);">{escape(name_a)}</td>
-            <td style="padding:10px 8px;color:var(--ink-muted);">+</td>
-            <td style="padding:10px 16px;font-family:var(--font-mono);font-size:var(--text-sm);">{escape(name_b)}</td>
-            <td style="padding:10px 16px;text-align:right;color:var(--ink-muted);font-size:var(--text-sm);">{count}x</td>
-        </tr>'''
+    as_of = datetime.date.today().strftime("%-d %B %Y")
 
-    # Build top tools list
+    # Build top tools bar chart
     tools_html = ""
     for slug, freq in top_tools:
         name = tool_names.get(slug, slug)
         bar_width = min(100, int((freq / top_tools[0][1]) * 100))
+        escaped_name = escape(name)
+        escaped_slug = escape(slug)
+        if slug in tool_in_db:
+            name_cell = f'<a href="/tools/{escaped_slug}" style="font-family:var(--font-mono);font-size:var(--text-sm);min-width:140px;color:var(--ink);text-decoration:none;" aria-label="View {escaped_name} on IndieStack">{escaped_name}</a>'
+        else:
+            name_cell = f'<span style="font-family:var(--font-mono);font-size:var(--text-sm);min-width:140px;color:var(--ink);">{escaped_name}</span>'
         tools_html += f'''<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-            <span style="font-family:var(--font-mono);font-size:var(--text-sm);min-width:140px;color:var(--ink);">{escape(name)}</span>
+            {name_cell}
             <div style="flex:1;height:20px;background:var(--cream-dark);border-radius:4px;overflow:hidden;">
                 <div style="width:{bar_width}%;height:100%;background:var(--accent);border-radius:4px;"></div>
             </div>
             <span style="font-size:var(--text-xs);color:var(--ink-muted);min-width:40px;text-align:right;">{freq}</span>
         </div>'''
+
+    # Build pairs table
+    pairs_html = ""
+    for i, p in enumerate(top_pairs):
+        raw_name_a = p["name_a"] if isinstance(p, dict) else p[3]
+        raw_name_b = p["name_b"] if isinstance(p, dict) else p[4]
+        slug_a = p["tool_a_slug"] if isinstance(p, dict) else p[0]
+        slug_b = p["tool_b_slug"] if isinstance(p, dict) else p[1]
+        count = p["cooccurrence_count"] if isinstance(p, dict) else p[2]
+
+        name_a = raw_name_a or slug_a.replace("npm-", "").replace("pypi-", "")
+        name_b = raw_name_b or slug_b.replace("npm-", "").replace("pypi-", "")
+
+        escaped_name_a = escape(name_a)
+        escaped_name_b = escape(name_b)
+        escaped_slug_a = escape(slug_a)
+        escaped_slug_b = escape(slug_b)
+
+        # Only link if the tool exists in our DB (JOIN succeeded)
+        if raw_name_a:
+            cell_a = f'<a href="/tools/{escaped_slug_a}" style="color:var(--ink);text-decoration:none;font-weight:500;" aria-label="View {escaped_name_a}">{escaped_name_a}</a>'
+        else:
+            cell_a = escaped_name_a
+
+        if raw_name_b:
+            cell_b = f'<a href="/tools/{escaped_slug_b}" style="color:var(--ink);text-decoration:none;font-weight:500;" aria-label="View {escaped_name_b}">{escaped_name_b}</a>'
+        else:
+            cell_b = escaped_name_b
+
+        row_border = "border-top:1px solid var(--border);" if i > 0 else ""
+        pairs_html += f'''<tr style="{row_border}" class="hover-highlight">
+            <td style="padding:12px 16px;font-family:var(--font-mono);font-size:var(--text-sm);">{cell_a}</td>
+            <td style="padding:12px 8px;color:var(--ink-muted);font-size:var(--text-lg);">+</td>
+            <td style="padding:12px 16px;font-family:var(--font-mono);font-size:var(--text-sm);">{cell_b}</td>
+            <td style="padding:12px 16px;text-align:right;color:var(--ink-muted);font-size:var(--text-sm);white-space:nowrap;">{count:,}&times;</td>
+        </tr>'''
 
     body = f'''
     <div style="max-width:800px;margin:0 auto;padding:0 16px;">
@@ -105,10 +141,10 @@ async def trending_stacks_page(request: Request):
                 Trending Stacks
             </h1>
             <p style="color:var(--ink-muted);font-size:var(--text-md);margin:0 0 4px;">
-                Live data from {total_analyses} dependency analyses across real-world projects.
+                All-time most common tool combinations from {total_analyses:,} real dependency files.
             </p>
             <p style="color:var(--ink-light);font-size:var(--text-sm);margin:0;">
-                {total_pairs:,} compatibility pairs tracked
+                {total_pairs:,} compatibility pairs tracked &middot; as of {as_of}
             </p>
         </div>
 
@@ -151,6 +187,6 @@ async def trending_stacks_page(request: Request):
     return HTMLResponse(page_shell(
         "Trending Stacks | IndieStack",
         body,
-        description=f"Live dependency intelligence from {total_analyses} project analyses. See which tools developers are using together.",
+        description=f"All-time most common tool combinations from {total_analyses:,} real dependency files. {total_pairs:,} compatibility pairs tracked.",
         user=user,
     ))
