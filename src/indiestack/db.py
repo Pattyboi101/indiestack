@@ -2378,7 +2378,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "openai": "ai",
     "langchain": "ai",
     "agent": "ai",
-    "mcp": "ai",
+    "mcp": "mcp",       # "mcp server", "mcp tool" → "MCP Servers" category (LIKE '%mcp%')
     "rag": "ai",
     "embedding": "ai",
     "embeddings": "ai",
