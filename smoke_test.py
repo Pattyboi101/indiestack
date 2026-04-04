@@ -67,6 +67,7 @@ TESTS = [
 
     # SVG endpoints (200)
     ("GET", "/api/badge/simple-analytics.svg", 200, "Badge SVG"),
+    ("GET", "/api/badge/ai-recs/simple-analytics.svg", 200, "AI recs badge SVG"),
     ("GET", "/api/milestone/simple-analytics.svg?type=first-tool", 200, "Milestone SVG"),
 
     # Sample content pages (200) - using known slugs
