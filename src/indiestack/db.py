@@ -2452,18 +2452,39 @@ _CAT_SYNONYMS: dict[str, str] = {
     "elasticsearch": "search",
     "typesense": "search",
     "meilisearch": "search",
+    # Search query modifiers — "semantic search", "fuzzy search", "faceted search"
+    # all have "search" stripped as stop word; the remaining term must still map to Search category
+    "semantic": "search",
+    "fuzzy": "search",
+    "faceted": "search",
+    "indexing": "search",
+    "fulltext": "search",
     # CMS
     "contentful": "cms",
     "strapi": "cms",
     "sanity": "cms",
     "directus": "cms",
-    # Analytics
+    # Analytics — "metrics dashboard", "metrics tracking" etc.
     "mixpanel": "analytics",
     "amplitude": "analytics",
     "segment": "analytics",
     "posthog": "analytics",
     "plausible": "analytics",
     "fathom": "analytics",
+    "metrics": "analytics",
+    "dashboard": "analytics",
+    "dashboards": "analytics",
+    # DevOps/Infrastructure — docker/k8s queries get category boost
+    "docker": "devops",
+    "kubernetes": "devops",
+    "k8s": "devops",
+    "container": "devops",
+    "containers": "devops",
+    "vpc": "devops",
+    # Monitoring extras — crash reporting, exception tracking
+    "crash": "monitoring",
+    "exception": "monitoring",
+    "exceptions": "monitoring",
     # Vector databases
     "qdrant": "database",
     "weaviate": "database",
