@@ -41,7 +41,7 @@ async def category_page(request: Request, slug: str, page: int = 1):
     icon = category_icon(str(category.get('slug', '')), size=48)
     name = str(category['name'])
     name_esc = escape(name)
-    desc = f"Discover indie {name} creations built by independent makers and small teams. Open-source, bootstrapped alternatives."
+    desc = f"Discover {total}+ indie {name} tools built by independent makers. Open-source and bootstrapped alternatives with install commands and compatibility data."
 
     if tools:
         # Inject trust badge data
@@ -125,5 +125,5 @@ async def category_page(request: Request, slug: str, page: int = 1):
     }
     extra_head = f'<script type="application/ld+json">{json.dumps(json_ld_data, ensure_ascii=False)}</script>'
 
-    title = f"{name} Tools — Indie Software Directory"
+    title = f"Best Indie {name} Tools | IndieStack"
     return HTMLResponse(page_shell(title, body, description=desc, user=request.state.user, extra_head=extra_head, canonical=f"/category/{slug}"))
