@@ -2296,6 +2296,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "newsletter": "email",
     "drip": "email",
     "transactional": "email",
+    "sending": "email",
     "sendgrid": "email",
     "resend": "email",
     "mailgun": "email",
