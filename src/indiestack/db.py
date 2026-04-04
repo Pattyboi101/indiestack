@@ -2396,11 +2396,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "analytics": "analytics",
     "database": "database",
     "storage": "file",
-    # "search" is stripped by _FTS_STOP_WORDS before synonym lookup — use specific terms instead
-    # "search" → covered by "algolia", "elasticsearch", etc. in named-tool synonyms below
+    # "search" is now a valid FTS term (removed from _FTS_STOP_WORDS).
+    # The category "Search Engine" contains "search" so LIKE matching works directly.
+    "search": "search",
     "notification": "notifications",
     "notifications": "notifications",
-    "chat": "chat",
+    # "chat" has no dedicated category — map to "customer" for Customer Support boost
+    # (live chat tools like Crisp, Tawk.to, Chatwoot live there)
+    "chat": "customer",
     "cms": "cms",
     "testing": "testing",
     "test": "testing",
@@ -2417,6 +2420,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "storybook": "testing",     # component testing / UI development
     "ci": "devops",
     "cicd": "devops",
+    "deploy": "devops",
+    "deployment": "devops",
+    "hosting": "devops",
+    "cache": "database",
+    "caching": "database",
+    "redis": "database",
     "form": "forms",
     "forms": "forms",
     "survey": "forms",
@@ -2614,7 +2623,7 @@ _FTS_STOP_WORDS = {
     'with', 'and', 'or', 'in', 'on', 'to', 'of', 'is', 'it', 'that',
     'integration', 'solution', 'alternative', 'tool', 'tools', 'library',
     'framework', 'platform', 'service', 'software', 'app', 'application',
-    'like', 'similar', 'recommend', 'suggestion', 'find', 'search', 'need',
+    'like', 'similar', 'recommend', 'suggestion', 'find', 'need',
     'want', 'looking', 'what', 'which', 'how', 'can', 'should', 'would',
     'use', 'using', 'build', 'building', 'add', 'adding', 'implement',
     'indie', 'developer', 'developers', 'project', 'projects',
@@ -2844,7 +2853,8 @@ async def search_tools(
         elif sort == "newest":
             return ("t.created_at DESC", [])
         # Blend FTS rank with engagement scoring
-        return (f"rank - ({_engagement_expr} / 50.0)", list(_engagement_params))
+        # Divisor 40 (vs 50) gives category/install signals more weight vs raw FTS rank.
+        return (f"rank - ({_engagement_expr} / 40.0)", list(_engagement_params))
 
     def _browse_order():
         if sort == "stars":
