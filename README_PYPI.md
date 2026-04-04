@@ -42,7 +42,7 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 8,000+ 
 
 "Indie" is the curation filter — tools built by independent developers and small teams. Focused, lean, maintained, honest pricing.
 
-### Tools (22)
+### Tools (23)
 
 | Tool | What it does |
 |------|-------------|
@@ -60,6 +60,7 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 8,000+ 
 | `browse_new_tools` | Recently added tools with pagination |
 | `list_tags` | All tags sorted by popularity |
 | `get_market_gaps` | Top unmet needs — what developers search for but can't find. Useful for tool makers deciding what to build. |
+| `get_migration_data` | Real migration momentum for any package — how many repos are adopting vs leaving, and what they're switching to/from |
 | `list_stacks` | Curated stacks for common use cases |
 | `analyze_dependencies` | Scan package.json/requirements.txt for better alternatives |
 | `evaluate_build_vs_buy` | Financial breakdown: build from scratch vs use what exists |

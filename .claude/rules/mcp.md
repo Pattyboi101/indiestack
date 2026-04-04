@@ -9,9 +9,9 @@ paths:
 # IndieStack — MCP Server
 
 ## Version & Distribution
-- Current version: v1.14.0 on PyPI + official MCP Registry
+- Current version: v1.15.0 on PyPI + official MCP Registry
 - Registry ID: `io.github.Pattyboi101/indiestack`, ~2,100 tokens footprint
-- 22 tools, 3 resources, 5 prompts
+- 23 tools, 3 resources, 5 prompts
 
 ## Architecture
 - MCP server calls production API — backend changes take effect on deploy, but `mcp_server.py` changes need PyPI publish
