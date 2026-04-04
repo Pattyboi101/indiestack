@@ -2354,6 +2354,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "langchain": "ai",
     "agent": "ai",
     "mcp": "ai",
+    "rag": "ai",
+    "embedding": "ai",
+    "embeddings": "ai",
+    # Vector databases (stored under database category)
+    "vector": "database",
     # Direct category name fragments (for non-first-position terms like "self hosted auth")
     "auth": "authentication",
     "authentication": "authentication",
@@ -2366,11 +2371,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "analytics": "analytics",
     "database": "database",
     "storage": "file",
-    "hosting": "hosting",
-    "deploy": "deployment",
-    "deployment": "deployment",
-    "cache": "caching",
-    "caching": "caching",
     "search": "search",
     "notification": "notifications",
     "notifications": "notifications",
@@ -2386,7 +2386,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "feature": "feature",
     "flags": "feature",
     "flag": "feature",
-    "logging": "monitoring",
     "error": "monitoring",
     "errors": "monitoring",
     "video": "media",
@@ -2465,6 +2464,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     "posthog": "analytics",
     "plausible": "analytics",
     "fathom": "analytics",
+    # Vector databases
+    "qdrant": "database",
+    "weaviate": "database",
+    "chroma": "database",
+    "pinecone": "database",
+    "milvus": "database",
+    # AI dev tools
+    "cursor": "ai",
+    "windsurf": "ai",
+    "copilot": "ai",
+    "linear": "project",
+    # Background job tools
+    "temporal": "background",
+    "trigger.dev": "background",
 }
 
 _FTS_STOP_WORDS = {
@@ -2504,6 +2517,7 @@ _FRAMEWORK_QUERY_TERMS: dict[str, str] = {
     "spring": "spring",
     "electron": "electron",
     "tauri": "tauri",
+    "nestjs": "nestjs", "nest": "nestjs",
     # Newer frameworks likely to appear in frameworks_tested
     "solid": "solid", "solidjs": "solid",
     "qwik": "qwik",
