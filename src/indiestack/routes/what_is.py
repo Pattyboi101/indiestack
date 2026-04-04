@@ -1,7 +1,7 @@
 """What is IndieStack — explains the discovery layer between AI coding agents and developer tools."""
 
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 
 from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell
@@ -324,3 +324,9 @@ async def what_is_page(request: Request):
         extra_head=json_ld,
         canonical="/what-is-indiestack",
     ))
+
+
+@router.get("/about", response_class=RedirectResponse)
+async def about_redirect():
+    """301 redirect /about → /what-is-indiestack (canonical about page)."""
+    return RedirectResponse(url="/what-is-indiestack", status_code=301)

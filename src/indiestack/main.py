@@ -1121,7 +1121,7 @@ async def sitemap(request: Request):
         (f"{BASE_URL}/guidelines", "monthly", "0.5", None),
         (f"{BASE_URL}/api", "monthly", "0.6", None),
     ]
-    for path in ["/about", "/terms", "/privacy", "/faq"]:
+    for path in ["/terms", "/privacy", "/faq"]:
         urls.append((f"{BASE_URL}{path}", "monthly", "0.5", None))
     urls.append((f"{BASE_URL}/blog", "weekly", "0.7", None))
     urls.append((f"{BASE_URL}/blog/stop-wasting-tokens", "monthly", "0.8", "2026-02-15"))
