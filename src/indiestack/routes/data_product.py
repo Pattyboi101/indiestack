@@ -60,8 +60,9 @@ async def data_product_page(request: Request):
                 Know where developers are<br>moving — before they do
             </h1>
             <p style="color:var(--ink-muted);font-size:var(--text-md);margin:0 0 32px;max-width:550px;margin-left:auto;margin-right:auto;line-height:1.6;">
-                Real migration data from {repos_fmt} GitHub repos. See which packages developers
-                are abandoning, what they're switching to, and which combinations actually work in production.
+                We scan GitHub commit history continuously — no surveys, no download counts.
+                See exactly which packages developers are dropping, what they&#39;re switching to,
+                and which tool combinations survive production. Ground truth from {repos_fmt} real repositories.
             </p>
             <a href="#pricing" class="btn-primary" style="padding:14px 32px;font-size:var(--text-md);text-decoration:none;">
                 Get API Access
@@ -74,6 +75,30 @@ async def data_product_page(request: Request):
             {stat_mig}
             {stat_paths}
             {stat_combos}
+        </div>
+
+        <!-- What is it -->
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;margin-bottom:48px;">
+            <h2 style="font-family:var(--font-display);font-size:var(--heading-sm);color:var(--ink);margin:0 0 12px;">What is Migration Intelligence?</h2>
+            <p style="color:var(--ink-muted);font-size:var(--text-sm);line-height:1.7;margin:0 0 20px;">
+                Package-level market research derived from actual code changes — not download counts, not surveys, not analyst estimates.
+                When a developer removes one package and adds another in the same commit, that&#39;s a migration event.
+                Across {migrations_fmt} of those events, a ground-truth picture of where the market is moving emerges.
+            </p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+                <div style="display:flex;gap:10px;align-items:flex-start;">
+                    <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--slate);background:rgba(100,116,139,0.12);padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;">01</span>
+                    <span style="font-size:var(--text-sm);color:var(--ink-light);line-height:1.5;">Monitor {repos_fmt} GitHub repos for changes to package.json and requirements.txt</span>
+                </div>
+                <div style="display:flex;gap:10px;align-items:flex-start;">
+                    <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--slate);background:rgba(100,116,139,0.12);padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;">02</span>
+                    <span style="font-size:var(--text-sm);color:var(--ink-light);line-height:1.5;">Record each package swap as a migration event with direction and confidence level</span>
+                </div>
+                <div style="display:flex;gap:10px;align-items:flex-start;">
+                    <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--slate);background:rgba(100,116,139,0.12);padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;">03</span>
+                    <span style="font-size:var(--text-sm);color:var(--ink-light);line-height:1.5;">Aggregate across {paths_fmt} unique migration paths to surface trends before they hit social media</span>
+                </div>
+            </div>
         </div>
 
         <!-- Use cases -->
@@ -122,8 +147,8 @@ async def data_product_page(request: Request):
 <span style="color:var(--ink-muted);">// What works with prisma in production?</span>
 <span style="color:var(--slate);">GET</span> /api/combos?package=prisma
 
-<span style="color:var(--ink-muted);">// CI outcomes for a specific manifest</span>
-<span style="color:var(--slate);">GET</span> /api/moat/stats</pre>
+<span style="color:var(--ink-muted);">// Full dataset summary and freshness info</span>
+<span style="color:var(--slate);">GET</span> /api/migrations/stats</pre>
             </div>
         </div>
 
@@ -151,7 +176,7 @@ async def data_product_page(request: Request):
 
                 <!-- Pro -->
                 <div style="background:var(--card-bg);border:2px solid var(--slate);border-radius:var(--radius-lg);padding:28px;position:relative;">
-                    <div style="position:absolute;top:-12px;right:20px;background:var(--slate);color:white;font-size:var(--text-xs);font-weight:600;padding:4px 12px;border-radius:12px;">POPULAR</div>
+                    <div style="position:absolute;top:-12px;right:20px;background:var(--slate);color:white;font-size:var(--text-xs);font-weight:600;padding:4px 12px;border-radius:12px;">RECOMMENDED</div>
                     <div style="font-family:var(--font-body);font-weight:600;font-size:var(--text-sm);color:var(--slate);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">Pro</div>
                     <div style="font-family:var(--font-display);font-size:var(--heading-md);color:var(--ink);margin-bottom:4px;">$299<span style="font-size:var(--text-sm);color:var(--ink-muted);font-family:var(--font-body);">/mo</span></div>
                     <div style="font-size:var(--text-xs);color:var(--ink-muted);margin-bottom:20px;">For tool maker marketing teams</div>
@@ -162,8 +187,8 @@ async def data_product_page(request: Request):
                         <li>&#10003; Repo-level detail</li>
                         <li>&#10003; Combo verification data</li>
                     </ul>
-                    <a href="mailto:pajebay1@gmail.com?subject=Migration%20Intelligence%20Pro" class="btn-primary" style="display:block;text-align:center;padding:10px;text-decoration:none;font-size:var(--text-sm);">
-                        Contact Us
+                    <a href="mailto:pajebay1@gmail.com?subject=Migration%20Intelligence%20Pro%20Access" class="btn-primary" style="display:block;text-align:center;padding:10px;text-decoration:none;font-size:var(--text-sm);">
+                        Request Access
                     </a>
                 </div>
 
@@ -196,7 +221,7 @@ async def data_product_page(request: Request):
     return HTMLResponse(page_shell(
         "Migration Intelligence API — IndieStack",
         body,
-        description="Real migration data from GitHub repos. See which packages developers are abandoning and what they're switching to. API access for tool makers.",
+        description="GitHub-sourced migration data for developer tool makers. Track which packages are being abandoned, what replaces them, and which combinations survive production.",
         canonical="/data",
         user=user,
     ))
