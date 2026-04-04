@@ -66,3 +66,17 @@ Result: I have enough to give a thorough audit. Here's what I found:
 
 ### /welcome route
 **Exists** — `dashboard.py` line 2298. It's a thin redirect: `GET /welcome → 30
+
+## 2026-04-04 15:17
+Task: FULL dashboard claim-to-Pro audit — you own this entirely, both logic and UI. Read src/indiestack/routes/dashboard.py end-to-end. Check: (1) After a user claims a tool, what state/data is available? (2) Does the claimed-tool section show a visible Maker Pro upgrade CTA ($49/mo)? (3) Is there a post-claim redirect or prompt nudging upgrade? (4) If the flow is broken, missing, or visually weak — implement/fix it. This is the revenue path from claimed tools to paid subscriptions, so make the CTA prominent but not aggressive. Do NOT gate features behind payment — just nudge (vision.md: never degrade the free experience).
+Result: Done. Here's the summary:
+
+```json
+{
+  "status": "done",
+  "files_changed": [
+    "src/indiestack/main.py",
+    "src/indiestack/routes/dashboard.py",
+    "src/indiestack/routes/tool.py"
+  ],
+  "summar

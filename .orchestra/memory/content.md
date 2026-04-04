@@ -23,3 +23,14 @@ Result: All clear. Here's what I found:
 
 **What changed in the last 3 commits:**
 - `components.py` — CSS-only changes: touch tar
+
+## 2026-04-04 15:17
+Task: SEO/meta tag audit for landing page, explore page, and tool detail page. Check: OG tags (og:title, og:description, og:image, og:url), Twitter card tags, title tag uniqueness (no duplicates), meta description quality and length (150-160 chars), structured data/JSON-LD presence. Fix anything obviously missing or thin. Files: src/indiestack/routes/landing.py, explore.py, tool.py (and components.py for shared shell).
+Result: ```json
+{
+  "status": "done",
+  "files_changed": [
+    "src/indiestack/routes/components.py",
+    "src/indiestack/routes/landing.py",
+    "src/indiestack/routes/explore.py",
+    "src/indiestack/routes

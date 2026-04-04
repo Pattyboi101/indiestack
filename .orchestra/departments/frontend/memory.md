@@ -79,3 +79,30 @@ _Focus on: file locations, patterns, gotchas, past decisions, domain knowledge._
 - Generates markdown report to /tmp/synthetic_user_report.md
 - All production tests passing (29/30 checks as of 2026-03-31 12:27:20)
 
+## 2026-04-04
+
+### dashboard.py — claim-to-Pro flow audit
+- `has_claimed_tools` flag (line ~107): `SELECT COUNT(*) FROM tools WHERE maker_id=? AND claimed_at IS NOT NULL AND status='approved'`
+- `upgrade_html` (line ~165): shows when `not is_pro and has_claimed_tools` — button in header area
+- `pro_banner` (line ~98): shows when `not is_pro and maker_id` — thin strip at top for ALL non-Pro makers
+- `just_claimed_banner` (added): shows when `?just_claimed=1` param — navy gradient celebration card with Pro CTA
+- `pro_nudge_card` (added): shows when `not is_pro and has_claimed_tools and not just_claimed_param` — lighter border card below quality score
+
+### main.py — post-claim redirect
+- `/api/claim/verify/{token}` endpoint (line ~3552) was redirecting to `/tool/{slug}?claimed=1`
+- Changed to redirect to `/dashboard?just_claimed=1&tool={slug}` so user lands on analytics + Pro CTA
+- The `?claimed=1` banner in tool.py is now fallback-only (admin-approval path still uses `?claim_requested=1`)
+
+### JS gotcha: multiple startProCheckout() definitions
+- dashboard.py had duplicate function definitions on the same page
+- Fixed: `just_claimed_banner` uses `window.startProCheckout = async function()` (highest priority, defines it)
+- `upgrade_html` uses `if (typeof startProCheckout === "undefined")` guard
+- `pro_nudge_card` uses the same typeof guard
+- Pattern: use `window.X = function()` for the "primary" definition, typeof guard for secondaries
+
+### Vision constraints for revenue nudges
+- Never gate features behind payment — free analytics always visible
+- Nudge copy should be specific about what Pro adds ("search query breakdown", "daily digest") not vague
+- "No contract · Cancel any time" below CTA buttons removes friction
+- $49/mo confirmed across vision.md AND pricing.py — stripe.md "$19/mo" appears outdated
+

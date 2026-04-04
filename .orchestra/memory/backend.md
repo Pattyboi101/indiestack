@@ -84,3 +84,17 @@ Result: All done. Here's the summary:
   "status": "done",
   "files_changed": ["production DB: /data/indiestack.db"],
   "summary": "Fixed 3 search quality issues. (1) Logto 'email' — removed 'email'
+
+## 2026-04-04 15:17
+Task: Data quality pass ONLY. Run queries against the LOCAL database to find: (A) top 20 approved tools with zero tags — suggest and apply appropriate tags based on name/description/category, (B) tools with obviously wrong categories — fix the most egregious mismatches. IMPORTANT: Do NOT use LIKE '%keyword%' for category matching — it catches substrings (gotcha). Use explicit slug lists or exact word matching. After all local DB changes, rebuild FTS: INSERT INTO tools_fts(tools_fts) VALUES('rebuild'). Note: these are LOCAL changes only — they'll need a separate production data fix later via SSH with absolute paths.
+Result: Done. Here's the summary:
+
+**Local DB: `/tmp/indiestack-local.db`** (based on today's backup)
+
+---
+
+**A — Tags applied (18 tools, was 5333 zero-tag → now 5315):**
+
+| Tool | Tags added |
+|---|---|
+| np
