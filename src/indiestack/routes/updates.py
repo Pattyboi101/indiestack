@@ -35,4 +35,4 @@ async def updates_feed(request: Request):
         {cards}
     </div>
     """
-    return HTMLResponse(page_shell("Maker Updates", body, description="Latest updates from indie makers on IndieStack.", user=request.state.user))
+    return HTMLResponse(page_shell("Maker Updates", body, description="See what indie makers are shipping — changelogs, launches, and updates from the IndieStack community. Follow the tools you care about as they evolve.", user=request.state.user, canonical="/updates"))

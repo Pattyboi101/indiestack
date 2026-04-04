@@ -342,7 +342,7 @@ async def explore(request: Request):
     </div>
     '''
 
-    desc = "Browse and filter 8,000+ indie developer tools by category, tags, verification status, and price. Find the perfect auth, payments, or analytics alternative."
+    desc = "Browse and filter 8,000+ developer tools by category, tag, type, and compatibility. Find the right auth, payments, analytics, or email tool for your stack."
     explore_ld = json.dumps({
         "@context": "https://schema.org",
         "@type": "CollectionPage",

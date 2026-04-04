@@ -2313,8 +2313,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Monitoring synonyms
     "uptime": "monitoring",
     "alerting": "monitoring",
-    "logging": "monitoring",
-    "logs": "monitoring",
+    # "logging"/"logs" → "logging" matches "Logging" category (not "Monitoring & Uptime")
+    # Logging is a separate category with tools like Fluentd, Logrus, lnav
+    "logging": "logging",
+    "logs": "logging",
     "observability": "monitoring",
     "tracing": "monitoring",
     "apm": "monitoring",
