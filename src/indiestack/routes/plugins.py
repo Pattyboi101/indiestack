@@ -127,4 +127,5 @@ async def plugins_page(request: Request, type: str = "", platform: str = ""):
         body=body,
         description="Discover MCP servers, Claude Code plugins, Cursor extensions, and AI skills. Install in one command.",
         user=getattr(request.state, 'user', None),
+        canonical="/plugins",
     )

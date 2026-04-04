@@ -7,6 +7,28 @@ router = APIRouter()
 # Add new entries at the top. Each entry is one ship day.
 CHANGELOG = [
     {
+        "date": "2026-04-04",
+        "title": "MCP v1.15.0, Search Quality & Sitemap Fix",
+        "items": [
+            ("feat", "MCP v1.15.0 — new get_migration_data tool: see which packages devs are migrating from/to, sourced from real GitHub diffs"),
+            ("feat", "MCP v1.14.0 — 22 tools, improved descriptions, ~300 tokens saved per tool call"),
+            ("feat", "Claim-to-Pro flow — smoother path from claiming a listing to Maker Pro"),
+            ("feat", "Sitemap now indexes all 8,000+ approved tools (was hard-capped at 5,000 — fixed)"),
+            ("fix", "Maker Pro pricing corrected to $19/mo sitewide — $49 crept in from old planning docs"),
+            ("fix", "20 tool recategorisations for search accuracy"),
+            ("improve", "Search quality — stronger category weighting, 20+ new query synonyms, stop word tuning"),
+            ("improve", "SEO pass — canonical URLs, meta descriptions, OG tags across all main pages"),
+        ],
+    },
+    {
+        "date": "2026-04-03",
+        "title": "AI Recs Badge",
+        "items": [
+            ("feat", "AI Recs badge — tool owners can embed their IndieStack recommendation count on their GitHub README"),
+            ("feat", "Outreach table now shows AI rec count per tool, sorted by MCP view count"),
+        ],
+    },
+    {
         "date": "2026-03-13",
         "title": "MCP v1.4.0 + CLI + Pro Features Live",
         "items": [
@@ -125,4 +147,4 @@ async def changelog_page(request: Request):
         {entries_html}
     </main>'''
 
-    return page_shell("Changelog — IndieStack", body, description="What we shipped and when. IndieStack's build-in-public changelog.", user=user)
+    return page_shell("Changelog — IndieStack", body, description="What we shipped and when. IndieStack's build-in-public changelog.", user=user, canonical="/changelog")
