@@ -61,3 +61,39 @@ _Focus on: file locations, patterns, gotchas, past decisions, domain knowledge._
 - Smithery blocks automated checks (403/429). Must verify listing manually in browser.
 - mcp.run redirects to turbomcp.ai (enterprise gateway), not a public listing directory
 
+---
+
+## Post-FTS-Rebuild Search Audit (2026-04-04)
+
+### Key Findings
+
+**Root cause of "testing" misfire (PostHog #1):**
+PostHog is BOTH in Analytics & Metrics AND Testing Tools category. The Testing Tools category
+membership gives it the 180-point boost for "testing" query. Meanwhile vitest/jest are in
+"Developer Tools" only → no boost → can't beat PostHog. Fix: remove PostHog/flagsmith/go-feature-flag
+from Testing Tools; add vitest/jest/pypi-pytest to Testing Tools.
+
+**Root cause of "email" misfire (Logto #1):**  
+Logto's FTS-indexed description contains heavy "email" mentions (email auth, email verification).
+Its bm25 rank for "email" is stronger than email-specific tools, even with the category boost
+those tools receive. Harder to fix — needs description cleaning or category-mismatch penalty.
+
+**Good queries (no action needed):** auth, analytics, database (top 3)
+
+**Category data issues to flag to Backend:**
+- PostHog: remove from Testing Tools
+- flagsmith, go-feature-flag-1: remove from Testing Tools  
+- vitest, jest: add to Testing Tools
+- pypi-pytest: has NO categories at all — add to Testing Tools
+- matomo: wrong category (SEO Tools → Analytics & Metrics)
+- swetrix: in Monitoring & Uptime but is analytics
+
+**Data quality issues for Backend:**
+- killbill + kill-bill: duplicates (both approved)
+- btcpay-server + btcpayserver: duplicates (both approved)
+- 16/20 ORM tools have no install_command (-40pts each in scoring)
+- email-marketing-bible: likely a prompt, not a dev tool — should be removed
+
+**Production DB path:** `/data/indiestack.db` (NOT /app/data/)
+**SSH inline python:** Use `-C 'python3 -c "..."'` with proper quoting
+

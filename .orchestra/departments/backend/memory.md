@@ -77,3 +77,11 @@ _Focus on: file locations, patterns, gotchas, past decisions, domain knowledge._
 - Argument objects: `type: "named"` (needs `name` field) or `type: "positional"`. Use `value` for hardcoded values.
 - Current MCP version: 1.11.1 (matches pyproject.toml)
 
+## 2026-04-04 — Search quality fixes
+- **Logto 'email' bug**: Logto had "email" in its tags (`authentication,authorization,email,identity,jwt`). This caused it to FTS-match "email" queries and show up #3. Fix: removed "email" from tags → now `authentication,authorization,identity,jwt,oidc,sso`.
+- **laravel-stripe-webhooks 'payments' bug**: It was in the Payments category (id=13) + had "payments" in tags — giving it both the +180 category bonus AND tag FTS match. Fix: moved to API Tools (id=16) and removed "payments" from tags → now `stripe,webhooks,laravel,php,laravel-package`.
+- **Duplicates**: btcpayserver (quality=38.7) and killbill (quality=48.1) both set to status='pending'. Stronger duplicates (btcpay-server quality=100, kill-bill quality=100) remain approved.
+- **FTS rebuild**: Always rebuild after tag/category changes: `conn.execute("INSERT INTO tools_fts(tools_fts) VALUES(?)", ("rebuild",))` — NOT a string literal in SQL, use a param! `chr()` is not available in SQLite on production (Alpine).
+- **tools table has no view_count column** — it's `mcp_view_count`. Always check PRAGMA table_info(tools) if unsure about columns.
+- **SSH inline Python quoting**: For complex queries with FTS MATCH params containing quotes/stars, pipe as base64 or use heredoc approach. The `-C 'python3 -c "..."'` works for simple scripts.
+

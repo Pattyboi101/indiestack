@@ -24,3 +24,16 @@ Result: Got all 5. Let me compile the full analysis now.
 | Query | Top Result | `install_command` | Tagline Quality | Category |
 |---|---|---|---|---|
 | **auth*
+
+## 2026-04-04 14:37
+Task: After FTS rebuild, audit search quality for top queries by hitting the production /api/tools/search endpoint for: auth, payments, database, email, monitoring, analytics, orm, testing. For each: check top result relevance, presence of install_command, correct category. Flag any misfires or thin results. Also scan for any other quick wins in search ranking or response quality.
+Result: Here's the full audit report:
+
+---
+
+## Post-FTS Rebuild — Search Quality Audit
+
+### ✅ Passing Queries
+| Query | Top Result | Verdict |
+|-------|-----------|---------|
+| **auth** | next-auth | ✅ 20 rel

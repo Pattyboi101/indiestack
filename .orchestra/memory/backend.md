@@ -67,3 +67,20 @@ Result: I have everything I need. Here's the full audit report:
 /auth/github
   → github.com/login/oauth/authorize
   → /au
+
+## 2026-04-04 14:37
+Task: After deploy completes, SSH into production and rebuild the FTS index: run `INSERT INTO tools_fts(tools_fts) VALUES('rebuild')` and `PRAGMA wal_checkpoint(TRUNCATE)` to pick up recent category fixes. Confirm no errors.
+Result: All good. Here's the summary:
+
+- **FTS rebuild**: ✅ `INSERT INTO tools_fts(tools_fts) VALUES('rebuild')` — completed without errors
+- **WAL checkpoint**: ✅ `log=0, checkpointed=0` — WAL was already cl
+
+## 2026-04-04 14:59
+Task: Fix 3 search quality issues: (1) 'email' query returns Logto as #1 — check db.py engagement scoring and FTS weighting; if Logto's description is keyword-stuffed with email terms, UPDATE its description in the production DB to be accurate without email-heavy language, then check if a scoring fix in db.py (e.g. category penalty for auth tools on 'email' queries) is needed; (2) 'payments' returns laravel-stripe-webhooks as #1 — investigate its category assignment and FTS rank vs Stripe; fix by correcting its category_id to a more specific one (e.g. webhooks/integration) or adjusting engagement scoring to boost tools whose primary category matches the query term; (3) Duplicate cleanup — query the DB for (btcpay-server, btcpayserver) and (kill-bill, killbill): compare upvotes, view counts, and data completeness; UPDATE the weaker duplicate's status to 'pending' in each pair. After ALL DB changes, run: INSERT INTO tools_fts(tools_fts) VALUES('rebuild') and PRAGMA wal_checkpoint(TRUNCATE) to rebuild the FTS index.
+Result: All done. Here's the summary:
+
+```json
+{
+  "status": "done",
+  "files_changed": ["production DB: /data/indiestack.db"],
+  "summary": "Fixed 3 search quality issues. (1) Logto 'email' — removed 'email'

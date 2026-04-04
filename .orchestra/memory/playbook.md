@@ -78,3 +78,19 @@ Results:
 ## 2026-03-31 — Dream consolidation
 Recent activity: 20 commits in last 24h.
 Features: 16. Fixes: 4.
+
+## 2026-04-04 14:37
+Task: Deploy latest changes (sign ups today added to admin hero strip), rebuild FTS index on production after recent category fixes, audit search quality for top queries, and check for any other quick wins
+Verdict: error
+Total cost: $1.0962
+Results:
+- 🚀 devops: done ($0.1326)
+- 🔧 backend: done ($0.0818)
+- 🔌 mcp: done ($0.7845)
+
+## 2026-04-04 14:59
+Task: Fix 3 search quality issues found in audit: (1) 'email' query returns Logto (auth tool) as #1 — Logto's description is dense with email keywords; fix by editing Logto's description on production to remove email-heavy language while keeping it accurate, OR find a scoring fix in db.py; (2) 'payments' returns laravel-stripe-webhooks as #1 instead of Stripe — investigate why and fix category or scoring; (3) Clean up duplicate tools: btcpay-server vs btcpayserver and kill-bill vs killbill — check which has more data/views and mark the weaker duplicate as pending. After any DB changes, rebuild FTS index.
+Verdict: error
+Total cost: $0.9988
+Results:
+- 🔧 backend: done ($0.8872)
