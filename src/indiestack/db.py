@@ -2268,6 +2268,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "worker": "background",
     "scheduler": "background",
     "scheduled": "background",
+    "job": "background",
+    "jobs": "background",
+    "background": "background",     # "background jobs" direct term → LIKE '%background%' ✓
     "celery": "background",
     "sidekiq": "background",
     "bullmq": "background",
@@ -2556,7 +2559,9 @@ _FRAMEWORK_QUERY_TERMS: dict[str, str] = {
     "solid": "solid", "solidjs": "solid",
     "qwik": "qwik",
     "hono": "hono",
-    "nodejs": "nodejs",
+    # "nodejs" intentionally NOT added here — it's a runtime/framework, not a category.
+    # Having it as a CAT_SYNONYM key with value "nodejs" would break queries like
+    # "nodejs background jobs" by setting cat_term="nodejs" (matches no category name).
 }
 
 
@@ -2720,12 +2725,16 @@ async def search_tools(
     # For category and tag matching, find the best synonym match across all meaningful terms.
     _q = query.strip()
     _meaningful = [t for t in _q.lower().split() if t not in _FTS_STOP_WORDS]
-    _raw_cat = _meaningful[0] if _meaningful else _q
+    # Strip framework qualifier terms (nodejs, react, etc.) from category lookup.
+    # "nodejs background jobs" → use ["background","jobs"] not ["nodejs","background","jobs"]
+    # so cat_term doesn't become "nodejs" (which matches no category name).
+    _meaningful_for_cat = [t for t in _meaningful if t not in _FRAMEWORK_QUERY_TERMS] or _meaningful
+    _raw_cat = _meaningful_for_cat[0] if _meaningful_for_cat else _q
     # Map synonyms so "cron" → "background" matches "Background Jobs" category.
     # For queries like "self hosted auth", the first meaningful term ("self") has no
     # synonym — scan all terms and prefer the first with a known synonym so "auth"
     # from "self hosted auth" gets the 100-point Authentication category boost.
-    _syn_term = next((t for t in _meaningful if t in _CAT_SYNONYMS), None)
+    _syn_term = next((t for t in _meaningful_for_cat if t in _CAT_SYNONYMS), None)
     if _syn_term:
         _cat_term = _CAT_SYNONYMS[_syn_term]
     else:
