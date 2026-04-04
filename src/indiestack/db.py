@@ -2296,7 +2296,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "newsletter": "email",
     "drip": "email",
     "transactional": "email",
-    "sending": "email",
+    "sending": "transactional",
     "sendgrid": "email",
     "resend": "email",
     "mailgun": "email",
@@ -2523,9 +2523,8 @@ _FTS_STOP_WORDS = {
     'lightweight', 'simple', 'easy', 'fast', 'modern', 'new',
     'free', 'alternative', 'alternatives',
     'open', 'source',
-    # Gerunds/filler words that don't appear as primary terms in tool descriptions.
-    # e.g. "email sending" → "email" only (tools say "send" not "sending" in descriptions)
-    'sending', 'running', 'tracking', 'managing',
+    # Gerunds/filler words that don't add FTS value (tools use root form in descriptions).
+    'running', 'tracking', 'managing',
 }
 
 # Framework qualifier terms in queries (e.g. "auth for nextjs", "payments django").
@@ -2556,6 +2555,7 @@ _FRAMEWORK_QUERY_TERMS: dict[str, str] = {
     "solid": "solid", "solidjs": "solid",
     "qwik": "qwik",
     "hono": "hono",
+    "nodejs": "nodejs",
 }
 
 
