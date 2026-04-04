@@ -430,7 +430,7 @@ async def tool_detail(request: Request, slug: str):
         <div style="margin:16px 0;padding:16px 24px;background:var(--success-bg);border:1px solid var(--success-border);border-radius:var(--radius-sm);color:var(--success-text);font-size:14px;line-height:1.6;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             <strong>Listing claimed!</strong> Visit your <a href="/dashboard" style="color:var(--success-text);font-weight:600;text-decoration:underline;">dashboard</a> to see your analytics.
-            Upgrade to <a href="/pricing" style="color:var(--success-text);font-weight:600;text-decoration:underline;">Maker Pro ($49/mo)</a> for full citation intel, search query data, and a verified badge.
+            Upgrade to <a href="/pricing" style="color:var(--success-text);font-weight:600;text-decoration:underline;">Maker Pro ($19/mo)</a> for full citation intel, search query data, and a verified badge.
         </div>'''
     elif request.query_params.get('claim_requested'):
         claim_message = '''

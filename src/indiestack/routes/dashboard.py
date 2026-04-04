@@ -98,7 +98,7 @@ async def dashboard_overview(request: Request):
     if not is_pro and maker_id:
         pro_banner = '''<div style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;">
             <div>
-                <strong style="color:var(--ink);font-size:14px;">Maker Pro &mdash; $49/mo</strong>
+                <strong style="color:var(--ink);font-size:14px;">Maker Pro &mdash; $19/mo</strong>
                 <span style="color:var(--ink-muted);font-size:13px;margin-left:8px;">See how AI agents recommend your tool. Citation analytics, search query data, verified badge.</span>
             </div>
             <a href="/pricing" style="color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;">Learn more &rarr;</a>
@@ -165,7 +165,7 @@ async def dashboard_overview(request: Request):
     upgrade_html = ''
     if not is_pro and has_claimed_tools:
         upgrade_html = '''<button onclick="startProCheckout()" class="btn-primary" style="padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;border:none;min-height:44px;">
-            Upgrade to Maker Pro &mdash; $49/mo
+            Upgrade to Maker Pro &mdash; $19/mo
         </button>
         <script>
         if (typeof startProCheckout === "undefined") {
@@ -176,8 +176,8 @@ async def dashboard_overview(request: Request):
                     const r = await fetch("/api/subscribe/pro", {method:"POST", headers:{"Content-Type":"application/json"}, body:"{}"});
                     const d = await r.json();
                     if (d.checkout_url) { window.location.href = d.checkout_url; }
-                    else { alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $49/mo"; }
-                } catch(e) { alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $49/mo"; }
+                    else { alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $19/mo"; }
+                } catch(e) { alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Maker Pro — $19/mo"; }
             };
         }
         </script>'''
@@ -218,7 +218,7 @@ async def dashboard_overview(request: Request):
                 </div>
                 <div style="flex-shrink:0;text-align:center;">
                     <button onclick="startProCheckout()" style="background:var(--accent);color:#0F1D30;border:none;padding:13px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;min-height:44px;display:block;width:100%;margin-bottom:6px;">
-                        Upgrade to Pro &mdash; $49/mo
+                        Upgrade to Pro &mdash; $19/mo
                     </button>
                     <span style="font-size:11px;color:rgba(255,255,255,0.35);">Cancel any time &middot; No contract</span>
                 </div>
@@ -232,8 +232,8 @@ async def dashboard_overview(request: Request):
                 const r = await fetch("/api/subscribe/pro", {{method:"POST", headers:{{"Content-Type":"application/json"}}, body:"{{}}"}});
                 const d = await r.json();
                 if (d.checkout_url) {{ window.location.href = d.checkout_url; }}
-                else {{ alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Pro — $49/mo"; }}
-            }} catch(e) {{ alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Pro — $49/mo"; }}
+                else {{ alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Pro — $19/mo"; }}
+            }} catch(e) {{ alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade to Pro — $19/mo"; }}
         }};
         </script>'''
 
@@ -1248,7 +1248,7 @@ async def dashboard_overview(request: Request):
                 </div>
                 <div style="flex-shrink:0;">
                     <button onclick="startProCheckout()" style="background:var(--accent);color:#0F1D30;border:none;padding:12px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;min-height:44px;display:block;margin-bottom:5px;">
-                        Upgrade &mdash; $49/mo
+                        Upgrade &mdash; $19/mo
                     </button>
                     <span style="font-size:11px;color:var(--ink-muted);display:block;text-align:center;">No contract &middot; Cancel any time</span>
                 </div>
@@ -1263,8 +1263,8 @@ async def dashboard_overview(request: Request):
                     const r = await fetch("/api/subscribe/pro", {method:"POST", headers:{"Content-Type":"application/json"}, body:"{}"});
                     const d = await r.json();
                     if (d.checkout_url) { window.location.href = d.checkout_url; }
-                    else { alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade — $49/mo"; }
-                } catch(e) { alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade — $49/mo"; }
+                    else { alert(d.error || "Payment error — try again"); btn.disabled = false; btn.textContent = "Upgrade — $19/mo"; }
+                } catch(e) { alert("Network error — try again"); btn.disabled = false; btn.textContent = "Upgrade — $19/mo"; }
             }
         }
         </script>'''

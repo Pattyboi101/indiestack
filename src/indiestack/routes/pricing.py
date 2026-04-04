@@ -85,7 +85,7 @@ async def pricing_page(request: Request):
     <!-- Tool Makers -->
     <div class="pricing-card">
       <h2>Tool Makers</h2>
-      <div class="price">$49<span> / month</span></div>
+      <div class="price">$19<span> / month</span></div>
       <div class="desc">See how AI agents recommend your tool.</div>
       <ul>
         {_feature_row("Claim and manage your listing")}
@@ -99,7 +99,7 @@ async def pricing_page(request: Request):
         Claim Your Tool
       </a>
       <p style="font-size:12px;color:var(--ink-muted);text-align:center;margin:8px 0 0;">
-        Claiming is free. Pro analytics is $49/mo.
+        Claiming is free. Pro analytics is $19/mo.
       </p>
     </div>
 
@@ -125,6 +125,6 @@ async def pricing_page(request: Request):
     return HTMLResponse(page_shell(
         "Pricing — IndieStack",
         body,
-        description="Free for developers — unlimited searches, MCP queries, and stack analysis. Tool makers get AI agent analytics starting at $49/mo.",
+        description="Free for developers — unlimited searches, MCP queries, and stack analysis. Tool makers get AI agent analytics starting at $19/mo.",
         user=user,
     ))
