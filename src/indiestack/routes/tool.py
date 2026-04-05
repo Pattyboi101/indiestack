@@ -670,7 +670,7 @@ async def tool_detail(request: Request, slug: str):
             "ratingValue": str(avg_rating),
             "reviewCount": str(review_count)
         }
-    json_ld = json.dumps(json_ld_data, ensure_ascii=False)
+    json_ld = json.dumps(json_ld_data, ensure_ascii=False).replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
     extra_head = f'<script type="application/ld+json">{json_ld}</script>'
 
     # Changelogs

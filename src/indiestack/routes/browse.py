@@ -123,7 +123,8 @@ async def category_page(request: Request, slug: str, page: int = 1):
             for i, t in enumerate(tools)
         ]
     }
-    extra_head = f'<script type="application/ld+json">{json.dumps(json_ld_data, ensure_ascii=False)}</script>'
+    _json_ld = json.dumps(json_ld_data, ensure_ascii=False).replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+    extra_head = f'<script type="application/ld+json">{_json_ld}</script>'
 
     title = f"Best Indie {name} Tools | IndieStack"
     return HTMLResponse(page_shell(title, body, description=desc, user=request.state.user, extra_head=extra_head, canonical=f"/category/{slug}"))

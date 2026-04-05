@@ -185,7 +185,9 @@ async def launch_with_me(request: Request, slug: str):
         }
     })
 
-    extra_head = f'<script type="application/ld+json">{json_ld}</script>'
+    # Escape HTML metacharacters to prevent </script> injection in JSON-LD
+    json_ld_safe = json_ld.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+    extra_head = f'<script type="application/ld+json">{json_ld_safe}</script>'
 
     # ── Assemble Page ────────────────────────────────────────────────────
     body = f"""

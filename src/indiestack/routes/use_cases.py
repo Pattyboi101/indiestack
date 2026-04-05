@@ -235,9 +235,11 @@ async def use_case_detail(request: Request, slug: str):
         ]
     })
 
+    def _safe_ld(s):
+        return s.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
     extra_head = f'''
-    <script type="application/ld+json">{json_ld}</script>
-    <script type="application/ld+json">{breadcrumb_ld}</script>
+    <script type="application/ld+json">{_safe_ld(json_ld)}</script>
+    <script type="application/ld+json">{_safe_ld(breadcrumb_ld)}</script>
     '''
 
     body = f'''
