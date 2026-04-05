@@ -132,7 +132,7 @@ KNOWN_PACKAGE_MAP = {
     "@highlight-run/next": "highlight",
     "axiom": "axiom",
     "@axiomhq/js": "axiom",
-    "@logtail/node": "betterstack",
+    "@logtail/node": "better-stack",
     "graphql-yoga": "graphql-yoga",
     "nextra": "nextra",
     "mintlify": "mintlify",
