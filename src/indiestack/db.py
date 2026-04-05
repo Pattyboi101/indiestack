@@ -2616,6 +2616,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pinia": "frontend",        # Vue state management
     "xstate": "frontend",       # State machines
     "nanostores": "frontend",
+    "htmx": "frontend",         # HTMX — HTML-first interactivity
+    "alpine": "frontend",       # Alpine.js — lightweight JS framework
+    "alpinejs": "frontend",
+    "preact": "frontend",       # Preact — lightweight React alternative
+    "lit": "frontend",          # Lit — web components library
+    "solidjs": "frontend",      # SolidJS — reactive UI library
+    "stencil": "frontend",      # Stencil — web components compiler
+    "ember": "frontend",        # Ember.js
+    # API tools — routing, RPC, gateways
+    "trpc": "api",              # tRPC — type-safe API layer
+    "grpc": "api",              # gRPC — RPC framework
+    "gateway": "api",           # API gateway queries
     # Realtime / WebSockets — typically API-layer tools (Pusher, Ably, PartyKit)
     "realtime": "api",
     "websocket": "api",
