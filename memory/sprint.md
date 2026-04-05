@@ -86,6 +86,21 @@ Last updated: 2026-04-05
   - Action for Patrick: bulk-reject via /admin (fastnfitness, foodyou, etc.)
   - Action for Content: add scope statement to submit/guidelines pages
 
+## Completed This Session (2026-04-05, sixth pass — autonomous improvement cycle)
+
+### Search Quality — NEED_MAPPINGS updates
+- Added `"realtime"` to NEED_MAPPINGS `"api"` terms list (was in _CAT_SYNONYMS only)
+- Added `"vector database"` to NEED_MAPPINGS `"database"` terms list (was in _CAT_SYNONYMS only)
+- Added `"rate limiting"` to NEED_MAPPINGS `"api"` terms list (was in _CAT_SYNONYMS only)
+- All other required mappings (state management→frontend, bundler→frontend) already present in both dicts
+
+### Catalog
+- Confirmed `scripts/add_missing_tools.py` already exists with all 10 tools (React, Vue, Svelte, Angular, Zustand, Jotai, Webpack, esbuild, Upstash, Resend) — not re-written
+
+### Code Quality
+- No hardcoded hex colors or missing html.escape() found in recently changed files (dashboard.py, why_list.py)
+- why_list.py already pulls all stats live from DB — no stale hardcoded figures
+
 ## Current Priorities
 1. **Backend**: validate citation data — how many tools have >10 agent citations/month?
 2. **Frontend**: audit /maker/dashboard analytics exposure

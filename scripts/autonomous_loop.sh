@@ -35,8 +35,12 @@ curl the API for these queries and check top-3 results are relevant:
   'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring',
   'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth',
   'state management', 'bundler', 'realtime', 'vector database', 'rate limiting'.
-For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
-Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
+For each misfire, check BOTH dicts in db.py:
+  A) _CAT_SYNONYMS — maps individual query tokens to category slug fragment (used for scoring)
+  B) NEED_MAPPINGS terms lists — used by Stack Builder and developer profile interest scoring
+  A term can exist in _CAT_SYNONYMS but be absent from NEED_MAPPINGS terms — check both.
+Also check _FTS_STOP_WORDS — overly broad stop words cause query word drops.
+Before editing, grep db.py for the term to confirm absence (avoids duplicate-key edits).
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
 ITERATION 2 — DATA QUALITY:
