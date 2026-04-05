@@ -2684,6 +2684,45 @@ _CAT_SYNONYMS: dict[str, str] = {
     "localization": "frontend", # "localization tools"
     # Workflow / automation (n8n, Make.com, Zapier)
     "workflow": "ai",           # "workflow automation" — n8n, Make, Zapier live in ai-automation
+    # JS/TS build ecosystem — transpilers and runtimes
+    "babel": "frontend",        # Babel — JS transpiler (legacy + modern)
+    "transpiler": "frontend",   # generic transpiler queries
+    "swc": "frontend",          # SWC — Rust-based JS/TS transpiler (used by Next.js, Vite)
+    "bun": "frontend",          # Bun — fast JS runtime + bundler + test runner
+    "deno": "frontend",         # Deno — secure JS/TS runtime (Deno 2)
+    # "management" catches "state management" where "state" is not the first meaningful term
+    "management": "frontend",   # "state management tool", "cache management"
+    # i18n / l10n — full words not covered by "i18n"/"localization" entries above
+    "translation": "frontend",          # "translation library", "translation API"
+    "locale": "frontend",               # "locale formatting", "locale config"
+    "internationalization": "frontend", # full English word (i18n = 18-letter abbreviation)
+    # Node.js / edge web frameworks — for "[framework] alternative" queries
+    "hono": "api",              # Hono — ultrafast edge web framework (Cloudflare, Deno, Bun)
+    "express": "api",           # Express.js — classic Node.js web framework
+    "fastify": "api",           # Fastify — low-overhead Node.js framework
+    "nestjs": "api",            # NestJS — TypeScript enterprise Node.js framework
+    "koa": "api",               # Koa — minimalist Node.js middleware framework
+    # DevOps / tunneling / IaC
+    "tunnel": "devops",         # "dev tunnel", "local tunnel" (ngrok, cloudflare tunnel)
+    "tunneling": "devops",      # explicit form
+    "ngrok": "devops",          # ngrok — localhost tunneling tool
+    "terraform": "devops",      # Terraform — infrastructure as code
+    "pulumi": "devops",         # Pulumi — IaC with real programming languages
+    "ansible": "devops",        # Ansible — configuration management
+    # Database — BaaS / cloud tools in TECH_KEYWORDS but missing category synonym boost
+    "turso": "database",        # Turso — distributed libSQL (serverless SQLite)
+    "convex": "database",       # Convex — real-time BaaS with reactive queries
+    "pocketbase": "database",   # PocketBase — SQLite-based open-source BaaS
+    "appwrite": "database",     # Appwrite — self-hosted Firebase alternative
+    # Auth — WebAuthn / passkeys
+    "webauthn": "authentication",   # WebAuthn — W3C passkey standard
+    "fido2": "authentication",      # FIDO2 — underlying passkey protocol
+    # Security — compliance, encryption, certificates
+    "compliance": "security",   # GDPR/SOC2 compliance tooling
+    "gdpr": "security",         # GDPR compliance tools
+    "encryption": "security",   # encryption libraries and key management
+    "ssl": "security",          # SSL certificate management
+    "tls": "security",          # TLS configuration tools
 }
 
 _FTS_STOP_WORDS = {
