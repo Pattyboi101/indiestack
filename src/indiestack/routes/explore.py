@@ -27,6 +27,19 @@ _CAT_META: dict[str, str] = {
     "headless-cms": "Browse {count}+ headless CMS tools on IndieStack — API-first and git-based content management systems for developers.",
     "search-engine": "Discover {count}+ search engine tools on IndieStack — self-hosted and cloud search APIs. Meilisearch, Typesense, and more.",
     "testing-tools": "Find {count}+ testing tools on IndieStack — unit testing, E2E testing, and QA tools recommended by AI coding agents.",
+    "developer-tools": "Browse {count}+ developer tools on IndieStack — CLIs, SDKs, libraries, and utilities curated for indie developers and AI agents.",
+    "ai-dev-tools": "Discover {count}+ AI developer tools on IndieStack — LLM APIs, copilots, code generation, and AI SDKs for your stack.",
+    "file-management": "Find {count}+ file management tools on IndieStack — S3-compatible storage, file upload, CDN, and object storage for developers.",
+    "ai-automation": "Explore {count}+ AI automation tools on IndieStack — agents, workflows, and no-code AI tools for indie developers.",
+    "design-creative": "Browse {count}+ design tools on IndieStack — UI libraries, icon sets, figma plugins, and creative tools for developers.",
+    "project-management": "Find {count}+ project management tools on IndieStack — issue trackers, kanban boards, and planning tools for small teams.",
+    "customer-support": "Discover {count}+ customer support tools on IndieStack — live chat, helpdesks, and ticketing for indie SaaS products.",
+    "learning-education": "Browse {count}+ learning tools on IndieStack — developer education platforms, courses, and resources for building better software.",
+    "api-tools": "Explore {count}+ API tools on IndieStack — API gateways, documentation, testing, and GraphQL tools for developers.",
+    "mcp-servers": "Find {count}+ MCP servers on IndieStack — Model Context Protocol servers for Claude, Cursor, and AI coding agents.",
+    "caching": "Browse {count}+ caching tools on IndieStack — Redis alternatives, in-memory stores, and edge caching for developer stacks.",
+    "logging": "Discover {count}+ logging tools on IndieStack — structured logging, log aggregation, and observability for production apps.",
+    "security-tools": "Find {count}+ security tools on IndieStack — auth hardening, vulnerability scanning, and access control for indie developers.",
 }
 
 
