@@ -125,7 +125,7 @@ async def dashboard_overview(request: Request):
     # Trend: is this week's rate above/below the 30d average weekly rate?
     _weekly_avg_30d = agent_citations_30d / 4.3
     _citation_trend = '↑' if agent_citations_7d > _weekly_avg_30d * 1.1 else ('↓' if agent_citations_7d < _weekly_avg_30d * 0.9 else '→')
-    _trend_color = 'var(--accent)' if _citation_trend == '↑' else ('#e74c3c' if _citation_trend == '↓' else 'var(--ink-muted)')
+    _trend_color = 'var(--accent)' if _citation_trend == '↑' else ('var(--error-text)' if _citation_trend == '↓' else 'var(--ink-muted)')
 
     # Fetch maker's tools once for success rate + quality score
     _maker_tools = await get_tools_by_maker(db, maker_id) if maker_id else []
