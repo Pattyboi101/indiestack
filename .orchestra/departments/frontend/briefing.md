@@ -1,15 +1,19 @@
-# Briefing — 2026-04-04 22:21
+# Briefing — 2026-04-05
 
 ## Task
-Read src/indiestack/routes/explore.py (or equivalent explore/browse route). Check how categories are fetched and ordered for the category grid — is it alphabetical, by tool count, or arbitrary? Identify if popular categories (Database, Authentication, DevOps) appear prominently. If the sort is suboptimal, update the DB query or in-memory sort to order by tool count DESC so high-value categories surface first. Report what the current sort is and what was changed.
+SEO and copy improvements for the catalog pages.
 
-## S&QA Conditions
-- Backend MUST use file-upload SSH pattern — no inline python via flyctl ssh console -C
-- Frontend Frameworks category is RESEARCH ONLY — write recommendation to /tmp, do not create
-- Do NOT move OpenAPI/AsyncAPI tools to ai-standards — only genuinely AI-specific standards
-- FTS rebuild must use PRAGMA busy_timeout=60000 and retry loop
+**Task 1 — Category page meta descriptions:**
+Check `/explore?category=frontend-frameworks`, `/explore?category=mcp-servers`, `/explore?category=caching` in the explore route. If these new categories have generic/missing meta descriptions, improve them. Check `src/indiestack/routes/explore.py` for where category meta descriptions are set.
 
-## Risk Flags
-- tags LIKE '%mcp%' without comma-delimited matching could theoretically match unexpected substrings — using proper comma-delimited pattern instead
-- ai-standards category may end up with very few tools after excluding OpenAPI/AsyncAPI — that's fine per pass 13 guidance ('leave empty if fewer than 3')
-- Backend task is heavy (3 category populations + research query) — may hit budget ceiling before completing all parts
+**Task 2 — Tool count in landing copy:**
+Run: `curl -s https://indiestack.ai/` and check if any visible copy still says "8,000+" or wrong tool counts. If so, find and fix in the route file.
+
+**Task 3 — Frontend Frameworks category page:**
+Check `https://indiestack.ai/explore?category=frontend-frameworks` renders correctly with the new tools (React, Tailwind, etc.). Report what you see.
+
+## Constraints
+- Read `src/indiestack/routes/explore.py` and `src/indiestack/routes/components.py` before editing
+- All route files return HTMLResponse with Python f-strings — no Jinja2
+- Run smoke tests after any changes: `python3 smoke_test.py`
+- Commit changes with descriptive message (NO Co-Authored-By line)
