@@ -1324,8 +1324,12 @@ async def browse_new_tools(limit: int = 10, offset: int = 0, *, ctx: Context) ->
 async def list_tags(*, ctx: Context) -> str:
     """List all tags used across IndieStack tools, sorted by popularity.
 
-    Use this to discover available tags for browsing or filtering.
-    Tags cover technologies, frameworks, and use cases across the catalog.
+    Tags are more granular than categories — use them to narrow results within
+    a category or find tools by specific technology (e.g. "react", "rust",
+    "open-source", "self-hosted", "cli"). Pass a tag to find_tools(tags=...).
+
+    Use list_categories() first to find the right category slug, then
+    list_tags() to explore technology-specific filters within that space.
     """
     cached = _cache_get("tags", 300)
     if cached:
