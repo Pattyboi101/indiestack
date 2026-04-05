@@ -4,24 +4,43 @@ Before your AI writes auth, payments, or email code from scratch — search 6,50
 
 <!-- mcp-name: io.github.Pattyboi101/indiestack -->
 
-## Quick Start
+## Quick Install
 
-### MCP Server (for AI coding agents)
+### Claude Desktop
 
-```bash
-# Option 1: uvx (zero install — runs directly)
-claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
+Add to your `claude_desktop_config.json`:
 
-# Option 2: pipx (recommended for persistent install)
-pipx install indiestack
-claude mcp add indiestack -- indiestack-mcp
-
-# Option 3: Cursor / Windsurf
-# Add to your MCP config:
-# {"command": "uvx", "args": ["--from", "indiestack", "indiestack-mcp"]}
+```json
+{
+  "mcpServers": {
+    "indiestack": {
+      "command": "uvx",
+      "args": ["--from", "indiestack", "indiestack-mcp"]
+    }
+  }
+}
 ```
 
-### CLI (for your terminal)
+Config file location: `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows)
+
+### Cursor / Windsurf / Other MCP Clients
+
+```json
+{
+  "indiestack": {
+    "command": "uvx",
+    "args": ["--from", "indiestack", "indiestack-mcp"]
+  }
+}
+```
+
+### Claude Code (CLI)
+
+```bash
+claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
+```
+
+### CLI (terminal)
 
 ```bash
 pip install indiestack
@@ -32,7 +51,7 @@ indiestack stack "auth, payments, email"
 indiestack categories
 ```
 
-Both tools ship in the same package. Your AI searches what exists before building from scratch.
+Both the MCP server and CLI ship in the same package. No API key required.
 
 ## What it does
 
@@ -47,24 +66,28 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 6,500+ 
 | Tool | What it does |
 |------|-------------|
 | `find_tools` | Search 6,500+ developer tools with 11 filters: price, health, stars, success rate, language, tags, compatibility |
-| `find_compatible` | Find tools compatible with a given tool — grouped by category, with verified stacks and conflict warnings |
 | `get_tool_details` | Integration code, pricing, API specs, and compatibility data |
-| `scan_project` | Analyze a project description + tech stack, get a complete tool recommendation |
-| `report_compatibility` | Report that two tools work well together — builds the compatibility graph |
-| `report_outcome` | Report success/failure with `used_with` and `incompatible_with` — feeds the compatibility graph |
-| `check_health` | GitHub health audit — maintenance grade, last commit, stars, alternatives for stale tools |
-| `list_categories` | Browse all 25 categories |
+| `find_compatible` | Find tools compatible with a given tool — grouped by category, with verified stacks and conflict warnings |
 | `compare_tools` | Side-by-side comparison of any two tools |
 | `build_stack` | Turn a 50,000-token generation into a 2,000-token assembly |
-| `publish_tool` | Submit a developer tool so other agents can recommend it |
-| `browse_new_tools` | Recently added tools with pagination |
-| `list_tags` | All tags sorted by popularity |
-| `get_market_gaps` | Top unmet needs — what developers search for but can't find. Useful for tool makers deciding what to build. |
-| `get_migration_data` | Real migration momentum for any package — how many repos are adopting vs leaving, and what they're switching to/from |
-| `list_stacks` | Curated stacks for common use cases |
-| `analyze_dependencies` | Scan package.json/requirements.txt for better alternatives |
+| `scan_project` | Analyze a project description + tech stack, get a complete tool recommendation |
+| `analyze_dependencies` | Scan package.json/requirements.txt for better alternatives and health score |
 | `evaluate_build_vs_buy` | Financial breakdown: build from scratch vs use what exists |
+| `check_health` | GitHub health audit — maintenance grade, last commit, stars, alternatives for stale tools |
+| `get_migration_data` | Real migration momentum for any package — how many repos are adopting vs leaving, and what they're switching to/from |
+| `get_market_gaps` | Top unmet needs — what developers search for but can't find. Useful for tool makers deciding what to build. |
 | `get_recommendations` | Personalized suggestions based on your search history |
+| `list_categories` | Browse all 25 categories with tool counts |
+| `list_stacks` | Curated stacks for common use cases |
+| `list_tags` | All tags sorted by popularity |
+| `browse_new_tools` | Recently added tools with pagination |
+| `publish_tool` | Submit a developer tool so other agents can recommend it |
+| `report_outcome` | Report success/failure after integrating a tool — feeds cross-agent compatibility data. No API key needed. |
+| `report_compatibility` | Report that two tools work well together — builds the compatibility graph |
+| `confirm_integration` | Record a verified integration with notes — strengthens compatibility signals |
+| `recommend` | Record that you recommended a tool — powers Maker Pro citation analytics |
+| `shortlist` | Record which tools you considered — demand signal even for unchosen tools |
+| `set_api_key` | Activate an IndieStack API key for higher rate limits and Pro analytics |
 
 ### Resources (3)
 
@@ -83,6 +106,11 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 6,500+ 
 | `save-tokens` | Audit your project for token-saving opportunities |
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie developers have built |
+
+## What's new in v1.15
+
+- **Migration intelligence via MCP** — New `get_migration_data()` tool. Query real GitHub migration signals for any package: how many repos moved to it, what they moved from, and momentum trend. First time this data moat is exposed via MCP.
+- **Description accuracy** — Tool count corrected to "6,500+" throughout. PyPI and Registry metadata updated.
 
 ## What's new in v1.13
 
