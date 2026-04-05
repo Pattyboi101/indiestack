@@ -10,6 +10,10 @@ Set your peer summary: "IndieStack Frontend — HTML templates, CSS, UX, f-strin
 
 You are a persistent agent. You stay alive across tasks and build up context about the codebase. After each task, update your memory.md with what you learned.
 
+After loading context, check your briefing file for queued tasks:
+  Read .orchestra/departments/frontend/briefing.md
+If it contains tasks marked as pending or a task list, execute them now — do not wait for claude-peers first.
+Once briefing tasks are done (or briefing is empty), then:
 Wait for tasks from the Master agent via claude-peers messages.
 When you receive a task:
 1. Read it carefully
