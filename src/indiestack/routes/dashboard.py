@@ -118,9 +118,14 @@ async def dashboard_overview(request: Request):
     user_tokens = await get_user_tokens_saved(db, user['id'])
     tokens_k = user_tokens // 1000 if user_tokens else 0
 
-    # Agent citations (30-day)
+    # Agent citations (7-day + 30-day)
+    agent_citations_7d  = await get_total_agent_citations(db, maker_id, days=7)  if maker_id else 0
     agent_citations_30d = await get_total_agent_citations(db, maker_id, days=30) if maker_id else 0
     citation_percentile = await get_citation_percentile(db, maker_id, days=30) if maker_id else None
+    # Trend: is this week's rate above/below the 30d average weekly rate?
+    _weekly_avg_30d = agent_citations_30d / 4.3
+    _citation_trend = '↑' if agent_citations_7d > _weekly_avg_30d * 1.1 else ('↓' if agent_citations_7d < _weekly_avg_30d * 0.9 else '→')
+    _trend_color = 'var(--accent)' if _citation_trend == '↑' else ('#e74c3c' if _citation_trend == '↓' else 'var(--ink-muted)')
 
     # Fetch maker's tools once for success rate + quality score
     _maker_tools = await get_tools_by_maker(db, maker_id) if maker_id else []
@@ -1039,7 +1044,11 @@ async def dashboard_overview(request: Request):
             <div class="ai-viz-grid">
                 <div>
                     <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations_30d}</div>
-                    <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">Agent Citations</div>
+                    <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">Citations (30d)</div>
+                    <div style="font-size:12px;margin-top:4px;">
+                        <span style="color:{_trend_color};font-weight:700;">{_citation_trend}</span>
+                        <span style="color:var(--ink-muted);"> {agent_citations_7d} this week</span>
+                    </div>
                 </div>
                 <div>
                     <div style="{pct_style}">{pct_display}</div>
@@ -1092,7 +1101,8 @@ async def dashboard_overview(request: Request):
                 </div>
                 <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.07);border-radius:var(--radius-sm);">
                     <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations_30d}</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Agent Citations</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:4px;">Citations (30d)</div>
+                    <div style="font-size:11px;color:{_trend_color};margin-top:2px;">{_citation_trend} {agent_citations_7d} this week</div>
                 </div>
                 <div style="text-align:center;padding:16px;background:rgba(255,255,255,0.07);border-radius:var(--radius-sm);">
                     <div style="font-family:var(--font-display);font-size:28px;color:white;">{_tokens_display}</div>
@@ -1129,7 +1139,8 @@ async def dashboard_overview(request: Request):
             </div>
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{agent_citations_30d}</div>
-                <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Agent Recs</div>
+                <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Agent Recs (30d)</div>
+                <div style="font-size:12px;margin-top:4px;"><span style="color:{_trend_color};font-weight:700;">{_citation_trend}</span> <span style="color:var(--ink-muted);">{agent_citations_7d} this week</span></div>
             </div>
             <div class="card" style="text-align:center;padding:20px;">
                 <div style="font-family:var(--font-display);font-size:28px;color:{sr_color};">{sr_display}</div>
