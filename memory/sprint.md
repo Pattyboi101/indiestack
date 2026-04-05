@@ -14,6 +14,9 @@ Last updated: 2026-04-05
   - `vector` → `database` (covers "vector database" queries)
   - `rate` → `api` (covers "rate limiting" queries)
 - Previously added: htmx, alpine, preact, lit, solidjs, stencil, ember, trpc, grpc mappings
+- Removed 6 duplicate keys in `_CAT_SYNONYMS` (deploy×2, deployment×2, hosting×2, cache×2, caching×2, redis×3). Stale entries pointed to wrong category (database instead of caching).
+- Added `push` → `notifications`, `sms` → `notifications`, `otp` → `authentication`, `totp` → `authentication`
+- **Git situation**: orphan chain (51 commits) was force-pushed to origin/master. `autonomous-improvements` branch = orphan tip + this session's fix. Both branches pushed.
 
 ### Catalog Maintenance
 - `scripts/add_missing_tools.py` — script to insert 10 high-priority tools (React, Vue, Svelte, Angular, Zustand, Jotai, Webpack, esbuild, Upstash, Resend). Checks slug before inserting. Safe to re-run.
