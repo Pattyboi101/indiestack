@@ -30,7 +30,7 @@ After fixing anything, rag_store() the knowledge so other agents benefit.
 
 Run the 5-iteration cycle:
 
-ITERATION 1 — SEARCH QUALITY: curl the API for 'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring', 'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth'. Flag bad results and fix them.
+ITERATION 1 — SEARCH QUALITY: curl the API for 'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring', 'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth', 'frontend framework', 'state management react', 'caching redis alternative', 'mcp server', 'push notifications', 'trpc', 'htmx'. Flag bad results (wrong category, irrelevant tools) and fix _CAT_SYNONYMS in db.py to correct them.
 
 ITERATION 2 — DATA QUALITY: SSH to prod (fly ssh console -a indiestack) and find tools with high mcp_view_count but missing install_command or description. Fix them. Check for zero-result queries. Rebuild FTS after changes.
 

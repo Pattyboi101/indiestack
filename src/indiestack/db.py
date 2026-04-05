@@ -2291,6 +2291,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "jwt": "authentication",
     "passkey": "authentication",
     "passwordless": "authentication",
+    "password": "authentication",   # "password manager", "password reset", etc.
+    "webauthn": "authentication",   # Web Authentication API / passkeys
+    "biometric": "authentication",  # biometric login flows
     # Payment synonyms
     "checkout": "payments",
     "billing": "payments",
@@ -2401,6 +2404,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "search": "search",
     "notification": "notifications",
     "notifications": "notifications",
+    "push": "notifications",        # "push notifications" → Notifications category
+    "sms": "notifications",         # SMS tools (Twilio, Vonage, etc.) live in Notifications
     # "chat" has no dedicated category — map to "customer" for Customer Support boost
     # (live chat tools like Crisp, Tawk.to, Chatwoot live there)
     "chat": "customer",
@@ -2563,6 +2568,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sonarqube": "security",
     "vault": "security",        # HashiCorp Vault — secrets management
     "secrets": "security",
+    "encryption": "security",   # encryption libraries, at-rest encryption
+    "hashing": "security",      # password hashing (bcrypt, argon2)
+    "hash": "security",         # "hash function", "hash algorithm" → Security
     # Invoicing — "invoice"/"receipt" already mapped above (line ~2295); add named tools + new terms
     "invoicing": "invoicing",
     "accounting": "invoicing",
@@ -2616,6 +2624,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pinia": "frontend",        # Vue state management
     "xstate": "frontend",       # State machines
     "nanostores": "frontend",
+    # Modern lightweight frameworks (solid, htmx, alpine, qwik)
+    "solid": "frontend",
+    "solidjs": "frontend",
+    "preact": "frontend",
+    "htmx": "frontend",
+    "alpine": "frontend",
+    "alpinejs": "frontend",
+    "qwik": "frontend",
+    "lit": "frontend",          # Google Lit — web components
+    "tanstack": "frontend",     # TanStack Query/Router/Table
     # Realtime / WebSockets — typically API-layer tools (Pusher, Ably, PartyKit)
     "realtime": "api",
     "websocket": "api",
@@ -2625,6 +2643,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ably": "api",
     "livekit": "api",           # WebRTC / realtime video
     "partykit": "api",
+    "trpc": "api",              # tRPC — typesafe API layer for Next.js
+    "grpc": "api",              # gRPC — Google's RPC framework
+    "socket": "api",            # socket.io / raw socket queries → API Tools
+    "socketio": "api",
     # Caching — dedicated category now exists
     "caching": "caching",
     "cache": "caching",
@@ -2632,6 +2654,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "upstash": "caching",
     "dragonfly": "caching",     # Redis-compatible, faster
     "keydb": "caching",
+    "valkey": "caching",        # Valkey — Redis fork (Linux Foundation)
+    "garnet": "caching",        # Microsoft Garnet — Redis-compatible
+    "momento": "caching",       # Momento — serverless cache
     "redis": "caching",         # Redis is the canonical caching tool (overrides earlier "database" entry)
     # Boilerplates / starter kits
     "boilerplate": "boilerplate",
