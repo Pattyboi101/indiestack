@@ -92,9 +92,23 @@ echo "  Switch:  Ctrl+B then window number"
 echo "  Detach:  Ctrl+B then D"
 echo ""
 
-# Wait for agents to start, then send init prompts
+# Wait for agents to start, then confirm the dev-channels dialog for all windows
 echo "  Waiting 8 seconds for agents to start..."
 sleep 8
+
+# Confirm --dangerously-load-development-channels dialog (option 1 is pre-selected, just hit Enter)
+echo "  Confirming dev-channels dialog..."
+if [ "$LAUNCH_CEO" = true ]; then
+  tmux send-keys -t "$SESSION:ceo" "Enter"
+  sleep 0.5
+fi
+for dept in "${DEPT_ORDER[@]}"; do
+  tmux send-keys -t "$SESSION:$dept" "Enter"
+  sleep 0.5
+done
+
+echo "  Waiting 5 more seconds for agents to load..."
+sleep 5
 
 # Send CEO init prompt
 if [ "$LAUNCH_CEO" = true ]; then
