@@ -3717,6 +3717,18 @@ async def get_citation_percentile(db: aiosqlite.Connection, maker_id: int, days:
     return {'name': row['name'], 'citations': row['cite_count'], 'percentile': row['percentile']}
 
 
+async def get_maker_tool_citations(db: aiosqlite.Connection, maker_id: int) -> list[dict]:
+    """Per-tool citation breakdown from maker_weekly_citations view (7d/30d/all)."""
+    cursor = await db.execute("""
+        SELECT tool_slug, tool_name, citations_7d, citations_30d, citations_all
+        FROM maker_weekly_citations
+        WHERE maker_id = ?
+        ORDER BY citations_30d DESC
+    """, (maker_id,))
+    rows = await cursor.fetchall()
+    return [dict(r) for r in rows]
+
+
 async def get_weekly_citation_digest(db, days: int = 7) -> list[dict]:
     """Get citation data for all makers with cited tools in the last N days.
 

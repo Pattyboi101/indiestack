@@ -31,6 +31,7 @@ from indiestack.db import (
     get_purchases_by_email,
     get_total_agent_citations, get_citation_percentile,
     get_maker_query_intelligence, get_maker_agent_breakdown, get_maker_daily_trend,
+    get_maker_tool_citations,
     create_api_key, get_api_keys_for_user, revoke_api_key, get_api_key_usage_stats,
     get_agent_action_counts, get_agent_action_log, update_api_key_scopes,
     get_developer_profile, toggle_personalization, clear_developer_profile,
@@ -378,6 +379,7 @@ async def dashboard_overview(request: Request):
         queries = await get_maker_query_intelligence(db, user['maker_id'], days=30)
         agents = await get_maker_agent_breakdown(db, user['maker_id'], days=30)
         trend = await get_maker_daily_trend(db, user['maker_id'], days=30)
+        tool_citations = await get_maker_tool_citations(db, user['maker_id'])
 
         # Query intelligence table
         query_rows = ''
@@ -443,6 +445,36 @@ async def dashboard_overview(request: Request):
                 </div>
             </div>'''
 
+        # Per-tool citation breakdown (visible to all claimed-tool makers)
+        _tool_cit_html = ''
+        if tool_citations and len(tool_citations) > 1:
+            _tool_rows = ''
+            for tc in tool_citations:
+                _tool_rows += f'''
+                <tr style="border-bottom:1px solid var(--border);">
+                    <td style="padding:10px 12px;">
+                        <a href="/tool/{escape(tc['tool_slug'])}" style="color:var(--ink);font-weight:600;text-decoration:none;font-size:14px;">{escape(tc['tool_name'])}</a>
+                    </td>
+                    <td style="padding:10px 12px;text-align:center;font-weight:600;color:var(--accent);font-size:14px;">{tc['citations_7d']}</td>
+                    <td style="padding:10px 12px;text-align:center;font-size:14px;color:var(--ink-muted);">{tc['citations_30d']}</td>
+                    <td style="padding:10px 12px;text-align:center;font-size:13px;color:var(--ink-muted);">{tc['citations_all']}</td>
+                </tr>'''
+            _tool_cit_html = f'''
+            <div class="card" style="padding:20px;margin-bottom:24px;">
+                <h3 style="font-size:15px;color:var(--ink);margin-bottom:12px;">Citations by Tool</h3>
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr style="border-bottom:2px solid var(--border);text-align:left;">
+                            <th style="padding:8px 12px;font-size:12px;color:var(--ink-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Tool</th>
+                            <th style="padding:8px 12px;text-align:center;font-size:12px;color:var(--ink-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">7d</th>
+                            <th style="padding:8px 12px;text-align:center;font-size:12px;color:var(--ink-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">30d</th>
+                            <th style="padding:8px 12px;text-align:center;font-size:12px;color:var(--ink-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">All</th>
+                        </tr>
+                    </thead>
+                    <tbody>{_tool_rows}</tbody>
+                </table>
+            </div>'''
+
         if queries or agents:
             # Pre-compute agent card content to avoid nested f-string quote conflicts
             if agents or trend:
@@ -456,6 +488,7 @@ async def dashboard_overview(request: Request):
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
                 </h2>
                 {_headline_html}
+                {_tool_cit_html}
                 <style>.ai-intel-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}}@media(max-width:600px){{.ai-intel-grid{{grid-template-columns:1fr}}}}</style>
                 <div class="ai-intel-grid">
                     <div class="card">
@@ -485,6 +518,7 @@ async def dashboard_overview(request: Request):
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> AI Distribution Intelligence <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(last 30 days)</span>
                 </h2>
                 {_headline_html}
+                {_tool_cit_html}
                 <p style="color:var(--ink-muted);font-size:13px;">As agents recommend your tools more, detailed breakdowns will appear here.</p>
             </div>'''
         else:
@@ -2981,14 +3015,12 @@ async def dashboard_export(request: Request):
     tools_data = []
     if maker_id:
         tools = await get_tools_by_maker(db, maker_id)
+        # Build citation lookup from view (7d/30d/all)
+        tc_list = await get_maker_tool_citations(db, maker_id)
+        tc_map = {tc['tool_slug']: tc for tc in tc_list}
         for t in tools:
-            # Per-tool citation count (all time)
-            cit_cursor = await db.execute(
-                "SELECT COUNT(*) as cnt FROM agent_citations WHERE tool_id = ?",
-                (t['id'],),
-            )
-            cit_row = await cit_cursor.fetchone()
-            citation_count = cit_row['cnt'] if cit_row else 0
+            tc = tc_map.get(t['slug'], {})
+            citation_count = tc.get('citations_all', 0) or 0
 
             tools_data.append({
                 'name': t['name'],
@@ -3001,6 +3033,8 @@ async def dashboard_export(request: Request):
                 'saves': t.get('save_count', 0),
                 'mcp_views': t.get('mcp_view_count', 0),
                 'agent_citations': citation_count,
+                'citations_7d': tc.get('citations_7d', 0) or 0,
+                'citations_30d': tc.get('citations_30d', 0) or 0,
             })
 
     if fmt == 'json':
@@ -3019,7 +3053,7 @@ async def dashboard_export(request: Request):
     # CSV format
     output = io.StringIO()
     fieldnames = ['name', 'slug', 'category', 'description', 'created_at',
-                  'status', 'upvotes', 'saves', 'mcp_views', 'agent_citations']
+                  'status', 'upvotes', 'saves', 'mcp_views', 'citations_7d', 'citations_30d', 'agent_citations']
     writer = csv.DictWriter(output, fieldnames=fieldnames)
     writer.writeheader()
     for row in tools_data:
