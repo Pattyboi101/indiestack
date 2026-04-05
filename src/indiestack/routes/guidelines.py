@@ -19,12 +19,24 @@ async def guidelines(request: Request):
         </p>
 
         <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:12px;">
+            Scope: developer tools only
+        </h2>
+        <p style="color:var(--ink);font-size:15px;line-height:1.7;margin-bottom:16px;">
+            IndieStack is for <strong>developer tools</strong> — software that helps developers and small teams build, ship, and run products.
+            This includes: auth libraries, payment SDKs, databases, APIs, analytics, monitoring, CI/CD, email infrastructure, self-hosted services, CLI tools, and developer SaaS.
+        </p>
+        <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;margin-bottom:24px;padding:12px 16px;background:var(--cream-dark);border-radius:8px;border-left:3px solid var(--terracotta);">
+            <strong>Out of scope:</strong> consumer apps (fitness trackers, recipe apps, social networks, weather apps, games), personal finance tools, crypto wallets, and non-developer productivity apps.
+            If your tool&rsquo;s primary audience is end-users, not developers, it&rsquo;s likely not a fit.
+        </p>
+
+        <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:12px;">
             What belongs on IndieStack
         </h2>
         <ul style="color:var(--ink);font-size:15px;line-height:1.8;margin-bottom:24px;padding-left:20px;">
             <li><strong>Independently built software</strong> &mdash; solo founders, small teams, bootstrapped projects</li>
             <li><strong>Actively maintained</strong> &mdash; your tool should work when someone tries it</li>
-            <li><strong>Genuinely useful</strong> &mdash; solves a real problem for real people</li>
+            <li><strong>Genuinely useful</strong> &mdash; solves a real problem for real developers</li>
         </ul>
 
         <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:12px;">
@@ -41,6 +53,7 @@ async def guidelines(request: Request):
             What gets rejected
         </h2>
         <ul style="color:var(--ink);font-size:15px;line-height:1.8;margin-bottom:24px;padding-left:20px;">
+            <li><strong>Consumer apps</strong> &mdash; fitness trackers, recipe apps, weather apps, games, crypto wallets, and tools built for end-users rather than developers</li>
             <li>Default deployment URLs with no custom domain</li>
             <li>Dead links or tools that return errors</li>
             <li>AI-generated marketing copy with no substance</li>
