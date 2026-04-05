@@ -28,21 +28,56 @@ while true; do
 Use rag_query() for context instead of reading full memory files.
 After fixing anything, rag_store() the knowledge so other agents benefit.
 
-Run the 5-iteration cycle:
+Run the 6-iteration cycle:
 
-ITERATION 1 — SEARCH QUALITY: curl the API for 'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring', 'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth'. Flag bad results and fix them.
+ITERATION 1 — SEARCH QUALITY:
+curl the API for these queries and check top-3 results are relevant:
+  'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring',
+  'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth',
+  'state management', 'bundler', 'realtime', 'vector database', 'rate limiting'.
+For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
+Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
+After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
-ITERATION 2 — DATA QUALITY: SSH to prod (fly ssh console -a indiestack) and find tools with high mcp_view_count but missing install_command or description. Fix them. Check for zero-result queries. Rebuild FTS after changes.
+ITERATION 2 — DATA QUALITY:
+SSH to prod (flyctl ssh console -a indiestack) and:
+  - Find tools with high mcp_view_count but missing install_command, description, or github_url.
+  - Check scripts/add_missing_tools.py — if any slugs from that script are missing from prod, run it.
+  - After any DB changes, rebuild FTS: INSERT INTO tools_fts(tools_fts) VALUES('rebuild');
+  - Run PRAGMA wal_checkpoint(TRUNCATE).
 
-ITERATION 3 — COMPETITIVE: Search GitHub for new MCP servers trending this week. Log findings to .orchestra/logs/\$(date +%Y-%m-%d)-research.md
+ITERATION 3 — COMPETITIVE RESEARCH:
+Search GitHub for new MCP servers trending this week (search 'mcp server' sort:stars pushed:>2026-03-01).
+Log findings to .orchestra/logs/\$(date +%Y-%m-%d)-research.md.
+If any trending MCP servers are missing from IndieStack, add them to scripts/add_missing_tools.py.
 
-ITERATION 4 — PROVOCATION: Run python3 scripts/provoke.py. Before acting: (1) helps distribution/search/revenue? (2) someone else doing it? (3) under 30 min? Only act if all pass.
+ITERATION 4 — PROVOCATION:
+Run python3 scripts/provoke.py. Before acting on any suggestion, ask:
+  (1) Does it help distribution, search quality, or revenue?
+  (2) Is someone else already doing it?
+  (3) Can it be done in under 30 minutes?
+Only act if ALL three pass.
 
-ITERATION 5 — RAG HYGIENE: Query RAG for entries tagged 'checkpoint' older than 24h and note any that seem stale. Check if any recent code changes contradict stored knowledge. Clean up as needed.
+ITERATION 5 — MEMORY HYGIENE:
+Check memory/sprint.md exists and is up-to-date (if missing, create it).
+Check memory/decisions.md exists with key decisions logged.
+Query RAG for entries tagged 'checkpoint' older than 24h — note stale ones.
+Check if recent code changes contradict stored RAG knowledge.
+
+ITERATION 6 — COPY AUDIT:
+Grep route files for hardcoded stats (tool counts, install counts, category counts).
+Verify against production DB: SELECT COUNT(*) FROM tools WHERE status='approved'.
+Fix any stale copy that's off by more than 10%. Run smoke_test.py after route changes.
 
 AFTER: bash ~/.claude/telegram.sh '[Bot] Session summary: [what you checked/fixed/researched]'
 
-Rules: never git add -A, never Co-Authored-By Claude, run smoke_test.py before pushing, DO NOT deploy, OK to exit early if nothing to do."
+Rules:
+- Never git add -A or git add . — stage specific files only
+- Never Co-Authored-By Claude in commits
+- Run python3 smoke_test.py before committing any route file changes
+- DO NOT deploy
+- Commit style: 'fix: ...' or 'feat: ...' or 'chore: ...' lowercase concise
+- OK to exit early if nothing needs fixing"
 
     echo ""
     echo "Cycle complete: $(date)"
