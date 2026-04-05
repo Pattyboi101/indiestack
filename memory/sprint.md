@@ -4,6 +4,17 @@ Last updated: 2026-04-05
 
 ## Status: Active
 
+## Completed This Session (2026-04-05, eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added NEED_MAPPINGS entries for 3 unmapped categories: `feature-flags`, `logging`, `notifications`
+- Added `_CAT_SYNONYMS`: `toggle`/`toggles` → `feature`, `experiment` → `feature`
+- These cover "feature toggle", "a/b experiment", and "push notification" query patterns
+
+### Code Quality (Step 3)
+- Fixed 2 stale stats: `account.py` "3,000+" → "6,500+", `built_this.py` "350+" → "6,500+"
+- Smoke test confirms tunnel/proxy failures only (not code failures)
+
 ## Completed This Session (2026-04-05, seventh pass — autonomous improvement cycle)
 
 ### Search Quality Audit (Step 1)

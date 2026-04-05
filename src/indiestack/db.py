@@ -689,6 +689,9 @@ NEED_MAPPINGS = {
     "caching": {"category": "caching", "terms": ["cache", "caching", "redis", "memcached", "in-memory", "key-value store", "edge cache", "cdn cache"], "competitors": ["Redis", "Memcached", "Upstash", "Cloudflare"], "title": "Caching & In-Memory", "description": "In-memory stores, caching layers, and key-value databases for high-performance apps.", "build_estimate": "1 week", "icon": "\u26a1"},
     "mcp": {"category": "mcp-servers", "terms": ["mcp server", "model context protocol", "mcp tool", "claude tool", "claude integration", "agent tool", "agent integration"], "competitors": ["Zapier MCP", "Make MCP", "Custom MCP servers"], "title": "MCP Servers", "description": "MCP server implementations that give AI agents access to tools, data, and services.", "build_estimate": "varies", "icon": "\U0001f9e9"},
     "boilerplate": {"category": "boilerplates", "terms": ["boilerplate", "starter kit", "starter template", "scaffold", "nextjs boilerplate", "saas starter", "app template"], "competitors": ["create-next-app", "T3 Stack", "create-t3-app", "Vercel templates"], "title": "Boilerplates & Starters", "description": "Starter kits, scaffold templates, and opinionated project starters to ship faster.", "build_estimate": "ready to use", "icon": "\U0001f4e6"},
+    "featureflags": {"category": "feature-flags", "terms": ["feature flag", "feature toggle", "a/b test", "ab test", "experiment", "gradual rollout", "canary release"], "competitors": ["LaunchDarkly", "Split.io", "Unleash", "Flagsmith"], "title": "Feature Flags", "description": "Ship features safely with toggles, A/B tests, and gradual rollouts.", "build_estimate": "1-2 weeks", "icon": "\U0001f6a9"},
+    "logging": {"category": "logging", "terms": ["logging", "log management", "log aggregation", "structured logs", "log drain", "log analysis"], "competitors": ["Datadog Logs", "Logtail", "Papertrail", "Splunk"], "title": "Logging", "description": "Aggregate, search, and analyse logs from your applications and infrastructure.", "build_estimate": "1 week", "icon": "\U0001f4dc"},
+    "notifications": {"category": "notifications", "terms": ["push notification", "in-app notification", "notification service", "sms notification", "mobile push"], "competitors": ["OneSignal", "Firebase FCM", "Pusher Beams", "Expo Notifications"], "title": "Notifications", "description": "Send push notifications, in-app messages, and SMS alerts to your users.", "build_estimate": "1-2 weeks", "icon": "\U0001f514"},
 }
 
 TECH_KEYWORDS = {
@@ -2446,6 +2449,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "feature": "feature",
     "flags": "feature",
     "flag": "feature",
+    "toggle": "feature",        # "feature toggle" queries
+    "toggles": "feature",
+    "experiment": "feature",    # "a/b experiment" / "experimentation platform"
     "error": "monitoring",
     "errors": "monitoring",
     "video": "media",
