@@ -2664,6 +2664,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend frameworks — named tools missing from earlier pass
     "tanstack": "frontend",     # TanStack Query, TanStack Router, TanStack Table
     "radix": "frontend",        # Radix UI primitives
+    # UI components / design systems
+    "ui": "frontend",           # "UI component library", "UI kit", "UI framework"
+    "component": "frontend",    # "component library" — library is a stop word, component stays
+    "components": "frontend",   # plural form
+    # Animation libraries
+    "animation": "frontend",    # Framer Motion, GSAP, Motion.dev, Anime.js
+    "animate": "frontend",      # "animate.css", "animate on scroll"
+    # Icon libraries
+    "icon": "frontend",         # "icon library" — Lucide Icons, Heroicons, Phosphor
+    "icons": "frontend",        # plural form
+    # Access control (RBAC, fine-grained permissions)
+    "rbac": "authentication",   # role-based access control
+    "permission": "authentication",   # "permissions management", "fine-grained permission"
+    "permissions": "authentication",  # plural
+    "access": "authentication",       # "access control", "access management"
+    # Internationalisation / localisation
+    "i18n": "frontend",         # "i18n library" — next-intl, rosetta, lingui, paraglide
+    "localization": "frontend", # "localization tools"
+    # Workflow / automation (n8n, Make.com, Zapier)
+    "workflow": "ai",           # "workflow automation" — n8n, Make, Zapier live in ai-automation
 }
 
 _FTS_STOP_WORDS = {
