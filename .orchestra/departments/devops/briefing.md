@@ -1,14 +1,24 @@
-# Briefing — 2026-04-04 16:07
+# Briefing — 2026-04-05
 
 ## Task
-Read smoke_test.py and identify which important endpoints are NOT currently tested. Suggest 3-5 additions that would catch real regressions (e.g. MCP endpoints, search API, tool detail API, /analyze, /stacks). Add the new tests directly to smoke_test.py. CONDITION: Only add tests for GET/read-only endpoints — do NOT add tests that POST data or mutate production state. Ensure new tests check for 200 status codes and basic response structure, not hardcoded content that will go stale.
+Verify deployment health and smoke test coverage.
 
-## S&QA Conditions
-- Backend: use absolute paths for any SSH commands — 'cd' is a shell builtin and will fail in flyctl ssh
-- Backend: throttle API requests slightly to avoid 429 rate limiting from rapid-fire queries
-- Content: verify all stats against production DB before updating copy — stale stats have bitten us multiple times
-- DevOps: new smoke tests must be read-only — no POST/PUT/DELETE against production endpoints
+**Task 1 — Smoke test gaps:**
+Read smoke_test.py and verify MCP-specific endpoints are covered. The current test suite has 58 endpoints. Check if `/api/tools/search?q=auth` and `/api/tools/categories` are tested. If not, add them (GET only, read-only).
+
+**Task 2 — Deployment verification:**
+After any deploy, run: `curl -sL -o /dev/null -w "%{http_code}" https://indiestack.fly.dev/`
+Send Telegram notification: `bash ~/.claude/telegram.sh "Deploy verified: OK"`
+
+**Task 3 — Health check:**
+Verify `https://indiestack.fly.dev/health` returns 200. Report status.
+
+## Constraints
+- Use absolute paths in all SSH commands — `cd` is a shell builtin and fails with flyctl ssh -C
+- `scripts/` is NOT in the Dockerfile — use SFTP upload pattern or `python3 -c "..."` for small scripts
+- All smoke test additions must be read-only (GET only, no mutations)
+- Do NOT run flyctl deploy unless explicitly instructed
 
 ## Risk Flags
-- Backend hitting production API 15+ times in quick succession could trigger rate limiting (known gotcha)
-- Content editing f-string templates — a stray quote or bracket breaks the whole page, so test locally or at least eyeball the diff carefully
+- Rapid API calls can trigger rate limiting (429) — throttle between requests
+- Local Docker build may be slow — use `--remote-only` if local is unavailable

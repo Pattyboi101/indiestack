@@ -2589,6 +2589,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "state": "frontend",
     "manager": "frontend",     # "state manager" → "state" or "manager" both map to frontend
     "bundler": "frontend",
+    "build": "frontend",           # "build tool" → first term "build" → frontend-frameworks
     "vite": "frontend",
     # CSS frameworks/libraries
     "css": "frontend",
@@ -2628,6 +2629,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Realtime / WebSockets — typically API-layer tools (Pusher, Ably, PartyKit)
     "realtime": "api",
     "real": "api",              # "real-time" → hyphen stripped → "real" + "time" → catches realtime queries
+    "time": "api",              # "real-time" hyphen-split → "time" reinforces realtime→api routing
     "limiting": "api",          # "rate limiting" → "rate" already maps to api, "limiting" reinforces it
     "websocket": "api",
     "websockets": "api",

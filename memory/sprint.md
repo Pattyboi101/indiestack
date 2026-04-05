@@ -4,7 +4,18 @@ Last updated: 2026-04-05
 
 ## Status: Active
 
-## Completed This Session (2026-04-05)
+## Completed This Session (2026-04-05, third pass — autonomous improvement cycle)
+
+### Search Quality (additional fixes)
+- Added `"build"` → `"frontend"` synonym for "build tool" queries (was missing)
+- Added `"time"` → `"api"` synonym to reinforce "real-time" hyphen-split routing
+- Verified all step-1 requested mappings are already present (no gaps found)
+
+### Code Quality
+- Fixed hardcoded hex `#1A2D4A` in landing.py status-tag CSS → now uses `var(--terracotta)`
+- Smoke test shows 403 tunnel errors (network issue, not code), not real failures
+
+## Completed This Session (2026-04-05, second pass)
 
 ### Search Quality
 - Verified all required `_CAT_SYNONYMS` mappings are present:

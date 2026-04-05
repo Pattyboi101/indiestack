@@ -501,7 +501,7 @@ async def landing(request: Request):
         '@media(max-width:480px){.cat-compact-grid{grid-template-columns:1fr;}}'
         '.glow-sphere{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;}'
         '/* System status tag */'
-        '.status-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.15em;font-size:11px;font-weight:600;color:#1A2D4A;}'
+        '.status-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.15em;font-size:11px;font-weight:600;color:var(--terracotta);}'
         '[data-theme="dark"] .status-tag{color:rgba(255,255,255,0.5);}'
         '.status-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--slate);animation:status-pulse 2s ease-in-out infinite;}'
         '@keyframes status-pulse{0%,100%{opacity:1;box-shadow:0 0 8px rgba(0,212,245,0.6)}50%{opacity:0.4;box-shadow:0 0 2px rgba(0,212,245,0.2)}}'
