@@ -1950,7 +1950,23 @@ async def api_tools_search(
             pass  # Never fail search for personalisation
 
     # Pro MCP enrichment — add citation counts and compatible pairs for Pro keys
-    is_pro_key = api_key and api_key.get('tier') == 'pro'
+    # Re-check actual Pro status at request time (key.tier may be stale after trial expiry)
+    is_pro_key = False
+    if api_key:
+        key_user_id = api_key.get('user_id')
+        if key_user_id:
+            try:
+                is_pro_key = await db.check_pro(d, key_user_id)
+                # Sync stale tier on the key itself
+                stored_tier = api_key.get('tier', 'free')
+                correct_tier = 'pro' if is_pro_key else 'free'
+                if stored_tier != correct_tier:
+                    await d.execute(
+                        "UPDATE api_keys SET tier = ? WHERE id = ?",
+                        (correct_tier, api_key['id'])
+                    )
+            except Exception:
+                is_pro_key = api_key.get('tier') == 'pro'  # fallback to stored
     if is_pro_key and results:
         try:
             tool_ids = [t['id'] for t in tools if t.get('id')]
@@ -2901,7 +2917,15 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
         pass
 
     # Pro MCP enrichment — citation stats, category ranking, demand context
-    is_pro_key = request.state.api_key and request.state.api_key.get('tier') == 'pro'
+    # Re-check actual Pro status (key.tier may be stale after trial expiry)
+    is_pro_key = False
+    if request.state.api_key:
+        _key_uid = request.state.api_key.get('user_id')
+        if _key_uid:
+            try:
+                is_pro_key = await db.check_pro(d, _key_uid)
+            except Exception:
+                is_pro_key = request.state.api_key.get('tier') == 'pro'
     if is_pro_key:
         try:
             import asyncio as _asyncio
