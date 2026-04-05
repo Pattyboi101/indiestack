@@ -25,11 +25,11 @@ def format_price(pence) -> str:
 def _health_badge(status: str) -> str:
     """Render a colored health-status pill."""
     colors = {
-        'active': ('var(--success-bg, #D1FAE5)', 'var(--success-text, #065F46)'),
-        'stale': ('#FEF3C7', '#92400E'),
-        'dead': ('#FEE2E2', '#991B1B'),
+        'active': ('var(--success-bg)', 'var(--success-text)'),
+        'stale': ('var(--warning-bg)', 'var(--warning-text)'),
+        'dead': ('var(--error-bg)', 'var(--error-text)'),
     }
-    bg, fg = colors.get(status, ('#F3F4F6', '#6B7280'))
+    bg, fg = colors.get(status, ('var(--cream-dark)', 'var(--ink-muted)'))
     label = escape(status.capitalize()) if status else 'Unknown'
     return (
         f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;'
@@ -206,9 +206,9 @@ async def compare_tools(request: Request, slugs: str):
         reason = escape(str(conflict['reason'] or 'Potential overlap detected'))
         compat_banner = f'''
         <div style="padding:14px 20px;border-radius:var(--radius-sm);margin-bottom:32px;
-                    background:#FEF3C7;border:1px solid #F59E0B;display:flex;align-items:center;gap:10px;">
+                    background:var(--warning-bg);border:1px solid var(--warning-border);display:flex;align-items:center;gap:10px;">
             <span style="font-size:18px;">&#9888;</span>
-            <span style="font-size:14px;color:#92400E;font-weight:500;">Compatibility warning: {reason}</span>
+            <span style="font-size:14px;color:var(--warning-text);font-weight:500;">Compatibility warning: {reason}</span>
         </div>'''
     elif pair and int(pair['success_count']) > 0:
         sc = int(pair['success_count'])
