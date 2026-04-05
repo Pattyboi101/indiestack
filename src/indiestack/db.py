@@ -2862,6 +2862,7 @@ async def search_tools(
         " + (CASE WHEN t.created_at > datetime('now', '-14 days') THEN"
         "     5.0 * (1.0 - (julianday('now') - julianday(t.created_at)) / 14.0)"
         "    ELSE 0 END)"
+        " + (COALESCE(t.quality_score, 0) * 1.5)"
     )
     # The five params consumed by _engagement_expr (exact name w/install, exact name w/o, prefix, category, tags)
     # For category and tag matching, find the best synonym match across all meaningful terms.

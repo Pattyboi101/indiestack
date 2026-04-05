@@ -1160,7 +1160,14 @@ async def sitemap(request: Request):
     cursor = await d.execute("SELECT slug, created_at as lastmod FROM tools WHERE status = 'approved'")
     tools = await cursor.fetchall()
     for t in tools:
-        lm = t['lastmod'][:10] if t.get('lastmod') else None
+        _lm = t['lastmod']
+        if not _lm:
+            lm = None
+        elif isinstance(_lm, int):
+            from datetime import datetime as _dt
+            lm = _dt.utcfromtimestamp(_lm).strftime('%Y-%m-%d')
+        else:
+            lm = str(_lm)[:10]
         urls.append((f"{BASE_URL}/tool/{t['slug']}", "weekly", "0.7", lm))
     # Maker profiles
     cursor2 = await d.execute("SELECT slug FROM makers")
