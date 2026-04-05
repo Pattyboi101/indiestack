@@ -55,6 +55,37 @@ Last updated: 2026-04-05
 - Key conclusion: citation analytics are the unlock for first Maker Pro subscriber
 - Action items written to all 5 department briefings
 
+## Completed This Session (2026-04-05, fifth pass — catalog cleanup resumed)
+
+### Catalog Cleanup — ~95 tools re-categorized (continuation of earlier ~500+ pass)
+- **seo-tools**: 7 misfits → boilerplates, developer-tools, ai-automation
+- **landing-pages**: 12 misfits → headless-cms, email-marketing, boilerplates, developer-tools, ai-dev-tools
+- **project-management**: 22 misfits → ai-dev-tools, ai-automation, documentation, scheduling-booking, devops-infrastructure, invoicing-billing, developer-tools, newsletters-content
+- **analytics-metrics**: 3 misfits → invoicing-billing, social-media, developer-tools
+- **games-entertainment**: 3 misfits → developer-tools, media-server
+- **design-creative**: 8 misfits → developer-tools (charting libs, favicon CLIs, diagram tools)
+- **customer-support**: fonoster → api-tools (telecom voice API)
+- **authentication**: 7 misfits → developer-tools, boilerplates, api-tools, frontend-frameworks, security-tools
+- **payments**: 5 misfits → boilerplates, project-management, developer-tools
+- **database**: AtlasOS → developer-tools (not a DB)
+- **monitoring-uptime**: 5 misfits → security-tools, ai-dev-tools, devops-infrastructure, developer-tools
+- **devops-infrastructure**: 6 misfits → documentation, developer-tools (pastebin/RSS/secret-sharing)
+- **api-tools**: 2 misfits → documentation, developer-tools
+- **crm-sales**: 6 misfits → boilerplates, ai-dev-tools, developer-tools
+- **testing-tools**: 6 misfits → developer-tools (benchmarking tools), api-tools
+- **message-queue**: 2 misfits → background-jobs, developer-tools
+- **social-media**: 6 misfits → security-tools (OSINT tools), boilerplates, newsletters-content
+- **search-engine**: 2 misfits → database, developer-tools
+- FTS rebuilt 4× after batch updates (WAL checkpoint skipped as app holds lock — normal)
+- Consumer apps expanded list updated in catalog-scope meeting: ~30 tools for Patrick to reject
+- Fintech tools re-homed: alpha-vantage→api-tools, ghostfolio/midday→invoicing-billing, fingpt/finrl-meta→ai-dev-tools
+- scheduling-booking/invoicing-billing/ai-automation: 20+ additional misfits fixed
+
+### Meetings
+- Catalog scope meeting (2026-04-05-15) created and closed — ~25 consumer apps identified
+  - Action for Patrick: bulk-reject via /admin (fastnfitness, foodyou, etc.)
+  - Action for Content: add scope statement to submit/guidelines pages
+
 ## Current Priorities
 1. **Backend**: validate citation data — how many tools have >10 agent citations/month?
 2. **Frontend**: audit /maker/dashboard analytics exposure

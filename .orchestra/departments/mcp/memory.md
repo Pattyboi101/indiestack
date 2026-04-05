@@ -119,3 +119,38 @@ those tools receive. Harder to fix — needs description cleaning or category-mi
 - License/setup snippet in get_tool_details — needs backend DB columns.
 
 **Files changed:** mcp_server.py, pyproject.toml, server.json (1.14.2 → 1.15.0)
+
+## 2026-04-05 — Search quality audit + description fix (v1.15.1)
+
+**Task:** Test 5 production search queries, audit mcp_server.py find_tools description.
+
+**Search misfires found:**
+- `authentication`: zauth (CLI 2FA, 78 stars) ranks #2. Clerk and Better Auth absent. Needs Backend attention.
+- `background jobs`: River (Go) and Resque (Ruby) rank above BullMQ and Celery. Language-specific tools surfacing for general query.
+- `css framework`: Bulma at #3 instead of shadcn. Minor.
+- `mcp server`: PASS. `caching`: PASS (Redis #1, Valkey, Memcached).
+
+**Description fix:**
+- `pyproject.toml` and `server.json` both had stale "8,000+" — corrected to "6,500+"
+- Version bumped 1.15.0 → 1.15.1
+
+**find_tools docstring:** Tool count "6,500+" was already correct in mcp_server.py. The stale count was ONLY in pyproject.toml and server.json metadata (not the Python code).
+
+**Files changed:** pyproject.toml, server.json (1.15.0 → 1.15.1)
+
+## 2026-04-05 — Meeting tasks: README rewrite + tool audit + maker stats spec
+
+**README rewrite:** Added claude_desktop_config.json as the lead Quick Install snippet.
+Fixed tools table from 19 → 23 tools (recommend, shortlist, confirm_integration, set_api_key were missing).
+
+**Tool audit findings (23 tools):**
+- 5 TERSE: list_tags, list_stacks (no call triggers), report_compatibility, recommend, shortlist
+- 2 MISLEADING: set_api_key (says "migration intelligence" requires key — it doesn't), confirm_integration (wrong URL: dashboard → developer)
+- Docstring fixes staged for v1.15.2 — DO NOT publish until approved
+
+**get_maker_stats spec:** Written to /tmp/get-maker-stats-spec.md
+- Backend needs: tool_impressions table + /api/maker/stats endpoint + tool ownership/claims
+- Most data already logged (recommend/shortlist/outcome) — impression logging is the main new work
+- This is the Maker Pro conversion hook
+
+**Files changed:** README_PYPI.md

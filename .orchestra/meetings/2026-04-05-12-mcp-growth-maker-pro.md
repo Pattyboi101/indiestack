@@ -174,12 +174,15 @@ Priority order that emerged:
 ## Action Items
 
 ### Backend
-- [ ] Query production: count tools with >10 agent citations this month — report number to Patrick
-- [ ] Add `maker_weekly_citations` view to DB for fast maker dashboard queries
+- [x] Query production: count tools with >10 agent citations — **23 tools** (out of 564 ever cited)
+  - Only 2 unclaimed: next-auth (23 citations), supertokens-core (14 citations)
+  - Distribution: 10 tools ≥20 citations, 29 tools ≥10, 72 tools ≥5
+  - Outreach emails drafted and forwarded to Ed
+- [x] `maker_weekly_citations` view created on production — 7d/30d/90d/all-time citation counts per tool, scoped to claimed tools
 
 ### Frontend
-- [ ] Audit /maker/dashboard — what analytics are currently exposed?
-- [ ] Design citation timeline component (30-day bar chart)
+- [x] Audit /maker/dashboard — citation analytics already exposed: `agent_citations_30d`, percentile, per-tool breakdown, daily trend. Real data from `agent_citations` table. Dashboard is functional — no blocker for outreach.
+- [ ] Design citation timeline component (30-day bar chart) — nice-to-have but not blocking
 
 ### Content
 - [ ] Update /why-list with AI agent discovery copy
@@ -190,7 +193,7 @@ Priority order that emerged:
 - [ ] Audit 23 MCP tool descriptions — flag any that are unclear or misleading
 
 ### DevOps
-- [ ] Run /backup before any Maker Pro launch work begins
+- [x] /backup complete — indiestack-20260405-142230.db, 108M, 5 backups retained locally
 
 ### Patrick (decisions needed)
 - [ ] What citation count threshold makes Maker Pro worth it to a maker? (10/week? 50/week?)

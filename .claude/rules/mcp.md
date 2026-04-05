@@ -9,7 +9,7 @@ paths:
 # IndieStack — MCP Server
 
 ## Version & Distribution
-- Current version: v1.15.0 on PyPI + official MCP Registry
+- Current version: v1.15.1 on PyPI + official MCP Registry
 - Registry ID: `io.github.Pattyboi101/indiestack`, ~2,100 tokens footprint
 - 23 tools, 3 resources, 5 prompts
 
