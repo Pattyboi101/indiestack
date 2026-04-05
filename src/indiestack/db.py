@@ -1775,6 +1775,13 @@ async def init_db():
         await db.execute("CREATE INDEX IF NOT EXISTS idx_outcomes_hash ON build_outcomes(manifest_hash)")
         await db.commit()
 
+        # Migration: track mid-trial citation nudge email (avoids duplicate sends)
+        try:
+            await db.execute("ALTER TABLE users ADD COLUMN citation_trial_nudge_sent INTEGER DEFAULT 0")
+            await db.commit()
+        except Exception:
+            pass
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 

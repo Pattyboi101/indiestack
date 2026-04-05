@@ -569,6 +569,85 @@ async def _weekly_citation_alert():
         await asyncio.sleep(3600)  # Check every hour
 
 
+async def _trial_citation_nudge():
+    """Send citation notification to trial users who haven't been nudged yet.
+
+    Runs every 6h. For each active trial user with cited tools, sends one email
+    showing how many times AI agents recommended their tool. Drives Pro conversion
+    by making the value tangible before the trial expires.
+    """
+    import aiosqlite
+    import logging
+    from datetime import datetime, timezone
+    logger = logging.getLogger("indiestack")
+    await asyncio.sleep(3600)  # Wait 1h after startup before first run
+    while True:
+        try:
+            async with aiosqlite.connect(db.DB_PATH) as conn:
+                conn.row_factory = aiosqlite.Row
+                trial_users = await conn.execute_fetchall("""
+                    SELECT u.id, u.email, u.name, u.maker_id, u.trial_ends_at
+                    FROM users u
+                    WHERE u.trial_ends_at > datetime('now')
+                      AND u.maker_id IS NOT NULL
+                      AND COALESCE(u.citation_trial_nudge_sent, 0) = 0
+                      AND COALESCE(u.email_opt_out, 0) = 0
+                      AND u.email IS NOT NULL AND u.email != ''
+                """)
+                sent = 0
+                for user in trial_users:
+                    rows = await conn.execute_fetchall("""
+                        SELECT t.name, t.slug, COUNT(ac.id) as cnt
+                        FROM tools t
+                        LEFT JOIN agent_citations ac ON ac.tool_id = t.id
+                            AND ac.created_at >= datetime('now', '-7 days')
+                        WHERE t.maker_id = ? AND t.status = 'approved'
+                        GROUP BY t.id
+                        ORDER BY cnt DESC
+                    """, (user['maker_id'],))
+                    total = sum(r['cnt'] for r in rows)
+                    if total == 0 or not rows:
+                        continue
+                    top_tool = rows[0]
+                    try:
+                        trial_end = datetime.fromisoformat(
+                            user['trial_ends_at'].replace('Z', '+00:00')
+                        )
+                        if trial_end.tzinfo is None:
+                            trial_end = trial_end.replace(tzinfo=timezone.utc)
+                        days_left = max(1, (trial_end - datetime.now(timezone.utc)).days)
+                    except Exception:
+                        days_left = 3
+                    first_name = (user['name'] or user['email'].split('@')[0]).split()[0]
+                    from indiestack.email import send_email as _send_email, trial_citation_nudge_html
+                    html = trial_citation_nudge_html(
+                        maker_name=first_name,
+                        tool_name=top_tool['name'],
+                        tool_slug=top_tool['slug'],
+                        citation_count=total,
+                        days_left=days_left,
+                    )
+                    cite_word = "time" if total == 1 else "times"
+                    subject = (
+                        f"AI agents cited {top_tool['name']} {total} {cite_word} "
+                        f"\u2014 {days_left} {'day' if days_left == 1 else 'days'} left on your trial"
+                    )
+                    ok = await _send_email(to=user['email'], subject=subject, html_body=html)
+                    if ok:
+                        await conn.execute(
+                            "UPDATE users SET citation_trial_nudge_sent = 1 WHERE id = ?",
+                            (user['id'],)
+                        )
+                        await conn.commit()
+                        sent += 1
+                        logger.info(f"Trial citation nudge sent: {user['email']} ({total} citations, {days_left}d left)")
+                if sent:
+                    _alert_telegram(f"Trial citation nudge: {sent} emails sent")
+        except Exception as e:
+            _logger.exception("Background task failed: trial citation nudge")
+        await asyncio.sleep(3600 * 6)  # Run every 6 hours
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await db.init_db()
@@ -588,6 +667,7 @@ async def lifespan(app: FastAPI):
     nudge_task = asyncio.create_task(_badge_nudge_check())
     digest_task = asyncio.create_task(_auto_weekly_digest())
     citation_task = asyncio.create_task(_weekly_citation_alert())
+    trial_nudge_task = asyncio.create_task(_trial_citation_nudge())
     pairs_task = asyncio.create_task(_weekly_pair_generator())
     health_task = asyncio.create_task(_periodic_health_refresh())
     yield
@@ -597,6 +677,7 @@ async def lifespan(app: FastAPI):
     nudge_task.cancel()
     digest_task.cancel()
     citation_task.cancel()
+    trial_nudge_task.cancel()
     pairs_task.cancel()
     health_task.cancel()
 

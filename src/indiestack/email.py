@@ -1679,3 +1679,56 @@ def reengagement_march_html(*, user_name: str, has_tools: bool) -> str:
         <strong style="color:#1A2D4A;">Patrick &amp; Ed</strong>
     </p>
     """
+
+
+def trial_citation_nudge_html(*, maker_name: str, tool_name: str, tool_slug: str,
+                               citation_count: int, days_left: int) -> str:
+    """Mid-trial email to makers with citations — make Pro value tangible before trial expires."""
+    maker_name = escape(maker_name)
+    tool_name = escape(tool_name)
+
+    cite_word = "time" if citation_count == 1 else "times"
+    day_word = "day" if days_left == 1 else "days"
+
+    return f"""
+    <div style="text-align:center;margin-bottom:24px;">
+        <div style="display:inline-block;background:#1A2D4A;color:#00D4F5;font-size:11px;font-weight:700;
+                    text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:999px;">
+            AI Citation Alert
+        </div>
+    </div>
+    <h2 style="font-family:serif;font-size:22px;color:#1A2D4A;margin-bottom:4px;text-align:center;">
+        {tool_name} is being picked up by AI agents
+    </h2>
+    <p style="color:#6B6560;font-size:15px;text-align:center;margin-bottom:24px;">
+        Hi {maker_name} &mdash; your tool was cited {citation_count} {cite_word} in the last 7 days.
+    </p>
+    <div style="text-align:center;padding:20px;background:#F0F7FA;border-radius:12px;margin:24px 0;">
+        <div style="font-size:40px;font-weight:bold;color:#1A2D4A;">{citation_count}</div>
+        <div style="font-size:13px;color:#6B6560;margin-top:4px;">AI agent citations in the last 7 days</div>
+    </div>
+    <p style="color:#1A2D4A;font-size:15px;line-height:1.6;margin:20px 0;">
+        AI coding assistants &mdash; Claude, Cursor, Windsurf &mdash; are recommending
+        <strong>{tool_name}</strong> to developers right now. This happens automatically
+        because your tool is in the catalog. Each citation is a developer who was pointed to you.
+    </p>
+    <div style="margin:28px 0;padding:20px;background:#1A2D4A;border-radius:12px;text-align:center;">
+        <p style="color:#00D4F5;font-size:14px;font-weight:700;margin:0 0 4px;">
+            Which agents cited it? What did they say?
+        </p>
+        <p style="color:rgba(255,255,255,0.7);font-size:13px;margin:0 0 16px;line-height:1.5;">
+            Pro shows you every citation in full &mdash; the agent, the context, the trend over time.
+            Your trial ends in <strong style="color:#fff;">{days_left} {day_word}</strong>.
+        </p>
+        <a href="{BASE_URL}/pricing" style="display:inline-block;background:#00D4F5;color:#1A2D4A;
+           padding:14px 32px;border-radius:8px;font-weight:700;font-size:16px;text-decoration:none;">
+            Keep Pro &mdash; $19/mo
+        </a>
+        <p style="color:rgba(255,255,255,0.5);font-size:12px;margin:10px 0 0;">
+            or <a href="{BASE_URL}/pricing" style="color:#E2B764;font-weight:600;">$99 once</a> as a Founding Member
+        </p>
+    </div>
+    <p style="color:#6B6560;font-size:14px;line-height:1.6;text-align:center;margin-top:24px;">
+        Patrick &amp; Ed &mdash; IndieStack
+    </p>
+    """
