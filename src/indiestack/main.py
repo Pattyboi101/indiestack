@@ -725,7 +725,7 @@ app.add_middleware(_HeadMethodMiddleware)
 
 # ── Security Headers ─────────────────────────────────────────────────────
 
-_CSRF_EXEMPT_PATHS = {"/webhooks/stripe", "/api/cite", "/api/tools/submit", "/api/follow-through", "/api/agent/recommend", "/api/agent/shortlist", "/api/agent/outcome", "/api/agent/integration", "/api/analyze", "/api/outcomes"}
+_CSRF_EXEMPT_PATHS = {"/webhooks/stripe", "/webhooks/conway", "/api/cite", "/api/tools/submit", "/api/follow-through", "/api/agent/recommend", "/api/agent/shortlist", "/api/agent/outcome", "/api/agent/integration", "/api/analyze", "/api/outcomes"}
 _ALLOWED_ORIGINS = {"https://indiestack.ai", "https://www.indiestack.ai", "https://indiestack.fly.dev", "https://www.indiestack.fly.dev", "http://localhost:8000", "http://127.0.0.1:8000"}
 
 
@@ -924,6 +924,20 @@ async def track_client_event(request: Request):
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+@app.post("/webhooks/conway")
+async def conway_webhook(request: Request):
+    """Conway extension webhook stub — logs intent, returns 200.
+    Ready to wire up when Conway beta access is granted."""
+    import logging
+    body = {}
+    try:
+        body = await request.json()
+    except Exception:
+        pass
+    logging.getLogger("indiestack").info(f"Conway webhook received: {body}")
+    return {"status": "received", "source": "indiestack"}
 
 
 # ── Logo ─────────────────────────────────────────────────────────────

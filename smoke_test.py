@@ -104,6 +104,7 @@ TESTS = [
     # Additional pages added since initial smoke tests
     ("GET", "/what-is-indiestack", 200, "What is IndieStack"),
     ("GET", "/setup", 200, "Setup / Claude.md"),
+    ("GET", "/setup/agents.md", 200, "AGENTS.md download"),
     ("GET", "/calculator", 200, "Cost calculator"),
     ("GET", "/embed", 200, "Embed landing"),
 ]
