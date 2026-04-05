@@ -2186,10 +2186,10 @@ def render_roast_detail(roast: dict, comments: list, user=None, has_upvoted: boo
 def analytics_wall_blurred(stats: dict, tool_name: str, slug: str, user_logged_in: bool, tool_id: int = 0) -> str:
     """Render blurred AI agent analytics wall for unclaimed tools. Drives claim activation via loss aversion."""
     from html import escape
-    total = stats.get('total_agent_queries', 0)
-    citations = stats.get('total_citations', 0)
-    platforms = stats.get('unique_platforms', 0)
-    last_7d = stats.get('queries_last_7d', 0)
+    total = stats.get('total_agent_queries') or 0
+    citations = stats.get('total_citations') or 0
+    platforms = stats.get('unique_platforms') or 0
+    last_7d = stats.get('queries_last_7d') or 0
     safe_name = escape(str(tool_name))
 
     if user_logged_in:
@@ -2268,10 +2268,10 @@ def analytics_wall_blurred(stats: dict, tool_name: str, slug: str, user_logged_i
 def analytics_wall_revealed(stats: dict, tool_name: str) -> str:
     """Render full unblurred AI agent analytics for claimed tool owners."""
     from html import escape
-    total = stats.get('total_agent_queries', 0)
-    citations = stats.get('total_citations', 0)
-    platforms = stats.get('unique_platforms', 0)
-    last_7d = stats.get('queries_last_7d', 0)
+    total = stats.get('total_agent_queries') or 0
+    citations = stats.get('total_citations') or 0
+    platforms = stats.get('unique_platforms') or 0
+    last_7d = stats.get('queries_last_7d') or 0
     platform_breakdown = stats.get('platform_breakdown', [])
     top_queries = stats.get('top_queries', [])
     daily_trend = stats.get('daily_trend', [])
