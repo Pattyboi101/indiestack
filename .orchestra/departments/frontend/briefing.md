@@ -17,3 +17,8 @@ Check `https://indiestack.ai/explore?category=frontend-frameworks` renders corre
 - All route files return HTMLResponse with Python f-strings — no Jinja2
 - Run smoke tests after any changes: `python3 smoke_test.py`
 - Commit changes with descriptive message (NO Co-Authored-By line)
+
+## Meeting Task — 2026-04-05 (MCP Growth & Maker Pro)
+- [ ] Audit /maker/dashboard — what analytics are currently exposed to makers?
+- [ ] Design citation timeline component (30-day bar chart showing agent citations per week)
+- [ ] Add Maker Pro verified badge to tool cards for claimed+subscribed makers

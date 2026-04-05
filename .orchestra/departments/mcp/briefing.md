@@ -21,3 +21,8 @@ If any descriptions are stale/wrong, fix them and bump version to v1.15.1 in pyp
 ## Constraints
 - Do NOT publish to PyPI without explicit instruction (/publish-mcp)
 - Report search results accurately — do not summarize away misfires
+
+## Meeting Task — 2026-04-05 (MCP Growth & Maker Pro)
+- [ ] Rewrite PyPI README with Quick Install section (exact claude_desktop_config.json snippet front and centre)
+- [ ] Audit all 23 MCP tool descriptions — flag any that are terse, misleading, or don't explain when to use them
+- [ ] Draft spec for `get_maker_stats(tool_slug)` MCP tool — what should it return? (needs Backend to implement API first)

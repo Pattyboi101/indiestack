@@ -22,3 +22,7 @@ Verify `https://indiestack.fly.dev/health` returns 200. Report status.
 ## Risk Flags
 - Rapid API calls can trigger rate limiting (429) — throttle between requests
 - Local Docker build may be slow — use `--remote-only` if local is unavailable
+
+## Meeting Task — 2026-04-05 (MCP Growth & Maker Pro)
+- [ ] Run /backup before any Maker Pro launch work begins
+- [ ] Add cron job to precompute maker citation summaries at 02:00 daily (avoids slow dashboard queries)

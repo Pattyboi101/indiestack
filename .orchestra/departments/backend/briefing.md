@@ -21,3 +21,8 @@ Run FTS rebuild after: `INSERT INTO tools_fts(tools_fts) VALUES('rebuild')` with
 - Do NOT move tools that are ambiguous — only move when category is clearly wrong
 - Do NOT use LIKE '%orm%' — substring matches 'platform', 'transform', etc.
 - After FTS rebuild, verify with: curl https://indiestack.ai/api/tools/search?q=security&limit=3
+
+## Meeting Task — 2026-04-05 (MCP Growth & Maker Pro)
+- [ ] Query production DB: how many unique tools have >10 agent citations this month? (SELECT tool_slug, COUNT(*) as n FROM agent_actions WHERE action='cite' AND created_at > datetime('now','-30 days') GROUP BY tool_slug HAVING n>10)
+- [ ] Add `maker_weekly_citations` view to DB for fast maker dashboard queries
+- [ ] Verify maker claim flow end-to-end (can a maker claim their tool and see analytics?)

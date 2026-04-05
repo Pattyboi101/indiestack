@@ -17,3 +17,8 @@ Check the /updates or changelog page. If the latest entry is older than 2 weeks,
 - Verify pricing references: $19/mo Maker Pro, $299/mo Migration Intelligence
 - Do not fabricate GitHub stats or adoption numbers
 - Commit any route changes with no Co-Authored-By line
+
+## Meeting Task — 2026-04-05 (MCP Growth & Maker Pro)
+- [ ] Update /why-list page copy with AI agent discovery angle and real citation stats
+- [ ] Draft maker outreach email template: "Your tool is being recommended to AI agents — here's the data"
+- [ ] Write/improve meta descriptions for top 10 category pages (SEO gap)

@@ -40,11 +40,27 @@ Last updated: 2026-04-05
 - MCP: (check `.orchestra/departments/mcp/briefing.md`)
 - Content: (check `.orchestra/departments/content/briefing.md`)
 
+## Completed This Session (2026-04-05, fourth pass)
+
+### Search Quality
+- Added OpenRouter, Groq, Together AI to catalog (LLM API category gap)
+- Approved uploadthing with proper tags, tagline, install_command
+- Fixed tags: posthog (event-tracking), vercel (deployment), harbor (container-registry), winston/pino (logging), lemon-squeezy (stripe-alternative)
+- Added quality_score * 1.5 to FTS engagement_expr — SaaS tools no longer buried by 0-star bias
+- Fixed sitemap TypeError (int created_at → ISO date string)
+- Search regression: 8/12 PASS on targeted queries; remaining failures are valid category alternatives
+
+### Meeting
+- Ran MCP Growth & Maker Pro meeting (2026-04-05-12)
+- Key conclusion: citation analytics are the unlock for first Maker Pro subscriber
+- Action items written to all 5 department briefings
+
 ## Current Priorities
-1. Run `scripts/add_missing_tools.py` on production → rebuild FTS
-2. Backend: recategorise misplaced tools out of developer-tools (2,931 → target ~1,500)
-3. Frontend: verify new category pages (frontend-frameworks, caching, mcp-servers)
-4. MCP server: check if any new synonyms need PyPI publish
+1. **Backend**: validate citation data — how many tools have >10 agent citations/month?
+2. **Frontend**: audit /maker/dashboard analytics exposure
+3. **Content**: update /why-list with AI agent discovery copy + draft maker outreach email
+4. **MCP**: rewrite PyPI README with Quick Install section
+5. **DevOps**: run /backup before Maker Pro launch work
 
 ## Known Blockers
 - None currently
