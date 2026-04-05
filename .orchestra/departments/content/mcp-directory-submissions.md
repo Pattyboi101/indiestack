@@ -7,7 +7,7 @@ Patrick: fill these forms. 2 minutes each.
 ## 1. mcpservers.org/submit
 
 - **Server Name:** IndieStack
-- **Short Description:** Discovery layer for AI coding agents — search 3,100+ developer tools with compatibility data, migration intelligence, and install commands. 22 tools including market gap analysis and trust-weighted search.
+- **Short Description:** Discovery layer for AI coding agents — search 6,500+ developer tools with compatibility data, migration intelligence, and install commands. 23 tools including market gap analysis and trust-weighted search.
 - **Link:** https://github.com/Pattyboi101/indiestack
 - **Category:** Development (or Search if available)
 - **Contact Email:** pat@indiestack.ai
@@ -20,7 +20,7 @@ _Consider the $39 premium listing for faster review + dofollow link. Worth it fo
 
 - **URL:** https://github.com/Pattyboi101/indiestack
 - **Name:** IndieStack
-- **Description:** MCP server for developer tool discovery. AI agents search 3,100+ tools with install commands, health scores, compatibility data from 8,700+ repos, and migration intelligence. One-line install: `uvx --from indiestack indiestack-mcp`
+- **Description:** MCP server for developer tool discovery. AI agents search 6,500+ tools with install commands, health scores, compatibility data, and migration intelligence. One-line install: `uvx --from indiestack indiestack-mcp`
 
 ---
 

@@ -79,7 +79,16 @@ Last updated: 2026-04-05
 - FTS rebuilt 4× after batch updates (WAL checkpoint skipped as app holds lock — normal)
 - Consumer apps expanded list updated in catalog-scope meeting: ~30 tools for Patrick to reject
 - Fintech tools re-homed: alpha-vantage→api-tools, ghostfolio/midday→invoicing-billing, fingpt/finrl-meta→ai-dev-tools
-- scheduling-booking/invoicing-billing/ai-automation: 20+ additional misfits fixed
+- scheduling-booking/invoicing-billing/ai-automation/mcp-servers/creative-tools/newsletters: 30+ additional misfits fixed
+- Fixed 500 errors on /tool/* pages: analytics_wall_blurred None stats bug — deployed fix
+- Updated /guidelines and /submit with explicit developer-tool-only scope statement — deployed
+- Rejected 3 spam tools (books-free-books, some-many-books, cihna-dictattorshrip-8); china-dictatorship skipped (has maker, needs Patrick)
+- Rejected 46 empty/duplicate npm- pending tools
+- Backfilled sdk_packages for daisyui, postmark, shadcn-ui
+- server.json description fixed (≤100 chars), pushed to GitHub (registry auto-refreshes)
+- MCP registry token expired — Patrick needs: mcp-publisher login github && mcp-publisher publish
+- GitHub stars: 2/5, need 3 more by end of April 5 for awesome-claude-code submission
+- Sent social post drafts to Patrick via Telegram for Ed to share
 
 ### Meetings
 - Catalog scope meeting (2026-04-05-15) created and closed — ~25 consumer apps identified
