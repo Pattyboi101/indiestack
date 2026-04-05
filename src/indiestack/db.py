@@ -692,6 +692,9 @@ NEED_MAPPINGS = {
     "featureflags": {"category": "feature-flags", "terms": ["feature flag", "feature toggle", "a/b test", "ab test", "experiment", "gradual rollout", "canary release"], "competitors": ["LaunchDarkly", "Split.io", "Unleash", "Flagsmith"], "title": "Feature Flags", "description": "Ship features safely with toggles, A/B tests, and gradual rollouts.", "build_estimate": "1-2 weeks", "icon": "\U0001f6a9"},
     "logging": {"category": "logging", "terms": ["logging", "log management", "log aggregation", "structured logs", "log drain", "log analysis"], "competitors": ["Datadog Logs", "Logtail", "Papertrail", "Splunk"], "title": "Logging", "description": "Aggregate, search, and analyse logs from your applications and infrastructure.", "build_estimate": "1 week", "icon": "\U0001f4dc"},
     "notifications": {"category": "notifications", "terms": ["push notification", "in-app notification", "notification service", "sms notification", "mobile push"], "competitors": ["OneSignal", "Firebase FCM", "Pusher Beams", "Expo Notifications"], "title": "Notifications", "description": "Send push notifications, in-app messages, and SMS alerts to your users.", "build_estimate": "1-2 weeks", "icon": "\U0001f514"},
+    "localization": {"category": "localization", "terms": ["i18n", "l10n", "localization", "internationalization", "translation", "locale", "multilingual"], "competitors": ["Crowdin", "Lokalise", "Phrase", "Transifex"], "title": "Localization", "description": "Translate your app and manage multilingual content with indie-friendly i18n tools.", "build_estimate": "1-2 weeks", "icon": "\U0001f310"},
+    "cli": {"category": "cli-tools", "terms": ["cli", "command-line", "terminal tool", "shell script", "tui", "command line interface"], "competitors": ["Homebrew", "Oh My Zsh", "Fig"], "title": "CLI Tools", "description": "Command-line utilities, terminal apps, and TUI tools for developer workflows.", "build_estimate": "1-2 weeks", "icon": "\U0001f4bb"},
+    "docs": {"category": "documentation", "terms": ["documentation", "api docs", "docs site", "wiki", "knowledge base", "readme"], "competitors": ["Docusaurus", "GitBook", "Mintlify", "ReadMe"], "title": "Documentation", "description": "Build docs sites, API references, wikis, and knowledge bases.", "build_estimate": "1-2 weeks", "icon": "\U0001f4da"},
 }
 
 TECH_KEYWORDS = {
@@ -2679,9 +2682,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "permission": "authentication",   # "permissions management", "fine-grained permission"
     "permissions": "authentication",  # plural
     "access": "authentication",       # "access control", "access management"
-    # Internationalisation / localisation
-    "i18n": "frontend",         # "i18n library" — next-intl, rosetta, lingui, paraglide
-    "localization": "frontend", # "localization tools"
+    # Internationalisation / localisation — dedicated "Localization" category exists
+    # LIKE '%localization%' matches category name "Localization" ✓
+    "i18n": "localization",
+    "l10n": "localization",
+    "translate": "localization",
+    "translation": "localization",      # "translation library", "translation API"
+    "locale": "localization",           # "locale formatting", "locale config"
+    "locales": "localization",
+    "localization": "localization",
+    "internationalization": "localization",
+    "crowdin": "localization",          # Crowdin — i18n platform
+    "weblate": "localization",          # Weblate — self-hosted translation
+    # CLI tools — "CLI Tools" category name, LIKE '%cli%' matches ✓
+    "commandline": "cli",
+    "terminal": "cli",
+    "shell": "cli",
+    "tui": "cli",                       # Terminal UI tools
+    # Documentation — "Documentation" category, LIKE '%documentation%' matches ✓
+    "docs": "documentation",
+    "wiki": "documentation",
+    "readme": "documentation",
+    "docusaurus": "documentation",
+    "mkdocs": "documentation",
+    "gitbook": "documentation",
+    "swagger": "documentation",
+    "mintlify": "documentation",
     # Workflow / automation (n8n, Make.com, Zapier)
     "workflow": "ai",           # "workflow automation" — n8n, Make, Zapier live in ai-automation
     # JS/TS build ecosystem — transpilers and runtimes
@@ -2691,11 +2717,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "bun": "frontend",          # Bun — fast JS runtime + bundler + test runner
     "deno": "frontend",         # Deno — secure JS/TS runtime (Deno 2)
     # "management" catches "state management" where "state" is not the first meaningful term
-    "management": "frontend",   # "state management tool", "cache management"
-    # i18n / l10n — full words not covered by "i18n"/"localization" entries above
-    "translation": "frontend",          # "translation library", "translation API"
-    "locale": "frontend",               # "locale formatting", "locale config"
-    "internationalization": "frontend", # full English word (i18n = 18-letter abbreviation)
+    "management": "frontend",   # "state management tool"
     # Node.js / edge web frameworks — for "[framework] alternative" queries
     "hono": "api",              # Hono — ultrafast edge web framework (Cloudflare, Deno, Bun)
     "express": "api",           # Express.js — classic Node.js web framework

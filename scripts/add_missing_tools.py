@@ -254,8 +254,8 @@ TOOLS = [
         "url": "https://next-intl-docs.vercel.app",
         "github_url": "https://github.com/amannn/next-intl",
         "github_stars": 8000,
-        "category_slug": "frontend-frameworks",
-        "tags": "i18n,localization,nextjs,internationalization,typescript,frontend",
+        "category_slug": "localization",
+        "tags": "i18n,localization,nextjs,internationalization,typescript",
         "source_type": "code",
     },
     {
@@ -266,8 +266,8 @@ TOOLS = [
         "url": "https://www.i18next.com",
         "github_url": "https://github.com/i18next/i18next",
         "github_stars": 7800,
-        "category_slug": "frontend-frameworks",
-        "tags": "i18n,localization,javascript,internationalization,translations,frontend",
+        "category_slug": "localization",
+        "tags": "i18n,localization,javascript,internationalization,translations",
         "source_type": "code",
     },
     # ── Workflow Automation ───────────────────────────────────────────
