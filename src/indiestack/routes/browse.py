@@ -66,7 +66,7 @@ async def category_page(request: Request, slug: str, page: int = 1):
     name_esc = escape(name)
     _desc_tpl = _CATEGORY_META.get(
         str(category.get('slug', '')),
-        "Discover {total}+ indie " + name + " tools built by independent makers. Open-source and bootstrapped alternatives with install commands and compatibility data.",
+        "Discover {total}+ indie " + name_esc + " tools built by independent makers. Open-source and bootstrapped alternatives with install commands and compatibility data.",
     )
     desc = _desc_tpl.format(total=total)
 
