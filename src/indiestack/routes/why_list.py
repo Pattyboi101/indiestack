@@ -29,6 +29,10 @@ async def why_list_page(request: Request):
     clicks_30d = (await _clicks.fetchone())['cnt']
     _searches = await db.execute("SELECT COUNT(*) as cnt FROM search_logs WHERE created_at >= datetime('now', '-7 days')")
     searches_week = (await _searches.fetchone())['cnt']
+    _cites = await db.execute("SELECT COUNT(*) as cnt FROM agent_citations")
+    total_citations = (await _cites.fetchone())['cnt']
+    _cites_30d = await db.execute("SELECT COUNT(*) as cnt FROM agent_citations WHERE created_at >= datetime('now', '-30 days')")
+    citations_30d = (await _cites_30d.fetchone())['cnt']
 
     # Notable tools — grab a few high-activity tools
     _notable = await db.execute("""
@@ -69,8 +73,8 @@ async def why_list_page(request: Request):
             <div class="card" style="padding:24px;text-align:center;cursor:default;transition:all 0.2s ease;"
                  onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)';this.style.borderColor='rgba(255,255,255,0.15)'"
                  onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor=''">
-                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{mcp_views}</div>
-                <div style="font-size:13px;color:var(--ink-muted);">AI agent lookups</div>
+                <div style="font-family:var(--font-display);font-size:28px;color:var(--accent);">{total_citations:,}</div>
+                <div style="font-size:13px;color:var(--ink-muted);">AI agent citations</div>
             </div>
             <div class="card" style="padding:24px;text-align:center;cursor:default;transition:all 0.2s ease;"
                  onmouseenter="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-md)';this.style.borderColor='rgba(255,255,255,0.15)'"
@@ -93,7 +97,8 @@ async def why_list_page(request: Request):
                 IndieStack is consulted. Your tool shows up in the AI&rsquo;s answer, not buried on a search results page.
             </p>
             <div class="card" style="padding:16px 20px;margin-top:12px;font-size:14px;color:var(--ink-light);background:var(--cream);">
-                <strong>{mcp_views:,} AI agent lookups</strong> logged so far &mdash; growing weekly as MCP adoption accelerates across AI coding tools.
+                <strong>{citations_30d:,} tools recommended</strong> by AI agents in the last 30 days &mdash; {total_citations:,} citations logged in total.
+                Growing weekly as MCP adoption accelerates across Claude, Cursor, and Windsurf.
             </div>
         </div>
 
