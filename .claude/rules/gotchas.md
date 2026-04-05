@@ -1,5 +1,7 @@
 # Mistakes We've Made — Don't Repeat These
 
+- `json.dumps()` does NOT escape `<`, `>`, `&` — raw JSON in `<script type="application/ld+json">` blocks is vulnerable to `</script>` injection. Always call `.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')` on the result before embedding in HTML. Fixed in tool.py, browse.py, use_cases.py, launch_with_me.py.
+
 - `stats.get('key', 0)` does NOT guard against `None` — if the key exists with value `None`, it returns `None` and breaks int comparisons. Always use `stats.get('key') or 0` for numeric stats from DB queries. This caused 500s on `/tool/*` pages from `analytics_wall_blurred` in components.py.
 
 - Maker Pro is **$19/mo**. Not $49. The $49 figure appears in old planning docs and keeps getting copy-pasted. The canonical source is stripe.md. Any agent touching pricing.py, landing.py, or copy must verify against stripe.md first.
