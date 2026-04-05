@@ -7,16 +7,19 @@ Last updated: 2026-04-05
 ## Completed This Session (2026-04-05, tenth pass — autonomous improvement cycle)
 
 ### Search Quality (Step 1)
-- Added 37 new `_CAT_SYNONYMS` entries covering gaps not covered in prior passes:
+- Added 37+ new `_CAT_SYNONYMS` entries to master (2 commits pushed):
   - **JS/TS build ecosystem**: `babel`, `transpiler`, `swc`, `bun`, `deno` → `frontend`
-  - **State management fallback**: `management` → `frontend` (catches "state management" when "state" isn't first meaningful term)
-  - **i18n full words**: `translation`, `locale`, `internationalization` → `frontend`
-  - **Node.js/edge frameworks**: `hono`, `express`, `fastify`, `nestjs`, `koa` → `api` (enables "[framework] alternative" queries)
+  - **State management fallback**: `management` → `frontend`
+  - **i18n (corrected)**: `i18n`, `l10n`, `locale`, `translation`, `localization`, `internationalization`, `crowdin`, `weblate` → `"localization"` (dedicated category, not "frontend" as previous passes incorrectly had)
+  - **CLI**: `commandline`, `terminal`, `shell`, `tui` → `"cli"` (matches "CLI Tools" category)
+  - **Docs**: `docs`, `wiki`, `readme`, `docusaurus`, `mkdocs`, `gitbook`, `swagger`, `mintlify` → `"documentation"`
+  - **Node.js/edge frameworks**: `hono`, `express`, `fastify`, `nestjs`, `koa` → `api`
   - **DevOps/IaC/tunneling**: `tunnel`, `tunneling`, `ngrok`, `terraform`, `pulumi`, `ansible` → `devops`
-  - **Database BaaS tools in TECH_KEYWORDS but missing synonyms**: `turso`, `convex`, `pocketbase`, `appwrite` → `database`
+  - **Database BaaS**: `turso`, `convex`, `pocketbase`, `appwrite` → `database`
   - **Auth/passkeys**: `webauthn`, `fido2` → `authentication`
   - **Security**: `compliance`, `gdpr`, `encryption`, `ssl`, `tls` → `security`
-- Total `_CAT_SYNONYMS` keys: ~403
+- Added 3 missing `NEED_MAPPINGS` entries: `localization`, `cli`, `docs`
+- Total `_CAT_SYNONYMS` keys: ~430
 
 ### Catalog Script (Step 2)
 - Extended `scripts/add_missing_tools.py` with 6 more high-priority tools (28 total):
@@ -26,6 +29,7 @@ Last updated: 2026-04-05
   - tRPC (api-tools, 36k stars) — type-safe API layer (T3 Stack cornerstone)
   - Bun (frontend-frameworks, 74k stars) — fast JS runtime + bundler
   - Hono (api-tools, 20k stars) — ultrafast edge web framework
+- Fixed next-intl and i18next category: `"localization"` (was `"frontend-frameworks"`)
 
 ## Completed This Session (2026-04-05, ninth pass — autonomous improvement cycle)
 
