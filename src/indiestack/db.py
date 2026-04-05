@@ -2401,6 +2401,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "search": "search",
     "notification": "notifications",
     "notifications": "notifications",
+    "push": "notifications",
+    "sms": "notifications",
+    "otp": "authentication",
+    "totp": "authentication",
     # "chat" has no dedicated category — map to "customer" for Customer Support boost
     # (live chat tools like Crisp, Tawk.to, Chatwoot live there)
     "chat": "customer",
@@ -2423,9 +2427,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "deploy": "devops",
     "deployment": "devops",
     "hosting": "devops",
-    "cache": "database",
-    "caching": "database",
-    "redis": "database",
     "form": "forms",
     "forms": "forms",
     "survey": "forms",
@@ -2451,10 +2452,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "map": "maps",
     "geo": "maps",
     "location": "maps",
-    # Hosting/deploy → DevOps & Infrastructure category
-    "hosting": "devops",
-    "deployment": "devops",
-    "deploy": "devops",
     "serverless": "devops",
     # Caching → moved to dedicated section below (caching category now exists)
     # Named tools → their primary category (fixes "[tool] alternative" queries so
@@ -2481,7 +2478,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "planetscale": "database",
     "cockroachdb": "database",
     "dynamodb": "database",
-    "redis": "database",
     # Hosting / DevOps
     "vercel": "devops",
     "netlify": "devops",
