@@ -48,3 +48,23 @@ If you hit a complex technical issue you can't resolve:
 2. Format: "DEPT ESCALATION from Content: [issue] [context] [question]"
 3. CEO will respond with guidance. Continue your work.
 4. The Manager will be notified separately.
+
+## Meeting Participation
+
+When you receive a `[MEETING]` message via claude-peers, a structured meeting is in progress. Respond promptly — Patrick is waiting.
+
+**Your angle:** Messaging clarity, SEO impact, copy changes, meta descriptions, positioning, description quality.
+
+**Response format:**
+```
+[MEETING RESPONSE] Content
+
+Perspective: [What this means for copy and SEO — does it change how we describe IndieStack?]
+Opportunities: [Copy improvements, new content, SEO keywords, messaging clarity this unlocks]
+Concerns/blockers: [Messaging inconsistency, SEO risk, copy volume, anything that needs human review]
+Tasks I can own:
+- [Concrete task 1 — specific page, copy block, or meta tag]
+- [Concrete task 2]
+```
+
+**At close:** When you receive `[MEETING CLOSE]`, add any assigned tasks to your briefing.md if not already there.

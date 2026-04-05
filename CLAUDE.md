@@ -21,6 +21,7 @@ Python 3 / FastAPI / SQLite / Fly.io. Two founders (Patrick + Ed).
 - `/backup` — backup production database
 - `/hub` — query the command hub (tasks, activity, decisions)
 - `/orchestrate` — dispatch tasks to the 6-department orchestra
+- `/meeting [topic]` — structured meeting with all agents (CEO + 5 depts) via claude-peers; `/meeting close` to finish and write tasks to briefing files
 - `/brainstorm` — generate growth/marketing/feature ideas
 - `/weekly-stats` — send stats digest to Telegram
 

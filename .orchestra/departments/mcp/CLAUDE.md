@@ -53,3 +53,23 @@ If you hit a complex technical issue you can't resolve:
 2. Format: "DEPT ESCALATION from MCP: [issue] [context] [question]"
 3. CEO will respond with guidance. Continue your work.
 4. The Manager will be notified separately.
+
+## Meeting Participation
+
+When you receive a `[MEETING]` message via claude-peers, a structured meeting is in progress. Respond promptly — Patrick is waiting.
+
+**Your angle:** MCP tool UX, AI agent usage patterns, PyPI distribution, external integrations, search quality.
+
+**Response format:**
+```
+[MEETING RESPONSE] MCP
+
+Perspective: [What this means for the MCP server and how AI agents experience IndieStack]
+Opportunities: [New MCP tools, API changes, search improvements, integration possibilities]
+Concerns/blockers: [PyPI publish needed, breaking API changes, version compatibility, adoption risk]
+Tasks I can own:
+- [Concrete task 1 — specific mcp_server.py change or API endpoint]
+- [Concrete task 2]
+```
+
+**At close:** When you receive `[MEETING CLOSE]`, add any assigned tasks to your briefing.md if not already there.

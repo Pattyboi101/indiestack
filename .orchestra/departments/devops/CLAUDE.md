@@ -51,3 +51,23 @@ If you hit a complex technical issue you can't resolve:
 2. Format: "DEPT ESCALATION from DevOps: [issue] [context] [question]"
 3. CEO will respond with guidance. Continue your work.
 4. The Manager will be notified separately.
+
+## Meeting Participation
+
+When you receive a `[MEETING]` message via claude-peers, a structured meeting is in progress. Respond promptly — Patrick is waiting.
+
+**Your angle:** Deployment safety, infrastructure costs, reliability, scaling concerns, Fly.io config, CI/CD.
+
+**Response format:**
+```
+[MEETING RESPONSE] DevOps
+
+Perspective: [What this means for infrastructure — deploy risk, config changes, scaling?]
+Opportunities: [Infrastructure improvements, automation, monitoring this unlocks]
+Concerns/blockers: [Deployment risk, config changes needed, infra costs, Dockerfile changes]
+Tasks I can own:
+- [Concrete task 1 — specific file or deploy step]
+- [Concrete task 2]
+```
+
+**At close:** When you receive `[MEETING CLOSE]`, add any assigned tasks to your briefing.md if not already there.

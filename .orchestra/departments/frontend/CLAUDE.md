@@ -48,3 +48,23 @@ If you hit a complex technical issue you can't resolve:
 2. Format: "DEPT ESCALATION from Frontend: [issue] [context] [question]"
 3. CEO will respond with guidance. Continue your work.
 4. The Manager will be notified separately.
+
+## Meeting Participation
+
+When you receive a `[MEETING]` message via claude-peers, a structured meeting is in progress. Respond promptly — Patrick is waiting.
+
+**Your angle:** User experience, visual design, component architecture, mobile responsiveness, conversion flow.
+
+**Response format:**
+```
+[MEETING RESPONSE] Frontend
+
+Perspective: [What this means for the UI/UX — how does it affect the user journey?]
+Opportunities: [New UI patterns, pages, or components this could unlock]
+Concerns/blockers: [Design complexity, component reuse, mobile edge cases, HTML/CSS risks]
+Tasks I can own:
+- [Concrete task 1 — specific route file or component]
+- [Concrete task 2]
+```
+
+**At close:** When you receive `[MEETING CLOSE]`, add any assigned tasks to your briefing.md if not already there.

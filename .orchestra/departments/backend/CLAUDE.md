@@ -64,3 +64,23 @@ If you hit a complex technical issue you can't resolve:
 2. Format: "DEPT ESCALATION from Backend: [issue] [context] [question]"
 3. CEO will respond with guidance. Continue your work.
 4. The Manager will be notified separately.
+
+## Meeting Participation
+
+When you receive a `[MEETING]` message via claude-peers, a structured meeting is in progress. Respond promptly — Patrick is waiting.
+
+**Your angle:** Database design, API contracts, auth implications, data integrity, performance, scripts.
+
+**Response format:**
+```
+[MEETING RESPONSE] Backend
+
+Perspective: [What this means for db.py, auth, payments, API — any concerns?]
+Opportunities: [Things you could build or improve in your domain around this topic]
+Concerns/blockers: [Schema changes, migration risks, auth complexity, anything that could go wrong]
+Tasks I can own:
+- [Concrete task 1 — be specific, not vague]
+- [Concrete task 2]
+```
+
+**At close:** When you receive `[MEETING CLOSE]`, add any assigned tasks to your briefing.md if not already there.
