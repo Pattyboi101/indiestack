@@ -276,6 +276,41 @@ async def explore(request: Request):
     </form>
     '''
 
+    # MCP install banner — shown on default browse (no filters, page 1)
+    if page == 1 and not any([q, category, tag, source_type, ejectable, compatible_with]):
+        mcp_banner_html = '''
+        <div style="background:#1A2D4A;border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;
+            display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;">
+                <div style="font-size:13px;font-weight:700;color:#00D4F5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">
+                    MCP Server
+                </div>
+                <div style="font-size:15px;font-weight:600;color:#fff;line-height:1.4;">
+                    Search this catalog from Claude, Cursor &amp; Windsurf
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                <code id="mcp-install-cmd"
+                    style="background:rgba(255,255,255,0.08);color:#00D4F5;font-family:var(--font-mono);
+                        font-size:13px;padding:8px 14px;border-radius:6px;white-space:nowrap;">
+                    uvx --from indiestack indiestack-mcp
+                </code>
+                <button onclick="navigator.clipboard.writeText('uvx --from indiestack indiestack-mcp');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
+                    style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);
+                        padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;
+                        white-space:nowrap;min-height:44px;">
+                    Copy
+                </button>
+                <a href="/setup" style="color:#00D4F5;font-size:13px;font-weight:600;text-decoration:none;
+                    white-space:nowrap;padding:8px 0;min-height:44px;display:inline-flex;align-items:center;">
+                    Setup guide &rarr;
+                </a>
+            </div>
+        </div>
+        '''
+    else:
+        mcp_banner_html = ''
+
     # Banner — signup CTA for logged-out, newsletter for logged-in
     if not user:
         mid_page_banner = '''
@@ -353,6 +388,7 @@ async def explore(request: Request):
             <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin-bottom:8px;">Explore</h1>
             <p style="color:var(--ink-muted);font-size:16px;">Community-curated catalog of developer tools. Makers can <a href="/submit" style="color:var(--accent);">claim their listing</a> to update details and verify ownership.</p>
         </div>
+        {mcp_banner_html}
         <a href="/surprise" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;
             background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;
             color:var(--ink-light);font-size:14px;font-weight:500;text-decoration:none;
