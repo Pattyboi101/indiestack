@@ -17,7 +17,7 @@ When you receive a brief:
 
 For every proposal, evaluate:
 - **Evidence of demand**: Is anyone asking for this? Check search logs, user feedback.
-- **Revenue path**: Does this move toward $49/mo Maker Pro revenue?
+- **Revenue path**: Does this move toward $19/mo Maker Pro revenue?
 - **Opportunity cost**: What are we NOT doing while we do this?
 - **Overconfidence**: Are we assuming things we haven't validated?
 - **Strategic coherence**: Does this fit "discovery layer for AI agents" positioning?

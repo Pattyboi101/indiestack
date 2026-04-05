@@ -252,7 +252,7 @@ Every task must pass through S&QA before any department executes. This is the mo
 S&QA evaluates every plan against:
 
 1. **Evidence of demand** — Is anyone asking for this? Check search logs, user feedback.
-2. **Revenue path** — Does this move toward $49/mo Maker Pro revenue?
+2. **Revenue path** — Does this move toward $19/mo Maker Pro revenue?
 3. **Opportunity cost** — What are we NOT doing while we do this?
 4. **Overconfidence** — Are we assuming things we haven't validated?
 5. **Strategic coherence** — Does this fit the "discovery layer for AI agents" positioning?
@@ -391,7 +391,7 @@ The autoloop was running in tmux but the session died overnight. It completed at
 | Type | Name | Method |
 |------|------|--------|
 | 1 | **GitHub Trending** | Queries GitHub API for trending dev tools repos. Asks: Is this in our catalog? What can we learn? |
-| 2 | **Tool Roleplay** | Picks a random tool from IndieStack's own API. Roleplays as its maker asking: What would make you claim? Pay $49/mo? Share on Twitter? |
+| 2 | **Tool Roleplay** | Picks a random tool from IndieStack's own API. Roleplays as its maker asking: What would make you claim? Pay $19/mo Maker Pro? Share on Twitter? |
 | 3 | **Constraint Challenge** | 25 artificial pressure scenarios (e.g., "What if we had to make $100 by Friday?", "A developer uninstalled the MCP server 30 seconds later. Why?") |
 | 4 | **Inversion** | 23 destruction/critique questions (e.g., "What's the worst thing about IndieStack?", "Which tools are dead/abandoned?") |
 | 5 | **Cross-Domain Steal** | Finds high-star non-dev-tools projects, asks what UX/community ideas to steal |
@@ -552,7 +552,7 @@ The system is designed to progress through 5 phases:
 - **Autoloop instability**: tmux session dies overnight. No crash logging or auto-restart mechanism.
 - **Telegram delivery unconfirmed**: Autoloop is supposed to send Telegram summaries but delivery hasn't been verified.
 - **Stale AGENTS.md**: Says 6,500 tools (actual: 8,197). Stale since March.
-- **Stale decisions.md**: Still references $299/mo data collection strategy (superseded by $49/mo Maker Pro).
+- **Stale decisions.md**: Still references $299/mo data collection strategy (superseded by $19/mo Maker Pro).
 - **Remote cron disabled**: Can't run autonomous work from cloud because local tools (flyctl, Telegram, file system) are required.
 - **Orchestra not running**: Currently killed to save tokens. Must be manually launched with `orchestra` alias.
 - **orchestrator.py untested recently**: The Python-based orchestrator was used earlier but the tmux-based `launch.sh` has been the primary method.

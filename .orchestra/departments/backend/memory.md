@@ -56,7 +56,7 @@ Result:
 - ~19 tools moved: testcafe/lighthouse/cupaloy/frisby → testing-tools, apache-airflow/meltano/go-feature-flag → devops, tolgee → localization, apprise → notifications, firecrawl-mcp-server/context7/repomix/fastgpt/cherry-studio → ai-dev-tools, shellcheck/npkill/gita → cli-tools, remotion → creative-tools, dnote → logging.
 - awesome-cheatsheets moved to database by tag match (has 'database' tag) — REVERTED back to developer-tools. It's a cheatsheet collection. Don't trust tag-based category moves blindly.
 - 97/100 tools were UNCERTAIN (npm-* packages, MCP servers, boilerplates). Next pass needs human-assisted review of npm-* slugs.
-- pricing.py: changed $19→$49 in 3 places. The stripe.md rules file still says $19/mo — may be stale. The authoritative price is $49/mo per vision.md.
+- pricing.py: NOTE — any $49 change was WRONG and was reverted. Canonical price is **$19/mo** per gotchas.md and stripe.md. vision.md had stale $49 copy that has since been corrected. Never change $19 to $49.
 - Category slug for testing is 'testing-tools' not 'testing' — classic mistake.
 - FTS rebuilt, WAL checkpoint, smoke test 54/54 passed.
 

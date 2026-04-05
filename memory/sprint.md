@@ -1,10 +1,29 @@
 # Sprint — Current
 
-Last updated: 2026-04-05
+Last updated: 2026-04-05 (autonomous loop run 2)
 
 ## Status: Active
 
-## Completed This Session (2026-04-05)
+## Completed This Session (2026-04-05 — Loop Run 2)
+
+### Search Quality (db.py _CAT_SYNONYMS)
+- Removed stale duplicate entries: `cache`/`caching`/`redis` → `database` (overridden later by caching section — dead code)
+- Removed duplicate `hosting`/`deployment`/`deploy` block; consolidated `serverless` into main devops block
+- Removed orphaned comment "Caching → moved to dedicated section"
+- Added IaC synonyms: `terraform` → devops, `pulumi` → devops, `ansible` → devops
+- Added A/B testing: `experiment`/`experiments`/`ab` → feature (Feature Flags category)
+- Added frontend build tools: `solid` → frontend (SolidJS alt form), `qwik` → frontend, `swc` → frontend, `babel` → frontend
+
+### Catalog Script (scripts/add_missing_tools.py)
+- Added 8 more tools: Next.js, Vite, Remix, Astro, SolidJS, Qwik, TanStack Query, SWC
+- All check slug before inserting — safe to re-run on production
+
+### Pricing Audit (critical)
+- Fixed $49 references in: `.orchestra/ceo/CLAUDE.md`, `.orchestra/departments/ceo/CLAUDE.md`, `.orchestra/SYSTEM-OVERVIEW.md` (3 instances)
+- Confirmed `src/indiestack/routes/pricing.py` already has correct $19/mo in all 3 places
+- Corrected stale backend memory note that claimed $19→$49 change was correct (it was wrong and was already reverted)
+
+## Completed This Session (2026-04-05 — Loop Run 1)
 
 ### Search Quality
 - Verified all required `_CAT_SYNONYMS` mappings are present:

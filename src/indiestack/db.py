@@ -2423,9 +2423,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "deploy": "devops",
     "deployment": "devops",
     "hosting": "devops",
-    "cache": "database",
-    "caching": "database",
-    "redis": "database",
+    "serverless": "devops",
+    "terraform": "devops",     # IaC — HashiCorp Terraform
+    "pulumi": "devops",        # IaC — Pulumi
+    "ansible": "devops",       # IaC / config management
     "form": "forms",
     "forms": "forms",
     "survey": "forms",
@@ -2444,6 +2445,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "feature": "feature",
     "flags": "feature",
     "flag": "feature",
+    "experiment": "feature",   # A/B testing / experimentation queries
+    "experiments": "feature",
+    "ab": "feature",           # "a/b testing" → first term is "a" stripped, second is "b"... no,
+                               # FTS stop-word stripping leaves "ab" for "a/b testing" queries
     "error": "monitoring",
     "errors": "monitoring",
     "video": "media",
@@ -2451,12 +2456,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "map": "maps",
     "geo": "maps",
     "location": "maps",
-    # Hosting/deploy → DevOps & Infrastructure category
-    "hosting": "devops",
-    "deployment": "devops",
-    "deploy": "devops",
-    "serverless": "devops",
-    # Caching → moved to dedicated section below (caching category now exists)
     # Named tools → their primary category (fixes "[tool] alternative" queries so
     # the category/tag boost targets the RIGHT category instead of tools tagged
     # with the target tool name, which are complements not alternatives)
@@ -2624,6 +2623,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "solidjs": "frontend",      # SolidJS — reactive UI library
     "stencil": "frontend",      # Stencil — web components compiler
     "ember": "frontend",        # Ember.js
+    "solid": "frontend",        # SolidJS — reactive UI ("solid" alone not caught by "solidjs" entry)
+    "qwik": "frontend",         # Qwik — resumability-based framework by Builder.io
+    "swc": "frontend",          # SWC — Rust-based JS/TS transpiler (replaces Babel in many setups)
+    "babel": "frontend",        # Babel — JS transpiler, still widely used
     # API tools — routing, RPC, gateways
     "trpc": "api",              # tRPC — type-safe API layer
     "grpc": "api",              # gRPC — RPC framework
