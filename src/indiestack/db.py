@@ -2587,6 +2587,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "astro": "frontend",
     "remix": "frontend",
     "state": "frontend",
+    "manager": "frontend",     # "state manager" → "state" or "manager" both map to frontend
     "bundler": "frontend",
     "vite": "frontend",
     # CSS frameworks/libraries
@@ -2626,6 +2627,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gateway": "api",           # API gateway queries
     # Realtime / WebSockets — typically API-layer tools (Pusher, Ably, PartyKit)
     "realtime": "api",
+    "real": "api",              # "real-time" → hyphen stripped → "real" + "time" → catches realtime queries
+    "limiting": "api",          # "rate limiting" → "rate" already maps to api, "limiting" reinforces it
     "websocket": "api",
     "websockets": "api",
     "sse": "api",               # Server-Sent Events
