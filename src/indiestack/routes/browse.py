@@ -16,6 +16,29 @@ router = APIRouter()
 
 PER_PAGE = 12
 
+# Category-specific meta descriptions for SEO. Key = category slug.
+# Each value is a template string with a single {total} placeholder.
+_CATEGORY_META: dict[str, str] = {
+    "authentication": "{total}+ open-source auth tools — OAuth, SSO, passkeys, MFA, and session management. Alternatives to Auth0, Clerk, and Firebase Auth.",
+    "payments": "{total}+ payment tools for developers — Stripe alternatives, subscriptions, checkout, and billing. Bootstrapped and open-source options.",
+    "analytics-metrics": "{total}+ privacy-first analytics tools — Google Analytics alternatives, event tracking, dashboards, and A/B testing. GDPR-compliant options.",
+    "email-marketing": "{total}+ email tools for developers — transactional APIs, newsletter platforms, and drip campaigns. Alternatives to Mailchimp and SendGrid.",
+    "database": "{total}+ database tools — PostgreSQL, ORMs, migrations, vector databases, and BaaS. Alternatives to PlanetScale, Supabase, and Neon.",
+    "hosting-infrastructure": "{total}+ hosting and infrastructure tools — PaaS, VPS, serverless, and container platforms. Heroku and Render alternatives for indie developers.",
+    "frontend-frameworks": "{total}+ frontend tools — JavaScript frameworks, UI libraries, bundlers, and state management. React, Vue, Svelte, Vite, and TypeScript ecosystem tools.",
+    "caching": "{total}+ caching tools — Redis alternatives, in-memory stores, and serverless key-value databases for high-performance apps.",
+    "mcp-servers": "{total}+ MCP server implementations — give AI agents (Claude, Cursor, Windsurf) access to your data, APIs, and tools via the Model Context Protocol.",
+    "boilerplates": "{total}+ boilerplate kits and starter templates — SaaS starters, Next.js templates, and full-stack scaffolds. Ship your next project faster.",
+    "developer-tools": "{total}+ developer tools — CLI utilities, debugging tools, SDKs, and productivity tools built by indie developers. No enterprise pricing.",
+    "monitoring-uptime": "{total}+ monitoring tools — uptime checks, error tracking, APM, and alerting. Self-hostable Datadog and PagerDuty alternatives.",
+    "cms-content": "{total}+ headless CMS and content tools — Contentful, Sanity, and WordPress alternatives. API-first CMS for modern web development.",
+    "background-jobs": "{total}+ background job tools — cron schedulers, task queues, and workflow engines. Alternatives to Celery, Bull, and AWS SQS.",
+    "ai-dev-tools": "{total}+ AI dev tools — MCP servers, coding assistants, agent frameworks, and LLM integrations built by indie developers.",
+    "ai-automation": "{total}+ AI and automation tools — LLM integrations, workflow automation, and AI-powered features. Open-source alternatives to enterprise AI platforms.",
+    "devops-infrastructure": "{total}+ DevOps tools — CI/CD, Docker, Kubernetes, IaC, and deployment automation. Open-source alternatives to GitHub Actions and CircleCI.",
+    "security-tools": "{total}+ security tools — vulnerability scanners, secret management, WAF, and penetration testing utilities. Open-source and bootstrapped.",
+}
+
 
 @router.get("/category/{slug}", response_class=HTMLResponse)
 async def category_page(request: Request, slug: str, page: int = 1):
@@ -41,7 +64,11 @@ async def category_page(request: Request, slug: str, page: int = 1):
     icon = category_icon(str(category.get('slug', '')), size=48)
     name = str(category['name'])
     name_esc = escape(name)
-    desc = f"Discover {total}+ indie {name} tools built by independent makers. Open-source and bootstrapped alternatives with install commands and compatibility data."
+    _desc_tpl = _CATEGORY_META.get(
+        str(category.get('slug', '')),
+        "Discover {total}+ indie " + name + " tools built by independent makers. Open-source and bootstrapped alternatives with install commands and compatibility data.",
+    )
+    desc = _desc_tpl.format(total=total)
 
     if tools:
         # Inject trust badge data
@@ -126,5 +153,11 @@ async def category_page(request: Request, slug: str, page: int = 1):
     _json_ld = json.dumps(json_ld_data, ensure_ascii=False).replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
     extra_head = f'<script type="application/ld+json">{_json_ld}</script>'
 
-    title = f"Best Indie {name} Tools | IndieStack"
+    # For categories where the name already implies "tools", omit the trailing word
+    _NO_TOOLS_SUFFIX = {"frontend-frameworks", "mcp-servers", "boilerplates", "background-jobs",
+                        "devops-infrastructure", "ai-dev-tools", "security-tools", "testing-tools"}
+    if str(category.get('slug', '')) in _NO_TOOLS_SUFFIX:
+        title = f"Best {name} | IndieStack"
+    else:
+        title = f"Best Indie {name} Tools | IndieStack"
     return HTMLResponse(page_shell(title, body, description=desc, user=request.state.user, extra_head=extra_head, canonical=f"/category/{slug}"))

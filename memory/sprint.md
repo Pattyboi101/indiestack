@@ -4,6 +4,26 @@ Last updated: 2026-04-05
 
 ## Status: Active
 
+## Completed This Session (2026-04-05, sixth pass — autonomous improvement cycle)
+
+### Search Quality
+- Added `"tanstack"` → `"frontend"` synonym (TanStack Query/Router/Table queries)
+- Added `"radix"` → `"frontend"` synonym (Radix UI primitives queries)
+- Total _CAT_SYNONYMS keys: 332
+
+### Category Page SEO
+- Added `_CATEGORY_META` dict to browse.py with specific meta descriptions for 18 top categories
+- Descriptions include named alternatives (Auth0, Stripe, Mailchimp, etc.) for long-tail SEO
+- Added `_NO_TOOLS_SUFFIX` set to fix page titles for categories like "Frontend Frameworks" and "MCP Servers" (was "Best Indie Frontend Frameworks Tools" — now "Best Frontend Frameworks")
+
+### Catalog (scripts only, no prod writes)
+- Extended `scripts/add_missing_tools.py` with 5 more high-priority tools:
+  - Vite (frontend-frameworks, 68k stars)
+  - SvelteKit (frontend-frameworks, 19k stars)
+  - TanStack Query (frontend-frameworks, 43k stars)
+  - Radix UI (frontend-frameworks, 16k stars)
+  - BullMQ (background-jobs, 6k stars)
+
 ## Completed This Session (2026-04-05, third pass — autonomous improvement cycle)
 
 ### Search Quality (additional fixes)

@@ -2654,6 +2654,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "template": "boilerplate",
     # MCP servers — dedicated category
     "protocol": "mcp",          # "model context protocol" → first term after stop words
+    # Frontend frameworks — named tools missing from earlier pass
+    "tanstack": "frontend",     # TanStack Query, TanStack Router, TanStack Table
+    "radix": "frontend",        # Radix UI primitives
 }
 
 _FTS_STOP_WORDS = {
