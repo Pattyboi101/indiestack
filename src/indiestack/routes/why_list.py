@@ -83,17 +83,38 @@ async def why_list_page(request: Request):
         <!-- Section 1: AI Agent Discovery -->
         <div style="margin-bottom:40px;">
             <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin-bottom:12px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> Your tool shows up in AI conversations
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="14" r="2"/></svg> AI agents recommend your tool directly
             </h2>
             <p style="color:var(--ink-light);line-height:1.7;">
-                IndieStack has an <a href="https://pypi.org/project/indiestack/" style="color:var(--accent);">MCP server on PyPI</a>
-                and the <a href="https://registry.modelcontextprotocol.io/" style="color:var(--accent);">official MCP Registry</a>.
-                When developers install it in Claude, Cursor, or Windsurf, their AI assistant searches our catalog
-                before building from scratch. Your tool gets recommended in the conversation &mdash; not buried on page 3 of a directory.
+                IndieStack&rsquo;s <a href="https://pypi.org/project/indiestack/" style="color:var(--accent);">MCP server</a> has
+                <strong style="color:var(--ink);">10,000+ installs</strong> on PyPI and is listed on the
+                <a href="https://registry.modelcontextprotocol.io/" style="color:var(--accent);">official MCP Registry</a>.
+                When developers ask Claude, Cursor, or Windsurf &ldquo;what should I use for payments?&rdquo; &mdash;
+                IndieStack is consulted. Your tool shows up in the AI&rsquo;s answer, not buried on a search results page.
             </p>
             <div class="card" style="padding:16px 20px;margin-top:12px;font-size:14px;color:var(--ink-light);background:var(--cream);">
-                <strong>{mcp_views} AI agent lookups</strong> so far &mdash; and growing weekly as more developers install the MCP server.
+                <strong>{mcp_views:,} AI agent lookups</strong> logged so far &mdash; growing weekly as MCP adoption accelerates across AI coding tools.
             </div>
+        </div>
+
+        <!-- Section 1b: Maker Pro -->
+        <div style="margin-bottom:40px;padding:24px;border:1px solid var(--accent);border-radius:12px;background:rgba(0,212,245,0.04);">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="background:var(--accent);color:#0a0a0a;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;letter-spacing:0.05em;">MAKER PRO</span>
+                <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin:0;">See exactly where your tool gets recommended</h2>
+            </div>
+            <p style="color:var(--ink-light);line-height:1.7;margin-bottom:16px;">
+                Maker Pro ($19/mo) gives you a live dashboard showing how AI agents find and recommend your tool:
+                which queries trigger it, how often it&rsquo;s the top result, and what developers are searching for
+                when they land on your listing.
+            </p>
+            <ul style="color:var(--ink-light);line-height:2.0;padding-left:0;list-style:none;margin-bottom:16px;">
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Agent citation analytics</strong> &mdash; how many AI sessions recommended your tool</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Search query data</strong> &mdash; what developers were searching for when they found you</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Verified badge</strong> &mdash; signals to agents that you&rsquo;re an active, claimed maker</li>
+                <li style="position:relative;padding-left:24px;"><span style="position:absolute;left:0;color:var(--accent);font-weight:700;">&mdash;</span><strong>Priority placement</strong> &mdash; boosted ranking in search and agent results</li>
+            </ul>
+            <a href="/pricing" style="color:var(--accent);font-weight:600;font-size:14px;">See Maker Pro &rarr;</a>
         </div>
 
         <!-- Section 2: What you get -->
@@ -186,7 +207,7 @@ async def why_list_page(request: Request):
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Why List on IndieStack",
-        "description": "IndieStack is a curated catalog of {tool_count} developer tools searchable by AI agents via MCP. Free to list.",
+        "description": "IndieStack is a curated catalog of {tool_count} developer tools searchable by AI agents via MCP server (10,000+ installs). Free to list. Maker Pro analytics from $19/mo.",
         "url": "{BASE_URL}/why-list",
         "mainEntity": {{
             "@type": "Organization",
@@ -200,7 +221,7 @@ async def why_list_page(request: Request):
         "Why List on IndieStack",
         body,
         user=user,
-        description=f"IndieStack is a curated catalog of {tool_count} developer tools searchable by AI agents. Free to list. {mcp_views} AI agent lookups and counting.",
+        description=f"IndieStack's MCP server has 10,000+ installs. AI agents recommend your tool in real developer conversations. Free to list. Maker Pro from $19/mo.",
         extra_head=json_ld,
         canonical="/why-list",
     ))
