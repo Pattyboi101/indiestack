@@ -132,7 +132,7 @@ Before adding any new package via npm, pip, yarn, pnpm, or cargo:
 """
 
 _COPY_BTN = '''<button class="copy-btn" style="position:absolute;top:8px;right:8px;padding:6px 14px;
-font-size:12px;font-weight:600;background:rgba(255,255,255,0.1);color:#e2e8f0;
+font-size:12px;font-weight:600;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.85);
 border:1px solid rgba(255,255,255,0.2);border-radius:6px;cursor:pointer;">Copy</button>'''
 
 
@@ -159,7 +159,7 @@ async def setup_page(request: Request):
         tab_panels += f'''
             <div class="setup-panel" data-tab="{ide_key}" style="display:{"block" if i == 0 else "none"};">
                 <div style="position:relative;">
-                    <pre class="copyable" style="background:var(--ink);color:#e2e8f0;padding:16px 50px 16px 16px;
+                    <pre class="copyable" style="background:var(--ink);color:rgba(255,255,255,0.85);padding:16px 50px 16px 16px;
                                 border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);
                                 overflow-x:auto;line-height:1.6;margin:0;">{install_escaped}</pre>
                     {_COPY_BTN}
@@ -176,9 +176,9 @@ async def setup_page(request: Request):
         from html import escape as _esc
         _name = _esc(user.get('name', '').split()[0] or 'there')
         welcome_banner = f'''
-        <div style="background:linear-gradient(135deg,#065F46,#064E3B);border:1px solid rgba(110,231,183,0.3);
+        <div style="background:linear-gradient(135deg,var(--success-text),#064E3B);border:1px solid var(--success-border);
                     border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;text-align:center;">
-            <p style="color:#6EE7B7;font-size:20px;font-weight:700;margin:0 0 4px;">Welcome to IndieStack, {_name}!</p>
+            <p style="color:var(--success-border);font-size:20px;font-weight:700;margin:0 0 4px;">Welcome to IndieStack, {_name}!</p>
             <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 6,500+ developer tools. 10,000+ installs and growing.</p>
         </div>'''
 
