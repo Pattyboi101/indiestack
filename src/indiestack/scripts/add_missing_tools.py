@@ -1211,6 +1211,154 @@ TOOLS = [
         "npm install ghost-cli -g && ghost install",
         "code",
     ),
+    # AI frameworks — LLM orchestration and agent tooling ---------------------------
+    (
+        "llamaindex",
+        "LlamaIndex",
+        "The leading data framework for building LLM applications",
+        "LlamaIndex is the go-to framework for building RAG (Retrieval-Augmented "
+        "Generation) applications. Connect LLMs to your data sources — PDFs, databases, "
+        "APIs — with 160+ data connectors, query engines, and agent tools. "
+        "Supports OpenAI, Anthropic, Llama, Mistral, and more.",
+        "ai-automation",
+        "run-llama/llama_index",
+        38000,
+        "https://llamaindex.ai",
+        "rag,llm,ai,agents,data-framework",
+        "pip install llama-index",
+        "code",
+    ),
+    (
+        "litellm",
+        "LiteLLM",
+        "Call 100+ LLMs using the same OpenAI format",
+        "LiteLLM provides a unified interface to 100+ LLM providers — OpenAI, Anthropic, "
+        "Vertex AI, Bedrock, Ollama, and more — with a single API format. "
+        "Drop-in replacement for OpenAI SDK calls. Includes a proxy server with "
+        "rate limiting, spend tracking, fallbacks, and load balancing.",
+        "ai-dev-tools",
+        "BerriAI/litellm",
+        15000,
+        "https://litellm.ai",
+        "llm,proxy,openai,anthropic,routing",
+        "pip install litellm",
+        "code",
+    ),
+    (
+        "crewai",
+        "CrewAI",
+        "Framework for orchestrating role-playing, autonomous AI agents",
+        "CrewAI enables teams of AI agents to work together on complex tasks. "
+        "Define agents with roles, goals, and tools; orchestrate them into crews "
+        "that collaborate, delegate, and produce results. Supports LangChain tools "
+        "and integrates with any LLM. Sequential and hierarchical process types.",
+        "ai-automation",
+        "crewAIInc/crewAI",
+        25000,
+        "https://crewai.com",
+        "agents,multi-agent,llm,automation,orchestration",
+        "pip install crewai",
+        "code",
+    ),
+    # DevOps — Kubernetes package management and GitOps ----------------------------
+    (
+        "helm",
+        "Helm",
+        "The Kubernetes Package Manager",
+        "Helm is the standard package manager for Kubernetes. Define, install, and "
+        "upgrade complex Kubernetes applications using Charts — pre-configured "
+        "resource packages. Helm Hub hosts 10,000+ community charts. "
+        "Version-controlled, rollback-capable deployments.",
+        "devops-infrastructure",
+        "helm/helm",
+        27000,
+        "https://helm.sh",
+        "kubernetes,k8s,package-manager,devops",
+        "brew install helm",
+        "code",
+    ),
+    (
+        "argocd",
+        "Argo CD",
+        "Declarative GitOps CD for Kubernetes",
+        "Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. "
+        "Automatically syncs your cluster state to match Git — the source of truth. "
+        "Web UI, CLI, and SSO support. Tracks deployments, diffs, and rollbacks. "
+        "CNCF graduated project with massive enterprise adoption.",
+        "devops-infrastructure",
+        "argoproj/argo-cd",
+        18000,
+        "https://argo-cd.readthedocs.io",
+        "kubernetes,gitops,cd,continuous-delivery,devops",
+        "kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml",
+        "code",
+    ),
+    # Background jobs / workflow orchestration -------------------------------------
+    (
+        "dagster",
+        "Dagster",
+        "An orchestration platform for the development, production, and observation of data assets",
+        "Dagster is a cloud-native data orchestration platform. Define pipelines as "
+        "software-defined assets — transformations, ML models, reports. "
+        "Built-in scheduling, partitioning, and lineage tracking. "
+        "Works with dbt, Spark, Snowflake, and all major data tools.",
+        "background-jobs",
+        "dagster-io/dagster",
+        12000,
+        "https://dagster.io",
+        "orchestration,data-pipeline,assets,workflow,etl",
+        "pip install dagster dagit",
+        "code",
+    ),
+    (
+        "prefect",
+        "Prefect",
+        "The modern workflow orchestration platform",
+        "Prefect is a Python-first workflow orchestration tool. Decorate functions "
+        "with @flow and @task to turn Python scripts into observable, retryable workflows. "
+        "Concurrent execution, subflows, caching, and a hosted Cloud tier. "
+        "Much simpler setup than Airflow for most use cases.",
+        "background-jobs",
+        "PrefectHQ/prefect",
+        16000,
+        "https://prefect.io",
+        "workflow,orchestration,python,etl,data-pipeline",
+        "pip install prefect",
+        "code",
+    ),
+    # API — gRPC and high-performance HTTP frameworks ------------------------------
+    (
+        "grpc",
+        "gRPC",
+        "A high performance, open source universal RPC framework",
+        "gRPC is a modern open-source RPC framework by Google. Uses Protocol Buffers "
+        "for serialization and HTTP/2 for transport — delivering 5-10x better performance "
+        "than REST/JSON. Supports bidirectional streaming, server push, and "
+        "code generation for 10+ languages. CNCF graduated project.",
+        "api-tools",
+        "grpc/grpc",
+        42000,
+        "https://grpc.io",
+        "rpc,api,protobuf,http2,streaming",
+        "pip install grpcio grpcio-tools",
+        "code",
+    ),
+    (
+        "fastify",
+        "Fastify",
+        "Fast and low overhead web framework for Node.js",
+        "Fastify is one of the fastest Node.js web frameworks — up to 2x faster than "
+        "Express. JSON Schema validation, plugin architecture, and TypeScript support "
+        "built in. Hooks, decorators, and a rich ecosystem of 250+ plugins. "
+        "Production-proven at massive scale.",
+        "api-tools",
+        "fastify/fastify",
+        33000,
+        "https://fastify.dev",
+        "nodejs,http,rest,api,typescript",
+        "npm install fastify",
+        "code",
+    ),
 ]
 
 

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twenty-fifth pass)
+Last updated: 2026-04-06 (twenty-sixth pass)
 
 ## Status: Active
 
@@ -9,12 +9,40 @@ Last updated: 2026-04-06 (twenty-fifth pass)
 - **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 559 entries for search routing (added 10 in twenty-fifth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 76 tools ready to insert (slug-safe)
-  - 4 tools added in twenty-fifth pass (Storybook, Rspack, Flipt, GrowthBook)
+- **_CAT_SYNONYMS**: 576 entries for search routing (added 17 in twenty-sixth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 86 tools ready to insert (slug-safe)
+  - 10 tools added in twenty-sixth pass (LlamaIndex, LiteLLM, CrewAI, Helm, ArgoCD, Dagster, Prefect, gRPC, Fastify + FluxCD synonym)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, twenty-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 17 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **AI agent frameworks**: `"llamaindex"`, `"litellm"`, `"crewai"`, `"autogen"`, `"dspy"`, `"smolagents"` → `"ai"` — all appear in TECH_KEYWORDS but were missing from synonym routing
+  - **Kubernetes DevOps**: `"helm"`, `"argocd"`, `"fluxcd"` → `"devops"` — K8s package mgr + GitOps tools
+  - **Workflow orchestration**: `"dagster"`, `"prefect"`, `"airflow"` → `"background"` — pipeline orchestrators
+  - **API protocol**: `"grpc"`, `"protobuf"` → `"api"` — gRPC is in TECH_KEYWORDS but unrouted
+- Running total: 576 entries (559 + 17)
+
+### Catalog Script (Step 2)
+- Added 9 new tools to `scripts/add_missing_tools.py` (86 total):
+  - LlamaIndex (ai-automation, 38k★) — leading RAG data framework for LLM apps
+  - LiteLLM (ai-dev-tools, 15k★) — unified proxy for 100+ LLM providers
+  - CrewAI (ai-automation, 25k★) — multi-agent role-based orchestration framework
+  - Helm (devops-infrastructure, 27k★) — Kubernetes package manager (charts)
+  - Argo CD (devops-infrastructure, 18k★) — GitOps continuous delivery for Kubernetes
+  - Dagster (background-jobs, 12k★) — asset-based data pipeline orchestration
+  - Prefect (background-jobs, 16k★) — modern Python workflow orchestration
+  - gRPC (api-tools, 42k★) — Google's high-performance RPC framework
+  - Fastify (api-tools, 33k★) — fast Node.js web framework (2x Express)
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py, memory files, and add_missing_tools.py — no route files to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to twenty-sixth pass
 
 ## Completed This Session (2026-04-06, twenty-fifth pass — autonomous improvement cycle)
 

@@ -2968,6 +2968,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "changesets": "devops",          # Changesets — monorepo versioning and changelog automation
     # Frontend — Angular meta-framework (file-based routing + SSR for Angular)
     "analog": "frontend",            # Analog — Angular meta-framework (Next.js for Angular)
+    # AI agent frameworks — increasingly common in developer queries
+    "llamaindex": "ai",              # LlamaIndex — RAG + data framework for LLM apps
+    "litellm": "ai",                 # LiteLLM — unified proxy for 100+ LLM providers
+    "crewai": "ai",                  # CrewAI — multi-agent role-based framework
+    "autogen": "ai",                 # AutoGen (Microsoft) — conversational multi-agent
+    "dspy": "ai",                    # DSPy (Stanford) — programming model for LM pipelines
+    "smolagents": "ai",              # SmolAgents (HuggingFace) — minimal agentic framework
+    # DevOps — Kubernetes ecosystem tools
+    "helm": "devops",               # Helm — Kubernetes package manager (charts)
+    "argocd": "devops",             # Argo CD — GitOps continuous delivery for Kubernetes
+    "fluxcd": "devops",             # Flux CD — GitOps operator for Kubernetes
+    # Background / workflow orchestration
+    "dagster": "background",         # Dagster — data pipeline + asset-based orchestration
+    "prefect": "background",         # Prefect — modern Python workflow orchestration
+    "airflow": "background",         # Apache Airflow — DAG-based workflow scheduler
+    # API protocol — gRPC / Protobuf
+    "grpc": "api",                   # gRPC — high-performance RPC framework
+    "protobuf": "api",               # Protocol Buffers — binary serialization by Google
 }
 
 _FTS_STOP_WORDS = {
