@@ -2773,6 +2773,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "encryption": "security",   # encryption libraries and key management
     "ssl": "security",          # SSL certificate management
     "tls": "security",          # TLS configuration tools
+    # Frontend rendering patterns — SSR/SSG/PWA/SPA (common agent query terms)
+    "ssr": "frontend",          # Server-Side Rendering (Next.js, SvelteKit, Nuxt)
+    "ssg": "frontend",          # Static Site Generation (Astro, Eleventy, Jekyll)
+    "pwa": "frontend",          # Progressive Web Apps (Workbox, Vite PWA plugin)
+    "spa": "frontend",          # Single Page Applications (React, Vue, Angular)
+    # Reverse proxy / web server / load balancer tools
+    "proxy": "devops",          # "reverse proxy" → DevOps & Infrastructure
+    "reverse": "devops",        # "reverse proxy" — "reverse" not a common stop-word here
+    "nginx": "devops",          # Nginx — most popular web server / reverse proxy
+    "traefik": "devops",        # Traefik — cloud-native reverse proxy
+    "caddy": "devops",          # Caddy — automatic HTTPS web server
+    "loadbalancer": "devops",   # load balancer tools
+    "haproxy": "devops",        # HAProxy — high-availability load balancer
+    # API layer — CORS and middleware
+    "cors": "api",              # "CORS middleware", "CORS header" → API Tools
+    "middleware": "api",        # "API middleware", "Express middleware" → API Tools
 }
 
 _FTS_STOP_WORDS = {

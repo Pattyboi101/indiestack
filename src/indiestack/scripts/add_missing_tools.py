@@ -460,6 +460,53 @@ TOOLS = [
         "curl -fsSL https://bun.sh/install | bash",
         "code",
     ),
+    # CSS Frameworks / Design Systems -------------------------------------------
+    (
+        "tailwindcss",
+        "Tailwind CSS",
+        "A utility-first CSS framework for rapid UI development",
+        "Tailwind CSS is a utility-first CSS framework that lets you build any design "
+        "directly in your HTML. No pre-built components — compose utilities to create "
+        "custom designs without leaving your markup. Powers shadcn/ui, Flowbite, and more.",
+        "frontend-frameworks",
+        "tailwindlabs/tailwindcss",
+        84000,
+        "https://tailwindcss.com",
+        "css,utility-first,styling,design-system",
+        "npm install tailwindcss",
+        "code",
+    ),
+    (
+        "shadcn-ui",
+        "shadcn/ui",
+        "Beautifully designed components built with Radix UI and Tailwind CSS",
+        "shadcn/ui is a collection of re-usable React components built with Radix UI "
+        "and Tailwind CSS. Not a component library — copy the source into your project. "
+        "Full control, zero vendor lock-in. Supports Next.js, Vite, Remix, and Astro.",
+        "frontend-frameworks",
+        "shadcn-ui/ui",
+        82000,
+        "https://ui.shadcn.com",
+        "ui,react,tailwind,radix,components",
+        "npx shadcn@latest init",
+        "code",
+    ),
+    # Monorepo tooling -----------------------------------------------------------
+    (
+        "turborepo",
+        "Turborepo",
+        "High-performance build system for JavaScript and TypeScript monorepos",
+        "Turborepo is a blazing-fast build system for monorepos. Intelligent caching, "
+        "parallel execution, and remote caching via Vercel. Dramatically speeds up "
+        "CI/CD pipelines for large JavaScript and TypeScript projects.",
+        "developer-tools",
+        "vercel/turborepo",
+        26000,
+        "https://turbo.build/repo",
+        "monorepo,build-tool,caching,ci",
+        "npx create-turbo@latest",
+        "code",
+    ),
     # Workflow automation --------------------------------------------------------
     (
         "n8n",
