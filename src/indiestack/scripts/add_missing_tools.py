@@ -585,6 +585,85 @@ TOOLS = [
         "docker run -it --rm -p 7700:7700 getmeili/meilisearch",
         "code",
     ),
+    # Headless CMS ---------------------------------------------------------------
+    (
+        "payload-cms",
+        "Payload CMS",
+        "The most powerful TypeScript headless CMS",
+        "Payload is a fully TypeScript-native headless CMS and application framework. "
+        "Code-first configuration, auto-generated REST & GraphQL APIs, a beautiful admin UI, "
+        "and no vendor lock-in. Self-host on Node.js + MongoDB or PostgreSQL.",
+        "headless-cms",
+        "payloadcms/payload",
+        32000,
+        "https://payloadcms.com",
+        "headless-cms,typescript,graphql,self-hosted",
+        "npx create-payload-app@latest",
+        "code",
+    ),
+    # Authentication libraries ---------------------------------------------------
+    (
+        "lucia-auth",
+        "Lucia",
+        "Simple and flexible auth library for TypeScript",
+        "Lucia is a lightweight, framework-agnostic TypeScript auth library. "
+        "Handles sessions, OAuth (GitHub, Google, etc.), and password hashing with "
+        "full control over your database schema. No magic, no vendor lock-in.",
+        "authentication",
+        "lucia-auth/lucia",
+        11000,
+        "https://lucia-auth.com",
+        "auth,typescript,session,oauth",
+        "npm install lucia",
+        "code",
+    ),
+    (
+        "better-auth",
+        "Better Auth",
+        "The most comprehensive authentication framework for TypeScript",
+        "Better Auth is a framework-agnostic TypeScript authentication library with "
+        "built-in support for email/password, OAuth, 2FA, sessions, organisations, "
+        "and plugins. Works with Next.js, Nuxt, SvelteKit, Hono, and more.",
+        "authentication",
+        "better-auth/better-auth",
+        14000,
+        "https://better-auth.com",
+        "auth,typescript,oauth,2fa,nextjs",
+        "npm install better-auth",
+        "code",
+    ),
+    # Database — OLAP / Analytics ------------------------------------------------
+    (
+        "clickhouse",
+        "ClickHouse",
+        "The fastest open-source analytical database",
+        "ClickHouse is an open-source column-oriented OLAP database for real-time analytics. "
+        "Processes billions of rows per second, supports SQL, and excels at aggregation "
+        "queries. Used at scale by Cloudflare, ByteDance, and Contentsquare.",
+        "database",
+        "ClickHouse/ClickHouse",
+        37000,
+        "https://clickhouse.com",
+        "olap,analytics,column-store,fast",
+        "docker run -d --name clickhouse clickhouse/clickhouse-server",
+        "code",
+    ),
+    # DevOps — Self-hosting ------------------------------------------------------
+    (
+        "coolify",
+        "Coolify",
+        "Self-hosted Heroku / Netlify alternative",
+        "Coolify is an open-source, self-hostable platform-as-a-service. Deploy apps, "
+        "databases, and services to your own server with a Heroku-like UI. Supports "
+        "Docker Compose, Nixpacks, static sites, and more.",
+        "devops-infrastructure",
+        "coollabsio/coolify",
+        32000,
+        "https://coolify.io",
+        "paas,self-hosted,docker,deployment",
+        "curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash",
+        "code",
+    ),
     # Workflow automation --------------------------------------------------------
     (
         "n8n",

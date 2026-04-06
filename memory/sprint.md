@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (sixteenth pass)
+Last updated: 2026-04-06 (seventeenth pass)
 
 ## Status: Active
 
@@ -8,12 +8,45 @@ Last updated: 2026-04-06 (sixteenth pass)
 
 - **MCP server**: v1.15.1 (PyPI) — 10,000+ installs, 23 tools, fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
-- **NEED_MAPPINGS**: 43 entries covering all 29+ category slugs
-- **_CAT_SYNONYMS**: ~461 entries for search routing (added 14 in sixteenth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 38 tools ready to insert (slug-safe)
+- **NEED_MAPPINGS**: 43 entries — 2 category slug bugs fixed (headless-cms, devops-infrastructure)
+- **_CAT_SYNONYMS**: ~495 entries for search routing (added 31 in seventeenth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 43 tools ready to insert (slug-safe)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, seventeenth pass — autonomous improvement cycle)
+
+### Bug Fixes (Step 1 — NEED_MAPPINGS)
+- Fixed 2 wrong category slugs in NEED_MAPPINGS that would silently break Stack Builder / Use Case pages:
+  - `"cms"` entry: `"cms-content"` → `"headless-cms"` (actual DB slug)
+  - `"hosting"` entry: `"hosting-infrastructure"` → `"devops-infrastructure"` (actual DB slug)
+
+### Search Quality (Step 1 — _CAT_SYNONYMS)
+- Added 31 new _CAT_SYNONYMS entries for common query terms not yet covered:
+  - **Auth libraries**: `lucia`, `betterauth`, `oidc`, `oauth2` → authentication
+  - **CMS tools**: `payload`, `ghost`, `wordpress`, `keystonejs` → cms
+  - **Database**: `clickhouse`, `neo4j`, `graph`, `timescale`, `timescaledb` → database
+  - **Caching**: `valkey` → caching (Linux Foundation Redis fork)
+  - **Testing**: `puppeteer`, `k6`, `msw`, `webdriverio` → testing
+  - **DevOps**: `kamal`, `coolify`, `fly` → devops
+  - **Frontend**: `qwik`, `million` → frontend
+  - **Security**: `sast`, `dast`, `owasp` → security
+- Total _CAT_SYNONYMS keys: ~495
+
+### Catalog Script (Step 2)
+- Added 5 high-value tools to `scripts/add_missing_tools.py` (43 total):
+  - Payload CMS (headless-cms, 32k stars) — TypeScript-native headless CMS
+  - Lucia (authentication, 11k stars) — lightweight TypeScript auth
+  - Better Auth (authentication, 14k stars) — modern TypeScript auth framework
+  - ClickHouse (database, 37k stars) — fastest open-source OLAP database
+  - Coolify (devops-infrastructure, 32k stars) — self-hosted Heroku/Netlify alternative
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py, memory files, and add_missing_tools.py — no route files to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated with seventeenth pass; decisions.md is current — no other changes needed
 
 ## Completed This Session (2026-04-06, sixteenth pass — autonomous improvement cycle)
 

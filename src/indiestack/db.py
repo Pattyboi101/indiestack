@@ -664,7 +664,7 @@ NEED_MAPPINGS = {
     "monitoring": {"category": "monitoring-uptime", "terms": ["monitoring", "uptime", "alerting", "observability"], "competitors": ["Datadog", "PagerDuty", "Pingdom"], "title": "Monitoring & Uptime", "description": "Monitor uptime, get alerts, and track application health.", "build_estimate": "2-3 weeks", "icon": "\U0001f6a8"},
     "forms": {"category": "forms-surveys", "terms": ["forms", "surveys", "feedback", "questionnaires"], "competitors": ["Typeform", "Google Forms", "SurveyMonkey"], "title": "Forms & Surveys", "description": "Build forms, collect responses, and run surveys.", "build_estimate": "1-2 weeks", "icon": "\U0001f4cb"},
     "scheduling": {"category": "scheduling-booking", "terms": ["scheduling", "booking", "calendar", "appointments"], "competitors": ["Calendly", "Acuity", "Cal.com"], "title": "Scheduling & Booking", "description": "Let users book meetings, schedule appointments, and manage availability.", "build_estimate": "2-3 weeks", "icon": "\U0001f4c5"},
-    "cms": {"category": "cms-content", "terms": ["cms", "content", "blog", "headless"], "competitors": ["WordPress", "Contentful", "Sanity"], "title": "CMS & Content", "description": "Manage content, run blogs, and build headless CMS backends.", "build_estimate": "3-5 weeks", "icon": "\U0001f4dd"},
+    "cms": {"category": "headless-cms", "terms": ["cms", "content", "blog", "headless"], "competitors": ["WordPress", "Contentful", "Sanity"], "title": "CMS & Content", "description": "Manage content, run blogs, and build headless CMS backends.", "build_estimate": "3-5 weeks", "icon": "\U0001f4dd"},
     "support": {"category": "customer-support", "terms": ["support", "helpdesk", "chat", "ticketing"], "competitors": ["Zendesk", "Intercom", "Freshdesk"], "title": "Customer Support", "description": "Add helpdesks, live chat, and ticketing systems.", "build_estimate": "3-4 weeks", "icon": "\U0001f3a7"},
     "seo": {"category": "seo-tools", "terms": ["seo", "search", "ranking", "keywords"], "competitors": ["Ahrefs", "SEMrush", "Moz"], "title": "SEO Tools", "description": "Track rankings, audit sites, and optimize for search engines.", "build_estimate": "2-3 weeks", "icon": "\U0001f50d"},
     "storage": {"category": "file-management", "terms": ["storage", "files", "upload", "media"], "competitors": ["AWS S3", "Dropbox", "Cloudinary"], "title": "File Storage", "description": "Upload files, manage media assets, and serve content.", "build_estimate": "1-2 weeks", "icon": "\U0001f4c1"},
@@ -684,7 +684,7 @@ NEED_MAPPINGS = {
     "creative": {"category": "creative-tools", "terms": ["music production", "video editor", "audio tool", "3d modeling", "pixel art", "creative software"], "competitors": ["Adobe Creative Suite", "DaVinci Resolve", "Blender", "Logic Pro"], "title": "Creative Tools", "description": "Music, video, art, and creative software from indie makers.", "build_estimate": "varies", "icon": "\U0001f3ad"},
     "database": {"category": "database", "terms": ["database", "orm", "sql", "nosql", "postgres", "mysql", "sqlite", "migration", "vector database", "vector db", "vector store"], "competitors": ["PlanetScale", "Supabase", "MongoDB Atlas", "Neon"], "title": "Databases", "description": "Indie databases, ORMs, and data storage tools for your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f5c4\ufe0f"},
     "background": {"category": "background-jobs", "terms": ["cron job", "task queue", "background job", "job scheduler", "workflow", "queue worker"], "competitors": ["Celery", "Bull", "Sidekiq", "AWS SQS"], "title": "Background Jobs", "description": "Schedule cron jobs, run task queues, and orchestrate workflows.", "build_estimate": "1-2 weeks", "icon": "\u2699\ufe0f"},
-    "hosting": {"category": "hosting-infrastructure", "terms": ["hosting", "deployment", "vps", "cloud", "infrastructure", "paas"], "competitors": ["AWS", "Heroku", "Vercel", "Railway", "Render"], "title": "Hosting & Infrastructure", "description": "Deploy apps, manage servers, and scale infrastructure without enterprise overhead.", "build_estimate": "1-2 weeks", "icon": "\U0001f30d"},
+    "hosting": {"category": "devops-infrastructure", "terms": ["hosting", "deployment", "vps", "cloud", "infrastructure", "paas"], "competitors": ["AWS", "Heroku", "Vercel", "Railway", "Render"], "title": "Hosting & Infrastructure", "description": "Deploy apps, manage servers, and scale infrastructure without enterprise overhead.", "build_estimate": "1-2 weeks", "icon": "\U0001f30d"},
     "frontend": {"category": "frontend-frameworks", "terms": ["react", "vue", "svelte", "angular", "nextjs", "nuxt", "astro", "remix", "frontend framework", "javascript framework", "ui framework", "bundler", "build tool", "state management"], "competitors": ["React", "Vue", "Angular", "Svelte", "Next.js", "Vite", "Webpack"], "title": "Frontend Frameworks", "description": "JavaScript frameworks, UI libraries, bundlers, and state management tools for building modern web apps.", "build_estimate": "varies", "icon": "\U0001f5a5\ufe0f"},
     "caching": {"category": "caching", "terms": ["cache", "caching", "redis", "memcached", "in-memory", "key-value store", "edge cache", "cdn cache"], "competitors": ["Redis", "Memcached", "Upstash", "Cloudflare"], "title": "Caching & In-Memory", "description": "In-memory stores, caching layers, and key-value databases for high-performance apps.", "build_estimate": "1 week", "icon": "\u26a1"},
     "mcp": {"category": "mcp-servers", "terms": ["mcp server", "model context protocol", "mcp tool", "claude tool", "claude integration", "agent tool", "agent integration"], "competitors": ["Zapier MCP", "Make MCP", "Custom MCP servers"], "title": "MCP Servers", "description": "MCP server implementations that give AI agents access to tools, data, and services.", "build_estimate": "varies", "icon": "\U0001f9e9"},
@@ -2809,6 +2809,40 @@ _CAT_SYNONYMS: dict[str, str] = {
     "snapshot": "testing",      # "snapshot testing" — Jest / Vitest snapshots
     "benchmark": "testing",     # "benchmark tool" — k6, Vitest bench, hyperfine
     "benchmarking": "testing",  # explicit form
+    # Auth libraries (named tools missing from earlier pass)
+    "lucia": "authentication",        # Lucia Auth — lightweight auth library
+    "betterauth": "authentication",   # Better Auth — modern TypeScript auth framework
+    "oidc": "authentication",         # OpenID Connect — identity protocol (Zitadel, Keycloak)
+    "oauth2": "authentication",       # explicit OAuth 2.0 queries
+    # CMS — popular tools not yet mapped
+    "payload": "cms",                 # PayloadCMS — TypeScript headless CMS (32k stars)
+    "ghost": "cms",                   # Ghost — open-source publishing/CMS
+    "wordpress": "cms",               # WordPress — headless WP queries
+    "keystonejs": "cms",              # KeystoneJS — Node.js headless CMS
+    # Database — OLAP, graph, time-series
+    "clickhouse": "database",         # ClickHouse — fast OLAP database
+    "neo4j": "database",              # Neo4j — graph database
+    "graph": "database",              # "graph database" queries (Neo4j, Amazon Neptune)
+    "timescale": "database",          # TimescaleDB — time-series PostgreSQL extension
+    "timescaledb": "database",        # explicit form
+    # Caching — Redis fork/alternatives
+    "valkey": "caching",              # Valkey — Linux Foundation Redis fork
+    # Testing — headless browser + load testing + mocking
+    "puppeteer": "testing",           # Puppeteer — headless Chrome automation
+    "k6": "testing",                  # k6 — load testing tool (Grafana)
+    "msw": "testing",                 # Mock Service Worker — API mocking
+    "webdriverio": "testing",         # WebdriverIO — cross-browser test automation
+    # DevOps — deployment / self-hosting tools
+    "kamal": "devops",                # Kamal — Rails/Docker deployment (by Basecamp)
+    "coolify": "devops",              # Coolify — self-hosted Heroku/Netlify alternative
+    "fly": "devops",                  # short form of "fly.io" in queries
+    # Frontend — modern frameworks not yet covered
+    "qwik": "frontend",               # Qwik — resumable JavaScript framework
+    "million": "frontend",            # Million.js — React performance compiler
+    # Security — static/dynamic analysis
+    "sast": "security",               # static application security testing
+    "dast": "security",               # dynamic application security testing
+    "owasp": "security",              # OWASP tooling (OWASP ZAP, OWASP Top 10)
 }
 
 _FTS_STOP_WORDS = {
