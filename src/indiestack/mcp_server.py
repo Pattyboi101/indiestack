@@ -47,7 +47,7 @@ def _detect_agent_platform() -> str:
     return "unknown"
 
 AGENT_PLATFORM = _detect_agent_platform()
-_USER_AGENT = f"indiestack-mcp/1.16.0 ({AGENT_PLATFORM})"
+_USER_AGENT = f"indiestack-mcp/1.17.0 ({AGENT_PLATFORM})"
 
 # ── TTL Cache ────────────────────────────────────────────────────────────
 
@@ -187,7 +187,7 @@ def _trust_label(tier: str) -> str:
 
 # ── API Helpers (async + retry) ──────────────────────────────────────────
 
-async def _api_get(client: httpx.AsyncClient, path: str, params: dict = None) -> dict:
+async def _api_get(client: httpx.AsyncClient, path: str, params: dict = None, headers: dict = None) -> dict:
     """GET request with retry and circuit breaker."""
     global _circuit_fails, _circuit_open_until
 
@@ -211,7 +211,7 @@ async def _api_get(client: httpx.AsyncClient, path: str, params: dict = None) ->
 
     for attempt in range(2):
         try:
-            resp = await client.get(path, params=params)
+            resp = await client.get(path, params=params, headers=headers or {})
             resp.raise_for_status()
             _circuit_fails = 0  # Reset on success
             return resp.json()
@@ -606,6 +606,39 @@ NEED_MAPPINGS: dict[str, dict] = {
 # ── Tools ────────────────────────────────────────────────────────────────
 
 
+def _build_confidence_rationale(t: dict) -> str:
+    """Build a concise confidence signal string from tool response fields."""
+    outcomes = t.get("agent_outcomes") or 0
+    health = t.get("health_status", "")
+    last_commit = t.get("github_last_commit")
+    is_archived = t.get("github_is_archived", False)
+
+    if outcomes >= 20:
+        score, label = 0.90, "high"
+    elif outcomes >= 5:
+        score, label = 0.65, "medium"
+    elif outcomes >= 1:
+        score, label = 0.35, "low"
+    else:
+        return ""  # No signal data — omit rather than mislead
+
+    signals = [f"{outcomes} citations"]
+    if is_archived or health == "dead":
+        signals.append("unmaintained")
+    elif last_commit:
+        try:
+            dt = datetime.fromisoformat(last_commit.replace('Z', '+00:00'))
+            days = (datetime.now(timezone.utc) - dt).days
+            if days <= 90:
+                signals.append("active")
+            elif days > 365:
+                signals.append("stale")
+        except (ValueError, TypeError):
+            pass
+
+    return f"{label} confidence ({score}) — {', '.join(signals)}"
+
+
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
 async def find_tools(
     query: str,
@@ -623,6 +656,7 @@ async def find_tools(
     health: Optional[str] = None,
     min_stars: int = 0,
     sort: Optional[str] = None,
+    session_id: Optional[str] = None,
     *,
     ctx: Context,
 ) -> str:
@@ -653,6 +687,7 @@ async def find_tools(
         health: Maintenance status: "active", "stale", "dead", "archived".
         min_stars: Minimum GitHub stars. Code tools only.
         sort: "relevance" (default), "stars", "upvotes", "newest".
+        session_id: Optional UUID string for session-aware result tracking. Pass a consistent ID across multiple calls in the same agent session to enable contextual analytics.
     """
     client = _get_client(ctx)
     params = {"q": query, "limit": "10", "offset": str(offset)}
@@ -683,9 +718,10 @@ async def find_tools(
     if sort:
         params["sort"] = sort
 
+    _session_headers = {"X-Session-ID": session_id} if session_id else None
     await ctx.report_progress(progress=0, total=1)
     try:
-        data = await _api_get(client, "/api/tools/search", params)
+        data = await _api_get(client, "/api/tools/search", params, headers=_session_headers)
     except ToolError:
         raise  # Pass through rate limit and other ToolErrors (e.g. signup pitch)
     except Exception as e:
@@ -747,8 +783,10 @@ async def find_tools(
             success_line = f" | Agent success: {t['agent_success_rate']}% ({t.get('agent_outcomes', 0)} reports)"
         stars_val = t.get('github_stars', 0) or 0
         stars_line = f" | {stars_val:,} stars" if stars_val > 0 else ""
+        confidence_line = _build_confidence_rationale(t)
+        confidence_tag = f" [{confidence_line}]" if confidence_line else ""
         lines.append(
-            f"- **{t['name']}** (`{t.get('slug', '')}`){source_label}{tool_type_label}{health_tag} — {(lambda d: d[:500] + '...' if len(d) > 500 else d)(t.get('tagline', ''))}\n"
+            f"- **{t['name']}** (`{t.get('slug', '')}`){source_label}{tool_type_label}{health_tag}{confidence_tag} — {(lambda d: d[:500] + '...' if len(d) > 500 else d)(t.get('tagline', ''))}\n"
             f"  Price: {t.get('price', 'Free')}{stars_line}{success_line}{install_line}{migration_line}\n"
             f"  {t.get('indiestack_url', '')}"
         )
@@ -829,7 +867,7 @@ def _format_health(tool: dict) -> str:
 
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
-async def get_tool_details(slug: str, *, ctx: Context) -> str:
+async def get_tool_details(slug: str, session_id: Optional[str] = None, *, ctx: Context) -> str:
     """Get integration code, pricing, API specs, and compatibility data for a specific tool from the 6,500+ IndieStack catalog.
 
     Call this after find_tools() to get everything needed to recommend and integrate
@@ -840,6 +878,7 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
 
     Args:
         slug: The tool's URL slug (e.g. "plausible-analytics"). Get slugs from find_tools() results.
+        session_id: Optional UUID string matching the session_id passed to find_tools(). Enables adoption tracking.
     """
     cache_key = f"tool:{slug}"
     cached = _cache_get(cache_key, 60)
@@ -847,9 +886,10 @@ async def get_tool_details(slug: str, *, ctx: Context) -> str:
         return cached
 
     client = _get_client(ctx)
+    _session_headers = {"X-Session-ID": session_id} if session_id else None
     await ctx.report_progress(progress=0, total=1)
     try:
-        data = await _api_get(client, f"/api/tools/{slug}")
+        data = await _api_get(client, f"/api/tools/{slug}", headers=_session_headers)
     except ToolError:
         raise  # Pass through signup pitch
     except Exception as e:
