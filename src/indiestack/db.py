@@ -3080,6 +3080,70 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mastra": "ai",                 # Mastra — TypeScript AI agent framework
     "pydantic-ai": "ai",            # Pydantic AI — production-grade agent framework
     "phidata": "ai",                # Phidata — multi-modal agent framework with memory
+    # TypeScript — very common query prefix ("typescript orm", "typescript testing", "ts library")
+    "typescript": "frontend",       # TypeScript — typed JS superset; TS tools live in frontend-frameworks
+    "ts": "frontend",               # abbreviation — "ts config", "ts utils", "ts bundler"
+    # Web scraping / crawling — Scrapy, Crawlee, Cheerio, Colly live in developer-tools
+    "scraping": "devtools",         # "web scraping library", "scraping framework" → Developer Tools
+    "scraper": "devtools",          # "html scraper", "page scraper" → Developer Tools
+    "crawler": "devtools",          # "web crawler", "link crawler" → Developer Tools
+    "crawling": "devtools",         # "web crawling tool" → Developer Tools
+    "cheerio": "devtools",          # Cheerio — jQuery-like server-side HTML parsing for scraping
+    "crawlee": "devtools",          # Crawlee — Apify's open-source web scraping/crawling library
+    # RPC — generic query term (beyond gRPC)
+    "rpc": "api",                   # "rpc framework", "rpc protocol" → API Tools (Hono, tRPC, gRPC)
+    # DNS — DNS tools and providers live in DevOps & Infrastructure
+    "dns": "devops",                # "DNS provider", "DNS management", "DNS server" → DevOps
+    # Code formatter — Prettier, Biome, dprint live in testing-tools alongside linters
+    "formatter": "testing",         # "code formatter", "js formatter" → Testing Tools
+    "format": "testing",            # "code format", "auto-format" → Testing Tools (Biome, Prettier)
+    # HTTP clients — Axios, Got, Ky, node-fetch live in api-tools
+    "axios": "api",                 # Axios — most popular promise-based HTTP client for JS/TS
+    "http": "api",                  # "http client", "http server", "http library" → API Tools
+    "httpclient": "api",            # explicit compound form
+    "httpx": "api",                 # HTTPX — async-first Python HTTP client
+    "got": "api",                   # Got — modern Node.js HTTP request library
+    "ky": "api",                    # Ky — tiny fetch-based HTTP client
+    # GitOps — ArgoCD, FluxCD live in DevOps & Infrastructure
+    "gitops": "devops",             # "gitops workflow", "gitops deployment" → DevOps
+    # AI model providers — very common in "[provider] alternative" queries
+    "ollama": "ai",                 # Ollama — local LLM runner (Llama, Mistral, Gemma)
+    "anthropic": "ai",              # Anthropic API / Claude SDK queries
+    "gemini": "ai",                 # Google Gemini API queries
+    "mistral": "ai",                # Mistral AI — efficient open-weight LLMs
+    "huggingface": "ai",            # Hugging Face — ML model hub and inference APIs
+    "groq": "ai",                   # Groq — ultra-fast LLM inference hardware/API
+    "together": "ai",               # Together.ai — open-source LLM inference cloud
+    "perplexity": "ai",             # Perplexity AI — search-augmented LLM
+    # Mobile / cross-platform frameworks (React Native ecosystem)
+    "reactnative": "frontend",      # React Native — cross-platform mobile with React
+    "react-native": "frontend",     # hyphenated form common in queries
+    "expo": "frontend",             # Expo — managed React Native toolchain
+    "capacitor": "frontend",        # Capacitor — native runtime for web apps (Ionic)
+    "ionic": "frontend",            # Ionic — hybrid mobile app framework
+    "nativewind": "frontend",       # NativeWind — Tailwind CSS for React Native
+    "flutter": "frontend",          # Flutter — Dart cross-platform UI framework
+    # Frontend — data tables and grids (AG Grid, TanStack Table, Handsontable)
+    "table": "frontend",            # "data table component", "react table" → Frontend Frameworks
+    "datagrid": "frontend",         # "datagrid library", "data grid component" → Frontend Frameworks
+    "grid": "frontend",             # "data grid", "css grid library" — TanStack Table, AG Grid
+    # Frontend — date/time pickers (very common UI component query)
+    "datepicker": "frontend",       # "date picker component", "calendar picker" → Frontend Frameworks
+    # Database — data warehouse / analytics DB
+    "duckdb": "database",           # DuckDB — in-process analytical database (OLAP)
+    "bigquery": "database",         # BigQuery — Google serverless data warehouse
+    "snowflake": "database",        # Snowflake — cloud data platform/warehouse
+    # DevOps — secret scanning / Git hooks
+    "gitleaks": "security",         # Gitleaks — secret scanning for git repos
+    "trufflehog": "security",       # TruffleHog — secret detection in git history
+    "husky": "devops",              # Husky — Git hooks made easy for Node.js projects
+    "lefthook": "devops",           # Lefthook — fast polyglot Git hooks manager
+    # AI — vector / embedding databases for RAG pipelines
+    "pgvector": "database",         # pgvector — open-source vector similarity for Postgres
+    # Monitoring — real user monitoring / performance
+    "rum": "monitoring",            # RUM (Real User Monitoring) — frontend performance tracking
+    "vitals": "monitoring",         # Core Web Vitals monitoring tools
+    "speedlify": "monitoring",      # Speedlify — automated performance benchmarking
 }
 
 _FTS_STOP_WORDS = {

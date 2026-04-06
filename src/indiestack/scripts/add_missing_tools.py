@@ -1684,6 +1684,100 @@ TOOLS = [
         "npm install @highlight-run/next",
         "code",
     ),
+    # Frontend — cross-platform / mobile frameworks --------------------------------
+    (
+        "expo",
+        "Expo",
+        "Build one app for Android, iOS, and the web with React Native",
+        "Expo is an open-source platform for making universal native apps with React. "
+        "Includes a managed build service (EAS), 50+ packages for common native APIs, "
+        "over-the-air updates, and a web runtime. The fastest way to ship a React Native app.",
+        "frontend-frameworks",
+        "expo/expo",
+        38000,
+        "https://expo.dev",
+        "react-native,mobile,cross-platform,ios,android",
+        "npx create-expo-app my-app",
+        "code",
+    ),
+    (
+        "flutter",
+        "Flutter",
+        "Build, test, and deploy beautiful mobile, web, desktop, and embedded apps",
+        "Flutter is Google's UI toolkit for building natively compiled applications "
+        "for mobile, web, desktop, and embedded devices from a single Dart codebase. "
+        "Flutter 3 supports all six platforms with near-native performance.",
+        "frontend-frameworks",
+        "flutter/flutter",
+        170000,
+        "https://flutter.dev",
+        "mobile,cross-platform,dart,ios,android,google",
+        "flutter create my_app",
+        "code",
+    ),
+    (
+        "react-native",
+        "React Native",
+        "Learn once, write anywhere — build native mobile apps with React",
+        "React Native lets you build mobile apps using React and JavaScript. "
+        "Access native APIs, ship to iOS and Android from one codebase, and reuse "
+        "web developer skills. Used by Meta, Microsoft, Shopify, and thousands of apps.",
+        "frontend-frameworks",
+        "facebook/react-native",
+        119000,
+        "https://reactnative.dev",
+        "mobile,react,ios,android,cross-platform",
+        "npx react-native init MyApp",
+        "code",
+    ),
+    # Database — OLAP / analytical -------------------------------------------------
+    (
+        "duckdb",
+        "DuckDB",
+        "In-process SQL OLAP database — fast analytical queries on local files",
+        "DuckDB is a fast, embedded analytical database. Run SQL directly on Parquet, "
+        "CSV, or JSON files without a server. Perfect for data analysis, local ETL, "
+        "and edge analytics. Runs in-process in Python, Node.js, Go, Rust, and Java.",
+        "database",
+        "duckdb/duckdb",
+        30000,
+        "https://duckdb.org",
+        "olap,analytics,embedded,sql,parquet",
+        "pip install duckdb",
+        "code",
+    ),
+    # AI — structured output / validation tools ------------------------------------
+    (
+        "instructor",
+        "Instructor",
+        "Structured outputs from LLMs powered by Pydantic",
+        "Instructor makes it easy to get structured data out of LLMs using Pydantic "
+        "models as schemas. Works with OpenAI, Anthropic, Mistral, Cohere, and Gemini. "
+        "Retry logic, partial streaming, and a clean Python API.",
+        "ai-dev-tools",
+        "instructor-ai/instructor",
+        10000,
+        "https://python.useinstructor.com",
+        "llm,structured-output,pydantic,python",
+        "pip install instructor",
+        "code",
+    ),
+    # DevOps — Git hooks automation ------------------------------------------------
+    (
+        "husky",
+        "Husky",
+        "Git hooks made easy for Node.js projects",
+        "Husky automatically installs and manages Git hooks for Node.js projects. "
+        "Run linters, tests, or formatters on commit/push with zero configuration. "
+        "Works with any Git hook and any linting tool.",
+        "devops-infrastructure",
+        "typicode/husky",
+        33000,
+        "https://typicode.github.io/husky",
+        "git-hooks,linting,automation,ci",
+        "npm install --save-dev husky",
+        "code",
+    ),
 ]
 
 

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twenty-ninth pass)
+Last updated: 2026-04-06 (thirtieth pass)
 
 ## Status: Active
 
@@ -9,12 +9,49 @@ Last updated: 2026-04-06 (twenty-ninth pass)
 - **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 652 entries for search routing (added 14 in twenty-ninth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 106 tools ready to insert (slug-safe)
-  - 6 tools added in twenty-ninth pass (React Router, TanStack Router, XState, Pinia, Mintlify, Mastra)
+- **_CAT_SYNONYMS**: 701 entries for search routing (added 49 in thirtieth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 113 tools ready to insert (slug-safe)
+  - 7 tools added in thirtieth pass (Expo, Flutter, React Native, DuckDB, Instructor, Husky + prior)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, thirtieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 49 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **TypeScript**: `"typescript"`, `"ts"` → `"frontend"` — ubiquitous TS query prefix (e.g. "typescript orm", "ts bundler")
+  - **Web scraping**: `"scraping"`, `"scraper"`, `"crawler"`, `"crawling"`, `"cheerio"`, `"crawlee"` → `"devtools"` — scraping tools in developer-tools category
+  - **Generic RPC**: `"rpc"` → `"api"` — beyond the specific gRPC entry
+  - **DNS tools**: `"dns"` → `"devops"` — DNS management tools live in DevOps category
+  - **Code formatters**: `"formatter"`, `"format"` → `"testing"` — Biome, Prettier, dprint live with linters
+  - **HTTP clients**: `"axios"`, `"http"`, `"httpclient"`, `"httpx"`, `"got"`, `"ky"` → `"api"` — HTTP client library queries
+  - **GitOps**: `"gitops"` → `"devops"` — ArgoCD, FluxCD GitOps workflow queries
+  - **AI model providers**: `"ollama"`, `"anthropic"`, `"gemini"`, `"mistral"`, `"huggingface"`, `"groq"`, `"together"`, `"perplexity"` → `"ai"` — LLM provider alternative queries
+  - **Mobile/cross-platform**: `"reactnative"`, `"react-native"`, `"expo"`, `"capacitor"`, `"ionic"`, `"nativewind"`, `"flutter"` → `"frontend"` — mobile dev framework queries
+  - **Data tables**: `"table"`, `"datagrid"`, `"grid"`, `"datepicker"` → `"frontend"` — TanStack Table, AG Grid queries
+  - **Analytics DBs**: `"duckdb"`, `"bigquery"`, `"snowflake"` → `"database"` — OLAP database queries
+  - **Git security**: `"gitleaks"`, `"trufflehog"` → `"security"` — secret scanning tool queries
+  - **Git hooks**: `"husky"`, `"lefthook"` → `"devops"` — Git hook manager queries
+  - **Vector DB**: `"pgvector"` → `"database"` — PostgreSQL vector extension
+  - **RUM**: `"rum"`, `"vitals"`, `"speedlify"` → `"monitoring"` — real user monitoring queries
+- Running total: 701 entries (652 + 49)
+
+### Catalog Script (Step 2)
+- Added 7 new tools to `scripts/add_missing_tools.py` (113 total):
+  - Expo (frontend-frameworks, 38k★) — managed React Native platform
+  - Flutter (frontend-frameworks, 170k★) — Google's cross-platform UI toolkit
+  - React Native (frontend-frameworks, 119k★) — Meta's mobile framework
+  - DuckDB (database, 30k★) — embedded OLAP database for analytics
+  - Instructor (ai-dev-tools, 10k★) — structured LLM outputs with Pydantic
+  - Husky (devops-infrastructure, 33k★) — Git hooks for Node.js
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py, memory files, and add_missing_tools.py — no route files to audit
+- No html.escape() gaps, no hardcoded hex colors, no stale stats found
+
+### R&D Docs (Step 4)
+- sprint.md updated to thirtieth pass
 
 ## Completed This Session (2026-04-06, twenty-ninth pass — autonomous improvement cycle)
 
