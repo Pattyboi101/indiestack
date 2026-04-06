@@ -1227,6 +1227,83 @@ async def report_outcome(request: Request):
     return JSONResponse({"status": "recorded", "repo": repo, "ci_passed": bool(ci_passed)})
 
 
+@router.get("/api/tool-trust", response_class=JSONResponse)
+async def tool_trust(request: Request):
+    """Public tool trust leaderboard — citation counts + agent outcome data.
+
+    Returns the tools most cited and successfully used by AI agents.
+    Agents can query this to find proven tools before recommending.
+
+    Query params:
+        tool: filter to a specific tool slug (e.g. ?tool=stripe)
+        limit: number of results (default 20, max 100)
+        min_citations: minimum citation count (default 1)
+    """
+    d = request.state.db
+    tool_slug = request.query_params.get("tool", "").strip().lower()
+    try:
+        limit = min(int(request.query_params.get("limit", "20")), 100)
+        min_citations = int(request.query_params.get("min_citations", "1"))
+    except ValueError:
+        limit, min_citations = 20, 1
+
+    if tool_slug:
+        # Single tool lookup
+        c = await d.execute(
+            """SELECT t.slug, t.name, t.description,
+                      COUNT(DISTINCT ac.id) as citation_count,
+                      SUM(CASE WHEN aa.success = 1 THEN 1 ELSE 0 END) as success_count,
+                      COUNT(DISTINCT aa.id) as outcome_count
+               FROM tools t
+               LEFT JOIN agent_citations ac ON ac.tool_id = t.id
+               LEFT JOIN agent_actions aa ON aa.tool_slug = t.slug
+               WHERE t.slug = ? AND t.status = 'approved'
+               GROUP BY t.id""",
+            (tool_slug,)
+        )
+        row = await c.fetchone()
+        if not row:
+            return JSONResponse({"error": "Tool not found"}, status_code=404)
+        result = dict(row)
+        result["success_rate"] = (
+            round(result["success_count"] / result["outcome_count"] * 100)
+            if result["outcome_count"] else None
+        )
+        return JSONResponse({"tool": result})
+
+    # Leaderboard mode
+    c = await d.execute(
+        """SELECT t.slug, t.name,
+                  COUNT(DISTINCT ac.id) as citation_count,
+                  SUM(CASE WHEN aa.success = 1 THEN 1 ELSE 0 END) as success_count,
+                  COUNT(DISTINCT aa.id) as outcome_count
+           FROM tools t
+           JOIN agent_citations ac ON ac.tool_id = t.id
+           LEFT JOIN agent_actions aa ON aa.tool_slug = t.slug
+           WHERE t.status = 'approved'
+           GROUP BY t.id
+           HAVING citation_count >= ?
+           ORDER BY citation_count DESC
+           LIMIT ?""",
+        (min_citations, limit)
+    )
+    rows = await c.fetchall()
+    results = []
+    for r in rows:
+        entry = dict(r)
+        entry["success_rate"] = (
+            round(entry["success_count"] / entry["outcome_count"] * 100)
+            if entry["outcome_count"] else None
+        )
+        results.append(entry)
+
+    return JSONResponse({
+        "tools": results,
+        "total": len(results),
+        "note": "citation_count = times cited by AI agents. success_rate = % of report_outcome() calls that were successful (null if no reports yet)."
+    }, headers={"Cache-Control": "public, max-age=300"})
+
+
 @router.get("/api/migrations", response_class=JSONResponse)
 async def get_migrations(request: Request):
     """Query migration paths for a package. The moat data endpoint."""
