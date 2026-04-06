@@ -2901,6 +2901,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "zod": "devtools",           # Zod — TypeScript-first schema validation (34k stars)
     "yup": "devtools",           # Yup — popular JS/TS schema validation (22k stars)
     "valibot": "devtools",       # Valibot — lightweight modular Zod alternative
+    # Realtime — Socket.io is the most-searched realtime tool, "socket" alone commonly used
+    "socket": "api",            # "socket server", "socket.io alternative" → API Tools
+    "socketio": "api",          # explicit Socket.io queries
+    # Frontend — theming / dark mode libraries (next-themes, theme-ui, Arco Design)
+    "theme": "frontend",        # "theme provider", "theming library", "theme switcher"
+    "dark": "frontend",         # "dark mode library", "dark mode toggle" — next-themes, shadcn
+    # Email — MJML and React Email are common template-layer tools
+    "mjml": "email",            # MJML — responsive email template language
+    "react-email": "email",     # React Email — React components for email templates
+    # Frontend — Formik (popular React form library, Zod/RHF complement)
+    "formik": "frontend",       # Formik — React form library (pre-RHF era, still widely used)
+    # Database — connection pooling (PgBouncer, PgCat, pgpool)
+    "pgbouncer": "database",    # PgBouncer — lightweight PostgreSQL connection pooler
+    "pgcat": "database",        # PgCat — high-performance Postgres pooler + router
+    "pooling": "database",      # "connection pooling", "db pooling" → Database category
+    # API — GraphQL engines (Hasura, PostGraphile auto-generate APIs from database schemas)
+    "hasura": "api",            # Hasura — instant GraphQL API over PostgreSQL/MySQL
+    "postgraphile": "api",      # PostGraphile — GraphQL from PostgreSQL schema
+    # Monitoring — Prometheus is the canonical open-source metrics system
+    "prometheus": "monitoring", # Prometheus — metrics collection and alerting
+    # Search — Typesense is a common Algolia alternative query term
+    "typesense": "search",      # Typesense — typo-tolerant open-source search engine
 }
 
 _FTS_STOP_WORDS = {

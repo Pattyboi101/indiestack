@@ -970,6 +970,85 @@ TOOLS = [
         "go get -u github.com/gin-gonic/gin",
         "code",
     ),
+    # Testing — unit test frameworks -----------------------------------------------
+    (
+        "jest",
+        "Jest",
+        "Delightful JavaScript testing",
+        "Jest is the most popular JavaScript testing framework. Zero config for most "
+        "JavaScript projects, snapshot testing, code coverage, mocking, and a watch mode "
+        "for rapid development. Created by Meta, used by React, Next.js, and thousands "
+        "of production codebases.",
+        "testing-tools",
+        "jestjs/jest",
+        44000,
+        "https://jestjs.io",
+        "testing,unit-test,javascript,snapshots,mocking",
+        "npm install jest --save-dev",
+        "code",
+    ),
+    (
+        "vitest",
+        "Vitest",
+        "Next generation testing framework powered by Vite",
+        "Vitest is a blazing-fast unit test framework built on Vite. Compatible with "
+        "Jest's API, instant HMR-based reruns, native ESM support, and out-of-the-box "
+        "TypeScript support. The standard test runner for Vite + React/Vue/Svelte.",
+        "testing-tools",
+        "vitest-dev/vitest",
+        13000,
+        "https://vitest.dev",
+        "testing,unit-test,vite,typescript,fast",
+        "npm install vitest --save-dev",
+        "code",
+    ),
+    (
+        "cypress",
+        "Cypress",
+        "Fast, easy and reliable testing for anything that runs in a browser",
+        "Cypress is a front-end testing tool for E2E, integration, and unit tests. "
+        "Runs in the same browser as your app, with time-travel debugging, real-time "
+        "reload, and automatic waiting. Includes Cypress Cloud for CI recording.",
+        "testing-tools",
+        "cypress-io/cypress",
+        47000,
+        "https://cypress.io",
+        "e2e,testing,browser,integration,component",
+        "npm install cypress --save-dev",
+        "code",
+    ),
+    # Realtime / WebSockets --------------------------------------------------------
+    (
+        "socket-io",
+        "Socket.IO",
+        "Bidirectional and low-latency communication for every platform",
+        "Socket.IO is the most widely used WebSocket library. Automatic fallbacks "
+        "(long-polling), rooms, namespaces, and a rich event system. Node.js server "
+        "with official clients for JavaScript, Python, Java, and Swift.",
+        "api-tools",
+        "socketio/socket.io",
+        60000,
+        "https://socket.io",
+        "websocket,realtime,event-driven,nodejs,rooms",
+        "npm install socket.io",
+        "code",
+    ),
+    # Email — templates / rendering -----------------------------------------------
+    (
+        "react-email",
+        "React Email",
+        "A collection of high-quality, unstyled React components for email",
+        "React Email lets you build responsive email templates with React and TypeScript. "
+        "Components for all major email clients, live preview, and integrations with "
+        "Resend, SendGrid, Nodemailer, and AWS SES.",
+        "email-marketing",
+        "resend/react-email",
+        14000,
+        "https://react.email",
+        "email,react,template,transactional,typescript",
+        "npm install react-email",
+        "code",
+    ),
     # Background jobs — durable execution ----------------------------------------
     (
         "temporal",

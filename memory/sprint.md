@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twenty-second pass)
+Last updated: 2026-04-06 (twenty-third pass)
 
 ## Status: Active
 
@@ -9,12 +9,40 @@ Last updated: 2026-04-06 (twenty-second pass)
 - **MCP server**: v1.15.1 (PyPI) — 10,000+ installs, 23 tools, fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 512 entries for search routing (actual count; added 15 in twenty-second pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 63 tools ready to insert (slug-safe)
-  - 5 backend framework tools added in twenty-second pass (FastAPI, Express, Django, Flask, Gin)
+- **_CAT_SYNONYMS**: 532 entries for search routing (added 20 in twenty-third pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 68 tools ready to insert (slug-safe)
+  - 5 tools added in twenty-third pass (Jest, Vitest, Cypress, Socket.IO, React Email)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, twenty-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 20 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **Realtime/WebSocket**: `"socket"`, `"socketio"` → `"api"` — Socket.io queries now route to API Tools
+  - **Frontend theming**: `"theme"`, `"dark"` → `"frontend"` — dark mode / theming library queries
+  - **Email templates**: `"mjml"`, `"react-email"` → `"email"` — email template tool queries
+  - **Form library**: `"formik"` → `"frontend"` — Formik queries (popular pre-RHF React form library)
+  - **DB connection pooling**: `"pgbouncer"`, `"pgcat"`, `"pooling"` → `"database"` — connection pool queries
+  - **GraphQL engines**: `"hasura"`, `"postgraphile"` → `"api"` — GraphQL-over-DB engine queries
+  - **Metrics**: `"prometheus"` → `"monitoring"` — canonical open-source metrics system was missing
+  - **Search**: `"typesense"` → `"search"` — popular Algolia alternative was missing from synonyms
+- Running total: 532 entries (512 + 20)
+
+### Catalog Script (Step 2)
+- Added 5 high-value tools to `scripts/add_missing_tools.py` (68 total):
+  - Jest (testing-tools, 44k stars) — most popular JS test framework
+  - Vitest (testing-tools, 13k stars) — fast Vite-native test runner
+  - Cypress (testing-tools, 47k stars) — E2E test framework, second only to Playwright
+  - Socket.IO (api-tools, 60k stars) — most popular WebSocket / realtime library
+  - React Email (email-marketing, 14k stars) — React components for email templates
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py, memory files, and add_missing_tools.py — no route files to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to twenty-third pass; decisions.md current — no changes needed
 
 ## Completed This Session (2026-04-06, twenty-second pass — autonomous improvement cycle)
 
