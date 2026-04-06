@@ -2789,6 +2789,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API layer — CORS and middleware
     "cors": "api",              # "CORS middleware", "CORS header" → API Tools
     "middleware": "api",        # "API middleware", "Express middleware" → API Tools
+    # Package managers — JS ecosystem
+    "yarn": "frontend",         # Yarn — fast npm-compatible package manager
+    "pnpm": "frontend",         # pnpm — efficient disk-space-saving package manager
+    # Monorepo tooling
+    "monorepo": "devtools",     # "monorepo build" → Developer Tools (Turborepo, Nx, Lerna)
+    "nx": "devtools",           # Nx — extensible build system for monorepos
+    # Database — SQL / NoSQL query patterns
+    "nosql": "database",        # "nosql database", "nosql store" queries
+    "sql": "database",          # raw "sql" queries (not ORM-specific)
+    # Frontend — WebAssembly
+    "wasm": "frontend",         # WebAssembly queries (wasm-pack, wasm-bindgen)
+    "webassembly": "frontend",  # full form of WebAssembly
+    # Frontend — reactivity signals pattern (Angular, SolidJS, Vue)
+    "signal": "frontend",       # "signal-based reactivity", "signal state"
+    "signals": "frontend",      # plural form — common in Angular 17+ / SolidJS docs
+    # Testing — additional patterns
+    "fixture": "testing",       # "test fixture" — pytest fixtures, testing factory patterns
+    "snapshot": "testing",      # "snapshot testing" — Jest / Vitest snapshots
+    "benchmark": "testing",     # "benchmark tool" — k6, Vitest bench, hyperfine
+    "benchmarking": "testing",  # explicit form
 }
 
 _FTS_STOP_WORDS = {

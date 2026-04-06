@@ -507,6 +507,84 @@ TOOLS = [
         "npx create-turbo@latest",
         "code",
     ),
+    # Meta-frameworks ------------------------------------------------------------
+    (
+        "nextjs",
+        "Next.js",
+        "The React Framework for the Web",
+        "Next.js is the most popular React meta-framework. App Router, Server Components, "
+        "file-based routing, API routes, SSR, SSG, and ISR out of the box. Deployed on "
+        "Vercel or self-hosted. Powers millions of production sites.",
+        "frontend-frameworks",
+        "vercel/next.js",
+        128000,
+        "https://nextjs.org",
+        "react,ssr,ssg,fullstack,routing",
+        "npx create-next-app@latest",
+        "code",
+    ),
+    (
+        "nuxt",
+        "Nuxt",
+        "The Intuitive Vue Framework",
+        "Nuxt is the full-stack Vue framework. File-based routing, server routes, "
+        "auto-imports, SSR/SSG/hybrid rendering, and a rich module ecosystem. "
+        "Nuxt 3 brings full TypeScript support and the Nitro server engine.",
+        "frontend-frameworks",
+        "nuxt/nuxt",
+        55000,
+        "https://nuxt.com",
+        "vue,ssr,ssg,fullstack,typescript",
+        "npx nuxi@latest init my-app",
+        "code",
+    ),
+    (
+        "astro",
+        "Astro",
+        "The web framework for content-driven websites",
+        "Astro is a modern static-site builder that ships zero JavaScript by default. "
+        "Islands architecture lets you use React, Vue, Svelte, or Solid components "
+        "where needed. Perfect for blogs, docs, and marketing sites.",
+        "frontend-frameworks",
+        "withastro/astro",
+        47000,
+        "https://astro.build",
+        "ssg,islands,performance,content",
+        "npm create astro@latest",
+        "code",
+    ),
+    # Developer Tools ------------------------------------------------------------
+    (
+        "typescript",
+        "TypeScript",
+        "TypeScript is JavaScript with syntax for types",
+        "TypeScript adds optional static types to JavaScript, catching errors at "
+        "compile time. Maintained by Microsoft, it's the standard for large-scale "
+        "JS codebases. Ships with a compiler (tsc) and full IDE tooling.",
+        "developer-tools",
+        "microsoft/TypeScript",
+        101000,
+        "https://typescriptlang.org",
+        "typescript,javascript,types,compiler",
+        "npm install typescript --save-dev",
+        "code",
+    ),
+    # Search Engines -------------------------------------------------------------
+    (
+        "meilisearch",
+        "Meilisearch",
+        "A lightning-fast search engine that fits effortlessly into any workflow",
+        "Meilisearch is an open-source, self-hostable search engine focused on speed "
+        "and developer experience. Typo-tolerant, relevancy-tunable, and easy to "
+        "integrate with instant search UI widgets.",
+        "search-engine",
+        "meilisearch/meilisearch",
+        49000,
+        "https://meilisearch.com",
+        "search,full-text,self-hosted,fast",
+        "docker run -it --rm -p 7700:7700 getmeili/meilisearch",
+        "code",
+    ),
     # Workflow automation --------------------------------------------------------
     (
         "n8n",

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (fifteenth pass)
+Last updated: 2026-04-06 (sixteenth pass)
 
 ## Status: Active
 
@@ -9,11 +9,37 @@ Last updated: 2026-04-06 (fifteenth pass)
 - **MCP server**: v1.15.1 (PyPI) — 10,000+ installs, 23 tools, fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 43 entries covering all 29+ category slugs
-- **_CAT_SYNONYMS**: ~447 entries for search routing (added 17 in fifteenth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 33 tools ready to insert (slug-safe)
+- **_CAT_SYNONYMS**: ~461 entries for search routing (added 14 in sixteenth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 38 tools ready to insert (slug-safe)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, sixteenth pass — autonomous improvement cycle)
+
+### Search Quality Audit (Step 1)
+- Added 14 new _CAT_SYNONYMS entries for genuine query gaps:
+  - JS package managers: `yarn`, `pnpm` → `frontend` (yarn/pnpm queries)
+  - Monorepo tooling: `monorepo`, `nx` → `devtools` (Turborepo/Nx queries)
+  - Database patterns: `nosql`, `sql` → `database` (raw SQL/NoSQL queries)
+  - WebAssembly: `wasm`, `webassembly` → `frontend` (wasm-pack, wasm-bindgen)
+  - Reactivity signals: `signal`, `signals` → `frontend` (Angular/SolidJS signals)
+  - Testing patterns: `fixture`, `snapshot`, `benchmark`, `benchmarking` → `testing`
+- Total _CAT_SYNONYMS keys: ~461
+
+### Catalog Script (Step 2)
+- Added 5 high-value tools to `scripts/add_missing_tools.py` (38 total):
+  - Next.js (frontend-frameworks, 128k stars) — most popular React meta-framework
+  - Nuxt (frontend-frameworks, 55k stars) — Vue meta-framework with Nitro
+  - Astro (frontend-frameworks, 47k stars) — islands-architecture static-site builder
+  - TypeScript (developer-tools, 101k stars) — the JS type system, referenced in synonyms but missing
+  - Meilisearch (search-engine, 49k stars) — fast self-hosted search engine
+
+### Code Quality (Step 3)
+- Last 5 commits only changed db.py, memory files, and add_missing_tools.py — no route files to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated with sixteenth pass; decisions.md is current — no other changes needed
 
 ## Completed This Session (2026-04-06, fifteenth pass — autonomous improvement cycle)
 
