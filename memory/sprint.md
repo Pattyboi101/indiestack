@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twenty-seventh pass)
+Last updated: 2026-04-06 (twenty-eighth pass)
 
 ## Status: Active
 
@@ -9,12 +9,41 @@ Last updated: 2026-04-06 (twenty-seventh pass)
 - **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 593 entries for search routing (added 30 in twenty-seventh pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 93 tools ready to insert (slug-safe)
-  - 7 tools added in twenty-seventh pass (Temporal, Inngest, Trigger.dev, Axum, Echo, Dragonfly, dbt)
+- **_CAT_SYNONYMS**: 638 entries for search routing (added 45 in twenty-eighth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 101 tools ready to insert (slug-safe)
+  - 8 tools added in twenty-eighth pass (Mongoose, TypeORM, GORM, Kysely, Sequelize, Nodemailer, Highlight.io, dbt already present)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, twenty-eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 45 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **Database ORMs**: `"typeorm"`, `"sequelize"`, `"mongoose"`, `"sqlalchemy"`, `"gorm"`, `"kysely"`, `"knex"`, `"mikro-orm"`, `"mikroorm"` → `"database"` — major ORMs missing from category routing
+  - **Email**: `"nodemailer"`, `"mailtrap"` → `"email"` — most-used Node email library + testing tool
+  - **Monitoring**: `"bugsnag"`, `"rollbar"`, `"logrocket"`, `"highlight"`, `"uptimerobot"`, `"betterstack"` → `"monitoring"` — session replay and uptime tools
+  - **Password/crypto**: `"password"`, `"hashing"`, `"bcrypt"`, `"argon2"`, `"crypto"` → `"security"` — password hashing library queries
+  - **CI/CD**: `"circleci"`, `"jenkins"`, `"buildkite"`, `"dagger"`, `"woodpecker"`, `"drone"`, `"github"` → `"devops"` — pipeline tool queries
+  - **AI structured output**: `"instructor"`, `"outlines"`, `"guardrails"`, `"mirascope"` → `"ai"` — structured LLM output tool queries
+- Running total: 638 entries (593 + 45)
+
+### Catalog Script (Step 2)
+- Added 8 new tools to `scripts/add_missing_tools.py` (101 total):
+  - Mongoose (database, 26k★) — MongoDB ODM for Node.js
+  - TypeORM (database, 34k★) — TypeScript/JS ORM for PostgreSQL/MySQL/SQLite
+  - GORM (database, 36k★) — Go ORM (most popular in Go ecosystem)
+  - Kysely (database, 10k★) — type-safe TypeScript SQL query builder
+  - Sequelize (database, 29k★) — classic Node.js ORM
+  - Nodemailer (email-marketing, 16k★) — Node.js email sending library
+  - Highlight.io (monitoring-uptime, 7k★) — open-source session replay + observability
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py, memory files, and add_missing_tools.py — no route files to audit
+- No html.escape() gaps, no hardcoded hex colors, no stale stats found
+
+### R&D Docs (Step 4)
+- sprint.md updated to twenty-eighth pass
 
 ## Completed This Session (2026-04-06, twenty-seventh pass — autonomous improvement cycle)
 

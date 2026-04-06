@@ -1474,6 +1474,120 @@ TOOLS = [
         "pip install dbt-core",
         "code",
     ),
+    # Database — ORMs and query builders ------------------------------------------
+    (
+        "mongoose",
+        "Mongoose",
+        "Elegant MongoDB object modelling for Node.js",
+        "Mongoose is the most popular MongoDB ODM (Object Document Mapper) for Node.js. "
+        "Schema-based models, middleware hooks, query chaining, and full TypeScript support. "
+        "Powers countless Node.js + MongoDB production applications.",
+        "database",
+        "Automattic/mongoose",
+        26000,
+        "https://mongoosejs.com",
+        "mongodb,odm,nodejs,schema,typescript",
+        "npm install mongoose",
+        "code",
+    ),
+    (
+        "typeorm",
+        "TypeORM",
+        "ORM for TypeScript and JavaScript",
+        "TypeORM is a full-featured ORM for TypeScript and JavaScript supporting "
+        "PostgreSQL, MySQL, SQLite, MongoDB, and more. Active Record and Data Mapper "
+        "patterns, migrations, relations, and a decorator-based API. "
+        "The classic choice for NestJS and TypeScript backends.",
+        "database",
+        "typeorm/typeorm",
+        34000,
+        "https://typeorm.io",
+        "orm,typescript,postgresql,mysql,sqlite,nestjs",
+        "npm install typeorm reflect-metadata",
+        "code",
+    ),
+    (
+        "gorm",
+        "GORM",
+        "The fantastic ORM library for Go",
+        "GORM is the most popular ORM for Go. Full-featured: associations, preloading, "
+        "hooks, transactions, scopes, composite primary keys, and auto migrations. "
+        "Supports PostgreSQL, MySQL, SQLite, and SQL Server. "
+        "Convention over configuration with full customisability.",
+        "database",
+        "go-gorm/gorm",
+        36000,
+        "https://gorm.io",
+        "orm,go,golang,postgresql,mysql,sqlite",
+        "go get -u gorm.io/gorm",
+        "code",
+    ),
+    (
+        "kysely",
+        "Kysely",
+        "Type-safe SQL query builder for TypeScript",
+        "Kysely is a type-safe, composable SQL query builder for TypeScript. "
+        "No ORM magic — just raw SQL power with full type inference. "
+        "Works with PostgreSQL, MySQL, SQLite (via dialect plugins). "
+        "Used as the query layer under PlanetScale and several BaaS providers.",
+        "database",
+        "kysely-org/kysely",
+        10000,
+        "https://kysely.dev",
+        "sql,typescript,query-builder,postgresql,type-safe",
+        "npm install kysely",
+        "code",
+    ),
+    (
+        "sequelize",
+        "Sequelize",
+        "Feature-rich ORM for Node.js",
+        "Sequelize is a battle-tested Node.js ORM supporting PostgreSQL, MySQL, "
+        "MariaDB, SQLite, and Microsoft SQL Server. Eager loading, associations, "
+        "transactions, migrations, and a rich query interface. "
+        "One of the most widely used Node.js ORMs in production.",
+        "database",
+        "sequelize/sequelize",
+        29000,
+        "https://sequelize.org",
+        "orm,nodejs,postgresql,mysql,sqlite,migrations",
+        "npm install sequelize",
+        "code",
+    ),
+    # Email — sending library -------------------------------------------------------
+    (
+        "nodemailer",
+        "Nodemailer",
+        "Send emails from Node.js — battle-tested since 2010",
+        "Nodemailer is the most widely used Node.js email sending library. "
+        "SMTP, SES, SendGrid, and custom transport support. "
+        "Attachments, HTML templates, embedded images, DKIM signing, and OAuth2. "
+        "Zero dependencies, easy setup, and 15+ years of production use.",
+        "email-marketing",
+        "nodemailer/nodemailer",
+        16000,
+        "https://nodemailer.com",
+        "email,smtp,nodejs,transactional,attachments",
+        "npm install nodemailer",
+        "code",
+    ),
+    # Monitoring — session replay / full-stack observability -----------------------
+    (
+        "highlight",
+        "Highlight.io",
+        "Open-source full-stack monitoring — session replay, logs, errors, traces",
+        "Highlight is an open-source monitoring platform combining session replay, "
+        "error tracking, structured logging, and distributed tracing. "
+        "Self-host or use Highlight Cloud. SDKs for React, Next.js, Python, Go, "
+        "and more. Privacy-first with PII masking.",
+        "monitoring-uptime",
+        "highlight/highlight",
+        7000,
+        "https://highlight.io",
+        "monitoring,session-replay,error-tracking,observability,open-source",
+        "npm install @highlight-run/next",
+        "code",
+    ),
 ]
 
 

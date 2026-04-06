@@ -3023,6 +3023,45 @@ _CAT_SYNONYMS: dict[str, str] = {
     "temporal": "background",  # Temporal.io — durable workflow execution engine
     "inngest": "background",   # Inngest — event-driven background jobs for Next.js/Node
     "trigger": "background",   # Trigger.dev — open-source background jobs with SDK
+    # Database — ORM / query builder named tools (very common agent queries)
+    "typeorm": "database",          # TypeORM — TypeScript/JS ORM supporting many databases
+    "sequelize": "database",        # Sequelize — classic Node.js ORM (PostgreSQL, MySQL, SQLite)
+    "mongoose": "database",         # Mongoose — MongoDB object modelling for Node.js
+    "sqlalchemy": "database",       # SQLAlchemy — Python SQL toolkit and ORM (Flask, FastAPI)
+    "gorm": "database",             # GORM — Go ORM with full-featured query builder
+    "kysely": "database",           # Kysely — TypeScript SQL query builder (type-safe)
+    "knex": "database",             # Knex.js — SQL query builder for Node.js
+    "mikro-orm": "database",        # MikroORM — TypeScript ORM based on Data Mapper pattern
+    "mikroorm": "database",         # alternate spelling (no hyphen)
+    # Email — sending library / testing tool named tools
+    "nodemailer": "email",          # Nodemailer — Node.js email sending library (SMTP/SES)
+    "mailtrap": "email",            # Mailtrap — email testing + delivery platform
+    # Monitoring — session replay + error tracking named tools
+    "bugsnag": "monitoring",        # Bugsnag — stability and error monitoring platform
+    "rollbar": "monitoring",        # Rollbar — real-time error tracking for production apps
+    "logrocket": "monitoring",      # LogRocket — session replay + error tracking
+    "highlight": "monitoring",      # Highlight.io — open-source full-stack session replay
+    "uptimerobot": "monitoring",    # UptimeRobot — uptime monitoring with alerts
+    "betterstack": "monitoring",    # Better Stack (ex-Logtail + Uptime) — monitoring platform
+    # Password / cryptography — security libraries ("bcrypt alternative", "password hashing")
+    "password": "security",         # "password hashing", "password manager" → Security Tools
+    "hashing": "security",          # "password hashing library", "hashing algorithm" → Security
+    "bcrypt": "security",           # bcrypt — adaptive password hashing function
+    "argon2": "security",           # Argon2 — memory-hard password hashing (PHC winner)
+    "crypto": "security",           # "crypto library", "node:crypto" queries → Security Tools
+    # CI/CD — common pipeline and build-automation tool queries
+    "circleci": "devops",           # CircleCI — cloud CI/CD platform
+    "jenkins": "devops",            # Jenkins — open-source automation server
+    "buildkite": "devops",          # Buildkite — hybrid CI/CD (agents run in your infra)
+    "dagger": "devops",             # Dagger — portable CI/CD pipelines as code
+    "woodpecker": "devops",         # Woodpecker CI — community fork of Drone CI
+    "drone": "devops",              # Drone CI — container-native CI/CD platform
+    "github": "devops",             # "github actions alternative" → DevOps & Infrastructure
+    # AI — structured output / LLM guardrail tools
+    "instructor": "ai",             # Instructor — structured LLM outputs with Pydantic
+    "outlines": "ai",               # Outlines — guided text generation (structured sampling)
+    "guardrails": "ai",             # Guardrails AI — LLM output validation and correction
+    "mirascope": "ai",              # Mirascope — clean Python LLM abstractions
 }
 
 _FTS_STOP_WORDS = {
