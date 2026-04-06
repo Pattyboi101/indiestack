@@ -1457,6 +1457,57 @@ TOOLS = [
         "docker run --ulimit memlock=-1 ghcr.io/dragonflydb/dragonfly",
         "code",
     ),
+    # AI — agent orchestration (LangChain ecosystem) --------------------------------
+    (
+        "langgraph",
+        "LangGraph",
+        "Build resilient multi-agent systems with graph-based orchestration",
+        "LangGraph is a framework for building stateful, multi-actor AI applications. "
+        "Models agents as nodes in a graph — define edges, conditions, and loops to "
+        "create arbitrarily complex agentic workflows. Built on LangChain, supports "
+        "any LLM, and includes a cloud platform for deployment and debugging.",
+        "ai-automation",
+        "langchain-ai/langgraph",
+        12000,
+        "https://langchain-ai.github.io/langgraph/",
+        "agents,multi-agent,llm,langchain,graph",
+        "pip install langgraph",
+        "code",
+    ),
+    # AI — local LLM (single-file runner) -------------------------------------------
+    (
+        "llamafile",
+        "Llamafile",
+        "Run a LLM in a single file on your own computer",
+        "Llamafile (by Mozilla) bundles an LLM and its inference engine into a single "
+        "executable file. No install, no configuration — just download and run. "
+        "Works on macOS, Linux, Windows, FreeBSD, and OpenBSD. "
+        "Powered by llama.cpp with a built-in web server and OpenAI-compatible API.",
+        "ai-dev-tools",
+        "Mozilla-Ocho/llamafile",
+        20000,
+        "https://github.com/Mozilla-Ocho/llamafile",
+        "llm,local,self-hosted,offline,openai-compatible",
+        "# Download from: https://github.com/Mozilla-Ocho/llamafile/releases",
+        "code",
+    ),
+    # Database — PostgreSQL vector extension -----------------------------------------
+    (
+        "pgvector",
+        "pgvector",
+        "Open-source vector similarity search for Postgres",
+        "pgvector adds vector storage and similarity search to PostgreSQL. "
+        "Store embeddings alongside your relational data — no separate vector DB. "
+        "Supports exact and approximate nearest neighbor search (IVFFlat, HNSW). "
+        "Works with Supabase, Neon, Timescale, and any Postgres provider.",
+        "database",
+        "pgvector/pgvector",
+        14000,
+        "https://github.com/pgvector/pgvector",
+        "vector,postgres,embeddings,similarity-search,rag",
+        "CREATE EXTENSION vector;",
+        "code",
+    ),
     # Database — data transformation / ETL ------------------------------------------
     (
         "dbt",

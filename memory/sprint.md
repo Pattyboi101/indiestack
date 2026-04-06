@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twenty-seventh pass)
+Last updated: 2026-04-06 (twenty-eighth pass)
 
 ## Status: Active
 
@@ -9,12 +9,33 @@ Last updated: 2026-04-06 (twenty-seventh pass)
 - **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 593 entries for search routing (added 30 in twenty-seventh pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 93 tools ready to insert (slug-safe)
-  - 7 tools added in twenty-seventh pass (Temporal, Inngest, Trigger.dev, Axum, Echo, Dragonfly, dbt)
+- **_CAT_SYNONYMS**: 598 entries for search routing (added 5 in twenty-eighth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 96 tools ready to insert (slug-safe)
+  - 3 tools added in twenty-eighth pass (LangGraph, Llamafile, pgvector)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, twenty-eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 5 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **AI inference/LLM providers**: `"groq"`, `"mistral"`, `"llamafile"` → `"ai"` — named providers missing from routing
+  - **AI agent frameworks**: `"langgraph"` → `"ai"` — LangChain's graph-based multi-agent framework
+  - **Vector DB extensions**: `"pgvector"` → `"database"` — PostgreSQL vector extension (widely used for RAG)
+- Running total: 598 entries (593 + 5)
+
+### Catalog Script (Step 2)
+- Added 3 new tools to `scripts/add_missing_tools.py` (96 total):
+  - LangGraph (ai-automation, 12k★) — graph-based multi-agent orchestration on LangChain
+  - Llamafile (ai-dev-tools, 20k★) — Mozilla's single-file local LLM runner (no install needed)
+  - pgvector (database, 14k★) — PostgreSQL vector extension for embeddings + RAG pipelines
+
+### Code Quality (Step 3)
+- No route files changed in last 5 commits (only synonym dicts and main.py dedup) — no code quality gaps to fix.
+
+### R&D Docs (Step 4)
+- sprint.md updated to twenty-eighth pass
 
 ## Completed This Session (2026-04-06, twenty-seventh pass — autonomous improvement cycle)
 

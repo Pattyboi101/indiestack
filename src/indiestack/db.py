@@ -3023,6 +3023,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "temporal": "background",  # Temporal.io — durable workflow execution engine
     "inngest": "background",   # Inngest — event-driven background jobs for Next.js/Node
     "trigger": "background",   # Trigger.dev — open-source background jobs with SDK
+    # AI inference / local LLM providers
+    "groq": "ai",              # Groq — ultra-fast LLM inference (LPU hardware)
+    "mistral": "ai",           # Mistral — open-weight LLMs and inference API
+    "llamafile": "ai",         # Llamafile — Mozilla's single-file local LLM runner
+    # AI agent orchestration — named frameworks missing from above
+    "langgraph": "ai",         # LangGraph — graph-based multi-agent orchestration (LangChain)
+    # Database — vector extensions
+    "pgvector": "database",    # pgvector — PostgreSQL extension for vector similarity search
 }
 
 _FTS_STOP_WORDS = {
