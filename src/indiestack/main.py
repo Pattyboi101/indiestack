@@ -190,7 +190,7 @@ _FOUNDER_PHOTO_DIR_CANDIDATES = [
 _founder_photo_cache: dict[str, bytes] = {}
 
 from indiestack import db
-from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping, create_notification, record_tool_pair, get_search_gaps
+from indiestack.db import CATEGORY_TOKEN_COSTS, NEED_MAPPINGS, get_user_by_badge_token, get_buyer_tokens_saved_by_token, cleanup_expired_sessions, cleanup_old_page_views, get_makers_for_ego_ping, create_notification, record_tool_pair, get_search_gaps, log_mcp_query, backfill_mcp_adoption, get_mcp_quality_stats
 from indiestack.email import send_email, ego_ping_html, maker_welcome_html, email_verification_html
 from indiestack.auth import get_current_user
 from indiestack.routes import landing, browse, tool, search, submit, admin, purchase
@@ -1728,6 +1728,7 @@ async def api_tools_search(
     min_stars: int = 0,
     sort: str = "",
     frameworks: str = "",
+    session_id: str = "",
 ):
     """JSON API for searching tools — used by MCP server and integrations."""
     d = request.state.db
@@ -1957,6 +1958,17 @@ async def api_tools_search(
             await db.log_agent_citations_bulk(d, tool_ids, agent_name="mcp")
         except Exception:
             pass
+
+    # MCP session outcome tracking
+    try:
+        _sid = session_id.strip()[:128] if session_id else ""
+        if _sid or source == "mcp":
+            _returned_slugs = [t['slug'] for t in tools if t.get('slug')]
+            _cat = tools[0].get('category_slug', '') if tools else (category.strip() if category else '')
+            _outcome = "gap" if not results else "unknown"
+            await log_mcp_query(d, _sid, q.strip(), _cat, _returned_slugs, _outcome)
+    except Exception:
+        pass  # Never fail search for tracking
 
     # Personalize results if API key has a mature profile
     personalized = False
@@ -2855,7 +2867,7 @@ async def _resolve_tool_slug(d, slug: str):
 
 
 @app.get("/api/tools/{slug}")
-async def api_tool_detail(request: Request, slug: str, source: str = ""):
+async def api_tool_detail(request: Request, slug: str, source: str = "", session_id: str = ""):
     """JSON API for getting full tool details — used by MCP server."""
     d = request.state.db
     tool = await db.get_tool_by_slug(d, slug)
@@ -2879,6 +2891,14 @@ async def api_tool_detail(request: Request, slug: str, source: str = ""):
             await db.log_agent_citation(d, tool['id'], agent_name="mcp")
         except Exception:
             pass
+
+    # Backfill session adoption outcome
+    try:
+        _sid = session_id.strip()[:128] if session_id else ""
+        if _sid:
+            await backfill_mcp_adoption(d, _sid, tool['slug'])
+    except Exception:
+        pass
 
     result = {
         "name": tool['name'],
@@ -4568,8 +4588,17 @@ async def api_quality(request: Request):
             "sample_size": len(latencies),
         }
 
+    # MCP session tracking stats
+    mcp_stats = {}
+    try:
+        d = request.state.db
+        mcp_stats = await get_mcp_quality_stats(d)
+    except Exception:
+        pass
+
     return JSONResponse({
         "endpoints": result,
+        "mcp_outcomes": mcp_stats,
         "timestamp": _time.time(),
         "note": "Metrics tracked since server startup. Use /api/quality to monitor endpoint health."
     })

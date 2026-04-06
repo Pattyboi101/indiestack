@@ -8802,3 +8802,150 @@ async def get_maker_follow_up_data(db: aiosqlite.Connection, tool_id: int) -> di
     ]
 
     return result
+
+
+# ── MCP Session Tracking ─────────────────────────────────────────────────
+
+async def log_mcp_query(
+    db: aiosqlite.Connection,
+    session_id: str,
+    query: str,
+    category: str,
+    tools_returned: list,
+    outcome: str = "unknown",
+) -> None:
+    """Log a find_tools call. outcome=gap if no results, unknown otherwise (backfilled to adopted/bounce later)."""
+    import time as _time
+    import json as _json
+
+    if session_id:
+        await db.execute(
+            """INSERT INTO mcp_sessions (id, created_at, query_count)
+               VALUES (?, ?, 1)
+               ON CONFLICT(id) DO UPDATE SET query_count = query_count + 1""",
+            (session_id, int(_time.time())),
+        )
+
+    await db.execute(
+        """INSERT INTO mcp_query_outcomes
+               (session_id, query, category, tools_returned, outcome, created_at)
+           VALUES (?, ?, ?, ?, ?, ?)""",
+        (
+            session_id or None,
+            query,
+            category or None,
+            _json.dumps(tools_returned) if tools_returned else "[]",
+            outcome,
+            int(_time.time()),
+        ),
+    )
+    await db.commit()
+
+
+async def backfill_mcp_adoption(
+    db: aiosqlite.Connection,
+    session_id: str,
+    slug: str,
+) -> None:
+    """When get_tool_details is called, mark the most recent find_tools call in the
+    same session as 'adopted' if the slug was in tools_returned."""
+    import json as _json
+
+    if not session_id:
+        return
+
+    cursor = await db.execute(
+        """SELECT id, tools_returned FROM mcp_query_outcomes
+           WHERE session_id = ? AND outcome IN ('unknown', 'bounce')
+           ORDER BY created_at DESC LIMIT 1""",
+        (session_id,),
+    )
+    row = await cursor.fetchone()
+    if not row:
+        return
+
+    try:
+        slugs = _json.loads(row["tools_returned"] or "[]")
+    except Exception:
+        slugs = []
+
+    if slug in slugs:
+        await db.execute(
+            "UPDATE mcp_query_outcomes SET adopted_slug = ?, outcome = 'adopted' WHERE id = ?",
+            (slug, row["id"]),
+        )
+        await db.commit()
+
+
+async def get_mcp_quality_stats(db: aiosqlite.Connection) -> dict:
+    """Aggregate session tracking stats for /api/quality."""
+
+    def _tokens_for_rows(rows) -> int:
+        total = 0
+        for r in rows:
+            cost = CATEGORY_TOKEN_COSTS.get(r["category"] or "", 15_000)
+            total += cost
+        return total
+
+    cursor = await db.execute(
+        """SELECT category FROM mcp_query_outcomes
+           WHERE outcome = 'adopted' AND created_at >= strftime('%s', 'now', '-7 days')""",
+    )
+    adopted_7d = await cursor.fetchall()
+
+    cursor = await db.execute(
+        """SELECT category FROM mcp_query_outcomes
+           WHERE outcome = 'adopted' AND created_at >= strftime('%s', 'now', '-30 days')""",
+    )
+    adopted_30d = await cursor.fetchall()
+
+    tokens_7d = _tokens_for_rows(adopted_7d)
+    tokens_30d = _tokens_for_rows(adopted_30d)
+
+    cursor = await db.execute(
+        """SELECT outcome, COUNT(*) as cnt FROM mcp_query_outcomes
+           WHERE outcome IN ('adopted', 'bounce')
+             AND created_at >= strftime('%s', 'now', '-7 days')
+           GROUP BY outcome""",
+    )
+    rate_rows = {r["outcome"]: r["cnt"] for r in await cursor.fetchall()}
+    adopted_n = rate_rows.get("adopted", 0)
+    bounce_n = rate_rows.get("bounce", 0)
+    adoption_rate = round(adopted_n / (adopted_n + bounce_n), 3) if (adopted_n + bounce_n) > 0 else None
+
+    cursor = await db.execute(
+        """SELECT COUNT(*) as total,
+                  SUM(CASE WHEN outcome = 'gap' THEN 1 ELSE 0 END) as gaps
+           FROM mcp_query_outcomes
+           WHERE created_at >= strftime('%s', 'now', '-7 days')""",
+    )
+    gr = await cursor.fetchone()
+    total_n = gr["total"] if gr else 0
+    gaps_n = gr["gaps"] if gr else 0
+    gap_rate = round(gaps_n / total_n, 3) if total_n > 0 else None
+
+    cursor = await db.execute(
+        """SELECT query, COUNT(*) as cnt FROM mcp_query_outcomes
+           WHERE outcome = 'gap' AND created_at >= strftime('%s', 'now', '-7 days')
+             AND query IS NOT NULL AND query != ''
+           GROUP BY LOWER(query)
+           ORDER BY cnt DESC LIMIT 10""",
+    )
+    gap_queries = [r["query"] for r in await cursor.fetchall()]
+
+    cursor = await db.execute(
+        """SELECT COUNT(DISTINCT session_id) as cnt FROM mcp_query_outcomes
+           WHERE session_id IS NOT NULL
+             AND created_at >= strftime('%s', 'now', '-7 days')""",
+    )
+    sess_row = await cursor.fetchone()
+    session_count = sess_row["cnt"] if sess_row else 0
+
+    return {
+        "tokens_saved_7d": tokens_7d,
+        "tokens_saved_30d": tokens_30d,
+        "adoption_rate_7d": adoption_rate,
+        "gap_rate_7d": gap_rate,
+        "top_gap_queries": gap_queries,
+        "session_count_7d": session_count,
+    }
