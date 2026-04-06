@@ -2923,6 +2923,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "prometheus": "monitoring", # Prometheus — metrics collection and alerting
     # Search — Typesense is a common Algolia alternative query term
     "typesense": "search",      # Typesense — typo-tolerant open-source search engine
+    # DevOps — IaC abbreviation (often used standalone in queries)
+    "iac": "devops",                 # Infrastructure as Code — Terraform, Pulumi, Ansible
+    # File storage — object/blob storage queries (Cloudflare R2, Azure Blob, Vercel Blob)
+    "blob": "file",                  # "blob storage", "Azure Blob" → File Management
+    "r2": "file",                    # Cloudflare R2 — S3-compatible object storage
+    "object": "file",                # "object storage" — R2, MinIO, Tigris, Backblaze B2
+    # Auth — enterprise directory / SSO providers not yet mapped
+    "workos": "authentication",      # WorkOS — enterprise SSO, SCIM, and Directory Sync
+    # Security — secrets management (Infisical, Doppler, Bitwarden)
+    "infisical": "security",         # Infisical — open-source secrets manager
+    "doppler": "security",           # Doppler — env and secrets management platform
+    "bitwarden": "security",         # Bitwarden — open-source password/secrets manager
+    # API / Realtime — collaborative realtime (CRDT-based)
+    "liveblocks": "api",             # Liveblocks — collaborative realtime infrastructure
+    "yjs": "api",                    # Y.js — CRDT-based collaborative realtime framework
+    # Forms — React Hook Form abbreviation
+    "rhf": "forms",                  # RHF — shorthand for React Hook Form in queries
+    # Database — local-first / WebAssembly database tools
+    "electric": "database",          # ElectricSQL — local-first Postgres sync (electric-sql)
+    "electricsql": "database",       # explicit form of ElectricSQL
+    "pglite": "database",            # PGlite — Postgres compiled to WASM (runs in browser)
 }
 
 _FTS_STOP_WORDS = {

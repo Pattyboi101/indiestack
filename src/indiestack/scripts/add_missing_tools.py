@@ -1065,6 +1065,70 @@ TOOLS = [
         "brew install temporal",
         "code",
     ),
+    # JS Runtimes — Deno -------------------------------------------------------
+    (
+        "deno",
+        "Deno",
+        "A modern runtime for JavaScript and TypeScript",
+        "Deno is a secure JavaScript and TypeScript runtime built on V8. Built-in "
+        "TypeScript support, web-standard APIs, a built-in linter/formatter/test runner, "
+        "and a standard library. Deno 2 brings Node.js compatibility and npm support.",
+        "frontend-frameworks",
+        "denoland/deno",
+        93000,
+        "https://deno.com",
+        "runtime,typescript,javascript,secure,web-standards",
+        "curl -fsSL https://deno.land/install.sh | sh",
+        "code",
+    ),
+    # Security — secrets management -------------------------------------------
+    (
+        "infisical",
+        "Infisical",
+        "Open-source secret management platform",
+        "Infisical is an open-source secrets manager that syncs environment variables "
+        "across your team and infrastructure. SDKs for Node.js, Python, Go, and more. "
+        "Self-host or use Infisical Cloud. Supports secret versioning, audit logs, and RBAC.",
+        "security-tools",
+        "Infisical/infisical",
+        15000,
+        "https://infisical.com",
+        "secrets,env,security,self-hosted,open-source",
+        "npm install @infisical/sdk",
+        "code",
+    ),
+    # API / Realtime — collaborative ------------------------------------------
+    (
+        "liveblocks",
+        "Liveblocks",
+        "Realtime collaboration infrastructure for developers",
+        "Liveblocks provides APIs and components for building collaborative features: "
+        "multiplayer cursors, presence, live comments, and document editing (like Notion/Figma). "
+        "Conflict-free CRDT backend, React hooks, and a customizable UI kit.",
+        "api-tools",
+        "liveblocks/liveblocks",
+        4000,
+        "https://liveblocks.io",
+        "realtime,collaboration,crdt,websocket,presence",
+        "npm install @liveblocks/client @liveblocks/react",
+        "saas",
+    ),
+    # Auth — enterprise / directory sync --------------------------------------
+    (
+        "workos",
+        "WorkOS",
+        "Add enterprise features in minutes",
+        "WorkOS provides APIs for enterprise auth: Single Sign-On (SAML, OIDC), "
+        "SCIM directory sync, and multi-factor authentication. Drop-in AuthKit UI. "
+        "Free for up to 1M MAUs. Used by Vercel, Perplexity, and Drata.",
+        "authentication",
+        "workos/workos-node",
+        1200,
+        "https://workos.com",
+        "auth,sso,saml,scim,enterprise",
+        "npm install @workos-inc/node",
+        "saas",
+    ),
     # Publishing / Newsletters ---------------------------------------------------
     (
         "ghost",
