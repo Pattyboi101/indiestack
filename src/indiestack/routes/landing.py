@@ -201,7 +201,7 @@ async def landing(request: Request):
         f'            <a href="/tool/{_hero_tool_slug}" style="color:var(--slate);font-weight:700;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;">{_hero_tool_name}</a>'
         '            <span style="color:rgba(255,255,255,0.85);"> is battle-tested,</span><br>'
         '            <span style="color:rgba(255,255,255,0.85);">&#160;&#160;&#160;&#160;&#160;verified compatible with your stack,</span><br>'
-        '            <span style="color:rgba(255,255,255,0.85);">&#160;&#160;&#160;&#160;&#160;and real GitHub data shows developers moving toward it.&rdquo;</span>'
+        '            <span style="color:rgba(255,255,255,0.85);">&#160;&#160;&#160;&#160;&#160;and real GitHub data shows strong developer momentum.&rdquo;</span>'
         '        </div>'
         '    </div>'
         f'    <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;margin-bottom:0;">'
