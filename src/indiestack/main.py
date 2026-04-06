@@ -746,10 +746,11 @@ async def track_api_latency(request: Request, call_next):
         tracked_path = None
         if path == "/api/tools/search":
             tracked_path = "/api/tools/search"
-        elif path.startswith("/api/tools/") and path.endswith(".json") and path != "/api/tools/index.json":
-            tracked_path = "/api/tools/{slug}"
         elif path == "/api/tools/index.json":
             tracked_path = "/api/tools/index.json"
+        elif path.startswith("/api/tools/") and not path.startswith("/api/tools/search") and not path.startswith("/api/tools/index"):
+            # Match /api/tools/{slug} pattern
+            tracked_path = "/api/tools/{slug}"
 
         if tracked_path and tracked_path in _api_metrics:
             metrics = _api_metrics[tracked_path]
@@ -769,10 +770,11 @@ async def track_api_latency(request: Request, call_next):
         tracked_path = None
         if path == "/api/tools/search":
             tracked_path = "/api/tools/search"
-        elif path.startswith("/api/tools/") and path != "/api/tools/index.json":
-            tracked_path = "/api/tools/{slug}"
         elif path == "/api/tools/index.json":
             tracked_path = "/api/tools/index.json"
+        elif path.startswith("/api/tools/") and not path.startswith("/api/tools/search") and not path.startswith("/api/tools/index"):
+            # Match /api/tools/{slug} pattern
+            tracked_path = "/api/tools/{slug}"
 
         if tracked_path and tracked_path in _api_metrics:
             _api_metrics[tracked_path]["errors"] += 1

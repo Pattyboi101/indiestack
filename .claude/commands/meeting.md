@@ -30,9 +30,11 @@ Run a real meeting — not a survey. Agents stake positions in Round 1, push bac
 | **R6** | Convergence | Find genuine agreement; surface remaining gaps | All |
 | **R7** | Synthesis | CEO resolves anything still unresolved | CEO only |
 
-**Minimum:** R1 + R2. **Standard:** R1–R3. **Deep strategy:** R1–R6 or R1–R7.
+**Minimum: R1–R4.** R3 and R4 are mandatory, not optional. Ideas proposed in R1 must be developed (R3) and attacked (R4) before the meeting can close. **Standard:** R1–R4. **Deep strategy:** R1–R6 or R1–R7.
 
-**Early exit:** After any round, agents can flag `[SATISFIED]` to signal they're happy with where the discussion has landed. When all active agents flag satisfied (or Patrick says close), wrap up — don't keep going.
+**Why 4 minimum:** 2 rounds means ideas get challenged once but never refined or stress-tested — they go into actions without anyone pushing back on them. R3 develops the strongest ideas from the debate; R4 attacks the emerging consensus before it hardens into decisions. Without both, the meeting is just a structured brainstorm.
+
+**Early exit is ignored before R4 completes.** `[SATISFIED]` and `[CLOSE MEETING]` flags are collected but not acted on until R4 is done. After R4, if CEO flags `[CLOSE MEETING]` or all agents flag `[SATISFIED]`, close immediately.
 
 ---
 
@@ -292,21 +294,24 @@ Write under "## Round 7 — Synthesis". This is a verdict, not a summary. After 
 
 ## Auto-Progression
 
-Rounds run automatically — do NOT stop to ask Patrick "should I run R2?" after each round. The flow is:
+Rounds run automatically — do NOT stop to ask Patrick between rounds. The mandatory flow is:
 
-1. R1 completes → chair identifies tensions → R2 fires automatically
-2. R2 completes → chair assesses → R3 fires if ideas need development, otherwise skip
-3. Continue through rounds as needed, automatically
-4. **Only surface to Patrick when the meeting closes** (via CEO close or all-satisfied)
+1. R1 completes → identify tensions → **R2 fires automatically**
+2. R2 completes → take strongest ideas from R1+R2 → **R3 fires automatically**
+3. R3 completes → identify forming consensus → **R4 fires automatically**
+4. R4 completes → genuine unresolved conflict? → R5+ if yes, close if no
 
-The CEO is the meeting closer. After any round, the CEO can write `[CLOSE MEETING: reason]` in their response to signal diminishing returns. When the chair sees this flag, immediately run Close Meeting — don't start another round. Include the CEO's reason in the summary to Patrick.
+**R1–R4 are mandatory. R3 and R4 cannot be skipped.** Ideas must be developed (R3) and attacked (R4) before any exit condition is honoured. A meeting that closes at R2 has only challenged ideas once — they've never been stress-tested.
 
-**Other exit conditions (also automatic):**
+**The CEO is the meeting closer — but only from R4 onwards.** After R4 completes, the CEO can write `[CLOSE MEETING: reason]` to signal diminishing returns. Close immediately when seen. `[SATISFIED]` and `[CLOSE MEETING]` flags received before R4 completes are noted but ignored.
+
+**Exit conditions (only honoured after R4):**
+- CEO writes `[CLOSE MEETING: reason]` → close immediately
 - All agents flag `[SATISFIED]` → close
 - Patrick says "close" → close
 - 7 rounds completed → close regardless
 
-**Never ask Patrick "want to keep going?" between rounds.** Run autonomously until closed.
+**Only surface to Patrick when the meeting closes.**
 
 ---
 
@@ -368,9 +373,9 @@ Written to each dept's briefing.md.
 
 | Type | Rounds | Notes |
 |------|--------|-------|
-| Sprint planning | R1–R2 | Quick — just align on what gets built |
-| Feature design | R1–R3 | R3 builds out the design from debate |
-| Strategy | R1–R4 or R1–R6 | R4 devil's advocate is critical for big bets |
-| Post-mortem | R1–R2 | Name cause, name fix, done |
-| Build prioritization | R1–R2 | Get the sequencing conflict on the table |
-| Partnership / outreach | R1–R4 | Devil's advocate on the pitch before sending |
+| Sprint planning | R1–R4 | R4 attacks the prioritisation before it's locked |
+| Feature design | R1–R4 | R3 builds the design, R4 finds what breaks it |
+| Strategy | R1–R4 to R1–R6 | R4 devil's advocate is critical for big bets |
+| Post-mortem | R1–R4 | R3 develops fixes, R4 attacks them — root cause may differ |
+| Build prioritization | R1–R4 | R3 develops the sequence, R4 challenges the assumptions |
+| Partnership / outreach | R1–R4 | R4 attacks the pitch before it goes out |
