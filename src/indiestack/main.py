@@ -1017,9 +1017,9 @@ async def llms_txt(request: Request):
     try:
         d = request.state.db
         row = await db.execute_fetchone(d, "SELECT COUNT(*) as cnt FROM tools WHERE status = 'approved'")
-        tool_count = row['cnt'] if row else 3000
+        tool_count = row['cnt'] if row else 7500
     except Exception:
-        tool_count = 3000
+        tool_count = 7500
     return (
         "# IndieStack\n\n"
         f"> The discovery layer between AI coding agents and {tool_count}+ proven, lightweight developer tools. "
@@ -1058,12 +1058,16 @@ async def llms_txt(request: Request):
         f"- [Data]({BASE_URL}/data): Aggregated tool data, search trends, and market intelligence from agent interactions\n"
         f"- [Analyze]({BASE_URL}/analyze): Analyze your project dependencies and get migration recommendations\n\n"
         "## Categories\n\n"
-        "Analytics & Metrics, Auth & Identity, Automation & Workflows, CMS & Content, "
-        "Customer Support, Database & Backend, Design & UI, DevOps & Hosting, "
-        "Email & Marketing, Forms & Surveys, Invoicing & Billing, Monitoring & Logging, "
-        "Payments & Subscriptions, Privacy & Compliance, Scheduling & Calendar, "
-        "Search & Discovery, Security & Encryption, SEO & Growth, Social & Community, "
-        "Storage & Files, Testing & QA\n\n"
+        "AI Dev Tools, AI & Automation, Analytics & Metrics, API Tools, Authentication, "
+        "Background Jobs, Boilerplates & Starters, Caching & In-Memory, CLI Tools, "
+        "CRM & Sales, Customer Support, Database, Design & Creative, Developer Tools, "
+        "DevOps & Infrastructure, Documentation, Email Marketing, Feature Flags, "
+        "Feedback & Reviews, File Management, Forms & Surveys, Frontend Frameworks, "
+        "Games & Entertainment, Headless CMS, Invoicing & Billing, Landing Pages, "
+        "Learning & Education, Localization, Logging, MCP Servers, Media Server, "
+        "Message Queue, Monitoring & Uptime, Newsletters & Content, Notifications, "
+        "Payments, Project Management, Scheduling & Booking, Search Engine, "
+        "Security Tools, SEO Tools, Social Media, Testing Tools\n\n"
         "## Agent Cards (Machine-Readable)\n\n"
         f"- Card Index: {BASE_URL}/cards/index.json\n"
         f"- Per-Tool Card: {BASE_URL}/cards/{{slug}}.json\n\n"
