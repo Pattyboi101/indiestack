@@ -2508,6 +2508,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "convertkit": "email",
     "twilio": "notifications",
     "vonage": "notifications",
+    "novu": "notifications",         # Novu — open-source multi-channel notification platform
+    "knock": "notifications",        # Knock — notification infrastructure API
+    "onesignal": "notifications",    # OneSignal — push + in-app + email notifications
+    "courier": "notifications",      # Courier — multi-channel notification routing
+    "fcm": "notifications",          # Firebase Cloud Messaging — Android/web push
+    "apns": "notifications",         # Apple Push Notification Service — iOS push
+    # WebRTC — real-time video/audio, routes to api-tools (Livekit, Partykit, Daily.co)
+    "webrtc": "api",                 # WebRTC queries — real-time video/audio API tools
     # Monitoring / observability
     "newrelic": "monitoring",
     "grafana": "monitoring",
