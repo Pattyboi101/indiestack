@@ -1993,8 +1993,8 @@ async def blog_indiestack_vs_stackshare(request: Request):
             <p>
                 IndieStack ships a free
                 <a href="https://pypi.org/project/indiestack/">MCP server</a> that any AI
-                coding agent can install in one command. The agent searches 3,099 tools across
-                25 categories, gets structured data back (pricing, API type, SDK packages,
+                coding agent can install in one command. The agent searches 6,500+ tools across
+                29 categories, gets structured data back (pricing, API type, SDK packages,
                 environment variables, compatible tools), and can recommend the right tool
                 in-context. No tab switching. No copy-pasting from a browser. The recommendation
                 happens inside the coding session, exactly where it is useful.

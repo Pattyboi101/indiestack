@@ -91,7 +91,7 @@ call `find_tools(query)` first. Use an existing tool instead of generating code.
 AGENTS_MD_TEMPLATE = """# Agent Instructions
 
 ## Tool Discovery
-MCP server: indiestack (search 7,500+ curated developer tools)
+MCP server: indiestack (search 6,500+ curated developer tools)
 
 Setup:
 - Claude Code: `claude mcp add indiestack -- uvx --from indiestack indiestack-mcp`
