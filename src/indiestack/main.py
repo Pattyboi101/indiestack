@@ -4842,6 +4842,65 @@ async def agent_integration(request: Request):
     return JSONResponse({"ok": True})
 
 
+@app.get("/api/tool-trust")
+async def api_tool_trust(request: Request, tool: str = "", limit: int = 20):
+    """Public Agent Success Ratings API.
+
+    Query success rate data for a tool, or browse the leaderboard.
+    This is the trust layer that lets Conway/Spud agents verify tools before using them.
+
+    GET /api/tool-trust?tool=stripe        — success rate for a single tool
+    GET /api/tool-trust?limit=20           — leaderboard of most-trusted tools
+    """
+    d = request.state.db
+    if tool:
+        tool = tool.strip().lower()[:100]
+        stats = await db.get_tool_success_rate(d, tool)
+        if stats["total"] == 0:
+            return JSONResponse({"tool": tool, "message": "No outcome data yet", "total": 0}, status_code=404)
+        t = await db.get_tool_by_slug(d, tool)
+        return JSONResponse({
+            "tool": tool,
+            "name": t["name"] if t else tool,
+            "success_rate": stats["rate"],
+            "total_signals": stats["total"],
+            "confidence": stats["confidence"],
+            "successes": stats["success"],
+            "failures": stats["fail"],
+        })
+    else:
+        # Leaderboard: tools with most outcome signals
+        limit = min(max(1, limit), 50)
+        cursor = await d.execute("""
+            SELECT t.slug, t.name,
+                   SUM(CASE WHEN aa.success = 1 THEN 1 ELSE 0 END) as successes,
+                   SUM(CASE WHEN aa.success = 0 THEN 1 ELSE 0 END) as failures,
+                   COUNT(*) as total
+            FROM agent_actions aa
+            JOIN tools t ON t.slug = aa.tool_slug
+            WHERE aa.action = 'report_outcome'
+            GROUP BY t.slug, t.name
+            HAVING total >= 3
+            ORDER BY total DESC, successes DESC
+            LIMIT ?
+        """, (limit,))
+        rows = await cursor.fetchall()
+        results = []
+        for r in rows:
+            total = r["total"]
+            successes = r["successes"]
+            rate = round(successes / total * 100) if total else 0
+            confidence = "low" if total < 5 else "medium" if total <= 20 else "high"
+            results.append({
+                "tool": r["slug"],
+                "name": r["name"],
+                "success_rate": rate,
+                "total_signals": total,
+                "confidence": confidence,
+            })
+        return JSONResponse({"leaderboard": results, "total": len(results)}, headers={"Cache-Control": "public, max-age=300"})
+
+
 # ── Mount routes ──────────────────────────────────────────────────────────
 
 app.include_router(landing.router)
