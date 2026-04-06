@@ -2951,6 +2951,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "electric": "database",          # ElectricSQL — local-first Postgres sync (electric-sql)
     "electricsql": "database",       # explicit form of ElectricSQL
     "pglite": "database",            # PGlite — Postgres compiled to WASM (runs in browser)
+    # Feature flags — named tools in DB but missing from synonyms
+    "unleash": "feature",            # Unleash — open-source feature management platform
+    "flagsmith": "feature",          # Flagsmith — open-source feature flags + remote config
+    "flipt": "feature",              # Flipt — open-source, git-backed feature flags
+    "growthbook": "feature",         # GrowthBook — open-source A/B testing + feature flags
+    # Frontend — Rspack (Rust webpack replacement by ByteDance/Web Infra team)
+    "rspack": "frontend",            # Rspack — Rust-based webpack-compatible bundler
+    # DevOps — dependency update automation
+    "renovate": "devops",            # Renovate — automated dependency update PRs
+    # Testing — visual regression for Storybook CI
+    "chromatic": "testing",          # Chromatic — visual testing and review tool for Storybook
+    # AI dev tools — Google's open Agent-to-Agent protocol
+    "a2a": "ai",                     # A2A (Agent2Agent) — Google's open agent interop protocol
+    # DevOps — monorepo release and changelog management
+    "changesets": "devops",          # Changesets — monorepo versioning and changelog automation
+    # Frontend — Angular meta-framework (file-based routing + SSR for Angular)
+    "analog": "frontend",            # Analog — Angular meta-framework (Next.js for Angular)
 }
 
 _FTS_STOP_WORDS = {

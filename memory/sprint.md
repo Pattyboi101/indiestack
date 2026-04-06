@@ -1,20 +1,47 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twenty-fourth pass)
+Last updated: 2026-04-06 (twenty-fifth pass)
 
 ## Status: Active
 
 ## System State (as of 2026-04-06)
 
-- **MCP server**: v1.15.1 (PyPI) — 10,000+ installs, 23 tools, fully anonymous
+- **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 549 entries for search routing (added 17 in twenty-fourth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 72 tools ready to insert (slug-safe)
-  - 4 tools added in twenty-fourth pass (Deno, Infisical, Liveblocks, WorkOS)
+- **_CAT_SYNONYMS**: 559 entries for search routing (added 10 in twenty-fifth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 76 tools ready to insert (slug-safe)
+  - 4 tools added in twenty-fifth pass (Storybook, Rspack, Flipt, GrowthBook)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, twenty-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 10 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **Feature flags**: `"unleash"`, `"flagsmith"`, `"flipt"`, `"growthbook"` → `"feature"` — tools in DB/integrations but not synonym-routed
+  - **Frontend**: `"rspack"` → `"frontend"` — Rust webpack replacement (ByteDance, fast growing)
+  - **DevOps**: `"renovate"` → `"devops"` — automated dependency update PRs
+  - **Testing**: `"chromatic"` → `"testing"` — visual regression testing for Storybook
+  - **AI dev**: `"a2a"` → `"ai"` — Google's Agent-to-Agent open interop protocol
+  - **DevOps**: `"changesets"` → `"devops"` — monorepo versioning and changelog automation
+  - **Frontend**: `"analog"` → `"frontend"` — Angular meta-framework (Next.js for Angular)
+- Running total: 559 entries (549 + 10)
+
+### Catalog Script (Step 2)
+- All original Step 2 items already covered — added 4 new tools (76 total):
+  - Storybook (frontend-frameworks, 84k stars) — industry-standard UI component workshop
+  - Rspack (frontend-frameworks, 10k stars) — Rust-based webpack-compatible bundler
+  - Flipt (feature-flags, 4k stars) — self-hosted git-backed feature flags
+  - GrowthBook (feature-flags, 6k stars) — open-source A/B testing + feature flags
+
+### Code Quality (Step 3)
+- Audited last 5 commits: mcp_server.py (check_compatibility), main.py (tool-trust endpoint + duplicate removal), landing.py (hero fix)
+- No html.escape() gaps, no hardcoded hex colors in changed files, no stale stat copy found
+
+### R&D Docs (Step 4)
+- sprint.md updated to twenty-fifth pass; MCP version corrected to v1.16.0
 
 ## Completed This Session (2026-04-06, twenty-fourth pass — autonomous improvement cycle)
 

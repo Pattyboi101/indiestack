@@ -1129,6 +1129,72 @@ TOOLS = [
         "npm install @workos-inc/node",
         "saas",
     ),
+    # Frontend — Component Dev / Bundlers ----------------------------------------
+    (
+        "storybook",
+        "Storybook",
+        "Build UI components and pages in isolation",
+        "Storybook is the industry-standard workshop for building, testing, and "
+        "documenting UI components in isolation. Works with React, Vue, Angular, "
+        "Svelte, and more. Includes addons for accessibility, visual testing, "
+        "and interaction testing. Used by Airbnb, IBM, Shopify, and thousands more.",
+        "frontend-frameworks",
+        "storybookjs/storybook",
+        84000,
+        "https://storybook.js.org",
+        "component,testing,ui,documentation,visual-testing",
+        "npx storybook@latest init",
+        "code",
+    ),
+    (
+        "rspack",
+        "Rspack",
+        "The fast Rust-based web bundler",
+        "Rspack is a high-performance JavaScript bundler written in Rust, "
+        "providing webpack-compatible APIs and plugins. Achieves 5-10x faster "
+        "build speeds than webpack with minimal migration effort. Built by "
+        "ByteDance's Web Infra team and used at scale in production.",
+        "frontend-frameworks",
+        "web-infra-dev/rspack",
+        10000,
+        "https://rspack.dev",
+        "bundler,build-tool,rust,fast,webpack-compatible",
+        "npm install @rspack/core @rspack/cli",
+        "code",
+    ),
+    # Feature Flags ---------------------------------------------------------------
+    (
+        "flipt",
+        "Flipt",
+        "Open-source, self-hosted feature flags",
+        "Flipt is a fully self-hosted, open-source feature flag solution with "
+        "first-class GitOps support. Store flag configuration in Git, use "
+        "gRPC or REST APIs, and integrate via official SDKs for Go, Python, "
+        "Node.js, Java, and more. No telemetry, no vendor lock-in.",
+        "feature-flags",
+        "flipt-io/flipt",
+        4000,
+        "https://flipt.io",
+        "feature-flags,self-hosted,gitops,grpc",
+        "brew install flipt-io/brew/flipt",
+        "code",
+    ),
+    (
+        "growthbook",
+        "GrowthBook",
+        "Open source feature flags and A/B testing",
+        "GrowthBook is an open-source platform for feature flags, A/B testing, "
+        "and experiment analysis. Self-host or use GrowthBook Cloud. SDKs for "
+        "JavaScript, React, Python, Go, Ruby, PHP, and more. "
+        "Connect to your existing data warehouse for statistical analysis.",
+        "feature-flags",
+        "growthbook/growthbook",
+        6000,
+        "https://growthbook.io",
+        "feature-flags,ab-testing,experimentation,analytics,open-source",
+        "npm install @growthbook/growthbook-react",
+        "code",
+    ),
     # Publishing / Newsletters ---------------------------------------------------
     (
         "ghost",
