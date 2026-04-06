@@ -695,6 +695,11 @@ NEED_MAPPINGS = {
     "localization": {"category": "localization", "terms": ["i18n", "l10n", "localization", "internationalization", "translation", "locale", "multilingual"], "competitors": ["Crowdin", "Lokalise", "Phrase", "Transifex"], "title": "Localization", "description": "Translate your app and manage multilingual content with indie-friendly i18n tools.", "build_estimate": "1-2 weeks", "icon": "\U0001f310"},
     "cli": {"category": "cli-tools", "terms": ["cli", "command-line", "terminal tool", "shell script", "tui", "command line interface"], "competitors": ["Homebrew", "Oh My Zsh", "Fig"], "title": "CLI Tools", "description": "Command-line utilities, terminal apps, and TUI tools for developer workflows.", "build_estimate": "1-2 weeks", "icon": "\U0001f4bb"},
     "docs": {"category": "documentation", "terms": ["documentation", "api docs", "docs site", "wiki", "knowledge base", "readme"], "competitors": ["Docusaurus", "GitBook", "Mintlify", "ReadMe"], "title": "Documentation", "description": "Build docs sites, API references, wikis, and knowledge bases.", "build_estimate": "1-2 weeks", "icon": "\U0001f4da"},
+    "testing": {"category": "testing-tools", "terms": ["testing", "unit test", "e2e test", "test automation", "mocking", "QA", "test runner", "code coverage"], "competitors": ["Jest", "Playwright", "Cypress", "Vitest", "pytest"], "title": "Testing Tools", "description": "Automate tests, mock dependencies, and ship with confidence.", "build_estimate": "1-2 weeks", "icon": "\U0001f9ea"},
+    "security": {"category": "security-tools", "terms": ["security", "vulnerability scanning", "pentest", "compliance", "encryption", "secrets management", "SAST", "DAST"], "competitors": ["Snyk", "OWASP ZAP", "HashiCorp Vault", "SonarQube"], "title": "Security Tools", "description": "Scan for vulnerabilities, manage secrets, and enforce compliance.", "build_estimate": "2-3 weeks", "icon": "\U0001f6e1\ufe0f"},
+    "search": {"category": "search-engine", "terms": ["full-text search", "vector search", "search index", "search API", "semantic search", "fuzzy search", "typo-tolerant"], "competitors": ["Algolia", "Elasticsearch", "Typesense", "Meilisearch"], "title": "Search Engines", "description": "Add fast, typo-tolerant full-text and semantic search to your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f50d"},
+    "queue": {"category": "message-queue", "terms": ["message queue", "message broker", "event streaming", "pubsub", "pub/sub", "kafka", "rabbitmq", "async messaging"], "competitors": ["Apache Kafka", "RabbitMQ", "AWS SQS", "NATS", "Redis Streams"], "title": "Message Queues", "description": "Decouple services with message brokers, event streaming, and pub/sub.", "build_estimate": "1-2 weeks", "icon": "\U0001f4ec"},
+    "media": {"category": "media-server", "terms": ["video streaming", "transcoding", "media server", "audio streaming", "HLS", "video encoding", "adaptive bitrate"], "competitors": ["Mux", "Cloudinary Video", "Plex", "Jellyfin", "Bunny Stream"], "title": "Media Servers", "description": "Stream, transcode, and manage video and audio content.", "build_estimate": "2-4 weeks", "icon": "\U0001f3ac"},
 }
 
 TECH_KEYWORDS = {
@@ -2558,6 +2563,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Background job tools
     "temporal": "background",
     "trigger.dev": "background",
+    # Code quality / linting — ESLint, Biome, Prettier live in testing-tools category
+    "lint": "testing",          # "linting tool", "js linter" → Testing Tools
+    "linting": "testing",
+    "eslint": "testing",        # ESLint — most popular JS/TS linter
+    "biome": "testing",         # Biome — fast linter + formatter (Rome successor)
+    "prettier": "testing",      # Prettier — opinionated code formatter
+    # Observability — OpenTelemetry is the dominant standard
+    "opentelemetry": "monitoring",   # full name
+    "otel": "monitoring",            # short form used in queries
+    "jaeger": "monitoring",          # Jaeger — distributed tracing (OTel-compatible)
+    "zipkin": "monitoring",          # Zipkin — distributed tracing system
+    # Data visualization / charting
+    "charting": "analytics",    # "charting library" → Analytics & Metrics
+    "charts": "analytics",      # "charts library", "charts component"
+    "chart": "analytics",       # "chart.js", "chart library"
+    "recharts": "analytics",    # Recharts — React charting library
+    "d3": "analytics",          # D3.js — data visualization
+    "plotly": "analytics",      # Plotly — interactive scientific charts
+    "chartjs": "analytics",     # Chart.js — simple canvas charts
+    # PDF generation / processing
+    "pdf": "file",              # PDFKit, Puppeteer PDF, WeasyPrint → file-management
+    # Markdown processing — editors, renderers, parsers
+    "markdown": "documentation", # markdown editors/renderers → Documentation category
     # Security tools — "security" as raw term already LIKE-matches "Security Tools",
     # but named tools and non-obvious terms need explicit mapping
     "security": "security",
