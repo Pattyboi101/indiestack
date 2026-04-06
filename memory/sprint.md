@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twenty-first pass)
+Last updated: 2026-04-06 (twenty-second pass)
 
 ## Status: Active
 
@@ -9,12 +9,37 @@ Last updated: 2026-04-06 (twenty-first pass)
 - **MCP server**: v1.15.1 (PyPI) — 10,000+ installs, 23 tools, fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~533 entries for search routing (added 14 in twenty-first pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 58 tools ready to insert (slug-safe)
-  - Note: actual count is 58 (53 pre-existing + 5 added in twenty-first pass); prior sprint count was inflated
+- **_CAT_SYNONYMS**: 512 entries for search routing (actual count; added 15 in twenty-second pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 63 tools ready to insert (slug-safe)
+  - 5 backend framework tools added in twenty-second pass (FastAPI, Express, Django, Flask, Gin)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, twenty-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 15 new _CAT_SYNONYMS entries — backend frameworks were entirely missing:
+  - **Python web frameworks**: `"fastapi"`, `"django"`, `"flask"` → `"api"` — covers "fastapi alternative", "django rest api" queries
+  - **Other backend frameworks**: `"rails"`, `"laravel"`, `"gin"`, `"fiber"`, `"axum"` → `"api"` — covers Rails/PHP/Go/Rust framework queries
+  - **Monorepo**: `"turborepo"` → `"devtools"` — Turborepo was in catalog but missing synonym
+  - **Schema validation**: `"validation"`, `"zod"`, `"yup"`, `"valibot"` → `"devtools"` — covers "schema validation library", "zod alternative" queries
+- Verified actual _CAT_SYNONYMS count: 512 (prior sprint counts were inflated)
+
+### Catalog Script (Step 2)
+- Added 5 backend framework tools to `scripts/add_missing_tools.py` (63 total):
+  - FastAPI (api-tools, 77k stars) — most popular Python async web framework
+  - Express.js (api-tools, 65k stars) — foundational Node.js web framework
+  - Django (api-tools, 82k stars) — batteries-included Python web framework
+  - Flask (api-tools, 68k stars) — lightweight Python micro-framework
+  - Gin (api-tools, 79k stars) — most popular Go HTTP framework
+
+### Code Quality (Step 3)
+- Last commits changed only db.py and memory files — no route files to audit
+- Duplicate key check on _CAT_SYNONYMS: clean (512 unique keys)
+
+### R&D Docs (Step 4)
+- sprint.md updated to twenty-second pass
 
 ## Completed This Session (2026-04-06, twenty-first pass — autonomous improvement cycle)
 

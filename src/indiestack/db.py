@@ -2884,6 +2884,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Drag and drop libraries (dnd-kit, react-beautiful-dnd, Sortable.js)
     "drag": "frontend",          # "drag and drop", "drag to reorder" → Frontend Frameworks
     "dnd": "frontend",           # dnd-kit abbreviation — common in React drag-and-drop queries
+    # Backend web frameworks — "fastapi alternative", "django orm", "rails framework" etc.
+    # All route to api-tools where backend frameworks and their indie alternatives live
+    "fastapi": "api",       # FastAPI — high-performance Python async web framework
+    "django": "api",        # Django — batteries-included Python web framework
+    "flask": "api",         # Flask — lightweight Python WSGI micro-framework
+    "rails": "api",         # Ruby on Rails — full-stack MVC framework
+    "laravel": "api",       # Laravel — PHP MVC web framework
+    "gin": "api",           # Gin — high-performance Go HTTP framework
+    "fiber": "api",         # Fiber — Express-inspired Go web framework
+    "axum": "api",          # Axum — modular Rust web framework (Tokio team)
+    # Monorepo tooling — Turborepo synonym missing despite being in catalog
+    "turborepo": "devtools",    # Turborepo — Vercel high-performance monorepo build system
+    # Schema validation — Zod, Yup, Valibot all live in developer-tools category
+    "validation": "devtools",   # "schema validation", "runtime validation", "form validation"
+    "zod": "devtools",           # Zod — TypeScript-first schema validation (34k stars)
+    "yup": "devtools",           # Yup — popular JS/TS schema validation (22k stars)
+    "valibot": "devtools",       # Valibot — lightweight modular Zod alternative
 }
 
 _FTS_STOP_WORDS = {

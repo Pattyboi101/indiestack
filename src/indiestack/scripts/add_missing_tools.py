@@ -890,6 +890,86 @@ TOOLS = [
         "npx create-strapi-app@latest my-project",
         "code",
     ),
+    # API / Backend Frameworks ---------------------------------------------------
+    (
+        "fastapi",
+        "FastAPI",
+        "High performance, easy to learn, fast to code Python API framework",
+        "FastAPI is a modern, fast Python web framework for building APIs with "
+        "standard type hints. Automatic interactive docs (Swagger + ReDoc), "
+        "async-first design, and Pydantic-powered validation. One of the fastest "
+        "Python frameworks available.",
+        "api-tools",
+        "tiangolo/fastapi",
+        77000,
+        "https://fastapi.tiangolo.com",
+        "python,api,async,openapi,pydantic",
+        "pip install fastapi uvicorn",
+        "code",
+    ),
+    (
+        "express",
+        "Express.js",
+        "Fast, unopinionated, minimalist web framework for Node.js",
+        "Express is the most widely used Node.js web framework. Minimal and "
+        "flexible with a rich middleware ecosystem. The foundation of countless "
+        "production Node.js apps and the basis for higher-level frameworks "
+        "like NestJS and LoopBack.",
+        "api-tools",
+        "expressjs/express",
+        65000,
+        "https://expressjs.com",
+        "nodejs,javascript,http,middleware,web-framework",
+        "npm install express",
+        "code",
+    ),
+    (
+        "django",
+        "Django",
+        "The web framework for perfectionists with deadlines",
+        "Django is a high-level Python web framework with batteries included: "
+        "ORM, admin panel, auth, forms, and URL routing out of the box. "
+        "Powers Instagram, Disqus, and Mozilla. 20+ years of battle-tested "
+        "stability and a thriving ecosystem.",
+        "api-tools",
+        "django/django",
+        82000,
+        "https://www.djangoproject.com",
+        "python,orm,admin,batteries-included,full-stack",
+        "pip install django",
+        "code",
+    ),
+    (
+        "flask",
+        "Flask",
+        "A simple framework for building complex web applications",
+        "Flask is a lightweight Python WSGI micro-framework. No ORM, no "
+        "default database — choose your own components. Great for small APIs, "
+        "microservices, and prototyping. Extensible via a large ecosystem "
+        "of Flask extensions.",
+        "api-tools",
+        "pallets/flask",
+        68000,
+        "https://flask.palletsprojects.com",
+        "python,micro-framework,wsgi,lightweight,api",
+        "pip install flask",
+        "code",
+    ),
+    (
+        "gin",
+        "Gin",
+        "HTTP web framework written in Go with martini-like API",
+        "Gin is the most popular Go HTTP web framework. 40x faster than Martini "
+        "with a zero-allocation router, built-in middleware, JSON validation, "
+        "and route grouping. The standard choice for Go REST APIs.",
+        "api-tools",
+        "gin-gonic/gin",
+        79000,
+        "https://gin-gonic.com",
+        "go,golang,http,routing,fast",
+        "go get -u github.com/gin-gonic/gin",
+        "code",
+    ),
     # Background jobs — durable execution ----------------------------------------
     (
         "temporal",
