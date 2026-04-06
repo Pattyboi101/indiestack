@@ -47,7 +47,7 @@ def _detect_agent_platform() -> str:
     return "unknown"
 
 AGENT_PLATFORM = _detect_agent_platform()
-_USER_AGENT = f"indiestack-mcp/1.15.1 ({AGENT_PLATFORM})"
+_USER_AGENT = f"indiestack-mcp/1.16.0 ({AGENT_PLATFORM})"
 
 # ── TTL Cache ────────────────────────────────────────────────────────────
 
@@ -2346,6 +2346,95 @@ async def confirm_integration(
             return "This integration pair was already recorded."
         return f"Recorded! '{tool_a_slug}' + '{tool_b_slug}' confirmed as compatible."
     return f"Error: {data.get('error', 'Unknown')}"
+
+
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
+async def check_compatibility(
+    tools: str,
+    *,
+    ctx: Context,
+) -> str:
+    """Check whether a set of tools are compatible with each other.
+
+    Use this to validate a stack before recommending it. Pass 2-8 tool slugs
+    and get back a compatibility matrix: which pairs are verified, which are
+    unknown, and which are known to conflict.
+
+    Ideal for always-on agents auditing dependency trees or before recommending
+    a multi-tool stack. Call check_health() afterward for maintenance status.
+
+    Args:
+        tools: Comma-separated tool slugs to check (e.g. "next-auth,prisma,stripe")
+    """
+    slugs = [s.strip().lower() for s in tools.split(",") if s.strip()][:8]
+    if len(slugs) < 2:
+        raise ToolError("Provide at least 2 comma-separated tool slugs to check compatibility.")
+
+    client = _get_client(ctx)
+    cache_key = f"compat:{'|'.join(sorted(slugs))}"
+    cached = _cache_get(cache_key, ttl=300.0)
+    if cached:
+        return cached
+
+    await ctx.report_progress(progress=0, total=1)
+
+    # Fetch compatible pairs for each tool in parallel
+    async def get_pairs(slug: str) -> dict:
+        try:
+            return await _api_get(client, f"/api/tools/{slug}/compatible", {"min_success_count": "1"})
+        except Exception:
+            return {}
+
+    results = await asyncio.gather(*[get_pairs(s) for s in slugs], return_exceptions=True)
+
+    # Build compatibility map: which pairs are verified
+    verified: list[tuple[str, str, int]] = []   # (a, b, count)
+    unknown: list[tuple[str, str]] = []
+
+    for i, (slug_a, data) in enumerate(zip(slugs, results)):
+        if isinstance(data, Exception) or not data:
+            continue
+        compatible_slugs = set()
+        for group in data.get("compatible", {}).values():
+            for tool in group:
+                compatible_slugs.add(tool.get("slug", ""))
+
+        for slug_b in slugs[i + 1:]:
+            if slug_b in compatible_slugs:
+                # Find the count
+                count = 0
+                for group in data.get("compatible", {}).values():
+                    for tool in group:
+                        if tool.get("slug") == slug_b:
+                            count = tool.get("success_count", 1)
+                verified.append((slug_a, slug_b, count))
+            else:
+                unknown.append((slug_a, slug_b))
+
+    await ctx.report_progress(progress=1, total=1)
+
+    lines = [f"Stack compatibility check: {', '.join(slugs)}", ""]
+
+    if verified:
+        lines.append("✅ Verified compatible pairs:")
+        for a, b, count in verified:
+            signals = f" ({count} integration report{'s' if count != 1 else ''})"
+            lines.append(f"  {a} + {b}{signals}")
+
+    if unknown:
+        lines.append("\n⚠️  Unknown compatibility (no data yet):")
+        for a, b in unknown:
+            lines.append(f"  {a} + {b}")
+
+    if not verified and not unknown:
+        lines.append("No compatibility data found for any pair.")
+
+    lines.append(f"\nTotal pairs checked: {len(verified) + len(unknown)} | Verified: {len(verified)} | Unknown: {len(unknown)}")
+    lines.append("To improve this data, call confirm_integration() after a successful integration.")
+
+    result = "\n".join(lines)
+    _cache_set(cache_key, result)
+    return result
 
 
 def main():
