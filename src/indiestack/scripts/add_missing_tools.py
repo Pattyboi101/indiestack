@@ -826,6 +826,86 @@ TOOLS = [
         "npm install react-hook-form",
         "code",
     ),
+    # Testing — E2E test framework -----------------------------------------------
+    (
+        "playwright",
+        "Playwright",
+        "Reliable end-to-end testing for modern web apps",
+        "Playwright is Microsoft's end-to-end testing framework for Node.js, Python, "
+        ".NET, and Java. Runs tests against Chromium, Firefox, and WebKit with a single "
+        "API. Auto-wait, tracing, screenshots, video recording, and a VSCode extension.",
+        "testing-tools",
+        "microsoft/playwright",
+        65000,
+        "https://playwright.dev",
+        "e2e,testing,browser-automation,headless",
+        "npm install @playwright/test",
+        "code",
+    ),
+    # Analytics — open-source product analytics ---------------------------------
+    (
+        "posthog",
+        "PostHog",
+        "The open-source product analytics platform",
+        "PostHog is the all-in-one open-source analytics platform: product analytics, "
+        "session replay, feature flags, A/B testing, and surveys. Self-host on your "
+        "own infrastructure or use PostHog Cloud. No vendor lock-in.",
+        "analytics-metrics",
+        "PostHog/posthog",
+        24000,
+        "https://posthog.com",
+        "analytics,product-analytics,feature-flags,self-hosted",
+        "pip install posthog",
+        "code",
+    ),
+    # Monitoring — error tracking -----------------------------------------------
+    (
+        "sentry",
+        "Sentry",
+        "Application monitoring for every developer",
+        "Sentry is the most widely used open-source error tracking and performance "
+        "monitoring platform. Catch exceptions, trace slow requests, and replay user "
+        "sessions. SDKs for Python, JavaScript, Go, Java, and 100+ more.",
+        "monitoring-uptime",
+        "getsentry/sentry",
+        39000,
+        "https://sentry.io",
+        "error-tracking,performance,monitoring,observability",
+        "pip install sentry-sdk",
+        "code",
+    ),
+    # Headless CMS — popular open-source ----------------------------------------
+    (
+        "strapi",
+        "Strapi",
+        "The leading open-source headless CMS",
+        "Strapi is the most popular open-source headless CMS. TypeScript-native, "
+        "customizable content types, REST and GraphQL APIs auto-generated, "
+        "and a rich plugin marketplace. Self-host on Node.js or use Strapi Cloud.",
+        "headless-cms",
+        "strapi/strapi",
+        63000,
+        "https://strapi.io",
+        "headless-cms,nodejs,graphql,self-hosted,typescript",
+        "npx create-strapi-app@latest my-project",
+        "code",
+    ),
+    # Background jobs — durable execution ----------------------------------------
+    (
+        "temporal",
+        "Temporal",
+        "Open source durable execution system",
+        "Temporal is a durable execution platform for running reliable long-running "
+        "workflows as code. Automatically handles retries, timeouts, and state persistence. "
+        "SDKs for Go, Java, TypeScript, Python, and .NET.",
+        "background-jobs",
+        "temporalio/temporal",
+        12000,
+        "https://temporal.io",
+        "workflow,durable-execution,distributed,reliability",
+        "brew install temporal",
+        "code",
+    ),
     # Publishing / Newsletters ---------------------------------------------------
     (
         "ghost",

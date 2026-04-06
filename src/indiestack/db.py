@@ -2861,6 +2861,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "microservices": "api",      # plural form — "microservices architecture", "microservices pattern"
     # SolidJS — "solid" alone commonly used ("solid alternative", "solid vs react")
     "solid": "frontend",         # SolidJS — fine-grained reactivity UI library
+    # Rich text editors / WYSIWYG — Tiptap, Quill, Slate.js, Lexical, ProseMirror, CodeMirror
+    "wysiwyg": "frontend",       # "wysiwyg editor" queries
+    "tiptap": "frontend",        # Tiptap — ProseMirror-based rich text editor for Vue/React
+    "lexical": "frontend",       # Lexical — Meta's extensible text editor framework
+    "codemirror": "frontend",    # CodeMirror — browser-based code editor widget
+    "monaco": "frontend",        # Monaco Editor — VS Code's editor (used in browser IDEs)
+    "prosemirror": "frontend",   # ProseMirror — toolkit for rich text editors (Tiptap base)
+    "quill": "frontend",         # Quill.js — popular open-source rich text editor
+    # CAPTCHA / bot protection — hCaptcha, reCAPTCHA, Cloudflare Turnstile, Arkose
+    "captcha": "security",       # "captcha widget", "captcha alternative" queries
+    "recaptcha": "security",     # Google reCAPTCHA queries
+    "hcaptcha": "security",      # hCaptcha — privacy-friendly reCAPTCHA alternative
+    "turnstile": "security",     # Cloudflare Turnstile — invisible bot protection
     # Client-side routing libraries (React Router, TanStack Router, Vue Router)
     "routing": "frontend",       # "routing library", "client-side routing", "file-based routing"
     "router": "frontend",        # "react router", "client router", "frontend router"

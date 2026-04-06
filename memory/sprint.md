@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twentieth pass)
+Last updated: 2026-04-06 (twenty-first pass)
 
 ## Status: Active
 
@@ -9,11 +9,34 @@ Last updated: 2026-04-06 (twentieth pass)
 - **MCP server**: v1.15.1 (PyPI) — 10,000+ installs, 23 tools, fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~519 entries for search routing (added 9 in twentieth pass)
+- **_CAT_SYNONYMS**: ~533 entries for search routing (added 14 in twenty-first pass)
 - **Catalog script**: `scripts/add_missing_tools.py` — 58 tools ready to insert (slug-safe)
+  - Note: actual count is 58 (53 pre-existing + 5 added in twenty-first pass); prior sprint count was inflated
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, twenty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 14 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **Rich text editors**: `"wysiwyg"`, `"tiptap"`, `"lexical"`, `"codemirror"`, `"monaco"`, `"prosemirror"`, `"quill"` → `"frontend"` — WYSIWYG and code-editor queries now route to Frontend Frameworks
+  - **CAPTCHA / bot protection**: `"captcha"`, `"recaptcha"`, `"hcaptcha"`, `"turnstile"` → `"security"` — bot protection tool queries now route to Security Tools
+- Note: sprint.md count was previously inflated (claimed 519 but actual was ~505 before this pass)
+
+### Catalog Script (Step 2)
+- Added 5 high-value tools to `scripts/add_missing_tools.py` (58 total, actual count):
+  - Playwright (testing-tools, 65k stars) — most popular cross-browser E2E testing framework
+  - PostHog (analytics-metrics, 24k stars) — open-source product analytics + feature flags
+  - Sentry (monitoring-uptime, 39k stars) — most popular error tracking + performance monitoring
+  - Strapi (headless-cms, 63k stars) — most popular open-source headless CMS
+  - Temporal (background-jobs, 12k stars) — durable execution for long-running workflows
+
+### Code Quality (Step 3)
+- Last commits changed only db.py and memory files — no route files to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to twenty-first pass; decisions.md current — no changes needed
 
 ## Completed This Session (2026-04-06, twentieth pass — autonomous improvement cycle)
 
