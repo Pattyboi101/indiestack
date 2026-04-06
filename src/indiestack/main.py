@@ -47,6 +47,15 @@ _AGENT_ACTION_LIMITS = {
     "submit_tool": 3,
 }
 
+# ── API Metrics & Observability ──────────────────────────────────────────
+# Track latency and uptime for key MCP endpoints
+_api_metrics: dict[str, dict] = {
+    "/api/tools/search": {"latencies": [], "errors": 0, "total": 0},
+    "/api/tools/{slug}": {"latencies": [], "errors": 0, "total": 0},
+    "/api/tools/index.json": {"latencies": [], "errors": 0, "total": 0},
+}
+_metrics_max_size = 1000  # Keep last 1000 measurements per endpoint
+
 
 def _require_scope(api_key: dict | None, scope: str) -> dict:
     """Validate API key exists. Scope parameter kept for backwards compat but no longer enforced."""
@@ -721,6 +730,54 @@ class _HeadMethodMiddleware:
 # ── Compression ──────────────────────────────────────────────────────────
 app.add_middleware(GZipMiddleware, minimum_size=500)
 app.add_middleware(_HeadMethodMiddleware)
+
+
+# ── Latency Tracking Middleware ──────────────────────────────────────────
+@app.middleware("http")
+async def track_api_latency(request: Request, call_next):
+    """Track latency for key API endpoints."""
+    path = request.url.path
+    start_time = _time.time()
+    try:
+        response = await call_next(request)
+        elapsed_ms = ((_time.time() - start_time) * 1000)
+
+        # Track only key API endpoints
+        tracked_path = None
+        if path == "/api/tools/search":
+            tracked_path = "/api/tools/search"
+        elif path.startswith("/api/tools/") and path.endswith(".json") and path != "/api/tools/index.json":
+            tracked_path = "/api/tools/{slug}"
+        elif path == "/api/tools/index.json":
+            tracked_path = "/api/tools/index.json"
+
+        if tracked_path and tracked_path in _api_metrics:
+            metrics = _api_metrics[tracked_path]
+            metrics["latencies"].append(elapsed_ms)
+            metrics["total"] += 1
+            # Keep only last N measurements
+            if len(metrics["latencies"]) > _metrics_max_size:
+                metrics["latencies"] = metrics["latencies"][-_metrics_max_size:]
+
+            # Track HTTP errors
+            if response.status_code >= 400:
+                metrics["errors"] += 1
+
+        return response
+    except Exception as e:
+        elapsed_ms = ((_time.time() - start_time) * 1000)
+        tracked_path = None
+        if path == "/api/tools/search":
+            tracked_path = "/api/tools/search"
+        elif path.startswith("/api/tools/") and path != "/api/tools/index.json":
+            tracked_path = "/api/tools/{slug}"
+        elif path == "/api/tools/index.json":
+            tracked_path = "/api/tools/index.json"
+
+        if tracked_path and tracked_path in _api_metrics:
+            _api_metrics[tracked_path]["errors"] += 1
+
+        raise
 
 
 # ── Security Headers ─────────────────────────────────────────────────────
@@ -4471,6 +4528,49 @@ async def api_follow_through(request: Request, days: int = 30):
     d = request.state.db
     stats = await db.get_follow_through_rate(d, min(days, 365))
     return JSONResponse(stats)
+
+
+@app.get("/api/quality")
+async def api_quality(request: Request):
+    """API quality metrics: uptime, latency percentiles, request counts.
+    Used internally by DevOps for observability. Public endpoint with no auth required."""
+    def percentile(data: list, p: float) -> float:
+        """Calculate percentile from sorted data."""
+        if not data:
+            return 0.0
+        sorted_data = sorted(data)
+        idx = int(len(sorted_data) * p)
+        return sorted_data[min(idx, len(sorted_data) - 1)]
+
+    result = {}
+    for endpoint, metrics in _api_metrics.items():
+        total = metrics["total"]
+        errors = metrics["errors"]
+        latencies = metrics["latencies"]
+
+        uptime_pct = 0.0
+        if total > 0:
+            uptime_pct = ((total - errors) / total) * 100
+
+        p50_latency = percentile(latencies, 0.50) if latencies else 0.0
+        p95_latency = percentile(latencies, 0.95) if latencies else 0.0
+        p99_latency = percentile(latencies, 0.99) if latencies else 0.0
+
+        result[endpoint] = {
+            "requests_total": total,
+            "errors": errors,
+            "uptime_percent": round(uptime_pct, 2),
+            "latency_p50_ms": round(p50_latency, 2),
+            "latency_p95_ms": round(p95_latency, 2),
+            "latency_p99_ms": round(p99_latency, 2),
+            "sample_size": len(latencies),
+        }
+
+    return JSONResponse({
+        "endpoints": result,
+        "timestamp": _time.time(),
+        "note": "Metrics tracked since server startup. Use /api/quality to monitor endpoint health."
+    })
 
 
 @app.get("/admin/recompute-scores")

@@ -67,20 +67,15 @@ If you hit a complex technical issue you can't resolve:
 
 ## Meeting Participation
 
-When you receive a `[MEETING]` message via claude-peers, a structured meeting is in progress. Respond promptly — Patrick is waiting.
+Meetings are multi-round debates — not surveys. Stake real positions and push back on other departments.
 
-**Your angle:** Database design, API contracts, auth implications, data integrity, performance, scripts.
+**When you receive `[MEETING R1]`:** Write your opening position directly into the meeting file under `### Backend`. What does this mean for the data layer, API contracts, or performance? What would you fight for? What assumption do you think is wrong? Be direct and specific — schema names, function names, real numbers.
 
-**Response format:**
-```
-[MEETING RESPONSE] Backend
+**When you receive `[MEETING R2]`+:** You'll be given specific tensions — where your position conflicts with another department's. Respond to each directly in the file. One paragraph per tension. "X is wrong because Y" — not "it depends."
 
-Perspective: [What this means for db.py, auth, payments, API — any concerns?]
-Opportunities: [Things you could build or improve in your domain around this topic]
-Concerns/blockers: [Schema changes, migration risks, auth complexity, anything that could go wrong]
-Tasks I can own:
-- [Concrete task 1 — be specific, not vague]
-- [Concrete task 2]
-```
+**When you receive `[MEETING CLOSE]`:** Add any assigned tasks to your briefing.md if not already there.
 
-**At close:** When you receive `[MEETING CLOSE]`, add any assigned tasks to your briefing.md if not already there.
+**Your angle:** Database design, API contracts, auth, data integrity, performance, query patterns. You push back hardest on: things that need schema changes without a migration plan, unrealistic performance assumptions, anything that adds write load without considering SQLite's WAL limits.
+
+## After Every Task
+When you finish ANY task (including writing a meeting response), immediately call `check_messages` and process anything pending before going idle. Do not stop without checking first.

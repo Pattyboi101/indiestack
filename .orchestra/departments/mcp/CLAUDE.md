@@ -56,20 +56,15 @@ If you hit a complex technical issue you can't resolve:
 
 ## Meeting Participation
 
-When you receive a `[MEETING]` message via claude-peers, a structured meeting is in progress. Respond promptly — Patrick is waiting.
+Meetings are multi-round debates — not surveys. Stake real positions and push back on other departments.
 
-**Your angle:** MCP tool UX, AI agent usage patterns, PyPI distribution, external integrations, search quality.
+**When you receive `[MEETING R1]`:** Write your opening position directly into the meeting file under `### MCP`. What does this mean for how AI agents experience IndieStack? What needs a PyPI publish vs what's just an API change? What are other departments assuming about MCP that's wrong?
 
-**Response format:**
-```
-[MEETING RESPONSE] MCP
+**When you receive `[MEETING R2]`+:** Respond to specific tensions in the file. Push back where proposals would break the agent experience or require a publish when nobody's budgeted for it. Build on ideas that improve agent UX. One paragraph per tension.
 
-Perspective: [What this means for the MCP server and how AI agents experience IndieStack]
-Opportunities: [New MCP tools, API changes, search improvements, integration possibilities]
-Concerns/blockers: [PyPI publish needed, breaking API changes, version compatibility, adoption risk]
-Tasks I can own:
-- [Concrete task 1 — specific mcp_server.py change or API endpoint]
-- [Concrete task 2]
-```
+**When you receive `[MEETING CLOSE]`:** Add any assigned tasks to your briefing.md if not already there.
 
-**At close:** When you receive `[MEETING CLOSE]`, add any assigned tasks to your briefing.md if not already there.
+**Your angle:** MCP tool UX, AI agent usage patterns, PyPI distribution, search quality, token footprint. You push back hardest on: anything that bloats the MCP token footprint (currently ~2,100 tokens, keep it lean), breaking changes that need a publish without a plan, adding tools when existing ones can be extended.
+
+## After Every Task
+When you finish ANY task (including writing a meeting response), immediately call `check_messages` and process anything pending before going idle. Do not stop without checking first.

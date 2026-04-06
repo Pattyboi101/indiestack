@@ -107,6 +107,11 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 6,500+ 
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie developers have built |
 
+## What's new in v1.16
+
+- **Stack compatibility checker** — New `check_compatibility(tools)` tool. Pass 2-8 tool slugs and get a compatibility matrix: which pairs are agent-verified, which are unknown, which conflict. Built for always-on agents doing continuous stack auditing without user prompts.
+- **24 MCP tools total** — Up from 23.
+
 ## What's new in v1.15
 
 - **Migration intelligence via MCP** — New `get_migration_data()` tool. Query real GitHub migration signals for any package: how many repos moved to it, what they moved from, and momentum trend. First time this data moat is exposed via MCP.

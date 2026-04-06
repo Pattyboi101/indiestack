@@ -1,0 +1,19 @@
+repo,stars,score,language,dead_deps,alternatives,pr_template,share_url
+zone-eu/wildduck,2086,66,JavaScript,@fidm/x509 (dormant); @phc/pbkdf2 (dormant); @root/acme (dormant),undici -> Scalar; undici -> slack; undici -> Jitsu,"Hey! I found this while running a dependency health check on your project (it scored 66/100). @fidm/x509 appears to be unmaintained.
+
+If you find this useful, I built a free GitHub Action that checks dependency health on every PR automatically:
+
+```yaml
+- uses: Pattyboi101/stack-health-check@master
+```
+
+No signup needed. Full report: https://indiestack.ai/analyze/sYNUy_xZtW8",https://indiestack.ai/analyze/sYNUy_xZtW8
+GladysAssistant/Gladys,3039,68,JavaScript,apidoc (dormant); shx (dormant),,"Hey! I found this while running a dependency health check on your project (it scored 68/100). apidoc appears to be unmaintained.
+
+If you find this useful, I built a free GitHub Action that checks dependency health on every PR automatically:
+
+```yaml
+- uses: Pattyboi101/stack-health-check@master
+```
+
+No signup needed. Full report: https://indiestack.ai/analyze/Rfv_yToA4W4",https://indiestack.ai/analyze/Rfv_yToA4W4

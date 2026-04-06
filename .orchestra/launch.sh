@@ -13,6 +13,22 @@ SESSION="orchestra"
 MCP_CONFIG="$REPO_DIR/.orchestra/mcp-config.json"
 CLAUDE_FLAGS="--dangerously-skip-permissions --dangerously-load-development-channels server:claude-peers"
 
+# Ensure claude-peers broker is running before launching agents
+BROKER_PORT="${CLAUDE_PEERS_PORT:-7899}"
+if ! curl -sf "http://127.0.0.1:${BROKER_PORT}/" >/dev/null 2>&1; then
+  echo "  Starting claude-peers broker..."
+  cd "$HOME/claude-peers-mcp" && bun run broker.ts >> /tmp/claude-peers-broker.log 2>&1 &
+  sleep 2
+  if curl -sf "http://127.0.0.1:${BROKER_PORT}/" >/dev/null 2>&1; then
+    echo "  claude-peers broker started"
+  else
+    echo "  WARNING: claude-peers broker failed to start — peer messaging will not work"
+  fi
+  cd "$REPO_DIR"
+else
+  echo "  claude-peers broker already running"
+fi
+
 # Add MCP config for RAG if it exists
 if [ -f "$MCP_CONFIG" ]; then
   CLAUDE_FLAGS="$CLAUDE_FLAGS --mcp-config $MCP_CONFIG"
@@ -92,20 +108,32 @@ echo "  Switch:  Ctrl+B then window number"
 echo "  Detach:  Ctrl+B then D"
 echo ""
 
-# Wait for agents to start, then confirm the dev-channels dialog for all windows
-echo "  Waiting 8 seconds for agents to start..."
-sleep 8
+# Wait for the dev-channels dialog and confirm it — detect rather than guess timing
+confirm_dialog() {
+  local target="$1"
+  local max_wait=30
+  local elapsed=0
+  while [ $elapsed -lt $max_wait ]; do
+    if tmux capture-pane -t "$target" -p 2>/dev/null | grep -q "Enter to confirm"; then
+      tmux send-keys -t "$target" "Enter" 2>/dev/null
+      return 0
+    fi
+    sleep 1
+    elapsed=$((elapsed + 1))
+  done
+  # Dialog never appeared — send Enter anyway as fallback
+  tmux send-keys -t "$target" "Enter" 2>/dev/null
+}
 
-# Confirm --dangerously-load-development-channels dialog (option 1 is pre-selected, just hit Enter)
-echo "  Confirming dev-channels dialog..."
+echo "  Waiting for dev-channels dialogs..."
 if [ "$LAUNCH_CEO" = true ]; then
-  tmux send-keys -t "$SESSION:ceo" "Enter"
-  sleep 0.5
+  confirm_dialog "$SESSION:ceo" &
 fi
 for dept in "${DEPT_ORDER[@]}"; do
-  tmux send-keys -t "$SESSION:$dept" "Enter"
-  sleep 0.5
+  confirm_dialog "$SESSION:$dept" &
 done
+wait
+echo "  All dialogs confirmed."
 
 echo "  Waiting 5 more seconds for agents to load..."
 sleep 5

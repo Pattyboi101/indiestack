@@ -1,6 +1,6 @@
 # IndieStack Agent Instructions
 
-The discovery layer between AI coding agents and 8,000+ developer tools.
+The discovery layer between AI coding agents and 6,500+ developer tools.
 Python 3 / FastAPI / SQLite / Fly.io.
 
 ## Project Structure
@@ -25,10 +25,9 @@ Python 3 / FastAPI / SQLite / Fly.io.
 - Check `.claude/rules/gotchas.md` for past mistakes before editing
 
 ## Current State (Apr 2026)
-- 8,197 approved tools across 40 categories
+- 6,500+ approved tools across 25+ categories
 - Multi-category system via tool_categories junction table
-- MCP server v1.13.0 on PyPI, 10,000+ installs
-- 60 users, Maker Pro at $49/mo (Stripe integration live)
-- Search quality: 10/10 test queries passing
+- MCP server v1.15.1 on PyPI, 10,000+ installs
+- Maker Pro at $19/mo (Stripe integration live)
 - Orchestra: CEO (Opus) + Manager (Sonnet) + 5 dept agents in tmux
 - See memory files in `~/.claude/projects/-home-patty-indiestack/memory/`
