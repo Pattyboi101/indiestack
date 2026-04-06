@@ -1248,17 +1248,14 @@ async def tool_trust(request: Request):
         limit, min_citations = 20, 1
 
     if tool_slug:
-        # Single tool lookup
+        # Single tool lookup — subquery agent_actions separately to avoid cross-join inflation
         c = await d.execute(
             """SELECT t.slug, t.name, t.description,
-                      COUNT(DISTINCT ac.id) as citation_count,
-                      SUM(CASE WHEN aa.success = 1 THEN 1 ELSE 0 END) as success_count,
-                      COUNT(DISTINCT aa.id) as outcome_count
+                      (SELECT COUNT(*) FROM agent_citations ac WHERE ac.tool_id = t.id) as citation_count,
+                      (SELECT COUNT(*) FROM agent_actions aa WHERE aa.tool_slug = t.slug AND aa.success = 1) as success_count,
+                      (SELECT COUNT(*) FROM agent_actions aa WHERE aa.tool_slug = t.slug) as outcome_count
                FROM tools t
-               LEFT JOIN agent_citations ac ON ac.tool_id = t.id
-               LEFT JOIN agent_actions aa ON aa.tool_slug = t.slug
-               WHERE t.slug = ? AND t.status = 'approved'
-               GROUP BY t.id""",
+               WHERE t.slug = ? AND t.status = 'approved'""",
             (tool_slug,)
         )
         row = await c.fetchone()
@@ -1271,18 +1268,18 @@ async def tool_trust(request: Request):
         )
         return JSONResponse({"tool": result})
 
-    # Leaderboard mode
+    # Leaderboard mode — subquery each aggregate to avoid cross-join inflation
     c = await d.execute(
-        """SELECT t.slug, t.name,
-                  COUNT(DISTINCT ac.id) as citation_count,
-                  SUM(CASE WHEN aa.success = 1 THEN 1 ELSE 0 END) as success_count,
-                  COUNT(DISTINCT aa.id) as outcome_count
-           FROM tools t
-           JOIN agent_citations ac ON ac.tool_id = t.id
-           LEFT JOIN agent_actions aa ON aa.tool_slug = t.slug
-           WHERE t.status = 'approved'
-           GROUP BY t.id
-           HAVING citation_count >= ?
+        """SELECT slug, name, citation_count, success_count, outcome_count
+           FROM (
+               SELECT t.slug, t.name,
+                      (SELECT COUNT(*) FROM agent_citations ac WHERE ac.tool_id = t.id) as citation_count,
+                      (SELECT COUNT(*) FROM agent_actions aa WHERE aa.tool_slug = t.slug AND aa.success = 1) as success_count,
+                      (SELECT COUNT(*) FROM agent_actions aa WHERE aa.tool_slug = t.slug) as outcome_count
+               FROM tools t
+               WHERE t.status = 'approved'
+           )
+           WHERE citation_count >= ?
            ORDER BY citation_count DESC
            LIMIT ?""",
         (min_citations, limit)
