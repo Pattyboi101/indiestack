@@ -664,6 +664,89 @@ TOOLS = [
         "curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash",
         "code",
     ),
+    # Meta-frameworks — additional -----------------------------------------------
+    (
+        "remix",
+        "Remix",
+        "Full stack web framework built on web standards",
+        "Remix is a full-stack React framework that leverages web fundamentals: "
+        "browser forms, HTTP caching, and progressive enhancement. "
+        "Nested routing, server-side rendering, and streaming out of the box. "
+        "Owned by Shopify, used in production at major companies.",
+        "frontend-frameworks",
+        "remix-run/remix",
+        32000,
+        "https://remix.run",
+        "react,ssr,fullstack,routing",
+        "npx create-remix@latest",
+        "code",
+    ),
+    (
+        "solidjs",
+        "SolidJS",
+        "Simple and performant reactivity for building user interfaces",
+        "SolidJS is a declarative JavaScript library for building UIs. "
+        "Uses fine-grained reactivity — no virtual DOM, no diffing. "
+        "Consistently benchmarks faster than React and Vue. "
+        "Solid Start is the full-stack meta-framework.",
+        "frontend-frameworks",
+        "solidjs/solid",
+        32000,
+        "https://solidjs.com",
+        "javascript,reactive,performance,signals",
+        "npx degit solidjs/templates/js my-app",
+        "code",
+    ),
+    # Authentication — SaaS providers -------------------------------------------
+    (
+        "clerk",
+        "Clerk",
+        "The most comprehensive User Management Platform",
+        "Clerk provides complete user management: sign up, sign in, MFA, "
+        "magic links, OAuth, and organization management. "
+        "Pre-built React components, Next.js App Router support, "
+        "and a beautiful hosted UI. Free tier for up to 10,000 MAUs.",
+        "authentication",
+        "clerkinc/clerk-js",
+        5000,
+        "https://clerk.com",
+        "auth,nextjs,react,oauth,mfa",
+        "npm install @clerk/nextjs",
+        "saas",
+    ),
+    # Scheduling — open source --------------------------------------------------
+    (
+        "calcom",
+        "Cal.com",
+        "Scheduling infrastructure for absolutely everyone",
+        "Cal.com is an open-source Calendly alternative with full self-hosting "
+        "support. API-first design, embeddable scheduling widgets, team bookings, "
+        "and 100+ integrations. Free for individuals, paid for teams.",
+        "scheduling-booking",
+        "calcom/cal.com",
+        33000,
+        "https://cal.com",
+        "scheduling,booking,open-source,self-hosted",
+        "npx create-turbo@latest -e with-tailwind",
+        "code",
+    ),
+    # Notifications — multi-channel ---------------------------------------------
+    (
+        "novu",
+        "Novu",
+        "The open-source notification infrastructure for developers",
+        "Novu is an open-source notification platform that unifies in-app, "
+        "email, SMS, push, and chat notifications behind a single API. "
+        "Pre-built notification center component, workflow editor, "
+        "and subscriber management. Self-host or use cloud.",
+        "notifications",
+        "novuhq/novu",
+        36000,
+        "https://novu.co",
+        "notifications,email,sms,push,in-app",
+        "npm install @novu/node",
+        "code",
+    ),
     # Workflow automation --------------------------------------------------------
     (
         "n8n",

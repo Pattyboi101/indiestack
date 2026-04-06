@@ -700,6 +700,7 @@ NEED_MAPPINGS = {
     "search": {"category": "search-engine", "terms": ["full-text search", "vector search", "search index", "search API", "semantic search", "fuzzy search", "typo-tolerant"], "competitors": ["Algolia", "Elasticsearch", "Typesense", "Meilisearch"], "title": "Search Engines", "description": "Add fast, typo-tolerant full-text and semantic search to your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f50d"},
     "queue": {"category": "message-queue", "terms": ["message queue", "message broker", "event streaming", "pubsub", "pub/sub", "kafka", "rabbitmq", "async messaging"], "competitors": ["Apache Kafka", "RabbitMQ", "AWS SQS", "NATS", "Redis Streams"], "title": "Message Queues", "description": "Decouple services with message brokers, event streaming, and pub/sub.", "build_estimate": "1-2 weeks", "icon": "\U0001f4ec"},
     "media": {"category": "media-server", "terms": ["video streaming", "transcoding", "media server", "audio streaming", "HLS", "video encoding", "adaptive bitrate"], "competitors": ["Mux", "Cloudinary Video", "Plex", "Jellyfin", "Bunny Stream"], "title": "Media Servers", "description": "Stream, transcode, and manage video and audio content.", "build_estimate": "2-4 weeks", "icon": "\U0001f3ac"},
+    "maps": {"category": "maps-location", "terms": ["maps", "geolocation", "geocoding", "mapping", "location api", "map tiles", "leaflet", "mapbox"], "competitors": ["Google Maps", "Mapbox", "HERE Maps", "OpenLayers"], "title": "Maps & Location", "description": "Add maps, geolocation, geocoding, and location-based features to your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f5fa\ufe0f"},
 }
 
 TECH_KEYWORDS = {
@@ -2843,6 +2844,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sast": "security",               # static application security testing
     "dast": "security",               # dynamic application security testing
     "owasp": "security",              # OWASP tooling (OWASP ZAP, OWASP Top 10)
+    # Rate limiting — complement to "rate"→"api", "limiting"→"api", "limiter"→"api"
+    "limit": "api",              # "rate limit" → both "rate" and "limit" reinforce api routing
+    # Headless browser / browser automation
+    "browser": "testing",        # "headless browser", "browser automation" → Testing Tools
+    # Microservices — common query pattern for API/service layer tools
+    "microservice": "api",       # "microservice framework" → API Tools (Hono, Express, Fastify)
+    "microservices": "api",      # plural form — "microservices architecture", "microservices pattern"
 }
 
 _FTS_STOP_WORDS = {

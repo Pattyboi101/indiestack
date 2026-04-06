@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (seventeenth pass)
+Last updated: 2026-04-06 (eighteenth pass)
 
 ## Status: Active
 
@@ -8,12 +8,38 @@ Last updated: 2026-04-06 (seventeenth pass)
 
 - **MCP server**: v1.15.1 (PyPI) — 10,000+ installs, 23 tools, fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
-- **NEED_MAPPINGS**: 43 entries — 2 category slug bugs fixed (headless-cms, devops-infrastructure)
-- **_CAT_SYNONYMS**: ~495 entries for search routing (added 31 in seventeenth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 43 tools ready to insert (slug-safe)
+- **NEED_MAPPINGS**: 44 entries — added maps/geolocation entry in eighteenth pass
+- **_CAT_SYNONYMS**: ~499 entries for search routing (added 4 in eighteenth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 48 tools ready to insert (slug-safe)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, eighteenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added `"maps"` NEED_MAPPINGS entry (geolocation/mapping category was missing from Stack Builder)
+  - Covers: maps, geolocation, geocoding, mapping, location api, map tiles, leaflet, mapbox
+  - Competitors: Google Maps, Mapbox, HERE Maps, OpenLayers
+- Added 4 new _CAT_SYNONYMS entries for genuine gaps:
+  - `"limit"` → `"api"` — "rate limit" complement to existing rate/limiting/limiter mappings
+  - `"browser"` → `"testing"` — "headless browser", "browser automation" queries
+  - `"microservice"` / `"microservices"` → `"api"` — service architecture query routing
+- Total _CAT_SYNONYMS keys: ~499
+
+### Catalog Script (Step 2)
+- Added 5 high-value tools to `scripts/add_missing_tools.py` (48 total):
+  - Remix (frontend-frameworks, 32k stars) — full-stack React framework on web standards
+  - SolidJS (frontend-frameworks, 32k stars) — fine-grained reactivity, no virtual DOM
+  - Clerk (authentication, 5k stars) — most popular Next.js user management SaaS
+  - Cal.com (scheduling-booking, 33k stars) — open-source Calendly alternative
+  - Novu (notifications, 36k stars) — open-source multi-channel notification platform
+
+### Code Quality (Step 3)
+- Recent commits only changed db.py and memory files — no route files to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated with eighteenth pass; decisions.md is current — no changes needed
 
 ## Completed This Session (2026-04-06, seventeenth pass — autonomous improvement cycle)
 
