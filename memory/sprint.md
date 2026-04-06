@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (eighteenth pass)
+Last updated: 2026-04-06 (nineteenth pass)
 
 ## Status: Active
 
@@ -8,12 +8,36 @@ Last updated: 2026-04-06 (eighteenth pass)
 
 - **MCP server**: v1.15.1 (PyPI) — 10,000+ installs, 23 tools, fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
-- **NEED_MAPPINGS**: 44 entries — added maps/geolocation entry in eighteenth pass
-- **_CAT_SYNONYMS**: ~499 entries for search routing (added 4 in eighteenth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 48 tools ready to insert (slug-safe)
+- **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
+- **_CAT_SYNONYMS**: ~509 entries for search routing (added 9 in nineteenth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 53 tools ready to insert (slug-safe)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, nineteenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 9 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **SolidJS**: `"solid"` → `"frontend"` — "solid alternative", "solid vs react" queries
+  - **Client routing**: `"routing"`, `"router"` → `"frontend"` — React Router, TanStack Router
+  - **Rails/Laravel JS frameworks**: `"livewire"`, `"hotwire"`, `"stimulus"` → `"frontend"`
+  - **Drag and drop**: `"drag"`, `"dnd"` → `"frontend"` — dnd-kit, react-beautiful-dnd queries
+- Total _CAT_SYNONYMS keys: ~509
+
+### Catalog Script (Step 2)
+- Added 5 high-value tools to `scripts/add_missing_tools.py` (53 total):
+  - Ollama (ai-dev-tools, 120k stars) — most-starred local LLM runner
+  - PocketBase (database, 40k stars) — open-source SQLite BaaS in a single binary
+  - Turso (database, 8k stars) — distributed SQLite for the edge (libSQL)
+  - React Hook Form (frontend-frameworks, 40k stars) — dominant React form library
+  - Ghost (newsletters-content, 47k stars) — open-source publishing & newsletter platform
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py and memory files — no route files to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to nineteenth pass; decisions.md is current — no other changes needed
 
 ## Completed This Session (2026-04-06, eighteenth pass — autonomous improvement cycle)
 

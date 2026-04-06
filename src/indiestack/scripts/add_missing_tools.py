@@ -763,6 +763,85 @@ TOOLS = [
         "npx n8n",
         "code",
     ),
+    # AI — local LLM runner -----------------------------------------------------
+    (
+        "ollama",
+        "Ollama",
+        "Get up and running with large language models locally",
+        "Ollama makes it easy to run open-source LLMs (Llama 3, Mistral, Gemma, Phi) "
+        "locally on macOS, Linux, or Windows. REST API compatible with OpenAI's format. "
+        "One-command install, no GPU required for smaller models.",
+        "ai-dev-tools",
+        "ollama/ollama",
+        120000,
+        "https://ollama.com",
+        "llm,local,self-hosted,openai-compatible",
+        "curl -fsSL https://ollama.com/install.sh | sh",
+        "code",
+    ),
+    # Database — SQLite BaaS / local-first ----------------------------------------
+    (
+        "pocketbase",
+        "PocketBase",
+        "Open Source backend in 1 file",
+        "PocketBase is an open-source backend consisting of a single executable — "
+        "embedded SQLite, realtime subscriptions, auth, file storage, and an admin UI. "
+        "Zero infrastructure overhead. Ship a full backend in minutes.",
+        "database",
+        "pocketbase/pocketbase",
+        40000,
+        "https://pocketbase.io",
+        "sqlite,baas,self-hosted,realtime,auth",
+        "# Download binary: https://pocketbase.io/docs/",
+        "code",
+    ),
+    (
+        "turso",
+        "Turso",
+        "SQLite for Production — distributed, fast, and cheap",
+        "Turso is a distributed SQLite database built on libSQL. Deploy databases "
+        "close to your users in 35+ regions. Free tier with 500 databases. "
+        "Edge-compatible with Cloudflare Workers, Vercel Edge, and Fly.io.",
+        "database",
+        "tursodatabase/libsql",
+        8000,
+        "https://turso.tech",
+        "sqlite,edge,distributed,serverless",
+        "npm install @libsql/client",
+        "code",
+    ),
+    # Frontend — form handling ---------------------------------------------------
+    (
+        "react-hook-form",
+        "React Hook Form",
+        "Performant, flexible and extensible forms with easy-to-use validation",
+        "React Hook Form is the dominant form library for React. Minimal re-renders, "
+        "small bundle size, easy integration with Zod/Yup validation, and DevTools. "
+        "Adopted by Vercel, Prisma, and thousands of production apps.",
+        "frontend-frameworks",
+        "react-hook-form/react-hook-form",
+        40000,
+        "https://react-hook-form.com",
+        "forms,react,validation,hooks",
+        "npm install react-hook-form",
+        "code",
+    ),
+    # Publishing / Newsletters ---------------------------------------------------
+    (
+        "ghost",
+        "Ghost",
+        "The world's most popular open source headless CMS for content creators",
+        "Ghost is an open-source publishing platform built for professional creators. "
+        "Newsletter sending, membership & subscriptions, SEO, and a clean writing editor. "
+        "Self-host on Node.js or use Ghost(Pro) managed hosting.",
+        "newsletters-content",
+        "TryGhost/Ghost",
+        47000,
+        "https://ghost.org",
+        "publishing,newsletter,cms,membership,self-hosted",
+        "npm install ghost-cli -g && ghost install",
+        "code",
+    ),
 ]
 
 

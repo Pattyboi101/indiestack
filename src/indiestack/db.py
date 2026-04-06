@@ -2851,6 +2851,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Microservices — common query pattern for API/service layer tools
     "microservice": "api",       # "microservice framework" → API Tools (Hono, Express, Fastify)
     "microservices": "api",      # plural form — "microservices architecture", "microservices pattern"
+    # SolidJS — "solid" alone commonly used ("solid alternative", "solid vs react")
+    "solid": "frontend",         # SolidJS — fine-grained reactivity UI library
+    # Client-side routing libraries (React Router, TanStack Router, Vue Router)
+    "routing": "frontend",       # "routing library", "client-side routing", "file-based routing"
+    "router": "frontend",        # "react router", "client router", "frontend router"
+    # Rails/Laravel server-rendered JS frameworks
+    "livewire": "frontend",      # Laravel Livewire — reactive PHP components
+    "hotwire": "frontend",       # Rails Hotwire — HTML-over-the-wire framework
+    "stimulus": "frontend",      # Stimulus.js — modest JS framework (Hotwire)
+    # Drag and drop libraries (dnd-kit, react-beautiful-dnd, Sortable.js)
+    "drag": "frontend",          # "drag and drop", "drag to reorder" → Frontend Frameworks
+    "dnd": "frontend",           # dnd-kit abbreviation — common in React drag-and-drop queries
 }
 
 _FTS_STOP_WORDS = {
