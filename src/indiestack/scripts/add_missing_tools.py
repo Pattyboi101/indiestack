@@ -1359,6 +1359,121 @@ TOOLS = [
         "npm install fastify",
         "code",
     ),
+    # Background jobs / workflow orchestration — durable execution --------------------
+    (
+        "temporal",
+        "Temporal",
+        "Durable execution system for resilient applications",
+        "Temporal is an open-source durable workflow execution engine. Write business "
+        "logic as code — Temporal ensures it runs to completion despite failures, "
+        "retries, or server restarts. Runs long-lived processes with built-in "
+        "versioning, signals, queries, and child workflows. Used at Stripe, Snap, Datadog.",
+        "background-jobs",
+        "temporalio/temporal",
+        12000,
+        "https://temporal.io",
+        "workflow,orchestration,durable-execution,microservices,saga",
+        "brew install temporal",
+        "code",
+    ),
+    (
+        "inngest",
+        "Inngest",
+        "The durable execution engine for modern serverless stacks",
+        "Inngest lets you write reliable, event-driven background jobs in your existing "
+        "codebase. Zero infrastructure — works with Next.js, Remix, SvelteKit, and any "
+        "framework. Automatic retries, fan-out, scheduled functions, and observability "
+        "built in. No queue config required.",
+        "background-jobs",
+        "inngest/inngest",
+        9000,
+        "https://inngest.com",
+        "background-jobs,serverless,event-driven,nextjs,workflow",
+        "npm install inngest",
+        "code",
+    ),
+    (
+        "trigger-dev",
+        "Trigger.dev",
+        "Open-source background jobs with no timeouts",
+        "Trigger.dev is an open-source background job framework for TypeScript. "
+        "Write long-running jobs that survive Vercel/Cloudflare function timeouts. "
+        "SDK-first design, real-time run logs, retries, concurrency, and queue management. "
+        "Self-host or use the managed cloud.",
+        "background-jobs",
+        "triggerdotdev/trigger.dev",
+        10000,
+        "https://trigger.dev",
+        "background-jobs,typescript,nextjs,serverless,long-running",
+        "npm install @trigger.dev/sdk",
+        "code",
+    ),
+    # API / Backend — Rust web frameworks -------------------------------------------
+    (
+        "axum",
+        "Axum",
+        "Ergonomic and modular web framework built with Tokio and Tower",
+        "Axum is a modular Rust web framework from the Tokio team. Built on Tower "
+        "middleware — composable, macro-free handlers with full async support. "
+        "Ergonomic routing, extractors, and WebSocket support. The fastest-growing "
+        "Rust web framework with excellent ecosystem compatibility.",
+        "api-tools",
+        "tokio-rs/axum",
+        20000,
+        "https://docs.rs/axum",
+        "rust,async,tokio,http,web-framework",
+        "cargo add axum tokio",
+        "code",
+    ),
+    (
+        "echo-go",
+        "Echo",
+        "High performance, minimalist Go web framework",
+        "Echo is a high-performance, extensible Go web framework. Optimised HTTP router "
+        "with zero dynamic memory allocation. Middleware groups, data binding, automatic "
+        "TLS, and HTTP/2 support. The second most popular Go framework after Gin.",
+        "api-tools",
+        "labstack/echo",
+        30000,
+        "https://echo.labstack.com",
+        "go,golang,http,routing,fast",
+        "go get github.com/labstack/echo/v4",
+        "code",
+    ),
+    # Caching — Redis fork / alternative --------------------------------------------
+    (
+        "dragonfly",
+        "Dragonfly",
+        "Redis-compatible in-memory data store — 25× faster than Redis",
+        "Dragonfly is a modern in-memory data store fully compatible with Redis and "
+        "Memcached APIs. Uses a novel multi-threaded architecture that delivers "
+        "25× more throughput on a single instance. Drop-in Redis replacement "
+        "with no code changes. Open-source with a managed cloud tier.",
+        "caching",
+        "dragonflydb/dragonfly",
+        26000,
+        "https://dragonflydb.io",
+        "redis,caching,in-memory,performance,drop-in",
+        "docker run --ulimit memlock=-1 ghcr.io/dragonflydb/dragonfly",
+        "code",
+    ),
+    # Database — data transformation / ETL ------------------------------------------
+    (
+        "dbt",
+        "dbt (data build tool)",
+        "Transform data in your warehouse using SQL",
+        "dbt (data build tool) enables analytics engineers to transform raw data in "
+        "their warehouse using SQL SELECT statements. Version-controlled, tested, "
+        "documented data models. The dominant tool in the modern data stack "
+        "(Airflow/Fivetran → dbt → BI). dbt Core is open-source; dbt Cloud is managed.",
+        "database",
+        "dbt-labs/dbt-core",
+        9000,
+        "https://getdbt.com",
+        "sql,data-transformation,analytics,warehouse,etl",
+        "pip install dbt-core",
+        "code",
+    ),
 ]
 
 

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twenty-sixth pass)
+Last updated: 2026-04-06 (twenty-seventh pass)
 
 ## Status: Active
 
@@ -9,12 +9,43 @@ Last updated: 2026-04-06 (twenty-sixth pass)
 - **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 576 entries for search routing (added 17 in twenty-sixth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 86 tools ready to insert (slug-safe)
-  - 10 tools added in twenty-sixth pass (LlamaIndex, LiteLLM, CrewAI, Helm, ArgoCD, Dagster, Prefect, gRPC, Fastify + FluxCD synonym)
+- **_CAT_SYNONYMS**: 593 entries for search routing (added 30 in twenty-seventh pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 93 tools ready to insert (slug-safe)
+  - 7 tools added in twenty-seventh pass (Temporal, Inngest, Trigger.dev, Axum, Echo, Dragonfly, dbt)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, twenty-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 41 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **Language routing**: `"python"`, `"go"`, `"golang"`, `"rust"` → `"api"` — route generic language queries to api-tools where indie frameworks live
+  - **Go frameworks**: `"actix"`, `"echo"`, `"chi"`, `"fiber"` → `"api"` — named Rust/Go frameworks missing from routing
+  - **Other languages**: `"ruby"`, `"java"`, `"spring"`, `"php"`, `"slim"` → `"api"` — common "[language] framework" query patterns
+  - **Env/secrets**: `"env"`, `"environment"`, `"dotenv"` → `"security"` — environment variable management queries → Security Tools (Infisical, Doppler)
+  - **ETL/pipelines**: `"etl"`, `"elt"`, `"pipeline"`, `"orchestration"`, `"dbt"`, `"airbyte"` → `"background"` — data pipeline queries
+  - **Edge/serverless**: `"edge"`, `"lambda"`, `"workers"` → `"devops"` — edge function/serverless compute queries
+  - **JavaScript**: `"javascript"`, `"js"` → `"frontend"` — generic JS library/framework queries
+  - **Named tools**: `"temporal"`, `"inngest"`, `"trigger"` → `"background"` — workflow tools in DB but unrouted
+- Running total: 593 entries (563 + 30)
+
+### Catalog Script (Step 2)
+- Added 7 new tools to `scripts/add_missing_tools.py` (93 total):
+  - Temporal (background-jobs, 12k★) — durable execution engine for resilient workflows
+  - Inngest (background-jobs, 9k★) — event-driven background jobs for serverless stacks
+  - Trigger.dev (background-jobs, 10k★) — open-source TypeScript background jobs (no timeouts)
+  - Axum (api-tools, 20k★) — ergonomic Rust web framework from the Tokio team
+  - Echo (api-tools, 30k★) — high-performance Go web framework (2nd after Gin)
+  - Dragonfly (caching, 26k★) — Redis-compatible, 25× faster single-instance throughput
+  - dbt (database, 9k★) — SQL-based data transformation (dominant in modern data stack)
+
+### Code Quality (Step 3)
+- Audited `check_compatibility` in mcp_server.py: slugs normalized with `.strip().lower()`, capped at 8, no injection risks. Clean.
+- No route files changed in last 5 commits — no html.escape() or hex-color gaps to fix.
+
+### R&D Docs (Step 4)
+- sprint.md updated to twenty-seventh pass
 
 ## Completed This Session (2026-04-06, twenty-sixth pass — autonomous improvement cycle)
 

@@ -2986,6 +2986,43 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API protocol — gRPC / Protobuf
     "grpc": "api",                   # gRPC — high-performance RPC framework
     "protobuf": "api",               # Protocol Buffers — binary serialization by Google
+    # Programming language routing — "python web framework", "go http framework" etc.
+    # These route generic language queries to the category where indie frameworks live.
+    "python": "api",           # Python framework queries → api-tools (FastAPI, Django, Flask)
+    "go": "api",               # Go HTTP framework queries → api-tools (Gin, Fiber, Echo)
+    "golang": "api",           # explicit form — "golang web framework"
+    "rust": "api",             # Rust web framework queries → api-tools (Axum, Actix-web)
+    "actix": "api",            # Actix-web — most popular Rust HTTP framework
+    "echo": "api",             # Echo — fast Go web framework (2nd after Gin)
+    "chi": "api",              # Chi — lightweight Go HTTP router
+    "fiber": "api",            # Fiber — Express-inspired Go web framework
+    "ruby": "api",             # Ruby framework queries → api-tools (Rails, Sinatra, Hanami)
+    "java": "api",             # Java framework queries → api-tools (Spring Boot alternatives)
+    "spring": "api",           # Spring Boot — in _FRAMEWORK_QUERY_TERMS but missing here
+    "php": "api",              # PHP framework queries (Laravel, Slim, Lumen)
+    "slim": "api",             # Slim — PHP micro-framework
+    # Environment / secrets management
+    "env": "security",         # "env management", "env secrets", ".env variables" → Security Tools
+    "environment": "security", # "environment variables", "environment config" → secrets management
+    "dotenv": "security",      # dotenv — env variable loading → Security Tools (Infisical, Doppler)
+    # Data pipeline / ETL
+    "etl": "background",       # ETL pipeline tools → background-jobs (Dagster, Prefect, Airflow)
+    "elt": "background",       # ELT — modern variant of ETL (dbt, Airbyte pattern)
+    "pipeline": "background",  # "data pipeline" → background-jobs orchestration
+    "orchestration": "background",  # "workflow orchestration", "data orchestration"
+    "dbt": "background",       # dbt (data build tool) — SQL-based data transformation
+    "airbyte": "background",   # Airbyte — open-source ELT data integration platform
+    # Edge functions / serverless compute
+    "edge": "devops",          # "edge function", "edge computing" → devops-infrastructure
+    "lambda": "devops",        # "AWS Lambda alternative", "lambda function" → devops
+    "workers": "devops",       # "Cloudflare Workers", "edge workers" → devops
+    # JavaScript / TypeScript generic language queries
+    "javascript": "frontend",  # "javascript framework", "js library" → frontend-frameworks
+    "js": "frontend",          # abbreviation — "js bundler", "js state management"
+    # Temporal / workflow tools — named tools for routing "[tool] alternative" queries
+    "temporal": "background",  # Temporal.io — durable workflow execution engine
+    "inngest": "background",   # Inngest — event-driven background jobs for Next.js/Node
+    "trigger": "background",   # Trigger.dev — open-source background jobs with SDK
 }
 
 _FTS_STOP_WORDS = {
