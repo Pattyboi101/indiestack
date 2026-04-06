@@ -1571,6 +1571,102 @@ TOOLS = [
         "npm install nodemailer",
         "code",
     ),
+    # Frontend — Routing libraries -------------------------------------------------
+    (
+        "react-router",
+        "React Router",
+        "Declarative routing for React — the most popular React router",
+        "React Router is the standard routing library for React applications. "
+        "Version 6+ brings nested routes, data loaders, actions, and form handling. "
+        "React Router v7 merges Remix into the core, enabling full-stack routing "
+        "with SSR, streaming, and server actions.",
+        "frontend-frameworks",
+        "remix-run/react-router",
+        52000,
+        "https://reactrouter.com",
+        "routing,react,spa,fullstack",
+        "npm install react-router",
+        "code",
+    ),
+    (
+        "tanstack-router",
+        "TanStack Router",
+        "Type-safe routing for React with first-class search params",
+        "TanStack Router is a fully type-safe React router with URL-based state "
+        "management, nested layouts, suspense-first data loading, and first-class "
+        "search param serialization. Works with Vite and framework-agnostic.",
+        "frontend-frameworks",
+        "TanStack/router",
+        9000,
+        "https://tanstack.com/router",
+        "routing,react,type-safe,search-params",
+        "npm install @tanstack/react-router",
+        "code",
+    ),
+    # Frontend — State machines -----------------------------------------------------
+    (
+        "xstate",
+        "XState",
+        "State machines and statecharts for the modern web",
+        "XState is a state management and orchestration solution for JavaScript and "
+        "TypeScript. Build complex async workflows, actor-based systems, and UI logic "
+        "with statecharts. Works with React, Vue, Svelte, and Node.js.",
+        "frontend-frameworks",
+        "statelyai/xstate",
+        26000,
+        "https://xstate.js.org",
+        "state-management,state-machine,statecharts,react,vue",
+        "npm install xstate",
+        "code",
+    ),
+    # Frontend — Vue state management -----------------------------------------------
+    (
+        "pinia",
+        "Pinia",
+        "The intuitive, type-safe store for Vue",
+        "Pinia is the official state management library for Vue 3. Lightweight, "
+        "devtools-friendly, and fully type-safe with Composition API. Replaces "
+        "Vuex — simpler API, no mutations, modular stores, and SSR support.",
+        "frontend-frameworks",
+        "vuejs/pinia",
+        13000,
+        "https://pinia.vuejs.org",
+        "state-management,vue,vuex-alternative,composition-api",
+        "npm install pinia",
+        "code",
+    ),
+    # Documentation — platforms ----------------------------------------------------
+    (
+        "mintlify",
+        "Mintlify",
+        "Beautiful documentation that converts — built for developer tools",
+        "Mintlify generates beautiful, AI-powered documentation sites from your "
+        "MDX files and OpenAPI specs. Built-in search, changelogs, API playground, "
+        "and analytics. Used by Anthropic, Resend, Trigger.dev, and 1,000+ teams.",
+        "documentation",
+        "mintlify/mintlify",
+        4000,
+        "https://mintlify.com",
+        "docs,api-docs,mdx,openapi,developer-experience",
+        "npm install -g mintlify",
+        "saas",
+    ),
+    # AI agent frameworks -----------------------------------------------------------
+    (
+        "mastra",
+        "Mastra",
+        "TypeScript AI agent framework — build, test, and deploy agents",
+        "Mastra is an opinionated TypeScript framework for building AI agents and "
+        "workflows. Built-in memory, tool calling, RAG pipelines, evals, and "
+        "deployment. Works with any LLM provider via a unified API.",
+        "ai-automation",
+        "mastra-ai/mastra",
+        9000,
+        "https://mastra.ai",
+        "ai,agent,typescript,workflows,rag",
+        "npm install @mastra/core",
+        "code",
+    ),
     # Monitoring — session replay / full-stack observability -----------------------
     (
         "highlight",

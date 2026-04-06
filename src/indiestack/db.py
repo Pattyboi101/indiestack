@@ -3062,6 +3062,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "outlines": "ai",               # Outlines — guided text generation (structured sampling)
     "guardrails": "ai",             # Guardrails AI — LLM output validation and correction
     "mirascope": "ai",              # Mirascope — clean Python LLM abstractions
+    # Vue state management
+    "pinia": "frontend",            # Pinia — official Vue 3 state management library
+    # React hooks libraries ("react hooks library", "custom hooks", "useHooks")
+    "hooks": "frontend",            # React hooks / hooks libraries → Frontend Frameworks
+    # SaaS starters / boilerplates ("saas boilerplate", "saas starter kit")
+    "saas": "boilerplate",          # SaaS starter queries → Boilerplates category
+    # Micro-frontends architecture (module federation, single-spa, qiankun)
+    "microfrontend": "frontend",    # "micro-frontend framework" → Frontend Frameworks
+    "microfrontends": "frontend",   # plural form — module federation, single-spa queries
+    # Headless UI / accessibility component libraries
+    "headlessui": "frontend",       # Headless UI (Tailwind Labs) — unstyled accessible components
+    "aria": "frontend",             # React Aria (Adobe) — accessibility primitives
+    # Client-side data fetching / server state (beyond TanStack Query)
+    "swr": "frontend",              # SWR (Vercel) — stale-while-revalidate data fetching hook
+    # AI agent frameworks — additional tools growing in adoption
+    "mastra": "ai",                 # Mastra — TypeScript AI agent framework
+    "pydantic-ai": "ai",            # Pydantic AI — production-grade agent framework
+    "phidata": "ai",                # Phidata — multi-modal agent framework with memory
 }
 
 _FTS_STOP_WORDS = {

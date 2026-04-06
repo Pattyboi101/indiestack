@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (twenty-eighth pass)
+Last updated: 2026-04-06 (twenty-ninth pass)
 
 ## Status: Active
 
@@ -9,12 +9,41 @@ Last updated: 2026-04-06 (twenty-eighth pass)
 - **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 638 entries for search routing (added 45 in twenty-eighth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 101 tools ready to insert (slug-safe)
-  - 8 tools added in twenty-eighth pass (Mongoose, TypeORM, GORM, Kysely, Sequelize, Nodemailer, Highlight.io, dbt already present)
+- **_CAT_SYNONYMS**: 652 entries for search routing (added 14 in twenty-ninth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 106 tools ready to insert (slug-safe)
+  - 6 tools added in twenty-ninth pass (React Router, TanStack Router, XState, Pinia, Mintlify, Mastra)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-06, twenty-ninth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 14 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **Vue**: `"pinia"` → `"frontend"` — Vue's official state manager
+  - **React hooks**: `"hooks"` → `"frontend"` — react-use, useHooks-ts, custom hooks library queries
+  - **SaaS starters**: `"saas"` → `"boilerplate"` — "SaaS boilerplate", "SaaS starter kit" queries
+  - **Micro-frontends**: `"microfrontend"`, `"microfrontends"` → `"frontend"` — module federation queries
+  - **Accessibility**: `"headlessui"`, `"aria"` → `"frontend"` — Headless UI and React Aria queries
+  - **Data fetching**: `"swr"` → `"frontend"` — Vercel SWR stale-while-revalidate hook queries
+  - **AI agents**: `"mastra"`, `"pydantic-ai"`, `"phidata"` → `"ai"` — emerging agent frameworks
+- Running total: 652 entries (638 + 14)
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (106 total):
+  - React Router (frontend-frameworks, 52k★) — most popular React router
+  - TanStack Router (frontend-frameworks, 9k★) — type-safe routing with search params
+  - XState (frontend-frameworks, 26k★) — state machines and statecharts
+  - Pinia (frontend-frameworks, 13k★) — official Vue 3 state management
+  - Mintlify (documentation, 4k★) — beautiful docs platform
+  - Mastra (ai-automation, 9k★) — TypeScript AI agent framework
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py, memory files, and add_missing_tools.py — no route files to audit
+- No html.escape() gaps, no hardcoded hex colors, no stale stats found
+
+### R&D Docs (Step 4)
+- sprint.md updated to twenty-ninth pass
 
 ## Completed This Session (2026-04-06, twenty-eighth pass — autonomous improvement cycle)
 
