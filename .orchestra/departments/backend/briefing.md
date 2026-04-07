@@ -29,6 +29,10 @@ Use SSH file-upload pattern to apply on production, then update any dashboard qu
 - [x] Developer Tools category cleanup — ~500+ tools re-categorized across 15+ categories (fifth pass)
 - [x] Fixed 500 errors on /tool/* pages (analytics_wall_blurred None stats bug)
 
+## Meeting Task — 2026-04-07 (DSP Outreach Stress Test)
+- [ ] Fix log_search() to correctly tag source='mcp' vs source='api' — currently all MCP calls logged as 'api', making populations indistinguishable | By: Apr 10
+- [ ] Update data/gap-queries-2026-04.json: correct denominator is 2,662 API queries with 143 zero-result (5.4% gap rate) — NOT 189/3,268 | Priority: HIGH | By: Apr 9
+
 ## Meeting Task — 2026-04-07 (Future Models + Anthropic Pitch)
 - [x] Deploy mcp_sessions + mcp_query_outcomes schema migration (see meeting file for full schema) | Done Apr 7
 - [x] Wire session_id optional param into find_tools + get_tool_details API endpoints | Done Apr 7
