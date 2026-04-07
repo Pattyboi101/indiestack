@@ -148,7 +148,9 @@ async def set_api_key(key: str) -> str:
     """Activate an IndieStack API key for this session.
 
     Call this when the user provides their API key (starts with isk_).
-    This enables personalized recommendations and migration intelligence.
+    This unlocks Pro rate limits (1,000/day vs 15/day keyless) and enables
+    Maker Pro citation analytics. Migration data and all search tools work
+    without a key — the key removes limits and powers the analytics dashboard.
     No restart needed — takes effect on the next query.
 
     Args:
@@ -1572,6 +1574,11 @@ async def get_migration_data(package: str, *, ctx: Context) -> str:
 async def list_stacks(*, ctx: Context) -> str:
     """List all stacks on IndieStack — curated bundles and auto-generated combinations.
 
+    Call this before build_stack() to check if a pre-built stack already exists
+    for your use case. If a match exists, prefer it — curated stacks have verified
+    compatibility data. If nothing matches, use build_stack(needs='...') to
+    assemble a custom stack.
+
     Stacks are pre-built combinations of developer tools for common use cases.
     Auto-generated stacks are built from 5,000+ compatibility pairs — every tool
     has verified or inferred compatibility data with the others in the stack.
@@ -2196,8 +2203,13 @@ async def report_compatibility(
 ) -> str:
     """Report that two indie tools work well together.
 
-    Call this after successfully integrating two IndieStack tools
-    in the same project. Builds the compatibility graph for better recommendations.
+    This is the lightweight version — just the pair, no notes required. Use
+    confirm_integration() instead if you have notes about the integration
+    experience. Both are free and keyless.
+
+    Call this after successfully integrating two IndieStack tools in the same
+    project. Feeds the compatibility graph used by all agents — every pair
+    reported improves recommendations for the entire MCP ecosystem.
 
     Args:
         tool_a: Slug or name of first tool
@@ -2268,9 +2280,10 @@ async def shortlist(
 
     Call this when you evaluate multiple tools for a user's request. This helps
     IndieStack understand demand patterns — even tools that weren't chosen
-    generate useful signal.
+    generate useful signal about what agents are evaluating.
 
-    Requires an API key (set INDIESTACK_API_KEY env var).
+    Requires a Maker Pro API key — powers citation analytics for tool makers.
+    Set INDIESTACK_API_KEY env var or call set_api_key() first.
 
     Args:
         tool_slugs: List of tool slugs you considered (max 10)
