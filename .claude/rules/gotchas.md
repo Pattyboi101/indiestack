@@ -41,3 +41,9 @@
 - After fixing data on production (tags, categories, install commands), ALWAYS rebuild the FTS index: `INSERT INTO tools_fts(tools_fts) VALUES('rebuild')` + `PRAGMA wal_checkpoint(TRUNCATE)`. Otherwise the search API serves stale cached results until the next deploy.
 
 - `LIKE '%orm%'` substring matching is dangerously broad — "transform", "platform", "format", "performance", "information" all contain "orm". When finding tools by name pattern, use exact word matching: check `slug IN (...)` explicit list, or use `LIKE '%,orm,%'` tag matching (which requires "orm" as a standalone comma-delimited tag). Do NOT use `LOWER(name) LIKE '%orm%'` for categorization queries.
+
+- `_CAT_SYNONYMS` values are matched via `LOWER(c.name) LIKE ('%' || LOWER(val) || '%')`. The Developer Tools category name is "Developer Tools" — mapping to `"devtools"` will NEVER match. Always use `"developer"` (matches "Developer Tools"). Previously broken: dotenv, turborepo, nx, zod, yup, valibot, validation. Fixed Apr 10.
+
+- Adding a programming language name to `_FRAMEWORK_QUERY_TERMS` strips it from FTS queries — which breaks searches where that language IS the primary term. `"fastapi python api"` with "python" in `_FRAMEWORK_QUERY_TERMS` strips both "fastapi" AND "python", leaving only "api" which returns garbage. Only add runtime qualifiers that are NEVER the thing being searched for (e.g. "nodejs" is safe; "python", "rust", "java" are not). Fixed Apr 10.
+
+- SDK wrapper libraries (laravel-stripe-webhooks, stripe-serverless-webhook, etc.) have "stripe" in their NAME and thus get huge FTS boosts for "stripe alternative" queries, ranking above actual Stripe alternatives (Polar, Lemon Squeezy). Fix: mark wrapper tools `is_reference=1` AND cap `quality_score` at 40 so their engagement score stays low. Fixed Apr 10.
