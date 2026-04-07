@@ -205,6 +205,7 @@ from indiestack.routes import embed
 from indiestack.routes import launch_with_me
 from indiestack.routes import use_cases
 from indiestack.routes import why_list
+from indiestack.routes import sla
 from indiestack.routes import what_is
 from indiestack.routes import plugins
 from indiestack.routes import gaps
@@ -5009,6 +5010,7 @@ app.include_router(embed.router)
 app.include_router(launch_with_me.router)
 app.include_router(use_cases.router)
 app.include_router(why_list.router)
+app.include_router(sla.router)
 app.include_router(what_is.router)
 app.include_router(plugins.router)
 app.include_router(gaps.router)
