@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-07 (thirty-fifth pass)
+Last updated: 2026-04-07 (thirty-sixth pass)
 
 ## Status: Active
 
@@ -9,12 +9,36 @@ Last updated: 2026-04-07 (thirty-fifth pass)
 - **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 755 entries for search routing (added 12 in thirty-fifth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 133 tools ready to insert (slug-safe)
-  - 8 tools added in thirty-fifth pass (Unleash, Flagsmith, Docusaurus, Scalar, Knock, Jaeger, Zipkin, OpenTelemetry-JS)
+- **_CAT_SYNONYMS**: 776 entries for search routing (added 21 in thirty-sixth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 139 tools ready to insert (slug-safe)
+  - 6 tools added in thirty-sixth pass (Material UI, Mantine, Ant Design, Chakra UI, Langfuse, Recharts)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-07, thirty-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited NEED_MAPPINGS — all active categories covered; no new gaps
+- Added 21 new _CAT_SYNONYMS entries targeting genuine query gaps:
+  - **AI — chatbot/prompt/finetuning**: `"chatbot"`, `"prompt"`, `"prompting"`, `"finetuning"`, `"finetune"`, `"generative"`, `"genai"` → `"ai"`
+  - **AI observability**: `"langfuse"`, `"helicone"` → `"ai"` — LLM tracing/proxy tools
+  - **Maps**: `"geocoding"`, `"geospatial"` → `"maps"` — complement to "geo"→maps
+  - **Frontend component libs**: `"mui"`, `"material"`, `"mantine"`, `"chakra"` → `"frontend"` — major React UI libraries
+  - **DevOps**: `"mesh"` → `"devops"` — service mesh (Istio, Linkerd); `"nix"`, `"nixos"` → `"devops"` — reproducible builds
+- Running total: ~776 entries (755 + 21)
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (139 total):
+  - Material UI / MUI (frontend-frameworks, 93k★) — most popular React component library
+  - Mantine (frontend-frameworks, 26k★) — full-featured React components, 100+ comps, dark mode
+  - Ant Design (frontend-frameworks, 93k★) — enterprise React UI from Alibaba/Ant Group
+  - Chakra UI (frontend-frameworks, 37k★) — accessible React components, WAI-ARIA compliant
+  - Langfuse (ai-dev-tools, 8k★) — open-source LLM observability, evals, prompt management
+  - Recharts (analytics-metrics, 23k★) — composable charting library for React + D3
+
+### R&D Docs (Step 4)
+- sprint.md updated to thirty-sixth pass
 
 ## Completed This Session (2026-04-07, thirty-fifth pass — autonomous improvement cycle)
 

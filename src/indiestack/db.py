@@ -3218,6 +3218,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "multitenant": "authentication",   # "multitenant auth", "multitenant saas" → Authentication
     # Web scraping (verb form, e.g. "scrape a website")
     "scrape": "devtools",           # "scrape website", "scrape html" → Developer Tools
+    # AI — chatbots, prompt engineering, fine-tuning
+    "chatbot": "ai",                # "chatbot builder", "chatbot framework" → AI & Automation
+    "prompt": "ai",                 # "prompt template", "prompt management", "prompt engineering" → AI
+    "prompting": "ai",              # "chain-of-thought prompting", "few-shot prompting" → AI
+    "finetuning": "ai",             # "llm finetuning", "model finetuning" → AI & Automation
+    "finetune": "ai",               # "finetune llm", "finetune model" → AI & Automation
+    "generative": "ai",             # "generative AI", "generative model" → AI & Automation
+    "genai": "ai",                  # abbreviation for "generative AI" — growing query term
+    # AI observability — LLM tracing, evaluation, and proxy tools
+    "langfuse": "ai",               # Langfuse — open-source LLM observability and evaluation
+    "helicone": "ai",               # Helicone — LLM observability and proxy platform
+    # Maps — geospatial and geocoding queries
+    "geocoding": "maps",            # "geocoding API", "geocode address" → Maps & Location
+    "geospatial": "maps",           # "geospatial data", "geospatial analysis" → Maps & Location
+    # Frontend — popular React component libraries not yet mapped
+    "mui": "frontend",              # Material UI (MUI) — most popular React UI component library
+    "material": "frontend",         # "material UI", "material design" → Frontend Frameworks (MUI)
+    "mantine": "frontend",          # Mantine — full-featured React component library
+    "chakra": "frontend",           # Chakra UI — accessible React component library
+    # DevOps — service mesh and Nix
+    "mesh": "devops",               # "service mesh" — Istio, Linkerd, Consul Connect → DevOps
+    "nix": "devops",                # Nix — reproducible builds and package management → DevOps
+    "nixos": "devops",              # NixOS — declarative Linux OS with Nix → DevOps
 }
 
 _FTS_STOP_WORDS = {

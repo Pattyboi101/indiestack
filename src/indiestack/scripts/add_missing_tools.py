@@ -2121,6 +2121,104 @@ TOOLS = [
         "npm install @opentelemetry/sdk-node",
         "code",
     ),
+    # Frontend — React component libraries -------------------------------------------
+    (
+        "material-ui",
+        "Material UI (MUI)",
+        "React components based on Material Design",
+        "MUI is the most popular React component library, providing a comprehensive "
+        "suite of prebuilt components implementing Google's Material Design. "
+        "Used in over 3 million projects, it includes a free core library (Joy UI), "
+        "data grid, date pickers, and MUI X premium components.",
+        "frontend-frameworks",
+        "mui/material-ui",
+        93000,
+        "https://mui.com",
+        "react,ui,material-design,components,design-system",
+        "npm install @mui/material @emotion/react @emotion/styled",
+        "code",
+    ),
+    (
+        "mantine",
+        "Mantine",
+        "A fully featured React component library",
+        "Mantine is a React component library with 100+ components and 50+ hooks. "
+        "Ships with built-in dark mode, form management, date pickers, rich text "
+        "editor, notifications, modals, and full TypeScript support. Zero-config "
+        "theming with CSS variables.",
+        "frontend-frameworks",
+        "mantinedev/mantine",
+        26000,
+        "https://mantine.dev",
+        "react,ui,components,dark-mode,hooks,typescript",
+        "npm install @mantine/core @mantine/hooks",
+        "code",
+    ),
+    (
+        "ant-design",
+        "Ant Design",
+        "An enterprise-class UI design language and React UI library",
+        "Ant Design is a comprehensive React UI library created by Alibaba/Ant Group. "
+        "The de-facto standard for enterprise React UIs in China and widely used globally. "
+        "Provides 60+ components, a design system, charts (AntV), and mobile support.",
+        "frontend-frameworks",
+        "ant-design/ant-design",
+        93000,
+        "https://ant.design",
+        "react,ui,enterprise,components,design-system,alibaba",
+        "npm install antd",
+        "code",
+    ),
+    (
+        "chakra-ui",
+        "Chakra UI",
+        "Simple, modular and accessible component library for React",
+        "Chakra UI gives you the building blocks to build accessible React apps with "
+        "speed. Every component follows WAI-ARIA guidelines, supports dark mode out "
+        "of the box, and is fully composable. Chakra v3 is built on Ark UI with "
+        "improved performance and RSC support.",
+        "frontend-frameworks",
+        "chakra-ui/chakra-ui",
+        37000,
+        "https://chakra-ui.com",
+        "react,ui,accessibility,dark-mode,composable,components",
+        "npm install @chakra-ui/react",
+        "code",
+    ),
+    # AI — LLM observability ---------------------------------------------------------
+    (
+        "langfuse",
+        "Langfuse",
+        "Open-source LLM observability, evals, and prompt management",
+        "Langfuse is the open-source LLM engineering platform. Trace LLM calls, "
+        "evaluate outputs, manage prompts, and run A/B experiments across OpenAI, "
+        "Anthropic, LangChain, LlamaIndex, and any custom model. Self-host or use "
+        "Langfuse Cloud.",
+        "ai-dev-tools",
+        "langfuse/langfuse",
+        8000,
+        "https://langfuse.com",
+        "llm,observability,tracing,evals,prompt-management,open-source",
+        "pip install langfuse",
+        "code",
+    ),
+    # Analytics — charting / data visualisation --------------------------------------
+    (
+        "recharts",
+        "Recharts",
+        "Redefined chart library built with React and D3",
+        "Recharts is a composable charting library built with React components and D3. "
+        "Supports line, bar, area, pie, radar, scatter, and composed charts. "
+        "Declarative API makes charts easy to customize; works with any React app "
+        "or data source.",
+        "analytics-metrics",
+        "recharts/recharts",
+        23000,
+        "https://recharts.org",
+        "react,charts,d3,data-visualization,components",
+        "npm install recharts",
+        "code",
+    ),
 ]
 
 
