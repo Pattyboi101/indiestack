@@ -1457,6 +1457,158 @@ TOOLS = [
         "docker run --ulimit memlock=-1 ghcr.io/dragonflydb/dragonfly",
         "code",
     ),
+    # AI — graph-based agent orchestration -------------------------------------------
+    (
+        "langgraph",
+        "LangGraph",
+        "Build stateful, multi-actor AI agent applications",
+        "LangGraph is a library for building stateful, multi-actor applications "
+        "with LLMs. Graph-based orchestration with cycles, controllability, and "
+        "persistence. Build agents that can plan, reflect, and use tools. "
+        "Part of the LangChain ecosystem, used for complex multi-step AI workflows.",
+        "ai-automation",
+        "langchain-ai/langgraph",
+        9000,
+        "https://langchain-ai.github.io/langgraph",
+        "ai,agents,llm,graph,orchestration,langchain",
+        "pip install langgraph",
+        "code",
+    ),
+    # AI — agent tool integrations ----------------------------------------------------
+    (
+        "composio",
+        "Composio",
+        "Production-ready tool integrations for AI agents",
+        "Composio gives AI agents 150+ production-ready integrations: GitHub, Slack, "
+        "Notion, Linear, Gmail, and more. Managed auth (OAuth, API keys), "
+        "action filtering, and SDKs for LangChain, CrewAI, AutoGen, and OpenAI. "
+        "Connect AI agents to the tools your users already use.",
+        "ai-dev-tools",
+        "ComposioHQ/composio",
+        17000,
+        "https://composio.dev",
+        "ai,agents,integrations,tools,mcp,langchain",
+        "pip install composio-core",
+        "code",
+    ),
+    # API / Backend — Bun-native TypeScript framework ---------------------------------
+    (
+        "elysia",
+        "Elysia",
+        "TypeScript framework supercharged by Bun",
+        "Elysia is a TypeScript web framework built for Bun. End-to-end type safety "
+        "with Eden treaty, declarative schema validation, Swagger generation, and "
+        "one of the fastest throughputs of any Node/Bun framework. "
+        "Plugin system, middleware, WebSocket, and SSE support built in.",
+        "api-tools",
+        "elysiajs/elysia",
+        11000,
+        "https://elysiajs.com",
+        "bun,typescript,web-framework,fast,type-safe",
+        "bun add elysia",
+        "code",
+    ),
+    # API / Backend — UnJS universal server engine ------------------------------------
+    (
+        "nitro",
+        "Nitro",
+        "Build and deploy universal JavaScript servers",
+        "Nitro is a next-generation server toolkit from UnJS (the team behind Nuxt). "
+        "Write server code once and deploy to Node.js, Deno, Bun, Cloudflare Workers, "
+        "AWS Lambda, and more. Powers Nuxt 3 under the hood. "
+        "File-based routing, TypeScript-first, auto-imports, and edge-ready.",
+        "api-tools",
+        "unjs/nitro",
+        6000,
+        "https://nitro.unjs.io",
+        "javascript,server,universal,edge,nuxt,bun,cloudflare",
+        "npm install nitropack",
+        "code",
+    ),
+    # Testing — load and performance testing ------------------------------------------
+    (
+        "artillery",
+        "Artillery",
+        "Cloud-scale load testing for APIs and microservices",
+        "Artillery is a modern load testing and smoke testing platform for APIs, "
+        "microservices, and web apps. YAML or JS scenarios, HTTP/WebSocket/Socket.io, "
+        "Playwright browser load tests, and a cloud runner for distributed tests. "
+        "Open-source core with Artillery Cloud for results and dashboards.",
+        "testing-tools",
+        "artilleryio/artillery",
+        8000,
+        "https://artillery.io",
+        "load-testing,performance,api-testing,k8s,cloud",
+        "npm install -g artillery",
+        "code",
+    ),
+    (
+        "locust",
+        "Locust",
+        "An open source load testing tool — define user behaviour with Python",
+        "Locust is a scalable Python load testing framework. Write test scenarios as "
+        "plain Python code — no XML or YAML needed. Distributed load generation, "
+        "a real-time web UI, and results exportable to CSV. "
+        "Run locally or on cloud infrastructure for massive scale tests.",
+        "testing-tools",
+        "locustio/locust",
+        25000,
+        "https://locust.io",
+        "load-testing,python,performance,distributed,api-testing",
+        "pip install locust",
+        "code",
+    ),
+    # Developer Tools — LLM-optimised web scraping ------------------------------------
+    (
+        "firecrawl",
+        "Firecrawl",
+        "Turn any website into LLM-ready data",
+        "Firecrawl crawls websites and converts them to clean Markdown or structured "
+        "JSON — optimised for feeding LLMs and RAG pipelines. "
+        "Handles JavaScript-rendered pages, PDFs, auth, and rate limiting. "
+        "Self-hostable open-source core; managed API available.",
+        "developer-tools",
+        "mendableai/firecrawl",
+        26000,
+        "https://firecrawl.dev",
+        "scraping,llm,rag,markdown,crawler,ai",
+        "pip install firecrawl-py",
+        "code",
+    ),
+    # Developer Tools — Go desktop application framework ------------------------------
+    (
+        "wails",
+        "Wails",
+        "Build desktop apps using Go + Web technologies",
+        "Wails lets you build cross-platform desktop apps using Go for the backend "
+        "and any web tech (React, Vue, Svelte, Vanilla JS) for the frontend. "
+        "Compiled to a single binary, native menus, system tray, file dialogs, "
+        "and notifications. The Tauri equivalent for Go developers.",
+        "developer-tools",
+        "wailsapp/wails",
+        27000,
+        "https://wails.io",
+        "go,golang,desktop,cross-platform,gui,electron-alternative",
+        "go install github.com/wailsapp/wails/v2/cmd/wails@latest",
+        "code",
+    ),
+    # Developer Tools — TypeScript runtime type validation ----------------------------
+    (
+        "arktype",
+        "ArkType",
+        "TypeScript's 1:1 validator — 100x faster than Zod",
+        "ArkType is a TypeScript-first runtime type validation library. "
+        "Write types using TypeScript syntax you already know — no new DSL. "
+        "Instantiates 100x faster than Zod with better error messages, "
+        "cyclic types, and morphs (transforms). The next-gen Zod alternative.",
+        "developer-tools",
+        "arktypeio/arktype",
+        4000,
+        "https://arktype.io",
+        "typescript,validation,schema,zod-alternative,types",
+        "npm install arktype",
+        "code",
+    ),
     # Database — data transformation / ETL ------------------------------------------
     (
         "dbt",

@@ -1,20 +1,57 @@
 # Sprint — Current
 
-Last updated: 2026-04-06 (thirty-second pass)
+Last updated: 2026-04-07 (thirty-third pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-06)
+## System State (as of 2026-04-07)
 
 - **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 701 entries for search routing (added 49 in thirtieth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 113 tools ready to insert (slug-safe)
-  - 7 tools added in thirtieth pass (Expo, Flutter, React Native, DuckDB, Instructor, Husky + prior)
+- **_CAT_SYNONYMS**: 721 entries for search routing (added 20 in thirty-third pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 121 tools ready to insert (slug-safe)
+  - 8 tools added in thirty-third pass (LangGraph, Composio, Elysia, Nitro, Artillery, Locust, Firecrawl, Wails, ArkType)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-07, thirty-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited NEED_MAPPINGS — all 5 specified query patterns already mapped; no changes needed
+- Added 20 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **AI agents**: `"langgraph"` → `"ai"` — LangGraph graph-based multi-agent framework
+  - **AI integrations**: `"composio"` → `"ai"` — AI agent tool integration platform
+  - **Bun framework**: `"elysia"`, `"elysiajs"` → `"api"` — Bun-native TypeScript web framework
+  - **UnJS server**: `"nitro"` → `"api"` — universal server engine powering Nuxt 3
+  - **TS backend**: `"encore"` → `"api"` — Encore.ts/Go backend with built-in infra
+  - **Rust runtime**: `"tokio"` → `"api"` — foundational async runtime (base of Axum/Actix)
+  - **Load testing**: `"artillery"`, `"locust"` → `"testing"` — JS and Python load test tools
+  - **LLM scraping**: `"firecrawl"` → `"devtools"` — LLM-ready web scraping API
+  - **Type validation**: `"arktype"` → `"devtools"` — TypeScript-first Zod alternative
+  - **Form libs**: `"reacthookform"`, `"react-hook-form"`, `"conform"` → `"frontend"` — React form state
+  - **Desktop Go**: `"wails"` → `"frontend"` — Go + web tech desktop app framework
+- Running total: 721 entries (701 + 20)
+
+### Catalog Script (Step 2)
+- Added 8 new tools to `scripts/add_missing_tools.py` (121 total):
+  - LangGraph (ai-automation, 9k★) — graph-based multi-agent orchestration
+  - Composio (ai-dev-tools, 17k★) — production-ready agent integrations (150+ tools)
+  - Elysia (api-tools, 11k★) — Bun-native TypeScript web framework
+  - Nitro (api-tools, 6k★) — UnJS universal server (powers Nuxt 3)
+  - Artillery (testing-tools, 8k★) — cloud-scale load testing
+  - Locust (testing-tools, 25k★) — Python-based distributed load testing
+  - Firecrawl (developer-tools, 26k★) — LLM-ready web scraping
+  - Wails (developer-tools, 27k★) — Go desktop apps with web frontends
+  - ArkType (developer-tools, 4k★) — TypeScript-first runtime validation
+
+### Code Quality (Step 3)
+- Last 5 commits changed setup.py (hex colors fixed), content.py + setup.py (stale counts), db.py
+- No html.escape() gaps found; no hardcoded hex colors; no stale stats found in recent changes
+
+### R&D Docs (Step 4)
+- sprint.md updated to thirty-third pass
 
 ## Completed This Session (2026-04-06, thirty-second pass — autonomous improvement cycle)
 

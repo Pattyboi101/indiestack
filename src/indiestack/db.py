@@ -3144,6 +3144,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rum": "monitoring",            # RUM (Real User Monitoring) — frontend performance tracking
     "vitals": "monitoring",         # Core Web Vitals monitoring tools
     "speedlify": "monitoring",      # Speedlify — automated performance benchmarking
+    # AI agent frameworks — graph-based orchestration
+    "langgraph": "ai",              # LangGraph — LangChain's graph-based multi-agent framework
+    "composio": "ai",               # Composio — tool integrations for AI agents (GitHub, Slack, etc.)
+    # API / Backend — Bun-native TypeScript framework
+    "elysia": "api",                # Elysia — Bun-native TypeScript web framework with end-to-end type safety
+    "elysiajs": "api",              # compound form without separator
+    # API / Backend — UnJS universal server and TypeScript backend framework
+    "nitro": "api",                 # Nitro — UnJS universal server engine (powers Nuxt)
+    "encore": "api",                # Encore.ts/Go — backend framework with built-in infra (queues, caches, auth)
+    # API / Backend — Rust async runtime (foundational for Axum/Actix)
+    "tokio": "api",                 # Tokio — async runtime for Rust, base of Axum and Actix-web
+    # Testing — load / performance testing
+    "artillery": "testing",         # Artillery — load testing and performance testing framework
+    "locust": "testing",            # Locust — scalable Python load testing (write tests in Python)
+    # Developer Tools — web scraping optimised for LLMs
+    "firecrawl": "devtools",        # Firecrawl — LLM-ready web scraping API (Markdown output)
+    # Developer Tools — TypeScript runtime validation (Zod alternatives)
+    "arktype": "devtools",          # ArkType — TypeScript-first runtime type validation (fast, concise)
+    # Frontend — form state management and validation
+    "reacthookform": "frontend",    # React Hook Form — dominant React form library (40k stars)
+    "react-hook-form": "frontend",  # hyphenated form used in queries like "react-hook-form alternative"
+    "conform": "frontend",          # Conform — progressive form validation for Remix/Next.js with Zod
+    # Frontend — Go desktop app framework using web tech
+    "wails": "frontend",            # Wails — build desktop apps with Go + HTML/CSS/JS frontend
 }
 
 _FTS_STOP_WORDS = {
