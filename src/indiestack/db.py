@@ -3429,7 +3429,8 @@ async def search_tools(
     # rank above open-source tools with stars in unrelated categories.
     # MCP views indicate real agent usage and get a strong boost.
     _engagement_expr = (
-        "(CASE WHEN LOWER(t.name) = LOWER(?) AND COALESCE(t.install_command, '') != '' THEN 150"
+        "(CASE WHEN LOWER(t.slug) = LOWER(?) THEN 2000"
+        "  WHEN LOWER(t.name) = LOWER(?) AND COALESCE(t.install_command, '') != '' THEN 150"
         "  WHEN LOWER(t.name) = LOWER(?) THEN 30 ELSE 0 END)"
         " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 60 ELSE 0 END)"
         " + (CASE WHEN LOWER(c.name) LIKE ('%' || LOWER(?) || '%') THEN 100 ELSE 0 END)"
@@ -3469,7 +3470,7 @@ async def search_tools(
         _cat_term = _CAT_SYNONYMS[_syn_term]
     else:
         _cat_term = _raw_cat
-    _engagement_params: list = [_q, _q, _q, _cat_term, _cat_term, _cat_term]
+    _engagement_params: list = [_q, _q, _q, _q, _cat_term, _cat_term, _cat_term]
 
     # Determine sort order — returns (sql_fragment, extra_params)
     def _fts_order():

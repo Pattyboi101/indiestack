@@ -1109,7 +1109,7 @@ async def tool_detail(request: Request, slug: str):
                     background:linear-gradient(135deg, var(--cream-dark) 0%, var(--card-bg) 100%);
                     border:1px solid var(--border);margin-bottom:24px;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:24px;">
-            <div style="flex:1;min-width:0;overflow:hidden;">
+            <div style="flex:1;min-width:0;">
                 <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
                     <a href="/category/{cat_slug}" class="tag" style="display:inline-block;">{cat_name}</a>
                     {''.join(f'<a href="/category/{escape(str(c["slug"]))}" class="tag" style="display:inline-block;opacity:0.7;">{escape(str(c["name"]))}</a>' for c in _secondary_cats)}
