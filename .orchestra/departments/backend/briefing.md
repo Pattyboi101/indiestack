@@ -25,7 +25,13 @@ Check `/maker/dashboard` route and verify it queries agent_actions correctly.
 Note: view queries agent_actions but citation data is actually in agent_citations.
 If view is used by dashboard, verify it queries the right table.
 
-## Completed Tasks
+## Completed Tasks (Apr 8-9 overnight)
+- [x] Fixed bug: /api/agent/outcome now calls backfill_mcp_adoption with session_id — outcome tagging validated end-to-end (adopted state correctly propagates to mcp_query_outcomes)
+- [x] Added synonym mappings: secret/env→security, gateway→payments (deployed v703)
+- [x] Catalog additions: 60+ tools added to production DB overnight (IDs 9252-9310)
+- [x] Load test outcome tagging — VALIDATED Apr 9: session=test-hanko shows adopted=hanko correctly
+
+## Completed Tasks (Previous)
 - [x] Developer Tools category cleanup — ~500+ tools re-categorized across 15+ categories (fifth pass)
 - [x] Fixed 500 errors on /tool/* pages (analytics_wall_blurred None stats bug)
 
