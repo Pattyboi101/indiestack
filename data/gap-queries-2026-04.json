@@ -1,76 +1,350 @@
 {
   "generated": "2026-04-07",
-  "source": "IndieStack — search logs from 3,268 tracked API/MCP searches (90 days)",
-  "note": "Zero-result queries — searches where no tools were returned. Includes both genuine catalog gaps and tools that exist but may be missing from search index. Queries that appear to be tests, spam, or non-dev-tool searches have been excluded.",
+  "source": "IndieStack \u2014 search logs from 3,268 tracked API/MCP searches (90 days)",
+  "note": "Zero-result queries \u2014 searches where no tools were returned. Includes both genuine catalog gaps and tools that exist but may be missing from search index. Queries that appear to be tests, spam, or non-dev-tool searches have been excluded.",
   "total_zero_result_queries_90d": 189,
   "gaps": [
-    { "query": "privacy-friendly analytics", "count": 3 },
-    { "query": "pagerduty", "count": 3 },
-    { "query": "intercom", "count": 3 },
-    { "query": "hookdeck", "count": 3 },
-    { "query": "translation", "count": 2 },
-    { "query": "logging nodejs", "count": 2 },
-    { "query": "netlify", "count": 2 },
-    { "query": "auth0", "count": 2 },
-    { "query": "zendesk", "count": 1 },
-    { "query": "web scraper", "count": 1 },
-    { "query": "web analytics privacy-friendly", "count": 1 },
-    { "query": "vpn", "count": 1 },
-    { "query": "vector database", "count": 1 },
-    { "query": "twilio", "count": 1 },
-    { "query": "transcription", "count": 1 },
-    { "query": "snmp", "count": 1 },
-    { "query": "social distribution", "count": 1 },
-    { "query": "seo", "count": 1 },
-    { "query": "scraping", "count": 1 },
-    { "query": "rss scanning", "count": 1 },
-    { "query": "rag vector database multi source", "count": 1 },
-    { "query": "quantum computing", "count": 1 },
-    { "query": "publishing", "count": 1 },
-    { "query": "payroll", "count": 1 },
-    { "query": "password manager", "count": 1 },
-    { "query": "pass keys", "count": 1 },
-    { "query": "orm", "count": 1 },
-    { "query": "notification alerting webhook", "count": 1 },
-    { "query": "notes wiki knowledge base", "count": 1 },
-    { "query": "newsletter", "count": 1 },
-    { "query": "new relic", "count": 1 },
-    { "query": "network dns security vpn", "count": 1 },
-    { "query": "media server streaming video", "count": 1 },
-    { "query": "media monitoring", "count": 1 },
-    { "query": "low code", "count": 1 },
-    { "query": "logging", "count": 1 },
-    { "query": "log error tracking observability", "count": 1 },
-    { "query": "load balancer", "count": 1 },
-    { "query": "link shortener url", "count": 1 },
-    { "query": "launchdarkly", "count": 1 },
-    { "query": "image optimization", "count": 1 },
-    { "query": "image generation", "count": 1 },
-    { "query": "home automation smart home", "count": 1 },
-    { "query": "go-feature-flag", "count": 1 },
-    { "query": "gitlab pages", "count": 1 },
-    { "query": "geospatial analysis", "count": 1 },
-    { "query": "fact checking", "count": 1 },
-    { "query": "etl", "count": 1 },
-    { "query": "embeddings", "count": 1 },
-    { "query": "email smtp messaging", "count": 1 },
-    { "query": "email sending transactional", "count": 1 },
-    { "query": "dashboard status page", "count": 1 },
-    { "query": "dashboard builder", "count": 1 },
-    { "query": "cron scheduler task queue", "count": 1 },
-    { "query": "cron", "count": 1 },
-    { "query": "changelog documentation status", "count": 1 },
-    { "query": "cache", "count": 1 },
-    { "query": "betterstack logging", "count": 1 },
-    { "query": "backup server infrastructure", "count": 1 },
-    { "query": "authentication passkey", "count": 1 },
-    { "query": "auth", "count": 1 },
-    { "query": "article generation", "count": 1 },
-    { "query": "api proxy reverse proxy tunnel", "count": 1 },
-    { "query": "api gateway integration", "count": 1 },
-    { "query": "analytics web app tracking experiments a/b testing", "count": 1 },
-    { "query": "analytics", "count": 1 },
-    { "query": "ai image", "count": 1 },
-    { "query": "action log", "count": 1 }
-  ]
+    {
+      "query": "privacy-friendly analytics",
+      "count": 3,
+      "status": "active"
+    },
+    {
+      "query": "pagerduty",
+      "count": 3,
+      "status": "active"
+    },
+    {
+      "query": "intercom",
+      "count": 3,
+      "status": "active"
+    },
+    {
+      "query": "hookdeck",
+      "count": 3,
+      "status": "resolved"
+    },
+    {
+      "query": "translation",
+      "count": 2,
+      "status": "active"
+    },
+    {
+      "query": "logging nodejs",
+      "count": 2,
+      "status": "active"
+    },
+    {
+      "query": "netlify",
+      "count": 2,
+      "status": "resolved"
+    },
+    {
+      "query": "auth0",
+      "count": 2,
+      "status": "resolved"
+    },
+    {
+      "query": "zendesk",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "web scraper",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "web analytics privacy-friendly",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "vpn",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "vector database",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "twilio",
+      "count": 1,
+      "status": "resolved"
+    },
+    {
+      "query": "transcription",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "snmp",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "social distribution",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "seo",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "scraping",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "rss scanning",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "rag vector database multi source",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "quantum computing",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "publishing",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "payroll",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "password manager",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "pass keys",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "orm",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "notification alerting webhook",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "notes wiki knowledge base",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "newsletter",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "new relic",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "network dns security vpn",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "media server streaming video",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "media monitoring",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "low code",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "logging",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "log error tracking observability",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "load balancer",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "link shortener url",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "launchdarkly",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "image optimization",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "image generation",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "home automation smart home",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "go-feature-flag",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "gitlab pages",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "geospatial analysis",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "fact checking",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "etl",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "embeddings",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "email smtp messaging",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "email sending transactional",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "dashboard status page",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "dashboard builder",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "cron scheduler task queue",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "cron",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "changelog documentation status",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "cache",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "betterstack logging",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "backup server infrastructure",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "authentication passkey",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "auth",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "article generation",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "api proxy reverse proxy tunnel",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "api gateway integration",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "analytics web app tracking experiments a/b testing",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "analytics",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "ai image",
+      "count": 1,
+      "status": "active"
+    },
+    {
+      "query": "action log",
+      "count": 1,
+      "status": "active"
+    }
+  ],
+  "last_verified": "2026-04-07",
+  "active_gaps": 64
 }

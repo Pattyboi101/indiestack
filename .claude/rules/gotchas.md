@@ -1,5 +1,9 @@
 # Mistakes We've Made — Don't Repeat These
 
+- Flex child `overflow-x:auto` does NOT work if any ancestor in the flex chain is missing `min-width:0`. The child can never shrink below its content width, so `overflow-x:auto` never triggers. Fix: add `min-width:0` to EVERY flex child in the chain that needs to shrink. Also: never add `overflow:hidden` to the flex wrapper div — it clips scrollable children. The install_block in tool.py hit this; fixed Apr 7.
+
+- `bm25(tools_fts)` with equal column weights lets "alternative to X" descriptions outrank X itself for a brand-name query. A tool with "netlify" 5× in its description beats Netlify for query "netlify". Fix: use weighted bm25 `bm25(tools_fts, 10.0, 5.0, 1.0, 3.0)` (name, tagline, description, tags) AND add a slug-exact-match boost (+2000 engagement) so the exact tool always ranks first.
+
 - `json.dumps()` does NOT escape `<`, `>`, `&` — raw JSON in `<script type="application/ld+json">` blocks is vulnerable to `</script>` injection. Always call `.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')` on the result before embedding in HTML. Fixed in tool.py, browse.py, use_cases.py, launch_with_me.py.
 
 - `stats.get('key', 0)` does NOT guard against `None` — if the key exists with value `None`, it returns `None` and breaks int comparisons. Always use `stats.get('key') or 0` for numeric stats from DB queries. This caused 500s on `/tool/*` pages from `analytics_wall_blurred` in components.py.
