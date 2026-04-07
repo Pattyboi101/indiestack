@@ -3305,9 +3305,17 @@ _FRAMEWORK_QUERY_TERMS: dict[str, str] = {
     "solid": "solid", "solidjs": "solid",
     "qwik": "qwik",
     "hono": "hono",
-    # "nodejs" intentionally NOT added here — it's a runtime/framework, not a category.
-    # Having it as a CAT_SYNONYM key with value "nodejs" would break queries like
-    # "nodejs background jobs" by setting cat_term="nodejs" (matches no category name).
+    # Runtime/language qualifiers — "logging nodejs", "auth python" etc.
+    # Routed to frameworks_tested LIKE filter. Only safe patterns where
+    # the match value won't substring-match unrelated frameworks:
+    # - "golang"/"go" excluded (LIKE '%go%' matches "django", "mongo", etc.)
+    # - "java" excluded (LIKE '%java%' matches "javascript")
+    "node": "node",
+    "nodejs": "node",
+    "python": "python",
+    "rust": "rust",
+    "ruby": "ruby",
+    "php": "php",
 }
 
 
