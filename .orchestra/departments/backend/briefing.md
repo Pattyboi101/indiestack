@@ -29,6 +29,16 @@ Use SSH file-upload pattern to apply on production, then update any dashboard qu
 - [x] Developer Tools category cleanup — ~500+ tools re-categorized across 15+ categories (fifth pass)
 - [x] Fixed 500 errors on /tool/* pages (analytics_wall_blurred None stats bug)
 
+## Meeting Task — 2026-04-07 (Future Models + Anthropic Pitch)
+- [x] Deploy mcp_sessions + mcp_query_outcomes schema migration (see meeting file for full schema) | Done Apr 7
+- [x] Wire session_id optional param into find_tools + get_tool_details API endpoints | Done Apr 7
+- [x] Extend /api/quality: add tokens_saved_7d, adoption_rate_7d, gap_rate_7d, top_gap_queries, session_count_7d | Done Apr 7
+- [ ] Load test + validate outcome tagging (adopted/gap/bounce/unknown) is capturing correctly | By: Apr 10
+- [ ] Confirm Postgres migration feasibility + reversibility (no downtime surprises) | By: Apr 15 — BLOCKING DevOps
+- [ ] Build session-aware result weighting (down-weight already-seen tools, up-weight complementary) | By: Apr 21
+- [ ] Publish live token-waste counter on site (uses adoption data from tracking) | By: Apr 14
+- CRITICAL: Do NOT migrate Postgres in week 2 (Apr 15-21). Migration moves to week 3 at earliest.
+
 ## Constraints
 - Use file-upload SSH pattern for ALL production DB writes (no inline python3 -c)
 - Do NOT use LIKE '%orm%' — substring matches 'platform', 'transform', etc.

@@ -22,3 +22,10 @@ Check `https://indiestack.ai/explore?category=frontend-frameworks` renders corre
 - [ ] Audit /maker/dashboard — what analytics are currently exposed to makers?
 - [ ] Design citation timeline component (30-day bar chart showing agent citations per week)
 - [ ] Add Maker Pro verified badge to tool cards for claimed+subscribed makers
+
+## Meeting Task — 2026-04-07 (Future Models + Anthropic Pitch)
+- [ ] Hero credibility surface — stats bar (dated numbers, not vague rounding) | By: Apr 11
+- [ ] Token calculator page at /calculator (labelled methodology — estimates not false precision) | By: Apr 12
+- [ ] Embeddable search widget, pitch-ready (top 5 results, confidence indicators, dark/light) | By: Apr 14
+- [ ] Embeddable widget polish for adoption — docs, error states, demo page | By: Apr 21
+- NOTE: Don't overlap with Postgres migration window (Apr 17+). Ship all deliverables first.

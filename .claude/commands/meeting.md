@@ -1,12 +1,12 @@
 ---
 name: meeting
-description: Facilitate a structured CONVERSATIONAL meeting between Patrick and all orchestra agents — up to 7 rounds of debate with cross-examination, idea building, and devil's advocate. Agents push back on each other, not just answer questions. Early exit when consensus is reached. Produces persistent notes and writes action items to briefing files.
+description: Facilitate a structured CONVERSATIONAL meeting between Patrick and all orchestra agents — named phases (Diverge → Challenge → Build → Stress Test) with state machine navigation. Agents push back on each other, build on each other's ideas, and the chair navigates phases autonomously. Early exit only after Stress Test completes.
 argument-hint: "[topic] OR 'close' to end the current meeting"
 ---
 
 # Meeting Skill
 
-Run a real meeting — not a survey. Agents stake positions in Round 1, push back on each other in Round 2, build on the best ideas in Round 3, attack the consensus in Round 4, refine in Round 5, converge in Round 6, synthesize in Round 7. Stop as soon as the group is satisfied — don't grind through rounds for the sake of it.
+Run a real meeting — a state machine, not a survey. Agents diverge ideas, challenge each other, build on what survives, and stress test before anything becomes an action. The chair navigates phases, can skip optional ones, repeat phases still generating value, or loop back when a later phase reveals something that needs earlier work.
 
 ---
 
@@ -18,39 +18,66 @@ Run a real meeting — not a survey. Agents stake positions in Round 1, push bac
 
 ---
 
-## Round Types
+## Phase System
 
-| Round | Name | Purpose | Who |
-|-------|------|---------|-----|
-| **R1** | Opening positions | Stake honest takes — no hedging | All |
-| **R2** | Cross-examination | Respond to specific tensions between positions | Targeted |
-| **R3** | Idea building | Develop the strongest ideas from R1–R2 | All or targeted |
-| **R4** | Devil's advocate | Attack the emerging consensus — find the holes | All |
-| **R5** | Refinement | Respond to R4 attacks, strengthen or concede | Targeted |
-| **R6** | Convergence | Find genuine agreement; surface remaining gaps | All |
-| **R7** | Synthesis | CEO resolves anything still unresolved | CEO only |
+| Phase | Purpose | Mandatory? |
+|-------|---------|-----------|
+| **Diverge** | All ideas on the table — no criticism yet | **Yes** |
+| **Clarify** | Surface assumptions, define terms, resolve ambiguity | Optional |
+| **Challenge** | Push back, expose tensions, stress-test assumptions | **Yes** |
+| **Build** | Develop the strongest ideas that survived Challenge | **Yes** |
+| **Stress Test** | Attack the emerging consensus — try to break it | **Yes** |
+| **Converge** | Find genuine agreement, surface remaining gaps | Optional |
+| **Decide** | CEO resolves anything still genuinely unresolved | Only if unresolved |
 
-**Minimum: R1–R4.** R3 and R4 are mandatory, not optional. Ideas proposed in R1 must be developed (R3) and attacked (R4) before the meeting can close. **Standard:** R1–R4. **Deep strategy:** R1–R6 or R1–R7.
+**Minimum required path:** Diverge → Challenge → Build → Stress Test
 
-**Why 4 minimum:** 2 rounds means ideas get challenged once but never refined or stress-tested — they go into actions without anyone pushing back on them. R3 develops the strongest ideas from the debate; R4 attacks the emerging consensus before it hardens into decisions. Without both, the meeting is just a structured brainstorm.
+**`[SATISFIED]` and `[CLOSE MEETING]` flags are ignored until Stress Test completes.** Collect them, note them, do not act on them.
 
-**Early exit is ignored before R4 completes.** `[SATISFIED]` and `[CLOSE MEETING]` flags are collected but not acted on until R4 is done. After R4, if CEO flags `[CLOSE MEETING]` or all agents flag `[SATISFIED]`, close immediately.
+---
+
+## Agent Flags
+
+Agents write these in their responses to signal navigation needs:
+
+| Flag | Meaning | Chair Action |
+|------|---------|-------------|
+| `[NEEDS CLARIFY: X]` | X needs defining before I can contribute fully | Insert Clarify phase |
+| `[BACK TO CHALLENGE: reason]` | Build surfaced a new tension that needs challenging | Loop to Challenge with the new tension |
+| `[BACK TO BUILD: reason]` | Stress Test revealed a better approach worth developing | Loop to Build with refined idea |
+| `[SATISFIED]` | Nothing more to add — happy with direction | Count; close if all satisfied (after Stress Test) |
+| `[CLOSE MEETING: reason]` | CEO: meeting has run its course | Close immediately (only after Stress Test) |
+
+---
+
+## State Machine
+
+```
+Diverge (mandatory)
+  → [Clarify]? — insert if [NEEDS CLARIFY] flags or agents talking past each other
+  → Challenge (mandatory)
+       ↑ ← loop back if Build surfaces [BACK TO CHALLENGE]
+  → Build (mandatory)
+       ↑ ← loop back if Stress Test surfaces [BACK TO BUILD]
+  → Stress Test (mandatory)
+  → [Converge]? — insert if unresolved disagreements remain
+  → [Decide]? — insert if Converge still has unresolved conflict
+  → Close
+```
+
+**Navigation decisions are the chair's to make** — do NOT stop to ask Patrick between phases. Only surface to Patrick when the meeting closes.
 
 ---
 
 ## Research Integration
 
-Research can happen at three points — use whichever the topic needs:
-
 | When | What | How |
 |------|------|-----|
-| **R0 — Pre-meeting brief** | Chair researches the topic before R1; key findings go in every agent's R1 prompt | Use WebSearch/WebFetch, summarise in 3-5 bullets, include inline |
-| **In-round** | Agents research before writing their position | Tell agents in the round prompt: "Search before writing if you need current data" |
-| **Between-round sprint** | Chair runs targeted searches surfaced by agent flags | Agents write `[NEEDS RESEARCH: X]` in their response; chair searches X and includes findings in the next round prompt |
+| **R0 — Pre-meeting** | Chair researches topic before Diverge | WebSearch/WebFetch, 3-5 bullets, included in every agent's prompt |
+| **In-phase** | Agents search before writing | Tell agents: "Search before writing if you need current data" |
+| **Between-phase sprint** | Chair runs searches from `[NEEDS RESEARCH: X]` flags | Prepend findings to next phase prompt |
 
-**When to use R0:** Any time the topic involves recent events, competitor moves, new model releases, market data, or anything agents might have stale knowledge on. Always do R0 for external partnership/outreach meetings.
-
-**[NEEDS RESEARCH: X] protocol:** When an agent writes this flag, collect all flags after the round, run the searches, and prepend findings to the next round's message: "Research from last round: [findings]. Now respond to..."
+Use R0 for: new model releases, competitor moves, partnership targets, market data — anything agents might have stale knowledge on.
 
 ---
 
@@ -63,18 +90,19 @@ Filename: `.orchestra/meetings/YYYY-MM-DD-[topic-slug].md`
 ```markdown
 # Meeting: [Topic]
 **Date:** YYYY-MM-DD HH:MM
-**Status:** Round 1
+**Status:** Diverge
+**Phases run:** []
 **Attendees:** Patrick (chair), CEO, Frontend, Backend, DevOps, Content, MCP
 
 ---
 
 ## Agenda
 
-[Topic + the specific decision or question to resolve]
+[Topic + the specific question or decision to resolve]
 
 ---
 
-## Round 1 — Opening Positions
+## Phase: Diverge
 
 ### CEO
 _Awaiting response_
@@ -96,19 +124,13 @@ _Awaiting response_
 
 ---
 
-## Round 2 — Cross-Examination
-
-_Populated by chair after Round 1_
-
----
-
-## [Further rounds added as needed]
+## [Further phases added dynamically]
 
 ---
 
 ## Patrick's Notes
 
-_(add observations, decisions, calls to make here)_
+_(chair observations, navigation decisions, calls to make)_
 
 ---
 
@@ -117,78 +139,100 @@ _(add observations, decisions, calls to make here)_
 _(populated at close)_
 ```
 
-### Step 1b — R0: Pre-Meeting Research (optional but recommended for external topics)
+### Step 1b — R0: Pre-Meeting Research (recommended for external topics)
 
-Before sending R1, do 3-5 web searches on the topic. Include a research brief in every R1 message:
+Do 3-5 searches before sending Diverge. Include a brief in every agent's prompt:
 
 ```
-**Research brief (pre-meeting):**
+**Research brief:**
 - [Finding 1]
 - [Finding 2]
 - [Finding 3]
-Use this as shared context. You may also search for more before writing your position.
+Shared context — you may also search before writing.
 ```
-
-Use R0 for: new model releases, competitor moves, partnership targets, market data, anything agents might have stale knowledge on.
 
 ---
 
-### Step 2 — Send Round 1
+### Step 2 — Phase: Diverge (mandatory)
 
-Call `list_peers` first. Send to ALL available agents simultaneously.
+Call `list_peers` first. Send to **ALL** available agents simultaneously.
 
 **To CEO:**
 ```
-[MEETING R1] Topic: [topic]
+[MEETING — DIVERGE] Topic: [topic]
 
-Opening position only. Answer:
-1. Strategic read: pursue / challenge / pass, and why
-2. The one thing you'd fight for in this discussion
-3. The assumption most likely to be wrong
-4. The risk nobody's talking about
+Generate ideas — no criticism yet. Answer:
+1. Strategic read: what's the real opportunity or problem here?
+2. Two or three concrete moves we could make
+3. The thing nobody's said yet that we should be considering
+4. One assumption you want to challenge in the next phase
 
-Write directly into the meeting file under "### CEO" (replacing _Awaiting response_). Stake a real position — other agents will push back in R2. After writing, check_messages immediately.
+Write under "### CEO" in the meeting file. Stake a real position — others push back in Challenge.
+After writing, check_messages immediately.
 
-If you're satisfied with the discussion at any point, add [SATISFIED] to your response.
+Write [NEEDS CLARIFY: X] if something needs defining before you can contribute fully.
+Write [SATISFIED] at any point if happy with the direction (noted, not acted on until after Stress Test).
 ```
 
 **To each department:**
 ```
-[MEETING R1] Topic: [topic]
+[MEETING — DIVERGE] Topic: [topic]
 
-Opening position only. Answer:
-1. Your honest take — what's right and wrong about this
-2. One thing you'd push back on if anyone proposed it
-3. What you'd volunteer to own
-4. What another department is underestimating
+Generate ideas — no criticism yet. Answer:
+1. Your honest take — what's the real problem or opportunity from your angle?
+2. What you'd build, propose, or change
+3. What another department is probably going to miss
+4. One assumption you want to challenge later
 
-Write directly into the meeting file under "### [Dept]" (replacing _Awaiting response_). Stake a real position — other agents respond to yours in R2. After writing, check_messages immediately.
+Write under "### [Dept]" in the meeting file. Stake real positions — others respond to yours in Challenge.
+After writing, check_messages immediately.
 
-If you're satisfied with the discussion at any point, add [SATISFIED] to your response.
+Write [NEEDS CLARIFY: X] if something needs defining before you can contribute fully.
+Write [SATISFIED] at any point if happy with the direction (noted, not acted on until after Stress Test).
 ```
 
-Tell Patrick: "Round 1 sent. Give agents 2-3 minutes. I'll read for tensions when you're ready."
+Tell Patrick: "Diverge sent. Give agents 2-3 minutes."
 
 ---
 
-### Step 2b — Between-Round Research Sprint (optional)
+### Step 3 — Phase: Clarify (optional)
 
-After collecting any round, scan for `[NEEDS RESEARCH: X]` flags. If any exist:
-1. Run the searches (WebSearch/WebFetch)
-2. Prepend findings to the next round's message: "**Research from last round:** [findings]. Now..."
-3. Clear the flags — don't carry them forward
-
-This keeps research demand-driven — it happens when the debate surfaces a gap, not on a fixed schedule.
-
----
-
-### Step 3 — Round 2: Cross-Examination
-
-Read all R1 responses. Find 3-5 **genuine tensions** — where agents contradict each other, make incompatible assumptions, or dismiss something another flagged as critical. Don't manufacture conflict; don't smooth over real disagreement.
+**Run if:** Diverge produced `[NEEDS CLARIFY]` flags, or agents are clearly using the same terms to mean different things.
+**Skip if:** Diverge responses were clear and agents share a common frame.
 
 Add section to meeting file:
 ```markdown
-## Round 2 — Cross-Examination
+## Phase: Clarify
+
+**Clarifications needed:**
+- [X from Frontend]
+- [Y from CEO]
+
+### Chair clarifications
+[Definitions or Patrick's decision on contested terms]
+```
+
+Send to agents who flagged clarifications:
+```
+[MEETING — CLARIFY] Topic: [topic]
+
+Before Challenge, clarifying:
+- [X]: [definition / Patrick's decision]
+- [Y]: [definition / Patrick's decision]
+
+Does this change your Diverge position? Update your section if needed, confirm you're clear.
+After writing, check_messages immediately.
+```
+
+---
+
+### Step 4 — Phase: Challenge (mandatory)
+
+Read all Diverge (and Clarify) responses. Find 3-5 **genuine tensions** — direct contradictions, incompatible assumptions, things one agent flagged as critical that others ignored. Don't manufacture conflict; don't smooth over real disagreement.
+
+Add section to meeting file:
+```markdown
+## Phase: Challenge
 
 **Tensions identified:**
 
@@ -198,120 +242,138 @@ Add section to meeting file:
 
 ### [Dept A] + [Dept B] respond to T1
 _Awaiting response_
-
-### CEO + [Dept C] respond to T2
-_Awaiting response_
 ```
 
-Send **targeted** messages — only agents whose positions are in tension:
+Send **targeted** messages — only agents in genuine conflict:
 ```
-[MEETING R2] Topic: [topic]
+[MEETING — CHALLENGE] Topic: [topic]
 
-You need to respond to these tensions:
+Respond to these tensions directly:
 
 **T1: [Label]**
-[Dept B] said: "[quote]"
-Your position was: "[quote]"
-These are incompatible. Who's right and why? Be direct.
+[Dept B] said: "[exact quote]"
+Your Diverge position was: "[exact quote]"
+These are incompatible. Who's right and why? Be direct — "X is wrong because Y."
 
-Write under "### [your dept] responds to T1" in the meeting file. One paragraph per tension. After writing, check_messages immediately.
+Write under "### [your dept] responds to T1". After writing, check_messages immediately.
 
-Add [SATISFIED] if you're happy with where the discussion is heading.
+Write [BACK TO CHALLENGE: reason] in a later phase if you hit a new tension that needs resolving.
+Write [SATISFIED] if happy with where this is heading (noted, not acted on until after Stress Test).
 ```
 
 Report tensions to Patrick before sending.
 
----
-
-### Step 4 — Round 3: Idea Building (optional)
-
-Use when R1–R2 surfaced promising ideas that need development, not just debate.
-
-```
-[MEETING R3] Topic: [topic]
-
-R2 is done. Here are the strongest ideas that emerged:
-- [Idea A from Dept X]
-- [Idea B from Dept Y]
-
-Your job this round: develop one of these further, or propose how to combine them. Don't critique — build.
-
-Write under "## Round 3 — Idea Building / ### [your dept]" in the meeting file. After writing, check_messages immediately.
-
-Add [SATISFIED] if you're happy with the direction.
-```
+**Loop back:** If Build responses contain `[BACK TO CHALLENGE: reason]`, add a new Challenge section, route only the agents involved, resolve it, then continue to Build.
 
 ---
 
-### Step 5 — Round 4: Devil's Advocate (optional)
+### Step 5 — Phase: Build (mandatory)
 
-Use when a consensus is forming and you want to stress-test it before committing.
+After Challenge resolves the main tensions, take the strongest surviving ideas and develop them.
+
+Add section:
+```markdown
+## Phase: Build
+
+**Surviving ideas to develop:**
+- [Idea A from Dept X — survived T1/T2 challenge]
+- [Idea B from CEO — unchallenged, needs development]
+```
+
+Send to all (or targeted if only specific ideas need development):
+```
+[MEETING — BUILD] Topic: [topic]
+
+Challenge is done. Strongest surviving ideas:
+- [Idea A]
+- [Idea B]
+
+Your job this phase: develop one further, or propose how to combine them. Don't critique — build.
+Be concrete: what does this actually look like? What's the first step? What does it need to work?
+
+Write under "## Phase: Build / ### [your dept]". After writing, check_messages immediately.
+
+Write [BACK TO CHALLENGE: reason] if you hit a new tension that needs resolving first.
+Write [SATISFIED] if happy with the direction (noted, not acted on until after Stress Test).
+```
+
+**Loop back:** If Build responses contain `[BACK TO CHALLENGE: reason]`, run a targeted Challenge on the new tension, then return to Build.
+
+---
+
+### Step 6 — Phase: Stress Test (mandatory)
+
+When Build has produced a concrete direction or proposal, attack it before committing.
+
+Add section:
+```markdown
+## Phase: Stress Test
+
+**Direction/proposal under attack:** [specific description]
+```
+
+Send to all:
+```
+[MEETING — STRESS TEST] Topic: [topic]
+
+A direction is forming: [description]
+
+Your job this phase: attack it. Find the holes, the bad assumptions, the things that will go wrong in practice. Don't defend it — break it.
+If you've tried and it held up, say why and flag [SATISFIED].
+
+Write under "## Phase: Stress Test / ### [your dept]". After writing, check_messages immediately.
+
+Write [BACK TO BUILD: reason] if Stress Test reveals a genuinely better approach worth developing.
+Write [CLOSE MEETING: reason] (CEO only) if the meeting has run its course.
+Write [SATISFIED] if the direction survived your scrutiny.
+```
+
+**Loop back:** If Stress Test responses contain `[BACK TO BUILD: reason]`, add a new Build section, develop the refined idea, then run Stress Test again.
+
+**Close triggers now active:**
+- CEO writes `[CLOSE MEETING: reason]` → close immediately
+- All agents write `[SATISFIED]` → close immediately
+- Patrick says "close" → close immediately
+- Otherwise → assess: Converge if unresolved, close if clear consensus
+
+---
+
+### Step 7 — Phase: Converge (optional)
+
+**Run if:** Stress Test ended with remaining genuine disagreements worth resolving explicitly.
+**Skip if:** Stress Test ended with clear consensus and all (or most) agents satisfied.
 
 ```
-[MEETING R4] Topic: [topic]
+[MEETING — CONVERGE] Topic: [topic]
 
-A consensus is forming around: [description]
+Here's where we are after Stress Test: [summary of what held up and what didn't]
 
-Your job this round: attack it. Find the holes, the bad assumptions, the things that will go wrong. Don't defend it — find what breaks it.
+What do you actually agree on? What's still genuinely unresolved — be specific.
 
-Write under "## Round 4 — Devil's Advocate / ### [your dept]" in the meeting file. After writing, check_messages immediately.
-
-Add [SATISFIED] if you think the consensus is actually solid and you're happy to proceed.
+Write under "## Phase: Converge / ### [your dept]". After writing, check_messages immediately.
+Flag [SATISFIED] when done. CEO: flag [CLOSE MEETING: reason] to close now.
 ```
 
 ---
 
-### Step 6 — Rounds 5 & 6: Refinement + Convergence (optional)
+### Step 8 — Phase: Decide (only if unresolved)
 
-**R5 — Refinement:** Send to agents whose ideas were attacked in R4. "Here's what R4 said about your proposal. Respond — defend, concede, or revise."
-
-**R6 — Convergence:** Broadcast to all. "Here's where we are. What do you actually agree on? What's still genuinely unresolved? Flag [SATISFIED] if you're done."
-
-Add new sections to meeting file for each round.
-
----
-
-### Step 7 — Round 7: Synthesis (optional)
-
-Only if R6 still has genuine unresolved conflict. Send to CEO only:
+Only if Converge (or Stress Test) still has genuine unresolved conflict. Send to CEO only:
 
 ```
-[MEETING R7 — SYNTHESIS] Topic: [topic]
+[MEETING — DECIDE] Topic: [topic]
 
-Unresolved after R6:
-- [T1: still open]
-- [T2: still open]
+Still genuinely unresolved:
+- [Item 1: what's the disagreement]
+- [Item 2: what's the disagreement]
 
 Read the full meeting file. Give a verdict:
-1. On T1: the right call is [X] because [Y]
-2. On T2: the right call is [X] because [Y]
-3. What Patrick needs to decide (if anything)
+1. On [Item 1]: the right call is [X] because [Y]
+2. On [Item 2]: the right call is [X] because [Y]
+3. What Patrick needs to decide (if anything you can't call)
 
-Write under "## Round 7 — Synthesis". This is a verdict, not a summary. After writing, check_messages immediately.
+Write under "## Phase: Decide". Verdict, not summary. After writing, check_messages immediately.
 ```
-
----
-
-## Auto-Progression
-
-Rounds run automatically — do NOT stop to ask Patrick between rounds. The mandatory flow is:
-
-1. R1 completes → identify tensions → **R2 fires automatically**
-2. R2 completes → take strongest ideas from R1+R2 → **R3 fires automatically**
-3. R3 completes → identify forming consensus → **R4 fires automatically**
-4. R4 completes → genuine unresolved conflict? → R5+ if yes, close if no
-
-**R1–R4 are mandatory. R3 and R4 cannot be skipped.** Ideas must be developed (R3) and attacked (R4) before any exit condition is honoured. A meeting that closes at R2 has only challenged ideas once — they've never been stress-tested.
-
-**The CEO is the meeting closer — but only from R4 onwards.** After R4 completes, the CEO can write `[CLOSE MEETING: reason]` to signal diminishing returns. Close immediately when seen. `[SATISFIED]` and `[CLOSE MEETING]` flags received before R4 completes are noted but ignored.
-
-**Exit conditions (only honoured after R4):**
-- CEO writes `[CLOSE MEETING: reason]` → close immediately
-- All agents flag `[SATISFIED]` → close
-- Patrick says "close" → close
-- 7 rounds completed → close regardless
-
-**Only surface to Patrick when the meeting closes.**
 
 ---
 
@@ -335,6 +397,7 @@ Append per department — don't overwrite:
 ### Step 3 — Update Meeting File
 
 - Status → `Closed`
+- Phases run → fill the list (e.g., `[Diverge, Challenge, Build, Stress Test]`)
 - Fill `## Action Items`
 
 ### Step 4 — Broadcast Close
@@ -346,7 +409,7 @@ Append per department — don't overwrite:
 ### Step 5 — Report to Patrick
 
 ```
-Meeting closed. [N] rounds.
+Meeting closed. Phases: [Diverge → Challenge → Build → Stress Test → ...]
 
 Decided: [key decisions]
 Unresolved (your call): [anything left open]
@@ -357,25 +420,25 @@ Written to each dept's briefing.md.
 
 ---
 
-## Tips
+## Meeting Type → Suggested Phase Path
 
-- **R2 is the whole point** — R1 without R2 is a survey.
-- **R3–R6 are where ideas develop** — use them for complex topics, skip for simple ones.
-- **[SATISFIED] saves tokens** — encourage agents to flag when they're done pushing.
-- **Route sparingly in R2** — only agents in genuine conflict. Don't spam everyone.
-- **CEO always gets R7** if there's real unresolved conflict. Skip if there isn't.
-- **Not all agents need to be online** — proceed with who's there.
-- **Meeting files are permanent** — stored in `.orchestra/meetings/` as institutional memory.
+| Type | Phase Path | Notes |
+|------|-----------|-------|
+| Sprint planning | Diverge → Challenge → Build → Stress Test | Full minimum path |
+| Feature design | Diverge → Challenge → Build → Stress Test | Build designs it, Stress Test breaks it |
+| Strategy / big bets | All phases | Converge + Decide critical for major calls |
+| Post-mortem | Diverge → Challenge → Build → Stress Test | Build develops fixes, Stress Test attacks them |
+| Partnership pitch | Diverge → Challenge → Build → Stress Test | Stress Test attacks the pitch before it goes out |
+| Quick align | Diverge → Challenge | Only if topic is narrow and consensus forms fast |
 
 ---
 
-## Meeting Type → Suggested Rounds
+## Tips
 
-| Type | Rounds | Notes |
-|------|--------|-------|
-| Sprint planning | R1–R4 | R4 attacks the prioritisation before it's locked |
-| Feature design | R1–R4 | R3 builds the design, R4 finds what breaks it |
-| Strategy | R1–R4 to R1–R6 | R4 devil's advocate is critical for big bets |
-| Post-mortem | R1–R4 | R3 develops fixes, R4 attacks them — root cause may differ |
-| Build prioritization | R1–R4 | R3 develops the sequence, R4 challenges the assumptions |
-| Partnership / outreach | R1–R4 | R4 attacks the pitch before it goes out |
+- **Challenge is the pivot** — Diverge without Challenge is a brainstorm.
+- **Build before Stress Test** — ideas need development before they can be meaningfully attacked.
+- **Loop back liberally** — Build reveals tensions → loop to Challenge. Stress Test reveals better ideas → loop to Build. This is the point of the state machine.
+- **Clarify early** — if agents are using the same terms differently, run Clarify before Challenge, not after.
+- **Decide sparingly** — most meetings shouldn't need it. Clear Stress Test → just close.
+- **CEO closes after Stress Test** — `[CLOSE MEETING: reason]` signals diminishing returns.
+- **Meeting files are permanent** — stored in `.orchestra/meetings/` as institutional memory.

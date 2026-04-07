@@ -22,3 +22,10 @@ Check the /updates or changelog page. If the latest entry is older than 2 weeks,
 - [ ] Update /why-list page copy with AI agent discovery angle and real citation stats
 - [ ] Draft maker outreach email template: "Your tool is being recommended to AI agents — here's the data"
 - [ ] Write/improve meta descriptions for top 10 category pages (SEO gap)
+
+## Meeting Task — 2026-04-07 (Future Models + Anthropic Pitch)
+- [ ] Draft DSP outreach message (framing: "zero-result queries" not "adoption rates" — 3 days of data is not enough to cite adoption) | By: Apr 9 — deliver to Patrick for review
+- [ ] Update Conway page headline: "Built for always-on agents" NOT "IndieStack is ready for Conway" | By: Apr 10
+- [ ] Publish token-cost blog skeleton at indiestack.ai/token-cost — estimates clearly labelled as methodology, not measurement | By: Apr 12
+- [ ] Hold Anthropic pitch one-pager until week 2 adoption data is in (Apr 18) — separate from blog post
+- NOTE: Gap data framing only for Apr 11 outreach. Adoption rates + token savings in Apr 18 follow-up.

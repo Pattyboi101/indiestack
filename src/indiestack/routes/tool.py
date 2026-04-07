@@ -808,11 +808,11 @@ async def tool_detail(request: Request, slug: str):
         safe_cmd = escape(install_command.strip())
         install_block = (
             f'<div style="background:var(--terracotta-dark);border-radius:var(--radius-sm);padding:16px 24px;'
-            f'margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;">'
+            f'margin-top:16px;display:flex;align-items:center;gap:16px;">'
             f'<code style="font-family:var(--font-mono);font-size:14px;color:var(--slate);white-space:nowrap;'
-            f'overflow-x:auto;">{safe_cmd}</code>'
+            f'overflow-x:auto;min-width:0;flex:1;">{safe_cmd}</code>'
             f'<button data-copy="{safe_cmd}" style="background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;'
-            f'padding:8px 16px;min-height:44px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">Copy</button>'
+            f'padding:8px 16px;min-height:44px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;">Copy</button>'
             f'</div>'
         )
 
