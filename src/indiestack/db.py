@@ -3429,7 +3429,7 @@ async def search_tools(
     # rank above open-source tools with stars in unrelated categories.
     # MCP views indicate real agent usage and get a strong boost.
     _engagement_expr = (
-        "(CASE WHEN LOWER(t.slug) = LOWER(?) THEN 2000"
+        "(CASE WHEN LOWER(t.slug) = LOWER(?) AND COALESCE(t.quality_score, 0) >= 80 THEN 2000"
         "  WHEN LOWER(t.name) = LOWER(?) AND COALESCE(t.install_command, '') != '' THEN 150"
         "  WHEN LOWER(t.name) = LOWER(?) THEN 30 ELSE 0 END)"
         " + (CASE WHEN LOWER(t.name) LIKE (LOWER(?) || '%') THEN 60 ELSE 0 END)"
