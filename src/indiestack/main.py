@@ -4929,6 +4929,7 @@ async def agent_outcome(request: Request):
     tool_slug = str(data.get("tool_slug", "")).strip()
     success = data.get("success")
     notes = str(data.get("notes", "")).strip()[:1000] or None
+    _session_id = str(data.get("session_id", "")).strip()[:128] or None
 
     if not tool_slug:
         return JSONResponse({"error": "tool_slug required"}, status_code=400)
@@ -4987,6 +4988,13 @@ async def agent_outcome(request: Request):
             inc_tool = await db.get_tool_by_slug(request.state.db, incompatible_with_str)
             if inc_tool:
                 await db.record_tool_conflict(request.state.db, tool_slug, incompatible_with_str, reason=notes)
+    except Exception:
+        pass
+
+    # Backfill session outcome if session_id provided
+    try:
+        if _session_id and success:
+            await backfill_mcp_adoption(request.state.db, _session_id, tool_slug)
     except Exception:
         pass
 
