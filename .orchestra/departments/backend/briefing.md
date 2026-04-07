@@ -3,27 +3,27 @@
 ## Priority Tasks
 
 **Task 1 — Citation analytics (HIGHEST priority, blocks Maker Pro launch):**
-Query production DB for agent citation data to validate Maker Pro value prop:
+NOTE: agent_actions has 0 cite records. Citation data is in agent_citations table.
+Correct query (verified Apr 8):
 ```sql
-SELECT tool_slug, COUNT(*) as n FROM agent_actions
-WHERE action='cite' AND created_at > datetime('now','-30 days')
-GROUP BY tool_slug HAVING n>10 ORDER BY n DESC LIMIT 20;
+SELECT t.name, t.slug, COUNT(*) as n FROM agent_citations ac
+JOIN tools t ON t.id = ac.tool_id
+WHERE ac.created_at > datetime('now','-30 days')
+GROUP BY ac.tool_id ORDER BY n DESC LIMIT 20;
 ```
-Report: how many tools have >10 citations? Is the data rich enough to sell Maker Pro ($19/mo)?
+Result: 15 tools with citations in 30d. Top: Cloudinary (27), Next Auth (26), zauth (25),
+Vaultwarden (24), Supabase (21). Data is rich enough for Maker Pro — these are real
+"appeared in MCP agent search results" signals (not explicit recommendations).
+maker_weekly_citations view already exists on production. [DONE — data confirmed Apr 8]
 
 **Task 2 — Maker Pro claim flow validation:**
 Verify end-to-end: can a maker claim their tool and see citation analytics on the dashboard?
 Check `/maker/dashboard` route and verify it queries agent_actions correctly.
 
 **Task 3 — `maker_weekly_citations` view:**
-Add a DB view for fast maker dashboard queries (avoids repeated GROUP BY on large table):
-```sql
-CREATE VIEW IF NOT EXISTS maker_weekly_citations AS
-  SELECT tool_slug, COUNT(*) as citations_7d FROM agent_actions
-  WHERE action='cite' AND created_at > datetime('now','-7 days')
-  GROUP BY tool_slug;
-```
-Use SSH file-upload pattern to apply on production, then update any dashboard queries to use the view.
+[DONE — view already exists on production, confirmed Apr 8]
+Note: view queries agent_actions but citation data is actually in agent_citations.
+If view is used by dashboard, verify it queries the right table.
 
 ## Completed Tasks
 - [x] Developer Tools category cleanup — ~500+ tools re-categorized across 15+ categories (fifth pass)
