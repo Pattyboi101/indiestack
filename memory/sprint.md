@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-07 (thirty-fourth pass)
+Last updated: 2026-04-07 (thirty-fifth pass)
 
 ## Status: Active
 
@@ -9,12 +9,43 @@ Last updated: 2026-04-07 (thirty-fourth pass)
 - **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 743 entries for search routing (added 22 in thirty-fourth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 125 tools ready to insert (slug-safe)
-  - 4 tools added in thirty-fourth pass (Electron, Tauri, semantic-release, Nx)
+- **_CAT_SYNONYMS**: 755 entries for search routing (added 12 in thirty-fifth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 133 tools ready to insert (slug-safe)
+  - 8 tools added in thirty-fifth pass (Unleash, Flagsmith, Docusaurus, Scalar, Knock, Jaeger, Zipkin, OpenTelemetry-JS)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-07, thirty-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited NEED_MAPPINGS — all active categories covered; no gaps found
+- Added 12 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **Rate throttling**: `"throttle"`, `"throttling"` → `"api"` — complement to rate/limiting/limiter
+  - **Circuit breaker**: `"circuit"` → `"api"` — circuit breaker pattern queries
+  - **Resilience**: `"resilience"` → `"monitoring"` — reliability/resilience engineering
+  - **Durable execution**: `"durable"` → `"background"` — Temporal/Inngest durable workflow queries
+  - **Notification inbox**: `"inbox"` → `"notifications"` — in-app notification inbox UI
+  - **Audit logging**: `"audit"` → `"logging"` — audit trail / compliance audit log
+  - **Health checks**: `"healthcheck"` → `"monitoring"` — health check endpoint monitoring
+  - **API codegen**: `"codegen"` → `"api"` — openapi-generator, swagger-codegen, Speakeasy
+  - **Multi-tenancy**: `"multitenancy"`, `"multitenant"` → `"authentication"` — tenant isolation
+  - **Web scraping (verb)**: `"scrape"` → `"devtools"` — "scrape website" queries
+- Running total: 755 entries (743 + 12)
+
+### Catalog Script (Step 2)
+- Added 8 new tools to `scripts/add_missing_tools.py` (133 total):
+  - Unleash (feature-flags, 12k★) — open-source feature flag management, self-hostable
+  - Flagsmith (feature-flags, 5k★) — feature flags + remote config, 16+ SDK languages
+  - Docusaurus (documentation, 57k★) — Meta's React/MDX static site generator for docs
+  - Scalar (documentation, 9k★) — beautiful interactive API references from OpenAPI specs
+  - Knock (notifications, SaaS) — multi-channel notification infra with inbox component
+  - Jaeger (monitoring-uptime, 20k★) — CNCF distributed tracing, born at Uber
+  - Zipkin (monitoring-uptime, 17k★) — distributed tracing from Twitter, multi-backend
+  - OpenTelemetry JS (monitoring-uptime, 3k★) — CNCF vendor-neutral telemetry for Node.js
+
+### R&D Docs (Step 4)
+- sprint.md updated to thirty-fifth pass
 
 ## Completed This Session (2026-04-07, thirty-fourth pass — autonomous improvement cycle)
 

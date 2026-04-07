@@ -3197,6 +3197,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     # PWA / service workers — Workbox (Google)
     "workbox": "frontend",          # Google Workbox — service worker and PWA caching library
     "serviceworker": "frontend",    # "service worker library", "service worker caching" → Frontend
+    # Rate throttling (complement to rate/limiting/limiter/limit → api)
+    "throttle": "api",              # "throttle requests", "api throttle" → API Tools
+    "throttling": "api",            # "request throttling", "api throttling" → API Tools
+    # Circuit breaker / resilience patterns
+    "circuit": "api",               # "circuit breaker", "circuit pattern" → API Tools
+    "resilience": "monitoring",     # "resilience engineering", "resiliency" → Monitoring & Uptime
+    # Durable execution / workflow engines (Temporal, Inngest, Trigger.dev)
+    "durable": "background",        # "durable execution", "durable workflow" → Background Jobs
+    # Notification inbox UI component (Novu, Knock, Courier)
+    "inbox": "notifications",       # "notification inbox", "inbox component" → Notifications
+    # Audit logging (audit trail, compliance audit log)
+    "audit": "logging",             # "audit log", "audit trail" → Logging
+    # Health checks (health-check endpoint monitoring)
+    "healthcheck": "monitoring",    # "healthcheck endpoint", "health check tool" → Monitoring
+    # API codegen (openapi-generator, swagger-codegen, Speakeasy)
+    "codegen": "api",               # "api codegen", "openapi codegen" → API Tools
+    # Multi-tenancy (multi-tenant SaaS auth, tenant isolation)
+    "multitenancy": "authentication",  # "multi-tenancy", "tenant isolation" → Authentication
+    "multitenant": "authentication",   # "multitenant auth", "multitenant saas" → Authentication
+    # Web scraping (verb form, e.g. "scrape a website")
+    "scrape": "devtools",           # "scrape website", "scrape html" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

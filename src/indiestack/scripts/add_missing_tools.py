@@ -1996,6 +1996,131 @@ TOOLS = [
         "npm install --save-dev husky",
         "code",
     ),
+    # Feature flags ---------------------------------------------------------------
+    (
+        "unleash",
+        "Unleash",
+        "The open-source feature flag service",
+        "Unleash is an enterprise-ready open-source feature flag management system. "
+        "Run it self-hosted or use Unleash Cloud. Supports gradual rollouts, "
+        "A/B experiments, and fine-grained strategy controls per environment.",
+        "feature-flags",
+        "Unleash/unleash",
+        12000,
+        "https://getunleash.io",
+        "feature-flags,open-source,self-hosted,experimentation",
+        "docker run unleashorg/unleash-server",
+        "code",
+    ),
+    (
+        "flagsmith",
+        "Flagsmith",
+        "Feature flags and remote config — open source",
+        "Flagsmith lets you manage feature flags, remote config, and user segments "
+        "across web, mobile, and server-side applications. Self-host with Docker "
+        "or use the managed cloud — includes a REST API and official SDKs for 16+ languages.",
+        "feature-flags",
+        "Flagsmith/flagsmith",
+        5000,
+        "https://flagsmith.com",
+        "feature-flags,remote-config,open-source,self-hosted",
+        "pip install flagsmith",
+        "code",
+    ),
+    # Documentation ---------------------------------------------------------------
+    (
+        "docusaurus",
+        "Docusaurus",
+        "Build optimised websites quickly, focus on your content",
+        "Docusaurus is a static site generator powered by React and MDX. "
+        "Used by Meta, Microsoft, Shopify, and thousands of open-source projects "
+        "to build documentation sites, blogs, and versioned API references.",
+        "documentation",
+        "facebook/docusaurus",
+        57000,
+        "https://docusaurus.io",
+        "docs,static-site,react,mdx,open-source",
+        "npm init docusaurus@latest my-website classic",
+        "code",
+    ),
+    (
+        "scalar",
+        "Scalar",
+        "Beautiful API references from OpenAPI specs",
+        "Scalar renders gorgeous, interactive API reference pages from your OpenAPI "
+        "or Swagger spec. Supports request testing in-browser, multi-language code "
+        "samples, and embeds in any stack — including Next.js, Hono, FastAPI, and more.",
+        "documentation",
+        "scalar/scalar",
+        9000,
+        "https://scalar.com",
+        "api-docs,openapi,swagger,interactive,reference",
+        "npm install @scalar/api-reference",
+        "code",
+    ),
+    # Notifications ---------------------------------------------------------------
+    (
+        "knock",
+        "Knock",
+        "The notification infrastructure for developers",
+        "Knock provides a complete notification infrastructure — multi-channel "
+        "delivery (email, SMS, push, in-app), a drag-and-drop workflow builder, "
+        "and a prebuilt notification inbox React component. No queuing infra to manage.",
+        "notifications",
+        "",
+        0,
+        "https://knock.app",
+        "notifications,in-app,email,sms,push,saas",
+        "npm install @knocklabs/node",
+        "saas",
+    ),
+    # Monitoring — distributed tracing --------------------------------------------
+    (
+        "jaeger",
+        "Jaeger",
+        "Open-source distributed tracing for microservices",
+        "Jaeger is an open-source distributed tracing system from Uber, now a CNCF "
+        "graduated project. Monitor request flows across microservices, identify "
+        "bottlenecks, and debug latency issues with a rich trace visualiser.",
+        "monitoring-uptime",
+        "jaegertracing/jaeger",
+        20000,
+        "https://jaegertracing.io",
+        "tracing,distributed,opentelemetry,observability,cncf",
+        "docker run jaegertracing/all-in-one",
+        "code",
+    ),
+    (
+        "zipkin",
+        "Zipkin",
+        "A distributed tracing system",
+        "Zipkin is a distributed tracing system from Twitter (now open-source). "
+        "It helps gather timing data to troubleshoot latency problems in "
+        "service architectures. Supports multiple storage backends including "
+        "Elasticsearch, Cassandra, and MySQL.",
+        "monitoring-uptime",
+        "openzipkin/zipkin",
+        17000,
+        "https://zipkin.io",
+        "tracing,distributed,observability,latency",
+        "docker run openzipkin/zipkin",
+        "code",
+    ),
+    (
+        "opentelemetry-js",
+        "OpenTelemetry (JS)",
+        "Vendor-neutral observability framework for JavaScript",
+        "OpenTelemetry is the CNCF standard for telemetry — traces, metrics, and "
+        "logs — with SDKs in 11+ languages. The JavaScript SDK instruments Node.js "
+        "and browser apps and exports to any backend: Jaeger, Zipkin, Datadog, etc.",
+        "monitoring-uptime",
+        "open-telemetry/opentelemetry-js",
+        3000,
+        "https://opentelemetry.io",
+        "otel,observability,tracing,metrics,logs,cncf",
+        "npm install @opentelemetry/sdk-node",
+        "code",
+    ),
 ]
 
 
