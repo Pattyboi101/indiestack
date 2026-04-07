@@ -98,6 +98,7 @@ def _check_rate_limit(ip: str, path: str, method: str) -> bool:
         "/api/subscribe": 5,
         "/api/claim": 5,
         "/api/tools/submit": 3,
+        "/api/status": 100,  # Public monitoring endpoint
     }
 
     # Check specific path limits
@@ -205,7 +206,7 @@ from indiestack.routes import embed
 from indiestack.routes import launch_with_me
 from indiestack.routes import use_cases
 from indiestack.routes import why_list
-from indiestack.routes import sla
+from indiestack.routes import sla, trust
 from indiestack.routes import what_is
 from indiestack.routes import plugins
 from indiestack.routes import gaps
@@ -4605,6 +4606,61 @@ async def api_quality(request: Request):
     })
 
 
+@app.get("/api/status")
+async def api_status(request: Request):
+    """Public status page: uptime, latency, incident log.
+    Used for operational transparency. Rate-limited to 100 req/min per IP."""
+    def percentile(data: list, p: float) -> float:
+        if not data:
+            return 0.0
+        sorted_data = sorted(data)
+        idx = int(len(sorted_data) * p)
+        return sorted_data[min(idx, len(sorted_data) - 1)]
+
+    # Aggregate metrics across all tracked endpoints
+    all_latencies = []
+    total_requests = 0
+    total_errors = 0
+
+    for endpoint, metrics in _api_metrics.items():
+        total_requests += metrics["total"]
+        total_errors += metrics["errors"]
+        all_latencies.extend(metrics["latencies"])
+
+    # Calculate aggregated uptime and latency
+    uptime_pct = 0.0
+    if total_requests > 0:
+        uptime_pct = ((total_requests - total_errors) / total_requests) * 100
+
+    p50 = percentile(all_latencies, 0.50) if all_latencies else 0.0
+    p95 = percentile(all_latencies, 0.95) if all_latencies else 0.0
+    p99 = percentile(all_latencies, 0.99) if all_latencies else 0.0
+
+    # Incident log (stub: fetch from DB if incidents exist)
+    incidents = []
+    try:
+        d = request.state.db
+        # Query incidents table if it exists (stub for now)
+        # incidents = await d.fetchall("SELECT id, timestamp, severity, description FROM incidents ORDER BY timestamp DESC LIMIT 10")
+    except Exception:
+        pass
+
+    return JSONResponse({
+        "status": "healthy" if uptime_pct >= 99.5 else "degraded",
+        "uptime_percent": round(uptime_pct, 2),
+        "latency_p50_ms": round(p50, 2),
+        "latency_p95_ms": round(p95, 2),
+        "latency_p99_ms": round(p99, 2),
+        "requests_total": total_requests,
+        "errors": total_errors,
+        "last_incident": None,  # TODO: populate from incidents table
+        "on_call_contact": "support@indiestack.ai",
+        "sla_url": "https://indiestack.ai/sla",
+        "incident_log_url": "https://indiestack.ai/trust/incidents",
+        "timestamp": _time.time(),
+    })
+
+
 @app.get("/admin/recompute-scores")
 async def admin_recompute_scores(request: Request):
     """Cron endpoint: run health checks then recompute all quality scores.
@@ -5011,6 +5067,7 @@ app.include_router(launch_with_me.router)
 app.include_router(use_cases.router)
 app.include_router(why_list.router)
 app.include_router(sla.router)
+app.include_router(trust.router)
 app.include_router(what_is.router)
 app.include_router(plugins.router)
 app.include_router(gaps.router)

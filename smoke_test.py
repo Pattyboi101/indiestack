@@ -108,6 +108,10 @@ TESTS = [
     ("GET", "/api/tool-trust?limit=5", 200, "Tool trust leaderboard"),
     ("GET", "/calculator", 200, "Cost calculator"),
     ("GET", "/embed", 200, "Embed landing"),
+
+    # Status and ops pages (Apr 7)
+    ("GET", "/api/status", 200, "Public status API"),
+    ("GET", "/trust/incidents", 200, "Incident response protocol"),
 ]
 
 # Content checks: path -> (substring or callable, description)

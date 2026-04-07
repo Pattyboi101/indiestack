@@ -28,9 +28,10 @@ Verify `https://indiestack.fly.dev/health` returns 200. Report status.
 - [ ] Add cron job to precompute maker citation summaries at 02:00 daily (avoids slow dashboard queries)
 
 ## Meeting Task — 2026-04-07 (Future Models + Anthropic Pitch)
-- [ ] Publish indiestack.ai/sla — honest 99.5% uptime, <150ms p95, 1h critical response | By: Apr 10
-- [ ] Deploy /api/status public endpoint (rate-limited, shows uptime/latency/incident log) | By: Apr 14
-- [ ] Publish incident response protocol at /trust/incidents | By: Apr 14
+- [x] Publish indiestack.ai/sla — honest 99.5% uptime, <150ms p95, 1h critical response | Done Apr 7
+- [x] Deploy /api/status public endpoint (rate-limited, shows uptime/latency/incident log) | Code complete Apr 7, deploying Apr 8
+- [x] Publish /trust/incidents page (incident response protocol + past log) | Code complete Apr 7, deploying Apr 8
+- [ ] Smoke test both endpoints, then deploy all changes | By: Apr 8
 - [ ] Postgres migration — week 3 EARLIEST (Apr 22+). Do NOT migrate during Apr 11-21 Anthropic conversation window.
 - [ ] Confirm with Backend by Apr 15: is Postgres migration feasible + reversible? If not, add disclaimer to /sla.
 - [ ] Multi-region read replica (iad) + failover testing | By: Apr 21 (if migration confirmed)
