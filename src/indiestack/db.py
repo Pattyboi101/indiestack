@@ -3168,6 +3168,35 @@ _CAT_SYNONYMS: dict[str, str] = {
     "conform": "frontend",          # Conform — progressive form validation for Remix/Next.js with Zod
     # Frontend — Go desktop app framework using web tech
     "wails": "frontend",            # Wails — build desktop apps with Go + HTML/CSS/JS frontend
+    # A/B testing — feature flags category (Split.io, GrowthBook, LaunchDarkly)
+    "ab": "feature",                # "a/b test", "a/b testing" → Feature Flags (GrowthBook, Unleash)
+    "split": "feature",             # "split testing", "Split.io alternative" → Feature Flags
+    # Email — generic mail queries (mail relay, mailer libraries)
+    "mail": "email",                # "mail sender", "mail relay", "Laravel mail", "Go mailer"
+    "mailer": "email",              # "Ruby mailer", "action mailer", "Node.js mailer"
+    # Contract testing — Pact, Dredd (consumer-driven contract tests)
+    "pact": "testing",              # Pact — consumer-driven contract testing framework
+    "contract": "testing",          # "contract testing", "consumer-driven contracts"
+    # Release / changelog automation — semantic-release, Changesets, release-it
+    "release": "devops",            # "release automation", "semantic release", "release management"
+    # Desktop app frameworks — Electron, Tauri, Wails
+    "electron": "frontend",         # Electron — Node.js + Chromium desktop app framework
+    "tauri": "frontend",            # Tauri — Rust + WebView2/WebKit desktop app framework
+    "desktop": "frontend",          # "desktop app framework", "desktop GUI" queries
+    # Mobile / cross-platform (complement to react-native, expo, flutter mappings)
+    "native": "frontend",           # "react native", "nativescript" — mobile/native queries
+    "mobile": "frontend",           # "mobile app framework", "mobile development" queries
+    # Accessibility (a11y) tooling — axe, React Aria, Radix UI
+    "accessibility": "frontend",    # "accessibility library", "a11y component" → Frontend Frameworks
+    "a11y": "frontend",             # short-form — "a11y testing", "a11y linting", "a11y audit"
+    # Hot Module Replacement — Vite HMR, webpack HMR
+    "hmr": "frontend",              # Hot Module Replacement — Vite/webpack feature query term
+    # Polyfills / browser compatibility shims — core-js, polyfill.io
+    "polyfill": "frontend",         # "polyfill library", "browser polyfill" → Frontend Frameworks
+    "polyfills": "frontend",        # plural form
+    # PWA / service workers — Workbox (Google)
+    "workbox": "frontend",          # Google Workbox — service worker and PWA caching library
+    "serviceworker": "frontend",    # "service worker library", "service worker caching" → Frontend
 }
 
 _FTS_STOP_WORDS = {

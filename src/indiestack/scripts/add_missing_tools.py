@@ -1609,6 +1609,72 @@ TOOLS = [
         "npm install arktype",
         "code",
     ),
+    # Frontend — Desktop app frameworks -------------------------------------------
+    (
+        "electron",
+        "Electron",
+        "Build cross-platform desktop apps with JavaScript, HTML, and CSS",
+        "Electron lets you build cross-platform desktop applications using web technologies. "
+        "It embeds Chromium and Node.js into a single binary so you can ship desktop apps "
+        "with HTML, CSS, and JavaScript. Powers VS Code, Slack, Figma, Discord, and more.",
+        "frontend-frameworks",
+        "electron/electron",
+        115000,
+        "https://www.electronjs.org",
+        "desktop,javascript,nodejs,chromium,cross-platform,gui",
+        "npm install --save-dev electron",
+        "code",
+    ),
+    (
+        "tauri",
+        "Tauri",
+        "Build smaller, faster, and more secure desktop applications with a web frontend",
+        "Tauri is a framework for building desktop apps using web tech for the frontend "
+        "and Rust for the backend. Produces significantly smaller binaries than Electron "
+        "(< 600KB) with lower memory usage. Uses the OS native WebView instead of bundling Chromium. "
+        "Tauri 2.0 adds mobile (iOS/Android) support.",
+        "frontend-frameworks",
+        "tauri-apps/tauri",
+        82000,
+        "https://tauri.app",
+        "desktop,rust,mobile,cross-platform,security,electron-alternative",
+        "npm create tauri-app@latest",
+        "code",
+    ),
+    # DevOps — release automation ---------------------------------------------------
+    (
+        "semantic-release",
+        "semantic-release",
+        "Fully automated version management and package publishing",
+        "semantic-release automates the versioning and release process based on commit "
+        "messages following the Conventional Commits specification. Determines next version "
+        "automatically, generates changelogs, publishes to npm, and creates GitHub releases — "
+        "all from your CI/CD pipeline.",
+        "devops-infrastructure",
+        "semantic-release/semantic-release",
+        21000,
+        "https://semantic-release.gitbook.io",
+        "release,versioning,changelog,ci-cd,npm,conventional-commits",
+        "npm install --save-dev semantic-release",
+        "code",
+    ),
+    # Developer Tools — monorepo build system ------------------------------------------
+    (
+        "nx",
+        "Nx",
+        "Smart monorepo build system with distributed task execution",
+        "Nx is an extensible build system for monorepos. Computes task dependency graphs, "
+        "caches task results locally and remotely (Nx Cloud), and distributes CI across "
+        "multiple machines. First-class support for React, Angular, Node.js, Next.js, "
+        "Vite, and more. Works alongside or instead of Turborepo.",
+        "developer-tools",
+        "nrwl/nx",
+        24000,
+        "https://nx.dev",
+        "monorepo,build-tool,ci,cache,typescript,javascript",
+        "npx create-nx-workspace@latest",
+        "code",
+    ),
     # Database — data transformation / ETL ------------------------------------------
     (
         "dbt",
