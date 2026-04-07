@@ -4655,7 +4655,7 @@ async def api_status(request: Request):
         "requests_total": total_requests,
         "errors": total_errors,
         "last_incident": None,  # TODO: populate from incidents table
-        "on_call_contact": "support@indiestack.ai",
+        "on_call_contact": "hello@indiestack.ai",
         "sla_url": "https://indiestack.ai/sla",
         "incident_log_url": "https://indiestack.ai/trust/incidents",
         "timestamp": _time.time(),
