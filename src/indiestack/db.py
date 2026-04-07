@@ -2385,6 +2385,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rate": "api",       # "rate limiting" → API Tools category
     # Message queue synonyms — "message" self-maps so "message queue" query gets correct boost
     # ("queue" singular stays mapped to "background" above for job queue queries)
+    # "event" → "message" so "event streaming queue" gets Message Queue boost, not Media Server
+    # (scan order: "event" is checked before "streaming" → "media")
+    "event": "message",
+    "events": "message",
     "message": "message",
     "queues": "message",
     "pubsub": "message",
