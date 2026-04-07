@@ -29,9 +29,10 @@ Verify `https://indiestack.fly.dev/health` returns 200. Report status.
 
 ## Meeting Task — 2026-04-07 (Future Models + Anthropic Pitch)
 - [x] Publish indiestack.ai/sla — honest 99.5% uptime, <150ms p95, 1h critical response | Done Apr 7
-- [x] Deploy /api/status public endpoint (rate-limited, shows uptime/latency/incident log) | Code complete Apr 7, deploying Apr 8
-- [x] Publish /trust/incidents page (incident response protocol + past log) | Code complete Apr 7, deploying Apr 8
-- [ ] Smoke test both endpoints, then deploy all changes | By: Apr 8
+- [x] Deploy /api/status public endpoint (rate-limited, shows uptime/latency/incident log) | Live Apr 8
+- [x] Publish /trust/incidents page (incident response protocol + past log) | Live Apr 8
+- [x] Smoke test both endpoints — 62/62 tests pass | Done Apr 8
+- [x] Link /sla ↔ /trust/incidents for cross-reference | Done Apr 8
 - [ ] Postgres migration — week 3 EARLIEST (Apr 22+). Do NOT migrate during Apr 11-21 Anthropic conversation window.
 - [ ] Confirm with Backend by Apr 15: is Postgres migration feasible + reversible? If not, add disclaimer to /sla.
 - [ ] Multi-region read replica (iad) + failover testing | By: Apr 21 (if migration confirmed)

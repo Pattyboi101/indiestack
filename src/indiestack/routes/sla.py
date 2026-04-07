@@ -98,9 +98,12 @@ async def sla_page(request: Request):
                     <span style="color:var(--ink-muted);">UI issues, slow pages, non-critical endpoint failures. Response within 24 hours.</span>
                 </div>
             </div>
-            <p style="color:var(--ink-muted);line-height:1.7;">
+            <p style="color:var(--ink-muted);line-height:1.7;margin-bottom:12px;">
                 Report incidents: <a href="mailto:hello@indiestack.ai" style="color:var(--accent);text-decoration:none;">hello@indiestack.ai</a>
                 or open an issue at <a href="https://github.com/Pattyboi101/indiestack/issues" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">github.com/Pattyboi101/indiestack</a>.
+            </p>
+            <p style="color:var(--ink-muted);line-height:1.7;">
+                See our full <a href="/trust/incidents" style="color:var(--accent);text-decoration:none;">incident response protocol</a> for severity definitions and response times.
             </p>
         </div>
 
@@ -120,7 +123,8 @@ async def sla_page(request: Request):
             <div style="padding:24px;background:var(--cream-dark);border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;">
                 <div style="font-size:32px;margin-bottom:8px;">&#x2714;</div>
                 <div style="font-weight:600;color:var(--ink);margin-bottom:4px;">No incidents in the last 90 days</div>
-                <div style="font-size:13px;color:var(--ink-muted);">Incidents will be logged here with timeline and resolution details.</div>
+                <div style="font-size:13px;color:var(--ink-muted);margin-bottom:12px;">Incidents will be logged here with timeline and resolution details.</div>
+                <a href="/trust/incidents" style="display:inline-block;padding:8px 16px;background:var(--accent);color:white;border-radius:var(--radius-sm);text-decoration:none;font-size:13px;font-weight:600;">View incident response protocol →</a>
             </div>
         </div>
 
