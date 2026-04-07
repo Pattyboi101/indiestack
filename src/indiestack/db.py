@@ -2913,13 +2913,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gin": "api",           # Gin — high-performance Go HTTP framework
     "fiber": "api",         # Fiber — Express-inspired Go web framework
     "axum": "api",          # Axum — modular Rust web framework (Tokio team)
-    # Monorepo tooling — Turborepo synonym missing despite being in catalog
-    "turborepo": "devtools",    # Turborepo — Vercel high-performance monorepo build system
+    # Monorepo tooling
+    "turborepo": "developer",   # Turborepo — Vercel high-performance monorepo build system
+    "nx": "developer",          # Nx — monorepo platform from Nrwl
     # Schema validation — Zod, Yup, Valibot all live in developer-tools category
-    "validation": "devtools",   # "schema validation", "runtime validation", "form validation"
-    "zod": "devtools",           # Zod — TypeScript-first schema validation (34k stars)
-    "yup": "devtools",           # Yup — popular JS/TS schema validation (22k stars)
-    "valibot": "devtools",       # Valibot — lightweight modular Zod alternative
+    "validation": "developer",  # "schema validation", "runtime validation", "form validation"
+    "zod": "developer",          # Zod — TypeScript-first schema validation (34k stars)
+    "yup": "developer",          # Yup — popular JS/TS schema validation (22k stars)
+    "valibot": "developer",      # Valibot — lightweight modular Zod alternative
+    # Additional backend web frameworks (new Apr 2026)
+    "actix": "api",             # Actix Web — powerful Rust web framework
+    "spring": "api",            # Spring Boot — Java enterprise web framework
+    "gorilla": "api",           # Gorilla Mux — Go HTTP router
+    "fastify": "api",           # Fastify — fast Node.js web framework
     # Realtime — Socket.io is the most-searched realtime tool, "socket" alone commonly used
     "socket": "api",            # "socket server", "socket.io alternative" → API Tools
     "socketio": "api",          # explicit Socket.io queries
