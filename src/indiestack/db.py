@@ -2395,6 +2395,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "kafka": "message",
     "rabbitmq": "message",
     "nats": "message",
+    "websocket": "message",  # WebSocket servers (Soketi, Centrifugo) live in Message Queue
+    "websockets": "message",
+    "realtime": "message",   # real-time messaging → message queue category
     # AI synonyms
     "llm": "ai",
     "gpt": "ai",
