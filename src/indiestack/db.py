@@ -2623,7 +2623,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "secret": "security",       # singular form — "secret management", "secret store"
     "env": "security",          # "env management", "env secrets" → security (Infisical, Doppler)
     "envvars": "security",      # "envvars management" → same
-    "dotenv": "devtools",       # dotenv — .env file loader library
+    "dotenv": "developer",      # dotenv — .env file loader library → Developer Tools category
     # Invoicing — "invoice"/"receipt" already mapped above (line ~2295); add named tools + new terms
     "invoicing": "invoicing",
     "accounting": "invoicing",
