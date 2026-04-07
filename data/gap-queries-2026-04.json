@@ -1,8 +1,10 @@
 {
   "generated": "2026-04-07",
-  "source": "IndieStack \u2014 search logs from 3,268 tracked API/MCP searches (90 days)",
-  "note": "Zero-result queries \u2014 searches where no tools were returned. Includes both genuine catalog gaps and tools that exist but may be missing from search index. Queries that appear to be tests, spam, or non-dev-tool searches have been excluded.",
-  "total_zero_result_queries_90d": 189,
+  "source": "IndieStack \u2014 2,662 server-logged API searches over 90 days",
+  "note": "Zero-result queries from source=api searches (MCP server calls + direct API integrations; MCP and direct API are not distinguished in this dataset as both log to the same source field). Not deduplicated by session. Includes both genuine catalog gaps and tools that exist but may be missing from the search index. Queries that appear to be tests, spam, or non-dev-tool searches have been excluded.",
+  "total_searches_90d": 2662,
+  "total_zero_result_queries_90d": 143,
+  "gap_rate": "5.4%",
   "gaps": [
     {
       "query": "privacy-friendly analytics",
