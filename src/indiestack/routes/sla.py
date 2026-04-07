@@ -139,5 +139,5 @@ async def sla_page(request: Request):
         description="IndieStack service level agreement: 99.5% uptime, <150ms API p95, 1h critical response.",
         body=body,
         user=user,
-        canonical_path="/sla",
+        canonical="/sla",
     ))
