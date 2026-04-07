@@ -960,3 +960,28 @@ If we present it as "here's our production Conway extension," wrong fields make 
 The session_id design is sound and the failure mode is graceful — callers who don't pass it just get `outcome=unknown`, nothing breaks. The gap dataset is the strongest asset and doesn't require any of the new infrastructure to be correct — it's a direct query against existing data. The Build plan's instinct to lead with gaps and not adoption rates is right.
 
 [SATISFIED — the plan holds, but the manifest needs the context_injection section removed, and confidence rationale needs honest uncertainty signals]
+
+---
+
+## DSP Outreach Draft
+
+*For Patrick to post as a GitHub comment — target: a relevant open issue or discussion on the MCP spec repo (modelcontextprotocol/specification). Tone: peer, technical, no ask.*
+
+---
+
+Hi David — I've been running IndieStack as an MCP server since late 2025 (10k+ PyPI installs, listed on the MCP Registry at `io.github.Pattyboi101/indiestack`). We serve tool discovery queries from AI agents — auth, payments, databases, that kind of infrastructure.
+
+I've been watching our zero-result queries closely because I think they're a useful signal for where the MCP ecosystem currently fails agents. Over the last 90 days we logged 189 searches that returned nothing — queries like "privacy-friendly analytics", "notification alerting webhook", "rag vector database multi source", "logging nodejs", "vector database", "notes wiki knowledge base". These aren't malformed queries; they're agents looking for real things that either don't exist yet as dev tools or aren't represented in any MCP-accessible catalog. We've since filled ~125 of them, but 64 remain open gaps. Full dataset here: https://github.com/Pattyboi101/indiestack/blob/master/data/gap-queries-2026-04.json
+
+The pattern that stands out: agents ask for things at a different level of abstraction than developers do. A developer searches "Stripe" or "Clerk." Agents search "payments with fraud detection" or "auth that supports passkeys" — capability descriptions, not brand names. That mismatch is a tool discovery problem that I suspect the MCP spec doesn't currently have a good answer for.
+
+Sharing in case it's useful for spec discussions or Conway's extension model — happy to export this as a more structured format if there's a specific shape that would be helpful.
+
+---
+
+*Notes for Patrick before sending:*
+- Post to an open discussion on github.com/modelcontextprotocol/specification — look for any thread touching tool discovery, registries, or extension ecosystems
+- Do NOT send as a cold DM or email first — a public comment is better, it's visible and low-pressure
+- GitHub handle should be professional (consider a clean identity before posting)
+- No follow-up for at least a week — let it sit, don't chase
+- The Apr 18 follow-up (adoption rates + token savings) is the second message, not this one
