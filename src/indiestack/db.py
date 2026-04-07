@@ -3530,7 +3530,7 @@ async def search_tools(
         fts_sql, fts_ord_params = _fts_order()
         cursor = await db.execute(
             f"""SELECT t.*, c.name as category_name, c.slug as category_slug,
-                      bm25(tools_fts) as rank
+                      bm25(tools_fts, 10.0, 5.0, 1.0, 3.0) as rank
                FROM tools_fts fts
                JOIN tools t ON t.id = fts.rowid
                JOIN categories c ON t.category_id = c.id
@@ -3553,7 +3553,7 @@ async def search_tools(
                 fts_sql2, fts_ord_params2 = _fts_order()
                 cursor = await db.execute(
                     f"""SELECT t.*, c.name as category_name, c.slug as category_slug,
-                              bm25(tools_fts) as rank
+                              bm25(tools_fts, 10.0, 5.0, 1.0, 3.0) as rank
                            FROM tools_fts fts
                            JOIN tools t ON t.id = fts.rowid
                            JOIN categories c ON t.category_id = c.id
