@@ -3305,17 +3305,12 @@ _FRAMEWORK_QUERY_TERMS: dict[str, str] = {
     "solid": "solid", "solidjs": "solid",
     "qwik": "qwik",
     "hono": "hono",
-    # Runtime/language qualifiers — "logging nodejs", "auth python" etc.
-    # Routed to frameworks_tested LIKE filter. Only safe patterns where
-    # the match value won't substring-match unrelated frameworks:
-    # - "golang"/"go" excluded (LIKE '%go%' matches "django", "mongo", etc.)
-    # - "java" excluded (LIKE '%java%' matches "javascript")
+    # Runtime qualifiers — "logging nodejs" → FTS "logging" + frameworks_tested LIKE '%node%'
+    # Only "node"/"nodejs" added here since these are rarely primary search targets.
+    # "python", "rust", "ruby", "php" excluded — too often the primary search term
+    # (e.g., "fastapi python api" must FTS-match "fastapi" not strip it as a framework).
     "node": "node",
     "nodejs": "node",
-    "python": "python",
-    "rust": "rust",
-    "ruby": "ruby",
-    "php": "php",
 }
 
 
