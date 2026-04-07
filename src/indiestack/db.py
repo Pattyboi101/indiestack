@@ -2397,7 +2397,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "nats": "message",
     "websocket": "message",  # WebSocket servers (Soketi, Centrifugo) live in Message Queue
     "websockets": "message",
-    "realtime": "message",   # real-time messaging → message queue category
     # AI synonyms
     "llm": "ai",
     "gpt": "ai",
@@ -2693,8 +2692,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "time": "api",              # "real-time" hyphen-split → "time" reinforces realtime→api routing
     "limiting": "api",          # "rate limiting" → "rate" already maps to api, "limiting" reinforces it
     "limiter": "api",           # "rate limiter" → both "rate" and "limiter" map to api
-    "websocket": "api",
-    "websockets": "api",
+    # websocket→message (moved from "api": WebSocket servers like Soketi/Centrifugo
+    # are message queue tools; Message Queue cat match outranks API testing tools)
+    # "websocket": "api" was previously here — removed to fix ranking
     "sse": "api",               # Server-Sent Events
     "pusher": "api",
     "ably": "api",
