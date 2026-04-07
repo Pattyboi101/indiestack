@@ -807,12 +807,13 @@ async def tool_detail(request: Request, slug: str):
     if install_command.strip():
         safe_cmd = escape(install_command.strip())
         install_block = (
-            f'<div style="background:var(--terracotta-dark);border-radius:var(--radius-sm);padding:16px 24px;'
-            f'margin-top:16px;display:flex;align-items:center;gap:16px;">'
-            f'<code style="font-family:var(--font-mono);font-size:14px;color:var(--slate);white-space:nowrap;'
-            f'overflow-x:auto;min-width:0;flex:1;">{safe_cmd}</code>'
-            f'<button data-copy="{safe_cmd}" style="background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;'
-            f'padding:8px 16px;min-height:44px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;">Copy</button>'
+            f'<div style="position:relative;background:var(--terracotta-dark);border-radius:var(--radius-sm);'
+            f'margin-top:16px;overflow:hidden;">'
+            f'<code style="display:block;font-family:var(--font-mono);font-size:14px;color:var(--slate);'
+            f'white-space:nowrap;overflow-x:auto;padding:14px 88px 14px 20px;">{safe_cmd}</code>'
+            f'<button data-copy="{safe_cmd}" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);'
+            f'background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;'
+            f'padding:6px 14px;min-height:36px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">Copy</button>'
             f'</div>'
         )
 
