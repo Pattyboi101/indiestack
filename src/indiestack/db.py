@@ -2487,6 +2487,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # the category/tag boost targets the RIGHT category instead of tools tagged
     # with the target tool name, which are complements not alternatives)
     # Payment processors
+    "gateway": "payments",      # "payment gateway" — Stripe, Paddle, Lemon Squeezy
     "stripe": "payments",
     "paddle": "payments",
     "paypal": "payments",
