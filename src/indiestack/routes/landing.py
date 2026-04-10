@@ -152,7 +152,7 @@ async def landing(request: Request):
     }
     if featured and (featured.get('name') or featured.get('tool_name')):
         _hero_tool_name = escape(featured.get('name') or featured.get('tool_name', ''))
-        _hero_tool_slug = featured.get('slug') or featured.get('tool_slug', 'simple-analytics')
+        _hero_tool_slug = escape(featured.get('slug') or featured.get('tool_slug', 'simple-analytics'))
         _hero_tagline = escape(featured.get('tagline', ''))
         _hero_prompt = _CATEGORY_PROMPTS.get(featured.get('category_slug', ''), 'Build me something')
     else:
