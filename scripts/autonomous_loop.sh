@@ -4,12 +4,24 @@
 #
 # Launch: tmux new-session -d -s autoloop 'bash scripts/autonomous_loop.sh'
 # Stop:   tmux kill-session -t autoloop
+#
+# Resilience: crash recovery with retries, structured logging, Telegram alerts.
+# Watchdog:   scripts/autoloop_watchdog.sh monitors this process externally.
 
 REPO_DIR="$HOME/indiestack"
 INTERVAL=3600  # seconds between runs
 MCP_CONFIG="$REPO_DIR/.orchestra/mcp-config.json"
+LOG_DIR="$REPO_DIR/.orchestra/logs"
+HEARTBEAT_FILE="$REPO_DIR/.orchestra/autoloop-heartbeat"
+TELEGRAM="$HOME/.claude/telegram.sh"
+
+MAX_RETRIES=3
+RETRY_BASE=2  # exponential backoff base (seconds)
 
 cd "$REPO_DIR"
+
+# Ensure log directory exists
+mkdir -p "$LOG_DIR"
 
 # MCP flags for RAG access
 MCP_FLAGS=""
@@ -17,13 +29,40 @@ if [ -f "$MCP_CONFIG" ]; then
   MCP_FLAGS="--mcp-config $MCP_CONFIG"
 fi
 
-while true; do
-    echo ""
-    echo "=========================================="
-    echo "  Autonomous cycle starting: $(date)"
-    echo "=========================================="
+# Structured logging helper
+log() {
+    local level="$1"
+    shift
+    local msg="$*"
+    local timestamp
+    timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    local logfile="$LOG_DIR/autoloop-$(date +%Y-%m-%d).log"
+    echo "[$timestamp] [$level] $msg" | tee -a "$logfile"
+}
 
-    claude --dangerously-skip-permissions --model sonnet $MCP_FLAGS -p "You are the IndieStack autonomous improvement agent running on Sonnet.
+# Update heartbeat — watchdog checks this file's mtime
+update_heartbeat() {
+    date '+%Y-%m-%d %H:%M:%S' > "$HEARTBEAT_FILE"
+}
+
+# Send Telegram alert
+alert() {
+    local msg="$1"
+    if [ -f "$TELEGRAM" ]; then
+        bash "$TELEGRAM" "$msg" 2>/dev/null
+    fi
+}
+
+# Run a single claude cycle with retry logic
+run_cycle() {
+    local attempt=0
+    local delay=$RETRY_BASE
+
+    while [ $attempt -lt $MAX_RETRIES ]; do
+        attempt=$((attempt + 1))
+        log "INFO" "Cycle attempt $attempt/$MAX_RETRIES starting"
+
+        claude --dangerously-skip-permissions --model sonnet $MCP_FLAGS -p "You are the IndieStack autonomous improvement agent running on Sonnet.
 
 Use rag_query() for context instead of reading full memory files.
 After fixing anything, rag_store() the knowledge so other agents benefit.
@@ -79,8 +118,41 @@ Rules:
 - Commit style: 'fix: ...' or 'feat: ...' or 'chore: ...' lowercase concise
 - OK to exit early if nothing needs fixing"
 
-    echo ""
-    echo "Cycle complete: $(date)"
-    echo "Sleeping ${INTERVAL}s until next cycle..."
+        local exit_code=$?
+
+        if [ $exit_code -eq 0 ]; then
+            log "INFO" "Cycle completed successfully"
+            return 0
+        fi
+
+        log "WARN" "Cycle attempt $attempt failed (exit code $exit_code)"
+
+        if [ $attempt -lt $MAX_RETRIES ]; then
+            log "INFO" "Retrying in ${delay}s..."
+            sleep "$delay"
+            delay=$((delay * 2))
+        fi
+    done
+
+    # All retries exhausted
+    log "ERROR" "Cycle failed after $MAX_RETRIES attempts"
+    alert "[Autoloop] Cycle failed after $MAX_RETRIES retries at $(date '+%H:%M %b %d'). Check logs: $LOG_DIR/autoloop-$(date +%Y-%m-%d).log"
+    return 1
+}
+
+# Main loop
+log "INFO" "Autoloop starting (PID $$, interval ${INTERVAL}s, max retries $MAX_RETRIES)"
+alert "[Autoloop] Started at $(date '+%H:%M %b %d') (PID $$)"
+update_heartbeat
+
+while true; do
+    log "INFO" "========== Cycle starting =========="
+    update_heartbeat
+
+    run_cycle
+    cycle_result=$?
+
+    update_heartbeat
+    log "INFO" "Cycle finished (result=$cycle_result). Sleeping ${INTERVAL}s..."
     sleep "$INTERVAL"
 done
