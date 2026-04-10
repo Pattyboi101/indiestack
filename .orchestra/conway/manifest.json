@@ -1,0 +1,81 @@
+{
+  "_comment": "Conway extension manifest — spec-pending, signal piece for DSP outreach. Not production code.",
+  "_status": "draft",
+  "_last_updated": "2026-04-10",
+  "name": "indiestack",
+  "display_name": "IndieStack — Developer Tool Intelligence",
+  "version": "0.1.0",
+  "description": "Live access to 6,500+ developer tools with confidence scoring, migration intelligence, and session-aware context.",
+  "homepage": "https://indiestack.ai",
+  "install": "uvx --from indiestack indiestack-mcp",
+
+  "capabilities": {
+    "search": {
+      "description": "Search developer tools by need, framework, or category",
+      "endpoint": "/api/tools/search",
+      "params": ["q", "category", "limit", "context", "session_id"],
+      "returns": "Ranked tools with metadata, confidence rationale, migration signals"
+    },
+    "tool_detail": {
+      "description": "Get full details for a specific tool",
+      "endpoint": "/api/tools/{slug}",
+      "returns": "Install commands, GitHub data, compatibility, pricing, alternatives"
+    },
+    "compare": {
+      "description": "Compare two tools head-to-head",
+      "endpoint": "/api/compare",
+      "params": ["tool_a", "tool_b"],
+      "returns": "Feature comparison, migration data, community signals"
+    },
+    "compatibility_check": {
+      "description": "Check if tools work together",
+      "endpoint": "/api/compatibility",
+      "params": ["tools"],
+      "returns": "Compatibility matrix with evidence from GitHub repos"
+    },
+    "gap_detection": {
+      "description": "Identify tool categories with unmet demand",
+      "endpoint": "/api/gaps",
+      "returns": "Search queries with no good matches — market opportunities"
+    }
+  },
+
+  "context_injection": {
+    "_comment": "Structured context that Conway can pass to bias results toward the user's stack",
+    "schema": {
+      "framework": "string — e.g. 'nextjs', 'django', 'rails'",
+      "language": "string — e.g. 'typescript', 'python', 'rust'",
+      "project_type": "string — e.g. 'saas', 'cli', 'mobile', 'api'",
+      "existing_tools": "array of slugs — tools already in the project",
+      "session_id": "string — unique per-project, enables cross-session memory"
+    },
+    "example": {
+      "framework": "nextjs",
+      "language": "typescript",
+      "project_type": "saas",
+      "existing_tools": ["next-auth", "prisma", "stripe"],
+      "session_id": "proj_abc123"
+    }
+  },
+
+  "session_tracking": {
+    "description": "Pass session_id across tool calls. IndieStack remembers searches, shortlists, and outcomes per session.",
+    "outcome_reporting": {
+      "description": "After integrating a tool, report success/failure to improve recommendations",
+      "endpoint": "/api/agent/outcome",
+      "params": ["session_id", "tool_slug", "success", "notes"]
+    }
+  },
+
+  "trust": {
+    "sla": "https://indiestack.ai/sla",
+    "incidents": "https://indiestack.ai/trust/incidents",
+    "status_api": "https://indiestack.ai/api/status",
+    "quality_api": "https://indiestack.ai/api/quality"
+  },
+
+  "pricing": {
+    "agent_usage": "Free, unlimited, no API key required",
+    "maker_pro": "$19/mo — analytics on how agents discover your tool"
+  }
+}
