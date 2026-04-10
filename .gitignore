@@ -73,8 +73,10 @@ backups/
 # Worktrees
 .worktrees/
 
-# Orchestra runtime output (logs, history, agent memory)
+# Orchestra runtime output (logs, history, agent memory, reactive state)
 .orchestra/logs/
 .orchestra/history/
 .orchestra/memory/*.md
 !.orchestra/memory/playbook.md
+.orchestra/reactor_state.json
+.orchestra/directives/pending/

@@ -14,6 +14,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -53,8 +54,17 @@ def save_state(state: dict):
     STATE_FILE.write_text(json.dumps(state, indent=2))
 
 
+def sanitize_for_directive(val: str) -> str:
+    """Strip characters that could influence agent command execution."""
+    return re.sub(r'[`$\\{}\x00-\x1f]', '', str(val))[:200]
+
+
 def query_prod(sql: str) -> str:
-    """Run a SQL query against production via Fly SSH."""
+    """Run a HARDCODED SQL query against production via Fly SSH.
+
+    WARNING: This function does NOT safely escape dynamic input.
+    Only pass string literals. Never interpolate user/external data.
+    """
     escaped_sql = sql.replace('"', '\\"').replace("'", "'\\''")
     cmd = f"""~/.fly/bin/fly ssh console -a indiestack -C 'python3 -c "
 import sqlite3
@@ -257,7 +267,6 @@ def check_health(state: dict) -> list:
             events.append({
                 "type": "health_failure",
                 "status_code": status,
-                "body": body[:200],
             })
         state["consecutive_health_failures"] = 0
     except (urllib.error.URLError, urllib.error.HTTPError, OSError) as e:
@@ -272,24 +281,6 @@ def check_health(state: dict) -> list:
             })
     return events
 
-
-def check_error_rate(state: dict) -> list:
-    """Check for 5xx error spikes via the /api/status endpoint."""
-    events = []
-    try:
-        req = urllib.request.Request(
-            f"{PROD_URL}/api/status",
-            headers={"User-Agent": "IndieStack-EventReactor/1.0"},
-        )
-        resp = urllib.request.urlopen(req, timeout=10)
-        data = json.loads(resp.read().decode())
-        # /api/status returns search_stats with error counts if available
-        # For now, check response time as a proxy for degradation
-        state["last_status_check"] = datetime.now(timezone.utc).isoformat()
-    except (urllib.error.URLError, urllib.error.HTTPError, OSError, json.JSONDecodeError):
-        # Health check covers full outage — this only catches degradation
-        pass
-    return events
 
 
 def check_gap_anomaly(state: dict) -> list:
@@ -319,7 +310,6 @@ def check_gap_anomaly(state: dict) -> list:
 
     gap_rate = gap_count / total_mcp
     events = []
-    prev_rate = state.get("last_gap_rate", 0.0)
 
     if gap_rate > 0.15:  # More than 15% of MCP queries return nothing
         # Only alert once per 24h
@@ -374,9 +364,9 @@ def react(events: list, state: dict):
                 f"Review at indiestack.ai/admin"
             )
             create_directive("submission_review", {
-                "tool_name": event["name"],
-                "tool_slug": event["slug"],
-                "submitted_at": event["created_at"],
+                "tool_name": sanitize_for_directive(event["name"]),
+                "tool_slug": sanitize_for_directive(event["slug"]),
+                "submitted_at": sanitize_for_directive(event["created_at"]),
             })
 
         elif event_type == "health_failure":
@@ -387,7 +377,7 @@ def react(events: list, state: dict):
                 f"({failures} consecutive failures). Check indiestack.fly.dev/health"
             )
             create_directive("deploy_failure", {
-                "error": error,
+                "error": sanitize_for_directive(error),
                 "consecutive_failures": str(failures),
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             })
