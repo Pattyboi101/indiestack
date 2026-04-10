@@ -262,6 +262,130 @@ async def embed_widget_js():
     )
 
 
+# ── Search widget — self-contained search box with results ───────────────
+
+SEARCH_WIDGET_JS = '(function(){\n  var BASE = "' + BASE_URL + '";\n' + r"""
+  var script = document.currentScript;
+  var limit = parseInt(script.getAttribute("data-limit") || "5", 10);
+  if (limit < 1) limit = 1;
+  if (limit > 10) limit = 10;
+  var theme = script.getAttribute("data-theme") || "light";
+
+  var container = document.createElement("div");
+  script.parentNode.insertBefore(container, script);
+  var shadow = container.attachShadow({mode: "open"});
+
+  var bg = theme === "dark" ? "#0a0e1a" : "#F7F9FC";
+  var ink = theme === "dark" ? "#e8eaf0" : "#1A2D4A";
+  var muted = theme === "dark" ? "#8b99ab" : "#6b7a8d";
+  var border = theme === "dark" ? "#2a3040" : "#e2e6ec";
+  var cardBg = theme === "dark" ? "#141822" : "#fff";
+
+  shadow.innerHTML = '<style>'
+    + '@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap");'
+    + '*{box-sizing:border-box;margin:0;padding:0;}'
+    + '.is-search-wrap{font-family:"DM Sans",system-ui,sans-serif;background:' + bg + ';border:1px solid ' + border + ';border-radius:12px;padding:20px;max-width:420px;color:' + ink + ';}'
+    + '.is-search-head{font-family:"DM Serif Display",serif;font-size:16px;margin-bottom:12px;}'
+    + '.is-search-head span{color:#00D4F5;}'
+    + '.is-search-input{width:100%;padding:10px 14px;border:1px solid ' + border + ';border-radius:8px;font-size:14px;font-family:inherit;background:' + cardBg + ';color:' + ink + ';outline:none;}'
+    + '.is-search-input:focus{border-color:#00D4F5;}'
+    + '.is-search-input::placeholder{color:' + muted + ';}'
+    + '.is-results{margin-top:12px;}'
+    + '.is-result{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:inherit;transition:background 0.15s;}'
+    + '.is-result:hover{background:' + (theme === "dark" ? "#1e2330" : "#eef1f5") + ';}'
+    + '.is-result-info{flex:1;min-width:0;}'
+    + '.is-result-name{font-weight:600;font-size:14px;color:' + ink + ';}'
+    + '.is-result-tag{font-size:12px;color:' + muted + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}'
+    + '.is-conf{flex-shrink:0;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}'
+    + '.is-conf-high{background:rgba(39,201,63,0.12);color:#27C93F;}'
+    + '.is-conf-med{background:rgba(226,183,100,0.12);color:#E2B764;}'
+    + '.is-conf-low{background:rgba(196,68,68,0.12);color:#c44;}'
+    + '.is-empty{padding:16px;text-align:center;font-size:13px;color:' + muted + ';}'
+    + '.is-foot{margin-top:10px;text-align:center;font-size:11px;color:' + muted + ';}'
+    + '.is-foot a{color:#00D4F5;text-decoration:none;font-weight:500;}'
+    + '</style>'
+    + '<div class="is-search-wrap">'
+    + '<div class="is-search-head">Find <span>Developer Tools</span></div>'
+    + '<input class="is-search-input" type="text" placeholder="Search 6,500+ tools..." />'
+    + '<div class="is-results"></div>'
+    + '<div class="is-foot">Powered by <a href="' + BASE + '?ref=search-widget" target="_blank" rel="noopener">IndieStack</a></div>'
+    + '</div>';
+
+  var input = shadow.querySelector(".is-search-input");
+  var resultsDiv = shadow.querySelector(".is-results");
+  var debounce = null;
+
+  input.addEventListener("input", function() {
+    clearTimeout(debounce);
+    var q = input.value.trim();
+    if (q.length < 2) { resultsDiv.innerHTML = ""; return; }
+    debounce = setTimeout(function() { doSearch(q); }, 300);
+  });
+
+  function doSearch(q) {
+    resultsDiv.innerHTML = '<div class="is-empty">Searching...</div>';
+    fetch(BASE + "/api/tools/search?q=" + encodeURIComponent(q) + "&limit=" + limit)
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        var tools = data.tools || [];
+        if (!tools.length) {
+          resultsDiv.innerHTML = '<div class="is-empty">No tools found for &ldquo;' + esc(q) + '&rdquo;</div>';
+          return;
+        }
+        var html = "";
+        for (var i = 0; i < tools.length; i++) {
+          var t = tools[i];
+          var conf = calcConf(t);
+          html += '<a class="is-result" href="' + t.indiestack_url + '?ref=search-widget" target="_blank" rel="noopener">'
+            + '<div class="is-conf ' + conf.cls + '">' + conf.pct + '</div>'
+            + '<div class="is-result-info">'
+            + '<div class="is-result-name">' + esc(t.name) + '</div>'
+            + '<div class="is-result-tag">' + esc(t.tagline) + '</div>'
+            + '</div></a>';
+        }
+        resultsDiv.innerHTML = html;
+      })
+      .catch(function(){
+        resultsDiv.innerHTML = '<div class="is-empty">Search failed. Try again.</div>';
+      });
+  }
+
+  function calcConf(t) {
+    var score = 0;
+    if (t.health_status === "alive") score += 30;
+    if (t.github_stars > 100) score += 20;
+    if (t.github_stars > 1000) score += 10;
+    if (t.install_command) score += 15;
+    if (t.github_last_commit) {
+      var d = new Date(t.github_last_commit);
+      var months = (Date.now() - d.getTime()) / (1000*60*60*24*30);
+      if (months < 6) score += 25;
+      else if (months < 12) score += 15;
+    }
+    var pct = Math.min(score, 100);
+    var cls = pct >= 70 ? "is-conf-high" : pct >= 40 ? "is-conf-med" : "is-conf-low";
+    return {pct: pct + "%", cls: cls};
+  }
+
+  function esc(s) {
+    if (!s) return "";
+    var d = document.createElement("div");
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+})();"""
+
+
+@router.get("/embed/search-widget.js")
+async def embed_search_widget_js():
+    """Self-contained search widget for embedding — Conway extension preview."""
+    return Response(
+        content=SEARCH_WIDGET_JS,
+        media_type="application/javascript",
+        headers={"Cache-Control": "public, max-age=3600", "Access-Control-Allow-Origin": "*"},
+    )
+
+
 # ── Endpoint 1: Standalone embeddable HTML page ─────────────────────────
 
 @router.get("/embed/{category_slug}", response_class=HTMLResponse)
