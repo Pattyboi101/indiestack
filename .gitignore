@@ -70,6 +70,9 @@ backups/
 .claude/commands/hub.md
 .rag/
 
+# Worktrees
+.worktrees/
+
 # Orchestra runtime output (logs, history, agent memory)
 .orchestra/logs/
 .orchestra/history/
