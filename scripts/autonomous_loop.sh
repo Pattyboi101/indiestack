@@ -53,6 +53,24 @@ alert() {
     fi
 }
 
+# Iteration 0 — reactive event check (fast, no AI, just SSH + Telegram)
+run_event_reactor() {
+    log "INFO" "Running event reactor (Iteration 0)..."
+    if [ -f "$REPO_DIR/scripts/event_reactor.py" ]; then
+        python3 "$REPO_DIR/scripts/event_reactor.py" 2>&1 | while read -r line; do
+            log "REACTOR" "$line"
+        done
+        local exit_code=${PIPESTATUS[0]}
+        if [ $exit_code -ne 0 ]; then
+            log "WARN" "Event reactor exited with code $exit_code"
+        else
+            log "INFO" "Event reactor complete"
+        fi
+    else
+        log "WARN" "Event reactor script not found, skipping"
+    fi
+}
+
 # Run a single claude cycle with retry logic
 run_cycle() {
     local attempt=0
@@ -148,6 +166,9 @@ update_heartbeat
 while true; do
     log "INFO" "========== Cycle starting =========="
     update_heartbeat
+
+    # Iteration 0: quick reactive checks before the heavy AI cycle
+    run_event_reactor
 
     run_cycle
     cycle_result=$?
