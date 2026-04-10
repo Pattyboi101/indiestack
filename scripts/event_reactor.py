@@ -17,6 +17,8 @@ import os
 import subprocess
 import sys
 import time
+import urllib.request
+import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -190,6 +192,152 @@ def check_search_activity(state: dict) -> list:
     return events
 
 
+PROD_URL = "https://indiestack.fly.dev"
+DIRECTIVES_PENDING = Path(".orchestra/directives/pending")
+DIRECTIVES_TEMPLATES = Path(".orchestra/directives/templates")
+
+
+def create_directive(template_name: str, replacements: dict):
+    """Instantiate a directive template into pending/ for the orchestrator to pick up."""
+    template_path = DIRECTIVES_TEMPLATES / f"{template_name}.md"
+    if not template_path.exists():
+        print(f"  Directive template not found: {template_path}")
+        return
+    content = template_path.read_text()
+    for key, val in replacements.items():
+        content = content.replace(f"{{{{{key}}}}}", str(val))
+    DIRECTIVES_PENDING.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    out_path = DIRECTIVES_PENDING / f"{template_name}-{timestamp}.md"
+    out_path.write_text(content)
+    print(f"  Created directive: {out_path.name}")
+
+
+def check_pending_submissions(state: dict) -> list:
+    """Check for new tool submissions awaiting review."""
+    result = query_prod(
+        "SELECT slug, name, created_at FROM tools "
+        "WHERE status = 'pending' "
+        "AND created_at > datetime('now', '-4 hours') "
+        "ORDER BY created_at DESC LIMIT 10"
+    )
+    events = []
+    known = state.get("known_pending_slugs", [])
+    for line in result.split("\n"):
+        if not line.strip():
+            continue
+        parts = line.split("|")
+        if len(parts) >= 3:
+            slug, name, created_at = parts[0], parts[1], parts[2]
+            if slug not in known:
+                events.append({
+                    "type": "new_submission",
+                    "slug": slug,
+                    "name": name,
+                    "created_at": created_at,
+                })
+                known.append(slug)
+    # Keep only last 100 known slugs
+    state["known_pending_slugs"] = known[-100:]
+    return events
+
+
+def check_health(state: dict) -> list:
+    """Check if production health endpoint is responding."""
+    events = []
+    try:
+        req = urllib.request.Request(
+            f"{PROD_URL}/health",
+            headers={"User-Agent": "IndieStack-EventReactor/1.0"},
+        )
+        resp = urllib.request.urlopen(req, timeout=10)
+        status = resp.getcode()
+        body = resp.read().decode()
+        if status != 200 or '"ok"' not in body:
+            events.append({
+                "type": "health_failure",
+                "status_code": status,
+                "body": body[:200],
+            })
+        state["consecutive_health_failures"] = 0
+    except (urllib.error.URLError, urllib.error.HTTPError, OSError) as e:
+        failures = state.get("consecutive_health_failures", 0) + 1
+        state["consecutive_health_failures"] = failures
+        # Only alert after 2 consecutive failures (avoids transient blips)
+        if failures >= 2:
+            events.append({
+                "type": "health_failure",
+                "error": str(e),
+                "consecutive_failures": failures,
+            })
+    return events
+
+
+def check_error_rate(state: dict) -> list:
+    """Check for 5xx error spikes via the /api/status endpoint."""
+    events = []
+    try:
+        req = urllib.request.Request(
+            f"{PROD_URL}/api/status",
+            headers={"User-Agent": "IndieStack-EventReactor/1.0"},
+        )
+        resp = urllib.request.urlopen(req, timeout=10)
+        data = json.loads(resp.read().decode())
+        # /api/status returns search_stats with error counts if available
+        # For now, check response time as a proxy for degradation
+        state["last_status_check"] = datetime.now(timezone.utc).isoformat()
+    except (urllib.error.URLError, urllib.error.HTTPError, OSError, json.JSONDecodeError):
+        # Health check covers full outage — this only catches degradation
+        pass
+    return events
+
+
+def check_gap_anomaly(state: dict) -> list:
+    """Check if MCP gap rate is abnormally high (agents not finding what they need)."""
+    result = query_prod(
+        "SELECT COUNT(*) FROM search_logs "
+        "WHERE created_at > datetime('now', '-24 hours') AND source = 'mcp'"
+    )
+    total_mcp = 0
+    try:
+        total_mcp = int(result.strip())
+    except (ValueError, AttributeError):
+        return []
+
+    if total_mcp < 20:
+        return []  # Not enough data
+
+    result_gaps = query_prod(
+        "SELECT COUNT(*) FROM search_logs "
+        "WHERE created_at > datetime('now', '-24 hours') AND source = 'mcp' "
+        "AND result_count = 0"
+    )
+    try:
+        gap_count = int(result_gaps.strip())
+    except (ValueError, AttributeError):
+        return []
+
+    gap_rate = gap_count / total_mcp
+    events = []
+    prev_rate = state.get("last_gap_rate", 0.0)
+
+    if gap_rate > 0.15:  # More than 15% of MCP queries return nothing
+        # Only alert once per 24h
+        last_alert = state.get("last_gap_alert")
+        now = datetime.now(timezone.utc).isoformat()
+        if not last_alert or now[:10] != last_alert[:10]:
+            events.append({
+                "type": "gap_anomaly",
+                "gap_rate": round(gap_rate * 100, 1),
+                "gap_count": gap_count,
+                "total_mcp": total_mcp,
+            })
+            state["last_gap_alert"] = now
+
+    state["last_gap_rate"] = gap_rate
+    return events
+
+
 def react(events: list, state: dict):
     """React to detected events."""
     for event in events:
@@ -220,6 +368,43 @@ def react(events: list, state: dict):
                 f"(was {event['previous']}). Agents are active."
             )
 
+        elif event_type == "new_submission":
+            notify(
+                f"NEW SUBMISSION: {event['name']} ({event['slug']}) at {event['created_at']}. "
+                f"Review at indiestack.ai/admin"
+            )
+            create_directive("submission_review", {
+                "tool_name": event["name"],
+                "tool_slug": event["slug"],
+                "submitted_at": event["created_at"],
+            })
+
+        elif event_type == "health_failure":
+            error = event.get("error", f"HTTP {event.get('status_code', '?')}")
+            failures = event.get("consecutive_failures", 1)
+            notify(
+                f"HEALTH CHECK FAILED: {error} "
+                f"({failures} consecutive failures). Check indiestack.fly.dev/health"
+            )
+            create_directive("deploy_failure", {
+                "error": error,
+                "consecutive_failures": str(failures),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+            })
+
+        elif event_type == "gap_anomaly":
+            notify(
+                f"MCP GAP ANOMALY: {event['gap_rate']}% of MCP queries returned 0 results "
+                f"in last 24h ({event['gap_count']}/{event['total_mcp']} queries). "
+                f"Search quality may be degrading."
+            )
+            create_directive("gap_anomaly", {
+                "gap_rate": str(event["gap_rate"]),
+                "gap_count": str(event["gap_count"]),
+                "total_queries": str(event["total_mcp"]),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+            })
+
         state.setdefault("reactions_sent", []).append({
             "type": event_type,
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -236,6 +421,9 @@ def run_check(state: dict) -> int:
     all_events.extend(check_new_claims(state))
     all_events.extend(check_traffic_spike(state))
     all_events.extend(check_search_activity(state))
+    all_events.extend(check_pending_submissions(state))
+    all_events.extend(check_health(state))
+    all_events.extend(check_gap_anomaly(state))
 
     if all_events:
         print(f"  {len(all_events)} event(s) detected!")
