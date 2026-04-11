@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-11 (fortieth pass)
+Last updated: 2026-04-11 (forty-first pass)
 
 ## Status: Active
 
@@ -10,12 +10,44 @@ Last updated: 2026-04-11 (fortieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~911 entries for search routing (added 34 in fortieth pass — Python ecosystem focus)
-- **Catalog script**: `scripts/add_missing_tools.py` — 175 tools ready to insert (slug-safe)
-  - 8 tools added in fortieth pass (Tiptap, CodeMirror, Pydantic, Ruff, Pytest, Uvicorn, PM2 — Python + browser editors)
+- **_CAT_SYNONYMS**: ~955 entries for search routing (added 44 in forty-first pass — BI/analytics, DB ops, API patterns)
+- **Catalog script**: `scripts/add_missing_tools.py` — 181 tools ready to insert (slug-safe)
+  - 6 tools added in forty-first pass (Metabase, Redash, Superset, Lightdash, Evidence, Litestream)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-11, forty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited _CAT_SYNONYMS — found 44 genuine gaps in BI/analytics, database ops, API resilience, file ops, monitoring
+- Added 44 new `_CAT_SYNONYMS` entries:
+  - **Caching patterns**: `memoize`, `memoization` → `"caching"` (memoizee, lodash.memoize)
+  - **Database operations**: `replication`, `replica`, `sharding`, `seeding`, `seed` → `"database"`
+  - **DevOps — backup/DR**: `backup`, `restore`, `litestream`, `pgbackrest`, `barman`, `disaster` → `"devops"`
+  - **Analytics / BI**: `bi`, `reporting`, `metabase`, `redash`, `superset`, `lightdash`, `evidence` → `"analytics"`
+  - **API — serialization + resilience**: `serialization`, `msgpack`, `flatbuffers`, `retry`, `retries`, `idempotency` → `"api"`
+  - **File ops**: `multipart`, `presigned` → `"file"`
+  - **Monitoring — profiling**: `profiling`, `profiler` → `"monitoring"`
+  - **Message queue — generic broker**: `broker`, `brokers` → `"message"`
+  - **DevOps — git hooks**: `lint-staged`, `precommit`, `pre-commit` → `"devops"`
+- Running total: ~955 entries (911 + 44)
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (181 total):
+  - Metabase (analytics-metrics, 38k★) — most popular OSS BI tool
+  - Redash (analytics-metrics, 26k★) — SQL dashboards and visualization
+  - Apache Superset (analytics-metrics, 62k★) — enterprise OSS BI
+  - Lightdash (analytics-metrics, 9k★) — open-source Looker / dbt-native BI
+  - Evidence (analytics-metrics, 5k★) — SQL + Markdown code-first BI
+  - Litestream (devops-infrastructure, 10k★) — continuous SQLite replication to S3/GCS
+
+### Code Quality (Step 3)
+- Reviewed files changed in last 5 commits (db.py, pyproject.toml, server.json, README_PYPI.md)
+- No html.escape() gaps, hardcoded hex colors, or stale stat strings found
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-first pass
 
 ## Completed This Session (2026-04-11, fortieth pass — autonomous improvement cycle)
 

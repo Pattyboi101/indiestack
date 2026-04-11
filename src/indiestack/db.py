@@ -3549,6 +3549,50 @@ _CAT_SYNONYMS: dict[str, str] = {
     "invalidation": "caching",      # "cache invalidation", "cache busting" → Caching
     "distributed": "caching",       # "distributed cache" → Caching (Redis cluster, Dragonfly)
     "warmup": "caching",            # "cache warmup", "cache warming" → Caching
+    # Memoization — in-process caching (memoizee, memize, lodash.memoize)
+    "memoize": "caching",           # "memoize function", "memoize library" → Caching
+    "memoization": "caching",       # "memoization pattern", "memoize results" → Caching
+    # Database — replication, sharding, seeding
+    "replication": "database",      # "database replication", "postgres replication" → Database
+    "replica": "database",          # "read replica", "replica lag" → Database
+    "sharding": "database",         # "database sharding", "horizontal sharding" → Database
+    "seeding": "database",          # "database seeding", "seed data" → Database
+    "seed": "database",             # "seed script", "seed database" → Database
+    # DevOps — backup and disaster recovery tools (Litestream, Barman, pgBackRest)
+    "backup": "devops",             # "database backup", "backup strategy" → DevOps & Infrastructure
+    "restore": "devops",            # "backup restore", "point-in-time restore" → DevOps
+    "litestream": "devops",         # Litestream — continuous SQLite replication to S3/GCS/Azure
+    "pgbackrest": "devops",         # pgBackRest — reliable Postgres backup and restore
+    "barman": "devops",             # Barman (EDB) — Postgres backup and recovery manager
+    "disaster": "devops",           # "disaster recovery", "DR strategy" → DevOps
+    # Analytics — BI and reporting tools (Metabase, Redash, Superset, Lightdash)
+    "bi": "analytics",              # "BI tool", "business intelligence" → Analytics & Metrics
+    "reporting": "analytics",       # "reporting tool", "sql report" → Analytics & Metrics
+    "metabase": "analytics",        # Metabase — open-source BI and dashboards (38k★)
+    "redash": "analytics",          # Redash — data visualization and dashboards (26k★)
+    "superset": "analytics",        # Apache Superset — enterprise open-source BI (62k★)
+    "lightdash": "analytics",       # Lightdash — open-source Looker alternative (9k★)
+    "evidence": "analytics",        # Evidence — SQL-driven BI for data teams (5k★)
+    # API — serialization protocols and resilience patterns
+    "serialization": "api",         # "binary serialization", "data serialization" → API Tools
+    "msgpack": "api",               # MessagePack — efficient binary serialization format
+    "flatbuffers": "api",           # FlatBuffers — Google's memory-efficient binary serialization
+    "retry": "api",                 # "retry library", "retry logic" → API Tools (resilience patterns)
+    "retries": "api",               # plural form — "http retries", "retry strategy"
+    "idempotency": "api",           # "idempotency key", "idempotent request" → API Tools
+    # File/storage — upload patterns and cloud object storage
+    "multipart": "file",            # "multipart upload", "multipart form data" → File Management
+    "presigned": "file",            # "presigned URL", "presigned S3 URL" → File Management
+    # Monitoring — profiling tools (pyspy, pprof, clinic.js, scalene, rbspy)
+    "profiling": "monitoring",      # "cpu profiling", "memory profiling" → Monitoring & Uptime
+    "profiler": "monitoring",       # "python profiler", "nodejs profiler" → Monitoring & Uptime
+    # Message queue — generic "broker" queries
+    "broker": "message",            # "message broker", "event broker" → Message Queue
+    "brokers": "message",           # plural — "kafka brokers", "message brokers" → Message Queue
+    # DevOps — linting, formatting CI action tools (pre-commit hooks, lint-staged)
+    "lint-staged": "devops",        # lint-staged — run linters on staged git files
+    "precommit": "devops",          # pre-commit — framework for managing pre-commit hooks
+    "pre-commit": "devops",         # hyphenated form
 }
 
 _FTS_STOP_WORDS = {

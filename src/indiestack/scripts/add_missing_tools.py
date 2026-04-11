@@ -2819,6 +2819,104 @@ TOOLS = [
         "npm install pm2 -g",
         "code",
     ),
+    # Analytics & BI Tools -------------------------------------------------------
+    (
+        "metabase",
+        "Metabase",
+        "The simplest, fastest way to get business intelligence and analytics",
+        "Metabase is an open-source business intelligence tool that lets anyone "
+        "in your company ask questions and learn from data — no SQL required for "
+        "basic use. Supports 20+ databases, rich visualisations, and self-hosted "
+        "or cloud deployment. One of the most-starred OSS BI tools at 38k+ stars.",
+        "analytics-metrics",
+        "metabase/metabase",
+        38000,
+        "https://www.metabase.com",
+        "bi,analytics,dashboards,sql,open-source,self-hosted",
+        "docker run -d -p 3000:3000 metabase/metabase",
+        "code",
+    ),
+    (
+        "redash",
+        "Redash",
+        "Connect to any data source and build beautiful dashboards",
+        "Redash is an open-source tool for teams to query, visualise, and share "
+        "data. Write SQL (or use drag-and-drop query builders) against 35+ data "
+        "sources, create charts and dashboards, and schedule automatic refresh. "
+        "Over 26k stars; used by thousands of teams worldwide.",
+        "analytics-metrics",
+        "getredash/redash",
+        26000,
+        "https://redash.io",
+        "bi,analytics,dashboards,sql,visualisation,self-hosted",
+        "docker-compose up -d",
+        "code",
+    ),
+    (
+        "superset",
+        "Apache Superset",
+        "A modern, enterprise-ready business intelligence web application",
+        "Apache Superset is a fast, lightweight, intuitive, and loaded with "
+        "options that make it easy for users of all skill sets to explore and "
+        "visualize their data, from simple line charts to highly detailed "
+        "geospatial charts. One of the top OSS BI tools with 62k+ GitHub stars.",
+        "analytics-metrics",
+        "apache/superset",
+        62000,
+        "https://superset.apache.org",
+        "bi,analytics,dashboards,sql,visualization,apache,self-hosted",
+        "pip install apache-superset",
+        "code",
+    ),
+    (
+        "lightdash",
+        "Lightdash",
+        "The open source alternative to Looker",
+        "Lightdash is an open-source BI tool built for dbt users. Define metrics "
+        "in your dbt project YAML and Lightdash auto-generates an analytics layer "
+        "on top — no duplicate metric definitions. Works with Postgres, BigQuery, "
+        "Snowflake, Databricks and more. 9k+ GitHub stars.",
+        "analytics-metrics",
+        "lightdash-ai/lightdash",
+        9000,
+        "https://www.lightdash.com",
+        "bi,analytics,dbt,metrics,dashboards,open-source,looker-alternative",
+        "pip install lightdash",
+        "code",
+    ),
+    (
+        "evidence",
+        "Evidence",
+        "Build fast, interactive data apps with SQL and Markdown",
+        "Evidence lets you write SQL queries and Markdown to build beautiful "
+        "data reports and apps that run entirely in the browser. Perfect for "
+        "analyst teams who want version-controlled, code-first BI. Supports "
+        "DuckDB, BigQuery, Snowflake, Postgres, and more.",
+        "analytics-metrics",
+        "evidence-dev/evidence",
+        5000,
+        "https://evidence.dev",
+        "bi,analytics,sql,markdown,duckdb,code-first,reporting",
+        "npm create evidence-app@latest",
+        "code",
+    ),
+    # DevOps — Database backup & replication -------------------------------------
+    (
+        "litestream",
+        "Litestream",
+        "Continuous replication for SQLite",
+        "Litestream is a standalone disaster recovery tool for SQLite. It runs as "
+        "a background process and continuously streams SQLite changes to Amazon S3, "
+        "Google Cloud Storage, or Azure Blob Storage — making SQLite viable for "
+        "production with near-zero RPO. Written in Go; 10k+ stars.",
+        "devops-infrastructure",
+        "benbjohnson/litestream",
+        10000,
+        "https://litestream.io",
+        "sqlite,replication,backup,disaster-recovery,s3,gcs,azure",
+        "brew install litestream",
+        "code",
+    ),
 ]
 
 
