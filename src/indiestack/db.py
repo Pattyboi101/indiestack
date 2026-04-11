@@ -3516,6 +3516,39 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tdd": "testing",               # test-driven development tooling queries
     "mutation": "testing",          # "mutation testing" — Stryker, Mutmut, PITest
     "stryker": "testing",           # Stryker — JavaScript/TypeScript mutation testing framework
+    # Python testing framework + tooling — fast-growing segment of agent searches
+    "pytest": "testing",            # pytest — dominant Python testing framework
+    "unittest": "testing",          # unittest — Python stdlib test framework
+    "hypothesis": "testing",        # Hypothesis — property-based testing for Python
+    "factory": "testing",           # factory_boy / FactoryBot — test data factories
+    # Python linters/formatters — Rust-powered tooling gaining fast adoption
+    "ruff": "testing",              # Ruff — extremely fast Python linter + formatter (Rust)
+    "pylint": "testing",            # Pylint — classic Python linter
+    "flake8": "testing",            # Flake8 — Python linting wrapper (pyflakes + pep8)
+    "black": "testing",             # Black — opinionated Python code formatter
+    "mypy": "testing",              # mypy — optional static type checker for Python
+    "pyright": "testing",           # Pyright — Microsoft's Python type checker (fast, VS Code)
+    # Python schema validation / data modelling — Developer Tools category
+    "pydantic": "developer",        # Pydantic — Python data validation with type hints (FastAPI foundation)
+    "marshmallow": "developer",     # Marshmallow — Python object serialization / deserialization
+    # Python ASGI / WSGI servers — API layer tools (Uvicorn, Gunicorn, Daphne, Hypercorn)
+    "uvicorn": "api",               # Uvicorn — ASGI server for FastAPI / Starlette (lightning fast)
+    "gunicorn": "api",              # Gunicorn — production WSGI server for Django / Flask
+    "asgi": "api",                  # ASGI — Asynchronous Server Gateway Interface protocol
+    "wsgi": "api",                  # WSGI — Python Web Server Gateway Interface protocol
+    "starlette": "api",             # Starlette — lightweight ASGI framework (FastAPI foundation)
+    "hypercorn": "api",             # Hypercorn — ASGI server with HTTP/2 support
+    # Process management — production Node.js / Linux process control tools
+    "pm2": "devops",                # PM2 — production process manager for Node.js apps
+    "supervisor": "devops",         # Supervisor — process control system for Unix
+    "systemd": "devops",            # systemd — init system and service manager for Linux
+    "process": "devops",            # "process manager", "process supervisor" → DevOps
+    # Caching — common pattern / protocol query terms
+    "ttl": "caching",               # TTL (time-to-live) — caching expiry strategy term
+    "eviction": "caching",          # "cache eviction", "eviction policy" → Caching
+    "invalidation": "caching",      # "cache invalidation", "cache busting" → Caching
+    "distributed": "caching",       # "distributed cache" → Caching (Redis cluster, Dragonfly)
+    "warmup": "caching",            # "cache warmup", "cache warming" → Caching
 }
 
 _FTS_STOP_WORDS = {

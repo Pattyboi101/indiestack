@@ -2701,6 +2701,124 @@ TOOLS = [
         "npm create plasmo@latest",
         "code",
     ),
+    # Frontend — rich text / code editors in the browser --------------------------
+    (
+        "tiptap",
+        "Tiptap",
+        "The headless, framework-agnostic rich text editor",
+        "Tiptap is a headless, fully customisable rich text editor built on "
+        "ProseMirror. Works with React, Vue, and Svelte. Collaborative editing "
+        "via Y.js, 50+ extensions, a low-level API for custom nodes/marks, "
+        "and a cloud offering for collaboration and comments.",
+        "frontend-frameworks",
+        "ueberdosis/tiptap",
+        28000,
+        "https://tiptap.dev",
+        "rich-text-editor,wysiwyg,prosemirror,react,vue,collaboration",
+        "npm install @tiptap/react @tiptap/pm @tiptap/starter-kit",
+        "code",
+    ),
+    (
+        "codemirror",
+        "CodeMirror",
+        "A versatile code editor component for the web",
+        "CodeMirror 6 is a modular, browser-based code editor toolkit. "
+        "Powers the editor in Firefox DevTools, Repl.it, Glitch, and "
+        "many browser-based IDEs. Supports 100+ languages with syntax "
+        "highlighting, autocomplete, linting, and collaborative editing via Y.js.",
+        "frontend-frameworks",
+        "codemirror/codemirror5",
+        26000,
+        "https://codemirror.net",
+        "code-editor,syntax-highlighting,browser,react,collaborative",
+        "npm install codemirror",
+        "code",
+    ),
+    # Python — data validation & type checking ------------------------------------
+    (
+        "pydantic",
+        "Pydantic",
+        "Data validation using Python type annotations",
+        "Pydantic is the most widely used Python data validation library. "
+        "Define schemas as Python classes with type hints — validation, "
+        "serialization, and IDE autocompletion included. Foundation of "
+        "FastAPI's request/response models. Pydantic v2 is written in Rust "
+        "for 5-50× faster validation.",
+        "developer-tools",
+        "pydantic/pydantic",
+        21000,
+        "https://docs.pydantic.dev",
+        "python,validation,schema,fastapi,type-hints,serialization",
+        "pip install pydantic",
+        "code",
+    ),
+    # Python — linting + testing ------------------------------------------------
+    (
+        "ruff",
+        "Ruff",
+        "An extremely fast Python linter and formatter, written in Rust",
+        "Ruff is a blazing-fast Python linter and code formatter written in Rust. "
+        "10-100× faster than Flake8, Pylint, isort, and Black. Replaces up to "
+        "12 Python tools with a single binary. Over 800 lint rules, auto-fix "
+        "support, and drop-in compatibility with Black formatting.",
+        "testing-tools",
+        "astral-sh/ruff",
+        35000,
+        "https://docs.astral.sh/ruff",
+        "python,linter,formatter,rust,fast,flake8-alternative",
+        "pip install ruff",
+        "code",
+    ),
+    (
+        "pytest",
+        "pytest",
+        "Makes it easy to write small tests, scales to support complex functional testing",
+        "pytest is the most popular Python testing framework. Write tests as "
+        "simple functions, leverage powerful fixtures for setup/teardown, "
+        "use parametrize for data-driven tests, and benefit from a rich "
+        "ecosystem of 1,000+ plugins (pytest-asyncio, pytest-django, pytest-cov).",
+        "testing-tools",
+        "pytest-dev/pytest",
+        12000,
+        "https://pytest.org",
+        "python,testing,fixtures,parametrize,unit-test,e2e",
+        "pip install pytest",
+        "code",
+    ),
+    # Python — ASGI server -------------------------------------------------------
+    (
+        "uvicorn",
+        "Uvicorn",
+        "An ASGI web server implementation for Python",
+        "Uvicorn is a lightning-fast ASGI server implementation for Python, "
+        "built on uvloop and httptools. The standard production server for "
+        "FastAPI and Starlette applications. Supports HTTP/1.1, WebSockets, "
+        "and lifespan protocol. Workers mode for multi-process deployments.",
+        "api-tools",
+        "encode/uvicorn",
+        8000,
+        "https://www.uvicorn.org",
+        "python,asgi,fastapi,starlette,server,production",
+        "pip install uvicorn",
+        "code",
+    ),
+    # DevOps — process manager --------------------------------------------------
+    (
+        "pm2",
+        "PM2",
+        "Production process manager for Node.js applications",
+        "PM2 is the most popular Node.js process manager for production. "
+        "Keep apps alive forever, reload without downtime, and manage "
+        "application logs. Built-in load balancer, startup scripts, and "
+        "a monitoring dashboard. Used by thousands of production Node.js deployments.",
+        "devops-infrastructure",
+        "Unitech/pm2",
+        42000,
+        "https://pm2.keymetrics.io",
+        "nodejs,process-manager,deployment,production,clustering,logs",
+        "npm install pm2 -g",
+        "code",
+    ),
 ]
 
 

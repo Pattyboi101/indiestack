@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-11 (thirty-ninth pass)
+Last updated: 2026-04-11 (fortieth pass)
 
 ## Status: Active
 
@@ -10,12 +10,41 @@ Last updated: 2026-04-11 (thirty-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~877 entries for search routing (added 48 in thirty-ninth pass; fixed 10 broken "devtools" values)
-- **Catalog script**: `scripts/add_missing_tools.py` — 167 tools ready to insert (slug-safe)
-  - 10 tools added in thirty-ninth pass (Hugo, Jekyll, Eleventy, Gatsby, Mermaid, Biome, Godot, Phaser, WXT, Plasmo)
+- **_CAT_SYNONYMS**: ~911 entries for search routing (added 34 in fortieth pass — Python ecosystem focus)
+- **Catalog script**: `scripts/add_missing_tools.py` — 175 tools ready to insert (slug-safe)
+  - 8 tools added in fortieth pass (Tiptap, CodeMirror, Pydantic, Ruff, Pytest, Uvicorn, PM2 — Python + browser editors)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-11, fortieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited _CAT_SYNONYMS — found 12+ genuine gaps in Python ecosystem coverage
+- Added 34 new `_CAT_SYNONYMS` entries:
+  - **Python testing**: `pytest`, `unittest`, `hypothesis`, `factory` → `"testing"`
+  - **Python linting/formatting**: `ruff`, `pylint`, `flake8`, `black`, `mypy`, `pyright` → `"testing"`
+  - **Python data validation**: `pydantic`, `marshmallow` → `"developer"`
+  - **Python servers (ASGI/WSGI)**: `uvicorn`, `gunicorn`, `asgi`, `wsgi`, `starlette`, `hypercorn` → `"api"`
+  - **Process management**: `pm2`, `supervisor`, `systemd`, `process` → `"devops"`
+  - **Caching patterns**: `ttl`, `eviction`, `invalidation`, `distributed`, `warmup` → `"caching"`
+- Running total: ~911 entries (877 + 34)
+
+### Catalog Script (Step 2)
+- Added 8 new tools to `scripts/add_missing_tools.py` (175 total):
+  - Tiptap (frontend-frameworks, 28k★) — headless ProseMirror-based rich text editor
+  - CodeMirror (frontend-frameworks, 26k★) — browser code editor powering Firefox DevTools, Repl.it
+  - Pydantic (developer-tools, 21k★) — Python data validation using type annotations (FastAPI backbone)
+  - Ruff (testing-tools, 35k★) — Rust-based Python linter/formatter (Flake8 + Black in one)
+  - Pytest (testing-tools, 12k★) — dominant Python testing framework
+  - Uvicorn (api-tools, 8k★) — ASGI server for FastAPI/Starlette production deployments
+  - PM2 (devops-infrastructure, 42k★) — production Node.js process manager
+
+### Code Quality (Step 3)
+- Reviewed recent commits — no html.escape(), hardcoded stat, or CSS color issues found
+
+### R&D Docs (Step 4)
+- sprint.md updated to fortieth pass
 
 ## Completed This Session (2026-04-11, thirty-ninth pass — autonomous improvement cycle)
 
