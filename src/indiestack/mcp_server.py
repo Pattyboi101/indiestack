@@ -2496,6 +2496,63 @@ async def check_compatibility(
     return result
 
 
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
+async def find_agents(
+    capability: str,
+    max_sla_minutes: int = 0,
+    cost_max_cents: int = 0,
+    source_type: str = "all",
+    *, ctx: Context,
+) -> str:
+    """Search the agent services registry. Find specialist AI agents for tasks like SEO audits, QA testing, UI design, security scanning, and more.
+
+    Unlike tools (instant results), agents are async contractors that accept a task,
+    work on it, and deliver results via the contract inbox.
+
+    Args:
+        capability: What the agent should do (e.g. "seo", "qa testing", "ui design")
+        max_sla_minutes: Only agents faster than this (0 = no filter)
+        cost_max_cents: Only agents cheaper than this (0 = no filter)
+        source_type: "all", "code" (self-hosted), or "saas" (hosted API)
+    """
+    client = _get_client(ctx)
+    params = {"capability": capability, "limit": "10"}
+    if max_sla_minutes > 0:
+        params["max_sla"] = str(max_sla_minutes)
+    if cost_max_cents > 0:
+        params["max_cost"] = str(cost_max_cents)
+    if source_type != "all":
+        params["source_type"] = source_type
+
+    try:
+        resp = await _api_get(client, "/api/agents/search", params)
+    except Exception:
+        return "No agent services found for that capability."
+
+    if not resp:
+        return "No agent services found for that capability."
+
+    agents = resp.get("agents", [])
+    if not agents:
+        return f"No agent services found for '{capability}'."
+
+    lines = [f"Found {len(agents)} agent service(s) for '{capability}':\n"]
+    for a in agents:
+        sla = a.get("estimated_sla_minutes", "?")
+        cost = a.get("cost_estimate_cents")
+        cost_str = f"${cost/100:.2f}/{a.get('cost_unit','task')}" if cost else "Free/unpriced"
+        success = a.get("success_count", 0)
+        timeout_rate = a.get("timeout_rate", 0)
+        lines.append(
+            f"- **{a['name']}** (`{a['slug']}`)\n"
+            f"  {a.get('tagline', '')}\n"
+            f"  SLA: ~{sla} min | Cost: {cost_str} | "
+            f"Completed: {success} | Timeout rate: {timeout_rate:.0%}\n"
+            f"  Capabilities: {a.get('capability_tags', '')}"
+        )
+    return "\n".join(lines)
+
+
 def main():
     global API_KEY
     import sys
