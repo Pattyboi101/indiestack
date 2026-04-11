@@ -9037,3 +9037,99 @@ async def get_mcp_quality_stats(db: aiosqlite.Connection) -> dict:
         "top_gap_queries": gap_queries,
         "session_count_7d": session_count,
     }
+
+
+# ── Agent Services (agent-to-agent procurement) ────────────────────────
+
+async def create_agent_service(db: aiosqlite.Connection, *, name: str, tagline: str,
+                                description: str = '', capability_tags: str = '',
+                                category_id: int = None, input_schema: str = '{}',
+                                output_schema: str = '{}', delivery_types: str = 'inline_json',
+                                estimated_sla_minutes: int = 5, cost_estimate_cents: int = None,
+                                cost_unit: str = 'per_task', url: str = None,
+                                github_url: str = None, source_type: str = 'saas',
+                                maker_id: int = None) -> int:
+    """Create a new agent service listing."""
+    slug = slugify(name)
+    cursor = await db.execute(
+        """INSERT INTO agent_services
+           (slug, name, tagline, description, capability_tags, category_id,
+            input_schema, output_schema, delivery_types, estimated_sla_minutes,
+            cost_estimate_cents, cost_unit, url, github_url, source_type, maker_id)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+        (slug, name, tagline, description, capability_tags, category_id,
+         input_schema, output_schema, delivery_types, estimated_sla_minutes,
+         cost_estimate_cents, cost_unit, url, github_url, source_type, maker_id),
+    )
+    await db.commit()
+    return cursor.lastrowid
+
+
+async def get_agent_service_by_slug(db: aiosqlite.Connection, slug: str):
+    """Get an approved agent service by slug."""
+    cursor = await db.execute(
+        "SELECT * FROM agent_services WHERE slug = ? AND status = 'approved'", (slug,))
+    return await cursor.fetchone()
+
+
+async def get_agent_service_by_slug_any(db: aiosqlite.Connection, slug: str):
+    """Get an agent service by slug regardless of status (for admin/callbacks)."""
+    cursor = await db.execute(
+        "SELECT * FROM agent_services WHERE slug = ?", (slug,))
+    return await cursor.fetchone()
+
+
+async def search_agent_services(db: aiosqlite.Connection, capability: str, *,
+                                 max_sla: int = 0, max_cost: int = 0,
+                                 source_type: str = 'all', limit: int = 10, offset: int = 0):
+    """Search agent services by capability. Returns list of matching services."""
+    where = ["status = 'approved'"]
+    params = []
+    if capability:
+        terms = [t.strip().lower() for t in capability.split() if t.strip()]
+        for term in terms:
+            where.append("LOWER(capability_tags || ' ' || name || ' ' || tagline) LIKE ?")
+            params.append(f"%{term}%")
+    if max_sla > 0:
+        where.append("estimated_sla_minutes <= ?")
+        params.append(max_sla)
+    if max_cost > 0:
+        where.append("(cost_estimate_cents IS NULL OR cost_estimate_cents <= ?)")
+        params.append(max_cost)
+    if source_type != 'all':
+        where.append("source_type = ?")
+        params.append(source_type)
+    params.extend([limit, offset])
+    cursor = await db.execute(
+        f"SELECT * FROM agent_services WHERE {' AND '.join(where)} "
+        f"ORDER BY quality_score DESC, success_count DESC LIMIT ? OFFSET ?",
+        params)
+    return await cursor.fetchall()
+
+
+async def get_all_agent_services(db: aiosqlite.Connection, *, status: str = 'approved',
+                                  limit: int = 50, offset: int = 0):
+    """Get all agent services with given status."""
+    cursor = await db.execute(
+        "SELECT * FROM agent_services WHERE status = ? "
+        "ORDER BY quality_score DESC LIMIT ? OFFSET ?",
+        (status, limit, offset))
+    return await cursor.fetchall()
+
+
+async def increment_agent_timeout(db: aiosqlite.Connection, agent_slug: str):
+    """Increment timeout count and recalculate timeout_rate."""
+    await db.execute(
+        "UPDATE agent_services SET timeout_count = timeout_count + 1, "
+        "timeout_rate = CAST(timeout_count + 1 AS REAL) / MAX(success_count + timeout_count + 1, 1), "
+        "updated_at = CURRENT_TIMESTAMP WHERE slug = ?", (agent_slug,))
+    await db.commit()
+
+
+async def increment_agent_success(db: aiosqlite.Connection, agent_slug: str):
+    """Increment success count and recalculate timeout_rate."""
+    await db.execute(
+        "UPDATE agent_services SET success_count = success_count + 1, "
+        "timeout_rate = CAST(timeout_count AS REAL) / MAX(success_count + timeout_count + 1, 1), "
+        "updated_at = CURRENT_TIMESTAMP WHERE slug = ?", (agent_slug,))
+    await db.commit()
