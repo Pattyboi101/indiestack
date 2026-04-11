@@ -1,8 +1,12 @@
 """Agent services registry — browse, detail, submit, and search API."""
 
+import hashlib
 import json
+import uuid
+from datetime import datetime, timedelta, timezone
 from html import escape
 
+import httpx
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
@@ -15,6 +19,11 @@ from indiestack.db import (
     create_agent_service,
     get_all_categories,
     slugify,
+    create_agent_contract,
+    update_contract_status,
+    get_agent_contracts,
+    get_agent_service_by_slug_any,
+    increment_agent_success,
 )
 
 router = APIRouter()
@@ -583,3 +592,267 @@ async def api_agents_search(request: Request):
         })
 
     return JSONResponse({"agents": agents_list})
+
+
+# ── Contract API ────────────────────────────────────────────────────────
+
+
+@router.post("/api/contracts/create")
+async def api_contracts_create(request: Request):
+    """Create an agent contract — hire an agent to perform a task."""
+    d = request.state.db
+    user = request.state.user
+
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON body"}, status_code=400)
+
+    agent_slug = (body.get("agent_slug") or "").strip()
+    payload = body.get("payload", "{}")
+    session_id = body.get("session_id")
+
+    if not agent_slug:
+        return JSONResponse({"error": "agent_slug is required"}, status_code=400)
+
+    # Look up agent service — must be approved
+    agent = await get_agent_service_by_slug_any(d, agent_slug)
+    if not agent or agent["status"] != "approved":
+        return JSONResponse({"error": "Agent not found or not approved"}, status_code=404)
+
+    if not agent["execution_endpoint"]:
+        # Agent has no execution endpoint — create contract as pending
+        contract_id = str(uuid.uuid4())
+        sla_minutes = agent["estimated_sla_minutes"] or 5
+        sla_deadline = datetime.now(timezone.utc) + timedelta(minutes=sla_minutes * 2)
+        sla_deadline_str = sla_deadline.strftime("%Y-%m-%d %H:%M:%S")
+
+        await create_agent_contract(
+            d,
+            contract_id=contract_id,
+            host_user_id=user["id"] if user else None,
+            host_session_id=session_id,
+            hired_agent_slug=agent_slug,
+            input_payload=payload if isinstance(payload, str) else json.dumps(payload),
+            sla_deadline_at=sla_deadline_str,
+            cost_estimate_cents=agent["cost_estimate_cents"],
+        )
+        return JSONResponse({
+            "contract_id": contract_id,
+            "status": "pending",
+            "estimated_completion": f"~{sla_minutes} minutes",
+            "sla_deadline": sla_deadline_str,
+            "note": "Agent has no execution endpoint — contract created as pending. Agent will be notified.",
+        })
+
+    # Agent has an execution endpoint — dispatch the task
+    contract_id = str(uuid.uuid4())
+    sla_minutes = agent["estimated_sla_minutes"] or 5
+    sla_deadline = datetime.now(timezone.utc) + timedelta(minutes=sla_minutes * 2)
+    sla_deadline_str = sla_deadline.strftime("%Y-%m-%d %H:%M:%S")
+
+    await create_agent_contract(
+        d,
+        contract_id=contract_id,
+        host_user_id=user["id"] if user else None,
+        host_session_id=session_id,
+        hired_agent_slug=agent_slug,
+        input_payload=payload if isinstance(payload, str) else json.dumps(payload),
+        sla_deadline_at=sla_deadline_str,
+        cost_estimate_cents=agent["cost_estimate_cents"],
+    )
+
+    callback_url = f"{BASE_URL}/api/contracts/{contract_id}/deliver"
+
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            resp = await client.post(
+                agent["execution_endpoint"],
+                json={
+                    "contract_id": contract_id,
+                    "payload": payload,
+                    "callback_url": callback_url,
+                },
+            )
+            resp.raise_for_status()
+    except Exception:
+        # Dispatch failed — contract stays pending
+        return JSONResponse({
+            "contract_id": contract_id,
+            "status": "pending",
+            "estimated_completion": f"~{sla_minutes} minutes",
+            "sla_deadline": sla_deadline_str,
+            "note": "Could not reach agent endpoint — contract created as pending.",
+        })
+
+    # Dispatch succeeded — mark as processing
+    await update_contract_status(d, contract_id, "processing")
+    return JSONResponse({
+        "contract_id": contract_id,
+        "status": "processing",
+        "estimated_completion": f"~{sla_minutes} minutes",
+        "sla_deadline": sla_deadline_str,
+    })
+
+
+@router.post("/api/contracts/{contract_id}/deliver")
+async def api_contracts_deliver(request: Request, contract_id: str):
+    """Agent delivers completed work for a contract."""
+    d = request.state.db
+
+    # Look up contract
+    contracts = await get_agent_contracts(d, contract_id=contract_id)
+    if not contracts:
+        return JSONResponse({"error": "Contract not found"}, status_code=404)
+    contract = contracts[0]
+
+    if contract["status"] != "processing":
+        return JSONResponse(
+            {"error": f"Contract status is '{contract['status']}', expected 'processing'"},
+            status_code=400,
+        )
+
+    # Verify auth token if agent has one set
+    agent = await get_agent_service_by_slug_any(d, contract["hired_agent_slug"])
+    if agent and agent["auth_token_hash"]:
+        auth_header = request.headers.get("authorization", "")
+        token = auth_header.replace("Bearer ", "").strip() if auth_header.startswith("Bearer ") else ""
+        token_hash = hashlib.sha256(token.encode()).hexdigest() if token else ""
+        if token_hash != agent["auth_token_hash"]:
+            return JSONResponse({"error": "Invalid auth token"}, status_code=403)
+
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON body"}, status_code=400)
+
+    delivery_type = (body.get("delivery_type") or "inline_json").strip()
+    delivery_ref = body.get("delivery_ref", "")
+    delivery_metadata = body.get("delivery_metadata", "{}")
+    ttl_hours = body.get("ttl_hours")
+
+    # Inline size limit
+    if delivery_type == "inline_json" and len(str(delivery_ref)) > 4096:
+        return JSONResponse(
+            {"error": "inline_json delivery_ref exceeds 4096 byte limit"},
+            status_code=400,
+        )
+
+    update_kwargs = {
+        "delivery_type": delivery_type,
+        "delivery_ref": delivery_ref if isinstance(delivery_ref, str) else json.dumps(delivery_ref),
+        "delivery_metadata": delivery_metadata if isinstance(delivery_metadata, str) else json.dumps(delivery_metadata),
+        "delivered_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    if ttl_hours:
+        try:
+            ttl_expires = datetime.now(timezone.utc) + timedelta(hours=int(ttl_hours))
+            update_kwargs["ttl_expires_at"] = ttl_expires.strftime("%Y-%m-%d %H:%M:%S")
+        except (ValueError, TypeError):
+            pass
+
+    await update_contract_status(d, contract_id, "delivered", **update_kwargs)
+    await increment_agent_success(d, contract["hired_agent_slug"])
+
+    return JSONResponse({"status": "delivered", "contract_id": contract_id})
+
+
+@router.post("/api/contracts/{contract_id}/extend")
+async def api_contracts_extend(request: Request, contract_id: str):
+    """Agent requests an SLA extension for a contract."""
+    d = request.state.db
+
+    # Look up contract
+    contracts = await get_agent_contracts(d, contract_id=contract_id)
+    if not contracts:
+        return JSONResponse({"error": "Contract not found"}, status_code=404)
+    contract = contracts[0]
+
+    if contract["status"] != "processing":
+        return JSONResponse(
+            {"error": f"Contract status is '{contract['status']}', expected 'processing'"},
+            status_code=400,
+        )
+
+    if contract["extended"]:
+        return JSONResponse({"error": "Contract already extended once"}, status_code=400)
+
+    # Verify auth token if agent has one set
+    agent = await get_agent_service_by_slug_any(d, contract["hired_agent_slug"])
+    if agent and agent["auth_token_hash"]:
+        auth_header = request.headers.get("authorization", "")
+        token = auth_header.replace("Bearer ", "").strip() if auth_header.startswith("Bearer ") else ""
+        token_hash = hashlib.sha256(token.encode()).hexdigest() if token else ""
+        if token_hash != agent["auth_token_hash"]:
+            return JSONResponse({"error": "Invalid auth token"}, status_code=403)
+
+    # Calculate new deadline: add 50% of original SLA
+    sla_minutes = (agent["estimated_sla_minutes"] or 5) if agent else 5
+    extension_minutes = max(sla_minutes // 2, 1)
+
+    current_deadline = contract["sla_deadline_at"]
+    if current_deadline:
+        try:
+            deadline_dt = datetime.strptime(current_deadline, "%Y-%m-%d %H:%M:%S").replace(
+                tzinfo=timezone.utc
+            )
+        except ValueError:
+            deadline_dt = datetime.now(timezone.utc)
+    else:
+        deadline_dt = datetime.now(timezone.utc)
+
+    new_deadline = deadline_dt + timedelta(minutes=extension_minutes)
+    new_deadline_str = new_deadline.strftime("%Y-%m-%d %H:%M:%S")
+
+    await update_contract_status(
+        d, contract_id, "processing",
+        sla_deadline_at=new_deadline_str,
+        extended=1,
+    )
+
+    return JSONResponse({
+        "status": "extended",
+        "contract_id": contract_id,
+        "new_deadline": new_deadline_str,
+    })
+
+
+@router.get("/api/contracts/inbox")
+async def api_contracts_inbox(request: Request):
+    """Check inbox for agent contract results."""
+    d = request.state.db
+    user = request.state.user
+
+    status_filter = request.query_params.get("status", "delivered").strip()
+    session_id = request.query_params.get("session_id", "").strip() or None
+    contract_id = request.query_params.get("contract_id", "").strip() or None
+
+    kwargs: dict = {}
+    if contract_id:
+        kwargs["contract_id"] = contract_id
+    if user:
+        kwargs["host_user_id"] = user["id"]
+    if session_id:
+        kwargs["host_session_id"] = session_id
+    if status_filter and status_filter != "all":
+        kwargs["status"] = status_filter
+
+    contracts = await get_agent_contracts(d, **kwargs)
+
+    result = []
+    for c in contracts:
+        entry = {
+            "id": c["id"],
+            "hired_agent_slug": c["hired_agent_slug"],
+            "status": c["status"],
+            "created_at": c["created_at"],
+            "sla_deadline_at": c["sla_deadline_at"],
+        }
+        if c["status"] == "delivered":
+            entry["delivery_type"] = c["delivery_type"]
+            entry["delivery_ref"] = c["delivery_ref"]
+            entry["delivered_at"] = c["delivered_at"]
+            entry["ttl_expires_at"] = c["ttl_expires_at"]
+        result.append(entry)
+
+    return JSONResponse({"contracts": result})
