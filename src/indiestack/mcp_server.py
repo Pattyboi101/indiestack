@@ -2553,6 +2553,113 @@ async def find_agents(
     return "\n".join(lines)
 
 
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=False))
+async def hire_agent(
+    agent_slug: str,
+    payload: str,
+    session_id: Optional[str] = None,
+    *, ctx: Context,
+) -> str:
+    """Hire an agent service to complete a task asynchronously.
+
+    The hired agent works on the task and delivers results to your inbox.
+    Use check_agent_inbox() to retrieve completed work.
+
+    Args:
+        agent_slug: The agent to hire (from find_agents results)
+        payload: JSON string with task details (must match agent's input_schema)
+        session_id: Your session ID for inbox retrieval
+    """
+    client = _get_client(ctx)
+    body = {"agent_slug": agent_slug, "payload": payload}
+    if session_id:
+        body["session_id"] = session_id
+
+    try:
+        data = await _api_post(client, "/api/contracts/create", body)
+    except httpx.HTTPStatusError as e:
+        if e.response.status_code == 404:
+            return f"Agent '{agent_slug}' not found or not available."
+        if e.response.status_code == 400:
+            return f"Invalid request: check the payload matches the agent's input_schema."
+        return f"Could not hire agent: {e}"
+    except Exception as e:
+        return f"Could not hire agent: {e}"
+
+    contract_id = data.get("contract_id", "?")
+    status = data.get("status", "pending")
+    eta = data.get("estimated_completion", "unknown")
+    sla = data.get("sla_deadline", "")
+
+    lines = [
+        f"Contract created: {contract_id}",
+        f"Status: {status}",
+        f"Estimated completion: {eta}",
+    ]
+    if sla:
+        lines.append(f"SLA deadline: {sla}")
+    if data.get("note"):
+        lines.append(f"Note: {data['note']}")
+    lines.append(
+        f"\nUse check_agent_inbox(contract_id='{contract_id}') to retrieve results."
+    )
+    return "\n".join(lines)
+
+
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
+async def check_agent_inbox(
+    status_filter: str = "delivered",
+    session_id: Optional[str] = None,
+    contract_id: Optional[str] = None,
+    *, ctx: Context,
+) -> str:
+    """Check your agent inbox for completed work from hired agents.
+
+    Args:
+        status_filter: "delivered" (default), "processing", or "all"
+        session_id: Filter by session
+        contract_id: Check a specific contract
+    """
+    client = _get_client(ctx)
+    params: dict[str, str] = {}
+    if status_filter and status_filter != "all":
+        params["status"] = status_filter
+    if session_id:
+        params["session_id"] = session_id
+    if contract_id:
+        params["contract_id"] = contract_id
+
+    try:
+        data = await _api_get(client, "/api/contracts/inbox", params)
+    except Exception as e:
+        return f"Could not check inbox: {e}"
+
+    contracts = data.get("contracts", [])
+    if not contracts:
+        return "No contracts found matching your filters."
+
+    lines = [f"Inbox: {len(contracts)} contract(s)\n"]
+    for c in contracts:
+        cid = c.get("id", "?")
+        agent = c.get("hired_agent_slug", "?")
+        st = c.get("status", "?")
+        line = f"- [{st.upper()}] Contract {cid} (agent: {agent})"
+        if st == "delivered":
+            dtype = c.get("delivery_type", "")
+            dref = c.get("delivery_ref", "")
+            if dtype:
+                line += f"\n  Delivery: {dtype}"
+                if dref:
+                    preview = dref[:200] + "..." if len(dref) > 200 else dref
+                    line += f" | Ref: {preview}"
+        elif st == "processing":
+            sla = c.get("sla_deadline_at", "")
+            if sla:
+                line += f"\n  SLA deadline: {sla}"
+        lines.append(line)
+    return "\n".join(lines)
+
+
 def main():
     global API_KEY
     import sys
