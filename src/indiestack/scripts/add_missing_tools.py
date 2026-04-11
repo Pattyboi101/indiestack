@@ -2527,6 +2527,180 @@ TOOLS = [
         "curl -sSL https://get.wasp-lang.dev/installer.sh | sh",
         "code",
     ),
+    # Static Site Generators ---------------------------------------------------
+    (
+        "hugo",
+        "Hugo",
+        "The world's fastest framework for building websites",
+        "Hugo is an open-source static site generator written in Go. It builds "
+        "sites from Markdown and templates in milliseconds, with no runtime "
+        "dependencies. Powers millions of sites including documentation, portfolios, "
+        "and blogs. Supports themes, shortcodes, multilingual content, and "
+        "taxonomies out of the box.",
+        "frontend-frameworks",
+        "gohugoio/hugo",
+        72000,
+        "https://gohugo.io",
+        "ssg,static-site,go,blog,documentation,fast",
+        "brew install hugo",
+        "code",
+    ),
+    (
+        "jekyll",
+        "Jekyll",
+        "Transform your plain text into static websites and blogs",
+        "Jekyll is the original static site generator, written in Ruby and "
+        "powering GitHub Pages. It converts Markdown, Liquid templates, and "
+        "YAML front matter into static HTML. Simple, blog-aware, with a rich "
+        "ecosystem of themes and plugins. Zero databases, zero configuration "
+        "required to get started.",
+        "frontend-frameworks",
+        "jekyll/jekyll",
+        48000,
+        "https://jekyllrb.com",
+        "ssg,static-site,ruby,blog,github-pages",
+        "gem install jekyll bundler",
+        "code",
+    ),
+    (
+        "eleventy",
+        "Eleventy (11ty)",
+        "A simpler static site generator",
+        "Eleventy is a simpler static site generator that works with multiple "
+        "template languages (Markdown, Nunjucks, Liquid, Handlebars, JavaScript, "
+        "and more). Zero client-side JavaScript by default. Extremely fast builds, "
+        "flexible project structure, and no framework lock-in. Used by Google, "
+        "ESLint, and the Web Almanac.",
+        "frontend-frameworks",
+        "11ty/eleventy",
+        17000,
+        "https://www.11ty.dev",
+        "ssg,static-site,javascript,multi-template,blog,fast",
+        "npm install @11ty/eleventy",
+        "code",
+    ),
+    (
+        "gatsby",
+        "Gatsby",
+        "The fastest frontend for the headless web",
+        "Gatsby is a React-based open-source static site generator and web "
+        "framework. It pulls data from any source (CMS, APIs, databases, files) "
+        "via GraphQL and builds blazing-fast static HTML. Features image "
+        "optimization, code splitting, prefetching, and a rich plugin ecosystem "
+        "with 3,000+ plugins.",
+        "frontend-frameworks",
+        "gatsbyjs/gatsby",
+        55000,
+        "https://www.gatsbyjs.com",
+        "ssg,static-site,react,graphql,image-optimization,pwa",
+        "npm install gatsby",
+        "code",
+    ),
+    # Developer Tools — diagramming --------------------------------------------
+    (
+        "mermaid",
+        "Mermaid",
+        "Diagramming and charting tool that renders text definitions",
+        "Mermaid is a JavaScript-based diagramming and charting tool that renders "
+        "Markdown-inspired text definitions to create diagrams. Supports flowcharts, "
+        "sequence diagrams, class diagrams, ER diagrams, Gantt charts, and more. "
+        "Natively supported in GitHub, GitLab, Notion, and Obsidian. Used to keep "
+        "docs in sync with code.",
+        "developer-tools",
+        "mermaid-js/mermaid",
+        72000,
+        "https://mermaid.js.org",
+        "diagrams,uml,flowchart,markdown,documentation,visualization",
+        "npm install mermaid",
+        "code",
+    ),
+    # Testing Tools — linting + formatting ------------------------------------
+    (
+        "biome",
+        "Biome",
+        "One toolchain for your web project",
+        "Biome is a fast formatter and linter for JavaScript, TypeScript, JSX, "
+        "TSX, JSON, CSS, and GraphQL. Written in Rust, it's 35x faster than "
+        "Prettier and 15x faster than ESLint. A single unified tool that replaces "
+        "Prettier + ESLint with zero configuration needed. Drop-in Prettier "
+        "compatible with a migration CLI.",
+        "testing-tools",
+        "biomejs/biome",
+        14000,
+        "https://biomejs.dev",
+        "linter,formatter,rust,fast,javascript,typescript,prettier-alternative",
+        "npm install --save-dev --save-exact @biomejs/biome",
+        "code",
+    ),
+    # Games & Entertainment ---------------------------------------------------
+    (
+        "godot",
+        "Godot Engine",
+        "The free and open source game engine",
+        "Godot Engine is a feature-packed, cross-platform game engine designed "
+        "to create 2D and 3D games from a unified interface. It provides a "
+        "comprehensive set of tools so you can focus on making games. Uses "
+        "GDScript (Python-like), C#, and C++ as scripting languages. Fully "
+        "free and open-source with MIT license.",
+        "games-entertainment",
+        "godotengine/godot",
+        90000,
+        "https://godotengine.org",
+        "game-engine,2d,3d,gdscript,cross-platform,mit,open-source",
+        "",
+        "code",
+    ),
+    (
+        "phaser",
+        "Phaser",
+        "A fast, fun and free open source HTML5 game framework",
+        "Phaser is a fast 2D game framework for HTML5 using WebGL and Canvas "
+        "rendering. It supports physics (Arcade, Matter.js, Impact), tweens, "
+        "particles, tilemaps, and game input. Used by thousands of indie games, "
+        "educational platforms, and browser-based apps. Works with TypeScript "
+        "and has an active community.",
+        "games-entertainment",
+        "photonstorm/phaser",
+        36000,
+        "https://phaser.io",
+        "game-framework,html5,webgl,canvas,javascript,2d,physics",
+        "npm install phaser",
+        "code",
+    ),
+    # Developer Tools — browser extension frameworks --------------------------
+    (
+        "wxt",
+        "WXT",
+        "Next-gen web extension framework",
+        "WXT is a framework for building browser extensions with a Next.js-like "
+        "developer experience. Supports Chrome, Firefox, Edge, and Safari. File-based "
+        "entrypoints, HMR during development, automatic manifest generation, and "
+        "TypeScript-first. The fastest way to build cross-browser extensions.",
+        "developer-tools",
+        "wxt-dev/wxt",
+        5000,
+        "https://wxt.dev",
+        "browser-extension,chrome-extension,firefox,manifest-v3,typescript,hmr",
+        "npm create wxt@latest",
+        "code",
+    ),
+    (
+        "plasmo",
+        "Plasmo",
+        "The browser extension framework",
+        "Plasmo is a battery-packed framework for building browser extensions "
+        "with React. Features a declarative API, built-in HMR, content scripts "
+        "with React, automatic manifest generation, and first-class TypeScript "
+        "support. Deploy to the Chrome Web Store and Firefox Add-ons with one "
+        "CLI command. Used by thousands of extension developers.",
+        "developer-tools",
+        "PlasmoHQ/plasmo",
+        10000,
+        "https://www.plasmo.com",
+        "browser-extension,chrome-extension,react,manifest-v3,typescript",
+        "npm create plasmo@latest",
+        "code",
+    ),
 ]
 
 

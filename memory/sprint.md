@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-11 (thirty-eighth pass)
+Last updated: 2026-04-11 (thirty-ninth pass)
 
 ## Status: Active
 
@@ -10,12 +10,53 @@ Last updated: 2026-04-11 (thirty-eighth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~829 entries for search routing (added 34 in thirty-eighth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 157 tools ready to insert (slug-safe)
-  - 10 tools added in thirty-eighth pass (Floating UI, Iconify, SVGR, Hoppscotch, HTTPie, Xata, Keystatic, Dokku, CapRover, Inertia.js, Wasp)
+- **_CAT_SYNONYMS**: ~877 entries for search routing (added 48 in thirty-ninth pass; fixed 10 broken "devtools" values)
+- **Catalog script**: `scripts/add_missing_tools.py` — 167 tools ready to insert (slug-safe)
+  - 10 tools added in thirty-ninth pass (Hugo, Jekyll, Eleventy, Gatsby, Mermaid, Biome, Godot, Phaser, WXT, Plasmo)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-11, thirty-ninth pass — autonomous improvement cycle)
+
+### Bug Fix (Step 1a)
+- **Fixed 10 broken `"devtools"` values in `_CAT_SYNONYMS`** (category name is "Developer Tools" → `LIKE '%developer%'` matches, `LIKE '%devtools%'` NEVER matches):
+  - Affected: `monorepo`, `scraping`, `scraper`, `crawler`, `crawling`, `cheerio`, `crawlee`, `firecrawl`, `arktype`, `scrape`
+  - Also aligned duplicate `nx` entry (2971→2972 said "devtools"; 3065 already correct as "developer"; now both consistent)
+  - Impact: web scraping, monorepo, and TypeScript validation queries were silently getting 0 category boost
+
+### Search Quality (Step 1b)
+- Added 48 new `_CAT_SYNONYMS` entries:
+  - **Frontend — static site generators**: `hugo`, `jekyll`, `eleventy`, `11ty`, `gatsby`, `hexo`, `pelican` → `"frontend"`
+  - **Games & Entertainment**: `godot`, `phaser`, `pygame`, `love2d`, `love`, `raylib` → `"games"`
+  - **Developer Tools — DI/IoC**: `ioc`, `inversify`, `tsyringe`, `wire` → `"developer"`
+  - **Developer Tools — browser extensions**: `plasmo`, `wxt`, `webextension` → `"developer"`
+  - **AI — MLOps**: `mlops`, `mlflow`, `dvc`, `kubeflow` → `"ai"`
+  - **DevOps — self-hosted Git**: `gitea`, `forgejo`, `gogs` → `"devops"`
+  - **Feature flags — named**: `launchdarkly`, `optimizely` → `"feature"`
+  - **Developer Tools — diagramming**: `mermaid`, `diagram`, `diagrams`, `drawio`, `plantuml` → `"developer"`
+  - **AI — evaluation**: `haystack`, `deepeval`, `ragas` → `"ai"`
+  - **Testing — TDD/mutation**: `tdd`, `mutation`, `stryker` → `"testing"`
+- Running total: ~877 entries (829 + 48)
+
+### Catalog Script (Step 2)
+- Added 10 new tools to `scripts/add_missing_tools.py` (167 total):
+  - Hugo (frontend-frameworks, 72k★) — world's fastest SSG in Go
+  - Jekyll (frontend-frameworks, 48k★) — Ruby SSG powering GitHub Pages
+  - Eleventy (frontend-frameworks, 17k★) — simple multi-template SSG
+  - Gatsby (frontend-frameworks, 55k★) — React SSG with GraphQL data layer
+  - Mermaid (developer-tools, 72k★) — diagrams from Markdown/code
+  - Biome (testing-tools, 14k★) — fast Rust-based linter + formatter (Prettier/ESLint replacement)
+  - Godot Engine (games-entertainment, 90k★) — open-source 2D/3D game engine
+  - Phaser (games-entertainment, 36k★) — HTML5 game framework
+  - WXT (developer-tools, 5k★) — Next.js-inspired browser extension framework
+  - Plasmo (developer-tools, 10k★) — React browser extension framework
+
+### Code Quality (Step 3)
+- Reviewed recent commits — no html.escape() or hardcoded stat issues found
+
+### R&D Docs (Step 4)
+- sprint.md updated to thirty-ninth pass
 
 ## Completed This Session (2026-04-11, thirty-eighth pass — autonomous improvement cycle)
 

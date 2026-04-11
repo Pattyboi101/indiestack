@@ -2968,8 +2968,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "yarn": "frontend",         # Yarn — fast npm-compatible package manager
     "pnpm": "frontend",         # pnpm — efficient disk-space-saving package manager
     # Monorepo tooling
-    "monorepo": "devtools",     # "monorepo build" → Developer Tools (Turborepo, Nx, Lerna)
-    "nx": "devtools",           # Nx — extensible build system for monorepos
+    "monorepo": "developer",    # "monorepo build" → Developer Tools (Turborepo, Nx, Lerna)
+    "nx": "developer",          # Nx — extensible build system for monorepos (also at 3065, kept for clarity)
     # Database — SQL / NoSQL query patterns
     "nosql": "database",        # "nosql database", "nosql store" queries
     "sql": "database",          # raw "sql" queries (not ORM-specific)
@@ -3249,12 +3249,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "typescript": "frontend",       # TypeScript — typed JS superset; TS tools live in frontend-frameworks
     "ts": "frontend",               # abbreviation — "ts config", "ts utils", "ts bundler"
     # Web scraping / crawling — Scrapy, Crawlee, Cheerio, Colly live in developer-tools
-    "scraping": "devtools",         # "web scraping library", "scraping framework" → Developer Tools
-    "scraper": "devtools",          # "html scraper", "page scraper" → Developer Tools
-    "crawler": "devtools",          # "web crawler", "link crawler" → Developer Tools
-    "crawling": "devtools",         # "web crawling tool" → Developer Tools
-    "cheerio": "devtools",          # Cheerio — jQuery-like server-side HTML parsing for scraping
-    "crawlee": "devtools",          # Crawlee — Apify's open-source web scraping/crawling library
+    "scraping": "developer",        # "web scraping library", "scraping framework" → Developer Tools
+    "scraper": "developer",         # "html scraper", "page scraper" → Developer Tools
+    "crawler": "developer",         # "web crawler", "link crawler" → Developer Tools
+    "crawling": "developer",        # "web crawling tool" → Developer Tools
+    "cheerio": "developer",         # Cheerio — jQuery-like server-side HTML parsing for scraping
+    "crawlee": "developer",         # Crawlee — Apify's open-source web scraping/crawling library
     # RPC — generic query term (beyond gRPC)
     "rpc": "api",                   # "rpc framework", "rpc protocol" → API Tools (Hono, tRPC, gRPC)
     # DNS — DNS tools and providers live in DevOps & Infrastructure
@@ -3324,9 +3324,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "artillery": "testing",         # Artillery — load testing and performance testing framework
     "locust": "testing",            # Locust — scalable Python load testing (write tests in Python)
     # Developer Tools — web scraping optimised for LLMs
-    "firecrawl": "devtools",        # Firecrawl — LLM-ready web scraping API (Markdown output)
+    "firecrawl": "developer",       # Firecrawl — LLM-ready web scraping API (Markdown output)
     # Developer Tools — TypeScript runtime validation (Zod alternatives)
-    "arktype": "devtools",          # ArkType — TypeScript-first runtime type validation (fast, concise)
+    "arktype": "developer",         # ArkType — TypeScript-first runtime type validation (fast, concise)
     # Frontend — form state management and validation
     "reacthookform": "frontend",    # React Hook Form — dominant React form library (40k stars)
     "react-hook-form": "frontend",  # hyphenated form used in queries like "react-hook-form alternative"
@@ -3382,7 +3382,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "multitenancy": "authentication",  # "multi-tenancy", "tenant isolation" → Authentication
     "multitenant": "authentication",   # "multitenant auth", "multitenant saas" → Authentication
     # Web scraping (verb form, e.g. "scrape a website")
-    "scrape": "devtools",           # "scrape website", "scrape html" → Developer Tools
+    "scrape": "developer",          # "scrape website", "scrape html" → Developer Tools
     # AI — chatbots, prompt engineering, fine-tuning
     "chatbot": "ai",                # "chatbot builder", "chatbot framework" → AI & Automation
     "prompt": "ai",                 # "prompt template", "prompt management", "prompt engineering" → AI
@@ -3466,6 +3466,56 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — self-hosted PaaS alternatives
     "dokku": "devops",              # Dokku — mini-Heroku on any server (self-hosted PaaS)
     "caprover": "devops",           # CapRover — Docker-based self-hosted PaaS
+    # Static site generators (named tool queries beyond the generic "ssg" term)
+    "hugo": "frontend",             # Hugo — fast Go static site generator (70k★)
+    "jekyll": "frontend",           # Jekyll — Ruby SSG powering GitHub Pages (48k★)
+    "eleventy": "frontend",         # Eleventy (11ty) — simple, fast SSG (17k★)
+    "11ty": "frontend",             # shorthand for Eleventy
+    "gatsby": "frontend",           # Gatsby — React-based SSG with GraphQL (55k★)
+    "hexo": "frontend",             # Hexo — Node.js blog/SSG framework (39k★)
+    "pelican": "frontend",          # Pelican — Python static site generator
+    # Game engines / frameworks
+    "godot": "games",               # Godot — open-source cross-platform game engine (90k★)
+    "phaser": "games",              # Phaser — HTML5 / WebGL game framework (36k★)
+    "pygame": "games",              # Pygame — Python 2D game development library
+    "love2d": "games",              # LÖVE 2D — Lua game framework
+    "love": "games",                # short form for LÖVE 2D queries
+    "raylib": "games",              # raylib — simple C game programming library
+    # Dependency injection / IoC containers
+    "ioc": "developer",             # inversion of control — DI container queries
+    "inversify": "developer",       # InversifyJS — powerful IoC container for JS/TS
+    "tsyringe": "developer",        # tsyringe — lightweight TypeScript DI container (MS)
+    "wire": "developer",            # Wire — compile-time DI for Go (Google)
+    # Browser extension frameworks
+    "plasmo": "developer",          # Plasmo — React-based browser extension framework (10k★)
+    "wxt": "developer",             # WXT — Next.js-inspired browser extension framework (5k★)
+    "webextension": "developer",    # generic web extension development queries
+    # MLOps / ML experiment tracking
+    "mlops": "ai",                  # ML operations tooling (MLflow, DVC, Kubeflow)
+    "mlflow": "ai",                 # MLflow — open-source ML lifecycle management (18k★)
+    "dvc": "ai",                    # DVC — data version control + ML pipelines (13k★)
+    "kubeflow": "ai",               # Kubeflow — ML toolkit on Kubernetes
+    # Self-hosted Git services
+    "gitea": "devops",              # Gitea — self-hosted lightweight Git service (44k★)
+    "forgejo": "devops",            # Forgejo — community fork of Gitea
+    "gogs": "devops",               # Gogs — minimal self-hosted Git (44k★)
+    # Feature flags — commercial platforms not yet mapped
+    "launchdarkly": "feature",      # LaunchDarkly — enterprise feature management platform
+    "optimizely": "feature",        # Optimizely — experimentation + feature flags (full-stack)
+    # Diagramming and technical drawing
+    "mermaid": "developer",         # Mermaid.js — diagrams in Markdown / code (72k★)
+    "diagram": "developer",         # "diagram tool", "diagramming library" → Developer Tools
+    "diagrams": "developer",        # plural form
+    "drawio": "developer",          # draw.io / diagrams.net — free diagramming web app
+    "plantuml": "developer",        # PlantUML — UML diagrams from plain text
+    # AI — additional NLP/LLM evaluation and pipeline tools
+    "haystack": "ai",               # Haystack — NLP + LLM pipeline framework (18k★)
+    "deepeval": "ai",               # DeepEval — open-source LLM evaluation framework (5k★)
+    "ragas": "ai",                  # RAGAS — RAG evaluation framework
+    # Testing — TDD and mutation testing
+    "tdd": "testing",               # test-driven development tooling queries
+    "mutation": "testing",          # "mutation testing" — Stryker, Mutmut, PITest
+    "stryker": "testing",           # Stryker — JavaScript/TypeScript mutation testing framework
 }
 
 _FTS_STOP_WORDS = {
