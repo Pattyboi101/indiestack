@@ -3432,6 +3432,40 @@ _CAT_SYNONYMS: dict[str, str] = {
     "virtualizer": "frontend",      # TanStack Virtual (formerly react-virtual) → Frontend Frameworks
     # Frontend — spreadsheet / Excel-like grid components (Handsontable, AG Grid, react-datasheet)
     "spreadsheet": "frontend",      # "spreadsheet component", "excel-like table" → Frontend Frameworks
+    # Frontend — animation libraries (Framer Motion, GSAP)
+    "framer": "frontend",           # Framer Motion — spring physics animation for React
+    "gsap": "frontend",             # GreenSock Animation Platform — JS animation
+    # Frontend — icon libraries (Lucide, Heroicons, Feather, Iconify)
+    "lucide": "frontend",           # Lucide Icons — fork of Feather, beautiful open icons
+    "heroicons": "frontend",        # Heroicons — by Tailwind Labs, SVG icon library
+    "feather": "frontend",          # Feather Icons — minimal open-source icon set
+    "iconify": "frontend",          # Iconify — unified icon framework (200k+ icons)
+    "svgr": "frontend",             # SVGR — transforms SVG files into React components
+    # Frontend — tooltip/popover positioning (Floating UI, Tippy.js, Popper.js)
+    "floating": "frontend",         # Floating UI — tooltip/popover/dropdown positioning
+    "popover": "frontend",          # "popover component", "popover library" → Frontend
+    "tooltip": "frontend",          # "tooltip library", "react tooltip" → Frontend
+    # Frontend — drag and drop (dnd-kit, react-beautiful-dnd, Pragmatic DnD)
+    "drop": "frontend",             # "drop zone", "drop target", "drag and drop" → Frontend
+    "gesture": "frontend",          # @use-gesture/react — gesture detection hooks → Frontend
+    # Frontend — Inertia.js (SPA routing for Laravel/Rails without a full API)
+    "inertia": "frontend",          # Inertia.js — build SPAs with server-side routing
+    # Frontend — MDX and unified ecosystem (remark, rehype)
+    "mdx": "documentation",         # MDX — Markdown with JSX for React docs
+    "remark": "documentation",      # Remark — extensible Markdown processor (unified)
+    "rehype": "documentation",      # Rehype — HTML processor (unified ecosystem)
+    # API tools — HTTP clients / API testing alternatives to Postman
+    "hoppscotch": "api",            # Hoppscotch — open-source Postman alternative (60k★)
+    "httpie": "api",                # HTTPie — human-friendly HTTP client for the API era
+    # Developer Tools — Wasp full-stack framework (Rails for React/Node)
+    "wasp": "developer",            # Wasp — declarative full-stack web framework
+    # Database — Xata (serverless Postgres + search + branching)
+    "xata": "database",             # Xata — serverless Postgres + full-text search + branching
+    # CMS — Keystatic (Git-based content management)
+    "keystatic": "cms",             # Keystatic — Git-based CMS by Thinkmill
+    # DevOps — self-hosted PaaS alternatives
+    "dokku": "devops",              # Dokku — mini-Heroku on any server (self-hosted PaaS)
+    "caprover": "devops",           # CapRover — Docker-based self-hosted PaaS
 }
 
 _FTS_STOP_WORDS = {

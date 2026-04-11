@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-11 (thirty-seventh pass)
+Last updated: 2026-04-11 (thirty-eighth pass)
 
 ## Status: Active
 
@@ -10,12 +10,50 @@ Last updated: 2026-04-11 (thirty-seventh pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~795 entries for search routing (added 19 in thirty-seventh pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 147 tools ready to insert (slug-safe)
-  - 8 tools added in thirty-seventh pass (Brevo, Loops, Plunk, React Spring, AG Grid, Headless UI, React Aria, date-fns)
+- **_CAT_SYNONYMS**: ~829 entries for search routing (added 34 in thirty-eighth pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 157 tools ready to insert (slug-safe)
+  - 10 tools added in thirty-eighth pass (Floating UI, Iconify, SVGR, Hoppscotch, HTTPie, Xata, Keystatic, Dokku, CapRover, Inertia.js, Wasp)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-11, thirty-eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited _CAT_SYNONYMS — found 34 genuine gaps across icon libs, animation, positioning, HTTP clients, PaaS, CMS
+- Added 34 new _CAT_SYNONYMS entries:
+  - **Frontend — animation**: `"framer"`, `"gsap"` → `"frontend"` (Framer Motion, GSAP)
+  - **Frontend — icons**: `"lucide"`, `"heroicons"`, `"feather"`, `"iconify"`, `"svgr"` → `"frontend"`
+  - **Frontend — positioning/UI**: `"floating"`, `"popover"`, `"tooltip"` → `"frontend"` (Floating UI)
+  - **Frontend — DnD/gesture**: `"drop"`, `"gesture"` → `"frontend"` (dnd-kit, @use-gesture)
+  - **Frontend — Inertia.js**: `"inertia"` → `"frontend"` (SPA routing for Laravel/Rails)
+  - **Documentation — unified**: `"mdx"`, `"remark"`, `"rehype"` → `"documentation"` (MDX, unified ecosystem)
+  - **API Tools — HTTP clients**: `"hoppscotch"`, `"httpie"` → `"api"` (Postman alternatives)
+  - **Developer Tools**: `"wasp"` → `"developer"` (full-stack framework)
+  - **Database**: `"xata"` → `"database"` (serverless Postgres + search)
+  - **CMS**: `"keystatic"` → `"cms"` (Git-based CMS by Thinkmill)
+  - **DevOps — PaaS**: `"dokku"`, `"caprover"` → `"devops"` (self-hosted Heroku alternatives)
+- Running total: ~829 entries (795 + 34)
+
+### Catalog Script (Step 2)
+- Added 10 new tools to `scripts/add_missing_tools.py` (157 total):
+  - Floating UI (frontend-frameworks, 29k★) — tooltip/popover positioning library
+  - Iconify (frontend-frameworks, 4k★) — unified icon framework (200k+ icons)
+  - SVGR (frontend-frameworks, 10k★) — transforms SVG into React components
+  - Hoppscotch (api-tools, 66k★) — open-source Postman alternative
+  - HTTPie (api-tools, 34k★) — human-friendly CLI HTTP client
+  - Xata (database, 1k★) — serverless Postgres + full-text search + branching
+  - Keystatic (headless-cms, 2k★) — Git-based CMS by Thinkmill
+  - Dokku (devops-infrastructure, 27k★) — self-hosted Heroku-compatible PaaS
+  - CapRover (devops-infrastructure, 13k★) — Docker-based self-hosted PaaS
+  - Inertia.js (frontend-frameworks, 6k★) — SPA routing for Laravel/Rails
+  - Wasp (developer-tools, 14k★) — declarative full-stack framework (Rails for JS)
+
+### Code Quality (Step 3)
+- Reviewed recent commits — no issues found
+
+### R&D Docs (Step 4)
+- sprint.md updated to thirty-eighth pass
 
 ## Completed This Session (2026-04-11, thirty-seventh pass — autonomous improvement cycle)
 

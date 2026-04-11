@@ -2344,6 +2344,189 @@ TOOLS = [
         "npm install date-fns",
         "code",
     ),
+    # Frontend — tooltip/popover positioning -----------------------------------
+    (
+        "floating-ui",
+        "Floating UI",
+        "Low-level library for positioning floating elements",
+        "Floating UI is a low-level library for positioning floating elements "
+        "like tooltips, popovers, dropdowns, and menus. Works with React, Vue, "
+        "Angular, and vanilla JS. Successor to Popper.js with better performance "
+        "and floating element interaction support.",
+        "frontend-frameworks",
+        "floating-ui/floating-ui",
+        29000,
+        "https://floating-ui.com",
+        "tooltip,popover,dropdown,positioning,react,vue,angular",
+        "npm install @floating-ui/react",
+        "code",
+    ),
+    # Frontend — icon libraries ------------------------------------------------
+    (
+        "iconify",
+        "Iconify",
+        "Unified icon framework with 200k+ open-source icons",
+        "Iconify is a unified icon framework that provides access to over 200,000 "
+        "icons from 100+ icon sets (Material, Tabler, Phosphor, Heroicons, and more) "
+        "through a single, consistent API. Works with React, Vue, Svelte, and CSS.",
+        "frontend-frameworks",
+        "iconify/iconify",
+        4000,
+        "https://iconify.design",
+        "icons,svg,react,vue,svelte,design-system",
+        "npm install @iconify/react",
+        "code",
+    ),
+    (
+        "svgr",
+        "SVGR",
+        "Transform SVG into React components",
+        "SVGR transforms SVG files into ready-to-use React components. Works as "
+        "a CLI, webpack loader, Vite plugin, and programmatic API. Powers "
+        "Create React App and is widely used in design system pipelines to "
+        "auto-generate accessible icon components from SVG source files.",
+        "frontend-frameworks",
+        "gregberge/svgr",
+        10000,
+        "https://react-svgr.com",
+        "svg,react,icons,build-tool,transform",
+        "npm install @svgr/webpack",
+        "code",
+    ),
+    # API Tools — HTTP clients -------------------------------------------------
+    (
+        "hoppscotch",
+        "Hoppscotch",
+        "Open-source API development ecosystem",
+        "Hoppscotch is an open-source, lightning-fast API development ecosystem "
+        "and Postman alternative. Test REST, GraphQL, WebSocket, SSE, and Socket.IO "
+        "APIs directly in the browser or desktop app. Supports team workspaces, "
+        "environments, and self-hosting.",
+        "api-tools",
+        "hoppscotch/hoppscotch",
+        66000,
+        "https://hoppscotch.io",
+        "api,rest,graphql,websocket,postman-alternative,open-source",
+        "npx @hoppscotch/cli test",
+        "code",
+    ),
+    (
+        "httpie",
+        "HTTPie",
+        "Human-friendly HTTP client for the API era",
+        "HTTPie is a command-line HTTP client designed for testing, debugging, "
+        "and interacting with APIs and web servers. Features a simple syntax, "
+        "automatic JSON support, syntax highlighting, and session persistence. "
+        "Available as CLI, desktop app, and web client.",
+        "api-tools",
+        "httpie/cli",
+        34000,
+        "https://httpie.io",
+        "api,http,rest,cli,curl-alternative,testing",
+        "brew install httpie",
+        "code",
+    ),
+    # Database — serverless Postgres + search ----------------------------------
+    (
+        "xata",
+        "Xata",
+        "Serverless database with built-in search and branching",
+        "Xata is a serverless Postgres database with built-in full-text search, "
+        "vector search, and database branching (like git branches for your schema). "
+        "Zero-downtime migrations, TypeScript SDK, and a visual data editor. "
+        "Ideal for Next.js and serverless apps.",
+        "database",
+        "xataio/client-ts",
+        1000,
+        "https://xata.io",
+        "database,postgres,search,serverless,branching,typescript",
+        "npm install @xata.io/client",
+        "saas",
+    ),
+    # CMS — Git-based content management ---------------------------------------
+    (
+        "keystatic",
+        "Keystatic",
+        "Git-based CMS that works with your codebase",
+        "Keystatic is a CMS that stores content directly in your Git repository "
+        "as Markdown, JSON, or YAML files. No external database — content lives "
+        "alongside your code. Built by Thinkmill, designed for Astro, Next.js, "
+        "and Remix projects. Open-source and self-hostable.",
+        "headless-cms",
+        "Thinkmill/keystatic",
+        2000,
+        "https://keystatic.com",
+        "cms,git,markdown,astro,nextjs,open-source,content",
+        "npm install @keystatic/core",
+        "code",
+    ),
+    # DevOps — self-hosted PaaS ------------------------------------------------
+    (
+        "dokku",
+        "Dokku",
+        "Self-hosted Heroku-compatible PaaS in under 1MB",
+        "Dokku is the smallest PaaS implementation you've ever seen — a self-hosted "
+        "Heroku alternative built on Docker. Push your code to deploy (git push dokku "
+        "main), with built-in buildpacks, SSL via Let's Encrypt, datastore plugins "
+        "for Postgres/Redis/MySQL, and reverse proxy via nginx.",
+        "devops-infrastructure",
+        "dokku/dokku",
+        27000,
+        "https://dokku.com",
+        "paas,heroku-alternative,docker,self-hosted,deployment,git",
+        "wget -NqO- https://packagecloud.io/dokku/dokku/gpgkey | sudo apt-key add -",
+        "code",
+    ),
+    (
+        "caprover",
+        "CapRover",
+        "Build your own Heroku in 5 minutes",
+        "CapRover is a free and open-source PaaS (Platform as a Service) that "
+        "lets you deploy apps using Docker and a simple CLI or web UI. Supports "
+        "one-click apps (Postgres, Redis, MongoDB, WordPress, Strapi), SSL, "
+        "load balancing, and webhooks for CI/CD pipelines.",
+        "devops-infrastructure",
+        "caprover/caprover",
+        13000,
+        "https://caprover.com",
+        "paas,docker,self-hosted,heroku-alternative,deployment",
+        "npm install -g caprover",
+        "code",
+    ),
+    # Frontend — Inertia.js (SPA for Laravel/Rails) ----------------------------
+    (
+        "inertiajs",
+        "Inertia.js",
+        "Build modern single-page apps using classic server-side routing",
+        "Inertia.js lets you build modern SPAs using classic server-side routing "
+        "and controllers — no separate API needed. Works with Laravel, Rails, and "
+        "Django backends. Your server returns components instead of JSON, and "
+        "Inertia handles the client-side routing seamlessly.",
+        "frontend-frameworks",
+        "inertiajs/inertia",
+        6000,
+        "https://inertiajs.com",
+        "laravel,rails,spa,routing,react,vue,svelte",
+        "npm install @inertiajs/react",
+        "code",
+    ),
+    # Developer Tools — full-stack framework -----------------------------------
+    (
+        "wasp",
+        "Wasp",
+        "The fastest way to build full-stack React + Node.js apps",
+        "Wasp is a declarative full-stack web framework for React and Node.js. "
+        "It handles auth, routing, deployments, and database migrations via a "
+        "simple config file — think Rails for the React/Node ecosystem. Deploy "
+        "to any cloud with one command. Open-source, MIT licensed.",
+        "developer-tools",
+        "wasp-lang/wasp",
+        14000,
+        "https://wasp-lang.dev",
+        "fullstack,react,nodejs,auth,prisma,deployment,rails-alternative",
+        "curl -sSL https://get.wasp-lang.dev/installer.sh | sh",
+        "code",
+    ),
 ]
 
 
