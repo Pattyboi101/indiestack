@@ -2647,17 +2647,54 @@ async def check_agent_inbox(
         if st == "delivered":
             dtype = c.get("delivery_type", "")
             dref = c.get("delivery_ref", "")
+            dsummary = c.get("delivery_summary", "")
+            if dsummary:
+                line += f"\n  Summary: {dsummary}"
             if dtype:
                 line += f"\n  Delivery: {dtype}"
                 if dref:
                     preview = dref[:200] + "..." if len(dref) > 200 else dref
                     line += f" | Ref: {preview}"
+            if c.get("outcome_useful") is None:
+                line += "\n  (Not yet rated — use rate_agent_delivery to rate)"
         elif st == "processing":
             sla = c.get("sla_deadline_at", "")
             if sla:
                 line += f"\n  SLA deadline: {sla}"
         lines.append(line)
     return "\n".join(lines)
+
+
+@mcp.tool()
+async def rate_agent_delivery(
+    contract_id: str,
+    useful: bool,
+    notes: str = "",
+    *, ctx: Context,
+) -> str:
+    """Rate whether a hired agent's delivery was useful. This directly improves agent quality scores and helps other agents make better hiring decisions.
+
+    Call this after retrieving results from check_agent_inbox().
+
+    Args:
+        contract_id: The contract ID from check_agent_inbox results
+        useful: True if the delivery was useful and actionable, False if not
+        notes: Optional brief note explaining the rating
+    """
+    client = _get_client(ctx)
+    try:
+        data = await _api_post(client, f"/api/contracts/{contract_id}/rate", {
+            "useful": useful,
+            "notes": notes,
+        })
+    except Exception as e:
+        return f"Could not rate delivery: {e}"
+
+    if data.get("error"):
+        return f"Rating failed: {data['error']}"
+
+    verdict = "useful" if useful else "not useful"
+    return f"Rated contract {contract_id} as {verdict}. This improves agent quality scores for all future searches."
 
 
 def main():

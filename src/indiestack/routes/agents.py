@@ -28,6 +28,7 @@ from indiestack.db import (
     get_agent_contracts,
     get_agent_service_by_slug_any,
     increment_agent_success,
+    rate_agent_delivery,
 )
 
 TELEGRAM_SCRIPT = os.path.expanduser("~/.claude/telegram.sh")
@@ -297,6 +298,30 @@ async def agents_submit_form(request: Request):
             </label>
 
             <label style="font-size:14px;font-weight:600;color:var(--ink);">
+                Example Input (JSON) <span style="font-weight:400;color:var(--ink-muted);font-size:12px;">helps agents construct payloads</span>
+                <textarea name="example_input" rows="3"
+                          placeholder='{"target_url": "https://example.com", "competitors": ["rival.com"]}'
+                          style="display:block;width:100%;margin-top:6px;padding:12px;
+                                 font-size:13px;font-family:var(--font-mono);
+                                 border:1px solid var(--border);border-radius:8px;
+                                 background:var(--card-bg);color:var(--ink);
+                                 box-sizing:border-box;resize:vertical;">
+                </textarea>
+            </label>
+
+            <label style="font-size:14px;font-weight:600;color:var(--ink);">
+                Example Output (JSON) <span style="font-weight:400;color:var(--ink-muted);font-size:12px;">shows agents what to expect</span>
+                <textarea name="example_output" rows="3"
+                          placeholder='{"report": "...", "issues": [...], "score": 85}'
+                          style="display:block;width:100%;margin-top:6px;padding:12px;
+                                 font-size:13px;font-family:var(--font-mono);
+                                 border:1px solid var(--border);border-radius:8px;
+                                 background:var(--card-bg);color:var(--ink);
+                                 box-sizing:border-box;resize:vertical;">
+                </textarea>
+            </label>
+
+            <label style="font-size:14px;font-weight:600;color:var(--ink);">
                 URL
                 <input name="url" type="url" placeholder="https://..."
                        style="display:block;width:100%;margin-top:6px;padding:12px;
@@ -350,6 +375,8 @@ async def agents_submit_post(
     output_schema: str = Form("{}"),
     url: str = Form(""),
     source_type: str = Form("saas"),
+    example_input: str = Form("{}"),
+    example_output: str = Form("{}"),
 ):
     db = request.state.db
 
@@ -397,10 +424,10 @@ async def agents_submit_post(
         source_type=source_type,
     )
 
-    # Store the hashed token
+    # Store the hashed token + examples
     await db.execute(
-        "UPDATE agent_services SET auth_token_hash = ? WHERE id = ?",
-        (token_hash, service_id),
+        "UPDATE agent_services SET auth_token_hash = ?, example_input = ?, example_output = ? WHERE id = ?",
+        (token_hash, example_input.strip() or '{}', example_output.strip() or '{}', service_id),
     )
     await db.commit()
 
@@ -498,6 +525,12 @@ async def agent_detail(request: Request, slug: str):
 
     input_schema_html = _pretty_schema(agent["input_schema"])
     output_schema_html = _pretty_schema(agent["output_schema"])
+    example_input_html = _pretty_schema(agent.get("example_input") or "{}")
+    example_output_html = _pretty_schema(agent.get("example_output") or "{}")
+    useful = agent.get("useful_count") or 0
+    not_useful = agent.get("not_useful_count") or 0
+    total_ratings = useful + not_useful
+    quality_pct = round(useful / total_ratings * 100) if total_ratings > 0 else None
 
     url_block = ""
     if url:
@@ -592,6 +625,45 @@ async def agent_detail(request: Request, slug: str):
                         font-family:var(--font-mono);color:var(--ink);
                         overflow-x:auto;line-height:1.5;">{output_schema_html}</pre>
         </div>
+
+        <!-- Example Payloads -->
+        <div style="margin-bottom:32px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);
+                       margin:0 0 12px;">Example Payloads</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div>
+                    <div style="font-size:12px;color:var(--ink-muted);text-transform:uppercase;
+                                letter-spacing:0.5px;margin-bottom:6px;font-weight:600;">Example Input</div>
+                    <pre style="background:var(--card-bg);border:1px solid var(--border);
+                                border-radius:8px;padding:14px;font-size:12px;
+                                font-family:var(--font-mono);color:var(--ink);
+                                overflow-x:auto;line-height:1.5;margin:0;">{example_input_html}</pre>
+                </div>
+                <div>
+                    <div style="font-size:12px;color:var(--ink-muted);text-transform:uppercase;
+                                letter-spacing:0.5px;margin-bottom:6px;font-weight:600;">Example Output</div>
+                    <pre style="background:var(--card-bg);border:1px solid var(--border);
+                                border-radius:8px;padding:14px;font-size:12px;
+                                font-family:var(--font-mono);color:var(--ink);
+                                overflow-x:auto;line-height:1.5;margin:0;">{output_schema_html}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quality Rating -->
+        {"" if total_ratings == 0 else f'''
+        <div style="margin-bottom:32px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);
+                       margin:0 0 12px;">Quality Rating</h2>
+            <div style="display:flex;align-items:center;gap:16px;">
+                <div style="font-size:32px;font-weight:700;color:{"var(--accent)" if quality_pct and quality_pct >= 70 else "var(--ink)"};">
+                    {quality_pct}%</div>
+                <div style="color:var(--ink-muted);font-size:14px;">
+                    useful ({useful} of {total_ratings} ratings)
+                </div>
+            </div>
+        </div>
+        '''}
     </div>
     """
 
@@ -657,8 +729,12 @@ async def api_agents_search(request: Request):
             "cost_unit": r["cost_unit"],
             "success_count": r["success_count"] or 0,
             "timeout_rate": r["timeout_rate"] or 0.0,
+            "quality_score": r["quality_score"] or 50,
+            "useful_count": r.get("useful_count") or 0,
+            "not_useful_count": r.get("not_useful_count") or 0,
             "source_type": r["source_type"],
             "url": r["url"],
+            "example_input": r.get("example_input") or "{}",
         })
 
     return JSONResponse({"agents": agents_list})
@@ -799,6 +875,7 @@ async def api_contracts_deliver(request: Request, contract_id: str):
     delivery_type = (body.get("delivery_type") or "inline_json").strip()
     delivery_ref = body.get("delivery_ref", "")
     delivery_metadata = body.get("delivery_metadata", "{}")
+    delivery_summary = (body.get("delivery_summary") or "").strip()[:500]  # cap at 500 chars
     ttl_hours = body.get("ttl_hours")
 
     # Inline size limit
@@ -812,6 +889,7 @@ async def api_contracts_deliver(request: Request, contract_id: str):
         "delivery_type": delivery_type,
         "delivery_ref": delivery_ref if isinstance(delivery_ref, str) else json.dumps(delivery_ref),
         "delivery_metadata": delivery_metadata if isinstance(delivery_metadata, str) else json.dumps(delivery_metadata),
+        "delivery_summary": delivery_summary,
         "delivered_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
     }
     if ttl_hours:
@@ -945,8 +1023,36 @@ async def api_contracts_inbox(request: Request):
         if c["status"] == "delivered":
             entry["delivery_type"] = c["delivery_type"]
             entry["delivery_ref"] = c["delivery_ref"]
+            entry["delivery_summary"] = c.get("delivery_summary") or ""
             entry["delivered_at"] = c["delivered_at"]
             entry["ttl_expires_at"] = c["ttl_expires_at"]
+            entry["outcome_useful"] = c.get("outcome_useful")
         result.append(entry)
 
     return JSONResponse({"contracts": result})
+
+
+@router.post("/api/contracts/{contract_id}/rate")
+async def api_contracts_rate(request: Request, contract_id: str):
+    """Rate a delivered agent contract — feeds agent quality scoring."""
+    d = request.state.db
+
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON body"}, status_code=400)
+
+    useful = body.get("useful")
+    if useful is None:
+        return JSONResponse({"error": "Missing 'useful' field (true/false)"}, status_code=400)
+
+    notes = (body.get("notes") or "").strip()[:500]
+
+    success = await rate_agent_delivery(d, contract_id, bool(useful), notes)
+    if not success:
+        return JSONResponse(
+            {"error": "Contract not found or not in 'delivered' status"},
+            status_code=400,
+        )
+
+    return JSONResponse({"status": "rated", "contract_id": contract_id, "useful": bool(useful)})

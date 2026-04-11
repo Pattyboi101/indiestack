@@ -68,6 +68,10 @@ CREATE TABLE IF NOT EXISTS agent_services (
     url TEXT,
     github_url TEXT,
     source_type TEXT DEFAULT 'saas',
+    example_input TEXT DEFAULT '{}',
+    example_output TEXT DEFAULT '{}',
+    useful_count INTEGER DEFAULT 0,
+    not_useful_count INTEGER DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -92,6 +96,9 @@ CREATE TABLE IF NOT EXISTS agent_contracts (
     cost_estimate_cents INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     delivered_at TIMESTAMP,
+    delivery_summary TEXT,
+    outcome_useful INTEGER,
+    outcome_notes TEXT,
     stripe_payment_intent_id TEXT,
     escrow_status TEXT
 );
@@ -1868,11 +1875,27 @@ async def init_db():
                 url TEXT,
                 github_url TEXT,
                 source_type TEXT DEFAULT 'saas',
+                example_input TEXT DEFAULT '{}',
+                example_output TEXT DEFAULT '{}',
+                useful_count INTEGER DEFAULT 0,
+                not_useful_count INTEGER DEFAULT 0,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )""")
             await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_services_status ON agent_services(status)")
             await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_services_capability ON agent_services(capability_tags)")
+
+        # Migration: add new columns to agent_services if missing
+        for _col, _ddl in [
+            ("example_input", "ALTER TABLE agent_services ADD COLUMN example_input TEXT DEFAULT '{}'"),
+            ("example_output", "ALTER TABLE agent_services ADD COLUMN example_output TEXT DEFAULT '{}'"),
+            ("useful_count", "ALTER TABLE agent_services ADD COLUMN useful_count INTEGER DEFAULT 0"),
+            ("not_useful_count", "ALTER TABLE agent_services ADD COLUMN not_useful_count INTEGER DEFAULT 0"),
+        ]:
+            try:
+                await db.execute(f"SELECT {_col} FROM agent_services LIMIT 1")
+            except Exception:
+                await db.execute(_ddl)
 
         # Migration: agent_contracts table for agent-to-agent procurement
         try:
@@ -1887,12 +1910,24 @@ async def init_db():
                 ttl_expires_at TIMESTAMP, sla_deadline_at TIMESTAMP,
                 extended BOOLEAN DEFAULT 0, cost_estimate_cents INTEGER,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, delivered_at TIMESTAMP,
+                delivery_summary TEXT, outcome_useful INTEGER, outcome_notes TEXT,
                 stripe_payment_intent_id TEXT, escrow_status TEXT
             )""")
             await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_contracts_status ON agent_contracts(status)")
             await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_contracts_host ON agent_contracts(host_user_id)")
             await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_contracts_session ON agent_contracts(host_session_id)")
             await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_contracts_agent ON agent_contracts(hired_agent_slug)")
+
+        # Migration: add new columns to agent_contracts if missing
+        for _col, _ddl in [
+            ("delivery_summary", "ALTER TABLE agent_contracts ADD COLUMN delivery_summary TEXT"),
+            ("outcome_useful", "ALTER TABLE agent_contracts ADD COLUMN outcome_useful INTEGER"),
+            ("outcome_notes", "ALTER TABLE agent_contracts ADD COLUMN outcome_notes TEXT"),
+        ]:
+            try:
+                await db.execute(f"SELECT {_col} FROM agent_contracts LIMIT 1")
+            except Exception:
+                await db.execute(_ddl)
 
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
@@ -9237,3 +9272,35 @@ async def get_expired_contracts(db: aiosqlite.Connection):
         "SELECT id, hired_agent_slug FROM agent_contracts "
         "WHERE status = 'processing' AND sla_deadline_at < datetime('now')")
     return await cursor.fetchall()
+
+
+async def rate_agent_delivery(db: aiosqlite.Connection, contract_id: str,
+                               useful: bool, notes: str = ''):
+    """Rate a delivered contract. Updates contract and agent quality score."""
+    contracts = await get_agent_contracts(db, contract_id=contract_id)
+    if not contracts:
+        return False
+    contract = contracts[0]
+    if contract["status"] != "delivered":
+        return False
+
+    # Update contract
+    await db.execute(
+        "UPDATE agent_contracts SET outcome_useful = ?, outcome_notes = ? WHERE id = ?",
+        (1 if useful else 0, notes, contract_id))
+
+    # Update agent service counters
+    if useful:
+        await db.execute(
+            "UPDATE agent_services SET useful_count = useful_count + 1, "
+            "quality_score = MIN(100, quality_score + 2), "
+            "updated_at = CURRENT_TIMESTAMP WHERE slug = ?",
+            (contract["hired_agent_slug"],))
+    else:
+        await db.execute(
+            "UPDATE agent_services SET not_useful_count = not_useful_count + 1, "
+            "quality_score = MAX(0, quality_score - 5), "
+            "updated_at = CURRENT_TIMESTAMP WHERE slug = ?",
+            (contract["hired_agent_slug"],))
+    await db.commit()
+    return True
