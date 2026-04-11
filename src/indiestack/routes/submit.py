@@ -144,7 +144,7 @@ def submit_success_page(tool_name, tool_slug, maker_slug="", tool_type=None):
         </div>
 
         <!-- Milestone card -->
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px;text-align:center;">
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px;text-align:center;">
             <img src="/api/milestone/{escape(tool_slug)}.svg?type=first-tool" alt="Milestone"
                  style="max-width:100%;margin-bottom:16px;">
             <div style="display:flex;justify-content:center;gap:12px;">
@@ -161,7 +161,7 @@ def submit_success_page(tool_name, tool_slug, maker_slug="", tool_type=None):
         </div>
 
         <!-- Embeddable badge -->
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px;">
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px;">
             <p style="font-weight:600;font-size:15px;color:var(--ink);margin-bottom:12px;">Embeddable Badge</p>
             <div style="text-align:center;margin-bottom:12px;">
                 <img src="/api/badge/{escape(tool_slug)}.svg" alt="{escape(tool_name)} on IndieStack">
@@ -169,7 +169,7 @@ def submit_success_page(tool_name, tool_slug, maker_slug="", tool_type=None):
             <textarea id="badge-embed" readonly
                       style="width:100%;height:60px;padding:10px;font-family:var(--font-mono);font-size:12px;border:1px solid var(--border);border-radius:var(--radius-sm);resize:none;background:var(--cream-dark);color:var(--ink);">{embed_code}</textarea>
             <button type="button" onclick="navigator.clipboard.writeText(document.getElementById('badge-embed').value).then(function(){{this.textContent='Copied!'}}.bind(this))"
-                    style="margin-top:8px;padding:8px 16px;background:var(--ink);color:white;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;">
+                    style="margin-top:8px;padding:8px 16px;background:#1A1A2E;color:white;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;">
                 Copy
             </button>
         </div>
@@ -220,7 +220,7 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
             </div>
             <div style="display:flex;gap:8px;">
                 <input type="text" id="github-url" placeholder="https://github.com/you/your-repo"
-                       style="flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:white;">
+                       style="flex:1;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:var(--card-bg);color:var(--ink);">
                 <button type="button" id="github-fetch-btn" onclick="fetchGitHub()"
                         style="padding:12px 22px;background:var(--terracotta);color:white;border:none;border-radius:var(--radius-sm);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;">
                     Auto-fill &rarr;

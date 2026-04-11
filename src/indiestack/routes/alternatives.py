@@ -375,7 +375,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
             <p style="color:var(--ink-muted);font-size:15px;margin-bottom:20px;line-height:1.6;">
                 Give your AI agent access to 6,500+ developer tools. Works with Claude, Cursor, and Windsurf.
             </p>
-            <div style="background:var(--ink);border-radius:var(--radius-sm);padding:16px 20px;overflow-x:auto;">
+            <div style="background:#1A1A2E;border-radius:var(--radius-sm);padding:16px 20px;overflow-x:auto;">
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--accent);white-space:nowrap;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code>
             </div>
         </div>

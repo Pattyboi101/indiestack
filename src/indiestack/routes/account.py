@@ -35,7 +35,7 @@ def _github_button(next_url: str = "") -> str:
     qs = f"?next={next_url}" if next_url else ""
     return f"""
     <a href="/auth/github{qs}" style="display:flex;align-items:center;justify-content:center;gap:8px;
-       width:100%;padding:12px;background:var(--ink);color:white;border-radius:var(--radius-sm);text-decoration:none;
+       width:100%;padding:12px;background:#1A1A2E;color:white;border-radius:var(--radius-sm);text-decoration:none;
        font-weight:600;font-size:15px;margin-bottom:24px;box-sizing:border-box;">
         {_GITHUB_SVG}
         Sign in with GitHub

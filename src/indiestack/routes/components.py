@@ -889,7 +889,7 @@ curl -s "{url}" -o /dev/null -w "%{{http_code}}"'''
                 <button onclick="navigator.clipboard.writeText(document.getElementById('snippet-py').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                         class="copy-btn">Copy</button>
             </div>
-            <pre id="snippet-py" style="background:var(--ink);color:var(--slate);border-radius:var(--radius-sm);padding:16px 20px;
+            <pre id="snippet-py" style="background:#1A1A2E;color:var(--slate);border-radius:var(--radius-sm);padding:16px 20px;
                         font-family:var(--font-mono);font-size:13px;line-height:1.7;overflow-x:auto;margin:0;">{python_snippet}</pre>
         </div>
         <div>
@@ -898,7 +898,7 @@ curl -s "{url}" -o /dev/null -w "%{{http_code}}"'''
                 <button onclick="navigator.clipboard.writeText(document.getElementById('snippet-curl').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                         class="copy-btn">Copy</button>
             </div>
-            <pre id="snippet-curl" style="background:var(--ink);color:var(--slate);border-radius:var(--radius-sm);padding:16px 20px;
+            <pre id="snippet-curl" style="background:#1A1A2E;color:var(--slate);border-radius:var(--radius-sm);padding:16px 20px;
                         font-family:var(--font-mono);font-size:13px;line-height:1.7;overflow-x:auto;margin:0;">{curl_snippet}</pre>
         </div>
     </div>

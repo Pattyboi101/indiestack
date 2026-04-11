@@ -279,7 +279,7 @@ async def dashboard_overview(request: Request):
                             <span style="font-size:13px;font-weight:600;color:var(--ink);">For GitHub README (Markdown)</span>
                         </div>
                         <div style="position:relative;">
-                            <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:11px;
+                            <pre style="background:#1A1A2E;color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:11px;
                                         font-family:var(--font-mono);overflow-x:auto;margin:0;white-space:pre-wrap;word-break:break-all;">[![{first_tool['name']} on IndieStack]({badge_url})]({tool_url})</pre>
                             <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                                     data-code="[![{first_tool['name']} on IndieStack]({badge_url})]({tool_url})"
@@ -293,7 +293,7 @@ async def dashboard_overview(request: Request):
                             <span style="font-size:13px;font-weight:600;color:var(--ink);">For your website (HTML)</span>
                         </div>
                         <div style="position:relative;">
-                            <pre style="background:var(--ink);color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:11px;
+                            <pre style="background:#1A1A2E;color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:11px;
                                         font-family:var(--font-mono);overflow-x:auto;margin:0;white-space:pre-wrap;word-break:break-all;">&lt;a href="{tool_url}"&gt;&lt;img src="{badge_url}" alt="{first_tool['name']} on IndieStack"&gt;&lt;/a&gt;</pre>
                             <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
                                     data-code='<a href="{tool_url}"><img src="{badge_url}" alt="{first_tool["name"]} on IndieStack"></a>'
@@ -2288,7 +2288,7 @@ async def my_stack_page(request: Request):
     else:
         for t in tools:
             tools_html += f"""
-            <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff;
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card-bg);
                         border-radius:var(--radius);border:1px solid var(--border);margin-bottom:8px;">
                 <div style="flex:1;">
                     <a href="/tool/{escape(str(t['slug']))}" style="font-weight:600;color:var(--terracotta);text-decoration:none;">{escape(str(t['name']))}</a>
@@ -2327,7 +2327,7 @@ async def my_stack_page(request: Request):
         </div>
 
         <form method="post" action="/dashboard/my-stack" style="margin-bottom:24px;">
-            <div style="background:#fff;border-radius:var(--radius);padding:24px;border:1px solid var(--border);">
+            <div style="background:var(--card-bg);border-radius:var(--radius);padding:24px;border:1px solid var(--border);">
                 <label style="font-weight:600;color:var(--terracotta);display:block;margin-bottom:8px;">Stack Title</label>
                 <input type="text" name="title" value="{title}"
                        style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:15px;margin-bottom:16px;box-sizing:border-box;">
@@ -2498,7 +2498,7 @@ async def welcome_page_old(request: Request):
     if new_key and new_key.startswith('isk_'):
         step1 = f'''<div style="background:rgba(110,231,183,0.1);border:1px solid rgba(110,231,183,0.3);border-radius:var(--radius-sm);padding:16px;margin-top:12px;">
             <p style="color:var(--ink);font-size:14px;font-weight:600;margin:0 0 8px;">Key created — copy it now:</p>
-            <code id="welcome-key" style="display:block;padding:10px 14px;background:var(--ink);color:var(--slate);border-radius:var(--radius-sm);font-size:14px;word-break:break-all;">{_esc(new_key)}</code>
+            <code id="welcome-key" style="display:block;padding:10px 14px;background:#1A1A2E;color:var(--slate);border-radius:var(--radius-sm);font-size:14px;word-break:break-all;">{_esc(new_key)}</code>
             <button onclick="navigator.clipboard.writeText(document.getElementById('welcome-key').textContent);this.textContent='Copied!'"
                 class="btn btn-primary" style="margin-top:8px;font-size:13px;">Copy to Clipboard</button>
         </div>'''
