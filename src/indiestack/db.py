@@ -3549,6 +3549,57 @@ _CAT_SYNONYMS: dict[str, str] = {
     "invalidation": "caching",      # "cache invalidation", "cache busting" → Caching
     "distributed": "caching",       # "distributed cache" → Caching (Redis cluster, Dragonfly)
     "warmup": "caching",            # "cache warmup", "cache warming" → Caching
+    # Mobile platforms — iOS and Android direct query terms
+    "ios": "frontend",              # iOS development queries (Swift, React Native iOS, Flutter)
+    "android": "frontend",          # Android development queries (Kotlin, React Native, Flutter)
+    # Apollo GraphQL — client and server framework (very common "[tool] alternative" query)
+    "apollo": "api",                # Apollo — GraphQL client/server (Apollo Client, Apollo Server)
+    "apolloclient": "api",          # explicit compound — "apollo client alternative"
+    "apolloserver": "api",          # explicit compound — "apollo server alternative"
+    # Ruby ecosystem — Sinatra and Hanami web frameworks
+    "sinatra": "api",               # Sinatra — minimal Ruby web framework (DSL-style)
+    "hanami": "api",                # Hanami — layered architecture Ruby web framework
+    # Maps — named library synonyms for "[tool] alternative" queries
+    "leaflet": "maps",              # Leaflet.js — most popular open-source interactive map library
+    "mapbox": "maps",               # Mapbox — maps/navigation SDK and APIs
+    "osm": "maps",                  # OSM — OpenStreetMap (common abbreviation in queries)
+    "openlayers": "maps",           # OpenLayers — feature-rich open-source mapping library
+    "here": "maps",                 # HERE Maps — navigation and mapping APIs
+    # Media / video processing — FFmpeg and cloud video tools
+    "ffmpeg": "media",              # FFmpeg — universal open-source media transcoding (CLI + lib)
+    "mux": "media",                 # Mux — developer-first video streaming and transcoding API
+    "bunnystream": "media",         # Bunny Stream — affordable video hosting + global delivery
+    "cloudflarestream": "media",    # Cloudflare Stream — serverless video storage/delivery
+    # Learning & Education — LMS, flashcard apps, spaced repetition
+    "lms": "learning",              # LMS (Learning Management System) — Moodle, Canvas queries
+    "flashcard": "learning",        # "flashcard app", "flashcard maker" → Learning & Education
+    "flashcards": "learning",       # plural form
+    "anki": "learning",             # Anki — open-source spaced repetition flashcard app
+    "spaced": "learning",           # "spaced repetition" — SRS algorithm/tool queries
+    "course": "learning",           # "course platform", "online course builder" → Learning
+    "quiz": "learning",             # "quiz app", "quiz platform", "quiz builder" → Learning
+    "elearning": "learning",        # "e-learning platform", "eLearning authoring" → Learning
+    # Newsletters / content publishing — Substack, Beehiiv, Ghost alternatives
+    "substack": "newsletter",       # Substack — newsletter platform → Newsletters & Content
+    "beehiiv": "newsletter",        # Beehiiv — modern newsletter growth platform
+    # Nuxt.js alternate spelling (nuxt is already mapped, add nuxtjs form)
+    "nuxtjs": "frontend",           # Nuxtjs — alternate form used in queries like "nuxtjs alternative"
+    # Invoicing / billing extras
+    "vat": "invoicing",             # "VAT handling", "VAT calculation tool" → Invoicing & Billing
+    "tax": "invoicing",             # "tax calculation", "sales tax API" → Invoicing & Billing
+    # Message queue — NATS and named tools not yet covered
+    "nats": "message",              # NATS — lightweight cloud-native messaging system
+    "redpanda": "message",          # Redpanda — Kafka-compatible event streaming (10× faster)
+    "nsq": "message",               # NSQ — realtime distributed messaging platform (Go)
+    "activemq": "message",          # ActiveMQ — Apache message broker
+    # Security — container/image scanning tools
+    "trivy": "security",            # Trivy — all-in-one vulnerability/secret scanner (CNCF)
+    "grype": "security",            # Grype — vulnerability scanner for containers and filesystems
+    "syft": "security",             # Syft — SBOM (software bill of materials) generator
+    # File storage — MinIO and self-hosted object storage
+    "minio": "file",                # MinIO — open-source S3-compatible object storage
+    "rclone": "file",               # rclone — command-line cloud storage sync/management
+    "backblaze": "file",            # Backblaze B2 — low-cost S3-compatible cloud storage
 }
 
 _FTS_STOP_WORDS = {

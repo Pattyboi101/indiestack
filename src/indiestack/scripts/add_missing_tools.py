@@ -1049,22 +1049,6 @@ TOOLS = [
         "npm install react-email",
         "code",
     ),
-    # Background jobs — durable execution ----------------------------------------
-    (
-        "temporal",
-        "Temporal",
-        "Open source durable execution system",
-        "Temporal is a durable execution platform for running reliable long-running "
-        "workflows as code. Automatically handles retries, timeouts, and state persistence. "
-        "SDKs for Go, Java, TypeScript, Python, and .NET.",
-        "background-jobs",
-        "temporalio/temporal",
-        12000,
-        "https://temporal.io",
-        "workflow,durable-execution,distributed,reliability",
-        "brew install temporal",
-        "code",
-    ),
     # JS Runtimes — Deno -------------------------------------------------------
     (
         "deno",
@@ -2817,6 +2801,155 @@ TOOLS = [
         "https://pm2.keymetrics.io",
         "nodejs,process-manager,deployment,production,clustering,logs",
         "npm install pm2 -g",
+        "code",
+    ),
+    # Message Queue — Kafka-compatible and lightweight brokers ---------------------
+    (
+        "redpanda",
+        "Redpanda",
+        "Kafka-compatible streaming data platform — 10× faster, no ZooKeeper",
+        "Redpanda is a Kafka-compatible event streaming platform written in C++. "
+        "No ZooKeeper, no JVM — a single binary delivers up to 10× lower latency "
+        "than Apache Kafka. Compatible with the Kafka API: no client code changes needed. "
+        "Self-host or use Redpanda Cloud. CNCF incubating project.",
+        "message-queue",
+        "redpanda-data/redpanda",
+        9000,
+        "https://redpanda.com",
+        "kafka,event-streaming,message-queue,distributed,c++",
+        "docker run --pull=always -d --name=redpanda docker.redpanda.com/redpandadata/redpanda",
+        "code",
+    ),
+    (
+        "nats",
+        "NATS",
+        "Connective technology for adaptive edge and distributed systems",
+        "NATS is a lightweight, high-performance cloud-native messaging system. "
+        "Supports publish/subscribe, request/reply, and persistent streaming (JetStream). "
+        "One of the fastest message brokers — 10M+ messages/sec. CNCF graduated project "
+        "written in Go. SDKs for 50+ languages.",
+        "message-queue",
+        "nats-io/nats.go",
+        5500,
+        "https://nats.io",
+        "messaging,pubsub,jetstream,cloud-native,cncf",
+        "go get github.com/nats-io/nats.go",
+        "code",
+    ),
+    # File Management — S3-compatible self-hosted object storage -------------------
+    (
+        "minio",
+        "MinIO",
+        "High performance, S3-compatible object storage",
+        "MinIO is a high-performance, S3-compatible object storage system written in Go. "
+        "Deploy on bare metal, Kubernetes, or Docker. Handles billions of objects with "
+        "strong consistency and erasure coding. The de-facto self-hosted alternative to "
+        "AWS S3, Google Cloud Storage, and Azure Blob Storage.",
+        "file-management",
+        "minio/minio",
+        47000,
+        "https://min.io",
+        "s3,object-storage,self-hosted,kubernetes,go,distributed",
+        "docker run -p 9000:9000 quay.io/minio/minio server /data",
+        "code",
+    ),
+    # Security — container and filesystem vulnerability scanning -------------------
+    (
+        "trivy",
+        "Trivy",
+        "All-in-one open source security scanner",
+        "Trivy is a comprehensive security scanner for containers, filesystems, git repos, "
+        "Kubernetes, and cloud. Detects CVEs, misconfigurations, exposed secrets, and "
+        "license violations. One binary, no DB setup, extremely fast. "
+        "CNCF incubating project — the most popular OSS container scanner.",
+        "security-tools",
+        "aquasecurity/trivy",
+        24000,
+        "https://trivy.dev",
+        "security,vulnerability,containers,kubernetes,sbom,cncf",
+        "brew install trivy",
+        "code",
+    ),
+    (
+        "doppler",
+        "Doppler",
+        "Universal secrets manager for developers",
+        "Doppler is a developer-first secrets management platform. One CLI to sync "
+        "secrets across local, CI/CD, and production environments. Works with "
+        "GitHub Actions, Vercel, Heroku, Kubernetes, and more. "
+        "Versioning, access control, and audit logs included. Generous free tier.",
+        "security-tools",
+        "",
+        0,
+        "https://doppler.com",
+        "secrets,env,dotenv,devops,ci-cd",
+        "brew install dopplerhq/cli/doppler",
+        "saas",
+    ),
+    # Media — open-source media servers --------------------------------------------
+    (
+        "jellyfin",
+        "Jellyfin",
+        "The Free Software Media System — your media, your server",
+        "Jellyfin is a free, open-source media server that puts you in control of "
+        "your media. Stream movies, TV shows, music, and live TV to any device. "
+        "Self-host at zero cost — no subscriptions, no tracking, no fees. "
+        "Clients for web, Android, iOS, Roku, Fire TV, and more.",
+        "media-server",
+        "jellyfin/jellyfin",
+        35000,
+        "https://jellyfin.org",
+        "media-server,self-hosted,streaming,movies,tv,music,open-source",
+        "docker run -d -p 8096:8096 jellyfin/jellyfin",
+        "code",
+    ),
+    # API / Realtime — WebRTC SFU --------------------------------------------------
+    (
+        "livekit",
+        "LiveKit",
+        "Real-time audio and video infrastructure for developers",
+        "LiveKit is an open-source WebRTC SFU (Selective Forwarding Unit) for building "
+        "real-time video and audio applications. SDKs for React, Flutter, Swift, Android, "
+        "and more. Handles 1:1 calls, group rooms, screensharing, and live streaming. "
+        "Self-host or use LiveKit Cloud.",
+        "api-tools",
+        "livekit/livekit",
+        10000,
+        "https://livekit.io",
+        "webrtc,realtime,video,audio,sfu,react,flutter",
+        "npm install livekit-client",
+        "code",
+    ),
+    # Developer Tools — SQL migration tools ----------------------------------------
+    (
+        "flyway",
+        "Flyway",
+        "Version control for your database",
+        "Flyway is the most widely-used database migration tool. Apply versioned SQL "
+        "scripts or Java migrations with repeatable, reliable execution. Supports "
+        "PostgreSQL, MySQL, Oracle, SQL Server, SQLite, and more. "
+        "Community edition is free and open-source.",
+        "database",
+        "flyway/flyway",
+        8000,
+        "https://flywaydb.org",
+        "migrations,database,sql,versioning,postgresql,mysql",
+        "brew install flyway",
+        "code",
+    ),
+    (
+        "liquibase",
+        "Liquibase",
+        "Database schema change management",
+        "Liquibase is an open-source database-independent library for tracking, "
+        "managing, and applying database schema changes. Uses XML, YAML, JSON, or "
+        "SQL changelogs. Integrates with CI/CD pipelines and supports rollbacks.",
+        "database",
+        "liquibase/liquibase",
+        4500,
+        "https://liquibase.org",
+        "migrations,database,schema,versioning,ci-cd",
+        "brew install liquibase",
         "code",
     ),
 ]

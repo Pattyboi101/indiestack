@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-11 (fortieth pass)
+Last updated: 2026-04-11 (forty-first pass)
 
 ## Status: Active
 
@@ -10,12 +10,50 @@ Last updated: 2026-04-11 (fortieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~911 entries for search routing (added 34 in fortieth pass — Python ecosystem focus)
-- **Catalog script**: `scripts/add_missing_tools.py` — 175 tools ready to insert (slug-safe)
-  - 8 tools added in fortieth pass (Tiptap, CodeMirror, Pydantic, Ruff, Pytest, Uvicorn, PM2 — Python + browser editors)
+- **_CAT_SYNONYMS**: ~961 entries for search routing (added 50 in forty-first pass — mobile, maps, media, learning, newsletter, message-queue, security, storage)
+- **Catalog script**: `scripts/add_missing_tools.py` — 182 tools ready to insert (slug-safe)
+  - 8 tools added in forty-first pass (Redpanda, NATS, MinIO, Trivy, Doppler, Jellyfin, LiveKit, Flyway, Liquibase)
+  - Removed pre-existing `temporal` duplicate
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-11, forty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited _CAT_SYNONYMS — found 50 genuine gaps across 8 underserved domains
+- Added 50 new `_CAT_SYNONYMS` entries:
+  - **Mobile platforms**: `ios`, `android` → `"frontend"` (React Native / Flutter queries)
+  - **Apollo GraphQL**: `apollo`, `apolloclient`, `apolloserver` → `"api"`
+  - **Ruby ecosystem**: `sinatra`, `hanami` → `"api"` (fills Rails-only gap)
+  - **Maps tools**: `leaflet`, `mapbox`, `osm`, `openlayers`, `here` → `"maps"`
+  - **Media tools**: `ffmpeg`, `mux`, `bunnystream`, `cloudflarestream` → `"media"`
+  - **Learning & Education**: `lms`, `flashcard`, `flashcards`, `anki`, `spaced`, `course`, `quiz`, `elearning` → `"learning"`
+  - **Newsletters**: `substack`, `beehiiv` → `"newsletter"` (routes to Newsletters & Content, not Email)
+  - **Alternate spellings**: `nuxtjs` → `"frontend"`, `apolloclient` / `apolloserver`
+  - **Invoicing extras**: `vat`, `tax` → `"invoicing"`
+  - **Message queue**: `nats`, `nsq`, `activemq` → `"message"`
+  - **Security scanners**: `trivy`, `grype`, `syft` → `"security"`
+  - **File storage**: `minio`, `rclone`, `backblaze` → `"file"`
+- Running total: ~961 entries (911 + 50)
+
+### Catalog Script (Step 2)
+- Added 8 new tools to `scripts/add_missing_tools.py` (182 total, removed temporal duplicate):
+  - Redpanda (message-queue, 9k★) — Kafka-compatible, no ZooKeeper, C++ performance
+  - NATS (message-queue, 5.5k★) — lightweight cloud-native messaging, CNCF graduated
+  - MinIO (file-management, 47k★) — S3-compatible self-hosted object storage
+  - Trivy (security-tools, 24k★) — all-in-one CNCF vulnerability/secret scanner
+  - Doppler (security-tools, SaaS) — universal secrets manager
+  - Jellyfin (media-server, 35k★) — free, open-source self-hosted media server
+  - LiveKit (api-tools, 10k★) — open-source WebRTC SFU for realtime video/audio
+  - Flyway (database, 8k★) — version control for database schema migrations
+  - Liquibase (database, 4.5k★) — database-independent schema change management
+
+### Code Quality (Step 3)
+- Reviewed recent commits — no html.escape(), hardcoded stat, or CSS color issues found
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-first pass
 
 ## Completed This Session (2026-04-11, fortieth pass — autonomous improvement cycle)
 
