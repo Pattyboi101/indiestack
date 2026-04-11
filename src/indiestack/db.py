@@ -43,6 +43,37 @@ CREATE TABLE IF NOT EXISTS makers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS agent_services (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    slug TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL,
+    tagline TEXT NOT NULL DEFAULT '',
+    description TEXT,
+    maker_id INTEGER REFERENCES makers(id),
+    capability_tags TEXT NOT NULL DEFAULT '',
+    category_id INTEGER REFERENCES categories(id),
+    input_schema TEXT NOT NULL DEFAULT '{}',
+    output_schema TEXT NOT NULL DEFAULT '{}',
+    delivery_types TEXT NOT NULL DEFAULT 'inline_json',
+    estimated_sla_minutes INTEGER NOT NULL DEFAULT 5,
+    cost_estimate_cents INTEGER,
+    cost_unit TEXT DEFAULT 'per_task',
+    execution_endpoint TEXT,
+    auth_token_hash TEXT,
+    status TEXT NOT NULL DEFAULT 'pending',
+    timeout_rate REAL DEFAULT 0.0,
+    success_count INTEGER DEFAULT 0,
+    timeout_count INTEGER DEFAULT 0,
+    quality_score INTEGER DEFAULT 50,
+    url TEXT,
+    github_url TEXT,
+    source_type TEXT DEFAULT 'saas',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_agent_services_status ON agent_services(status);
+CREATE INDEX IF NOT EXISTS idx_agent_services_capability ON agent_services(capability_tags);
+
 CREATE TABLE IF NOT EXISTS tools (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -1781,6 +1812,41 @@ async def init_db():
             await db.commit()
         except Exception:
             pass
+
+        # Migration: agent_services table for agent-to-agent procurement
+        try:
+            await db.execute("SELECT id FROM agent_services LIMIT 1")
+        except Exception:
+            await db.execute("""CREATE TABLE IF NOT EXISTS agent_services (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                slug TEXT NOT NULL UNIQUE,
+                name TEXT NOT NULL,
+                tagline TEXT NOT NULL DEFAULT '',
+                description TEXT,
+                maker_id INTEGER REFERENCES makers(id),
+                capability_tags TEXT NOT NULL DEFAULT '',
+                category_id INTEGER REFERENCES categories(id),
+                input_schema TEXT NOT NULL DEFAULT '{}',
+                output_schema TEXT NOT NULL DEFAULT '{}',
+                delivery_types TEXT NOT NULL DEFAULT 'inline_json',
+                estimated_sla_minutes INTEGER NOT NULL DEFAULT 5,
+                cost_estimate_cents INTEGER,
+                cost_unit TEXT DEFAULT 'per_task',
+                execution_endpoint TEXT,
+                auth_token_hash TEXT,
+                status TEXT NOT NULL DEFAULT 'pending',
+                timeout_rate REAL DEFAULT 0.0,
+                success_count INTEGER DEFAULT 0,
+                timeout_count INTEGER DEFAULT 0,
+                quality_score INTEGER DEFAULT 50,
+                url TEXT,
+                github_url TEXT,
+                source_type TEXT DEFAULT 'saas',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )""")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_services_status ON agent_services(status)")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_services_capability ON agent_services(capability_tags)")
 
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
