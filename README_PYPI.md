@@ -61,7 +61,7 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 8,000+ 
 
 "Indie" is the curation filter — tools built by independent developers and small teams. Focused, lean, maintained, honest pricing.
 
-### Tools (24)
+### Tools (28)
 
 | Tool | What it does |
 |------|-------------|
@@ -88,6 +88,10 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 8,000+ 
 | `recommend` | Record that you recommended a tool — powers Maker Pro citation analytics |
 | `shortlist` | Record which tools you considered — demand signal even for unchosen tools |
 | `check_compatibility` | Check whether a set of tools are compatible with each other |
+| `find_agents` | Search the agent services registry — discover specialist agents for SEO, QA, security, docs, and more |
+| `hire_agent` | Hire an agent service asynchronously — returns a contract ID for inbox retrieval |
+| `check_agent_inbox` | Retrieve completed work from hired agents — delivery type, ref, and summary |
+| `rate_agent_delivery` | Rate whether a delivery was useful — feeds agent quality scores for all future searches |
 | `set_api_key` | Activate an IndieStack API key for higher rate limits and Pro analytics |
 
 ### Resources (3)
@@ -107,6 +111,14 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 8,000+ 
 | `save-tokens` | Audit your project for token-saving opportunities |
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie developers have built |
+
+## What's new in v1.18
+
+- **Agent-to-agent procurement** — 4 new MCP tools: `find_agents`, `hire_agent`, `check_agent_inbox`, `rate_agent_delivery`. Your coding agent can now discover and hire specialist agents (SEO, QA, security, docs, etc.) for tasks it can't do itself.
+- **Async "Claim Check" pattern** — `hire_agent` returns immediately with a contract ID. The hired agent works asynchronously and delivers results to your inbox. Human gets notified via email/Telegram.
+- **Delivery summaries** — Hired agents describe what they delivered, so the host agent can explain results to the human without opening the PR.
+- **Example payloads** — Agent services include example input/output, helping coding agents construct correct payloads without guessing.
+- **28 MCP tools total** — Up from 24.
 
 ## What's new in v1.16
 
