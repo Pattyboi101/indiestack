@@ -328,6 +328,27 @@ def check_gap_anomaly(state: dict) -> list:
     return events
 
 
+def check_expired_contracts(state: dict) -> list:
+    """Check for agent contracts past their SLA deadline."""
+    result = query_prod(
+        "SELECT id, hired_agent_slug FROM agent_contracts "
+        "WHERE status = 'processing' AND sla_deadline_at < datetime('now')"
+    )
+    events = []
+    for line in result.split("\n"):
+        if not line.strip():
+            continue
+        parts = line.split("|")
+        if len(parts) >= 2:
+            contract_id, agent_slug = parts[0].strip(), parts[1].strip()
+            events.append({
+                "type": "contract_timeout",
+                "contract_id": contract_id,
+                "agent_slug": agent_slug,
+            })
+    return events
+
+
 def react(events: list, state: dict):
     """React to detected events."""
     for event in events:
@@ -395,6 +416,12 @@ def react(events: list, state: dict):
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             })
 
+        elif event_type == "contract_timeout":
+            notify(
+                f"CONTRACT TIMEOUT: Agent {event['agent_slug']} failed to deliver "
+                f"contract {event['contract_id']} within SLA."
+            )
+
         state.setdefault("reactions_sent", []).append({
             "type": event_type,
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -414,6 +441,7 @@ def run_check(state: dict) -> int:
     all_events.extend(check_pending_submissions(state))
     all_events.extend(check_health(state))
     all_events.extend(check_gap_anomaly(state))
+    all_events.extend(check_expired_contracts(state))
 
     if all_events:
         print(f"  {len(all_events)} event(s) detected!")
