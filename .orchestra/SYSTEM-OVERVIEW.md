@@ -533,7 +533,7 @@ The system is designed to progress through 5 phases:
 | 1. Manual | **Active** | Patrick runs `/orchestrate` with specific tasks. S&QA gates everything. |
 | 2. Scheduled | **Complete** | Autoloop runs hourly with crash recovery, structured logging, heartbeat monitoring. Watchdog restarts on failure (5/day cap). |
 | 3. Reactive | **Active** | Event reactor runs as Iteration 0 of each autoloop cycle. Monitors: new submissions, health failures, MCP gap anomaly (>15%). Creates directives in pending/ for orchestrator. |
-| 4. Proactive | **Not started** | Orchestrator reads its own history to identify patterns, auto-generates preventive tasks. |
+| 4. Proactive | **Active** | `pattern_detector.py` runs daily (post-autoloop, 24h cooldown). 4 detectors: low-confidence queries, category decline, autoloop thrashing, high-view/low-adoption. Reports to `.orchestra/logs/patterns-*.md`. |
 | 5. Self-improving | **Not started** | Master writes skills for departments based on patterns. S&QA reviews its own past verdicts. |
 
 ---

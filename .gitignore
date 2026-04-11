@@ -79,4 +79,5 @@ backups/
 .orchestra/memory/*.md
 !.orchestra/memory/playbook.md
 .orchestra/reactor_state.json
+.orchestra/pattern_state.json
 .orchestra/directives/pending/

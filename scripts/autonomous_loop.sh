@@ -173,6 +173,14 @@ while true; do
     run_cycle
     cycle_result=$?
 
+    # Phase 4: Proactive pattern detection (daily cooldown built-in)
+    log "INFO" "Running pattern detector..."
+    if [ -f "$REPO_DIR/scripts/pattern_detector.py" ]; then
+        python3 "$REPO_DIR/scripts/pattern_detector.py" --from-autoloop 2>&1 | while read -r line; do
+            log "PATTERN" "$line"
+        done
+    fi
+
     update_heartbeat
     log "INFO" "Cycle finished (result=$cycle_result). Sleeping ${INTERVAL}s..."
     sleep "$INTERVAL"
