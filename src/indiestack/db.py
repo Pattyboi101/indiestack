@@ -74,6 +74,32 @@ CREATE TABLE IF NOT EXISTS agent_services (
 CREATE INDEX IF NOT EXISTS idx_agent_services_status ON agent_services(status);
 CREATE INDEX IF NOT EXISTS idx_agent_services_capability ON agent_services(capability_tags);
 
+CREATE TABLE IF NOT EXISTS agent_contracts (
+    id TEXT PRIMARY KEY,
+    host_user_id INTEGER REFERENCES users(id),
+    host_session_id TEXT,
+    host_api_key_id INTEGER REFERENCES api_keys(id),
+    hired_agent_slug TEXT NOT NULL,
+    input_payload TEXT NOT NULL DEFAULT '{}',
+    status TEXT NOT NULL DEFAULT 'pending',
+    status_changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    delivery_type TEXT,
+    delivery_ref TEXT,
+    delivery_metadata TEXT DEFAULT '{}',
+    ttl_expires_at TIMESTAMP,
+    sla_deadline_at TIMESTAMP,
+    extended BOOLEAN DEFAULT 0,
+    cost_estimate_cents INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    delivered_at TIMESTAMP,
+    stripe_payment_intent_id TEXT,
+    escrow_status TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_agent_contracts_status ON agent_contracts(status);
+CREATE INDEX IF NOT EXISTS idx_agent_contracts_host ON agent_contracts(host_user_id);
+CREATE INDEX IF NOT EXISTS idx_agent_contracts_session ON agent_contracts(host_session_id);
+CREATE INDEX IF NOT EXISTS idx_agent_contracts_agent ON agent_contracts(hired_agent_slug);
+
 CREATE TABLE IF NOT EXISTS tools (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -1847,6 +1873,26 @@ async def init_db():
             )""")
             await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_services_status ON agent_services(status)")
             await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_services_capability ON agent_services(capability_tags)")
+
+        # Migration: agent_contracts table for agent-to-agent procurement
+        try:
+            await db.execute("SELECT id FROM agent_contracts LIMIT 1")
+        except Exception:
+            await db.execute("""CREATE TABLE IF NOT EXISTS agent_contracts (
+                id TEXT PRIMARY KEY, host_user_id INTEGER, host_session_id TEXT,
+                host_api_key_id INTEGER, hired_agent_slug TEXT NOT NULL,
+                input_payload TEXT NOT NULL DEFAULT '{}', status TEXT NOT NULL DEFAULT 'pending',
+                status_changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                delivery_type TEXT, delivery_ref TEXT, delivery_metadata TEXT DEFAULT '{}',
+                ttl_expires_at TIMESTAMP, sla_deadline_at TIMESTAMP,
+                extended BOOLEAN DEFAULT 0, cost_estimate_cents INTEGER,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, delivered_at TIMESTAMP,
+                stripe_payment_intent_id TEXT, escrow_status TEXT
+            )""")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_contracts_status ON agent_contracts(status)")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_contracts_host ON agent_contracts(host_user_id)")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_contracts_session ON agent_contracts(host_session_id)")
+            await db.execute("CREATE INDEX IF NOT EXISTS idx_agent_contracts_agent ON agent_contracts(hired_agent_slug)")
 
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
@@ -9133,3 +9179,61 @@ async def increment_agent_success(db: aiosqlite.Connection, agent_slug: str):
         "timeout_rate = CAST(timeout_count AS REAL) / MAX(success_count + timeout_count + 1, 1), "
         "updated_at = CURRENT_TIMESTAMP WHERE slug = ?", (agent_slug,))
     await db.commit()
+
+
+# ── Agent Contracts (agent-to-agent procurement) ───────────────────────
+
+async def create_agent_contract(db: aiosqlite.Connection, *, contract_id: str,
+                                 host_user_id: int = None, host_session_id: str = None,
+                                 host_api_key_id: int = None, hired_agent_slug: str,
+                                 input_payload: str = '{}', sla_deadline_at: str = None,
+                                 cost_estimate_cents: int = None):
+    await db.execute(
+        """INSERT INTO agent_contracts
+           (id, host_user_id, host_session_id, host_api_key_id, hired_agent_slug,
+            input_payload, status, sla_deadline_at, cost_estimate_cents)
+           VALUES (?,?,?,?,?,?,'pending',?,?)""",
+        (contract_id, host_user_id, host_session_id, host_api_key_id,
+         hired_agent_slug, input_payload, sla_deadline_at, cost_estimate_cents))
+    await db.commit()
+
+
+async def update_contract_status(db: aiosqlite.Connection, contract_id: str,
+                                  status: str, **kwargs):
+    sets = ["status = ?", "status_changed_at = CURRENT_TIMESTAMP"]
+    params = [status]
+    for key, val in kwargs.items():
+        sets.append(f"{key} = ?")
+        params.append(val)
+    params.append(contract_id)
+    await db.execute(
+        f"UPDATE agent_contracts SET {', '.join(sets)} WHERE id = ?", params)
+    await db.commit()
+
+
+async def get_agent_contracts(db: aiosqlite.Connection, *, host_user_id: int = None,
+                               host_session_id: str = None, contract_id: str = None,
+                               status: str = None, limit: int = 20):
+    where = []
+    params = []
+    if contract_id:
+        where.append("id = ?"); params.append(contract_id)
+    if host_user_id:
+        where.append("host_user_id = ?"); params.append(host_user_id)
+    if host_session_id:
+        where.append("host_session_id = ?"); params.append(host_session_id)
+    if status:
+        where.append("status = ?"); params.append(status)
+    where_str = f"WHERE {' AND '.join(where)}" if where else ""
+    params.append(limit)
+    cursor = await db.execute(
+        f"SELECT * FROM agent_contracts {where_str} ORDER BY created_at DESC LIMIT ?",
+        params)
+    return await cursor.fetchall()
+
+
+async def get_expired_contracts(db: aiosqlite.Connection):
+    cursor = await db.execute(
+        "SELECT id, hired_agent_slug FROM agent_contracts "
+        "WHERE status = 'processing' AND sla_deadline_at < datetime('now')")
+    return await cursor.fetchall()
