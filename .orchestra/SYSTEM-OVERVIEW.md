@@ -530,9 +530,9 @@ The system is designed to progress through 5 phases:
 
 | Phase | Status | Description |
 |-------|--------|-------------|
-| 1. Manual | **Current** | Patrick runs `/orchestrate` with specific tasks. S&QA gates everything. |
-| 2. Scheduled | **Partially active** | Autoloop runs hourly improvements. Cron templates defined but not all active. |
-| 3. Reactive | **Not started** | Webhooks trigger orchestrator on deploy failures, error spikes, new tool submissions. |
+| 1. Manual | **Active** | Patrick runs `/orchestrate` with specific tasks. S&QA gates everything. |
+| 2. Scheduled | **Complete** | Autoloop runs hourly with crash recovery, structured logging, heartbeat monitoring. Watchdog restarts on failure (5/day cap). |
+| 3. Reactive | **Active** | Event reactor runs as Iteration 0 of each autoloop cycle. Monitors: new submissions, health failures, MCP gap anomaly (>15%). Creates directives in pending/ for orchestrator. |
 | 4. Proactive | **Not started** | Orchestrator reads its own history to identify patterns, auto-generates preventive tasks. |
 | 5. Self-improving | **Not started** | Master writes skills for departments based on patterns. S&QA reviews its own past verdicts. |
 
