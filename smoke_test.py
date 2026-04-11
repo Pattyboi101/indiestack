@@ -112,6 +112,10 @@ TESTS = [
     # Status and ops pages (Apr 7)
     ("GET", "/api/status", 200, "Public status API"),
     ("GET", "/trust/incidents", 200, "Incident response protocol"),
+
+    # Agent registry (Phase A)
+    ("GET", "/agents", 200, "Agent registry"),
+    ("GET", "/api/agents/search?capability=seo", 200, "Agent search API"),
 ]
 
 # Content checks: path -> (substring or callable, description)
