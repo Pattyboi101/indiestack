@@ -3406,6 +3406,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mesh": "devops",               # "service mesh" — Istio, Linkerd, Consul Connect → DevOps
     "nix": "devops",                # Nix — reproducible builds and package management → DevOps
     "nixos": "devops",              # NixOS — declarative Linux OS with Nix → DevOps
+    # Forms — multi-step wizards and stepped UIs
+    "wizard": "forms",              # "form wizard", "multi-step wizard" → Forms & Surveys
+    "multistep": "forms",           # "multi-step form", "multistep flow" → Forms & Surveys
+    "stepper": "forms",             # "form stepper", "stepper component" → Forms & Surveys
+    # Notifications — toast / snackbar UI components (react-hot-toast, Sonner, Toastify)
+    "toast": "notifications",       # "toast notification", "toast component" → Notifications
+    "toaster": "notifications",     # "toaster library", "react toaster" → Notifications
+    "snackbar": "notifications",    # "snackbar notification" (MUI/Android term) → Notifications
+    # Developer Tools — QR code generation and barcode libraries
+    "qr": "developer",              # "qr code generator", "qr code library" → Developer Tools
+    "barcode": "developer",         # "barcode scanner", "barcode generator" → Developer Tools
+    # AI — LLM observability / evaluation platforms
+    "langsmith": "ai",              # LangSmith — LangChain's LLM observability and tracing platform
+    "evals": "ai",                  # "llm evals", "model evaluation harness" → AI & Automation
+    "evaluation": "ai",             # "llm evaluation", "evaluation pipeline" → AI & Automation
+    # Email — major providers/tools not yet mapped
+    "brevo": "email",               # Brevo (formerly Sendinblue) — email marketing + transactional
+    "plunk": "email",               # Plunk — open-source transactional email (3k★)
+    # Schema validation / data modeling
+    "schema": "developer",          # "json schema validator", "schema definition" → Developer Tools
+    # Frontend — infinite scroll / virtual list patterns
+    "infinite": "frontend",         # "infinite scroll", "infinite loading" → Frontend Frameworks
+    "virtual": "frontend",          # "virtual list", "virtual scroll", "react-virtual" → Frontend Frameworks
+    "virtualizer": "frontend",      # TanStack Virtual (formerly react-virtual) → Frontend Frameworks
+    # Frontend — spreadsheet / Excel-like grid components (Handsontable, AG Grid, react-datasheet)
+    "spreadsheet": "frontend",      # "spreadsheet component", "excel-like table" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {

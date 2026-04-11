@@ -1,20 +1,53 @@
 # Sprint — Current
 
-Last updated: 2026-04-07 (thirty-sixth pass)
+Last updated: 2026-04-11 (thirty-seventh pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-07)
+## System State (as of 2026-04-11)
 
-- **MCP server**: v1.16.0 (PyPI) — 10,000+ installs, 24 tools (check_compatibility added), fully anonymous
+- **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
+- **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 776 entries for search routing (added 21 in thirty-sixth pass)
-- **Catalog script**: `scripts/add_missing_tools.py` — 139 tools ready to insert (slug-safe)
-  - 6 tools added in thirty-sixth pass (Material UI, Mantine, Ant Design, Chakra UI, Langfuse, Recharts)
+- **_CAT_SYNONYMS**: ~795 entries for search routing (added 19 in thirty-seventh pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 147 tools ready to insert (slug-safe)
+  - 8 tools added in thirty-seventh pass (Brevo, Loops, Plunk, React Spring, AG Grid, Headless UI, React Aria, date-fns)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-11, thirty-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited NEED_MAPPINGS — all active categories covered; no gaps
+- Added 19 new _CAT_SYNONYMS entries for genuine query gaps:
+  - **Forms — wizard/multi-step**: `"wizard"`, `"multistep"`, `"stepper"` → `"forms"`
+  - **Notifications — toast UI**: `"toast"`, `"toaster"`, `"snackbar"` → `"notifications"` (react-hot-toast, Sonner, Toastify)
+  - **Developer Tools — QR/barcode**: `"qr"`, `"barcode"` → `"developer"`
+  - **AI — observability/eval**: `"langsmith"`, `"evals"`, `"evaluation"` → `"ai"`
+  - **Email — major providers**: `"brevo"`, `"plunk"` → `"email"`
+  - **Developer Tools — schema**: `"schema"` → `"developer"` (JSON schema, OpenAPI schema)
+  - **Frontend — virtual/infinite scroll**: `"infinite"`, `"virtual"`, `"virtualizer"` → `"frontend"` (TanStack Virtual)
+  - **Frontend — spreadsheet grid**: `"spreadsheet"` → `"frontend"` (AG Grid, Handsontable)
+- Running total: ~795 entries (776 + 19)
+
+### Catalog Script (Step 2)
+- Added 8 new tools to `scripts/add_missing_tools.py` (147 total):
+  - Brevo (email-marketing, SaaS) — email marketing + transactional, 500k+ users
+  - Loops (email-marketing, 3.5k★) — email for modern SaaS products
+  - Plunk (email-marketing, 3.2k★) — open-source email on AWS SES, self-hostable
+  - React Spring (frontend-frameworks, 28k★) — spring-physics animation for React
+  - AG Grid (frontend-frameworks, 12k★) — most feature-complete JS data grid
+  - Headless UI (frontend-frameworks, 24k★) — unstyled accessible UI by Tailwind Labs
+  - React Aria (frontend-frameworks, 12k★) — Adobe's accessibility hooks for React
+  - date-fns (developer-tools, 34k★) — comprehensive date utility library (200+ fns)
+
+### Code Quality (Step 3)
+- Reviewed recent commits (agents.py, components.py, db.py) — escape() used correctly; no hex color violations; no stats copy issues
+
+### R&D Docs (Step 4)
+- sprint.md updated to thirty-seventh pass
 
 ## Completed This Session (2026-04-07, thirty-sixth pass — autonomous improvement cycle)
 

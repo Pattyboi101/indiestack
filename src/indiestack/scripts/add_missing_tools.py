@@ -2219,6 +2219,131 @@ TOOLS = [
         "npm install recharts",
         "code",
     ),
+    # Email — missing major providers -----------------------------------------
+    (
+        "brevo",
+        "Brevo",
+        "Email marketing and transactional email for growing businesses",
+        "Brevo (formerly Sendinblue) is an all-in-one email platform trusted by "
+        "500,000+ businesses. Send transactional emails, newsletters, and SMS. "
+        "Includes marketing automation, CRM, and a generous free tier.",
+        "email-marketing",
+        None,
+        0,
+        "https://brevo.com",
+        "email,transactional,newsletter,marketing,smtp",
+        "npm install @getbrevo/brevo",
+        "saas",
+    ),
+    (
+        "loops",
+        "Loops",
+        "Email for modern SaaS companies",
+        "Loops is an email platform built for SaaS products. Send product emails, "
+        "onboarding sequences, and newsletters from one place. Beautiful editor, "
+        "contact management, and dead-simple API for transactional sends.",
+        "email-marketing",
+        "loops-so/loops",
+        3500,
+        "https://loops.so",
+        "email,transactional,saas,onboarding,newsletter",
+        "npm install loops",
+        "saas",
+    ),
+    (
+        "plunk",
+        "Plunk",
+        "The open-source email platform built on AWS SES",
+        "Plunk is an open-source transactional email service built on top of AWS SES. "
+        "Self-host for near-zero cost or use the hosted version. Clean REST API, "
+        "event tracking, and contact management included.",
+        "email-marketing",
+        "useplunk/plunk",
+        3200,
+        "https://useplunk.com",
+        "email,transactional,open-source,aws-ses,self-hosted",
+        "npm install @plunk/node",
+        "code",
+    ),
+    # Frontend — animation libraries -------------------------------------------
+    (
+        "react-spring",
+        "React Spring",
+        "A spring-physics based animation library for React",
+        "React Spring is a physics-based animation library for React. Uses spring "
+        "dynamics (tension, friction, mass) instead of durations for naturally "
+        "fluid animations. Supports web, React Native, Three.js, and Konva.",
+        "frontend-frameworks",
+        "pmndrs/react-spring",
+        28000,
+        "https://react-spring.dev",
+        "animation,react,spring,physics",
+        "npm install @react-spring/web",
+        "code",
+    ),
+    # Frontend — data grids ----------------------------------------------------
+    (
+        "ag-grid",
+        "AG Grid",
+        "The best JavaScript data grid in the world",
+        "AG Grid is the most feature-complete JavaScript data grid available. "
+        "Handles millions of rows with virtual rendering. Free community edition "
+        "plus enterprise version with pivoting, row grouping, and Excel export.",
+        "frontend-frameworks",
+        "ag-grid/ag-grid",
+        12000,
+        "https://ag-grid.com",
+        "datagrid,table,react,angular,vue,spreadsheet,excel",
+        "npm install ag-grid-community ag-grid-react",
+        "code",
+    ),
+    # Frontend — accessible headless UI ----------------------------------------
+    (
+        "headlessui",
+        "Headless UI",
+        "Completely unstyled, fully accessible UI components",
+        "Headless UI provides completely unstyled, fully accessible UI components "
+        "designed to integrate with Tailwind CSS. Built by the Tailwind Labs team. "
+        "Includes Dialog, Listbox, Combobox, Disclosure, Menu, and more.",
+        "frontend-frameworks",
+        "tailwindlabs/headlessui",
+        24000,
+        "https://headlessui.com",
+        "ui,react,vue,accessibility,headless,tailwind",
+        "npm install @headlessui/react",
+        "code",
+    ),
+    (
+        "react-aria",
+        "React Aria",
+        "A library of React Hooks for accessible UI primitives",
+        "React Aria (by Adobe) provides over 40 React Hooks for building accessible "
+        "UI components. Implements ARIA patterns with full keyboard, screen reader, "
+        "and touch support. Foundation for Adobe's React Spectrum design system.",
+        "frontend-frameworks",
+        "adobe/react-spectrum",
+        12000,
+        "https://react-spectrum.adobe.com/react-aria",
+        "ui,react,accessibility,headless,hooks,adobe",
+        "npm install react-aria",
+        "code",
+    ),
+    # Developer Tools — date/time utilities ------------------------------------
+    (
+        "date-fns",
+        "date-fns",
+        "Modern JavaScript date utility library",
+        "date-fns provides the most comprehensive, yet simple and consistent "
+        "toolset for manipulating JavaScript dates in a browser and Node.js. "
+        "Tree-shakeable, immutable, and fully typed. 200+ functions.",
+        "developer-tools",
+        "date-fns/date-fns",
+        34000,
+        "https://date-fns.org",
+        "date,time,utility,javascript,typescript,immutable",
+        "npm install date-fns",
+        "code",
+    ),
 ]
 
 
