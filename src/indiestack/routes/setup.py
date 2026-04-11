@@ -159,7 +159,7 @@ async def setup_page(request: Request):
         tab_panels += f'''
             <div class="setup-panel" data-tab="{ide_key}" style="display:{"block" if i == 0 else "none"};">
                 <div style="position:relative;">
-                    <pre class="copyable" style="background:var(--ink);color:rgba(255,255,255,0.85);padding:16px 50px 16px 16px;
+                    <pre class="copyable" style="background:#1A1A2E;color:#e2e8f0;padding:16px 50px 16px 16px;
                                 border-radius:var(--radius-sm);font-size:13px;font-family:var(--font-mono);
                                 overflow-x:auto;line-height:1.6;margin:0;">{install_escaped}</pre>
                     {_COPY_BTN}
@@ -272,7 +272,7 @@ async def setup_page(request: Request):
             </p>
 
             <div style="position:relative;">
-                <pre class="copyable" style="background:var(--ink);color:rgba(255,255,255,0.85);padding:16px 50px 16px 16px;
+                <pre class="copyable" style="background:#1A1A2E;color:#e2e8f0;padding:16px 50px 16px 16px;
                             border-radius:var(--radius-sm);font-size:12px;font-family:var(--font-mono);
                             overflow-x:auto;line-height:1.6;margin:0;max-height:240px;overflow-y:auto;">{claude_md_escaped}</pre>
                 {_COPY_BTN}
@@ -294,7 +294,7 @@ async def setup_page(request: Request):
             </p>
 
             <div style="position:relative;">
-                <pre class="copyable" style="background:var(--ink);color:rgba(255,255,255,0.85);padding:16px 50px 16px 16px;
+                <pre class="copyable" style="background:#1A1A2E;color:#e2e8f0;padding:16px 50px 16px 16px;
                             border-radius:var(--radius-sm);font-size:12px;font-family:var(--font-mono);
                             overflow-x:auto;line-height:1.6;margin:0;">name: Stack Health Check
 on:
