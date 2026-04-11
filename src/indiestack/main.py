@@ -5143,3 +5143,5 @@ app.include_router(data_product.router)
 app.include_router(conway.router)
 from indiestack.routes import token_cost
 app.include_router(token_cost.router)
+from indiestack.routes import agents
+app.include_router(agents.router)
