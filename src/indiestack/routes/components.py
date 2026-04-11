@@ -666,6 +666,7 @@ def nav_html(user=None) -> str:
             </a>
             <div class="nav-links">
                 <a href="/explore" style="color:var(--ink-light);">Explore</a>
+                <a href="/agents" style="color:var(--ink-light);">Agents</a>
                 <a href="/setup" style="color:var(--ink-light);">Set Up MCP</a>
                 <a href="/migrations" style="color:var(--ink-light);">Migrations</a>
                 <a href="/pricing" style="color:var(--ink-light);">Pricing</a>
@@ -677,6 +678,7 @@ def nav_html(user=None) -> str:
         </div>
         <div class="mobile-menu" id="mobile-menu">
             <a href="/explore">Explore</a>
+            <a href="/agents">Agents</a>
             <a href="/setup">Set Up MCP</a>
             <a href="/migrations">Migrations</a>
             <a href="/pricing">Pricing</a>

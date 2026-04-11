@@ -2,6 +2,9 @@
 
 import hashlib
 import json
+import os
+import secrets
+import subprocess
 import uuid
 from datetime import datetime, timedelta, timezone
 from html import escape
@@ -12,6 +15,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
 from indiestack.config import BASE_URL
 from indiestack.routes.components import page_shell
+from indiestack.email import send_email
 from indiestack.db import (
     search_agent_services,
     get_agent_service_by_slug,
@@ -25,6 +29,19 @@ from indiestack.db import (
     get_agent_service_by_slug_any,
     increment_agent_success,
 )
+
+TELEGRAM_SCRIPT = os.path.expanduser("~/.claude/telegram.sh")
+
+
+def _notify_telegram(message: str):
+    """Send Telegram notification (best-effort, non-blocking)."""
+    try:
+        subprocess.Popen(
+            ["bash", TELEGRAM_SCRIPT, message],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        )
+    except Exception:
+        pass
 
 router = APIRouter()
 
@@ -362,7 +379,11 @@ async def agents_submit_post(
     if source_type not in ("saas", "code"):
         source_type = "saas"
 
-    await create_agent_service(
+    # Generate auth token for delivery callbacks
+    raw_token = f"isa_{secrets.token_urlsafe(32)}"
+    token_hash = hashlib.sha256(raw_token.encode()).hexdigest()
+
+    service_id = await create_agent_service(
         db,
         name=name,
         tagline=tagline,
@@ -376,10 +397,59 @@ async def agents_submit_post(
         source_type=source_type,
     )
 
-    return RedirectResponse(
-        "/agents?msg=Service+submitted+successfully.+We'll+review+it+shortly.",
-        status_code=303,
+    # Store the hashed token
+    await db.execute(
+        "UPDATE agent_services SET auth_token_hash = ? WHERE id = ?",
+        (token_hash, service_id),
     )
+    await db.commit()
+
+    # Show the token once — user must copy it now
+    slug = slugify(name)
+    body = f'''
+    <div class="container" style="max-width:640px;padding:64px 24px;text-align:center;">
+        <div style="font-size:48px;margin-bottom:16px;">&#10003;</div>
+        <h1 style="font-family:var(--font-display);font-size:28px;color:var(--ink);margin-bottom:12px;">
+            Agent Service Submitted
+        </h1>
+        <p style="color:var(--ink-muted);margin-bottom:32px;">
+            <strong>{escape(name)}</strong> has been submitted for review.
+        </p>
+
+        <div style="background:var(--cream-dark);border:2px solid var(--accent);border-radius:var(--radius);
+                     padding:24px;margin-bottom:32px;text-align:left;">
+            <h2 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
+                Your Auth Token
+            </h2>
+            <p style="color:var(--ink-muted);font-size:13px;margin-bottom:12px;">
+                Use this token to deliver completed work via
+                <code style="font-family:var(--font-mono);font-size:12px;">POST /api/contracts/{{contract_id}}/deliver</code>.
+                <strong>Copy it now — it will not be shown again.</strong>
+            </p>
+            <div style="position:relative;">
+                <pre style="background:var(--code-bg, #1a1a2e);color:var(--accent);padding:14px 16px;
+                            border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:13px;
+                            overflow-x:auto;margin:0;">{escape(raw_token)}</pre>
+                <button onclick="navigator.clipboard.writeText('{escape(raw_token)}').then(()=>{{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)}})"
+                        style="position:absolute;top:8px;right:8px;background:var(--accent);color:white;
+                               border:none;border-radius:var(--radius-sm);padding:6px 14px;font-size:12px;
+                               font-weight:600;cursor:pointer;">Copy</button>
+            </div>
+        </div>
+
+        <p style="color:var(--ink-muted);font-size:13px;line-height:1.6;margin-bottom:24px;">
+            When delivering work, include this token as a Bearer header:<br>
+            <code style="font-family:var(--font-mono);font-size:12px;">Authorization: Bearer {escape(raw_token[:20])}...</code>
+        </p>
+
+        <a href="/agents" class="btn btn-primary">Browse Agent Registry &rarr;</a>
+    </div>
+    '''
+    return HTMLResponse(page_shell(
+        "Agent Service Submitted",
+        body,
+        user=request.state.user,
+    ))
 
 
 # ── GET /agents/{slug} — Detail page ────────────────────────────────────
@@ -753,6 +823,30 @@ async def api_contracts_deliver(request: Request, contract_id: str):
 
     await update_contract_status(d, contract_id, "delivered", **update_kwargs)
     await increment_agent_success(d, contract["hired_agent_slug"])
+
+    # Notify the human who hired this agent
+    agent_name = agent["name"] if agent else contract["hired_agent_slug"]
+    _notify_telegram(
+        f"AGENT DELIVERED: {agent_name} completed contract {contract_id[:8]}. "
+        f"Type: {delivery_type}. Check your agent inbox."
+    )
+
+    # Email notification if we can find the user's email
+    if contract["host_user_id"]:
+        try:
+            _uc = await d.execute("SELECT email FROM users WHERE id = ?", (contract["host_user_id"],))
+            _urow = await _uc.fetchone()
+            if _urow and _urow["email"]:
+                await send_email(
+                    _urow["email"],
+                    f"Agent delivered: {agent_name}",
+                    f"<p>The agent <strong>{escape(agent_name)}</strong> has completed your task.</p>"
+                    f"<p>Delivery type: {escape(delivery_type)}</p>"
+                    f"<p>Use <code>check_agent_inbox()</code> in your AI coding agent to retrieve the results, "
+                    f"or view your contracts at <a href='{BASE_URL}/agents'>indiestack.ai/agents</a>.</p>",
+                )
+        except Exception:
+            pass  # Non-critical — don't fail the delivery
 
     return JSONResponse({"status": "delivered", "contract_id": contract_id})
 
