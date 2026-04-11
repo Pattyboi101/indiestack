@@ -40,6 +40,23 @@ _CAT_META: dict[str, str] = {
     "caching": "Browse {count}+ caching tools on IndieStack — Redis alternatives, in-memory stores, and edge caching for developer stacks.",
     "logging": "Discover {count}+ logging tools on IndieStack — structured logging, log aggregation, and observability for production apps.",
     "security-tools": "Find {count}+ security tools on IndieStack — auth hardening, vulnerability scanning, and access control for indie developers.",
+    "crm-sales": "Browse {count}+ CRM and sales tools on IndieStack — lightweight CRMs, pipeline trackers, and sales automation for indie teams.",
+    "feedback-reviews": "Find {count}+ feedback and review tools on IndieStack — NPS surveys, in-app feedback widgets, and review platforms for developers.",
+    "forms-surveys": "Discover {count}+ form and survey tools on IndieStack — form builders, data collection, and survey platforms for your apps.",
+    "invoicing-billing": "Browse {count}+ invoicing and billing tools on IndieStack — invoice generators, subscription billing, and revenue management.",
+    "landing-pages": "Find {count}+ landing page tools on IndieStack — page builders, A/B testing, and conversion-optimized templates for launches.",
+    "newsletters-content": "Explore {count}+ newsletter and content tools on IndieStack — email newsletters, content platforms, and audience builders.",
+    "scheduling-booking": "Discover {count}+ scheduling and booking tools on IndieStack — calendar APIs, appointment scheduling, and booking widgets.",
+    "social-media": "Browse {count}+ social media tools on IndieStack — schedulers, analytics, and social management tools for developers.",
+    "seo-tools": "Find {count}+ SEO tools on IndieStack — rank trackers, keyword research, and technical SEO tools for indie projects.",
+    "documentation": "Explore {count}+ documentation tools on IndieStack — docs generators, API docs, and knowledge bases for developer products.",
+    "cli-tools": "Discover {count}+ CLI tools on IndieStack — terminal utilities, command-line frameworks, and developer productivity tools.",
+    "feature-flags": "Browse {count}+ feature flag tools on IndieStack — progressive rollouts, A/B testing, and remote config for your apps.",
+    "notifications": "Find {count}+ notification tools on IndieStack — push notifications, in-app messaging, and alert systems for developers.",
+    "background-jobs": "Explore {count}+ background job tools on IndieStack — task queues, job schedulers, and async processing for your backend.",
+    "message-queue": "Discover {count}+ message queue tools on IndieStack — event streaming, pub/sub, and async messaging for distributed systems.",
+    "media-server": "Browse {count}+ media server tools on IndieStack — video streaming, image processing, and media management for developers.",
+    "localization": "Find {count}+ localization tools on IndieStack — i18n libraries, translation management, and multilingual content platforms.",
 }
 
 
@@ -424,8 +441,8 @@ async def explore(request: Request):
         explore_page_title = f"{_c_name} Tools — {_c_count}+ Options | IndieStack"
         explore_canonical = f"/explore?category={category}"
     else:
-        desc = "Browse and filter 6,500+ developer tools by category, tag, type, and compatibility. Find the right auth, payments, analytics, or email tool for your stack."
-        explore_page_title = "Explore 6,500+ Developer Tools by Category | IndieStack"
+        desc = "Browse and filter 8,000+ developer tools by category, tag, type, and compatibility. Find the right auth, payments, analytics, or email tool for your stack."
+        explore_page_title = "Explore 8,000+ Developer Tools by Category | IndieStack"
         explore_canonical = "/explore"
 
     explore_ld = json.dumps({

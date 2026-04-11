@@ -758,7 +758,7 @@ def footer_html() -> str:
           <!-- Brand -->
           <div>
             <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;">IndieStack</div>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">The discovery layer between AI coding agents and 6,500+ developer tools.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">The discovery layer between AI coding agents and 8,000+ developer tools.</p>
           </div>
           <!-- Product -->
           <div>
@@ -1061,7 +1061,8 @@ def stack_card(stack: dict) -> str:
 # ── Tool Card ─────────────────────────────────────────────────────────────
 
 def verified_badge_html() -> str:
-    return ""
+    """Verified badge for claimed + Pro makers — signals active, trusted tool."""
+    return '<span style="display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(0,212,245,0.1),rgba(0,212,245,0.05));color:var(--accent);font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;border:1px solid rgba(0,212,245,0.2);text-transform:uppercase;letter-spacing:0.3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l3.09 6.26L22 8.27l-5 4.87 1.18 6.88L12 16.77l-6.18 3.25L7 13.14 2 8.27l6.91-1.01L12 1z"/></svg> Verified</span>'
 
 
 def pro_badge_html() -> str:
@@ -1184,13 +1185,15 @@ def tool_card(tool: dict, compact: bool = False) -> str:
     is_boosted = bool(tool.get('is_boosted', 0))
     if is_boosted:
         badge += ' ' + boosted_badge_html()
-    # Show "Maker ✓" badge only for claimed tools — no badge for unclaimed
-    if tool.get('claimed_at'):
+    # Show combined "Verified" badge for claimed + Pro, or just "Maker ✓" for claimed-only
+    if tool.get('claimed_at') and tool.get('maker_is_pro'):
+        badge += ' ' + verified_badge_html()
+    elif tool.get('claimed_at'):
         badge += ' <span class="badge badge-success" style="font-size:var(--text-xs);">Maker &#10003;</span>'
     price_pence = tool.get('price_pence')
     if price_pence and price_pence > 0 and not tool.get('stripe_account_id'):
         badge += f' <span class="pill-price">&pound;{price_pence // 100}/mo</span>'
-    if tool.get('maker_is_pro'):
+    if tool.get('maker_is_pro') and not tool.get('claimed_at'):
         badge += ' ' + pro_badge_html()
     # Pixel art icon takes priority over favicon
     pixel_icon = str(tool.get('pixel_icon', '') or '')
@@ -1529,7 +1532,7 @@ def theme_js() -> str:
 # ── Page Shell ────────────────────────────────────────────────────────────
 
 def page_shell(title: str, body: str, *, description: str = "", extra_head: str = "", user=None, og_image: str = f"{BASE_URL}/logo.png", canonical: str = "") -> str:
-    desc = escape(description) if description else "Discover 6,500+ developer tools for AI coding agents. Find indie alternatives for auth, payments, analytics, email, and more — curated for developers."
+    desc = escape(description) if description else "Discover 8,000+ developer tools for AI coding agents. Find indie alternatives for auth, payments, analytics, email, and more — curated for developers."
     canonical_tag = f'\n    <link rel="canonical" href="{BASE_URL}{escape(canonical)}">' if canonical else ""
     # Strip trailing " | IndieStack" or " — IndieStack" to avoid duplication
     clean_title = title

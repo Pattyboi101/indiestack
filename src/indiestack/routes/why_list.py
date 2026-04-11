@@ -53,7 +53,8 @@ async def why_list_page(request: Request):
             Why List on IndieStack
         </h1>
         <p style="font-size:18px;color:var(--ink-muted);line-height:1.6;margin-bottom:48px;">
-            A curated catalog of {tool_count} developer tools, searchable by AI agents and humans alike. Here's what you get.
+            Your tool appears when AI coding agents search for solutions.
+            {tool_count:,} tools indexed, {total_citations:,} agent citations logged. Here&rsquo;s what listing gets you.
         </p>
 
         <!-- Stat cards -->

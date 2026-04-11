@@ -225,7 +225,7 @@ async def landing(request: Request):
         f'        <div style="width:1px;background:var(--border);align-self:stretch;"></div>'
         f'        <div style="text-align:center;">'
         f'            <div style="font-family:var(--font-display);font-size:24px;color:var(--ink);font-weight:700;">10,000+</div>'
-        f'            <div style="font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em;">MCP Installs</div>'
+        f'            <div style="font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em;">PyPI Installs</div>'
         f'        </div>'
         f'        <div style="width:1px;background:var(--border);align-self:stretch;"></div>'
         f'        <div style="text-align:center;">'
@@ -240,8 +240,18 @@ async def landing(request: Request):
     # ── Video Section (disabled — waiting for better video) ──────────
     video_section = ""
 
-    # ── Stats Bar (removed — duplicated hero) ──────────────────────
-    stats_bar = ""
+    # ── Stats Bar — dated credibility line below hero ─────────────
+    from datetime import date as _date
+    _today = _date.today().strftime('%b %d, %Y')
+    stats_bar = (
+        f'<div style="text-align:center;padding:12px 24px;font-size:12px;color:var(--ink-muted);'
+        f'background:var(--cream);border-bottom:1px solid var(--border);">'
+        f'<span style="font-weight:600;color:var(--ink);">{tool_count:,}</span> tools indexed'
+        f' &middot; <span style="font-weight:600;color:var(--ink);">{ai_recs:,}</span> agent queries served'
+        f' &middot; <span style="font-weight:600;color:var(--ink);">{claimed_count}</span> makers claimed'
+        f' &middot; Updated {_today}'
+        f'</div>'
+    )
 
     # ── MCP Walkthrough (simplified) ────────────────────────────────
     mcp_walkthrough = f"""
@@ -294,7 +304,33 @@ async def landing(request: Request):
     </section>
     """
 
-    build_vs_buy = ""
+    # Token savings estimate: ai_recs * average 15,000 tokens saved per query
+    _est_tokens_saved = ai_recs * 15000
+    if _est_tokens_saved >= 1_000_000_000:
+        _tokens_display = f'{_est_tokens_saved / 1_000_000_000:.1f}B'
+    elif _est_tokens_saved >= 1_000_000:
+        _tokens_display = f'{_est_tokens_saved / 1_000_000:.0f}M'
+    else:
+        _tokens_display = f'{_est_tokens_saved:,}'
+    build_vs_buy = f"""
+    <section style="padding:48px 24px;background:var(--cream-dark);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <div class="container" style="max-width:800px;text-align:center;">
+            <h2 style="font-family:var(--font-display);font-size:clamp(22px,3vw,28px);color:var(--ink);margin-bottom:8px;">
+                Tokens not wasted
+            </h2>
+            <p style="font-family:var(--font-display);font-size:clamp(36px,5vw,56px);color:var(--accent);font-weight:700;margin-bottom:8px;">
+                ~{_tokens_display}
+            </p>
+            <p style="color:var(--ink-muted);font-size:14px;max-width:480px;margin:0 auto 16px;">
+                Estimated tokens saved across {ai_recs:,} agent queries.
+                Each search that finds an existing tool prevents ~15,000 tokens of generated boilerplate.
+            </p>
+            <a href="/token-cost" style="color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;">
+                See methodology &rarr;
+            </a>
+        </div>
+    </section>
+    """
 
     # ── "Try it yourself" Search Widget ────────────────────────────────
     search_widget = """
@@ -636,7 +672,7 @@ async def landing(request: Request):
     )
 
     response = HTMLResponse(page_shell("The discovery layer for AI coding agents", body,
-                                   description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if a developer tool already exists — 6,500+ tools indexed.",
+                                   description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if a developer tool already exists — 8,000+ tools indexed.",
                                    user=request.state.user, canonical="/", extra_head=extra_head,
                                    og_image=f"{BASE_URL}/logo.png"))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"

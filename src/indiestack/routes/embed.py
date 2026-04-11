@@ -127,6 +127,57 @@ async def embed_docs(request: Request):
             </div>
         </div>
 
+        <!-- Search Widget -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:8px;">
+                Option 3: Search Widget
+            </h2>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
+                A self-contained search box with confidence indicators. Top 5 results, dark/light mode, &lt;50KB.
+            </p>
+            <div style="display:flex;gap:8px;margin-bottom:16px;">
+                <button id="theme-light" onclick="setSearchTheme('light')" style="padding:6px 14px;font-size:13px;border:1px solid var(--accent);border-radius:var(--radius-sm);background:var(--accent);color:white;cursor:pointer;font-weight:600;">Light</button>
+                <button id="theme-dark" onclick="setSearchTheme('dark')" style="padding:6px 14px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--card-bg);color:var(--ink);cursor:pointer;">Dark</button>
+            </div>
+            <div style="position:relative;">
+                <pre id="search-widget-code" style="
+                    background:var(--terracotta);color:var(--border);padding:16px 20px;border-radius:var(--radius-sm);
+                    font-family:var(--font-mono);font-size:13px;
+                    overflow-x:auto;white-space:pre-wrap;word-break:break-all;
+                "></pre>
+                <button id="copy-search" data-copy="" style="
+                    position:absolute;top:8px;right:8px;background:var(--slate);color:#fff;
+                    border:none;border-radius:var(--radius-sm);padding:8px 16px;font-size:12px;
+                    font-weight:600;cursor:pointer;
+                ">Copy</button>
+            </div>
+        </div>
+
+        <!-- Search Widget Preview -->
+        <div style="margin-bottom:32px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">
+                Search Widget Preview
+            </h2>
+            <div id="search-preview-wrap" style="
+                border:2px dashed var(--border);border-radius:var(--radius);padding:24px;
+                background:#fff;min-height:120px;
+            ">
+                <div id="search-widget-container"></div>
+            </div>
+        </div>
+
+        <!-- Error States -->
+        <div class="card" style="padding:24px;margin-bottom:24px;">
+            <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:8px;">
+                Error Handling
+            </h2>
+            <p style="color:var(--ink-muted);font-size:14px;line-height:1.7;">
+                Both widgets handle errors gracefully. If the IndieStack API is unreachable, the category widget shows
+                &ldquo;Failed to load IndieStack widget&rdquo; and the search widget shows &ldquo;Search failed. Try again.&rdquo;
+                No uncaught exceptions, no blank spaces. Widgets render inside Shadow DOM so they never conflict with your page styles.
+            </p>
+        </div>
+
         <div style="text-align:center;padding:32px;background:var(--cream-dark);border-radius:var(--radius);">
             <p style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:8px;">
                 Want your tool featured in embeds?
@@ -161,6 +212,53 @@ async def embed_docs(request: Request):
 
     catSelect.addEventListener("change", updateSnippets);
     updateSnippets();
+
+    // Search widget
+    var searchCode = document.getElementById("search-widget-code");
+    var copySearchBtn = document.getElementById("copy-search");
+    var searchTheme = "light";
+
+    function setSearchTheme(theme) {{
+        searchTheme = theme;
+        document.getElementById("theme-light").style.background = theme === "light" ? "var(--accent)" : "var(--card-bg)";
+        document.getElementById("theme-light").style.color = theme === "light" ? "white" : "var(--ink)";
+        document.getElementById("theme-light").style.borderColor = theme === "light" ? "var(--accent)" : "var(--border)";
+        document.getElementById("theme-dark").style.background = theme === "dark" ? "var(--accent)" : "var(--card-bg)";
+        document.getElementById("theme-dark").style.color = theme === "dark" ? "white" : "var(--ink)";
+        document.getElementById("theme-dark").style.borderColor = theme === "dark" ? "var(--accent)" : "var(--border)";
+        updateSearchSnippet();
+        // Reload preview
+        var wrap = document.getElementById("search-preview-wrap");
+        wrap.style.background = theme === "dark" ? "#0a0e1a" : "#fff";
+        var container = document.getElementById("search-widget-container");
+        container.innerHTML = "";
+        var s = document.createElement("script");
+        s.src = BASE + "/embed/search-widget.js";
+        s.setAttribute("data-theme", theme);
+        s.setAttribute("data-limit", "5");
+        container.appendChild(s);
+    }}
+
+    function updateSearchSnippet() {{
+        var snippet = '<script src="' + BASE + '/embed/search-widget.js" data-theme="' + searchTheme + '" data-limit="5"></' + 'script>';
+        searchCode.textContent = snippet;
+        copySearchBtn.setAttribute("data-copy", snippet);
+    }}
+    updateSearchSnippet();
+    // Load initial preview
+    setSearchTheme("light");
+
+    // Generic copy handler for all copy buttons
+    document.querySelectorAll("[data-copy]").forEach(function(btn) {{
+        btn.addEventListener("click", function() {{
+            var text = this.getAttribute("data-copy");
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(function() {{
+                btn.textContent = "Copied!";
+                setTimeout(function() {{ btn.textContent = "Copy"; }}, 2000);
+            }});
+        }});
+    }});
     </script>
     """
 
@@ -306,7 +404,7 @@ SEARCH_WIDGET_JS = '(function(){\n  var BASE = "' + BASE_URL + '";\n' + r"""
     + '</style>'
     + '<div class="is-search-wrap">'
     + '<div class="is-search-head">Find <span>Developer Tools</span></div>'
-    + '<input class="is-search-input" type="text" placeholder="Search 6,500+ tools..." />'
+    + '<input class="is-search-input" type="text" placeholder="Search 8,000+ tools..." />'
     + '<div class="is-results"></div>'
     + '<div class="is-foot">Powered by <a href="' + BASE + '?ref=search-widget" target="_blank" rel="noopener">IndieStack</a></div>'
     + '</div>';

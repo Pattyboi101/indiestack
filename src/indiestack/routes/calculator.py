@@ -139,6 +139,12 @@ async def calculator(request: Request):
             <a href="/alternatives" class="btn btn-primary">Browse All Alternatives &rarr;</a>
             <a href="/submit" class="btn" style="background:var(--cream-dark);color:var(--ink);border:1px solid var(--border);">List Your Tool</a>
         </div>
+
+        <p style="text-align:center;font-size:12px;color:var(--ink-muted);margin-top:32px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6;">
+            <strong>Methodology:</strong> Estimates based on published list prices as of April 2026.
+            Actual costs vary by usage tier, team size, and contract terms.
+            Indie alternative pricing sourced from each tool&rsquo;s public pricing page.
+        </p>
     </div>
 
     <script>

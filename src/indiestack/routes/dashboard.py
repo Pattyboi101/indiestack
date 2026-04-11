@@ -413,19 +413,33 @@ async def dashboard_overview(request: Request):
                 </div>
             </div>'''
 
-        # Sparkline trend (pure CSS bars)
+        # Weekly trend (4 bars for 30 days)
         trend_html = ''
         if trend:
-            max_val = max((d['citations'] for d in trend), default=1) or 1
+            # Aggregate into 4 weekly buckets
+            weeks = [{'label': '', 'total': 0} for _ in range(4)]
+            for d in trend:
+                idx = min(len(trend) - 1 - trend.index(d), 29) // 7
+                if idx < 4:
+                    weeks[3 - idx]['total'] += d['citations']
+                    weeks[3 - idx]['label'] = d['day'][5:]  # last day label
+            # Label weeks
+            week_labels = ['4w ago', '3w ago', '2w ago', 'This week']
+            max_val = max((w['total'] for w in weeks), default=1) or 1
             bars = ''
-            for d in trend[-14:]:  # Last 14 days
-                h = max(int(d['citations'] / max_val * 40), 2)
-                day_label = d['day'][5:]  # MM-DD
-                bars += f'<div title="{day_label}: {d["citations"]}" style="width:8px;height:{h}px;background:var(--accent);border-radius:2px;flex-shrink:0;"></div>'
+            for i, w in enumerate(weeks):
+                h = max(int(w['total'] / max_val * 60), 4)
+                bars += (
+                    f'<div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;">'
+                    f'<div style="width:100%;max-width:48px;height:{h}px;background:var(--accent);border-radius:4px;" title="{w["total"]} citations"></div>'
+                    f'<span style="font-size:11px;color:var(--ink-muted);">{week_labels[i]}</span>'
+                    f'<span style="font-size:13px;font-weight:600;color:var(--ink);">{w["total"]}</span>'
+                    f'</div>'
+                )
             trend_html = f'''
             <div style="margin-top:16px;">
-                <h4 style="font-size:13px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Daily AI Recommendations (14d)</h4>
-                <div style="display:flex;align-items:flex-end;gap:3px;height:44px;padding:2px 0;">{bars}</div>
+                <h4 style="font-size:13px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Weekly AI Recommendations (30d)</h4>
+                <div style="display:flex;align-items:flex-end;gap:12px;height:100px;padding:2px 0;">{bars}</div>
             </div>'''
 
         # Headline stats (visible to all claimed-tool makers)
@@ -2570,7 +2584,7 @@ async def developer_page(request: Request):
         public_body = f'''
     <div class="container" style="max-width:800px;padding:48px 24px;">
         <div style="margin-bottom:32px;text-align:center;">
-            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin:0 0 12px;">Give your AI agent access to 6,500+ developer tools</h1>
+            <h1 style="font-family:var(--font-display);font-size:36px;color:var(--ink);margin:0 0 12px;">Give your AI agent access to 8,000+ developer tools</h1>
             <p style="color:var(--ink-muted);font-size:17px;margin:0;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6;">
                 Without IndieStack, your AI writes infrastructure from scratch. With IndieStack, it finds proven tools first.
             </p>
