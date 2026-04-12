@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (forty-eighth pass)
+Last updated: 2026-04-12 (forty-ninth pass)
 
 ## Status: Active
 
@@ -10,13 +10,41 @@ Last updated: 2026-04-12 (forty-eighth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1004 entries for search routing (added 26 in forty-eighth pass — logging tools, background jobs, container runtimes, AI providers, testing)
-- **Catalog script**: `scripts/add_missing_tools.py` — 217 tools ready to insert (slug-safe)
-  - 4 tools added in forty-eighth pass (Winston, Pino, Hatchet, Dapr)
+- **_CAT_SYNONYMS**: 1036 entries for search routing (added 32 in forty-ninth pass — speech/voice AI, stream processing, SCIM/LDAP auth, plugins, logging tools)
+- **Catalog script**: `scripts/add_missing_tools.py` — 222 tools ready to insert (slug-safe)
+  - 5 tools added in forty-ninth pass (Loguru, structlog, Redpanda, Deepgram, Whisper)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, forty-ninth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for gaps in speech AI, stream processing, auth protocols, and logging
+- Added 32 new `_CAT_SYNONYMS` entries:
+  - **Speech/Voice AI**: `tts`, `stt`, `asr`, `voice`, `speech` → `"ai"` (text-to-speech + ASR growing query segment)
+  - **Named AI voice tools**: `elevenlabs`, `deepgram`, `cartesia`, `assemblyai` → `"ai"`
+  - **Stream processing**: `stream`, `streams`, `flink`, `kinesis`, `redpanda` → `"message"` (Flink/Kinesis alternative queries)
+  - **Auth protocols**: `scim`, `ldap`, `directory`, `provisioning` → `"authentication"` (enterprise SSO/provisioning)
+  - **Developer Tools**: `plugin`, `plugins` → `"developer"` (plugin system and bundler plugin queries)
+  - **Logging**: `loguru`, `structlog`, `fluentbit`, `fluent-bit` → `"logging"` (Python + lightweight log tools)
+- Running total: 1036 entries (1004 + 32)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (222 total):
+  - Loguru (logging, 18k★) — delightful Python logging, dominant stdlib alternative
+  - structlog (logging, 3.5k★) — structured logging for Python, used at Stripe
+  - Redpanda (message-queue, 9k★) — Kafka-compatible streaming, 10× faster, no ZooKeeper
+  - Deepgram (ai-dev-tools, 800★ SDK) — speech-to-text API with real-time + async transcription
+  - Whisper (ai-dev-tools, 74k★) — OpenAI open-source ASR, 99 languages, runs locally
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-ninth pass
 
 ## Completed This Session (2026-04-12, forty-eighth pass — autonomous improvement cycle)
 

@@ -3509,6 +3509,92 @@ TOOLS = [
         "curl -fsSL https://raw.githubusercontent.com/dapr/cli/master/install/install.sh | /bin/bash",
         "code",
     ),
+    # Logging — Python loggers -------------------------------------------------------
+    (
+        "loguru",
+        "Loguru",
+        "Python logging made (stupidly) simple",
+        "Loguru is a Python logging library that aims to make logging enjoyable rather "
+        "than a chore. Zero boilerplate: one import, one `logger`, and you're done. "
+        "Automatic exception formatting, colour output, rotation/retention, async support, "
+        "and structured JSON logging. The dominant modern alternative to the stdlib "
+        "logging module for Python applications.",
+        "logging",
+        "Delgan/loguru",
+        18000,
+        "https://loguru.readthedocs.io",
+        "python,logging,structured-logging,async",
+        "pip install loguru",
+        "code",
+    ),
+    (
+        "structlog",
+        "structlog",
+        "Structured logging for Python — simple, powerful, and fast",
+        "structlog makes logging in Python fast, less painful, and prettier. It wraps "
+        "any existing Python logger (stdlib, loguru, etc.) and adds structured key-value "
+        "context, a processor pipeline, and optional JSON output. Used at Stripe, "
+        "Heroku, and many large Python projects.",
+        "logging",
+        "hynek/structlog",
+        3500,
+        "https://www.structlog.org",
+        "python,logging,structured-logging,json",
+        "pip install structlog",
+        "code",
+    ),
+    # Message Queue — stream processing -----------------------------------------------
+    (
+        "redpanda",
+        "Redpanda",
+        "Kafka-compatible streaming data platform — 10× faster, no ZooKeeper",
+        "Redpanda is a Kafka-compatible event streaming platform written in C++. "
+        "No ZooKeeper, no JVM, no configuration zoo. Delivers 10× lower latency "
+        "than Kafka with identical API compatibility. CNCF sandbox project with "
+        "a managed cloud offering and a self-hosted binary.",
+        "message-queue",
+        "redpanda-data/redpanda",
+        9000,
+        "https://redpanda.com",
+        "kafka,streaming,message-queue,event-streaming,kafka-compatible",
+        "curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.deb.sh' | sudo bash && sudo apt install redpanda",
+        "code",
+    ),
+    # AI — Speech-to-text / voice AI -------------------------------------------------
+    (
+        "deepgram",
+        "Deepgram",
+        "Speech-to-text API for real-time and async transcription",
+        "Deepgram provides developer-friendly speech recognition via REST and WebSocket "
+        "APIs. Features include real-time streaming transcription, speaker diarisation, "
+        "language detection, topic detection, and summarisation. SDKs for Python, "
+        "Node.js, Go, .NET, and Ruby. Used by NASA, Spotify, and thousands of indie "
+        "developers for voice-enabled applications.",
+        "ai-dev-tools",
+        "deepgram/deepgram-python-sdk",
+        800,
+        "https://deepgram.com",
+        "speech-to-text,asr,voice,transcription,realtime,api",
+        "pip install deepgram-sdk",
+        "saas",
+    ),
+    (
+        "whisper",
+        "OpenAI Whisper",
+        "Open-source automatic speech recognition that rivals humans",
+        "Whisper is OpenAI's open-source automatic speech recognition model trained on "
+        "680k hours of multilingual speech. Supports 99 languages with near-human "
+        "accuracy. Runs locally, no API key required. Models range from tiny (39M params) "
+        "to large-v3 (1.5B params). Widely integrated into voice apps, transcription "
+        "pipelines, and AI agents via faster-whisper and whisper.cpp.",
+        "ai-dev-tools",
+        "openai/whisper",
+        74000,
+        "https://github.com/openai/whisper",
+        "speech-to-text,asr,voice,transcription,python,open-source,local",
+        "pip install openai-whisper",
+        "code",
+    ),
 ]
 
 

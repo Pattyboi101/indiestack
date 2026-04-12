@@ -3740,6 +3740,35 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — container-based integration testing and test data generation
     "testcontainers": "testing",    # Testcontainers — real service containers for integration tests
     "faker": "testing",             # Faker.js / Faker.py — realistic fake data for tests
+    # Speech / Voice AI — growing segment of AI queries (TTS, STT, ASR tools)
+    "tts": "ai",                    # text-to-speech — ElevenLabs, Cartesia, Coqui TTS
+    "stt": "ai",                    # speech-to-text (STT abbreviation) — Deepgram, Whisper
+    "asr": "ai",                    # automatic speech recognition — Deepgram, AssemblyAI
+    "voice": "ai",                  # voice AI — ElevenLabs, Play.ht, Murf → AI & Automation
+    "speech": "ai",                 # "speech recognition", "speech synthesis" → AI & Automation
+    "elevenlabs": "ai",             # ElevenLabs — leading voice AI API for TTS (developer-focused)
+    "deepgram": "ai",               # Deepgram — speech-to-text API for real-time + async transcription
+    "cartesia": "ai",               # Cartesia — ultra-low latency real-time voice synthesis
+    "assemblyai": "ai",             # AssemblyAI — transcription + audio intelligence API
+    # Stream processing — Apache Flink, Kafka Streams, Spark Streaming
+    "stream": "message",            # "stream processing", "event stream" → Message Queue
+    "streams": "message",           # plural — "Redis Streams", "Kafka Streams" queries
+    "flink": "message",             # Apache Flink — stateful distributed stream processing (37k★)
+    "kinesis": "message",           # AWS Kinesis — event streaming (for alternative queries)
+    "redpanda": "message",          # Redpanda — Kafka-compatible streaming, 10× faster (8k★)
+    # Auth — SCIM provisioning and LDAP directory services
+    "scim": "authentication",       # SCIM 2.0 — automated user provisioning (WorkOS, Okta, JumpCloud)
+    "ldap": "authentication",       # LDAP — directory protocol (OpenLDAP, FreeIPA queries)
+    "directory": "authentication",  # "directory service", "user directory" → Authentication
+    "provisioning": "authentication",  # "user provisioning", "auto-provisioning" → Auth
+    # Developer Tools — plugin and extension systems
+    "plugin": "developer",          # "plugin system", "vite plugin" → Developer Tools
+    "plugins": "developer",         # plural — "rollup plugins", "webpack plugins"
+    # Logging — additional named tools not yet covered
+    "loguru": "logging",            # Loguru — delightful Python logging with zero setup (18k★)
+    "structlog": "logging",         # structlog — structured logging for Python (3k★)
+    "fluentbit": "logging",         # Fluent Bit — lightweight log processor and forwarder (5k★)
+    "fluent-bit": "logging",        # hyphenated form used in queries ("fluent-bit alternative")
 }
 
 _FTS_STOP_WORDS = {
