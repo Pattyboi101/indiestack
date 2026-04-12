@@ -3666,6 +3666,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     "polar": "payments",            # Polar.sh — open-source Stripe alternative for OSS devs (5k★)
     "lemon": "payments",            # Lemon Squeezy — first term: "lemon squeezy alternative"
     "squeezy": "payments",          # Lemon Squeezy — second term for direct "squeezy" queries
+    # Workflow automation — n8n, Windmill, Activepieces, Pipedream (Zapier alternatives)
+    "n8n": "background",            # n8n — self-hostable workflow automation (47k★)
+    "windmill": "background",       # Windmill — fast workflow engine + script runner (12k★)
+    "activepieces": "background",   # Activepieces — open-source Zapier alternative (12k★)
+    "pipedream": "background",      # Pipedream — developer-focused workflow automation (8k★)
+    "zapier": "background",         # Zapier — canonical automation brand for alternative queries
+    # AI — visual flow builders (LangChain / LlamaIndex GUI environments)
+    "flowise": "ai",                # FlowiseAI — drag-and-drop LangChain builder (34k★)
+    "langflow": "ai",               # LangFlow — visual LangChain/LlamaIndex flow builder (48k★)
+    # AI — emerging agent/orchestration frameworks not yet covered
+    "baml": "ai",                   # BAML — structured LLM function language by BoundaryML
+    "agno": "ai",                   # Agno (formerly Phidata) — multi-modal agent framework (4k★)
+    "marvin": "ai",                 # Marvin — Prefect's Python AI toolkit for structured outputs
+    "controlflow": "ai",            # ControlFlow — Python task orchestration for LLM workflows
 }
 
 _FTS_STOP_WORDS = {

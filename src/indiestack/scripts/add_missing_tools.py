@@ -1459,6 +1459,40 @@ TOOLS = [
         "npm install @trigger.dev/sdk",
         "code",
     ),
+    # Background jobs / workflow automation — open-source Zapier alternatives --------
+    (
+        "windmill",
+        "Windmill",
+        "Open-source workflow engine and script runner",
+        "Windmill is a fast, open-source workflow engine and developer platform. "
+        "Write scripts in Python, TypeScript, Go, Bash, or SQL — Windmill handles "
+        "scheduling, parallelism, retries, secrets, and a polished UI. Self-host on "
+        "Docker or use Windmill Cloud. Popular Airflow/Zapier alternative for teams "
+        "who want code-first workflows without the enterprise overhead.",
+        "background-jobs",
+        "windmill-labs/windmill",
+        12000,
+        "https://windmill.dev",
+        "workflow,automation,cron,scripting,self-hosted,python,typescript",
+        "docker compose up -d",
+        "code",
+    ),
+    (
+        "activepieces",
+        "Activepieces",
+        "Open-source business automation — your Zapier alternative",
+        "Activepieces is an open-source automation platform with a visual flow builder "
+        "and 200+ connectors. Self-host for free or use the managed cloud. Features "
+        "include scheduled triggers, webhooks, loops, conditional logic, and an SDK "
+        "for building custom pieces. GDPR-compliant, privacy-first architecture.",
+        "background-jobs",
+        "activepieces/activepieces",
+        12000,
+        "https://activepieces.com",
+        "automation,workflow,no-code,zapier-alternative,self-hosted,webhooks",
+        "docker compose up",
+        "code",
+    ),
     # API / Backend — Rust web frameworks -------------------------------------------
     (
         "axum",
@@ -3290,6 +3324,40 @@ TOOLS = [
         "https://wandb.ai",
         "mlops,experiment-tracking,ml,pytorch,tensorflow,monitoring",
         "pip install wandb",
+        "code",
+    ),
+    # AI — visual flow builders (no-code/low-code LangChain environments) ---------------
+    (
+        "flowise",
+        "Flowise",
+        "Drag-and-drop UI to build LLM flows with LangChain",
+        "Flowise is an open-source drag-and-drop tool for building customized LLM "
+        "orchestration flows and AI agents. Built on LangChain and LangGraph, with "
+        "100+ integrations: OpenAI, Anthropic, Groq, Ollama, Pinecone, Qdrant, and "
+        "more. Deploy chatbots, RAG pipelines, and multi-agent systems in minutes "
+        "with no code required.",
+        "ai-automation",
+        "FlowiseAI/Flowise",
+        34000,
+        "https://flowiseai.com",
+        "langchain,rag,chatbot,no-code,visual-builder,llm,agents",
+        "npx flowise start",
+        "code",
+    ),
+    (
+        "langflow",
+        "Langflow",
+        "Visual framework for building multi-agent and RAG applications",
+        "Langflow is a low-code app builder for RAG and multi-agent AI applications. "
+        "A visual editor lets you compose pipelines from LangChain and LlamaIndex "
+        "components. Export flows as APIs or embed in Python. Supports OpenAI, "
+        "Anthropic, Google, local models via Ollama, and 20+ vector databases.",
+        "ai-automation",
+        "langflow-ai/langflow",
+        48000,
+        "https://langflow.org",
+        "langchain,llamaindex,rag,multi-agent,visual-builder,llm,python",
+        "pip install langflow",
         "code",
     ),
 ]

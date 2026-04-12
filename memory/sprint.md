@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (forty-fifth pass)
+Last updated: 2026-04-12 (forty-sixth pass)
 
 ## Status: Active
 
@@ -10,12 +10,36 @@ Last updated: 2026-04-12 (forty-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~1032 entries for search routing (added 25 in forty-fifth pass — AI/ML inference, RAG, payments)
-- **Catalog script**: `scripts/add_missing_tools.py` — 203 tools ready to insert (slug-safe)
-  - 7 tools added in forty-fifth pass (Chroma, Qdrant, Weaviate, Milvus, pgvector, vLLM, llama.cpp, wandb)
+- **_CAT_SYNONYMS**: ~1048 entries for search routing (added 16 in forty-sixth pass — workflow automation + AI flow builders)
+- **Catalog script**: `scripts/add_missing_tools.py` — 207 tools ready to insert (slug-safe)
+  - 4 tools added in forty-sixth pass (Windmill, Activepieces, Flowise, LangFlow)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, forty-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — found genuine gaps in workflow automation and AI flow builder terminology
+- Added 16 new `_CAT_SYNONYMS` entries covering:
+  - **Workflow automation**: `n8n`, `windmill`, `activepieces`, `pipedream`, `zapier` → `"background"` (common "[tool] alternative" queries)
+  - **AI visual builders**: `flowise`, `langflow` → `"ai"` (drag-and-drop LangChain/LlamaIndex environments)
+  - **AI agent frameworks**: `baml`, `agno`, `marvin`, `controlflow` → `"ai"` (emerging frameworks not yet covered)
+- Running total: ~1048 entries (1032 + 16)
+
+### Catalog Script (Step 2)
+- Added 4 new tools to `scripts/add_missing_tools.py` (207 total):
+  - Windmill (background-jobs, 12k★) — open-source workflow engine + script runner
+  - Activepieces (background-jobs, 12k★) — open-source Zapier alternative with visual builder
+  - Flowise (ai-automation, 34k★) — drag-and-drop LangChain UI builder
+  - LangFlow (ai-automation, 48k★) — visual LangChain/LlamaIndex flow builder
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no HTML/CSS drift
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-sixth pass
 
 ## Completed This Session (2026-04-12, forty-fifth pass — autonomous improvement cycle)
 
