@@ -3888,6 +3888,97 @@ TOOLS = [
         "npm install effector",
         "code",
     ),
+    # Testing — classic JS test runner (very common "alternative" query target) ----------
+    (
+        "mocha",
+        "Mocha",
+        "Simple, flexible, fun JavaScript test framework",
+        "Mocha is the most battle-tested Node.js test framework. Runs in Node.js and the "
+        "browser, supports async tests via Promises and callbacks, and is compatible with "
+        "any assertion library (Chai, assert, expect.js). Highly configurable with reporters, "
+        "hooks (before/after), and a rich plugin ecosystem. The original Node.js test runner "
+        "that paved the way for Jest and Vitest. 22k+ GitHub stars.",
+        "testing-tools",
+        "mochajs/mocha",
+        22000,
+        "https://mochajs.org",
+        "testing,javascript,nodejs,bdd,tdd,async",
+        "npm install mocha --save-dev",
+        "code",
+    ),
+    # Security — container and IaC vulnerability scanning ------------------------------
+    (
+        "trivy",
+        "Trivy",
+        "All-in-one open-source security scanner for containers and IaC",
+        "Trivy is a comprehensive, fast vulnerability scanner by Aqua Security. Scans "
+        "container images, filesystems, Git repos, Kubernetes clusters, and IaC "
+        "(Terraform, Helm, CloudFormation) for CVEs, misconfigurations, and secrets. "
+        "Zero config, a single binary, and CI/CD integrations for GitHub Actions and "
+        "GitLab CI. CNCF sandbox project. 22k+ GitHub stars.",
+        "security-tools",
+        "aquasecurity/trivy",
+        22000,
+        "https://trivy.dev",
+        "security,vulnerability-scanning,containers,iac,devops,cve",
+        "brew install trivy",
+        "code",
+    ),
+    # Security — static application security testing (SAST) ---------------------------
+    (
+        "semgrep",
+        "Semgrep",
+        "Fast, open-source, static analysis for finding bugs and enforcing code standards",
+        "Semgrep is a fast, open-source static analysis tool for finding bugs, detecting "
+        "vulnerabilities, and enforcing code standards. Write rules in a simple YAML syntax "
+        "that mirrors your code. Supports 30+ languages (Python, JS/TS, Go, Java, Ruby, PHP). "
+        "Semgrep Registry has 3,000+ community rules. Integrates into CI/CD pipelines with "
+        "zero friction. Used at Dropbox, Snowflake, and thousands of security-conscious teams. "
+        "10k+ GitHub stars.",
+        "security-tools",
+        "semgrep/semgrep",
+        10000,
+        "https://semgrep.dev",
+        "security,sast,static-analysis,vulnerability,code-quality",
+        "pip install semgrep",
+        "code",
+    ),
+    # Documentation — Next.js-based docs framework ----------------------------------------
+    (
+        "nextra",
+        "Nextra",
+        "Simple, powerful and flexible site generation framework with Next.js",
+        "Nextra is a documentation site framework built on Next.js. Write docs in MDX, "
+        "get instant search, syntax highlighting, i18n, dark mode, and a polished theme "
+        "out of the box. Zero configuration to start; fully customisable with Next.js. "
+        "Used by OpenAI, Vercel docs, and thousands of open-source projects. "
+        "From the creators of SWR (Vercel). 11k+ GitHub stars.",
+        "documentation",
+        "shuding/nextra",
+        11000,
+        "https://nextra.site",
+        "docs,nextjs,mdx,documentation,search,dark-mode",
+        "npm install nextra nextra-theme-docs",
+        "code",
+    ),
+    # Documentation — VitePress (Vue/Vite-powered docs) ------------------------------------
+    (
+        "vitepress",
+        "VitePress",
+        "Vite & Vue powered static site generator for documentation",
+        "VitePress is the official documentation site generator for the Vue ecosystem. "
+        "Built on Vite and Vue 3 — blazing-fast dev server, instant HMR, and markdown-based "
+        "content with Vue components inline. Ships with a polished default theme, built-in "
+        "search, and internationalization. Powers Vue.js docs, Vite docs, Vitest docs, "
+        "Pinia docs, and thousands of open-source doc sites. 13k+ GitHub stars.",
+        "documentation",
+        "vuejs/vitepress",
+        13000,
+        "https://vitepress.dev",
+        "docs,vue,vite,markdown,static-site,mdx,documentation",
+        "npm install vitepress",
+        "code",
+    ),
 ]
 
 

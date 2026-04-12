@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (fifty-second pass)
+Last updated: 2026-04-12 (fifty-third pass)
 
 ## Status: Active
 
@@ -10,13 +10,45 @@ Last updated: 2026-04-12 (fifty-second pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1099 entries for search routing (added 17 in fifty-second pass — syntax highlighting, i18n libs, proxy state, env validation)
-- **Catalog script**: `scripts/add_missing_tools.py` — 239 tools ready to insert (slug-safe)
-  - 5 tools added in fifty-second pass (Shiki, Lingui, Valtio, Effector, + 1 prior correction)
+- **_CAT_SYNONYMS**: 1126 entries for search routing (added 27 in fifty-third pass — JS testing, payments, AI providers, docs tools, security)
+- **Catalog script**: `scripts/add_missing_tools.py` — 243 tools ready to insert (slug-safe)
+  - 5 tools added in fifty-third pass (Mocha, Trivy, Semgrep, Nextra, VitePress)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, fifty-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for gaps in classic JS testing, additional payments providers, AI cloud platforms, docs frameworks, security scanners, and mobile tooling
+- Added 27 new `_CAT_SYNONYMS` entries:
+  - **Classic JS testing**: `mocha`, `jasmine`, `chai`, `sinon` → `"testing"` (common "alternative" queries)
+  - **Go/Ruby testing**: `testify`, `rspec`, `gomock` → `"testing"` (named-tool routing)
+  - **Payments**: `chargebee`, `adyen`, `revenuecat`, `recurly` → `"payments"` (subscription + enterprise)
+  - **Database**: `fauna`, `faunadb` → `"database"` (FaunaDB/Fauna serverless DB queries)
+  - **Security**: `trivy`, `semgrep`, `grype` → `"security"` (container scanning + SAST)
+  - **AI cloud platforms**: `cohere`, `vertex`, `bedrock`, `sagemaker` → `"ai"` (cloud LLM/ML queries)
+  - **Documentation frameworks**: `nextra`, `vitepress`, `docsify` → `"documentation"` (named SSGs)
+  - **React Router**: `react-router`, `reactrouter` → `"frontend"` (highly common routing query)
+  - **Mobile**: `nativescript` → `"frontend"` (NativeScript cross-platform)
+  - **DevOps**: `fastlane`, `crossplane` → `"devops"` (mobile CI/CD and K8s IaC)
+- Running total: 1126 entries (1099 + 27)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (244 total):
+  - Mocha (testing-tools, 22k★) — classic Node.js test runner; very common "[tool] alternative" queries
+  - Trivy (security-tools, 22k★) — Aqua Security all-in-one container/IaC vulnerability scanner
+  - Semgrep (security-tools, 10k★) — fast open-source SAST for 30+ languages
+  - Nextra (documentation, 11k★) — Next.js-based docs framework (OpenAI, Vercel use it)
+  - VitePress (documentation, 13k★) — Vue/Vite powered SSG powering Vue/Vite/Vitest/Pinia docs
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to fifty-third pass
 
 ## Completed This Session (2026-04-12, fifty-second pass — autonomous improvement cycle)
 

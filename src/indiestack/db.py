@@ -3850,6 +3850,44 @@ _CAT_SYNONYMS: dict[str, str] = {
     "t3-env": "developer",          # T3 Env — type-safe env vars with Zod (3.5k★, T3 stack)
     "t3env": "developer",           # compound form — "t3env nextjs", "t3env validation"
     "envalid": "developer",         # envalid — Node.js env variable validation (clean, typed)
+    # Testing — classic JS test framework and assertion libraries
+    "mocha": "testing",             # Mocha — classic Node.js test runner (22k★, very common "[tool] alternative")
+    "jasmine": "testing",           # Jasmine — BDD testing framework for JS (16k★)
+    "chai": "testing",              # Chai — BDD/TDD assertion library, pairs with Mocha
+    "sinon": "testing",             # Sinon.js — test spies, stubs, and mocks for JS
+    # Testing — Go and Ruby test frameworks
+    "testify": "testing",           # Testify — Go testing toolkit with assertions and mocks (23k★)
+    "rspec": "testing",             # RSpec — Ruby BDD testing framework
+    "gomock": "testing",            # GoMock — Go interface mocking framework (Google)
+    # Payments — additional subscription and enterprise payment providers
+    "chargebee": "payments",        # Chargebee — subscription billing and management SaaS
+    "adyen": "payments",            # Adyen — global enterprise payment processing
+    "revenuecat": "payments",       # RevenueCat — mobile in-app purchase and subscription SDK
+    "recurly": "payments",          # Recurly — subscription management platform
+    # Database — FaunaDB
+    "fauna": "database",            # Fauna — serverless document-relational database
+    "faunadb": "database",          # explicit form — "faunadb alternative" queries
+    # Security — static analysis and container scanning tools
+    "trivy": "security",            # Trivy — container and IaC vulnerability scanner (Aqua, 22k★)
+    "semgrep": "security",          # Semgrep — fast, open-source SAST (static analysis, 10k★)
+    "grype": "security",            # Grype — container and filesystem vulnerability scanner (Anchore)
+    # AI — cloud ML platforms (commonly queried as "[platform] alternative" or SDK queries)
+    "cohere": "ai",                 # Cohere — enterprise LLM APIs (Rerank, Embed, Generate)
+    "vertex": "ai",                 # Google Vertex AI — managed ML platform and LLM APIs
+    "bedrock": "ai",                # AWS Bedrock — fully managed LLM service (Claude, Llama, Titan)
+    "sagemaker": "ai",              # AWS SageMaker — ML training, deployment, and MLOps
+    # Documentation — Next.js/Vite-based doc site frameworks
+    "nextra": "documentation",      # Nextra — Next.js-based documentation framework (11k★)
+    "vitepress": "documentation",   # VitePress — Vite-powered static site generator for docs (13k★)
+    "docsify": "documentation",     # Docsify — no-build docs site generator from Markdown (28k★)
+    # Frontend — React Router (direct named-tool query: "react-router alternative" is very common)
+    "react-router": "frontend",     # React Router — most popular React routing library (52k★)
+    "reactrouter": "frontend",      # compound form — "reactrouter alternative", "react router v7"
+    # Frontend — mobile cross-platform
+    "nativescript": "frontend",     # NativeScript — native mobile apps with JS/TS (Angular/React/Vue)
+    # DevOps — mobile CI/CD and Kubernetes IaC
+    "fastlane": "devops",           # Fastlane — automate iOS/Android builds and releases (40k★)
+    "crossplane": "devops",         # Crossplane — Kubernetes-native IaC and control plane (9k★)
 }
 
 _FTS_STOP_WORDS = {
