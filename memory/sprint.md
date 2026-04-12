@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (forty-third pass)
+Last updated: 2026-04-12 (forty-fourth pass)
 
 ## Status: Active
 
@@ -10,12 +10,43 @@ Last updated: 2026-04-12 (forty-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~967 entries for search routing (added 6 in forty-third pass — ML/deep-learning routing fix)
-- **Catalog script**: `scripts/add_missing_tools.py` — 189 tools ready to insert (slug-safe)
-  - 5 tools added in forty-third pass (Redis, Prettier, ESLint, Valibot, SQLAlchemy); 1 duplicate removed
+- **_CAT_SYNONYMS**: ~1007 entries for search routing (added 40 in forty-fourth pass — protocols, authz, jupyter, BDD, devops infra)
+- **Catalog script**: `scripts/add_missing_tools.py` — 196 tools ready to insert (slug-safe)
+  - 7 tools added in forty-fourth pass (Prometheus, Grafana, MinIO, Caddy, Nginx, OpenFGA, Casbin)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, forty-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — 14 duplicate keys identified (harmless, last value wins, all same-category); genuine gaps found
+- Added 40 new `_CAT_SYNONYMS` entries covering:
+  - **Messaging protocols**: `amqp`, `mqtt`, `mosquitto`, `emqx` → `"message"` (core IoT/RabbitMQ protocols)
+  - **Fine-grained authorization**: `authorization`, `authz`, `openfga`, `casbin`, `zanzibar` → `"authentication"` (authz tools live in auth category)
+  - **Jupyter/notebooks**: `jupyter`, `jupyterlab`, `notebook`, `ipython` → `"developer"` (interactive computing)
+  - **BDD testing**: `bdd`, `cucumber`, `behave`, `specflow`, `gherkin` → `"testing"` (behaviour-driven development)
+  - **DevOps infra**: `consul`, `etcd`, `vagrant`, `virtualbox`, `hypervisor`, `hashicorp` → `"devops"` (service discovery, config, VMs)
+  - **Monitoring**: `prometheus`, `grafana` → `"monitoring"` (canonical observability stack)
+  - **File storage**: `minio`, `backblaze`, `tigris` → `"file"` (S3-compatible object storage)
+- Running total: ~1007 entries (967 + 40)
+
+### Catalog Script (Step 2)
+- Added 7 new tools to `scripts/add_missing_tools.py` (196 total):
+  - Prometheus (monitoring-uptime, 52k★) — open-source monitoring + PromQL + Alertmanager
+  - Grafana (monitoring-uptime, 64k★) — dashboards + visualization for metrics/logs/traces
+  - MinIO (file-management, 47k★) — self-hosted S3-compatible object storage
+  - Caddy (devops-infrastructure, 57k★) — automatic HTTPS web server + reverse proxy
+  - Nginx (devops-infrastructure, 20k★) — battle-tested web server + reverse proxy
+  - OpenFGA (authentication, 3k★) — Google Zanzibar-based fine-grained authorization
+  - Casbin (authentication, 17k★) — multi-model authorization library (Go, Node, Python)
+
+### Code Quality (Step 3)
+- Identified 14 duplicate keys in _CAT_SYNONYMS (all harmless — same category in both entries, last value wins)
+- No route files changed → smoke test not required
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-fourth pass
 
 ## Completed This Session (2026-04-12, forty-third pass — autonomous improvement cycle)
 

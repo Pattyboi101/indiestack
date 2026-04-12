@@ -3607,6 +3607,42 @@ _CAT_SYNONYMS: dict[str, str] = {
     "lint-staged": "devops",        # lint-staged — run linters on staged git files
     "precommit": "devops",          # pre-commit — framework for managing pre-commit hooks
     "pre-commit": "devops",         # hyphenated form
+    # Message queue protocols — AMQP (RabbitMQ) and MQTT (IoT pub/sub)
+    "amqp": "message",              # AMQP — Advanced Message Queuing Protocol (RabbitMQ, ActiveMQ)
+    "mqtt": "message",              # MQTT — lightweight pub/sub protocol for IoT (Mosquitto, EMQx, HiveMQ)
+    "mosquitto": "message",         # Eclipse Mosquitto — open-source MQTT broker
+    "emqx": "message",              # EMQX — scalable open-source MQTT broker (12k★)
+    # Authorization (fine-grained) — OpenFGA, Casbin, Ory Keto live in auth category
+    "authorization": "authentication",  # fine-grained authz tools (ReBAC, ABAC, RBAC engines)
+    "authz": "authentication",      # shorthand for authorization in developer queries
+    "openfga": "authentication",    # OpenFGA — Google's open-source fine-grained authorization
+    "casbin": "authentication",     # Casbin — flexible authorization library (Go, Node, Python)
+    "zanzibar": "authentication",   # Google Zanzibar-based authz ("zanzibar alternative" queries)
+    # Developer Tools — Jupyter / notebook ecosystem
+    "jupyter": "developer",         # Jupyter Notebook / JupyterLab — interactive computing
+    "jupyterlab": "developer",      # JupyterLab — next-gen Jupyter UI
+    "notebook": "developer",        # generic "notebook" queries → Developer Tools (Jupyter, Zed)
+    "ipython": "developer",         # IPython — enhanced interactive Python shell
+    # Testing — BDD (Behaviour-Driven Development)
+    "bdd": "testing",               # BDD tooling: Cucumber, Behave, SpecFlow, Jasmine
+    "cucumber": "testing",          # Cucumber — most popular BDD framework
+    "behave": "testing",            # Behave — Python BDD framework
+    "specflow": "testing",          # SpecFlow — .NET BDD framework
+    "gherkin": "testing",           # Gherkin — BDD DSL used by Cucumber/Behave
+    # DevOps — service discovery, config, and VM tooling
+    "consul": "devops",             # HashiCorp Consul — service discovery + config + mesh
+    "etcd": "devops",               # etcd — distributed key-value store (Kubernetes backbone)
+    "vagrant": "devops",            # Vagrant — VM provisioning with declarative config
+    "virtualbox": "devops",         # VirtualBox — open-source x86 VM hypervisor
+    "hypervisor": "devops",         # generic hypervisor/VM queries → DevOps & Infrastructure
+    "hashicorp": "devops",          # HashiCorp brand queries (Vault, Terraform, Consul, Nomad)
+    # DevOps — monitoring: Prometheus + Grafana (canonical stack for metrics)
+    "prometheus": "monitoring",     # Prometheus — open-source monitoring + alerting (52k★)
+    "grafana": "monitoring",        # Grafana — observability dashboards + visualization (64k★)
+    # File storage — object storage (MinIO, Backblaze B2, Tigris, Cloudflare R2)
+    "minio": "file",                # MinIO — open-source S3-compatible object storage (47k★)
+    "backblaze": "file",            # Backblaze B2 — cheap S3-alternative object storage
+    "tigris": "file",               # Tigris — globally distributed S3-compatible object storage
 }
 
 _FTS_STOP_WORDS = {

@@ -3052,6 +3052,115 @@ TOOLS = [
         "pip install sqlalchemy",
         "code",
     ),
+    # Monitoring — Prometheus + Grafana (canonical open-source observability stack) ----
+    (
+        "prometheus",
+        "Prometheus",
+        "Open-source monitoring and alerting toolkit",
+        "Prometheus is the most widely adopted open-source monitoring system. Pull-based "
+        "metrics collection, a powerful query language (PromQL), built-in alerting via "
+        "Alertmanager, and native Kubernetes support. Foundation of the CNCF observability stack.",
+        "monitoring-uptime",
+        "prometheus/prometheus",
+        52000,
+        "https://prometheus.io",
+        "monitoring,metrics,alerting,cncf,kubernetes",
+        "docker run -p 9090:9090 prom/prometheus",
+        "code",
+    ),
+    (
+        "grafana",
+        "Grafana",
+        "Open-source observability and data visualization platform",
+        "Grafana is the leading open-source platform for monitoring, observability, and data "
+        "visualization. Connects to Prometheus, Loki, InfluxDB, PostgreSQL, and 100+ data "
+        "sources. Build dashboards, set alerts, and explore metrics, logs, and traces.",
+        "monitoring-uptime",
+        "grafana/grafana",
+        64000,
+        "https://grafana.com",
+        "monitoring,dashboards,visualization,metrics,observability",
+        "docker run -d -p 3000:3000 grafana/grafana",
+        "code",
+    ),
+    # File Storage — MinIO (self-hosted S3-compatible object storage) -------------------
+    (
+        "minio",
+        "MinIO",
+        "High-performance, S3-compatible object storage",
+        "MinIO is the world's most widely deployed object storage. S3-compatible API, "
+        "single binary deployment, Kubernetes-native, and capable of storing photos, "
+        "videos, log files, backups, and container images. Runs anywhere.",
+        "file-management",
+        "minio/minio",
+        47000,
+        "https://min.io",
+        "s3,object-storage,self-hosted,kubernetes",
+        "docker run -p 9000:9000 -p 9001:9001 quay.io/minio/minio server /data --console-address ':9001'",
+        "code",
+    ),
+    # DevOps — web servers and reverse proxies -----------------------------------------
+    (
+        "caddy",
+        "Caddy",
+        "The web server with automatic HTTPS",
+        "Caddy is a powerful, enterprise-ready, open-source web server with automatic HTTPS "
+        "by default. Written in Go, it handles TLS certificate renewal via Let's Encrypt, "
+        "reverse proxying, static file serving, and load balancing — zero config required.",
+        "devops-infrastructure",
+        "caddyserver/caddy",
+        57000,
+        "https://caddyserver.com",
+        "web-server,reverse-proxy,https,lets-encrypt,go",
+        "docker run -p 80:80 -p 443:443 caddy",
+        "code",
+    ),
+    (
+        "nginx",
+        "Nginx",
+        "High-performance web server and reverse proxy",
+        "Nginx (pronounced 'engine-x') is the world's most used web server. Handles static "
+        "files, reverse proxying, load balancing, TLS termination, and HTTP caching with "
+        "exceptional performance and a small memory footprint.",
+        "devops-infrastructure",
+        "nginx/nginx",
+        20000,
+        "https://nginx.org",
+        "web-server,reverse-proxy,load-balancer,proxy",
+        "docker run -p 80:80 nginx",
+        "code",
+    ),
+    # Authentication — fine-grained authorization engines -----------------------------
+    (
+        "openfga",
+        "OpenFGA",
+        "Open source fine-grained authorization",
+        "OpenFGA is an open-source authorization solution based on Google Zanzibar. It lets "
+        "you implement fine-grained access control with relationship-based authorization "
+        "(ReBAC). Used by Auth0 and designed for multi-tenant SaaS at scale.",
+        "authentication",
+        "openfga/openfga",
+        3000,
+        "https://openfga.dev",
+        "authorization,rbac,rebac,fine-grained,zanzibar",
+        "docker run -p 8080:8080 openfga/openfga run",
+        "code",
+    ),
+    (
+        "casbin",
+        "Casbin",
+        "An authorization library that supports access control models",
+        "Casbin is a powerful authorization library with support for ACL, RBAC, ABAC, and "
+        "custom access control models. Available in Go, Node.js, Python, PHP, Rust, Java, "
+        "and more. Define your authorization model in a simple config file.",
+        "authentication",
+        "casbin/casbin",
+        17000,
+        "https://casbin.org",
+        "authorization,rbac,abac,acl,golang",
+        "go get github.com/casbin/casbin/v2",
+        "code",
+    ),
 ]
 
 
