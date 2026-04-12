@@ -3802,6 +3802,36 @@ _CAT_SYNONYMS: dict[str, str] = {
     "clipboard": "developer",       # "clipboard API", "copy to clipboard" → Developer Tools
     # Database — analytical / data warehouse queries
     "warehouse": "database",        # "data warehouse", "analytical warehouse" → Database
+    # Lazy loading / code splitting / island architecture patterns
+    "lazy": "frontend",             # "lazy loading", "lazy image", "dynamic import" → Frontend
+    "splitting": "frontend",        # "code splitting", "chunk splitting" (Vite/Webpack) → Frontend
+    "island": "frontend",           # "island architecture" (Astro, Fresh) → Frontend Frameworks
+    "hydration": "frontend",        # "SSR hydration", "partial hydration", "hydration mismatch" → Frontend
+    # State machine / FSM (XState, Robot, MachineState)
+    "fsm": "frontend",              # "FSM library", "finite state machine" → Frontend (XState)
+    "statemachine": "frontend",     # "state machine library", "state machine alternative" → Frontend
+    # Event emitter libraries (mitt, EventEmitter3, nanobus)
+    "emitter": "api",               # "event emitter", "typed event emitter" → API Tools
+    "eventemitter": "api",          # compound — "EventEmitter3 alternative", "event emitter lib"
+    "mitt": "api",                  # mitt — 200b event emitter (specific named tool)
+    # Concurrency / parallelism control (worker pools, async queues)
+    "concurrency": "background",    # "concurrency control", "concurrent jobs" → Background Jobs
+    "concurrent": "background",     # "concurrent tasks", "concurrent workers" → Background Jobs
+    # Analytics — user behavior analysis
+    "replay": "monitoring",         # "session replay" (LogRocket, Highlight.io, PostHog) → Monitoring
+    "heatmap": "analytics",         # "click heatmap", "scroll heatmap" (Hotjar, Clarity) → Analytics
+    "funnel": "analytics",          # "conversion funnel", "funnel analysis" → Analytics & Metrics
+    "cohort": "analytics",          # "cohort analysis", "user cohorts" → Analytics & Metrics
+    # Project management — Gantt charts (commonly searched feature)
+    "gantt": "project",             # "Gantt chart", "Gantt timeline view" → Project Management
+    # User onboarding / product tours (Intro.js, Shepherd.js, Driver.js)
+    "tour": "frontend",             # "product tour", "interactive tour library" → Frontend Frameworks
+    "onboarding": "frontend",       # "user onboarding flow", "onboarding wizard" → Frontend Frameworks
+    # Vue utilities — VueUse is searched directly as a named tool
+    "vueuse": "frontend",           # VueUse — Vue Composition API utility collection (21k★)
+    # Debounce / rate-control hooks (use-debounce, xhook, lodash.debounce)
+    "debounce": "frontend",         # "debounce library", "useDebounce hook" → Frontend Frameworks
+    "usedebounce": "frontend",      # "useDebounce React hook" — explicit hook form
 }
 
 _FTS_STOP_WORDS = {

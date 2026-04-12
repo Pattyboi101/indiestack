@@ -3730,6 +3730,92 @@ TOOLS = [
         "pip install celery",
         "code",
     ),
+    # AI — LangChain (most popular LLM framework) ----------------------------------------
+    (
+        "langchain",
+        "LangChain",
+        "Build context-aware reasoning applications with LLMs",
+        "LangChain is the most widely used framework for building LLM-powered applications. "
+        "Provides chains, agents, RAG pipelines, memory, and a vast ecosystem of integrations "
+        "(OpenAI, Anthropic, Hugging Face, vector stores, document loaders). "
+        "Available in Python and JavaScript. Part of the LangChain ecosystem alongside "
+        "LangGraph (multi-agent workflows) and LangSmith (observability). 95k+ GitHub stars.",
+        "ai-automation",
+        "langchain-ai/langchain",
+        95000,
+        "https://python.langchain.com",
+        "llm,rag,agents,chains,python,javascript,ai,openai",
+        "pip install langchain",
+        "code",
+    ),
+    # AI — AutoGen (Microsoft multi-agent framework) ------------------------------------
+    (
+        "autogen",
+        "AutoGen",
+        "Multi-agent conversation framework by Microsoft Research",
+        "AutoGen is Microsoft's open-source framework for building multi-agent AI systems. "
+        "Agents converse, collaborate, and use tools autonomously to solve complex tasks. "
+        "Supports OpenAI, Azure OpenAI, local LLMs, and custom models. AutoGen Studio "
+        "offers a no-code UI for building agentic workflows. 34k+ GitHub stars.",
+        "ai-automation",
+        "microsoft/autogen",
+        34000,
+        "https://microsoft.github.io/autogen",
+        "llm,agents,multi-agent,python,microsoft,orchestration,ai",
+        "pip install pyautogen",
+        "code",
+    ),
+    # Frontend — VueUse (Vue Composition API utilities) ---------------------------------
+    (
+        "vueuse",
+        "VueUse",
+        "Collection of essential Vue Composition API utilities",
+        "VueUse is a collection of 200+ utility composables for Vue 3 and Vue 2 "
+        "with the Composition API. Covers sensors, browser APIs, state, animation, "
+        "network, storage, and more. Every function is tree-shakeable and fully typed. "
+        "Inspired by React Hooks, used in virtually every Vue 3 project. 21k+ GitHub stars.",
+        "frontend-frameworks",
+        "vueuse/vueuse",
+        21000,
+        "https://vueuse.org",
+        "vue,composables,utilities,typescript,hooks,vue3",
+        "npm install @vueuse/core",
+        "code",
+    ),
+    # Maps — MapLibre GL JS (open-source Mapbox alternative) ----------------------------
+    (
+        "maplibre",
+        "MapLibre GL JS",
+        "Open-source vector map rendering — free Mapbox GL JS fork",
+        "MapLibre GL JS is the open-source fork of Mapbox GL JS. Renders vector tiles "
+        "via WebGL — smooth zooming, rotation, and custom styling using Mapbox GL styles. "
+        "No API key required, fully Apache 2.0 licensed. Drop-in Mapbox replacement. "
+        "Powers OSM-based maps, geospatial dashboards, and location-aware apps. 11k+ stars.",
+        "maps-location",
+        "maplibre/maplibre-gl-js",
+        11000,
+        "https://maplibre.org/maplibre-gl-js/docs/",
+        "maps,vector-tiles,webgl,openstreetmap,mapbox-alternative,geospatial",
+        "npm install maplibre-gl",
+        "code",
+    ),
+    # API — mitt (tiny event emitter) ---------------------------------------------------
+    (
+        "mitt",
+        "mitt",
+        "Tiny 200b functional event emitter / pubsub",
+        "mitt is a tiny, zero-dependency event emitter for JavaScript. 200 bytes gzipped, "
+        "TypeScript native, with a simple three-method API: on, off, emit. "
+        "Supports wildcard '*' listeners for all events. Works in browsers and Node.js. "
+        "10k+ GitHub stars; the go-to solution for cross-component and module-level pub/sub.",
+        "api-tools",
+        "developit/mitt",
+        10000,
+        "https://github.com/developit/mitt",
+        "event-emitter,pubsub,tiny,typescript,javascript,events",
+        "npm install mitt",
+        "code",
+    ),
 ]
 
 

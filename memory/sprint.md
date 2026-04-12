@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (fiftieth pass)
+Last updated: 2026-04-12 (fifty-first pass)
 
 ## Status: Active
 
@@ -10,13 +10,44 @@ Last updated: 2026-04-12 (fiftieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1053 entries for search routing (added 17 in fiftieth pass — date/time libs, UI components, 3D/dataviz, auth tokens, file ops)
-- **Catalog script**: `scripts/add_missing_tools.py` — 229 tools ready to insert (slug-safe)
-  - 8 tools added in fiftieth pass (Day.js, Three.js, D3.js, Chart.js, SWR, dnd-kit, Puppeteer, Celery)
+- **_CAT_SYNONYMS**: 1082 entries for search routing (added 29 in fifty-first pass — lazy/island/hydration, FSM, event emitters, concurrency, behavior analytics, VueUse, debounce)
+- **Catalog script**: `scripts/add_missing_tools.py` — 234 tools ready to insert (slug-safe)
+  - 5 tools added in fifty-first pass (LangChain, AutoGen, VueUse, MapLibre GL, mitt)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, fifty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for gaps in island/hydration architecture, FSM, event emitters, concurrency, behavior analytics, and common utility hooks
+- Added 29 new `_CAT_SYNONYMS` entries:
+  - **Lazy loading / island**: `lazy`, `splitting`, `island`, `hydration` → `"frontend"` (Astro island architecture, SSR hydration, code splitting)
+  - **State machines**: `fsm`, `statemachine` → `"frontend"` (XState, Robot, MachineState alternative queries)
+  - **Event emitters**: `emitter`, `eventemitter`, `mitt` → `"api"` (mitt, EventEmitter3 named-tool and generic queries)
+  - **Concurrency**: `concurrency`, `concurrent` → `"background"` (concurrent job workers, task parallelism)
+  - **Behavior analytics**: `replay` → `"monitoring"` (session replay — LogRocket, Highlight.io); `heatmap`, `funnel`, `cohort` → `"analytics"`
+  - **Project**: `gantt` → `"project"` (Gantt chart tools)
+  - **User onboarding**: `tour`, `onboarding` → `"frontend"` (Intro.js, Shepherd.js, Driver.js)
+  - **Vue utilities**: `vueuse` → `"frontend"` (direct named-tool routing)
+  - **Debounce hooks**: `debounce`, `usedebounce` → `"frontend"` (use-debounce, lodash.debounce)
+- Running total: 1082 entries (1053 + 29)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (234 total):
+  - LangChain (ai-automation, 95k★) — most popular LLM framework; was a glaring catalog gap
+  - AutoGen (ai-automation, 34k★) — Microsoft multi-agent conversation framework
+  - VueUse (frontend-frameworks, 21k★) — Vue Composition API utilities (used in most Vue 3 projects)
+  - MapLibre GL JS (maps-location, 11k★) — open-source Mapbox alternative, no API key required
+  - mitt (api-tools, 10k★) — 200b event emitter, most-used micro pub/sub library
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to fifty-first pass
 
 ## Completed This Session (2026-04-12, fiftieth pass — autonomous improvement cycle)
 
