@@ -2939,7 +2939,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "convex": "database",       # Convex — real-time BaaS with reactive queries
     "pocketbase": "database",   # PocketBase — SQLite-based open-source BaaS
     "appwrite": "database",     # Appwrite — self-hosted Firebase alternative
-    # Auth — WebAuthn / passkeys
+    "libsql": "database",       # libSQL — open-source fork of SQLite (powers Turso)
+    "surrealdb": "database",    # SurrealDB — multi-model DB (SQL + graph + document + KV)
     "webauthn": "authentication",   # WebAuthn — W3C passkey standard
     "fido2": "authentication",      # FIDO2 — underlying passkey protocol
     # Security — compliance, encryption, certificates
@@ -2989,6 +2990,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "betterauth": "authentication",   # Better Auth — modern TypeScript auth framework
     "oidc": "authentication",         # OpenID Connect — identity protocol (Zitadel, Keycloak)
     "oauth2": "authentication",       # explicit OAuth 2.0 queries
+    "nextauth": "authentication",     # NextAuth.js — most popular Next.js auth library (26k★)
+    "next-auth": "authentication",    # hyphenated canonical package name (@auth/nextjs)
+    "passport": "authentication",     # Passport.js — classic Node.js auth middleware (23k★)
+    "passportjs": "authentication",   # compound form used in queries like "passportjs alternative"
     # CMS — popular tools not yet mapped
     "payload": "cms",                 # PayloadCMS — TypeScript headless CMS (32k stars)
     "ghost": "cms",                   # Ghost — open-source publishing/CMS

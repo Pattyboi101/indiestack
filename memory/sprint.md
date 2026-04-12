@@ -1,21 +1,44 @@
 # Sprint — Current
 
-Last updated: 2026-04-11 (forty-first pass)
+Last updated: 2026-04-12 (forty-second pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-11)
+## System State (as of 2026-04-12)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~955 entries for search routing (added 44 in forty-first pass — BI/analytics, DB ops, API patterns)
-- **Catalog script**: `scripts/add_missing_tools.py` — 181 tools ready to insert (slug-safe)
-  - 6 tools added in forty-first pass (Metabase, Redash, Superset, Lightdash, Evidence, Litestream)
+- **_CAT_SYNONYMS**: ~961 entries for search routing (added 6 in forty-second pass — auth libs, DB tools)
+- **Catalog script**: `scripts/add_missing_tools.py` — 185 tools ready to insert (slug-safe)
+  - 4 tools added in forty-second pass (NextAuth.js, Passport.js, SurrealDB, libSQL)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, forty-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited _CAT_SYNONYMS — found 6 genuine gaps: TECH_KEYWORDS tools missing synonym routing, popular auth libs
+- Added 6 new `_CAT_SYNONYMS` entries:
+  - **Database**: `libsql`, `surrealdb` → `"database"` (both in TECH_KEYWORDS, missing from synonyms)
+  - **Authentication**: `nextauth`, `next-auth`, `passport`, `passportjs` → `"authentication"` (most popular Node.js/Next.js auth libs)
+- Running total: ~961 entries (955 + 6)
+
+### Catalog Script (Step 2)
+- Added 4 new tools to `scripts/add_missing_tools.py` (185 total):
+  - NextAuth.js (authentication, 26k★) — most popular Next.js/JS auth library
+  - Passport.js (authentication, 23k★) — classic Node.js auth middleware (500+ strategies)
+  - SurrealDB (database, 28k★) — multi-model DB with SQL + graph + document + KV
+  - libSQL (database, 5k★) — open-source SQLite fork powering Turso; HTTP API + replication
+
+### Code Quality (Step 3)
+- Reviewed agents.py (most recent changed route) — proper `html.escape` usage, CSS variables used, no hardcoded stats
+- No issues found
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-second pass
 
 ## Completed This Session (2026-04-11, forty-first pass — autonomous improvement cycle)
 

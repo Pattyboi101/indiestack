@@ -632,6 +632,40 @@ TOOLS = [
         "npm install better-auth",
         "code",
     ),
+    (
+        "nextauth",
+        "NextAuth.js",
+        "Authentication for the Web",
+        "NextAuth.js (now Auth.js) is the most popular open-source authentication "
+        "library for Next.js and the broader JavaScript ecosystem. Supports 60+ OAuth "
+        "providers (GitHub, Google, Discord, etc.), email/passwordless login, and "
+        "database sessions. Ships with adapters for Prisma, Drizzle, and more. "
+        "26k+ GitHub stars; used by hundreds of thousands of projects.",
+        "authentication",
+        "nextauthjs/next-auth",
+        26000,
+        "https://authjs.dev",
+        "auth,nextjs,oauth,sessions,typescript",
+        "npm install next-auth",
+        "code",
+    ),
+    (
+        "passport",
+        "Passport.js",
+        "Simple, unobtrusive authentication for Node.js",
+        "Passport is the most widely deployed Node.js authentication middleware. "
+        "It provides a clean, modular mechanism for authentication via 500+ "
+        "strategies: OAuth (Google, GitHub, Facebook), local username/password, "
+        "JWT, API keys, and more. Framework-agnostic — works with Express, Fastify, "
+        "Hapi, and other Node.js frameworks. 23k+ GitHub stars.",
+        "authentication",
+        "jaredhanson/passport",
+        23000,
+        "https://www.passportjs.org",
+        "auth,nodejs,oauth,jwt,strategy,express",
+        "npm install passport",
+        "code",
+    ),
     # Database — OLAP / Analytics ------------------------------------------------
     (
         "clickhouse",
@@ -646,6 +680,39 @@ TOOLS = [
         "https://clickhouse.com",
         "olap,analytics,column-store,fast",
         "docker run -d --name clickhouse clickhouse/clickhouse-server",
+        "code",
+    ),
+    (
+        "surrealdb",
+        "SurrealDB",
+        "The ultimate multi-model database for tomorrow's applications",
+        "SurrealDB is a multi-model database that combines SQL querying, graph "
+        "relations, document storage, and key-value access in a single engine. "
+        "Runs embedded (like SQLite), as a server, or distributed in the cloud. "
+        "Real-time live queries, schema-optional, built-in auth, and a JavaScript "
+        "SDK make it popular for indie devs and full-stack apps. 28k+ GitHub stars.",
+        "database",
+        "surrealdb/surrealdb",
+        28000,
+        "https://surrealdb.com",
+        "multi-model,sql,graph,document,realtime,embedded,rust",
+        "curl -sSf https://install.surrealdb.com | sh",
+        "code",
+    ),
+    (
+        "libsql",
+        "libSQL",
+        "The open-source, open-contribution fork of SQLite",
+        "libSQL is an open-source fork of SQLite maintained by the Turso team, "
+        "adding server mode, HTTP API, replication, and WASM builds while staying "
+        "100% compatible with SQLite. Powers Turso's distributed serverless SQLite "
+        "and can also be used standalone as a local or embedded database. 5k+ stars.",
+        "database",
+        "tursodatabase/libsql",
+        5000,
+        "https://libsql.org",
+        "sqlite,distributed,serverless,turso,embedded,fork",
+        "npm install @libsql/client",
         "code",
     ),
     # DevOps — Self-hosting ------------------------------------------------------
