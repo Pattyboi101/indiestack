@@ -3052,6 +3052,123 @@ TOOLS = [
         "pip install sqlalchemy",
         "code",
     ),
+    # Time-series / metrics --------------------------------------------------------
+    (
+        "influxdb",
+        "InfluxDB",
+        "The platform for time series data",
+        "InfluxDB is the most popular open-source time-series database. Built for "
+        "high-write-throughput metrics, IoT sensor data, and real-time analytics. "
+        "InfluxDB 3.0 (Apache Arrow + Flight SQL) is columnar and dramatically faster. "
+        "Used by Tesla, Cisco, and thousands of startups for observability pipelines.",
+        "database",
+        "influxdata/influxdb",
+        29000,
+        "https://influxdata.com",
+        "time-series,metrics,iot,observability,monitoring",
+        "docker run -p 8086:8086 influxdb:latest",
+        "code",
+    ),
+    (
+        "victoria-metrics",
+        "VictoriaMetrics",
+        "Fast, scalable and resource-efficient time series database",
+        "VictoriaMetrics is a fast, cost-effective monitoring solution and time-series "
+        "database. Drop-in Prometheus + Grafana replacement with 10× less RAM. "
+        "Handles millions of metrics per second, supports MetricsQL (Prometheus-compatible), "
+        "and offers single-node and cluster deployments for production observability.",
+        "monitoring-uptime",
+        "VictoriaMetrics/VictoriaMetrics",
+        13000,
+        "https://victoriametrics.com",
+        "time-series,metrics,prometheus,monitoring,observability",
+        "docker run -p 8428:8428 victoriametrics/victoria-metrics",
+        "code",
+    ),
+    # File management / object storage ---------------------------------------------
+    (
+        "minio",
+        "MinIO",
+        "High-performance S3-compatible object storage",
+        "MinIO is the world's most popular self-hosted object storage. S3-compatible API "
+        "means any AWS SDK works out of the box. Runs on Kubernetes or bare metal, handles "
+        "exabyte-scale deployments, and supports multi-site replication. Ideal for storing "
+        "files, backups, ML datasets, and media assets without cloud vendor lock-in.",
+        "file-management",
+        "minio/minio",
+        51000,
+        "https://min.io",
+        "s3,object-storage,self-hosted,kubernetes,file-storage",
+        "docker run -p 9000:9000 minio/minio server /data",
+        "code",
+    ),
+    # Developer Tools / web scraping -----------------------------------------------
+    (
+        "scrapy",
+        "Scrapy",
+        "A fast and powerful Python web scraping framework",
+        "Scrapy is the most popular Python web scraping and crawling framework. "
+        "Built-in request scheduling, middleware pipeline, item pipelines, and export "
+        "to JSON/CSV/XML. Handles JavaScript-heavy sites via Playwright integration "
+        "and scales to thousands of concurrent requests with Twisted async I/O.",
+        "developer-tools",
+        "scrapy/scrapy",
+        52000,
+        "https://scrapy.org",
+        "web-scraping,crawler,python,data-extraction,spider",
+        "pip install scrapy",
+        "code",
+    ),
+    # Database / BaaS ---------------------------------------------------------------
+    (
+        "appwrite",
+        "Appwrite",
+        "Your backend, minus the hassle",
+        "Appwrite is an open-source Firebase alternative providing auth, databases, "
+        "storage, functions, and realtime in a single self-hosted platform. "
+        "Supports 30+ login methods, multiple databases, file storage with image "
+        "transformations, and cloud functions in any language. Docker Compose setup.",
+        "database",
+        "appwrite/appwrite",
+        44000,
+        "https://appwrite.io",
+        "baas,firebase-alternative,auth,database,storage,self-hosted",
+        "docker run -it --rm appwrite/install",
+        "code",
+    ),
+    # AI / ML -----------------------------------------------------------------------
+    (
+        "haystack",
+        "Haystack",
+        "LLM orchestration framework for NLP and RAG pipelines",
+        "Haystack by deepset is a production-ready LLM orchestration framework for "
+        "building RAG, question-answering, and document search systems. Modular "
+        "pipeline architecture with 60+ integrations (OpenAI, Weaviate, Elasticsearch, "
+        "HuggingFace). Used by thousands of teams shipping NLP and LLM applications.",
+        "ai-automation",
+        "deepset-ai/haystack",
+        18000,
+        "https://haystack.deepset.ai",
+        "rag,llm,nlp,pipelines,question-answering,document-search",
+        "pip install haystack-ai",
+        "code",
+    ),
+    (
+        "mlflow",
+        "MLflow",
+        "Open source platform for the machine learning lifecycle",
+        "MLflow is the most widely adopted open-source ML lifecycle platform. "
+        "Experiment tracking, model registry, model serving, and project packaging "
+        "in one tool. Works with any ML framework (PyTorch, TensorFlow, scikit-learn, "
+        "XGBoost). Used by Databricks, Microsoft, and thousands of ML teams globally.",
+        "ai-automation",
+        "mlflow/mlflow",
+        18000,
+        "https://mlflow.org",
+        "mlops,experiment-tracking,model-registry,ml-lifecycle,python",
+        "pip install mlflow",
+        "code",
+    ),
 ]
 
 

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (forty-third pass)
+Last updated: 2026-04-12 (forty-fourth pass)
 
 ## Status: Active
 
@@ -10,12 +10,48 @@ Last updated: 2026-04-12 (forty-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~967 entries for search routing (added 6 in forty-third pass — ML/deep-learning routing fix)
-- **Catalog script**: `scripts/add_missing_tools.py` — 189 tools ready to insert (slug-safe)
-  - 5 tools added in forty-third pass (Redis, Prettier, ESLint, Valibot, SQLAlchemy); 1 duplicate removed
+- **_CAT_SYNONYMS**: ~978 entries for search routing (added 11 in forty-fourth pass — time-series, kv, biometric, minio, olap, nativescript, ratelimit)
+- **Catalog script**: `scripts/add_missing_tools.py` — 196 tools ready to insert (slug-safe)
+  - 7 tools added in forty-fourth pass (InfluxDB, VictoriaMetrics, MinIO, Scrapy, Appwrite, Haystack, MLflow)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, forty-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited _CAT_SYNONYMS — found 11 genuine gaps: time-series DBs, kv store shorthand, biometric auth, MinIO storage, OLAP analytics, NativeScript mobile, ratelimit compound
+- Added 11 new `_CAT_SYNONYMS` entries:
+  - **Database**: `timeseries`, `influxdb`, `questdb` → `"database"` (time-series DB queries)
+  - **Database — OLAP**: `olap` → `"database"` (ClickHouse, DuckDB analytical DB queries)
+  - **Monitoring**: `victoriametrics` → `"monitoring"` (fast metrics TSDB)
+  - **Caching**: `kv` → `"caching"` (shorthand — "kv store", "kv cache")
+  - **Authentication**: `passkeys`, `biometric` → `"authentication"` (plural passkey + biometric auth)
+  - **File management**: `minio` → `"file"` (S3-compatible self-hosted storage, 51k★)
+  - **Frontend**: `nativescript` → `"frontend"` (native mobile with Vue/Angular/Svelte)
+  - **API**: `ratelimit` → `"api"` (compound form without space, common in programmatic queries)
+- Running total: ~978 entries (967 + 11)
+
+### Catalog Script (Step 2)
+- Added 7 new tools to `scripts/add_missing_tools.py` (196 total):
+  - InfluxDB (database, 29k★) — most popular OSS time-series DB; pairs with "influxdb alternative" queries
+  - VictoriaMetrics (monitoring-uptime, 13k★) — Prometheus-compatible metrics TSDB, 10× less RAM
+  - MinIO (file-management, 51k★) — S3-compatible self-hosted object storage
+  - Scrapy (developer-tools, 52k★) — dominant Python web scraping framework
+  - Appwrite (database, 44k★) — open-source Firebase alternative BaaS
+  - Haystack (ai-automation, 18k★) — NLP + LLM pipeline framework for RAG systems
+  - MLflow (ai-automation, 18k★) — ML lifecycle management (experiments, model registry, serving)
+
+### Code Quality (Step 3)
+- Reviewed last 5 commits — only db.py (_CAT_SYNONYMS additions), sprint.md, and add_missing_tools.py changed
+- db.py additions: no HTML injection vectors (backend routing logic, not templates)
+- add_missing_tools.py: parameterized SQL only (`?` placeholders) — no injection risk
+- No issues found
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-fourth pass
+
+---
 
 ## Completed This Session (2026-04-12, forty-third pass — autonomous improvement cycle)
 

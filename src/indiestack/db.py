@@ -3607,6 +3607,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "lint-staged": "devops",        # lint-staged — run linters on staged git files
     "precommit": "devops",          # pre-commit — framework for managing pre-commit hooks
     "pre-commit": "devops",         # hyphenated form
+    # Time-series databases (InfluxDB, QuestDB, TimescaleDB, VictoriaMetrics)
+    "timeseries": "database",          # "time-series database", "timeseries store" → Database
+    "influxdb": "database",            # InfluxDB — most popular open-source time-series DB (29k★)
+    "questdb": "database",             # QuestDB — high-performance time-series SQL DB (14k★)
+    "victoriametrics": "monitoring",   # VictoriaMetrics — fast scalable metrics TSDB (13k★)
+    # Caching — key-value shorthand
+    "kv": "caching",                   # "kv store", "kv cache" shorthand → Caching
+    # Authentication — biometric + plural passkeys
+    "passkeys": "authentication",      # plural of passkey — "passkeys api", "passkeys support"
+    "biometric": "authentication",     # "biometric auth", "biometric login" → Authentication
+    # File/storage — self-hosted S3-compatible object storage
+    "minio": "file",                   # MinIO — S3-compatible self-hosted object storage (51k★)
+    # Database — analytical / OLAP
+    "olap": "database",                # "olap database", "analytical database" → Database (ClickHouse, DuckDB)
+    # Frontend — NativeScript cross-platform mobile framework
+    "nativescript": "frontend",        # NativeScript — native mobile apps with Vue/Angular/Svelte
+    # API — rate-limit compound without space (common in programmatic queries)
+    "ratelimit": "api",                # "ratelimit library", "ratelimit middleware" → API Tools
 }
 
 _FTS_STOP_WORDS = {
