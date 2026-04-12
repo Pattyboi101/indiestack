@@ -4145,6 +4145,101 @@ TOOLS = [
         "docker run -d --name tooljet -p 3000:3000 tooljet/tooljet:latest",
         "code",
     ),
+    # DevOps — Railway (PaaS deployment platform) ----------------------------------------
+    (
+        "railway",
+        "Railway",
+        "Instant deployments, zero config needed",
+        "Railway is a cloud deployment platform built for teams and indie developers. "
+        "Connect a GitHub repo and Railway auto-detects your language, builds with Nixpacks, "
+        "and deploys in seconds. Supports databases (Postgres, MySQL, Redis, MongoDB), "
+        "cron jobs, private networking, and multi-environment workflows. "
+        "Pay for what you use — no cold starts, 100GB egress free tier. "
+        "nixpacks (their OSS build system) has 7k+ GitHub stars.",
+        "devops-infrastructure",
+        "railwayapp/nixpacks",
+        7000,
+        "https://railway.app",
+        "hosting,deployment,paas,cloud,auto-deploy,nixpacks",
+        "npm install -g @railway/cli && railway login && railway up",
+        "saas",
+    ),
+    # Database — Neon (serverless Postgres) -----------------------------------------------
+    (
+        "neon",
+        "Neon",
+        "Serverless Postgres with branching",
+        "Neon is a serverless PostgreSQL platform that separates compute and storage, "
+        "enabling scale-to-zero and instant database branching. "
+        "Create a branch for every PR — each branch is a full database copy with "
+        "instant provisioning and no storage duplication. "
+        "Compatible with any Postgres driver or ORM (Prisma, Drizzle, Kysely). "
+        "Generous free tier: 0.5 GB storage, unlimited branches. "
+        "13k+ GitHub stars; Vercel's official Postgres partner.",
+        "database",
+        "neondatabase/neon",
+        13000,
+        "https://neon.tech",
+        "postgres,serverless,branching,scale-to-zero,cloud",
+        "npm install @neondatabase/serverless",
+        "saas",
+    ),
+    # Headless CMS — Directus (open-source data platform) --------------------------------
+    (
+        "directus",
+        "Directus",
+        "The open data platform for headless content management",
+        "Directus wraps any SQL database (Postgres, MySQL, SQLite, MS SQL) with a "
+        "real-time REST + GraphQL API, a no-code app, and a JavaScript SDK. "
+        "Works with your existing schema — no migrations required. "
+        "Role-based access control, file management, webhooks, extensions, "
+        "and a fully customisable admin UI. "
+        "Self-host with Docker or use Directus Cloud. 28k+ GitHub stars.",
+        "headless-cms",
+        "directus/directus",
+        28000,
+        "https://directus.io",
+        "cms,headless,rest,graphql,no-code,self-hosted,open-source",
+        "npx directus-template-cli@latest extract",
+        "code",
+    ),
+    # Frontend Frameworks — TanStack Table ------------------------------------------------
+    (
+        "tanstack-table",
+        "TanStack Table",
+        "Headless UI for building tables and datagrids",
+        "TanStack Table (formerly React Table) is a headless, framework-agnostic "
+        "table and datagrid library. Handles sorting, filtering, pagination, "
+        "row selection, column resizing, and virtualization — "
+        "you own the markup and styles. Supports React, Vue, Solid, Svelte, and vanilla JS. "
+        "The most-downloaded open-source table library in the JS ecosystem. 24k+ GitHub stars.",
+        "frontend-frameworks",
+        "tanstack/table",
+        24000,
+        "https://tanstack.com/table",
+        "table,datagrid,sorting,filtering,pagination,headless,react,vue",
+        "npm install @tanstack/react-table",
+        "code",
+    ),
+    # Frontend Frameworks — Fresh (Deno meta-framework) ------------------------------------
+    (
+        "fresh",
+        "Fresh",
+        "The next-gen web framework for Deno",
+        "Fresh is a full-stack web framework for Deno built on islands architecture. "
+        "Pages ship zero JavaScript by default — only interactive islands are hydrated. "
+        "No build step, instant deploys to Deno Deploy. "
+        "Uses Preact and JSX, supports TypeScript out of the box, "
+        "and has a Tailwind CSS plugin. "
+        "A strong alternative to Next.js for teams already using Deno. 12k+ GitHub stars.",
+        "frontend-frameworks",
+        "denoland/fresh",
+        12000,
+        "https://fresh.deno.dev",
+        "deno,ssr,islands,fullstack,zero-js,preact,typescript",
+        "deno run -A -r https://fresh.deno.dev my-project",
+        "code",
+    ),
 ]
 
 

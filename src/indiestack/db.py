@@ -3946,6 +3946,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "bull": "background",           # Bull — Redis-backed Node.js queue (classic; BullMQ successor)
     "agenda": "background",         # Agenda.js — MongoDB-backed job scheduler for Node.js (9k★)
     "bree": "background",           # Bree — worker thread-based JavaScript job scheduler (3k★)
+    # SEO — sitemap generators and Open Graph / meta tag tools
+    "sitemap": "seo",               # next-sitemap, @astrojs/sitemap, nuxt-simple-sitemap → SEO Tools
+    "opengraph": "seo",             # Open Graph meta tag tools, og-image generators → SEO Tools
+    "metatag": "seo",               # meta tag generators ("metatag alternative") → SEO Tools
+    # Testing — visual regression and load testing tools not yet mapped
+    "screenshot": "testing",        # visual regression: Percy, Chromatic, Playwright screenshots
+    "percy": "testing",             # BrowserStack Percy — automated visual regression testing
+    "gatling": "testing",           # Gatling — Scala/Java-based load + performance testing (10k★)
+    "lighthouse": "monitoring",     # Google Lighthouse — web performance audit (run as CLI/CI)
+    # GraphQL — client and server libraries
+    "apollo": "api",                # Apollo Client + Server — dominant GraphQL ecosystem (22k★)
+    "urql": "api",                  # urql — lightweight GraphQL client for React/Vue/Svelte (9k★)
+    # Date utilities — normalized slug form (complement to dayjs/moment/luxon)
+    "datefns": "frontend",          # "datefns alternative" query normalization → date-fns (34k★)
+    # Frontend frameworks — Deno Fresh meta-framework and cross-framework compilers
+    "fresh": "frontend",            # Deno Fresh — zero-JS-by-default island SSR meta-framework (12k★)
+    "mitosis": "frontend",          # Mitosis — write once, compile to React/Vue/Svelte/Angular
 }
 
 _FTS_STOP_WORDS = {

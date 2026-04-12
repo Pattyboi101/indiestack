@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (fifty-fifth pass)
+Last updated: 2026-04-12 (fifty-sixth pass)
 
 ## Status: Active
 
@@ -10,13 +10,40 @@ Last updated: 2026-04-12 (fifty-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1162 entries for search routing (added 36 in fifty-fifth pass — admin panels, Ory auth, static search, CSS-in-JS, Vercel AI SDK, OSS monitoring, DB migration tools, job schedulers)
-- **Catalog script**: `scripts/add_missing_tools.py` — 252 tools ready to insert (slug-safe)
-  - 5 tools added in fifty-fifth pass (Loops, Orama, SigNoz, Appsmith, ToolJet)
+- **_CAT_SYNONYMS**: 1151 entries for search routing (added 13 in fifty-sixth pass — SEO sitemaps/OG, testing visual regression, GraphQL clients, date-fns slug variant, Deno Fresh, Mitosis)
+- **Catalog script**: `scripts/add_missing_tools.py` — 257 tools ready to insert (slug-safe)
+  - 5 tools added in fifty-sixth pass (Railway, Neon, Directus, TanStack Table, Fresh)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, fifty-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for unmapped query terms after 55 prior passes
+- Added 13 new `_CAT_SYNONYMS` entries:
+  - **SEO**: `sitemap`, `opengraph`, `metatag` → `"seo"` (sitemap generators, OG image tools, meta tag generators)
+  - **Testing**: `screenshot`, `percy`, `gatling` → `"testing"` (visual regression, load testing)
+  - **Monitoring**: `lighthouse` → `"monitoring"` (Google Lighthouse web perf audit — run as CLI/CI)
+  - **GraphQL**: `apollo`, `urql` → `"api"` (Apollo Client/Server + urql — dominant GraphQL ecosystem)
+  - **Date utilities**: `datefns` → `"frontend"` (normalized slug variant for date-fns queries)
+  - **Frontend**: `fresh` → `"frontend"` (Deno Fresh zero-JS island SSR); `mitosis` → `"frontend"` (cross-framework compiler)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (257 total):
+  - Railway (devops-infrastructure, 7k★ nixpacks) — PaaS with Nixpacks auto-build; GitHub → deploy in seconds
+  - Neon (database, 13k★) — serverless Postgres with branching; Vercel's official Postgres partner
+  - Directus (headless-cms, 28k★) — wraps any SQL DB with REST+GraphQL API; no-migration self-hosted CMS
+  - TanStack Table (frontend-frameworks, 24k★) — headless table/datagrid for React/Vue/Solid/Svelte
+  - Fresh (frontend-frameworks, 12k★) — Deno's zero-JS-by-default island SSR meta-framework
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to fifty-sixth pass
 
 ## Completed This Session (2026-04-12, fifty-fifth pass — autonomous improvement cycle)
 
