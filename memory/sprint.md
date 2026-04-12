@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (forty-sixth pass)
+Last updated: 2026-04-12 (forty-seventh pass)
 
 ## Status: Active
 
@@ -8,14 +8,47 @@ Last updated: 2026-04-12 (forty-sixth pass)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
-- **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
+- **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~1048 entries for search routing (added 16 in forty-sixth pass — workflow automation + AI flow builders)
-- **Catalog script**: `scripts/add_missing_tools.py` — 207 tools ready to insert (slug-safe)
-  - 4 tools added in forty-sixth pass (Windmill, Activepieces, Flowise, LangFlow)
+- **_CAT_SYNONYMS**: ~1062 entries for search routing (added 14 in forty-seventh pass — boilerplate starters, frontend, DB, developer tools)
+- **Catalog script**: `scripts/add_missing_tools.py` — 213 tools ready to insert (slug-safe)
+  - 6 tools added in forty-seventh pass (Valkey, Memcached, KeyDB, T3 Stack, Next.js Boilerplate)
+- **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, forty-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for gaps in newer categories — found missing boilerplate, maps, and developer terms
+- Added 14 new `_CAT_SYNONYMS` entries:
+  - **Boilerplates**: `t3`, `shipfast`, `shipfa` → `"boilerplate"` (T3 Stack is one of the most searched starters)
+  - **Frontend**: `partytown` → `"frontend"` (web worker script isolation by BuilderIO)
+  - **Database**: `nile` → `"database"` (Nile DB — serverless multi-tenant Postgres)
+  - **Developer Tools**: `effect`, `effectts` → `"developer"` (Effect.ts — functional TypeScript library)
+- Running total: ~1062 entries (1048 + 14)
+
+### Infrastructure (init_db)
+- Added v3 category migration block to `init_db()` — ensures fresh deploys get all 5 new categories:
+  - frontend-frameworks, caching, mcp-servers, boilerplates, maps-location
+- Added `CATEGORY_TOKEN_COSTS` entries for all 5 new categories (needed by cost-estimation logic)
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (213 total):
+  - Valkey (caching, 18k★) — Linux Foundation Redis fork; 100% Redis-compatible
+  - Memcached (caching, 14k★) — classic distributed in-memory cache (20+ years in production)
+  - KeyDB (caching, 7k★) — multi-threaded Redis fork with 5× throughput
+  - T3 Stack (boilerplates, 25k★) — most popular Next.js + TypeScript starter (create-t3-app)
+  - Next.js Boilerplate (boilerplates, 12k★) — production-ready Next.js starter with Clerk + Stripe
+- **First tools added to boilerplates category** — previously the category had zero catalog entries
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (migration + synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-seventh pass
 
 ## Completed This Session (2026-04-12, forty-sixth pass — autonomous improvement cycle)
 

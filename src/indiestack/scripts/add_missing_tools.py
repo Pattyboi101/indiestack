@@ -3002,6 +3002,55 @@ TOOLS = [
         "brew install litestream",
         "code",
     ),
+    # Caching — Redis-compatible alternatives + classic --------------------------------
+    (
+        "valkey",
+        "Valkey",
+        "Open-source, Redis-compatible in-memory data store",
+        "Valkey is an open-source fork of Redis maintained by the Linux Foundation. "
+        "100% compatible with Redis 7.2 commands and clients, including Sentinel and Cluster "
+        "modes. Created in response to Redis Ltd's licence change; backed by AWS, Google, "
+        "Oracle, Ericsson, and the broader open-source community. Drop-in replacement.",
+        "caching",
+        "valkey-io/valkey",
+        18000,
+        "https://valkey.io",
+        "redis,cache,in-memory,open-source,linux-foundation,drop-in",
+        "docker run -d --name valkey -p 6379:6379 valkey/valkey",
+        "code",
+    ),
+    (
+        "memcached",
+        "Memcached",
+        "High-performance, distributed memory object caching system",
+        "Memcached is a battle-tested, high-performance, distributed in-memory caching system. "
+        "Simple key-value store focused purely on caching: no persistence, no pub/sub, no data "
+        "structures. Sub-millisecond latency at scale. Used by Wikipedia, YouTube, Facebook, "
+        "and thousands of production systems for over 20 years.",
+        "caching",
+        "memcached/memcached",
+        14000,
+        "https://memcached.org",
+        "cache,in-memory,distributed,key-value,classic",
+        "docker run -d --name memcached -p 11211:11211 memcached",
+        "code",
+    ),
+    (
+        "keydb",
+        "KeyDB",
+        "High-performance, multi-threaded Redis fork",
+        "KeyDB is a fully Redis-compatible, multi-threaded database. By using multiple threads, "
+        "KeyDB achieves 5× higher throughput than Redis on the same hardware. Supports all "
+        "Redis data types, commands, modules, and replication. Flash storage tier for "
+        "cost-effective large datasets. Open-source core; hosted on Snap.",
+        "caching",
+        "Snapchat/KeyDB",
+        7000,
+        "https://docs.keydb.dev",
+        "redis,cache,in-memory,multi-threaded,performance",
+        "docker run --name keydb -p 6379:6379 eqalpha/keydb",
+        "code",
+    ),
     # Caching — the canonical in-memory store --------------------------------------
     (
         "redis",
@@ -3324,6 +3373,38 @@ TOOLS = [
         "https://wandb.ai",
         "mlops,experiment-tracking,ml,pytorch,tensorflow,monitoring",
         "pip install wandb",
+        "code",
+    ),
+    # Boilerplates / Starter Kits -------------------------------------------------------
+    (
+        "t3-stack",
+        "T3 Stack",
+        "The best way to start a full-stack, typesafe Next.js app",
+        "The T3 Stack is an opinionated, full-stack, typesafe Next.js boilerplate created by Theo. "
+        "Ships with Next.js, TypeScript, Tailwind CSS, tRPC, Prisma, and NextAuth.js — "
+        "each component optional at setup. Created by `create-t3-app`, it's the most popular "
+        "opinionated Next.js starter with 25k+ GitHub stars and millions of weekly npm downloads.",
+        "boilerplates",
+        "t3-oss/create-t3-app",
+        25000,
+        "https://create.t3.gg",
+        "nextjs,typescript,trpc,tailwind,prisma,nextauth,fullstack,boilerplate",
+        "npm create t3-app@latest",
+        "code",
+    ),
+    (
+        "nextjs-boilerplate",
+        "Next.js Boilerplate",
+        "Production-ready Next.js starter with TypeScript, Tailwind, and Clerk",
+        "A production-ready, batteries-included Next.js boilerplate. Ships with TypeScript, "
+        "Tailwind CSS, ESLint, Prettier, Clerk auth, Sentry error monitoring, Stripe payments, "
+        "Drizzle ORM, and Playwright E2E tests. Opinionated and well-maintained with 12k+ stars.",
+        "boilerplates",
+        "ixartz/Next-js-Boilerplate",
+        12000,
+        "https://github.com/ixartz/Next-js-Boilerplate",
+        "nextjs,typescript,tailwind,clerk,stripe,drizzle,playwright,boilerplate",
+        "git clone https://github.com/ixartz/Next-js-Boilerplate.git",
         "code",
     ),
     # AI — visual flow builders (no-code/low-code LangChain environments) ---------------

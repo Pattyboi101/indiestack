@@ -715,6 +715,12 @@ CATEGORY_TOKEN_COSTS = {
     "notifications": 35_000,
     "background-jobs": 40_000,
     "localization": 30_000,
+    # v3 categories
+    "frontend-frameworks": 80_000,
+    "caching": 35_000,
+    "mcp-servers": 50_000,
+    "boilerplates": 30_000,
+    "maps-location": 25_000,
 }
 
 # Maps common need keywords to category slugs, search terms, and competitors.
@@ -1728,6 +1734,23 @@ async def init_db():
             ("Notifications", "notifications", "Push notifications, in-app messaging, and alerts", ""),
             ("Background Jobs", "background-jobs", "Task queues, cron jobs, and workflow orchestration", ""),
             ("Localization", "localization", "Translation, i18n, and multilingual content", ""),
+        ]:
+            try:
+                await db.execute(
+                    "INSERT INTO categories (name, slug, description, icon) VALUES (?, ?, ?, ?)",
+                    (_cat_name, _cat_slug, _cat_desc, _cat_icon),
+                )
+            except Exception:
+                pass  # already exists
+        await db.commit()
+
+        # Migration: add v3 categories (frontend-frameworks, caching, mcp-servers, boilerplates, maps-location)
+        for _cat_name, _cat_slug, _cat_desc, _cat_icon in [
+            ("Frontend Frameworks", "frontend-frameworks", "JavaScript frameworks, UI libraries, bundlers, and state management tools", "🖥️"),
+            ("Caching", "caching", "In-memory stores, caching layers, and key-value databases for high-performance apps", "⚡"),
+            ("MCP Servers", "mcp-servers", "MCP server implementations that give AI agents access to tools, data, and services", "🧩"),
+            ("Boilerplates", "boilerplates", "Starter kits, scaffold templates, and opinionated project starters to ship faster", "📦"),
+            ("Maps & Location", "maps-location", "Maps, geolocation, geocoding, and location-based APIs", "🗺️"),
         ]:
             try:
                 await db.execute(
@@ -3680,6 +3703,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "agno": "ai",                   # Agno (formerly Phidata) — multi-modal agent framework (4k★)
     "marvin": "ai",                 # Marvin — Prefect's Python AI toolkit for structured outputs
     "controlflow": "ai",            # ControlFlow — Python task orchestration for LLM workflows
+    # Boilerplates — T3 Stack is the dominant Next.js starter ("t3 stack", "t3 boilerplate" queries)
+    "t3": "boilerplate",            # T3 Stack — Next.js + TypeScript + tRPC + Tailwind + Prisma (25k★)
+    "shipfast": "boilerplate",      # ShipFast — Next.js SaaS boilerplate with Stripe + auth
+    "shipfa": "boilerplate",        # ShipFa.st — common shorthand used in queries
+    # Frontend — Partytown (web worker script isolation from BuilderIO)
+    "partytown": "frontend",        # Partytown — relocate 3rd-party scripts to web workers
+    # Database — Nile (serverless multi-tenant Postgres)
+    "nile": "database",             # Nile — serverless Postgres database built for multi-tenant SaaS
+    # Developer Tools — Effect.ts (functional programming library for TypeScript)
+    "effect": "developer",          # Effect.ts — functional programming library for complex TypeScript apps
+    "effectts": "developer",        # compound form — "effect ts alternative" queries
 }
 
 _FTS_STOP_WORDS = {
