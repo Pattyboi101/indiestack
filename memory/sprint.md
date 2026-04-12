@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (forty-ninth pass)
+Last updated: 2026-04-12 (fiftieth pass)
 
 ## Status: Active
 
@@ -10,13 +10,46 @@ Last updated: 2026-04-12 (forty-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1036 entries for search routing (added 32 in forty-ninth pass — speech/voice AI, stream processing, SCIM/LDAP auth, plugins, logging tools)
-- **Catalog script**: `scripts/add_missing_tools.py` — 222 tools ready to insert (slug-safe)
-  - 5 tools added in forty-ninth pass (Loguru, structlog, Redpanda, Deepgram, Whisper)
+- **_CAT_SYNONYMS**: 1053 entries for search routing (added 17 in fiftieth pass — date/time libs, UI components, 3D/dataviz, auth tokens, file ops)
+- **Catalog script**: `scripts/add_missing_tools.py` — 229 tools ready to insert (slug-safe)
+  - 8 tools added in fiftieth pass (Day.js, Three.js, D3.js, Chart.js, SWR, dnd-kit, Puppeteer, Celery)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, fiftieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for gaps in date/time queries, UI component terms, 3D/dataviz, and auth patterns
+- Added 17 new `_CAT_SYNONYMS` entries:
+  - **Date/time**: `date`, `dayjs`, `moment`, `momentjs`, `luxon` → `"frontend"` (date-fns/dayjs/Moment.js alternative queries)
+  - **UI components**: `editor`, `dialog`, `drawer`, `carousel`, `slider`, `accordion`, `tabs`, `color`, `font` → `"frontend"` (common component-level search terms)
+  - **3D/dataviz**: `three`, `threejs` → `"frontend"` (Three.js 3D library); `d3` → `"analytics"` (D3.js data viz)
+  - **Auth tokens**: `cookie`, `token`, `tokens` → `"authentication"` (session/JWT token queries)
+  - **Payments**: `currency` → `"payments"` (currency formatting/conversion)
+  - **File**: `sharp`, `resize` → `"file"` (image processing queries)
+  - **Developer**: `clipboard` → `"developer"` (copy-to-clipboard utilities)
+  - **Database**: `warehouse` → `"database"` (data warehouse / analytical DB queries)
+- Running total: 1053 entries (1036 + 17)
+
+### Catalog Script (Step 2)
+- Added 8 new tools to `scripts/add_missing_tools.py` (229 total):
+  - Day.js (frontend-frameworks, 47k★) — 2kB Moment.js alternative, most-searched date library
+  - Three.js (frontend-frameworks, 102k★) — JavaScript 3D/WebGL library, huge query volume
+  - D3.js (analytics-metrics, 108k★) — data-driven documents, foundational data viz library
+  - Chart.js (analytics-metrics, 65k★) — most popular simple charting library
+  - SWR (frontend-frameworks, 30k★) — Vercel stale-while-revalidate data fetching hook
+  - dnd-kit (frontend-frameworks, 12k★) — modern drag-and-drop toolkit for React
+  - Puppeteer (testing-tools, 88k★) — headless Chrome Node.js API (scraping + E2E)
+  - Celery (background-jobs, 24k★) — dominant Python distributed task queue
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to fiftieth pass
 
 ## Completed This Session (2026-04-12, forty-ninth pass — autonomous improvement cycle)
 

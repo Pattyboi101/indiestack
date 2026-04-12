@@ -3595,6 +3595,141 @@ TOOLS = [
         "pip install openai-whisper",
         "code",
     ),
+    # Date/time libraries --------------------------------------------------------
+    (
+        "dayjs",
+        "Day.js",
+        "2kB immutable date library alternative to Moment.js",
+        "Day.js is a minimalist JavaScript library for parsing, validating, manipulating, "
+        "and displaying dates and times. API-compatible with Moment.js but only 2kB. "
+        "Supports plugins for relative time, duration, UTC, and timezone handling. "
+        "The fastest-growing Moment.js alternative with 47k+ GitHub stars.",
+        "frontend-frameworks",
+        "iamkun/dayjs",
+        47000,
+        "https://day.js.org",
+        "date,time,javascript,moment-alternative,lightweight",
+        "npm install dayjs",
+        "code",
+    ),
+    # 3D / WebGL -----------------------------------------------------------------
+    (
+        "threejs",
+        "Three.js",
+        "JavaScript 3D library",
+        "Three.js is the most popular JavaScript 3D library, providing WebGL-based 3D "
+        "rendering for the web. Includes geometries, materials, lights, cameras, loaders, "
+        "and a rich ecosystem (React Three Fiber, Drei, etc.). Powers interactive 3D "
+        "experiences, data visualisations, and games in the browser. 102k+ GitHub stars.",
+        "frontend-frameworks",
+        "mrdoob/three.js",
+        102000,
+        "https://threejs.org",
+        "3d,webgl,graphics,canvas,animation,javascript",
+        "npm install three",
+        "code",
+    ),
+    # Data visualization ---------------------------------------------------------
+    (
+        "d3",
+        "D3.js",
+        "Data-Driven Documents — the JavaScript library for bespoke data visualization",
+        "D3.js binds data to the DOM and applies data-driven transformations to the document. "
+        "Build bar charts, line charts, scatter plots, maps, networks, and custom SVG "
+        "visualisations. Low-level but extremely powerful. Powers Observable, Vega, "
+        "and many charting libraries internally. 108k+ GitHub stars.",
+        "analytics-metrics",
+        "d3/d3",
+        108000,
+        "https://d3js.org",
+        "data-visualization,svg,charts,javascript,canvas",
+        "npm install d3",
+        "code",
+    ),
+    (
+        "chartjs",
+        "Chart.js",
+        "Simple yet flexible JavaScript charting for designers & developers",
+        "Chart.js is the most popular open-source charting library. Renders "
+        "8 chart types (bar, line, pie, doughnut, radar, scatter, bubble, polar area) "
+        "on HTML5 Canvas. Responsive by default, animated, and highly customisable via plugins. "
+        "65k+ GitHub stars; used in dashboards, analytics UIs, and reporting tools.",
+        "analytics-metrics",
+        "chartjs/Chart.js",
+        65000,
+        "https://www.chartjs.org",
+        "charts,canvas,javascript,visualization,responsive",
+        "npm install chart.js",
+        "code",
+    ),
+    # Data fetching --------------------------------------------------------------
+    (
+        "swr",
+        "SWR",
+        "React Hooks library for data fetching",
+        "SWR is a React hooks library for remote data fetching from Vercel. "
+        "Stale-while-revalidate strategy: returns cached data first (stale), then "
+        "re-fetches and updates (revalidate). Built-in caching, deduplication, "
+        "real-time updates, and TypeScript support. 30k+ GitHub stars.",
+        "frontend-frameworks",
+        "vercel/swr",
+        30000,
+        "https://swr.vercel.app",
+        "data-fetching,react,hooks,caching,state-management",
+        "npm install swr",
+        "code",
+    ),
+    # Drag and drop --------------------------------------------------------------
+    (
+        "dnd-kit",
+        "dnd kit",
+        "A lightweight, performant, accessible drag and drop toolkit for React",
+        "dnd kit is the modern drag-and-drop library for React. Supports sortable lists, "
+        "grids, kanban boards, and custom sensors (pointer, keyboard, touch). "
+        "Framework-agnostic core, collision detection algorithms, and full accessibility "
+        "support out of the box. The successor to react-beautiful-dnd. 12k+ GitHub stars.",
+        "frontend-frameworks",
+        "clauderic/dnd-kit",
+        12000,
+        "https://dndkit.com",
+        "drag-and-drop,react,sortable,accessibility,touch",
+        "npm install @dnd-kit/core @dnd-kit/sortable",
+        "code",
+    ),
+    # Headless browser -----------------------------------------------------------
+    (
+        "puppeteer",
+        "Puppeteer",
+        "Headless Chrome Node.js API",
+        "Puppeteer is Google's official Node.js library for controlling headless Chrome. "
+        "Automate form submission, UI testing, screenshot capture, PDF generation, "
+        "and web scraping. Supports both headless and headful Chrome/Chromium. "
+        "The foundation of many E2E testing and scraping tools. 88k+ GitHub stars.",
+        "testing-tools",
+        "puppeteer/puppeteer",
+        88000,
+        "https://pptr.dev",
+        "headless-browser,chrome,testing,scraping,automation,pdf",
+        "npm install puppeteer",
+        "code",
+    ),
+    # Python task queues ---------------------------------------------------------
+    (
+        "celery",
+        "Celery",
+        "Distributed task queue for Python",
+        "Celery is the most widely used Python distributed task queue. Execute tasks "
+        "asynchronously with Redis or RabbitMQ as the broker. Supports scheduling (beat), "
+        "retries, chaining, groups, and monitoring via Flower. Essential for Django and "
+        "FastAPI background jobs. 24k+ GitHub stars.",
+        "background-jobs",
+        "celery/celery",
+        24000,
+        "https://docs.celeryq.dev",
+        "python,task-queue,redis,rabbitmq,async,django,fastapi",
+        "pip install celery",
+        "code",
+    ),
 ]
 
 

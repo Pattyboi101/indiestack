@@ -3769,6 +3769,39 @@ _CAT_SYNONYMS: dict[str, str] = {
     "structlog": "logging",         # structlog — structured logging for Python (3k★)
     "fluentbit": "logging",         # Fluent Bit — lightweight log processor and forwarder (5k★)
     "fluent-bit": "logging",        # hyphenated form used in queries ("fluent-bit alternative")
+    # Date/time libraries — very common "alternative" query segment for date-fns, dayjs, Moment
+    "date": "frontend",             # "date picker", "date library", "date-fns alternative" → Frontend
+    "dayjs": "frontend",            # Day.js — lightweight 2kB Moment.js alternative (47k★)
+    "moment": "frontend",           # Moment.js — most-searched legacy date library (48k★)
+    "momentjs": "frontend",         # compound form — "momentjs alternative" queries
+    "luxon": "frontend",            # Luxon — modern DateTime library from Moment.js team
+    # UI component query terms — common frontend queries that don't match category name
+    "editor": "frontend",           # "text editor", "rich text editor", "code editor" → Frontend
+    "dialog": "frontend",           # "dialog component", "accessible dialog" → Frontend Frameworks
+    "drawer": "frontend",           # "drawer component", "side drawer", "bottom sheet" → Frontend
+    "carousel": "frontend",         # "image carousel", "carousel component" → Frontend Frameworks
+    "slider": "frontend",           # "range slider", "image slider" → Frontend Frameworks
+    "accordion": "frontend",        # "accordion component", "collapsible section" → Frontend
+    "tabs": "frontend",             # "tab component", "tabbed navigation" → Frontend Frameworks
+    "color": "frontend",            # "color picker", "color palette library" → Frontend Frameworks
+    "font": "frontend",             # "web font", "font loader", "font optimizer" → Frontend
+    # 3D / data visualization — Three.js and D3.js generate high query volume
+    "three": "frontend",            # Three.js — 3D JavaScript / WebGL library (102k★)
+    "threejs": "frontend",          # compound form — "threejs alternative", "three.js tutorial"
+    "d3": "analytics",              # D3.js — data-driven documents, data visualization (108k★)
+    # Auth patterns — cookie/token queries grow with SSR + edge-auth patterns
+    "cookie": "authentication",     # "cookie session", "cookie-based auth", "iron-session" → Auth
+    "token": "authentication",      # "jwt token", "access token", "token refresh" → Authentication
+    "tokens": "authentication",     # plural — "oauth tokens", "refresh tokens" → Authentication
+    # Payments — currency formatting/conversion queries
+    "currency": "payments",         # "currency formatter", "currency conversion API" → Payments
+    # File management — image processing beyond "upload" / "media"
+    "sharp": "file",                # Sharp — high-performance Node.js image processing (27k★)
+    "resize": "file",               # "image resize library", "image resizer" → File Management
+    # Developer Tools — clipboard utilities (very common utility query)
+    "clipboard": "developer",       # "clipboard API", "copy to clipboard" → Developer Tools
+    # Database — analytical / data warehouse queries
+    "warehouse": "database",        # "data warehouse", "analytical warehouse" → Database
 }
 
 _FTS_STOP_WORDS = {
