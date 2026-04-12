@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (fifty-seventh pass)
+Last updated: 2026-04-12 (fifty-eighth pass)
 
 ## Status: Active
 
@@ -10,13 +10,41 @@ Last updated: 2026-04-12 (fifty-seventh pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1165 entries for search routing (added 14 in fifty-seventh pass — code editors, terminals, git clients, AI code review, billing/metering tools)
-- **Catalog script**: `scripts/add_missing_tools.py` — 262 tools ready to insert (slug-safe)
-  - 5 tools added in fifty-seventh pass (Lago, Zed, Ghostty, GitButler, Neovim)
+- **_CAT_SYNONYMS**: 1188 entries for search routing (added 23 in fifty-eighth pass — AI coding assistants, cloud dev envs, JAMstack/static, auth tools, analytics, developer TUI tools)
+- **Catalog script**: `scripts/add_missing_tools.py` — 267 tools ready to insert (slug-safe)
+  - 5 tools added in fifty-eighth pass (Aider, Lazygit, Atuin, Gitpod, Dub)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, fifty-eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for unmapped query terms after 57 prior passes
+- Added 23 new `_CAT_SYNONYMS` entries:
+  - **AI coding assistants**: `aider`, `continue`, `codeium`, `tabnine`, `cody`, `supermaven`, `devin` → `"ai"` (all searched as "[tool] alternative" or "ai pair programmer")
+  - **Cloud dev environments**: `gitpod`, `devcontainer`, `codespace` → `"devops"` (cloud/containerised dev env queries)
+  - **JAMstack / static**: `jamstack` → `"frontend"`, `static` → `"frontend"` (static site generator queries)
+  - **Auth tools** (in DB, synonyms missing): `logto`, `hanko`, `stytch`, `propelauth` → `"authentication"`
+  - **API management**: `unkey` → `"api"` (Unkey — OSS API key management + rate limiting)
+  - **Analytics**: `umami` → `"analytics"` (Umami in DB; synonym was missing)
+  - **Developer TUI tools**: `lazygit`, `atuin`, `zellij` → `"developer"` (fast-growing CLI-native tooling segment)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (267 total):
+  - Aider (ai-dev-tools, 24k★) — terminal AI pair programmer; top SWE-bench performer
+  - Lazygit (developer-tools, 53k★) — keyboard-driven TUI git client written in Go
+  - Atuin (developer-tools, 22k★) — shell history replacement in Rust with encrypted sync
+  - Gitpod (devops-infrastructure, 13k★) — ephemeral cloud dev environments from any repo
+  - Dub (developer-tools, 18k★) — open-source Bitly alternative with analytics SDK
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to fifty-eighth pass
 
 ## Completed This Session (2026-04-12, fifty-seventh pass — autonomous improvement cycle)
 

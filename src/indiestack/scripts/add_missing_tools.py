@@ -4333,6 +4333,96 @@ TOOLS = [
         "brew install neovim",
         "code",
     ),
+    # AI Dev Tools — Aider (terminal AI pair programmer) ----------------------------------
+    (
+        "aider",
+        "Aider",
+        "AI pair programming in your terminal",
+        "Aider lets you pair program with LLMs directly in your terminal. "
+        "Works with Claude, GPT-4, and local models. Edits multiple files simultaneously, "
+        "auto-commits changes with sensible messages, and handles large codebases via "
+        "repo-map context. Supports voice coding, image input, and all major languages. "
+        "Consistently top-ranked in SWE-bench coding benchmarks. 24k+ GitHub stars.",
+        "ai-dev-tools",
+        "Aider-AI/aider",
+        24000,
+        "https://aider.chat",
+        "ai,coding,llm,terminal,pair-programming,claude,gpt,open-source",
+        "pip install aider-chat",
+        "code",
+    ),
+    # Developer Tools — Lazygit (TUI git client) ------------------------------------------
+    (
+        "lazygit",
+        "Lazygit",
+        "Simple terminal UI for git commands",
+        "Lazygit is a fast, keyboard-driven terminal UI for git. "
+        "Stage individual lines, manage branches, interactive rebase, "
+        "stash management, and custom commands — all without leaving the terminal. "
+        "Written in Go, works everywhere git does. "
+        "53k+ GitHub stars; one of the most-starred developer tools on GitHub.",
+        "developer-tools",
+        "jesseduffield/lazygit",
+        53000,
+        "https://github.com/jesseduffield/lazygit",
+        "git,tui,terminal,cli,developer,open-source",
+        "brew install lazygit",
+        "code",
+    ),
+    # Developer Tools — Atuin (shell history manager) -------------------------------------
+    (
+        "atuin",
+        "Atuin",
+        "Magical shell history",
+        "Atuin replaces your shell history with a SQLite database, giving you "
+        "fuzzy search, context-aware filtering, and optional encrypted sync across machines. "
+        "Supports Bash, Zsh, Fish, and Nushell. "
+        "Written in Rust for maximum speed — history search returns in milliseconds. "
+        "22k+ GitHub stars.",
+        "developer-tools",
+        "atuinsh/atuin",
+        22000,
+        "https://atuin.sh",
+        "shell,history,cli,terminal,rust,sync,developer,open-source",
+        "bash <(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)",
+        "code",
+    ),
+    # DevOps — Gitpod (cloud dev environments) -------------------------------------------
+    (
+        "gitpod",
+        "Gitpod",
+        "Always-ready, cloud-based dev environments",
+        "Gitpod spins up fully configured, ephemeral dev environments in the cloud "
+        "in seconds — directly from any GitHub, GitLab, or Bitbucket repo. "
+        "Environments are defined as code (`.gitpod.yml`) and run in Docker containers. "
+        "Supports VS Code in browser or desktop, JetBrains, Neovim, and custom IDEs. "
+        "13k+ GitHub stars. Self-hostable with Gitpod Community edition.",
+        "devops-infrastructure",
+        "gitpod-io/gitpod",
+        13000,
+        "https://gitpod.io",
+        "devops,cloud,dev-environment,docker,remote,ephemeral,open-source",
+        "# Open any repo: gitpod.io/#https://github.com/your/repo",
+        "saas",
+    ),
+    # Developer Tools — Dub (open-source link management) --------------------------------
+    (
+        "dub",
+        "Dub",
+        "Open-source link management for modern marketing teams",
+        "Dub is an open-source Bitly alternative built for developers. "
+        "Short links with analytics (clicks, referrers, geo, device), "
+        "custom domains, QR codes, link expiration, and a TypeScript SDK. "
+        "Self-hostable on Vercel + Upstash + Tinybird, or use Dub.co hosted. "
+        "18k+ GitHub stars; widely used in SaaS boilerplates.",
+        "developer-tools",
+        "dubinc/dub",
+        18000,
+        "https://dub.co",
+        "links,analytics,shortener,developer,saas,open-source,typescript",
+        "npm install dub",
+        "code",
+    ),
 ]
 
 

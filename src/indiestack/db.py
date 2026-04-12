@@ -3981,6 +3981,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     "orb": "invoicing",             # Orb — usage-based billing platform (metered pricing SaaS)
     # Product-led pricing / feature access management
     "stigg": "payments",            # Stigg — pricing & entitlements infrastructure for SaaS
+    # AI coding assistants — "aider alternative", "codeium vs copilot", "ai pair programmer"
+    "aider": "ai",              # Aider — terminal AI pair programmer (Aider-AI/aider, 24k★)
+    "continue": "ai",           # Continue.dev — open-source AI coding assistant (VS Code/JetBrains)
+    "codeium": "ai",            # Codeium — AI code completion (now "Windsurf" brand, still widely searched)
+    "tabnine": "ai",            # Tabnine — AI code completion with local model option (17k★)
+    "cody": "ai",               # Sourcegraph Cody — AI coding assistant with codebase context
+    "supermaven": "ai",         # Supermaven — ultrafast AI code completion (by Tabnine co-founder)
+    "devin": "ai",              # Devin (Cognition) — AI software engineer for fully autonomous tasks
+    # Cloud dev environments — "gitpod alternative", "dev container setup" → DevOps & Infrastructure
+    "gitpod": "devops",         # Gitpod — cloud-based dev environments (instant workspace spin-up, 13k★)
+    "devcontainer": "devops",   # Dev Containers (VS Code spec) — containerised reproducible dev envs
+    "codespace": "devops",      # GitHub Codespaces — browser-based VS Code dev environments
+    # JAMstack / static site architecture terms (complement to "ssg", "ssr", "pwa")
+    "jamstack": "frontend",     # JAMstack — JavaScript + APIs + Markup architecture (Netlify coined)
+    "static": "frontend",       # "static site generator", "static site framework" → Frontend Frameworks
+    # Auth tools in DB but synonyms were missing
+    "logto": "authentication",  # Logto — open-source CIAM and auth infrastructure (9k★)
+    "hanko": "authentication",  # Hanko — passkey-first authentication SDK (7k★)
+    "stytch": "authentication", # Stytch — auth API with passkeys, magic links, SSO (B2C-focused)
+    "propelauth": "authentication",  # PropelAuth — hosted auth for B2B SaaS (RBAC, org management)
+    # API key management — Unkey is the dominant OSS tool in this space
+    "unkey": "api",             # Unkey — open-source API key management and rate limiting (5k★)
+    # Analytics — Umami is in DB but was missing from synonyms
+    "umami": "analytics",       # Umami — self-hosted privacy-friendly Google Analytics alternative (23k★)
+    # Developer TUI tools — fast-growing category of CLI-native developer tooling
+    "lazygit": "developer",     # Lazygit — simple terminal UI for Git commands (Golang, 53k★)
+    "atuin": "developer",       # Atuin — magical shell history replacement in Rust (22k★)
+    "zellij": "developer",      # Zellij — feature-rich terminal workspace / multiplexer (Rust, 23k★)
 }
 
 _FTS_STOP_WORDS = {
