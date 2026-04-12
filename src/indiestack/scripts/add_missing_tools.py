@@ -1116,22 +1116,6 @@ TOOLS = [
         "npm install react-email",
         "code",
     ),
-    # Background jobs — durable execution ----------------------------------------
-    (
-        "temporal",
-        "Temporal",
-        "Open source durable execution system",
-        "Temporal is a durable execution platform for running reliable long-running "
-        "workflows as code. Automatically handles retries, timeouts, and state persistence. "
-        "SDKs for Go, Java, TypeScript, Python, and .NET.",
-        "background-jobs",
-        "temporalio/temporal",
-        12000,
-        "https://temporal.io",
-        "workflow,durable-execution,distributed,reliability",
-        "brew install temporal",
-        "code",
-    ),
     # JS Runtimes — Deno -------------------------------------------------------
     (
         "deno",
@@ -2982,6 +2966,90 @@ TOOLS = [
         "https://litestream.io",
         "sqlite,replication,backup,disaster-recovery,s3,gcs,azure",
         "brew install litestream",
+        "code",
+    ),
+    # Caching — the canonical in-memory store --------------------------------------
+    (
+        "redis",
+        "Redis",
+        "The open source, in-memory data structure store",
+        "Redis is the world's most popular in-memory key-value store. Used for "
+        "caching, session management, pub/sub messaging, leaderboards, and queues. "
+        "Supports strings, hashes, lists, sets, sorted sets, streams, and more. "
+        "Foundation for Upstash, Dragonfly, Valkey, and dozens of Redis-compatible tools.",
+        "caching",
+        "redis/redis",
+        65000,
+        "https://redis.io",
+        "cache,key-value,in-memory,pub-sub,sessions",
+        "docker run -d -p 6379:6379 redis",
+        "code",
+    ),
+    # Testing / Code Quality — formatters and linters ------------------------------
+    (
+        "prettier",
+        "Prettier",
+        "An opinionated code formatter",
+        "Prettier is the most widely used JavaScript/TypeScript code formatter. "
+        "Supports JS, TS, CSS, HTML, JSON, Markdown, GraphQL, and more. "
+        "Zero config to get started; eliminates style debates in PRs. "
+        "Integrates with ESLint, editors, and CI pipelines. 48k+ GitHub stars.",
+        "testing-tools",
+        "prettier/prettier",
+        48000,
+        "https://prettier.io",
+        "formatter,javascript,typescript,css,code-quality",
+        "npm install --save-dev prettier",
+        "code",
+    ),
+    (
+        "eslint",
+        "ESLint",
+        "Find and fix problems in your JavaScript code",
+        "ESLint is the dominant JavaScript and TypeScript linting tool. Statically "
+        "analyses code to find problems: bugs, anti-patterns, and style violations. "
+        "Highly configurable via plugins (eslint-config-airbnb, typescript-eslint, "
+        "eslint-plugin-react). Used in virtually every serious JS/TS project. 24k+ stars.",
+        "testing-tools",
+        "eslint/eslint",
+        24000,
+        "https://eslint.org",
+        "linting,javascript,typescript,code-quality,static-analysis",
+        "npm install eslint --save-dev",
+        "code",
+    ),
+    # Developer Tools — schema validation ------------------------------------------
+    (
+        "valibot",
+        "Valibot",
+        "The modular and type-safe schema library for validating structural data",
+        "Valibot is a modular schema validation library for TypeScript — a lightweight "
+        "alternative to Zod. Tree-shakeable bundle under 1KB for most schemas. "
+        "Same API shape as Zod with a cleaner functional architecture. "
+        "Ideal for edge functions, Cloudflare Workers, and bundle-size-sensitive apps.",
+        "developer-tools",
+        "fabian-hiller/valibot",
+        7000,
+        "https://valibot.dev",
+        "validation,typescript,schema,zod-alternative,modular",
+        "npm install valibot",
+        "code",
+    ),
+    # Database — Python ORM / SQL toolkit -------------------------------------------
+    (
+        "sqlalchemy",
+        "SQLAlchemy",
+        "The Python SQL Toolkit and Object Relational Mapper",
+        "SQLAlchemy is the most widely used Python SQL toolkit and ORM. Provides "
+        "a full-featured ORM with unit-of-work pattern, an expressive Core SQL "
+        "expression language, and dialect support for PostgreSQL, MySQL, SQLite, "
+        "Oracle, and MS SQL. Foundation for FastAPI + Alembic + many Python web apps.",
+        "database",
+        "sqlalchemy/sqlalchemy",
+        9000,
+        "https://sqlalchemy.org",
+        "orm,python,sql,postgresql,mysql,sqlite,alembic",
+        "pip install sqlalchemy",
         "code",
     ),
 ]

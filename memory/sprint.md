@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (forty-second pass)
+Last updated: 2026-04-12 (forty-third pass)
 
 ## Status: Active
 
@@ -10,12 +10,41 @@ Last updated: 2026-04-12 (forty-second pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~961 entries for search routing (added 6 in forty-second pass — auth libs, DB tools)
-- **Catalog script**: `scripts/add_missing_tools.py` — 185 tools ready to insert (slug-safe)
-  - 4 tools added in forty-second pass (NextAuth.js, Passport.js, SurrealDB, libSQL)
+- **_CAT_SYNONYMS**: ~967 entries for search routing (added 6 in forty-third pass — ML/deep-learning routing fix)
+- **Catalog script**: `scripts/add_missing_tools.py` — 189 tools ready to insert (slug-safe)
+  - 5 tools added in forty-third pass (Redis, Prettier, ESLint, Valibot, SQLAlchemy); 1 duplicate removed
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, forty-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Found routing BUG: "machine learning" and "deep learning" mapped to **Learning & Education** (via `"learning"` synonym) instead of AI & Automation
+- Fixed by adding 6 new `_CAT_SYNONYMS` entries that fire before the "learning"→education mapping:
+  - `ml` → `"ai"` — "ml framework", "ml model", "ml pipeline"
+  - `machine` → `"ai"` — "machine learning" short-circuits before "learning"→education fires
+  - `neural` → `"ai"` — "neural network", "neural architecture"
+  - `deep` → `"ai"` — "deep learning" short-circuits before "learning"→education fires
+  - `inference` → `"ai"` — "llm inference", "model inference", "inference api"
+  - `chatgpt` → `"ai"` — ChatGPT alternative queries
+- Running total: ~967 entries (961 + 6)
+
+### Catalog Script (Step 2)
+- Fixed duplicate `temporal` slug (two entries for same tool — second had better tags; removed first)
+- Added 5 new tools to `scripts/add_missing_tools.py` (189 total):
+  - Redis (caching, 65k★) — canonical in-memory store; reference for "redis alternative" queries
+  - Prettier (testing-tools, 48k★) — most popular JS/TS code formatter
+  - ESLint (testing-tools, 24k★) — dominant JS/TS linter
+  - Valibot (developer-tools, 7k★) — modular Zod alternative, < 1KB tree-shakeable
+  - SQLAlchemy (database, 9k★) — dominant Python ORM/SQL toolkit (FastAPI + Alembic ecosystem)
+
+### Code Quality (Step 3)
+- Found and removed duplicate `temporal` slug in `add_missing_tools.py` (slug check prevents DB duplication but dead code is confusing)
+- db.py _CAT_SYNONYMS additions reviewed — no HTML templating, no hardcoded stats/colors
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-third pass
 
 ## Completed This Session (2026-04-12, forty-second pass — autonomous improvement cycle)
 

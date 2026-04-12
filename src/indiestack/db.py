@@ -3396,6 +3396,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "finetune": "ai",               # "finetune llm", "finetune model" → AI & Automation
     "generative": "ai",             # "generative AI", "generative model" → AI & Automation
     "genai": "ai",                  # abbreviation for "generative AI" — growing query term
+    # ML / deep learning — fix routing: "machine learning" and "deep learning" must NOT map to
+    # Learning & Education (via "learning" synonym). Add explicit "machine"/"deep" → "ai" so the
+    # synonym scanner picks up the first term and short-circuits before hitting "learning".
+    "ml": "ai",                    # "ml framework", "ml model", "ml pipeline" → AI & Automation
+    "machine": "ai",               # "machine learning" — "machine" fires before "learning"→education
+    "neural": "ai",                # "neural network", "neural architecture" → AI & Automation
+    "deep": "ai",                  # "deep learning" — "deep" fires before "learning"→education
+    "inference": "ai",             # "llm inference", "model inference", "inference api" → AI & Automation
+    "chatgpt": "ai",               # ChatGPT alternative queries → AI & Automation
     # AI observability — LLM tracing, evaluation, and proxy tools
     "langfuse": "ai",               # Langfuse — open-source LLM observability and evaluation
     "helicone": "ai",               # Helicone — LLM observability and proxy platform
