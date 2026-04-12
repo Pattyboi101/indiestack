@@ -3832,6 +3832,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Debounce / rate-control hooks (use-debounce, xhook, lodash.debounce)
     "debounce": "frontend",         # "debounce library", "useDebounce hook" → Frontend Frameworks
     "usedebounce": "frontend",      # "useDebounce React hook" — explicit hook form
+    # Syntax highlighting (used in documentation sites and markdown renderers)
+    "shiki": "documentation",       # Shiki — TextMate-grammar syntax highlighter (Vite/Astro docs)
+    "prismjs": "documentation",     # Prism.js — lightweight extensible syntax highlighter
+    # Note: "highlight" → monitoring (Highlight.io); use "prismjs" not "prism" to avoid conflict
+    # i18n / localization libraries (specific named tools)
+    "lingui": "localization",       # Lingui — JS/React i18n with compile-time message extraction
+    "paraglide": "localization",    # Paraglide.js — tree-shakeable i18n for SvelteKit/Astro/Next.js
+    "react-intl": "localization",   # React-Intl (FormatJS) — React component i18n
+    "formatjs": "localization",     # FormatJS ecosystem — react-intl, intl-messageformat, etc.
+    # State management — proxy-based and reactive (not yet covered)
+    "valtio": "frontend",           # Valtio — proxy-based mutable state for React (9k★)
+    "effector": "frontend",         # Effector — reactive state management, framework-agnostic (4k★)
+    "legendstate": "frontend",      # Legend State — high-performance proxy observables (4k★)
+    "legend-state": "frontend",     # hyphenated form — "legend-state alternative", "legend-state react"
+    # Environment variable validation / type-safe env (developer tooling)
+    "t3-env": "developer",          # T3 Env — type-safe env vars with Zod (3.5k★, T3 stack)
+    "t3env": "developer",           # compound form — "t3env nextjs", "t3env validation"
+    "envalid": "developer",         # envalid — Node.js env variable validation (clean, typed)
 }
 
 _FTS_STOP_WORDS = {

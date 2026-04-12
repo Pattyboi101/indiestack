@@ -3816,6 +3816,78 @@ TOOLS = [
         "npm install mitt",
         "code",
     ),
+    # Documentation — Shiki (syntax highlighting) ---------------------------------------
+    (
+        "shiki",
+        "Shiki",
+        "Beautiful syntax highlighting powered by TextMate grammars",
+        "Shiki is a syntax highlighter that uses TextMate grammars and VS Code themes for "
+        "accurate, beautiful code highlighting. Outputs static HTML — no client-side JS needed. "
+        "Used by VitePress, Astro docs, Nuxt docs, and thousands of documentation sites. "
+        "Supports 200+ languages and all VS Code themes. The standard for modern doc sites. "
+        "10k+ GitHub stars; successor to highlight.js in SSG-based documentation stacks.",
+        "documentation",
+        "shikijs/shiki",
+        10000,
+        "https://shiki.style",
+        "syntax-highlighting,documentation,markdown,vitepress,astro,typescript",
+        "npm install shiki",
+        "code",
+    ),
+    # Localization — Lingui (JS/React i18n) --------------------------------------------
+    (
+        "lingui",
+        "Lingui",
+        "Powerful i18n library with compile-time message extraction",
+        "Lingui is a JavaScript/React internationalization library that extracts messages "
+        "at compile time — no runtime overhead. Supports ICU MessageFormat syntax, "
+        "React, Vue, Angular, and vanilla JS. CLI for message extraction and compilation. "
+        "Works with any translation management system via catalog formats (PO, JSON, CSV). "
+        "4.5k+ stars; production-proven at scale with type-safe message IDs.",
+        "localization",
+        "lingui/js-lingui",
+        4500,
+        "https://lingui.dev",
+        "i18n,react,typescript,icu,localization,translation",
+        "npm install @lingui/core @lingui/react",
+        "code",
+    ),
+    # Frontend Frameworks — Valtio (proxy state) ----------------------------------------
+    (
+        "valtio",
+        "Valtio",
+        "Proxy-based mutable state management for React",
+        "Valtio makes JavaScript objects act like reactive state. Wrap any object with "
+        "`proxy()` and it auto-notifies subscribed components on mutation — no reducers, "
+        "no actions, no boilerplate. Works with React via `useSnapshot()`. "
+        "From the Poimandres collective (also builds Zustand, Jotai). "
+        "9k+ GitHub stars; ideal for shared mutable state that doesn't need Redux patterns.",
+        "frontend-frameworks",
+        "pmndrs/valtio",
+        9000,
+        "https://valtio.dev",
+        "state-management,react,proxy,typescript,javascript",
+        "npm install valtio",
+        "code",
+    ),
+    # Frontend Frameworks — Effector (reactive state) -----------------------------------
+    (
+        "effector",
+        "Effector",
+        "Framework-agnostic reactive state manager with powerful typing",
+        "Effector is a business logic-first reactive state manager for JavaScript. "
+        "Uses algebraic data types: stores (state), events (triggers), and effects (side effects). "
+        "Works with React, Vue, Svelte, Angular, and vanilla JS via official bindings. "
+        "No context providers needed — stores are global by default. "
+        "4k+ GitHub stars; popular for complex domain logic where Zustand/Jotai feel too simple.",
+        "frontend-frameworks",
+        "effector/effector",
+        4000,
+        "https://effector.dev",
+        "state-management,reactive,typescript,react,vue,svelte",
+        "npm install effector",
+        "code",
+    ),
 ]
 
 
