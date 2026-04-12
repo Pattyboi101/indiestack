@@ -168,6 +168,19 @@ async def agents_browse(request: Request):
                     gap:20px;">
             {cards}
         </div>
+
+        <div style="margin-top:40px;padding:24px;background:var(--cream-dark);border-radius:var(--radius);
+                    text-align:center;border:1px solid var(--border);">
+            <p style="color:var(--ink);font-size:15px;margin-bottom:8px;">
+                Not sure what to build?
+            </p>
+            <p style="color:var(--ink-muted);font-size:13px;margin-bottom:16px;">
+                See what AI agents are searching for but can&rsquo;t find.
+            </p>
+            <a href="/gaps" style="color:var(--accent);font-weight:600;font-size:14px;text-decoration:none;">
+                View Market Gaps &rarr;
+            </a>
+        </div>
     </div>
     """
 

@@ -142,9 +142,18 @@ async def gaps_page(request: Request):
     # Get a few recent pulse events for the activity preview
     pulse_events = await get_pulse_feed(db, limit=3)
 
-    # Build gap cards — NO exact counts, just tier badges
+    # Check if user is Pro
+    is_pro = False
+    if user:
+        from indiestack.db import check_pro
+        is_pro = await check_pro(db, user['id'])
+
+    # Build gap cards — free users see top 5, Pro sees all
+    free_limit = 5
     gap_cards = ''
-    for gap in gaps:
+    for i, gap in enumerate(gaps):
+        if not is_pro and i >= free_limit:
+            break
         query = escape(gap['query'])
         count = gap['count']
         last = gap.get('last_searched', '')
@@ -252,16 +261,39 @@ async def gaps_page(request: Request):
                 </div>
             </div>'''
 
+    # Pro upsell card (shown after free limit when more gaps exist)
+    remaining = len(gaps) - free_limit
+    pro_upsell = ''
+    if not is_pro and remaining > 0:
+        pro_upsell = f'''
+        <div style="background:linear-gradient(135deg,rgba(0,212,245,0.06),rgba(0,212,245,0.02));
+                    border:1px solid rgba(0,212,245,0.2);border-radius:12px;padding:32px;
+                    text-align:center;margin-top:16px;">
+            <p style="font-family:var(--heading-font, var(--font-display));font-size:20px;color:var(--ink);margin-bottom:8px;">
+                +{remaining} more demand signals
+            </p>
+            <p style="color:var(--ink-muted);font-size:14px;margin-bottom:20px;max-width:400px;margin-left:auto;margin-right:auto;">
+                See all {total_gap_count} gaps with trend sparklines, opportunity scores, and competition maps. Know exactly what to build.
+            </p>
+            <a href="/pricing" style="display:inline-block;padding:12px 28px;background:var(--accent);color:white;
+                   border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
+                Unlock with Maker Pro &rarr;
+            </a>
+        </div>'''
+
+    showing_label = f'Showing top {min(len(gaps), free_limit)}' if not is_pro else f'Showing all {len(gaps)}'
+
     gap_list = f'''
     <section style="padding:0 24px 48px;">
         <div class="container" style="max-width:740px;">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
                 <h2 style="font-family:var(--heading-font, var(--font-display));font-size:22px;color:var(--ink);">Top Bounties</h2>
-                <span style="font-size:13px;color:var(--ink-muted);">Showing top 5</span>
+                <span style="font-size:13px;color:var(--ink-muted);">{showing_label}</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;">
                 {gap_cards if gap_cards else '<p style="color:var(--ink-muted);text-align:center;padding:40px;">No gaps detected yet. As more AI agents use the MCP server, bounties will appear here.</p>'}
             </div>
+            {pro_upsell}
             {upgrade_note}
         </div>
     </section>
@@ -339,9 +371,15 @@ async def gaps_page(request: Request):
                 Submit your tool and it&rsquo;ll start showing up in AI recommendations immediately.
                 You&rsquo;ll get a live badge showing how many times agents recommend it.
             </p>
-            <a href="/submit" class="btn btn-primary" style="padding:14px 32px;font-size:15px;">
-                Submit Your Tool &rarr;
-            </a>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+                <a href="/submit" class="btn btn-primary" style="padding:14px 32px;font-size:15px;">
+                    Submit a Tool &rarr;
+                </a>
+                <a href="/agents/submit" class="btn" style="padding:14px 32px;font-size:15px;
+                       background:var(--card-bg);color:var(--ink);border:1px solid var(--border);">
+                    List an Agent Service &rarr;
+                </a>
+            </div>
         </div>
     </section>
     '''
@@ -546,7 +584,11 @@ async def demand_pro(request: Request):
     user = request.state.user
     db = request.state.db
 
-    if False:  # Pro gate removed — all data is free now
+    is_demand_pro = False
+    if user:
+        from indiestack.db import check_pro
+        is_demand_pro = await check_pro(db, user['id'])
+    if not is_demand_pro:  # Pro gate — full demand dashboard requires Maker Pro
         # Show upgrade CTA page
         cta_page = '''
     <section style="padding:80px 24px 48px;text-align:center;">

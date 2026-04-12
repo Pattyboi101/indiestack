@@ -766,11 +766,12 @@ def footer_html() -> str:
           <div>
             <div class="footer-heading">Product</div>
             <a href="/explore" class="footer-link">Explore</a>
-            <a href="/explore?sort=newest" class="footer-link">New Arrivals</a>
+            <a href="/agents" class="footer-link">Agent Services</a>
+            <a href="/gaps" class="footer-link">Market Gaps</a>
+            <a href="/calculator" class="footer-link">Cost Calculator</a>
             <a href="/migrations" class="footer-link">Migrations</a>
             <a href="/analyze" class="footer-link">Stack Health</a>
-            <a href="/stacks" class="footer-link">Stacks</a>
-            <a href="/data" class="footer-link">API Data</a>
+            <a href="/embed" class="footer-link">Embed Widget</a>
           </div>
           <!-- Company -->
           <div>
