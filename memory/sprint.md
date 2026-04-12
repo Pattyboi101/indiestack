@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (forty-fourth pass)
+Last updated: 2026-04-12 (forty-fifth pass)
 
 ## Status: Active
 
@@ -10,12 +10,43 @@ Last updated: 2026-04-12 (forty-fourth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~1007 entries for search routing (added 40 in forty-fourth pass — protocols, authz, jupyter, BDD, devops infra)
-- **Catalog script**: `scripts/add_missing_tools.py` — 196 tools ready to insert (slug-safe)
-  - 7 tools added in forty-fourth pass (Prometheus, Grafana, MinIO, Caddy, Nginx, OpenFGA, Casbin)
+- **_CAT_SYNONYMS**: ~1032 entries for search routing (added 25 in forty-fifth pass — AI/ML inference, RAG, payments)
+- **Catalog script**: `scripts/add_missing_tools.py` — 203 tools ready to insert (slug-safe)
+  - 7 tools added in forty-fifth pass (Chroma, Qdrant, Weaviate, Milvus, pgvector, vLLM, llama.cpp, wandb)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, forty-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — found genuine gaps in AI/ML inference and RAG terminology
+- Added 25 new `_CAT_SYNONYMS` entries covering:
+  - **LLM inference**: `vllm`, `llamacpp`, `llamafile` → `"ai"` (vLLM 20k★, llama.cpp 70k★)
+  - **ML frameworks**: `pytorch`, `tensorflow`, `torch`, `keras` → `"ai"` (for "pytorch alternative" queries)
+  - **ML experiment tracking**: `wandb`, `weights`, `biases` → `"ai"` (W&B queries)
+  - **RAG terminology**: `retrieval`, `chunking`, `rerank`, `reranking`, `embedder` → `"ai"` (common RAG pipeline terms)
+  - **Payments**: `polar`, `lemon`, `squeezy` → `"payments"` (Polar.sh featured in tool pairs; Lemon Squeezy queries)
+- Removed duplicate `embedding` entry (already present at line 2556)
+- Running total: ~1032 entries (1007 + 25)
+
+### Catalog Script (Step 2)
+- Added 7 new tools to `scripts/add_missing_tools.py` (203 total):
+  - Chroma / chromadb (database, 17k★) — AI-native open-source embedding vector DB
+  - Qdrant (database, 21k★) — Rust-powered vector similarity search engine
+  - Weaviate (database, 12k★) — hybrid search vector DB with GraphQL API
+  - Milvus (database, 32k★) — cloud-native billion-scale vector DB
+  - pgvector (database, 14k★) — vector similarity search PostgreSQL extension
+  - vLLM (ai-automation, 20k★) — fast LLM inference and serving engine
+  - llama.cpp / llama-cpp (ai-automation, 70k★) — local LLM inference in C/C++
+  - Weights & Biases / wandb (ai-automation, 9k★) — ML experiment tracking platform
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Fixed duplicate `embedding` key introduced during edit
+
+### R&D Docs (Step 4)
+- sprint.md updated to forty-fifth pass
 
 ## Completed This Session (2026-04-12, forty-fourth pass — autonomous improvement cycle)
 

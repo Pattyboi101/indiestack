@@ -3161,6 +3161,137 @@ TOOLS = [
         "go get github.com/casbin/casbin/v2",
         "code",
     ),
+    # Database — Vector databases for AI/RAG workloads ------------------------------
+    (
+        "chromadb",
+        "Chroma",
+        "The AI-native open-source embedding database",
+        "Chroma is the leading open-source vector database built for AI applications. "
+        "Store, query, and manage embeddings with a simple Python/JavaScript API. "
+        "No server required for dev — embed directly in your app. Scales to millions "
+        "of vectors with persistent storage and metadata filtering.",
+        "database",
+        "chroma-core/chroma",
+        17000,
+        "https://trychroma.com",
+        "vector-database,embeddings,rag,ai,python,javascript",
+        "pip install chromadb",
+        "code",
+    ),
+    (
+        "qdrant",
+        "Qdrant",
+        "Vector similarity search engine and vector database",
+        "Qdrant is a high-performance vector similarity search engine designed for "
+        "production AI workloads. Written in Rust, it supports payload filtering, "
+        "hybrid search, on-disk storage, and distributed deployment. Used for RAG "
+        "pipelines, semantic search, and recommendation systems.",
+        "database",
+        "qdrant/qdrant",
+        21000,
+        "https://qdrant.tech",
+        "vector-database,embeddings,rag,similarity-search,rust",
+        "pip install qdrant-client",
+        "code",
+    ),
+    (
+        "weaviate",
+        "Weaviate",
+        "AI-native vector database built for production",
+        "Weaviate is an AI-native open-source vector database. It supports hybrid "
+        "search (vector + keyword), multi-modal data (text, images, audio), modules "
+        "for OpenAI / Cohere / HuggingFace embeddings, and GraphQL API. Cloud and "
+        "self-hosted options available.",
+        "database",
+        "weaviate/weaviate",
+        12000,
+        "https://weaviate.io",
+        "vector-database,hybrid-search,graphql,embeddings,rag",
+        "pip install weaviate-client",
+        "code",
+    ),
+    (
+        "milvus",
+        "Milvus",
+        "Open-source vector database built for scalable similarity search",
+        "Milvus is a cloud-native open-source vector database built for massive-scale "
+        "embedding similarity search. Powers AI applications with billion-vector support, "
+        "ANNS algorithms (HNSW, IVF), GPU acceleration, and a Python SDK. Foundation of "
+        "Zilliz Cloud.",
+        "database",
+        "milvus-io/milvus",
+        32000,
+        "https://milvus.io",
+        "vector-database,embeddings,similarity-search,scalable,python",
+        "pip install pymilvus",
+        "code",
+    ),
+    (
+        "pgvector",
+        "pgvector",
+        "Open-source vector similarity search for PostgreSQL",
+        "pgvector is a PostgreSQL extension that adds vector similarity search. Store "
+        "embeddings alongside relational data, run exact and approximate nearest-neighbor "
+        "queries, and use familiar SQL with `<->` distance operators. Works with Postgres "
+        "on Supabase, Neon, and self-hosted deployments.",
+        "database",
+        "pgvector/pgvector",
+        14000,
+        "https://github.com/pgvector/pgvector",
+        "vector-database,postgresql,embeddings,rag,sql",
+        "CREATE EXTENSION vector;",
+        "code",
+    ),
+    # AI — LLM inference and local model running -------------------------------------
+    (
+        "vllm",
+        "vLLM",
+        "Fast and easy-to-use library for LLM inference and serving",
+        "vLLM is a fast, memory-efficient LLM inference and serving library. Achieves "
+        "state-of-the-art throughput with PagedAttention memory management, continuous "
+        "batching, and optimized CUDA kernels. Serves OpenAI-compatible APIs for "
+        "Llama, Mistral, Mixtral, Qwen, and 100+ models.",
+        "ai-automation",
+        "vllm-project/vllm",
+        20000,
+        "https://docs.vllm.ai",
+        "llm,inference,serving,openai-compatible,gpu,python",
+        "pip install vllm",
+        "code",
+    ),
+    (
+        "llama-cpp",
+        "llama.cpp",
+        "LLM inference in C/C++ — run AI models locally",
+        "llama.cpp enables LLM inference with minimal setup on CPUs and GPUs. The most "
+        "widely used local LLM runtime — supports Llama 3, Mistral, Gemma, Phi, and "
+        "dozens of GGUF models. Runs on Mac, Linux, Windows, Raspberry Pi, and Android. "
+        "Foundation for Ollama, LM Studio, and many local AI tools.",
+        "ai-automation",
+        "ggerganov/llama.cpp",
+        70000,
+        "https://github.com/ggerganov/llama.cpp",
+        "llm,local-ai,inference,cpu,gpu,gguf,c++",
+        "brew install llama.cpp",
+        "code",
+    ),
+    # AI — ML experiment tracking and model management --------------------------------
+    (
+        "wandb",
+        "Weights & Biases",
+        "ML experiment tracking, model monitoring, and collaboration",
+        "Weights & Biases (W&B) is the leading MLOps platform for tracking ML experiments, "
+        "visualizing training runs, managing datasets, and deploying models. Integrates with "
+        "PyTorch, TensorFlow, Keras, Hugging Face, and all major ML frameworks with a "
+        "single `wandb.log()` call.",
+        "ai-automation",
+        "wandb/wandb",
+        9000,
+        "https://wandb.ai",
+        "mlops,experiment-tracking,ml,pytorch,tensorflow,monitoring",
+        "pip install wandb",
+        "code",
+    ),
 ]
 
 

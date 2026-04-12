@@ -3643,6 +3643,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "minio": "file",                # MinIO — open-source S3-compatible object storage (47k★)
     "backblaze": "file",            # Backblaze B2 — cheap S3-alternative object storage
     "tigris": "file",               # Tigris — globally distributed S3-compatible object storage
+    # AI — LLM inference engines (local and server-side)
+    "vllm": "ai",                   # vLLM — fast LLM inference and serving engine (20k★)
+    "llamacpp": "ai",               # llama.cpp — local LLM inference in C++ (70k★, most downloaded)
+    "llamafile": "ai",              # llamafile — single-file local LLM deployment (Mozilla)
+    # AI — ML frameworks (commonly searched as "pytorch alternative", "tensorflow vs")
+    "pytorch": "ai",                # PyTorch — most popular ML research framework (Facebook)
+    "tensorflow": "ai",             # TensorFlow — Google's ML framework for production/research
+    "torch": "ai",                  # PyTorch alias — "torch model", "torch training"
+    "keras": "ai",                  # Keras — high-level neural networks API (TF/JAX/PyTorch backends)
+    # AI — ML experiment tracking and model management
+    "wandb": "ai",                  # Weights & Biases — MLOps platform for experiment tracking (9k★)
+    "weights": "ai",                # "Weights & Biases" — first term in full name queries
+    "biases": "ai",                 # "Weights & Biases" — second term in queries
+    # AI — RAG pipeline terminology (Retrieval-Augmented Generation)
+    "retrieval": "ai",              # "retrieval augmented", "retrieval pipeline" → AI & Automation
+    "chunking": "ai",               # "text chunking", "document chunking" → AI & Automation (RAG)
+    "rerank": "ai",                 # "reranking model", "cross-encoder rerank" → AI & Automation
+    "reranking": "ai",              # explicit form — "reranking in RAG"
+    "embedder": "ai",               # "document embedder", "fast embedder" → AI & Automation
+    # Payments — Polar.sh and Lemon Squeezy routing for "[tool] alternative" queries
+    "polar": "payments",            # Polar.sh — open-source Stripe alternative for OSS devs (5k★)
+    "lemon": "payments",            # Lemon Squeezy — first term: "lemon squeezy alternative"
+    "squeezy": "payments",          # Lemon Squeezy — second term for direct "squeezy" queries
 }
 
 _FTS_STOP_WORDS = {
