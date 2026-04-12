@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (fifty-fourth pass)
+Last updated: 2026-04-12 (fifty-fifth pass)
 
 ## Status: Active
 
@@ -10,13 +10,43 @@ Last updated: 2026-04-12 (fifty-fourth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1126 entries for search routing (added 12 in fifty-fourth pass — data fetching, certs, fullstack, openapi spec, workspaces, typesafe, devtool)
-- **Catalog script**: `scripts/add_missing_tools.py` — 247 tools ready to insert (slug-safe)
-  - 4 tools added in fifty-fourth pass (Supabase, Convex, Appwrite, Rollup)
+- **_CAT_SYNONYMS**: 1162 entries for search routing (added 36 in fifty-fifth pass — admin panels, Ory auth, static search, CSS-in-JS, Vercel AI SDK, OSS monitoring, DB migration tools, job schedulers)
+- **Catalog script**: `scripts/add_missing_tools.py` — 252 tools ready to insert (slug-safe)
+  - 5 tools added in fifty-fifth pass (Loops, Orama, SigNoz, Appsmith, ToolJet)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, fifty-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for unmapped query terms after 54 prior passes
+- Added 36 new `_CAT_SYNONYMS` entries:
+  - **Admin panels**: `retool`, `appsmith`, `tooljet`, `budibase`, `admin` → `"developer"` (internal tool builder queries)
+  - **Ory auth stack**: `ory`, `hydra`, `kratos` → `"authentication"` (OAuth 2.0/OIDC server + identity mgmt)
+  - **Static search**: `orama`, `pagefind`, `lunr`, `fuse` → `"search"` (edge/client-side full-text search libs)
+  - **Email**: `loops` → `"email"` (Loops.so — SaaS-focused transactional + marketing platform)
+  - **Vercel AI SDK**: `vercel-ai`, `aisdk` → `"ai"` (unified TypeScript AI provider SDK, very high query volume)
+  - **CSS-in-JS**: `styled-components`, `styledcomponents`, `emotion`, `vanilla-extract`, `vanillaextract`, `stitches` → `"frontend"`
+  - **Monitoring**: `signoz`, `hyperdx`, `checkly` → `"monitoring"` (OSS APM, monitoring-as-code)
+  - **Database**: `atlas`, `vitess`, `citus` → `"database"` (schema migration CLI, MySQL sharding, Postgres sharding)
+  - **Background jobs**: `bull`, `agenda`, `bree` → `"background"` (classic/alternative Node.js job schedulers)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (252 total):
+  - Loops (email-marketing, 5k★) — SaaS-focused transactional + marketing email; growing fast with indie hackers
+  - Orama (search-engine, 7k★) — edge-native TypeScript full-text + vector search; runs in browser/Workers/Deno
+  - SigNoz (monitoring-uptime, 18k★) — OSS Datadog/NewRelic alternative built on OpenTelemetry
+  - Appsmith (developer-tools, 31k★) — most popular OSS internal tool builder; Retool alternative
+  - ToolJet (developer-tools, 28k★) — open-source low-code internal tools; direct Retool alternative
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to fifty-fifth pass
 
 ## Completed This Session (2026-04-12, fifty-fourth pass — autonomous improvement cycle)
 

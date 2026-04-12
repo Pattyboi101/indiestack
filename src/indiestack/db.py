@@ -3907,6 +3907,45 @@ _CAT_SYNONYMS: dict[str, str] = {
     "type-safe": "developer",       # hyphenated form — "type-safe query builder" → Developer Tools
     # Singular devtool form (complement to existing "devtools" → "developer" mapping)
     "devtool": "developer",         # singular — "devtool extension", "devtool panel" → Developer Tools
+    # Admin panel / internal tool builders — Appsmith, ToolJet, Budibase, Retool → Developer Tools
+    "retool": "developer",          # Retool — leading internal tool builder (very common alternative query)
+    "appsmith": "developer",        # Appsmith — open-source internal tools builder (31k★)
+    "tooljet": "developer",         # ToolJet — open-source Retool alternative (28k★)
+    "budibase": "developer",        # Budibase — open-source low-code app builder for teams (22k★)
+    "admin": "developer",           # "admin panel builder", "admin dashboard" → Developer Tools
+    # Ory open-source identity stack (Hydra, Kratos, Keto, Oathkeeper)
+    "ory": "authentication",        # Ory — full open-source identity infrastructure platform
+    "hydra": "authentication",      # Ory Hydra — certified OAuth 2.0 and OpenID Connect server
+    "kratos": "authentication",     # Ory Kratos — headless self-service identity management
+    # Static / client-side search (complement to Algolia/Typesense/Meilisearch synonyms)
+    "orama": "search",              # Orama — edge-native TypeScript full-text + vector search (7k★)
+    "pagefind": "search",           # Pagefind — Wasm-powered static full-text search for docs/blogs
+    "lunr": "search",               # Lunr.js — Solr-inspired full-text search for browsers/Node (9k★)
+    "fuse": "search",               # Fuse.js — lightweight fuzzy-search library for JS/TS (18k★)
+    # Email — SaaS-focused transactional platforms not yet mapped
+    "loops": "email",               # Loops.so — transactional + marketing email for modern SaaS
+    # AI SDK — Vercel AI SDK is the most widely adopted unified provider SDK
+    "vercel-ai": "ai",              # Vercel AI SDK — TypeScript SDK for Next.js AI apps (11k★)
+    "aisdk": "ai",                  # short form — "ai sdk alternative", "ai sdk streaming" queries
+    # CSS-in-JS styling libraries
+    "styled-components": "frontend", # styled-components — CSS-in-JS with tagged templates (React)
+    "styledcomponents": "frontend",  # compound form — "styledcomponents alternative" queries
+    "emotion": "frontend",           # Emotion — performant CSS-in-JS, framework-agnostic
+    "vanilla-extract": "frontend",   # vanilla-extract — zero-runtime TypeScript-first CSS
+    "vanillaextract": "frontend",    # compound form — "vanilla-extract alternative" queries
+    "stitches": "frontend",          # Stitches — near-zero runtime CSS-in-JS by WorkOS (8k★)
+    # Monitoring — open-source APM and monitoring-as-code
+    "signoz": "monitoring",         # SigNoz — open-source Datadog/NewRelic alternative (18k★)
+    "hyperdx": "monitoring",        # HyperDX — open-source Datadog alt (logs + traces + sessions)
+    "checkly": "monitoring",        # Checkly — monitoring as code (E2E + API checks in CI/CD)
+    # Database — schema migration CLI and distributed MySQL/Postgres tools
+    "atlas": "database",            # Atlas — Ariga's declarative database schema migration CLI (5k★)
+    "vitess": "database",           # Vitess — MySQL horizontal scaling (powers YouTube/PlanetScale)
+    "citus": "database",            # Citus — Postgres extension for horizontal sharding (Microsoft)
+    # Background jobs — classic and additional Node.js schedulers
+    "bull": "background",           # Bull — Redis-backed Node.js queue (classic; BullMQ successor)
+    "agenda": "background",         # Agenda.js — MongoDB-backed job scheduler for Node.js (9k★)
+    "bree": "background",           # Bree — worker thread-based JavaScript job scheduler (3k★)
 }
 
 _FTS_STOP_WORDS = {

@@ -4050,6 +4050,101 @@ TOOLS = [
         "npm install rollup",
         "code",
     ),
+    # Email Marketing — Loops ----------------------------------------------------------
+    (
+        "loops",
+        "Loops",
+        "The email platform built for SaaS",
+        "Loops is a modern email platform purpose-built for SaaS products. "
+        "Send transactional emails (password resets, receipts, notifications) and "
+        "marketing campaigns from one place. Events-driven: trigger emails from "
+        "your app events, Stripe webhooks, and user actions. "
+        "Simple API, beautiful editor, clean analytics. "
+        "Favourite among indie hackers and SaaS founders. 5k+ GitHub stars.",
+        "email-marketing",
+        "loops-so/loops",
+        5000,
+        "https://loops.so",
+        "email,transactional,marketing,saas,events-driven",
+        "npm install loops-sdk",
+        "saas",
+    ),
+    # Search Engine — Orama ------------------------------------------------------------
+    (
+        "orama",
+        "Orama",
+        "Fast, in-memory, typo-tolerant full-text and vector search",
+        "Orama is an open-source, edge-native search engine written in TypeScript. "
+        "Works entirely in-process (no server required) with schema-free indexing, "
+        "typo-tolerance, and vector/semantic search support. "
+        "Runs in the browser, Node.js, Deno, Bun, Cloudflare Workers, and Fastly. "
+        "Orama Cloud provides a managed hosted tier. "
+        "Ideal for docs sites, e-commerce, and apps that need fast offline-capable search. "
+        "7k+ GitHub stars.",
+        "search-engine",
+        "oramasearch/orama",
+        7000,
+        "https://orama.com",
+        "search,full-text,vector,edge,typescript,in-memory,open-source",
+        "npm install @orama/orama",
+        "code",
+    ),
+    # Monitoring — SigNoz --------------------------------------------------------------
+    (
+        "signoz",
+        "SigNoz",
+        "Open-source Datadog and NewRelic alternative",
+        "SigNoz is an open-source application performance monitoring (APM) and observability "
+        "platform built on OpenTelemetry. Provides distributed tracing, metrics, and logs "
+        "in a single pane — no vendor lock-in, full data ownership. "
+        "Self-host with Docker/Kubernetes or use SigNoz Cloud. "
+        "Supports all major languages via OpenTelemetry SDKs. "
+        "18k+ GitHub stars.",
+        "monitoring-uptime",
+        "signoz/signoz",
+        18000,
+        "https://signoz.io",
+        "monitoring,apm,observability,open-source,opentelemetry,tracing,metrics,logs",
+        "git clone https://github.com/signoz/signoz && cd signoz/deploy && docker compose up -d",
+        "code",
+    ),
+    # Developer Tools — Appsmith -------------------------------------------------------
+    (
+        "appsmith",
+        "Appsmith",
+        "Open-source platform to build internal tools, admin panels, and dashboards",
+        "Appsmith is an open-source low-code framework for building internal tools, admin panels, "
+        "CRUD apps, and dashboards. Drag-and-drop UI components connect to any REST API, "
+        "GraphQL, or database (PostgreSQL, MongoDB, MySQL, Redis, and 30+ more). "
+        "Write custom logic in JavaScript. Deploy on-premise with Docker or use Appsmith Cloud. "
+        "A popular open-source Retool alternative. 31k+ GitHub stars.",
+        "developer-tools",
+        "appsmithorg/appsmith",
+        31000,
+        "https://www.appsmith.com",
+        "internal-tools,low-code,admin-panel,dashboard,open-source,retool-alternative",
+        "docker run -d --name appsmith -p 80:80 appsmith/appsmith-ce",
+        "code",
+    ),
+    # Developer Tools — ToolJet --------------------------------------------------------
+    (
+        "tooljet",
+        "ToolJet",
+        "Open-source low-code platform to build and deploy internal tools",
+        "ToolJet is an open-source low-code framework for building internal tools such as "
+        "dashboards, admin panels, CRUD apps, and workflows. "
+        "Visual drag-and-drop editor connects to 50+ data sources: PostgreSQL, MySQL, MongoDB, "
+        "Stripe, Slack, Google Sheets, REST APIs, and more. "
+        "Write JavaScript to add business logic. Self-host with Docker or use ToolJet Cloud. "
+        "A direct open-source Retool alternative. 28k+ GitHub stars.",
+        "developer-tools",
+        "ToolJet/ToolJet",
+        28000,
+        "https://tooljet.com",
+        "internal-tools,low-code,admin-panel,dashboard,open-source,retool-alternative",
+        "docker run -d --name tooljet -p 3000:3000 tooljet/tooljet:latest",
+        "code",
+    ),
 ]
 
 
