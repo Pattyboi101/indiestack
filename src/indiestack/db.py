@@ -3888,6 +3888,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — mobile CI/CD and Kubernetes IaC
     "fastlane": "devops",           # Fastlane — automate iOS/Android builds and releases (40k★)
     "crossplane": "devops",         # Crossplane — Kubernetes-native IaC and control plane (9k★)
+    # Data fetching hooks / server state (SWR, TanStack Query, Apollo Client)
+    "fetching": "frontend",         # "data fetching library", "fetching hook" → Frontend Frameworks
+    # SSL/TLS certificate management tools
+    "certificate": "security",      # "ssl certificate", "certificate management", "cert-manager" → Security
+    "cert": "security",             # short form — "cert renewal", "cert authority" → Security Tools
+    # Full-stack framework queries (Next.js, SvelteKit, Remix live in frontend-frameworks)
+    "fullstack": "frontend",        # "fullstack framework", "fullstack typescript" → Frontend Frameworks
+    "full-stack": "frontend",       # hyphenated form — "full-stack web framework" → Frontend Frameworks
+    # OpenAPI spec tooling (Scalar, Speakeasy, Redoc, openapi-ts)
+    "spec": "api",                  # "openapi spec", "api specification", "json schema spec" → API Tools
+    "specification": "api",         # long form — "api specification tool" → API Tools
+    # Monorepo workspace tooling (Nx, Turborepo, pnpm workspaces, Yarn workspaces)
+    "workspace": "developer",       # "nx workspace", "pnpm workspace", "yarn workspaces" → Developer Tools
+    "workspaces": "developer",      # plural — "monorepo workspaces", "npm workspaces" → Developer Tools
+    # Type-safe query/API patterns (tRPC, Kysely, Zod, Drizzle are all developer tools)
+    "typesafe": "developer",        # "typesafe orm", "typesafe api client" → Developer Tools
+    "type-safe": "developer",       # hyphenated form — "type-safe query builder" → Developer Tools
+    # Singular devtool form (complement to existing "devtools" → "developer" mapping)
+    "devtool": "developer",         # singular — "devtool extension", "devtool panel" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

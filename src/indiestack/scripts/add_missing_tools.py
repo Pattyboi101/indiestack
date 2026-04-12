@@ -3979,6 +3979,77 @@ TOOLS = [
         "npm install vitepress",
         "code",
     ),
+    # Database / BaaS — Supabase -------------------------------------------------------
+    (
+        "supabase",
+        "Supabase",
+        "The open source Firebase alternative",
+        "Supabase is an open-source Firebase alternative built on PostgreSQL. "
+        "Provides a hosted Postgres database, authentication, instant REST and GraphQL APIs, "
+        "edge functions, realtime subscriptions, and file storage — all with a generous free tier. "
+        "Self-hostable with Docker. The most popular open-source BaaS for indie developers. "
+        "73k+ GitHub stars.",
+        "database",
+        "supabase/supabase",
+        73000,
+        "https://supabase.com",
+        "baas,postgres,auth,realtime,storage,open-source,firebase-alternative",
+        "npm install @supabase/supabase-js",
+        "code",
+    ),
+    # Database / BaaS — Convex --------------------------------------------------------
+    (
+        "convex",
+        "Convex",
+        "The reactive backend platform for TypeScript apps",
+        "Convex is a backend-as-a-service with a real-time reactive database for TypeScript. "
+        "Write server functions in TypeScript that automatically re-run when data changes, "
+        "syncing state to all connected clients instantly. No SQL, no REST — just TypeScript "
+        "functions, automatic caching, and built-in auth. 8k+ GitHub stars.",
+        "database",
+        "get-convex/convex-backend",
+        8000,
+        "https://convex.dev",
+        "baas,realtime,typescript,reactive,serverless",
+        "npm install convex",
+        "code",
+    ),
+    # Database / BaaS — Appwrite -------------------------------------------------------
+    (
+        "appwrite",
+        "Appwrite",
+        "Self-hosted backend-as-a-service for web, mobile, and flutter apps",
+        "Appwrite is an open-source self-hosted BaaS providing a REST API for authentication, "
+        "databases, cloud storage, cloud functions, and realtime events. "
+        "Deploy with Docker in minutes. Supports 30+ SDKs and frameworks. "
+        "A strong Firebase alternative for developers who want full data ownership. "
+        "45k+ GitHub stars.",
+        "database",
+        "appwrite/appwrite",
+        45000,
+        "https://appwrite.io",
+        "baas,self-hosted,auth,database,storage,functions,firebase-alternative",
+        "docker run appwrite/appwrite",
+        "code",
+    ),
+    # Frontend Frameworks — Rollup -----------------------------------------------------
+    (
+        "rollup",
+        "Rollup",
+        "Next-generation ES module bundler",
+        "Rollup is a module bundler for JavaScript which compiles small pieces of code into "
+        "something larger and more complex, such as a library or application. It uses the "
+        "standardized ES module format instead of CommonJS. Rollup pioneered tree-shaking and "
+        "is the bundler powering Vite under the hood for production builds. "
+        "Used by React, Vue, D3, Three.js, and thousands of libraries. 25k+ GitHub stars.",
+        "frontend-frameworks",
+        "rollup/rollup",
+        25000,
+        "https://rollupjs.org",
+        "bundler,build-tool,esm,tree-shaking,javascript",
+        "npm install rollup",
+        "code",
+    ),
 ]
 
 
