@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (fifty-sixth pass)
+Last updated: 2026-04-12 (fifty-seventh pass)
 
 ## Status: Active
 
@@ -10,13 +10,39 @@ Last updated: 2026-04-12 (fifty-sixth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1151 entries for search routing (added 13 in fifty-sixth pass — SEO sitemaps/OG, testing visual regression, GraphQL clients, date-fns slug variant, Deno Fresh, Mitosis)
-- **Catalog script**: `scripts/add_missing_tools.py` — 257 tools ready to insert (slug-safe)
-  - 5 tools added in fifty-sixth pass (Railway, Neon, Directus, TanStack Table, Fresh)
+- **_CAT_SYNONYMS**: 1165 entries for search routing (added 14 in fifty-seventh pass — code editors, terminals, git clients, AI code review, billing/metering tools)
+- **Catalog script**: `scripts/add_missing_tools.py` — 262 tools ready to insert (slug-safe)
+  - 5 tools added in fifty-seventh pass (Lago, Zed, Ghostty, GitButler, Neovim)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, fifty-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for unmapped query terms after 56 prior passes
+- Added 14 new `_CAT_SYNONYMS` entries:
+  - **Code editors**: `zed`, `neovim`, `helix`, `lapce` → `"developer"` (Zed 65k★, Neovim 82k★, Helix 35k★, Lapce 34k★)
+  - **Terminal emulators**: `ghostty`, `alacritty`, `wezterm` → `"developer"` (Ghostty 25k★, Alacritty 56k★, WezTerm 18k★)
+  - **Git clients**: `gitbutler` → `"developer"` (GitButler 12k★ — branch-stacking git workflow tool)
+  - **AI code review**: `coderabbit` → `"ai"` (AI-powered PR review; growing fast in indie dev queries)
+  - **Billing/metering**: `lago` → `"invoicing"` (in DB as tool, now routed in synonyms), `orb` → `"invoicing"`, `stigg` → `"payments"`
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (262 total):
+  - Lago (invoicing-billing, 6k★) — open-source metering+billing API; OSS alternative to Chargebee/Orb
+  - Zed (developer-tools, 65k★) — collaborative Rust code editor with native AI integration
+  - Ghostty (developer-tools, 25k★) — GPU-native terminal by Mitchell Hashimoto; written in Zig
+  - GitButler (developer-tools, 12k★) — branch-stacking git client built with Tauri/Rust
+  - Neovim (developer-tools, 82k★) — hyperextensible Vim-fork; massive plugin ecosystem (LazyVim etc.)
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to fifty-seventh pass
 
 ## Completed This Session (2026-04-12, fifty-sixth pass — autonomous improvement cycle)
 

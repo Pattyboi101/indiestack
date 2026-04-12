@@ -3963,6 +3963,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend frameworks — Deno Fresh meta-framework and cross-framework compilers
     "fresh": "frontend",            # Deno Fresh — zero-JS-by-default island SSR meta-framework (12k★)
     "mitosis": "frontend",          # Mitosis — write once, compile to React/Vue/Svelte/Angular
+    # Code editors — queries like "zed alternative", "neovim setup" → Developer Tools
+    "zed": "developer",             # Zed — collaborative Rust code editor with AI features (65k★)
+    "neovim": "developer",          # Neovim — hyperextensible Vim-fork; huge plugin ecosystem (82k★)
+    "helix": "developer",           # Helix — post-modern modal text editor (Rust, kakoune-style) (35k★)
+    "lapce": "developer",           # Lapce — GPU-accelerated code editor written in Rust (34k★)
+    # Terminal emulators — queries like "ghostty alternative", "fast terminal" → Developer Tools
+    "ghostty": "developer",         # Ghostty — fast GPU-native terminal by Mitchell Hashimoto (25k★)
+    "alacritty": "developer",       # Alacritty — cross-platform OpenGL terminal emulator (56k★)
+    "wezterm": "developer",         # WezTerm — GPU-accelerated terminal with Lua config (18k★)
+    # Git clients — "gitbutler alternative" → Developer Tools
+    "gitbutler": "developer",       # GitButler — branch-stacking git client for modern workflows (12k★)
+    # AI code review — "coderabbit alternative", "ai code review" → AI Dev Tools
+    "coderabbit": "ai",             # CodeRabbit — AI-powered code review (contextual PR feedback)
+    # Billing/metering SaaS — routes "lago alternative", "usage based billing" → Invoicing & Billing
+    "lago": "invoicing",            # Lago — open-source metering and billing API (6k★)
+    "orb": "invoicing",             # Orb — usage-based billing platform (metered pricing SaaS)
+    # Product-led pricing / feature access management
+    "stigg": "payments",            # Stigg — pricing & entitlements infrastructure for SaaS
 }
 
 _FTS_STOP_WORDS = {

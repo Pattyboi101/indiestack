@@ -4240,6 +4240,99 @@ TOOLS = [
         "deno run -A -r https://fresh.deno.dev my-project",
         "code",
     ),
+    # Invoicing & Billing — Lago (open-source metering + billing API) ----------------------
+    (
+        "lago",
+        "Lago",
+        "Open-source metering and billing API",
+        "Lago is an open-source billing API for usage-based, seat-based, and hybrid pricing models. "
+        "Define billable metrics (API calls, compute minutes, storage GB), attach pricing plans, "
+        "and generate invoices automatically. Self-host with Docker or use Lago Cloud. "
+        "Integrates with Stripe, GoCardless, and Adyen for payment collection. "
+        "A full-featured open-source alternative to Chargebee, Recurly, and Orb. 6k+ GitHub stars.",
+        "invoicing-billing",
+        "getlago/lago",
+        6000,
+        "https://www.getlago.com",
+        "billing,metering,usage-based,invoicing,open-source,stripe,self-hosted",
+        "docker compose up",
+        "code",
+    ),
+    # Developer Tools — Zed (collaborative AI code editor) --------------------------------
+    (
+        "zed",
+        "Zed",
+        "High-performance, multiplayer code editor",
+        "Zed is a next-generation code editor built in Rust for speed and collaboration. "
+        "Real-time multiplayer editing, native AI integration (Claude, GPT, Gemini), "
+        "a built-in terminal, and a language server protocol implementation. "
+        "GPU-rendered UI — opens in milliseconds. "
+        "Supports most languages via tree-sitter and LSP. "
+        "Open-source since January 2024. 65k+ GitHub stars.",
+        "developer-tools",
+        "zed-industries/zed",
+        65000,
+        "https://zed.dev",
+        "editor,ide,rust,ai,multiplayer,fast,open-source",
+        "curl https://zed.dev/install.sh | sh",
+        "code",
+    ),
+    # Developer Tools — Ghostty (fast GPU-native terminal emulator) -----------------------
+    (
+        "ghostty",
+        "Ghostty",
+        "Fast, feature-rich, and native terminal emulator",
+        "Ghostty is a terminal emulator built by Mitchell Hashimoto (HashiCorp founder) "
+        "that prioritises platform-native UI, GPU rendering, and correctness. "
+        "Uses native UI frameworks on each platform (AppKit on macOS, GTK on Linux). "
+        "Supports terminal multiplexing, ligatures, true colour, and thousands of keybindings. "
+        "Written in Zig for maximum performance. 25k+ GitHub stars.",
+        "developer-tools",
+        "ghostty-org/ghostty",
+        25000,
+        "https://ghostty.org",
+        "terminal,emulator,gpu,zig,fast,native,developer",
+        "brew install ghostty",
+        "code",
+    ),
+    # Developer Tools — GitButler (branch-stacking git client) ----------------------------
+    (
+        "gitbutler",
+        "GitButler",
+        "A Git client for simultaneous branches on top of your existing workflow",
+        "GitButler is a next-generation git client that lets you work on multiple branches "
+        "simultaneously without constantly context-switching. "
+        "Virtual branches sit on top of your working directory — move files between them freely. "
+        "Integrates with GitHub PRs, resolves conflicts visually, "
+        "and syncs to a cloud backup branch automatically. "
+        "Built with Tauri (Rust + WebView). 12k+ GitHub stars.",
+        "developer-tools",
+        "gitbutlerapp/gitbutler",
+        12000,
+        "https://gitbutler.com",
+        "git,client,branches,workflow,tauri,rust,open-source",
+        "brew install gitbutler",
+        "code",
+    ),
+    # Developer Tools — Neovim (hyperextensible Vim-fork) ---------------------------------
+    (
+        "neovim",
+        "Neovim",
+        "Hyperextensible Vim-based text editor",
+        "Neovim is a refactored Vim with first-class Lua scripting, a built-in LSP client, "
+        "tree-sitter syntax highlighting, and async job control. "
+        "A thriving plugin ecosystem (Telescope, nvim-cmp, LazyVim, AstroNvim, NvChad) "
+        "makes it a fully-featured IDE for any language. "
+        "Modal editing with Vim motions, infinitely configurable, and extremely fast. "
+        "82k+ GitHub stars; one of the most-starred editor projects on GitHub.",
+        "developer-tools",
+        "neovim/neovim",
+        82000,
+        "https://neovim.io",
+        "editor,vim,lua,lsp,treesitter,modal,open-source",
+        "brew install neovim",
+        "code",
+    ),
 ]
 
 
