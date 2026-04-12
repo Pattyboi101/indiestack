@@ -4423,6 +4423,91 @@ TOOLS = [
         "npm install dub",
         "code",
     ),
+    # AI Dev Tools — llama.cpp (local LLM inference engine) ------------------------------
+    (
+        "llamacpp",
+        "llama.cpp",
+        "LLM inference in C++ for CPU and GPU",
+        "llama.cpp enables running large language models (LLaMA, Mistral, Gemma, Phi) "
+        "locally on CPU or GPU with minimal setup. Written in C++, it supports GGUF "
+        "quantised models, offers a REST API server mode, and powers most local LLM "
+        "runners including LM Studio and Jan. The foundation of local AI development.",
+        "ai-dev-tools",
+        "ggerganov/llama.cpp",
+        72000,
+        "https://github.com/ggerganov/llama.cpp",
+        "ai,llm,local,inference,cpp,gguf,quantization,open-source",
+        "# Build from source or download binaries from GitHub Releases",
+        "code",
+    ),
+    # API Tools — Bruno (open-source API testing) ----------------------------------------
+    (
+        "bruno",
+        "Bruno",
+        "Open-source API client for exploring and testing APIs",
+        "Bruno is an offline-first, open-source Postman and Insomnia alternative. "
+        "Collections are stored as plain text files (Bru format) directly in your repo — "
+        "no cloud sync required. Supports REST, GraphQL, and gRPC. Native desktop app "
+        "for Mac, Windows, and Linux. 28k+ GitHub stars.",
+        "api-tools",
+        "usebruno/bruno",
+        28000,
+        "https://usebruno.com",
+        "api,testing,postman,rest,graphql,offline,open-source,developer",
+        "# Download from https://usebruno.com or brew install bruno",
+        "code",
+    ),
+    # Analytics & Metrics — Apache ECharts (data visualization) -------------------------
+    (
+        "echarts",
+        "Apache ECharts",
+        "An open-source JavaScript visualisation library",
+        "Apache ECharts is a powerful, interactive chart library supporting line, bar, "
+        "pie, scatter, map, heatmap, radar, tree, and 30+ chart types. Renders via Canvas "
+        "or SVG, handles millions of data points, and is the most-used chart library in "
+        "enterprise and Asian tech stacks. 60k+ GitHub stars.",
+        "analytics-metrics",
+        "apache/echarts",
+        60000,
+        "https://echarts.apache.org",
+        "charts,visualization,data,canvas,svg,open-source,apache",
+        "npm install echarts",
+        "code",
+    ),
+    # API Tools — Phoenix Framework (Elixir web framework) ------------------------------
+    (
+        "phoenix",
+        "Phoenix Framework",
+        "Peace of mind from prototype to production",
+        "Phoenix is a productive Elixir web framework built for real-time apps. "
+        "Its Channels feature gives WebSocket-based pub/sub with millions of concurrent "
+        "connections on a single server. Phoenix LiveView enables rich, reactive UIs "
+        "without writing JavaScript. Widely praised for developer happiness and performance.",
+        "api-tools",
+        "phoenixframework/phoenix",
+        21000,
+        "https://phoenixframework.org",
+        "elixir,realtime,websocket,liveview,pubsub,full-stack",
+        "mix phx.new my_app",
+        "code",
+    ),
+    # Message Queue — Centrifugo (real-time messaging server) ---------------------------
+    (
+        "centrifugo",
+        "Centrifugo",
+        "Scalable real-time messaging server",
+        "Centrifugo is a language-agnostic open-source real-time messaging server. "
+        "Supports WebSocket, HTTP-streaming, SSE, and GRPC. Handles pub/sub, presence, "
+        "and history with Redis/Tarantool/Nats backends. Used in production by companies "
+        "serving millions of connections. Self-hostable Pusher/Ably alternative.",
+        "message-queue",
+        "centrifugal/centrifugo",
+        8200,
+        "https://centrifugal.dev",
+        "realtime,websocket,pubsub,sse,grpc,self-hosted,open-source",
+        "docker run -d centrifugo/centrifugo",
+        "code",
+    ),
 ]
 
 

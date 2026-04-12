@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-12 (fifty-eighth pass)
+Last updated: 2026-04-12 (fifty-ninth pass)
 
 ## Status: Active
 
@@ -10,13 +10,42 @@ Last updated: 2026-04-12 (fifty-eighth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1188 entries for search routing (added 23 in fifty-eighth pass — AI coding assistants, cloud dev envs, JAMstack/static, auth tools, analytics, developer TUI tools)
-- **Catalog script**: `scripts/add_missing_tools.py` — 267 tools ready to insert (slug-safe)
-  - 5 tools added in fifty-eighth pass (Aider, Lazygit, Atuin, Gitpod, Dub)
+- **_CAT_SYNONYMS**: 1211 entries for search routing (added 23 in fifty-ninth pass — local LLMs, image AI, charts, API tools, realtime servers, backend frameworks)
+- **Catalog script**: `scripts/add_missing_tools.py` — 272 tools ready to insert (slug-safe)
+  - 5 tools added in fifty-ninth pass (llama.cpp, Bruno, Apache ECharts, Phoenix, Centrifugo)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-12, fifty-ninth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for unmapped query terms after 58 prior passes
+- Added 23 new `_CAT_SYNONYMS` entries:
+  - **Local LLM runners**: `llamacpp`, `llama`, `llamafile`, `lmstudio`, `jan` → `"ai"` (high agent query volume as devs set up local inference)
+  - **AI image generation**: `stable`, `diffusion`, `comfyui` → `"ai"` (Stable Diffusion ecosystem queries)
+  - **Data visualization**: `echarts`, `nivo`, `apexcharts` → `"analytics"` (complement to recharts/d3/chartjs already mapped)
+  - **API tools**: `bruno`, `scalar` → `"api"` (open-source Postman alternatives); `redoc` → `"documentation"`
+  - **WebSocket/realtime servers**: `soketi`, `centrifugo` → `"message"` (open-source Pusher/Ably alternatives)
+  - **Backend frameworks**: `phoenix`, `elixir` → `"api"` (Elixir/Phoenix queries — like existing python/ruby/go mappings)
+  - **DevOps**: `cloudflare` → `"devops"` (extremely common "alternative" query base)
+  - **Payments**: `mollie` → `"payments"` (major EU payment processor)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (272 total):
+  - llama.cpp (ai-dev-tools, 72k★) — C++ local LLM inference engine; foundation of LM Studio, Jan, etc.
+  - Bruno (api-tools, 28k★) — offline-first open-source Postman/Insomnia alternative
+  - Apache ECharts (analytics-metrics, 60k★) — feature-rich chart library (enterprise/Asia focus)
+  - Phoenix Framework (api-tools, 21k★) — Elixir web framework famous for real-time channels + LiveView
+  - Centrifugo (message-queue, 8.2k★) — scalable open-source real-time messaging server (self-hosted Pusher/Ably)
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to fifty-ninth pass
 
 ## Completed This Session (2026-04-12, fifty-eighth pass — autonomous improvement cycle)
 

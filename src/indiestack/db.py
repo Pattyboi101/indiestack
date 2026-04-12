@@ -4009,6 +4009,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     "lazygit": "developer",     # Lazygit — simple terminal UI for Git commands (Golang, 53k★)
     "atuin": "developer",       # Atuin — magical shell history replacement in Rust (22k★)
     "zellij": "developer",      # Zellij — feature-rich terminal workspace / multiplexer (Rust, 23k★)
+    # Local LLM inference tools — very high query volume as devs set up local AI
+    # (llamacpp, llamafile already mapped above; adding the remaining high-volume terms)
+    "llama": "ai",                  # LLaMA model queries — "run llama locally", "llama model" → AI
+    "lmstudio": "ai",               # LM Studio — popular local LLM GUI with built-in model library
+    "jan": "ai",                    # Jan.ai — open-source local-first LLM chat and inference server
+    # AI image generation — Stable Diffusion ecosystem has enormous agent query volume
+    "stable": "ai",                 # "stable diffusion", "stable video diffusion" → AI & Automation
+    "diffusion": "ai",              # "diffusion model", "latent diffusion" → AI & Automation
+    "comfyui": "ai",                # ComfyUI — node-based Stable Diffusion workflow UI (66k★)
+    # Data visualization — chart libraries complement to recharts/d3/chartjs already mapped
+    "echarts": "analytics",         # Apache ECharts — feature-rich chart library (60k★, enterprise/Asia)
+    "nivo": "analytics",            # Nivo — React chart library built on D3, rich component set (13k★)
+    "apexcharts": "analytics",      # ApexCharts — interactive SVG/canvas chart library (14k★)
+    # API tools — open-source Postman alternatives and OpenAPI documentation
+    "bruno": "api",                 # Bruno — offline-first open-source API testing tool (28k★)
+    "scalar": "api",                # Scalar — modern interactive OpenAPI reference and playground (30k★)
+    "redoc": "documentation",       # ReDoc — OpenAPI 3.x documentation renderer (23k★)
+    # WebSocket / realtime servers — open-source push infrastructure
+    "soketi": "message",            # soketi — open-source Pusher-compatible WebSocket server (5k★)
+    "centrifugo": "message",        # Centrifugo — scalable open-source real-time messaging server (8k★)
+    # Backend framework queries (complement to fastapi/django/flask/rails/spring mappings)
+    "phoenix": "api",               # Phoenix — Elixir web framework famous for real-time channels (21k★)
+    "elixir": "api",                # Elixir language queries → API frameworks (Phoenix, Plug, Bandit)
+    # DevOps — cloud infrastructure providers with high "alternative" query volume
+    "cloudflare": "devops",         # Cloudflare — CDN/DNS/Workers; common "alternative" query base
+    # Payments — EU payment processors
+    "mollie": "payments",           # Mollie — developer-friendly EU payment processor
 }
 
 _FTS_STOP_WORDS = {
