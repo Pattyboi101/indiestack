@@ -3441,6 +3441,74 @@ TOOLS = [
         "pip install langflow",
         "code",
     ),
+    # Logging -------------------------------------------------------------------------
+    (
+        "winston",
+        "Winston",
+        "A logger for just about everything in Node.js",
+        "Winston is the most popular Node.js logging library with a multi-transport "
+        "architecture. Write logs to the console, files, databases, or HTTP endpoints "
+        "simultaneously. Supports structured JSON output, custom formatters, log levels, "
+        "and async transports. Used by millions of Node.js applications in production.",
+        "logging",
+        "winstonjs/winston",
+        22000,
+        "https://github.com/winstonjs/winston",
+        "nodejs,logging,structured-logging,transports,json",
+        "npm install winston",
+        "code",
+    ),
+    (
+        "pino",
+        "Pino",
+        "Super fast, all natural JSON logger for Node.js",
+        "Pino is the fastest Node.js logger available — up to 5× faster than alternatives "
+        "like Bunyan and Winston. Uses an asynchronous destination stream and produces "
+        "compact NDJSON logs. Integrations for Fastify, Express, Hapi, Koa, and Restify. "
+        "Includes pino-pretty for human-readable development output.",
+        "logging",
+        "pinojs/pino",
+        14000,
+        "https://getpino.io",
+        "nodejs,logging,json,structured-logging,fastify,async",
+        "npm install pino",
+        "code",
+    ),
+    # Background Jobs — Distributed workflow orchestration ----------------------------
+    (
+        "hatchet",
+        "Hatchet",
+        "Distributed, fault-tolerant background task and workflow engine",
+        "Hatchet is an open-source durable task queue and workflow orchestration engine. "
+        "Define multi-step workflows as code with built-in retries, rate limiting, "
+        "fan-out/fan-in, and cron scheduling. SDKs for TypeScript, Python, and Go. "
+        "Self-hostable with a local Docker Compose stack or deploy to cloud.",
+        "background-jobs",
+        "hatchet-dev/hatchet",
+        5000,
+        "https://hatchet.run",
+        "workflow,orchestration,background-jobs,typescript,python,go,durable-execution",
+        "npx @hatchet-dev/hatchet-cli dev",
+        "code",
+    ),
+    # API Tools — Distributed application runtime -------------------------------------
+    (
+        "dapr",
+        "Dapr",
+        "Portable, event-driven runtime for distributed applications",
+        "Dapr (Distributed Application Runtime) is a CNCF-graduated open-source runtime "
+        "that simplifies microservice development. It provides language-agnostic building "
+        "blocks via HTTP/gRPC: service-to-service invocation, state management, pub/sub "
+        "messaging, bindings, actors, and durable workflows. SDKs for Go, Python, Java, "
+        ".NET, JavaScript, PHP, and Rust.",
+        "api-tools",
+        "dapr/dapr",
+        24000,
+        "https://dapr.io",
+        "microservices,distributed,pubsub,state-management,actors,workflows,grpc",
+        "curl -fsSL https://raw.githubusercontent.com/dapr/cli/master/install/install.sh | /bin/bash",
+        "code",
+    ),
 ]
 
 

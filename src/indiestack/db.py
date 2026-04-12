@@ -3714,6 +3714,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — Effect.ts (functional programming library for TypeScript)
     "effect": "developer",          # Effect.ts — functional programming library for complex TypeScript apps
     "effectts": "developer",        # compound form — "effect ts alternative" queries
+    # Logging — Node.js and Go named loggers (common "[tool] alternative" queries)
+    "winston": "logging",           # Winston — most popular Node.js multi-transport logger (22k★)
+    "pino": "logging",              # Pino — fastest low-overhead JSON logger for Node.js (14k★)
+    "bunyan": "logging",            # Bunyan — classic JSON structured logger for Node.js
+    "morgan": "logging",            # Morgan — HTTP request logger middleware for Express/Node.js
+    "zerolog": "logging",           # Zerolog — Go zero-allocation JSON logger
+    "slog": "logging",              # Go standard library structured logging (Go 1.21+)
+    "structured": "logging",        # "structured logging", "structured log format" → Logging
+    # Background jobs — additional named tools not yet covered
+    "hatchet": "background",        # Hatchet — durable workflow orchestration engine (5k★)
+    "oban": "background",           # Oban — reliable Elixir background jobs on PostgreSQL
+    "faktory": "background",        # Faktory — language-agnostic background job system (6k★)
+    "rq": "background",             # RQ (Redis Queue) — lightweight Python job queues (10k★)
+    # DevOps — container runtimes (Docker alternatives)
+    "podman": "devops",             # Podman — rootless daemonless Docker-compatible runtime
+    "containerd": "devops",         # containerd — CNCF container runtime (powers Kubernetes nodes)
+    # Distributed application runtime
+    "dapr": "api",                  # Dapr — portable event-driven distributed runtime (24k★)
+    # AI — model API providers and inference tools
+    "openrouter": "ai",             # OpenRouter — unified LLM routing API (200+ models)
+    "replicate": "ai",              # Replicate — run ML models via API (no GPU setup required)
+    "modal": "ai",                  # Modal — serverless GPU compute for AI/ML workloads
+    "whisper": "ai",                # OpenAI Whisper — open-source speech-to-text model
+    # Testing — container-based integration testing and test data generation
+    "testcontainers": "testing",    # Testcontainers — real service containers for integration tests
+    "faker": "testing",             # Faker.js / Faker.py — realistic fake data for tests
 }
 
 _FTS_STOP_WORDS = {
