@@ -11,6 +11,7 @@ router = APIRouter()
 @router.get("/oracle", response_class=HTMLResponse)
 async def oracle_page(request: Request):
     """Human-readable landing page for the x402 Oracle API."""
+    user = getattr(request.state, "user", None)
     content = f"""
     <div style="max-width:720px;margin:0 auto;padding:40px 20px;">
       <h1 style="font-family:var(--font-heading);font-size:2rem;margin-bottom:8px;">
@@ -90,4 +91,8 @@ async def oracle_page(request: Request):
       </div>
     </div>
     """
-    return HTMLResponse(page_shell(request, "Oracle API — IndieStack", content))
+    return HTMLResponse(page_shell(
+        "Oracle API — IndieStack", content,
+        description="Pay-per-call compatibility and migration intelligence for developer tools via x402.",
+        user=user,
+    ))
