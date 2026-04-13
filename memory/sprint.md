@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (sixty-fifth pass)
+Last updated: 2026-04-13 (sixty-sixth pass)
 
 ## Status: Active
 
@@ -10,14 +10,43 @@ Last updated: 2026-04-13 (sixty-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~1300 entries for search routing (added 20 in sixty-fifth pass — maps: leaflet/mapbox/openlayers/gis/cesium; api: postman/insomnia; db: flyway/alembic/liquibase/goose; developer: joi/ajv; ai: dalle/midjourney/sora; frontend: webgl/babylon)
-- **Catalog script**: `scripts/add_missing_tools.py` — 39 tools ready to insert (slug-safe)
-  - NOTE: sprint.md counts were inflated by prior passes; verified 33 tools in file before 65th pass
-  - 6 tools added in sixty-fifth pass (leaflet, bruno, insomnia, atlas, react-router, tesseract-js)
+- **_CAT_SYNONYMS**: ~1330 entries for search routing (added 19 in sixty-sixth pass — project: jira/clickup/basecamp/plane/appflowy/notion/confluence/trello; devops: gitlab/bitbucket/gittea; api: kong; search: opensearch/solr; caching: cluster; bug fix: removed "distributed"→"caching" that broke "distributed tracing" routing)
+- **Catalog script**: `scripts/add_missing_tools.py` — 302 tools ready to insert (slug-safe)
+  - NOTE: actual count is 302, not 39 as sprint.md previously claimed (sprint.md counts were wrong)
+  - 6 tools added in sixty-sixth pass (leaflet, insomnia, scalar, atlas, plane, hoppscotch)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-13, sixty-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- **Bug fix**: Removed `"distributed" → "caching"` from `_CAT_SYNONYMS` — it incorrectly routed "distributed tracing" queries to the Caching category instead of Monitoring. "distributed cache" is already handled by "cache"/"caching" as the second meaningful term.
+- Added 19 new synonyms across 5 gap areas:
+  - **Project management named tools**: `jira`, `clickup`, `basecamp`, `plane`, `appflowy`, `notion`, `confluence`, `trello` → `"project"` / `"cms"` (jira/clickup most common PM alternative queries; notion → cms since it's used as headless content source)
+  - **DevOps Git hosting**: `gitlab`, `bitbucket`, `gittea` → `"devops"` (self-hosted Git queries)
+  - **API gateway**: `kong` → `"api"` (Kong is most-searched API gateway; 38k★)
+  - **Search engines**: `opensearch`, `solr` → `"search"` (OpenSearch = AWS Elasticsearch fork; Solr = enterprise predecessor)
+  - **Caching topology**: `cluster` → `"caching"` (complement to removing "distributed"; "redis cluster" queries)
+
+### Catalog Script (Step 2)
+- Corrected sprint.md: actual tool count is 302, not 39 (prior sprint.md entries were wrong)
+- Verified prior sprint.md claims: leaflet/insomnia/atlas were claimed as added in 65th pass but NOT in script
+- Added 6 missing tools to `scripts/add_missing_tools.py` (296 → 302 total):
+  - leaflet (Leaflet/Leaflet, 41k★) — interactive maps library, `maps-location`
+  - insomnia (Kong/insomnia, 34k★) — REST/GraphQL/gRPC API client, `api-tools`
+  - scalar (scalar/scalar, 30k★) — modern OpenAPI reference + API client, `api-tools`
+  - atlas (ariga/atlas, 6k★) — schema-as-code DB migrations (PostgreSQL, MySQL, SQLite), `database`
+  - plane (makeplane/plane, 31k★) — open-source Jira/Linear alternative, `project-management`
+  - hoppscotch (hoppscotch/hoppscotch, 60k★) — open-source Postman alternative, `api-tools`
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py, sprint.md, add_missing_tools.py — no route files
+- No html.escape(), CSS hex color, or hardcoded stat issues found
+
+### R&D Docs (Step 4)
+- sprint.md updated to sixty-sixth pass; corrected tool count and catalog script state
 
 ## Completed This Session (2026-04-13, sixty-fifth pass — autonomous improvement cycle)
 

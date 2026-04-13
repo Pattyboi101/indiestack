@@ -3584,7 +3584,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ttl": "caching",               # TTL (time-to-live) — caching expiry strategy term
     "eviction": "caching",          # "cache eviction", "eviction policy" → Caching
     "invalidation": "caching",      # "cache invalidation", "cache busting" → Caching
-    "distributed": "caching",       # "distributed cache" → Caching (Redis cluster, Dragonfly)
+    # "distributed" removed — "distributed tracing" wrongly routed to Caching;
+    # "distributed cache" is handled by "cache"/"caching" as the second meaningful term.
     "warmup": "caching",            # "cache warmup", "cache warming" → Caching
     # Memoization — in-process caching (memoizee, memize, lodash.memoize)
     "memoize": "caching",           # "memoize function", "memoize library" → Caching
@@ -4144,6 +4145,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — WebGL (lower level than Three.js, but queried directly)
     "webgl": "frontend",            # WebGL — browser 3D graphics API; queries route to Three.js/Babylon.js
     "babylon": "frontend",          # Babylon.js — WebGL-based 3D engine (alternative to Three.js, 23k★)
+    # Project management — named tools not yet mapped (very common alternative query targets)
+    "jira": "project",              # Jira — most-searched PM tool; "jira alternative" is the canonical query
+    "clickup": "project",           # ClickUp — all-in-one productivity platform; popular alternative queries
+    "basecamp": "project",          # Basecamp — project management + team communication by 37signals
+    "plane": "project",             # Plane.so — open-source Jira/Linear alternative (31k★)
+    "appflowy": "project",          # AppFlowy — open-source Notion/Confluence alternative (61k★)
+    "notion": "cms",                # Notion — used as headless CMS/content source; wiki + CMS queries
+    "confluence": "project",        # Confluence — Atlassian wiki/knowledge base (very common alternative query)
+    "trello": "project",            # Trello — kanban board; "trello alternative" is a high-volume query
+    # DevOps — Git hosting platforms (most common alternative query targets)
+    "gitlab": "devops",             # GitLab — self-hosted Git + CI/CD; "gitlab alternative" common query
+    "bitbucket": "devops",          # Bitbucket — Atlassian Git hosting + CI/CD
+    "gittea": "devops",             # common misspelling of Gitea — still routes correctly
+    # API Tools — API gateway named tools not yet mapped
+    "kong": "api",                  # Kong — open-source API gateway (38k★); "kong alternative" queries
+    # Search — additional engines
+    "opensearch": "search",         # OpenSearch — AWS fork of Elasticsearch (16k★)
+    "solr": "search",               # Apache Solr — enterprise full-text search (Elasticsearch predecessor)
+    # Caching — cluster topology terms (complement to removing "distributed")
+    "cluster": "caching",           # "redis cluster", "cache cluster" → Caching
 }
 
 _FTS_STOP_WORDS = {

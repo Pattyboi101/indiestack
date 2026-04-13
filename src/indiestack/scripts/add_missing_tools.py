@@ -4925,6 +4925,107 @@ TOOLS = [
         "npm install luxon",
         "code",
     ),
+    # Maps & Location — interactive mapping libraries --------------------------
+    (
+        "leaflet",
+        "Leaflet.js",
+        "The leading open-source JavaScript library for mobile-friendly interactive maps",
+        "Leaflet is the most popular open-source JavaScript library for mobile-friendly "
+        "interactive maps. Weighing just 42 KB of JS, it has all the mapping features "
+        "most developers ever need. Works with OpenStreetMap, Mapbox, and any tile "
+        "provider. Extensible via 300+ plugins.",
+        "maps-location",
+        "Leaflet/Leaflet",
+        41000,
+        "https://leafletjs.com",
+        "maps,geolocation,javascript,openstreetmap,mobile",
+        "npm install leaflet",
+        "code",
+    ),
+    # API Tools — REST/GraphQL/gRPC clients ------------------------------------
+    (
+        "insomnia",
+        "Insomnia",
+        "The collaborative API client for REST, GraphQL, gRPC, and more",
+        "Insomnia is Kong's open-source API client for designing, debugging, and "
+        "testing REST, GraphQL, WebSockets, Server-Sent Events, and gRPC requests. "
+        "Supports environments, test suites, Git sync, and team collaboration. "
+        "Available as desktop app (Mac/Windows/Linux) and CLI.",
+        "api-tools",
+        "Kong/insomnia",
+        34000,
+        "https://insomnia.rest",
+        "api-client,rest,graphql,grpc,testing,http",
+        "brew install insomnia",
+        "code",
+    ),
+    (
+        "scalar",
+        "Scalar",
+        "Beautiful API references from OpenAPI/Swagger files",
+        "Scalar generates modern, interactive API reference documentation from "
+        "OpenAPI/Swagger specs. Drop-in replacement for Swagger UI and ReDoc. "
+        "Includes an embedded API client for testing. Integrates with FastAPI, "
+        "Hono, Express, Nitro, and any OpenAPI provider.",
+        "api-tools",
+        "scalar/scalar",
+        30000,
+        "https://scalar.com",
+        "openapi,api-docs,swagger,documentation,api-client",
+        "npm install @scalar/api-reference",
+        "code",
+    ),
+    # Database — schema migration tools ----------------------------------------
+    (
+        "atlas",
+        "Atlas",
+        "Manage your database schema as code",
+        "Atlas is a language-agnostic schema-as-code tool for managing and migrating "
+        "database schemas. Supports PostgreSQL, MySQL, MariaDB, SQLite, and more. "
+        "Declarative and versioned migration workflows, with automatic migration "
+        "planning and CI enforcement. Built by the Ariga team.",
+        "database",
+        "ariga/atlas",
+        6000,
+        "https://atlasgo.io",
+        "database,migrations,schema,postgresql,mysql,sqlite",
+        "curl -sSf https://atlasgo.sh | sh",
+        "code",
+    ),
+    # Project Management — open-source alternatives ----------------------------
+    (
+        "plane",
+        "Plane",
+        "The open-source project management tool",
+        "Plane is an open-source software project management tool for issues, cycles, "
+        "and modules — a Jira and Linear alternative. Self-hostable or cloud-hosted. "
+        "Supports Kanban boards, sprints, roadmaps, and GitHub integration. "
+        "Built with Next.js and Python/Django.",
+        "project-management",
+        "makeplane/plane",
+        31000,
+        "https://plane.so",
+        "project-management,kanban,issues,self-hosted,open-source",
+        "docker compose up -d",
+        "code",
+    ),
+    # API Tools — open-source Postman alternatives -----------------------------
+    (
+        "hoppscotch",
+        "Hoppscotch",
+        "Open source API development ecosystem",
+        "Hoppscotch is a lightweight, web-based API development suite — an open-source "
+        "Postman alternative. Test REST, GraphQL, WebSocket, SSE, and Socket.IO "
+        "endpoints directly in the browser. Supports teams, environments, collections, "
+        "and self-hosting. Built with Vue.js and available as a desktop app.",
+        "api-tools",
+        "hoppscotch/hoppscotch",
+        60000,
+        "https://hoppscotch.io",
+        "api-client,rest,graphql,websocket,postman-alternative,open-source",
+        "docker run --rm -it hoppscotch/hoppscotch",
+        "code",
+    ),
 ]
 
 
