@@ -4074,6 +4074,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "dependency": "developer",       # "dependency management", "dependency graph", "dep scanning" → Dev Tools
     "review": "developer",           # "code review tool", "automated code review" → Developer Tools
     "diff": "developer",             # "diff library", "json diff tool", "code diff" → Developer Tools
+    # Database — query builders and ORMs ("sql query builder", "type-safe query")
+    "query": "database",             # "query builder", "type-safe query", "sql query" → Database (Kysely, Knex, Drizzle)
+    # Frontend — state stores ("global store", "state store", "redux store")
+    "store": "frontend",             # "state store", "global store", "data store" → Frontend Frameworks (Zustand, Pinia, Redux)
+    # Frontend — data fetching (SWR, TanStack Query, Apollo Client)
+    "fetch": "frontend",             # "data fetch", "client fetch", "fetch hook" → Frontend Frameworks (SWR, TanStack Query)
+    # Frontend — islands architecture (Astro, Fresh, Qwik use "islands" terminology)
+    "islands": "frontend",           # "islands architecture", "islands framework" → Frontend Frameworks (Astro, Fresh)
+    # Frontend — hydration (complement to existing "hydration" → "frontend")
+    "hydrate": "frontend",           # "hydrate component", "client hydrate" → Frontend Frameworks
+    # Database — NoSQL document stores ("document database", "document store")
+    "document": "database",          # "document store", "document database" → Database (MongoDB, Firestore)
+    # Frontend — React context API ("react context api", "context provider" queries)
+    "context": "frontend",           # "react context", "context provider", "context api" → Frontend Frameworks
+    # Frontend — virtual DOM queries (React, Preact, Inferno)
+    "vdom": "frontend",              # "virtual dom library", "vdom alternative" → Frontend Frameworks
+    "virtual-dom": "frontend",       # hyphenated form — "virtual-dom alternatives" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {

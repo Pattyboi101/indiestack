@@ -4661,6 +4661,79 @@ TOOLS = [
         "docker run -p 9000:9000 -p 9001:9001 quay.io/minio/minio server /data --console-address ':9001'",
         "code",
     ),
+    # API / Backend Frameworks — NestJS (TypeScript enterprise framework) ----------------
+    (
+        "nestjs",
+        "NestJS",
+        "A progressive Node.js framework for building efficient, reliable and scalable server-side applications",
+        "NestJS is a TypeScript-first, opinionated Node.js backend framework heavily inspired "
+        "by Angular's architecture. Uses decorators, dependency injection, and modular structure "
+        "to build maintainable enterprise applications. First-class support for REST, GraphQL, "
+        "WebSockets, microservices (gRPC, NATS, Redis, Kafka), and database integration "
+        "via TypeORM, Prisma, or Mongoose. The dominant choice for large TypeScript backends. "
+        "68k+ GitHub stars.",
+        "api-tools",
+        "nestjs/nest",
+        68000,
+        "https://nestjs.com",
+        "nodejs,typescript,di,rest,graphql,microservices,decorators",
+        "npm i -g @nestjs/cli && nest new project-name",
+        "code",
+    ),
+    # Frontend — MobX (reactive state management) -----------------------------------------
+    (
+        "mobx",
+        "MobX",
+        "Simple, scalable state management",
+        "MobX is a battle-tested reactive state management library. It uses observable state "
+        "and computed values to automatically track dependencies and re-render only what's needed. "
+        "Less boilerplate than Redux — annotate plain JavaScript objects with `@observable` "
+        "and `@computed`. Works with React, Vue, and vanilla JS. "
+        "Ideal for domain-rich, complex state models. 27k+ GitHub stars.",
+        "frontend-frameworks",
+        "mobxjs/mobx",
+        27000,
+        "https://mobx.js.org",
+        "state-management,react,typescript,reactive,observable",
+        "npm install mobx mobx-react-lite",
+        "code",
+    ),
+    # API Tools — Apollo Client (GraphQL client) ------------------------------------------
+    (
+        "apollo-client",
+        "Apollo Client",
+        "A fully-featured, production-ready caching GraphQL client for JavaScript",
+        "Apollo Client is the most popular GraphQL client for JavaScript and TypeScript. "
+        "Normalised cache, automatic query batching, optimistic UI, real-time subscriptions "
+        "via WebSocket, and first-class React hooks (`useQuery`, `useMutation`). "
+        "Works with any GraphQL server — Hasura, Strawberry, Pothos, or custom schemas. "
+        "Part of the Apollo GraphOS ecosystem. 19k+ GitHub stars.",
+        "api-tools",
+        "apollographql/apollo-client",
+        19000,
+        "https://apollographql.com/docs/react",
+        "graphql,react,client,caching,subscriptions,typescript",
+        "npm install @apollo/client graphql",
+        "code",
+    ),
+    # AI Dev Tools — Vercel AI SDK --------------------------------------------------------
+    (
+        "vercel-ai-sdk",
+        "Vercel AI SDK",
+        "The AI Toolkit for TypeScript",
+        "Vercel AI SDK (now simply 'AI SDK') is the standard toolkit for building AI-powered "
+        "streaming UIs in TypeScript. Unified API for OpenAI, Anthropic, Google Gemini, Mistral, "
+        "and 20+ providers. React/Next.js hooks for streaming text, structured output (with Zod), "
+        "tool calling, and multi-step agents. Supports RSC streaming and edge runtime. "
+        "The go-to SDK for AI chat apps, copilots, and generative UIs. 14k+ GitHub stars.",
+        "ai-dev-tools",
+        "vercel/ai",
+        14000,
+        "https://sdk.vercel.ai",
+        "ai,llm,streaming,nextjs,react,openai,anthropic,typescript,structured-output",
+        "npm install ai",
+        "code",
+    ),
     # Testing — k6 (load and performance testing) ----------------------------------------
     (
         "k6",
