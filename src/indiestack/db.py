@@ -1860,6 +1860,19 @@ async def init_db():
         """)
         await db.execute("CREATE INDEX IF NOT EXISTS idx_outcomes_repo ON build_outcomes(repo)")
         await db.execute("CREATE INDEX IF NOT EXISTS idx_outcomes_hash ON build_outcomes(manifest_hash)")
+
+        # Oracle API call log (x402 pay-per-call analytics)
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS oracle_calls (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                endpoint TEXT NOT NULL,
+                slug_a TEXT NOT NULL,
+                slug_b TEXT NOT NULL,
+                had_data INTEGER NOT NULL DEFAULT 1,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_oracle_calls_created ON oracle_calls(created_at)")
         await db.commit()
 
         # Migration: track mid-trial citation nudge email (avoids duplicate sends)

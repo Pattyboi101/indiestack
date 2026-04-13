@@ -299,6 +299,12 @@ async def privacy_page(request: Request):
         outcomes (success/failure) and tool compatibility data via <code>report_outcome</code>
         and <code>report_compatibility</code> functions. This data is used to improve tool
         recommendations and build trust signals. No personal data is included in these reports.</li>
+        <li><strong>Oracle API calls:</strong> when an AI agent queries our paid Oracle API
+        (via the <a href="https://www.x402.org/" style="color:var(--accent);">x402 protocol</a>),
+        we log the endpoint called, the tool slugs queried, and a timestamp. We do not log
+        wallet addresses, payment signatures, or any identifying information about the agent
+        or its user. Payment verification is handled entirely by the x402 protocol and the
+        Base blockchain network — we receive USDC but do not process or store payment credentials.</li>
       </ul>
 
       <h2 {_HEADING}>How We Use Your Data</h2>
@@ -314,6 +320,11 @@ async def privacy_page(request: Request):
         <li><strong>Gmail SMTP</strong> — transactional emails are sent from our Gmail account.</li>
         <li><strong>Stripe</strong> — payments for paid plans are processed by Stripe. We do not
         store your payment card details — these are handled entirely by Stripe.</li>
+        <li><strong>Base network (x402)</strong> — Oracle API payments are processed on the
+        <a href="https://base.org/" style="color:var(--accent);">Base</a> blockchain via the
+        x402 protocol. Payments are peer-to-peer USDC transfers verified by a facilitator service.
+        On-chain transaction data (wallet addresses, amounts, timestamps) is publicly visible on
+        the Base blockchain as with any blockchain transaction.</li>
       </ul>
       <p {_TEXT}>We do not sell your personal data. We do not use any third-party analytics,
       advertising, or tracking services.</p>

@@ -1,10 +1,24 @@
 """x402-gated Oracle API — pay-per-call compatibility and migration data."""
 
+import logging
+
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from fastapi_x402 import pay
 
+_log = logging.getLogger("indiestack.oracle")
 router = APIRouter()
+
+
+async def _log_call(d, endpoint: str, slug_a: str, slug_b: str, had_data: bool):
+    """Log an oracle call for analytics. Fire-and-forget, never fails the request."""
+    try:
+        await d.execute(
+            "INSERT INTO oracle_calls (endpoint, slug_a, slug_b, had_data) VALUES (?, ?, ?, ?)",
+            (endpoint, slug_a, slug_b, 1 if had_data else 0))
+        await d.commit()
+    except Exception as e:
+        _log.warning("oracle call log failed: %s", e)
 
 
 # -- Compatibility endpoint ------------------------------------------------
@@ -31,7 +45,15 @@ async def compatibility(request: Request, tool_a: str, tool_b: str):
         "WHERE tool_a_slug = ? AND tool_b_slug = ?", (a, b))
     cooccurrence = await cursor2.fetchone()
 
-    if not pair and not cooccurrence:
+    # Check verified_combos (real packages found together in starred repos)
+    cursor3 = await d.execute(
+        "SELECT repo, repo_stars FROM verified_combos "
+        "WHERE (package_a = ? AND package_b = ?) OR (package_a = ? AND package_b = ?) "
+        "ORDER BY repo_stars DESC LIMIT 10", (a, b, b, a))
+    combos = [dict(r) for r in await cursor3.fetchall()]
+
+    if not pair and not cooccurrence and not combos:
+        await _log_call(d, "compatibility", a, b, False)
         return JSONResponse({
             "tool_a": a,
             "tool_b": b,
@@ -40,20 +62,26 @@ async def compatibility(request: Request, tool_a: str, tool_b: str):
             "message": f"No compatibility data found for {a} + {b}."
         })
 
+    await _log_call(d, "compatibility", a, b, True)
+
     # Find related tools (other tools commonly paired with tool_a)
-    cursor3 = await d.execute(
+    cursor4 = await d.execute(
         "SELECT tool_b_slug FROM tool_pairs WHERE tool_a_slug = ? "
         "ORDER BY success_count DESC LIMIT 5", (a,))
-    related = [r['tool_b_slug'] for r in await cursor3.fetchall() if r['tool_b_slug'] != b]
+    related = [r['tool_b_slug'] for r in await cursor4.fetchall() if r['tool_b_slug'] != b]
+
+    has_evidence = (pair and pair['success_count'] > 0) or cooccurrence or combos
 
     return JSONResponse({
         "tool_a": a,
         "tool_b": b,
-        "compatible": True if (pair and pair['success_count'] > 0) or cooccurrence else None,
-        "confidence": "verified" if pair and pair['verified'] else "observed" if cooccurrence else "reported",
+        "compatible": True if has_evidence else None,
+        "confidence": "verified" if pair and pair['verified'] else "observed" if (cooccurrence or combos) else "reported",
         "success_count": pair['success_count'] if pair else 0,
-        "source": pair['source'] if pair else "cooccurrence",
+        "source": pair['source'] if pair else ("verified_combos" if combos else "cooccurrence"),
         "cooccurrence_count": cooccurrence['cooccurrence_count'] if cooccurrence else 0,
+        "verified_in_repos": [{"repo": c['repo'], "stars": c['repo_stars']} for c in combos[:5]],
+        "verified_repo_count": len(combos),
         "related_tools": related[:5],
     })
 
@@ -84,12 +112,15 @@ async def migration(request: Request, from_package: str, to_package: str):
     reverse_count = (await cursor2.fetchone())['cnt']
 
     if not forward and reverse_count == 0:
+        await _log_call(d, "migration", from_pkg, to_pkg, False)
         return JSONResponse({
             "from": from_pkg,
             "to": to_pkg,
             "migrations_found": 0,
             "message": f"No migration data found for {from_pkg} -> {to_pkg}."
         })
+
+    await _log_call(d, "migration", from_pkg, to_pkg, True)
 
     # Confidence breakdown
     confidence_counts = {"swap": 0, "likely": 0, "inferred": 0}
