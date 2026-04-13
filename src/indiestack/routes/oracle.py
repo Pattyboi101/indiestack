@@ -141,6 +141,122 @@ async def migration(request: Request, from_package: str, to_package: str):
     })
 
 
+# -- Stack Architect endpoint ----------------------------------------------
+
+@pay("$0.10")
+@router.post("/v1/stack/architect")
+async def stack_architect(request: Request):
+    """Validate an entire tool stack. Returns a compatibility matrix,
+    conflict warnings, and migration alternatives for each package pair."""
+    d = request.state.db
+
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON body"}, status_code=400)
+
+    packages = body.get("packages", [])
+    if not packages or not isinstance(packages, list):
+        return JSONResponse({"error": "Provide a 'packages' array with 2+ tool names"}, status_code=400)
+
+    # Normalize and deduplicate
+    packages = list(dict.fromkeys([p.lower().strip() for p in packages if isinstance(p, str) and p.strip()]))
+    if len(packages) < 2:
+        return JSONResponse({"error": "Need at least 2 packages to analyze"}, status_code=400)
+    if len(packages) > 20:
+        return JSONResponse({"error": "Maximum 20 packages per request"}, status_code=400)
+
+    # Build all unique pairs (alphabetically sorted)
+    pairs = []
+    for i in range(len(packages)):
+        for j in range(i + 1, len(packages)):
+            a, b = sorted([packages[i], packages[j]])
+            pairs.append((a, b))
+
+    # Query all data sources for each pair
+    matrix = []
+    conflicts = []
+    total_evidence = 0
+
+    for a, b in pairs:
+        cursor = await d.execute(
+            "SELECT verified, success_count, source FROM tool_pairs "
+            "WHERE tool_a_slug = ? AND tool_b_slug = ?", (a, b))
+        pair = await cursor.fetchone()
+
+        cursor2 = await d.execute(
+            "SELECT cooccurrence_count FROM manifest_cooccurrences "
+            "WHERE tool_a_slug = ? AND tool_b_slug = ?", (a, b))
+        cooc = await cursor2.fetchone()
+
+        cursor3 = await d.execute(
+            "SELECT COUNT(*) as cnt, MAX(repo_stars) as max_stars FROM verified_combos "
+            "WHERE (package_a = ? AND package_b = ?) OR (package_a = ? AND package_b = ?)",
+            (a, b, b, a))
+        combo = await cursor3.fetchone()
+
+        evidence_count = (
+            (pair['success_count'] if pair else 0) +
+            (cooc['cooccurrence_count'] if cooc else 0) +
+            (combo['cnt'] if combo else 0)
+        )
+        total_evidence += evidence_count
+
+        confidence = "no_data"
+        if pair and pair['verified']:
+            confidence = "verified"
+        elif (combo and combo['cnt'] > 0) or cooc:
+            confidence = "observed"
+        elif pair:
+            confidence = "reported"
+
+        entry = {
+            "pair": [a, b],
+            "compatible": True if evidence_count > 0 else None,
+            "confidence": confidence,
+            "evidence_count": evidence_count,
+            "max_repo_stars": combo['max_stars'] if combo and combo['max_stars'] else 0,
+        }
+
+        if confidence == "no_data":
+            conflicts.append(f"No compatibility data for {a} + {b}")
+
+        matrix.append(entry)
+
+    # Check migration momentum for each package (is it being abandoned?)
+    warnings = []
+    for pkg in packages:
+        cursor_mig = await d.execute(
+            "SELECT to_package, COUNT(*) as cnt FROM migration_paths "
+            "WHERE from_package = ? GROUP BY to_package ORDER BY cnt DESC LIMIT 1", (pkg,))
+        mig = await cursor_mig.fetchone()
+        if mig and mig['cnt'] >= 3:
+            warnings.append({
+                "package": pkg,
+                "warning": "migration_momentum",
+                "detail": f"{mig['cnt']} repos migrated from {pkg} to {mig['to_package']}",
+                "alternative": mig['to_package'],
+            })
+
+    # Overall stack score
+    total_pairs = len(pairs)
+    pairs_with_data = sum(1 for m in matrix if m['confidence'] != 'no_data')
+    coverage = round(pairs_with_data / total_pairs * 100) if total_pairs > 0 else 0
+
+    await _log_call(d, "stack_architect", ",".join(packages[:5]), str(len(packages)), total_evidence > 0)
+
+    return JSONResponse({
+        "packages": packages,
+        "stack_score": coverage,
+        "total_pairs_checked": total_pairs,
+        "pairs_with_evidence": pairs_with_data,
+        "total_evidence_points": total_evidence,
+        "matrix": matrix,
+        "conflicts": conflicts,
+        "migration_warnings": warnings,
+    })
+
+
 # -- Bazaar discovery metadata ---------------------------------------------
 
 @router.get("/v1/.well-known/x402-resources")
