@@ -5546,6 +5546,122 @@ TOOLS = [
         "docker compose up",
         "code",
     ),
+    # Rust WASM frontend frameworks — rapidly growing query segment ------------------
+    (
+        "leptos",
+        "Leptos",
+        "Build fast web applications with Rust and WebAssembly",
+        "Leptos is a full-stack, isomorphic Rust web framework leveraging fine-grained "
+        "reactivity to build declarative user interfaces. Compile to WASM for the browser "
+        "or run server-side. Supports SSR, hydration, server functions, and SPA mode. "
+        "Emerging as the Rust answer to SolidJS and Next.js.",
+        "frontend-frameworks",
+        "leptos-rs/leptos",
+        16000,
+        "https://leptos.dev",
+        "rust,wasm,webassembly,fullstack,ssr,reactive",
+        "cargo add leptos",
+        "code",
+    ),
+    (
+        "yew",
+        "Yew",
+        "Rust / Wasm framework for building client web apps",
+        "Yew is a modern Rust framework for creating multi-threaded front-end web apps "
+        "using WebAssembly. Component-based design inspired by Elm and React. Supports "
+        "JavaScript interoperability and reuse of NPM packages. Battle-tested and "
+        "the most mature Rust+WASM frontend framework.",
+        "frontend-frameworks",
+        "yewstack/yew",
+        30000,
+        "https://yew.rs",
+        "rust,wasm,webassembly,components,frontend",
+        "cargo add yew",
+        "code",
+    ),
+    (
+        "dioxus",
+        "Dioxus",
+        "Fullstack GUI library for web, desktop, and mobile in Rust",
+        "Dioxus is a portable, performant, and ergonomic framework for building "
+        "cross-platform apps in Rust. Write once, deploy to web (WASM), desktop "
+        "(native), mobile (iOS/Android), and TUI targets. React-inspired component "
+        "model with a simple hook system and built-in routing and state management.",
+        "frontend-frameworks",
+        "DioxusLabs/dioxus",
+        18000,
+        "https://dioxuslabs.com",
+        "rust,wasm,cross-platform,desktop,mobile,web,fullstack",
+        "cargo add dioxus",
+        "code",
+    ),
+    # CSS frameworks / atomic CSS --------------------------------------------------
+    (
+        "unocss",
+        "UnoCSS",
+        "The instant on-demand atomic CSS engine",
+        "UnoCSS is a highly customisable and performant atomic CSS engine. "
+        "Near-instant build times by generating only the CSS you use. Compatible "
+        "with Tailwind, Windi CSS, and Bootstrap presets. Powers many Vite and "
+        "Nuxt applications as a drop-in Tailwind replacement.",
+        "frontend-frameworks",
+        "unocss/unocss",
+        17000,
+        "https://unocss.dev",
+        "css,atomic-css,tailwind,utility-first,vite",
+        "npm install -D unocss",
+        "code",
+    ),
+    # Local Kubernetes dev tools ---------------------------------------------------
+    (
+        "minikube",
+        "Minikube",
+        "Local Kubernetes, focused on making Kubernetes easy to learn and develop for",
+        "Minikube implements a local Kubernetes cluster on macOS, Linux, and Windows. "
+        "The primary goals are to be the best tool for local Kubernetes application "
+        "development and to support all Kubernetes features that fit. Supports "
+        "multiple container runtimes (Docker, containerd, CRI-O).",
+        "devops-infrastructure",
+        "kubernetes/minikube",
+        29000,
+        "https://minikube.sigs.k8s.io",
+        "kubernetes,k8s,local-dev,containers,devops",
+        "minikube start",
+        "code",
+    ),
+    (
+        "k3s",
+        "K3s",
+        "Lightweight Kubernetes — production-ready distribution for resource-constrained environments",
+        "K3s is a highly available, certified Kubernetes distribution designed for "
+        "production workloads in resource-constrained environments. Single binary under "
+        "70MB, built-in containerd, SQLite or etcd backends, and automatic TLS "
+        "management. Created by Rancher Labs, now a CNCF Sandbox project.",
+        "devops-infrastructure",
+        "k3s-io/k3s",
+        28000,
+        "https://k3s.io",
+        "kubernetes,k8s,lightweight,edge,iot,arm,devops",
+        "curl -sfL https://get.k3s.io | sh -",
+        "code",
+    ),
+    # Node.js backend frameworks ---------------------------------------------------
+    (
+        "adonisjs",
+        "AdonisJS",
+        "A fully-featured Node.js web framework with a focus on developer ergonomics",
+        "AdonisJS is a batteries-included MVC framework for Node.js and TypeScript. "
+        "Inspired by Laravel, it ships with an ORM (Lucid), authentication, mailer, "
+        "file storage, and a first-class CLI. Ideal for server-rendered apps and "
+        "JSON APIs that want structure without configuration overhead.",
+        "api-tools",
+        "adonisjs/core",
+        17000,
+        "https://adonisjs.com",
+        "nodejs,typescript,mvc,fullstack,orm,laravel-like",
+        "npm init adonisjs@latest my-app",
+        "code",
+    ),
 ]
 
 

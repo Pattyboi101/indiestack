@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (seventy-fourth pass)
+Last updated: 2026-04-13 (seventy-fifth pass)
 
 ## Status: Active
 
@@ -10,14 +10,44 @@ Last updated: 2026-04-13 (seventy-fourth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1370 unique effective keys (added 7 in seventy-fourth pass — idp/iam/embedded/cdc/debezium/columnstore/pulsar; 21 duplicate keys exist in source but all have correct last-write-wins values)
-- **Catalog script**: `scripts/add_missing_tools.py` — 331 tools ready to insert (slug-safe); +4 this pass: chroma, apache-kafka, rabbitmq, airbyte
+- **_CAT_SYNONYMS**: 1395 unique effective keys (added 25 in seventy-fifth pass — Rust WASM/leptos/yew/dioxus/trunk; CSS/unocss/windi/pandacss/panda; progressive; solidstart; Node/adonisjs/adonis/hapi/hapijs; k8s-local/minikube/k3s/k3d; AI/braintrust/agentops/opik; 21 duplicate keys exist in source but all correct last-write-wins values)
+- **Catalog script**: `scripts/add_missing_tools.py` — 338 tools ready to insert (slug-safe); +7 this pass: leptos, yew, dioxus, unocss, minikube, k3s, adonisjs
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-13, seventy-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — all prior Step 1 targets confirmed covered
+- Added 25 new entries to `_CAT_SYNONYMS` (1370 → 1395 unique effective keys):
+  - **Rust WASM**: `leptos`, `yew`, `dioxus`, `trunk` → `"frontend"` — Rust+WASM framework queries (fast-growing segment)
+  - **CSS**: `unocss`, `windi`, `pandacss`, `panda` → `"frontend"` — atomic CSS / type-safe styling queries
+  - **PWA**: `progressive` → `"frontend"` — "progressive web app" without "pwa" abbreviation
+  - **SolidJS**: `solidstart` → `"frontend"` — SolidStart meta-framework (SSR, file routing)
+  - **Node.js API**: `adonisjs`, `adonis`, `hapi`, `hapijs` → `"api"` — popular Node.js backend frameworks
+  - **Local k8s**: `minikube`, `k3s`, `k3d` → `"devops"` — local Kubernetes cluster tools
+  - **LLM eval**: `braintrust`, `agentops`, `opik` → `"ai"` — LLM evaluation and agent observability tools
+
+### Catalog Script (Step 2)
+- Added 7 new tools to `scripts/add_missing_tools.py` (331 → 338 total):
+  - **Leptos** (leptos-rs/leptos, 16k★) — Rust+WASM full-stack reactive web framework; frontend-frameworks
+  - **Yew** (yewstack/yew, 30k★) — most mature Rust/WASM component framework; frontend-frameworks
+  - **Dioxus** (DioxusLabs/dioxus, 18k★) — Rust GUI for web, desktop, and mobile; frontend-frameworks
+  - **UnoCSS** (unocss/unocss, 17k★) — instant atomic CSS engine (Windi/Tailwind successor); frontend-frameworks
+  - **Minikube** (kubernetes/minikube, 29k★) — local Kubernetes cluster; devops-infrastructure
+  - **k3s** (k3s-io/k3s, 28k★) — lightweight Kubernetes by Rancher/SUSE; devops-infrastructure
+  - **AdonisJS** (adonisjs/core, 17k★) — Laravel-inspired Node.js MVC framework; api-tools
+
+### Code Quality (Step 3)
+- Recent commits limited to search quality + catalog additions — no route file changes; no html.escape or CSS regressions to fix
+- Both db.py and add_missing_tools.py validated clean with `ast.parse()`
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventy-fifth pass
 
 ## Completed This Session (2026-04-13, seventy-fourth pass — autonomous improvement cycle)
 

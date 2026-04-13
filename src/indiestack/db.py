@@ -4309,6 +4309,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     "columnstore": "database",      # "column-store database" (compound, no hyphen) → Database
     # Message queue — additional stream processing platform
     "pulsar": "message",            # Apache Pulsar — distributed message streaming (Kafka alternative)
+    # Rust frontend / WASM frameworks — fast-growing query segment
+    "leptos": "frontend",           # Leptos — Rust+WASM full-stack reactive web framework (16k★)
+    "yew": "frontend",              # Yew — Rust/WASM component model framework (30k★)
+    "dioxus": "frontend",           # Dioxus — Rust UI framework for web, desktop, and mobile (18k★)
+    "trunk": "frontend",            # Trunk — Rust+WASM build tool and dev server (complement to wasm-pack)
+    # CSS frameworks — atomic CSS and zero-runtime styling not yet individually mapped
+    "unocss": "frontend",           # UnoCSS — instant on-demand atomic CSS engine (Windi/Tailwind successor, 17k★)
+    "windi": "frontend",            # Windi CSS — on-demand utility CSS predecessor to UnoCSS (24k★)
+    "pandacss": "frontend",         # Panda CSS — type-safe CSS-in-JS by Chakra UI team (3.5k★)
+    "panda": "frontend",            # short form — "panda css alternative", "panda setup" → Frontend
+    # PWA — "progressive web app" without the "pwa" abbreviation
+    "progressive": "frontend",      # "progressive web app", "progressive enhancement" → Frontend Frameworks
+    # SolidJS meta-framework (complement to "solid"→"frontend", "solidjs"→"frontend")
+    "solidstart": "frontend",       # SolidStart — SolidJS meta-framework (SSR, file routing, Server Actions)
+    # Node.js backend frameworks not yet individually mapped
+    "adonisjs": "api",              # AdonisJS — Laravel-inspired full-stack Node.js MVC framework (17k★)
+    "adonis": "api",                # short form — "adonis alternative", "adonis vs nestjs" queries
+    "hapi": "api",                  # hapi.js — rich Node.js framework by Walmart Labs (14k★)
+    "hapijs": "api",                # compound form — "hapijs alternative" queries
+    # Kubernetes local dev — complement to k8s/kubernetes/helm/argocd already mapped
+    "minikube": "devops",           # Minikube — local Kubernetes cluster (29k★, most-used local k8s)
+    "k3s": "devops",                # k3s — lightweight Kubernetes by Rancher/SUSE (28k★)
+    "k3d": "devops",                # k3d — run k3s in Docker for local dev (5k★)
+    # LLM evaluation and agent observability — fast-growing AI developer query segment
+    "braintrust": "ai",             # Braintrust Data — LLM evaluation, tracing, and dataset management
+    "agentops": "ai",               # AgentOps — LLM/AI agent session replay and observability (4k★)
+    "opik": "ai",                   # Opik (Comet ML) — open-source LLM evaluation and tracing (5k★)
 }
 
 _FTS_STOP_WORDS = {
