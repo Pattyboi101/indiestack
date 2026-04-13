@@ -5026,6 +5026,94 @@ TOOLS = [
         "docker run --rm -it hoppscotch/hoppscotch",
         "code",
     ),
+    # Database — TypeScript ORMs / query builders (major catalog gap) ----------
+    (
+        "drizzle",
+        "Drizzle ORM",
+        "Headless TypeScript ORM with a head",
+        "Drizzle ORM is a lightweight, performant TypeScript ORM that feels like "
+        "writing SQL, not fighting an abstraction layer. Zero dependencies, full "
+        "type inference, works with PostgreSQL, MySQL, SQLite, and every major "
+        "serverless runtime (Neon, Turso, Cloudflare D1, Bun). Pairs naturally "
+        "with Drizzle Kit for schema migrations.",
+        "database",
+        "drizzle-team/drizzle-orm",
+        25000,
+        "https://orm.drizzle.team",
+        "orm,typescript,postgresql,mysql,sqlite,serverless,type-safe",
+        "npm install drizzle-orm",
+        "code",
+    ),
+    # Database — Python ORMs for FastAPI / async stacks -----------------------
+    (
+        "sqlmodel",
+        "SQLModel",
+        "SQL databases in Python, designed for simplicity and compatibility",
+        "SQLModel is a library for interacting with SQL databases from Python code, "
+        "with Python objects. Designed by the creator of FastAPI, it combines "
+        "SQLAlchemy and Pydantic. Write your database models once and get full "
+        "editor support, data validation, and an ORM — with zero boilerplate.",
+        "database",
+        "tiangolo/sqlmodel",
+        14000,
+        "https://sqlmodel.tiangolo.com",
+        "orm,python,fastapi,pydantic,sqlalchemy,type-safe",
+        "pip install sqlmodel",
+        "code",
+    ),
+    # Payments — open-source payments for OSS developers ----------------------
+    (
+        "polar",
+        "Polar.sh",
+        "Open source monetization for developers",
+        "Polar is an open-source platform for software developers to monetize their "
+        "work. Create and sell subscriptions, one-time products, and GitHub-sponsored "
+        "tiers. Built-in license key management, file downloads, and Discord role "
+        "rewards. Simple checkout flow and developer-first API. "
+        "A Stripe-backed, indie-friendly Gumroad/Lemon Squeezy alternative.",
+        "payments",
+        "polarsource/polar",
+        5000,
+        "https://polar.sh",
+        "payments,subscriptions,oss,open-source,stripe,developer,monetization",
+        "pip install polar-sdk",
+        "code",
+    ),
+    # Developer Tools — TypeScript functional programming ---------------------
+    (
+        "effect",
+        "Effect",
+        "The missing standard library for TypeScript",
+        "Effect is a powerful TypeScript library for building complex, production-grade "
+        "applications. It provides a structured approach to handling errors, async "
+        "operations, dependency injection, and resource management — all fully "
+        "type-safe. Think Rust's Result type plus structured concurrency plus DI, "
+        "all in idiomatic TypeScript.",
+        "developer-tools",
+        "Effect-TS/effect",
+        8000,
+        "https://effect.website",
+        "typescript,functional,fp,error-handling,dependency-injection,concurrency",
+        "npm install effect",
+        "code",
+    ),
+    # API Tools — realtime multiplayer infrastructure -------------------------
+    (
+        "partykit",
+        "PartyKit",
+        "Build realtime multiplayer applications",
+        "PartyKit is a platform and SDK for building multiplayer collaborative "
+        "applications, live cursors, shared state, and real-time features at the "
+        "edge. Deploy stateful WebSocket servers to Cloudflare's network in "
+        "seconds. Pairs naturally with Y.js and Liveblocks-style CRDT patterns.",
+        "api-tools",
+        "partykit/partykit",
+        4000,
+        "https://partykit.io",
+        "realtime,multiplayer,websocket,collaborative,cloudflare,edge",
+        "npm install partykit",
+        "code",
+    ),
 ]
 
 

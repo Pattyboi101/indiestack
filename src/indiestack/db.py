@@ -4165,6 +4165,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "solr": "search",               # Apache Solr — enterprise full-text search (Elasticsearch predecessor)
     # Caching — cluster topology terms (complement to removing "distributed")
     "cluster": "caching",           # "redis cluster", "cache cluster" → Caching
+    # Caching — key-value store generic query terms (Upstash, Cloudflare KV, Redis)
+    "kv": "caching",                # "KV store", "KV namespace", "Cloudflare KV" → Caching
+    "keyvalue": "caching",          # compound — "key-value database", "key-value store" → Caching
+    # Maps — geolocation (in NEED_MAPPINGS terms but missing as individual synonym)
+    "geolocation": "maps",          # "geolocation API", "browser geolocation", "IP geolocation" → Maps & Location
+    "geocode": "maps",              # verb form — "geocode address", "geocode API" (geocoding already mapped)
+    "tile": "maps",                 # "map tile server", "tile provider", "vector tiles" → Maps & Location
+    "tiles": "maps",                # plural form — "map tiles", "raster tiles", "MVT tiles"
+    # Invoicing — usage-based / metered billing (Lago, Orb, Stripe Metering, Stigg)
+    "metered": "invoicing",         # "metered billing", "pay-per-use model" → Invoicing & Billing
+    "usage": "invoicing",           # "usage-based billing", "usage metering" → Invoicing & Billing
+    # Payments — feature entitlements and content paywalls
+    "entitlements": "payments",     # "entitlements management", "feature entitlements" (Stigg, Orb)
+    "paywall": "payments",          # "paywall implementation", "content paywall" → Payments
+    # Auth — passkeys (plural of passkey; singular already mapped at line ~2482)
+    "passkeys": "authentication",   # plural — "passkeys support", "implement passkeys" → Authentication
+    # API — Django REST Framework (very high query volume in Python ecosystem)
+    "drf": "api",                   # DRF — Django REST Framework abbreviation (most common Python API)
+    "djangorestframework": "api",   # full canonical package name form → API Tools
+    # Database — async Python ORMs (FastAPI + MongoDB ecosystem tools)
+    "sqlmodel": "database",         # SQLModel — Pydantic+SQLAlchemy ORM by FastAPI creator (14k★)
+    "beanie": "database",           # Beanie — async MongoDB ODM for Python with Pydantic (4k★)
+    "tortoise": "database",         # Tortoise ORM — Django-inspired async Python ORM (4k★)
+    "tortoise-orm": "database",     # hyphenated form — "tortoise-orm alternative" queries
 }
 
 _FTS_STOP_WORDS = {
