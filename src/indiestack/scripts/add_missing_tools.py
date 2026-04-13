@@ -4751,6 +4751,95 @@ TOOLS = [
         "brew install k6",
         "code",
     ),
+    # MCP Servers -----------------------------------------------------------------------
+    (
+        "mcp-filesystem",
+        "Filesystem MCP Server",
+        "Give AI agents secure read/write access to your local filesystem",
+        "The official Model Context Protocol filesystem server from Anthropic. Exposes "
+        "file system operations to AI agents — read files, write files, list directories, "
+        "create/move/delete files, and search file contents. Supports configurable "
+        "allowed-paths so agents are sandboxed to specific directories. The most widely "
+        "used MCP server for giving AI coding agents access to project files. Part of the "
+        "official modelcontextprotocol/servers monorepo (14k+ GitHub stars).",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+        "mcp,filesystem,claude,ai-agent,model-context-protocol,anthropic",
+        "npx @modelcontextprotocol/server-filesystem /path/to/allowed/dir",
+        "code",
+    ),
+    (
+        "mcp-github",
+        "GitHub MCP Server",
+        "Let AI agents read repos, issues, PRs, and code from GitHub",
+        "Official MCP server for GitHub integration. Gives AI agents access to "
+        "repository contents, file trees, commits, branches, issues, pull requests, "
+        "and code search. Supports both public and private repos via GitHub personal "
+        "access tokens. Essential for AI coding agents working with GitHub-hosted projects. "
+        "Part of the official modelcontextprotocol/servers monorepo (14k+ GitHub stars).",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
+        "mcp,github,claude,ai-agent,model-context-protocol,code-review,issues",
+        "npx @modelcontextprotocol/server-github",
+        "code",
+    ),
+    (
+        "mcp-postgres",
+        "PostgreSQL MCP Server",
+        "Give AI agents read access to your PostgreSQL database",
+        "Official MCP server for PostgreSQL. Exposes database schema, table structures, "
+        "and read-only query execution to AI agents. Agents can inspect tables, run "
+        "SELECT queries, and understand your data model — without write access by default. "
+        "Invaluable for AI agents helping debug queries, generate migrations, or answer "
+        "questions about your data. Part of the official modelcontextprotocol/servers monorepo.",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+        "mcp,postgresql,database,claude,ai-agent,model-context-protocol,sql",
+        "npx @modelcontextprotocol/server-postgres postgresql://user:pass@localhost/mydb",
+        "code",
+    ),
+    (
+        "mcp-memory",
+        "Memory MCP Server",
+        "Give AI agents a persistent knowledge graph across conversations",
+        "Official MCP server that gives AI agents a persistent memory store backed by "
+        "a local knowledge graph. Agents can create, read, update, and delete entities "
+        "and relations — letting them remember facts, preferences, and context across "
+        "sessions. Built on a local JSON file store, no external dependencies. Ideal for "
+        "building AI assistants that remember user context. Part of the official "
+        "modelcontextprotocol/servers monorepo (14k+ GitHub stars).",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/memory",
+        "mcp,memory,knowledge-graph,claude,ai-agent,model-context-protocol,persistence",
+        "npx @modelcontextprotocol/server-memory",
+        "code",
+    ),
+    (
+        "mcp-fetch",
+        "Fetch MCP Server",
+        "Let AI agents fetch and read web pages and HTTP endpoints",
+        "Official MCP server that gives AI agents the ability to fetch URLs and read "
+        "web content. Supports HTML-to-Markdown conversion so agents can digest web "
+        "pages cleanly, as well as raw response mode for JSON APIs. Handles redirects, "
+        "custom headers, and basic authentication. The simplest way to give an agent "
+        "access to external web data. Part of the official modelcontextprotocol/servers "
+        "monorepo (14k+ GitHub stars).",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
+        "mcp,fetch,http,web,claude,ai-agent,model-context-protocol,scraping",
+        "npx @modelcontextprotocol/server-fetch",
+        "code",
+    ),
 ]
 
 

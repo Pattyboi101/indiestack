@@ -4091,6 +4091,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — virtual DOM queries (React, Preact, Inferno)
     "vdom": "frontend",              # "virtual dom library", "vdom alternative" → Frontend Frameworks
     "virtual-dom": "frontend",       # hyphenated form — "virtual-dom alternatives" → Frontend Frameworks
+    # Testing — test stubs (complement to mock/mocking → testing)
+    "stub": "testing",              # "test stub", "http stub", "stub server" → Testing Tools (MSW, WireMock)
+    "stubbing": "testing",          # "stubbing http requests", "stubbing dependencies" → Testing Tools
+    # Frontend — pagination and infinite scroll components
+    "pagination": "frontend",       # "pagination component", "cursor pagination" → Frontend (TanStack Table)
+    "paginate": "frontend",         # "paginate results", "paginate api response" → Frontend Frameworks
+    # Developer Tools — debugging utilities (pdb, node --inspect, Chrome DevTools protocol)
+    "debugger": "developer",        # "node debugger", "python debugger", "remote debugger" → Developer Tools
+    "debugging": "developer",       # "debugging tool", "remote debugging", "debug middleware" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
