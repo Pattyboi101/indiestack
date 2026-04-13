@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (sixtieth pass)
+Last updated: 2026-04-13 (sixty-first pass)
 
 ## Status: Active
 
@@ -10,13 +10,41 @@ Last updated: 2026-04-13 (sixtieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1230 entries for search routing (added 11 in sixtieth pass — OTel/tracing, performance, load balancer, magic link auth, local-first/CRDT sync)
-- **Catalog script**: `scripts/add_missing_tools.py` — 278 tools ready to insert (slug-safe)
-  - 5 tools added in sixtieth pass (Crawlee, Encore, ElectricSQL, Pagefind, Soketi)
+- **_CAT_SYNONYMS**: 1251 entries for search routing (added 21 in sixty-first pass — XSS/CSRF/sanitize security, html, openid, injection/di, quality/regression, report, dependency/review/diff)
+- **Catalog script**: `scripts/add_missing_tools.py` — 283 tools ready to insert (slug-safe)
+  - 5 tools added in sixty-first pass (Uptime Kuma, Ruff, Pydantic, MinIO, k6)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-13, sixty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for unmapped query terms after 60 prior passes
+- Added 21 new `_CAT_SYNONYMS` entries:
+  - **Security — XSS/CSRF/sanitization**: `xss`, `csrf`, `sanitizer`, `sanitize`, `dompurify` → `"security"` (DOMPurify, sanitize-html, helmet, csurf queries; very common in frontend security searches)
+  - **Frontend — HTML**: `html` → `"frontend"` (html parser/template engine/editor queries; HTMX, Alpine.js, html-in-js)
+  - **Auth — OpenID**: `openid` → `"authentication"` (complement to `"oidc"` → authentication; OpenID Connect provider queries)
+  - **Developer Tools — Dependency Injection**: `injection`, `di` → `"developer"` (InversifyJS, tsyringe, Wire DI container queries)
+  - **Testing — Code Quality / Regression**: `quality`, `regression` → `"testing"` (SonarQube, Codacy, visual/unit regression testing)
+  - **Analytics — Reporting**: `report` → `"analytics"` (reporting tool, SQL report, report builder queries)
+  - **Developer Tools — Dependency / Review / Diff**: `dependency`, `review`, `diff` → `"developer"` (dependency management, code review tool, diff library queries)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (283 total):
+  - Uptime Kuma (monitoring-uptime, 60k★) — self-hosted uptime monitoring with beautiful status pages
+  - Ruff (testing-tools, 34k★) — 10-100× faster Python linter + formatter written in Rust
+  - Pydantic (developer-tools, 21k★) — Python data validation with type hints (FastAPI foundation)
+  - MinIO (file-management, 47k★) — high-performance self-hosted S3-compatible object storage
+  - k6 (testing-tools, 25k★) — modern JavaScript-based load and performance testing tool
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to sixty-first pass
 
 ## Completed This Session (2026-04-13, sixtieth pass — autonomous improvement cycle)
 

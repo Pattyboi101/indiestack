@@ -4593,6 +4593,91 @@ TOOLS = [
         "npm install -g @soketi/soketi",
         "code",
     ),
+    # Monitoring — Uptime Kuma (self-hosted uptime monitoring) -------------------------
+    (
+        "uptime-kuma",
+        "Uptime Kuma",
+        "A fancy self-hosted monitoring tool",
+        "Uptime Kuma is a self-hosted uptime monitoring tool similar to Uptime Robot. "
+        "Monitors HTTP(S), TCP, DNS, Docker containers, and Steam game servers. "
+        "Beautiful status pages, multi-channel notifications (Telegram, Discord, Slack, email), "
+        "and a clean dashboard. Single Docker container, zero external dependencies. 60k+ stars.",
+        "monitoring-uptime",
+        "louislam/uptime-kuma",
+        60000,
+        "https://uptime.kuma.pet",
+        "monitoring,uptime,self-hosted,docker,open-source,status-page",
+        "docker run -d --restart=always -p 3001:3001 louislam/uptime-kuma:1",
+        "code",
+    ),
+    # Testing — Ruff (Python linter + formatter in Rust) --------------------------------
+    (
+        "ruff",
+        "Ruff",
+        "An extremely fast Python linter and code formatter, written in Rust",
+        "Ruff is a blazing-fast Python linter and formatter written in Rust — 10-100× faster "
+        "than Flake8, Black, isort, and pylint combined. Drop-in replacement with a single "
+        "pyproject.toml config. Supports 800+ lint rules (including Flake8, isort, pydocstyle, "
+        "pyupgrade). The standard Python linting tool for modern projects. 34k+ GitHub stars.",
+        "testing-tools",
+        "astral-sh/ruff",
+        34000,
+        "https://astral.sh/ruff",
+        "python,linter,formatter,fast,rust,flake8-alternative",
+        "pip install ruff",
+        "code",
+    ),
+    # Developer Tools — Pydantic (Python data validation) --------------------------------
+    (
+        "pydantic",
+        "Pydantic",
+        "Data validation using Python type hints",
+        "Pydantic is the most widely used Python data validation library. Define data shapes "
+        "with type hints, get automatic validation, serialization, and JSON schema generation. "
+        "The foundation of FastAPI, LangChain, and thousands of Python applications. "
+        "Pydantic v2 rewrites the core in Rust for 5-50× faster validation. 21k+ GitHub stars.",
+        "developer-tools",
+        "pydantic/pydantic",
+        21000,
+        "https://docs.pydantic.dev",
+        "python,validation,types,serialization,fastapi,json-schema",
+        "pip install pydantic",
+        "code",
+    ),
+    # File Management — MinIO (S3-compatible object storage) ----------------------------
+    (
+        "minio",
+        "MinIO",
+        "High-performance, S3-compatible object storage",
+        "MinIO is a high-performance, open-source object storage server fully compatible "
+        "with the Amazon S3 API. Self-host on commodity hardware or Kubernetes. "
+        "Write performance up to 325 GiB/s, read up to 165 GiB/s on a standard server. "
+        "Powers AI/ML pipelines, data lakes, and cloud-native backup. 47k+ GitHub stars.",
+        "file-management",
+        "minio/minio",
+        47000,
+        "https://min.io",
+        "s3,object-storage,self-hosted,open-source,kubernetes,data-lake",
+        "docker run -p 9000:9000 -p 9001:9001 quay.io/minio/minio server /data --console-address ':9001'",
+        "code",
+    ),
+    # Testing — k6 (load and performance testing) ----------------------------------------
+    (
+        "k6",
+        "k6",
+        "Modern load testing for developers and testers",
+        "k6 is an open-source load testing tool by Grafana Labs. Write tests in JavaScript, "
+        "run them locally or in Grafana Cloud. Supports HTTP/1.1, HTTP/2, WebSockets, gRPC, "
+        "and browser testing (via Playwright integration). Scriptable, CI/CD-friendly, "
+        "with rich metrics and thresholds. 25k+ GitHub stars.",
+        "testing-tools",
+        "grafana/k6",
+        25000,
+        "https://k6.io",
+        "load-testing,performance,javascript,api-testing,grafana,open-source",
+        "brew install k6",
+        "code",
+    ),
 ]
 
 

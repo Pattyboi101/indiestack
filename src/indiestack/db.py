@@ -4052,6 +4052,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "localfirst": "database",        # compound form — "localfirst sync", "localfirst architecture"
     "sync": "database",              # "offline sync", "data sync", "realtime sync" → Database
     "crdt": "database",              # "CRDT sync", "conflict-free replicated data type" → Database
+    # Security — XSS and CSRF protection tools (DOMPurify, sanitize-html, csurf, helmet)
+    "xss": "security",               # XSS (cross-site scripting) prevention and sanitizer queries
+    "csrf": "security",              # CSRF protection middleware ("csrf token", "csrf alternative")
+    "sanitizer": "security",         # "html sanitizer", "input sanitizer" → Security Tools (DOMPurify)
+    "sanitize": "security",          # verb form — "sanitize html input", "sanitize output" → Security
+    "dompurify": "security",         # DOMPurify — fast, permissive XSS sanitizer for HTML (13k★)
+    # Frontend — HTML template engines, parsers, and editors
+    "html": "frontend",              # "html parser", "html template engine", "html-in-js" → Frontend
+    # Auth — OpenID Connect standard (complement to "oidc"→authentication)
+    "openid": "authentication",      # OpenID Connect — "openid provider", "openid connect library"
+    # Developer Tools — dependency injection containers (InversifyJS, tsyringe, Wire)
+    "injection": "developer",        # "dependency injection", "constructor injection" → Developer Tools
+    "di": "developer",               # DI container shorthand — "di framework", "di library for ts"
+    # Testing — code quality and regression testing patterns
+    "quality": "testing",            # "code quality tool", "quality gate" → Testing Tools (SonarQube, Codacy)
+    "regression": "testing",         # "regression testing", "visual regression suite" → Testing Tools
+    # Analytics — generic reporting tool queries
+    "report": "analytics",           # "reporting tool", "report builder", "sql report" → Analytics & Metrics
+    # Developer Tools — dependency management and code review tooling
+    "dependency": "developer",       # "dependency management", "dependency graph", "dep scanning" → Dev Tools
+    "review": "developer",           # "code review tool", "automated code review" → Developer Tools
+    "diff": "developer",             # "diff library", "json diff tool", "code diff" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
