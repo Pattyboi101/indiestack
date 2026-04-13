@@ -4336,6 +4336,49 @@ _CAT_SYNONYMS: dict[str, str] = {
     "braintrust": "ai",             # Braintrust Data — LLM evaluation, tracing, and dataset management
     "agentops": "ai",               # AgentOps — LLM/AI agent session replay and observability (4k★)
     "opik": "ai",                   # Opik (Comet ML) — open-source LLM evaluation and tracing (5k★)
+    # Kubernetes tooling — cluster management and developer workflow tools
+    "k9s": "devops",                # k9s — terminal-based Kubernetes TUI dashboard manager (27k★)
+    "kustomize": "devops",          # Kustomize — Kubernetes-native configuration customization (CNCF)
+    "skaffold": "devops",           # Skaffold — k8s build/push/deploy dev workflow tool (Google, 15k★)
+    # Database — multi-model and document stores not yet individually mapped
+    "arangodb": "database",         # ArangoDB — multi-model graph/document/key-value database (13k★)
+    "couchdb": "database",          # Apache CouchDB — document-oriented NoSQL with HTTP API (6k★)
+    # Caching — distributed in-memory data grids
+    "hazelcast": "caching",         # Hazelcast — open-source distributed in-memory caching + compute
+    # Testing — code quality, static analysis, and coverage platforms
+    "sonar": "testing",             # SonarQube/SonarCloud shorthand — static analysis + quality gates
+    "sonarcloud": "testing",        # SonarCloud — cloud-hosted SonarQube (free for OSS projects)
+    "codecov": "testing",           # Codecov — code coverage tracking and PR annotation (10k★)
+    "codacy": "testing",            # Codacy — automated code quality and test coverage reports
+    "deepsource": "testing",        # DeepSource — static analysis for Python, JS, Go, Ruby
+    # CMS — headless CMS tools not yet individually mapped
+    "storyblok": "cms",             # Storyblok — headless CMS with visual block editor (SaaS, 2.6k★)
+    "tinacms": "cms",               # TinaCMS — open-source Git-backed headless CMS (12k★)
+    "contentlayer": "cms",          # ContentLayer — transforms content into type-safe data for Next.js (4k★)
+    # AI — AI app builders and IDE coding assistants with fast-growing query volume
+    "lovable": "ai",                # Lovable — AI-powered full-stack app builder (React + Supabase)
+    "cline": "ai",                  # Cline — open-source AI coding extension (formerly Claude Dev, 38k★)
+    "boltnew": "ai",                # Bolt.new (StackBlitz) — AI-powered full-stack app generator in browser
+    # Monitoring — ELK stack components not yet individually mapped
+    "kibana": "monitoring",         # Kibana — log and metrics visualization for Elasticsearch
+    "elk": "monitoring",            # ELK stack — Elasticsearch + Logstash + Kibana (observability)
+    # Logging — ELK pipeline component
+    "logstash": "logging",          # Logstash — server-side log ingestion and transformation pipeline
+    # API — SDK generation tools and developer-focused API gateways
+    "speakeasy": "api",             # Speakeasy — type-safe SDK generation from OpenAPI specs (5k★)
+    "zuplo": "api",                 # Zuplo — OpenAPI-native developer API gateway with rate limiting
+    "stainless": "api",             # Stainless — automatic SDK generation for REST APIs
+    "redocly": "api",               # Redocly — OpenAPI documentation, linting, and bundling (7k★)
+    "hurl": "api",                  # Hurl — HTTP request testing with plain text files (13k★)
+    # Email — email testing / sandbox servers for local development
+    "mailpit": "email",             # Mailpit — modern email testing server (MailHog successor, 6k★)
+    "mailhog": "email",             # MailHog — SMTP email testing server for local dev (14k★)
+    # Developer Tools — JavaScript package registry alternative to npm
+    "jsr": "developer",             # JSR (JavaScript Registry) — Deno's modern TypeScript-native package registry
+    # Developer Tools — Python project manager and version manager
+    "rye": "developer",             # Rye — Python project and package manager by Armin Ronacher (9k★)
+    # Message Queue — Go event-driven application library
+    "watermill": "message",         # Watermill — Go library for building event-driven applications (8k★)
 }
 
 _FTS_STOP_WORDS = {

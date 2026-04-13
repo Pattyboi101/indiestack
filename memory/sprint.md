@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (seventy-fifth pass)
+Last updated: 2026-04-13 (seventy-sixth pass)
 
 ## Status: Active
 
@@ -10,14 +10,46 @@ Last updated: 2026-04-13 (seventy-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1395 unique effective keys (added 25 in seventy-fifth pass — Rust WASM/leptos/yew/dioxus/trunk; CSS/unocss/windi/pandacss/panda; progressive; solidstart; Node/adonisjs/adonis/hapi/hapijs; k8s-local/minikube/k3s/k3d; AI/braintrust/agentops/opik; 21 duplicate keys exist in source but all correct last-write-wins values)
-- **Catalog script**: `scripts/add_missing_tools.py` — 338 tools ready to insert (slug-safe); +7 this pass: leptos, yew, dioxus, unocss, minikube, k3s, adonisjs
+- **_CAT_SYNONYMS**: 1420 unique effective keys (added 30 in seventy-sixth pass — k8s tooling/k9s/kustomize/skaffold; DB/arangodb/couchdb/hazelcast; testing/sonar/sonarcloud/codecov/codacy/deepsource; CMS/storyblok/tinacms/contentlayer; AI/lovable/cline/boltnew; monitoring/kibana/elk/logstash; API/speakeasy/zuplo/stainless/redocly/hurl; email/mailpit/mailhog; dev/jsr/rye; message/watermill; 21 duplicate keys exist in source but all correct last-write-wins values)
+- **Catalog script**: `scripts/add_missing_tools.py` — 343 tools ready to insert (slug-safe); +5 this pass: k9s, kustomize, tinacms, arangodb, hurl
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-13, seventy-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 30 new entries to `_CAT_SYNONYMS` (1395 → 1420 unique effective keys, 1441 total with 21 pre-existing duplicates):
+  - **K8s tooling**: `k9s`, `kustomize`, `skaffold` → `"devops"` — Kubernetes TUI and workflow tools
+  - **Database**: `arangodb`, `couchdb` → `"database"` — multi-model and document-oriented NoSQL stores
+  - **Caching**: `hazelcast` → `"caching"` — distributed in-memory caching grid
+  - **Testing/quality**: `sonar`, `sonarcloud`, `codecov`, `codacy`, `deepsource` → `"testing"` — code quality and coverage platforms
+  - **CMS**: `storyblok`, `tinacms`, `contentlayer` → `"cms"` — headless CMS tools not previously mapped
+  - **AI**: `lovable`, `cline`, `boltnew` → `"ai"` — AI app builders and IDE coding agents
+  - **Monitoring**: `kibana`, `elk` → `"monitoring"` — ELK stack visualization and observability
+  - **Logging**: `logstash` → `"logging"` — ELK log ingestion pipeline
+  - **API**: `speakeasy`, `zuplo`, `stainless`, `redocly`, `hurl` → `"api"` — SDK generation, API gateways, and HTTP testing
+  - **Email**: `mailpit`, `mailhog` → `"email"` — local email testing servers
+  - **Developer Tools**: `jsr`, `rye` → `"developer"` — JavaScript registry and Python project manager
+  - **Message Queue**: `watermill` → `"message"` — Go event-driven application library
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (338 → 343 total):
+  - **k9s** (derailed/k9s, 27k★) — Kubernetes terminal TUI dashboard; devops-infrastructure
+  - **Kustomize** (kubernetes-sigs/kustomize, 11k★) — Kubernetes-native config management (CNCF); devops-infrastructure
+  - **TinaCMS** (tinacms/tinacms, 12k★) — open-source Git-backed headless CMS; headless-cms
+  - **ArangoDB** (arangodb/arangodb, 13k★) — multi-model graph/document/key-value DB; database
+  - **Hurl** (Orange-OpenSource/hurl, 13k★) — HTTP request testing with plain text files; api-tools
+
+### Code Quality (Step 3)
+- Recent commits limited to search quality + catalog additions — no route file changes; no html.escape or CSS regressions to fix
+- db.py and add_missing_tools.py validated clean with `ast.parse()`
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventy-sixth pass
 
 ## Completed This Session (2026-04-13, seventy-fifth pass — autonomous improvement cycle)
 

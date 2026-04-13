@@ -5662,6 +5662,93 @@ TOOLS = [
         "npm init adonisjs@latest my-app",
         "code",
     ),
+    # Kubernetes tooling -------------------------------------------------------
+    (
+        "k9s",
+        "k9s",
+        "Kubernetes CLI To Manage Your Clusters In Style",
+        "k9s is a terminal-based UI to interact with your Kubernetes clusters. "
+        "Navigate, observe, and manage your deployed applications from the comfort "
+        "of your terminal. k9s provides a visual interface to your Kubernetes cluster, "
+        "allowing you to quickly navigate between resources, view logs, exec into pods, "
+        "and manage workloads — all without kubectl muscle memory.",
+        "devops-infrastructure",
+        "derailed/k9s",
+        27000,
+        "https://k9scli.io",
+        "kubernetes,k8s,tui,terminal,devops,cli,dashboard",
+        "brew install derailed/k9s/k9s",
+        "code",
+    ),
+    (
+        "kustomize",
+        "Kustomize",
+        "Kubernetes-native configuration management",
+        "Kustomize introduces a template-free way to customize application configuration "
+        "that simplifies the use of off-the-shelf applications. Built into kubectl as "
+        "`kubectl apply -k`, it lets you overlay patches on top of base Kubernetes configs "
+        "without forking — perfect for managing dev/staging/prod variants.",
+        "devops-infrastructure",
+        "kubernetes-sigs/kustomize",
+        11000,
+        "https://kustomize.io",
+        "kubernetes,k8s,configuration,gitops,devops,overlay",
+        "brew install kustomize",
+        "code",
+    ),
+    # Headless CMS -------------------------------------------------------------
+    (
+        "tinacms",
+        "TinaCMS",
+        "Open-source headless CMS with Git-backed content and visual editing",
+        "TinaCMS is a fully open-source headless CMS that stores content in your "
+        "Git repository as Markdown, MDX, or JSON. It offers a visual editing "
+        "experience in-context of your site (React-based), a type-safe content "
+        "client, and a cloud-hosted dashboard — all with no vendor lock-in.",
+        "headless-cms",
+        "tinacms/tinacms",
+        12000,
+        "https://tina.io",
+        "cms,headless,git-backed,markdown,mdx,react,visual-editor,open-source",
+        "npx create-tina-app@latest",
+        "code",
+    ),
+    # Database -----------------------------------------------------------------
+    (
+        "arangodb",
+        "ArangoDB",
+        "Multi-model NoSQL database with graphs, documents, and key-value",
+        "ArangoDB is a native multi-model database combining the flexibility of "
+        "graphs, documents, and key-value pairs in a single engine with one query "
+        "language (AQL). Use it for graph analytics, complex relation traversals, "
+        "full-text search, and flexible document storage — without running multiple "
+        "database systems.",
+        "database",
+        "arangodb/arangodb",
+        13000,
+        "https://arangodb.com",
+        "graph,nosql,document,key-value,multi-model,aql",
+        "docker run -e ARANGO_ROOT_PASSWORD=password arangodb",
+        "code",
+    ),
+    # API Tools ----------------------------------------------------------------
+    (
+        "hurl",
+        "Hurl",
+        "Run and test HTTP requests with plain text files",
+        "Hurl is a command-line tool that runs HTTP requests defined in a simple "
+        "plain text format. It can chain requests, capture values, evaluate queries "
+        "on headers and body responses, and is usable as a non-regression testing "
+        "tool. Fast, scriptable, and CI-friendly — a powerful alternative to Postman "
+        "for API testing in plain text.",
+        "api-tools",
+        "Orange-OpenSource/hurl",
+        13000,
+        "https://hurl.dev",
+        "api-testing,http,cli,curl,rest,ci,testing",
+        "brew install hurl",
+        "code",
+    ),
 ]
 
 
