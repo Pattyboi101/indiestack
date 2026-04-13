@@ -5148,6 +5148,121 @@ TOOLS = [
         "pip install pydantic-ai",
         "code",
     ),
+    # Developer Tools — package managers and JS toolchains ----------------------
+    (
+        "pnpm",
+        "pnpm",
+        "Fast, disk-space-efficient package manager",
+        "pnpm is a fast, disk-space-efficient Node.js package manager that uses "
+        "hard links and symlinks to share packages across projects. Up to 2× faster "
+        "than npm and saves gigabytes of disk space via a global content-addressable "
+        "store. Supports workspaces for monorepos out of the box.",
+        "frontend-frameworks",
+        "pnpm/pnpm",
+        30000,
+        "https://pnpm.io",
+        "package-manager,npm,monorepo,workspace,fast",
+        "npm install -g pnpm",
+        "code",
+    ),
+    (
+        "yarn-berry",
+        "Yarn Berry",
+        "Fast, reliable, and secure JavaScript package manager",
+        "Yarn Berry (Yarn 2+) is a modern package manager with Plug'n'Play "
+        "(PnP) installs that eliminate node_modules entirely, built-in workspace "
+        "support, zero-installs via cached packages in version control, and "
+        "first-class monorepo tooling with workspaces and constraints.",
+        "frontend-frameworks",
+        "yarnpkg/berry",
+        7500,
+        "https://yarnpkg.com",
+        "package-manager,npm,pnp,zero-install,monorepo",
+        "npm install -g yarn",
+        "code",
+    ),
+    (
+        "volta",
+        "Volta",
+        "The Hassle-Free JavaScript Tool Manager",
+        "Volta is a JavaScript toolchain manager written in Rust that lets you "
+        "pin exact Node.js, npm, Yarn, and package binary versions per project. "
+        "No more manual nvm use — Volta switches automatically based on your "
+        "package.json. Works on macOS, Linux, and Windows.",
+        "developer-tools",
+        "volta-cli/volta",
+        11000,
+        "https://volta.sh",
+        "node-version-manager,toolchain,javascript,version-manager",
+        "curl https://get.volta.sh | bash",
+        "code",
+    ),
+    (
+        "mise",
+        "mise-en-place",
+        "The front-end to your dev env (asdf alternative)",
+        "mise is a polyglot runtime version manager written in Rust. It manages "
+        "versions of Node.js, Python, Ruby, Go, Rust, Java, and 600+ plugins — "
+        "and replaces both asdf and direnv. Activates automatically via shell "
+        "hooks. Compatible with .tool-versions (asdf format) and .mise.toml.",
+        "developer-tools",
+        "jdx/mise",
+        12000,
+        "https://mise.jdx.dev",
+        "version-manager,runtime,polyglot,asdf,node,python",
+        "curl https://mise.run | sh",
+        "code",
+    ),
+    (
+        "nvm",
+        "nvm",
+        "Node Version Manager — manage multiple Node.js versions",
+        "nvm (Node Version Manager) is a POSIX-compliant bash script to manage "
+        "multiple Node.js versions per user. Install any Node.js version, switch "
+        "instantly with nvm use, and set defaults per project via .nvmrc files. "
+        "The most-installed Node version manager with 80k+ GitHub stars.",
+        "developer-tools",
+        "nvm-sh/nvm",
+        80000,
+        "https://github.com/nvm-sh/nvm",
+        "node-version-manager,version-manager,node,bash",
+        "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash",
+        "code",
+    ),
+    # Database — time-series databases ------------------------------------------
+    (
+        "influxdb",
+        "InfluxDB",
+        "Scalable time-series database for metrics and events",
+        "InfluxDB is the most widely used open-source time-series database. "
+        "Store and query metrics, events, traces, and logs at scale. InfluxDB 3 "
+        "introduces a columnar storage engine on top of Apache Arrow and Parquet, "
+        "with SQL and InfluxQL query interfaces. Cloud and self-hosted options.",
+        "database",
+        "influxdata/influxdb",
+        28000,
+        "https://www.influxdata.com",
+        "timeseries,metrics,monitoring,observability,sql,events",
+        "docker run -p 8086:8086 influxdb:latest",
+        "code",
+    ),
+    (
+        "questdb",
+        "QuestDB",
+        "Fast open-source time-series database for analytics",
+        "QuestDB is a high-performance time-series database written in Java with "
+        "a zero-GC core. Ingests millions of rows per second via the InfluxDB line "
+        "protocol, PostgreSQL wire protocol, or REST API. SQL-native with "
+        "time-series extensions (SAMPLE BY, LATEST ON, ASOF JOIN). Used for "
+        "financial data, IoT, monitoring, and DevOps analytics.",
+        "database",
+        "questdb/questdb",
+        14000,
+        "https://questdb.io",
+        "timeseries,sql,fast,analytics,influxdb,metrics",
+        "docker run -p 8812:8812 -p 9000:9000 questdb/questdb",
+        "code",
+    ),
     # DevOps — open-source Terraform replacement --------------------------------
     (
         "opentofu",

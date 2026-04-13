@@ -3210,7 +3210,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Environment / secrets management
     "env": "security",         # "env management", "env secrets", ".env variables" → Security Tools
     "environment": "security", # "environment variables", "environment config" → secrets management
-    "dotenv": "security",      # dotenv — env variable loading → Security Tools (Infisical, Doppler)
+    # NOTE: "dotenv" must map to "developer" — it's the .env loader library (Developer Tools), NOT secrets
+    # management. Gotchas.md: "Always use developer (matches 'Developer Tools'). Previously broken: dotenv".
+    # "env secrets" / "environment secrets" queries already route via "env"→security above.
     # Data pipeline / ETL
     "etl": "background",       # ETL pipeline tools → background-jobs (Dagster, Prefect, Airflow)
     "elt": "background",       # ELT — modern variant of ETL (dbt, Airbyte pattern)
@@ -4240,6 +4242,36 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Table and data-grid component libraries → frontend-frameworks
     "table": "frontend",            # "react table", "table component" → TanStack Table, AG Grid
     "grid": "frontend",             # "data grid", "ag grid alternative" → Frontend Frameworks
+    # React Server Components — Next.js 13+ RSC pattern, very high query volume
+    "rsc": "frontend",              # "RSC alternative", "react server component" → Frontend Frameworks
+    "server-component": "frontend", # "server component", "server-component streaming" → Frontend Frameworks
+    "server-components": "frontend",# plural — "server components pattern", "react server components"
+    "server-actions": "frontend",   # "server actions nextjs", "server action form" → Frontend Frameworks
+    # Version managers / JS toolchains — "nvm alternative", "node version manager", "mise setup"
+    "nvm": "developer",             # nvm — Node Version Manager (bash, 80k★); most-used node switcher
+    "fnm": "developer",             # fnm — Fast Node Manager (Rust, 17k★); faster nvm alternative
+    "volta": "developer",           # Volta — JS toolchain manager (pin per-project, 11k★)
+    "mise": "developer",            # mise-en-place — polyglot runtime version manager (asdf successor, 12k★)
+    "asdf": "developer",            # asdf — multi-language version manager (Ruby, Node, Python, Go)
+    # AI — multimodal and vision models (GPT-4V, Claude Vision, Gemini Pro Vision)
+    "multimodal": "ai",             # "multimodal AI", "multimodal model", "vision + text model" → AI & Automation
+    "computer-vision": "ai",        # "computer vision library", "cv model" → AI & Automation
+    "cv": "ai",                     # "cv library", "cv pipeline" (computer vision context) → AI & Automation
+    # Web Components — standard browser custom elements (Lit, Stencil, FAST, Shoelace)
+    "webcomponent": "frontend",     # "web component library", "webcomponent framework" → Frontend Frameworks
+    "webcomponents": "frontend",    # plural — "web components standard", "custom elements" → Frontend Frameworks
+    "custom-element": "frontend",   # "custom element", "custom elements API" → Frontend Frameworks (Lit, FAST)
+    "custom-elements": "frontend",  # plural form — Web Components Custom Elements spec
+    # Testing — integration tests (complement to e2e, unit, bdd, coverage already mapped)
+    "integration": "testing",       # "integration test", "integration testing library" → Testing Tools
+    # Database — time-series databases not individually mapped
+    "influxdb": "database",         # InfluxDB — most popular open-source time-series database (28k★)
+    "questdb": "database",          # QuestDB — fast SQL time-series database (14k★)
+    "cassandra": "database",        # Apache Cassandra — wide-column distributed NoSQL store
+    "scylladb": "database",         # ScyllaDB — C++ Cassandra-compatible (10× faster, 13k★)
+    # Security — Zero Trust architecture (growing segment in enterprise security queries)
+    "zerotrust": "security",        # "zero trust model", "zerotrust network" → Security Tools
+    "zero-trust": "security",       # hyphenated form — "zero-trust architecture", "zero-trust auth"
 }
 
 _FTS_STOP_WORDS = {

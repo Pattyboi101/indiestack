@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (seventieth pass)
+Last updated: 2026-04-13 (seventy-first pass)
 
 ## Status: Active
 
@@ -10,14 +10,49 @@ Last updated: 2026-04-13 (seventieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~1358 entries for search routing (added 5 in seventieth pass — api: http/fetch; frontend: date/table/grid)
-- **Catalog script**: `scripts/add_missing_tools.py` — 310 tools ready to insert (slug-safe)
+- **_CAT_SYNONYMS**: ~1368 entries for search routing (added 23 in seventy-first pass — RSC/server-actions, version managers, AI multimodal/CV, web components, time-series DBs, zero-trust; fixed dotenv duplicate bug)
+- **Catalog script**: `scripts/add_missing_tools.py` — 317 tools ready to insert (slug-safe)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-13, seventy-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — Step 1 targets from loop prompt all confirmed covered in prior passes
+- Added 23 new entries to `_CAT_SYNONYMS` (1358 → 1368 unique entries; 1368 total with de-dup):
+  - **Frontend**: `rsc`, `server-component`, `server-components`, `server-actions` → `"frontend"` (React Server Components / Next.js Server Actions — high query volume in Next.js 13+ era)
+  - **Developer**: `nvm`, `fnm`, `volta`, `mise`, `asdf` → `"developer"` (JS/polyglot version managers — common "alternative" query targets)
+  - **AI**: `multimodal`, `computer-vision`, `cv` → `"ai"` (multimodal/vision model queries — GPT-4V, Claude Vision, Gemini Vision)
+  - **Frontend**: `webcomponent`, `webcomponents`, `custom-element`, `custom-elements` → `"frontend"` (Web Components standard — Lit, Stencil, FAST, Shoelace)
+  - **Testing**: `integration` → `"testing"` ("integration test", "integration testing library" — complement to e2e/unit already mapped)
+  - **Database**: `influxdb`, `questdb`, `cassandra`, `scylladb` → `"database"` (time-series and wide-column stores not individually mapped)
+  - **Security**: `zerotrust`, `zero-trust` → `"security"` ("zero trust architecture", "zero-trust network" queries)
+- **Fixed bug**: `"dotenv"` had a conflicting duplicate entry (`"developer"` at line 2809 vs `"security"` at line 3213). Python last-write-wins meant `"security"` was active, contradicting gotchas.md which says dotenv must route to Developer Tools. Removed the erroneous `"security"` entry; replaced with explanatory comment.
+
+### Catalog Script (Step 2)
+- All 10 Step 2 target tools (react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend) already in script from prior passes
+- Added 7 new tools to `scripts/add_missing_tools.py` (310 → 317 total):
+  - **pnpm** (pnpm/pnpm, 30k★) — fast disk-efficient npm-compatible package manager; frontend-frameworks
+  - **Yarn Berry** (yarnpkg/berry, 7.5k★) — modern Yarn with PnP zero-installs; frontend-frameworks
+  - **Volta** (volta-cli/volta, 11k★) — Rust JS toolchain manager (pin Node/npm per project); developer-tools
+  - **mise** (jdx/mise, 12k★) — polyglot version manager (asdf successor); developer-tools
+  - **nvm** (nvm-sh/nvm, 80k★) — most-installed Node version manager; developer-tools
+  - **InfluxDB** (influxdata/influxdb, 28k★) — most popular open-source time-series database; database
+  - **QuestDB** (questdb/questdb, 14k★) — fast SQL time-series database; database
+
+### Code Quality (Step 3)
+- Checked last 5 commits: intel.py (new route), oracle_page.py fix, main.py router registration
+- intel.py: All user data escaped with `html.escape()`, uses `request.state.db` pattern, all DB results properly escaped before HTML injection — no issues
+- oracle_page.py fix already applied in seventieth pass (dynamic stats replacing hardcoded values)
+- Found and fixed `"dotenv"` duplicate key bug in `_CAT_SYNONYMS` (see Step 1 above)
+- Ran `ast.parse()` validation on db.py and add_missing_tools.py — both syntax-clean
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventy-first pass; docs/plans/ directory does not exist (gitignored)
 
 ## Completed This Session (2026-04-13, seventieth pass — autonomous improvement cycle)
 
