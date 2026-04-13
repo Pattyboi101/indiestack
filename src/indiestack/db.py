@@ -4379,6 +4379,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rye": "developer",             # Rye — Python project and package manager by Armin Ronacher (9k★)
     # Message Queue — Go event-driven application library
     "watermill": "message",         # Watermill — Go library for building event-driven applications (8k★)
+    # DevOps — service mesh tools (Istio, Linkerd, Cilium, Envoy-based proxies)
+    "istio": "devops",              # Istio — most-deployed Kubernetes service mesh (35k★)
+    "linkerd": "devops",            # Linkerd — ultralight CNCF service mesh for Kubernetes (10k★)
+    "cilium": "devops",             # Cilium — eBPF-based Kubernetes networking + security (19k★)
+    "ebpf": "devops",               # eBPF — Linux kernel observability: Cilium, Tetragon, Falco queries
+    "sidecar": "devops",            # "sidecar proxy", "sidecar pattern" — service mesh architecture
+    "service-mesh": "devops",       # hyphenated form — "service-mesh comparison", "service-mesh setup"
+    # AI — LLM observability named tools not yet mapped
+    "arize": "ai",                  # Arize AI — LLM observability, tracing, and evaluation platform
+    # Developer Tools — WASM runtimes (run WebAssembly outside the browser)
+    "wasmtime": "developer",        # Wasmtime — fast, secure standalone WASM runtime (Bytecode Alliance, 15k★)
+    "wasmer": "developer",          # Wasmer — universal WASM runtime (supports multiple languages, 18k★)
+    # Message Queue — event-driven architecture patterns (CQRS, event sourcing)
+    "event-sourcing": "message",    # "event sourcing pattern", "event sourcing library" → Message Queue
+    "eventsourcing": "message",     # compound form — "eventsourcing framework" → Message Queue
+    "cqrs": "message",              # CQRS — Command Query Responsibility Segregation → Message Queue
+    # API — GraphQL federation and supergraph (Apollo Federation, Cosmo Router, WunderGraph)
+    "federation": "api",            # "graphql federation", "apollo federation" → API Tools
+    "supergraph": "api",            # "supergraph", "apollo supergraph" — federated GraphQL schema
+    # Monitoring — VictoriaMetrics (fast Prometheus-compatible TSDB, popular alternative query)
+    "victoriametrics": "monitoring",# VictoriaMetrics — high-perf time series DB, Prometheus-compatible (13k★)
+    "victoria": "monitoring",       # first term — "victoria metrics alternative", "victoria metrics setup"
+    # Security — runtime container security (CNCF Falco)
+    "falco": "security",            # Falco — CNCF runtime security for containers and Kubernetes (7k★)
 }
 
 _FTS_STOP_WORDS = {

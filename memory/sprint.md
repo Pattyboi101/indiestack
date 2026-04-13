@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (seventy-sixth pass)
+Last updated: 2026-04-13 (seventy-seventh pass)
 
 ## Status: Active
 
@@ -10,14 +10,41 @@ Last updated: 2026-04-13 (seventy-sixth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1420 unique effective keys (added 30 in seventy-sixth pass — k8s tooling/k9s/kustomize/skaffold; DB/arangodb/couchdb/hazelcast; testing/sonar/sonarcloud/codecov/codacy/deepsource; CMS/storyblok/tinacms/contentlayer; AI/lovable/cline/boltnew; monitoring/kibana/elk/logstash; API/speakeasy/zuplo/stainless/redocly/hurl; email/mailpit/mailhog; dev/jsr/rye; message/watermill; 21 duplicate keys exist in source but all correct last-write-wins values)
-- **Catalog script**: `scripts/add_missing_tools.py` — 343 tools ready to insert (slug-safe); +5 this pass: k9s, kustomize, tinacms, arangodb, hurl
+- **_CAT_SYNONYMS**: 1440 unique effective keys (added 20 in seventy-seventh pass — service mesh/istio/linkerd/cilium/ebpf/sidecar/service-mesh; AI/arize; dev/wasmtime/wasmer; message/event-sourcing/eventsourcing/cqrs; API/federation/supergraph; monitoring/victoriametrics/victoria; security/falco; 21 duplicate keys exist in source but all correct last-write-wins values)
+- **Catalog script**: `scripts/add_missing_tools.py` — 348 tools ready to insert (slug-safe); +5 this pass: istio, linkerd, cilium, victoriametrics, falco
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-13, seventy-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 20 new entries to `_CAT_SYNONYMS` (1420 → 1440 unique effective keys):
+  - **Service mesh**: `istio`, `linkerd`, `cilium`, `ebpf`, `sidecar`, `service-mesh` → `"devops"` — Kubernetes service mesh tools and eBPF networking (no prior coverage)
+  - **AI observability**: `arize` → `"ai"` — Arize AI LLM evaluation platform
+  - **WASM runtimes**: `wasmtime`, `wasmer` → `"developer"` — standalone WASM runtimes outside browser
+  - **Event-driven patterns**: `event-sourcing`, `eventsourcing`, `cqrs` → `"message"` — CQRS and event sourcing architecture pattern queries
+  - **GraphQL federation**: `federation`, `supergraph` → `"api"` — Apollo Federation, Cosmo Router, WunderGraph supergraph queries
+  - **Monitoring**: `victoriametrics`, `victoria` → `"monitoring"` — VictoriaMetrics high-perf Prometheus-compatible TSDB
+  - **Security**: `falco` → `"security"` — CNCF Falco runtime security for containers/Kubernetes
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (343 → 348 total):
+  - **Istio** (istio/istio, 35k★) — most-deployed Kubernetes service mesh; devops-infrastructure
+  - **Linkerd** (linkerd/linkerd2, 10k★) — ultralight CNCF Kubernetes service mesh; devops-infrastructure
+  - **Cilium** (cilium/cilium, 19k★) — eBPF-based Kubernetes networking and security; devops-infrastructure
+  - **VictoriaMetrics** (VictoriaMetrics/VictoriaMetrics, 13k★) — fast Prometheus-compatible TSDB; monitoring-uptime
+  - **Falco** (falcosecurity/falco, 7k★) — CNCF runtime security for containers; security-tools
+
+### Code Quality (Step 3)
+- Recent commits limited to search quality + catalog additions — no route file changes; no html.escape or CSS regressions to fix
+- Both db.py and add_missing_tools.py validated clean with `ast.parse()`
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventy-seventh pass
 
 ## Completed This Session (2026-04-13, seventy-sixth pass — autonomous improvement cycle)
 

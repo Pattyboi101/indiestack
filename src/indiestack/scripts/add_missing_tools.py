@@ -5749,6 +5749,95 @@ TOOLS = [
         "brew install hurl",
         "code",
     ),
+    # DevOps — Service Mesh tools -----------------------------------------------
+    (
+        "istio",
+        "Istio",
+        "An open platform to connect, manage, and secure microservices",
+        "Istio is the most widely deployed service mesh for Kubernetes, providing "
+        "zero-trust networking with mutual TLS, fine-grained traffic management "
+        "(canary deployments, A/B testing, circuit breaking), and distributed "
+        "observability (traces, metrics, logs) — all without changing application "
+        "code. Backed by Google, IBM, and the CNCF.",
+        "devops-infrastructure",
+        "istio/istio",
+        35000,
+        "https://istio.io",
+        "service-mesh,kubernetes,k8s,mtls,traffic-management,observability,devops",
+        "istioctl install --set profile=default",
+        "code",
+    ),
+    (
+        "linkerd",
+        "Linkerd",
+        "Ultralight, zero-config service mesh for Kubernetes",
+        "Linkerd is the CNCF graduated service mesh built specifically for "
+        "Kubernetes. It provides automatic mutual TLS, latency-aware load "
+        "balancing, retries, and transparent distributed tracing — without any "
+        "configuration required. Written in Rust and Go, it is the lightest "
+        "service mesh available. The recommended service mesh for teams who want "
+        "Istio-like features without Envoy complexity.",
+        "devops-infrastructure",
+        "linkerd/linkerd2",
+        10000,
+        "https://linkerd.io",
+        "service-mesh,kubernetes,k8s,mtls,rust,observability,devops",
+        "linkerd install --crds | kubectl apply -f -",
+        "code",
+    ),
+    (
+        "cilium",
+        "Cilium",
+        "eBPF-based networking, observability, and security for Kubernetes",
+        "Cilium is an open-source, cloud-native networking solution for Kubernetes "
+        "powered by eBPF. It provides high-performance L3/L4/L7 networking, "
+        "network policy enforcement, Kubernetes service load balancing, and deep "
+        "observability via Hubble — all without iptables overhead. Also ships "
+        "Tetragon for runtime security threat detection.",
+        "devops-infrastructure",
+        "cilium/cilium",
+        19000,
+        "https://cilium.io",
+        "ebpf,kubernetes,k8s,networking,service-mesh,security,observability",
+        "helm repo add cilium https://helm.cilium.io/ && helm install cilium cilium/cilium",
+        "code",
+    ),
+    # Monitoring — high-performance Prometheus-compatible TSDB -------------------
+    (
+        "victoriametrics",
+        "VictoriaMetrics",
+        "Fast, cost-effective and scalable time series database and monitoring",
+        "VictoriaMetrics is a high-performance time series database and monitoring "
+        "solution compatible with Prometheus. It offers 5-10× better compression "
+        "than Prometheus, faster queries at scale, and a cluster mode that scales "
+        "reads and writes independently. Supports PromQL and MetricsQL. Used at "
+        "Cloudflare, Wix, and dozens of large-scale production deployments.",
+        "monitoring-uptime",
+        "VictoriaMetrics/VictoriaMetrics",
+        13000,
+        "https://victoriametrics.com",
+        "prometheus,metrics,timeseries,monitoring,self-hosted,performance",
+        "docker run -v victoriametrics-data:/victoria-metrics-data -p 8428:8428 victoriametrics/victoria-metrics",
+        "code",
+    ),
+    # Security — runtime container security -------------------------------------
+    (
+        "falco",
+        "Falco",
+        "Cloud-native runtime security for containers and Kubernetes",
+        "Falco is a CNCF graduated open-source runtime security tool that detects "
+        "threats and anomalies in real time. It uses eBPF to observe kernel syscalls "
+        "and Kubernetes audit events, then fires alerts when behaviour matches "
+        "configurable rules (e.g. shell spawned in container, sensitive file read, "
+        "privilege escalation). Integrates with Slack, PagerDuty, and SIEM systems.",
+        "security-tools",
+        "falcosecurity/falco",
+        7000,
+        "https://falco.org",
+        "runtime-security,containers,kubernetes,k8s,ebpf,threat-detection,cncf",
+        "helm repo add falcosecurity https://falcosecurity.github.io/charts && helm install falco falcosecurity/falco",
+        "code",
+    ),
 ]
 
 
