@@ -4052,6 +4052,50 @@ _CAT_SYNONYMS: dict[str, str] = {
     "localfirst": "database",        # compound form — "localfirst sync", "localfirst architecture"
     "sync": "database",              # "offline sync", "data sync", "realtime sync" → Database
     "crdt": "database",              # "CRDT sync", "conflict-free replicated data type" → Database
+    # ONNX — universal ML model interchange format (ONNX Runtime is the most-searched inference engine)
+    "onnx": "ai",                    # ONNX Runtime — fast cross-platform ML inference (Microsoft)
+    "ort": "ai",                     # ORT — abbreviation for ONNX Runtime (common in ML code queries)
+    # Version managers — polyglot tool/runtime version management
+    "mise": "developer",             # mise (formerly rtx) — fast polyglot dev tool version manager (12k★)
+    "asdf": "developer",             # asdf — "one version manager to rule them all" (20k★)
+    "nvm": "developer",              # nvm — Node Version Manager (80k★, most searched version manager)
+    "fnm": "developer",              # fnm — fast Rust-based Node.js version manager (17k★)
+    "pyenv": "developer",            # pyenv — simple Python version management (37k★)
+    # CMS — TinaCMS (git-backed visual CMS, popular with Next.js/Astro)
+    "tina": "cms",                   # TinaCMS — git-backed CMS with inline visual editing (11k★)
+    "tinacms": "cms",                # explicit form — "tinacms alternative", "tinacms nextjs"
+    # Kotlin web framework queries → API Tools (Ktor, Vert.x, Spring Boot Kotlin)
+    "kotlin": "api",                 # Kotlin backend/web framework queries → API Tools
+    "ktor": "api",                   # Ktor — async Kotlin web framework by JetBrains (11k★)
+    "vertx": "api",                  # Vert.x — reactive polyglot toolkit (Java/Kotlin/Groovy)
+    # Frontend — Tamagui (universal React Native + Web UI framework)
+    "tamagui": "frontend",           # Tamagui — universal UI kit for React Native + Web (11k★)
+    # Monitoring — high-volume named tools not yet mapped
+    "netdata": "monitoring",         # Netdata — real-time infrastructure monitoring agent (74k★)
+    "openobserve": "monitoring",     # OpenObserve — open-source observability (logs/traces/metrics, 13k★)
+    "statsd": "monitoring",          # StatsD — daemon for aggregating application metrics
+    "victoria": "monitoring",        # VictoriaMetrics — fast Prometheus-compatible time-series DB
+    "victoriametrics": "monitoring", # explicit form — "victoriametrics alternative"
+    # Testing — TestCafe (Node.js end-to-end testing framework, no WebDriver)
+    "testcafe": "testing",           # TestCafe — Node.js E2E testing without WebDriver (16k★)
+    "nunit": "testing",              # NUnit — .NET testing framework
+    "xunit": "testing",              # xUnit.net — .NET testing framework (successor to NUnit)
+    "mstest": "testing",             # MSTest — Microsoft's .NET test framework (built into VS)
+    # Background jobs — Dramatiq (Redis/RabbitMQ Python task queue)
+    "dramatiq": "background",        # Dramatiq — Redis/RabbitMQ-backed Python task queue (4k★)
+    "huey": "background",            # Huey — lightweight Python task queue (Redis/SQLite, 5k★)
+    "apscheduler": "background",     # APScheduler — advanced Python job scheduler (12k★)
+    # Authorization engines — SpiceDB, Cerbos (Zanzibar-style fine-grained authz)
+    "spicedb": "authentication",     # SpiceDB — Zanzibar-inspired open-source authz engine (4.6k★)
+    "cerbos": "authentication",      # Cerbos — policy-based access control engine (3.5k★)
+    "permit": "authentication",      # Permit.io — managed fine-grained authz as a service
+    # DevOps — Kubernetes dev workflow tools
+    "skaffold": "devops",            # Skaffold — local Kubernetes development workflow (15k★)
+    "devspace": "devops",            # DevSpace — dev tool for Kubernetes (hot reload in cluster, 4k★)
+    "tilt": "devops",                # Tilt — smart rebuilds for Kubernetes dev workflows (7k★)
+    # Frontend — data fetching / async state (complement to "swr", "fetching", "tanstack")
+    "react-query": "frontend",       # React Query (TanStack Query) — server state management for React
+    "reactquery": "frontend",        # compound form — "reactquery alternative", "react query v5"
 }
 
 _FTS_STOP_WORDS = {

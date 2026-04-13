@@ -4593,6 +4593,93 @@ TOOLS = [
         "npm install -g @soketi/soketi",
         "code",
     ),
+    # Monitoring — Netdata (real-time infrastructure monitoring, 74k★) ----------------
+    (
+        "netdata",
+        "Netdata",
+        "Real-time infrastructure monitoring, done right",
+        "Netdata is an open-source, zero-configuration monitoring agent that collects "
+        "thousands of metrics per second from servers, containers, and cloud. Ships "
+        "live dashboards with 1-second granularity. Works with Prometheus, Grafana, "
+        "and OpenTelemetry. Cloud or self-hosted. 74k+ GitHub stars.",
+        "monitoring-uptime",
+        "netdata/netdata",
+        74000,
+        "https://netdata.cloud",
+        "monitoring,metrics,infrastructure,realtime,open-source,self-hosted,observability",
+        "curl https://my-netdata.io/kickstart.sh | bash",
+        "code",
+    ),
+    # CMS — TinaCMS (git-backed visual editing, 11k★) ---------------------------------
+    (
+        "tinacms",
+        "TinaCMS",
+        "The Git-backed headless CMS with visual editing",
+        "TinaCMS is an open-source, git-backed headless CMS that gives editors an "
+        "inline visual editing experience while keeping content in Markdown and MDX "
+        "files in your repository. Works seamlessly with Next.js, Astro, and Remix. "
+        "Self-host or use Tina Cloud. 11k+ GitHub stars.",
+        "headless-cms",
+        "tinacms/tinacms",
+        11000,
+        "https://tina.io",
+        "cms,git-backed,visual-editing,markdown,mdx,nextjs,open-source",
+        "npx @tinacms/cli@latest init",
+        "code",
+    ),
+    # Authorization — SpiceDB (Zanzibar-inspired authz engine, 4.6k★) -----------------
+    (
+        "spicedb",
+        "SpiceDB",
+        "Open-source Zanzibar-inspired permissions database",
+        "SpiceDB is a database system for managing security-critical application "
+        "permissions, inspired by Google Zanzibar. Define fine-grained authorization "
+        "policies with a schema language, then enforce them via gRPC or HTTP APIs. "
+        "Used by teams that need ReBAC beyond RBAC. 4.6k+ GitHub stars.",
+        "authentication",
+        "authzed/spicedb",
+        4600,
+        "https://authzed.com/spicedb",
+        "authorization,authz,rbac,rebac,permissions,zanzibar,open-source,grpc",
+        "brew install authzed/tap/spicedb",
+        "code",
+    ),
+    # Frontend — Tamagui (universal React Native + Web UI kit, 11k★) ------------------
+    (
+        "tamagui",
+        "Tamagui",
+        "Universal UI kit for React Native and Web",
+        "Tamagui is a React Native + Web UI framework with a powerful style system. "
+        "Write once and target iOS, Android, and Web with near-native performance. "
+        "Uses a compiler to extract styles at build time — eliminating runtime overhead. "
+        "Comes with 130+ components, dark mode, animations, and theme support. "
+        "11k+ GitHub stars.",
+        "frontend-frameworks",
+        "tamagui/tamagui",
+        11000,
+        "https://tamagui.dev",
+        "react-native,ui-kit,cross-platform,universal,styling,mobile,web",
+        "npm install tamagui @tamagui/core",
+        "code",
+    ),
+    # Background Jobs — Dramatiq (Redis-backed Python task queue, 4k★) ---------------
+    (
+        "dramatiq",
+        "Dramatiq",
+        "Fast and reliable distributed task processing for Python",
+        "Dramatiq is a background task processing library for Python with a focus on "
+        "simplicity, reliability, and performance. Uses Redis or RabbitMQ as the broker. "
+        "Supports automatic retries, dead-letter queues, priority queues, and rate "
+        "limiting. A cleaner alternative to Celery with a better developer experience. "
+        "4k+ GitHub stars.",
+        "background-jobs",
+        "Bogdanp/dramatiq",
+        4000,
+        "https://dramatiq.io",
+        "task-queue,background-jobs,python,redis,rabbitmq,async,celery-alternative",
+        "pip install dramatiq[redis]",
+        "code",
+    ),
 ]
 
 

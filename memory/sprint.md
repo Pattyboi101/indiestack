@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (sixtieth pass)
+Last updated: 2026-04-13 (sixty-first pass)
 
 ## Status: Active
 
@@ -10,13 +10,45 @@ Last updated: 2026-04-13 (sixtieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1230 entries for search routing (added 11 in sixtieth pass — OTel/tracing, performance, load balancer, magic link auth, local-first/CRDT sync)
-- **Catalog script**: `scripts/add_missing_tools.py` — 278 tools ready to insert (slug-safe)
-  - 5 tools added in sixtieth pass (Crawlee, Encore, ElectricSQL, Pagefind, Soketi)
+- **_CAT_SYNONYMS**: 1274 entries for search routing (added 44 in sixty-first pass — ONNX, version managers, TinaCMS, Kotlin/Ktor, Tamagui, Netdata/OpenObserve, TestCafe, Dramatiq, SpiceDB/Cerbos, Skaffold, react-query)
+- **Catalog script**: `scripts/add_missing_tools.py` — 283 tools ready to insert (slug-safe)
+  - 5 tools added in sixty-first pass (Netdata, TinaCMS, SpiceDB, Tamagui, Dramatiq)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-13, sixty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` for unmapped query terms after 60 prior passes
+- Added 44 new `_CAT_SYNONYMS` entries:
+  - **ONNX / ML inference**: `onnx`, `ort` → `"ai"` (ONNX Runtime — cross-platform ML inference)
+  - **Version managers**: `mise`, `asdf`, `nvm`, `fnm`, `pyenv` → `"developer"` (polyglot tool/runtime version managers)
+  - **TinaCMS**: `tina`, `tinacms` → `"cms"` (git-backed visual CMS for Next.js/Astro)
+  - **Kotlin web frameworks**: `kotlin`, `ktor`, `vertx` → `"api"` (complement to existing python/ruby/go/java mappings)
+  - **Tamagui**: `tamagui` → `"frontend"` (universal React Native + Web UI framework)
+  - **Monitoring tools**: `netdata`, `openobserve`, `statsd`, `victoria`, `victoriametrics` → `"monitoring"`
+  - **Testing**: `testcafe`, `nunit`, `xunit`, `mstest` → `"testing"` (.NET and alternative E2E test frameworks)
+  - **Background jobs**: `dramatiq`, `huey`, `apscheduler` → `"background"` (Python task queues)
+  - **Fine-grained authz**: `spicedb`, `cerbos`, `permit` → `"authentication"` (Zanzibar-style authz engines)
+  - **Kubernetes dev tools**: `skaffold`, `devspace`, `tilt` → `"devops"`
+  - **Data fetching**: `react-query`, `reactquery` → `"frontend"` (TanStack Query alternative query forms)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (283 total):
+  - Netdata (monitoring-uptime, 74k★) — real-time zero-config infrastructure monitoring agent
+  - TinaCMS (headless-cms, 11k★) — git-backed CMS with inline visual editing for Next.js/Astro
+  - SpiceDB (authentication, 4.6k★) — Zanzibar-inspired open-source permissions database
+  - Tamagui (frontend-frameworks, 11k★) — universal UI kit for React Native + Web with compiler
+  - Dramatiq (background-jobs, 4k★) — fast Redis/RabbitMQ-backed Python task queue (clean Celery alt)
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to sixty-first pass
 
 ## Completed This Session (2026-04-13, sixtieth pass — autonomous improvement cycle)
 
