@@ -2,12 +2,14 @@
 
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
+from fastapi_x402 import pay
 
 router = APIRouter()
 
 
 # -- Compatibility endpoint ------------------------------------------------
 
+@pay("$0.02")
 @router.get("/v1/compatibility/{tool_a}/{tool_b}")
 async def compatibility(request: Request, tool_a: str, tool_b: str):
     """Check if two tools are compatible. Returns compatibility data from
@@ -58,6 +60,7 @@ async def compatibility(request: Request, tool_a: str, tool_b: str):
 
 # -- Migration endpoint ----------------------------------------------------
 
+@pay("$0.05")
 @router.get("/v1/migration/{from_package}/{to_package}")
 async def migration(request: Request, from_package: str, to_package: str):
     """Get real migration data from GitHub repos — how many repos switched,

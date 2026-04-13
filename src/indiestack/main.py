@@ -734,6 +734,15 @@ class _HeadMethodMiddleware:
 app.add_middleware(GZipMiddleware, minimum_size=500)
 app.add_middleware(_HeadMethodMiddleware)
 
+# x402 payment initialization (only if credentials are configured)
+if _os.environ.get("PAY_TO_ADDRESS"):
+    from fastapi_x402 import init_x402
+    init_x402(
+        app=app,
+        pay_to=_os.environ["PAY_TO_ADDRESS"],
+        network="base-sepolia",  # Switch to "base" for mainnet
+    )
+
 
 # ── Latency Tracking Middleware ──────────────────────────────────────────
 @app.middleware("http")
@@ -5145,3 +5154,5 @@ from indiestack.routes import token_cost
 app.include_router(token_cost.router)
 from indiestack.routes import agents
 app.include_router(agents.router)
+from indiestack.routes import oracle
+app.include_router(oracle.router)
