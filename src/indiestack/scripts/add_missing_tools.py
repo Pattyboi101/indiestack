@@ -5114,6 +5114,25 @@ TOOLS = [
         "npm install partykit",
         "code",
     ),
+    # DevOps — open-source Terraform replacement --------------------------------
+    (
+        "opentofu",
+        "OpenTofu",
+        "Open-source Terraform fork by the community",
+        "OpenTofu is an open-source infrastructure-as-code tool and a community-led "
+        "fork of Terraform, maintained under the CNCF. It is a drop-in replacement "
+        "for Terraform — same HCL syntax, same provider ecosystem, same workflows — "
+        "without the Business Source License restrictions. Write declarative "
+        "infrastructure for AWS, GCP, Azure, and 3,000+ providers. Features "
+        "state encryption, provider-defined functions, and an active roadmap.",
+        "devops-infrastructure",
+        "opentofu/opentofu",
+        22000,
+        "https://opentofu.org",
+        "iac,terraform,infrastructure-as-code,hcl,open-source,cncf",
+        "brew install opentofu",
+        "code",
+    ),
 ]
 
 

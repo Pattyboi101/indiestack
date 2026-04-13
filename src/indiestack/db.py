@@ -4189,6 +4189,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "beanie": "database",           # Beanie — async MongoDB ODM for Python with Pydantic (4k★)
     "tortoise": "database",         # Tortoise ORM — Django-inspired async Python ORM (4k★)
     "tortoise-orm": "database",     # hyphenated form — "tortoise-orm alternative" queries
+    # DevOps — OpenTofu (open-source Terraform fork, 22k★)
+    "opentofu": "devops",           # OpenTofu — open-source Terraform fork by CNCF (22k★)
+    "tofu": "devops",               # short form — "tofu deploy", "opentofu vs terraform" queries
+    # Security — fraud detection and KYC/identity verification
+    "fraud": "security",            # "fraud detection", "fraud prevention" (Fingerprint, SEON, Stripe Radar)
+    "kyc": "security",              # KYC verification — "kyc tool", "know your customer" (Onfido, Persona)
+    "spam": "security",             # "spam protection", "spam filter" (Akismet, Cleantalk, hCaptcha)
+    # Invoicing — tax calculation for SaaS
+    "tax": "invoicing",             # "sales tax API", "VAT compliance", "tax calculation" (Anrok, TaxJar, Avalara)
 }
 
 _FTS_STOP_WORDS = {

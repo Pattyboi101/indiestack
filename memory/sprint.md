@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (sixty-seventh pass)
+Last updated: 2026-04-13 (sixty-eighth pass)
 
 ## Status: Active
 
@@ -10,13 +10,37 @@ Last updated: 2026-04-13 (sixty-seventh pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~1350 entries for search routing (added 20 in sixty-seventh pass — maps: geolocation/geocode/tile/tiles; caching: kv/keyvalue; invoicing: metered/usage; payments: entitlements/paywall; auth: passkeys; api: drf/djangorestframework; database: sqlmodel/beanie/tortoise/tortoise-orm)
-- **Catalog script**: `scripts/add_missing_tools.py` — 307 tools ready to insert (slug-safe)
-  - 5 tools added in sixty-seventh pass (drizzle, sqlmodel, polar, effect, partykit)
+- **_CAT_SYNONYMS**: ~1740 entries for search routing (added 6 in sixty-eighth pass — devops: opentofu/tofu; security: fraud/kyc/spam; invoicing: tax)
+- **Catalog script**: `scripts/add_missing_tools.py` — 308 tools ready to insert (slug-safe)
+  - 1 tool added in sixty-eighth pass (opentofu)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+- **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
+
+## Completed This Session (2026-04-13, sixty-eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — the main Step 1 targets (state management, bundler, realtime, vector database, rate limiting) are all covered from prior passes
+- Found 6 genuinely missing terms; added to `_CAT_SYNONYMS`:
+  - **DevOps**: `opentofu`, `tofu` → `"devops"` (OpenTofu = open-source Terraform fork, 22k★; "tofu" is the short CLI name used in "tofu deploy" and "opentofu vs terraform" queries)
+  - **Security**: `fraud` → `"security"` ("fraud detection", "fraud prevention" — Fingerprint, SEON, Stripe Radar)
+  - **Security**: `kyc` → `"security"` ("KYC verification", "know your customer" — Onfido, Persona, Stripe Identity)
+  - **Security**: `spam` → `"security"` ("spam protection", "spam filter" — Akismet, hCaptcha, Cleantalk)
+  - **Invoicing**: `tax` → `"invoicing"` ("sales tax API", "VAT compliance", "tax calculation" — Anrok, TaxJar, Avalara)
+
+### Catalog Script (Step 2)
+- All Step 2 target tools from the improvement loop prompt already in script (react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend — added in prior passes)
+- Added 1 new tool: **OpenTofu** (opentofu/opentofu, 22k★) — open-source Terraform fork under CNCF, `devops-infrastructure` (this was the synonym gap that led to the addition)
+
+### Code Quality (Step 3)
+- Last 5 commits changed oracle.py, main.py, smoke_test.py — all JSON API routes, no html.escape() needed
+- Oracle endpoints use parameterized SQL throughout, correct `d = request.state.db` pattern
+- No hardcoded stats, CSS hex colors, or injection risks found
+
+### R&D Docs (Step 4)
+- sprint.md updated to sixty-eighth pass
 
 ## Completed This Session (2026-04-13, sixty-seventh pass — autonomous improvement cycle)
 
