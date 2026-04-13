@@ -4840,6 +4840,91 @@ TOOLS = [
         "npx @modelcontextprotocol/server-fetch",
         "code",
     ),
+    # AI — OCR ---------------------------------------------------------------
+    (
+        "tesseract-js",
+        "Tesseract.js",
+        "Pure JavaScript OCR for 100+ languages",
+        "Tesseract.js is a pure JavaScript port of the Tesseract OCR engine. "
+        "Recognises text in images across 100+ languages with no native dependencies. "
+        "Works in the browser and Node.js. The go-to OCR library for JavaScript "
+        "developers who need offline, server-side, or browser-based text extraction.",
+        "ai-automation",
+        "naptha/tesseract.js",
+        34000,
+        "https://tesseract.projectnaptha.com",
+        "ocr,image,text-extraction,javascript,browser,nodejs",
+        "npm install tesseract.js",
+        "code",
+    ),
+    # Developer Tools — compression -------------------------------------------
+    (
+        "fflate",
+        "fflate",
+        "High performance (de)compression in an 8kB package",
+        "fflate is the fastest pure-JavaScript compression library — significantly "
+        "faster than pako, zlib.js, and JSZip. Supports DEFLATE, GZIP, ZLIB, and ZIP "
+        "formats synchronously, asynchronously, and with streaming. Tree-shakeable, "
+        "works in browsers and Node.js. The modern default for web compression.",
+        "developer-tools",
+        "101arrowz/fflate",
+        3000,
+        "https://101arrowz.github.io/fflate",
+        "compression,deflate,gzip,zip,javascript,browser,nodejs,wasm",
+        "npm install fflate",
+        "code",
+    ),
+    # Developer Tools — phone number ------------------------------------------
+    (
+        "libphonenumber-js",
+        "libphonenumber-js",
+        "Parse, format and validate phone numbers in any country",
+        "A JavaScript port of Google's libphonenumber library. Validates, parses, "
+        "formats, and normalizes phone numbers for 240+ countries. Supports E.164 "
+        "formatting, national/international display formats, and carrier detection. "
+        "Tree-shakeable and available as a lightweight build for browser use.",
+        "developer-tools",
+        "catamphetamine/libphonenumber-js",
+        5000,
+        "https://github.com/catamphetamine/libphonenumber-js",
+        "phone,phone-number,validation,formatting,e164,google-libphonenumber",
+        "npm install libphonenumber-js",
+        "code",
+    ),
+    # Developer Tools — template engines ---------------------------------------
+    (
+        "handlebars",
+        "Handlebars.js",
+        "Minimal templating on steroids",
+        "Handlebars.js is a minimal, logic-less template engine for JavaScript. "
+        "Extends Mustache syntax with helpers, partials, and block expressions. "
+        "Used in Express.js, Ember.js, and thousands of email and HTML templating "
+        "pipelines. Compiles templates to optimised JavaScript functions.",
+        "developer-tools",
+        "handlebars-lang/handlebars.js",
+        18000,
+        "https://handlebarsjs.com",
+        "template-engine,handlebars,javascript,mustache,html",
+        "npm install handlebars",
+        "code",
+    ),
+    # Developer Tools — datetime / timezone -----------------------------------
+    (
+        "luxon",
+        "Luxon",
+        "A powerful, modern, and friendly wrapper for JavaScript dates and times",
+        "Luxon is an immutable datetime library built by one of the Moment.js authors "
+        "as its spiritual successor. Provides a clean, chainable API for parsing, "
+        "formatting, arithmetic, and timezone/locale handling. Backed by the Intl API "
+        "for native timezone support — no tzdata bundle required.",
+        "developer-tools",
+        "moment/luxon",
+        15000,
+        "https://moment.github.io/luxon",
+        "datetime,timezone,date,time,javascript,intl,immutable",
+        "npm install luxon",
+        "code",
+    ),
 ]
 
 

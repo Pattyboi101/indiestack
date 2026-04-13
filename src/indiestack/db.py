@@ -4100,6 +4100,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — debugging utilities (pdb, node --inspect, Chrome DevTools protocol)
     "debugger": "developer",        # "node debugger", "python debugger", "remote debugger" → Developer Tools
     "debugging": "developer",       # "debugging tool", "remote debugging", "debug middleware" → Developer Tools
+    # AI — OCR and optical character recognition (Tesseract.js, PaddleOCR, pytesseract)
+    "ocr": "ai",                    # "ocr library", "ocr api", "ocr tool" → AI & Automation
+    # Developer Tools — phone number validation/formatting (libphonenumber-js, phone-fns)
+    "phonenumber": "developer",     # "phonenumber library", "phone number validation" → Developer Tools
+    "libphonenumber": "developer",  # explicit library name queries → Developer Tools
+    # Developer Tools — data/file compression (pako, fflate, lz-string, zstd-wasm)
+    "compress": "developer",        # "compress files", "compress data", "js compress" → Developer Tools
+    "compression": "developer",     # "compression library", "lossless compression" → Developer Tools
+    # Developer Tools — spell checking (cspell, nspell, hunspell bindings)
+    "spell": "developer",           # "spell check", "spell checker library" → Developer Tools
+    "spellcheck": "developer",      # "spellcheck library", "spellcheck api" → Developer Tools
+    # Developer Tools — server-side template engines (Handlebars, Nunjucks, Mustache, EJS)
+    "handlebars": "developer",      # Handlebars.js — minimal JS templating (18k★)
+    "nunjucks": "developer",        # Nunjucks — Jinja2-inspired templates for Node.js
+    "mustache": "developer",        # Mustache — logic-less templates for JS/Python/Ruby
+    "jinja": "developer",           # Jinja2 — Python template engine (high search volume)
+    "ejs": "developer",             # EJS — embedded JavaScript templating
+    # Developer Tools — timezone handling (date-fns-tz, spacetime, temporal)
+    "timezone": "developer",        # "timezone library", "timezone conversion" → Developer Tools
+    # Note: "luxon" already maps to "frontend" at line 3777 — no duplicate here
 }
 
 _FTS_STOP_WORDS = {

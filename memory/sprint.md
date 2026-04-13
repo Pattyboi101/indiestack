@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (sixty-third pass)
+Last updated: 2026-04-13 (sixty-fourth pass)
 
 ## Status: Active
 
@@ -10,8 +10,9 @@ Last updated: 2026-04-13 (sixty-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1260 entries for search routing (added 6 in sixty-third pass — stub/stubbing→testing, pagination/paginate→frontend, debugger/debugging→developer)
-- **Catalog script**: `scripts/add_missing_tools.py` — 292 tools ready to insert (slug-safe)
+- **_CAT_SYNONYMS**: 1275 entries for search routing (added 15 in sixty-fourth pass — ocr→ai, phonenumber/libphonenumber→developer, compress/compression→developer, spell/spellcheck→developer, handlebars/nunjucks/mustache/jinja/ejs→developer, timezone→developer)
+- **Catalog script**: `scripts/add_missing_tools.py` — 297 tools ready to insert (slug-safe)
+  - 5 tools added in sixty-fourth pass (tesseract-js, fflate, libphonenumber-js, handlebars, luxon)
   - 5 MCP server tools added in sixty-third pass (mcp-filesystem, mcp-github, mcp-postgres, mcp-memory, mcp-fetch)
   - 4 tools added in sixty-second pass (NestJS, MobX, Apollo Client, Vercel AI SDK)
   - 5 tools added in sixty-first pass (Uptime Kuma, Ruff, Pydantic, MinIO, k6)
@@ -19,6 +20,34 @@ Last updated: 2026-04-13 (sixty-third pass)
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-13, sixty-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` exhaustively — all Step 1 targets already covered (state management, bundler, realtime, vector database, rate limiting)
+- Found 16 genuinely missing mappings; added to `_CAT_SYNONYMS`:
+  - **AI — OCR**: `ocr` → `"ai"` (tesseract.js, PaddleOCR, pytesseract → AI & Automation)
+  - **Developer — phone**: `phonenumber`, `libphonenumber` → `"developer"` (libphonenumber-js → Developer Tools)
+  - **Developer — compression**: `compress`, `compression` → `"developer"` (fflate, pako, lz-string → Developer Tools)
+  - **Developer — spell checking**: `spell`, `spellcheck` → `"developer"` (cspell, nspell → Developer Tools)
+  - **Developer — template engines**: `handlebars`, `nunjucks`, `mustache`, `jinja`, `ejs` → `"developer"` (server-side template engines)
+  - **Developer — timezone**: `timezone` → `"developer"` (date-fns-tz, spacetime → Developer Tools; note: `luxon` already mapped to "frontend" on line 3777)
+
+### Catalog Script (Step 2)
+- All 10 target tools from task prompt already in script (react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend)
+- Added 5 new tools to `scripts/add_missing_tools.py` (297 total) — corresponding to new synonym categories:
+  - tesseract-js (naptha/tesseract.js, 34k★) — OCR in JavaScript, `ai-automation`
+  - fflate (101arrowz/fflate, 3k★) — fastest JS compression library, `developer-tools`
+  - libphonenumber-js (catamphetamine, 5k★) — phone number validation, `developer-tools`
+  - handlebars (handlebars-lang, 18k★) — minimal JS template engine, `developer-tools`
+  - luxon (moment/luxon, 15k★) — immutable datetime + timezone library, `developer-tools`
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py, sprint.md, add_missing_tools.py — no route files
+- No html.escape(), CSS hex color, or hardcoded stat issues found
+
+### R&D Docs (Step 4)
+- sprint.md updated to sixty-fourth pass
 
 ## Completed This Session (2026-04-13, sixty-third pass — autonomous improvement cycle)
 
