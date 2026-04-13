@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (seventy-third pass)
+Last updated: 2026-04-13 (seventy-fourth pass)
 
 ## Status: Active
 
@@ -10,14 +10,40 @@ Last updated: 2026-04-13 (seventy-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1363 unique effective keys (added 4 in seventy-third pass — labeling/annotation/synthetic/moderation → ai; NOTE: 21 duplicate keys exist in source but all have correct last-write-wins values)
-- **Catalog script**: `scripts/add_missing_tools.py` — 327 tools ready to insert (slug-safe); +4 this pass: promptfoo, deepeval, helicone, label-studio
+- **_CAT_SYNONYMS**: 1370 unique effective keys (added 7 in seventy-fourth pass — idp/iam/embedded/cdc/debezium/columnstore/pulsar; 21 duplicate keys exist in source but all have correct last-write-wins values)
+- **Catalog script**: `scripts/add_missing_tools.py` — 331 tools ready to insert (slug-safe); +4 this pass: chroma, apache-kafka, rabbitmq, airbyte
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-13, seventy-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` against Step 1 targets — confirmed all listed gaps from prior passes now covered
+- Added 7 new entries to `_CAT_SYNONYMS` (1363 → 1370 unique effective keys):
+  - **Auth/IAM**: `"idp"` → `"authentication"` — IDP (Identity Provider) queries (Okta, Keycloak, ZITADEL, PingOne)
+  - **Auth/IAM**: `"iam"` → `"authentication"` — IAM (Identity Access Management) queries
+  - **Database**: `"embedded"` → `"database"` — "embedded database" (SQLite, DuckDB, PocketBase queries)
+  - **Database**: `"cdc"` → `"database"` — Change Data Capture (Debezium, Maxwell, Kafka Connect)
+  - **Database**: `"debezium"` → `"database"` — direct Debezium tool queries
+  - **Database**: `"columnstore"` → `"database"` — compound form of column-store database queries
+  - **Message queue**: `"pulsar"` → `"message"` — Apache Pulsar alternative queries
+
+### Catalog Script (Step 2)
+- Added 4 new tools to `scripts/add_missing_tools.py` (327 → 331 total):
+  - **Chroma** (database, 15k★) — AI-native embedding database, default for LangChain/LlamaIndex RAG
+  - **Apache Kafka** (message-queue, 28k★) — dominant event streaming platform (CNCF graduated)
+  - **RabbitMQ** (message-queue, 12k★) — most widely deployed open-source message broker
+  - **Airbyte** (background-jobs, 17k★) — open-source ELT with 400+ connectors
+
+### Code Quality (Step 3)
+- Recent commits limited to search quality + catalog additions — no route file changes; no html.escape or CSS regressions to fix
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventy-fourth pass
 
 ## Completed This Session (2026-04-13, seventy-third pass — autonomous improvement cycle)
 

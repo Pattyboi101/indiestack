@@ -5479,6 +5479,73 @@ TOOLS = [
         "docker run nats",
         "code",
     ),
+    # Vector databases — AI / RAG pipelines ------------------------------------------
+    (
+        "chroma",
+        "Chroma",
+        "The AI-native open-source embedding database",
+        "Chroma is an open-source embedding database purpose-built for AI applications. "
+        "Store, embed, and query documents with metadata filtering. The go-to "
+        "local-first vector store for LangChain, LlamaIndex, and RAG prototyping. "
+        "Scales from local dev to self-hosted production.",
+        "database",
+        "chroma-core/chroma",
+        15000,
+        "https://trychroma.com",
+        "vector-database,embeddings,rag,langchain,local-first",
+        "pip install chromadb",
+        "code",
+    ),
+    # Message queues — the two most-searched message brokers -------------------------
+    (
+        "apache-kafka",
+        "Apache Kafka",
+        "The open-source distributed event streaming platform",
+        "Apache Kafka is the dominant event streaming platform. Publish, subscribe, "
+        "store, and process streams of records with high throughput and low latency. "
+        "Powers real-time data pipelines, event-driven microservices, and stream "
+        "processing at every major tech company. CNCF graduated project.",
+        "message-queue",
+        "apache/kafka",
+        28000,
+        "https://kafka.apache.org",
+        "message-queue,event-streaming,pubsub,distributed,real-time",
+        "docker run -p 9092:9092 apache/kafka",
+        "code",
+    ),
+    (
+        "rabbitmq",
+        "RabbitMQ",
+        "The most widely deployed open-source message broker",
+        "RabbitMQ is a battle-tested message broker supporting AMQP, MQTT, and STOMP. "
+        "Routes messages between producers and consumers with queues, exchanges, "
+        "and bindings. Supports clustering, federation, and high availability. "
+        "The canonical choice for task queues and service decoupling.",
+        "message-queue",
+        "rabbitmq/rabbitmq-server",
+        12000,
+        "https://rabbitmq.com",
+        "message-broker,amqp,queues,distributed,celery",
+        "docker run -p 5672:5672 rabbitmq",
+        "code",
+    ),
+    # Background jobs — ELT / data integration -------------------------------------
+    (
+        "airbyte",
+        "Airbyte",
+        "Open-source data integration platform — 400+ connectors",
+        "Airbyte is the leading open-source ELT platform. Move data from 400+ "
+        "sources (Postgres, Salesforce, Stripe, Google Sheets, and more) to any "
+        "destination warehouse or lake. Deploy self-hosted on Docker/Kubernetes "
+        "or use Airbyte Cloud. No-code + low-code + custom connector support.",
+        "background-jobs",
+        "airbytehq/airbyte",
+        17000,
+        "https://airbyte.com",
+        "etl,elt,data-integration,connectors,self-hosted,warehouse",
+        "docker compose up",
+        "code",
+    ),
 ]
 
 

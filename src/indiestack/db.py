@@ -4299,6 +4299,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "synthetic": "ai",              # "synthetic data", "synthetic training data" → AI & Automation
     # AI — content moderation / LLM output filtering (Perspective API, OpenAI Mod, Llama Guard)
     "moderation": "ai",             # "content moderation api", "llm moderation" → AI & Automation
+    # Auth — identity management terminology not yet mapped
+    "idp": "authentication",        # IDP (Identity Provider) — Okta, Keycloak, ZITADEL, PingOne
+    "iam": "authentication",        # IAM (Identity and Access Management) — authz policy engines
+    # Database — embedded, CDC, and column-store query patterns
+    "embedded": "database",         # "embedded database" — SQLite, DuckDB, PocketBase
+    "cdc": "database",              # Change Data Capture — Debezium, Maxwell, Kafka Connect
+    "debezium": "database",         # Debezium — open-source CDC platform for event streaming
+    "columnstore": "database",      # "column-store database" (compound, no hyphen) → Database
+    # Message queue — additional stream processing platform
+    "pulsar": "message",            # Apache Pulsar — distributed message streaming (Kafka alternative)
 }
 
 _FTS_STOP_WORDS = {
