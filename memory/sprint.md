@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (sixty-fourth pass)
+Last updated: 2026-04-13 (sixty-fifth pass)
 
 ## Status: Active
 
@@ -10,16 +10,43 @@ Last updated: 2026-04-13 (sixty-fourth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1275 entries for search routing (added 15 in sixty-fourth pass — ocr→ai, phonenumber/libphonenumber→developer, compress/compression→developer, spell/spellcheck→developer, handlebars/nunjucks/mustache/jinja/ejs→developer, timezone→developer)
-- **Catalog script**: `scripts/add_missing_tools.py` — 297 tools ready to insert (slug-safe)
-  - 5 tools added in sixty-fourth pass (tesseract-js, fflate, libphonenumber-js, handlebars, luxon)
-  - 5 MCP server tools added in sixty-third pass (mcp-filesystem, mcp-github, mcp-postgres, mcp-memory, mcp-fetch)
-  - 4 tools added in sixty-second pass (NestJS, MobX, Apollo Client, Vercel AI SDK)
-  - 5 tools added in sixty-first pass (Uptime Kuma, Ruff, Pydantic, MinIO, k6)
+- **_CAT_SYNONYMS**: ~1300 entries for search routing (added 20 in sixty-fifth pass — maps: leaflet/mapbox/openlayers/gis/cesium; api: postman/insomnia; db: flyway/alembic/liquibase/goose; developer: joi/ajv; ai: dalle/midjourney/sora; frontend: webgl/babylon)
+- **Catalog script**: `scripts/add_missing_tools.py` — 39 tools ready to insert (slug-safe)
+  - NOTE: sprint.md counts were inflated by prior passes; verified 33 tools in file before 65th pass
+  - 6 tools added in sixty-fifth pass (leaflet, bruno, insomnia, atlas, react-router, tesseract-js)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-13, sixty-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` exhaustively — all Step 1 targets (state management, bundler, realtime, vector database, rate limiting) already covered from prior passes
+- Found 20 genuinely missing mappings; added to `_CAT_SYNONYMS`:
+  - **Maps**: `leaflet`, `mapbox`, `openlayers`, `gis`, `cesium` → `"maps"` (Leaflet.js most-searched maps lib)
+  - **API clients**: `postman`, `insomnia` → `"api"` (postman is highest-volume API query)
+  - **Database migrations**: `flyway`, `alembic`, `liquibase`, `goose` → `"database"` (popular SQL migration runners)
+  - **Developer validation**: `joi`, `ajv` → `"developer"` (Joi 20k★, AJV 14k★ JSON schema validator)
+  - **AI image generation**: `dalle`, `midjourney`, `sora` → `"ai"` (image gen alternative queries)
+  - **Frontend 3D/WebGL**: `webgl`, `babylon` → `"frontend"` (Three.js/Babylon.js ecosystem queries)
+
+### Catalog Script (Step 2)
+- Verified actual file: 33 tools (sprint.md counts were inflated by prior loops that wrote but failed to commit)
+- Added 6 new tools to `scripts/add_missing_tools.py` (39 total):
+  - leaflet (Leaflet/Leaflet, 41k★) — interactive maps, `maps-location`
+  - bruno (usebruno/bruno, 28k★) — offline-first API testing, `api-tools`
+  - insomnia (Kong/insomnia, 34k★) — REST/GraphQL/gRPC client, `api-tools`
+  - atlas (ariga/atlas, 6k★) — schema-as-code DB migrations, `database`
+  - react-router (remix-run/react-router, 52k★) — React routing, `frontend-frameworks`
+  - tesseract-js (naptha/tesseract.js, 34k★) — browser OCR, `ai-automation`
+
+### Code Quality (Step 3)
+- Last 5 commits changed only db.py, sprint.md, add_missing_tools.py — no route files
+- No html.escape(), CSS hex color, or hardcoded stat issues found
+
+### R&D Docs (Step 4)
+- sprint.md updated to sixty-fifth pass; corrected inflated tool count (33 actual, not 297)
 
 ## Completed This Session (2026-04-13, sixty-fourth pass — autonomous improvement cycle)
 

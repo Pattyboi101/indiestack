@@ -4120,6 +4120,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — timezone handling (date-fns-tz, spacetime, temporal)
     "timezone": "developer",        # "timezone library", "timezone conversion" → Developer Tools
     # Note: "luxon" already maps to "frontend" at line 3777 — no duplicate here
+    # Maps & Location — named mapping libraries (Leaflet is most-searched maps alternative)
+    "leaflet": "maps",              # Leaflet.js — most popular open-source interactive map library (41k★)
+    "mapbox": "maps",               # Mapbox GL JS — vector tile map rendering SDK (11k★)
+    "openlayers": "maps",           # OpenLayers — full-featured maps in the browser (11k★)
+    "gis": "maps",                  # GIS (Geographic Information System) generic queries → Maps & Location
+    "cesium": "maps",               # CesiumJS — 3D globes and maps (Cesium ion, open-source, 13k★)
+    # API clients / API testing — Postman is the canonical tool; "[tool] alternative" is high-volume
+    "postman": "api",               # Postman — most-used API testing and documentation platform
+    "insomnia": "api",              # Insomnia — Kong's open-source REST/GraphQL/gRPC client (34k★)
+    # Database — SQL migration runners not yet mapped
+    "flyway": "database",           # Flyway — SQL database migrations (popular in Java/Spring ecosystem, 8k★)
+    "alembic": "database",          # Alembic — SQLAlchemy migration tool for Python (3k★)
+    "liquibase": "database",        # Liquibase — database schema version control (13k★)
+    "goose": "database",            # Goose — Go database migration tool (6k★)
+    # Developer Tools — schema/data validation libraries very commonly searched
+    "joi": "developer",             # Joi — most popular JS/TS object schema validation (20k★, pre-Zod era)
+    "ajv": "developer",             # AJV — fastest JSON schema validator for Node.js/browser (14k★)
+    # AI — image generation models (enormous query volume via stable diffusion synonyms + branded)
+    "dalle": "ai",                  # DALL-E — OpenAI image generation; "dalle alternative" high-volume
+    "midjourney": "ai",             # Midjourney — popular text-to-image AI; "midjourney alternative" queries
+    "sora": "ai",                   # Sora — OpenAI text-to-video model; "sora alternative" growing queries
+    # Frontend — WebGL (lower level than Three.js, but queried directly)
+    "webgl": "frontend",            # WebGL — browser 3D graphics API; queries route to Three.js/Babylon.js
+    "babylon": "frontend",          # Babylon.js — WebGL-based 3D engine (alternative to Three.js, 23k★)
 }
 
 _FTS_STOP_WORDS = {
