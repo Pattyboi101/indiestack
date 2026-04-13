@@ -740,7 +740,7 @@ if _os.environ.get("PAY_TO_ADDRESS"):
     init_x402(
         app=app,
         pay_to=_os.environ["PAY_TO_ADDRESS"],
-        network="base-sepolia",  # Switch to "base" for mainnet
+        network="base",
     )
 
 
