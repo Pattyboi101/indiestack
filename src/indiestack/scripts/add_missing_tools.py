@@ -5097,6 +5097,56 @@ TOOLS = [
         "npm install effect",
         "code",
     ),
+    # Developer Tools — headless commerce ----------------------------------------
+    (
+        "medusa",
+        "Medusa",
+        "Open-source Shopify alternative built for developers",
+        "Medusa is a composable headless commerce platform. Build custom e-commerce "
+        "experiences with a modular backend — products, carts, orders, payments, and "
+        "fulfilment are all pluggable. Pairs with any frontend (Next.js, Remix, mobile). "
+        "The open-source alternative to Shopify and Commerce.js.",
+        "developer-tools",
+        "medusajs/medusa",
+        26000,
+        "https://medusajs.com",
+        "headless-commerce,ecommerce,nodejs,typescript,open-source",
+        "npx create-medusa-app@latest",
+        "code",
+    ),
+    # Monitoring — high-performance metrics storage --------------------------------
+    (
+        "victoriametrics",
+        "VictoriaMetrics",
+        "Fast, cost-effective monitoring solution and time series database",
+        "VictoriaMetrics is a high-performance Prometheus-compatible monitoring "
+        "system and time series database. Drop-in replacement for Prometheus with "
+        "significantly lower memory and storage usage. Supports PromQL, MetricsQL, "
+        "and native long-term metrics storage at scale.",
+        "monitoring-uptime",
+        "VictoriaMetrics/VictoriaMetrics",
+        12000,
+        "https://victoriametrics.com",
+        "monitoring,metrics,prometheus,time-series,open-source,self-hosted",
+        "docker pull victoriametrics/victoria-metrics",
+        "code",
+    ),
+    (
+        "netdata",
+        "Netdata",
+        "Real-time infrastructure monitoring, done right",
+        "Netdata is an open-source real-time infrastructure monitoring agent. "
+        "Installs in seconds, auto-detects thousands of metrics without configuration, "
+        "and streams data to Netdata Cloud or any external storage. Covers system, "
+        "application, and container metrics with minimal overhead.",
+        "monitoring-uptime",
+        "netdata/netdata",
+        76000,
+        "https://netdata.cloud",
+        "monitoring,metrics,real-time,open-source,self-hosted,observability",
+        "wget -O /tmp/netdata-kickstart.sh https://my-netdata.io/kickstart.sh && sh /tmp/netdata-kickstart.sh",
+        "code",
+    ),
     # API Tools — realtime multiplayer infrastructure -------------------------
     (
         "partykit",

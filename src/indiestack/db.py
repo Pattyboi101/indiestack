@@ -4189,6 +4189,38 @@ _CAT_SYNONYMS: dict[str, str] = {
     "beanie": "database",           # Beanie — async MongoDB ODM for Python with Pydantic (4k★)
     "tortoise": "database",         # Tortoise ORM — Django-inspired async Python ORM (4k★)
     "tortoise-orm": "database",     # hyphenated form — "tortoise-orm alternative" queries
+    # Search — autocomplete / type-ahead search patterns (very common agent query segment)
+    "autocomplete": "search",       # "search autocomplete", "autocomplete API" → Search Engines
+    "typeahead": "search",          # "type-ahead search", "typeahead widget" → Search Engines
+    # Security — Let's Encrypt and ACME certificate management (common DevOps + Security queries)
+    "certbot": "security",          # Certbot — EFF CLI for Let's Encrypt cert automation
+    "letsencrypt": "security",      # Let's Encrypt — free SSL/TLS certificates (very common query)
+    # Database — time-series databases (InfluxDB, QuestDB, TimescaleDB)
+    "influxdb": "database",         # InfluxDB — purpose-built time-series database platform (29k★)
+    "influx": "database",           # short form — "influx query", "influx alternative" queries
+    "questdb": "database",          # QuestDB — fast SQL time-series database (14k★)
+    # Database — multi-model graph/document
+    "arangodb": "database",         # ArangoDB — native multi-model (graph + document + KV) database (13k★)
+    # Monitoring — additional named tools and SRE terminology
+    "victoriametrics": "monitoring", # VictoriaMetrics — fast Prometheus-compatible metrics storage (12k★)
+    "netdata": "monitoring",         # Netdata — real-time infrastructure monitoring agent (76k★)
+    "mimir": "monitoring",           # Grafana Mimir — horizontally-scalable Prometheus long-term storage
+    "slo": "monitoring",             # SLO (Service Level Objective) — reliability target concept
+    "sli": "monitoring",             # SLI (Service Level Indicator) — reliability measurement metric
+    "sre": "monitoring",             # SRE — Site Reliability Engineering practice queries
+    "oncall": "monitoring",          # "on-call scheduling", "on-call alerting" → Monitoring & Uptime
+    # Headless commerce — Medusa.js (open-source Shopify alternative for developers)
+    "medusa": "developer",           # Medusa.js — open-source headless commerce engine (26k★)
+    "medusajs": "developer",         # compound form — "medusajs alternative" queries
+    # Payments — Buy Now Pay Later (BNPL) category
+    "bnpl": "payments",              # Buy Now Pay Later — category term (Klarna, Afterpay, Affirm)
+    "klarna": "payments",            # Klarna — most popular BNPL provider (alternative queries)
+    "afterpay": "payments",          # Afterpay/Clearpay — BNPL by Square (popular AU/US)
+    # Developer Tools — CLI framework named tools (complement to "cli"→"cli" category synonym)
+    "cobra": "developer",            # Cobra — most popular Go CLI framework (37k★)
+    "commander": "developer",        # commander.js — most popular Node.js CLI builder (25k★)
+    "typer": "developer",            # Typer — Python CLI framework by FastAPI creator (15k★)
+    "oxc": "frontend",               # Oxc (Oxidation Compiler) — ultra-fast Rust JS/TS toolchain
 }
 
 _FTS_STOP_WORDS = {
