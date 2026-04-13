@@ -108,3 +108,64 @@ async def migration(request: Request, from_package: str, to_package: str):
         "net_momentum": len(forward) - reverse_count,
         "confidence_summary": confidence_counts,
     })
+
+
+# -- Bazaar discovery metadata ---------------------------------------------
+
+@router.get("/v1/.well-known/x402-resources")
+async def x402_resources():
+    """x402 Bazaar discovery metadata — agents use this to find our services."""
+    return JSONResponse({
+        "name": "IndieStack Oracle",
+        "description": "Compatibility and migration intelligence for developer tools. 6,622 verified pairs, 422 migration paths from real GitHub repos.",
+        "endpoints": [
+            {
+                "path": "/v1/compatibility/{tool_a}/{tool_b}",
+                "method": "GET",
+                "price": "$0.02",
+                "description": "Check if two developer tools are compatible. Returns verified compatibility data, co-occurrence counts from real repos, and related tools.",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "tool_a": {"type": "string", "description": "First tool slug (e.g., 'nextjs', 'react', 'supabase')"},
+                        "tool_b": {"type": "string", "description": "Second tool slug"}
+                    },
+                    "required": ["tool_a", "tool_b"]
+                },
+                "output": {
+                    "example": {
+                        "tool_a": "nextjs",
+                        "tool_b": "supabase",
+                        "compatible": True,
+                        "confidence": "verified",
+                        "success_count": 47,
+                        "cooccurrence_count": 312,
+                        "related_tools": ["prisma", "lucia-auth"]
+                    }
+                }
+            },
+            {
+                "path": "/v1/migration/{from_package}/{to_package}",
+                "method": "GET",
+                "price": "$0.05",
+                "description": "Get real migration data from GitHub repos. How many repos switched between packages, when, and confidence level.",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "from_package": {"type": "string", "description": "Package migrating from (e.g., 'jest', 'webpack')"},
+                        "to_package": {"type": "string", "description": "Package migrating to (e.g., 'vitest', 'vite')"}
+                    },
+                    "required": ["from_package", "to_package"]
+                },
+                "output": {
+                    "example": {
+                        "from": "jest",
+                        "to": "vitest",
+                        "migrations_found": 27,
+                        "net_momentum": 25,
+                        "confidence_summary": {"swap": 20, "likely": 5, "inferred": 2}
+                    }
+                }
+            }
+        ]
+    })
