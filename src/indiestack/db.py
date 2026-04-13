@@ -4232,6 +4232,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — natural language processing (NLP tools live in ai-automation alongside LLM tools)
     "nlp": "ai",                    # "NLP library", "NLP pipeline", "nlp tool" → AI & Automation
     "sentiment": "ai",              # "sentiment analysis", "sentiment classifier" → AI & Automation
+    # DevOps — Functions as a Service (serverless function hosting)
+    "faas": "devops",               # FaaS — "faas platform", "serverless function runner" (Deno Deploy, Cloudflare Workers)
+    # DevOps — self-hosting queries (Coolify, Caprover, Dokku, Portainer)
+    "selfhost": "devops",           # "self host option", "how to selfhost" → DevOps & Infrastructure
+    "selfhosted": "devops",         # compound — "selfhosted alternative", "selfhosted version" → DevOps
+    # Analytics — session replay and heatmap tools (OpenReplay, LogRocket, Highlight)
+    "hotjar": "analytics",          # Hotjar — heatmaps + session recording; "hotjar alternative" high-volume
+    "openreplay": "analytics",      # OpenReplay — open-source session replay + analytics (9.6k★)
+    "recording": "analytics",       # "session recording", "user recording" → Analytics (OpenReplay, PostHog)
+    # Security — HTTP security headers and Content Security Policy
+    "csp": "security",              # CSP (Content Security Policy) — "csp header", "csp nonce" → Security Tools
+    "helmet": "security",           # helmet.js — Node.js HTTP security headers (28k★); "helmet alternative" queries
+    # AI — LLM output safety and guardrail frameworks
+    "guardrail": "ai",              # "llm guardrail", "ai guardrail" → AI & Automation (NeMo Guardrails, Guardrails AI)
+    "guardrails": "ai",             # plural — "add guardrails to llm", "guardrails library" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

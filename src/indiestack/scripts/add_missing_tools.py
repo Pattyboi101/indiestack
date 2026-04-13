@@ -5148,6 +5148,43 @@ TOOLS = [
         "pip install pydantic-ai",
         "code",
     ),
+    # Analytics — open-source session replay + product analytics ------------------
+    (
+        "openreplay",
+        "OpenReplay",
+        "Open-source session replay you can self-host",
+        "OpenReplay is an open-source session replay suite for developers. "
+        "Watch exactly what users do in your app — every click, scroll, network "
+        "request, and console log. Self-hostable (Docker/k8s), works with React, "
+        "Vue, Angular, and vanilla JS. Includes performance monitoring, "
+        "funnel analysis, and co-browsing. A privacy-first Hotjar/FullStory alternative.",
+        "analytics-metrics",
+        "openreplay/openreplay",
+        9600,
+        "https://openreplay.com",
+        "session-replay,analytics,heatmap,self-hosted,product-analytics,open-source",
+        "bash <(curl -s https://raw.githubusercontent.com/openreplay/openreplay/main/scripts/helmcharts/openreplay-helm/scripts/install.sh)",
+        "code",
+    ),
+    # Message Queue — high-performance NATS messaging --------------------------
+    (
+        "nats",
+        "NATS",
+        "Connective technology for adaptive edge and distributed systems",
+        "NATS is an open-source, high-performance messaging system for cloud-native "
+        "applications. Supports pub/sub, request/reply, and persistent JetStream "
+        "streaming. Extremely lightweight (the server is a single Go binary), "
+        "handles millions of messages per second, and deploys on everything from "
+        "IoT edge nodes to global cloud clusters. A simpler alternative to Kafka "
+        "and RabbitMQ for many use cases.",
+        "message-queue",
+        "nats-io/nats-server",
+        16000,
+        "https://nats.io",
+        "messaging,pubsub,streaming,jetstream,lightweight,cloud-native",
+        "brew install nats-server",
+        "code",
+    ),
     # DevOps — open-source Terraform replacement --------------------------------
     (
         "opentofu",

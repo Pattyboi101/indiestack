@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (sixty-ninth pass)
+Last updated: 2026-04-13 (seventieth pass)
 
 ## Status: Active
 
@@ -10,14 +10,43 @@ Last updated: 2026-04-13 (sixty-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~1353 entries for search routing (added 13 in sixty-ninth pass — database: timeseries/olap/columnar/multimodel; developer: lowcode/nocode/giscus; payments: iap/purchase; background: cronjob; support: disqus; ai: nlp/sentiment)
-- **Catalog script**: `scripts/add_missing_tools.py` — 310 tools ready to insert (slug-safe)
-  - 2 tools added in sixty-ninth pass (livekit, pydantic-ai)
+- **_CAT_SYNONYMS**: ~1364 entries for search routing (added 11 in seventieth pass — devops: faas/selfhost/selfhosted; analytics: hotjar/openreplay/recording; security: csp/helmet; ai: guardrail/guardrails)
+- **Catalog script**: `scripts/add_missing_tools.py` — 312 tools ready to insert (slug-safe)
+  - 2 tools added in seventieth pass (openreplay, nats)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
+
+## Completed This Session (2026-04-13, seventieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — Step 1 targets and all prior-pass terms confirmed present
+- Found 11 genuinely missing terms; added to `_CAT_SYNONYMS`:
+  - **DevOps**: `faas` → `"devops"` (Functions as a Service — Deno Deploy, Cloudflare Workers queries)
+  - **DevOps**: `selfhost`, `selfhosted` → `"devops"` (self-hosting queries — Coolify, Caprover, Dokku)
+  - **Analytics**: `hotjar` → `"analytics"` ("hotjar alternative" is a high-volume query)
+  - **Analytics**: `openreplay` → `"analytics"` (OpenReplay — open-source session replay, 9.6k★)
+  - **Analytics**: `recording` → `"analytics"` ("session recording", "user recording" queries)
+  - **Security**: `csp` → `"security"` (Content Security Policy — "csp header", "csp nonce" queries)
+  - **Security**: `helmet` → `"security"` (helmet.js — Node.js HTTP security headers, 28k★)
+  - **AI**: `guardrail`, `guardrails` → `"ai"` (LLM guardrail frameworks — NeMo Guardrails, Guardrails AI)
+
+### Catalog Script (Step 2)
+- All Step 2 target tools from the improvement loop prompt already in script (react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend — added in prior passes)
+- Added 2 new tools to `scripts/add_missing_tools.py` (310 → 312 total):
+  - **OpenReplay** (openreplay/openreplay, 9.6k★) — open-source session replay + product analytics, `analytics-metrics`
+  - **NATS** (nats-io/nats-server, 16k★) — high-performance pub/sub + JetStream streaming, `message-queue`
+
+### Code Quality (Step 3)
+- Last 5 commits changed db.py, scripts/add_missing_tools.py, oracle.py, oracle_page.py, content.py
+- oracle.py: correct `d = request.state.db` pattern, parameterized SQL, no issues
+- db.py: _CAT_SYNONYMS additions are string literals only, no injection risk
+- No hardcoded stats, CSS hex colors, or html.escape() gaps found
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventieth pass; docs/plans/ directory does not exist (gitignored)
 
 ## Completed This Session (2026-04-13, sixty-ninth pass — autonomous improvement cycle)
 
