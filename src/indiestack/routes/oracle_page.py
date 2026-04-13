@@ -12,6 +12,19 @@ router = APIRouter()
 async def oracle_page(request: Request):
     """Human-readable landing page for the x402 Oracle API."""
     user = getattr(request.state, "user", None)
+    d = request.state.db
+
+    # Fetch live stats — fall back to last-known values if tables not yet populated
+    try:
+        r = await d.execute("SELECT COUNT(*) as n FROM tool_pairs")
+        pairs_count = (await r.fetchone())['n']
+        r = await d.execute("SELECT COUNT(*) as n FROM manifest_cooccurrences")
+        cooc_count = (await r.fetchone())['n']
+        r = await d.execute("SELECT COUNT(*) as n FROM migration_paths")
+        mig_count = (await r.fetchone())['n']
+    except Exception:
+        pairs_count, cooc_count, mig_count = 6622, 58638, 422
+
     content = f"""
     <div style="max-width:720px;margin:0 auto;padding:40px 20px;">
       <h1 style="font-family:var(--font-heading);font-size:2rem;margin-bottom:8px;">
@@ -28,7 +41,7 @@ async def oracle_page(request: Request):
           <div style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);margin-bottom:8px;">$0.02 / call</div>
           <h3 style="margin:0 0 8px;">Compatibility Check</h3>
           <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:16px;">
-            Are two tools compatible? Verified data from 6,622 pairs and 58,638 manifest co-occurrences from real repos.
+            Are two tools compatible? Verified data from {pairs_count:,} pairs and {cooc_count:,} manifest co-occurrences from real repos.
           </p>
           <code style="display:block;background:var(--bg);padding:12px;border-radius:8px;font-size:0.8rem;overflow-x:auto;white-space:nowrap;">
             GET /v1/compatibility/nextjs/supabase
@@ -38,7 +51,7 @@ async def oracle_page(request: Request):
           <div style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);margin-bottom:8px;">$0.05 / call</div>
           <h3 style="margin:0 0 8px;">Migration Data</h3>
           <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:16px;">
-            How many repos switched between two packages, when, and with what confidence. 422 migration paths from real git history.
+            How many repos switched between two packages, when, and with what confidence. {mig_count:,} migration paths from real git history.
           </p>
           <code style="display:block;background:var(--bg);padding:12px;border-radius:8px;font-size:0.8rem;overflow-x:auto;white-space:nowrap;">
             GET /v1/migration/jest/vitest

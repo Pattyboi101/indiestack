@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (sixty-ninth pass)
+Last updated: 2026-04-13 (seventieth pass)
 
 ## Status: Active
 
@@ -10,14 +10,38 @@ Last updated: 2026-04-13 (sixty-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~1353 entries for search routing (added 13 in sixty-ninth pass — database: timeseries/olap/columnar/multimodel; developer: lowcode/nocode/giscus; payments: iap/purchase; background: cronjob; support: disqus; ai: nlp/sentiment)
+- **_CAT_SYNONYMS**: ~1358 entries for search routing (added 5 in seventieth pass — api: http/fetch; frontend: date/table/grid)
 - **Catalog script**: `scripts/add_missing_tools.py` — 310 tools ready to insert (slug-safe)
-  - 2 tools added in sixty-ninth pass (livekit, pydantic-ai)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
+- **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-13, seventieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — Step 1 targets (state management, bundler, realtime, vector database, rate limiting) all covered from prior passes
+- Found 5 genuinely missing terms; added to `_CAT_SYNONYMS`:
+  - **API**: `http` → `"api"` ("http client", "http request library" — Axios, Got, Ky, undici)
+  - **API**: `fetch` → `"api"` ("fetch wrapper", "node fetch alternative" — ky, ofetch, Got)
+  - **Frontend**: `date` → `"frontend"` ("date library", "date utility" — date-fns, dayjs, Luxon)
+  - **Frontend**: `table` → `"frontend"` ("react table", "table component" — TanStack Table, AG Grid)
+  - **Frontend**: `grid` → `"frontend"` ("data grid", "ag grid alternative" — AG Grid, react-data-grid)
+
+### Catalog Script (Step 2)
+- All Step 2 target tools already in script (added in prior passes)
+- No new tools to add this pass
+
+### Code Quality (Step 3)
+- Last 5 commits: intel.py, oracle.py, oracle_page.py, oracle_page.py (stack_architect addition), smoke_test.py
+- **Fixed**: `oracle_page.py` had hardcoded stats ("6,622 pairs", "58,638 co-occurrences", "422 migration paths") — now dynamically fetched from DB with fallback to last-known values
+- intel.py: All user data correctly escaped with `html.escape()`, uses `request.state.db` pattern, stats are from live DB queries (no hardcoding)
+- oracle.py: Parameterized SQL throughout, correct patterns
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventieth pass; docs/plans/ directory does not exist (gitignored)
 
 ## Completed This Session (2026-04-13, sixty-ninth pass — autonomous improvement cycle)
 

@@ -4232,6 +4232,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — natural language processing (NLP tools live in ai-automation alongside LLM tools)
     "nlp": "ai",                    # "NLP library", "NLP pipeline", "nlp tool" → AI & Automation
     "sentiment": "ai",              # "sentiment analysis", "sentiment classifier" → AI & Automation
+    # HTTP client / fetch wrapper libraries — Axios, Got, Ky, undici, node-fetch → api-tools
+    "http": "api",                  # "http client", "http request library" → API Tools
+    "fetch": "api",                 # "fetch wrapper", "node fetch alternative" → API Tools
+    # Date/time utility libraries — date-fns, dayjs, Luxon, Temporal polyfill → frontend-frameworks
+    "date": "frontend",             # "date library", "date utility", "date format" → Frontend Frameworks
+    # Table and data-grid component libraries → frontend-frameworks
+    "table": "frontend",            # "react table", "table component" → TanStack Table, AG Grid
+    "grid": "frontend",             # "data grid", "ag grid alternative" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
