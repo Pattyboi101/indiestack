@@ -120,6 +120,7 @@ TESTS = [
     # Oracle API (x402) — data endpoints return 402 (payment required) on production
     ("GET", "/v1/compatibility/nextjs/supabase", [200, 402], "Oracle compatibility"),
     ("GET", "/v1/migration/jest/vitest", [200, 402], "Oracle migration"),
+    ("POST", "/v1/stack/architect", [200, 400, 402, 403], "Oracle stack architect"),
     ("GET", "/v1/.well-known/x402-resources", 200, "Oracle x402 metadata"),
 ]
 
