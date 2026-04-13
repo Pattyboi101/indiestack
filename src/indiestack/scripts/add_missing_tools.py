@@ -5114,6 +5114,40 @@ TOOLS = [
         "npm install partykit",
         "code",
     ),
+    # API Tools — realtime video/audio infrastructure -------------------------
+    (
+        "livekit",
+        "LiveKit",
+        "Open-source infrastructure for real-time video, audio, and data",
+        "LiveKit is an open-source WebRTC stack for building live video, audio, and "
+        "data streaming applications. Scalable media server (Go), SDKs for every major "
+        "platform (React, iOS, Android, Python, Unity), and cloud hosting. Used for "
+        "video conferencing, live streaming, voice AI, and real-time collaboration.",
+        "api-tools",
+        "livekit/livekit",
+        12000,
+        "https://livekit.io",
+        "webrtc,realtime,video,audio,streaming,voice-ai",
+        "pip install livekit",
+        "code",
+    ),
+    # AI / LLM agent frameworks ------------------------------------------------
+    (
+        "pydantic-ai",
+        "Pydantic AI",
+        "Agent framework from the Pydantic team, built for production",
+        "Pydantic AI is a Python AI agent framework by the team behind Pydantic and "
+        "FastAPI. Structured outputs via Pydantic models, dependency injection, "
+        "multi-model support (OpenAI, Anthropic, Gemini, Groq, Mistral), streaming, "
+        "and built-in testing utilities. Designed for production Python apps.",
+        "ai-automation",
+        "pydantic/pydantic-ai",
+        7000,
+        "https://ai.pydantic.dev",
+        "ai,agent,python,pydantic,llm,structured-output",
+        "pip install pydantic-ai",
+        "code",
+    ),
     # DevOps — open-source Terraform replacement --------------------------------
     (
         "opentofu",

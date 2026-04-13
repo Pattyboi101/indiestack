@@ -4211,6 +4211,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "spam": "security",             # "spam protection", "spam filter" (Akismet, Cleantalk, hCaptcha)
     # Invoicing — tax calculation for SaaS
     "tax": "invoicing",             # "sales tax API", "VAT compliance", "tax calculation" (Anrok, TaxJar, Avalara)
+    # Database — analytical / OLAP query terms
+    "timeseries": "database",       # "timeseries database" (compound, no hyphen) — TimescaleDB, InfluxDB, QuestDB
+    "olap": "database",             # OLAP (Online Analytical Processing) — ClickHouse, DuckDB, Apache Druid
+    "columnar": "database",         # "columnar database", "column-store" — ClickHouse, DuckDB, Redshift alternative queries
+    "multimodel": "database",       # "multi-model database" — SurrealDB, ArangoDB, OrientDB queries
+    # Low-code / no-code platforms — Retool, Budibase, Appsmith live in Developer Tools
+    # compound forms without spaces/hyphens are the most commonly searched by AI agents
+    "lowcode": "developer",         # "lowcode platform", "lowcode tool" → Developer Tools
+    "nocode": "developer",          # "nocode builder", "nocode app" → Developer Tools
+    # Payments — in-app purchase (mobile billing via Apple/Google)
+    # "in-app purchase" → "in" and "app" are stop words, "purchase" is the meaningful term
+    "iap": "payments",              # IAP (In-App Purchase) abbreviation — RevenueCat, Adapty, Glassfy
+    "purchase": "payments",         # "in-app purchase", "one-time purchase" → Payments (RevenueCat, Stripe)
+    # Background jobs — compound form without space
+    "cronjob": "background",        # "cronjob scheduling", "cronjob service" (compound) → Background Jobs
+    # Developer Tools — comment/discussion widgets embedded in websites
+    "giscus": "developer",          # Giscus — GitHub Discussions-based comment widget (6k★)
+    "disqus": "support",            # Disqus — hosted comment platform (customer-facing discussions)
+    # AI — natural language processing (NLP tools live in ai-automation alongside LLM tools)
+    "nlp": "ai",                    # "NLP library", "NLP pipeline", "nlp tool" → AI & Automation
+    "sentiment": "ai",              # "sentiment analysis", "sentiment classifier" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
