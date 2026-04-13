@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (seventy-second pass)
+Last updated: 2026-04-13 (seventy-third pass)
 
 ## Status: Active
 
@@ -10,14 +10,38 @@ Last updated: 2026-04-13 (seventy-second pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1359 unique effective keys (added 12 in seventy-second pass — web workers, module federation, lottie/rive, two-factor auth, Portkey AI gateway, JSON Schema, rate-limit compound; NOTE: 21 duplicate keys exist in source but all have correct last-write-wins values)
-- **Catalog script**: `scripts/add_missing_tools.py` — 323 tools ready to insert (slug-safe); +6 this pass: htmx, qwik, typesense, preact, lottie, nats
+- **_CAT_SYNONYMS**: 1363 unique effective keys (added 4 in seventy-third pass — labeling/annotation/synthetic/moderation → ai; NOTE: 21 duplicate keys exist in source but all have correct last-write-wins values)
+- **Catalog script**: `scripts/add_missing_tools.py` — 327 tools ready to insert (slug-safe); +4 this pass: promptfoo, deepeval, helicone, label-studio
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-13, seventy-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — all Step 1 targets from loop prompt confirmed covered in prior passes
+- Added 4 new entries to `_CAT_SYNONYMS` (1359 → 1363 unique effective keys):
+  - **AI**: `labeling` → `"ai"` — "data labeling tool", "ml labeling platform" (Label Studio, Argilla, Prodigy)
+  - **AI**: `annotation` → `"ai"` — "data annotation", "training data annotation" (same tools, different query form)
+  - **AI**: `synthetic` → `"ai"` — "synthetic data", "synthetic training data" (Gretel.ai, Mostly AI, SDV)
+  - **AI**: `moderation` → `"ai"` — "content moderation api", "llm moderation" (Perspective API, Llama Guard)
+
+### Catalog Script (Step 2)
+- Step 2 target tools (react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend) all confirmed in script from prior passes
+- Added 4 new tools to `scripts/add_missing_tools.py` (323 → 327 total):
+  - **promptfoo** (promptfoo/promptfoo, 5k★) — LLM prompt testing + red-teaming CLI; ai-dev-tools
+  - **DeepEval** (confident-ai/deepeval, 7k★) — open-source LLM evaluation framework (RAGAS, G-Eval, hallucination metrics); ai-dev-tools
+  - **Helicone** (Helicone/helicone, 2k★) — open-source LLM observability proxy (1-line integration); ai-dev-tools
+  - **Label Studio** (HumanSignal/label-studio, 21k★) — most popular open-source data labeling/annotation platform; ai-dev-tools
+
+### Code Quality (Step 3)
+- Reviewed last 5 commits (db.py 72nd pass, sprint.md, add_missing_tools.py): clean; no html.escape gaps, no hardcoded hex colors, no stale stats in changed files
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventy-third pass; docs/plans/ directory does not exist (gitignored)
 
 ## Completed This Session (2026-04-13, seventy-second pass — autonomous improvement cycle)
 

@@ -4292,6 +4292,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — JSON Schema tooling (AJV, JSON Schema Validator, openapi-schema-validator)
     "jsonschema": "developer",      # "json schema validator", "jsonschema library" → Developer Tools
     "json-schema": "developer",     # hyphenated — "json-schema validation", "json-schema spec" → Developer Tools
+    # AI — data labeling / annotation platforms (Label Studio, Argilla, Prodigy, Scale AI alternatives)
+    "labeling": "ai",               # "data labeling tool", "ml labeling platform" → AI & Automation
+    "annotation": "ai",             # "data annotation", "training data annotation" → AI & Automation
+    # AI — synthetic data generation (Gretel.ai, Mostly AI, SDV, DataSynthesizer)
+    "synthetic": "ai",              # "synthetic data", "synthetic training data" → AI & Automation
+    # AI — content moderation / LLM output filtering (Perspective API, OpenAI Mod, Llama Guard)
+    "moderation": "ai",             # "content moderation api", "llm moderation" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

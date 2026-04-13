@@ -5381,6 +5381,84 @@ TOOLS = [
         "npm install lottie-web",
         "code",
     ),
+    # AI Dev Tools — LLM eval, observability, data labeling ----------------------
+    (
+        "promptfoo",
+        "promptfoo",
+        "Test and evaluate LLM prompts, models, and RAG pipelines",
+        "promptfoo is an open-source CLI and library for testing and evaluating LLM "
+        "outputs. Run automated evals across prompts, models (OpenAI, Anthropic, "
+        "Gemini, Mistral, local models), and configurations. Supports unit tests, "
+        "red-teaming for safety, and regression testing to prevent prompt regressions "
+        "between deploys. Used by engineering teams at Shopify, Mozilla, and others "
+        "to ship LLM features with confidence. Define test cases in YAML or JSON, "
+        "run with `promptfoo eval`, view results in an interactive web UI.",
+        "ai-dev-tools",
+        "promptfoo/promptfoo",
+        5000,
+        "https://promptfoo.dev",
+        "llm,evals,testing,prompt-testing,red-team,rag,ai-safety,openai,anthropic",
+        "npm install -g promptfoo",
+        "code",
+    ),
+    (
+        "deepeval",
+        "DeepEval",
+        "The open-source LLM evaluation framework",
+        "DeepEval is an open-source evaluation framework for LLM applications. "
+        "Provides 14+ evaluation metrics out of the box: G-Eval, RAGAS, hallucination, "
+        "faithfulness, contextual recall/precision, bias, toxicity, and more. "
+        "Works with any LLM provider. Integrates with pytest for CI-based evals. "
+        "Confident AI dashboard for tracking metric scores over time. Ideal for "
+        "teams building RAG pipelines, chatbots, or AI agents who need systematic "
+        "quality assurance beyond ad-hoc manual testing.",
+        "ai-dev-tools",
+        "confident-ai/deepeval",
+        7000,
+        "https://docs.confident-ai.com",
+        "llm,evals,evaluation,rag,hallucination,testing,pytest,metrics,ragas",
+        "pip install deepeval",
+        "code",
+    ),
+    (
+        "helicone",
+        "Helicone",
+        "Open-source LLM observability — one line to log every request",
+        "Helicone is an open-source LLM observability platform. Add a single line "
+        "to proxy your OpenAI/Anthropic/Mistral requests through Helicone and get "
+        "full request/response logging, cost tracking, latency analytics, prompt "
+        "versioning, user-level analytics, caching, and rate limiting. "
+        "Self-hostable on Fly.io, Vercel, or Cloudflare Workers. Generous free tier "
+        "on Helicone Cloud. Lighter-weight than Langfuse — no SDK wrapping required, "
+        "just change your base_url.",
+        "ai-dev-tools",
+        "Helicone/helicone",
+        2000,
+        "https://helicone.ai",
+        "llm,observability,logging,openai,anthropic,cost-tracking,caching,proxy",
+        "pip install helicone",
+        "code",
+    ),
+    (
+        "label-studio",
+        "Label Studio",
+        "Open source data labeling platform for any AI use case",
+        "Label Studio is the most popular open-source data annotation and labeling "
+        "platform. Supports image, audio, text, video, time series, and multi-modal "
+        "data. Features 10+ labeling interfaces: bounding boxes, polygons, named "
+        "entity recognition, relation extraction, audio transcription, and more. "
+        "Multi-user workflows with review/approval queues, ML backend auto-labeling, "
+        "and export to common ML formats (COCO, YOLO, NLP JSON). Self-hostable with "
+        "Docker. Used by ML teams at NVIDIA, Toyota, and thousands of startups for "
+        "fine-tuning and RLHF datasets.",
+        "ai-dev-tools",
+        "HumanSignal/label-studio",
+        21000,
+        "https://labelstud.io",
+        "data-labeling,annotation,ml,computer-vision,nlp,rlhf,fine-tuning,active-learning",
+        "pip install label-studio && label-studio",
+        "code",
+    ),
     # Message Queue — NATS (cloud-native messaging system) -----------------------
     (
         "nats",
