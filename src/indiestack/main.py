@@ -1076,6 +1076,7 @@ async def robots():
         f"# LLMs: {BASE_URL}/llms.txt",
         f"# LLMs Full: {BASE_URL}/llms-full.txt",
         f"# AI Agents: {BASE_URL}/for-agents.txt",
+        f"# x402 Oracle: {BASE_URL}/.well-known/x402-resources",
     ]
     indexnow_key = _os.environ.get("INDEXNOW_KEY", "")
     if indexnow_key:
@@ -1125,6 +1126,13 @@ async def llms_txt(request: Request):
         f"- [Makers]({BASE_URL}/makers): Indie maker directory\n"
         f"- [Submit]({BASE_URL}/submit): Free listing for developer tools\n"
         f"- [Gaps]({BASE_URL}/gaps): Unsolved problems ranked by developer demand\n\n"
+        "## Oracle API (x402 Pay-Per-Call)\n\n"
+        f"- [Compatibility Check]({BASE_URL}/v1/compatibility/nextjs/supabase): "
+        "`GET /v1/compatibility/{tool_a}/{tool_b}` — $0.02 USDC on Base, returns verified compatibility data\n"
+        f"- [Migration Data]({BASE_URL}/v1/migration/jest/vitest): "
+        "`GET /v1/migration/{from_package}/{to_package}` — $0.05 USDC on Base, returns real migration paths from GitHub\n"
+        f"- [x402 Discovery]({BASE_URL}/.well-known/x402-resources): "
+        "`GET /.well-known/x402-resources` — free, describes available paid endpoints\n\n"
         "## Migration Intelligence\n\n"
         f"- [Migrations]({BASE_URL}/migrations): Real migration paths between developer tools — step-by-step guides with effort estimates\n"
         f"- [Data]({BASE_URL}/data): Aggregated tool data, search trends, and market intelligence from agent interactions\n"
@@ -1215,6 +1223,8 @@ async def agent_card(request: Request):
             {"id": "compare_tools", "name": "Compare Tools", "description": "Side-by-side tool comparison with pricing and features"},
             {"id": "publish_tool", "name": "Publish Tool", "description": "Submit a developer tool to the catalog"},
             {"id": "get_recommendations", "name": "Get Recommendations", "description": "Personalized suggestions based on your search history"},
+            {"id": "check_compatibility", "name": "Check Compatibility (x402)", "description": "Pay $0.02 USDC to check if two tools are compatible — verified data from 6,622 pairs"},
+            {"id": "get_migration_data", "name": "Get Migration Data (x402)", "description": "Pay $0.05 USDC for real migration paths between packages from GitHub repos"},
         ],
         "interfaces": {
             "mcp": {
@@ -1227,6 +1237,12 @@ async def agent_card(request: Request):
             "rest": {
                 "openapi": f"{BASE_URL}/openapi.json",
                 "base_url": f"{BASE_URL}/api/",
+            },
+            "x402": {
+                "discovery": f"{BASE_URL}/.well-known/x402-resources",
+                "network": "base",
+                "asset": "USDC",
+                "endpoints": 2,
             },
             "llms_txt": f"{BASE_URL}/llms.txt",
             "agent_cards": {
@@ -1243,6 +1259,13 @@ async def agent_card(request: Request):
             ],
         },
     })
+
+
+@app.get("/.well-known/x402-resources")
+async def x402_resources_wellknown(request: Request):
+    """Standard x402 discovery path — proxy to oracle's metadata endpoint."""
+    from starlette.responses import RedirectResponse
+    return RedirectResponse(url="/v1/.well-known/x402-resources", status_code=307)
 
 
 @app.get("/for-agents.txt", response_class=PlainTextResponse)
@@ -1277,9 +1300,19 @@ async def for_agents_txt(request: Request):
         "and session-aware context that improves across interactions. "
         "Every recommendation comes with install commands, GitHub health data, "
         "and evidence from real codebases.\n\n"
+        "## Paid Oracle API (x402)\n\n"
+        "IndieStack exposes premium compatibility and migration intelligence via x402 pay-per-call endpoints. "
+        "Autonomous agents can pay USDC on Base to query:\n\n"
+        f"- **Compatibility check** ($0.02): `GET {BASE_URL}/v1/compatibility/{{tool_a}}/{{tool_b}}` — "
+        "are two tools compatible? Verified data from 6,622 pairs + 58,638 manifest co-occurrences\n"
+        f"- **Migration data** ($0.05): `GET {BASE_URL}/v1/migration/{{from}}/{{to}}` — "
+        "real migration paths from GitHub repos with confidence levels\n"
+        f"- **Discovery**: `GET {BASE_URL}/.well-known/x402-resources` (free, no payment required)\n\n"
+        "No API key needed. No account needed. Just pay per call via the x402 protocol.\n\n"
         "## How to connect\n\n"
         "- **MCP Server**: `uvx --from indiestack indiestack-mcp` (one command, no API key)\n"
         f"- **REST API**: {BASE_URL}/api/tools/search?q=auth (returns JSON)\n"
+        f"- **x402 Oracle**: {BASE_URL}/.well-known/x402-resources (pay-per-call)\n"
         f"- **Full docs**: {BASE_URL}/llms.txt (structured for AI consumption)\n"
         f"- **Agent card**: {BASE_URL}/.well-known/agent-card.json (A2A protocol)\n\n"
         "## For investors and founders\n\n"
@@ -5156,3 +5189,5 @@ from indiestack.routes import agents
 app.include_router(agents.router)
 from indiestack.routes import oracle
 app.include_router(oracle.router)
+from indiestack.routes import oracle_page
+app.include_router(oracle_page.router)

@@ -117,9 +117,9 @@ TESTS = [
     ("GET", "/agents", 200, "Agent registry"),
     ("GET", "/api/agents/search?capability=seo", 200, "Agent search API"),
 
-    # Oracle API (x402)
-    ("GET", "/v1/compatibility/nextjs/supabase", 200, "Oracle compatibility"),
-    ("GET", "/v1/migration/jest/vitest", 200, "Oracle migration"),
+    # Oracle API (x402) — data endpoints return 402 (payment required) on production
+    ("GET", "/v1/compatibility/nextjs/supabase", [200, 402], "Oracle compatibility"),
+    ("GET", "/v1/migration/jest/vitest", [200, 402], "Oracle migration"),
     ("GET", "/v1/.well-known/x402-resources", 200, "Oracle x402 metadata"),
 ]
 
