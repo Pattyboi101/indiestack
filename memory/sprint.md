@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (seventy-first pass)
+Last updated: 2026-04-13 (seventy-second pass)
 
 ## Status: Active
 
@@ -10,14 +10,47 @@ Last updated: 2026-04-13 (seventy-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: ~1368 entries for search routing (added 23 in seventy-first pass — RSC/server-actions, version managers, AI multimodal/CV, web components, time-series DBs, zero-trust; fixed dotenv duplicate bug)
-- **Catalog script**: `scripts/add_missing_tools.py` — 317 tools ready to insert (slug-safe)
+- **_CAT_SYNONYMS**: 1359 unique effective keys (added 12 in seventy-second pass — web workers, module federation, lottie/rive, two-factor auth, Portkey AI gateway, JSON Schema, rate-limit compound; NOTE: 21 duplicate keys exist in source but all have correct last-write-wins values)
+- **Catalog script**: `scripts/add_missing_tools.py` — 323 tools ready to insert (slug-safe); +6 this pass: htmx, qwik, typesense, preact, lottie, nats
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-13, seventy-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — Step 1 targets from loop prompt all confirmed covered in prior passes
+- Ran programmatic duplicate-key audit: found 21 duplicate keys in source dict; all active (last-write-wins) values are semantically correct, no behavioral bugs. True unique count is 1347 before this pass, not 1368 as previously stated.
+- Added 12 new entries to `_CAT_SYNONYMS` (1347 → 1359 unique effective keys):
+  - **API**: `ratelimit` → `"api"` — normalised compound of "rate-limit" (Unkey, Upstash Rate Limiting queries)
+  - **Frontend**: `webworker`, `web-worker` → `"frontend"` — Web Workers API (Comlink, Partytown queries)
+  - **Frontend**: `modulefederation`, `module-federation` → `"frontend"` — webpack/Rspack Module Federation micro-frontends
+  - **Frontend**: `lottie` → `"frontend"` — Lottie animation library (airbnb/lottie-web, 30k★)
+  - **Frontend**: `rive` → `"frontend"` — Rive interactive animation runtime (state machine animations)
+  - **Authentication**: `twofactor`, `two-factor` → `"authentication"` — long form of "2fa" (complement to mfa/2fa/totp already mapped)
+  - **AI**: `portkey` → `"ai"` — Portkey.ai AI gateway (LLM routing, observability, fallbacks)
+  - **Developer**: `jsonschema`, `json-schema` → `"developer"` — JSON Schema tooling (AJV, openapi-schema-validator)
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (317 → 323 total):
+  - **htmx** (bigskysoftware/htmx, 40k★) — HTML-first AJAX/WebSocket/SSE via attributes; frontend-frameworks
+  - **Qwik** (QwikDev/qwik, 21k★) — Resumable JavaScript framework, no hydration; frontend-frameworks
+  - **Typesense** (typesense/typesense, 21k★) — Open-source typo-tolerant search engine (Algolia alternative); search-engine
+  - **Preact** (preactjs/preact, 36k★) — 3kB React-compatible library with signals; frontend-frameworks
+  - **Lottie Web** (airbnb/lottie-web, 30k★) — JSON-based animation renderer (After Effects → browser); frontend-frameworks
+  - **NATS** (nats-io/nats-server, 15k★) — Cloud-native messaging system, faster than Kafka for small messages; message-queue
+
+### Code Quality (Step 3)
+- Checked last 5 commits: db.py (71st pass synonyms), oracle_page.py (dynamic stats fix), intel.py (new route), main.py (router registration), oracle_page.py (stack architect addition)
+- intel.py: All user data escaped with `html.escape()`, uses `request.state.db` pattern, no hardcoded stats — clean
+- oracle_page.py: Dynamic stats fetching verified in 70th/71st pass — clean
+- Identified 21 duplicate keys in `_CAT_SYNONYMS` (programmatic audit); no behavioral bugs but source count was mis-stated as 1368 — corrected to 1359 effective unique keys this pass
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventy-second pass; docs/plans/ directory does not exist (gitignored)
 
 ## Completed This Session (2026-04-13, seventy-first pass — autonomous improvement cycle)
 

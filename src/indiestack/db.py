@@ -4272,6 +4272,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Security — Zero Trust architecture (growing segment in enterprise security queries)
     "zerotrust": "security",        # "zero trust model", "zerotrust network" → Security Tools
     "zero-trust": "security",       # hyphenated form — "zero-trust architecture", "zero-trust auth"
+    # API — rate-limit compound form (complement to "rate"→api, "limit"→api, "limiting"→api)
+    "ratelimit": "api",             # "rate-limit" normalised → Unkey, Kong, Upstash Rate Limiting → API Tools
+    # Frontend — Web Workers (browser parallelism; Comlink, Partytown, workbox-background-sync)
+    "webworker": "frontend",        # "web worker api", "webworker pool" → Frontend Frameworks
+    "web-worker": "frontend",       # hyphenated — "web-worker library", "web-worker thread" → Frontend
+    # Frontend — Module Federation (webpack/Rspack micro-frontend code splitting)
+    "modulefederation": "frontend", # "module federation setup", "module federation plugin" → Frontend
+    "module-federation": "frontend",# hyphenated — "module-federation webpack", "module-federation rspack"
+    # Frontend — Lottie animation library (airbnb/lottie-web + DotLottie ecosystem)
+    "lottie": "frontend",           # Lottie — JSON-based animation format by Airbnb (30k★) → Frontend
+    # Frontend — Rive interactive animation (real-time state machine animations)
+    "rive": "frontend",             # Rive — interactive real-time animation runtime (8k★) → Frontend
+    # Authentication — two-factor auth long forms (complement to "2fa"→auth, "mfa"→auth, "totp"→auth)
+    "twofactor": "authentication",  # "two-factor auth setup", "two-factor verification" → Authentication
+    "two-factor": "authentication", # hyphenated — "two-factor authentication library" → Authentication
+    # AI — AI gateway / LLM proxy tools (Portkey.ai, LiteLLM proxy, OpenRouter)
+    "portkey": "ai",                # Portkey.ai — AI gateway: routing, fallbacks, observability (5k★) → AI
+    # Developer Tools — JSON Schema tooling (AJV, JSON Schema Validator, openapi-schema-validator)
+    "jsonschema": "developer",      # "json schema validator", "jsonschema library" → Developer Tools
+    "json-schema": "developer",     # hyphenated — "json-schema validation", "json-schema spec" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

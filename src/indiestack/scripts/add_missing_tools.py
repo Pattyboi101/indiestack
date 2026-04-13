@@ -5282,6 +5282,125 @@ TOOLS = [
         "brew install opentofu",
         "code",
     ),
+    # Frontend — htmx (HTML-first progressive enhancement) -----------------------
+    (
+        "htmx",
+        "htmx",
+        "High power tools for HTML — AJAX, WebSockets, and Server-Sent Events via HTML attributes",
+        "htmx gives you access to AJAX, CSS Transitions, WebSockets, and Server-Sent "
+        "Events directly in HTML, using attributes. It lets you build modern UIs with "
+        "the simplicity and power of hypertext. No JavaScript build step required — "
+        "just include the single-file library and add hx-* attributes to any element. "
+        "htmx works with any backend (Python, Go, Rails, PHP, Node.js) and integrates "
+        "beautifully with Alpine.js for client-side interactions. 40k GitHub stars.",
+        "frontend-frameworks",
+        "bigskysoftware/htmx",
+        40000,
+        "https://htmx.org",
+        "htmx,html,ajax,hypermedia,progressive-enhancement,no-build,python,go",
+        "<script src=\"https://unpkg.com/htmx.org\"></script>",
+        "code",
+    ),
+    # Frontend — Qwik (resumable JS framework) -----------------------------------
+    (
+        "qwik",
+        "Qwik",
+        "No hydration, no replay — the resumable JavaScript framework",
+        "Qwik is a new kind of web framework built for the edge that delivers instant "
+        "app startup performance regardless of application complexity. Unlike other "
+        "frameworks, Qwik does not need to hydrate — instead it serializes state and "
+        "resumes execution directly on the client, loading only the code needed for "
+        "the current interaction. Built by the team behind Angular, QwikCity is the "
+        "meta-framework with file-based routing, server actions, and Vite integration. "
+        "Outstanding Core Web Vitals scores out of the box.",
+        "frontend-frameworks",
+        "QwikDev/qwik",
+        21000,
+        "https://qwik.dev",
+        "qwik,resumable,ssr,edge,performance,react,typescript",
+        "npm create qwik@latest",
+        "code",
+    ),
+    # Search — Typesense (typo-tolerant open-source search engine) ---------------
+    (
+        "typesense",
+        "Typesense",
+        "Open-source, typo-tolerant search engine — a blazing fast Algolia alternative",
+        "Typesense is an open-source, typo-tolerant search engine optimised for "
+        "developer productivity and low operational overhead. It supports instant "
+        "search-as-you-type, multi-tenant API keys, geo search, faceted filtering, "
+        "vector search, and hybrid search in a single binary. Can be self-hosted or "
+        "used via Typesense Cloud. Official SDKs for JavaScript, Python, Go, PHP, "
+        "Ruby, Java, and more. Much simpler to operate than Elasticsearch and often "
+        "faster than Algolia with no per-query pricing.",
+        "search-engine",
+        "typesense/typesense",
+        21000,
+        "https://typesense.org",
+        "search,typesense,algolia-alternative,typo-tolerant,open-source,vector-search",
+        "docker run -p 8108:8108 -v/tmp/typesense-data:/data typesense/typesense:latest",
+        "code",
+    ),
+    # Frontend — Preact (lightweight React alternative) --------------------------
+    (
+        "preact",
+        "Preact",
+        "Fast 3kB alternative to React with the same modern API",
+        "Preact is a fast, 3kB alternative to React with the same ES2015 API. It "
+        "provides the thinnest possible Virtual DOM abstraction on top of the DOM and "
+        "is compatible with the entire React ecosystem via preact/compat. Preact is "
+        "used in production by large companies including Etsy, The Guardian, and Uber "
+        "who need React compatibility with a much smaller bundle. Includes hooks, "
+        "signals (a new reactive primitive), async rendering, and Preact CLI for "
+        "rapid application development.",
+        "frontend-frameworks",
+        "preactjs/preact",
+        36000,
+        "https://preactjs.com",
+        "preact,react,lightweight,virtual-dom,3kb,performance,signals",
+        "npm install preact",
+        "code",
+    ),
+    # Frontend — Lottie Web (JSON-based animation library) -----------------------
+    (
+        "lottie",
+        "Lottie Web",
+        "Render After Effects animations natively in the browser with minimal effort",
+        "Lottie is an open-source animation library by Airbnb that parses Adobe After "
+        "Effects animations exported as JSON with Bodymovin and renders them natively "
+        "on mobile and on the web. Designers can create and ship beautiful animations "
+        "without an engineer needing to recreate them. The DotLottie format adds "
+        "compression, theming, and interactive state machines. Widely used by "
+        "Duolingo, Google, and thousands of indie apps for splash screens, "
+        "micro-interactions, and loading animations.",
+        "frontend-frameworks",
+        "airbnb/lottie-web",
+        30000,
+        "https://lottiefiles.com/lottie-docs",
+        "lottie,animation,json,after-effects,airbnb,mobile,ios,android,web",
+        "npm install lottie-web",
+        "code",
+    ),
+    # Message Queue — NATS (cloud-native messaging system) -----------------------
+    (
+        "nats",
+        "NATS",
+        "Connective technology for adaptive edge and distributed systems",
+        "NATS is a connective technology built for the ever-increasingly hyper-connected "
+        "world. It is a simple, secure, and high-performance open-source messaging "
+        "system for cloud-native applications, IoT messaging, and microservices "
+        "architectures. NATS.io is a CNCF incubating project. Supports publish-subscribe, "
+        "request-reply, and queue groups. JetStream adds persistence, key-value store, "
+        "object store, and at-least-once delivery. Faster than Kafka for small messages "
+        "and much simpler to operate.",
+        "message-queue",
+        "nats-io/nats-server",
+        15000,
+        "https://nats.io",
+        "nats,messaging,pubsub,cloud-native,iot,microservices,jetstream,cncf",
+        "docker run nats",
+        "code",
+    ),
 ]
 
 
