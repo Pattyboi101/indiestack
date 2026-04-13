@@ -264,7 +264,7 @@ async def x402_resources():
     """x402 Bazaar discovery metadata — agents use this to find our services."""
     return JSONResponse({
         "name": "IndieStack Oracle",
-        "description": "Compatibility and migration intelligence for developer tools. 6,622 verified pairs, 422 migration paths from real GitHub repos.",
+        "description": "Compatibility, migration, and stack intelligence for developer tools. 93,111 verified combos, 422 migration paths from real GitHub repos.",
         "endpoints": [
             {
                 "path": "/v1/compatibility/{tool_a}/{tool_b}",
@@ -311,6 +311,33 @@ async def x402_resources():
                         "migrations_found": 27,
                         "net_momentum": 25,
                         "confidence_summary": {"swap": 20, "likely": 5, "inferred": 2}
+                    }
+                }
+            },
+            {
+                "path": "/v1/stack/architect",
+                "method": "POST",
+                "price": "$0.10",
+                "description": "Validate an entire tool stack. Returns compatibility matrix, conflict warnings, and migration alternatives for each package pair. Premium pre-flight intelligence for coding agents.",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "packages": {
+                            "type": "array",
+                            "items": {"type": "string"},
+                            "description": "List of package/tool names to validate as a stack (2-20 items)",
+                        }
+                    },
+                    "required": ["packages"]
+                },
+                "output": {
+                    "example": {
+                        "packages": ["react", "nextjs", "supabase", "prisma"],
+                        "stack_score": 83,
+                        "pairs_with_evidence": 5,
+                        "total_pairs_checked": 6,
+                        "conflicts": ["No compatibility data for prisma + supabase"],
+                        "migration_warnings": [{"package": "prisma", "warning": "migration_momentum", "alternative": "drizzle"}]
                     }
                 }
             }
