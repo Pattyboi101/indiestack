@@ -46,9 +46,20 @@ async def oracle_page(request: Request):
         </div>
       </div>
 
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:40px;">
+        <div style="font-family:var(--font-mono);font-size:0.85rem;color:var(--accent);margin-bottom:8px;">$0.10 / call</div>
+        <h3 style="margin:0 0 8px;">Stack Architect</h3>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:16px;">
+          Send your full proposed stack. Get a compatibility matrix, conflict warnings, and migration alternatives for every package pair. Pre-flight intelligence for coding agents.
+        </p>
+        <code style="display:block;background:var(--bg);padding:12px;border-radius:8px;font-size:0.8rem;overflow-x:auto;white-space:nowrap;">
+          POST /v1/stack/architect {{"packages": ["react", "nextjs", "supabase", "prisma"]}}
+        </code>
+      </div>
+
       <h2 style="font-family:var(--font-heading);font-size:1.4rem;margin-bottom:16px;">How it works</h2>
       <ol style="color:var(--text-muted);line-height:1.8;padding-left:20px;margin-bottom:32px;">
-        <li>Agent sends a GET request to an oracle endpoint</li>
+        <li>Agent sends a request to an oracle endpoint</li>
         <li>Server responds with <strong>HTTP 402</strong> and a payment requirement (amount, wallet, network)</li>
         <li>Agent signs a USDC payment on Base and resends with the payment header</li>
         <li>Server verifies payment and returns the data</li>

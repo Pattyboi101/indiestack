@@ -1131,6 +1131,8 @@ async def llms_txt(request: Request):
         "`GET /v1/compatibility/{tool_a}/{tool_b}` — $0.02 USDC on Base, returns verified compatibility data\n"
         f"- [Migration Data]({BASE_URL}/v1/migration/jest/vitest): "
         "`GET /v1/migration/{from_package}/{to_package}` — $0.05 USDC on Base, returns real migration paths from GitHub\n"
+        f"- [Stack Architect]({BASE_URL}/v1/stack/architect): "
+        "`POST /v1/stack/architect` — $0.10 USDC on Base, validates an entire tool stack with compatibility matrix and conflict warnings\n"
         f"- [x402 Discovery]({BASE_URL}/.well-known/x402-resources): "
         "`GET /.well-known/x402-resources` — free, describes available paid endpoints\n\n"
         "## Migration Intelligence\n\n"
@@ -1225,6 +1227,7 @@ async def agent_card(request: Request):
             {"id": "get_recommendations", "name": "Get Recommendations", "description": "Personalized suggestions based on your search history"},
             {"id": "check_compatibility", "name": "Check Compatibility (x402)", "description": "Pay $0.02 USDC to check if two tools are compatible — verified data from 6,622 pairs"},
             {"id": "get_migration_data", "name": "Get Migration Data (x402)", "description": "Pay $0.05 USDC for real migration paths between packages from GitHub repos"},
+            {"id": "validate_stack", "name": "Validate Stack (x402)", "description": "Pay $0.10 USDC for full-stack compatibility matrix — validates every pair in a proposed stack against 93k verified combos"},
         ],
         "interfaces": {
             "mcp": {
@@ -1307,6 +1310,8 @@ async def for_agents_txt(request: Request):
         "are two tools compatible? Verified data from 6,622 pairs + 58,638 manifest co-occurrences\n"
         f"- **Migration data** ($0.05): `GET {BASE_URL}/v1/migration/{{from}}/{{to}}` — "
         "real migration paths from GitHub repos with confidence levels\n"
+        f"- **Stack validation** ($0.10): `POST {BASE_URL}/v1/stack/architect` — "
+        "send a proposed stack, get a full compatibility matrix with conflict warnings and migration alternatives\n"
         f"- **Discovery**: `GET {BASE_URL}/.well-known/x402-resources` (free, no payment required)\n\n"
         "No API key needed. No account needed. Just pay per call via the x402 protocol.\n\n"
         "## How to connect\n\n"
