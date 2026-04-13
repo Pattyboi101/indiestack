@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (sixty-first pass)
+Last updated: 2026-04-13 (sixty-second pass)
 
 ## Status: Active
 
@@ -10,13 +10,42 @@ Last updated: 2026-04-13 (sixty-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1251 entries for search routing (added 21 in sixty-first pass — XSS/CSRF/sanitize security, html, openid, injection/di, quality/regression, report, dependency/review/diff)
+- **_CAT_SYNONYMS**: 1254 entries for search routing (added 9 in sixty-second pass — query/document→database, store/fetch/islands/hydrate/context/vdom→frontend)
 - **Catalog script**: `scripts/add_missing_tools.py` — 283 tools ready to insert (slug-safe)
+  - 4 tools added in sixty-second pass (NestJS, MobX, Apollo Client, Vercel AI SDK)
   - 5 tools added in sixty-first pass (Uptime Kuma, Ruff, Pydantic, MinIO, k6)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
+
+## Completed This Session (2026-04-13, sixty-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited `_CAT_SYNONYMS` — no duplicates introduced; removed 4 false-new entries
+- Added 9 genuinely new `_CAT_SYNONYMS` entries:
+  - **Database — query builders**: `query` → `"database"` (sql query builder, type-safe query → Kysely, Knex, Drizzle)
+  - **Database — document stores**: `document` → `"database"` (document store, document database → MongoDB, Firestore)
+  - **Frontend — state stores**: `store` → `"frontend"` (state store, global store, redux store → Zustand, Pinia)
+  - **Frontend — data fetching**: `fetch` → `"frontend"` (data fetch hook → SWR, TanStack Query)
+  - **Frontend — islands architecture**: `islands` → `"frontend"` (islands architecture → Astro, Fresh, Qwik)
+  - **Frontend — hydration**: `hydrate` → `"frontend"` (client hydrate, hydrate component — complement to existing hydration→frontend)
+  - **Frontend — React context**: `context` → `"frontend"` (react context api, context provider → React Context, Jotai)
+  - **Frontend — virtual DOM**: `vdom`, `virtual-dom` → `"frontend"` (virtual dom library, vdom alternative → React, Preact)
+
+### Catalog Script (Step 2)
+- Added 4 new tools to `scripts/add_missing_tools.py` (287 total):
+  - NestJS (api-tools, 68k★) — progressive TypeScript Node.js framework with DI, decorators, microservices
+  - MobX (frontend-frameworks, 27k★) — reactive observable state management for React/Vue
+  - Apollo Client (api-tools, 19k★) — most popular GraphQL client for JavaScript with normalised cache
+  - Vercel AI SDK (ai-dev-tools, 14k★) — TypeScript AI toolkit for streaming UIs (OpenAI, Anthropic, Gemini)
+
+### Code Quality (Step 3)
+- No route files changed → smoke test not required
+- Changes limited to db.py (synonyms) and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to sixty-second pass
 
 ## Completed This Session (2026-04-13, sixty-first pass — autonomous improvement cycle)
 
