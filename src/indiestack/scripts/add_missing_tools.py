@@ -4508,6 +4508,91 @@ TOOLS = [
         "docker run -d centrifugo/centrifugo",
         "code",
     ),
+    # Developer Tools — Crawlee (web scraping and crawling framework by Apify) ----------
+    (
+        "crawlee",
+        "Crawlee",
+        "A web scraping and browser automation library",
+        "Crawlee is Apify's open-source web scraping and browser automation library for "
+        "Node.js and Python. Supports Cheerio, Playwright, and Puppeteer scrapers with "
+        "built-in request queuing, proxy rotation, and session management. Perfect for "
+        "building reliable scrapers that extract LLM-ready content at scale. 14k+ GitHub stars.",
+        "developer-tools",
+        "apify/crawlee",
+        14000,
+        "https://crawlee.dev",
+        "scraping,crawling,playwright,puppeteer,cheerio,nodejs,typescript,open-source",
+        "npm install crawlee",
+        "code",
+    ),
+    # API Tools — Encore (backend framework with built-in infra) ------------------------
+    (
+        "encore",
+        "Encore",
+        "The backend framework with built-in infrastructure",
+        "Encore is a TypeScript and Go backend framework that auto-provisions infrastructure "
+        "(queues, caches, cron jobs, secrets, databases) from your code. Write infrastructure "
+        "as type-safe functions; Encore generates cloud resources on AWS/GCP/Azure or deploys "
+        "to Encore Cloud. Eliminates boilerplate Terraform and config. 10k+ GitHub stars.",
+        "api-tools",
+        "encoredev/encore",
+        10000,
+        "https://encore.dev",
+        "backend,typescript,go,infrastructure,serverless,queues,open-source",
+        "npm create encore@latest",
+        "code",
+    ),
+    # Database — ElectricSQL (local-first Postgres sync) --------------------------------
+    (
+        "electricsql",
+        "ElectricSQL",
+        "Local-first sync layer for Postgres",
+        "ElectricSQL is an open-source local-first sync engine that replicates Postgres "
+        "data to client-side SQLite (in the browser or native apps) in real time. "
+        "Build offline-capable apps with instant read performance. Sync is automatic and "
+        "conflict-free. Used with React, SvelteKit, and Expo. 8k+ GitHub stars.",
+        "database",
+        "electric-sql/electric",
+        8000,
+        "https://electric-sql.com",
+        "local-first,sync,postgres,sqlite,offline,realtime,open-source",
+        "npm install electric-sql",
+        "code",
+    ),
+    # Search — Pagefind (static site full-text search) ----------------------------------
+    (
+        "pagefind",
+        "Pagefind",
+        "Fully static search at scale",
+        "Pagefind is a WebAssembly-powered static full-text search engine that runs entirely "
+        "in the browser with no server required. Indexes your built site and ships a tiny "
+        "search UI. Works with any static site generator (Astro, Hugo, Eleventy, Jekyll). "
+        "Typical index: 300kB for a 10,000-page site. 4k+ GitHub stars.",
+        "search-engine",
+        "CloudCannon/pagefind",
+        4000,
+        "https://pagefind.app",
+        "search,static-site,wasm,full-text,javascript,open-source",
+        "npx pagefind --site public",
+        "code",
+    ),
+    # Message Queue — Soketi (open-source Pusher-compatible WebSocket server) ----------
+    (
+        "soketi",
+        "Soketi",
+        "Open-source Pusher-compatible WebSocket server",
+        "Soketi is a blazing-fast, open-source WebSocket server fully compatible with the "
+        "Pusher client libraries. Drop-in replacement for Pusher Channels — point your "
+        "existing Pusher SDK at Soketi and self-host. Built with uWebSockets.js for "
+        "extreme performance. Works with Laravel Echo, React, Vue, and more. 5k+ GitHub stars.",
+        "message-queue",
+        "soketi/soketi",
+        5000,
+        "https://soketi.app",
+        "websocket,pubsub,pusher,realtime,self-hosted,open-source,nodejs",
+        "npm install -g @soketi/soketi",
+        "code",
+    ),
 ]
 
 

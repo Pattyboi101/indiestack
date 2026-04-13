@@ -4036,6 +4036,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cloudflare": "devops",         # Cloudflare — CDN/DNS/Workers; common "alternative" query base
     # Payments — EU payment processors
     "mollie": "payments",           # Mollie — developer-friendly EU payment processor
+    # Observability — OpenTelemetry terms (complement to "tracing"→monitoring, "otel"→monitoring)
+    "telemetry": "monitoring",       # "telemetry data", "telemetry pipeline" → Monitoring & Uptime
+    "trace": "monitoring",           # "distributed trace", "trace query" → Monitoring & Uptime
+    "traces": "monitoring",          # plural — "view traces", "traces dashboard"
+    "span": "monitoring",            # "span context", "trace span" → OpenTelemetry terminology
+    # Performance — APM / performance monitoring (New Relic, DataDog APM, Scout APM, Elastic APM)
+    "performance": "monitoring",     # "performance monitoring", "app performance" → Monitoring
+    # Load balancer — HAProxy, Nginx, Traefik, Caddy live in DevOps & Infrastructure
+    "balancer": "devops",            # "load balancer", "traffic balancer" → DevOps & Infrastructure
+    # Auth — magic link authentication (Stytch, Auth0, Clerk magic links)
+    "magic": "authentication",       # "magic link auth", "passwordless magic" → Authentication
+    # Local-first / sync — ElectricSQL, PGlite, Automerge, Liveblocks CRDT
+    "local-first": "database",       # "local-first app", "local-first database" → Database
+    "localfirst": "database",        # compound form — "localfirst sync", "localfirst architecture"
+    "sync": "database",              # "offline sync", "data sync", "realtime sync" → Database
+    "crdt": "database",              # "CRDT sync", "conflict-free replicated data type" → Database
 }
 
 _FTS_STOP_WORDS = {
