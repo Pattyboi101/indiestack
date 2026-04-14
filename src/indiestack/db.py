@@ -4452,6 +4452,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "dify": "ai",                   # Dify — open-source LLM application platform and RAG engine (60k★)
     "openwebui": "ai",              # Open WebUI — feature-rich web UI for Ollama/local LLMs (80k★)
     "open-webui": "ai",             # hyphenated form — "open-webui alternative" queries → AI & Automation
+    # Identity — common query prefix not yet individually mapped
+    "identity": "authentication",   # "identity provider", "identity management", "digital identity" → Authentication
+    # FaaS — Function as a Service (serverless function alternatives)
+    "faas": "devops",               # "FaaS alternative", "function as a service", "faas platform" → DevOps
+    # Batch processing — complement to background-job synonyms (cron/queue/worker/scheduler)
+    "batch": "background",          # "batch job", "batch processing", "batch queue" → Background Jobs
+    # API endpoint — extremely common term missing from synonyms
+    "endpoint": "api",              # "API endpoint", "endpoint testing", "REST endpoint" → API Tools
+    # Type checking — TypeScript/Python type checking tools (mypy, pyright, tsc)
+    "typecheck": "testing",         # "typecheck tool", "typecheck script" → Testing Tools (mypy, tsc, Pyright)
+    "typechecking": "testing",      # long form — "typechecking in CI", "typechecking library" → Testing Tools
+    # Package manager — routes to developer, not frontend (which "manager" → "frontend" would give)
+    "package": "developer",         # "package manager", "package registry" → Developer Tools (npm, pnpm, Rye, uv)
+    # Service worker — hyphenated form splits to "service"[unmapped] + "worker"[→background]
+    "service-worker": "frontend",   # "service-worker caching", "service-worker library" → Frontend (Workbox)
+    # Task runner — "task" not currently mapped; "task runner" queries (Grunt, Gulp, Nx run, Make)
+    "task": "developer",            # "task runner", "task automation", "build task" → Developer Tools
+    "runner": "developer",          # complement — "task runner", "script runner" → Developer Tools
+    # Ingress controller — Kubernetes/reverse proxy routing
+    "ingress": "devops",            # "ingress controller", "kubernetes ingress", "ingress rule" → DevOps
+    # immer — immutable state library
+    "immer": "frontend",            # Immer — produce next immutable state via mutations (26k★)
+    # Medusa — open-source commerce
+    "medusa": "developer",          # Medusa — open-source headless commerce engine (23k★)
 }
 
 _FTS_STOP_WORDS = {
