@@ -104,6 +104,8 @@ async def admin_get(request: Request):
         section_html = await render_people_tab(db, request)
     elif tab == 'growth':
         section_html = await render_growth_tab(db, request)
+    elif tab == 'intel':
+        section_html = await render_intel_tab(db)
     elif tab == 'content':
         # Legacy redirect — content moved to tools sub-tabs
         section_html = await render_tools_tab(db, request, pending)
@@ -1279,6 +1281,47 @@ async def render_people_tab(db, request):
 
 
 # ── Growth Tab ───────────────────────────────────────────────────────────
+
+async def render_intel_tab(db):
+    """Intel tab: top tools by views with links to /intel/{slug} dashboards."""
+    cursor = await db.execute(
+        "SELECT t.slug, t.name, COUNT(tv.id) as views, "
+        "(SELECT COUNT(*) FROM outbound_clicks oc WHERE oc.tool_id = t.id) as clicks, "
+        "(SELECT COUNT(*) FROM agent_citations ac WHERE ac.tool_id = t.id) as citations "
+        "FROM tools t LEFT JOIN tool_views tv ON t.id = tv.tool_id "
+        "WHERE t.status = 'approved' "
+        "GROUP BY t.slug ORDER BY views DESC LIMIT 30")
+    tools = [dict(r) for r in await cursor.fetchall()]
+
+    rows = ""
+    for t in tools:
+        rows += (
+            f'<tr>'
+            f'<td style="padding:8px 12px;"><a href="/intel/{escape(t["slug"])}" style="color:var(--accent);text-decoration:none;font-weight:500;">{escape(t["name"])}</a></td>'
+            f'<td style="padding:8px 12px;text-align:right;">{t["views"]:,}</td>'
+            f'<td style="padding:8px 12px;text-align:right;">{t["clicks"]:,}</td>'
+            f'<td style="padding:8px 12px;text-align:right;">{t["citations"]:,}</td>'
+            f'</tr>'
+        )
+
+    return f'''
+    <div style="margin-bottom:16px;">
+        <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin:0 0 8px;">Developer Intent Intelligence</h2>
+        <p style="color:var(--ink-muted);font-size:14px;margin:0 0 20px;">Click any tool to see its competitive intelligence dashboard.</p>
+    </div>
+    <table style="width:100%;border-collapse:collapse;background:white;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);">
+        <thead>
+            <tr style="background:var(--cream-dark);border-bottom:1px solid var(--border);">
+                <th style="text-align:left;padding:10px 12px;font-size:12px;color:var(--ink-muted);font-weight:600;">Tool</th>
+                <th style="text-align:right;padding:10px 12px;font-size:12px;color:var(--ink-muted);font-weight:600;">Views</th>
+                <th style="text-align:right;padding:10px 12px;font-size:12px;color:var(--ink-muted);font-weight:600;">Clicks</th>
+                <th style="text-align:right;padding:10px 12px;font-size:12px;color:var(--ink-muted);font-weight:600;">Citations</th>
+            </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+    </table>
+    '''
+
 
 async def render_growth_tab(db, request):
     """Growth tab: 4 consolidated sections (Traffic, Funnels, Search, Outreach)."""
