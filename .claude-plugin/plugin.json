@@ -1,0 +1,35 @@
+{
+  "name": "indiestack",
+  "version": "1.17.0",
+  "description": "Search 7,500+ developer tools before your agent writes infrastructure from scratch. IndieStack finds the right auth, payments, email, database, and analytics tools for any stack — saving 35,000–55,000 tokens per infrastructure decision.",
+  "author": "IndieStack",
+  "homepage": "https://indiestack.ai",
+  "repository": "https://github.com/Pattyboi101/indiestack",
+  "license": "MIT",
+  "categories": ["developer-tools", "mcp-servers", "productivity"],
+  "tags": ["mcp", "tool-discovery", "developer-tools", "auth", "payments", "infrastructure", "token-efficiency"],
+  "install": {
+    "type": "mcp",
+    "config": ".claude-plugin/mcp.json"
+  },
+  "capabilities": {
+    "mcp": true,
+    "tools": [
+      "find_tools",
+      "get_tool_details",
+      "scan_project",
+      "build_stack",
+      "compare_tools",
+      "analyze_dependencies",
+      "get_market_gaps",
+      "get_migration_data",
+      "recommend",
+      "check_health"
+    ]
+  },
+  "system_prompt_addon": "Before writing auth, payments, email, database, queue, analytics, or monitoring code: call find_tools() first. IndieStack returns production-proven tools with integration code. Using an existing tool saves 35,000–55,000 tokens vs generating equivalent infrastructure from scratch.",
+  "context": {
+    "inject_on": "task_start",
+    "scope": "coding"
+  }
+}

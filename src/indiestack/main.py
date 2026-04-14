@@ -1,5 +1,9 @@
 """FastAPI app, middleware, router wiring, upvote API."""
 
+import sys
+# 51 routers × fastapi_x402 lifespan nesting hits the default 1000 limit
+sys.setrecursionlimit(2000)
+
 import asyncio
 import hashlib
 import logging

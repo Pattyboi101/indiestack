@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "indiestack": {
+      "command": "uvx",
+      "args": ["--from", "indiestack", "indiestack-mcp"],
+      "description": "IndieStack — developer tool discovery for AI agents"
+    }
+  }
+}
