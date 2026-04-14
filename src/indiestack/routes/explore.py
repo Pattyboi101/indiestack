@@ -441,8 +441,8 @@ async def explore(request: Request):
         explore_page_title = f"{_c_name} Tools — {_c_count}+ Options | IndieStack"
         explore_canonical = f"/explore?category={category}"
     else:
-        desc = "Browse and filter 8,000+ developer tools by category, tag, type, and compatibility. Find the right auth, payments, analytics, or email tool for your stack."
-        explore_page_title = "Explore 8,000+ Developer Tools by Category | IndieStack"
+        desc = "Browse and filter 6,500+ developer tools by category, tag, type, and compatibility. Find the right auth, payments, analytics, or email tool for your stack."
+        explore_page_title = "Explore 6,500+ Developer Tools by Category | IndieStack"
         explore_canonical = "/explore"
 
     explore_ld = json.dumps({

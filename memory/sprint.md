@@ -1,50 +1,41 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (seventy-seventh pass)
+Last updated: 2026-04-14 (seventy-eighth pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-13)
+## System State (as of 2026-04-14)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1440 unique effective keys (added 20 in seventy-seventh pass — service mesh/istio/linkerd/cilium/ebpf/sidecar/service-mesh; AI/arize; dev/wasmtime/wasmer; message/event-sourcing/eventsourcing/cqrs; API/federation/supergraph; monitoring/victoriametrics/victoria; security/falco; 21 duplicate keys exist in source but all correct last-write-wins values)
-- **Catalog script**: `scripts/add_missing_tools.py` — 348 tools ready to insert (slug-safe); +5 this pass: istio, linkerd, cilium, victoriametrics, falco
+- **_CAT_SYNONYMS**: 1446 unique effective keys (added 6 in seventy-eighth pass — diagramming/excalidraw/tldraw; database/dbdiagram/lancedb; scheduling/cal; email/dkim)
+- **Catalog script**: `scripts/add_missing_tools.py` — 348 tools ready to insert (slug-safe); no new tools this pass
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
-- **Tool count in copy**: "6,500+" (verified correct)
+- **Tool count in copy**: "6,500+" — corrected from stale "8,000+" across 13 files this pass
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
 
-## Completed This Session (2026-04-13, seventy-seventh pass — autonomous improvement cycle)
+## Completed This Session (2026-04-14, seventy-eighth pass — autonomous improvement cycle)
 
 ### Search Quality (Step 1)
-- Added 20 new entries to `_CAT_SYNONYMS` (1420 → 1440 unique effective keys):
-  - **Service mesh**: `istio`, `linkerd`, `cilium`, `ebpf`, `sidecar`, `service-mesh` → `"devops"` — Kubernetes service mesh tools and eBPF networking (no prior coverage)
-  - **AI observability**: `arize` → `"ai"` — Arize AI LLM evaluation platform
-  - **WASM runtimes**: `wasmtime`, `wasmer` → `"developer"` — standalone WASM runtimes outside browser
-  - **Event-driven patterns**: `event-sourcing`, `eventsourcing`, `cqrs` → `"message"` — CQRS and event sourcing architecture pattern queries
-  - **GraphQL federation**: `federation`, `supergraph` → `"api"` — Apollo Federation, Cosmo Router, WunderGraph supergraph queries
-  - **Monitoring**: `victoriametrics`, `victoria` → `"monitoring"` — VictoriaMetrics high-perf Prometheus-compatible TSDB
-  - **Security**: `falco` → `"security"` — CNCF Falco runtime security for containers/Kubernetes
-
-### Catalog Script (Step 2)
-- Added 5 new tools to `scripts/add_missing_tools.py` (343 → 348 total):
-  - **Istio** (istio/istio, 35k★) — most-deployed Kubernetes service mesh; devops-infrastructure
-  - **Linkerd** (linkerd/linkerd2, 10k★) — ultralight CNCF Kubernetes service mesh; devops-infrastructure
-  - **Cilium** (cilium/cilium, 19k★) — eBPF-based Kubernetes networking and security; devops-infrastructure
-  - **VictoriaMetrics** (VictoriaMetrics/VictoriaMetrics, 13k★) — fast Prometheus-compatible TSDB; monitoring-uptime
-  - **Falco** (falcosecurity/falco, 7k★) — CNCF runtime security for containers; security-tools
+- Added 6 new entries to `_CAT_SYNONYMS` (1440 → 1446 unique effective keys):
+  - **Diagramming**: `excalidraw`, `tldraw` → `"developer"` — whiteboard tools commonly used for architecture/system design (90k★, 39k★)
+  - **Database**: `dbdiagram` → `"database"` — dbdiagram.io DB schema visualiser (handles "db diagram", "database diagram" queries)
+  - **Scheduling**: `cal` → `"scheduling"` — Cal.com common shorthand (33k★ OSS Calendly alternative)
+  - **Email**: `dkim` → `"email"` — email deliverability queries ("dkim setup", "dkim record")
+  - **Vector DB**: `lancedb` → `"database"` — fast-growing OSS vector store built on Lance format (6k★)
 
 ### Code Quality (Step 3)
-- Recent commits limited to search quality + catalog additions — no route file changes; no html.escape or CSS regressions to fix
-- Both db.py and add_missing_tools.py validated clean with `ast.parse()`
+- Fixed stale `8,000+` stat → `6,500+` across **13 files**: conway.py (×2), components.py (×2), setup.py (×3), explore.py (×2), dashboard.py, search.py (×2), alternatives.py (×3), account.py, embed.py, built_this.py, content.py, landing.py, mcp_server.py (×5)
+- Root cause: 1,631 npm-\* tools demoted to pending in Apr 2026; copy never updated
+- All 14 modified files passed `ast.parse()` syntax check
 
 ### R&D Docs (Step 4)
-- sprint.md updated to seventy-seventh pass
+- sprint.md updated to seventy-eighth pass
 
 ## Completed This Session (2026-04-13, seventy-sixth pass — autonomous improvement cycle)
 

@@ -48,7 +48,7 @@ def _built_this_form(error: str = "", url_val: str = "", desc_val: str = "",
                     Just built something?
                 </h1>
                 <p style="color:var(--ink-muted);font-size:15px;line-height:1.5;">
-                    Share it with 8,000+ developer tools and the devs who use them.
+                    Share it with 6,500+ developer tools and the devs who use them.
                 </p>
             </div>
             {alert}

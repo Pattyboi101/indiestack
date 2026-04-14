@@ -4403,6 +4403,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "victoria": "monitoring",       # first term — "victoria metrics alternative", "victoria metrics setup"
     # Security — runtime container security (CNCF Falco)
     "falco": "security",            # Falco — CNCF runtime security for containers and Kubernetes (7k★)
+    # Diagramming / whiteboard — common developer tools for architecture and system design
+    "excalidraw": "developer",      # Excalidraw — virtual whiteboard for sketching diagrams (90k★)
+    "tldraw": "developer",          # tldraw — infinite canvas whiteboard with developer SDK (39k★)
+    "dbdiagram": "database",        # dbdiagram.io — DB schema visualiser used with dbml (query: "db diagram", "database diagram")
+    # Scheduling — Cal.com is the dominant OSS Calendly alternative; "cal" is its common shorthand
+    "cal": "scheduling",            # Cal.com — open-source scheduling infrastructure (33k★)
+    # Email deliverability — DKIM is a common query when setting up transactional email
+    "dkim": "email",                # "dkim setup", "dkim record" → Email Marketing / transactional tools
+    # Vector database — LanceDB is a fast growing OSS vector store missed in earlier pass
+    "lancedb": "database",          # LanceDB — serverless vector database built on Lance format (6k★)
 }
 
 _FTS_STOP_WORDS = {
