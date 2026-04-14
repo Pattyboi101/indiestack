@@ -1,6 +1,3 @@
-import sys
-sys.setrecursionlimit(50000)  # 51 routers × FastAPI lifespan nesting
-
 import uvicorn
 import os
 

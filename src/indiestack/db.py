@@ -1965,21 +1965,6 @@ async def init_db():
             except Exception:
                 await db.execute(_ddl)
 
-        # Validation logs for /api/validate guardrail endpoint
-        await db.execute("""
-            CREATE TABLE IF NOT EXISTS validation_logs (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                package TEXT NOT NULL,
-                ecosystem TEXT NOT NULL DEFAULT 'npm',
-                exists BOOLEAN,
-                is_typosquat BOOLEAN DEFAULT 0,
-                risk_level TEXT DEFAULT 'unknown',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        """)
-        await db.execute("CREATE INDEX IF NOT EXISTS idx_validation_pkg ON validation_logs(package)")
-        await db.commit()
-
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
@@ -3105,6 +3090,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "axum": "api",          # Axum — modular Rust web framework (Tokio team)
     # Monorepo tooling
     "turborepo": "developer",   # Turborepo — Vercel high-performance monorepo build system
+    "nx": "developer",          # Nx — monorepo platform from Nrwl
     # Schema validation — Zod, Yup, Valibot all live in developer-tools category
     "validation": "developer",  # "schema validation", "runtime validation", "form validation"
     "zod": "developer",          # Zod — TypeScript-first schema validation (34k stars)
@@ -3131,7 +3117,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API — GraphQL engines (Hasura, PostGraphile auto-generate APIs from database schemas)
     "hasura": "api",            # Hasura — instant GraphQL API over PostgreSQL/MySQL
     "postgraphile": "api",      # PostGraphile — GraphQL from PostgreSQL schema
-    # Monitoring — Prometheus is the canonical open-source metrics system
     # Search — Typesense is a common Algolia alternative query term
     "typesense": "search",      # Typesense — typo-tolerant open-source search engine
     # DevOps — IaC abbreviation (often used standalone in queries)
@@ -4088,7 +4073,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "query": "database",             # "query builder", "type-safe query", "sql query" → Database (Kysely, Knex, Drizzle)
     # Frontend — state stores ("global store", "state store", "redux store")
     "store": "frontend",             # "state store", "global store", "data store" → Frontend Frameworks (Zustand, Pinia, Redux)
-    # Frontend — data fetching (SWR, TanStack Query, Apollo Client)
     # Frontend — islands architecture (Astro, Fresh, Qwik use "islands" terminology)
     "islands": "frontend",           # "islands architecture", "islands framework" → Frontend Frameworks (Astro, Fresh)
     # Frontend — hydration (complement to existing "hydration" → "frontend")
@@ -4469,65 +4453,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "immer": "frontend",            # Immer — produce next immutable state via mutations (26k★)
     # Medusa — open-source commerce
     "medusa": "developer",          # Medusa — open-source headless commerce engine (23k★)
-    # Generic linter/formatter query term (standalone, not tool-specific)
-    "linter": "testing",            # "js linter", "python linter", "go linter", "typescript linter" → Testing Tools
-    # Text editors — Vim/Neovim are searched directly as alternative targets
-    "vim": "developer",             # Vim — ubiquitous modal text editor; "vim alternative" queries → Developer Tools
-    "nvim": "developer",            # nvim — short form of Neovim used in queries ("nvim setup", "nvim alternative")
-    # Terminal multiplexers
-    "tmux": "developer",            # tmux — terminal multiplexer; "tmux alternative" queries → Developer Tools
-    # Warp AI terminal (open-source 2024)
-    "warp": "developer",            # Warp — AI-powered GPU-accelerated terminal (25k★) → Developer Tools
-    # Cross-shell prompt — Starship is the dominant Rust-based prompt
-    "starship": "developer",        # Starship — cross-shell prompt (rust-based, 45k★) → Developer Tools
-    # Modern document preparation (LaTeX alternative)
-    "typst": "documentation",       # Typst — modern markup document compiler (34k★) → Documentation
-    # Gleam — functional language targeting BEAM VM and JS (Erlang/Elixir ecosystem)
-    "gleam": "api",                 # Gleam — type-safe functional language on BEAM/Erlang VM → API Tools
-    # Rust JS/TS toolchain — OxLint and Oxc are the fastest linting/parsing tools
-    "oxlint": "testing",            # OxLint — Rust-based extremely fast JavaScript linter (oxc-project, 13k★) → Testing
-    "oxc": "testing",               # Oxc — all-in-one Rust JS/TS toolchain (linter, parser, transformer) → Testing
-    # Shell configuration / CLI shells
-    "zsh": "cli",                   # Zsh — Z shell; "zsh plugin", "zsh config" queries → CLI Tools
-    "ohmyzsh": "cli",               # Oh My Zsh — Zsh configuration framework (174k★) → CLI Tools
-    "nushell": "cli",               # Nushell (Nu) — structured data shell (32k★) → CLI Tools
-    # DevOps — Tilt for Kubernetes dev environment
-    "tilt": "devops",               # Tilt — local Kubernetes dev workflow tool (8k★) → DevOps & Infrastructure
-    # Configuration languages
-    "pkl": "developer",             # PKL (Apple) — programmable config language (9k★) → Developer Tools
-    # AI — transformer model architecture (foundational to all modern LLMs)
-    "transformer": "ai",            # "transformer model", "transformer architecture" — BERT, ViT, GPT → AI & Automation
-    "tokenizer": "ai",              # "tokenizer library", "llm tokenizer", "tiktoken" → AI & Automation
-    "tokenization": "ai",           # long form — "tokenization strategy", "subword tokenization" → AI & Automation
-    "bert": "ai",                   # BERT — Google's bidirectional transformer (most-downloaded HuggingFace model)
-    # File/Storage — decentralized / IPFS-based storage
-    "ipfs": "file",                 # IPFS — InterPlanetary File System; "ipfs storage", "ipfs upload" → File Management
-    "pinata": "file",               # Pinata — IPFS pinning service (5k★)
-    # Developer Tools — Web3 / blockchain development tooling
-    "web3": "developer",            # Web3 tooling: ethers.js, wagmi, viem, Hardhat, Foundry → Developer Tools
-    "blockchain": "developer",      # blockchain SDK and framework queries → Developer Tools
-    "ethersjs": "developer",        # ethers.js — Ethereum library (29k★); "ethersjs alternative"
-    "wagmi": "developer",           # wagmi — React hooks for Ethereum (8k★)
-    "viem": "developer",            # viem — TypeScript Ethereum interface (12k★)
-    "hardhat": "developer",         # Hardhat — Ethereum dev env for professionals (7k★)
-    "foundry": "developer",         # Foundry — fast Ethereum dev toolchain in Rust (8k★)
-    # Message Queue — event bus patterns
-    "eventbus": "message",          # "event bus", "typed event bus" → Message Queue
-    "event-bus": "message",         # hyphenated — "event-bus library", "event-bus pattern" → Message Queue
-    # Developer Tools — Rust serialization
-    "serde": "developer",           # serde — Rust serialization/deserialization framework (most downloaded Rust crate)
-    # API — TypeSpec and OpenAPI abbreviations
-    "typespec": "api",              # Microsoft TypeSpec — API definition language (IDL for HTTP/OpenAPI)
-    "oas": "api",                   # OAS (OpenAPI Specification) abbreviation — "oas3 validator", "oas tooling"
-    # DevOps — GitHub Actions queries
-    "actions": "devops",            # "github actions alternative", "ci actions", "workflow actions" → DevOps
-    # Developer Tools — compression libraries
-    "gzip": "developer",            # "gzip library", "node gzip", "gzip compress" → Developer Tools
-    "brotli": "developer",          # "brotli compression", "brotli library" → Developer Tools
-    "zstd": "developer",            # Zstandard — "zstd library", "zstd compress" (Facebook, high ratio + fast)
-    # API — GraphQL Yoga and plugin system
-    "graphql-yoga": "api",          # GraphQL Yoga — fully featured GraphQL server by The Guild (8k★)
-    "envelop": "api",               # Envelop — GraphQL plugin system (The Guild)
     # Compiler / transpiler tools (Babel, SWC, Binaryen, esbuild — frontend build chain)
     "compiler": "frontend",         # "js compiler", "typescript compiler", "babel compiler" → Frontend Frameworks
     # Validation — complement to "validation" → developer; "validate" form catches verb queries
