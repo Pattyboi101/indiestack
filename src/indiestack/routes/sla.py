@@ -99,7 +99,7 @@ async def sla_page(request: Request):
                 </div>
             </div>
             <p style="color:var(--ink-muted);line-height:1.7;margin-bottom:12px;">
-                Report incidents: <a href="mailto:hello@indiestack.ai" style="color:var(--accent);text-decoration:none;">hello@indiestack.ai</a>
+                Report incidents: <a href="mailto:pajebay1@gmail.com" style="color:var(--accent);text-decoration:none;">pajebay1@gmail.com</a>
                 or open an issue at <a href="https://github.com/Pattyboi101/indiestack/issues" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">github.com/Pattyboi101/indiestack</a>.
             </p>
             <p style="color:var(--ink-muted);line-height:1.7;">

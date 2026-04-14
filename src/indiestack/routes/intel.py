@@ -130,7 +130,7 @@ async def intel_dashboard(request: Request, slug: str):
             '<p style="color:var(--text-muted);margin:16px 0;">Competitive intelligence for developer tool companies. '
             'See what developers compare your tool to, where they migrate, and what they search for.</p>'
             '<p style="color:var(--text-muted);margin-top:24px;">Contact '
-            '<a href="mailto:hello@indiestack.ai" style="color:var(--accent);">hello@indiestack.ai</a> '
+            '<a href="mailto:pajebay1@gmail.com" style="color:var(--accent);">pajebay1@gmail.com</a> '
             'for access — starting at $499/mo.</p></div>',
             user=user,
         ))
@@ -236,7 +236,7 @@ async def intel_dashboard(request: Request, slug: str):
       {paired}
       <div style="text-align:center;padding:24px 0;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.8rem;">
         IndieStack Developer Intelligence &middot; {v:,} developer interactions
-        &middot; <a href="mailto:hello@indiestack.ai" style="color:var(--accent);">Get API access</a>
+        &middot; <a href="mailto:pajebay1@gmail.com" style="color:var(--accent);">Get API access</a>
       </div>
     </div>'''
 
