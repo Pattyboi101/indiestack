@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (seventy-eighth pass)
+Last updated: 2026-04-14 (seventy-ninth pass)
 
 ## Status: Active
 
@@ -10,14 +10,38 @@ Last updated: 2026-04-14 (seventy-eighth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1460 unique effective keys (added 23 in seventy-eighth pass — Python pkg managers/uv/poetry/pdm/pipenv/conda/mamba/pixi; Rust DB/sqlx/diesel/sea-orm/seaorm; Elixir/ecto; Frontend/react-query/reactquery/redwood/redwoodjs; Media/hls/mpeg-dash; DevOps/gradle/maven; Developer/plop/hygen/yeoman; 22 duplicate keys exist in source, all correct last-write-wins values)
-- **Catalog script**: `scripts/add_missing_tools.py` — 355 tools ready to insert (slug-safe); +6 this pass: uv, poetry, sqlx, diesel, sea-orm, redwoodjs
+- **_CAT_SYNONYMS**: 1479 unique effective keys (added 19 in seventy-ninth pass — in-memory/memory/inmemory → caching; letsencrypt/certbot/step-ca/smallstep → security; agentic/multiagent/llmops/tuning/dify/openwebui/open-webui → ai; 22 duplicate keys in source, all correct last-write-wins)
+- **Catalog script**: `scripts/add_missing_tools.py` — 360 tools ready to insert (slug-safe); +5 this pass: dify, open-webui, certbot, step-ca, loki
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, seventy-ninth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 19 new entries to `_CAT_SYNONYMS` (1460 → 1479 unique effective keys):
+  - **Caching — in-memory queries**: `in-memory`, `memory`, `inmemory` → `"caching"` — handles "in-memory cache/database/store" where hyphen splitting and stop-word stripping left "memory" as the only meaningful term with no category mapping
+  - **Security — PKI/TLS tooling**: `letsencrypt`, `certbot`, `step-ca`, `smallstep` → `"security"` — fills the Let's Encrypt certificate management query gap (very common "alternative" query target)
+  - **AI — agentic/multi-agent**: `agentic`, `multiagent` → `"ai"` — 2026's fastest-growing AI query terms; "agentic AI workflow" and "multi-agent system" searches
+  - **AI — LLMOps + fine-tuning**: `llmops`, `tuning` → `"ai"` — covers "LLMOps platform" and "fine-tuning" (hyphen strip leaves "tuning" without mapping)
+  - **AI — LLM app platforms**: `dify`, `openwebui`, `open-webui` → `"ai"` — Dify (60k★) and Open WebUI (80k★) are among the most-starred AI tools; "[tool] alternative" queries had no category boost
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (355 → 360 total):
+  - **Dify** (langgenius/dify, 60k★) — open-source LLM app platform + RAG engine; ai-automation
+  - **Open WebUI** (open-webui/open-webui, 80k★) — self-hosted web UI for Ollama/local LLMs; ai-automation
+  - **Certbot** (certbot/certbot, 31k★) — EFF ACME client for Let's Encrypt HTTPS; security-tools
+  - **step-ca** (smallstep/certificates, 7k★) — self-hosted private CA for mTLS/zero-trust; security-tools
+  - **Grafana Loki** (grafana/loki, 23k★) — horizontally-scalable log aggregation (Prometheus for logs); logging
+
+### Code Quality (Step 3)
+- No route file changes this pass; ast.parse() confirmed clean on db.py and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventy-ninth pass
 
 ## Completed This Session (2026-04-14, seventy-eighth pass — autonomous improvement cycle)
 
