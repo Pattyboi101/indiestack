@@ -666,9 +666,9 @@ def nav_html(user=None) -> str:
             </a>
             <div class="nav-links">
                 <a href="/explore" style="color:var(--ink-light);">Explore</a>
-                <a href="/agents" style="color:var(--ink-light);">Agents</a>
                 <a href="/setup" style="color:var(--ink-light);">Set Up MCP</a>
                 <a href="/migrations" style="color:var(--ink-light);">Migrations</a>
+                <a href="/oracle" style="color:var(--ink-light);">Oracle API</a>
                 <a href="/pricing" style="color:var(--ink-light);">Pricing</a>
                 <a href="/submit" class="btn btn-primary" style="padding:8px 16px;font-size:13px;">Submit</a>
                 <button onclick="toggleTheme()" id="theme-toggle" aria-label="Toggle dark mode" style="background:none;border:1px solid var(--border);border-radius:999px;padding:8px 12px;cursor:pointer;font-size:14px;color:var(--ink-muted);transition:all 0.15s ease;min-width:44px;min-height:44px;" title="Toggle dark mode">&#9790;</button>
@@ -678,9 +678,9 @@ def nav_html(user=None) -> str:
         </div>
         <div class="mobile-menu" id="mobile-menu">
             <a href="/explore">Explore</a>
-            <a href="/agents">Agents</a>
             <a href="/setup">Set Up MCP</a>
             <a href="/migrations">Migrations</a>
+            <a href="/oracle">Oracle API</a>
             <a href="/pricing">Pricing</a>
             {mobile_auth_links}
             <a href="/submit">Submit a Tool</a>
@@ -760,18 +760,18 @@ def footer_html() -> str:
           <!-- Brand -->
           <div>
             <div style="font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:8px;">IndieStack</div>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">The discovery layer between AI coding agents and 8,000+ developer tools.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin:0;">Dependency guardrail for AI coding agents. Validates packages, catches hallucinations, migration intelligence.</p>
           </div>
           <!-- Product -->
           <div>
             <div class="footer-heading">Product</div>
             <a href="/explore" class="footer-link">Explore</a>
+            <a href="/migrations" class="footer-link">Migrations</a>
+            <a href="/oracle" class="footer-link">Oracle API</a>
             <a href="/agents" class="footer-link">Agent Services</a>
             <a href="/gaps" class="footer-link">Market Gaps</a>
-            <a href="/calculator" class="footer-link">Cost Calculator</a>
-            <a href="/migrations" class="footer-link">Migrations</a>
             <a href="/analyze" class="footer-link">Stack Health</a>
-            <a href="/embed" class="footer-link">Embed Widget</a>
+            <a href="/api" class="footer-link">REST API</a>
           </div>
           <!-- Company -->
           <div>
@@ -803,7 +803,7 @@ def footer_html() -> str:
                 font-family:var(--font-body);">Subscribe</button>
     </form>
 </div>
-          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">The discovery layer between AI coding agents and developer tools.</span>
+          <span style="color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;width:100%;text-align:center;margin-bottom:12px;">Dependency guardrail for AI coding agents.</span>
           <span class="footer-muted">&copy; 2026 IndieStack. All rights reserved.</span>
           <span class="footer-muted">Made with care for the indie maker community.</span>
         </div>

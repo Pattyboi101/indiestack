@@ -174,14 +174,14 @@ async def landing(request: Request):
         '    <div class="glow-sphere" style="width:400px;height:400px;background:radial-gradient(circle,rgba(226,183,100,0.08) 0%,transparent 70%);bottom:10%;right:15%;"></div>'
         '    <div style="position:relative;z-index:1;">'
         '    <div class="status-tag" style="margin-bottom:24px;justify-content:center;">'
-        '        <span class="dot"></span>INTELLIGENCE LAYER FOR AI CODING AGENTS'
+        '        <span class="dot"></span>DEPENDENCY GUARDRAIL FOR AI CODING AGENTS'
         '    </div>'
         '    <h1 style="font-family:var(--font-display);font-size:clamp(36px,6vw,64px);'
         '               line-height:1.15;max-width:700px;margin:0 auto;color:var(--ink);letter-spacing:-0.03em;">'
         '        <span class="hero-headline">Your AI knows what to build. We know what already works.</span>'
         '    </h1>'
         '    <p style="font-size:20px;color:var(--ink-muted);max-width:560px;margin:16px auto 32px;line-height:1.6;">'
-        f'        {tool_count}+ tools. Migration intelligence from real GitHub data. Verified package combinations. Unlimited free searches.'
+        f'        {tool_count}+ tools. Validates packages before install. Catches hallucinations and typosquats. Migration intelligence from real GitHub data.'
         '    </p>'
         # Hero visual — code conversation block
         '    <div style="max-width:560px;margin:0 auto 24px;text-align:left;background:rgba(10,14,26,0.8);'
@@ -261,7 +261,7 @@ async def landing(request: Request):
                 How it works
             </h2>
             <p style="text-align:center;color:var(--ink-muted);font-size:16px;margin-bottom:48px;max-width:520px;margin-left:auto;margin-right:auto;">
-                Three steps. Your AI stops reinventing the wheel.
+                Three steps. Your AI stops hallucinating packages.
             </p>
 
             <!-- 3-step flow -->
@@ -279,18 +279,18 @@ async def landing(request: Request):
                     <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;
                                 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;
                                 margin:0 auto 16px;">2</div>
-                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">Your AI searches</h3>
+                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">Your AI validates</h3>
                     <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;">
-                        When you ask your AI to build something, it checks IndieStack first.
+                        Before installing any package, your AI checks IndieStack first. Catches fakes and typosquats.
                     </p>
                 </div>
                 <div style="text-align:center;padding:24px;">
                     <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;
                                 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;
                                 margin:0 auto 16px;">3</div>
-                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">It finds what exists</h3>
+                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">It finds what works</h3>
                     <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;">
-                        Instead of writing 50k tokens of code, your AI suggests a vetted tool.
+                        Instead of generating code from scratch, your AI recommends a vetted, maintained tool.
                     </p>
                 </div>
             </div>
@@ -671,8 +671,8 @@ async def landing(request: Request):
         '</script>'
     )
 
-    response = HTMLResponse(page_shell("The discovery layer for AI coding agents", body,
-                                   description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if a developer tool already exists — 8,000+ tools indexed.",
+    response = HTMLResponse(page_shell("Dependency guardrail for AI coding agents", body,
+                                   description="IndieStack validates packages before install, catches hallucinations and typosquats, and provides migration intelligence. Plugs into Claude, Cursor, and Windsurf.",
                                    user=request.state.user, canonical="/", extra_head=extra_head,
                                    og_image=f"{BASE_URL}/logo.png"))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"
