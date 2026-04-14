@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-third pass)
+Last updated: 2026-04-14 (eighty-fourth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-14 (eighty-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1507 unique active keys (eighty-third pass: +8 new — relay, turbo, wrangler, kotlin, gleam, zig, openreplay, axiom; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 379 tools ready to insert (slug-safe); +5 this pass: openreplay, relay, gleam, electric-sql, million
+- **_CAT_SYNONYMS**: 1524 unique active keys (eighty-fourth pass: +17 new — changelog, lakehouse, iceberg, delta, hudi, spark, visual, ktor, quarkus, vertx, micronaut, databricks, feast, hopsworks, feature-store, featurestore, graalvm; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 378 unique tools (fixed 6 pre-existing duplicates + added 5 new: ktor, quarkus, git-cliff, apache-spark, feast)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,35 @@ Last updated: 2026-04-14 (eighty-third pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- All targeted synonyms from task prompt confirmed well-covered from prior passes
+- Added 17 new `_CAT_SYNONYMS` entries (1507 → 1524 unique keys, 0 duplicates):
+  - **Changelog**: `changelog` → devops — git-cliff, semantic-release, release-it queries
+  - **Data Lakehouse**: `lakehouse`, `iceberg`, `delta`, `hudi` → database — Apache Iceberg, Delta Lake, Apache Hudi table format queries
+  - **Apache Spark**: `spark` → background — distributed batch + stream data processing queries
+  - **Visual regression**: `visual` → testing — "visual regression test", "visual testing tool" queries
+  - **JVM backends**: `ktor`, `quarkus`, `vertx`, `micronaut` → api — Kotlin/Java web framework queries
+  - **Databricks**: `databricks` → ai — unified data + AI platform alternative queries
+  - **ML feature stores**: `feast`, `hopsworks`, `feature-store`, `featurestore` → ai — ML feature store queries
+  - **GraalVM**: `graalvm` → devops — native image compilation for JVM apps
+
+### Catalog Script (Step 2)
+- Fixed 6 pre-existing duplicate slugs (ruff, pydantic, minio, loops, scalar, hoppscotch) — script now has 378 unique entries (was 379 with 6 dupes)
+- Added 5 new tools (373 → 378 unique):
+  - **Ktor** (kotlin/ktor, 12k★) — Kotlin async web framework by JetBrains; api-tools
+  - **Quarkus** (quarkusio/quarkus, 14k★) — Supersonic Subatomic Java for cloud-native; api-tools
+  - **git-cliff** (orhun/git-cliff, 9k★) — customizable changelog generator from git; devops-infrastructure
+  - **Apache Spark** (apache/spark, 40k★) — unified analytics engine for large-scale data; background-jobs
+  - **Feast** (feast-dev/feast, 6k★) — open-source ML feature store; ai-automation
+
+### Code Quality (Step 3)
+- No route file changes needed — stale stats fixed in eighty-second pass, no new issues in recent commits
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-fourth pass
 
 ## Completed This Session (2026-04-14, eighty-third pass — autonomous improvement cycle)
 
