@@ -19,4 +19,4 @@ COPY founder-photos/ founder-photos/
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["python", "-m", "indiestack"]
+CMD ["python", "-c", "import sys; sys.setrecursionlimit(10000); import indiestack.__main__"]
