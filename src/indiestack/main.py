@@ -2,7 +2,7 @@
 
 import sys
 # 51 routers × fastapi_x402 lifespan nesting hits the default 1000 limit
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(50000)
 
 import asyncio
 import hashlib
