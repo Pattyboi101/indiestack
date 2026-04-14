@@ -1,3 +1,0 @@
-lightrag-hku>=1.4.0
-sentence-transformers>=5.0.0
-mcp[cli]>=1.0.0
