@@ -5202,7 +5202,7 @@ from indiestack.routes import oracle_page
 app.include_router(oracle_page.router)
 from indiestack.routes import intel
 app.include_router(intel.router)
-# Validate endpoint added directly to app (not via include_router)
-# to avoid pushing lifespan nesting over the recursion limit (50 routers = the max)
-from indiestack.routes.validate import validate_package as _validate_handler
-app.add_api_route("/api/validate", _validate_handler, methods=["GET"])
+# Validate endpoint disabled — lifespan nesting at 50 routers is the max.
+# Deploying via /api/validate requires consolidating existing routers first.
+# The validate_package MCP tool calls the production API, so this blocks it.
+# TODO: consolidate routers or move validate into an existing router file.
