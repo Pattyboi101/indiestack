@@ -404,7 +404,7 @@ SEARCH_WIDGET_JS = '(function(){\n  var BASE = "' + BASE_URL + '";\n' + r"""
     + '</style>'
     + '<div class="is-search-wrap">'
     + '<div class="is-search-head">Find <span>Developer Tools</span></div>'
-    + '<input class="is-search-input" type="text" placeholder="Search 8,000+ tools..." />'
+    + '<input class="is-search-input" type="text" placeholder="Search 6,500+ tools..." />'
     + '<div class="is-results"></div>'
     + '<div class="is-foot">Powered by <a href="' + BASE + '?ref=search-widget" target="_blank" rel="noopener">IndieStack</a></div>'
     + '</div>';

@@ -29,7 +29,7 @@ async def conway_page(request: Request):
             Built for always-on agents.
         </h1>
         <p style="font-size:18px;color:var(--ink-muted);line-height:1.7;margin-bottom:48px;max-width:600px;">
-            IndieStack gives always-on agents like Conway live access to 8,000+
+            IndieStack gives always-on agents like Conway live access to 6,500+
             developer tools — with confidence scores, migration paths, and
             session-aware context that improves across runs.
         </p>
@@ -171,7 +171,7 @@ async def conway_page(request: Request):
 
     return HTMLResponse(page_shell(
         title="Conway — IndieStack for Always-On Agents",
-        description="Live tool intelligence for always-on AI coding agents. 8,000+ tools, confidence scoring, session tracking, zero config.",
+        description="Live tool intelligence for always-on AI coding agents. 6,500+ tools, confidence scoring, session tracking, zero config.",
         body=body,
         user=user,
         canonical="/conway",

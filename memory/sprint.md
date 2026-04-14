@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-first pass)
+Last updated: 2026-04-14 (eighty-second pass)
 
 ## Status: Active
 
@@ -10,14 +10,53 @@ Last updated: 2026-04-14 (eighty-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1489 unique effective keys (eighty-first pass: +2 new, 0 duplicates remaining — all 22 prior duplicates purged)
-- **Catalog script**: `scripts/add_missing_tools.py` — 369 tools ready to insert (slug-safe); +5 this pass: shipwright, supastarter, mcp-brave-search, mcp-playwright, mcp-linear
+- **_CAT_SYNONYMS**: 1499 unique active keys (eighty-second pass: +10 new — oxlint, oxc, rolldown, knip, trieve, wundergraph, valtown, val, farm, rslib; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 374 tools ready to insert (slug-safe); +5 this pass: rolldown, knip, oxlint, trieve, val-town
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
-- **Tool count in copy**: "6,500+" (verified correct)
+- **Tool count in copy**: "6,500+" — updated to 6,500+ across all 14 route files (was stale 8,000+)
+- **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- All NEED_MAPPINGS entries verified complete for: state management, bundler, realtime, vector database, rate limiting — already well-covered from prior passes
+- Verified _CAT_SYNONYMS has 1499 unique active keys (0 duplicates after regex-excluding comment lines)
+
+### Catalog Script (Step 2)
+- All 10 tools from task prompt already in script — verified by slug grep
+
+### Code Quality (Step 3)
+- Replaced stale "8,000+" with "6,500+" across 14 files (21 occurrences):
+  - Routes: landing, built_this, content, account, search, setup, alternatives, dashboard, components, embed, explore, conway
+  - main.py: `llms.txt` description, `llms-full.txt` dynamic count, OG image SVG
+- Replaced stale "25 categories" with "29+" in: main.py (×3), api_docs.py, content.py
+- Made `/llms-full.txt` category count dynamic: `len({t['category'] for t in tools if t['category']})` — always reflects live DB
+- All 14 changed files pass `python3 -m py_compile` (smoke tests unavailable: tunnel 403 in this env)
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-second pass
+
+### Self-Improvement (Step 5)
+- Added 10 new `_CAT_SYNONYMS` entries for 2026 tooling gaps:
+  - **OXLint** (`oxlint` → testing) — Rust JS/TS linter, 50-100x faster than ESLint
+  - **OXC toolchain** (`oxc` → frontend) — Oxidation Compiler (oxlint + rolldown + parser)
+  - **Rolldown** (`rolldown` → frontend) — Rust bundler replacing Rollup in Vite 6
+  - **Knip** (`knip` → developer) — TypeScript dead-code and unused-dependency finder
+  - **Trieve** (`trieve` → search) — search + RAG + recommendations platform
+  - **WunderGraph** (`wundergraph` → api) — API composition / GraphQL federation gateway
+  - **Val Town** (`valtown`, `val` → developer) — serverless TypeScript scripting platform
+  - **Farm** (`farm` → frontend) — Rust-based web build tool (Vite-compatible)
+  - **Rslib** (`rslib` → frontend) — Rsbuild-based library bundler for npm packages
+- Added 5 new catalog tools to `scripts/add_missing_tools.py` (369 → 374 total):
+  - **Rolldown** (rolldown-rs/rolldown, 9k★) — Rust bundler for Vite 6; frontend-frameworks
+  - **Knip** (webpodcast/knip, 7k★) — TypeScript dead code finder; developer-tools
+  - **OXLint** (oxc-project/oxc, 5k★) — Rust JS/TS linter; developer-tools
+  - **Trieve** (devflowinc/trieve, 2k★) — search + RAG platform; search-engine
+  - **Val Town** (val-town/val-town-product, 3k★) — serverless scripting; developer-tools
 
 ## Completed This Session (2026-04-14, eighty-first pass — autonomous improvement cycle)
 

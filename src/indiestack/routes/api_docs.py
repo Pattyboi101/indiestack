@@ -86,7 +86,7 @@ async def api_docs(request: Request):
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/categories</code>
             </div>
             <div style="padding:16px 20px;">
-                <p style="color:var(--ink-muted);font-size:14px;">All 25 categories with slugs, descriptions, and tool counts.</p>
+                <p style="color:var(--ink-muted);font-size:14px;">All 29+ categories with slugs, descriptions, and tool counts.</p>
                 <div style="margin-top:12px;background:var(--cream-dark);border-radius:8px;padding:12px 16px;">
                     <code style="font-family:var(--font-mono);font-size:13px;color:var(--ink-light);">curl "https://indiestack.ai/api/categories"</code>
                 </div>
