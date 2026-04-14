@@ -4474,6 +4474,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "farm": "frontend",             # Farm — Rust-based web build tool (Vite-compatible, 10k★)
     # Developer Tools — Rslib (Rsbuild-based library build tool, recommended for publishing npm packages)
     "rslib": "frontend",            # Rslib — Rsbuild-based library bundler for publishing npm/ESM packages
+    # API — Relay (Meta's production-ready GraphQL client for React, 18k★)
+    "relay": "api",                 # Relay — Meta's GraphQL client for React (declarative data, 18k★)
+    # Developer — Turbo (Turborepo CLI short form; "turbo run build", "turbo monorepo" queries)
+    "turbo": "developer",           # Turbo — CLI name for Turborepo monorepo build system (25k★)
+    # DevOps — Wrangler (Cloudflare's CLI for Workers, Pages, D1, KV, R2 deployment)
+    "wrangler": "devops",           # Wrangler — Cloudflare CLI for deploying Workers and Pages (10k★)
+    # API — Kotlin language queries route to API tools (Ktor, Spring Boot, Vert.x)
+    "kotlin": "api",                # Kotlin — JVM/multiplatform language; backend queries → Ktor, Spring (50k★)
+    # API — Gleam language (type-safe functional language on BEAM/Erlang VM, web backend)
+    "gleam": "api",                 # Gleam — type-safe BEAM language; "gleam web framework" → API Tools (18k★)
+    # Developer — Zig language tooling queries (Zig build system, zig cc, capy, Bun uses Zig internally)
+    "zig": "developer",             # Zig — fast systems language; "zig build tool", "zig alternative" (11k★)
+    # Monitoring — OpenReplay (open-source session replay + DevTools + observability)
+    "openreplay": "monitoring",     # OpenReplay — open-source Hotjar/FullStory alternative (10k★)
+    # Logging — Axiom (cloud log management and analytics; Logtail/Papertrail alternative)
+    "axiom": "logging",             # Axiom — developer-first log management and analytics (5k★)
 }
 
 _FTS_STOP_WORDS = {
