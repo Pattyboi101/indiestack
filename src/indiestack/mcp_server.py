@@ -1,4 +1,4 @@
-"""IndieStack MCP Server — the discovery layer between AI coding agents and 8,000+ proven developer tools."""
+"""IndieStack MCP Server — dependency guardrail for AI coding agents. Validates packages, catches hallucinations, 8,000+ tools."""
 
 import json
 import os
