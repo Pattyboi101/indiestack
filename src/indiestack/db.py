@@ -4457,6 +4457,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "compiler": "frontend",         # "js compiler", "typescript compiler", "babel compiler" → Frontend Frameworks
     # Validation — complement to "validation" → developer; "validate" form catches verb queries
     "validate": "developer",        # "validate schema", "validate input", "data validate" → Developer Tools
+    # MS SQL Server — Microsoft's relational database (enterprise/Windows stacks, common in ".NET" ecosystem)
+    "mssql": "database",            # mssql — Node.js driver for MS SQL Server ("mssql alternative" queries)
+    "sqlserver": "database",        # compound — "sqlserver connect", "sqlserver driver" → Database
+    # Cloudflare Wrangler — Workers CLI; "wrangler" alone is specific enough to route to DevOps
+    "wrangler": "devops",           # Wrangler — Cloudflare Workers CLI/SDK ("wrangler deploy", "wrangler dev")
+    # Phoenix LiveView — server-driven real-time UI without client JS (Elixir)
+    "liveview": "frontend",         # Phoenix LiveView — reactive server-rendered UIs in Elixir
+    # TypeScript compiler used as type-checker (tsc --noEmit in CI)
+    "tsc": "testing",               # tsc — TypeScript compiler; "run tsc", "tsc alternative in CI" → Testing Tools
+    # Oxlint — Rust-based JavaScript/TypeScript linter (part of OXC project)
+    "oxlint": "testing",            # Oxlint — Rust-based JS/TS linter, 50-100× faster than ESLint (14k★)
+    # Vinxi — full-stack JavaScript build SDK powering TanStack Start and SolidStart
+    "vinxi": "frontend",            # Vinxi — app bundler + dev-server SDK (TanStack Start, SolidStart)
+    # Bandit — Python SAST security linter (common "python security tool" and "bandit alternative" queries)
+    "bandit": "security",           # Bandit — Python security linter (pypa/bandit, 6k★)
+    # pg (node-postgres) — #1 Node.js PostgreSQL client, extremely common in Node backend stacks
+    "pg": "database",               # pg (node-postgres) — most popular Node.js PostgreSQL client (12k★)
+    # ZAP — OWASP ZAP web application security scanner (short form; "owasp"→security already handles full form)
+    "zap": "security",              # ZAP (OWASP ZAP) — open-source web application security scanner (12k★)
 }
 
 _FTS_STOP_WORDS = {

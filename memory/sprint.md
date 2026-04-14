@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-first pass)
+Last updated: 2026-04-14 (eighty-second pass)
 
 ## Status: Active
 
@@ -10,14 +10,41 @@ Last updated: 2026-04-14 (eighty-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1489 unique effective keys (eighty-first pass: +2 new, 0 duplicates remaining — all 22 prior duplicates purged)
-- **Catalog script**: `scripts/add_missing_tools.py` — 369 tools ready to insert (slug-safe); +5 this pass: shipwright, supastarter, mcp-brave-search, mcp-playwright, mcp-linear
+- **_CAT_SYNONYMS**: 1499 unique effective keys (eighty-second pass: +10 new, 0 duplicates)
+- **Catalog script**: `src/indiestack/scripts/add_missing_tools.py` — 375 tools ready to insert (slug-safe); +5 this pass: oxlint, nock, supertokens, react-admin, colima
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 10 new entries to `_CAT_SYNONYMS` (1489 → 1499 unique effective keys):
+  - **Database**: `mssql` → `"database"` — MS SQL Server Node.js driver queries; `sqlserver` → `"database"` — compound form
+  - **DevOps**: `wrangler` → `"devops"` — Cloudflare Workers CLI (growing query term as Workers adoption increases)
+  - **Frontend**: `liveview` → `"frontend"` — Phoenix LiveView (server-driven real-time UI without JS, Elixir)
+  - **Testing**: `tsc` → `"testing"` — TypeScript compiler used as type-checker in CI; `oxlint` → `"testing"` — Rust-based ESLint replacement (14k★)
+  - **Frontend**: `vinxi` → `"frontend"` — full-stack build SDK powering TanStack Start and SolidStart
+  - **Security**: `bandit` → `"security"` — Python SAST security linter (pypa/bandit); `zap` → `"security"` — OWASP ZAP short form
+  - **Database**: `pg` → `"database"` — node-postgres (#1 Node.js PostgreSQL client, extremely common in agent queries)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `src/indiestack/scripts/add_missing_tools.py` (370 → 375 total):
+  - **Oxlint** (oxc-project/oxc, 14k★) — Rust-based JS/TS linter, 50-100× faster than ESLint; testing-tools
+  - **Nock** (nock/nock, 12k★) — HTTP server mocking for Node.js tests (works with any HTTP client); testing-tools
+  - **SuperTokens** (supertokens/supertokens-core, 12k★) — open-source Auth0 alternative, self-hosted or managed; authentication
+  - **React Admin** (marmelab/react-admin, 24k★) — React framework for admin panels/internal tools; developer-tools
+  - **Colima** (abiosoft/colima, 17k★) — Docker Desktop alternative for macOS/Linux (no licensing restrictions); devops-infrastructure
+
+### Code Quality (Step 3)
+- Recent commits audited: Intel tab addition (70f0998) uses html.escape() and CSS variables correctly — no issues
+- ast.parse() confirmed clean on both db.py and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-second pass
 
 ## Completed This Session (2026-04-14, eighty-first pass — autonomous improvement cycle)
 

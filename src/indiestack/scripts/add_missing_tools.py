@@ -6194,6 +6194,95 @@ TOOLS = [
         "npx @linear/mcp-server",
         "code",
     ),
+    # ── Testing Tools (additional) ────────────────────────────────────
+    (
+        "oxlint",
+        "Oxlint",
+        "Rust-based JavaScript and TypeScript linter — 50-100× faster than ESLint",
+        "Oxlint is a JavaScript and TypeScript linter written in Rust, "
+        "delivering 50-100× faster lint times than ESLint with zero "
+        "configuration required. Part of the OXC (Oxidation Compiler) project, "
+        "it supports ESLint-compatible rules and integrates with existing "
+        "configs. Used by major monorepos to replace slow ESLint runs in CI.",
+        "testing-tools",
+        "oxc-project/oxc",
+        14000,
+        "https://oxc.rs/docs/guide/usage/linter",
+        "linter,javascript,typescript,rust,eslint,fast,ci",
+        "npx oxlint@latest",
+        "code",
+    ),
+    (
+        "nock",
+        "Nock",
+        "HTTP server mocking and expectations for Node.js tests",
+        "Nock intercepts HTTP requests in Node.js tests, letting you mock "
+        "external APIs without a real server. Define expected URLs, methods, "
+        "and response bodies — Nock asserts that all defined interceptors "
+        "were called, catching missed API calls. Works with any Node.js HTTP "
+        "client (axios, got, node-fetch) and pairs perfectly with Jest/Mocha.",
+        "testing-tools",
+        "nock/nock",
+        12000,
+        "https://github.com/nock/nock",
+        "testing,mocking,http,nodejs,jest,mocha,api-testing",
+        "npm install --save-dev nock",
+        "code",
+    ),
+    # ── Authentication ────────────────────────────────────────────────
+    (
+        "supertokens",
+        "SuperTokens",
+        "Open-source alternative to Auth0 — self-hosted or managed",
+        "SuperTokens provides authentication with session management, "
+        "social login, email/password, and MFA. Fully open-source and "
+        "self-hostable, or use SuperTokens Cloud as a managed service. "
+        "SDKs for Node.js, Python, Go, and frontend frameworks. Designed "
+        "as a drop-in Auth0 alternative with no per-MAU pricing.",
+        "authentication",
+        "supertokens/supertokens-core",
+        12000,
+        "https://supertokens.com",
+        "auth,authentication,sessions,social-login,mfa,self-hosted,open-source",
+        "npx create-supertokens-app",
+        "code",
+    ),
+    # ── Developer Tools ───────────────────────────────────────────────
+    (
+        "react-admin",
+        "React Admin",
+        "React framework for building admin panels and internal tools",
+        "React Admin is a frontend framework for building browser-based, "
+        "data-driven admin applications. Connects to any REST or GraphQL "
+        "API. Ships with 150+ hooks and components: CRUD pages, data grids, "
+        "forms, auth, permissions, and theming. Used in 25,000+ GitHub "
+        "projects as a Retool / Appsmith alternative in your own codebase.",
+        "developer-tools",
+        "marmelab/react-admin",
+        24000,
+        "https://marmelab.com/react-admin",
+        "admin,react,crud,internal-tools,dashboard,rest,graphql",
+        "npm install react-admin",
+        "code",
+    ),
+    # ── DevOps & Infrastructure ───────────────────────────────────────
+    (
+        "colima",
+        "Colima",
+        "Docker Desktop alternative — container runtimes on macOS and Linux",
+        "Colima enables Docker container runtimes on macOS (and Linux) with "
+        "minimal setup. Runs a Linux VM using Lima under the hood, providing "
+        "a Docker-compatible socket that works as a drop-in replacement for "
+        "Docker Desktop — without the licensing restrictions. Supports "
+        "Rosetta emulation, volume mounts, and Kubernetes via k3s.",
+        "devops-infrastructure",
+        "abiosoft/colima",
+        17000,
+        "https://github.com/abiosoft/colima",
+        "docker,containers,macos,linux,devops,docker-desktop-alternative",
+        "brew install colima",
+        "code",
+    ),
 ]
 
 
