@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-second pass)
+Last updated: 2026-04-14 (eighty-third pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-14 (eighty-second pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1499 unique active keys (eighty-second pass: +10 new — oxlint, oxc, rolldown, knip, trieve, wundergraph, valtown, val, farm, rslib; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 374 tools ready to insert (slug-safe); +5 this pass: rolldown, knip, oxlint, trieve, val-town
+- **_CAT_SYNONYMS**: 1507 unique active keys (eighty-third pass: +8 new — relay, turbo, wrangler, kotlin, gleam, zig, openreplay, axiom; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 379 tools ready to insert (slug-safe); +5 this pass: openreplay, relay, gleam, electric-sql, million
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,35 @@ Last updated: 2026-04-14 (eighty-second pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Verified all targeted synonyms from task prompt (state management, bundler, realtime, vector database, rate limiting) — all confirmed well-covered from prior passes
+- Added 8 new `_CAT_SYNONYMS` entries (1499 → 1507 unique keys, 0 duplicates):
+  - **Relay** (`relay` → api) — Meta's GraphQL client for React, high-volume "relay alternative" queries
+  - **Turbo** (`turbo` → developer) — short-form CLI name for Turborepo ("turbo run build", "turbo monorepo")
+  - **Wrangler** (`wrangler` → devops) — Cloudflare CLI for Workers/Pages deployment (10k★)
+  - **Kotlin** (`kotlin` → api) — JVM/multiplatform language → Ktor, Spring Boot, Vert.x backend queries
+  - **Gleam** (`gleam` → api) — type-safe BEAM language, growing web backend ecosystem (18k★)
+  - **Zig** (`zig` → developer) — systems language tooling queries (Bun uses Zig internally, 11k★)
+  - **OpenReplay** (`openreplay` → monitoring) — open-source Hotjar/FullStory alt (10k★)
+  - **Axiom** (`axiom` → logging) — developer-first log management and analytics (5k★)
+
+### Catalog Script (Step 2)
+- Verified all 10 tools from task prompt already in script (react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend)
+- Added 5 new tools (374 → 379 total):
+  - **OpenReplay** (openreplay/openreplay, 10k★) — open-source session replay; monitoring-uptime
+  - **Relay** (facebook/relay, 18k★) — GraphQL client for React; api-tools
+  - **Gleam** (gleam-lang/gleam, 18k★) — BEAM language; developer-tools
+  - **Electric SQL** (electric-sql/electric, 8k★) — local-first Postgres sync; database
+  - **Million.js** (aidenybai/million, 16k★) — React compiler optimizer; frontend-frameworks
+
+### Code Quality (Step 3)
+- No route file changes needed — no stale counts or missing escapes found in last 5 commits' files
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-third pass
 
 ## Completed This Session (2026-04-14, eighty-second pass — autonomous improvement cycle)
 

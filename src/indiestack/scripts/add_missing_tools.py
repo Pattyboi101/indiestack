@@ -6284,6 +6284,101 @@ TOOLS = [
         "# Sign up at val.town — no install needed",
         "saas",
     ),
+    # Monitoring — OpenReplay (open-source session replay + DevTools, Hotjar/FullStory alternative) -------
+    (
+        "openreplay",
+        "OpenReplay",
+        "Open-source session replay and product analytics — self-hostable Hotjar alternative",
+        "OpenReplay is an open-source session replay and product analytics suite that lets "
+        "you replay user sessions (mouse movements, clicks, console errors, network requests) "
+        "and understand how users interact with your app. Self-hostable on your own infra or "
+        "as a cloud service. Includes DevTools integration, rage-click detection, "
+        "performance monitoring, and funnel analytics. Strong alternative to Hotjar, "
+        "FullStory, and LogRocket with full data ownership.",
+        "monitoring-uptime",
+        "openreplay/openreplay",
+        10000,
+        "https://openreplay.com",
+        "session-replay,monitoring,analytics,open-source,self-hosted,hotjar-alternative,ux",
+        "docker-compose up -d  # self-hosted",
+        "code",
+    ),
+    # API Tools — Relay (Meta's production GraphQL client for React, 18k★) ----------------------------
+    (
+        "relay",
+        "Relay",
+        "Production-ready GraphQL client for React — declarative data fetching at scale",
+        "Relay is Meta's production-ready GraphQL client for React applications. It compiles "
+        "GraphQL queries at build time for maximum performance, co-locates data requirements "
+        "with components, and handles pagination, subscriptions, and optimistic updates. "
+        "Used by Facebook, Instagram, and other large-scale React apps. Relay emphasises "
+        "correctness and type-safety via generated TypeScript types. Best-in-class for "
+        "large codebases where Apollo feels too loose.",
+        "api-tools",
+        "facebook/relay",
+        18000,
+        "https://relay.dev",
+        "graphql,react,client,meta,facebook,data-fetching,typescript",
+        "npm install react-relay relay-runtime",
+        "code",
+    ),
+    # Developer Tools — Gleam (type-safe functional language on Erlang/BEAM VM) ----------------------
+    (
+        "gleam",
+        "Gleam",
+        "Type-safe functional language on the Erlang VM — fast, friendly, and reliable",
+        "Gleam is a statically typed functional language that runs on the Erlang virtual "
+        "machine (BEAM), giving it the fault tolerance and concurrency of Erlang/Elixir with "
+        "a modern, friendly syntax. Compiles to both Erlang and JavaScript (Node, Deno, "
+        "browsers). The compiler produces excellent error messages and has no runtime "
+        "exceptions from type errors. Growing fast in the web backend space with its "
+        "Wisp HTTP framework and growing ecosystem.",
+        "developer-tools",
+        "gleam-lang/gleam",
+        18000,
+        "https://gleam.run",
+        "language,erlang,beam,functional,type-safe,web-backend,javascript",
+        "# Install via gleam.run/getting-started",
+        "code",
+    ),
+    # Database — Electric SQL (local-first sync layer for Postgres, 8k★) ----------------------------
+    (
+        "electric-sql",
+        "Electric SQL",
+        "Local-first sync engine for Postgres — instant reactivity without loading states",
+        "Electric SQL is a local-first sync layer that syncs a subset of your Postgres "
+        "database into the client in real-time. Apps read from local storage (instant, "
+        "offline-capable) and sync changes back to Postgres. No loading states — data is "
+        "always available locally. Uses Postgres logical replication under the hood. Works "
+        "with any Postgres host (Supabase, Neon, RDS, self-hosted). Shape-based sync lets "
+        "you subscribe to live queries that update automatically.",
+        "database",
+        "electric-sql/electric",
+        8000,
+        "https://electric-sql.com",
+        "local-first,sync,postgres,realtime,offline,reactive,typescript",
+        "npm install electric-sql",
+        "code",
+    ),
+    # Frontend Frameworks — Million.js (lightweight React compiler/optimizer, 16k★) -----------------
+    (
+        "million",
+        "Million.js",
+        "Drop-in React compiler that makes your app up to 70% faster",
+        "Million.js is a lightweight virtual DOM replacement for React that makes components "
+        "up to 70% faster through compiler optimisations. It works as a drop-in addition to "
+        "React — you wrap performance-critical components with the `block()` HOC and Million "
+        "replaces React's reconciler with a faster diff algorithm for those subtrees. No "
+        "rewrite required. Also includes the Million Lint VSCode extension that automatically "
+        "finds and flags slow React components. Works with Next.js, Vite, and Create React App.",
+        "frontend-frameworks",
+        "aidenybai/million",
+        16000,
+        "https://million.dev",
+        "react,performance,compiler,virtual-dom,optimization,nextjs,vite",
+        "npm install million",
+        "code",
+    ),
 ]
 
 
