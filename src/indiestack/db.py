@@ -4514,6 +4514,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API — GraphQL Yoga and plugin system
     "graphql-yoga": "api",          # GraphQL Yoga — fully featured GraphQL server by The Guild (8k★)
     "envelop": "api",               # Envelop — GraphQL plugin system (The Guild)
+    # Multi-tenancy — "tenant" as first meaningful term (per-tenant SaaS auth, tenant isolation)
+    "tenant": "authentication",     # "per-tenant auth", "tenant isolation", "tenant database" → Authentication
+    # ML Feature Stores — Feast, Hopsworks, Vertex AI Feature Store queries
+    "featurestore": "ai",           # "feature store ml", "featurestore for ml" → AI & Automation
+    "feature-store": "ai",          # hyphenated form — "feature-store alternative", "feature-store setup"
+    "feast": "ai",                  # Feast — open-source ML feature store (5k★); direct named tool queries
+    "hopsworks": "ai",              # Hopsworks — data-intensive AI platform with feature store (4k★)
+    # Data catalogs — DataHub, Amundsen, OpenMetadata, Apache Atlas queries
+    "catalog": "analytics",         # "data catalog", "metadata catalog" → Analytics & Metrics
+    "datahub": "analytics",         # DataHub — LinkedIn's open-source data catalog (10k★)
+    # Data lineage — OpenLineage, Marquez, DataHub lineage queries
+    "lineage": "analytics",         # "data lineage tool", "lineage tracking" → Analytics & Metrics
+    # Fingerprinting — browser/device fingerprinting for fraud detection (Fingerprint.com)
+    "fingerprint": "security",      # "browser fingerprint", "device fingerprint" → Security Tools
+    # Saga and distributed transaction patterns
+    "saga": "message",              # "saga pattern", "saga orchestrator", "choreography saga" → Message Queue
+    # Transactional outbox pattern — reliable event publishing from DB writes
+    "outbox": "message",            # "transactional outbox", "outbox pattern", "outbox relay" → Message Queue
+    # Dead Letter Queue — DLQ abbreviation (RabbitMQ, SQS, Kafka dead letters)
+    "dlq": "message",               # "DLQ handler", "dead letter queue", "dlq retry" → Message Queue
+    # SLO tooling — Nobl9, OpenSLO, Sloth, Pyrra (Service Level Objective management)
+    "slo": "monitoring",            # "SLO management", "slo tool", "service level objective" → Monitoring & Uptime
+    # SRE — site reliability engineering practice → Monitoring & Uptime
+    "sre": "monitoring",            # "SRE tooling", "sre platform", "site reliability engineering" → Monitoring & Uptime
+    # Idempotent requests — complement to "idempotency" already mapped
+    "idempotent": "api",            # "idempotent api", "idempotent request", "idempotent consumer" → API Tools
+    # GraphRAG — Microsoft's Graph-based RAG technique; fast-growing query segment 2026
+    "graphrag": "ai",               # "graphrag implementation", "graph rag python" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

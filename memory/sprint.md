@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-second pass)
+Last updated: 2026-04-14 (eighty-third pass)
 
 ## Status: Active
 
@@ -10,14 +10,46 @@ Last updated: 2026-04-14 (eighty-second pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1526 unique effective keys (eighty-second pass: +24 new, 0 duplicates — purged all 21 remaining dups including 2 conflicting-value entries)
-- **Catalog script**: `scripts/add_missing_tools.py` — 379 tools ready to insert (slug-safe); +10 this pass: shipwright, supastarter, mcp-brave-search, mcp-playwright, mcp-linear, mcp-slack, mcp-notion, graphql-yoga, oxc, lucia
+- **_CAT_SYNONYMS**: 1546 unique effective keys (eighty-third pass: +20 new entries covering ML/data-platform + distributed systems gaps)
+- **Catalog script**: `scripts/add_missing_tools.py` — 384 tools ready to insert (slug-safe); +5 this pass: appflowy, datahub, create-t3-app, agno, feast
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 20 new entries to `_CAT_SYNONYMS` (1526 → 1546 unique effective keys):
+  - **Auth**: `tenant` → `"authentication"` — per-tenant SaaS patterns ("tenant isolation", "per-tenant database")
+  - **AI — ML Feature Stores**: `featurestore`, `feature-store` → `"ai"` — Feast, Hopsworks, Vertex Feature Store queries
+  - **AI — Named Feature Store Tools**: `feast`, `hopsworks` → `"ai"` — direct named tool queries + "[tool] alternative"
+  - **Analytics — Data Catalog**: `catalog`, `datahub` → `"analytics"` — DataHub, Amundsen, OpenMetadata queries
+  - **Analytics — Data Lineage**: `lineage` → `"analytics"` — OpenLineage, Marquez, DataHub lineage queries
+  - **Security**: `fingerprint` → `"security"` — browser/device fingerprinting (Fingerprint.com)
+  - **Message Queue — Distributed Patterns**: `saga`, `outbox`, `dlq` → `"message"` — Saga pattern, Transactional Outbox, Dead Letter Queue
+  - **Monitoring — SRE/SLO**: `slo`, `sre` → `"monitoring"` — SLO tooling (Nobl9, OpenSLO, Sloth), SRE practice queries
+  - **API**: `idempotent` → `"api"` — complement to existing `idempotency` mapping
+  - **AI**: `graphrag` → `"ai"` — Microsoft GraphRAG technique; fast-growing query term in 2026
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (379 → 384 total):
+  - **AppFlowy** (AppFlowy-IO/AppFlowy, 61k★) — open-source Notion/Confluence alternative; project-management
+  - **DataHub** (datahub-project/datahub, 10k★) — data discovery, lineage, and metadata catalog; analytics-metrics
+  - **create-t3-app** (t3-oss/create-t3-app, 27k★) — T3 Stack scaffolding CLI (Next.js + tRPC + Prisma); boilerplates
+  - **Agno** (agno-agi/agno, 23k★) — Python AI agent framework (formerly Phidata); ai-automation
+  - **Feast** (feast-dev/feast, 5k★) — CNCF open-source ML feature store; ai-automation
+
+### Code Quality (Step 3)
+- Reviewed recent commits bdd8564 and 2a89ab3: both are clean fixes
+- intel.py: all dynamic values (slug, tool name, query strings, migration packages, paired slugs) correctly html.escape()'d
+- No $49 Maker Pro references; no hardcoded bad email addresses
+- ast.parse() confirmed clean on db.py and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-third pass
 
 ## Completed This Session (2026-04-14, eighty-second pass — autonomous improvement cycle)
 
