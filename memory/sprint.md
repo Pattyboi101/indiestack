@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-sixth pass)
+Last updated: 2026-04-14 (eighty-seventh pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-14 (eighty-sixth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1544 unique active keys (eighty-sixth pass: +6 new — jvm, chaos, canary, rollout, bluegreen, blue-green; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 388 unique tools (added 5 new: remark, rehype, velite, unkey, argo-rollouts)
+- **_CAT_SYNONYMS**: 1558 unique active keys (eighty-seventh pass: +15 new — infrastructure, infra, balancing, serving, rendering, config, configuration, extraction, parsing, parser, connector, transform, transformer, commerce, ecommerce; removed 1 bad mapping: headless→cms)
+- **Catalog script**: `scripts/add_missing_tools.py` — 393 unique tools (added 5 new: bentoml, vendure, tanstack-form, tanstack-virtual, shoelace)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,38 @@ Last updated: 2026-04-14 (eighty-sixth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25); also fixed stale "40 categories" in setup.py
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 15 new `_CAT_SYNONYMS` entries + removed 1 bad mapping (1544 → 1558 unique keys, 0 duplicates):
+  - **DevOps**: `infrastructure`, `infra` → devops — "infrastructure as code", "cloud infrastructure"
+  - **DevOps**: `balancing` → devops — completes "load balancing" two-word query pattern
+  - **AI**: `serving` → ai — "model serving", "llm serving" (vLLM, BentoML, TorchServe, Ray Serve)
+  - **Frontend**: `rendering` → frontend — "server-side rendering" full phrase (complement to "ssr")
+  - **Developer**: `config`, `configuration` → developer — "config management", "app config"
+  - **AI**: `extraction` → ai — "text extraction", "entity extraction", "information extraction"
+  - **Developer**: `parsing`, `parser` → developer — HTML/AST parsing libraries (Cheerio, tree-sitter, lxml)
+  - **Background**: `connector` → background — data connectors (Airbyte, Kafka Connect, Fivetran)
+  - **Background**: `transform` → background — ETL data transformation (dbt, Spark)
+  - **AI**: `transformer` → ai — "transformer model", "transformer architecture" (ML meaning dominates)
+  - **Developer**: `commerce`, `ecommerce` → developer — headless commerce (Medusa, Vendure)
+  - **Bug fix**: removed `headless` → `cms` — was incorrectly routing "headless browser" queries to CMS; "headless cms" unaffected via direct "cms" mapping
+
+### Catalog Script (Step 2)
+- Added 5 new tools (388 → 393 unique):
+  - **BentoML** (bentoml/BentoML, 7k★) — unified ML model serving framework; ai-automation
+  - **Vendure** (vendure-ecommerce/vendure, 6k★) — TypeScript headless commerce on GraphQL; developer-tools
+  - **TanStack Form** (tanstack/form, 5k★) — type-safe headless form state management; frontend-frameworks
+  - **TanStack Virtual** (tanstack/virtual, 6k★) — row/column virtualisation for large datasets; frontend-frameworks
+  - **Shoelace** (shoelace-style/shoelace, 13k★) — framework-agnostic web components library; frontend-frameworks
+
+### Code Quality (Step 3)
+- Reviewed last 5 commits (all db.py + add_missing_tools.py only); no route file changes
+- Email addresses correct (pajebay1@gmail.com), no stale stats in routes, no bad db patterns
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-seventh pass
 
 ## Completed This Session (2026-04-14, eighty-sixth pass — autonomous improvement cycle)
 

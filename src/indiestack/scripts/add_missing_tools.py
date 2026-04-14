@@ -6513,6 +6513,90 @@ TOOLS = [
         "kubectl apply -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml",
         "code",
     ),
+    # Model Serving ---------------------------------------------------------------
+    (
+        "bentoml",
+        "BentoML",
+        "Unified model serving framework for building ML-powered services",
+        "BentoML is an open-source framework for building production-grade ML services. "
+        "Define your model, dependencies, and serving logic in Python; BentoML packages "
+        "everything into a portable Bento and deploys to any cloud or on-premises infra "
+        "with built-in batching, async runners, and adaptive micro-batching.",
+        "ai-automation",
+        "bentoml/BentoML",
+        7000,
+        "https://bentoml.com",
+        "model-serving,mlops,inference,python,fastapi,rest-api,grpc",
+        "pip install bentoml",
+        "code",
+    ),
+    # Headless Commerce -----------------------------------------------------------
+    (
+        "vendure",
+        "Vendure",
+        "A headless TypeScript e-commerce framework built on GraphQL",
+        "Vendure is a modern, headless e-commerce framework built with TypeScript, GraphQL, "
+        "and Node.js. It provides a fully-customisable core with plugins for products, "
+        "orders, payments, inventory, and promotions. Deployable anywhere Node.js runs; "
+        "ideal for teams who need full control over their commerce layer.",
+        "developer-tools",
+        "vendure-ecommerce/vendure",
+        6000,
+        "https://www.vendure.io",
+        "headless-commerce,graphql,typescript,nodejs,ecommerce,storefront",
+        "npx @vendure/create my-shop",
+        "code",
+    ),
+    # TanStack Ecosystem ----------------------------------------------------------
+    (
+        "tanstack-form",
+        "TanStack Form",
+        "Headless, type-safe form state management for TypeScript and React",
+        "TanStack Form is a framework-agnostic, headless form library with first-class "
+        "TypeScript support. It handles form state, validation (Zod/Valibot/Yup), async "
+        "validation, array fields, and nested objects with minimal re-renders. Works with "
+        "React, Vue, Angular, Solid, and Lit.",
+        "frontend-frameworks",
+        "tanstack/form",
+        5000,
+        "https://tanstack.com/form",
+        "forms,typescript,react,vue,angular,solid,validation,headless",
+        "npm install @tanstack/react-form",
+        "code",
+    ),
+    (
+        "tanstack-virtual",
+        "TanStack Virtual",
+        "Headless UI virtualizer for massive datasets in any framework",
+        "TanStack Virtual provides headless row, column, and grid virtualisation for "
+        "any JavaScript framework. Render only the visible rows in lists of 100,000+ "
+        "items with no layout constraints — attach it to any scrolling container. "
+        "Framework adapters for React, Vue, Solid, Svelte, and Lit.",
+        "frontend-frameworks",
+        "tanstack/virtual",
+        6000,
+        "https://tanstack.com/virtual",
+        "virtualization,list,table,grid,react,vue,performance,large-data",
+        "npm install @tanstack/react-virtual",
+        "code",
+    ),
+    # Web Components --------------------------------------------------------------
+    (
+        "shoelace",
+        "Shoelace",
+        "A forward-thinking library of web components built on web standards",
+        "Shoelace (now Web Awesome) is a collection of professionally designed, "
+        "framework-agnostic UI components built on the Web Components standard. "
+        "Works with React, Vue, Angular, Svelte, or plain HTML. Fully accessible, "
+        "themeable via CSS custom properties, and tree-shakeable for minimal bundle size.",
+        "frontend-frameworks",
+        "shoelace-style/shoelace",
+        13000,
+        "https://shoelace.style",
+        "web-components,ui-components,accessible,framework-agnostic,css,html",
+        "npm install @shoelace-style/shoelace",
+        "code",
+    ),
 ]
 
 

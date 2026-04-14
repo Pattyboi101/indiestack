@@ -2548,7 +2548,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "assets": "file",
     # CMS synonyms
     "blog": "cms",
-    "headless": "cms",
+    # NOTE: "headless" removed — "headless browser" queries would get CMS boost instead of Testing.
+    # "headless cms" still works because "cms" is mapped directly below.
     "content": "cms",
     # Project management synonyms
     "kanban": "project",
@@ -4544,6 +4545,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rollout": "devops",            # "deployment rollout", "progressive rollout" → DevOps (Argo Rollouts, Spinnaker)
     "bluegreen": "devops",          # "blue-green deployment" compound form → DevOps & Infrastructure
     "blue-green": "devops",         # hyphenated — "blue-green strategy", "blue-green switch" → DevOps
+    # Infrastructure — very common prefix for DevOps queries ("infrastructure as code", "cloud infrastructure")
+    "infrastructure": "devops",     # "infrastructure as code", "cloud infrastructure" → DevOps & Infrastructure
+    "infra": "devops",              # short form — "infra setup", "infra tooling", "infra cost" → DevOps
+    # Load balancing — complement to "balancer"→devops; two-word query "load balancing" needs "balancing" mapped
+    "balancing": "devops",          # "load balancing", "traffic balancing" → DevOps & Infrastructure
+    # Model serving — fast-growing query segment (vLLM, BentoML, TorchServe, Ray Serve, Triton Inference)
+    "serving": "ai",                # "model serving", "llm serving", "inference serving" → AI & Automation
+    # Server-side rendering — full phrase complement to "ssr"→frontend (covers queries that spell it out)
+    "rendering": "frontend",        # "server-side rendering", "client rendering", "static rendering" → Frontend Frameworks
+    # App configuration management — Convict, t3-env, Zod env, dotenv, AppConfig → Developer Tools
+    "config": "developer",          # "config management", "app config", "env config" → Developer Tools
+    "configuration": "developer",   # long form — "configuration management", "app configuration" → Developer Tools
+    # NLP/AI text extraction — entity extraction, information extraction, document parsing
+    "extraction": "ai",             # "text extraction", "entity extraction", "information extraction" → AI & Automation
+    # HTML/AST parsing — Cheerio, BeautifulSoup, tree-sitter, lxml, unified, htmlparser2
+    "parsing": "developer",         # "html parsing", "json parsing", "markdown parsing", "ast parsing" → Developer Tools
+    "parser": "developer",          # "xml parser", "markdown parser", "ast parser", "html parser" → Developer Tools
+    # Data pipeline connectors — Airbyte, Kafka Connect, Fivetran use "connector" terminology heavily
+    "connector": "background",      # "data connector", "kafka connector", "etl connector" → Background Jobs
+    # ETL data transformation — dbt, Spark, pandas transforms in ETL/ELT pipelines
+    "transform": "background",      # "data transform", "stream transform", "etl transform" → Background Jobs
+    # ML transformer architecture (dominates over stream/data transform in agent queries)
+    "transformer": "ai",            # "transformer model", "transformer architecture", "vision transformer" → AI & Automation
+    # Headless commerce — Medusa, Vendure, Saleor API-first engines (complement to "medusa"→developer)
+    "commerce": "developer",        # "headless commerce", "e-commerce engine", "commerce api" → Developer Tools
+    "ecommerce": "developer",       # compound — "ecommerce platform", "ecommerce framework" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
