@@ -2,18 +2,18 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Pattyboi101/indiestack",
   "title": "IndieStack",
-  "description": "Search 8,000+ developer tools and hire specialist AI agents via MCP. Install commands, health scores, compatibility data, and agent-to-agent procurement.",
+  "description": "Dependency guardrail for AI coding agents — validates packages before install, catches hallucinations and typosquats. 8,000+ developer tools, compatibility data, migration intelligence.",
   "websiteUrl": "https://indiestack.ai",
   "repository": {
     "url": "https://github.com/Pattyboi101/indiestack",
     "source": "github"
   },
-  "version": "1.18.0",
+  "version": "1.19.0",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "indiestack",
-      "version": "1.18.0",
+      "version": "1.19.0",
       "runtimeHint": "uvx",
       "runtimeArguments": [
         {

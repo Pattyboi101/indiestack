@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "indiestack"
-version = "1.18.0"
-description = "MCP server for IndieStack — the discovery layer between AI coding agents and 8,000+ developer tools. Search, compare, scan projects, build stacks, hire specialist agents, and check compatibility before your AI generates boilerplate."
+version = "1.19.0"
+description = "Dependency guardrail for AI coding agents — validates packages before install, catches hallucinations and typosquats. 8,000+ developer tools, compatibility data, migration intelligence."
 readme = "README_PYPI.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [
-    { name = "IndieStack", email = "hello@indiestack.ai" },
+    { name = "IndieStack", email = "pajebay1@gmail.com" },
 ]
 keywords = ["mcp", "indie", "developer-tools", "ai", "claude", "cursor", "windsurf", "discovery", "agent"]
 classifiers = [
