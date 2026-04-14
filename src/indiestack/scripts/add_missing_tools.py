@@ -6112,6 +6112,101 @@ TOOLS = [
         "npx create-medusa-app",
         "code",
     ),
+    # DevOps & Infrastructure --------------------------------------------------
+    (
+        "dagger",
+        "Dagger",
+        "Portable CI/CD pipelines as code",
+        "Dagger is a portable DevOps engine that runs your CI/CD "
+        "pipelines as code. Write pipeline steps once in TypeScript, "
+        "Python, or Go using the Dagger SDK; run them locally with "
+        "Docker and on any CI provider (GitHub Actions, GitLab CI, "
+        "CircleCI, Jenkins) without change. Caches every layer "
+        "intelligently for fast incremental builds.",
+        "devops-infrastructure",
+        "dagger/dagger",
+        10000,
+        "https://dagger.io",
+        "ci-cd,devops,containers,docker,pipelines,automation,build-tool",
+        "curl -L https://dl.dagger.io/dagger/install.sh | DAGGER_VERSION=0.13.3 sh",
+        "code",
+    ),
+    # Developer Tools ----------------------------------------------------------
+    (
+        "fnm",
+        "Fnm",
+        "Fast and simple Node.js version manager",
+        "Fnm (Fast Node Manager) is a Rust-based Node.js version "
+        "manager that is 40× faster than nvm. Supports .nvmrc and "
+        ".node-version files, cross-platform (macOS, Linux, Windows), "
+        "and integrates with all major shells (bash, zsh, fish, "
+        "PowerShell). Drop-in nvm replacement with zero runtime "
+        "overhead — no shell startup penalty.",
+        "developer-tools",
+        "Schniz/fnm",
+        17000,
+        "https://fnm.vercel.app",
+        "node,nodejs,version-manager,nvm,developer-tools,rust,cli",
+        "curl -fsSL https://fnm.vercel.app/install | bash",
+        "code",
+    ),
+    (
+        "zellij",
+        "Zellij",
+        "Feature-rich terminal workspace and multiplexer",
+        "Zellij is a terminal workspace with batteries included. "
+        "Written in Rust, it offers a plugin system (WASM), floating "
+        "panes, session management, layouts, and an intuitive "
+        "key-binding system. Unlike tmux it shows keybindings "
+        "on-screen for discoverability, making it approachable for "
+        "newcomers while staying powerful for power users.",
+        "developer-tools",
+        "zellij-org/zellij",
+        23000,
+        "https://zellij.dev",
+        "terminal,multiplexer,tmux,rust,cli,workspace,session-manager",
+        "bash <(curl -L zellij.dev/launch)",
+        "code",
+    ),
+    # Testing Tools ------------------------------------------------------------
+    (
+        "oxlint",
+        "OxLint",
+        "Rust-powered JavaScript and TypeScript linter — 50–100× faster than ESLint",
+        "OxLint is a Rust-based JavaScript and TypeScript linter "
+        "built by the Oxc project. It runs 50–100× faster than ESLint "
+        "by parallelising lint passes across all CPU cores. Implements "
+        "500+ ESLint rules out of the box, is compatible with ESLint "
+        "configs, and integrates with VS Code, WebStorm, and CI "
+        "pipelines. Part of the Oxc toolchain alongside an ultra-fast "
+        "Rust parser and transformer.",
+        "testing-tools",
+        "oxc-project/oxc",
+        13000,
+        "https://oxc.rs",
+        "linter,eslint,javascript,typescript,rust,fast,testing,ci",
+        "npm install oxlint --save-dev",
+        "code",
+    ),
+    # Frontend Frameworks ------------------------------------------------------
+    (
+        "analog",
+        "Analog",
+        "The full-stack Angular meta-framework",
+        "Analog is a full-stack meta-framework for Angular, similar "
+        "to Next.js for React or Nuxt for Vue. It adds file-based "
+        "routing, server-side rendering (SSR), static site generation "
+        "(SSG), API routes, and Server Actions on top of Angular. "
+        "Built on Vite and Nitro, it supports deploying to Vercel, "
+        "Netlify, Cloudflare Workers, and Node.js servers.",
+        "frontend-frameworks",
+        "analogjs/analog",
+        3500,
+        "https://analogjs.org",
+        "angular,meta-framework,ssr,ssg,vite,nitro,typescript,fullstack",
+        "npm create analog@latest",
+        "code",
+    ),
 ]
 
 

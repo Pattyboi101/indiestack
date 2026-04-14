@@ -4476,6 +4476,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "immer": "frontend",            # Immer — produce next immutable state via mutations (26k★)
     # Medusa — open-source commerce
     "medusa": "developer",          # Medusa — open-source headless commerce engine (23k★)
+    # Generic linter/formatter query term (standalone, not tool-specific)
+    "linter": "testing",            # "js linter", "python linter", "go linter", "typescript linter" → Testing Tools
+    # Text editors — Vim/Neovim are searched directly as alternative targets
+    "vim": "developer",             # Vim — ubiquitous modal text editor; "vim alternative" queries → Developer Tools
+    "nvim": "developer",            # nvim — short form of Neovim used in queries ("nvim setup", "nvim alternative")
+    # Terminal multiplexers
+    "tmux": "developer",            # tmux — terminal multiplexer; "tmux alternative" queries → Developer Tools
+    # Warp AI terminal (open-source 2024)
+    "warp": "developer",            # Warp — AI-powered GPU-accelerated terminal (25k★) → Developer Tools
+    # Cross-shell prompt — Starship is the dominant Rust-based prompt
+    "starship": "developer",        # Starship — cross-shell prompt (rust-based, 45k★) → Developer Tools
+    # Modern document preparation (LaTeX alternative)
+    "typst": "documentation",       # Typst — modern markup document compiler (34k★) → Documentation
+    # Gleam — functional language targeting BEAM VM and JS (Erlang/Elixir ecosystem)
+    "gleam": "api",                 # Gleam — type-safe functional language on BEAM/Erlang VM → API Tools
+    # Rust JS/TS toolchain — OxLint and Oxc are the fastest linting/parsing tools
+    "oxlint": "testing",            # OxLint — Rust-based extremely fast JavaScript linter (oxc-project, 13k★) → Testing
+    "oxc": "testing",               # Oxc — all-in-one Rust JS/TS toolchain (linter, parser, transformer) → Testing
+    # Shell configuration / CLI shells
+    "zsh": "cli",                   # Zsh — Z shell; "zsh plugin", "zsh config" queries → CLI Tools
+    "ohmyzsh": "cli",               # Oh My Zsh — Zsh configuration framework (174k★) → CLI Tools
+    "nushell": "cli",               # Nushell (Nu) — structured data shell (32k★) → CLI Tools
+    # DevOps — Tilt for Kubernetes dev environment
+    "tilt": "devops",               # Tilt — local Kubernetes dev workflow tool (8k★) → DevOps & Infrastructure
+    # Configuration languages
+    "pkl": "developer",             # PKL (Apple) — programmable config language (9k★) → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

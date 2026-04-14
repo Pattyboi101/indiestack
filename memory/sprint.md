@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eightieth pass)
+Last updated: 2026-04-14 (eighty-first pass)
 
 ## Status: Active
 
@@ -10,14 +10,41 @@ Last updated: 2026-04-14 (eightieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1487 unique effective keys (added 13 in eightieth pass — identity/faas/batch/endpoint/typecheck/typechecking/package/service-worker/task/runner/ingress/immer/medusa; 21 duplicate keys in source, all correct last-write-wins)
-- **Catalog script**: `scripts/add_missing_tools.py` — 364 tools ready to insert (slug-safe); +5 this pass: payload, pglite, monaco, immer, medusajs
+- **_CAT_SYNONYMS**: 1502 unique effective keys (added 15 in eighty-first pass — linter/vim/nvim/tmux/warp/starship/typst/gleam/oxlint/oxc/zsh/ohmyzsh/nushell/tilt/pkl; 22 duplicate keys in source, all correct last-write-wins)
+- **Catalog script**: `scripts/add_missing_tools.py` — 369 tools ready to insert (slug-safe); +5 this pass: dagger, fnm, zellij, oxlint, analog
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 15 new entries to `_CAT_SYNONYMS` (1487 → 1502 unique effective keys, 22 duplicate keys):
+  - **Testing**: `linter` → `"testing"` — very common standalone query term ("js linter", "python linter", "go linter"); no prior mapping forced fallback to unhelpful results
+  - **Testing**: `oxlint`, `oxc` → `"testing"` — Rust-based ultra-fast JS linter and toolchain (13k★); increasingly common in "fast linter" / "eslint alternative" queries
+  - **Developer Tools**: `vim`, `nvim`, `tmux`, `warp`, `starship`, `pkl` → `"developer"` — classic and modern developer environment tools; "vim alternative", "tmux alternative", "warp terminal" are high-volume alternative queries; PKL is Apple's new config language
+  - **Documentation**: `typst` → `"documentation"` — Typst is the fast-growing LaTeX alternative (34k★); "typst alternative" queries had no category boost
+  - **API Tools**: `gleam` → `"api"` — Gleam functional language (BEAM/Erlang VM); queries like "gleam framework" or "gleam alternative" route to api-tools where Phoenix/Elixir alternatives live
+  - **CLI Tools**: `zsh`, `ohmyzsh`, `nushell` → `"cli"` — shell configuration and alternative shell queries (Oh My Zsh 174k★, Nushell 32k★)
+  - **DevOps**: `tilt` → `"devops"` — Tilt k8s dev environment (8k★); complements existing k8s tooling synonyms
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (364 → 369 total):
+  - **Dagger** (dagger/dagger, 10k★) — portable CI/CD pipelines as code; devops-infrastructure
+  - **Fnm** (Schniz/fnm, 17k★) — Rust-based Fast Node Manager, 40× faster than nvm; developer-tools
+  - **Zellij** (zellij-org/zellij, 23k★) — Rust terminal workspace multiplexer with WASM plugins; developer-tools
+  - **OxLint** (oxc-project/oxc, 13k★) — Rust-powered JS/TS linter, 50–100× faster than ESLint; testing-tools
+  - **Analog** (analogjs/analog, 3.5k★) — Angular meta-framework (SSR/SSG/API routes, like Next.js for Angular); frontend-frameworks
+
+### Code Quality (Step 3)
+- No route file changes this pass; ast.parse() confirmed clean on db.py and add_missing_tools.py
+- Verified 0 new duplicate keys introduced in _CAT_SYNONYMS (22 dupes all pre-existing)
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-first pass
 
 ## Completed This Session (2026-04-14, eightieth pass — autonomous improvement cycle)
 
