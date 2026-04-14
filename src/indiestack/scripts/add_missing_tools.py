@@ -6094,6 +6094,96 @@ TOOLS = [
         "npm install immer",
         "code",
     ),
+    # Authentication — passkey-first auth SDK ----------------------------------
+    (
+        "hanko",
+        "Hanko",
+        "Passkey-first authentication for modern web apps",
+        "Hanko is an open-source, passkey-first authentication SDK built for "
+        "developers who want to offer passwordless login. Drop in the Hanko UI "
+        "component, connect the Hanko API, and users sign in with biometrics in "
+        "minutes. Supports magic links, OAuth social login, and email OTP as "
+        "fallbacks. Self-host or use Hanko Cloud.",
+        "authentication",
+        "teamhanko/hanko",
+        7000,
+        "https://hanko.io",
+        "auth,passkeys,passwordless,biometric,oauth,magic-link,self-hosted",
+        "npm install @teamhanko/hanko-elements",
+        "code",
+    ),
+    # Developer Tools — headless ecommerce -------------------------------------
+    (
+        "saleor",
+        "Saleor",
+        "High-performance, composable headless commerce",
+        "Saleor is an open-source headless commerce platform built with Python and "
+        "GraphQL. It provides a fully-featured API for building custom storefronts "
+        "with multi-channel selling, flexible pricing, discounts, shipping, and "
+        "warehouse management. Saleor Dashboard is a React admin UI bundled with "
+        "the platform. Battle-tested at scale with a modular plugin architecture.",
+        "developer-tools",
+        "saleor/saleor",
+        20000,
+        "https://saleor.io",
+        "ecommerce,graphql,python,headless,commerce,storefront,api,django",
+        "docker compose up",
+        "code",
+    ),
+    # AI & Automation — LLM/agent observability --------------------------------
+    (
+        "agentops",
+        "AgentOps",
+        "Observability platform for LLM agents and AI workflows",
+        "AgentOps is an open-source observability SDK for LLM agents. It records "
+        "every LLM call, tool use, and agent action as a replayable session, "
+        "tracks token costs, latency, and error rates, and lets you replay agent "
+        "runs step-by-step in a visual timeline. Integrates with LangChain, "
+        "CrewAI, AutoGen, Swarm, and any OpenAI-compatible provider in one line.",
+        "ai-automation",
+        "AgentOps-AI/agentops",
+        4000,
+        "https://agentops.ai",
+        "ai,agents,llm,observability,tracing,langchain,crewai,autogen,monitoring",
+        "pip install agentops",
+        "code",
+    ),
+    # API Tools — type-safe SDK generation -------------------------------------
+    (
+        "speakeasy",
+        "Speakeasy",
+        "Generate type-safe SDKs from your OpenAPI spec",
+        "Speakeasy generates idiomatic, type-safe client SDKs in TypeScript, Python, "
+        "Go, Java, Ruby, and C# from your OpenAPI specification. SDKs include "
+        "retries, pagination, OAuth flows, and streaming support out of the box. "
+        "Integrates into CI/CD to automatically publish updated SDKs on spec changes. "
+        "Used by Stripe, Mistral, and 200+ API companies.",
+        "api-tools",
+        "speakeasy-api/speakeasy",
+        5000,
+        "https://speakeasy.com",
+        "sdk,openapi,codegen,typescript,python,go,api-client,developer-tools",
+        "brew install speakeasy-api/homebrew-tap/speakeasy",
+        "code",
+    ),
+    # Email — modern local email testing server --------------------------------
+    (
+        "mailpit",
+        "Mailpit",
+        "Fast email testing server with web UI for local development",
+        "Mailpit is a modern replacement for MailHog — an SMTP testing server with "
+        "a clean web UI, API, and built-in spam score checking. Runs as a single "
+        "binary with no dependencies. Captures all outgoing email from local apps, "
+        "lets you inspect headers, HTML/text bodies, and attachments instantly. "
+        "Supports SMTP AUTH, TLS, and message search.",
+        "email-marketing",
+        "axllent/mailpit",
+        6000,
+        "https://mailpit.axllent.org",
+        "email,smtp,testing,local-dev,email-testing,mailhog,dev-tools",
+        "brew install mailpit",
+        "code",
+    ),
     # Developer Tools ----------------------------------------------------------
     (
         "medusajs",

@@ -4476,6 +4476,36 @@ _CAT_SYNONYMS: dict[str, str] = {
     "immer": "frontend",            # Immer — produce next immutable state via mutations (26k★)
     # Medusa — open-source commerce
     "medusa": "developer",          # Medusa — open-source headless commerce engine (23k★)
+    # E-commerce / headless commerce — Medusa, Saleor, Vendure live in Developer Tools
+    "ecommerce": "developer",       # "ecommerce framework", "ecommerce engine" → Developer Tools
+    "e-commerce": "developer",      # hyphenated form — "e-commerce alternative" → Developer Tools
+    "commerce": "developer",        # "headless commerce", "commerce platform" → Developer Tools
+    "storefront": "developer",      # "headless storefront", "storefront API" → Developer Tools
+    "cart": "developer",            # "shopping cart", "cart state management" → Developer Tools (Medusa, Saleor)
+    "merchant": "developer",        # "merchant platform", "merchant API" → Developer Tools
+    "saleor": "developer",          # Saleor — open-source GraphQL headless commerce (Python, 20k★)
+    "vendure": "developer",         # Vendure — TypeScript/Node.js headless commerce framework (6k★)
+    # Configuration management — Ansible (already mapped), Puppet, SaltStack → DevOps & Infrastructure
+    "config": "devops",             # "config management", "config server" → DevOps & Infrastructure
+    "configuration": "devops",      # "configuration management tool" → DevOps & Infrastructure
+    "puppet": "devops",             # Puppet — model-driven config management (16k★) → DevOps
+    "saltstack": "devops",          # SaltStack — event-driven infrastructure automation → DevOps
+    # Container registry — Harbor, Docker Hub, GHCR → DevOps & Infrastructure
+    "registry": "devops",           # "container registry", "image registry" → DevOps & Infrastructure
+    "harbor": "devops",             # Harbor — CNCF open-source container image registry (24k★)
+    # Web server — complement to nginx/traefik/caddy/haproxy already mapped
+    "webserver": "devops",          # "web server config", "webserver alternative" → DevOps & Infrastructure
+    "web-server": "devops",         # hyphenated form — "web-server setup" → DevOps & Infrastructure
+    # Health checks — complement to "healthcheck"→monitoring already mapped
+    "health": "monitoring",         # "health endpoint", "health monitoring" → Monitoring & Uptime
+    # CI/CD — complement to "ci"→devops, "cicd"→devops, "circleci"→devops already mapped
+    "cd": "devops",                 # "cd pipeline", "continuous delivery", "continuous deployment" → DevOps
+    # Marketing analytics — attribution and revenue metrics tools
+    "attribution": "analytics",     # "marketing attribution", "utm attribution" → Analytics & Metrics
+    "baremetrics": "analytics",     # Baremetrics — MRR/churn/ARR analytics for SaaS → Analytics & Metrics
+    "chartmogul": "analytics",      # ChartMogul — subscription analytics and revenue reporting → Analytics
+    "mrr": "analytics",             # "mrr dashboard", "mrr tracking", "monthly recurring revenue" → Analytics
+    "churn": "analytics",           # "churn analysis", "churn rate", "churn prediction" → Analytics & Metrics
 }
 
 _FTS_STOP_WORDS = {
