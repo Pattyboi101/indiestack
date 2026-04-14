@@ -16,11 +16,11 @@ router = APIRouter()
 def _alt_health_badge(status: str) -> str:
     """Render a colored health-status pill for alternatives pages."""
     colors = {
-        'active': ('var(--success-bg, #D1FAE5)', 'var(--success-text, #065F46)'),
-        'stale': ('#FEF3C7', '#92400E'),
-        'dead': ('#FEE2E2', '#991B1B'),
+        'active': ('var(--success-bg)', 'var(--success-text)'),
+        'stale': ('var(--warning-bg)', 'var(--warning-text)'),
+        'dead': ('var(--error-bg)', 'var(--error-text)'),
     }
-    bg, fg = colors.get(status, ('#F3F4F6', '#6B7280'))
+    bg, fg = colors.get(status, ('var(--cream-dark)', 'var(--ink-muted)'))
     label = escape(status.capitalize()) if status else 'Unknown'
     return (
         f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;'
@@ -58,7 +58,7 @@ def _alt_agent_citations(tool: dict) -> str:
     count = int(mcp_views)
     return (
         f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;'
-        f'font-weight:600;background:#EDE9FE;color:#7C3AED;">'
+        f'font-weight:600;background:rgba(0,212,245,0.1);color:var(--accent);">'
         f'AI agents recommend this {count:,} time{"s" if count != 1 else ""}</span>'
     )
 

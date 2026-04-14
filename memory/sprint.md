@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-third pass)
+Last updated: 2026-04-14 (eighty-seventh pass)
 
 ## Status: Active
 
@@ -10,14 +10,43 @@ Last updated: 2026-04-14 (eighty-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1546 unique effective keys (eighty-third pass: +20 new entries covering ML/data-platform + distributed systems gaps)
-- **Catalog script**: `scripts/add_missing_tools.py` — 384 tools ready to insert (slug-safe); +5 this pass: appflowy, datahub, create-t3-app, agno, feast
+- **_CAT_SYNONYMS**: 1504 unique keys (eighty-seventh pass: +15 new — mux, ffmpeg, bunny, honeycomb, tinybird, cubejs, uploadthing, imagekit, biometric, casl, cerbos, permit, aceternity, magicui, tamagui; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 389 tools (added 5 new: casl, uploadthing, ffmpeg, tamagui, cerbos)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 15 new `_CAT_SYNONYMS` entries (+15 unique keys, 0 duplicates):
+  - **Media**: `mux` → media (Mux Video API); `ffmpeg` → media (FFmpeg 43k★); `bunny` → media (Bunny Stream)
+  - **Monitoring**: `honeycomb` → monitoring (Honeycomb.io, common Datadog alternative query)
+  - **Analytics**: `tinybird` → analytics (real-time ClickHouse analytics); `cubejs` → analytics (Cube.js semantic layer)
+  - **File**: `uploadthing` → file (UploadThing for Next.js); `imagekit` → file (ImageKit.io CDN)
+  - **Auth**: `biometric` → authentication; `casl` → authentication (JS authz); `cerbos` → authentication (policy engine); `permit` → authentication (Permit.io)
+  - **Frontend**: `aceternity` → frontend (Aceternity UI 16k★); `magicui` → frontend (Magic UI); `tamagui` → frontend (universal React design system 11k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools (384 → 389 unique):
+  - **CASL** (stalniy/casl, 6k★) — isomorphic JS authorization library; authentication
+  - **UploadThing** (pingdotgg/uploadthing, 4k★) — file uploads for Next.js/React; file-management
+  - **FFmpeg** (FFmpeg/FFmpeg, 43k★) — universal audio/video processing framework; media-server
+  - **Tamagui** (tamagui/tamagui, 11k★) — universal React design system (web + native); frontend-frameworks
+  - **Cerbos** (cerbos/cerbos, 3.5k★) — open-source stateless authorization service; security-tools
+
+### Code Quality (Step 3)
+- Fixed `alternatives.py` status badge hardcoded hex colors:
+  - `stale`: `#FEF3C7/#92400E` → `var(--warning-bg)/var(--warning-text)`
+  - `dead`: `#FEE2E2/#991B1B` → `var(--error-bg)/var(--error-text)`
+  - Unknown fallback: `#F3F4F6/#6B7280` → `var(--cream-dark)/var(--ink-muted)`
+  - AI citation badge: `#EDE9FE/#7C3AED` → `rgba(0,212,245,0.1)/var(--accent)` (on-brand cyan)
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-seventh pass
 
 ## Completed This Session (2026-04-14, eighty-third pass — autonomous improvement cycle)
 

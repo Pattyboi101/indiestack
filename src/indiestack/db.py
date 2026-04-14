@@ -4457,6 +4457,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "compiler": "frontend",         # "js compiler", "typescript compiler", "babel compiler" → Frontend Frameworks
     # Validation — complement to "validation" → developer; "validate" form catches verb queries
     "validate": "developer",        # "validate schema", "validate input", "data validate" → Developer Tools
+    # Media — named video/media API platforms
+    "mux": "media",                 # Mux — video API for developers (hosting, streaming, analytics, 3k★)
+    "ffmpeg": "media",              # FFmpeg — universal audio/video processing framework (43k★, very common query)
+    "bunny": "media",               # Bunny Stream — video streaming CDN (BunnyStream, fast CDN delivery)
+    # Monitoring — Honeycomb.io (high-cardinality observability, common "Datadog alternative" query)
+    "honeycomb": "monitoring",      # Honeycomb.io — observability for high-cardinality production data
+    # Analytics — real-time analytics API platforms
+    "tinybird": "analytics",        # Tinybird — real-time analytics API over ClickHouse (5k★)
+    "cubejs": "analytics",          # Cube.js — semantic layer / analytics API framework (18k★)
+    # File management — modern upload services for the JS ecosystem
+    "uploadthing": "file",          # UploadThing — file uploads for Next.js/React apps (pingdotgg, 4k★)
+    "imagekit": "file",             # ImageKit.io — image/video CDN with on-the-fly optimization (SaaS)
+    # Authentication — biometric and fine-grained authorization tools
+    "biometric": "authentication",  # "biometric authentication", "biometric login" → Authentication
+    "casl": "authentication",       # CASL — isomorphic authorization for JS/TS apps (5.6k★)
+    "cerbos": "authentication",     # Cerbos — open-source authorization service/engine (3.4k★)
+    "permit": "authentication",     # Permit.io — full-stack fine-grained authorization platform (4k★)
+    # Frontend — newer UI component libraries gaining strong adoption in 2025-2026
+    "aceternity": "frontend",       # Aceternity UI — animated React component library (16k★)
+    "magicui": "frontend",          # Magic UI — animated React components for landing pages (11k★)
+    "tamagui": "frontend",          # Tamagui — universal React design system (web + native, 11k★)
 }
 
 _FTS_STOP_WORDS = {

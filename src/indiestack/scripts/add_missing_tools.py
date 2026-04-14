@@ -6459,6 +6459,83 @@ TOOLS = [
         "pip install feast",
         "code",
     ),
+    # ── Eighty-seventh pass (2026-04-14) ────────────────────────────────────
+    (
+        "casl",
+        "CASL",
+        "Isomorphic authorization JavaScript library",
+        "CASL is an isomorphic authorization JavaScript library that restricts "
+        "what resources a given user is allowed to access. Incrementally adoptable "
+        "and easily scales from simple claim-based to fully-featured subject and "
+        "action-based authorization (RBAC, ABAC).",
+        "authentication",
+        "stalniy/casl",
+        6000,
+        "https://casl.js.org",
+        "authorization,permissions,rbac,abac,access-control",
+        "npm install @casl/ability",
+        "code",
+    ),
+    (
+        "uploadthing",
+        "UploadThing",
+        "File uploads for the modern web",
+        "UploadThing is the easiest way to add file uploads to your full-stack "
+        "TypeScript application. Built for Next.js but works with any React "
+        "framework. Handles storage, CDN delivery, and type-safe client SDKs.",
+        "file-management",
+        "pingdotgg/uploadthing",
+        4000,
+        "https://uploadthing.com",
+        "file-upload,nextjs,typescript,storage,s3",
+        "npm install uploadthing @uploadthing/react",
+        "code",
+    ),
+    (
+        "ffmpeg",
+        "FFmpeg",
+        "Complete solution to record, convert and stream audio and video",
+        "FFmpeg is the leading multimedia framework, able to decode, encode, "
+        "transcode, mux, demux, stream, filter and play almost anything. "
+        "Used by YouTube, Twitch, VLC, Chrome, and thousands of projects worldwide.",
+        "media-server",
+        "FFmpeg/FFmpeg",
+        43000,
+        "https://ffmpeg.org",
+        "video,audio,transcoding,streaming,codec,open-source",
+        "brew install ffmpeg",
+        "code",
+    ),
+    (
+        "tamagui",
+        "Tamagui",
+        "Universal React design system for web and native",
+        "Tamagui is a React + React Native UI kit and style system with an "
+        "optimizing compiler. Write components once and ship to web and native "
+        "with CSS extraction on the web and native StyleSheet on iOS/Android.",
+        "frontend-frameworks",
+        "tamagui/tamagui",
+        11000,
+        "https://tamagui.dev",
+        "react,react-native,design-system,universal,cross-platform,typescript",
+        "npx create-tamagui@latest",
+        "code",
+    ),
+    (
+        "cerbos",
+        "Cerbos",
+        "Open-source stateless authorization service",
+        "Cerbos is an open-source, scalable authorization layer that decouples "
+        "access control from your application code. Define policies in YAML, "
+        "evaluate them via a sidecar or API, and evolve authorization independently.",
+        "security-tools",
+        "cerbos/cerbos",
+        3500,
+        "https://cerbos.dev",
+        "authorization,access-control,policy,rbac,abac,open-source",
+        "brew install cerbos/tap/cerbos",
+        "code",
+    ),
 ]
 
 
