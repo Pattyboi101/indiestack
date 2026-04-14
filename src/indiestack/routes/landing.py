@@ -304,30 +304,26 @@ async def landing(request: Request):
     </section>
     """
 
-    # Token savings estimate: ai_recs * average 15,000 tokens saved per query
-    _est_tokens_saved = ai_recs * 15000
-    if _est_tokens_saved >= 1_000_000_000:
-        _tokens_display = f'{_est_tokens_saved / 1_000_000_000:.1f}B'
-    elif _est_tokens_saved >= 1_000_000:
-        _tokens_display = f'{_est_tokens_saved / 1_000_000:.0f}M'
-    else:
-        _tokens_display = f'{_est_tokens_saved:,}'
     build_vs_buy = f"""
     <section style="padding:48px 24px;background:var(--cream-dark);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
         <div class="container" style="max-width:800px;text-align:center;">
             <h2 style="font-family:var(--font-display);font-size:clamp(22px,3vw,28px);color:var(--ink);margin-bottom:8px;">
-                Tokens not wasted
+                What your AI checks before installing
             </h2>
-            <p style="font-family:var(--font-display);font-size:clamp(36px,5vw,56px);color:var(--accent);font-weight:700;margin-bottom:8px;">
-                ~{_tokens_display}
-            </p>
-            <p style="color:var(--ink-muted);font-size:14px;max-width:480px;margin:0 auto 16px;">
-                Estimated tokens saved across {ai_recs:,} agent queries.
-                Each search that finds an existing tool prevents ~15,000 tokens of generated boilerplate.
-            </p>
-            <a href="/token-cost" style="color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;">
-                See methodology &rarr;
-            </a>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin-top:32px;text-align:center;">
+                <div>
+                    <div style="font-family:var(--font-display);font-size:32px;color:var(--accent);font-weight:700;">{tool_count:,}+</div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Packages tracked</div>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-display);font-size:32px;color:var(--accent);font-weight:700;">npm + PyPI</div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Live registry validation</div>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-display);font-size:32px;color:var(--accent);font-weight:700;">422</div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Migration paths from GitHub</div>
+                </div>
+            </div>
         </div>
     </section>
     """
@@ -444,9 +440,9 @@ async def landing(request: Request):
         trending_strip = f"""
         <section class="container" style="padding:48px 24px;">
             <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;">
-                <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);">Trending right now</h2>
+                <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);">Popular with AI agents</h2>
                 <a href="/explore" style="color:var(--terracotta);font-size:14px;font-weight:600;text-decoration:none;">
-                    Browse all &rarr;
+                    Explore all &rarr;
                 </a>
             </div>
             <div class="scroll-row">{trending_cards}</div>
@@ -477,7 +473,7 @@ async def landing(request: Request):
     categories_compact = f"""
     <section class="container" style="padding:48px 24px;">
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;">
-            <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);">Browse by category</h2>
+            <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);">What we cover</h2>
             <a href="/explore" style="color:var(--accent);font-size:14px;font-weight:600;text-decoration:none;">
                 All {category_count} categories &rarr;
             </a>
@@ -519,7 +515,7 @@ async def landing(request: Request):
         "@type": "WebSite",
         "name": "IndieStack",
         "url": BASE_URL,
-        "description": f"The discovery layer between AI coding agents and developer tools. Search {tool_count}+ tools before building from scratch.",
+        "description": f"Dependency guardrail for AI coding agents. Validates {tool_count}+ packages before install, catches hallucinations and typosquats, migration intelligence from real GitHub data.",
         "potentialAction": {
             "@type": "SearchAction",
             "target": f"{BASE_URL}/search?q={{search_term_string}}",
