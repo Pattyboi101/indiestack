@@ -4457,6 +4457,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "compiler": "frontend",         # "js compiler", "typescript compiler", "babel compiler" → Frontend Frameworks
     # Validation — complement to "validation" → developer; "validate" form catches verb queries
     "validate": "developer",        # "validate schema", "validate input", "data validate" → Developer Tools
+    # OXC toolchain — Rust-based JS/TS tools (oxlint, rolldown, oxc-transform)
+    "oxlint": "testing",            # OXLint — Rust-based JS/TS linter (50-100x faster than ESLint, 5k★)
+    "oxc": "frontend",              # OXC (Oxidation Compiler) — Rust JS/TS toolchain: linter + bundler + parser
+    "rolldown": "frontend",         # Rolldown — Rust-based bundler replacing Rollup in Vite 6 (9k★)
+    # Dead code elimination — Knip finds unused exports/files/dependencies in TypeScript
+    "knip": "developer",            # Knip — TypeScript dead code finder (unused exports, files, deps) (7k★)
+    # Search / RAG — Trieve combines search + RAG + recommendations in one API
+    "trieve": "search",             # Trieve — search, RAG, and recommendations platform (2k★)
+    # API composition / data fetching — WunderGraph unifies APIs into a single GraphQL layer
+    "wundergraph": "api",           # WunderGraph — API composition gateway (GraphQL, REST, gRPC, 2k★)
+    # Serverless scripting — Val Town lets you write/run TypeScript scripts with HTTP triggers
+    "valtown": "developer",         # Val Town — serverless TypeScript scripting platform (run code as API, 3k★)
+    "val": "developer",             # short form — "val town alternative", "val.town serverless" queries
+    # Frontend — Farm (Rust-based build tool, Vite-compatible, extremely fast cold starts)
+    "farm": "frontend",             # Farm — Rust-based web build tool (Vite-compatible, 10k★)
+    # Developer Tools — Rslib (Rsbuild-based library build tool, recommended for publishing npm packages)
+    "rslib": "frontend",            # Rslib — Rsbuild-based library bundler for publishing npm/ESM packages
 }
 
 _FTS_STOP_WORDS = {

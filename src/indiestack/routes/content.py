@@ -2038,7 +2038,7 @@ async def blog_indiestack_vs_stackshare(request: Request):
                 Volume is the strategy &mdash; list everything, let users sort it out.
             </p>
             <p>
-                IndieStack catalogs 8,000+ tools across 29 categories with an explicit curation
+                IndieStack catalogs 6,500+ tools across 29 categories with an explicit curation
                 filter: focused, lean, actively maintained, and honestly priced. We are not
                 trying to list every tool that has ever existed. We are trying to list the tools
                 that a developer should actually consider using today. That means excluding
@@ -2195,7 +2195,7 @@ async def best_index(request: Request):
     return HTMLResponse(page_shell(
         "Best Developer Tools in 2026", body,
         user=request.state.user,
-        description="Curated lists of the best developer tools across 25 categories. Built by independent makers, priced fairly.",
+        description="Curated lists of the best developer tools across 29+ categories. Built by independent makers, priced fairly.",
         canonical="/best",
     ))
 

@@ -1112,7 +1112,7 @@ async def llms_txt(request: Request):
         "`GET /api/tools/<slug>` — pricing, integration snippets, compatibility data\n"
         f"- [Tool Index]({BASE_URL}/api/tools/index.json): "
         "`GET /api/tools/index.json` — compact full catalog for prompt caching\n"
-        f"- [Categories]({BASE_URL}/api/categories): `GET /api/categories` — 25 categories with tool counts\n"
+        f"- [Categories]({BASE_URL}/api/categories): `GET /api/categories` — 29+ categories with tool counts\n"
         f"- [Tags]({BASE_URL}/api/tags): `GET /api/tags` — all tags sorted by popularity\n"
         f"- [Stack Builder]({BASE_URL}/api/stack-builder?needs=auth,payments): "
         "`GET /api/stack-builder?needs=<needs>&budget=<n>`\n"
@@ -1177,7 +1177,7 @@ async def llms_full_txt(request: Request):
 
     lines = [
         f"# IndieStack — Full Tool Catalog\n",
-        f"> {len(tools)} developer tools across 25 categories. "
+        f"> {len(tools)} developer tools across {len({t['category'] for t in tools if t['category']})} categories. "
         "Use this for comprehensive tool lookup without API calls.\n",
     ]
 
@@ -3808,7 +3808,7 @@ async def og_home_card():
   <text x="80" y="440" font-size="22" fill="rgba(255,255,255,0.6)" font-family="system-ui,sans-serif">Before your AI writes code, it checks what already exists.</text>
   <text x="80" y="540" font-size="18" fill="rgba(255,255,255,0.3)" font-family="system-ui,sans-serif">pip install indiestack</text>
   <text x="1120" y="540" font-size="18" fill="rgba(255,255,255,0.3)" text-anchor="end" font-family="system-ui,sans-serif">indiestack.ai</text>
-  <text x="80" y="580" font-size="16" fill="rgba(255,255,255,0.25)" font-family="system-ui,sans-serif">6,500+ developer tools &#183; 25 categories &#183; indie-built</text>
+  <text x="80" y="580" font-size="16" fill="rgba(255,255,255,0.25)" font-family="system-ui,sans-serif">6,500+ developer tools &#183; 29+ categories &#183; indie-built</text>
 </svg>'''
     return Response(content=svg, media_type="image/svg+xml",
                     headers={"Cache-Control": "public, max-age=86400"})

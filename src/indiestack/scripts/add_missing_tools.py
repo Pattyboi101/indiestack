@@ -6194,6 +6194,96 @@ TOOLS = [
         "npx @linear/mcp-server",
         "code",
     ),
+    # Frontend Frameworks — Rolldown (Rust bundler replacing Rollup inside Vite) ----------
+    (
+        "rolldown",
+        "Rolldown",
+        "Rust-powered JavaScript bundler for Vite — next-gen speed without compromise",
+        "Rolldown is a Rust-based JavaScript/TypeScript bundler designed to replace "
+        "Rollup as the production bundler inside Vite. It achieves dramatic build speed "
+        "improvements while maintaining full Rollup plugin compatibility. Being integrated "
+        "as the default bundler in Vite 6, making it the de-facto bundler for the modern "
+        "Vite ecosystem. Built by the VoidZero team (creator of Vue and Vite).",
+        "frontend-frameworks",
+        "rolldown-rs/rolldown",
+        9000,
+        "https://rolldown.rs",
+        "bundler,build-tool,rust,vite,fast,rollup-compatible",
+        "npm install rolldown",
+        "code",
+    ),
+    # Developer Tools — Knip (TypeScript dead code and unused dependency finder) ----------
+    (
+        "knip",
+        "Knip",
+        "Find unused files, exports, and dependencies in your TypeScript project",
+        "Knip scans your TypeScript and JavaScript projects to find unused files, "
+        "exports, types, and dependencies. It eliminates dead code, reduces bundle "
+        "size, and improves maintainability. Supports monorepos, all major frameworks, "
+        "and hundreds of plugins. The go-to tool for TypeScript project hygiene — "
+        "runs in CI and as a pre-commit check.",
+        "developer-tools",
+        "webpodcast/knip",
+        7000,
+        "https://knip.dev",
+        "typescript,dead-code,unused-exports,static-analysis,monorepo,developer-tools",
+        "npm install knip",
+        "code",
+    ),
+    # Testing Tools — OXLint (Rust-based JS/TS linter, 50-100x faster than ESLint) ------
+    (
+        "oxlint",
+        "OXLint",
+        "Rust-powered JavaScript and TypeScript linter — 50-100x faster than ESLint",
+        "OXLint is a Rust-based JavaScript and TypeScript linter built as part of the "
+        "OXC (Oxidation Compiler) toolchain. It runs 50-100x faster than ESLint, "
+        "supports 400+ rules, and requires zero configuration. Designed to complement "
+        "or replace ESLint in CI pipelines where speed is critical. Increasingly adopted "
+        "as a faster pre-commit linting step alongside or instead of ESLint.",
+        "developer-tools",
+        "oxc-project/oxc",
+        5000,
+        "https://oxc.rs/docs/guide/usage/linter",
+        "linter,javascript,typescript,rust,fast,eslint-alternative,ci",
+        "npm install oxlint",
+        "code",
+    ),
+    # Search Engine — Trieve (search + RAG + recommendations in one hosted platform) -----
+    (
+        "trieve",
+        "Trieve",
+        "Search, RAG, and recommendations platform for developers",
+        "Trieve is a hosted platform that combines full-text search, vector search, "
+        "RAG (Retrieval-Augmented Generation), and recommendation APIs in one service. "
+        "It handles document ingestion, chunking, embeddings, and reranking so you can "
+        "add powerful semantic search and AI retrieval to your app without building the "
+        "infrastructure yourself. SDKs for TypeScript and Python.",
+        "search-engine",
+        "devflowinc/trieve",
+        2000,
+        "https://trieve.ai",
+        "search,rag,vector-search,recommendations,full-text,semantic-search,typescript",
+        "npm install trieve-ts-sdk",
+        "saas",
+    ),
+    # Developer Tools — Val Town (serverless TypeScript scripting with HTTP triggers) -----
+    (
+        "val-town",
+        "Val Town",
+        "Write, run, and deploy serverless TypeScript scripts in seconds",
+        "Val Town is a social coding platform where you write small TypeScript functions "
+        "('vals') that run as HTTP endpoints, cron jobs, or email handlers — instantly, "
+        "with zero setup. Vals can import from npm, call each other, and store data in "
+        "built-in SQLite. Great for webhooks, bots, automations, and rapid prototyping. "
+        "Think GitHub Gists + serverless functions + a social layer.",
+        "developer-tools",
+        "val-town/val-town-product",
+        3000,
+        "https://val.town",
+        "serverless,typescript,scripts,webhooks,cron,prototyping,platform",
+        "# Sign up at val.town — no install needed",
+        "saas",
+    ),
 ]
 
 
