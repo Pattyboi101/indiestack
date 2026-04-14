@@ -20,6 +20,10 @@ import sqlite3
 import sys
 import time
 from collections import defaultdict
+from functools import partial
+
+# Unbuffered output so we can monitor in real time
+print = partial(print, flush=True)
 
 import requests
 
@@ -158,27 +162,71 @@ def find_swaps(removed, added):
 
 
 def mine_repo(repo, token, existing, dry_run=False):
-    """Mine a single repo for migration paths. Returns list of new migrations."""
-    commits = get_package_json_commits(repo, token, max_commits=15)
+    """Mine a single repo for migration paths using two strategies:
+
+    Strategy 1 (swap): Compare consecutive commits for same-commit swaps.
+    Strategy 2 (likely): Compare oldest vs newest package.json for full-timeline migrations.
+
+    Strategy 2 is the main win — catches swaps that happen across multiple commits.
+    Only costs 2 API calls (first + last commit's file content).
+    """
+    commits = get_package_json_commits(repo, token, max_commits=20)
     if len(commits) < 2:
         return []
 
     new_migrations = []
+    newest_sha = commits[0]["sha"]
+    oldest_sha = commits[-1]["sha"]
+    newest_date = commits[0].get("commit", {}).get("committer", {}).get("date", "")
 
-    # Compare consecutive commits (newer to older)
-    for i in range(len(commits) - 1):
+    # -- Strategy 2 first (cheaper, higher yield): oldest vs newest ----------
+    newest_content = get_file_at_commit(repo, newest_sha, "package.json", token)
+    oldest_content = get_file_at_commit(repo, oldest_sha, "package.json", token)
+
+    if newest_content and oldest_content:
+        newest_deps = extract_deps(newest_content)
+        oldest_deps = extract_deps(oldest_content)
+
+        removed = oldest_deps - newest_deps
+        added = newest_deps - oldest_deps
+
+        if removed and added:
+            swaps = find_swaps(removed, added)
+            for from_pkg, to_pkg in swaps:
+                if (from_pkg, to_pkg, repo) in existing:
+                    continue
+                migration = {
+                    "from_package": from_pkg,
+                    "to_package": to_pkg,
+                    "repo": repo,
+                    "commit_sha": newest_sha[:12],
+                    "committed_at": newest_date,
+                    "confidence": "likely",
+                }
+                new_migrations.append(migration)
+                existing.add((from_pkg, to_pkg, repo))
+                print(f"  LIKELY: {from_pkg} -> {to_pkg}")
+
+    # -- Strategy 1 (precise): consecutive commit swaps ----------------------
+    # Only check a few consecutive pairs to find exact swap commits
+    for i in range(min(len(commits) - 1, 5)):
         newer_sha = commits[i]["sha"]
         older_sha = commits[i + 1]["sha"]
         commit_date = commits[i].get("commit", {}).get("committer", {}).get("date", "")
 
-        newer_content = get_file_at_commit(repo, newer_sha, "package.json", token)
-        older_content = get_file_at_commit(repo, older_sha, "package.json", token)
+        # Reuse newest_content for i=0
+        if i == 0 and newest_content:
+            newer_content_i = newest_content
+        else:
+            newer_content_i = get_file_at_commit(repo, newer_sha, "package.json", token)
 
-        if not newer_content or not older_content:
+        older_content_i = get_file_at_commit(repo, older_sha, "package.json", token)
+
+        if not newer_content_i or not older_content_i:
             continue
 
-        newer_deps = extract_deps(newer_content)
-        older_deps = extract_deps(older_content)
+        newer_deps = extract_deps(newer_content_i)
+        older_deps = extract_deps(older_content_i)
 
         removed = older_deps - newer_deps
         added = newer_deps - older_deps
@@ -201,9 +249,7 @@ def mine_repo(repo, token, existing, dry_run=False):
             }
             new_migrations.append(migration)
             existing.add((from_pkg, to_pkg, repo))
-
-            if not dry_run:
-                print(f"  SWAP: {from_pkg} -> {to_pkg} (commit {newer_sha[:8]})")
+            print(f"  SWAP: {from_pkg} -> {to_pkg} (commit {newer_sha[:8]})")
 
     return new_migrations
 
