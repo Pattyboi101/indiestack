@@ -6501,6 +6501,90 @@ TOOLS = [
         "pip install opik",
         "code",
     ),
+    # JavaScript Utility Libraries -----------------------------------------------
+    (
+        "jquery",
+        "jQuery",
+        "The Write Less, Do More JavaScript library",
+        "jQuery is a fast, small, and feature-rich JavaScript library. "
+        "It simplifies HTML document traversal, event handling, animation, and Ajax "
+        "with an easy-to-use API. Despite the React/Vue era, jQuery still powers "
+        "a vast portion of the web and is one of the most downloaded npm packages.",
+        "frontend-frameworks",
+        "jquery/jquery",
+        59000,
+        "https://jquery.com",
+        "javascript,dom,ajax,utility",
+        "npm install jquery",
+        "code",
+    ),
+    (
+        "rxjs",
+        "RxJS",
+        "Reactive Extensions library for JavaScript",
+        "RxJS is a library for reactive programming using Observables. Enables "
+        "composing asynchronous and event-based programs using observable sequences "
+        "and LINQ-style query operators. Core dependency of Angular and widely used "
+        "with React, Vue, and plain JavaScript for complex async flows.",
+        "frontend-frameworks",
+        "ReactiveX/rxjs",
+        31000,
+        "https://rxjs.dev",
+        "reactive,observables,angular,async,functional-reactive",
+        "npm install rxjs",
+        "code",
+    ),
+    (
+        "lodash",
+        "Lodash",
+        "A modern JavaScript utility library delivering modularity and performance",
+        "Lodash is a modern JavaScript utility library with methods for arrays, "
+        "objects, strings, numbers, and more. Provides consistent cross-environment "
+        "iteration support with tree-shakeable modular imports. One of the most "
+        "downloaded npm packages ever.",
+        "developer-tools",
+        "lodash/lodash",
+        59000,
+        "https://lodash.com",
+        "javascript,utility,functional,arrays,objects",
+        "npm install lodash",
+        "code",
+    ),
+    # Run GitHub Actions Locally -------------------------------------------------
+    (
+        "act",
+        "act",
+        "Run your GitHub Actions locally",
+        "act uses Docker to run your GitHub Actions locally. Reads your "
+        ".github/workflows/ files and uses the Docker API to pull or build images "
+        "and run the containers. Ideal for rapid feedback loops without pushing "
+        "every commit to CI. Written in Go.",
+        "devops-infrastructure",
+        "nektos/act",
+        59000,
+        "https://github.com/nektos/act",
+        "ci-cd,github-actions,local,docker",
+        "brew install act",
+        "code",
+    ),
+    # Express Security Middleware -------------------------------------------------
+    (
+        "helmet",
+        "Helmet.js",
+        "Secure your Express apps with HTTP headers",
+        "Helmet helps secure Express.js apps by setting various HTTP security "
+        "headers including Content-Security-Policy, X-XSS-Protection, "
+        "X-Content-Type-Options, and more. Simple middleware with sensible defaults "
+        "that protects against common web vulnerabilities. Used by millions of "
+        "Node.js applications.",
+        "security-tools",
+        "helmetjs/helmet",
+        10000,
+        "https://helmetjs.github.io",
+        "security,express,http-headers,csp,nodejs",
+        "npm install helmet",
+        "code",
+    ),
     # CI/CD Pipelines as Code ----------------------------------------------------
     (
         "dagger",

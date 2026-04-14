@@ -4558,6 +4558,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "fusionauth": "authentication", # FusionAuth — customer identity and access management (CIAM) platform (10k★)
     # MCP — ModelContextProtocol full name (complement to "mcp"→mcp and "protocol"→mcp)
     "modelcontextprotocol": "mcp",  # ModelContextProtocol — MCP specification and registry → MCP Servers
+    # jQuery — most downloaded JS library ever; still widely searched despite React/Vue dominance
+    "jquery": "frontend",           # jQuery — DOM manipulation library (65k★) → Frontend Frameworks
+    "jqueryui": "frontend",         # jQuery UI — interaction and widget library for jQuery → Frontend
+    # RxJS — Reactive Extensions for JavaScript (Angular core dependency, 31k★)
+    "rxjs": "frontend",             # RxJS — reactive programming for JS (31k★, Angular core) → Frontend Frameworks
+    # Utility libraries — Lodash, Underscore, Ramda (among most-downloaded npm packages globally)
+    "lodash": "developer",          # Lodash — JS utility library (59k★, one of most downloaded ever) → Developer Tools
+    "underscore": "developer",      # Underscore.js — classic functional JS utilities (27k★) → Developer Tools
+    "ramda": "developer",           # Ramda — functional programming library for JS (23k★) → Developer Tools
+    # Nuxt.js compound form (complements "nuxt"→"frontend" already mapped)
+    "nuxtjs": "frontend",           # NuxtJS — compound query form for Nuxt.js meta-framework
+    # AngularJS — Angular 1.x legacy framework (still searched by teams on legacy codebases)
+    "angularjs": "frontend",        # AngularJS — Angular 1.x MVVM framework (59k★, legacy queries)
+    # GraphQL Yoga — popular GraphQL server (complement to "graphql"→"api" already mapped)
+    "yoga": "api",                  # GraphQL Yoga — flexible GraphQL server (The Guild, 8k★) → API Tools
+    # Helmet.js — Express HTTP security headers middleware (very high query volume in Node.js security)
+    "helmet": "security",           # Helmet.js — secure Express apps via HTTP headers (62k★) → Security Tools
+    # VS Code — most-used code editor; extension/plugin queries route to Developer Tools
+    "vscode": "developer",          # VS Code — most-used code editor; extension/plugin queries → Developer Tools
+    # act — run GitHub Actions locally (nektos/act, 59k★)
+    "act": "devops",                # act — run GitHub Actions locally (nektos/act, 59k★) → DevOps & Infrastructure
+    # Oh My Zsh / Starship — shell config framework and prompt (very common developer tooling queries)
+    "ohmyzsh": "developer",         # Oh My Zsh — Zsh config framework (174k★) → Developer Tools
+    "starship": "developer",        # Starship — blazing-fast cross-shell prompt (Rust, 45k★) → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
