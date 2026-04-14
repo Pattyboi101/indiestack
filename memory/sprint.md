@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eightieth pass)
+Last updated: 2026-04-14 (eighty-first pass)
 
 ## Status: Active
 
@@ -10,14 +10,40 @@ Last updated: 2026-04-14 (eightieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1487 unique effective keys (added 13 in eightieth pass — identity/faas/batch/endpoint/typecheck/typechecking/package/service-worker/task/runner/ingress/immer/medusa; 21 duplicate keys in source, all correct last-write-wins)
-- **Catalog script**: `scripts/add_missing_tools.py` — 364 tools ready to insert (slug-safe); +5 this pass: payload, pglite, monaco, immer, medusajs
+- **_CAT_SYNONYMS**: 1489 unique effective keys (eighty-first pass: +2 new, 0 duplicates remaining — all 22 prior duplicates purged)
+- **Catalog script**: `scripts/add_missing_tools.py` — 369 tools ready to insert (slug-safe); +5 this pass: shipwright, supastarter, mcp-brave-search, mcp-playwright, mcp-linear
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited all 1489 `_CAT_SYNONYMS` entries for duplicates; found 22 real duplicate keys
+- Fixed 2 conflicting duplicates (silent wrong-value overwrites):
+  - `gateway`: removed `→ "payments"` entry; `→ "api"` is correct (api gateway >> payment gateway)
+  - `fetch`: removed `→ "frontend"` entry; `→ "api"` is correct (fetch wrappers are HTTP client tools)
+- Removed 20 harmless same-value duplicates (inngest, trigger, temporal, grafana, typesense, d3, grpc, fastify, nx, fiber, actix, spring, env, pinia, prometheus, http, table, grid, date, and others)
+- Added 2 missing entries: `"compiler"` → `"frontend"` (Babel/SWC/Binaryen queries); `"validate"` → `"developer"` (complement to `"validation"`)
+- Result: 1489 unique keys, 0 duplicates remaining
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (364 → 369 total):
+  - **Shipwright** (ixartz/Next-js-Boilerplate, 4.8k★) — opinionated Next.js SaaS boilerplate; boilerplates
+  - **Supastarter** (supastarter/next, 1.8k★) — Supabase + Next.js SaaS starter; boilerplates
+  - **MCP Brave Search** (modelcontextprotocol/servers, 14k★) — real-time web search for AI agents; mcp-servers
+  - **MCP Playwright** (microsoft/playwright-mcp, 3.2k★) — browser automation MCP server by Microsoft; mcp-servers
+  - **MCP Linear** (linear/linear, 10k★) — Linear project management MCP integration; mcp-servers
+
+### Code Quality (Step 3)
+- No route file changes this pass; ast.parse() confirmed clean on db.py and add_missing_tools.py
+- Fixed 2 conflicting synonym entries that were silently routing queries to wrong categories
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-first pass
 
 ## Completed This Session (2026-04-14, eightieth pass — autonomous improvement cycle)
 

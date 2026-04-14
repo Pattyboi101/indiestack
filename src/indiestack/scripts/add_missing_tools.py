@@ -6112,6 +6112,88 @@ TOOLS = [
         "npx create-medusa-app",
         "code",
     ),
+    # Boilerplates -----------------------------------------------------------
+    (
+        "shipwright",
+        "Shipwright",
+        "Full-stack Next.js SaaS boilerplate with auth, payments, and email",
+        "Shipwright is an opinionated Next.js 14+ SaaS starter kit. Ships with "
+        "NextAuth.js, Stripe subscriptions, Resend transactional email, Prisma "
+        "ORM, Tailwind CSS, and shadcn/ui. Includes admin dashboard, user "
+        "management, and API rate limiting out of the box.",
+        "boilerplates",
+        "ixartz/Next-js-Boilerplate",
+        4800,
+        "https://github.com/ixartz/Next-js-Boilerplate",
+        "nextjs,saas,boilerplate,auth,stripe,tailwind,shadcn,typescript",
+        "npx create-next-app -e https://github.com/ixartz/Next-js-Boilerplate",
+        "code",
+    ),
+    (
+        "supastarter",
+        "Supastarter",
+        "Next.js and Nuxt SaaS starter kit powered by Supabase",
+        "Supastarter is a production-ready SaaS boilerplate built on "
+        "Next.js (and Nuxt). Includes Supabase auth, Stripe billing, "
+        "i18n, email, team management, and admin panel. Used by hundreds "
+        "of indie makers to ship faster.",
+        "boilerplates",
+        "supastarter/next",
+        1800,
+        "https://supastarter.dev",
+        "nextjs,supabase,saas,boilerplate,typescript,stripe,i18n",
+        "npx create-supastarter-app",
+        "code",
+    ),
+    # MCP Servers -----------------------------------------------------------
+    (
+        "mcp-brave-search",
+        "MCP Brave Search",
+        "Give AI agents access to real-time web search via Brave Search API",
+        "An MCP server that wraps the Brave Search API to provide AI coding "
+        "agents with real-time web search, news search, and local business "
+        "search capabilities. Part of the official modelcontextprotocol/servers "
+        "monorepo. Requires a free Brave Search API key.",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
+        "mcp,search,brave,web-search,ai-agent,claude",
+        "npx -y @modelcontextprotocol/server-brave-search",
+        "code",
+    ),
+    (
+        "mcp-playwright",
+        "MCP Playwright",
+        "Browser automation and web scraping for AI agents via Playwright",
+        "An MCP server that exposes Playwright browser automation to AI coding "
+        "agents. Enables agents to navigate websites, fill forms, take "
+        "screenshots, and extract structured data from the web. Built and "
+        "maintained by Microsoft.",
+        "mcp-servers",
+        "microsoft/playwright-mcp",
+        3200,
+        "https://github.com/microsoft/playwright-mcp",
+        "mcp,playwright,browser,automation,scraping,ai-agent,microsoft",
+        "npx @playwright/mcp@latest",
+        "code",
+    ),
+    (
+        "mcp-linear",
+        "MCP Linear",
+        "Linear project management integration for AI coding agents",
+        "An MCP server that gives AI agents read and write access to Linear "
+        "issues, projects, and teams. Lets agents create issues, update "
+        "status, add comments, and query the backlog — turning your AI "
+        "assistant into a first-class Linear team member.",
+        "mcp-servers",
+        "linear/linear",
+        10000,
+        "https://linear.app/docs/mcp",
+        "mcp,linear,project-management,issues,ai-agent,productivity",
+        "npx @linear/mcp-server",
+        "code",
+    ),
 ]
 
 

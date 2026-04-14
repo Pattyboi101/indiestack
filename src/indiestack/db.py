@@ -2480,8 +2480,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "celery": "background",
     "sidekiq": "background",
     "bullmq": "background",
-    "inngest": "background",
-    "trigger": "background",
     # Auth synonyms
     "oauth": "authentication",
     "saml": "authentication",
@@ -2670,7 +2668,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # the category/tag boost targets the RIGHT category instead of tools tagged
     # with the target tool name, which are complements not alternatives)
     # Payment processors
-    "gateway": "payments",      # "payment gateway" — Stripe, Paddle, Lemon Squeezy
     "stripe": "payments",
     "paddle": "payments",
     "paypal": "payments",
@@ -2715,12 +2712,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "webrtc": "api",                 # WebRTC queries — real-time video/audio API tools
     # Monitoring / observability
     "newrelic": "monitoring",
-    "grafana": "monitoring",
     "pagerduty": "monitoring",
     # Search
     "algolia": "search",
     "elasticsearch": "search",
-    "typesense": "search",
     "meilisearch": "search",
     # Search query modifiers — "semantic search", "fuzzy search", "faceted search"
     # all have "search" stripped as stop word; the remaining term must still map to Search category
@@ -2767,7 +2762,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "copilot": "ai",
     "linear": "project",
     # Background job tools
-    "temporal": "background",
     "trigger.dev": "background",
     # Code quality / linting — ESLint, Biome, Prettier live in testing-tools category
     "lint": "testing",          # "linting tool", "js linter" → Testing Tools
@@ -2785,7 +2779,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "charts": "analytics",      # "charts library", "charts component"
     "chart": "analytics",       # "chart.js", "chart library"
     "recharts": "analytics",    # Recharts — React charting library
-    "d3": "analytics",          # D3.js — data visualization
     "plotly": "analytics",      # Plotly — interactive scientific charts
     "chartjs": "analytics",     # Chart.js — simple canvas charts
     # PDF generation / processing
@@ -2804,7 +2797,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "vault": "security",        # HashiCorp Vault — secrets management
     "secrets": "security",
     "secret": "security",       # singular form — "secret management", "secret store"
-    "env": "security",          # "env management", "env secrets" → security (Infisical, Doppler)
     "envvars": "security",      # "envvars management" → same
     "dotenv": "developer",      # dotenv — .env file loader library → Developer Tools category
     # Invoicing — "invoice"/"receipt" already mapped above (line ~2295); add named tools + new terms
@@ -2859,7 +2851,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "jotai": "frontend",
     "redux": "frontend",
     "recoil": "frontend",
-    "pinia": "frontend",        # Vue state management
     "xstate": "frontend",       # State machines
     "nanostores": "frontend",
     "htmx": "frontend",         # HTMX — HTML-first interactivity
@@ -2872,7 +2863,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ember": "frontend",        # Ember.js
     # API tools — routing, RPC, gateways
     "trpc": "api",              # tRPC — type-safe API layer
-    "grpc": "api",              # gRPC — RPC framework
     "gateway": "api",           # API gateway queries
     # Realtime / WebSockets — typically API-layer tools (Pusher, Ably, PartyKit)
     "realtime": "api",
@@ -2960,7 +2950,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Node.js / edge web frameworks — for "[framework] alternative" queries
     "hono": "api",              # Hono — ultrafast edge web framework (Cloudflare, Deno, Bun)
     "express": "api",           # Express.js — classic Node.js web framework
-    "fastify": "api",           # Fastify — low-overhead Node.js framework
     "nestjs": "api",            # NestJS — TypeScript enterprise Node.js framework
     "koa": "api",               # Koa — minimalist Node.js middleware framework
     # DevOps / tunneling / IaC
@@ -3006,7 +2995,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pnpm": "frontend",         # pnpm — efficient disk-space-saving package manager
     # Monorepo tooling
     "monorepo": "developer",    # "monorepo build" → Developer Tools (Turborepo, Nx, Lerna)
-    "nx": "developer",          # Nx — extensible build system for monorepos (also at 3065, kept for clarity)
     # Database — SQL / NoSQL query patterns
     "nosql": "database",        # "nosql database", "nosql store" queries
     "sql": "database",          # raw "sql" queries (not ORM-specific)
@@ -3099,7 +3087,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rails": "api",         # Ruby on Rails — full-stack MVC framework
     "laravel": "api",       # Laravel — PHP MVC web framework
     "gin": "api",           # Gin — high-performance Go HTTP framework
-    "fiber": "api",         # Fiber — Express-inspired Go web framework
     "axum": "api",          # Axum — modular Rust web framework (Tokio team)
     # Monorepo tooling
     "turborepo": "developer",   # Turborepo — Vercel high-performance monorepo build system
@@ -3110,8 +3097,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "yup": "developer",          # Yup — popular JS/TS schema validation (22k stars)
     "valibot": "developer",      # Valibot — lightweight modular Zod alternative
     # Additional backend web frameworks (new Apr 2026)
-    "actix": "api",             # Actix Web — powerful Rust web framework
-    "spring": "api",            # Spring Boot — Java enterprise web framework
     "gorilla": "api",           # Gorilla Mux — Go HTTP router
     "fastify": "api",           # Fastify — fast Node.js web framework
     # Realtime — Socket.io is the most-searched realtime tool, "socket" alone commonly used
@@ -3132,8 +3117,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API — GraphQL engines (Hasura, PostGraphile auto-generate APIs from database schemas)
     "hasura": "api",            # Hasura — instant GraphQL API over PostgreSQL/MySQL
     "postgraphile": "api",      # PostGraphile — GraphQL from PostgreSQL schema
-    # Monitoring — Prometheus is the canonical open-source metrics system
-    "prometheus": "monitoring", # Prometheus — metrics collection and alerting
     # Search — Typesense is a common Algolia alternative query term
     "typesense": "search",      # Typesense — typo-tolerant open-source search engine
     # DevOps — IaC abbreviation (often used standalone in queries)
@@ -3307,7 +3290,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "format": "testing",            # "code format", "auto-format" → Testing Tools (Biome, Prettier)
     # HTTP clients — Axios, Got, Ky, node-fetch live in api-tools
     "axios": "api",                 # Axios — most popular promise-based HTTP client for JS/TS
-    "http": "api",                  # "http client", "http server", "http library" → API Tools
     "httpclient": "api",            # explicit compound form
     "httpx": "api",                 # HTTPX — async-first Python HTTP client
     "got": "api",                   # Got — modern Node.js HTTP request library
@@ -3332,9 +3314,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "nativewind": "frontend",       # NativeWind — Tailwind CSS for React Native
     "flutter": "frontend",          # Flutter — Dart cross-platform UI framework
     # Frontend — data tables and grids (AG Grid, TanStack Table, Handsontable)
-    "table": "frontend",            # "data table component", "react table" → Frontend Frameworks
     "datagrid": "frontend",         # "datagrid library", "data grid component" → Frontend Frameworks
-    "grid": "frontend",             # "data grid", "css grid library" — TanStack Table, AG Grid
     # Frontend — date/time pickers (very common UI component query)
     "datepicker": "frontend",       # "date picker component", "calendar picker" → Frontend Frameworks
     # Database — data warehouse / analytics DB
@@ -3786,7 +3766,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "fluentbit": "logging",         # Fluent Bit — lightweight log processor and forwarder (5k★)
     "fluent-bit": "logging",        # hyphenated form used in queries ("fluent-bit alternative")
     # Date/time libraries — very common "alternative" query segment for date-fns, dayjs, Moment
-    "date": "frontend",             # "date picker", "date library", "date-fns alternative" → Frontend
     "dayjs": "frontend",            # Day.js — lightweight 2kB Moment.js alternative (47k★)
     "moment": "frontend",           # Moment.js — most-searched legacy date library (48k★)
     "momentjs": "frontend",         # compound form — "momentjs alternative" queries
@@ -4094,8 +4073,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "query": "database",             # "query builder", "type-safe query", "sql query" → Database (Kysely, Knex, Drizzle)
     # Frontend — state stores ("global store", "state store", "redux store")
     "store": "frontend",             # "state store", "global store", "data store" → Frontend Frameworks (Zustand, Pinia, Redux)
-    # Frontend — data fetching (SWR, TanStack Query, Apollo Client)
-    "fetch": "frontend",             # "data fetch", "client fetch", "fetch hook" → Frontend Frameworks (SWR, TanStack Query)
     # Frontend — islands architecture (Astro, Fresh, Qwik use "islands" terminology)
     "islands": "frontend",           # "islands architecture", "islands framework" → Frontend Frameworks (Astro, Fresh)
     # Frontend — hydration (complement to existing "hydration" → "frontend")
@@ -4476,6 +4453,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "immer": "frontend",            # Immer — produce next immutable state via mutations (26k★)
     # Medusa — open-source commerce
     "medusa": "developer",          # Medusa — open-source headless commerce engine (23k★)
+    # Compiler / transpiler tools (Babel, SWC, Binaryen, esbuild — frontend build chain)
+    "compiler": "frontend",         # "js compiler", "typescript compiler", "babel compiler" → Frontend Frameworks
+    # Validation — complement to "validation" → developer; "validate" form catches verb queries
+    "validate": "developer",        # "validate schema", "validate input", "data validate" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
