@@ -5942,6 +5942,89 @@ TOOLS = [
         "yarn create redwood-app my-app",
         "code",
     ),
+    # AI & Automation --------------------------------------------------------
+    (
+        "dify",
+        "Dify",
+        "Open-source LLM app development platform",
+        "Dify is an open-source LLM application development platform with a "
+        "visual workflow builder, RAG pipeline, agent orchestration, and model "
+        "management. Supports 100+ LLM providers. Self-host or use Dify Cloud. "
+        "Powers AI-native apps from prototype to production.",
+        "ai-automation",
+        "langgenius/dify",
+        60000,
+        "https://dify.ai",
+        "ai,llm,rag,agents,workflow,no-code,self-hosted",
+        "docker compose up -d",
+        "code",
+    ),
+    (
+        "open-webui",
+        "Open WebUI",
+        "Self-hosted web interface for running local LLMs",
+        "Open WebUI is a feature-rich, offline-capable web interface for Ollama "
+        "and OpenAI-compatible APIs. Includes RAG support, web search, image "
+        "generation, voice I/O, model management, and multi-user access. "
+        "The most popular self-hosted UI for local LLM inference.",
+        "ai-automation",
+        "open-webui/open-webui",
+        80000,
+        "https://openwebui.com",
+        "ai,ollama,llm,self-hosted,rag,local-ai,chatgpt-ui",
+        "pip install open-webui",
+        "code",
+    ),
+    # Security Tools ---------------------------------------------------------
+    (
+        "certbot",
+        "Certbot",
+        "Automatically enable HTTPS on your website with Let's Encrypt",
+        "Certbot is the EFF's free, open-source ACME client that automatically "
+        "obtains and renews TLS/SSL certificates from Let's Encrypt. Supports "
+        "Apache, Nginx, and standalone modes. The standard tool for free HTTPS "
+        "certificate management on self-hosted servers.",
+        "security-tools",
+        "certbot/certbot",
+        31000,
+        "https://certbot.eff.org",
+        "ssl,tls,https,letsencrypt,acme,certificate,security",
+        "sudo snap install --classic certbot",
+        "code",
+    ),
+    (
+        "step-ca",
+        "step-ca",
+        "Open-source private certificate authority for DevOps",
+        "step-ca is an open-source, online certificate authority for secure, "
+        "automated certificate management. Supports ACME, SCEP, JWK, OAuth/OIDC, "
+        "and SSH certificates. The self-hosted alternative to Let's Encrypt for "
+        "internal PKI, mTLS, and zero-trust networking.",
+        "security-tools",
+        "smallstep/certificates",
+        7000,
+        "https://smallstep.com/docs/step-ca",
+        "ssl,tls,pki,certificate-authority,acme,mtls,zero-trust,security",
+        "brew install step",
+        "code",
+    ),
+    # Logging ----------------------------------------------------------------
+    (
+        "loki",
+        "Grafana Loki",
+        "Like Prometheus, but for logs",
+        "Grafana Loki is a horizontally-scalable, highly-available log aggregation "
+        "system. Unlike ELK, it does not index log content — only labels — making "
+        "it cost-effective and fast. Integrates natively with Grafana and Prometheus "
+        "for a complete observability stack.",
+        "logging",
+        "grafana/loki",
+        23000,
+        "https://grafana.com/oss/loki",
+        "logging,log-aggregation,observability,grafana,prometheus,devops",
+        "docker run grafana/loki:latest -config.file=/etc/loki/local-config.yaml",
+        "code",
+    ),
 ]
 
 

@@ -4434,6 +4434,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "plop": "developer",            # Plop.js — micro-generator framework for consistent boilerplate (6k★)
     "hygen": "developer",           # Hygen — scalable code generator built for teams (5k★)
     "yeoman": "developer",          # Yeoman — classic scaffolding tool for web projects (4k★)
+    # Caching — "in-memory" query routing (hyphen stripped to single token in raw split)
+    "in-memory": "caching",         # "in-memory cache", "in-memory database" — Redis, Memcached, Upstash
+    "memory": "caching",            # "in memory" after stop-word strip: "in" removed → "memory" first term
+    "inmemory": "caching",          # compound form — "inmemory store", "inmemory cache" → Caching
+    # Security — certificate/TLS management tools (Let's Encrypt ecosystem)
+    "letsencrypt": "security",      # Let's Encrypt — free, automated TLS certificate authority (by ISRG)
+    "certbot": "security",          # Certbot — EFF ACME client for Let's Encrypt (most-used, 31k★)
+    "step-ca": "security",          # step-ca — self-hosted certificate authority (smallstep, 7k★)
+    "smallstep": "security",        # smallstep — brand name for step-ca and step CLI PKI tooling
+    # AI — agentic / multi-agent system queries (fast-growing query segment 2026)
+    "agentic": "ai",                # "agentic AI", "agentic system", "agentic workflow" → AI & Automation
+    "multiagent": "ai",             # compound — "multiagent framework", "multi-agent system" → AI & Automation
+    "llmops": "ai",                 # LLMOps — ML operations for LLM apps (MLflow-style but for LLMs)
+    "tuning": "ai",                 # "fine-tuning" → hyphen stripped → "fine" "tuning"; "tuning" fires → AI
+    # AI — LLM application platforms (no-code/low-code LLM builder tools)
+    "dify": "ai",                   # Dify — open-source LLM application platform and RAG engine (60k★)
+    "openwebui": "ai",              # Open WebUI — feature-rich web UI for Ollama/local LLMs (80k★)
+    "open-webui": "ai",             # hyphenated form — "open-webui alternative" queries → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
