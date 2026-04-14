@@ -1965,6 +1965,21 @@ async def init_db():
             except Exception:
                 await db.execute(_ddl)
 
+        # Validation logs for /api/validate guardrail endpoint
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS validation_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                package TEXT NOT NULL,
+                ecosystem TEXT NOT NULL DEFAULT 'npm',
+                exists BOOLEAN,
+                is_typosquat BOOLEAN DEFAULT 0,
+                risk_level TEXT DEFAULT 'unknown',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_validation_pkg ON validation_logs(package)")
+        await db.commit()
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 

@@ -5198,3 +5198,5 @@ from indiestack.routes import oracle_page
 app.include_router(oracle_page.router)
 from indiestack.routes import intel
 app.include_router(intel.router)
+from indiestack.routes import validate
+app.include_router(validate.router)
