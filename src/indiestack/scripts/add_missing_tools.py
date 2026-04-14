@@ -6207,6 +6207,173 @@ TOOLS = [
         "npm create analog@latest",
         "code",
     ),
+    # Boilerplates ---------------------------------------------------------------
+    (
+        "shipwright",
+        "Shipwright",
+        "Next.js SaaS boilerplate with auth, payments, and more",
+        "Shipwright (aka Next-js-Boilerplate) is an opinionated Next.js "
+        "starter with TypeScript, Tailwind CSS, shadcn/ui, NextAuth, "
+        "Prisma, and Stripe pre-configured. One of the most-starred "
+        "free SaaS starters on GitHub.",
+        "boilerplates",
+        "ixartz/Next-js-Boilerplate",
+        4800,
+        "https://github.com/ixartz/Next-js-Boilerplate",
+        "boilerplate,nextjs,tailwind,typescript,saas,stripe,auth",
+        "git clone https://github.com/ixartz/Next-js-Boilerplate.git",
+        "code",
+    ),
+    (
+        "supastarter",
+        "SupaStarter",
+        "Next.js + Supabase SaaS starter kit",
+        "SupaStarter is a full-stack SaaS starter combining Next.js, "
+        "Supabase (auth + database), Stripe billing, Tailwind CSS, "
+        "and shadcn/ui. Includes multi-tenancy, team management, "
+        "and transactional emails out of the box.",
+        "boilerplates",
+        "supastarter/next",
+        1800,
+        "https://supastarter.dev",
+        "boilerplate,nextjs,supabase,stripe,tailwind,saas,typescript",
+        "git clone https://github.com/supastarter/next.git",
+        "code",
+    ),
+    # MCP Servers ----------------------------------------------------------------
+    (
+        "mcp-brave-search",
+        "MCP Brave Search",
+        "Real-time web search for AI agents via Brave API",
+        "An official MCP server that exposes Brave Search to AI agents. "
+        "Lets Claude and other MCP clients run real-time web searches, "
+        "image searches, and news queries using Brave's privacy-first "
+        "search API. Includes result summaries, safe-search controls, "
+        "and country/language targeting.",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
+        "mcp,search,web,brave,ai-agent,real-time",
+        "npx @modelcontextprotocol/server-brave-search",
+        "code",
+    ),
+    (
+        "mcp-playwright",
+        "MCP Playwright",
+        "Browser automation and web scraping for AI agents",
+        "The official Microsoft Playwright MCP server gives AI agents "
+        "full browser control: navigate pages, click elements, fill "
+        "forms, capture screenshots, and extract structured data. "
+        "Works with Chromium, Firefox, and WebKit, and exposes CDP "
+        "for rich browser automation.",
+        "mcp-servers",
+        "microsoft/playwright-mcp",
+        3200,
+        "https://github.com/microsoft/playwright-mcp",
+        "mcp,playwright,browser-automation,web-scraping,ai-agent",
+        "npx @playwright/mcp",
+        "code",
+    ),
+    (
+        "mcp-linear",
+        "MCP Linear",
+        "Give AI agents access to Linear project management",
+        "An MCP server that gives AI agents read and write access to Linear "
+        "issues, projects, and teams. Lets agents create issues, update "
+        "status, add comments, and query the backlog — turning your AI "
+        "assistant into a first-class Linear team member.",
+        "mcp-servers",
+        "linear/linear",
+        10000,
+        "https://linear.app/docs/mcp",
+        "mcp,linear,project-management,issues,ai-agent,productivity",
+        "npx @linear/mcp-server",
+        "code",
+    ),
+    (
+        "mcp-slack",
+        "MCP Slack",
+        "Give AI agents access to Slack channels and messages",
+        "The official MCP server for Slack. Lets AI agents read channel "
+        "history, post messages, search conversations, and manage threads. "
+        "Built on the official Slack SDK and compatible with Claude and any "
+        "MCP-capable AI agent.",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/slack",
+        "mcp,slack,messaging,ai-agent,communication",
+        "npx @modelcontextprotocol/server-slack",
+        "code",
+    ),
+    (
+        "mcp-notion",
+        "MCP Notion",
+        "Give AI agents read and write access to Notion workspaces",
+        "An MCP server for Notion that lets AI agents query databases, "
+        "create and update pages, append blocks, and search your workspace. "
+        "Enables agents to use Notion as a knowledge base or task tracker "
+        "in multi-step workflows.",
+        "mcp-servers",
+        "makenotion/notion-sdk-js",
+        7000,
+        "https://developers.notion.com/docs/mcp",
+        "mcp,notion,knowledge-base,ai-agent,pages,databases",
+        "npx @notionhq/mcp",
+        "code",
+    ),
+    # API Tools ------------------------------------------------------------------
+    (
+        "graphql-yoga",
+        "GraphQL Yoga",
+        "Fully-featured, spec-compliant GraphQL server",
+        "GraphQL Yoga is a batteries-included GraphQL server built on "
+        "standard fetch APIs. Supports subscriptions, file uploads, "
+        "persisted queries, and the Envelop plugin system. Works with "
+        "Fastify, Express, Next.js, Cloudflare Workers, and more.",
+        "api-tools",
+        "dotansimha/graphql-yoga",
+        8500,
+        "https://the-guild.dev/graphql/yoga-server",
+        "graphql,api,subscriptions,typescript,server",
+        "npm install graphql-yoga",
+        "code",
+    ),
+    # Developer Tools ------------------------------------------------------------
+    (
+        "oxc",
+        "Oxc",
+        "The JavaScript Oxidation Compiler",
+        "Oxc is a high-performance JavaScript and TypeScript toolchain "
+        "written in Rust. Includes a linter 50-100x faster than ESLint, "
+        "a transformer, a bundler (Rolldown), a minifier, and a formatter. "
+        "Powers Vite's next-generation build pipeline.",
+        "developer-tools",
+        "oxc-project/oxc",
+        13000,
+        "https://oxc.rs",
+        "linter,bundler,transformer,rust,javascript,fast",
+        "npm install @oxc-project/oxc-napi",
+        "code",
+    ),
+    # Authentication -------------------------------------------------------------
+    (
+        "lucia",
+        "Lucia",
+        "Authentication, simple and clean",
+        "Lucia is a lightweight TypeScript authentication library that "
+        "handles sessions, not passwords. Gives you full control over the "
+        "auth flow without magic or abstraction. Works with any framework "
+        "and any database — Drizzle, Prisma, Mongoose, and more.",
+        "authentication",
+        "lucia-auth/lucia",
+        11000,
+        "https://lucia-auth.com",
+        "auth,session,typescript,framework-agnostic",
+        "npm install lucia",
+        "code",
+    ),
 ]
 
 

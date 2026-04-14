@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-first pass)
+Last updated: 2026-04-14 (eighty-second pass)
 
 ## Status: Active
 
@@ -10,14 +10,48 @@ Last updated: 2026-04-14 (eighty-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1502 unique effective keys (added 15 in eighty-first pass — linter/vim/nvim/tmux/warp/starship/typst/gleam/oxlint/oxc/zsh/ohmyzsh/nushell/tilt/pkl; 22 duplicate keys in source, all correct last-write-wins)
-- **Catalog script**: `scripts/add_missing_tools.py` — 369 tools ready to insert (slug-safe); +5 this pass: dagger, fnm, zellij, oxlint, analog
+- **_CAT_SYNONYMS**: 1526 unique effective keys (eighty-second pass: +24 new, 0 duplicates — purged all 21 remaining dups including 2 conflicting-value entries)
+- **Catalog script**: `scripts/add_missing_tools.py` — 379 tools ready to insert (slug-safe); +10 this pass: shipwright, supastarter, mcp-brave-search, mcp-playwright, mcp-linear, mcp-slack, mcp-notion, graphql-yoga, oxc, lucia
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 24 new entries to `_CAT_SYNONYMS` and purged all 21 remaining duplicates (1502 → 1526 unique keys, 22 → 0 duplicates):
+  - **AI**: `transformer`, `tokenizer`, `tokenization`, `bert` — transformer model architecture and LLM tokenization; BERT is most-downloaded HuggingFace model
+  - **File**: `ipfs`, `pinata` — IPFS decentralized storage and Pinata pinning service
+  - **Developer**: `web3`, `blockchain`, `ethersjs`, `wagmi`, `viem`, `hardhat`, `foundry` — Web3/Ethereum developer tooling (fast-growing segment)
+  - **Developer**: `serde` — Rust serde crate (most downloaded Rust crate); `gzip`, `brotli`, `zstd` — compression library queries
+  - **Message**: `eventbus`, `event-bus` — event bus pattern queries
+  - **API**: `typespec`, `oas` — Microsoft TypeSpec (growing 2026) and OAS abbreviation for OpenAPI Spec; `graphql-yoga`, `envelop` — GraphQL Yoga server + plugin system
+  - **DevOps**: `actions` — "github actions alternative" is high-volume query
+- Fixed 2 conflicting duplicates: `gateway`→payments removed (api is correct); `fetch`→frontend removed (api is correct)
+- Removed 19 harmless same-value duplicates: inngest, trigger, grafana, typesense, temporal, d3, env, pinia, grpc, fastify, nx, fiber, actix, spring, prometheus, http, date, table, grid
+
+### Catalog Script (Step 2)
+- Added 10 new tools to `scripts/add_missing_tools.py` (369 → 379 total):
+  - **Shipwright** (ixartz/Next-js-Boilerplate, 4.8k★) — opinionated Next.js SaaS boilerplate; boilerplates
+  - **SupaStarter** (supastarter/next, 1.8k★) — Next.js + Supabase SaaS starter; boilerplates
+  - **MCP Brave Search** (modelcontextprotocol/servers, 14k★) — real-time web search for AI agents; mcp-servers
+  - **MCP Playwright** (microsoft/playwright-mcp, 3.2k★) — browser automation for AI agents; mcp-servers
+  - **MCP Linear** (linear/linear, 10k★) — Linear project management for AI agents; mcp-servers
+  - **MCP Slack** (modelcontextprotocol/servers, 14k★) — Slack channel access for AI agents; mcp-servers
+  - **MCP Notion** (makenotion/notion-sdk-js, 7k★) — Notion workspace access for AI agents; mcp-servers
+  - **GraphQL Yoga** (dotansimha/graphql-yoga, 8.5k★) — fully featured GraphQL server by The Guild; api-tools
+  - **Oxc** (oxc-project/oxc, 13k★) — JavaScript Oxidation Compiler toolchain in Rust; developer-tools
+  - **Lucia** (lucia-auth/lucia, 11k★) — lightweight TypeScript session auth; authentication
+
+### Code Quality (Step 3)
+- ast.parse() confirmed clean on both changed files; 0 duplicate keys after purge
+- Fixed 2 silent synonym conflicts: gateway and fetch were routing to wrong categories
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-second pass
 
 ## Completed This Session (2026-04-14, eighty-first pass — autonomous improvement cycle)
 
