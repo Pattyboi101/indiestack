@@ -5838,6 +5838,110 @@ TOOLS = [
         "helm repo add falcosecurity https://falcosecurity.github.io/charts && helm install falco falcosecurity/falco",
         "code",
     ),
+    # Developer Tools — Python package managers ---------------------------------
+    (
+        "uv",
+        "uv",
+        "An extremely fast Python package and project manager",
+        "uv is a drop-in replacement for pip and pip-tools built in Rust by Astral. "
+        "It installs packages 10-100× faster than pip, manages virtualenvs, resolves "
+        "dependencies with a lockfile, and can replace pyenv for Python version "
+        "management. uv is quickly becoming the default Python toolchain for new "
+        "projects in 2025.",
+        "developer-tools",
+        "astral-sh/uv",
+        50000,
+        "https://docs.astral.sh/uv",
+        "python,package-manager,pip,virtualenv,fast,rust",
+        "curl -LsSf https://astral.sh/uv/install.sh | sh",
+        "code",
+    ),
+    (
+        "poetry",
+        "Poetry",
+        "Python packaging and dependency management made easy",
+        "Poetry handles Python dependency management and packaging with a single "
+        "pyproject.toml file and a lockfile for reproducible installs. It automatically "
+        "creates and manages virtualenvs, resolves dependencies deterministically, and "
+        "can publish packages to PyPI. Poetry is the most-adopted Python project "
+        "manager among web developers.",
+        "developer-tools",
+        "python-poetry/poetry",
+        28000,
+        "https://python-poetry.org",
+        "python,package-manager,dependency-management,virtualenv,pyproject",
+        "curl -sSL https://install.python-poetry.org | python3 -",
+        "code",
+    ),
+    # Database — Rust ORM / SQL tooling -----------------------------------------
+    (
+        "sqlx",
+        "sqlx",
+        "Async, compile-time checked SQL queries for Rust",
+        "sqlx is a pure Rust async SQL toolkit that verifies your queries against "
+        "the database schema at compile time — no ORM magic, just type-safe SQL. "
+        "Supports PostgreSQL, MySQL, SQLite, and MSSQL. Works with Tokio, async-std, "
+        "and Actix. The de-facto standard for Rust web apps that need raw SQL power "
+        "with full type safety.",
+        "database",
+        "launchbadge/sqlx",
+        13000,
+        "https://github.com/launchbadge/sqlx",
+        "rust,sql,postgres,async,type-safe,orm",
+        "cargo add sqlx --features runtime-tokio,postgres",
+        "code",
+    ),
+    (
+        "diesel",
+        "Diesel",
+        "Safe, extensible ORM and query builder for Rust",
+        "Diesel is a safe, extensible ORM for Rust that prevents runtime query errors "
+        "at compile time. It generates type-safe query builders and supports "
+        "PostgreSQL, MySQL, and SQLite. Diesel includes built-in schema migrations and "
+        "a powerful query DSL that maps directly to SQL without runtime overhead.",
+        "database",
+        "diesel-rs/diesel",
+        12000,
+        "https://diesel.rs",
+        "rust,orm,postgres,mysql,sqlite,type-safe,migrations",
+        "cargo add diesel --features postgres",
+        "code",
+    ),
+    (
+        "sea-orm",
+        "SeaORM",
+        "Async and dynamic ORM for Rust built on top of sqlx",
+        "SeaORM is an async ORM for Rust that combines the ergonomics of Active "
+        "Record with the type safety of Rust. Built on sqlx, it supports PostgreSQL, "
+        "MySQL, and SQLite with a fluent query API, relationship support, and "
+        "schema migrations via SeaSchema. Popular in the Rust web ecosystem "
+        "alongside Axum and Actix.",
+        "database",
+        "SeaQL/sea-orm",
+        7000,
+        "https://www.sea-ql.org/SeaORM",
+        "rust,orm,async,postgres,mysql,sqlite,active-record",
+        "cargo add sea-orm --features sqlx-postgres,runtime-tokio-native-tls",
+        "code",
+    ),
+    # Frontend — RedwoodJS full-stack framework ---------------------------------
+    (
+        "redwoodjs",
+        "RedwoodJS",
+        "The full-stack JavaScript framework for the startup era",
+        "RedwoodJS is an opinionated full-stack web framework built on React, "
+        "GraphQL, Prisma, and TypeScript. It provides file-based routing, "
+        "serverless deploy support, built-in auth, and a cells pattern for "
+        "declarative data fetching. Designed to be the Rails of the JavaScript "
+        "world — convention over configuration from frontend to database.",
+        "frontend-frameworks",
+        "redwoodjs/redwood",
+        17000,
+        "https://redwoodjs.com",
+        "react,graphql,prisma,typescript,fullstack,serverless",
+        "yarn create redwood-app my-app",
+        "code",
+    ),
 ]
 
 

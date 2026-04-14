@@ -1,23 +1,51 @@
 # Sprint — Current
 
-Last updated: 2026-04-13 (seventy-seventh pass)
+Last updated: 2026-04-14 (seventy-eighth pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-13)
+## System State (as of 2026-04-14)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1440 unique effective keys (added 20 in seventy-seventh pass — service mesh/istio/linkerd/cilium/ebpf/sidecar/service-mesh; AI/arize; dev/wasmtime/wasmer; message/event-sourcing/eventsourcing/cqrs; API/federation/supergraph; monitoring/victoriametrics/victoria; security/falco; 21 duplicate keys exist in source but all correct last-write-wins values)
-- **Catalog script**: `scripts/add_missing_tools.py` — 348 tools ready to insert (slug-safe); +5 this pass: istio, linkerd, cilium, victoriametrics, falco
+- **_CAT_SYNONYMS**: 1460 unique effective keys (added 23 in seventy-eighth pass — Python pkg managers/uv/poetry/pdm/pipenv/conda/mamba/pixi; Rust DB/sqlx/diesel/sea-orm/seaorm; Elixir/ecto; Frontend/react-query/reactquery/redwood/redwoodjs; Media/hls/mpeg-dash; DevOps/gradle/maven; Developer/plop/hygen/yeoman; 22 duplicate keys exist in source, all correct last-write-wins values)
+- **Catalog script**: `scripts/add_missing_tools.py` — 355 tools ready to insert (slug-safe); +6 this pass: uv, poetry, sqlx, diesel, sea-orm, redwoodjs
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, seventy-eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 23 new entries to `_CAT_SYNONYMS` (1440 → 1460 unique effective keys):
+  - **Python pkg managers**: `uv`, `poetry`, `pdm`, `pipenv`, `conda`, `mamba`, `pixi` → `"developer"` — covers the entire Python toolchain management query space
+  - **Rust DB tooling**: `sqlx`, `diesel`, `sea-orm`, `seaorm` → `"database"` — async SQL and ORM for Rust web apps (growing fast)
+  - **Elixir ORM**: `ecto` → `"database"` — Ecto (Elixir database library, paired with Phoenix queries)
+  - **Frontend**: `react-query`, `reactquery` → `"frontend"` — original TanStack Query package name; high-volume "[tool] alternative" queries
+  - **Frontend**: `redwood`, `redwoodjs` → `"frontend"` — RedwoodJS full-stack React+GraphQL framework (17k★)
+  - **Media**: `hls`, `mpeg-dash` → `"media"` — HTTP Live Streaming and MPEG-DASH adaptive bitrate queries
+  - **DevOps**: `gradle`, `maven` → `"devops"` — JVM build tools (Java/Kotlin/Android queries)
+  - **Developer**: `plop`, `hygen`, `yeoman` → `"developer"` — code scaffolding and generator tools
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (349 → 355 total):
+  - **uv** (astral-sh/uv, 50k★) — extremely fast Python package manager; developer-tools
+  - **Poetry** (python-poetry/poetry, 28k★) — Python dependency management with lockfile; developer-tools
+  - **sqlx** (launchbadge/sqlx, 13k★) — async compile-time-checked SQL for Rust; database
+  - **Diesel** (diesel-rs/diesel, 12k★) — safe extensible ORM for Rust; database
+  - **SeaORM** (SeaQL/sea-orm, 7k★) — async Rust ORM built on sqlx; database
+  - **RedwoodJS** (redwoodjs/redwood, 17k★) — full-stack React+GraphQL framework; frontend-frameworks
+
+### Code Quality (Step 3)
+- No route file changes this pass; ast.parse() confirmed clean on db.py and add_missing_tools.py
+
+### R&D Docs (Step 4)
+- sprint.md updated to seventy-eighth pass
 
 ## Completed This Session (2026-04-13, seventy-seventh pass — autonomous improvement cycle)
 

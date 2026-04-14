@@ -4403,6 +4403,37 @@ _CAT_SYNONYMS: dict[str, str] = {
     "victoria": "monitoring",       # first term — "victoria metrics alternative", "victoria metrics setup"
     # Security — runtime container security (CNCF Falco)
     "falco": "security",            # Falco — CNCF runtime security for containers and Kubernetes (7k★)
+    # Python package / project managers — uv and Poetry dominate 2025 dev tool queries
+    "uv": "developer",              # uv — extremely fast Python package installer + resolver by Astral (50k★)
+    "poetry": "developer",          # Poetry — Python dependency management with pyproject.toml (28k★)
+    "pdm": "developer",             # PDM — Python dependency manager with PEP 582 / lockfile (7k★)
+    "pipenv": "developer",          # Pipenv — Python dev workflow tool (virtualenv + pip unified, 24k★)
+    "conda": "developer",           # Conda — cross-language package + environment manager (data science)
+    "mamba": "developer",           # Mamba — fast C++ conda alternative for env management
+    "pixi": "developer",            # Pixi — fast conda-compatible package manager by prefix.dev (4k★)
+    # Rust database / ORM tooling — growing fast as Rust web dev adoption increases
+    "sqlx": "database",             # sqlx — async pure-Rust SQL toolkit (compile-time checked queries, 13k★)
+    "diesel": "database",           # Diesel — safe, extensible ORM for Rust (12k★, type-checked queries)
+    "sea-orm": "database",          # SeaORM — async Rust ORM built on sqlx (7k★, Active Record + Data Mapper)
+    "seaorm": "database",           # compound form — "seaorm alternative", "seaorm vs diesel" queries
+    # Elixir ORM — Ecto is searched alongside Phoenix queries
+    "ecto": "database",             # Ecto — Elixir database wrapper + query composition library (6k★)
+    # Frontend — React Query (original npm package name before TanStack rebranding)
+    "react-query": "frontend",      # React Query — original name; "react-query alternative" high-volume
+    "reactquery": "frontend",       # compound form — "reactquery vs swr", "react query v5" queries
+    # Frontend — RedwoodJS full-stack React framework (not yet individually mapped)
+    "redwood": "frontend",          # RedwoodJS — opinionated full-stack framework (React+GraphQL, 17k★)
+    "redwoodjs": "frontend",        # explicit form — "redwoodjs alternative", "redwoodjs starter" queries
+    # Media — HLS streaming protocol (very common in video streaming queries)
+    "hls": "media",                 # HLS (HTTP Live Streaming) — Apple's adaptive streaming protocol
+    "mpeg-dash": "media",           # MPEG-DASH — adaptive bitrate streaming standard (hyphenated form safe)
+    # DevOps — JVM build tools (Gradle and Maven are dominant Java/Kotlin build queries)
+    "gradle": "devops",             # Gradle — build automation for Java, Kotlin, Android (17k★)
+    "maven": "devops",              # Apache Maven — Java build/project management tool (classic)
+    # Developer Tools — code scaffolding and generator tools
+    "plop": "developer",            # Plop.js — micro-generator framework for consistent boilerplate (6k★)
+    "hygen": "developer",           # Hygen — scalable code generator built for teams (5k★)
+    "yeoman": "developer",          # Yeoman — classic scaffolding tool for web projects (4k★)
 }
 
 _FTS_STOP_WORDS = {
