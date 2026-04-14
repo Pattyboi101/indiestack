@@ -6374,6 +6374,91 @@ TOOLS = [
         "npm install lucia",
         "code",
     ),
+    # Project Management — open-source Notion/Confluence alternative -----------
+    (
+        "appflowy",
+        "AppFlowy",
+        "Bring projects, wikis, and teams together with AI",
+        "AppFlowy is an open-source Notion and Confluence alternative built with "
+        "Rust and Flutter. Self-hostable with full data ownership. Supports "
+        "documents, databases, kanban boards, calendars, and AI writing assistance. "
+        "One of the most-starred open-source productivity tools (61k+ stars).",
+        "project-management",
+        "AppFlowy-IO/AppFlowy",
+        61000,
+        "https://appflowy.io",
+        "notion-alternative,wiki,project-management,self-hosted,open-source,rust,flutter",
+        "docker compose up -d",
+        "code",
+    ),
+    # Analytics — open-source data catalog and lineage platform ----------------
+    (
+        "datahub",
+        "DataHub",
+        "The extensible metadata platform for the modern data stack",
+        "DataHub is a modern metadata platform for data discovery, observability, "
+        "and governance built by LinkedIn. Provides data lineage, impact analysis, "
+        "data cataloging, and column-level lineage. Integrates with dbt, Airflow, "
+        "Spark, Kafka, and 50+ data sources out of the box.",
+        "analytics-metrics",
+        "datahub-project/datahub",
+        10000,
+        "https://datahubproject.io",
+        "data-catalog,data-lineage,data-discovery,metadata,governance,open-source",
+        "pip install acryl-datahub",
+        "code",
+    ),
+    # Boilerplates — T3 Stack scaffolding CLI ----------------------------------
+    (
+        "create-t3-app",
+        "create-t3-app",
+        "The best way to start a full-stack, typesafe Next.js app",
+        "create-t3-app is the official CLI for bootstrapping T3 Stack projects — "
+        "Next.js, TypeScript, Tailwind CSS, tRPC, Prisma, and NextAuth.js. "
+        "The most popular opinionated Next.js starter with 27k+ stars. "
+        "One command to scaffold a type-safe, production-ready SaaS foundation.",
+        "boilerplates",
+        "t3-oss/create-t3-app",
+        27000,
+        "https://create.t3.gg",
+        "nextjs,typescript,trpc,tailwind,prisma,nextauth,t3-stack,saas-starter",
+        "npm create t3-app@latest",
+        "code",
+    ),
+    # AI — TypeScript AI agent framework (formerly Phidata) --------------------
+    (
+        "agno",
+        "Agno",
+        "Build fast, multi-modal AI agents in Python",
+        "Agno (formerly Phidata) is a lightweight Python library for building "
+        "multi-modal AI agents with memory, knowledge, tools, and reasoning. "
+        "Supports OpenAI, Anthropic, Gemini, and local models via Ollama. "
+        "Features structured outputs, agent teams, and a built-in playground UI.",
+        "ai-automation",
+        "agno-agi/agno",
+        23000,
+        "https://agno.com",
+        "ai-agent,python,llm,multi-agent,memory,tools,openai,anthropic",
+        "pip install agno",
+        "code",
+    ),
+    # AI — open-source ML feature store ----------------------------------------
+    (
+        "feast",
+        "Feast",
+        "Open source feature store for machine learning",
+        "Feast is a standalone open-source feature store that enables ML teams "
+        "to define, manage, discover, and serve features for model training and "
+        "online inference. Supports offline stores (BigQuery, Spark, Redshift) "
+        "and online stores (Redis, DynamoDB, Bigtable). CNCF sandbox project.",
+        "ai-automation",
+        "feast-dev/feast",
+        5000,
+        "https://feast.dev",
+        "feature-store,ml,machine-learning,mlops,redis,bigquery,python",
+        "pip install feast",
+        "code",
+    ),
 ]
 
 
