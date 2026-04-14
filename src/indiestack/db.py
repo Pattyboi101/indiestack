@@ -4535,6 +4535,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "clack": "cli",                 # Clack — modern Node.js interactive CLI prompts by Nate Wienert (3k★)
     # Computer vision / autonomous agents — "computer" alone fires before "vision" / "use"
     "computer": "ai",               # "computer vision library", "computer use API" → AI & Automation
+    # JVM ecosystem — "jvm" alone is common in backend framework queries
+    "jvm": "api",                   # "jvm framework", "jvm microservices" → API Tools (Ktor, Quarkus, Spring Boot)
+    # Chaos engineering — CNCF tools for testing infrastructure resilience
+    "chaos": "devops",              # "chaos engineering", "chaos testing" → DevOps (LitmusChaos, Chaos Mesh, Gremlin)
+    # Progressive delivery / canary deployments
+    "canary": "devops",             # "canary deployment", "canary release" → DevOps (Argo Rollouts, Flagger)
+    "rollout": "devops",            # "deployment rollout", "progressive rollout" → DevOps (Argo Rollouts, Spinnaker)
+    "bluegreen": "devops",          # "blue-green deployment" compound form → DevOps & Infrastructure
+    "blue-green": "devops",         # hyphenated — "blue-green strategy", "blue-green switch" → DevOps
 }
 
 _FTS_STOP_WORDS = {

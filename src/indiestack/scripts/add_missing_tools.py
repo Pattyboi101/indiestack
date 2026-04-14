@@ -6435,6 +6435,84 @@ TOOLS = [
         "npm install yup",
         "code",
     ),
+    # Markdown / HTML processing (unified ecosystem) --------------------------------
+    (
+        "remark",
+        "remark",
+        "Markdown processor powered by plugins",
+        "remark is a Markdown processor built on the unified ecosystem. Parse Markdown "
+        "to a syntax tree, transform it with plugins, then compile to HTML or other "
+        "formats. Used by Next.js, Astro, and most modern documentation toolchains.",
+        "documentation",
+        "remarkjs/remark",
+        7000,
+        "https://remark.js.org",
+        "markdown,parser,unified,plugins,mdx",
+        "npm install remark",
+        "code",
+    ),
+    (
+        "rehype",
+        "rehype",
+        "HTML processor powered by plugins",
+        "rehype is an HTML processor built on the unified ecosystem. Parse HTML to a "
+        "syntax tree, transform it with plugins, then serialize back to HTML. Works "
+        "seamlessly with remark for Markdown-to-HTML pipelines.",
+        "documentation",
+        "rehypejs/rehype",
+        1500,
+        "https://github.com/rehypejs/rehype",
+        "html,parser,unified,plugins,markdown",
+        "npm install rehype",
+        "code",
+    ),
+    (
+        "velite",
+        "Velite",
+        "Build typesafe content layer for your Next.js / Astro app",
+        "Velite transforms Markdown, MDX, YAML, and JSON files into type-safe data. "
+        "ContentLayer successor with better Next.js App Router support. Define "
+        "content schemas with Zod, then query your blog posts and docs with full TypeScript types.",
+        "headless-cms",
+        "velite-build/velite",
+        3000,
+        "https://velite.js.org",
+        "mdx,markdown,nextjs,cms,typescript,content-layer",
+        "npm install velite",
+        "code",
+    ),
+    # API key management -------------------------------------------------------------
+    (
+        "unkey",
+        "Unkey",
+        "Open source API key management and rate limiting",
+        "Unkey provides instant API key creation, validation, rate limiting, and "
+        "analytics. Ship API authentication in minutes — no key management "
+        "infrastructure to maintain. SDKs for TypeScript, Python, Go, and more.",
+        "api-tools",
+        "unkeyhq/unkey",
+        5000,
+        "https://unkey.dev",
+        "api-key,rate-limiting,authentication,open-source",
+        "npm install @unkey/api",
+        "code",
+    ),
+    # Progressive delivery -----------------------------------------------------------
+    (
+        "argo-rollouts",
+        "Argo Rollouts",
+        "Kubernetes progressive delivery controller",
+        "Argo Rollouts is a Kubernetes controller and set of CRDs for progressive "
+        "delivery with support for canary releases, blue-green deployments, and "
+        "automated rollback. Integrates with metrics providers and ingress controllers.",
+        "devops-infrastructure",
+        "argoproj/argo-rollouts",
+        3000,
+        "https://argoproj.github.io/rollouts",
+        "kubernetes,canary,blue-green,progressive-delivery,gitops",
+        "kubectl apply -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml",
+        "code",
+    ),
 ]
 
 

@@ -341,7 +341,7 @@ jobs:
             <div style="font-size:14px;color:var(--ink-muted);line-height:1.8;">
                 Your AI agent will automatically search IndieStack when you need developer infrastructure.
                 Instead of generating auth code from scratch, it finds Clerk or Lucia. Instead of writing
-                a payment flow, it finds LemonSqueezy or Polar. 40 categories, 6,500+ tools, verified
+                a payment flow, it finds LemonSqueezy or Polar. 29+ categories, 6,500+ tools, verified
                 compatibility data.
             </div>
         </div>
