@@ -4490,6 +4490,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     "openreplay": "monitoring",     # OpenReplay — open-source Hotjar/FullStory alternative (10k★)
     # Logging — Axiom (cloud log management and analytics; Logtail/Papertrail alternative)
     "axiom": "logging",             # Axiom — developer-first log management and analytics (5k★)
+    # Changelog generation — git-cliff, semantic-release, release-it, conventional-changelog
+    "changelog": "devops",          # "changelog generator", "changelog from git" → DevOps (git-cliff, semantic-release)
+    # Data lakehouse / table formats — Apache Iceberg, Delta Lake, Apache Hudi
+    "lakehouse": "database",        # "data lakehouse", "lakehouse architecture" → Database
+    "iceberg": "database",          # Apache Iceberg — open table format for huge analytic datasets (9k★)
+    "delta": "database",            # Delta Lake — ACID transactions on data lakes (Databricks, 7k★)
+    "hudi": "database",             # Apache Hudi — streaming data lake platform (7k★)
+    # Apache Spark — unified analytics engine for large-scale data processing
+    "spark": "background",          # Apache Spark — distributed batch + stream processing engine (40k★)
+    # Visual regression testing — Chromatic, Percy, Playwright screenshot tests
+    "visual": "testing",            # "visual regression test", "visual testing tool" → Testing Tools
+    # JVM / Kotlin backend frameworks — growing as Kotlin adoption rises
+    "ktor": "api",                  # Ktor — Kotlin async web framework by JetBrains (12k★)
+    "quarkus": "api",               # Quarkus — Supersonic Subatomic Java (GraalVM native, 14k★)
+    "vertx": "api",                 # Eclipse Vert.x — reactive Java/JVM toolkit (14k★)
+    "micronaut": "api",             # Micronaut — JVM microservices with compile-time DI (6k★)
+    # Databricks — unified data + AI platform (very common alternative query)
+    "databricks": "ai",             # Databricks — unified data lakehouse + AI/ML platform
+    # ML feature stores — Feast, Hopsworks, Tecton
+    "feast": "ai",                  # Feast — open-source ML feature store (6k★)
+    "hopsworks": "ai",              # Hopsworks — ML platform + feature store (1k★)
+    "feature-store": "ai",          # "feature store", "ml feature store" → AI & Automation
+    "featurestore": "ai",           # compound form — "featurestore alternative" → AI & Automation
+    # GraalVM — native image compilation for Java/JVM apps
+    "graalvm": "devops",            # GraalVM — polyglot JVM with native image compilation (22k★)
 }
 
 _FTS_STOP_WORDS = {

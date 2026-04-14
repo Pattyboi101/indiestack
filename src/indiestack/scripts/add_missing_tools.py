@@ -4050,25 +4050,6 @@ TOOLS = [
         "npm install rollup",
         "code",
     ),
-    # Email Marketing — Loops ----------------------------------------------------------
-    (
-        "loops",
-        "Loops",
-        "The email platform built for SaaS",
-        "Loops is a modern email platform purpose-built for SaaS products. "
-        "Send transactional emails (password resets, receipts, notifications) and "
-        "marketing campaigns from one place. Events-driven: trigger emails from "
-        "your app events, Stripe webhooks, and user actions. "
-        "Simple API, beautiful editor, clean analytics. "
-        "Favourite among indie hackers and SaaS founders. 5k+ GitHub stars.",
-        "email-marketing",
-        "loops-so/loops",
-        5000,
-        "https://loops.so",
-        "email,transactional,marketing,saas,events-driven",
-        "npm install loops-sdk",
-        "saas",
-    ),
     # Search Engine — Orama ------------------------------------------------------------
     (
         "orama",
@@ -4610,57 +4591,6 @@ TOOLS = [
         "docker run -d --restart=always -p 3001:3001 louislam/uptime-kuma:1",
         "code",
     ),
-    # Testing — Ruff (Python linter + formatter in Rust) --------------------------------
-    (
-        "ruff",
-        "Ruff",
-        "An extremely fast Python linter and code formatter, written in Rust",
-        "Ruff is a blazing-fast Python linter and formatter written in Rust — 10-100× faster "
-        "than Flake8, Black, isort, and pylint combined. Drop-in replacement with a single "
-        "pyproject.toml config. Supports 800+ lint rules (including Flake8, isort, pydocstyle, "
-        "pyupgrade). The standard Python linting tool for modern projects. 34k+ GitHub stars.",
-        "testing-tools",
-        "astral-sh/ruff",
-        34000,
-        "https://astral.sh/ruff",
-        "python,linter,formatter,fast,rust,flake8-alternative",
-        "pip install ruff",
-        "code",
-    ),
-    # Developer Tools — Pydantic (Python data validation) --------------------------------
-    (
-        "pydantic",
-        "Pydantic",
-        "Data validation using Python type hints",
-        "Pydantic is the most widely used Python data validation library. Define data shapes "
-        "with type hints, get automatic validation, serialization, and JSON schema generation. "
-        "The foundation of FastAPI, LangChain, and thousands of Python applications. "
-        "Pydantic v2 rewrites the core in Rust for 5-50× faster validation. 21k+ GitHub stars.",
-        "developer-tools",
-        "pydantic/pydantic",
-        21000,
-        "https://docs.pydantic.dev",
-        "python,validation,types,serialization,fastapi,json-schema",
-        "pip install pydantic",
-        "code",
-    ),
-    # File Management — MinIO (S3-compatible object storage) ----------------------------
-    (
-        "minio",
-        "MinIO",
-        "High-performance, S3-compatible object storage",
-        "MinIO is a high-performance, open-source object storage server fully compatible "
-        "with the Amazon S3 API. Self-host on commodity hardware or Kubernetes. "
-        "Write performance up to 325 GiB/s, read up to 165 GiB/s on a standard server. "
-        "Powers AI/ML pipelines, data lakes, and cloud-native backup. 47k+ GitHub stars.",
-        "file-management",
-        "minio/minio",
-        47000,
-        "https://min.io",
-        "s3,object-storage,self-hosted,open-source,kubernetes,data-lake",
-        "docker run -p 9000:9000 -p 9001:9001 quay.io/minio/minio server /data --console-address ':9001'",
-        "code",
-    ),
     # API / Backend Frameworks — NestJS (TypeScript enterprise framework) ----------------
     (
         "nestjs",
@@ -4959,22 +4889,6 @@ TOOLS = [
         "brew install insomnia",
         "code",
     ),
-    (
-        "scalar",
-        "Scalar",
-        "Beautiful API references from OpenAPI/Swagger files",
-        "Scalar generates modern, interactive API reference documentation from "
-        "OpenAPI/Swagger specs. Drop-in replacement for Swagger UI and ReDoc. "
-        "Includes an embedded API client for testing. Integrates with FastAPI, "
-        "Hono, Express, Nitro, and any OpenAPI provider.",
-        "api-tools",
-        "scalar/scalar",
-        30000,
-        "https://scalar.com",
-        "openapi,api-docs,swagger,documentation,api-client",
-        "npm install @scalar/api-reference",
-        "code",
-    ),
     # Database — schema migration tools ----------------------------------------
     (
         "atlas",
@@ -5007,23 +4921,6 @@ TOOLS = [
         "https://plane.so",
         "project-management,kanban,issues,self-hosted,open-source",
         "docker compose up -d",
-        "code",
-    ),
-    # API Tools — open-source Postman alternatives -----------------------------
-    (
-        "hoppscotch",
-        "Hoppscotch",
-        "Open source API development ecosystem",
-        "Hoppscotch is a lightweight, web-based API development suite — an open-source "
-        "Postman alternative. Test REST, GraphQL, WebSocket, SSE, and Socket.IO "
-        "endpoints directly in the browser. Supports teams, environments, collections, "
-        "and self-hosting. Built with Vue.js and available as a desktop app.",
-        "api-tools",
-        "hoppscotch/hoppscotch",
-        60000,
-        "https://hoppscotch.io",
-        "api-client,rest,graphql,websocket,postman-alternative,open-source",
-        "docker run --rm -it hoppscotch/hoppscotch",
         "code",
     ),
     # Database — TypeScript ORMs / query builders (major catalog gap) ----------
@@ -6377,6 +6274,86 @@ TOOLS = [
         "https://million.dev",
         "react,performance,compiler,virtual-dom,optimization,nextjs,vite",
         "npm install million",
+        "code",
+    ),
+    # ── Eighty-fourth pass ────────────────────────────────────────────────────
+    # JVM / Kotlin frameworks -----------------------------------------------
+    (
+        "ktor",
+        "Ktor",
+        "Asynchronous framework for connected applications",
+        "Ktor is an asynchronous Kotlin framework by JetBrains for building connected "
+        "applications — web services, HTTP clients, mobile backends. Lightweight, "
+        "coroutine-native, and runs on JVM, Android, and Kotlin Multiplatform.",
+        "api-tools",
+        "kotlin/ktor",
+        12000,
+        "https://ktor.io",
+        "kotlin,async,jvm,coroutines,multiplatform",
+        "implementation(\"io.ktor:ktor-server-core:3.0.0\")",
+        "code",
+    ),
+    (
+        "quarkus",
+        "Quarkus",
+        "Supersonic Subatomic Java",
+        "Quarkus is a Kubernetes-native Java stack tailored for GraalVM and HotSpot. "
+        "Sub-10ms startup, tiny memory footprint, and developer-friendly live reload. "
+        "Unifies imperative and reactive programming models for cloud-native microservices.",
+        "api-tools",
+        "quarkusio/quarkus",
+        14000,
+        "https://quarkus.io",
+        "java,graalvm,microservices,kubernetes,native-image",
+        "mvn io.quarkus.platform:quarkus-maven-plugin:create",
+        "code",
+    ),
+    # Changelog generation --------------------------------------------------
+    (
+        "git-cliff",
+        "git-cliff",
+        "A highly customizable changelog generator",
+        "git-cliff generates changelogs from your Git history based on Conventional "
+        "Commits. Written in Rust for speed, supports Jinja2 templates, multiple "
+        "output formats, and integrates with GitHub CI workflows.",
+        "devops-infrastructure",
+        "orhun/git-cliff",
+        9000,
+        "https://git-cliff.org",
+        "changelog,git,conventional-commits,rust,release",
+        "cargo install git-cliff",
+        "code",
+    ),
+    # Apache Spark -----------------------------------------------------------
+    (
+        "apache-spark",
+        "Apache Spark",
+        "Unified engine for large-scale data analytics",
+        "Apache Spark is the most widely-used open-source unified analytics engine for "
+        "large-scale data processing. Supports batch, streaming (Structured Streaming), "
+        "SQL, machine learning (MLlib), and graph processing (GraphX).",
+        "background-jobs",
+        "apache/spark",
+        40000,
+        "https://spark.apache.org",
+        "batch,streaming,big-data,ml,sql,scala,python,java",
+        "pip install pyspark",
+        "code",
+    ),
+    # ML feature stores -----------------------------------------------------
+    (
+        "feast",
+        "Feast",
+        "Open source feature store for machine learning",
+        "Feast is an open-source feature store that allows ML teams to define, manage, "
+        "discover, and serve features for training and online inference. Supports "
+        "Redis, BigQuery, Snowflake, DynamoDB, and more as backend stores.",
+        "ai-automation",
+        "feast-dev/feast",
+        6000,
+        "https://feast.dev",
+        "ml,feature-store,mlops,redis,bigquery,python",
+        "pip install feast",
         "code",
     ),
 ]
