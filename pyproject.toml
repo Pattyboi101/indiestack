@@ -37,7 +37,7 @@ Repository = "https://github.com/Pattyboi101/indiestack"
 # Optional: full server dependencies (only needed for self-hosting)
 [project.optional-dependencies]
 server = [
-    "fastapi>=0.109.0",
+    "fastapi>=0.109.0,<0.116.0",
     "uvicorn[standard]>=0.27.0",
     "aiosqlite>=0.19.0",
     "python-multipart>=0.0.6",
