@@ -32,7 +32,7 @@ async def incidents_page(request: Request):
                 If you spot a problem, let us know immediately:
             </p>
             <ul style="color:var(--ink-muted);line-height:1.8;margin-bottom:16px;padding-left:20px;">
-                <li><strong style="color:var(--ink);">Email:</strong> <a href="mailto:hello@indiestack.ai" style="color:var(--accent);text-decoration:none;">hello@indiestack.ai</a> (fastest response)</li>
+                <li><strong style="color:var(--ink);">Email:</strong> <a href="mailto:pajebay1@gmail.com" style="color:var(--accent);text-decoration:none;">pajebay1@gmail.com</a> (fastest response)</li>
                 <li><strong style="color:var(--ink);">GitHub:</strong> <a href="https://github.com/Pattyboi101/indiestack/issues" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">github.com/Pattyboi101/indiestack/issues</a></li>
                 <li><strong style="color:var(--ink);">API Status:</strong> Check <a href="https://indiestack.ai/api/status" style="color:var(--accent);text-decoration:none;">indiestack.ai/api/status</a> for real-time metrics</li>
             </ul>
@@ -128,7 +128,7 @@ async def incidents_page(request: Request):
 
         <div style="border-top:1px solid var(--border);padding-top:32px;">
             <p style="font-size:13px;color:var(--ink-muted);line-height:1.6;">
-                Questions? Email <a href="mailto:hello@indiestack.ai" style="color:var(--accent);text-decoration:none;">hello@indiestack.ai</a>.
+                Questions? Email <a href="mailto:pajebay1@gmail.com" style="color:var(--accent);text-decoration:none;">pajebay1@gmail.com</a>.
                 Read our full <a href="https://indiestack.ai/sla" style="color:var(--accent);text-decoration:none;">SLA page</a> for uptime commitments.
             </p>
         </div>
