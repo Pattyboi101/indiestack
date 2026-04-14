@@ -1,5 +1,9 @@
 # Mistakes We've Made — Don't Repeat These
 
+- `db.execute_fetchone()` does NOT exist in the db module. Use `await (await d.execute(query, params)).fetchone()` directly on the connection object. The hallucinated function survived in main.py because those calls are wrapped in try/except. Always use the cursor pattern: `cursor = await d.execute(...); row = await cursor.fetchone()`.
+
+- `hello@indiestack.ai` does NOT exist. The contact email is `pajebay1@gmail.com`. This was hallucinated across 5 files (main.py, intel.py, sla.py, trust.py). Always use `pajebay1@gmail.com` until an actual indiestack.ai email is set up.
+
 - Flex child `overflow-x:auto` does NOT work if any ancestor in the flex chain is missing `min-width:0`. The child can never shrink below its content width, so `overflow-x:auto` never triggers. Fix: add `min-width:0` to EVERY flex child in the chain that needs to shrink. Also: never add `overflow:hidden` to the flex wrapper div — it clips scrollable children. The install_block in tool.py hit this; fixed Apr 7.
 
 - `bm25(tools_fts)` with equal column weights lets "alternative to X" descriptions outrank X itself for a brand-name query. A tool with "netlify" 5× in its description beats Netlify for query "netlify". Fix: use weighted bm25 `bm25(tools_fts, 10.0, 5.0, 1.0, 3.0)` (name, tagline, description, tags) AND add a slug-exact-match boost (+2000 engagement) so the exact tool always ranks first.
