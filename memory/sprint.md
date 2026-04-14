@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (seventy-ninth pass)
+Last updated: 2026-04-14 (eightieth pass)
 
 ## Status: Active
 
@@ -10,14 +10,43 @@ Last updated: 2026-04-14 (seventy-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1479 unique effective keys (added 19 in seventy-ninth pass — in-memory/memory/inmemory → caching; letsencrypt/certbot/step-ca/smallstep → security; agentic/multiagent/llmops/tuning/dify/openwebui/open-webui → ai; 22 duplicate keys in source, all correct last-write-wins)
-- **Catalog script**: `scripts/add_missing_tools.py` — 360 tools ready to insert (slug-safe); +5 this pass: dify, open-webui, certbot, step-ca, loki
+- **_CAT_SYNONYMS**: 1487 unique effective keys (added 13 in eightieth pass — identity/faas/batch/endpoint/typecheck/typechecking/package/service-worker/task/runner/ingress/immer/medusa; 21 duplicate keys in source, all correct last-write-wins)
+- **Catalog script**: `scripts/add_missing_tools.py` — 364 tools ready to insert (slug-safe); +5 this pass: payload, pglite, monaco, immer, medusajs
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
 - **Tool count in copy**: "6,500+" (verified correct)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eightieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 13 new entries to `_CAT_SYNONYMS` (1479 → 1487 unique effective keys, 22 → 21 duplicate keys):
+  - **Auth**: `identity` → `"authentication"` — covers "identity provider", "identity management", "digital identity" queries (not individually mapped despite being one of the most common auth-related terms)
+  - **DevOps**: `faas`, `ingress` → `"devops"` — FaaS (Function as a Service) alternative queries; Kubernetes ingress controller queries
+  - **Background Jobs**: `batch` → `"background"` — "batch job", "batch processing", "batch queue" queries
+  - **API Tools**: `endpoint` → `"api"` — "API endpoint" is an extremely common search term with no prior mapping
+  - **Testing**: `typecheck`, `typechecking` → `"testing"` — type checking tool queries (mypy, pyright, tsc); hyphen-stripped compound forms
+  - **Developer Tools**: `package`, `task`, `runner` → `"developer"` — "package manager" was routing to "frontend" via `manager`→`frontend`; "task runner" had no category boost
+  - **Frontend**: `service-worker`, `immer` → `"frontend"` — hyphenated "service-worker" was splitting to "service"[unmapped] + "worker"[→background]; Immer named tool for immutable state
+  - **CMS**: removed duplicate `payload` → `"cms"` entry (already at line 3034, last-write-wins kept)
+  - **Developer**: `medusa` → `"developer"` — Medusa open-source commerce framework queries
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (359 → 364 total):
+  - **Payload CMS** (payloadcms/payload, 32k★) — TypeScript headless CMS with built-in admin UI; headless-cms
+  - **PGlite** (electric-sql/pglite, 9k★) — PostgreSQL in WASM for browser, Node, edge runtimes; database
+  - **Monaco Editor** (microsoft/monaco-editor, 38k★) — the code editor that powers VS Code; frontend-frameworks
+  - **Immer** (immerjs/immer, 26k★) — produce next immutable state via mutations; frontend-frameworks
+  - **Medusa** (medusajs/medusa, 23k★) — open-source headless commerce infrastructure; developer-tools
+
+### Code Quality (Step 3)
+- No route file changes this pass; ast.parse() confirmed clean on db.py and add_missing_tools.py
+- Verified 0 new duplicate keys introduced in _CAT_SYNONYMS; removed 1 pre-existing duplicate (payload→cms)
+
+### R&D Docs (Step 4)
+- sprint.md updated to eightieth pass
 
 ## Completed This Session (2026-04-14, seventy-ninth pass — autonomous improvement cycle)
 

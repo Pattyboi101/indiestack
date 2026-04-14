@@ -6025,6 +6025,93 @@ TOOLS = [
         "docker run grafana/loki:latest -config.file=/etc/loki/local-config.yaml",
         "code",
     ),
+    # Headless CMS -------------------------------------------------------------
+    (
+        "payload",
+        "Payload CMS",
+        "The most powerful TypeScript headless CMS",
+        "Payload is a code-first headless CMS built with TypeScript, "
+        "React, and Node.js. It generates a fully-featured admin UI from "
+        "your schema, supports Postgres and MongoDB, and integrates "
+        "natively with Next.js. No vendor lock-in — your database, your server.",
+        "headless-cms",
+        "payloadcms/payload",
+        32000,
+        "https://payloadcms.com",
+        "cms,headless,typescript,nextjs,admin-ui,postgres,mongodb",
+        "npx create-payload-app",
+        "code",
+    ),
+    # Database -----------------------------------------------------------------
+    (
+        "pglite",
+        "PGlite",
+        "Lightweight Postgres in WASM for the browser and Node",
+        "PGlite is a WASM build of Postgres that runs in the browser, "
+        "Node.js, and edge runtimes with no native dependencies. Supports "
+        "full Postgres SQL, ACID transactions, and persistence via "
+        "IndexedDB. Ideal for local-first apps, tests, and Postgres-powered "
+        "edge compute.",
+        "database",
+        "electric-sql/pglite",
+        9000,
+        "https://pglite.dev",
+        "postgres,wasm,browser,local-first,database,serverless",
+        "npm install @electric-sql/pglite",
+        "code",
+    ),
+    # Frontend Frameworks ------------------------------------------------------
+    (
+        "monaco",
+        "Monaco Editor",
+        "The code editor that powers VS Code",
+        "Monaco Editor is the browser-based code editor that powers "
+        "VS Code. It provides rich IntelliSense, syntax highlighting, "
+        "diff views, and multi-cursor editing for 30+ languages. "
+        "Widely used to build browser IDEs, playground tools, and "
+        "in-app code editors.",
+        "frontend-frameworks",
+        "microsoft/monaco-editor",
+        38000,
+        "https://microsoft.github.io/monaco-editor",
+        "editor,code-editor,browser-ide,vscode,syntax-highlighting",
+        "npm install monaco-editor",
+        "code",
+    ),
+    (
+        "immer",
+        "Immer",
+        "Create the next immutable state by mutating the current one",
+        "Immer simplifies handling immutable data structures. You work "
+        "with a mutable draft, and Immer produces the next immutable "
+        "state. Used widely in Redux Toolkit, Zustand, and standalone "
+        "React state management. Supports patches and structural sharing.",
+        "frontend-frameworks",
+        "immerjs/immer",
+        26000,
+        "https://immerjs.github.io/immer",
+        "state-management,immutable,react,redux,draft,frontend",
+        "npm install immer",
+        "code",
+    ),
+    # Developer Tools ----------------------------------------------------------
+    (
+        "medusajs",
+        "Medusa",
+        "Open-source headless commerce infrastructure",
+        "Medusa is a composable open-source commerce engine built for "
+        "developers. Supports multi-region, subscriptions, promotions, "
+        "inventory management, and custom workflows. Powers headless "
+        "storefronts via its REST API and ships with a React admin "
+        "dashboard. Self-host on any Node.js environment.",
+        "developer-tools",
+        "medusajs/medusa",
+        23000,
+        "https://medusajs.com",
+        "ecommerce,commerce,headless,nodejs,api,self-hosted,typescript",
+        "npx create-medusa-app",
+        "code",
+    ),
 ]
 
 
