@@ -511,7 +511,7 @@ async def landing(request: Request):
     def _reveal(html):
         return f'<div class="reveal">{html}</div>'
 
-    body = hero + stats_bar + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(analyze_cta) + _reveal(maker_cta)
+    body = hero + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(analyze_cta) + _reveal(maker_cta)
 
     import json as _json
     website_ld = _json.dumps({
