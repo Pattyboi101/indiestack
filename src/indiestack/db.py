@@ -4515,6 +4515,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     "featurestore": "ai",           # compound form — "featurestore alternative" → AI & Automation
     # GraalVM — native image compilation for Java/JVM apps
     "graalvm": "devops",            # GraalVM — polyglot JVM with native image compilation (22k★)
+    # Data visualization — generic "visualization" term (missing despite "charts"/"charting" being mapped)
+    "visualization": "analytics",  # "data visualization library", "visualization tool" → Analytics & Metrics
+    "viz": "analytics",             # abbreviation — "data viz", "viz library", "viz component" → Analytics
+    # Data science / Python ecosystem — DataFrame, numeric, and scientific computing tools
+    "polars": "database",           # Polars — Rust DataFrame library, fast pandas alternative (34k★)
+    "pandas": "ai",                 # pandas — Python data analysis and DataFrame library (44k★); distinct from "panda"→frontend (Panda CSS)
+    "numpy": "ai",                  # NumPy — fundamental scientific computing for Python (28k★)
+    "scipy": "ai",                  # SciPy — scientific algorithms and math for Python (13k★)
+    "matplotlib": "analytics",      # Matplotlib — foundational Python plotting library (19k★)
+    "seaborn": "analytics",         # Seaborn — statistical data visualization on Matplotlib (12k★)
+    # Distributed computing / parallel Python — Ray (ML), Dask (big data)
+    "ray": "ai",                    # Ray — distributed ML and parallel compute framework (35k★)
+    "dask": "background",           # Dask — parallel Python computing for big data (12k★)
+    # Cloudflare D1 — serverless SQLite database (very common in Workers + Next.js stacks)
+    "d1": "database",               # Cloudflare D1 — serverless SQLite database on Workers (growing query volume)
+    # CLI frameworks — Go Cobra and Node.js Clack are the dominant named-tool alternative queries
+    "cobra": "cli",                 # Cobra — dominant Go CLI framework used by Docker, kubectl, Hugo (38k★)
+    "clack": "cli",                 # Clack — modern Node.js interactive CLI prompts by Nate Wienert (3k★)
+    # Computer vision / autonomous agents — "computer" alone fires before "vision" / "use"
+    "computer": "ai",               # "computer vision library", "computer use API" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

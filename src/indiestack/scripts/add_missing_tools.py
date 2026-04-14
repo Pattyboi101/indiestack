@@ -6356,6 +6356,85 @@ TOOLS = [
         "pip install feast",
         "code",
     ),
+    # Data Science / DataFrame ---------------------------------------------------
+    (
+        "polars",
+        "Polars",
+        "Blazingly fast DataFrames for Python, Rust, and Node.js",
+        "Polars is a lightning-fast DataFrame library written in Rust. Often 10-100x "
+        "faster than pandas for common operations. Lazy evaluation, multi-threaded "
+        "execution, and Apache Arrow memory model. The go-to pandas alternative in 2025.",
+        "database",
+        "pola-rs/polars",
+        34000,
+        "https://pola.rs",
+        "dataframe,python,rust,analytics,pandas-alternative",
+        "pip install polars",
+        "code",
+    ),
+    # CLI Frameworks -------------------------------------------------------------
+    (
+        "cobra",
+        "Cobra",
+        "A Commander for modern Go CLI applications",
+        "Cobra is the most popular Go library for building powerful modern CLI apps. "
+        "Used by Docker, Kubernetes kubectl, Hugo, GitHub CLI, and many others. "
+        "Generates bash/zsh/fish completion, man pages, and more.",
+        "cli-tools",
+        "spf13/cobra",
+        38000,
+        "https://cobra.dev",
+        "cli,go,golang,command-line,shell-completion",
+        "go get -u github.com/spf13/cobra@latest",
+        "code",
+    ),
+    (
+        "click",
+        "Click",
+        "The Pallets project for creating beautiful command line interfaces in Python",
+        "Click is a Python package for creating beautiful command line interfaces with "
+        "as little code as possible. Arbitrary nesting of commands, automatic help page "
+        "generation, and supports lazy loading of subcommands.",
+        "cli-tools",
+        "pallets/click",
+        15000,
+        "https://click.palletsprojects.com",
+        "cli,python,command-line,argparse-alternative",
+        "pip install click",
+        "code",
+    ),
+    # Developer Tools — Diagramming / Whiteboard ---------------------------------
+    (
+        "excalidraw",
+        "Excalidraw",
+        "Virtual whiteboard for sketching hand-drawn like diagrams",
+        "Excalidraw is an open-source virtual whiteboard with a hand-drawn feel. "
+        "Used by millions for technical diagrams, architecture sketches, and "
+        "collaborative whiteboarding. End-to-end encrypted real-time collaboration.",
+        "developer-tools",
+        "excalidraw/excalidraw",
+        89000,
+        "https://excalidraw.com",
+        "whiteboard,diagrams,collaboration,canvas,drawing",
+        "npm install @excalidraw/excalidraw",
+        "code",
+    ),
+    # Schema Validation ----------------------------------------------------------
+    (
+        "yup",
+        "Yup",
+        "Dead simple object schema validation for JavaScript",
+        "Yup is a schema builder for runtime value parsing and validation. Define a "
+        "schema, transform a value to match, assert the shape of an existing value, or "
+        "both. Pre-dates Zod but still widely used, especially with Formik.",
+        "developer-tools",
+        "jquense/yup",
+        22000,
+        "https://github.com/jquense/yup",
+        "validation,schema,javascript,typescript,formik",
+        "npm install yup",
+        "code",
+    ),
 ]
 
 

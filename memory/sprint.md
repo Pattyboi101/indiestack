@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-fourth pass)
+Last updated: 2026-04-14 (eighty-fifth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-14 (eighty-fourth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1524 unique active keys (eighty-fourth pass: +17 new — changelog, lakehouse, iceberg, delta, hudi, spark, visual, ktor, quarkus, vertx, micronaut, databricks, feast, hopsworks, feature-store, featurestore, graalvm; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 378 unique tools (fixed 6 pre-existing duplicates + added 5 new: ktor, quarkus, git-cliff, apache-spark, feast)
+- **_CAT_SYNONYMS**: 1538 unique active keys (eighty-fifth pass: +14 new — visualization, viz, polars, pandas, numpy, scipy, matplotlib, seaborn, ray, dask, d1, cobra, clack, computer; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 383 unique tools (added 5 new: polars, cobra, click, excalidraw, yup)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,32 @@ Last updated: 2026-04-14 (eighty-fourth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 14 new `_CAT_SYNONYMS` entries (1524 → 1538 unique keys, 0 duplicates):
+  - **Data viz**: `visualization`, `viz` → analytics — "data visualization library", "viz component" queries
+  - **Python data science**: `polars` → database, `pandas` → ai, `numpy` → ai, `scipy` → ai — major Python data tools (pandas distinct from "panda"→frontend for Panda CSS)
+  - **Python viz**: `matplotlib` → analytics, `seaborn` → analytics — foundational Python plotting libraries
+  - **Distributed compute**: `ray` → ai (Ray.io ML framework), `dask` → background (parallel Python)
+  - **Cloudflare D1**: `d1` → database — serverless SQLite on Workers (growing Next.js/Workers stack)
+  - **CLI frameworks**: `cobra` → cli (Go CLI, 38k★), `clack` → cli (Node.js interactive CLI)
+  - **Computer vision**: `computer` → ai — "computer vision library", "computer use API" queries
+
+### Catalog Script (Step 2)
+- Added 5 new tools (378 → 383 unique):
+  - **Polars** (pola-rs/polars, 34k★) — Rust DataFrame library, fast pandas alternative; database
+  - **Cobra** (spf13/cobra, 38k★) — dominant Go CLI framework (Docker, kubectl, Hugo use it); cli-tools
+  - **Click** (pallets/click, 15k★) — Python CLI framework by Pallets; cli-tools
+  - **Excalidraw** (excalidraw/excalidraw, 89k★) — virtual whiteboard/diagramming; developer-tools
+  - **Yup** (jquense/yup, 22k★) — JS/TS schema validation, pre-Zod era but still widely searched; developer-tools
+
+### Code Quality (Step 3)
+- No route file changes needed — no stale stats or missing escapes found in recent commits
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-fifth pass
 
 ## Completed This Session (2026-04-14, eighty-fourth pass — autonomous improvement cycle)
 
