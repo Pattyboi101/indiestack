@@ -6435,6 +6435,89 @@ TOOLS = [
         "npm install yup",
         "code",
     ),
+    # AI Dev Tools — Eighty-Sixth Pass -------------------------------------------
+    (
+        "cline",
+        "Cline",
+        "Open-source AI coding agent that lives in your IDE",
+        "Cline (formerly Claude Dev) is an open-source AI coding extension for VS Code "
+        "and JetBrains. It autonomously reads files, writes code, runs terminal commands, "
+        "and browses the web to complete multi-step tasks. Supports Claude, GPT-4, Gemini, "
+        "and any OpenAI-compatible API. 38k+ GitHub stars.",
+        "ai-dev-tools",
+        "clinebot/cline",
+        38000,
+        "https://cline.bot",
+        "ai-coding,code-assistant,ide,vscode,autonomous-agent,claude",
+        "",
+        "code",
+    ),
+    # Local LLM ------------------------------------------------------------------
+    (
+        "jan",
+        "Jan",
+        "Open-source local LLM chat and inference server",
+        "Jan is a 100% offline, privacy-first alternative to ChatGPT that runs on your "
+        "own hardware. Download models from Hugging Face, run them locally via llama.cpp, "
+        "and expose a local OpenAI-compatible API server. Supports Mac, Windows, and Linux.",
+        "ai-automation",
+        "janhq/jan",
+        22000,
+        "https://jan.ai",
+        "local-llm,privacy,inference,chat,offline,openai-compatible",
+        "",
+        "code",
+    ),
+    # AI Agent Framework ---------------------------------------------------------
+    (
+        "agno",
+        "Agno",
+        "Multi-modal agent framework for building production AI agents",
+        "Agno (formerly Phidata) is a lightweight Python library for building multi-modal "
+        "agents with memory, knowledge, tools, and reasoning. Agents can work alone or in "
+        "teams, with built-in support for RAG, structured outputs, and 20+ LLM providers.",
+        "ai-automation",
+        "agno-agi/agno",
+        24000,
+        "https://agno.com",
+        "agents,multi-agent,python,llm,rag,agentic,multimodal",
+        "pip install agno",
+        "code",
+    ),
+    # LLM Observability ----------------------------------------------------------
+    (
+        "opik",
+        "Opik",
+        "Open-source LLM evaluation and tracing by Comet",
+        "Opik is an open-source platform for evaluating, testing, and monitoring LLM "
+        "applications. Log traces with one line of code, run automated evaluations, "
+        "compare prompt versions, and catch regressions before they reach production. "
+        "Integrates with LangChain, LlamaIndex, and any LLM.",
+        "ai-automation",
+        "comet-ml/opik",
+        5000,
+        "https://www.comet.com/site/products/opik",
+        "llm-evaluation,tracing,observability,evals,testing,langchain",
+        "pip install opik",
+        "code",
+    ),
+    # CI/CD Pipelines as Code ----------------------------------------------------
+    (
+        "dagger",
+        "Dagger",
+        "Portable DevOps pipeline engine that runs anywhere",
+        "Dagger lets you define your CI/CD pipelines as code using TypeScript, Python, or "
+        "Go. The same pipeline runs locally and in any CI provider (GitHub Actions, CircleCI, "
+        "Jenkins, GitLab CI) without vendor lock-in. Powered by BuildKit containers for "
+        "reproducible, cacheable builds.",
+        "devops-infrastructure",
+        "dagger/dagger",
+        11000,
+        "https://dagger.io",
+        "ci-cd,pipelines,containers,devops,github-actions,reproducible",
+        "",
+        "code",
+    ),
 ]
 
 

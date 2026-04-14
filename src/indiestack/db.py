@@ -4535,6 +4535,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "clack": "cli",                 # Clack — modern Node.js interactive CLI prompts by Nate Wienert (3k★)
     # Computer vision / autonomous agents — "computer" alone fires before "vision" / "use"
     "computer": "ai",               # "computer vision library", "computer use API" → AI & Automation
+    # Caching — Varnish HTTP accelerator (popular "varnish alternative" queries)
+    "varnish": "caching",           # Varnish Cache — high-performance HTTP reverse proxy + cache (11k★)
+    # AI — audio/video transcription tools (Whisper, Deepgram, AssemblyAI)
+    "transcription": "ai",          # "transcription API", "audio transcription" → AI & Automation
+    # AI — standalone "vision" term (complement to "computer-vision"→ai, "cv"→ai)
+    "vision": "ai",                 # "vision model", "vision API", "LLM vision", "vision LLM" → AI & Automation
+    # Auth — attribute-based access control (complement to "rbac"→authentication)
+    "abac": "authentication",       # ABAC — attribute-based access control → Authentication
+    # DevOps — localhost tunneling tools (LocalTunnel, ngrok already mapped, zrok)
+    "localtunnel": "devops",        # LocalTunnel — expose localhost to the web → DevOps
+    "zrok": "devops",               # zrok — self-hosted ngrok alternative → DevOps
+    # DevOps — IaC tools for Azure and AWS (complement to "terraform"/"opentofu" already mapped)
+    "bicep": "devops",              # Azure Bicep — domain-specific language for IaC on Azure
+    "cdk": "devops",                # AWS CDK — Cloud Development Kit (TypeScript/Python/Java IaC)
+    # Analytics — session recording / heatmaps (very high "alternative" query volume)
+    "hotjar": "analytics",          # Hotjar — heatmaps, session recordings, and user feedback (very common alt query)
+    "clarity": "analytics",         # Microsoft Clarity — free heatmaps + session recordings → Analytics
+    # Monitoring — FullStory session replay (complement to "logrocket"/"highlight" already mapped)
+    "fullstory": "monitoring",      # FullStory — enterprise session replay and digital experience analytics
+    # Auth — FusionAuth CIAM platform
+    "fusionauth": "authentication", # FusionAuth — customer identity and access management (CIAM) platform (10k★)
+    # MCP — ModelContextProtocol full name (complement to "mcp"→mcp and "protocol"→mcp)
+    "modelcontextprotocol": "mcp",  # ModelContextProtocol — MCP specification and registry → MCP Servers
 }
 
 _FTS_STOP_WORDS = {

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-fifth pass)
+Last updated: 2026-04-14 (eighty-sixth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-14 (eighty-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1538 unique active keys (eighty-fifth pass: +14 new — visualization, viz, polars, pandas, numpy, scipy, matplotlib, seaborn, ray, dask, d1, cobra, clack, computer; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 383 unique tools (added 5 new: polars, cobra, click, excalidraw, yup)
+- **_CAT_SYNONYMS**: 1551 unique active keys (eighty-sixth pass: +13 new — varnish, transcription, vision, abac, localtunnel, zrok, bicep, cdk, hotjar, clarity, fullstory, fusionauth, modelcontextprotocol; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 388 unique tools (added 5 new: cline, jan, agno, opik, dagger)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,35 @@ Last updated: 2026-04-14 (eighty-fifth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-14, eighty-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 14 new `_CAT_SYNONYMS` entries (1538 → 1552 unique keys, 0 duplicates):
+  - **Caching**: `varnish` → caching — Varnish Cache HTTP accelerator (popular alternative queries)
+  - **AI transcription**: `transcription` → ai — "transcription API", "audio transcription" queries
+  - **AI vision**: `vision` → ai — standalone "vision model", "vision API", "LLM vision" queries
+  - **Auth**: `abac` → authentication, `fusionauth` → authentication — attribute-based access control + CIAM
+  - **DevOps tunneling**: `localtunnel` → devops, `zrok` → devops — localhost tunnel tools
+  - **DevOps IaC**: `bicep` → devops, `cdk` → devops — Azure Bicep and AWS Cloud Development Kit
+  - **Analytics**: `hotjar` → analytics, `clarity` → analytics — heatmap/session recording tools
+  - **Monitoring**: `fullstory` → monitoring — enterprise session replay analytics
+  - **MCP**: `modelcontextprotocol` → mcp — full protocol name disambiguation
+
+### Catalog Script (Step 2)
+- Added 5 new tools (383 → 388 unique):
+  - **Cline** (clinebot/cline, 38k★) — open-source AI coding agent (formerly Claude Dev); ai-dev-tools
+  - **Jan** (janhq/jan, 22k★) — offline local LLM chat + OpenAI-compatible inference server; ai-automation
+  - **Agno** (agno-agi/agno, 24k★) — multi-modal Python agent framework (formerly Phidata); ai-automation
+  - **Opik** (comet-ml/opik, 5k★) — open-source LLM evaluation and tracing by Comet ML; ai-automation
+  - **Dagger** (dagger/dagger, 11k★) — portable CI/CD pipelines as code; devops-infrastructure
+
+### Code Quality (Step 3)
+- Reviewed admin Intel tab (70f0998) and intel.py cursor fix (bdd8564) — both clean
+- Proper html.escape(), CSS variables, no hardcoded hex colors or stale stats found
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-sixth pass
 
 ## Completed This Session (2026-04-14, eighty-fifth pass — autonomous improvement cycle)
 
