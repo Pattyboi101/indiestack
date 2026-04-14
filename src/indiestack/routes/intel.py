@@ -6,7 +6,6 @@ from html import escape
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
-from indiestack import db
 from indiestack.auth import check_admin_session
 from indiestack.routes.components import page_shell
 
@@ -18,22 +17,22 @@ router = APIRouter()
 
 async def _fetch_intel(d, slug: str) -> dict | None:
     """Fetch all intelligence data for a tool. Returns None if tool not found."""
-    tool = await db.execute_fetchone(d,
-        "SELECT id, name, slug FROM tools WHERE slug = ? AND status = 'approved'", (slug,))
+    tool = await (await d.execute(
+        "SELECT id, name, slug FROM tools WHERE slug = ? AND status = 'approved'", (slug,))).fetchone()
     if not tool:
         return None
 
     tool_id = tool['id']
     name = tool['name']
 
-    views = await db.execute_fetchone(d,
-        "SELECT COUNT(*) as total FROM tool_views WHERE tool_id = ?", (tool_id,))
+    views = await (await d.execute(
+        "SELECT COUNT(*) as total FROM tool_views WHERE tool_id = ?", (tool_id,))).fetchone()
 
-    clicks = await db.execute_fetchone(d,
-        "SELECT COUNT(*) as total FROM outbound_clicks WHERE tool_id = ?", (tool_id,))
+    clicks = await (await d.execute(
+        "SELECT COUNT(*) as total FROM outbound_clicks WHERE tool_id = ?", (tool_id,))).fetchone()
 
-    citations = await db.execute_fetchone(d,
-        "SELECT COUNT(*) as total FROM agent_citations WHERE tool_id = ?", (tool_id,))
+    citations = await (await d.execute(
+        "SELECT COUNT(*) as total FROM agent_citations WHERE tool_id = ?", (tool_id,))).fetchone()
 
     # What tools do viewers compare this to?
     cursor_compared = await d.execute(
@@ -130,7 +129,7 @@ async def intel_dashboard(request: Request, slug: str):
             '<p style="color:var(--text-muted);margin:16px 0;">Competitive intelligence for developer tool companies. '
             'See what developers compare your tool to, where they migrate, and what they search for.</p>'
             '<p style="color:var(--text-muted);margin-top:24px;">Contact '
-            '<a href="mailto:hello@indiestack.ai" style="color:var(--accent);">hello@indiestack.ai</a> '
+            '<a href="mailto:pajebay1@gmail.com" style="color:var(--accent);">pajebay1@gmail.com</a> '
             'for access — starting at $499/mo.</p></div>',
             user=user,
         ))
@@ -236,7 +235,7 @@ async def intel_dashboard(request: Request, slug: str):
       {paired}
       <div style="text-align:center;padding:24px 0;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.8rem;">
         IndieStack Developer Intelligence &middot; {v:,} developer interactions
-        &middot; <a href="mailto:hello@indiestack.ai" style="color:var(--accent);">Get API access</a>
+        &middot; <a href="mailto:pajebay1@gmail.com" style="color:var(--accent);">Get API access</a>
       </div>
     </div>'''
 

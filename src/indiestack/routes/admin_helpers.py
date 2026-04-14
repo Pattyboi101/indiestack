@@ -173,6 +173,7 @@ def tab_nav(active_tab, pending_count=0):
         ("tools", "Tools"),
         ("people", "People"),
         ("growth", "Growth"),
+        ("intel", "Intel"),
     ]
     items = []
     for slug, label in tabs:

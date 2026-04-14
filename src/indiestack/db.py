@@ -1965,6 +1965,21 @@ async def init_db():
             except Exception:
                 await db.execute(_ddl)
 
+        # Validation logs for /api/validate guardrail endpoint
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS validation_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                package TEXT NOT NULL,
+                ecosystem TEXT NOT NULL DEFAULT 'npm',
+                exists BOOLEAN,
+                is_typosquat BOOLEAN DEFAULT 0,
+                risk_level TEXT DEFAULT 'unknown',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_validation_pkg ON validation_logs(package)")
+        await db.commit()
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
@@ -2995,7 +3010,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pnpm": "frontend",         # pnpm — efficient disk-space-saving package manager
     # Monorepo tooling
     "monorepo": "developer",    # "monorepo build" → Developer Tools (Turborepo, Nx, Lerna)
-    "nx": "developer",          # Nx — extensible build system for monorepos (also at 3065, kept for clarity)
     # Database — SQL / NoSQL query patterns
     "nosql": "database",        # "nosql database", "nosql store" queries
     "sql": "database",          # raw "sql" queries (not ORM-specific)
@@ -4514,6 +4528,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API — GraphQL Yoga and plugin system
     "graphql-yoga": "api",          # GraphQL Yoga — fully featured GraphQL server by The Guild (8k★)
     "envelop": "api",               # Envelop — GraphQL plugin system (The Guild)
+    # Compiler / transpiler tools (Babel, SWC, Binaryen, esbuild — frontend build chain)
+    "compiler": "frontend",         # "js compiler", "typescript compiler", "babel compiler" → Frontend Frameworks
+    # Validation — complement to "validation" → developer; "validate" form catches verb queries
+    "validate": "developer",        # "validate schema", "validate input", "data validate" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
