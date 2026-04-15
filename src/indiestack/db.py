@@ -4653,6 +4653,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sklearn": "ai",                # scikit-learn abbreviation — "sklearn alternative"
     "scikit": "ai",                 # scikit-learn prefix — "scikit-learn alternative"
     "transformers": "ai",           # HuggingFace Transformers — most popular ML library (130k★)
+    # Email — deliverability authentication (very common infra queries from indie makers)
+    "dkim": "email",                # DKIM — DomainKeys Identified Mail (email signing DNS record)
+    "spf": "email",                 # SPF — Sender Policy Framework (authorised sender DNS record)
+    "dmarc": "email",               # DMARC — email auth policy ("dmarc setup", "dmarc tool" queries)
+    # Caching — eviction policy query terms (most common caching algorithm searched)
+    "lru": "caching",               # LRU (Least Recently Used) — "lru cache library", "lru eviction"
+    # Auth — federated identity (SAML/OIDC, complement to "federation"→api for GraphQL federation)
+    "federated": "authentication",  # "federated identity", "federated login" → Authentication
+    # Monitoring — SRE reliability engineering terminology (growing query segment from platform teams)
+    "slo": "monitoring",            # SLO — Service Level Objective ("slo tracking", "slo dashboard")
+    "sli": "monitoring",            # SLI — Service Level Indicator ("sli definition tool")
+    # Frontend — autocomplete and combobox UI widgets (complement to search-UI queries)
+    "autocomplete": "frontend",     # "autocomplete component", "react autocomplete" → Frontend Frameworks
+    "combobox": "frontend",         # "combobox component", "accessible combobox" → Frontend (Radix, Downshift)
+    # Search — typeahead pattern (search-as-you-type UX; distinct from combobox UI widget)
+    "typeahead": "search",          # "typeahead search", "typeahead input" → Search (Algolia, Typesense)
+    # Monitoring — OpenTelemetry Protocol (complement to "otel"→monitoring; used in SDK config queries)
+    "otlp": "monitoring",           # OTLP — OpenTelemetry Protocol (wire format; "otlp exporter" queries)
+    # API — Buf protobuf toolchain (modern Protobuf DX, 5k★; "buf lint", "buf generate" queries)
+    "buf": "api",                   # Buf — developer-first Protobuf toolchain → API Tools
 }
 
 _FTS_STOP_WORDS = {

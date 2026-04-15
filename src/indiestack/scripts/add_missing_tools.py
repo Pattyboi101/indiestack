@@ -6936,6 +6936,23 @@ TOOLS = [
         "docker compose up -d",
         "code",
     ),
+    # API Tools — HTTP clients -------------------------------------------------------
+    (
+        "axios",
+        "Axios",
+        "Promise based HTTP client for the browser and Node.js",
+        "Axios is the most popular HTTP client for JavaScript. Promise-based, "
+        "works in browser and Node.js, supports request/response interceptors, "
+        "automatic JSON parsing, and request cancellation. 104k+ GitHub stars "
+        "and one of the most downloaded npm packages globally.",
+        "api-tools",
+        "axios/axios",
+        104000,
+        "https://axios-http.com",
+        "http,client,javascript,nodejs,promise,ajax",
+        "npm install axios",
+        "code",
+    ),
 ]
 
 

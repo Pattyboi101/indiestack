@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-15 (ninety-first pass)
+Last updated: 2026-04-15 (ninety-second pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-15 (ninety-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1614 unique active keys (ninety-first pass: +12 new — authentik, earthly, taskfile, fireworks, cerebras, edgedb, cockroach, coroot, openobserve, sklearn, scikit, transformers; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 413 unique tools (added 5 new: earthly, edgedb, cockroachdb, openobserve, authentik)
+- **_CAT_SYNONYMS**: 1628 unique active keys (ninety-second pass: +12 new — dkim, spf, dmarc, lru, federated, slo, sli, autocomplete, combobox, typeahead, otlp, buf; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 414 unique tools (added 1 new: axios)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,34 @@ Last updated: 2026-04-15 (ninety-first pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-15, ninety-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1616 → 1628 unique keys, 0 duplicates):
+  - **Email**: `dkim` → email — DKIM email signing DNS record
+  - **Email**: `spf` → email — SPF sender policy framework DNS record
+  - **Email**: `dmarc` → email — DMARC email auth policy
+  - **Caching**: `lru` → caching — LRU eviction policy ("lru cache library")
+  - **Auth**: `federated` → authentication — "federated identity", "federated login"
+  - **Monitoring**: `slo` → monitoring — Service Level Objective (SRE terminology)
+  - **Monitoring**: `sli` → monitoring — Service Level Indicator (SRE terminology)
+  - **Frontend**: `autocomplete` → frontend — autocomplete/combobox UI widget
+  - **Frontend**: `combobox` → frontend — combobox component (Radix, Downshift, Shadcn)
+  - **Search**: `typeahead` → search — typeahead search-as-you-type UX pattern
+  - **Monitoring**: `otlp` → monitoring — OpenTelemetry Protocol wire format
+  - **API**: `buf` → api — Buf protobuf toolchain (5k★)
+
+### Catalog Script (Step 2)
+- Added 1 new tool (413 → 414 unique); 4 planned tools already present from prior passes:
+  - **Axios** (axios/axios, 104k★) — most popular JS HTTP client; api-tools
+  - Skipped: Supabase, FastAPI, Express.js, Fastify (all already in catalog)
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-second pass
 
 ## Completed This Session (2026-04-15, ninety-first pass — autonomous improvement cycle)
 
