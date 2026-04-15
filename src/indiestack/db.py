@@ -4673,6 +4673,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "otlp": "monitoring",           # OTLP — OpenTelemetry Protocol (wire format; "otlp exporter" queries)
     # API — Buf protobuf toolchain (modern Protobuf DX, 5k★; "buf lint", "buf generate" queries)
     "buf": "api",                   # Buf — developer-first Protobuf toolchain → API Tools
+    # Headless commerce / e-commerce platforms (Medusa, Saleor, Vendure live in Developer Tools)
+    "ecommerce": "developer",       # "ecommerce platform", "headless ecommerce" → Developer Tools
+    "commerce": "developer",        # generic "commerce engine", "headless commerce" → Developer Tools
+    "storefront": "developer",      # "headless storefront", "custom storefront" → Developer Tools
+    "shopify": "developer",         # "shopify alternative" — Medusa, Saleor, Vendure → Developer Tools
+    "woocommerce": "developer",     # "woocommerce alternative" — headless commerce engines
+    "saleor": "developer",          # Saleor — open-source headless commerce platform (20k★)
+    "medusajs": "developer",        # compound form — "medusajs alternative", "medusa.js" → Developer Tools
+    "vendure": "developer",         # Vendure — TypeScript headless commerce framework (5k★)
+    "cart": "payments",             # "shopping cart", "cart library" → Payments (checkout flow)
+    # Monorepo — Lerna (complement to turborepo/nx already mapped)
+    "lerna": "developer",           # Lerna — original JS monorepo management tool (35k★) → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

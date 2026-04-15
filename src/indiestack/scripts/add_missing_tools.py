@@ -5991,7 +5991,55 @@ TOOLS = [
         "npm install immer",
         "code",
     ),
-    # Developer Tools ----------------------------------------------------------
+    # Developer Tools — headless commerce engines and monorepo tools --------
+    (
+        "saleor",
+        "Saleor",
+        "Open-source composable commerce platform",
+        "Saleor is a headless, open-source e-commerce platform built with Python, "
+        "Django, and GraphQL. Composable commerce architecture lets you connect any "
+        "frontend. Features include multi-currency, multi-channel, promotions, "
+        "checkout API, and a React-based dashboard. Self-host or use Saleor Cloud.",
+        "developer-tools",
+        "saleor/saleor",
+        20000,
+        "https://saleor.io",
+        "ecommerce,commerce,headless,graphql,python,django,self-hosted",
+        "docker compose up",
+        "code",
+    ),
+    (
+        "vendure",
+        "Vendure",
+        "TypeScript headless commerce framework",
+        "Vendure is a modern, TypeScript-first headless commerce framework built on "
+        "Node.js with NestJS and GraphQL. Its plugin architecture makes it easy to "
+        "extend with custom logic. Powers B2B and B2C storefronts with real-time "
+        "inventory, promotions, tax, and shipping engines.",
+        "developer-tools",
+        "vendure-ecommerce/vendure",
+        5400,
+        "https://www.vendure.io",
+        "ecommerce,commerce,headless,typescript,nodejs,graphql,nestjs",
+        "npx @vendure/create",
+        "code",
+    ),
+    (
+        "lerna",
+        "Lerna",
+        "Fast, modern build system for JavaScript/TypeScript monorepos",
+        "Lerna is the original JavaScript monorepo management tool, now powered by "
+        "Nx for fast task scheduling. Manages publishing, versioning, and changelogs "
+        "across multiple packages. Used by Babel, Jest, Create React App, and many "
+        "major open-source projects.",
+        "developer-tools",
+        "lerna/lerna",
+        35000,
+        "https://lerna.js.org",
+        "monorepo,typescript,javascript,build-tool,versioning,publishing",
+        "npm install lerna --save-dev",
+        "code",
+    ),
     (
         "medusajs",
         "Medusa",

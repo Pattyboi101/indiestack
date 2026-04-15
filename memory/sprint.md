@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-15 (ninety-second pass)
+Last updated: 2026-04-15 (ninety-third pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-15 (ninety-second pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1628 unique active keys (ninety-second pass: +12 new — dkim, spf, dmarc, lru, federated, slo, sli, autocomplete, combobox, typeahead, otlp, buf; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 414 unique tools (added 1 new: axios)
+- **_CAT_SYNONYMS**: 1638 unique active keys (ninety-third pass: +10 new — ecommerce, commerce, storefront, shopify, woocommerce, saleor, medusajs, vendure, cart, lerna; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 417 unique tools (added 3 new: saleor, vendure, lerna)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,33 @@ Last updated: 2026-04-15 (ninety-second pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-15, ninety-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 10 new `_CAT_SYNONYMS` entries (1628 → 1638 unique keys, 0 duplicates):
+  - **Developer**: `ecommerce` → developer — headless e-commerce platform queries
+  - **Developer**: `commerce` → developer — generic "headless commerce engine" queries
+  - **Developer**: `storefront` → developer — "headless storefront" queries
+  - **Developer**: `shopify` → developer — "shopify alternative" (Medusa, Saleor, Vendure)
+  - **Developer**: `woocommerce` → developer — "woocommerce alternative" queries
+  - **Developer**: `saleor` → developer — Saleor open-source headless commerce (20k★)
+  - **Developer**: `medusajs` → developer — compound form "medusajs alternative" queries
+  - **Developer**: `vendure` → developer — Vendure TypeScript headless commerce (5k★)
+  - **Payments**: `cart` → payments — "shopping cart library", "cart checkout" queries
+  - **Developer**: `lerna` → developer — Lerna JS monorepo management (35k★)
+
+### Catalog Script (Step 2)
+- Added 3 new tools (414 → 417 unique) matching the new commerce/monorepo synonyms:
+  - **Saleor** (saleor/saleor, 20k★) — open-source composable commerce platform; developer-tools
+  - **Vendure** (vendure-ecommerce/vendure, 5.4k★) — TypeScript headless commerce framework; developer-tools
+  - **Lerna** (lerna/lerna, 35k★) — modern JS/TS monorepo management; developer-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-third pass
 
 ## Completed This Session (2026-04-15, ninety-second pass — autonomous improvement cycle)
 
