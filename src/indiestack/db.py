@@ -4632,6 +4632,76 @@ _CAT_SYNONYMS: dict[str, str] = {
     "configuration": "developer",   # "configuration management library", "config DSL" → Developer Tools
     # API Tools — OpenAPI linting and spec validation
     "spectral": "api",              # Spectral (Stoplight) — OpenAPI + JSON Schema linter → API Tools
+    # Web3/Blockchain development — fast-growing developer query segment
+    "blockchain": "developer",      # "blockchain development", "blockchain dev tools" → Developer Tools
+    "solidity": "developer",        # Solidity — Ethereum smart contract language
+    "ethers": "developer",          # ethers.js — TypeScript/JS library for Ethereum interaction (8k★)
+    "hardhat": "developer",         # Hardhat — Ethereum development environment (7k★)
+    "wagmi": "developer",           # wagmi — React Hooks for Ethereum (7k★)
+    "viem": "developer",            # viem — TypeScript Ethereum interface (wagmi foundation, 5k★)
+    # Mobile — iOS/Swift and Android/Jetpack development
+    "android": "frontend",          # Android app development queries
+    "ios": "frontend",              # iOS/iPadOS development queries
+    "swiftui": "frontend",          # SwiftUI — Apple's declarative UI framework
+    "swift": "frontend",            # Swift — Apple's programming language
+    "jetpack": "frontend",          # Android Jetpack Compose — Google's modern Android UI
+    "realm": "database",            # Realm — offline-first mobile database (MongoDB Realm, 12k★)
+    "fish": "cli",                  # Fish Shell — friendly interactive shell (26k★)
+    # AI — plural forms and LLM interaction patterns
+    "agents": "ai",                 # plural "agents" — "AI agents framework", "multi-agent system"
+    "hybrid": "search",             # "hybrid search" — BM25+vector combined retrieval (key RAG term)
+    "toolcalling": "ai",            # compound — "toolcalling api", "tool calling llm" → AI & Automation
+    "function-calling": "ai",       # hyphenated — "function-calling openai" → AI
+    # Frontend — React Three Fiber (declarative Three.js for React, 27k★)
+    "r3f": "frontend",              # R3F abbreviation → Frontend Frameworks
+    "react-three-fiber": "frontend",# full form → Frontend Frameworks
+    # Message Queue — Apache ActiveMQ
+    "activemq": "message",          # Apache ActiveMQ — enterprise JMS message broker
+    # DevOps — HashiCorp Nomad workload orchestrator (already mapped at line ~4603)
+    # Developer Tools — Foundry Ethereum toolchain
+    "foundry": "developer",         # Foundry — professional Ethereum toolkit (9k★)
+    # Auth — Frontegg enterprise B2B identity platform
+    "frontegg": "authentication",   # Frontegg — B2B SaaS user management and identity
+    # API — additional Python async frameworks
+    "sanic": "api",                 # Sanic — async Python web framework (18k★)
+    "strawberry": "api",            # Strawberry GraphQL — Python type-annotated GraphQL (4k★)
+    # AI — ML model serving frameworks
+    "bentoml": "ai",                # BentoML — open-source model serving framework (7k★)
+    # Auth — Authentik self-hosted identity provider
+    "authentik": "authentication",  # Authentik — self-hosted SSO/IdP (15k★)
+    # DevOps — Earthly and Taskfile
+    "earthly": "devops",            # Earthly — reproducible containerised builds (12k★)
+    "taskfile": "devops",           # Taskfile — modern YAML Makefile alternative (10k★)
+    # AI — fast inference cloud providers
+    "fireworks": "ai",              # Fireworks AI — fastest open-source LLM inference API
+    "cerebras": "ai",               # Cerebras — wafer-scale chip AI inference (ultra-fast)
+    # Database — EdgeDB and CockroachDB
+    "edgedb": "database",           # EdgeDB — graph-relational DB with EdgeQL (14k★)
+    "cockroach": "database",        # CockroachDB — distributed SQL, Postgres-compatible (30k★)
+    # Monitoring — open-source observability platforms
+    "coroot": "monitoring",         # Coroot — eBPF zero-instrumentation observability (5k★)
+    "openobserve": "monitoring",    # OpenObserve — 10× cheaper Datadog alt (14k★)
+    # AI — scikit-learn and HuggingFace Transformers
+    "sklearn": "ai",                # scikit-learn abbreviation
+    "scikit": "ai",                 # scikit-learn prefix
+    "transformers": "ai",           # HuggingFace Transformers — most popular ML library (130k★)
+    # Frontend — Next.js is the #1 React meta-framework
+    "next": "frontend",             # "next alternative", "next.js setup" → Frontend Frameworks
+    # Developer — package manager queries
+    "npm": "developer",             # npm — Node.js package manager; "npm alternative"
+    "pip": "developer",             # pip — Python package installer; "pip alternative"
+    "pipx": "developer",            # pipx — install Python apps in isolated envs (10k★)
+    "hatch": "developer",           # Hatch — Python project manager (pypa/hatch, 5k★)
+    # API — "server" alone routes web server/server framework queries → API Tools
+    "server": "api",                # "web server", "server framework", "http server" → API Tools
+    # CRM — synonyms for non-obvious terms in the CRM & Sales category
+    "sales": "crm",                 # "sales CRM", "sales tool", "sales pipeline" → CRM & Sales
+    "lead": "crm",                  # "lead management", "lead tracker" → CRM & Sales
+    "leads": "crm",                 # plural — "leads database" → CRM & Sales
+    # AI — ML model compression and efficiency techniques
+    "moe": "ai",                    # Mixture of Experts (MoE) — "sparse moe" → AI & Automation
+    "quantization": "ai",           # "model quantization", "llm quantization" → AI
+    "distillation": "ai",           # "model distillation", "knowledge distillation" → AI
 }
 
 _FTS_STOP_WORDS = {
