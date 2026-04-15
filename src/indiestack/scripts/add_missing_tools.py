@@ -6684,6 +6684,58 @@ TOOLS = [
         "brew install tmux",
         "code",
     ),
+    # BaaS / Firebase alternatives ---------------------------------------------------
+    (
+        "nhost",
+        "Nhost",
+        "The open-source Firebase alternative with Postgres, GraphQL, auth, and storage",
+        "Nhost is an open-source backend platform powered by PostgreSQL, Hasura GraphQL, "
+        "and a suite of services (auth, file storage, serverless functions). It gives you "
+        "a full backend in minutes with instant GraphQL APIs over your Postgres schema. "
+        "Self-hostable or managed cloud. Loved by teams that want Firebase DX with "
+        "Postgres reliability.",
+        "devops-infrastructure",
+        "nhost/nhost",
+        7600,
+        "https://nhost.io",
+        "baas,firebase-alternative,graphql,postgres,hasura,auth,storage,serverless",
+        "npm install @nhost/nhost-js",
+        "code",
+    ),
+    # Observability — Grafana OSS stack ----------------------------------------------
+    (
+        "grafana-tempo",
+        "Grafana Tempo",
+        "Easy-to-operate, high-scale distributed tracing backend",
+        "Grafana Tempo is an open-source, easy-to-operate distributed tracing backend. "
+        "Deeply integrated with Grafana, Prometheus, and Loki. Requires only object storage "
+        "(S3, GCS, or local), making it cost-effective at scale. Supports OpenTelemetry, "
+        "Zipkin, and Jaeger ingest. CNCF project widely used alongside the Grafana stack.",
+        "monitoring-uptime",
+        "grafana/tempo",
+        4100,
+        "https://grafana.com/oss/tempo",
+        "tracing,distributed-tracing,opentelemetry,observability,grafana,cncf",
+        "docker pull grafana/tempo",
+        "code",
+    ),
+    (
+        "grafana-mimir",
+        "Grafana Mimir",
+        "The most scalable open-source Prometheus-compatible TSDB",
+        "Grafana Mimir is an open-source, horizontally scalable, highly available, "
+        "multi-tenant, long-term storage for Prometheus. It is a drop-in Prometheus "
+        "remote-write target with unlimited cardinality support, durable storage on "
+        "object stores, and global query view across multiple Prometheus instances. "
+        "Used by Grafana Cloud under the hood.",
+        "monitoring-uptime",
+        "grafana/mimir",
+        4000,
+        "https://grafana.com/oss/mimir",
+        "monitoring,prometheus,metrics,time-series,grafana,scalable,object-storage",
+        "docker pull grafana/mimir",
+        "code",
+    ),
 ]
 
 

@@ -4597,6 +4597,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ripgrep": "developer",         # ripgrep — extremely fast grep replacement (47k★) → Developer Tools
     "jq": "developer",              # jq — JSON processor for the command line (29k★) → Developer Tools
     "yq": "developer",              # yq — YAML/JSON/XML processor, jq wrapper (12k★) → Developer Tools
+    # AI — major LLM providers / model families missing from synonyms
+    "deepseek": "ai",               # DeepSeek — DeepSeek-R1/V3 open models (massive search volume in 2025)
+    "phi": "ai",                    # Microsoft Phi — Phi-3/Phi-4 small language models (SLMs), "phi alternative"
+    "qwen": "ai",                   # Alibaba Qwen — Qwen2.5-72B, QwQ-32B open-weight LLMs
+    "gemma": "ai",                  # Google Gemma — open-weight models (Gemma 2, Gemma 3) for local inference
+    "grok": "ai",                   # xAI Grok — Elon Musk's LLM; "grok API", "grok alternative" queries
+    "cerebras": "ai",               # Cerebras — ultra-fast LLM inference API (wafer-scale hardware)
+    "trulens": "ai",                # TruLens — LLM evaluation and tracing framework (TruEra/Snowflake)
+    # Monitoring — Grafana OSS stack components (common alternative and setup queries)
+    "mimir": "monitoring",          # Grafana Mimir — scalable long-term Prometheus metrics storage (4k★)
+    "tempo": "monitoring",          # Grafana Tempo — distributed tracing backend (CNCF, 4k★)
+    # Email — common "alternative to" queries for well-known providers
+    "ses": "email",                 # AWS SES — most-searched email delivery; "ses alternative" → email tools
+    "bento": "email",               # Bento — behavioural email + CRM for SaaS (common indie email query)
+    # Database — local-first sync (Replicache, Zero, ElectricSQL queries)
+    "replicache": "database",       # Replicache — local-first sync library; "replicache alternative" → Database
 }
 
 _FTS_STOP_WORDS = {
