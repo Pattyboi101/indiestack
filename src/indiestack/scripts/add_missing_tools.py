@@ -6850,6 +6850,92 @@ TOOLS = [
         "curl -L https://foundry.paradigm.xyz | bash",
         "code",
     ),
+    # --- Ninety-first pass additions ---
+    (
+        "earthly",
+        "Earthly",
+        "Reproducible builds in containers",
+        "Earthly is an open-source build automation tool that combines the best of "
+        "Dockerfiles and Makefiles. Each build target runs in a container, making "
+        "builds reproducible and portable across dev, CI, and production. Works with "
+        "any language and integrates with GitHub Actions, CircleCI, and Jenkins. "
+        "Supports build caching, parallelism, and cross-platform builds.",
+        "devops-infrastructure",
+        "earthly-technologies/earthly",
+        12000,
+        "https://earthly.dev",
+        "build,ci,containers,reproducible,makefile-alternative,devops",
+        "brew install earthly/earthly/earthly",
+        "code",
+    ),
+    (
+        "edgedb",
+        "EdgeDB",
+        "A graph-relational database with a type-safe query language",
+        "EdgeDB is a next-generation database built on PostgreSQL that combines "
+        "the relational model with object-oriented concepts. Features a rich type "
+        "system, EdgeQL (a more expressive alternative to SQL), built-in migrations, "
+        "and a schema definition language. Ideal for complex data models. "
+        "Client libraries for Python, TypeScript, Go, and Rust.",
+        "database",
+        "edgedb/edgedb",
+        14000,
+        "https://edgedb.com",
+        "database,postgresql,orm,typescript,graph-relational,edgeql",
+        "pip install edgedb",
+        "code",
+    ),
+    (
+        "cockroachdb",
+        "CockroachDB",
+        "The cloud-native distributed SQL database",
+        "CockroachDB is a distributed SQL database built for cloud-native apps. "
+        "Fully Postgres-compatible wire protocol, so existing drivers and ORMs work "
+        "without changes. Automatic sharding, multi-region replication, and "
+        "serialisable transactions. Self-host with the open-source edition or use "
+        "CockroachDB Serverless / Dedicated for managed deployments.",
+        "database",
+        "cockroachdb/cockroach",
+        30000,
+        "https://cockroachlabs.com",
+        "database,sql,postgresql,distributed,cloud-native,multi-region",
+        "brew install cockroachdb/tap/cockroach",
+        "code",
+    ),
+    (
+        "openobserve",
+        "OpenObserve",
+        "Cloud-native observability platform at 140x lower storage cost",
+        "OpenObserve (O2) is an open-source observability platform for logs, metrics, "
+        "traces, and RUM. Written in Rust, it uses object storage (S3/GCS/MinIO) "
+        "instead of spinning disks — yielding 140× cheaper storage than Elasticsearch. "
+        "Drop-in replacement for Elasticsearch/OpenSearch log ingestion APIs. "
+        "Single binary, no external dependencies, deploys in under 2 minutes.",
+        "monitoring-uptime",
+        "openobserve/openobserve",
+        14000,
+        "https://openobserve.ai",
+        "observability,logs,metrics,traces,rust,elasticsearch-alternative,monitoring",
+        "curl -L https://raw.githubusercontent.com/openobserve/openobserve/main/deploy/quick-install.sh | bash",
+        "code",
+    ),
+    (
+        "authentik",
+        "Authentik",
+        "The authentication glue you need",
+        "Authentik is a self-hosted identity provider and SSO solution. Works as "
+        "an OAuth2, OpenID Connect, SAML, LDAP, or SCIM provider — a drop-in "
+        "replacement for Okta, Auth0, or Azure AD in self-hosted environments. "
+        "Ships with pre-built flows for enrollment, recovery, and MFA. "
+        "Deploy via Docker Compose or Helm chart in minutes.",
+        "authentication",
+        "goauthentik/authentik",
+        15000,
+        "https://goauthentik.io",
+        "auth,sso,oauth2,oidc,saml,self-hosted,identity,okta-alternative",
+        "docker compose up -d",
+        "code",
+    ),
 ]
 
 

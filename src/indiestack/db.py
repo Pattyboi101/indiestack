@@ -4635,6 +4635,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "strawberry": "api",            # Strawberry GraphQL — Python type-annotated GraphQL library (4k★)
     # AI — ML model serving frameworks
     "bentoml": "ai",                # BentoML — open-source model serving + deployment framework (bentoml/bentoml, 7k★)
+    # Auth — Authentik self-hosted identity provider
+    "authentik": "authentication",  # Authentik — self-hosted SSO/IdP (goauthentik/authentik, 15k★)
+    # DevOps — Earthly reproducible builds + Taskfile task runner
+    "earthly": "devops",            # Earthly — reproducible containerised build system (12k★)
+    "taskfile": "devops",           # Taskfile — modern YAML-based Makefile alternative (go-task, 10k★)
+    # AI — fast inference cloud providers (open-weight model APIs)
+    "fireworks": "ai",              # Fireworks AI — fastest open-source LLM inference API
+    "cerebras": "ai",               # Cerebras — wafer-scale chip AI inference (ultra-fast)
+    # Database — distributed SQL and graph-relational databases
+    "edgedb": "database",           # EdgeDB — graph-relational DB with EdgeQL (14k★)
+    "cockroach": "database",        # CockroachDB — distributed SQL, Postgres-compatible (30k★)
+    # Monitoring — open-source observability platforms
+    "coroot": "monitoring",         # Coroot — eBPF zero-instrumentation observability (5k★)
+    "openobserve": "monitoring",    # OpenObserve — 10× cheaper Datadog alt, logs+metrics+traces (14k★)
+    # AI — scikit-learn and HuggingFace Transformers (high ML developer query volume)
+    "sklearn": "ai",                # scikit-learn abbreviation — "sklearn alternative"
+    "scikit": "ai",                 # scikit-learn prefix — "scikit-learn alternative"
+    "transformers": "ai",           # HuggingFace Transformers — most popular ML library (130k★)
 }
 
 _FTS_STOP_WORDS = {

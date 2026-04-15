@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-15 (ninetieth pass)
+Last updated: 2026-04-15 (ninety-first pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-15 (ninetieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1604 unique active keys (ninetieth pass: +13 new — agents, hybrid, toolcalling, function-calling, r3f, react-three-fiber, activemq, nomad, foundry, frontegg, sanic, strawberry, bentoml; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 408 unique tools (added 5 new: react-three-fiber, bentoml, sanic, activemq, foundry-eth)
+- **_CAT_SYNONYMS**: 1614 unique active keys (ninety-first pass: +12 new — authentik, earthly, taskfile, fireworks, cerebras, edgedb, cockroach, coroot, openobserve, sklearn, scikit, transformers; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 413 unique tools (added 5 new: earthly, edgedb, cockroachdb, openobserve, authentik)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,37 @@ Last updated: 2026-04-15 (ninetieth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-15, ninety-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1604 → 1614 unique keys, 0 duplicates):
+  - **Auth**: `authentik` → authentication — self-hosted SSO/IdP (goauthentik/authentik, 15k★)
+  - **DevOps**: `earthly` → devops — reproducible containerised builds (earthly-technologies/earthly, 12k★)
+  - **DevOps**: `taskfile` → devops — modern YAML Makefile alternative (go-task/task, 10k★)
+  - **AI**: `fireworks` → ai — Fireworks AI fast open-source LLM inference
+  - **AI**: `cerebras` → ai — wafer-scale chip ultra-fast LLM inference
+  - **Database**: `edgedb` → database — graph-relational DB with EdgeQL (edgedb/edgedb, 14k★)
+  - **Database**: `cockroach` → database — CockroachDB distributed SQL, Postgres-compatible (30k★)
+  - **Monitoring**: `coroot` → monitoring — eBPF zero-instrumentation observability (5k★)
+  - **Monitoring**: `openobserve` → monitoring — 10× cheaper Datadog alt, logs+metrics+traces (14k★)
+  - **AI**: `sklearn` → ai — scikit-learn abbreviation (high ML developer query volume)
+  - **AI**: `scikit` → ai — scikit-learn prefix queries
+  - **AI**: `transformers` → ai — HuggingFace Transformers library (130k★, most popular ML lib)
+
+### Catalog Script (Step 2)
+- Added 5 new tools (408 → 413 unique):
+  - **Earthly** (earthly-technologies/earthly, 12k★) — reproducible containerised builds; devops-infrastructure
+  - **EdgeDB** (edgedb/edgedb, 14k★) — graph-relational database with EdgeQL; database
+  - **CockroachDB** (cockroachdb/cockroach, 30k★) — distributed Postgres-compatible SQL; database
+  - **OpenObserve** (openobserve/openobserve, 14k★) — 140× cheaper observability platform; monitoring-uptime
+  - **Authentik** (goauthentik/authentik, 15k★) — self-hosted SSO/IdP (Okta alternative); authentication
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-first pass
 
 ## Completed This Session (2026-04-15, ninetieth pass — autonomous improvement cycle)
 
