@@ -1,17 +1,17 @@
 # Sprint — Current
 
-Last updated: 2026-04-14 (eighty-seventh pass)
+Last updated: 2026-04-15 (eighty-eighth pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-14)
+## System State (as of 2026-04-15)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1565 unique active keys (eighty-seventh pass: +14 new — jquery, jqueryui, rxjs, lodash, underscore, ramda, nuxtjs, angularjs, yoga, helmet, vscode, act, ohmyzsh, starship; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 393 unique tools (added 5 new: jquery, rxjs, lodash, act, helmet)
+- **_CAT_SYNONYMS**: 1578 unique active keys (eighty-eighth pass: +13 new — vpn, wireguard, tailscale, netbird, zerotier, headscale, tmux, fzf, zoxide, bat, ripgrep, jq, yq; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 398 unique tools (added 5 new: tailscale, fzf, ripgrep, jq, tmux)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,38 @@ Last updated: 2026-04-14 (eighty-seventh pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-15, eighty-eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 13 new `_CAT_SYNONYMS` entries (1565 → 1578 unique keys, 0 duplicates):
+  - **DevOps**: `vpn` → devops — generic VPN query routing
+  - **DevOps**: `wireguard` → devops — WireGuard VPN protocol
+  - **DevOps**: `tailscale` → devops — Tailscale mesh VPN (18k★)
+  - **DevOps**: `netbird` → devops — NetBird open-source VPN alternative (11k★)
+  - **DevOps**: `zerotier` → devops — ZeroTier peer-to-peer virtual network (14k★)
+  - **DevOps**: `headscale` → devops — self-hosted Tailscale control server (24k★)
+  - **CLI**: `tmux` → cli — terminal multiplexer (34k★)
+  - **CLI**: `fzf` → cli — command-line fuzzy finder (64k★)
+  - **CLI**: `zoxide` → cli — smarter cd command (24k★)
+  - **CLI**: `bat` → cli — better cat with syntax highlighting (48k★)
+  - **Developer**: `ripgrep` → developer — fast grep replacement in Rust (47k★)
+  - **Developer**: `jq` → developer — JSON processor for CLI (29k★)
+  - **Developer**: `yq` → developer — YAML/JSON processor (12k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools (393 → 398 unique):
+  - **Tailscale** (tailscale/tailscale, 18k★) — zero-config mesh VPN; devops-infrastructure
+  - **fzf** (junegunn/fzf, 64k★) — command-line fuzzy finder; cli-tools
+  - **ripgrep** (BurntSushi/ripgrep, 47k★) — fast grep replacement; cli-tools
+  - **jq** (jqlang/jq, 29k★) — JSON processor for CLI; cli-tools
+  - **tmux** (tmux/tmux, 34k★) — terminal multiplexer; cli-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-eighth pass
 
 ## Completed This Session (2026-04-14, eighty-seventh pass — autonomous improvement cycle)
 

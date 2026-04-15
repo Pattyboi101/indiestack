@@ -4582,6 +4582,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Oh My Zsh / Starship — shell config framework and prompt (very common developer tooling queries)
     "ohmyzsh": "developer",         # Oh My Zsh — Zsh config framework (174k★) → Developer Tools
     "starship": "developer",        # Starship — blazing-fast cross-shell prompt (Rust, 45k★) → Developer Tools
+    # VPN / mesh networking — Tailscale, WireGuard, NetBird, ZeroTier (very common in devops/infra queries)
+    "vpn": "devops",                # generic VPN queries → DevOps & Infrastructure
+    "wireguard": "devops",          # WireGuard — modern VPN protocol (Linux kernel, fast, minimal) → DevOps
+    "tailscale": "devops",          # Tailscale — zero-config mesh VPN built on WireGuard (18k★) → DevOps
+    "netbird": "devops",            # NetBird — open-source Tailscale alternative (11k★) → DevOps
+    "zerotier": "devops",           # ZeroTier — peer-to-peer virtual Ethernet (14k★) → DevOps
+    "headscale": "devops",          # Headscale — self-hosted Tailscale control server (24k★) → DevOps
+    # CLI productivity tools — tmux, fzf, zoxide (very common in developer tooling queries)
+    "tmux": "cli",                  # tmux — terminal multiplexer (34k★) → CLI Tools
+    "fzf": "cli",                   # fzf — fuzzy finder for the command line (64k★) → CLI Tools
+    "zoxide": "cli",                # zoxide — smarter cd command (24k★) → CLI Tools
+    "bat": "cli",                   # bat — better cat with syntax highlighting (48k★) → CLI Tools
+    "ripgrep": "developer",         # ripgrep — extremely fast grep replacement (47k★) → Developer Tools
+    "jq": "developer",              # jq — JSON processor for the command line (29k★) → Developer Tools
+    "yq": "developer",              # yq — YAML/JSON/XML processor, jq wrapper (12k★) → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

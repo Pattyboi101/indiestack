@@ -6602,6 +6602,88 @@ TOOLS = [
         "",
         "code",
     ),
+    # VPN / mesh networking -------------------------------------------------------
+    (
+        "tailscale",
+        "Tailscale",
+        "Zero-config mesh VPN built on WireGuard",
+        "Tailscale creates a secure private network between your devices, servers, and cloud "
+        "instances using WireGuard under the hood. Zero-config: works behind NAT, firewalls, "
+        "and across clouds without port-forwarding. Free tier for personal use. Widely used "
+        "for connecting local dev machines to production databases and staging services.",
+        "devops-infrastructure",
+        "tailscale/tailscale",
+        18000,
+        "https://tailscale.com",
+        "vpn,wireguard,mesh-network,networking,security,zero-config",
+        "curl -fsSL https://tailscale.com/install.sh | sh",
+        "code",
+    ),
+    # CLI Productivity Tools -------------------------------------------------------
+    (
+        "fzf",
+        "fzf",
+        "A command-line fuzzy finder",
+        "fzf is a general-purpose command-line fuzzy finder written in Go. It can be used as "
+        "an interactive filter for any list: files, command history, git commits, processes. "
+        "Integrates with bash, zsh, fish, and vim/neovim. One of the most-starred CLI tools "
+        "on GitHub, beloved by developers who live in the terminal.",
+        "cli-tools",
+        "junegunn/fzf",
+        64000,
+        "https://github.com/junegunn/fzf",
+        "cli,fuzzy-finder,terminal,productivity,search",
+        "brew install fzf",
+        "code",
+    ),
+    (
+        "ripgrep",
+        "ripgrep",
+        "Recursively searches directories for a regex pattern",
+        "ripgrep (rg) is a line-oriented search tool that recursively searches your current "
+        "directory for a regex pattern. It respects .gitignore rules, skips binary files, and "
+        "is 10-100x faster than grep. Written in Rust. Used internally by VS Code for its "
+        "text search feature. Essential for developers who do frequent code searches.",
+        "cli-tools",
+        "BurntSushi/ripgrep",
+        47000,
+        "https://github.com/BurntSushi/ripgrep",
+        "cli,grep,search,regex,rust,fast",
+        "brew install ripgrep",
+        "code",
+    ),
+    (
+        "jq",
+        "jq",
+        "Lightweight and flexible command-line JSON processor",
+        "jq is like sed for JSON data — you can use it to slice, filter, map, and transform "
+        "structured data. It is written in portable C and has zero runtime dependencies. "
+        "Essential for working with REST APIs, parsing log files, and scripting JSON "
+        "transformations in shell scripts and CI pipelines.",
+        "cli-tools",
+        "jqlang/jq",
+        29000,
+        "https://jqlang.github.io/jq",
+        "cli,json,processor,parsing,shell,devops",
+        "brew install jq",
+        "code",
+    ),
+    (
+        "tmux",
+        "tmux",
+        "Terminal multiplexer — multiple windows in one terminal",
+        "tmux lets you switch between several programs in one terminal, detach them (they keep "
+        "running in the background), and reattach later. Essential for remote server work "
+        "over SSH, running multiple processes side-by-side, and preserving sessions. "
+        "Works with vi/emacs key bindings and is highly configurable via .tmux.conf.",
+        "cli-tools",
+        "tmux/tmux",
+        34000,
+        "https://github.com/tmux/tmux/wiki",
+        "cli,terminal,multiplexer,session,ssh,productivity",
+        "brew install tmux",
+        "code",
+    ),
 ]
 
 
