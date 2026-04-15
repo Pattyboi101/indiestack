@@ -1,25 +1,36 @@
 # IndieStack
 
-Your AI agent searches 6,500+ developer tools before writing code from scratch. 10,000+ installs.
+Dependency guardrail for AI coding agents. Validates packages before installation, catches hallucinations and typosquats, and provides compatibility intelligence across 6,500+ developer tools.
 
-> **Context-efficient AI coding:** One `find_tools()` call finds a 3-line install command instead of generating hundreds of lines of boilerplate. Less code generated = less context consumed.
+**10,000+ PyPI installs** | **110,000+ unique visitors** | **23 MCP tools**
 
 ```bash
 claude mcp add indiestack -- uvx --from indiestack indiestack-mcp
 ```
 
 Then ask your agent:
+- "Validate this package before installing"
 - "Find an auth solution for my Next.js app"
-- "What's the lightest open-source payments library?"
-- "Show me migration paths away from Webpack"
+- "Check compatibility between these two tools"
 
 ---
 
 ## What it does
 
-Before your AI writes auth, payments, or email boilerplate — IndieStack searches 6,500+ curated developer tools with real compatibility data from 4,500+ repos. You get install commands, health scores, and what tools actually work together in production.
+Before your AI installs a dependency or writes boilerplate — IndieStack validates it exists, checks for typosquats, and searches 6,500+ curated developer tools with real compatibility data from 4,500+ repos. You get install commands, health scores, and what tools actually work together in production.
 
 "Indie" is the curation filter: independent developers and small teams. Focused, lean, maintained, honest pricing.
+
+---
+
+## Tech stack
+
+- **Backend**: Python 3 / FastAPI / SQLite (FTS5 full-text search, WAL mode)
+- **Infrastructure**: Fly.io / Docker / 48-endpoint smoke testing
+- **MCP server**: Published on [PyPI](https://pypi.org/project/indiestack/) — 23 tools, 3 resources, 5 prompts
+- **Auth**: GitHub OAuth via sessions
+- **Payments**: Stripe subscriptions
+- **Monitoring**: Event reactor, pattern detection, Telegram alerting
 
 ---
 
@@ -107,18 +118,17 @@ indiestack stack "auth, payments, email"
 
 ---
 
-## What's new in v1.12
+## What's new in v1.19
 
-- **Market gaps** — `get_market_gaps()` exposes zero-result queries ranked by search volume. See what tools are missing from the ecosystem.
-- **Trust-weighted search** — Tools with higher agent success rates rank higher. Real outcome data, not just star count.
-- **Agent success badges** — Search results show success rate badges when outcome data is available.
+- **Package validation** — `validate_package()` verifies packages exist and are safe before installation. Catches hallucinated and typosquatted packages.
+- **Guardrail-first design** — Built for AI agents that need to validate dependencies, not just discover them.
 
-## What's new in v1.11
+## Recent highlights
 
-- **Migration intelligence** — Tool details include real migration data from 4,500+ GitHub repos. "jest → vitest: 27 repos", "webpack → vite: 13 repos".
-- **Verified combos** — 93,000+ verified package combinations from production repos.
-- **Unlimited searches** — All rate limits removed.
-- **2,100+ install commands** populated across the catalog.
+- **Migration intelligence** — Tool details include real migration data from 4,500+ GitHub repos.
+- **93,000+ verified package combinations** from production repos.
+- **Trust-weighted search** — Tools with higher agent success rates rank higher.
+- **Market gaps** — `get_market_gaps()` exposes zero-result queries ranked by search volume.
 
 ---
 
