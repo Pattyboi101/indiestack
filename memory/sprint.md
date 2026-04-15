@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-15 (eighty-eighth pass)
+Last updated: 2026-04-15 (eighty-ninth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-15 (eighty-eighth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1578 unique active keys (eighty-eighth pass: +13 new — vpn, wireguard, tailscale, netbird, zerotier, headscale, tmux, fzf, zoxide, bat, ripgrep, jq, yq; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 398 unique tools (added 5 new: tailscale, fzf, ripgrep, jq, tmux)
+- **_CAT_SYNONYMS**: 1591 unique active keys (eighty-ninth pass: +13 new — blockchain, solidity, ethers, hardhat, wagmi, viem, android, ios, swiftui, swift, jetpack, realm, fish; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 403 unique tools (added 5 new: alacritty, helix, fish, zellij, hardhat)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,38 @@ Last updated: 2026-04-15 (eighty-eighth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-15, eighty-ninth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 13 new `_CAT_SYNONYMS` entries (1578 → 1591 unique keys, 0 duplicates):
+  - **Web3/Blockchain**: `blockchain` → developer — blockchain dev tooling (Hardhat, Foundry, ethers.js)
+  - **Web3/Blockchain**: `solidity` → developer — Ethereum smart contract language
+  - **Web3/Blockchain**: `ethers` → developer — ethers.js TypeScript/JS Ethereum library (8k★)
+  - **Web3/Blockchain**: `hardhat` → developer — Ethereum dev environment: compile/test/deploy (7k★)
+  - **Web3/Blockchain**: `wagmi` → developer — React Hooks for Ethereum (7k★)
+  - **Web3/Blockchain**: `viem` → developer — TypeScript Ethereum interface (wagmi foundation, 5k★)
+  - **Mobile**: `android` → frontend — Android app development queries
+  - **Mobile**: `ios` → frontend — iOS/iPadOS development queries
+  - **Mobile**: `swiftui` → frontend — Apple SwiftUI declarative UI framework
+  - **Mobile**: `swift` → frontend — Swift language (iOS/macOS/visionOS mobile)
+  - **Mobile**: `jetpack` → frontend — Android Jetpack Compose declarative UI
+  - **Database**: `realm` → database — Realm offline-first mobile database (MongoDB Realm, 12k★)
+  - **CLI**: `fish` → cli — Fish Shell friendly interactive shell (26k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools (398 → 403 unique):
+  - **Alacritty** (BurntSushi/alacritty, 56k★) — GPU-accelerated terminal emulator; developer-tools
+  - **Helix** (helix-editor/helix, 35k★) — post-modern modal text editor; developer-tools
+  - **Fish Shell** (fish-shell/fish-shell, 26k★) — friendly interactive shell; cli-tools
+  - **Zellij** (zellij-org/zellij, 23k★) — terminal workspace / tmux alternative; developer-tools
+  - **Hardhat** (NomicFoundation/hardhat, 7k★) — Ethereum development environment; developer-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to eighty-ninth pass
 
 ## Completed This Session (2026-04-15, eighty-eighth pass — autonomous improvement cycle)
 

@@ -4597,6 +4597,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ripgrep": "developer",         # ripgrep — extremely fast grep replacement (47k★) → Developer Tools
     "jq": "developer",              # jq — JSON processor for the command line (29k★) → Developer Tools
     "yq": "developer",              # yq — YAML/JSON/XML processor, jq wrapper (12k★) → Developer Tools
+    # Web3 / blockchain development — fast-growing developer query segment (Hardhat, Foundry, ethers.js)
+    "blockchain": "developer",      # "blockchain development", "blockchain dev tools" → Developer Tools
+    "solidity": "developer",        # Solidity — Ethereum smart contract language
+    "ethers": "developer",          # ethers.js — TypeScript/JS library for Ethereum interaction (8k★)
+    "hardhat": "developer",         # Hardhat — Ethereum development environment (compile, test, deploy, 7k★)
+    "wagmi": "developer",           # wagmi — React Hooks for Ethereum (Config + core, 7k★)
+    "viem": "developer",            # viem — TypeScript Ethereum interface (low-level, wagmi foundation, 5k★)
+    # Mobile — iOS/Swift and Android/Jetpack development queries
+    "android": "frontend",          # Android app development — React Native, Flutter, Capacitor alternatives
+    "ios": "frontend",              # iOS/iPadOS development queries → mobile frameworks (React Native, Expo)
+    "swiftui": "frontend",          # SwiftUI — Apple's declarative UI framework for iOS/macOS
+    "swift": "frontend",            # Swift — Apple's programming language (iOS/macOS/visionOS)
+    "jetpack": "frontend",          # Android Jetpack Compose — Google's modern declarative Android UI
+    # Mobile / offline database
+    "realm": "database",            # Realm — offline-first mobile database (MongoDB Realm, iOS/Android, 12k★)
+    # Shell — Fish Shell (interactive, Bash/Zsh replacement)
+    "fish": "cli",                  # Fish Shell — friendly interactive shell (fish-shell/fish-shell, 26k★)
 }
 
 _FTS_STOP_WORDS = {

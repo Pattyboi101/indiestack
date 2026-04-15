@@ -6684,6 +6684,87 @@ TOOLS = [
         "brew install tmux",
         "code",
     ),
+    # Developer Tools — Terminal emulators / editors (89th pass) -------------------------
+    (
+        "alacritty",
+        "Alacritty",
+        "Fast, cross-platform, OpenGL terminal emulator",
+        "Alacritty is the fastest terminal emulator in existence, written in Rust. "
+        "Uses GPU rendering via OpenGL for near-zero latency. Highly configurable "
+        "via YAML/TOML. Ships with sensible defaults. No tabs or splits built in — "
+        "pairs with tmux or Zellij. Cross-platform: Linux, macOS, Windows, BSD.",
+        "developer-tools",
+        "BurntSushi/alacritty",
+        56000,
+        "https://alacritty.org",
+        "terminal,emulator,gpu,rust,fast,cross-platform",
+        "brew install --cask alacritty",
+        "code",
+    ),
+    (
+        "helix",
+        "Helix",
+        "A post-modern modal text editor",
+        "Helix is a terminal-based modal text editor inspired by Kakoune and Neovim. "
+        "Written in Rust, it features tree-sitter syntax highlighting, LSP support, "
+        "multiple selections, and a selection-first editing model. No plugin system "
+        "required — LSP, DAP, tree-sitter grammars, and themes ship out of the box.",
+        "developer-tools",
+        "helix-editor/helix",
+        35000,
+        "https://helix-editor.com",
+        "editor,modal,rust,lsp,treesitter,vim-alternative",
+        "brew install helix",
+        "code",
+    ),
+    (
+        "fish",
+        "Fish Shell",
+        "A smart and user-friendly command line shell",
+        "Fish is a Unix shell designed for interactive use. Its standout features are "
+        "autosuggestions based on history and completions, a clean scripting syntax "
+        "with no arcane quoting rules, web-based configuration, and out-of-the-box "
+        "syntax highlighting. A drop-in Bash/Zsh replacement for everyday terminal work.",
+        "cli-tools",
+        "fish-shell/fish-shell",
+        26000,
+        "https://fishshell.com",
+        "shell,cli,interactive,autosuggestions,scripting,bash-alternative",
+        "brew install fish",
+        "code",
+    ),
+    (
+        "zellij",
+        "Zellij",
+        "A terminal workspace with batteries included",
+        "Zellij is a terminal multiplexer (tmux alternative) built in Rust. It provides "
+        "floating panes, split layouts, a plugin system written in WebAssembly, built-in "
+        "status bar, and a sessioniser. Config is YAML/KDL. Aims to be discoverable and "
+        "beginner-friendly while remaining powerful for advanced workflows.",
+        "developer-tools",
+        "zellij-org/zellij",
+        23000,
+        "https://zellij.dev",
+        "terminal,multiplexer,rust,tmux-alternative,panes,plugins,wasm",
+        "cargo install zellij",
+        "code",
+    ),
+    (
+        "hardhat",
+        "Hardhat",
+        "Ethereum development environment for professionals",
+        "Hardhat is a development environment for Ethereum smart contracts. Compile, "
+        "test, debug, and deploy Solidity contracts. Ships with Hardhat Network — a "
+        "local Ethereum node for testing. Extensive plugin ecosystem (OpenZeppelin, "
+        "Ethers.js, Viem, Foundry forking). The most widely used Ethereum dev tool.",
+        "developer-tools",
+        "NomicFoundation/hardhat",
+        7000,
+        "https://hardhat.org",
+        "ethereum,blockchain,solidity,smart-contracts,testing,web3",
+        "npm install --save-dev hardhat",
+        "code",
+    ),
 ]
 
 
