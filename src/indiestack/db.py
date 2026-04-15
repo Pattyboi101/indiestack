@@ -4702,6 +4702,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "moe": "ai",                    # Mixture of Experts (MoE) — "sparse moe" → AI & Automation
     "quantization": "ai",           # "model quantization", "llm quantization" → AI
     "distillation": "ai",           # "model distillation", "knowledge distillation" → AI
+    # Feature Flags — deployment pattern terminology (complement to "flag"/"flags"/"toggle" already mapped)
+    "rollout": "feature",           # "feature rollout", "gradual rollout", "phased rollout" → Feature Flags
+    "canary": "feature",            # "canary release", "canary deployment" → Feature Flags (LaunchDarkly, GrowthBook)
+    "gradual": "feature",           # "gradual rollout", "gradual release" → Feature Flags (GrowthBook, Unleash)
+    # Feature Flags — named tools not yet individually mapped
+    "openfeature": "feature",       # OpenFeature — CNCF open standard for feature flag evaluation (3k★)
+    "flipper": "feature",           # Flipper — Ruby/Rails feature flags gem (flippercloud/flipper, 3k★)
+    # Security — credential management (secrets, keys, passwords)
+    "credential": "security",       # "credential management", "credential rotation" → Security Tools
+    "credentials": "security",      # plural — "credentials store", "credentials provider" → Security Tools
+    # Email — deliverability tooling (Mailtrap, GlockApps, Mail-Tester, Postmark tools)
+    "deliverability": "email",      # "email deliverability tool", "deliverability testing" → Email Marketing
+    # Database — version-controlled / distributed SQLite
+    "dolt": "database",             # Dolt — git-inspired version-controlled SQL database (dolthub/dolt, 18k★)
+    "nhost": "database",            # Nhost — Postgres + Hasura + Auth + Storage BaaS (nhost/nhost, 8k★)
+    # DevOps — container registries (Harbor, Zot, ECR, GCR, GHCR)
+    "harbor": "devops",             # Harbor — CNCF container registry with RBAC + replication (goharbor/harbor, 24k★)
+    "artifact": "devops",           # "artifact registry", "build artifact storage" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

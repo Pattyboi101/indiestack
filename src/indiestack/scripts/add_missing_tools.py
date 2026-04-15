@@ -7473,6 +7473,93 @@ TOOLS = [
         "pip install hatch",
         "code",
     ),
+    # Database — version-controlled SQL -------------------------------------------------
+    (
+        "dolt",
+        "Dolt",
+        "Git for data — version-controlled SQL database",
+        "Dolt is the world's first version-controlled SQL database. Branch, merge, "
+        "diff, and rollback your data like you do your code. DoltHub hosts public "
+        "and private databases. Compatible with MySQL protocol — works with any MySQL "
+        "client or ORM. Perfect for reproducible data pipelines and auditability.",
+        "database",
+        "dolthub/dolt",
+        18000,
+        "https://www.dolthub.com",
+        "database,sql,mysql,version-control,git,data-versioning",
+        "brew install dolt",
+        "code",
+    ),
+    # DevOps — container registries ------------------------------------------------------
+    (
+        "harbor",
+        "Harbor",
+        "Open-source container registry with RBAC, replication, and vulnerability scanning",
+        "Harbor is a CNCF Graduated open-source container registry that secures "
+        "artifacts with policies and RBAC. Includes image replication across registries, "
+        "vulnerability scanning via Trivy/Clair, content signing via Notary, and a "
+        "rich web UI. Self-host on Kubernetes or bare metal.",
+        "devops-infrastructure",
+        "goharbor/harbor",
+        24000,
+        "https://goharbor.io",
+        "container-registry,docker,oci,kubernetes,security,self-hosted",
+        "helm install harbor harbor/harbor",
+        "code",
+    ),
+    # Feature Flags — Ruby ecosystem -----------------------------------------------------
+    (
+        "flipper",
+        "Flipper",
+        "Feature flags for Ruby and Rails applications",
+        "Flipper is the most popular feature flagging gem in the Ruby ecosystem. "
+        "Store flags in memory, Redis, ActiveRecord, or any custom adapter. "
+        "Boolean, percentage, group, and actor-based targeting. Flipper Cloud "
+        "adds a hosted dashboard with audit log and team collaboration.",
+        "feature-flags",
+        "flippercloud/flipper",
+        3400,
+        "https://www.flippercloud.io",
+        "feature-flags,ruby,rails,percentage-rollout,self-hosted",
+        "gem install flipper",
+        "code",
+    ),
+    # DevOps / BaaS — Firebase alternative ----------------------------------------------
+    (
+        "nhost",
+        "Nhost",
+        "The open-source Firebase alternative with GraphQL",
+        "Nhost is a Firebase alternative built on open standards: PostgreSQL, "
+        "Hasura GraphQL, Auth, and File Storage — all in one platform. "
+        "Instant GraphQL API auto-generated from your database schema, built-in "
+        "auth with social providers, serverless functions, and a generous free tier. "
+        "Self-hostable via Docker Compose.",
+        "devops-infrastructure",
+        "nhost/nhost",
+        8000,
+        "https://nhost.io",
+        "baas,firebase-alternative,graphql,hasura,postgres,auth,storage,self-hosted",
+        "npm install @nhost/react",
+        "code",
+    ),
+    # API Tools — Protobuf toolchain -----------------------------------------------------
+    (
+        "buf",
+        "Buf",
+        "The best way to use Protobuf",
+        "Buf is a modern developer-first Protobuf toolchain. It replaces the "
+        "fragile protoc workflow with a single CLI: lint, format, detect breaking "
+        "changes, generate code, and push to the Buf Schema Registry. "
+        "buf.build hosts a public schema registry for sharing Protobuf APIs. "
+        "Used by Stripe, DoorDash, and many API-first companies.",
+        "api-tools",
+        "bufbuild/buf",
+        9000,
+        "https://buf.build",
+        "protobuf,grpc,api,rpc,code-generation,linting",
+        "brew install bufbuild/buf/buf",
+        "code",
+    ),
 ]
 
 
