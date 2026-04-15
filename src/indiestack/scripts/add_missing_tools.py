@@ -6459,6 +6459,616 @@ TOOLS = [
         "pip install feast",
         "code",
     ),
+    # Frontend Frameworks — Rolldown (Rust bundler replacing Rollup inside Vite) ----------
+    (
+        "rolldown",
+        "Rolldown",
+        "Rust-powered JavaScript bundler for Vite — next-gen speed without compromise",
+        "Rolldown is a Rust-based JavaScript/TypeScript bundler designed to replace "
+        "Rollup as the production bundler inside Vite. It achieves dramatic build speed "
+        "improvements while maintaining full Rollup plugin compatibility. Being integrated "
+        "as the default bundler in Vite 6, making it the de-facto bundler for the modern "
+        "Vite ecosystem. Built by the VoidZero team (creator of Vue and Vite).",
+        "frontend-frameworks",
+        "rolldown-rs/rolldown",
+        9000,
+        "https://rolldown.rs",
+        "bundler,build-tool,rust,vite,fast,rollup-compatible",
+        "npm install rolldown",
+        "code",
+    ),
+    # Developer Tools — Knip (TypeScript dead code and unused dependency finder) ----------
+    (
+        "knip",
+        "Knip",
+        "Find unused files, exports, and dependencies in your TypeScript project",
+        "Knip scans your TypeScript and JavaScript projects to find unused files, "
+        "exports, types, and dependencies. It eliminates dead code, reduces bundle "
+        "size, and improves maintainability. Supports monorepos, all major frameworks, "
+        "and hundreds of plugins. The go-to tool for TypeScript project hygiene — "
+        "runs in CI and as a pre-commit check.",
+        "developer-tools",
+        "webpodcast/knip",
+        7000,
+        "https://knip.dev",
+        "typescript,dead-code,unused-exports,static-analysis,monorepo,developer-tools",
+        "npm install knip",
+        "code",
+    ),
+    # Search Engine — Trieve (search + RAG + recommendations in one hosted platform) -----
+    (
+        "trieve",
+        "Trieve",
+        "Search, RAG, and recommendations platform for developers",
+        "Trieve is a hosted platform that combines full-text search, vector search, "
+        "RAG (Retrieval-Augmented Generation), and recommendation APIs in one service. "
+        "It handles document ingestion, chunking, embeddings, and reranking so you can "
+        "add powerful semantic search and AI retrieval to your app without building the "
+        "infrastructure yourself. SDKs for TypeScript and Python.",
+        "search-engine",
+        "devflowinc/trieve",
+        2000,
+        "https://trieve.ai",
+        "search,rag,vector-search,recommendations,full-text,semantic-search,typescript",
+        "npm install trieve-ts-sdk",
+        "saas",
+    ),
+    # Developer Tools — Val Town (serverless TypeScript scripting with HTTP triggers) -----
+    (
+        "val-town",
+        "Val Town",
+        "Write, run, and deploy serverless TypeScript scripts in seconds",
+        "Val Town is a social coding platform where you write small TypeScript functions "
+        "('vals') that run as HTTP endpoints, cron jobs, or email handlers — instantly, "
+        "with zero setup. Vals can import from npm, call each other, and store data in "
+        "built-in SQLite. Great for webhooks, bots, automations, and rapid prototyping. "
+        "Think GitHub Gists + serverless functions + a social layer.",
+        "developer-tools",
+        "val-town/val-town-product",
+        3000,
+        "https://val.town",
+        "serverless,typescript,scripts,webhooks,cron,prototyping,platform",
+        "# Sign up at val.town — no install needed",
+        "saas",
+    ),
+    # Monitoring — OpenReplay (open-source session replay + DevTools, Hotjar/FullStory alternative) -------
+    (
+        "openreplay",
+        "OpenReplay",
+        "Open-source session replay and product analytics — self-hostable Hotjar alternative",
+        "OpenReplay is an open-source session replay and product analytics suite that lets "
+        "you replay user sessions (mouse movements, clicks, console errors, network requests) "
+        "and understand how users interact with your app. Self-hostable on your own infra or "
+        "as a cloud service. Includes DevTools integration, rage-click detection, "
+        "performance monitoring, and funnel analytics. Strong alternative to Hotjar, "
+        "FullStory, and LogRocket with full data ownership.",
+        "monitoring-uptime",
+        "openreplay/openreplay",
+        10000,
+        "https://openreplay.com",
+        "session-replay,monitoring,analytics,open-source,self-hosted,hotjar-alternative,ux",
+        "docker-compose up -d  # self-hosted",
+        "code",
+    ),
+    # API Tools — Relay (Meta's production GraphQL client for React, 18k★) ----------------------------
+    (
+        "relay",
+        "Relay",
+        "Production-ready GraphQL client for React — declarative data fetching at scale",
+        "Relay is Meta's production-ready GraphQL client for React applications. It compiles "
+        "GraphQL queries at build time for maximum performance, co-locates data requirements "
+        "with components, and handles pagination, subscriptions, and optimistic updates. "
+        "Used by Facebook, Instagram, and other large-scale React apps. Relay emphasises "
+        "correctness and type-safety via generated TypeScript types. Best-in-class for "
+        "large codebases where Apollo feels too loose.",
+        "api-tools",
+        "facebook/relay",
+        18000,
+        "https://relay.dev",
+        "graphql,react,client,meta,facebook,data-fetching,typescript",
+        "npm install react-relay relay-runtime",
+        "code",
+    ),
+    # Developer Tools — Gleam (type-safe functional language on Erlang/BEAM VM) ----------------------
+    (
+        "gleam",
+        "Gleam",
+        "Type-safe functional language on the Erlang VM — fast, friendly, and reliable",
+        "Gleam is a statically typed functional language that runs on the Erlang virtual "
+        "machine (BEAM), giving it the fault tolerance and concurrency of Erlang/Elixir with "
+        "a modern, friendly syntax. Compiles to both Erlang and JavaScript (Node, Deno, "
+        "browsers). The compiler produces excellent error messages and has no runtime "
+        "exceptions from type errors. Growing fast in the web backend space with its "
+        "Wisp HTTP framework and growing ecosystem.",
+        "developer-tools",
+        "gleam-lang/gleam",
+        18000,
+        "https://gleam.run",
+        "language,erlang,beam,functional,type-safe,web-backend,javascript",
+        "# Install via gleam.run/getting-started",
+        "code",
+    ),
+    # Database — Electric SQL (local-first sync layer for Postgres, 8k★) ----------------------------
+    (
+        "electric-sql",
+        "Electric SQL",
+        "Local-first sync engine for Postgres — instant reactivity without loading states",
+        "Electric SQL is a local-first sync layer that syncs a subset of your Postgres "
+        "database into the client in real-time. Apps read from local storage (instant, "
+        "offline-capable) and sync changes back to Postgres. No loading states — data is "
+        "always available locally. Uses Postgres logical replication under the hood. Works "
+        "with any Postgres host (Supabase, Neon, RDS, self-hosted). Shape-based sync lets "
+        "you subscribe to live queries that update automatically.",
+        "database",
+        "electric-sql/electric",
+        8000,
+        "https://electric-sql.com",
+        "local-first,sync,postgres,realtime,offline,reactive,typescript",
+        "npm install electric-sql",
+        "code",
+    ),
+    # Frontend Frameworks — Million.js (lightweight React compiler/optimizer, 16k★) -----------------
+    (
+        "million",
+        "Million.js",
+        "Drop-in React compiler that makes your app up to 70% faster",
+        "Million.js is a lightweight virtual DOM replacement for React that makes components "
+        "up to 70% faster through compiler optimisations. It works as a drop-in addition to "
+        "React — you wrap performance-critical components with the `block()` HOC and Million "
+        "replaces React's reconciler with a faster diff algorithm for those subtrees. No "
+        "rewrite required. Also includes the Million Lint VSCode extension that automatically "
+        "finds and flags slow React components. Works with Next.js, Vite, and Create React App.",
+        "frontend-frameworks",
+        "aidenybai/million",
+        16000,
+        "https://million.dev",
+        "react,performance,compiler,virtual-dom,optimization,nextjs,vite",
+        "npm install million",
+        "code",
+    ),
+    # ── Eighty-fourth pass ────────────────────────────────────────────────────
+    # JVM / Kotlin frameworks -----------------------------------------------
+    (
+        "ktor",
+        "Ktor",
+        "Asynchronous framework for connected applications",
+        "Ktor is an asynchronous Kotlin framework by JetBrains for building connected "
+        "applications — web services, HTTP clients, mobile backends. Lightweight, "
+        "coroutine-native, and runs on JVM, Android, and Kotlin Multiplatform.",
+        "api-tools",
+        "kotlin/ktor",
+        12000,
+        "https://ktor.io",
+        "kotlin,async,jvm,coroutines,multiplatform",
+        "implementation(\"io.ktor:ktor-server-core:3.0.0\")",
+        "code",
+    ),
+    (
+        "quarkus",
+        "Quarkus",
+        "Supersonic Subatomic Java",
+        "Quarkus is a Kubernetes-native Java stack tailored for GraalVM and HotSpot. "
+        "Sub-10ms startup, tiny memory footprint, and developer-friendly live reload. "
+        "Unifies imperative and reactive programming models for cloud-native microservices.",
+        "api-tools",
+        "quarkusio/quarkus",
+        14000,
+        "https://quarkus.io",
+        "java,graalvm,microservices,kubernetes,native-image",
+        "mvn io.quarkus.platform:quarkus-maven-plugin:create",
+        "code",
+    ),
+    # Changelog generation --------------------------------------------------
+    (
+        "git-cliff",
+        "git-cliff",
+        "A highly customizable changelog generator",
+        "git-cliff generates changelogs from your Git history based on Conventional "
+        "Commits. Written in Rust for speed, supports Jinja2 templates, multiple "
+        "output formats, and integrates with GitHub CI workflows.",
+        "devops-infrastructure",
+        "orhun/git-cliff",
+        9000,
+        "https://git-cliff.org",
+        "changelog,git,conventional-commits,rust,release",
+        "cargo install git-cliff",
+        "code",
+    ),
+    # Apache Spark -----------------------------------------------------------
+    (
+        "apache-spark",
+        "Apache Spark",
+        "Unified engine for large-scale data analytics",
+        "Apache Spark is the most widely-used open-source unified analytics engine for "
+        "large-scale data processing. Supports batch, streaming (Structured Streaming), "
+        "SQL, machine learning (MLlib), and graph processing (GraphX).",
+        "background-jobs",
+        "apache/spark",
+        40000,
+        "https://spark.apache.org",
+        "batch,streaming,big-data,ml,sql,scala,python,java",
+        "pip install pyspark",
+        "code",
+    ),
+    # Data Science / DataFrame ---------------------------------------------------
+    (
+        "polars",
+        "Polars",
+        "Blazingly fast DataFrames for Python, Rust, and Node.js",
+        "Polars is a lightning-fast DataFrame library written in Rust. Often 10-100x "
+        "faster than pandas for common operations. Lazy evaluation, multi-threaded "
+        "execution, and Apache Arrow memory model. The go-to pandas alternative in 2025.",
+        "database",
+        "pola-rs/polars",
+        34000,
+        "https://pola.rs",
+        "dataframe,python,rust,analytics,pandas-alternative",
+        "pip install polars",
+        "code",
+    ),
+    # CLI Frameworks -------------------------------------------------------------
+    (
+        "cobra",
+        "Cobra",
+        "A Commander for modern Go CLI applications",
+        "Cobra is the most popular Go library for building powerful modern CLI apps. "
+        "Used by Docker, Kubernetes kubectl, Hugo, GitHub CLI, and many others. "
+        "Generates bash/zsh/fish completion, man pages, and more.",
+        "cli-tools",
+        "spf13/cobra",
+        38000,
+        "https://cobra.dev",
+        "cli,go,golang,command-line,shell-completion",
+        "go get -u github.com/spf13/cobra@latest",
+        "code",
+    ),
+    (
+        "click",
+        "Click",
+        "The Pallets project for creating beautiful command line interfaces in Python",
+        "Click is a Python package for creating beautiful command line interfaces with "
+        "as little code as possible. Arbitrary nesting of commands, automatic help page "
+        "generation, and supports lazy loading of subcommands.",
+        "cli-tools",
+        "pallets/click",
+        15000,
+        "https://click.palletsprojects.com",
+        "cli,python,command-line,argparse-alternative",
+        "pip install click",
+        "code",
+    ),
+    # Developer Tools — Diagramming / Whiteboard ---------------------------------
+    (
+        "excalidraw",
+        "Excalidraw",
+        "Virtual whiteboard for sketching hand-drawn like diagrams",
+        "Excalidraw is an open-source virtual whiteboard with a hand-drawn feel. "
+        "Used by millions for technical diagrams, architecture sketches, and "
+        "collaborative whiteboarding. End-to-end encrypted real-time collaboration.",
+        "developer-tools",
+        "excalidraw/excalidraw",
+        89000,
+        "https://excalidraw.com",
+        "whiteboard,diagrams,collaboration,canvas,drawing",
+        "npm install @excalidraw/excalidraw",
+        "code",
+    ),
+    # Schema Validation ----------------------------------------------------------
+    (
+        "yup",
+        "Yup",
+        "Dead simple object schema validation for JavaScript",
+        "Yup is a schema builder for runtime value parsing and validation. Define a "
+        "schema, transform a value to match, assert the shape of an existing value, or "
+        "both. Pre-dates Zod but still widely used, especially with Formik.",
+        "developer-tools",
+        "jquense/yup",
+        22000,
+        "https://github.com/jquense/yup",
+        "validation,schema,javascript,typescript,formik",
+        "npm install yup",
+        "code",
+    ),
+    # AI Dev Tools — Eighty-Sixth Pass -------------------------------------------
+    (
+        "cline",
+        "Cline",
+        "Open-source AI coding agent that lives in your IDE",
+        "Cline (formerly Claude Dev) is an open-source AI coding extension for VS Code "
+        "and JetBrains. It autonomously reads files, writes code, runs terminal commands, "
+        "and browses the web to complete multi-step tasks. Supports Claude, GPT-4, Gemini, "
+        "and any OpenAI-compatible API. 38k+ GitHub stars.",
+        "ai-dev-tools",
+        "clinebot/cline",
+        38000,
+        "https://cline.bot",
+        "ai-coding,code-assistant,ide,vscode,autonomous-agent,claude",
+        "",
+        "code",
+    ),
+    # Local LLM ------------------------------------------------------------------
+    (
+        "jan",
+        "Jan",
+        "Open-source local LLM chat and inference server",
+        "Jan is a 100% offline, privacy-first alternative to ChatGPT that runs on your "
+        "own hardware. Download models from Hugging Face, run them locally via llama.cpp, "
+        "and expose a local OpenAI-compatible API server. Supports Mac, Windows, and Linux.",
+        "ai-automation",
+        "janhq/jan",
+        22000,
+        "https://jan.ai",
+        "local-llm,privacy,inference,chat,offline,openai-compatible",
+        "",
+        "code",
+    ),
+    # LLM Observability ----------------------------------------------------------
+    (
+        "opik",
+        "Opik",
+        "Open-source LLM evaluation and tracing by Comet",
+        "Opik is an open-source platform for evaluating, testing, and monitoring LLM "
+        "applications. Log traces with one line of code, run automated evaluations, "
+        "compare prompt versions, and catch regressions before they reach production. "
+        "Integrates with LangChain, LlamaIndex, and any LLM.",
+        "ai-automation",
+        "comet-ml/opik",
+        5000,
+        "https://www.comet.com/site/products/opik",
+        "llm-evaluation,tracing,observability,evals,testing,langchain",
+        "pip install opik",
+        "code",
+    ),
+    # JavaScript Utility Libraries -----------------------------------------------
+    (
+        "jquery",
+        "jQuery",
+        "The Write Less, Do More JavaScript library",
+        "jQuery is a fast, small, and feature-rich JavaScript library. "
+        "It simplifies HTML document traversal, event handling, animation, and Ajax "
+        "with an easy-to-use API. Despite the React/Vue era, jQuery still powers "
+        "a vast portion of the web and is one of the most downloaded npm packages.",
+        "frontend-frameworks",
+        "jquery/jquery",
+        59000,
+        "https://jquery.com",
+        "javascript,dom,ajax,utility",
+        "npm install jquery",
+        "code",
+    ),
+    (
+        "rxjs",
+        "RxJS",
+        "Reactive Extensions library for JavaScript",
+        "RxJS is a library for reactive programming using Observables. Enables "
+        "composing asynchronous and event-based programs using observable sequences "
+        "and LINQ-style query operators. Core dependency of Angular and widely used "
+        "with React, Vue, and plain JavaScript for complex async flows.",
+        "frontend-frameworks",
+        "ReactiveX/rxjs",
+        31000,
+        "https://rxjs.dev",
+        "reactive,observables,angular,async,functional-reactive",
+        "npm install rxjs",
+        "code",
+    ),
+    (
+        "lodash",
+        "Lodash",
+        "A modern JavaScript utility library delivering modularity and performance",
+        "Lodash is a modern JavaScript utility library with methods for arrays, "
+        "objects, strings, numbers, and more. Provides consistent cross-environment "
+        "iteration support with tree-shakeable modular imports. One of the most "
+        "downloaded npm packages ever.",
+        "developer-tools",
+        "lodash/lodash",
+        59000,
+        "https://lodash.com",
+        "javascript,utility,functional,arrays,objects",
+        "npm install lodash",
+        "code",
+    ),
+    # Run GitHub Actions Locally -------------------------------------------------
+    (
+        "act",
+        "act",
+        "Run your GitHub Actions locally",
+        "act uses Docker to run your GitHub Actions locally. Reads your "
+        ".github/workflows/ files and uses the Docker API to pull or build images "
+        "and run the containers. Ideal for rapid feedback loops without pushing "
+        "every commit to CI. Written in Go.",
+        "devops-infrastructure",
+        "nektos/act",
+        59000,
+        "https://github.com/nektos/act",
+        "ci-cd,github-actions,local,docker",
+        "brew install act",
+        "code",
+    ),
+    # Express Security Middleware -------------------------------------------------
+    (
+        "helmet",
+        "Helmet.js",
+        "Secure your Express apps with HTTP headers",
+        "Helmet helps secure Express.js apps by setting various HTTP security "
+        "headers including Content-Security-Policy, X-XSS-Protection, "
+        "X-Content-Type-Options, and more. Simple middleware with sensible defaults "
+        "that protects against common web vulnerabilities. Used by millions of "
+        "Node.js applications.",
+        "security-tools",
+        "helmetjs/helmet",
+        10000,
+        "https://helmetjs.github.io",
+        "security,express,http-headers,csp,nodejs",
+        "npm install helmet",
+        "code",
+    ),
+    # VPN / mesh networking -------------------------------------------------------
+    (
+        "tailscale",
+        "Tailscale",
+        "Zero-config mesh VPN built on WireGuard",
+        "Tailscale creates a secure private network between your devices, servers, and cloud "
+        "instances using WireGuard under the hood. Zero-config: works behind NAT, firewalls, "
+        "and across clouds without port-forwarding. Free tier for personal use. Widely used "
+        "for connecting local dev machines to production databases and staging services.",
+        "devops-infrastructure",
+        "tailscale/tailscale",
+        18000,
+        "https://tailscale.com",
+        "vpn,wireguard,mesh-network,networking,security,zero-config",
+        "curl -fsSL https://tailscale.com/install.sh | sh",
+        "code",
+    ),
+    # CLI Productivity Tools -------------------------------------------------------
+    (
+        "fzf",
+        "fzf",
+        "A command-line fuzzy finder",
+        "fzf is a general-purpose command-line fuzzy finder written in Go. It can be used as "
+        "an interactive filter for any list: files, command history, git commits, processes. "
+        "Integrates with bash, zsh, fish, and vim/neovim. One of the most-starred CLI tools "
+        "on GitHub, beloved by developers who live in the terminal.",
+        "cli-tools",
+        "junegunn/fzf",
+        64000,
+        "https://github.com/junegunn/fzf",
+        "cli,fuzzy-finder,terminal,productivity,search",
+        "brew install fzf",
+        "code",
+    ),
+    (
+        "ripgrep",
+        "ripgrep",
+        "Recursively searches directories for a regex pattern",
+        "ripgrep (rg) is a line-oriented search tool that recursively searches your current "
+        "directory for a regex pattern. It respects .gitignore rules, skips binary files, and "
+        "is 10-100x faster than grep. Written in Rust. Used internally by VS Code for its "
+        "text search feature. Essential for developers who do frequent code searches.",
+        "cli-tools",
+        "BurntSushi/ripgrep",
+        47000,
+        "https://github.com/BurntSushi/ripgrep",
+        "cli,grep,search,regex,rust,fast",
+        "brew install ripgrep",
+        "code",
+    ),
+    (
+        "jq",
+        "jq",
+        "Lightweight and flexible command-line JSON processor",
+        "jq is like sed for JSON data — you can use it to slice, filter, map, and transform "
+        "structured data. It is written in portable C and has zero runtime dependencies. "
+        "Essential for working with REST APIs, parsing log files, and scripting JSON "
+        "transformations in shell scripts and CI pipelines.",
+        "cli-tools",
+        "jqlang/jq",
+        29000,
+        "https://jqlang.github.io/jq",
+        "cli,json,processor,parsing,shell,devops",
+        "brew install jq",
+        "code",
+    ),
+    (
+        "tmux",
+        "tmux",
+        "Terminal multiplexer — multiple windows in one terminal",
+        "tmux lets you switch between several programs in one terminal, detach them (they keep "
+        "running in the background), and reattach later. Essential for remote server work "
+        "over SSH, running multiple processes side-by-side, and preserving sessions. "
+        "Works with vi/emacs key bindings and is highly configurable via .tmux.conf.",
+        "cli-tools",
+        "tmux/tmux",
+        34000,
+        "https://github.com/tmux/tmux/wiki",
+        "cli,terminal,multiplexer,session,ssh,productivity",
+        "brew install tmux",
+        "code",
+    ),
+    # Bundlers ----------------------------------------------------------------------
+    (
+        "parcel",
+        "Parcel",
+        "The zero configuration build tool for the web",
+        "Parcel is a zero-configuration web application bundler. Drop in an HTML entry point "
+        "and Parcel automatically resolves JS, CSS, images, and more — no config file required. "
+        "Built-in dev server with HMR, production optimization, code splitting, and scope "
+        "hoisting. Popular choice for smaller projects and rapid prototyping.",
+        "frontend-frameworks",
+        "parcel-bundler/parcel",
+        43000,
+        "https://parceljs.org",
+        "bundler,build-tool,zero-config,javascript",
+        "npm install parcel --save-dev",
+        "code",
+    ),
+    # OpenAPI Documentation ---------------------------------------------------------
+    (
+        "redoc",
+        "ReDoc",
+        "OpenAPI/Swagger-generated API Reference Documentation",
+        "ReDoc renders beautiful, interactive API reference documentation from OpenAPI "
+        "2.0/3.0/3.1 specs. Single HTML file output, responsive three-panel layout, code "
+        "samples, and deep-linking. Used by thousands of teams to publish public API docs. "
+        "Available as CLI, React component, or Docker image.",
+        "api-tools",
+        "Redocly/redoc",
+        23000,
+        "https://redocly.com/redoc",
+        "openapi,api-docs,swagger,documentation,rest",
+        "npx @redocly/cli preview-docs openapi.yaml",
+        "code",
+    ),
+    (
+        "swagger-ui",
+        "Swagger UI",
+        "Visualize and interact with your API's resources without any implementation logic",
+        "Swagger UI is the most widely deployed OpenAPI documentation explorer. Renders an "
+        "interactive UI from any OpenAPI 2.0/3.0 spec — try endpoints directly in the browser, "
+        "inspect request/response schemas, and download client SDKs. Available as standalone "
+        "HTML, npm package, or Docker image.",
+        "api-tools",
+        "swagger-api/swagger-ui",
+        26000,
+        "https://swagger.io/tools/swagger-ui",
+        "openapi,swagger,api-docs,rest,interactive",
+        "npm install swagger-ui",
+        "code",
+    ),
+    # Form Libraries ----------------------------------------------------------------
+    (
+        "tanstack-form",
+        "TanStack Form",
+        "Headless, framework-agnostic form state management for the web",
+        "TanStack Form provides type-safe form state management for React, Vue, Solid, Angular, "
+        "and Lit. Async validation, array fields, nested forms, and a tiny bundle size. Pairs "
+        "naturally with Zod, Valibot, or custom validators. The headless, framework-agnostic "
+        "alternative to React Hook Form.",
+        "frontend-frameworks",
+        "TanStack/form",
+        4500,
+        "https://tanstack.com/form",
+        "forms,react,vue,typescript,validation,headless",
+        "npm install @tanstack/react-form",
+        "code",
+    ),
+    (
+        "vee-validate",
+        "VeeValidate",
+        "Painless Vue.js form validation",
+        "VeeValidate is the most popular form validation library for Vue.js. Composition API "
+        "first with first-class TypeScript support and built-in Zod/Yup/Valibot schema "
+        "adapters. Handles async rules, i18n error messages, and nested field arrays. "
+        "Powers form validation in thousands of Vue 2 and Vue 3 apps.",
+        "frontend-frameworks",
+        "logaretm/vee-validate",
+        10000,
+        "https://vee-validate.logaretm.com",
+        "forms,vue,validation,typescript,zod",
+        "npm install vee-validate",
+        "code",
+    ),
+
 ]
 
 
