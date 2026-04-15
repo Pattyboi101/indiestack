@@ -6765,6 +6765,91 @@ TOOLS = [
         "npm install --save-dev hardhat",
         "code",
     ),
+    # --- Ninetieth pass additions ---
+    (
+        "react-three-fiber",
+        "React Three Fiber",
+        "A React renderer for Three.js",
+        "React Three Fiber (R3F) is a React renderer for Three.js that lets you "
+        "build Three.js scenes declaratively with React components. It abstracts "
+        "away the Three.js boilerplate while giving you full access to the Three.js "
+        "API. Part of the pmndrs ecosystem alongside Drei (helpers), Rapier "
+        "(physics), and React Spring (animation).",
+        "frontend-frameworks",
+        "pmndrs/react-three-fiber",
+        27000,
+        "https://docs.pmnd.rs/react-three-fiber",
+        "three,3d,webgl,react,animation",
+        "npm install @react-three/fiber three",
+        "code",
+    ),
+    (
+        "bentoml",
+        "BentoML",
+        "The easiest way to serve AI apps and models",
+        "BentoML is an open-source model serving framework that lets you build, "
+        "ship, and scale AI applications. Define serving logic in Python, package "
+        "models with dependencies, and deploy to any cloud or on-premises. "
+        "Supports PyTorch, TensorFlow, scikit-learn, XGBoost, LLMs via vLLM/Ollama, "
+        "and any Python model. Handles batching, streaming, and multi-model pipelines.",
+        "ai-automation",
+        "bentoml/bentoml",
+        7000,
+        "https://bentoml.com",
+        "ml,model-serving,llm,python,deployment,inference",
+        "pip install bentoml",
+        "code",
+    ),
+    (
+        "sanic",
+        "Sanic",
+        "Build fast. Run fast.",
+        "Sanic is an async Python web framework and server built for performance. "
+        "It supports async/await syntax natively and is one of the fastest Python "
+        "web frameworks available. Suitable for building REST APIs, WebSocket servers, "
+        "and microservices. Ships with built-in HTTP/2, TLS, and streaming support.",
+        "api-tools",
+        "sanic-org/sanic",
+        18000,
+        "https://sanic.dev",
+        "python,async,web-framework,rest-api,http2",
+        "pip install sanic",
+        "code",
+    ),
+    (
+        "activemq",
+        "Apache ActiveMQ",
+        "The most popular open-source, multi-protocol message broker",
+        "Apache ActiveMQ is a widely deployed open-source message broker that "
+        "supports JMS, AMQP, MQTT, OpenWire, STOMP, and WebSocket protocols. "
+        "Used extensively in enterprise Java stacks for reliable async messaging. "
+        "ActiveMQ Classic and ActiveMQ Artemis (next-gen) handle millions of messages "
+        "per second and integrate with Spring Boot, Camel, and Quarkus.",
+        "message-queue",
+        "apache/activemq",
+        2000,
+        "https://activemq.apache.org",
+        "message-broker,jms,amqp,mqtt,java,enterprise",
+        "",
+        "code",
+    ),
+    (
+        "foundry-eth",
+        "Foundry",
+        "Blazing fast, portable, and modular toolkit for Ethereum development",
+        "Foundry is a smart contract development toolchain written in Rust. "
+        "It ships Forge (testing framework), Cast (CLI for EVM interaction), "
+        "Anvil (local Ethereum node), and Chisel (Solidity REPL). Tests are written "
+        "in Solidity — no JavaScript required. Significantly faster than Hardhat for "
+        "compilation and testing, with fuzzing and invariant testing built in.",
+        "developer-tools",
+        "foundry-rs/foundry",
+        9000,
+        "https://book.getfoundry.sh",
+        "ethereum,blockchain,solidity,smart-contracts,testing,web3",
+        "curl -L https://foundry.paradigm.xyz | bash",
+        "code",
+    ),
 ]
 
 

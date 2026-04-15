@@ -4614,6 +4614,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "realm": "database",            # Realm — offline-first mobile database (MongoDB Realm, iOS/Android, 12k★)
     # Shell — Fish Shell (interactive, Bash/Zsh replacement)
     "fish": "cli",                  # Fish Shell — friendly interactive shell (fish-shell/fish-shell, 26k★)
+    # AI — plural forms and LLM interaction patterns (new terms growing in agent query volume)
+    "agents": "ai",                 # plural "agents" — "AI agents framework", "multi-agent system" queries
+    "hybrid": "search",             # "hybrid search" — BM25+vector combined retrieval (key RAG term)
+    "toolcalling": "ai",            # compound — "toolcalling api", "tool calling llm" → AI & Automation
+    "function-calling": "ai",       # hyphenated — "function-calling openai", "function-calling spec" → AI
+    # Frontend — React Three Fiber (declarative Three.js for React, 27k★)
+    "r3f": "frontend",              # R3F abbreviation — "r3f alternative", "r3f tutorial" → Frontend Frameworks
+    "react-three-fiber": "frontend",# full form — "react-three-fiber alternative", "r3f vs threejs" → Frontend
+    # Message Queue — Apache ActiveMQ (classic enterprise JMS broker)
+    "activemq": "message",          # Apache ActiveMQ — enterprise JMS message broker (widely deployed)
+    # DevOps — HashiCorp Nomad workload orchestrator
+    "nomad": "devops",              # HashiCorp Nomad — flexible workload orchestrator (containers + VMs, 15k★)
+    # Developer Tools — Foundry Ethereum toolchain (Forge + Cast + Anvil)
+    "foundry": "developer",         # Foundry — professional Ethereum toolkit: Forge (test), Cast (CLI), Anvil (node)
+    # Auth — Frontegg enterprise B2B identity platform
+    "frontegg": "authentication",   # Frontegg — B2B SaaS user management and identity platform
+    # API — additional Python async frameworks
+    "sanic": "api",                 # Sanic — async Python web framework, Flask-style API (sanic-org/sanic, 18k★)
+    "strawberry": "api",            # Strawberry GraphQL — Python type-annotated GraphQL library (4k★)
+    # AI — ML model serving frameworks
+    "bentoml": "ai",                # BentoML — open-source model serving + deployment framework (bentoml/bentoml, 7k★)
 }
 
 _FTS_STOP_WORDS = {
