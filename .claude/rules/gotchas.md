@@ -1,5 +1,7 @@
 # Mistakes We've Made — Don't Repeat These
 
+- Adding routers pushes `fastapi_x402` lifespan nesting deeper. With 51 routers the nested async context managers exceeded Python's default recursion limit (1000), crashing the app on startup with a `merged_lifespan` RecursionError. Fix: `sys.setrecursionlimit(2000)` at the top of main.py. If adding more routers in future, check this limit.
+
 - `db.execute_fetchone()` does NOT exist in the db module. Use `await (await d.execute(query, params)).fetchone()` directly on the connection object. The hallucinated function survived in main.py because those calls are wrapped in try/except. Always use the cursor pattern: `cursor = await d.execute(...); row = await cursor.fetchone()`.
 
 - `hello@indiestack.ai` does NOT exist. The contact email is `pajebay1@gmail.com`. This was hallucinated across 5 files (main.py, intel.py, sla.py, trust.py). Always use `pajebay1@gmail.com` until an actual indiestack.ai email is set up.

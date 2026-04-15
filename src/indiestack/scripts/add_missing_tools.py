@@ -4050,6 +4050,25 @@ TOOLS = [
         "npm install rollup",
         "code",
     ),
+    # Email Marketing — Loops ----------------------------------------------------------
+    (
+        "loops",
+        "Loops",
+        "The email platform built for SaaS",
+        "Loops is a modern email platform purpose-built for SaaS products. "
+        "Send transactional emails (password resets, receipts, notifications) and "
+        "marketing campaigns from one place. Events-driven: trigger emails from "
+        "your app events, Stripe webhooks, and user actions. "
+        "Simple API, beautiful editor, clean analytics. "
+        "Favourite among indie hackers and SaaS founders. 5k+ GitHub stars.",
+        "email-marketing",
+        "loops-so/loops",
+        5000,
+        "https://loops.so",
+        "email,transactional,marketing,saas,events-driven",
+        "npm install loops-sdk",
+        "saas",
+    ),
     # Search Engine — Orama ------------------------------------------------------------
     (
         "orama",
@@ -4591,6 +4610,57 @@ TOOLS = [
         "docker run -d --restart=always -p 3001:3001 louislam/uptime-kuma:1",
         "code",
     ),
+    # Testing — Ruff (Python linter + formatter in Rust) --------------------------------
+    (
+        "ruff",
+        "Ruff",
+        "An extremely fast Python linter and code formatter, written in Rust",
+        "Ruff is a blazing-fast Python linter and formatter written in Rust — 10-100× faster "
+        "than Flake8, Black, isort, and pylint combined. Drop-in replacement with a single "
+        "pyproject.toml config. Supports 800+ lint rules (including Flake8, isort, pydocstyle, "
+        "pyupgrade). The standard Python linting tool for modern projects. 34k+ GitHub stars.",
+        "testing-tools",
+        "astral-sh/ruff",
+        34000,
+        "https://astral.sh/ruff",
+        "python,linter,formatter,fast,rust,flake8-alternative",
+        "pip install ruff",
+        "code",
+    ),
+    # Developer Tools — Pydantic (Python data validation) --------------------------------
+    (
+        "pydantic",
+        "Pydantic",
+        "Data validation using Python type hints",
+        "Pydantic is the most widely used Python data validation library. Define data shapes "
+        "with type hints, get automatic validation, serialization, and JSON schema generation. "
+        "The foundation of FastAPI, LangChain, and thousands of Python applications. "
+        "Pydantic v2 rewrites the core in Rust for 5-50× faster validation. 21k+ GitHub stars.",
+        "developer-tools",
+        "pydantic/pydantic",
+        21000,
+        "https://docs.pydantic.dev",
+        "python,validation,types,serialization,fastapi,json-schema",
+        "pip install pydantic",
+        "code",
+    ),
+    # File Management — MinIO (S3-compatible object storage) ----------------------------
+    (
+        "minio",
+        "MinIO",
+        "High-performance, S3-compatible object storage",
+        "MinIO is a high-performance, open-source object storage server fully compatible "
+        "with the Amazon S3 API. Self-host on commodity hardware or Kubernetes. "
+        "Write performance up to 325 GiB/s, read up to 165 GiB/s on a standard server. "
+        "Powers AI/ML pipelines, data lakes, and cloud-native backup. 47k+ GitHub stars.",
+        "file-management",
+        "minio/minio",
+        47000,
+        "https://min.io",
+        "s3,object-storage,self-hosted,open-source,kubernetes,data-lake",
+        "docker run -p 9000:9000 -p 9001:9001 quay.io/minio/minio server /data --console-address ':9001'",
+        "code",
+    ),
     # API / Backend Frameworks — NestJS (TypeScript enterprise framework) ----------------
     (
         "nestjs",
@@ -4889,6 +4959,22 @@ TOOLS = [
         "brew install insomnia",
         "code",
     ),
+    (
+        "scalar",
+        "Scalar",
+        "Beautiful API references from OpenAPI/Swagger files",
+        "Scalar generates modern, interactive API reference documentation from "
+        "OpenAPI/Swagger specs. Drop-in replacement for Swagger UI and ReDoc. "
+        "Includes an embedded API client for testing. Integrates with FastAPI, "
+        "Hono, Express, Nitro, and any OpenAPI provider.",
+        "api-tools",
+        "scalar/scalar",
+        30000,
+        "https://scalar.com",
+        "openapi,api-docs,swagger,documentation,api-client",
+        "npm install @scalar/api-reference",
+        "code",
+    ),
     # Database — schema migration tools ----------------------------------------
     (
         "atlas",
@@ -4921,6 +5007,23 @@ TOOLS = [
         "https://plane.so",
         "project-management,kanban,issues,self-hosted,open-source",
         "docker compose up -d",
+        "code",
+    ),
+    # API Tools — open-source Postman alternatives -----------------------------
+    (
+        "hoppscotch",
+        "Hoppscotch",
+        "Open source API development ecosystem",
+        "Hoppscotch is a lightweight, web-based API development suite — an open-source "
+        "Postman alternative. Test REST, GraphQL, WebSocket, SSE, and Socket.IO "
+        "endpoints directly in the browser. Supports teams, environments, collections, "
+        "and self-hosting. Built with Vue.js and available as a desktop app.",
+        "api-tools",
+        "hoppscotch/hoppscotch",
+        60000,
+        "https://hoppscotch.io",
+        "api-client,rest,graphql,websocket,postman-alternative,open-source",
+        "docker run --rm -it hoppscotch/hoppscotch",
         "code",
     ),
     # Database — TypeScript ORMs / query builders (major catalog gap) ----------
@@ -6009,76 +6112,173 @@ TOOLS = [
         "npx create-medusa-app",
         "code",
     ),
-    # Boilerplates -----------------------------------------------------------
+    # DevOps & Infrastructure --------------------------------------------------
+    (
+        "dagger",
+        "Dagger",
+        "Portable CI/CD pipelines as code",
+        "Dagger is a portable DevOps engine that runs your CI/CD "
+        "pipelines as code. Write pipeline steps once in TypeScript, "
+        "Python, or Go using the Dagger SDK; run them locally with "
+        "Docker and on any CI provider (GitHub Actions, GitLab CI, "
+        "CircleCI, Jenkins) without change. Caches every layer "
+        "intelligently for fast incremental builds.",
+        "devops-infrastructure",
+        "dagger/dagger",
+        10000,
+        "https://dagger.io",
+        "ci-cd,devops,containers,docker,pipelines,automation,build-tool",
+        "curl -L https://dl.dagger.io/dagger/install.sh | DAGGER_VERSION=0.13.3 sh",
+        "code",
+    ),
+    # Developer Tools ----------------------------------------------------------
+    (
+        "fnm",
+        "Fnm",
+        "Fast and simple Node.js version manager",
+        "Fnm (Fast Node Manager) is a Rust-based Node.js version "
+        "manager that is 40× faster than nvm. Supports .nvmrc and "
+        ".node-version files, cross-platform (macOS, Linux, Windows), "
+        "and integrates with all major shells (bash, zsh, fish, "
+        "PowerShell). Drop-in nvm replacement with zero runtime "
+        "overhead — no shell startup penalty.",
+        "developer-tools",
+        "Schniz/fnm",
+        17000,
+        "https://fnm.vercel.app",
+        "node,nodejs,version-manager,nvm,developer-tools,rust,cli",
+        "curl -fsSL https://fnm.vercel.app/install | bash",
+        "code",
+    ),
+    (
+        "zellij",
+        "Zellij",
+        "Feature-rich terminal workspace and multiplexer",
+        "Zellij is a terminal workspace with batteries included. "
+        "Written in Rust, it offers a plugin system (WASM), floating "
+        "panes, session management, layouts, and an intuitive "
+        "key-binding system. Unlike tmux it shows keybindings "
+        "on-screen for discoverability, making it approachable for "
+        "newcomers while staying powerful for power users.",
+        "developer-tools",
+        "zellij-org/zellij",
+        23000,
+        "https://zellij.dev",
+        "terminal,multiplexer,tmux,rust,cli,workspace,session-manager",
+        "bash <(curl -L zellij.dev/launch)",
+        "code",
+    ),
+    # Testing Tools ------------------------------------------------------------
+    (
+        "oxlint",
+        "OxLint",
+        "Rust-powered JavaScript and TypeScript linter — 50–100× faster than ESLint",
+        "OxLint is a Rust-based JavaScript and TypeScript linter "
+        "built by the Oxc project. It runs 50–100× faster than ESLint "
+        "by parallelising lint passes across all CPU cores. Implements "
+        "500+ ESLint rules out of the box, is compatible with ESLint "
+        "configs, and integrates with VS Code, WebStorm, and CI "
+        "pipelines. Part of the Oxc toolchain alongside an ultra-fast "
+        "Rust parser and transformer.",
+        "testing-tools",
+        "oxc-project/oxc",
+        13000,
+        "https://oxc.rs",
+        "linter,eslint,javascript,typescript,rust,fast,testing,ci",
+        "npm install oxlint --save-dev",
+        "code",
+    ),
+    # Frontend Frameworks ------------------------------------------------------
+    (
+        "analog",
+        "Analog",
+        "The full-stack Angular meta-framework",
+        "Analog is a full-stack meta-framework for Angular, similar "
+        "to Next.js for React or Nuxt for Vue. It adds file-based "
+        "routing, server-side rendering (SSR), static site generation "
+        "(SSG), API routes, and Server Actions on top of Angular. "
+        "Built on Vite and Nitro, it supports deploying to Vercel, "
+        "Netlify, Cloudflare Workers, and Node.js servers.",
+        "frontend-frameworks",
+        "analogjs/analog",
+        3500,
+        "https://analogjs.org",
+        "angular,meta-framework,ssr,ssg,vite,nitro,typescript,fullstack",
+        "npm create analog@latest",
+        "code",
+    ),
+    # Boilerplates ---------------------------------------------------------------
     (
         "shipwright",
         "Shipwright",
-        "Full-stack Next.js SaaS boilerplate with auth, payments, and email",
-        "Shipwright is an opinionated Next.js 14+ SaaS starter kit. Ships with "
-        "NextAuth.js, Stripe subscriptions, Resend transactional email, Prisma "
-        "ORM, Tailwind CSS, and shadcn/ui. Includes admin dashboard, user "
-        "management, and API rate limiting out of the box.",
+        "Next.js SaaS boilerplate with auth, payments, and more",
+        "Shipwright (aka Next-js-Boilerplate) is an opinionated Next.js "
+        "starter with TypeScript, Tailwind CSS, shadcn/ui, NextAuth, "
+        "Prisma, and Stripe pre-configured. One of the most-starred "
+        "free SaaS starters on GitHub.",
         "boilerplates",
         "ixartz/Next-js-Boilerplate",
         4800,
         "https://github.com/ixartz/Next-js-Boilerplate",
-        "nextjs,saas,boilerplate,auth,stripe,tailwind,shadcn,typescript",
-        "npx create-next-app -e https://github.com/ixartz/Next-js-Boilerplate",
+        "boilerplate,nextjs,tailwind,typescript,saas,stripe,auth",
+        "git clone https://github.com/ixartz/Next-js-Boilerplate.git",
         "code",
     ),
     (
         "supastarter",
-        "Supastarter",
-        "Next.js and Nuxt SaaS starter kit powered by Supabase",
-        "Supastarter is a production-ready SaaS boilerplate built on "
-        "Next.js (and Nuxt). Includes Supabase auth, Stripe billing, "
-        "i18n, email, team management, and admin panel. Used by hundreds "
-        "of indie makers to ship faster.",
+        "SupaStarter",
+        "Next.js + Supabase SaaS starter kit",
+        "SupaStarter is a full-stack SaaS starter combining Next.js, "
+        "Supabase (auth + database), Stripe billing, Tailwind CSS, "
+        "and shadcn/ui. Includes multi-tenancy, team management, "
+        "and transactional emails out of the box.",
         "boilerplates",
         "supastarter/next",
         1800,
         "https://supastarter.dev",
-        "nextjs,supabase,saas,boilerplate,typescript,stripe,i18n",
-        "npx create-supastarter-app",
+        "boilerplate,nextjs,supabase,stripe,tailwind,saas,typescript",
+        "git clone https://github.com/supastarter/next.git",
         "code",
     ),
-    # MCP Servers -----------------------------------------------------------
+    # MCP Servers ----------------------------------------------------------------
     (
         "mcp-brave-search",
         "MCP Brave Search",
-        "Give AI agents access to real-time web search via Brave Search API",
-        "An MCP server that wraps the Brave Search API to provide AI coding "
-        "agents with real-time web search, news search, and local business "
-        "search capabilities. Part of the official modelcontextprotocol/servers "
-        "monorepo. Requires a free Brave Search API key.",
+        "Real-time web search for AI agents via Brave API",
+        "An official MCP server that exposes Brave Search to AI agents. "
+        "Lets Claude and other MCP clients run real-time web searches, "
+        "image searches, and news queries using Brave's privacy-first "
+        "search API. Includes result summaries, safe-search controls, "
+        "and country/language targeting.",
         "mcp-servers",
         "modelcontextprotocol/servers",
         14000,
         "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
-        "mcp,search,brave,web-search,ai-agent,claude",
-        "npx -y @modelcontextprotocol/server-brave-search",
+        "mcp,search,web,brave,ai-agent,real-time",
+        "npx @modelcontextprotocol/server-brave-search",
         "code",
     ),
     (
         "mcp-playwright",
         "MCP Playwright",
-        "Browser automation and web scraping for AI agents via Playwright",
-        "An MCP server that exposes Playwright browser automation to AI coding "
-        "agents. Enables agents to navigate websites, fill forms, take "
-        "screenshots, and extract structured data from the web. Built and "
-        "maintained by Microsoft.",
+        "Browser automation and web scraping for AI agents",
+        "The official Microsoft Playwright MCP server gives AI agents "
+        "full browser control: navigate pages, click elements, fill "
+        "forms, capture screenshots, and extract structured data. "
+        "Works with Chromium, Firefox, and WebKit, and exposes CDP "
+        "for rich browser automation.",
         "mcp-servers",
         "microsoft/playwright-mcp",
         3200,
         "https://github.com/microsoft/playwright-mcp",
-        "mcp,playwright,browser,automation,scraping,ai-agent,microsoft",
-        "npx @playwright/mcp@latest",
+        "mcp,playwright,browser-automation,web-scraping,ai-agent",
+        "npx @playwright/mcp",
         "code",
     ),
     (
         "mcp-linear",
         "MCP Linear",
-        "Linear project management integration for AI coding agents",
+        "Give AI agents access to Linear project management",
         "An MCP server that gives AI agents read and write access to Linear "
         "issues, projects, and teams. Lets agents create issues, update "
         "status, add comments, and query the backlog — turning your AI "
@@ -6089,6 +6289,174 @@ TOOLS = [
         "https://linear.app/docs/mcp",
         "mcp,linear,project-management,issues,ai-agent,productivity",
         "npx @linear/mcp-server",
+        "code",
+    ),
+    (
+        "mcp-slack",
+        "MCP Slack",
+        "Give AI agents access to Slack channels and messages",
+        "The official MCP server for Slack. Lets AI agents read channel "
+        "history, post messages, search conversations, and manage threads. "
+        "Built on the official Slack SDK and compatible with Claude and any "
+        "MCP-capable AI agent.",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/slack",
+        "mcp,slack,messaging,ai-agent,communication",
+        "npx @modelcontextprotocol/server-slack",
+        "code",
+    ),
+    (
+        "mcp-notion",
+        "MCP Notion",
+        "Give AI agents read and write access to Notion workspaces",
+        "An MCP server for Notion that lets AI agents query databases, "
+        "create and update pages, append blocks, and search your workspace. "
+        "Enables agents to use Notion as a knowledge base or task tracker "
+        "in multi-step workflows.",
+        "mcp-servers",
+        "makenotion/notion-sdk-js",
+        7000,
+        "https://developers.notion.com/docs/mcp",
+        "mcp,notion,knowledge-base,ai-agent,pages,databases",
+        "npx @notionhq/mcp",
+        "code",
+    ),
+    # API Tools ------------------------------------------------------------------
+    (
+        "graphql-yoga",
+        "GraphQL Yoga",
+        "Fully-featured, spec-compliant GraphQL server",
+        "GraphQL Yoga is a batteries-included GraphQL server built on "
+        "standard fetch APIs. Supports subscriptions, file uploads, "
+        "persisted queries, and the Envelop plugin system. Works with "
+        "Fastify, Express, Next.js, Cloudflare Workers, and more.",
+        "api-tools",
+        "dotansimha/graphql-yoga",
+        8500,
+        "https://the-guild.dev/graphql/yoga-server",
+        "graphql,api,subscriptions,typescript,server",
+        "npm install graphql-yoga",
+        "code",
+    ),
+    # Developer Tools ------------------------------------------------------------
+    (
+        "oxc",
+        "Oxc",
+        "The JavaScript Oxidation Compiler",
+        "Oxc is a high-performance JavaScript and TypeScript toolchain "
+        "written in Rust. Includes a linter 50-100x faster than ESLint, "
+        "a transformer, a bundler (Rolldown), a minifier, and a formatter. "
+        "Powers Vite's next-generation build pipeline.",
+        "developer-tools",
+        "oxc-project/oxc",
+        13000,
+        "https://oxc.rs",
+        "linter,bundler,transformer,rust,javascript,fast",
+        "npm install @oxc-project/oxc-napi",
+        "code",
+    ),
+    # Authentication -------------------------------------------------------------
+    (
+        "lucia",
+        "Lucia",
+        "Authentication, simple and clean",
+        "Lucia is a lightweight TypeScript authentication library that "
+        "handles sessions, not passwords. Gives you full control over the "
+        "auth flow without magic or abstraction. Works with any framework "
+        "and any database — Drizzle, Prisma, Mongoose, and more.",
+        "authentication",
+        "lucia-auth/lucia",
+        11000,
+        "https://lucia-auth.com",
+        "auth,session,typescript,framework-agnostic",
+        "npm install lucia",
+        "code",
+    ),
+    # Project Management — open-source Notion/Confluence alternative -----------
+    (
+        "appflowy",
+        "AppFlowy",
+        "Bring projects, wikis, and teams together with AI",
+        "AppFlowy is an open-source Notion and Confluence alternative built with "
+        "Rust and Flutter. Self-hostable with full data ownership. Supports "
+        "documents, databases, kanban boards, calendars, and AI writing assistance. "
+        "One of the most-starred open-source productivity tools (61k+ stars).",
+        "project-management",
+        "AppFlowy-IO/AppFlowy",
+        61000,
+        "https://appflowy.io",
+        "notion-alternative,wiki,project-management,self-hosted,open-source,rust,flutter",
+        "docker compose up -d",
+        "code",
+    ),
+    # Analytics — open-source data catalog and lineage platform ----------------
+    (
+        "datahub",
+        "DataHub",
+        "The extensible metadata platform for the modern data stack",
+        "DataHub is a modern metadata platform for data discovery, observability, "
+        "and governance built by LinkedIn. Provides data lineage, impact analysis, "
+        "data cataloging, and column-level lineage. Integrates with dbt, Airflow, "
+        "Spark, Kafka, and 50+ data sources out of the box.",
+        "analytics-metrics",
+        "datahub-project/datahub",
+        10000,
+        "https://datahubproject.io",
+        "data-catalog,data-lineage,data-discovery,metadata,governance,open-source",
+        "pip install acryl-datahub",
+        "code",
+    ),
+    # Boilerplates — T3 Stack scaffolding CLI ----------------------------------
+    (
+        "create-t3-app",
+        "create-t3-app",
+        "The best way to start a full-stack, typesafe Next.js app",
+        "create-t3-app is the official CLI for bootstrapping T3 Stack projects — "
+        "Next.js, TypeScript, Tailwind CSS, tRPC, Prisma, and NextAuth.js. "
+        "The most popular opinionated Next.js starter with 27k+ stars. "
+        "One command to scaffold a type-safe, production-ready SaaS foundation.",
+        "boilerplates",
+        "t3-oss/create-t3-app",
+        27000,
+        "https://create.t3.gg",
+        "nextjs,typescript,trpc,tailwind,prisma,nextauth,t3-stack,saas-starter",
+        "npm create t3-app@latest",
+        "code",
+    ),
+    # AI — TypeScript AI agent framework (formerly Phidata) --------------------
+    (
+        "agno",
+        "Agno",
+        "Build fast, multi-modal AI agents in Python",
+        "Agno (formerly Phidata) is a lightweight Python library for building "
+        "multi-modal AI agents with memory, knowledge, tools, and reasoning. "
+        "Supports OpenAI, Anthropic, Gemini, and local models via Ollama. "
+        "Features structured outputs, agent teams, and a built-in playground UI.",
+        "ai-automation",
+        "agno-agi/agno",
+        23000,
+        "https://agno.com",
+        "ai-agent,python,llm,multi-agent,memory,tools,openai,anthropic",
+        "pip install agno",
+        "code",
+    ),
+    # AI — open-source ML feature store ----------------------------------------
+    (
+        "feast",
+        "Feast",
+        "Open source feature store for machine learning",
+        "Feast is a standalone open-source feature store that enables ML teams "
+        "to define, manage, discover, and serve features for model training and "
+        "online inference. Supports offline stores (BigQuery, Spark, Redshift) "
+        "and online stores (Redis, DynamoDB, Bigtable). CNCF sandbox project.",
+        "ai-automation",
+        "feast-dev/feast",
+        5000,
+        "https://feast.dev",
+        "feature-store,ml,machine-learning,mlops,redis,bigquery,python",
+        "pip install feast",
         "code",
     ),
     # Frontend Frameworks — Rolldown (Rust bundler replacing Rollup inside Vite) ----------
@@ -6125,24 +6493,6 @@ TOOLS = [
         "https://knip.dev",
         "typescript,dead-code,unused-exports,static-analysis,monorepo,developer-tools",
         "npm install knip",
-        "code",
-    ),
-    # Testing Tools — OXLint (Rust-based JS/TS linter, 50-100x faster than ESLint) ------
-    (
-        "oxlint",
-        "OXLint",
-        "Rust-powered JavaScript and TypeScript linter — 50-100x faster than ESLint",
-        "OXLint is a Rust-based JavaScript and TypeScript linter built as part of the "
-        "OXC (Oxidation Compiler) toolchain. It runs 50-100x faster than ESLint, "
-        "supports 400+ rules, and requires zero configuration. Designed to complement "
-        "or replace ESLint in CI pipelines where speed is critical. Increasingly adopted "
-        "as a faster pre-commit linting step alongside or instead of ESLint.",
-        "developer-tools",
-        "oxc-project/oxc",
-        5000,
-        "https://oxc.rs/docs/guide/usage/linter",
-        "linter,javascript,typescript,rust,fast,eslint-alternative,ci",
-        "npm install oxlint",
         "code",
     ),
     # Search Engine — Trieve (search + RAG + recommendations in one hosted platform) -----
@@ -6340,22 +6690,6 @@ TOOLS = [
         "pip install pyspark",
         "code",
     ),
-    # ML feature stores -----------------------------------------------------
-    (
-        "feast",
-        "Feast",
-        "Open source feature store for machine learning",
-        "Feast is an open-source feature store that allows ML teams to define, manage, "
-        "discover, and serve features for training and online inference. Supports "
-        "Redis, BigQuery, Snowflake, DynamoDB, and more as backend stores.",
-        "ai-automation",
-        "feast-dev/feast",
-        6000,
-        "https://feast.dev",
-        "ml,feature-store,mlops,redis,bigquery,python",
-        "pip install feast",
-        "code",
-    ),
     # Data Science / DataFrame ---------------------------------------------------
     (
         "polars",
@@ -6468,22 +6802,6 @@ TOOLS = [
         "",
         "code",
     ),
-    # AI Agent Framework ---------------------------------------------------------
-    (
-        "agno",
-        "Agno",
-        "Multi-modal agent framework for building production AI agents",
-        "Agno (formerly Phidata) is a lightweight Python library for building multi-modal "
-        "agents with memory, knowledge, tools, and reasoning. Agents can work alone or in "
-        "teams, with built-in support for RAG, structured outputs, and 20+ LLM providers.",
-        "ai-automation",
-        "agno-agi/agno",
-        24000,
-        "https://agno.com",
-        "agents,multi-agent,python,llm,rag,agentic,multimodal",
-        "pip install agno",
-        "code",
-    ),
     # LLM Observability ----------------------------------------------------------
     (
         "opik",
@@ -6585,23 +6903,6 @@ TOOLS = [
         "npm install helmet",
         "code",
     ),
-    # CI/CD Pipelines as Code ----------------------------------------------------
-    (
-        "dagger",
-        "Dagger",
-        "Portable DevOps pipeline engine that runs anywhere",
-        "Dagger lets you define your CI/CD pipelines as code using TypeScript, Python, or "
-        "Go. The same pipeline runs locally and in any CI provider (GitHub Actions, CircleCI, "
-        "Jenkins, GitLab CI) without vendor lock-in. Powered by BuildKit containers for "
-        "reproducible, cacheable builds.",
-        "devops-infrastructure",
-        "dagger/dagger",
-        11000,
-        "https://dagger.io",
-        "ci-cd,pipelines,containers,devops,github-actions,reproducible",
-        "",
-        "code",
-    ),
     # VPN / mesh networking -------------------------------------------------------
     (
         "tailscale",
@@ -6682,6 +6983,89 @@ TOOLS = [
         "https://github.com/tmux/tmux/wiki",
         "cli,terminal,multiplexer,session,ssh,productivity",
         "brew install tmux",
+        "code",
+    ),
+    # Bundlers ----------------------------------------------------------------------
+    (
+        "parcel",
+        "Parcel",
+        "The zero configuration build tool for the web",
+        "Parcel is a zero-configuration web application bundler. Drop in an HTML entry point "
+        "and Parcel automatically resolves JS, CSS, images, and more — no config file required. "
+        "Built-in dev server with HMR, production optimization, code splitting, and scope "
+        "hoisting. Popular choice for smaller projects and rapid prototyping.",
+        "frontend-frameworks",
+        "parcel-bundler/parcel",
+        43000,
+        "https://parceljs.org",
+        "bundler,build-tool,zero-config,javascript",
+        "npm install parcel --save-dev",
+        "code",
+    ),
+    # OpenAPI Documentation ---------------------------------------------------------
+    (
+        "redoc",
+        "ReDoc",
+        "OpenAPI/Swagger-generated API Reference Documentation",
+        "ReDoc renders beautiful, interactive API reference documentation from OpenAPI "
+        "2.0/3.0/3.1 specs. Single HTML file output, responsive three-panel layout, code "
+        "samples, and deep-linking. Used by thousands of teams to publish public API docs. "
+        "Available as CLI, React component, or Docker image.",
+        "api-tools",
+        "Redocly/redoc",
+        23000,
+        "https://redocly.com/redoc",
+        "openapi,api-docs,swagger,documentation,rest",
+        "npx @redocly/cli preview-docs openapi.yaml",
+        "code",
+    ),
+    (
+        "swagger-ui",
+        "Swagger UI",
+        "Visualize and interact with your API's resources without any implementation logic",
+        "Swagger UI is the most widely deployed OpenAPI documentation explorer. Renders an "
+        "interactive UI from any OpenAPI 2.0/3.0 spec — try endpoints directly in the browser, "
+        "inspect request/response schemas, and download client SDKs. Available as standalone "
+        "HTML, npm package, or Docker image.",
+        "api-tools",
+        "swagger-api/swagger-ui",
+        26000,
+        "https://swagger.io/tools/swagger-ui",
+        "openapi,swagger,api-docs,rest,interactive",
+        "npm install swagger-ui",
+        "code",
+    ),
+    # Form Libraries ----------------------------------------------------------------
+    (
+        "tanstack-form",
+        "TanStack Form",
+        "Headless, framework-agnostic form state management for the web",
+        "TanStack Form provides type-safe form state management for React, Vue, Solid, Angular, "
+        "and Lit. Async validation, array fields, nested forms, and a tiny bundle size. Pairs "
+        "naturally with Zod, Valibot, or custom validators. The headless, framework-agnostic "
+        "alternative to React Hook Form.",
+        "frontend-frameworks",
+        "TanStack/form",
+        4500,
+        "https://tanstack.com/form",
+        "forms,react,vue,typescript,validation,headless",
+        "npm install @tanstack/react-form",
+        "code",
+    ),
+    (
+        "vee-validate",
+        "VeeValidate",
+        "Painless Vue.js form validation",
+        "VeeValidate is the most popular form validation library for Vue.js. Composition API "
+        "first with first-class TypeScript support and built-in Zod/Yup/Valibot schema "
+        "adapters. Handles async rules, i18n error messages, and nested field arrays. "
+        "Powers form validation in thousands of Vue 2 and Vue 3 apps.",
+        "frontend-frameworks",
+        "logaretm/vee-validate",
+        10000,
+        "https://vee-validate.logaretm.com",
+        "forms,vue,validation,typescript,zod",
+        "npm install vee-validate",
         "code",
     ),
     # Frontend — cross-platform / React Native UI libraries ------------------

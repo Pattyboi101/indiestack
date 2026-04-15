@@ -324,8 +324,8 @@ def submit_form(categories, values: dict = None, error: str = "", success: str =
         <div style="background:var(--info-bg);border:1px solid var(--info-border);border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;line-height:1.7;">
             <p style="font-size:14px;color:var(--info-text);margin:0;">
                 <strong>A note from us:</strong> IndieStack is still young &mdash; a small, curated directory built by two uni students in Cardiff.
-                We&rsquo;re building something we think matters: a discovery layer where AI agents find real developer tools
-                instead of writing code from scratch. Libraries, CLIs, APIs, SaaS tools &mdash; if developers use it, we want it in here.
+                We&rsquo;re building something we think matters: a guardrail that helps AI agents validate packages
+                and find real developer tools instead of hallucinating code from scratch. Libraries, CLIs, APIs, SaaS tools &mdash; if developers use it, we want it in here.
                 <strong>Developer tools only</strong> &mdash; consumer apps, games, and personal productivity tools are out of scope.
                 Early listers get the most visibility as the catalog grows.
             </p>

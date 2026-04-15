@@ -174,14 +174,14 @@ async def landing(request: Request):
         '    <div class="glow-sphere" style="width:400px;height:400px;background:radial-gradient(circle,rgba(226,183,100,0.08) 0%,transparent 70%);bottom:10%;right:15%;"></div>'
         '    <div style="position:relative;z-index:1;">'
         '    <div class="status-tag" style="margin-bottom:24px;justify-content:center;">'
-        '        <span class="dot"></span>INTELLIGENCE LAYER FOR AI CODING AGENTS'
+        '        <span class="dot"></span>DEPENDENCY GUARDRAIL FOR AI CODING AGENTS'
         '    </div>'
         '    <h1 style="font-family:var(--font-display);font-size:clamp(36px,6vw,64px);'
         '               line-height:1.15;max-width:700px;margin:0 auto;color:var(--ink);letter-spacing:-0.03em;">'
         '        <span class="hero-headline">Your AI knows what to build. We know what already works.</span>'
         '    </h1>'
         '    <p style="font-size:20px;color:var(--ink-muted);max-width:560px;margin:16px auto 32px;line-height:1.6;">'
-        f'        {tool_count}+ tools. Migration intelligence from real GitHub data. Verified package combinations. Unlimited free searches.'
+        f'        {tool_count}+ tools. Validates packages before install. Catches hallucinations and typosquats. Migration intelligence from real GitHub data.'
         '    </p>'
         # Hero visual — code conversation block
         '    <div style="max-width:560px;margin:0 auto 24px;text-align:left;background:rgba(10,14,26,0.8);'
@@ -261,7 +261,7 @@ async def landing(request: Request):
                 How it works
             </h2>
             <p style="text-align:center;color:var(--ink-muted);font-size:16px;margin-bottom:48px;max-width:520px;margin-left:auto;margin-right:auto;">
-                Three steps. Your AI stops reinventing the wheel.
+                Three steps. Your AI stops hallucinating packages.
             </p>
 
             <!-- 3-step flow -->
@@ -279,18 +279,18 @@ async def landing(request: Request):
                     <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;
                                 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;
                                 margin:0 auto 16px;">2</div>
-                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">Your AI searches</h3>
+                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">Your AI validates</h3>
                     <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;">
-                        When you ask your AI to build something, it checks IndieStack first.
+                        Before installing any package, your AI checks IndieStack first. Catches fakes and typosquats.
                     </p>
                 </div>
                 <div style="text-align:center;padding:24px;">
                     <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;
                                 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;
                                 margin:0 auto 16px;">3</div>
-                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">It finds what exists</h3>
+                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">It finds what works</h3>
                     <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;">
-                        Instead of writing 50k tokens of code, your AI suggests a vetted tool.
+                        Instead of generating code from scratch, your AI recommends a vetted, maintained tool.
                     </p>
                 </div>
             </div>
@@ -304,30 +304,26 @@ async def landing(request: Request):
     </section>
     """
 
-    # Token savings estimate: ai_recs * average 15,000 tokens saved per query
-    _est_tokens_saved = ai_recs * 15000
-    if _est_tokens_saved >= 1_000_000_000:
-        _tokens_display = f'{_est_tokens_saved / 1_000_000_000:.1f}B'
-    elif _est_tokens_saved >= 1_000_000:
-        _tokens_display = f'{_est_tokens_saved / 1_000_000:.0f}M'
-    else:
-        _tokens_display = f'{_est_tokens_saved:,}'
     build_vs_buy = f"""
     <section style="padding:48px 24px;background:var(--cream-dark);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
         <div class="container" style="max-width:800px;text-align:center;">
             <h2 style="font-family:var(--font-display);font-size:clamp(22px,3vw,28px);color:var(--ink);margin-bottom:8px;">
-                Tokens not wasted
+                What your AI checks before installing
             </h2>
-            <p style="font-family:var(--font-display);font-size:clamp(36px,5vw,56px);color:var(--accent);font-weight:700;margin-bottom:8px;">
-                ~{_tokens_display}
-            </p>
-            <p style="color:var(--ink-muted);font-size:14px;max-width:480px;margin:0 auto 16px;">
-                Estimated tokens saved across {ai_recs:,} agent queries.
-                Each search that finds an existing tool prevents ~15,000 tokens of generated boilerplate.
-            </p>
-            <a href="/token-cost" style="color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;">
-                See methodology &rarr;
-            </a>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin-top:32px;text-align:center;">
+                <div>
+                    <div style="font-family:var(--font-display);font-size:32px;color:var(--accent);font-weight:700;">{tool_count:,}+</div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Packages tracked</div>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-display);font-size:32px;color:var(--accent);font-weight:700;">npm + PyPI</div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Live registry validation</div>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-display);font-size:32px;color:var(--accent);font-weight:700;">422</div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Migration paths from GitHub</div>
+                </div>
+            </div>
         </div>
     </section>
     """
@@ -444,9 +440,9 @@ async def landing(request: Request):
         trending_strip = f"""
         <section class="container" style="padding:48px 24px;">
             <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;">
-                <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);">Trending right now</h2>
+                <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);">Popular with AI agents</h2>
                 <a href="/explore" style="color:var(--terracotta);font-size:14px;font-weight:600;text-decoration:none;">
-                    Browse all &rarr;
+                    Explore all &rarr;
                 </a>
             </div>
             <div class="scroll-row">{trending_cards}</div>
@@ -477,7 +473,7 @@ async def landing(request: Request):
     categories_compact = f"""
     <section class="container" style="padding:48px 24px;">
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;">
-            <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);">Browse by category</h2>
+            <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);">What we cover</h2>
             <a href="/explore" style="color:var(--accent);font-size:14px;font-weight:600;text-decoration:none;">
                 All {category_count} categories &rarr;
             </a>
@@ -511,7 +507,7 @@ async def landing(request: Request):
     def _reveal(html):
         return f'<div class="reveal">{html}</div>'
 
-    body = hero + stats_bar + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(analyze_cta) + _reveal(maker_cta)
+    body = hero + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(analyze_cta) + _reveal(maker_cta)
 
     import json as _json
     website_ld = _json.dumps({
@@ -519,7 +515,7 @@ async def landing(request: Request):
         "@type": "WebSite",
         "name": "IndieStack",
         "url": BASE_URL,
-        "description": f"The discovery layer between AI coding agents and developer tools. Search {tool_count}+ tools before building from scratch.",
+        "description": f"Dependency guardrail for AI coding agents. Validates {tool_count}+ packages before install, catches hallucinations and typosquats, migration intelligence from real GitHub data.",
         "potentialAction": {
             "@type": "SearchAction",
             "target": f"{BASE_URL}/search?q={{search_term_string}}",
@@ -671,8 +667,8 @@ async def landing(request: Request):
         '</script>'
     )
 
-    response = HTMLResponse(page_shell("The discovery layer for AI coding agents", body,
-                                   description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if a developer tool already exists — 6,500+ tools indexed.",
+    response = HTMLResponse(page_shell("Dependency guardrail for AI coding agents", body,
+                                   description="IndieStack validates packages before install, catches hallucinations and typosquats, and provides migration intelligence. Plugs into Claude, Cursor, and Windsurf.",
                                    user=request.state.user, canonical="/", extra_head=extra_head,
                                    og_image=f"{BASE_URL}/logo.png"))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"
