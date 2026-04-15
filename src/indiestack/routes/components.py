@@ -908,8 +908,9 @@ curl -s "{url}" -o /dev/null -w "%{{http_code}}"'''
     """
 
 
-# Co-founder emails — update Ed's when he signs up
-COFOUNDER_EMAILS = {'ameyjonesP@gmail.com', 'toedgamings@gmail.com'}
+# Co-founder emails — loaded from env to keep out of public repo
+import os as _os
+COFOUNDER_EMAILS = set(filter(None, _os.environ.get("COFOUNDER_EMAILS", "").split(",")))
 
 
 def cofounder_badge_html() -> str:

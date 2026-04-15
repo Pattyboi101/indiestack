@@ -99,7 +99,6 @@ Log decisions to `.orchestra/ceo/memory/escalation-log.md` (keep last 20).
 
 ## Ed (Co-founder)
 
-Email: toedgamings@gmail.com. GitHub: rupert61622-blip.
 Handles Reddit/social + maker outreach. Check memory/ed.md for his current focus.
 
 ## Key Links
