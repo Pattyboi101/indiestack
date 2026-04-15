@@ -4597,6 +4597,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ripgrep": "developer",         # ripgrep — extremely fast grep replacement (47k★) → Developer Tools
     "jq": "developer",              # jq — JSON processor for the command line (29k★) → Developer Tools
     "yq": "developer",              # yq — YAML/JSON/XML processor, jq wrapper (12k★) → Developer Tools
+    # Protocol Buffers — shorthand query term (.proto files, schema definitions)
+    "proto": "api",                 # .proto files — "proto schema", "proto vs grpc", "proto codegen" → API Tools
+    "drizzle-orm": "database",      # hyphenated Drizzle package name — "drizzle-orm alternative" queries → Database
+    # HashiCorp ecosystem — Nomad, Packer, Boundary (complement to "terraform"/"vault"/"consul" already mapped)
+    "nomad": "devops",              # HashiCorp Nomad — workload orchestrator (Kubernetes alternative, 15k★) → DevOps
+    "packer": "devops",             # HashiCorp Packer — automated machine/container image builder (15k★) → DevOps
+    "hcl": "devops",                # HCL — HashiCorp Configuration Language (Terraform, Nomad, Packer, 5k★) → DevOps
+    "boundary": "devops",           # HashiCorp Boundary — identity-based secure remote access (9k★) → DevOps
+    # UnJS ecosystem — Nitro (already mapped), H3, ofetch, defu, destr (Vue/Nuxt adjacent)
+    "unjs": "api",                  # UnJS — universal JS tools (H3, Nitro, ofetch, listhen) → API Tools
+    # React Native / cross-platform UI libraries
+    "tamagui": "frontend",          # Tamagui — universal React UI kit for web + React Native (7k★) → Frontend
+    "nativebase": "frontend",       # NativeBase — popular React Native + web component library (20k★) → Frontend
+    "gluestack": "frontend",        # Gluestack UI — NativeBase v4/successor with RSC support (5k★) → Frontend
+    # RSC Server Actions — singular form (complement to "server-actions" at line 4226)
+    "server-action": "frontend",    # "server action nextjs", "server action form" → Frontend Frameworks
+    # OpenAPI TypeScript codegen
+    "openapi-ts": "api",            # openapi-typescript — TS types from OpenAPI specs (7k★) → API Tools
 }
 
 _FTS_STOP_WORDS = {

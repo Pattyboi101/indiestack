@@ -6684,6 +6684,90 @@ TOOLS = [
         "brew install tmux",
         "code",
     ),
+    # Frontend — cross-platform / React Native UI libraries ------------------
+    (
+        "tamagui",
+        "Tamagui",
+        "Universal UI kit for React Native and React web",
+        "Tamagui is a universal design system and component library that works across "
+        "React Native and React for web. Write components once and run them on iOS, "
+        "Android, and the browser with a shared styling API, tokens, and themes. "
+        "Comes with an optimizing compiler that flattens styles to CSS and native views "
+        "for near-zero runtime overhead.",
+        "frontend-frameworks",
+        "tamagui/tamagui",
+        7000,
+        "https://tamagui.dev",
+        "cross-platform,react-native,web,ui,universal,styling,design-system",
+        "npm install tamagui @tamagui/core",
+        "code",
+    ),
+    (
+        "nativebase",
+        "NativeBase",
+        "Universal design system for React Native and web",
+        "NativeBase is a production-ready component library for React Native and React "
+        "web. One of the most popular UI kits in the React Native ecosystem, it ships "
+        "accessible, themeable components for both iOS and Android (and the web via "
+        "react-native-web). Widely used across thousands of mobile apps.",
+        "frontend-frameworks",
+        "GeekyAnts/NativeBase",
+        20000,
+        "https://nativebase.io",
+        "react-native,mobile,ui,cross-platform,accessible,components",
+        "npm install native-base",
+        "code",
+    ),
+    (
+        "gluestack",
+        "Gluestack UI",
+        "Universal, accessible components for React web and native",
+        "Gluestack UI is the spiritual successor to NativeBase v4. It ships headless, "
+        "accessible React primitives that work on React Native and the web. Built for "
+        "Tailwind CSS compatibility and React Server Components, with optional NativeWind "
+        "styling. Maintained by the same team as NativeBase.",
+        "frontend-frameworks",
+        "gluestack/gluestack-ui",
+        5000,
+        "https://gluestack.io",
+        "react-native,web,ui,universal,tailwind,accessible,rsc",
+        "npx gluestack-ui@latest add",
+        "code",
+    ),
+    # Project management — Linear (most popular project tool for indie/startup devs) ---
+    (
+        "linear",
+        "Linear",
+        "The issue tracker built for high-performance teams",
+        "Linear is a modern project management tool for software teams. It replaces Jira "
+        "with a radically faster, keyboard-first interface for managing issues, sprints, "
+        "and roadmaps. Features Git sync, cycle planning, triage, and project analytics. "
+        "The API and MCP integration let AI agents create and update issues.",
+        "project-management",
+        "linear/linear",
+        10000,
+        "https://linear.app",
+        "project-management,issues,sprints,roadmap,productivity,api",
+        "",
+        "saas",
+    ),
+    # DevOps — HashiCorp Packer (machine image builder) -------------------------
+    (
+        "packer",
+        "Packer",
+        "Build identical machine images for multiple platforms from a single config",
+        "Packer is an open-source tool from HashiCorp that automates the creation of "
+        "identical machine images for multiple platforms (AWS AMI, Docker, Vagrant, "
+        "VMware, GCP, Azure) from a single template. Uses HCL or JSON configuration. "
+        "Integrates with Ansible, Chef, and Puppet for provisioning.",
+        "devops-infrastructure",
+        "hashicorp/packer",
+        15000,
+        "https://www.packer.io",
+        "image-build,automation,devops,hashicorp,infrastructure,ami,docker",
+        "brew install packer",
+        "code",
+    ),
 ]
 
 
