@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-16 (ninety-eighth pass)
+Last updated: 2026-04-16 (ninety-ninth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-16 (ninety-eighth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1693 unique active keys (ninety-eighth pass: +12 new — nuxt3, rsbuild, zag, sst, ssh, openauth, promptfoo, oslo, llamaparse, shortener, oclif, chromadb; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 439 unique tools (added 5 new: sst, openauth, rsbuild, oclif, llamaparse)
+- **_CAT_SYNONYMS**: 1705 unique active keys (ninety-ninth pass: +12 new — config, configuration, infrastructure, microframework, health, entitlement, polling, openshift, datalake, data-lake, saml2, tenant; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 444 unique tools (added 5 new: haystack, rq, axiom, oban, fluent-bit)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-16 (ninety-eighth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-16, ninety-ninth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1693 → 1705 unique keys, 0 duplicates):
+  - **DevOps**: `config` → devops — "app config", "config management", "runtime config"
+  - **DevOps**: `configuration` → devops — long form for "configuration management" queries
+  - **DevOps**: `infrastructure` → devops — standalone "cloud infrastructure", "infra tool" queries
+  - **API**: `microframework` → api — "python microframework", "go microframework" (Flask, Gin, Sanic)
+  - **Monitoring**: `health` → monitoring — "health check tool", "health endpoint monitoring"
+  - **Payments**: `entitlement` → payments — singular form (complement to "entitlements"→payments)
+  - **API**: `polling` → api — "long-polling server", "http polling", "webhook vs polling"
+  - **DevOps**: `openshift` → devops — Red Hat OpenShift Kubernetes platform
+  - **Database**: `datalake` → database — "data lake storage", "datalake platform" (Delta Lake, Iceberg)
+  - **Database**: `data-lake` → database — hyphenated form of data lake queries
+  - **Auth**: `saml2` → authentication — SAML 2.0 specific queries (complement to "saml"→authentication)
+  - **Auth**: `tenant` → authentication — "tenant isolation", "per-tenant auth" (complement to "multitenant")
+
+### Catalog Script (Step 2)
+- Added 5 new tools (439 → 444 unique):
+  - **Haystack** (deepset-ai/haystack, 18k★) — open-source LLM/NLP pipeline framework; ai-automation
+  - **RQ** (rq/rq, 10k★) — simple Python job queues on Redis; background-jobs
+  - **Axiom** (axiomhq/axiom-go, 5k★) — serverless log management platform; logging
+  - **Oban** (sorentwo/oban, 3k★) — Elixir background jobs on PostgreSQL; background-jobs
+  - **Fluent Bit** (fluent/fluent-bit, 5k★) — lightweight log processor and forwarder; logging
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-ninth pass
+
+---
 
 ## Completed This Session (2026-04-16, ninety-eighth pass — autonomous improvement cycle)
 

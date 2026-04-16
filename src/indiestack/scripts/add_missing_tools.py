@@ -7358,6 +7358,91 @@ TOOLS = [
         "pip install llama-parse",
         "saas",
     ),
+    # AI — NLP and RAG pipeline frameworks -------------------------------------------
+    (
+        "haystack",
+        "Haystack",
+        "Open-source LLM framework for building production-ready NLP pipelines",
+        "Haystack is an open-source LLM framework by deepset for building production-grade "
+        "NLP and RAG pipelines. Compose custom search, QA, and generative AI pipelines from "
+        "modular components. Integrates with OpenAI, Cohere, Hugging Face, and all major "
+        "vector databases. Powers enterprise AI applications at scale.",
+        "ai-automation",
+        "deepset-ai/haystack",
+        18000,
+        "https://haystack.deepset.ai",
+        "nlp,rag,llm,pipeline,question-answering",
+        "pip install haystack-ai",
+        "code",
+    ),
+    # Background Jobs — Python job queue on Redis ------------------------------------
+    (
+        "rq",
+        "RQ (Redis Queue)",
+        "Simple job queues for Python backed by Redis",
+        "RQ (Redis Queue) is a simple, lightweight Python library for queueing jobs "
+        "and processing them in the background with workers. No special message broker "
+        "required — just Redis. Minimal configuration, easy monitoring with RQ Dashboard. "
+        "Used in production by thousands of Python apps.",
+        "background-jobs",
+        "rq/rq",
+        10000,
+        "https://python-rq.org",
+        "queue,redis,python,workers,background",
+        "pip install rq",
+        "code",
+    ),
+    # Logging — developer-first cloud log management ---------------------------------
+    (
+        "axiom",
+        "Axiom",
+        "Serverless log management and analytics for developers",
+        "Axiom is a developer-first log management platform with per-event pricing "
+        "instead of per-GB. Ingest terabytes of logs at a fraction of Datadog's cost. "
+        "Powerful query language, APM, and dashboards. Works with any log shipper. "
+        "Free tier includes 500GB/month.",
+        "logging",
+        "axiomhq/axiom-go",
+        5000,
+        "https://axiom.co",
+        "logging,observability,analytics,serverless,cheap",
+        "npm install @axiomhq/js",
+        "saas",
+    ),
+    # Background Jobs — Elixir background jobs on PostgreSQL -------------------------
+    (
+        "oban",
+        "Oban",
+        "Robust job processing for Elixir backed by PostgreSQL",
+        "Oban is a reliable and observable job processing library for Elixir. "
+        "Uses PostgreSQL for storage — no additional infrastructure needed. "
+        "Supports unique jobs, rate limiting, cron-like scheduling, and dynamic "
+        "queues. Powers background processing in many Phoenix/Elixir production apps.",
+        "background-jobs",
+        "sorentwo/oban",
+        3000,
+        "https://getoban.pro",
+        "queue,elixir,phoenix,postgres,background",
+        "",
+        "code",
+    ),
+    # Logging — lightweight log processor and forwarder -----------------------------
+    (
+        "fluent-bit",
+        "Fluent Bit",
+        "Fast and lightweight telemetry agent for logs, metrics, and traces",
+        "Fluent Bit is an ultra-fast, lightweight log processor and forwarder. "
+        "Collects logs and metrics from any source and routes them to any destination "
+        "(Elasticsearch, Kafka, S3, Datadog, Splunk, and more). Runs as a sidecar in "
+        "Kubernetes or as a standalone agent. 10× smaller footprint than Fluentd.",
+        "logging",
+        "fluent/fluent-bit",
+        5000,
+        "https://fluentbit.io",
+        "logging,telemetry,metrics,kubernetes,sidecar",
+        "",
+        "code",
+    ),
 ]
 
 

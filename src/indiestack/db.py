@@ -4785,6 +4785,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "oclif": "cli",                 # oclif — open CLI framework by Salesforce; "oclif alternative" → CLI Tools
     # Database — ChromaDB explicit compound form (complement to "chroma"→database already mapped)
     "chromadb": "database",         # ChromaDB — explicit compound form for "chromadb alternative" queries → Database
+    # DevOps — config/configuration management (Consul, etcd, Ansible, HashiCorp Config)
+    "config": "devops",             # "app config", "config management", "runtime config" → DevOps & Infrastructure
+    "configuration": "devops",      # long form — "configuration management", "config-as-code" → DevOps
+    # DevOps — standalone "infrastructure" term (complement to "iac"→devops, "terraform"→devops)
+    "infrastructure": "devops",     # "cloud infrastructure", "infrastructure tool", "infra management" → DevOps
+    # API — microframework queries (Flask, Gin, Sinatra, Sanic — complement to fastapi/flask/gin already mapped)
+    "microframework": "api",        # "python microframework", "go microframework", "web microframework" → API Tools
+    # Monitoring — health check endpoint queries (complement to "healthcheck"→monitoring already mapped)
+    "health": "monitoring",         # "health check tool", "health endpoint monitoring" → Monitoring & Uptime
+    # Payments — singular form of "entitlements" (already mapped at line ~4173)
+    "entitlement": "payments",      # "entitlement check", "feature entitlement" → Payments (Stigg, Orb)
+    # API — HTTP polling queries (long-polling, webhook vs polling, poll endpoint)
+    "polling": "api",               # "long-polling server", "http polling alternative", "poll endpoint" → API Tools
+    # DevOps — Red Hat OpenShift Kubernetes platform
+    "openshift": "devops",          # OpenShift — Red Hat enterprise Kubernetes platform → DevOps & Infrastructure
+    # Database — data lake storage and processing (complement to "lakehouse"→database)
+    "datalake": "database",         # "data lake storage", "datalake platform" → Database (Delta Lake, Iceberg, Hudi)
+    "data-lake": "database",        # hyphenated form — "data-lake architecture", "data-lake tool" → Database
+    # Auth — SAML 2.0 specific queries (complement to "saml"→authentication already mapped)
+    "saml2": "authentication",      # SAML 2.0 — "saml2 library", "saml2 provider" → Authentication
+    # Auth — tenant/tenancy queries (complement to "multitenant"→authentication, "multitenancy"→authentication)
+    "tenant": "authentication",     # "tenant isolation", "per-tenant auth", "tenant management" → Authentication
 }
 
 _FTS_STOP_WORDS = {
