@@ -7560,6 +7560,71 @@ TOOLS = [
         "brew install bufbuild/buf/buf",
         "code",
     ),
+    # AI — Agent frameworks and coding assistants (ninety-fourth pass) -------------------
+    (
+        "openhands",
+        "OpenHands",
+        "An open platform for AI software developers as agents",
+        "OpenHands (formerly OpenDevin) is an autonomous AI software engineering "
+        "agent that can write code, run tests, fix bugs, and browse the web. "
+        "Modular architecture supports any LLM backend — Claude, GPT-4, Llama. "
+        "Designed for real software engineering tasks, not just code completion.",
+        "ai-dev-tools",
+        "All-Hands-AI/OpenHands",
+        33000,
+        "https://docs.all-hands.ai",
+        "ai-agent,autonomous,software-engineer,llm,opendevin",
+        "docker pull ghcr.io/all-hands-ai/runtime:0.28-nikolaik",
+        "code",
+    ),
+    (
+        "semantic-kernel",
+        "Semantic Kernel",
+        "Build enterprise AI agents and copilots with an open-source SDK",
+        "Semantic Kernel (SK) is Microsoft's open-source SDK for integrating LLMs "
+        "into .NET, Python, and Java applications. Supports OpenAI, Azure OpenAI, "
+        "Hugging Face, and local models. Provides memory, planning, plugins, and "
+        "function-calling abstractions for production agent workflows.",
+        "ai-automation",
+        "microsoft/semantic-kernel",
+        23000,
+        "https://learn.microsoft.com/semantic-kernel",
+        "ai-agent,llm,microsoft,dotnet,python,orchestration",
+        "pip install semantic-kernel",
+        "code",
+    ),
+    (
+        "unstructured",
+        "Unstructured",
+        "Pre-process documents for large language model (LLM) apps",
+        "Unstructured is an open-source library for extracting and transforming "
+        "content from PDFs, Word docs, PowerPoints, HTML, and 30+ other formats "
+        "into clean structured data ready for RAG pipelines. Used by LangChain, "
+        "LlamaIndex, and thousands of production AI apps.",
+        "ai-automation",
+        "Unstructured-IO/unstructured",
+        9000,
+        "https://unstructured.io",
+        "rag,document-parsing,pdf,llm,langchain,preprocessing",
+        "pip install unstructured",
+        "code",
+    ),
+    (
+        "genkit",
+        "Firebase GenKit",
+        "An open-source framework for building AI-powered apps",
+        "GenKit is Google's open-source framework for building production AI "
+        "applications in JavaScript/TypeScript and Go. Supports OpenAI, Anthropic, "
+        "Google Gemini, Ollama, and more. Built-in flow tracing, schema validation "
+        "with Zod, and a developer UI for inspecting AI flows.",
+        "ai-automation",
+        "firebase/genkit",
+        3000,
+        "https://firebase.google.com/docs/genkit",
+        "ai-framework,llm,google,typescript,go,flows",
+        "npm install genkit @genkit-ai/googleai",
+        "code",
+    ),
 ]
 
 

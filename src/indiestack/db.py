@@ -4720,6 +4720,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — container registries (Harbor, Zot, ECR, GCR, GHCR)
     "harbor": "devops",             # Harbor — CNCF container registry with RBAC + replication (goharbor/harbor, 24k★)
     "artifact": "devops",           # "artifact registry", "build artifact storage" → DevOps & Infrastructure
+    # AI agent frameworks — new 2025/2026 releases with fast-growing query volume
+    "strands": "ai",                # AWS Strands Agents SDK — open-source agentic AI framework by AWS (2026)
+    "genkit": "ai",                 # Firebase GenKit — Google's open-source LLM app framework (3k★)
+    "semantickernel": "ai",         # Microsoft Semantic Kernel — enterprise AI orchestration SDK (23k★)
+    "semantic-kernel": "ai",        # hyphenated form — "semantic-kernel alternative" queries → AI & Automation
+    "ag2": "ai",                    # AG2 (AutoGen 2) — Microsoft AutoGen refactored as agentic framework (38k★)
+    "openhands": "ai",              # OpenHands — AI software engineer (formerly OpenDevin, 33k★)
+    "opendevin": "ai",              # OpenDevin — old name for OpenHands; still widely searched as alternative
+    "v0": "ai",                     # Vercel v0 — AI UI generation from prompts; "v0 alternative" queries
+    "unstructured": "ai",           # Unstructured.io — document parsing + pre-processing for RAG pipelines (9k★)
+    "weave": "ai",                  # W&B Weave — LLM tracing, evaluation, and observability (Weights & Biases)
+    # Testing — HTTP mocking and integration test helpers for Node.js
+    "supertest": "testing",         # SuperTest — HTTP assertions for Express/Fastify apps (14k★) → Testing Tools
+    "nock": "testing",              # Nock — HTTP server mocking and stubbing for Node.js (12k★) → Testing Tools
+    # Frontend — TanStack Start meta-framework and hookform shorthand
+    "tanstack-start": "frontend",   # TanStack Start — new TypeScript full-stack meta-framework (file routing+SSR)
+    "tanstackstart": "frontend",    # compound form — "tanstackstart alternative", "tanstack start router"
+    "hookform": "frontend",         # React Hook Form shorthand — "hookform validation", "hookform zod" queries
+    # Maps — PostGIS spatial extension for PostgreSQL
+    "postgis": "maps",              # PostGIS — open-source spatial database extension for PostgreSQL (1.5k★)
 }
 
 _FTS_STOP_WORDS = {
