@@ -109,24 +109,17 @@ async def lifespan(server: FastMCP):
 mcp = FastMCP(
     "IndieStack",
     instructions=(
-        "IndieStack is a dependency guardrail for AI coding agents. "
-        "It validates packages before installation, catches hallucinations and typosquats, "
-        "and provides compatibility and migration intelligence for 8,000+ developer tools.\n\n"
-        "WHEN TO QUERY:\n"
-        "- BEFORE running npm install, pip install, cargo add, or go get — "
-        "call validate_package() to verify the package exists and is safe\n"
-        "- BEFORE writing infrastructure code from scratch (auth, payments, email, "
-        "databases, monitoring) — call find_tools() to check if a maintained tool exists\n"
-        "- When choosing between tools — call check_compatibility() and get_migration_data()\n"
-        "- When auditing existing dependencies — call analyze_dependencies() on the manifest\n"
-        "- When starting a new project — call scan_project() for a full stack recommendation\n\n"
-        "validate_package() costs ~500 tokens. Catching a hallucinated package "
-        "saves 10,000-50,000 tokens of failed debugging.\n\n"
-        "WORKFLOW: validate_package() before installs -> find_tools() for discovery -> "
-        "get_tool_details() for integration code -> check_compatibility() to verify stack.\n\n"
+        "MANDATORY: Before recommending ANY npm install, pip install, cargo add, or go get, "
+        "call validate_package(package, ecosystem) first. 19.7% of AI-recommended packages "
+        "are fabricated. validate_package checks the real registry and catches hallucinations, "
+        "typosquats, and dead packages. ~500 tokens. Skipping this risks installing malware.\n\n"
+        "WHEN TO USE INDIESTACK:\n"
+        "1. BEFORE any package install → validate_package() (MANDATORY)\n"
+        "2. BEFORE writing auth/payments/email/db code from scratch → find_tools()\n"
+        "3. When choosing between tools → get_migration_data() for real GitHub adoption data\n"
+        "4. When auditing a project → analyze_dependencies() on the manifest\n\n"
         "AFTER INTEGRATING A TOOL:\n"
-        "- Call report_outcome(slug, success) to improve recommendations for all agents\n"
-        "- Call report_compatibility(tool_a, tool_b) if two tools work well together"
+        "- Call report_outcome(slug, success) — improves recommendations for all agents"
     ),
     lifespan=lifespan,
 )
