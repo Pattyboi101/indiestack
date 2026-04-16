@@ -4632,6 +4632,148 @@ _CAT_SYNONYMS: dict[str, str] = {
     "configuration": "developer",   # "configuration management library", "config DSL" → Developer Tools
     # API Tools — OpenAPI linting and spec validation
     "spectral": "api",              # Spectral (Stoplight) — OpenAPI + JSON Schema linter → API Tools
+    # Web3/Blockchain development — fast-growing developer query segment
+    "blockchain": "developer",      # "blockchain development", "blockchain dev tools" → Developer Tools
+    "solidity": "developer",        # Solidity — Ethereum smart contract language
+    "ethers": "developer",          # ethers.js — TypeScript/JS library for Ethereum interaction (8k★)
+    "hardhat": "developer",         # Hardhat — Ethereum development environment (7k★)
+    "wagmi": "developer",           # wagmi — React Hooks for Ethereum (7k★)
+    "viem": "developer",            # viem — TypeScript Ethereum interface (wagmi foundation, 5k★)
+    # Mobile — iOS/Swift and Android/Jetpack development
+    "android": "frontend",          # Android app development queries
+    "ios": "frontend",              # iOS/iPadOS development queries
+    "swiftui": "frontend",          # SwiftUI — Apple's declarative UI framework
+    "swift": "frontend",            # Swift — Apple's programming language
+    "jetpack": "frontend",          # Android Jetpack Compose — Google's modern Android UI
+    "realm": "database",            # Realm — offline-first mobile database (MongoDB Realm, 12k★)
+    "fish": "cli",                  # Fish Shell — friendly interactive shell (26k★)
+    # AI — plural forms and LLM interaction patterns
+    "agents": "ai",                 # plural "agents" — "AI agents framework", "multi-agent system"
+    "hybrid": "search",             # "hybrid search" — BM25+vector combined retrieval (key RAG term)
+    "toolcalling": "ai",            # compound — "toolcalling api", "tool calling llm" → AI & Automation
+    "function-calling": "ai",       # hyphenated — "function-calling openai" → AI
+    # Frontend — React Three Fiber (declarative Three.js for React, 27k★)
+    "r3f": "frontend",              # R3F abbreviation → Frontend Frameworks
+    "react-three-fiber": "frontend",# full form → Frontend Frameworks
+    # Message Queue — Apache ActiveMQ
+    "activemq": "message",          # Apache ActiveMQ — enterprise JMS message broker
+    # DevOps — HashiCorp Nomad workload orchestrator (already mapped at line ~4603)
+    # Developer Tools — Foundry Ethereum toolchain
+    "foundry": "developer",         # Foundry — professional Ethereum toolkit (9k★)
+    # Auth — Frontegg enterprise B2B identity platform
+    "frontegg": "authentication",   # Frontegg — B2B SaaS user management and identity
+    # API — additional Python async frameworks
+    "sanic": "api",                 # Sanic — async Python web framework (18k★)
+    "strawberry": "api",            # Strawberry GraphQL — Python type-annotated GraphQL (4k★)
+    # AI — ML model serving frameworks
+    "bentoml": "ai",                # BentoML — open-source model serving framework (7k★)
+    # Auth — Authentik self-hosted identity provider
+    "authentik": "authentication",  # Authentik — self-hosted SSO/IdP (15k★)
+    # DevOps — Earthly and Taskfile
+    "earthly": "devops",            # Earthly — reproducible containerised builds (12k★)
+    "taskfile": "devops",           # Taskfile — modern YAML Makefile alternative (10k★)
+    # AI — fast inference cloud providers
+    "fireworks": "ai",              # Fireworks AI — fastest open-source LLM inference API
+    "cerebras": "ai",               # Cerebras — wafer-scale chip AI inference (ultra-fast)
+    # Database — EdgeDB and CockroachDB
+    "edgedb": "database",           # EdgeDB — graph-relational DB with EdgeQL (14k★)
+    "cockroach": "database",        # CockroachDB — distributed SQL, Postgres-compatible (30k★)
+    # Monitoring — open-source observability platforms
+    "coroot": "monitoring",         # Coroot — eBPF zero-instrumentation observability (5k★)
+    "openobserve": "monitoring",    # OpenObserve — 10× cheaper Datadog alt (14k★)
+    # AI — scikit-learn and HuggingFace Transformers
+    "sklearn": "ai",                # scikit-learn abbreviation
+    "scikit": "ai",                 # scikit-learn prefix
+    "transformers": "ai",           # HuggingFace Transformers — most popular ML library (130k★)
+    # Frontend — Next.js is the #1 React meta-framework
+    "next": "frontend",             # "next alternative", "next.js setup" → Frontend Frameworks
+    # Developer — package manager queries
+    "npm": "developer",             # npm — Node.js package manager; "npm alternative"
+    "pip": "developer",             # pip — Python package installer; "pip alternative"
+    "pipx": "developer",            # pipx — install Python apps in isolated envs (10k★)
+    "hatch": "developer",           # Hatch — Python project manager (pypa/hatch, 5k★)
+    # API — "server" alone routes web server/server framework queries → API Tools
+    "server": "api",                # "web server", "server framework", "http server" → API Tools
+    # CRM — synonyms for non-obvious terms in the CRM & Sales category
+    "sales": "crm",                 # "sales CRM", "sales tool", "sales pipeline" → CRM & Sales
+    "lead": "crm",                  # "lead management", "lead tracker" → CRM & Sales
+    "leads": "crm",                 # plural — "leads database" → CRM & Sales
+    # AI — ML model compression and efficiency techniques
+    "moe": "ai",                    # Mixture of Experts (MoE) — "sparse moe" → AI & Automation
+    "quantization": "ai",           # "model quantization", "llm quantization" → AI
+    "distillation": "ai",           # "model distillation", "knowledge distillation" → AI
+    # Feature Flags — deployment pattern terminology (complement to "flag"/"flags"/"toggle" already mapped)
+    "rollout": "feature",           # "feature rollout", "gradual rollout", "phased rollout" → Feature Flags
+    "canary": "feature",            # "canary release", "canary deployment" → Feature Flags (LaunchDarkly, GrowthBook)
+    "gradual": "feature",           # "gradual rollout", "gradual release" → Feature Flags (GrowthBook, Unleash)
+    # Feature Flags — named tools not yet individually mapped
+    "openfeature": "feature",       # OpenFeature — CNCF open standard for feature flag evaluation (3k★)
+    "flipper": "feature",           # Flipper — Ruby/Rails feature flags gem (flippercloud/flipper, 3k★)
+    # Security — credential management (secrets, keys, passwords)
+    "credential": "security",       # "credential management", "credential rotation" → Security Tools
+    "credentials": "security",      # plural — "credentials store", "credentials provider" → Security Tools
+    # Email — deliverability tooling (Mailtrap, GlockApps, Mail-Tester, Postmark tools)
+    "deliverability": "email",      # "email deliverability tool", "deliverability testing" → Email Marketing
+    # Database — version-controlled / distributed SQLite
+    "dolt": "database",             # Dolt — git-inspired version-controlled SQL database (dolthub/dolt, 18k★)
+    "nhost": "database",            # Nhost — Postgres + Hasura + Auth + Storage BaaS (nhost/nhost, 8k★)
+    # DevOps — container registries (Harbor, Zot, ECR, GCR, GHCR)
+    "harbor": "devops",             # Harbor — CNCF container registry with RBAC + replication (goharbor/harbor, 24k★)
+    "artifact": "devops",           # "artifact registry", "build artifact storage" → DevOps & Infrastructure
+    # AI agent frameworks — new 2025/2026 releases with fast-growing query volume
+    "strands": "ai",                # AWS Strands Agents SDK — open-source agentic AI framework by AWS (2026)
+    "genkit": "ai",                 # Firebase GenKit — Google's open-source LLM app framework (3k★)
+    "semantickernel": "ai",         # Microsoft Semantic Kernel — enterprise AI orchestration SDK (23k★)
+    "semantic-kernel": "ai",        # hyphenated form — "semantic-kernel alternative" queries → AI & Automation
+    "ag2": "ai",                    # AG2 (AutoGen 2) — Microsoft AutoGen refactored as agentic framework (38k★)
+    "openhands": "ai",              # OpenHands — AI software engineer (formerly OpenDevin, 33k★)
+    "opendevin": "ai",              # OpenDevin — old name for OpenHands; still widely searched as alternative
+    "v0": "ai",                     # Vercel v0 — AI UI generation from prompts; "v0 alternative" queries
+    "unstructured": "ai",           # Unstructured.io — document parsing + pre-processing for RAG pipelines (9k★)
+    "weave": "ai",                  # W&B Weave — LLM tracing, evaluation, and observability (Weights & Biases)
+    # Testing — HTTP mocking and integration test helpers for Node.js
+    "supertest": "testing",         # SuperTest — HTTP assertions for Express/Fastify apps (14k★) → Testing Tools
+    "nock": "testing",              # Nock — HTTP server mocking and stubbing for Node.js (12k★) → Testing Tools
+    # Frontend — TanStack Start meta-framework and hookform shorthand
+    "tanstack-start": "frontend",   # TanStack Start — new TypeScript full-stack meta-framework (file routing+SSR)
+    "tanstackstart": "frontend",    # compound form — "tanstackstart alternative", "tanstack start router"
+    "hookform": "frontend",         # React Hook Form shorthand — "hookform validation", "hookform zod" queries
+    # Maps — PostGIS spatial extension for PostgreSQL
+    "postgis": "maps",              # PostGIS — open-source spatial database extension for PostgreSQL (1.5k★)
+    # Python Postgres drivers — psycopg2 / asyncpg / psycopg are the dominant queries in Python+Postgres stacks
+    "psycopg": "database",          # psycopg / psycopg3 — Python PostgreSQL adapter (most-used Python DB driver)
+    "psycopg2": "database",         # psycopg2 — classic Python PostgreSQL adapter (very high query volume)
+    "asyncpg": "database",          # asyncpg — fast async Python Postgres driver (FastAPI + asyncio ecosystem)
+    "pymongo": "database",          # PyMongo — official Python MongoDB driver (queries: "pymongo alternative")
+    # Node.js Redis clients — ioredis + node-redis are the two dominant npm Redis packages
+    "ioredis": "caching",           # ioredis — full-featured Node.js Redis client (13k★); "ioredis alternative"
+    "node-redis": "caching",        # node-redis — official Redis client for Node.js; "node-redis alternative"
+    # Auth — Better Auth hyphenated form (compound "betterauth" already mapped)
+    "better-auth": "authentication",  # Better Auth hyphenated — "better-auth setup", "better-auth nextjs" queries
+    # Payments — Plaid fintech banking connectivity (very common "plaid alternative" query)
+    "plaid": "payments",            # Plaid — fintech API for bank account connectivity; "plaid alternative" queries
+    # Documentation — Sphinx Python documentation generator
+    "sphinx": "documentation",      # Sphinx — Python documentation generator (RST/Markdown, autodoc, 6k★)
+    # Frontend — TanStack Router hyphenated form (complement to "tanstack"→frontend already mapped)
+    "tanstack-router": "frontend",  # TanStack Router — type-safe file-based router (9k★); hyphenated query form
+    # Backend frameworks — additional language ecosystem routes not yet covered
+    "sinatra": "api",              # Sinatra — Ruby micro-framework (12k★); "sinatra alternative" → API Tools
+    "hanami": "api",               # Hanami — Ruby full-stack framework (3k★); "hanami alternative" → API Tools
+    "symfony": "api",              # Symfony — PHP full-stack framework (28k★); "symfony alternative" → API Tools
+    "dotnet": "api",               # .NET queries → api-tools (ASP.NET Core Minimal API, .NET web framework)
+    "vapor": "api",                # Vapor — Swift server-side web framework (24k★); "vapor alternative" → API Tools
+    "nest": "api",                 # NestJS short form — "nest server", "nest module", "nest guard" → API Tools
+    # Frontend — Redux ecosystem tools not yet individually mapped
+    "reselect": "frontend",        # Reselect — memoized selectors for Redux (19k★); "reselect alternative" → Frontend
+    # AI — singular "embed" verb form (complement to "embedding"→ai, "embeddings"→ai)
+    "embed": "ai",                 # "embed text", "embed document", "embed vector", "embed api" → AI & Automation
+    # Auth — ACL (Access Control List) queries
+    "acl": "authentication",       # ACL — "acl library", "acl rbac", "access control list" → Authentication
+    # Media — FFmpeg is the canonical multimedia processing framework
+    "ffmpeg": "media",             # FFmpeg — multimedia framework (45k★); "ffmpeg alternative" → Media Server
+    # SEO — structured data and JSON-LD markup tools
+    "jsonld": "seo",               # JSON-LD — structured data for rich results; "json-ld tool" → SEO Tools
+    "schemaorg": "seo",            # Schema.org — "schema.org markup", "schema.org generator" → SEO Tools
 }
 
 _FTS_STOP_WORDS = {

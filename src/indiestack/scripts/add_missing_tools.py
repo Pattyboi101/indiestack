@@ -7152,6 +7152,564 @@ TOOLS = [
         "brew install packer",
         "code",
     ),
+    # ── Passes 89-92 (autonomous improvement cycle) ──────────────────────────
+    # Developer Tools — Terminal emulators / editors
+    (
+        "alacritty",
+        "Alacritty",
+        "Fast, cross-platform, OpenGL terminal emulator",
+        "Alacritty is the fastest terminal emulator in existence, written in Rust. "
+        "Uses GPU rendering via OpenGL for near-zero latency. Highly configurable "
+        "via YAML/TOML. Ships with sensible defaults. No tabs or splits built in — "
+        "pairs with tmux or Zellij. Cross-platform: Linux, macOS, Windows, BSD.",
+        "developer-tools",
+        "BurntSushi/alacritty",
+        56000,
+        "https://alacritty.org",
+        "terminal,emulator,gpu,rust,fast,cross-platform",
+        "brew install --cask alacritty",
+        "code",
+    ),
+    (
+        "helix",
+        "Helix",
+        "A post-modern modal text editor",
+        "Helix is a terminal-based modal text editor inspired by Kakoune and Neovim. "
+        "Written in Rust, it features tree-sitter syntax highlighting, LSP support, "
+        "multiple selections, and a selection-first editing model. No plugin system "
+        "required — LSP, DAP, tree-sitter grammars, and themes ship out of the box.",
+        "developer-tools",
+        "helix-editor/helix",
+        35000,
+        "https://helix-editor.com",
+        "editor,modal,rust,lsp,treesitter,vim-alternative",
+        "brew install helix",
+        "code",
+    ),
+    (
+        "fish",
+        "Fish Shell",
+        "A smart and user-friendly command line shell",
+        "Fish is a Unix shell designed for interactive use. Its standout features are "
+        "autosuggestions based on history and completions, a clean scripting syntax "
+        "with no arcane quoting rules, web-based configuration, and out-of-the-box "
+        "syntax highlighting. A drop-in Bash/Zsh replacement for everyday terminal work.",
+        "cli-tools",
+        "fish-shell/fish-shell",
+        26000,
+        "https://fishshell.com",
+        "shell,cli,interactive,autosuggestions,scripting,bash-alternative",
+        "brew install fish",
+        "code",
+    ),
+    (
+        "hardhat",
+        "Hardhat",
+        "Ethereum development environment for professionals",
+        "Hardhat is a development environment for Ethereum smart contracts. Compile, "
+        "test, debug, and deploy Solidity contracts. Ships with Hardhat Network — a "
+        "local Ethereum node for testing. Extensive plugin ecosystem (OpenZeppelin, "
+        "Ethers.js, Viem, Foundry forking). The most widely used Ethereum dev tool.",
+        "developer-tools",
+        "NomicFoundation/hardhat",
+        7000,
+        "https://hardhat.org",
+        "ethereum,blockchain,solidity,smart-contracts,testing,web3",
+        "npm install --save-dev hardhat",
+        "code",
+    ),
+    (
+        "react-three-fiber",
+        "React Three Fiber",
+        "A React renderer for Three.js",
+        "React Three Fiber (R3F) is a React renderer for Three.js that lets you "
+        "build Three.js scenes declaratively with React components. It abstracts "
+        "away the Three.js boilerplate while giving you full access to the Three.js "
+        "API. Part of the pmndrs ecosystem alongside Drei (helpers), Rapier "
+        "(physics), and React Spring (animation).",
+        "frontend-frameworks",
+        "pmndrs/react-three-fiber",
+        27000,
+        "https://docs.pmnd.rs/react-three-fiber",
+        "three,3d,webgl,react,animation",
+        "npm install @react-three/fiber three",
+        "code",
+    ),
+    (
+        "bentoml",
+        "BentoML",
+        "The easiest way to serve AI apps and models",
+        "BentoML is an open-source model serving framework that lets you build, "
+        "ship, and scale AI applications. Define serving logic in Python, package "
+        "models with dependencies, and deploy to any cloud or on-premises. "
+        "Supports PyTorch, TensorFlow, scikit-learn, XGBoost, LLMs via vLLM/Ollama, "
+        "and any Python model. Handles batching, streaming, and multi-model pipelines.",
+        "ai-automation",
+        "bentoml/bentoml",
+        7000,
+        "https://bentoml.com",
+        "ml,model-serving,llm,python,deployment,inference",
+        "pip install bentoml",
+        "code",
+    ),
+    (
+        "sanic",
+        "Sanic",
+        "Build fast. Run fast.",
+        "Sanic is an async Python web framework and server built for performance. "
+        "It supports async/await syntax natively and is one of the fastest Python "
+        "web frameworks available. Suitable for building REST APIs, WebSocket servers, "
+        "and microservices. Ships with built-in HTTP/2, TLS, and streaming support.",
+        "api-tools",
+        "sanic-org/sanic",
+        18000,
+        "https://sanic.dev",
+        "python,async,web-framework,rest-api,http2",
+        "pip install sanic",
+        "code",
+    ),
+    (
+        "activemq",
+        "Apache ActiveMQ",
+        "The most popular open-source, multi-protocol message broker",
+        "Apache ActiveMQ is a widely deployed open-source message broker that "
+        "supports JMS, AMQP, MQTT, OpenWire, STOMP, and WebSocket protocols. "
+        "Used extensively in enterprise Java stacks for reliable async messaging. "
+        "ActiveMQ Classic and ActiveMQ Artemis handle millions of messages "
+        "per second and integrate with Spring Boot, Camel, and Quarkus.",
+        "message-queue",
+        "apache/activemq",
+        2000,
+        "https://activemq.apache.org",
+        "message-broker,jms,amqp,mqtt,java,enterprise",
+        "",
+        "code",
+    ),
+    (
+        "foundry-eth",
+        "Foundry",
+        "Blazing fast, portable, and modular toolkit for Ethereum development",
+        "Foundry is a smart contract development toolchain written in Rust. "
+        "It ships Forge (testing framework), Cast (CLI for EVM interaction), "
+        "Anvil (local Ethereum node), and Chisel (Solidity REPL). Tests are written "
+        "in Solidity — no JavaScript required. Significantly faster than Hardhat for "
+        "compilation and testing, with fuzzing and invariant testing built in.",
+        "developer-tools",
+        "foundry-rs/foundry",
+        9000,
+        "https://book.getfoundry.sh",
+        "ethereum,blockchain,solidity,smart-contracts,testing,web3",
+        "curl -L https://foundry.paradigm.xyz | bash",
+        "code",
+    ),
+    (
+        "earthly",
+        "Earthly",
+        "Reproducible builds in containers",
+        "Earthly is an open-source build automation tool that combines the best of "
+        "Dockerfiles and Makefiles. Each build target runs in a container, making "
+        "builds reproducible and portable across dev, CI, and production. Works with "
+        "any language and integrates with GitHub Actions, CircleCI, and Jenkins. "
+        "Supports build caching, parallelism, and cross-platform builds.",
+        "devops-infrastructure",
+        "earthly-technologies/earthly",
+        12000,
+        "https://earthly.dev",
+        "build,ci,containers,reproducible,makefile-alternative,devops",
+        "brew install earthly/earthly/earthly",
+        "code",
+    ),
+    (
+        "edgedb",
+        "EdgeDB",
+        "A graph-relational database with a type-safe query language",
+        "EdgeDB is a next-generation database built on PostgreSQL that combines "
+        "the relational model with object-oriented concepts. Features a rich type "
+        "system, EdgeQL (a more expressive alternative to SQL), built-in migrations, "
+        "and a schema definition language. Ideal for complex data models. "
+        "Client libraries for Python, TypeScript, Go, and Rust.",
+        "database",
+        "edgedb/edgedb",
+        14000,
+        "https://edgedb.com",
+        "database,postgresql,orm,typescript,graph-relational,edgeql",
+        "pip install edgedb",
+        "code",
+    ),
+    (
+        "cockroachdb",
+        "CockroachDB",
+        "The cloud-native distributed SQL database",
+        "CockroachDB is a distributed SQL database built for cloud-native apps. "
+        "Fully Postgres-compatible wire protocol, so existing drivers and ORMs work "
+        "without changes. Automatic sharding, multi-region replication, and "
+        "serialisable transactions. Self-host with the open-source edition or use "
+        "CockroachDB Serverless / Dedicated for managed deployments.",
+        "database",
+        "cockroachdb/cockroach",
+        30000,
+        "https://cockroachlabs.com",
+        "database,sql,postgresql,distributed,cloud-native,multi-region",
+        "brew install cockroachdb/tap/cockroach",
+        "code",
+    ),
+    (
+        "openobserve",
+        "OpenObserve",
+        "Cloud-native observability platform at 140x lower storage cost",
+        "OpenObserve (O2) is an open-source observability platform for logs, metrics, "
+        "traces, and RUM. Written in Rust, it uses object storage (S3/GCS/MinIO) "
+        "instead of spinning disks — yielding 140× cheaper storage than Elasticsearch. "
+        "Drop-in replacement for Elasticsearch/OpenSearch log ingestion APIs. "
+        "Single binary, no external dependencies, deploys in under 2 minutes.",
+        "monitoring-uptime",
+        "openobserve/openobserve",
+        14000,
+        "https://openobserve.ai",
+        "observability,logs,metrics,traces,rust,elasticsearch-alternative,monitoring",
+        "curl -L https://raw.githubusercontent.com/openobserve/openobserve/main/deploy/quick-install.sh | bash",
+        "code",
+    ),
+    (
+        "authentik",
+        "Authentik",
+        "The authentication glue you need",
+        "Authentik is a self-hosted identity provider and SSO solution. Works as "
+        "an OAuth2, OpenID Connect, SAML, LDAP, or SCIM provider — a drop-in "
+        "replacement for Okta, Auth0, or Azure AD in self-hosted environments. "
+        "Ships with pre-built flows for enrollment, recovery, and MFA. "
+        "Deploy via Docker Compose or Helm chart in minutes.",
+        "authentication",
+        "goauthentik/authentik",
+        15000,
+        "https://goauthentik.io",
+        "auth,sso,oauth2,oidc,saml,self-hosted,identity,okta-alternative",
+        "docker compose up -d",
+        "code",
+    ),
+    (
+        "plausible",
+        "Plausible Analytics",
+        "Simple, privacy-friendly Google Analytics alternative",
+        "Plausible Analytics is an open-source, privacy-friendly web analytics tool. "
+        "Lightweight script (< 1KB), no cookies, GDPR compliant, and self-hostable. "
+        "Shows page views, bounce rate, referrers, and custom events in a clean dashboard. "
+        "Used by over 12,000 paying customers and thousands of self-hosted deployments. "
+        "The go-to Google Analytics alternative for privacy-conscious developers and indie makers.",
+        "analytics-metrics",
+        "plausible/analytics",
+        21000,
+        "https://plausible.io",
+        "analytics,privacy,google-analytics-alternative,gdpr,open-source,self-hosted",
+        "docker run -d plausible/analytics",
+        "code",
+    ),
+    (
+        "umami",
+        "Umami",
+        "Simple, fast, privacy-focused website analytics",
+        "Umami is a simple, fast, privacy-focused open-source analytics platform. "
+        "Self-host on your own infrastructure or use Umami Cloud. Collects only the "
+        "data you need — no cookies, no tracking across sites, fully GDPR compliant. "
+        "Clean dashboard with realtime data, custom events, and UTM tracking. "
+        "23k+ GitHub stars; one of the most popular self-hosted analytics solutions.",
+        "analytics-metrics",
+        "umami-software/umami",
+        23000,
+        "https://umami.is",
+        "analytics,privacy,self-hosted,open-source,gdpr,realtime",
+        "docker pull ghcr.io/umami-software/umami:postgresql-latest",
+        "code",
+    ),
+    (
+        "kamal",
+        "Kamal",
+        "Deploy web apps anywhere — from bare metal to cloud VMs",
+        "Kamal is a modern Docker-based deployment tool by 37signals (makers of Basecamp). "
+        "Deploy any Dockerised app to any server (bare metal, VPS, cloud VM) with zero "
+        "downtime via container rollover. Manages rolling deployments, secrets, and "
+        "health checks. Originally built for Rails but works with any stack. "
+        "The simplest path from a Dockerfile to production without a PaaS.",
+        "devops-infrastructure",
+        "basecamp/kamal",
+        11000,
+        "https://kamal-deploy.org",
+        "deployment,docker,paas,devops,rails,zero-downtime,vps",
+        "gem install kamal",
+        "code",
+    ),
+    (
+        "netdata",
+        "Netdata",
+        "Real-time performance monitoring for servers, VMs, and containers",
+        "Netdata is an open-source, real-time monitoring solution that collects thousands "
+        "of metrics per second with 1-second granularity. Zero-configuration auto-discovery "
+        "of apps, databases, and services. Ships with 800+ integrations. "
+        "Can run as a standalone agent (very low overhead) or as a distributed observability "
+        "cloud. The go-to tool for detailed server-level performance visibility without the "
+        "cost of Datadog or New Relic.",
+        "monitoring-uptime",
+        "netdata/netdata",
+        73000,
+        "https://netdata.cloud",
+        "monitoring,metrics,real-time,performance,linux,self-hosted,observability",
+        "curl https://get.netdata.cloud/kickstart.sh | bash",
+        "code",
+    ),
+    (
+        "hatch",
+        "Hatch",
+        "Modern, extensible Python project manager",
+        "Hatch is the official Python project manager from the Python Packaging Authority (PyPA). "
+        "Manage virtual environments, build distributions, run tests across Python versions, "
+        "and publish to PyPI — all from one tool. Uses pyproject.toml as the single source "
+        "of truth. Plugin-based architecture makes it extensible. The recommended successor "
+        "to setup.py and tox for new Python projects.",
+        "developer-tools",
+        "pypa/hatch",
+        5000,
+        "https://hatch.pypa.io",
+        "python,package-manager,virtual-env,build,pypi,project-manager",
+        "pip install hatch",
+        "code",
+    ),
+    # Database — version-controlled SQL -------------------------------------------------
+    (
+        "dolt",
+        "Dolt",
+        "Git for data — version-controlled SQL database",
+        "Dolt is the world's first version-controlled SQL database. Branch, merge, "
+        "diff, and rollback your data like you do your code. DoltHub hosts public "
+        "and private databases. Compatible with MySQL protocol — works with any MySQL "
+        "client or ORM. Perfect for reproducible data pipelines and auditability.",
+        "database",
+        "dolthub/dolt",
+        18000,
+        "https://www.dolthub.com",
+        "database,sql,mysql,version-control,git,data-versioning",
+        "brew install dolt",
+        "code",
+    ),
+    # DevOps — container registries ------------------------------------------------------
+    (
+        "harbor",
+        "Harbor",
+        "Open-source container registry with RBAC, replication, and vulnerability scanning",
+        "Harbor is a CNCF Graduated open-source container registry that secures "
+        "artifacts with policies and RBAC. Includes image replication across registries, "
+        "vulnerability scanning via Trivy/Clair, content signing via Notary, and a "
+        "rich web UI. Self-host on Kubernetes or bare metal.",
+        "devops-infrastructure",
+        "goharbor/harbor",
+        24000,
+        "https://goharbor.io",
+        "container-registry,docker,oci,kubernetes,security,self-hosted",
+        "helm install harbor harbor/harbor",
+        "code",
+    ),
+    # Feature Flags — Ruby ecosystem -----------------------------------------------------
+    (
+        "flipper",
+        "Flipper",
+        "Feature flags for Ruby and Rails applications",
+        "Flipper is the most popular feature flagging gem in the Ruby ecosystem. "
+        "Store flags in memory, Redis, ActiveRecord, or any custom adapter. "
+        "Boolean, percentage, group, and actor-based targeting. Flipper Cloud "
+        "adds a hosted dashboard with audit log and team collaboration.",
+        "feature-flags",
+        "flippercloud/flipper",
+        3400,
+        "https://www.flippercloud.io",
+        "feature-flags,ruby,rails,percentage-rollout,self-hosted",
+        "gem install flipper",
+        "code",
+    ),
+    # DevOps / BaaS — Firebase alternative ----------------------------------------------
+    (
+        "nhost",
+        "Nhost",
+        "The open-source Firebase alternative with GraphQL",
+        "Nhost is a Firebase alternative built on open standards: PostgreSQL, "
+        "Hasura GraphQL, Auth, and File Storage — all in one platform. "
+        "Instant GraphQL API auto-generated from your database schema, built-in "
+        "auth with social providers, serverless functions, and a generous free tier. "
+        "Self-hostable via Docker Compose.",
+        "devops-infrastructure",
+        "nhost/nhost",
+        8000,
+        "https://nhost.io",
+        "baas,firebase-alternative,graphql,hasura,postgres,auth,storage,self-hosted",
+        "npm install @nhost/react",
+        "code",
+    ),
+    # API Tools — Protobuf toolchain -----------------------------------------------------
+    (
+        "buf",
+        "Buf",
+        "The best way to use Protobuf",
+        "Buf is a modern developer-first Protobuf toolchain. It replaces the "
+        "fragile protoc workflow with a single CLI: lint, format, detect breaking "
+        "changes, generate code, and push to the Buf Schema Registry. "
+        "buf.build hosts a public schema registry for sharing Protobuf APIs. "
+        "Used by Stripe, DoorDash, and many API-first companies.",
+        "api-tools",
+        "bufbuild/buf",
+        9000,
+        "https://buf.build",
+        "protobuf,grpc,api,rpc,code-generation,linting",
+        "brew install bufbuild/buf/buf",
+        "code",
+    ),
+    # AI — Agent frameworks and coding assistants (ninety-fourth pass) -------------------
+    (
+        "openhands",
+        "OpenHands",
+        "An open platform for AI software developers as agents",
+        "OpenHands (formerly OpenDevin) is an autonomous AI software engineering "
+        "agent that can write code, run tests, fix bugs, and browse the web. "
+        "Modular architecture supports any LLM backend — Claude, GPT-4, Llama. "
+        "Designed for real software engineering tasks, not just code completion.",
+        "ai-dev-tools",
+        "All-Hands-AI/OpenHands",
+        33000,
+        "https://docs.all-hands.ai",
+        "ai-agent,autonomous,software-engineer,llm,opendevin",
+        "docker pull ghcr.io/all-hands-ai/runtime:0.28-nikolaik",
+        "code",
+    ),
+    (
+        "semantic-kernel",
+        "Semantic Kernel",
+        "Build enterprise AI agents and copilots with an open-source SDK",
+        "Semantic Kernel (SK) is Microsoft's open-source SDK for integrating LLMs "
+        "into .NET, Python, and Java applications. Supports OpenAI, Azure OpenAI, "
+        "Hugging Face, and local models. Provides memory, planning, plugins, and "
+        "function-calling abstractions for production agent workflows.",
+        "ai-automation",
+        "microsoft/semantic-kernel",
+        23000,
+        "https://learn.microsoft.com/semantic-kernel",
+        "ai-agent,llm,microsoft,dotnet,python,orchestration",
+        "pip install semantic-kernel",
+        "code",
+    ),
+    (
+        "unstructured",
+        "Unstructured",
+        "Pre-process documents for large language model (LLM) apps",
+        "Unstructured is an open-source library for extracting and transforming "
+        "content from PDFs, Word docs, PowerPoints, HTML, and 30+ other formats "
+        "into clean structured data ready for RAG pipelines. Used by LangChain, "
+        "LlamaIndex, and thousands of production AI apps.",
+        "ai-automation",
+        "Unstructured-IO/unstructured",
+        9000,
+        "https://unstructured.io",
+        "rag,document-parsing,pdf,llm,langchain,preprocessing",
+        "pip install unstructured",
+        "code",
+    ),
+    (
+        "genkit",
+        "Firebase GenKit",
+        "An open-source framework for building AI-powered apps",
+        "GenKit is Google's open-source framework for building production AI "
+        "applications in JavaScript/TypeScript and Go. Supports OpenAI, Anthropic, "
+        "Google Gemini, Ollama, and more. Built-in flow tracing, schema validation "
+        "with Zod, and a developer UI for inspecting AI flows.",
+        "ai-automation",
+        "firebase/genkit",
+        3000,
+        "https://firebase.google.com/docs/genkit",
+        "ai-framework,llm,google,typescript,go,flows",
+        "npm install genkit @genkit-ai/googleai",
+        "code",
+    ),
+    # API Tools — Ruby / Swift / PHP frameworks ----------------------------------------
+    (
+        "sinatra",
+        "Sinatra",
+        "A DSL for quickly creating web applications in Ruby",
+        "Sinatra is a free and open-source Ruby web application library. "
+        "It emphasises a minimalist approach — define routes with a simple DSL, "
+        "no generated project files, no migrations. The inspiration for many "
+        "micro-frameworks: Flask (Python), Express (Node.js), Gin (Go). "
+        "12k+ GitHub stars; still widely used for small APIs and prototypes.",
+        "api-tools",
+        "sinatra/sinatra",
+        12000,
+        "https://sinatrarb.com",
+        "ruby,web-framework,dsl,minimalist,lightweight",
+        "gem install sinatra",
+        "code",
+    ),
+    (
+        "vapor",
+        "Vapor",
+        "A server-side Swift web framework",
+        "Vapor is an open-source server-side Swift web framework built on SwiftNIO. "
+        "Fully async, HTTP/2 native, and type-safe. Popular for iOS/macOS developers "
+        "who want to write backend code in Swift. Supports Fluent ORM, Leaf templates, "
+        "WebSockets, and queue workers.",
+        "api-tools",
+        "vapor/vapor",
+        24000,
+        "https://vapor.codes",
+        "swift,web-framework,async,swiftnio,server-side",
+        "swift package init --type executable",
+        "code",
+    ),
+    (
+        "symfony",
+        "Symfony",
+        "High performance PHP framework for web development",
+        "Symfony is a PHP web application framework and a reusable set of PHP "
+        "components. It follows MVC, PSR standards, and dependency injection. "
+        "Core components power Laravel, Drupal, Yii2, and thousands of other "
+        "projects. Comes with a powerful CLI (bin/console), Flex recipe system, "
+        "and a large ecosystem of bundles.",
+        "api-tools",
+        "symfony/symfony",
+        28000,
+        "https://symfony.com",
+        "php,web-framework,mvc,components,enterprise,api",
+        "composer create-project symfony/skeleton my-project",
+        "code",
+    ),
+    # Frontend — Redux selectors -------------------------------------------------------
+    (
+        "reselect",
+        "Reselect",
+        "Selector library for Redux",
+        "Reselect provides memoized, composable selectors for Redux. Selectors "
+        "re-compute only when their input state changes, preventing unnecessary "
+        "React re-renders. Reselect v5 brings TypeScript-first APIs and is the "
+        "standard selector library in the Redux Toolkit ecosystem.",
+        "frontend-frameworks",
+        "reduxjs/reselect",
+        19000,
+        "https://reselect.js.org",
+        "redux,state-management,memoization,react,typescript,selectors",
+        "npm install reselect",
+        "code",
+    ),
+    # Media — HLS browser player -------------------------------------------------------
+    (
+        "hlsjs",
+        "hls.js",
+        "JavaScript HLS client using Media Source Extensions",
+        "hls.js plays HLS (HTTP Live Streaming) directly in any browser that "
+        "supports HTML5 video and Media Source Extensions API. No Flash required. "
+        "Supports ABR (adaptive bitrate), low-latency HLS, ID3 cue points, "
+        "subtitle tracks, and CMAF. The standard library for web HLS playback.",
+        "media-server",
+        "video-dev/hls.js",
+        15000,
+        "https://hlsjs.video-dev.org",
+        "hls,video,streaming,javascript,media,player,browser",
+        "npm install hls.js",
+        "code",
+    ),
 ]
 
 
