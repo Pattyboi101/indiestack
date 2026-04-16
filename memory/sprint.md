@@ -1,17 +1,17 @@
 # Sprint — Current
 
-Last updated: 2026-04-16 (ninety-fourth pass)
+Last updated: 2026-04-16 (ninety-fifth pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-15)
+## System State (as of 2026-04-16)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1647 unique active keys (ninety-fourth pass: +10 new, -1 removed — reasoning, thinking, hook, pool, pooler, registry, harbor, ingestion, ingest, output; removed "structured"→logging misroute; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 419 unique tools (added 2 new: harbor, pgbouncer)
+- **_CAT_SYNONYMS**: 1657 unique active keys (ninety-fifth pass: +10 new — pydanticai, openai-agents, restate, triggerdev, qstash, chatwoot, calcom, twenty, nocodb, baserow; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 424 unique tools (added 5 new: twenty, nocodb, baserow, chatwoot, restate)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,35 @@ Last updated: 2026-04-16 (ninety-fourth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-16, ninety-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 10 new `_CAT_SYNONYMS` entries (1647 → 1657 unique keys, 0 duplicates):
+  - **AI**: `pydanticai` → ai — compound form of "pydantic-ai" (normalised, no hyphen)
+  - **AI**: `openai-agents` → ai — OpenAI Agents SDK for Python multi-agent workflows
+  - **Background**: `restate` → background — Restate durable workflow/function engine (9k★)
+  - **Background**: `triggerdev` → background — compound form of "trigger.dev" (period dropped)
+  - **Message**: `qstash` → message — Upstash QStash serverless message queue + scheduler
+  - **Support**: `chatwoot` → support — open-source Intercom/Zendesk alternative (22k★)
+  - **Scheduling**: `calcom` → scheduling — compound form of "cal.com" (period dropped)
+  - **CRM**: `twenty` → crm — Twenty open-source Salesforce alternative (25k★)
+  - **Developer**: `nocodb` → developer — NocoDB open-source Airtable alternative (51k★)
+  - **Developer**: `baserow` → developer — Baserow open-source no-code database (4k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools (419 → 424 unique):
+  - **Twenty** (twentyhq/twenty, 25k★) — open-source CRM, Salesforce alternative; crm-sales
+  - **NocoDB** (nocodb/nocodb, 51k★) — open-source Airtable/spreadsheet over any DB; developer-tools
+  - **Baserow** (bram2w/baserow, 4k★) — open-source no-code database platform; developer-tools
+  - **Chatwoot** (chatwoot/chatwoot, 22k★) — self-hosted omnichannel customer support; customer-support
+  - **Restate** (restatedev/restate, 9k★) — durable workflow + function orchestration; background-jobs
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-fifth pass
 
 ## Completed This Session (2026-04-16, ninety-fourth pass — autonomous improvement cycle)
 

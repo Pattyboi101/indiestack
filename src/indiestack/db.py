@@ -4702,6 +4702,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ingest": "background",         # verb form — "ingest data", "ingest logs" → Background Jobs
     # AI — LLM output queries (Instructor, Outlines, Guardrails; misrouted by removed "structured"→logging)
     "output": "ai",                 # "structured output", "llm output", "model output" → AI & Automation
+    # AI — Pydantic AI compound form (complement to "pydantic-ai" already mapped)
+    "pydanticai": "ai",             # compound — "pydanticai agent", "pydanticai framework" → AI & Automation
+    # AI — OpenAI Agents SDK (Python SDK for building AI agents; "openai-agents install" queries)
+    "openai-agents": "ai",          # OpenAI Agents SDK — Python multi-agent framework → AI & Automation
+    # Background jobs — Restate durable workflow engine (TypeScript/Java; restatedev/restate, 9k★)
+    "restate": "background",        # Restate — durable functions + event-driven workflows → Background Jobs
+    # Background jobs — compound form of trigger.dev (period stripped in token normalisation)
+    "triggerdev": "background",     # compound — "triggerdev alternative", "triggerdev open-source" → Background Jobs
+    # Message queue — Upstash QStash (serverless HTTP message queue + scheduling; Upstash ecosystem)
+    "qstash": "message",            # QStash — serverless message queue + delay queue by Upstash → Message Queues
+    # Customer support — Chatwoot open-source Intercom/Zendesk alternative (chatwoot/chatwoot, 22k★)
+    "chatwoot": "support",          # Chatwoot — self-hosted omnichannel customer support → Customer Support
+    # Scheduling — compound form of "cal.com" (period stripped in token normalisation)
+    "calcom": "scheduling",         # compound — "calcom alternative", "calcom self-hosted" → Scheduling & Booking
+    # CRM — Twenty open-source Salesforce/HubSpot alternative (twentyhq/twenty, 25k★)
+    "twenty": "crm",                # Twenty — open-source CRM, Salesforce alternative → CRM & Sales
+    # Developer Tools — NocoDB open-source Airtable alternative (nocodb/nocodb, 51k★)
+    "nocodb": "developer",          # NocoDB — turn any DB into a smart spreadsheet/Airtable → Developer Tools
+    # Developer Tools — Baserow open-source no-code database platform (bram2w/baserow, 4k★)
+    "baserow": "developer",         # Baserow — open-source Airtable/database platform → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

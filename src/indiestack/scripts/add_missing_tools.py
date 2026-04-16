@@ -7020,6 +7020,86 @@ TOOLS = [
         "apt install pgbouncer",
         "code",
     ),
+    # CRM — open-source alternatives -------------------------------------------------
+    (
+        "twenty",
+        "Twenty",
+        "Open-source CRM — the #1 Salesforce alternative",
+        "Twenty is a modern open-source CRM built with React, TypeScript, and GraphQL. "
+        "Self-hostable alternative to Salesforce and HubSpot. Features contacts, deals, "
+        "custom objects, email sync, automations, and a developer API. Backed by Y Combinator.",
+        "crm-sales",
+        "twentyhq/twenty",
+        25000,
+        "https://twenty.com",
+        "crm,open-source,self-hosted,salesforce-alternative,typescript,react",
+        "npx create-twenty-app@latest",
+        "code",
+    ),
+    # Developer Tools — no-code databases / Airtable alternatives --------------------
+    (
+        "nocodb",
+        "NocoDB",
+        "Open Source Airtable Alternative — turn any database into a smart spreadsheet",
+        "NocoDB is an open-source platform that turns any SQL database (Postgres, MySQL, "
+        "SQLite, MSSQL) into a smart spreadsheet with collaborative views, automations, "
+        "REST APIs, and integrations. Self-hosted or cloud. 51k+ GitHub stars.",
+        "developer-tools",
+        "nocodb/nocodb",
+        51000,
+        "https://nocodb.com",
+        "no-code,airtable-alternative,database,self-hosted,spreadsheet,rest-api",
+        "npx create-nocodb-app",
+        "code",
+    ),
+    (
+        "baserow",
+        "Baserow",
+        "Open source no-code database and Airtable alternative",
+        "Baserow is an open-source no-code database platform. Create custom databases, "
+        "build forms, share data, and automate workflows — all without code. Self-hosted "
+        "or cloud. Integrates with n8n, Zapier, and REST API for developers.",
+        "developer-tools",
+        "bram2w/baserow",
+        4000,
+        "https://baserow.io",
+        "no-code,airtable-alternative,database,self-hosted,open-source",
+        "docker run -v baserow_data:/baserow/data -p 80:80 -p 443:443 baserow/baserow:latest",
+        "code",
+    ),
+    # Customer Support — open-source Intercom/Zendesk alternatives ------------------
+    (
+        "chatwoot",
+        "Chatwoot",
+        "Open-source customer support — self-hostable Intercom alternative",
+        "Chatwoot is an open-source omnichannel customer support platform. Live chat, "
+        "email, Twitter, Facebook, WhatsApp — all in one inbox. Self-hosted or cloud. "
+        "API-first with webhooks, custom automations, and CSAT surveys. 22k+ stars.",
+        "customer-support",
+        "chatwoot/chatwoot",
+        22000,
+        "https://chatwoot.com",
+        "customer-support,live-chat,omnichannel,self-hosted,open-source,intercom-alternative",
+        "docker-compose up -d",
+        "code",
+    ),
+    # Background Jobs — durable workflow engines ------------------------------------
+    (
+        "restate",
+        "Restate",
+        "Distributed durable functions and workflows",
+        "Restate is an open-source durable workflow and function orchestration platform. "
+        "Write reliable, resumable TypeScript/Java workflows without managing state. "
+        "Handles retries, idempotency, timers, and signals automatically. Run on Restate "
+        "Cloud or self-host. Simpler than Temporal for most use cases.",
+        "background-jobs",
+        "restatedev/restate",
+        9000,
+        "https://restate.dev",
+        "workflow,durable-execution,typescript,java,background-jobs,orchestration",
+        "npm install @restatedev/restate-sdk",
+        "code",
+    ),
     # API Tools — HTTP clients -------------------------------------------------------
     (
         "axios",
