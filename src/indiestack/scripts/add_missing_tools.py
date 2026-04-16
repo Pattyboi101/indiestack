@@ -6984,6 +6984,42 @@ TOOLS = [
         "docker compose up -d",
         "code",
     ),
+    # DevOps — Container Registries --------------------------------------------------
+    (
+        "harbor",
+        "Harbor",
+        "An open source trusted cloud native registry project",
+        "Harbor is a CNCF-graduated container image registry that secures artifacts "
+        "with policies and role-based access control. Supports replication, "
+        "vulnerability scanning (via Trivy/Clair), and image signing (Cosign/Notation). "
+        "Runs on Kubernetes or Docker Compose; used by thousands of enterprises as a "
+        "self-hosted Docker Hub / ECR / GCR alternative.",
+        "devops-infrastructure",
+        "goharbor/harbor",
+        22000,
+        "https://goharbor.io",
+        "container-registry,oci,docker,self-hosted,cncf,kubernetes,replication",
+        "helm install harbor harbor/harbor",
+        "code",
+    ),
+    # Database — Connection Poolers ---------------------------------------------------
+    (
+        "pgbouncer",
+        "PgBouncer",
+        "Lightweight connection pooler for PostgreSQL",
+        "PgBouncer is the de-facto standard PostgreSQL connection pooler. It sits "
+        "between your application and Postgres, multiplexing thousands of client "
+        "connections onto a small pool of server connections. Supports session, "
+        "transaction, and statement pooling modes. Reduces Postgres memory usage "
+        "dramatically — essential for web apps with many short-lived connections.",
+        "database",
+        "pgbouncer/pgbouncer",
+        4000,
+        "https://www.pgbouncer.org",
+        "postgres,connection-pool,pooler,database,performance,postgresql",
+        "apt install pgbouncer",
+        "code",
+    ),
     # API Tools — HTTP clients -------------------------------------------------------
     (
         "axios",

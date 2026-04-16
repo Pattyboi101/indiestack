@@ -3717,7 +3717,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "morgan": "logging",            # Morgan — HTTP request logger middleware for Express/Node.js
     "zerolog": "logging",           # Zerolog — Go zero-allocation JSON logger
     "slog": "logging",              # Go standard library structured logging (Go 1.21+)
-    "structured": "logging",        # "structured logging", "structured log format" → Logging
+    # NOTE: "structured" removed — misrouted "structured output" LLM queries to Logging.
+    # "structured logs/logging/log" already covered by "log"→logging, "logs"→logging, "logging"→logging.
     # Background jobs — additional named tools not yet covered
     "hatchet": "background",        # Hatchet — durable workflow orchestration engine (5k★)
     "oban": "background",           # Oban — reliable Elixir background jobs on PostgreSQL
@@ -4685,6 +4686,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cart": "payments",             # "shopping cart", "cart library" → Payments (checkout flow)
     # Monorepo — Lerna (complement to turborepo/nx already mapped)
     "lerna": "developer",           # Lerna — original JS monorepo management tool (35k★) → Developer Tools
+    # AI — reasoning models (o1, DeepSeek-R1, Claude extended thinking queries)
+    "reasoning": "ai",              # "reasoning model", "reasoning LLM", "o1 alternative" → AI & Automation
+    "thinking": "ai",               # "extended thinking", "thinking tokens", "thinking model" → AI & Automation
+    # Frontend — React hooks singular form (complement to "hooks"→frontend already mapped)
+    "hook": "frontend",             # "react hook library", "custom hook", "use hook" → Frontend Frameworks
+    # Database — connection pool queries (PgBouncer, PgCat, Odyssey, pgpool)
+    "pool": "database",             # "connection pool", "db pool", "postgres pool" → Database
+    "pooler": "database",           # "connection pooler", "postgres pooler" → Database (PgBouncer, PgCat)
+    # DevOps — container and artifact registry queries (Harbor, Quay, Zot, GHCR alternatives)
+    "registry": "devops",           # "container registry", "image registry", "oci registry" → DevOps
+    "harbor": "devops",             # Harbor — CNCF container image registry with RBAC and replication (22k★)
+    # Background jobs — data/log ingestion pipeline queries (Airbyte, Kafka Connect, Debezium)
+    "ingestion": "background",      # "data ingestion pipeline", "log ingestion" → Background Jobs / ETL
+    "ingest": "background",         # verb form — "ingest data", "ingest logs" → Background Jobs
+    # AI — LLM output queries (Instructor, Outlines, Guardrails; misrouted by removed "structured"→logging)
+    "output": "ai",                 # "structured output", "llm output", "model output" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

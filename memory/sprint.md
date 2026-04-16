@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-15 (ninety-third pass)
+Last updated: 2026-04-16 (ninety-fourth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-15 (ninety-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1638 unique active keys (ninety-third pass: +10 new — ecommerce, commerce, storefront, shopify, woocommerce, saleor, medusajs, vendure, cart, lerna; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 417 unique tools (added 3 new: saleor, vendure, lerna)
+- **_CAT_SYNONYMS**: 1647 unique active keys (ninety-fourth pass: +10 new, -1 removed — reasoning, thinking, hook, pool, pooler, registry, harbor, ingestion, ingest, output; removed "structured"→logging misroute; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 419 unique tools (added 2 new: harbor, pgbouncer)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,33 @@ Last updated: 2026-04-15 (ninety-third pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-16, ninety-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Removed `"structured"` → "logging" bug: was misrouting "structured output" LLM queries to Logging category instead of AI. "structured logs/logging/log" covered by individual "log"/"logs"/"logging" synonyms.
+- Added 10 new `_CAT_SYNONYMS` entries (1638 → 1647 unique keys, 0 duplicates):
+  - **AI**: `reasoning` → ai — "reasoning model", "o1 alternative", "reasoning LLM"
+  - **AI**: `thinking` → ai — "extended thinking", "thinking tokens", "thinking model"
+  - **AI**: `output` → ai — "structured output", "llm output", "model output" (Instructor, Outlines)
+  - **Frontend**: `hook` → frontend — singular of "hooks" (React custom hooks, hook library)
+  - **Database**: `pool` → database — "connection pool", "db pool" (PgBouncer, PgCat)
+  - **Database**: `pooler` → database — "connection pooler", "postgres pooler"
+  - **DevOps**: `registry` → devops — "container registry", "image registry", "oci registry"
+  - **DevOps**: `harbor` → devops — Harbor CNCF container registry (22k★)
+  - **Background**: `ingestion` → background — "data ingestion pipeline", "log ingestion"
+  - **Background**: `ingest` → background — verb form of ingestion
+
+### Catalog Script (Step 2)
+- Added 2 new tools (417 → 419 unique):
+  - **Harbor** (goharbor/harbor, 22k★) — CNCF container image registry with RBAC + replication; devops-infrastructure
+  - **PgBouncer** (pgbouncer/pgbouncer, 4k★) — lightweight PostgreSQL connection pooler; database
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-fourth pass
 
 ## Completed This Session (2026-04-15, ninety-third pass — autonomous improvement cycle)
 
