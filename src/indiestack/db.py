@@ -4756,6 +4756,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sphinx": "documentation",      # Sphinx — Python documentation generator (RST/Markdown, autodoc, 6k★)
     # Frontend — TanStack Router hyphenated form (complement to "tanstack"→frontend already mapped)
     "tanstack-router": "frontend",  # TanStack Router — type-safe file-based router (9k★); hyphenated query form
+    # Backend frameworks — additional language ecosystem routes not yet covered
+    "sinatra": "api",              # Sinatra — Ruby micro-framework (12k★); "sinatra alternative" → API Tools
+    "hanami": "api",               # Hanami — Ruby full-stack framework (3k★); "hanami alternative" → API Tools
+    "symfony": "api",              # Symfony — PHP full-stack framework (28k★); "symfony alternative" → API Tools
+    "dotnet": "api",               # .NET queries → api-tools (ASP.NET Core Minimal API, .NET web framework)
+    "vapor": "api",                # Vapor — Swift server-side web framework (24k★); "vapor alternative" → API Tools
+    "nest": "api",                 # NestJS short form — "nest server", "nest module", "nest guard" → API Tools
+    # Frontend — Redux ecosystem tools not yet individually mapped
+    "reselect": "frontend",        # Reselect — memoized selectors for Redux (19k★); "reselect alternative" → Frontend
+    # AI — singular "embed" verb form (complement to "embedding"→ai, "embeddings"→ai)
+    "embed": "ai",                 # "embed text", "embed document", "embed vector", "embed api" → AI & Automation
+    # Auth — ACL (Access Control List) queries
+    "acl": "authentication",       # ACL — "acl library", "acl rbac", "access control list" → Authentication
+    # Media — FFmpeg is the canonical multimedia processing framework
+    "ffmpeg": "media",             # FFmpeg — multimedia framework (45k★); "ffmpeg alternative" → Media Server
+    # SEO — structured data and JSON-LD markup tools
+    "jsonld": "seo",               # JSON-LD — structured data for rich results; "json-ld tool" → SEO Tools
+    "schemaorg": "seo",            # Schema.org — "schema.org markup", "schema.org generator" → SEO Tools
 }
 
 _FTS_STOP_WORDS = {

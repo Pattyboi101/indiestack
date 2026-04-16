@@ -7625,6 +7625,91 @@ TOOLS = [
         "npm install genkit @genkit-ai/googleai",
         "code",
     ),
+    # API Tools — Ruby / Swift / PHP frameworks ----------------------------------------
+    (
+        "sinatra",
+        "Sinatra",
+        "A DSL for quickly creating web applications in Ruby",
+        "Sinatra is a free and open-source Ruby web application library. "
+        "It emphasises a minimalist approach — define routes with a simple DSL, "
+        "no generated project files, no migrations. The inspiration for many "
+        "micro-frameworks: Flask (Python), Express (Node.js), Gin (Go). "
+        "12k+ GitHub stars; still widely used for small APIs and prototypes.",
+        "api-tools",
+        "sinatra/sinatra",
+        12000,
+        "https://sinatrarb.com",
+        "ruby,web-framework,dsl,minimalist,lightweight",
+        "gem install sinatra",
+        "code",
+    ),
+    (
+        "vapor",
+        "Vapor",
+        "A server-side Swift web framework",
+        "Vapor is an open-source server-side Swift web framework built on SwiftNIO. "
+        "Fully async, HTTP/2 native, and type-safe. Popular for iOS/macOS developers "
+        "who want to write backend code in Swift. Supports Fluent ORM, Leaf templates, "
+        "WebSockets, and queue workers.",
+        "api-tools",
+        "vapor/vapor",
+        24000,
+        "https://vapor.codes",
+        "swift,web-framework,async,swiftnio,server-side",
+        "swift package init --type executable",
+        "code",
+    ),
+    (
+        "symfony",
+        "Symfony",
+        "High performance PHP framework for web development",
+        "Symfony is a PHP web application framework and a reusable set of PHP "
+        "components. It follows MVC, PSR standards, and dependency injection. "
+        "Core components power Laravel, Drupal, Yii2, and thousands of other "
+        "projects. Comes with a powerful CLI (bin/console), Flex recipe system, "
+        "and a large ecosystem of bundles.",
+        "api-tools",
+        "symfony/symfony",
+        28000,
+        "https://symfony.com",
+        "php,web-framework,mvc,components,enterprise,api",
+        "composer create-project symfony/skeleton my-project",
+        "code",
+    ),
+    # Frontend — Redux selectors -------------------------------------------------------
+    (
+        "reselect",
+        "Reselect",
+        "Selector library for Redux",
+        "Reselect provides memoized, composable selectors for Redux. Selectors "
+        "re-compute only when their input state changes, preventing unnecessary "
+        "React re-renders. Reselect v5 brings TypeScript-first APIs and is the "
+        "standard selector library in the Redux Toolkit ecosystem.",
+        "frontend-frameworks",
+        "reduxjs/reselect",
+        19000,
+        "https://reselect.js.org",
+        "redux,state-management,memoization,react,typescript,selectors",
+        "npm install reselect",
+        "code",
+    ),
+    # Media — HLS browser player -------------------------------------------------------
+    (
+        "hlsjs",
+        "hls.js",
+        "JavaScript HLS client using Media Source Extensions",
+        "hls.js plays HLS (HTTP Live Streaming) directly in any browser that "
+        "supports HTML5 video and Media Source Extensions API. No Flash required. "
+        "Supports ABR (adaptive bitrate), low-latency HLS, ID3 cue points, "
+        "subtitle tracks, and CMAF. The standard library for web HLS playback.",
+        "media-server",
+        "video-dev/hls.js",
+        15000,
+        "https://hlsjs.video-dev.org",
+        "hls,video,streaming,javascript,media,player,browser",
+        "npm install hls.js",
+        "code",
+    ),
 ]
 
 
