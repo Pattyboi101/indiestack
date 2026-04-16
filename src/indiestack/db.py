@@ -1971,7 +1971,7 @@ async def init_db():
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 package TEXT NOT NULL,
                 ecosystem TEXT NOT NULL DEFAULT 'npm',
-                exists BOOLEAN,
+                pkg_exists BOOLEAN,
                 is_typosquat BOOLEAN DEFAULT 0,
                 risk_level TEXT DEFAULT 'unknown',
                 source TEXT DEFAULT '',

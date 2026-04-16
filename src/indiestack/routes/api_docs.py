@@ -106,7 +106,7 @@ async def validate_package(request: Request, name: str = "", ecosystem: str = "n
         ua = request.headers.get("user-agent", "")
         source = "mcp" if "indiestack-mcp" in ua else "web" if "Mozilla" in ua else "api"
         await d.execute(
-            "INSERT INTO validation_logs (package, ecosystem, exists, is_typosquat, risk_level, source) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO validation_logs (package, ecosystem, pkg_exists, is_typosquat, risk_level, source) VALUES (?, ?, ?, ?, ?, ?)",
             (name, ecosystem, pkg_exists, 1 if typosquat_match else 0, risk_level, source),
         )
         await d.commit()
