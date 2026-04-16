@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-16 (ninety-seventh pass)
+Last updated: 2026-04-16 (ninety-eighth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-16 (ninety-seventh pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1681 unique active keys (ninety-seventh pass: +12 new — genkit, semantickernel, semantic-kernel, ragflow, replicache, powersync, instantdb, springboot, spring-boot, monolith, astrojs, expressjs; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 434 unique tools (added 5 new: genkit, semantic-kernel, ragflow, instantdb, deepseek)
+- **_CAT_SYNONYMS**: 1693 unique active keys (ninety-eighth pass: +12 new — nuxt3, rsbuild, zag, sst, ssh, openauth, promptfoo, oslo, llamaparse, shortener, oclif, chromadb; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 439 unique tools (added 5 new: sst, openauth, rsbuild, oclif, llamaparse)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-16 (ninety-seventh pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-16, ninety-eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1681 → 1693 unique keys, 0 duplicates):
+  - **Frontend**: `nuxt3` → frontend — Nuxt 3 version-specific queries ("nuxt3 starter", "nuxt3 alternative")
+  - **Frontend**: `rsbuild` → frontend — Rsbuild, ByteDance's Rspack-based build tool (9k★)
+  - **Frontend**: `zag` → frontend — Zag.js state machines for accessible UI components (4k★)
+  - **DevOps**: `sst` → devops — SST Ion AWS-native IaC framework (21k★)
+  - **DevOps**: `ssh` → devops — SSH tools, tunneling, key management queries
+  - **Auth**: `openauth` → authentication — OpenAuth.js from SST team (6k★)
+  - **Testing**: `promptfoo` → testing — LLM testing/red-teaming CLI (5k★)
+  - **Developer**: `oslo` → developer — oslo.js JavaScript auth utility library (Lucia base)
+  - **AI**: `llamaparse` → ai — LlamaParse document parsing for RAG pipelines
+  - **Developer**: `shortener` → developer — URL/link shortener queries (Dub.co, YOURLS, Kutt)
+  - **CLI**: `oclif` → cli — oclif open CLI framework by Salesforce (8k★)
+  - **Database**: `chromadb` → database — ChromaDB explicit compound form for vector DB queries
+
+### Catalog Script (Step 2)
+- Added 5 new tools (434 → 439 unique):
+  - **SST** (sst/sst, 21k★) — AWS-native IaC full-stack framework; devops-infrastructure
+  - **OpenAuth** (openauthjs/openauth, 6k★) — universal standards-based auth provider; authentication
+  - **Rsbuild** (web-infra-dev/rsbuild, 9k★) — Rspack-powered build tool; frontend-frameworks
+  - **oclif** (oclif/oclif, 8k★) — open CLI framework by Salesforce; cli-tools
+  - **LlamaParse** (run-llama/llama_parse, 3k★) — document parser for LLM/RAG pipelines; ai-automation
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-eighth pass
+
+---
 
 ## Completed This Session (2026-04-16, ninety-seventh pass — autonomous improvement cycle)
 

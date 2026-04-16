@@ -7273,6 +7273,91 @@ TOOLS = [
         "pip install openai",
         "code",
     ),
+    # DevOps — Infrastructure as Code -------------------------------------------------
+    (
+        "sst",
+        "SST",
+        "Build full-stack apps on AWS with your favourite frontend",
+        "SST (Serverless Stack) is an open-source framework that makes it easy to "
+        "build modern full-stack applications on AWS. Version 3 (Ion) uses Pulumi/Terraform "
+        "under the hood and supports Node.js, Python, Go, and more. Live Lambda development "
+        "lets you debug functions locally with a real AWS connection.",
+        "devops-infrastructure",
+        "sst/sst",
+        21000,
+        "https://sst.dev",
+        "serverless,aws,iac,fullstack,lambda,infrastructure",
+        "npm install sst",
+        "code",
+    ),
+    # Auth — open-source auth frameworks -----------------------------------------------
+    (
+        "openauth",
+        "OpenAuth",
+        "Universal, standards-based auth provider",
+        "OpenAuth is an open-source, standards-based authentication provider built on "
+        "OAuth 2.0 and OpenID Connect. Created by the SST team, it runs anywhere — "
+        "serverless, edge, or containers. Supports multiple subjects, custom UIs, and "
+        "passwordless flows with zero vendor lock-in.",
+        "authentication",
+        "openauthjs/openauth",
+        6000,
+        "https://openauth.js.org",
+        "oauth2,oidc,serverless,open-source,passwordless",
+        "npm install @openauthjs/openauth",
+        "code",
+    ),
+    # Frontend Frameworks — build tools ------------------------------------------------
+    (
+        "rsbuild",
+        "Rsbuild",
+        "The Rspack-powered build tool",
+        "Rsbuild is a high-performance build tool powered by Rspack. Created by the "
+        "ByteDance Web Infra team, it provides a Webpack-compatible API with dramatically "
+        "faster build and dev server speeds. Drop-in for projects migrating from "
+        "Create React App, Webpack, or Vite.",
+        "frontend-frameworks",
+        "web-infra-dev/rsbuild",
+        9000,
+        "https://rsbuild.dev",
+        "bundler,build-tool,rspack,webpack-compatible,fast",
+        "npm create rsbuild@latest",
+        "code",
+    ),
+    # CLI Tools — frameworks -----------------------------------------------------------
+    (
+        "oclif",
+        "oclif",
+        "The open CLI framework",
+        "oclif is the open CLI framework built by Salesforce. It provides a structured "
+        "way to build type-safe, maintainable Node.js CLI tools with automatic help "
+        "generation, plugins, hooks, and testing utilities. Used by Heroku, Salesforce, "
+        "and Shopify CLIs.",
+        "cli-tools",
+        "oclif/oclif",
+        8000,
+        "https://oclif.io",
+        "cli,node,typescript,commands,plugins",
+        "npx oclif generate my-cli",
+        "code",
+    ),
+    # AI — document parsing ------------------------------------------------------------
+    (
+        "llamaparse",
+        "LlamaParse",
+        "Proprietary parsing for complex documents in your LLM pipeline",
+        "LlamaParse is a document parser designed for complex PDFs, PowerPoints, Word "
+        "documents, and spreadsheets. It extracts structured text and tables from messy "
+        "real-world documents, dramatically improving RAG pipeline accuracy. Built by the "
+        "LlamaIndex team.",
+        "ai-automation",
+        "run-llama/llama_parse",
+        3000,
+        "https://llamaparse.ai",
+        "document-parsing,rag,pdf,llm,structured-data",
+        "pip install llama-parse",
+        "saas",
+    ),
 ]
 
 

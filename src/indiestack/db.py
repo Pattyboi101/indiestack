@@ -4761,6 +4761,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "astrojs": "frontend",           # AstroJS — compound form; "astrojs alternative", "astrojs tutorial" → Frontend
     # API — Express.js compound form (complement to "express"→"api" already mapped)
     "expressjs": "api",              # ExpressJS — compound form; "expressjs alternative", "expressjs tutorial" → API
+    # Frontend — Nuxt 3 version-specific queries (complement to "nuxt"→frontend, "nuxtjs"→frontend)
+    "nuxt3": "frontend",            # Nuxt 3 — "nuxt3 starter", "nuxt3 alternative", "nuxt3 setup" queries → Frontend Frameworks
+    # Frontend — Rsbuild build tool (ByteDance, Rspack-based, 9k★)
+    "rsbuild": "frontend",          # Rsbuild — Rspack-based build tool; "rsbuild alternative", "rsbuild vite" → Frontend Frameworks
+    # Frontend — Zag.js state machines for UI component logic (4k★)
+    "zag": "frontend",              # Zag.js — state machines for accessible UI components (used by Chakra/Ark UI) → Frontend Frameworks
+    # DevOps — SST (Serverless Stack) AWS IaC framework (21k★)
+    "sst": "devops",                # SST Ion — AWS-native IaC framework; "sst alternative", "sst deploy" → DevOps & Infrastructure
+    # DevOps — SSH tooling queries (SSH tunnels, SSH keys, SSH servers)
+    "ssh": "devops",                # SSH tools — key management, tunneling, bastion hosts → DevOps & Infrastructure
+    # Auth — OpenAuth.js (open-source auth framework by SST team)
+    "openauth": "authentication",   # OpenAuth.js — open-source standards-based auth framework (SST team) → Authentication
+    # Testing — promptfoo LLM testing and red-teaming (5k★)
+    "promptfoo": "testing",         # promptfoo — LLM testing, red-teaming, and evaluation CLI (5k★) → Testing Tools
+    # Developer Tools — oslo.js auth utility library (Lucia Auth base, very commonly installed)
+    "oslo": "developer",            # oslo.js — JavaScript auth utility library (base of Lucia Auth) → Developer Tools
+    # AI — LlamaParse document parsing for RAG pipelines (LlamaIndex team)
+    "llamaparse": "ai",             # LlamaParse — high-accuracy document parser for LLM/RAG pipelines → AI & Automation
+    # Developer Tools — URL/link shortener tools (Dub.co, YOURLS, Kutt)
+    "shortener": "developer",       # "url shortener", "link shortener" → Developer Tools (Dub.co, YOURLS, Kutt)
+    # CLI — oclif open-source CLI framework by Salesforce (8k★)
+    "oclif": "cli",                 # oclif — open CLI framework by Salesforce; "oclif alternative" → CLI Tools
+    # Database — ChromaDB explicit compound form (complement to "chroma"→database already mapped)
+    "chromadb": "database",         # ChromaDB — explicit compound form for "chromadb alternative" queries → Database
 }
 
 _FTS_STOP_WORDS = {
