@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-16 (ninety-ninth pass)
+Last updated: 2026-04-16 (one-hundredth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-16 (ninety-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1706 unique active keys (ninety-ninth pass: +13 new — vinxi, tanstack-start, tanstackstart, qwik-city, qwikcity, tsup, microbundle, slonik, objection, runes, cursorai, buninstall, fastifyjs; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 444 unique tools (added 5 new: vinxi, tsup, microbundle, slonik, objection)
+- **_CAT_SYNONYMS**: 1719 unique active keys (one-hundredth pass: +13 new — tgi, mlx, unsloth, axolotl, tempo, mimir, alloy, pyroscope, parca, flamegraph, commitlint, release-please, devpod; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 449 unique tools (added 5 new: tgi, unsloth, pyroscope, grafana-alloy, commitlint)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,40 @@ Last updated: 2026-04-16 (ninety-ninth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-16, one-hundredth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 13 new `_CAT_SYNONYMS` entries (1706 → 1719 unique keys, 0 duplicates):
+  - **AI**: `tgi` → ai — HuggingFace Text Generation Inference (9k★)
+  - **AI**: `mlx` → ai — Apple MLX framework for Apple Silicon (20k★)
+  - **AI**: `unsloth` → ai — 2× faster LLM fine-tuning library (24k★)
+  - **AI**: `axolotl` → ai — LLM fine-tuning toolkit (LoRA, QLoRA, 9k★)
+  - **Monitoring**: `tempo` → monitoring — Grafana Tempo distributed tracing (4k★)
+  - **Monitoring**: `mimir` → monitoring — Grafana Mimir Prometheus-compatible TSDB (4k★)
+  - **Monitoring**: `alloy` → monitoring — Grafana Alloy OTel collector (6k★)
+  - **Monitoring**: `pyroscope` → monitoring — continuous profiling platform (10k★)
+  - **Monitoring**: `parca` → monitoring — open-source continuous profiling (4k★)
+  - **Monitoring**: `flamegraph` → monitoring — flame graph visualization for profiling
+  - **DevOps**: `commitlint` → devops — commit message linting (17k★)
+  - **DevOps**: `release-please` → devops — PR-based release automation (7k★)
+  - **DevOps**: `devpod` → devops — open-source dev environments / Gitpod alt (8k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (444 → 449 unique):
+  - **TGI** (huggingface/text-generation-inference, 9.5k★) — LLM serving; ai-automation
+  - **Unsloth** (unslothai/unsloth, 24k★) — fast LLM fine-tuning; ai-automation
+  - **Pyroscope** (grafana/pyroscope, 10k★) — continuous profiling; monitoring-uptime
+  - **Grafana Alloy** (grafana/alloy, 6k★) — OTel collector; devops-infrastructure
+  - **commitlint** (conventional-changelog/commitlint, 17k★) — commit linting; devops-infrastructure
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundredth pass
+
+---
 
 ## Completed This Session (2026-04-16, ninety-ninth pass — autonomous improvement cycle)
 

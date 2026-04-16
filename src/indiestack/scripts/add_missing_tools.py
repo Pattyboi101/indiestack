@@ -7441,6 +7441,91 @@ TOOLS = [
         "npm install objection knex",
         "code",
     ),
+    # AI — Text Generation Inference (HuggingFace LLM serving) -------------------------
+    (
+        "tgi",
+        "Text Generation Inference",
+        "Production-grade LLM serving by HuggingFace",
+        "Text Generation Inference (TGI) is HuggingFace's production-ready LLM serving "
+        "toolkit. It supports continuous batching, flash attention, tensor parallelism, "
+        "and quantization (GPTQ, AWQ, bitsandbytes). Runs Llama, Mistral, Falcon, and "
+        "most open-weight models with OpenAI-compatible API endpoints.",
+        "ai-automation",
+        "huggingface/text-generation-inference",
+        9500,
+        "https://huggingface.co/docs/text-generation-inference",
+        "llm,inference,serving,huggingface,self-hosted,open-source",
+        "docker pull ghcr.io/huggingface/text-generation-inference",
+        "code",
+    ),
+    # AI — Unsloth LLM fine-tuning -------------------------------------------------------
+    (
+        "unsloth",
+        "Unsloth",
+        "2× faster LLM fine-tuning with 70% less VRAM",
+        "Unsloth makes LLM fine-tuning (LoRA, QLoRA) 2× faster and uses 70% less GPU memory "
+        "with no accuracy degradation. Supports Llama 3, Mistral, Gemma, Phi, and Qwen via "
+        "Hugging Face Transformers + PEFT. Works in Google Colab and local setups. "
+        "The go-to fine-tuning library for indie ML developers.",
+        "ai-automation",
+        "unslothai/unsloth",
+        24000,
+        "https://unsloth.ai",
+        "fine-tuning,lora,qlora,llm,training,huggingface,memory-efficient",
+        "pip install unsloth",
+        "code",
+    ),
+    # Monitoring — Pyroscope continuous profiling ----------------------------------------
+    (
+        "pyroscope",
+        "Pyroscope",
+        "Open-source continuous profiling for applications",
+        "Pyroscope is an open-source continuous profiling platform that helps you find "
+        "performance bottlenecks in any language. It collects CPU and memory profiles "
+        "continuously in production with minimal overhead, stores them efficiently, and "
+        "provides a flame graph UI for analysis. Grafana Pyroscope is the Grafana-maintained fork.",
+        "monitoring-uptime",
+        "grafana/pyroscope",
+        10000,
+        "https://pyroscope.io",
+        "profiling,flamegraph,continuous-profiling,performance,observability,grafana",
+        "docker run -p 4040:4040 grafana/pyroscope",
+        "code",
+    ),
+    # DevOps — Grafana Alloy OTel collector ----------------------------------------------
+    (
+        "grafana-alloy",
+        "Grafana Alloy",
+        "OpenTelemetry collector and Grafana Agent successor",
+        "Grafana Alloy is the open-source successor to Grafana Agent — an "
+        "OpenTelemetry-compatible collector for metrics, logs, traces, and profiles. "
+        "It supports native Prometheus scraping, Loki log shipping, Tempo trace forwarding, "
+        "and Pyroscope profiling with a unified River/Alloy configuration syntax.",
+        "devops-infrastructure",
+        "grafana/alloy",
+        6000,
+        "https://grafana.com/oss/alloy-opentelemetry-collector",
+        "opentelemetry,otel,collector,grafana,metrics,logs,traces,observability",
+        "docker run -v /etc/alloy:/etc/alloy grafana/alloy",
+        "code",
+    ),
+    # DevOps — commitlint commit message linter ------------------------------------------
+    (
+        "commitlint",
+        "commitlint",
+        "Lint commit messages against Conventional Commits",
+        "commitlint checks your commit messages against configured rules — most commonly "
+        "the Conventional Commits spec (feat, fix, chore, etc.). Integrates with Husky "
+        "as a commit-msg git hook. Used by major OSS projects to enforce consistent "
+        "changelogs, semantic versioning, and automated release notes.",
+        "devops-infrastructure",
+        "conventional-changelog/commitlint",
+        17000,
+        "https://commitlint.js.org",
+        "git-hooks,conventional-commits,linting,ci,changelog,semantic-versioning",
+        "npm install --save-dev @commitlint/config-conventional @commitlint/cli",
+        "code",
+    ),
 ]
 
 

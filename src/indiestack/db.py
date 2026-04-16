@@ -4809,6 +4809,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "buninstall": "developer",      # "bun install", "bun package manager" → Developer Tools
     # API — Fastify compound form (complement to "fastify"→api already mapped)
     "fastifyjs": "api",             # FastifyJS — compound; "fastifyjs alternative", "fastifyjs tutorial" → API Tools
+    # AI — LLM inference servers (fast-growing segment; agents search "tgi", "mlx" before deploying)
+    "tgi": "ai",                    # TGI (Text Generation Inference) — HuggingFace LLM serving engine (9k★)
+    "mlx": "ai",                    # Apple MLX — ML framework for Apple Silicon (numpy+autograd+neural, 20k★)
+    # AI — LLM fine-tuning frameworks (2026 growth segment; "unsloth alternative" queries increasing)
+    "unsloth": "ai",                # Unsloth — 2× faster LLM fine-tuning with 70% less VRAM (24k★)
+    "axolotl": "ai",                # Axolotl — LLM fine-tuning toolkit (LoRA, QLoRA, Flash Attention, 9k★)
+    # Monitoring — Grafana observability stack completeness (Loki already mapped; adding Tempo + Mimir + Alloy)
+    "tempo": "monitoring",          # Grafana Tempo — open-source distributed tracing backend (4k★)
+    "mimir": "monitoring",          # Grafana Mimir — Prometheus-compatible horizontally scalable TSDB (4k★)
+    "alloy": "monitoring",          # Grafana Alloy — OpenTelemetry collector (successor to Grafana Agent, 6k★)
+    # Monitoring — continuous profiling (fast-growing infra observability segment)
+    "pyroscope": "monitoring",      # Pyroscope — continuous profiling platform (Grafana/pyroscope, 10k★)
+    "parca": "monitoring",          # Parca — open-source continuous profiling by Polar Signals (4k★)
+    "flamegraph": "monitoring",     # "flame graph", "flamegraph viewer" — profiling visualization → Monitoring
+    # DevOps — git commit and release automation (very common in CI/CD setup queries)
+    "commitlint": "devops",         # commitlint — lint commit messages against Conventional Commits (17k★)
+    "release-please": "devops",     # release-please — Google's PR-based release automation tool (7k★)
+    "devpod": "devops",             # DevPod — open-source dev environments, Gitpod alternative (loft-sh, 8k★)
 }
 
 _FTS_STOP_WORDS = {
