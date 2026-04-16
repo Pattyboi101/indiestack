@@ -7526,6 +7526,94 @@ TOOLS = [
         "npm install --save-dev @commitlint/config-conventional @commitlint/cli",
         "code",
     ),
+    # AI — ComfyUI node-based Stable Diffusion UI ------------------------------------------
+    (
+        "comfyui",
+        "ComfyUI",
+        "The most powerful and modular diffusion model GUI and backend",
+        "ComfyUI is a node-based visual programming environment for Stable Diffusion "
+        "and other diffusion models. It lets you build complex image and video generation "
+        "pipelines by connecting nodes representing models, samplers, VAEs, LoRAs, and "
+        "post-processors. Extremely popular in the open-source AI art community with an "
+        "extensive ecosystem of custom nodes.",
+        "ai-automation",
+        "comfyanonymous/ComfyUI",
+        66000,
+        "https://github.com/comfyanonymous/ComfyUI",
+        "stable-diffusion,image-generation,ai,visual-programming,nodes,sdxl,flux",
+        "pip install comfyui",
+        "code",
+    ),
+    # AI — Docling document parser for RAG pipelines ----------------------------------------
+    (
+        "docling",
+        "Docling",
+        "Parse and export any document for generative AI",
+        "Docling is IBM's open-source document conversion library that parses PDFs, "
+        "Word documents, PowerPoints, images, and HTML into structured Markdown or JSON "
+        "for RAG pipelines and LLM ingestion. It uses state-of-the-art ML models for "
+        "layout analysis, table structure recognition, and reading-order detection.",
+        "ai-automation",
+        "DS4SD/docling",
+        10000,
+        "https://github.com/DS4SD/docling",
+        "rag,document-parsing,pdf,llm,structured-output,ibm,python",
+        "pip install docling",
+        "code",
+    ),
+    # AI — Kotaemon RAG chatbot framework ---------------------------------------------------
+    (
+        "kotaemon",
+        "Kotaemon",
+        "Open-source RAG-based tool for chatting with your documents",
+        "Kotaemon is an open-source, clean, and customizable RAG-based document chat "
+        "application. It supports multiple LLM providers (OpenAI, Claude, Ollama, local "
+        "models), multiple vector stores, and hybrid search. Built by Cinnamon AI, it "
+        "provides a ready-to-use Gradio UI with multi-user support and document management.",
+        "ai-automation",
+        "Cinnamon/kotaemon",
+        22000,
+        "https://github.com/Cinnamon/kotaemon",
+        "rag,chatbot,document-qa,llm,gradio,vector-store,hybrid-search,python",
+        "pip install kotaemon",
+        "code",
+    ),
+    # AI — LlamaStack Meta's unified inference + agent stack --------------------------------
+    (
+        "llama-stack",
+        "LlamaStack",
+        "Meta's standardised interface for LLM inference and agent APIs",
+        "LlamaStack defines standardised API interfaces for building LLM applications "
+        "— covering inference, safety, agents, memory, and tool execution. It provides "
+        "a unified client SDK (Python, JS) and server with pluggable providers for "
+        "local inference (llama.cpp, vLLM), cloud APIs (Fireworks, Together), and "
+        "safety (Llama Guard). The reference for building Meta Llama-compatible stacks.",
+        "ai-automation",
+        "meta-llama/llama-stack",
+        8000,
+        "https://github.com/meta-llama/llama-stack",
+        "llm,inference,agents,meta,llama,safety,tool-use,python",
+        "pip install llama-stack",
+        "code",
+    ),
+    # AI — Jina AI neural search and multimodal embedding ----------------------------------
+    (
+        "jina",
+        "Jina AI",
+        "Build multimodal AI services and neural search pipelines",
+        "Jina is an open-source framework for building cloud-native multimodal AI "
+        "services. It provides neural search, embeddings, and reranking APIs with a "
+        "unified interface across images, text, audio, and video. Jina's hosted "
+        "Reader API converts any URL to LLM-friendly Markdown, used widely in RAG "
+        "pipelines. The jina-embeddings models rank highly on the MTEB leaderboard.",
+        "ai-automation",
+        "jina-ai/jina",
+        22000,
+        "https://jina.ai",
+        "neural-search,embeddings,multimodal,rag,reranking,python,api",
+        "pip install jina",
+        "code",
+    ),
 ]
 
 

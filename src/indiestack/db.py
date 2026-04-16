@@ -4827,6 +4827,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "commitlint": "devops",         # commitlint — lint commit messages against Conventional Commits (17k★)
     "release-please": "devops",     # release-please — Google's PR-based release automation tool (7k★)
     "devpod": "devops",             # DevPod — open-source dev environments, Gitpod alternative (loft-sh, 8k★)
+    # Frontend — ISR and prerendering (Next.js/Astro incremental static regeneration, common query segment)
+    "isr": "frontend",              # ISR (Incremental Static Regeneration) — "isr nextjs", "isr alternative" → Frontend Frameworks
+    "prerender": "frontend",        # "prerender service", "prerender.io alternative" → Frontend Frameworks
+    "prerendering": "frontend",     # "prerendering tool", "dynamic prerendering" → Frontend Frameworks
+    # Frontend — compound "state management" without space (complement to "state"→frontend already mapped)
+    "statemanagement": "frontend",  # compound — "statemanagement library", "statemanagement react" → Frontend Frameworks
+    # AI — Meta LlamaStack inference + agent server (8k★, fast-growing in 2026)
+    "llamastack": "ai",             # LlamaStack — Meta's unified LLM inference + agent stack → AI & Automation
+    "llama-stack": "ai",            # hyphenated form — "llama-stack alternative", "llama-stack server" → AI & Automation
+    # AI — document parsing for RAG pipelines (fast-growing 2026 query segment)
+    "docling": "ai",                # Docling — IBM's document extraction and conversion for RAG (10k★) → AI & Automation
+    "kotaemon": "ai",               # Kotaemon — RAG chatbot UI framework by Cinnamon (22k★) → AI & Automation
+    # AI — Jina AI neural search and multimodal embedding (22k★)
+    "jina": "ai",                   # Jina AI — neural search and multimodal embedding framework (22k★) → AI & Automation
+    "jinaai": "ai",                 # compound form — "jinaai alternative", "jina ai reader" → AI & Automation
+    # MCP — client-side tooling (complement to "mcp"→mcp for server queries)
+    "mcp-client": "mcp",            # "mcp client library", "mcp client sdk" → MCP Servers category
+    "mcpclient": "mcp",             # compound — "mcpclient setup", "mcp client implementation" → MCP Servers
 }
 
 _FTS_STOP_WORDS = {
