@@ -1533,6 +1533,10 @@ def theme_js() -> str:
     """
 
 
+# ── Analytics ─────────────────────────────────────────────────────────────
+
+_CLARITY_SCRIPT = '<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","wcjqc0vmmu");</script>'
+
 # ── Page Shell ────────────────────────────────────────────────────────────
 
 def page_shell(title: str, body: str, *, description: str = "", extra_head: str = "", user=None, og_image: str = f"{BASE_URL}/logo.png", canonical: str = "") -> str:
@@ -1564,6 +1568,7 @@ def page_shell(title: str, body: str, *, description: str = "", extra_head: str 
     <meta name="twitter:image" content="{escape(og_image)}">
     {design_tokens()}
     <link rel="alternate" type="application/rss+xml" title="IndieStack — New Creations" href="{BASE_URL}/feed/rss">
+    {_CLARITY_SCRIPT}
     {extra_head}
 </head>
 <body>
