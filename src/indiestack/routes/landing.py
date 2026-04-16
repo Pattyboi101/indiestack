@@ -199,7 +199,7 @@ async def landing(request: Request):
                 <span style="background:#DC2626;color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:0.05em;">DANGER</span>
                 <span style="color:#FF6B6B;font-weight:600;">Package does NOT exist on npm</span>
             </div>
-            <div style="color:rgba(255,255,255,0.6);font-size:13px;">This is a hallucinated package name. 237 repos were infected before it was caught.</div>
+            <div style="color:rgba(255,255,255,0.6);font-size:13px;">Known AI hallucination &mdash; appeared in 237+ repos via AI-generated code.</div>
         </div>
 
         <!-- Live validator input — JS only fires on user action -->
