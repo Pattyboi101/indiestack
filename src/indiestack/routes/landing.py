@@ -178,7 +178,7 @@ async def landing(request: Request):
         </div>
         <h1 style="font-family:var(--font-display);font-size:clamp(36px,6vw,64px);
                    line-height:1.15;max-width:700px;margin:0 auto;color:var(--ink);letter-spacing:-0.03em;">
-            Stop installing packages your AI made up.
+            Validate every package before your AI installs it.
         </h1>
         <p style="font-size:20px;color:var(--ink-muted);max-width:560px;margin:16px auto 32px;line-height:1.6;">
             19.7% of AI-recommended packages don&rsquo;t exist. IndieStack catches them before your agent installs malware.
@@ -187,7 +187,7 @@ async def landing(request: Request):
         <!-- Static threat card — pure HTML, zero JS, instant paint -->
         <div id="hero-result" style="max-width:560px;margin:0 auto 16px;text-align:left;background:rgba(10,14,26,0.92);
                     border-radius:12px;padding:20px 24px;font-family:var(--font-mono);font-size:14px;line-height:1.7;
-                    box-shadow:var(--shadow-floating);position:relative;z-index:1;">
+                    box-shadow:var(--shadow-floating);position:relative;z-index:1;min-height:160px;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                 <span style="width:12px;height:12px;border-radius:50%;background:#FF5F56;display:inline-block;"></span>
                 <span style="width:12px;height:12px;border-radius:50%;background:var(--gold);display:inline-block;"></span>
