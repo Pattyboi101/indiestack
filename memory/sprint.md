@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-16 (ninety-fifth pass)
+Last updated: 2026-04-16 (ninety-sixth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-16 (ninety-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1657 unique active keys (ninety-fifth pass: +10 new — pydanticai, openai-agents, restate, triggerdev, qstash, chatwoot, calcom, twenty, nocodb, baserow; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 424 unique tools (added 5 new: twenty, nocodb, baserow, chatwoot, restate)
+- **_CAT_SYNONYMS**: 1669 unique active keys (ninety-sixth pass: +12 new — antd, ant, nextui, primereact, primevue, nativebase, tamagui, gluestack, letta, memgpt, casl, typebox; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 429 unique tools (added 5 new: nextui, primereact, nativebase, letta, casl)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-16 (ninety-fifth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-16, ninety-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1657 → 1669 unique keys, 0 duplicates):
+  - **Frontend**: `antd` → frontend — Ant Design npm package name (93k★ React UI)
+  - **Frontend**: `ant` → frontend — bare query term ("ant design alternative", "ant ui")
+  - **Frontend**: `nextui` → frontend — NextUI React UI library (22k★, shadcn competitor)
+  - **Frontend**: `primereact` → frontend — PrimeReact enterprise React UI (10k★)
+  - **Frontend**: `primevue` → frontend — PrimeVue Vue UI library (10k★)
+  - **Frontend**: `nativebase` → frontend — NativeBase React Native components (20k★)
+  - **Frontend**: `tamagui` → frontend — Tamagui universal UI kit (11k★)
+  - **Frontend**: `gluestack` → frontend — Gluestack UI universal components
+  - **AI**: `letta` → ai — Letta stateful LLM agent framework (formerly MemGPT, 33k★)
+  - **AI**: `memgpt` → ai — MemGPT original name; still searched ("memgpt alternative")
+  - **Auth**: `casl` → authentication — CASL.js RBAC/ABAC authorization library (5k★)
+  - **Developer**: `typebox` → developer — TypeBox JSON Schema Type Builder (7k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools (424 → 429 unique):
+  - **NextUI** (nextui-org/nextui, 22k★) — beautifully designed React UI library; frontend-frameworks
+  - **PrimeReact** (primefaces/primereact, 10k★) — 90+ React UI components, enterprise-grade; frontend-frameworks
+  - **NativeBase** (GeekyAnts/NativeBase, 20k★) — React Native component library, Gluestack predecessor; frontend-frameworks
+  - **Letta** (cpacker/MemGPT, 33k★) — stateful LLM agents with long-term memory; ai-dev-tools
+  - **CASL** (stalniy/casl, 5.5k★) — isomorphic RBAC/ABAC authorization library; authentication
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-sixth pass
+
+---
 
 ## Completed This Session (2026-04-16, ninety-fifth pass — autonomous improvement cycle)
 

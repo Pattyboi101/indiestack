@@ -4722,6 +4722,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "nocodb": "developer",          # NocoDB — turn any DB into a smart spreadsheet/Airtable → Developer Tools
     # Developer Tools — Baserow open-source no-code database platform (bram2w/baserow, 4k★)
     "baserow": "developer",         # Baserow — open-source Airtable/database platform → Developer Tools
+    # Frontend — Ant Design UI ecosystem (most-searched enterprise React UI; "antd" is the npm package name)
+    "antd": "frontend",              # Ant Design — enterprise React UI library (93k★); "antd install", "antd alternative"
+    "ant": "frontend",               # bare term — "ant design alternative", "ant ui component" → Frontend Frameworks
+    # Frontend — NextUI (shadcn/ui competitor; "nextui alternative" growing query segment, 22k★)
+    "nextui": "frontend",            # NextUI — beautifully designed React UI library (22k★)
+    # Frontend — PrimeTek component libraries for React and Vue (frequently searched in enterprise stacks)
+    "primereact": "frontend",        # PrimeReact — 90+ React UI components, enterprise-grade (10k★)
+    "primevue": "frontend",          # PrimeVue — comprehensive Vue.js UI component library (10k★)
+    # Frontend — React Native mobile UI libraries (very common in RN starter/alternative queries)
+    "nativebase": "frontend",        # NativeBase — React Native component library (20k★, Gluestack predecessor)
+    "tamagui": "frontend",           # Tamagui — universal UI kit for React Native + web (11k★)
+    "gluestack": "frontend",         # Gluestack UI — universal components (Gluestack/NativeBase successor)
+    # AI — LLM memory and stateful agent frameworks (high query volume as devs add long-term memory to AI apps)
+    "letta": "ai",                   # Letta — LLM memory OS + stateful agents (formerly MemGPT, 33k★)
+    "memgpt": "ai",                  # MemGPT — original name for Letta; "memgpt alternative" queries still active
+    # Auth — CASL authorization library (most popular JS RBAC/ABAC library, 5k★)
+    "casl": "authentication",        # CASL.js — attribute-based authorization for JS/TS → Authentication
+    # Developer Tools — TypeBox JSON Schema type builder for TypeScript (7k★)
+    "typebox": "developer",          # TypeBox — JSON Schema Type Builder with static TypeScript types (7k★)
 }
 
 _FTS_STOP_WORDS = {

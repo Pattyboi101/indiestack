@@ -7100,6 +7100,84 @@ TOOLS = [
         "npm install @restatedev/restate-sdk",
         "code",
     ),
+    # Frontend — additional UI component libraries ----------------------------------------
+    (
+        "nextui",
+        "NextUI",
+        "Beautiful, fast and modern React UI library",
+        "NextUI is a beautiful, fast, and modern React UI library built on Radix UI "
+        "and Tailwind Variants. Ships with 40+ components, dark mode out of the box, "
+        "TypeScript support, and a focus on developer experience and performance.",
+        "frontend-frameworks",
+        "nextui-org/nextui",
+        22000,
+        "https://nextui.org",
+        "react,ui,components,tailwind,dark-mode,typescript",
+        "npm install @nextui-org/react",
+        "code",
+    ),
+    (
+        "primereact",
+        "PrimeReact",
+        "The Most Complete UI Suite for React",
+        "PrimeReact is a comprehensive React UI component library with 90+ components. "
+        "Available in unstyled (headless) and styled variants, with multiple built-in "
+        "themes. Battle-tested in enterprise applications worldwide.",
+        "frontend-frameworks",
+        "primefaces/primereact",
+        10000,
+        "https://primereact.org",
+        "react,ui,components,enterprise,headless,themes",
+        "npm install primereact",
+        "code",
+    ),
+    (
+        "nativebase",
+        "NativeBase",
+        "Universal UI components for React Native and Web",
+        "NativeBase is a comprehensive React Native component library that works on "
+        "iOS, Android, and Web. Built on React Native primitives, it provides 45+ "
+        "accessible components. Predecessor to Gluestack UI.",
+        "frontend-frameworks",
+        "GeekyAnts/NativeBase",
+        20000,
+        "https://nativebase.io",
+        "react-native,mobile,ui,cross-platform,ios,android",
+        "npm install native-base",
+        "code",
+    ),
+    # AI — LLM memory and agent frameworks -------------------------------------------
+    (
+        "letta",
+        "Letta",
+        "Build stateful LLM agents with long-term memory",
+        "Letta (formerly MemGPT) is an open-source framework for building stateful "
+        "LLM applications. Agents have persistent memory, can manage their own context, "
+        "and maintain state across conversations. Self-host or use Letta Cloud.",
+        "ai-dev-tools",
+        "cpacker/MemGPT",
+        33000,
+        "https://letta.ai",
+        "llm,memory,agent,stateful,rag,python",
+        "pip install letta",
+        "code",
+    ),
+    # Auth — authorization libraries -------------------------------------------------
+    (
+        "casl",
+        "CASL",
+        "Isomorphic authorization JavaScript library",
+        "CASL is an isomorphic authorization JavaScript library that restricts what "
+        "resources a given user is allowed to access. Implement RBAC, ABAC, and "
+        "attribute-based permissions. Framework-agnostic: works with React, Vue, Angular, Node.",
+        "authentication",
+        "stalniy/casl",
+        5500,
+        "https://casl.js.org",
+        "authorization,rbac,abac,permissions,javascript,react",
+        "npm install @casl/ability",
+        "code",
+    ),
     # API Tools — HTTP clients -------------------------------------------------------
     (
         "axios",
