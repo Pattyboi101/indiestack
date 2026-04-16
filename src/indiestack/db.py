@@ -4740,6 +4740,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "hookform": "frontend",         # React Hook Form shorthand — "hookform validation", "hookform zod" queries
     # Maps — PostGIS spatial extension for PostgreSQL
     "postgis": "maps",              # PostGIS — open-source spatial database extension for PostgreSQL (1.5k★)
+    # Python Postgres drivers — psycopg2 / asyncpg / psycopg are the dominant queries in Python+Postgres stacks
+    "psycopg": "database",          # psycopg / psycopg3 — Python PostgreSQL adapter (most-used Python DB driver)
+    "psycopg2": "database",         # psycopg2 — classic Python PostgreSQL adapter (very high query volume)
+    "asyncpg": "database",          # asyncpg — fast async Python Postgres driver (FastAPI + asyncio ecosystem)
+    "pymongo": "database",          # PyMongo — official Python MongoDB driver (queries: "pymongo alternative")
+    # Node.js Redis clients — ioredis + node-redis are the two dominant npm Redis packages
+    "ioredis": "caching",           # ioredis — full-featured Node.js Redis client (13k★); "ioredis alternative"
+    "node-redis": "caching",        # node-redis — official Redis client for Node.js; "node-redis alternative"
+    # Auth — Better Auth hyphenated form (compound "betterauth" already mapped)
+    "better-auth": "authentication",  # Better Auth hyphenated — "better-auth setup", "better-auth nextjs" queries
+    # Payments — Plaid fintech banking connectivity (very common "plaid alternative" query)
+    "plaid": "payments",            # Plaid — fintech API for bank account connectivity; "plaid alternative" queries
+    # Documentation — Sphinx Python documentation generator
+    "sphinx": "documentation",      # Sphinx — Python documentation generator (RST/Markdown, autodoc, 6k★)
+    # Frontend — TanStack Router hyphenated form (complement to "tanstack"→frontend already mapped)
+    "tanstack-router": "frontend",  # TanStack Router — type-safe file-based router (9k★); hyphenated query form
 }
 
 _FTS_STOP_WORDS = {
