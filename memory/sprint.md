@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-16 (ninety-eighth pass)
+Last updated: 2026-04-16 (ninety-ninth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-16 (ninety-eighth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1693 unique active keys (ninety-eighth pass: +12 new — nuxt3, rsbuild, zag, sst, ssh, openauth, promptfoo, oslo, llamaparse, shortener, oclif, chromadb; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 439 unique tools (added 5 new: sst, openauth, rsbuild, oclif, llamaparse)
+- **_CAT_SYNONYMS**: 1706 unique active keys (ninety-ninth pass: +13 new — vinxi, tanstack-start, tanstackstart, qwik-city, qwikcity, tsup, microbundle, slonik, objection, runes, cursorai, buninstall, fastifyjs; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 444 unique tools (added 5 new: vinxi, tsup, microbundle, slonik, objection)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,40 @@ Last updated: 2026-04-16 (ninety-eighth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-16, ninety-ninth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 13 new `_CAT_SYNONYMS` entries (1693 → 1706 unique keys, 0 duplicates):
+  - **Frontend**: `vinxi` → frontend — Vinxi app bundler (powers TanStack Start + SolidStart)
+  - **Frontend**: `tanstack-start` → frontend — hyphenated form for "tanstack-start vs nextjs" queries
+  - **Frontend**: `tanstackstart` → frontend — compound form for "tanstackstart alternative" queries
+  - **Frontend**: `qwik-city` → frontend — Qwik City meta-framework hyphenated form
+  - **Frontend**: `qwikcity` → frontend — Qwik City compound form
+  - **Frontend**: `runes` → frontend — Svelte 5 runes reactivity queries (high post-Svelte-5-launch volume)
+  - **Developer**: `tsup` → developer — TypeScript library bundler (esbuild-backed, 9k★)
+  - **Developer**: `microbundle` → developer — zero-config npm package bundler (Preact team, 8k★)
+  - **Developer**: `buninstall` → developer — "bun install" package manager queries
+  - **Database**: `slonik` → database — type-safe Postgres SQL client for Node.js (4k★)
+  - **Database**: `objection` → database — Objection.js ORM on Knex.js (7k★)
+  - **AI**: `cursorai` → ai — "cursor ai" compound form queries
+  - **API**: `fastifyjs` → api — FastifyJS compound form for "fastifyjs alternative" queries
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (439 → 444 unique):
+  - **Vinxi** (nksaraf/vinxi, 4k★) — full-stack app bundler powering TanStack Start; frontend-frameworks
+  - **tsup** (egoist/tsup, 9k★) — zero-config TypeScript library bundler; developer-tools
+  - **microbundle** (developit/microbundle, 8k★) — zero-config npm package bundler; developer-tools
+  - **Slonik** (gajus/slonik, 4k★) — type-safe Postgres client for Node.js; database
+  - **Objection.js** (vincit/objection.js, 7k★) — SQL-friendly ORM built on Knex; database
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-ninth pass
+
+---
 
 ## Completed This Session (2026-04-16, ninety-eighth pass — autonomous improvement cycle)
 

@@ -7358,6 +7358,89 @@ TOOLS = [
         "pip install llama-parse",
         "saas",
     ),
+    # Frontend Frameworks — Vinxi app bundler ------------------------------------------
+    (
+        "vinxi",
+        "Vinxi",
+        "The Full Stack JavaScript SDK",
+        "Vinxi is a file-based app bundler and server runtime for building JavaScript "
+        "frameworks and full-stack apps. It powers TanStack Start and SolidStart, providing "
+        "a unified abstraction over Vite and Nitro for SSR, file-based routing, and server "
+        "functions. Think of it as the engine that Next.js-style frameworks are built on.",
+        "frontend-frameworks",
+        "nksaraf/vinxi",
+        4000,
+        "https://vinxi.vercel.app",
+        "bundler,ssr,tanstack-start,solidstart,vite,nitro",
+        "npm install vinxi",
+        "code",
+    ),
+    # Developer Tools — tsup TypeScript bundler ----------------------------------------
+    (
+        "tsup",
+        "tsup",
+        "Bundle your TypeScript library with no config",
+        "tsup is a zero-config TypeScript library bundler powered by esbuild. It generates "
+        "CJS and ESM outputs, declaration files, and sourcemaps with a single command. "
+        "The standard choice for bundling npm packages in the TypeScript ecosystem.",
+        "developer-tools",
+        "egoist/tsup",
+        9000,
+        "https://tsup.egoist.dev",
+        "bundler,typescript,npm-package,esm,cjs,esbuild",
+        "npm install tsup --save-dev",
+        "code",
+    ),
+    # Developer Tools — microbundle zero-config bundler --------------------------------
+    (
+        "microbundle",
+        "microbundle",
+        "Zero-configuration bundler for tiny modules",
+        "microbundle is a zero-config bundler for small JavaScript/TypeScript packages. "
+        "Built by the Preact team, it outputs modern ES modules, CJS, and UMD bundles "
+        "with tree-shaking support. Great for utility libraries and React component packages.",
+        "developer-tools",
+        "developit/microbundle",
+        8000,
+        "https://github.com/developit/microbundle",
+        "bundler,typescript,npm-package,esm,preact,zero-config",
+        "npm install microbundle --save-dev",
+        "code",
+    ),
+    # Database — Slonik type-safe Postgres client --------------------------------------
+    (
+        "slonik",
+        "Slonik",
+        "Type-safe Postgres client for Node.js",
+        "Slonik is an opinionated Node.js PostgreSQL client that enforces best practices: "
+        "all queries must be tagged template literals, preventing accidental SQL injection. "
+        "It provides runtime type checking via Zod, connection pooling, and structured "
+        "error handling — no ORMs, just safe SQL.",
+        "database",
+        "gajus/slonik",
+        4000,
+        "https://github.com/gajus/slonik",
+        "postgres,sql,node,typescript,type-safe,query-builder",
+        "npm install slonik",
+        "code",
+    ),
+    # Database — Objection.js ORM on Knex ----------------------------------------------
+    (
+        "objection",
+        "Objection.js",
+        "An SQL-friendly ORM for Node.js",
+        "Objection.js is an ORM built on Knex.js that gives you the full power of SQL "
+        "and relationships without hiding it. It supports eager loading, JSON columns, "
+        "graph upserts, and TypeScript. Unlike most ORMs, Objection lets you drop down "
+        "to raw SQL whenever you need full control.",
+        "database",
+        "vincit/objection.js",
+        7000,
+        "https://vincit.github.io/objection.js",
+        "orm,sql,node,typescript,knex,relations",
+        "npm install objection knex",
+        "code",
+    ),
 ]
 
 

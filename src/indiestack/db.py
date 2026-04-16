@@ -4785,6 +4785,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "oclif": "cli",                 # oclif — open CLI framework by Salesforce; "oclif alternative" → CLI Tools
     # Database — ChromaDB explicit compound form (complement to "chroma"→database already mapped)
     "chromadb": "database",         # ChromaDB — explicit compound form for "chromadb alternative" queries → Database
+    # Frontend — Vinxi app bundler (powers TanStack Start and SolidStart; "vinxi alternative" queries)
+    "vinxi": "frontend",            # Vinxi — file-based app bundler by Nikhil Saraf (powers TanStack Start, SolidStart)
+    # Frontend — TanStack Start meta-framework (React SSR + file routing; competitor to Next.js)
+    "tanstack-start": "frontend",   # TanStack Start — hyphenated form; "tanstack-start vs nextjs" queries
+    "tanstackstart": "frontend",    # TanStack Start — compound form; "tanstackstart alternative" queries
+    # Frontend — Qwik City meta-framework (Qwik's file-based router + SSR layer)
+    "qwik-city": "frontend",        # Qwik City — hyphenated form; "qwik-city alternative", "qwik-city vs nextjs"
+    "qwikcity": "frontend",         # Qwik City — compound form; "qwikcity tutorial", "qwikcity routing" queries
+    # Developer — tsup TypeScript library bundler (esbuild-powered, most common npm package build tool, 9k★)
+    "tsup": "developer",            # tsup — bundle TypeScript libraries with no config (esbuild-backed, 9k★)
+    # Developer — microbundle zero-config bundler for npm packages (8k★)
+    "microbundle": "developer",     # microbundle — zero-config bundler for tiny modules (Preact team, 8k★)
+    # Database — Slonik type-safe Postgres client for Node.js (4k★)
+    "slonik": "database",           # Slonik — opinionated type-safe Postgres SQL client for Node.js (4k★)
+    # Database — Objection.js ORM on top of Knex.js (7k★)
+    "objection": "database",        # Objection.js — SQL-friendly ORM built on Knex (7k★) → Database
+    # Frontend — Svelte 5 runes (new reactivity primitive — very high query volume post-Svelte 5 launch)
+    "runes": "frontend",            # "svelte runes", "runes reactivity", "svelte 5 runes" → Frontend Frameworks
+    # AI — Cursor AI IDE compound forms (complement to "cursor"→ai already mapped)
+    "cursorai": "ai",               # compound — "cursorai alternative", "cursor ai setup" → AI & Automation
+    # Developer — Bun package manager (bun install, bun run — distinct from Bun the runtime in stack.md)
+    "buninstall": "developer",      # "bun install", "bun package manager" → Developer Tools
+    # API — Fastify compound form (complement to "fastify"→api already mapped)
+    "fastifyjs": "api",             # FastifyJS — compound; "fastifyjs alternative", "fastifyjs tutorial" → API Tools
 }
 
 _FTS_STOP_WORDS = {
