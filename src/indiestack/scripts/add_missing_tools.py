@@ -7195,6 +7195,84 @@ TOOLS = [
         "npm install axios",
         "code",
     ),
+    # AI / LLM Frameworks — high-volume agent queries ---------------------------------
+    (
+        "genkit",
+        "Genkit",
+        "Open source framework for building AI-powered apps",
+        "Genkit is Google Firebase's open-source AI framework for TypeScript and Go. "
+        "Build LLM flows, RAG pipelines, and AI agents with built-in support for "
+        "Gemini, OpenAI, Anthropic, and Ollama. Tracing and evaluation included.",
+        "ai-dev-tools",
+        "firebase/genkit",
+        5000,
+        "https://firebase.google.com/docs/genkit",
+        "ai,llm,google,typescript,go,rag,agent",
+        "npm install genkit @genkit-ai/googleai",
+        "code",
+    ),
+    (
+        "semantic-kernel",
+        "Semantic Kernel",
+        "Microsoft's open-source SDK for AI orchestration",
+        "Semantic Kernel is Microsoft's open-source AI SDK for C#, Python, and Java. "
+        "Orchestrate LLMs with plugins, planners, and memory. Powers Copilot experiences "
+        "at Microsoft. First-class support for OpenAI, Azure OpenAI, and Hugging Face.",
+        "ai-dev-tools",
+        "microsoft/semantic-kernel",
+        22000,
+        "https://learn.microsoft.com/en-us/semantic-kernel/overview",
+        "ai,llm,microsoft,dotnet,python,agent,orchestration",
+        "pip install semantic-kernel",
+        "code",
+    ),
+    (
+        "ragflow",
+        "RAGFlow",
+        "Open-source RAG engine based on deep document understanding",
+        "RAGFlow is an open-source Retrieval-Augmented Generation engine that grounds "
+        "answers in citations from complex documents — PDFs, Word, slides, spreadsheets. "
+        "Visual pipeline builder, REST API, and Docker deployment. 28k+ GitHub stars.",
+        "ai-automation",
+        "infiniflow/ragflow",
+        28000,
+        "https://ragflow.io",
+        "rag,llm,document,knowledge-base,pipeline,open-source",
+        "docker compose up -d",
+        "code",
+    ),
+    # Database — local-first / offline sync -------------------------------------------
+    (
+        "instantdb",
+        "InstantDB",
+        "The realtime Firebase you control",
+        "InstantDB is a realtime Firebase alternative that works in React. "
+        "Write queries in a simple Graph-like syntax, get live updates automatically. "
+        "Self-hostable, open-source, and built for collaborative apps.",
+        "database",
+        "instantdb/instant",
+        5000,
+        "https://www.instantdb.com",
+        "realtime,database,firebase,react,sync,local-first",
+        "npm install @instantdb/react",
+        "code",
+    ),
+    # AI — reasoning model providers --------------------------------------------------
+    (
+        "deepseek",
+        "DeepSeek",
+        "High-performance reasoning LLMs at a fraction of the cost",
+        "DeepSeek provides powerful open-weight LLMs including DeepSeek-V3 and "
+        "DeepSeek-R1, the top reasoning model that rivals GPT-o1. API is "
+        "OpenAI-compatible. Models available via DeepSeek API, Hugging Face, and Ollama.",
+        "ai-dev-tools",
+        "deepseek-ai/DeepSeek-V3",
+        40000,
+        "https://api.deepseek.com",
+        "llm,reasoning,open-source,openai-compatible,inference",
+        "pip install openai",
+        "code",
+    ),
 ]
 
 

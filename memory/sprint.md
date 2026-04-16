@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-16 (ninety-sixth pass)
+Last updated: 2026-04-16 (ninety-seventh pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-16 (ninety-sixth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1669 unique active keys (ninety-sixth pass: +12 new — antd, ant, nextui, primereact, primevue, nativebase, tamagui, gluestack, letta, memgpt, casl, typebox; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 429 unique tools (added 5 new: nextui, primereact, nativebase, letta, casl)
+- **_CAT_SYNONYMS**: 1681 unique active keys (ninety-seventh pass: +12 new — genkit, semantickernel, semantic-kernel, ragflow, replicache, powersync, instantdb, springboot, spring-boot, monolith, astrojs, expressjs; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 434 unique tools (added 5 new: genkit, semantic-kernel, ragflow, instantdb, deepseek)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-16 (ninety-sixth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-16, ninety-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1669 → 1681 unique keys, 0 duplicates):
+  - **AI**: `genkit` → ai — Google Firebase Genkit AI framework (5k★)
+  - **AI**: `semantickernel` → ai — Microsoft Semantic Kernel compound form (22k★)
+  - **AI**: `semantic-kernel` → ai — hyphenated form for "semantic-kernel alternative" queries
+  - **AI**: `ragflow` → ai — RAGFlow open-source RAG engine (28k★, InfiniFlow)
+  - **Database**: `replicache` → database — local-first sync engine (Rocicorp)
+  - **Database**: `powersync` → database — offline-first real-time sync (JourneyApps)
+  - **Database**: `instantdb` → database — realtime Firebase alternative (instantdb/instant)
+  - **API**: `springboot` → api — Spring Boot compound form (complement to "spring"→api)
+  - **API**: `spring-boot` → api — hyphenated form for "spring-boot vs quarkus" queries
+  - **API**: `monolith` → api — "monolith architecture", "modular monolith" queries
+  - **Frontend**: `astrojs` → frontend — Astro compound form (complement to "astro"→frontend)
+  - **API**: `expressjs` → api — Express.js compound form (complement to "express"→api)
+
+### Catalog Script (Step 2)
+- Added 5 new tools (429 → 434 unique):
+  - **Genkit** (firebase/genkit, 5k★) — Google's open-source AI app framework; ai-dev-tools
+  - **Semantic Kernel** (microsoft/semantic-kernel, 22k★) — Microsoft's AI orchestration SDK; ai-dev-tools
+  - **RAGFlow** (infiniflow/ragflow, 28k★) — open-source RAG engine for complex documents; ai-automation
+  - **InstantDB** (instantdb/instant, 5k★) — realtime Firebase alternative; database
+  - **DeepSeek** (deepseek-ai/DeepSeek-V3, 40k★) — high-performance reasoning LLM API; ai-dev-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to ninety-seventh pass
+
+---
 
 ## Completed This Session (2026-04-16, ninety-sixth pass — autonomous improvement cycle)
 

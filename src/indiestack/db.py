@@ -4741,6 +4741,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     "casl": "authentication",        # CASL.js — attribute-based authorization for JS/TS → Authentication
     # Developer Tools — TypeBox JSON Schema type builder for TypeScript (7k★)
     "typebox": "developer",          # TypeBox — JSON Schema Type Builder with static TypeScript types (7k★)
+    # AI — Google Firebase Genkit (TypeScript/Go AI app framework, growing fast in 2025-2026)
+    "genkit": "ai",                  # Genkit — Firebase AI framework for building AI-powered apps (5k★) → AI & Automation
+    # AI — Microsoft Semantic Kernel (AI orchestration SDK for C#/Python/Java)
+    "semantickernel": "ai",          # Semantic Kernel — Microsoft AI SDK; compound form (22k★) → AI & Automation
+    "semantic-kernel": "ai",         # hyphenated — "semantic-kernel alternative", "semantic-kernel python" → AI
+    # AI — RAGFlow open-source RAG platform (very high query volume, 28k★ in 2026)
+    "ragflow": "ai",                 # RAGFlow — open-source RAG engine by InfiniFlow (28k★) → AI & Automation
+    # Database — local-first / offline sync tools (growing segment alongside CRDT/ElectricSQL)
+    "replicache": "database",        # Replicache — local-first sync engine by Rocicorp → Database
+    "powersync": "database",         # PowerSync — offline-first real-time sync by JourneyApps → Database
+    "instantdb": "database",         # InstantDB — realtime Firebase alternative (instantdb/instant) → Database
+    # API — Spring Boot compound/hyphenated forms (complement to "spring"→"api" already mapped)
+    "springboot": "api",             # Spring Boot — compound form; "springboot alternative" queries → API Tools
+    "spring-boot": "api",            # hyphenated — "spring-boot vs quarkus", "spring-boot tutorial" → API Tools
+    # API — "monolith" query routing (monolith vs microservices → API tools with backend frameworks)
+    "monolith": "api",               # "monolith architecture", "modular monolith" → API Tools (Rails, Django)
+    # Frontend — Astro compound form (complement to "astro"→"frontend" already mapped)
+    "astrojs": "frontend",           # AstroJS — compound form; "astrojs alternative", "astrojs tutorial" → Frontend
+    # API — Express.js compound form (complement to "express"→"api" already mapped)
+    "expressjs": "api",              # ExpressJS — compound form; "expressjs alternative", "expressjs tutorial" → API
 }
 
 _FTS_STOP_WORDS = {
