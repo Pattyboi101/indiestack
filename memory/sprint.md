@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-fifth pass)
+Last updated: 2026-04-17 (one-hundred-and-sixth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-17 (one-hundred-and-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1779 unique active keys (one-hundred-and-fifth pass: +12 new — opa, cerbos, motherduck, tinybird, anime, webgpu, fontsource, kestra, gradio, streamlit, gemma, qwen; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 474 unique tools (added 5 new: gradio, streamlit, kestra, cerbos, animejs)
+- **_CAT_SYNONYMS**: 1791 unique active keys (one-hundred-and-sixth pass: +12 new — vibe, vibecoding, vibe-coding, mcpserver, mcp-server, browser-use, browseruse, stagehand, waku, risingwave, swarm, roocode; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 479 unique tools (added 5 new: browser-use, stagehand, waku, risingwave, openai-swarm)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-17 (one-hundred-and-fifth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-17, one-hundred-and-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1779 → 1791 unique keys, 0 duplicates):
+  - **AI**: `vibe` → ai — "vibe coding" (Karpathy's 2026 term for AI-assisted coding)
+  - **AI**: `vibecoding` → ai — compound form of "vibe coding"
+  - **AI**: `vibe-coding` → ai — hyphenated form
+  - **MCP**: `mcpserver` → mcp — compound "mcp server" (no space, common in queries)
+  - **MCP**: `mcp-server` → mcp — hyphenated form
+  - **AI**: `browser-use` → ai — Python AI browser automation library (25k★)
+  - **AI**: `browseruse` → ai — compound form
+  - **AI**: `stagehand` → ai — Browserbase AI browser SDK (8k★)
+  - **Frontend**: `waku` → frontend — minimal React RSC framework (5k★)
+  - **Database**: `risingwave` → database — distributed SQL streaming database (7k★)
+  - **AI**: `swarm` → ai — OpenAI Swarm multi-agent framework
+  - **AI**: `roocode` → ai — Roo Code AI coding assistant (38k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (474 → 479 unique):
+  - **Browser Use** (browser-use/browser-use, 25k★) — AI browser automation; ai-automation
+  - **Stagehand** (browserbase/stagehand, 8k★) — AI browser automation SDK; ai-automation
+  - **Waku** (dai-shi/waku, 5k★) — minimal React RSC framework; frontend-frameworks
+  - **RisingWave** (risingwavelabs/risingwave, 7k★) — SQL streaming database; database
+  - **OpenAI Swarm** (openai/swarm, 9k★) — multi-agent orchestration; ai-automation
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundred-and-sixth pass
+
+---
 
 ## Completed This Session (2026-04-17, one-hundred-and-fifth pass — autonomous improvement cycle)
 

@@ -4927,6 +4927,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gemma": "ai",                  # Google Gemma — open-weight LLMs for local deployment → AI & Automation
     # AI — Alibaba Qwen open-weight models
     "qwen": "ai",                   # Qwen (Alibaba) — open-weight LLM family; "qwen alternative" → AI & Automation
+    # Vibe coding — dominant 2026 term coined by Andrej Karpathy for AI-assisted coding
+    "vibe": "ai",                   # "vibe coding", "vibe-based development" → AI & Automation
+    "vibecoding": "ai",             # compound — "vibecoding tools", "vibecoding setup" → AI & Automation
+    "vibe-coding": "ai",            # hyphenated — "vibe-coding workflow", "vibe-coding alternative" → AI & Automation
+    # MCP — compound and hyphenated forms (complement to "mcp"→mcp and "protocol"→mcp)
+    "mcpserver": "mcp",             # compound — "mcpserver typescript", "mcpserver node" → MCP Servers
+    "mcp-server": "mcp",            # hyphenated — "mcp-server alternative", "mcp-server sdk" → MCP Servers
+    # AI browser automation — fast-growing 2026 segment (agents browsing the web)
+    "browser-use": "ai",            # Browser-use — Python AI-controlled browser automation (25k★) → AI & Automation
+    "browseruse": "ai",             # compound — "browseruse alternative", "browseruse python" → AI & Automation
+    "stagehand": "ai",              # Stagehand — Browserbase AI browser automation SDK (8k★) → AI & Automation
+    # Frontend — Waku minimal React RSC framework
+    "waku": "frontend",             # Waku — minimal React server components framework (5k★) → Frontend Frameworks
+    # Database — RisingWave distributed SQL streaming database
+    "risingwave": "database",       # RisingWave — distributed SQL streaming database (7k★) → Database
+    # AI — OpenAI Swarm lightweight multi-agent orchestration
+    "swarm": "ai",                  # OpenAI Swarm — lightweight multi-agent orchestration framework → AI & Automation
+    # AI — Roo Code open-source AI coding assistant (VS Code extension)
+    "roocode": "ai",                # Roo Code — open-source AI coding extension (VS Code, 38k★) → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

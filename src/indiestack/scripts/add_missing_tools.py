@@ -7953,6 +7953,82 @@ TOOLS = [
         "npm install animejs",
         "code",
     ),
+    # AI / Browser automation -------------------------------------------------------
+    (
+        "browser-use",
+        "Browser Use",
+        "Make websites accessible for AI agents",
+        "Browser Use is a Python library that makes it easy to connect AI agents to "
+        "web browsers. Agents can navigate sites, fill forms, click elements, and "
+        "extract data — all via a clean, LLM-friendly API. 25k+ stars in under a year.",
+        "ai-automation",
+        "browser-use/browser-use",
+        25000,
+        "https://browser-use.com",
+        "browser-automation,ai-agent,playwright,python,scraping",
+        "pip install browser-use",
+        "code",
+    ),
+    (
+        "stagehand",
+        "Stagehand",
+        "AI browser automation SDK for reliable web tasks",
+        "Stagehand is an AI-powered browser automation framework built on Playwright. "
+        "Designed for building reliable web agents — extract, act, and observe with "
+        "LLM-backed actions. Open-source by Browserbase.",
+        "ai-automation",
+        "browserbase/stagehand",
+        8000,
+        "https://stagehand.dev",
+        "browser-automation,ai-agent,playwright,typescript",
+        "npm install @browserbasehq/stagehand",
+        "code",
+    ),
+    (
+        "waku",
+        "Waku",
+        "The minimal React framework",
+        "Waku is a lightweight React framework focused on React Server Components. "
+        "Minimal API, fast dev server, supports static and serverless deployment. "
+        "Built by the Zustand/Jotai team at Daishi Kato.",
+        "frontend-frameworks",
+        "dai-shi/waku",
+        5000,
+        "https://waku.gg",
+        "react,server-components,rsc,minimal,typescript",
+        "npm create waku@latest",
+        "code",
+    ),
+    (
+        "risingwave",
+        "RisingWave",
+        "Stream processing meets SQL database",
+        "RisingWave is a cloud-native streaming database that uses SQL. It ingests "
+        "streaming data, performs continuous queries, and serves results with low "
+        "latency. Compatible with PostgreSQL wire protocol and Kafka.",
+        "database",
+        "risingwavelabs/risingwave",
+        7000,
+        "https://risingwave.com",
+        "streaming,sql,realtime,postgres-compatible,kafka",
+        "docker run -it --pull=always -p 4566:4566 risingwavelabs/risingwave:latest playground",
+        "code",
+    ),
+    (
+        "openai-swarm",
+        "OpenAI Swarm",
+        "Educational framework for multi-agent orchestration",
+        "Swarm is OpenAI's experimental lightweight framework for building and "
+        "orchestrating multi-agent systems. Explores ergonomic patterns for creating "
+        "agent handoffs, routines, and coordination. Primarily for educational use.",
+        "ai-automation",
+        "openai/swarm",
+        9000,
+        "https://github.com/openai/swarm",
+        "multi-agent,orchestration,openai,python,agent-handoff",
+        "pip install git+https://github.com/openai/swarm.git",
+        "code",
+    ),
 ]
 
 
