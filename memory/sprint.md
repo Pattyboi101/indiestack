@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-fourth pass)
+Last updated: 2026-04-17 (one-hundred-and-fifth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-17 (one-hundred-and-fourth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1767 unique active keys (one-hundred-and-fourth pass: +12 new — yargs, commander, chalk, inquirer, ts-node, tsnode, nodemon, ach, sepa, sqs, sns, shaka; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 469 unique tools (added 5 new: yargs, commander, ts-node, nodemon, chalk)
+- **_CAT_SYNONYMS**: 1779 unique active keys (one-hundred-and-fifth pass: +12 new — opa, cerbos, motherduck, tinybird, anime, webgpu, fontsource, kestra, gradio, streamlit, gemma, qwen; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 474 unique tools (added 5 new: gradio, streamlit, kestra, cerbos, animejs)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-17 (one-hundred-and-fourth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-17, one-hundred-and-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1767 → 1779 unique keys, 0 duplicates):
+  - **Security**: `opa` → security — Open Policy Agent; CNCF policy-as-code engine
+  - **Auth**: `cerbos` → authentication — Cerbos open-source authorization engine
+  - **Database**: `motherduck` → database — MotherDuck cloud DuckDB service
+  - **Analytics**: `tinybird` → analytics — Tinybird real-time analytics on ClickHouse
+  - **Frontend**: `anime` → frontend — Anime.js animation library (50k★)
+  - **Frontend**: `webgpu` → frontend — WebGPU browser graphics/compute API
+  - **Frontend**: `fontsource` → frontend — Fontsource npm-installable self-hosted fonts
+  - **Background**: `kestra` → background — Kestra workflow orchestration (14k★)
+  - **AI**: `gradio` → ai — Gradio ML demo framework (34k★)
+  - **AI**: `streamlit` → ai — Streamlit Python data app framework (36k★)
+  - **AI**: `gemma` → ai — Google Gemma open-weight LLMs
+  - **AI**: `qwen` → ai — Alibaba Qwen open-weight LLM family
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (469 → 474 unique):
+  - **Gradio** (gradio-app/gradio, 34k★) — ML demo framework; ai-automation
+  - **Streamlit** (streamlit/streamlit, 36k★) — Python data apps; ai-automation
+  - **Kestra** (kestra-io/kestra, 14k★) — workflow orchestration; background-jobs
+  - **Cerbos** (cerbos/cerbos, 4k★) — authorization engine; security-tools
+  - **Anime.js** (juliangarnier/anime, 50k★) — JS animation library; frontend-frameworks
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundred-and-fifth pass
+
+---
 
 ## Completed This Session (2026-04-17, one-hundred-and-fourth pass — autonomous improvement cycle)
 

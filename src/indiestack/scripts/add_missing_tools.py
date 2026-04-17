@@ -7872,6 +7872,87 @@ TOOLS = [
         "npm install chalk",
         "code",
     ),
+    (
+        "gradio",
+        "Gradio",
+        "Build machine learning web apps in minutes",
+        "Gradio lets you build interactive demos and web applications for your machine "
+        "learning models, APIs, and Python functions in minutes. Share demos publicly "
+        "with a Gradio link or embed in your own site. Powers hundreds of thousands "
+        "of ML demos on Hugging Face Spaces. No JavaScript or frontend skills needed.",
+        "ai-automation",
+        "gradio-app/gradio",
+        34000,
+        "https://gradio.app",
+        "ai,machine-learning,demo,python,ml-ui,huggingface",
+        "pip install gradio",
+        "code",
+    ),
+    (
+        "streamlit",
+        "Streamlit",
+        "Turn Python scripts into shareable web apps",
+        "Streamlit turns data scripts into shareable web applications in minutes. No "
+        "frontend experience needed — add a few Streamlit commands to your Python "
+        "script and you get an interactive web app. Used by data scientists, ML "
+        "engineers, and indie developers to build internal tools, dashboards, and "
+        "model demos.",
+        "ai-automation",
+        "streamlit/streamlit",
+        36000,
+        "https://streamlit.io",
+        "python,data,machine-learning,dashboard,ai,web-app",
+        "pip install streamlit",
+        "code",
+    ),
+    (
+        "kestra",
+        "Kestra",
+        "Declarative workflow orchestration for engineers and data teams",
+        "Kestra is an open-source workflow orchestration platform with a declarative "
+        "YAML interface, built-in UI, and 500+ plugins. Handles ETL pipelines, event-driven "
+        "automations, microservice orchestration, and scheduled tasks. Alternative to "
+        "Apache Airflow with lower operational complexity and built-in Git sync.",
+        "background-jobs",
+        "kestra-io/kestra",
+        14000,
+        "https://kestra.io",
+        "workflow,orchestration,etl,pipeline,automation,scheduler",
+        "docker run -it --pull=always --rm -p 8080:8080 kestra/kestra:latest server local",
+        "code",
+    ),
+    (
+        "cerbos",
+        "Cerbos",
+        "Open-source authorization engine for your app",
+        "Cerbos is a scalable, open-source authorization service that decouples access "
+        "control from your application code. Define policies in YAML, deploy as a "
+        "sidecar or service, and query via gRPC or REST. Supports RBAC, ABAC, and "
+        "relationship-based access control. Self-hosted or SaaS (Cerbos Hub).",
+        "security-tools",
+        "cerbos/cerbos",
+        4000,
+        "https://cerbos.dev",
+        "authorization,rbac,abac,permissions,security,policy",
+        "docker pull ghcr.io/cerbos/cerbos:latest",
+        "code",
+    ),
+    (
+        "animejs",
+        "Anime.js",
+        "Lightweight JavaScript animation library",
+        "Anime.js is a lightweight JavaScript animation library with a simple yet "
+        "powerful API. Works with CSS properties, SVG, DOM attributes, and JavaScript "
+        "objects. Supports keyframes, timelines, easing, spring physics, and more. "
+        "50k+ stars on GitHub and used across thousands of creative web projects.",
+        "frontend-frameworks",
+        "juliangarnier/anime",
+        50000,
+        "https://animejs.com",
+        "animation,javascript,css,svg,frontend,creative",
+        "npm install animejs",
+        "code",
+    ),
 ]
 
 

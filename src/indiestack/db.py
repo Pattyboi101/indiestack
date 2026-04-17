@@ -4903,6 +4903,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sns": "notifications",         # AWS SNS — Simple Notification Service; "sns alternative" → Notifications
     # Media — Shaka Player (Google's adaptive media player for HLS/DASH streams)
     "shaka": "media",               # Shaka Player — Google's open-source adaptive media player (6k★) → Media Server
+    # Security — Open Policy Agent (CNCF policy-as-code engine)
+    "opa": "security",              # OPA — Open Policy Agent; "opa policy", "opa alternative" → Security Tools
+    # Auth — Cerbos open-source authorization engine
+    "cerbos": "authentication",     # Cerbos — open-source authorization service; "cerbos alternative" → Authentication
+    # Database — MotherDuck cloud DuckDB service
+    "motherduck": "database",       # MotherDuck — cloud DuckDB; "motherduck alternative", "motherduck vs" → Database
+    # Analytics — Tinybird real-time analytics on ClickHouse
+    "tinybird": "analytics",        # Tinybird — real-time analytics platform; "tinybird alternative" → Analytics & Metrics
+    # Frontend — Anime.js animation library (50k★)
+    "anime": "frontend",            # Anime.js — lightweight JS animation library (50k★); "anime.js alternative" → Frontend Frameworks
+    # Frontend — WebGPU (successor to WebGL for GPU compute in browser)
+    "webgpu": "frontend",           # WebGPU — next-gen browser graphics/compute API; "webgpu library" → Frontend Frameworks
+    # Frontend — Fontsource npm-installable self-hosted fonts
+    "fontsource": "frontend",       # Fontsource — self-hosted web fonts via npm; "fontsource alternative" → Frontend Frameworks
+    # Background Jobs — Kestra workflow orchestration (14k★)
+    "kestra": "background",         # Kestra — declarative workflow orchestration platform (14k★) → Background Jobs
+    # AI — Gradio ML demo and UI framework (34k★)
+    "gradio": "ai",                 # Gradio — build ML demos and web UIs in Python (34k★) → AI & Automation
+    # AI — Streamlit Python data app framework (36k★)
+    "streamlit": "ai",              # Streamlit — turn Python scripts into shareable data apps (36k★) → AI & Automation
+    # AI — Google Gemma open-weight models
+    "gemma": "ai",                  # Google Gemma — open-weight LLMs for local deployment → AI & Automation
+    # AI — Alibaba Qwen open-weight models
+    "qwen": "ai",                   # Qwen (Alibaba) — open-weight LLM family; "qwen alternative" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
