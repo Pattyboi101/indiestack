@@ -5065,6 +5065,37 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — TypeScript type-safe Postgres query generation
     "pgtyped": "database",          # PgTyped — compile-time type-safe Postgres queries for TypeScript (3k★) → Database
     "pg-typed": "database",         # hyphenated — "pg-typed alternative", "pgtyped migration" → Database
+    # Analytics — data visualization libraries missing from synonyms
+    "visx": "analytics",            # Airbnb visx — low-level D3+React visualization primitives (18k★) → Analytics & Metrics
+    "victory": "analytics",         # Victory.js — composable React chart library by FormidableLabs (10k★) → Analytics & Metrics
+    "highcharts": "analytics",      # Highcharts — widely-searched commercial charting library → Analytics & Metrics
+    "bokeh": "analytics",           # Bokeh — interactive Python visualization library (19k★) → Analytics & Metrics
+    "dash": "analytics",            # Plotly Dash — Python analytical web app framework (21k★) → Analytics & Metrics
+    # Frontend — icon libraries not yet covered (high alternative-query volume)
+    "phosphor": "frontend",         # Phosphor Icons — flexible icon family; "phosphor alternative" (4k★) → Frontend Frameworks
+    "phosphoricons": "frontend",    # compound — "phosphoricons react", "phosphoricons setup" → Frontend Frameworks
+    "tabler": "frontend",           # Tabler Icons — 5000+ open-source SVG icons (18k★) → Frontend Frameworks
+    "tablericons": "frontend",      # compound — "tablericons react", "tablericons alternative" → Frontend Frameworks
+    "iconoir": "frontend",          # Iconoir — clean open-source icon set; "iconoir alternative" (4k★) → Frontend Frameworks
+    # Database — columnar file format (common in data pipeline / data lake queries)
+    "parquet": "database",          # Apache Parquet — columnar storage format; "parquet reader", "parquet alternative" → Database
+    # API — Haskell and OCaml web framework queries
+    "haskell": "api",               # Haskell web framework queries → API Tools (Servant, Yesod, IHP) → API Tools
+    "ocaml": "api",                 # OCaml web framework queries → API Tools (Dream, Opium) → API Tools
+    # Design — Figma (most-searched design tool; "figma alternative" is a top query)
+    "figma": "design",              # Figma — "figma alternative", "figma open source" → Design & Creative
+    # Monitoring — cron job monitoring (high "alternative" query volume)
+    "cronitor": "monitoring",       # Cronitor — cron monitoring and alerting service → Monitoring & Uptime
+    # AI — Vercel v0 AI UI builder and TabbyML self-hosted code assistant
+    "v0": "ai",                     # v0.dev — Vercel's AI UI generator from text prompts → AI & Automation
+    "tabbyml": "ai",                # TabbyML — self-hosted GitHub Copilot alternative (22k★) → AI & Automation
+    "tabby": "ai",                  # short form — "tabby alternative", "tabby ai setup" → AI & Automation
+    # AI — image generation models (complement to "dalle"→ai and "midjourney"→ai already mapped)
+    "flux": "ai",                   # FLUX.1 — Black Forest Labs image generation model (16k★) → AI & Automation
+    "sdxl": "ai",                   # Stable Diffusion XL — "sdxl alternative", "sdxl model" → AI & Automation
+    "stability": "ai",              # Stability AI — "stability ai api", "stability diffusion" → AI & Automation
+    # Developer Tools — Void open-source Cursor-alternative IDE
+    "void": "developer",            # Void IDE — open-source VS Code fork with AI coding features → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

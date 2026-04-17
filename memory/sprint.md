@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-tenth pass)
+Last updated: 2026-04-17 (one-hundred-and-twelfth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-17 (one-hundred-and-tenth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1849 unique active keys (one-hundred-and-tenth pass: +16 new — onnx, onnxruntime, autogpt, gguf, ggml, lora, qlora, transformerjs, transformer, kind, canary, bluegreen, blue-green, sre, eventbus, event-bus)
-- **Catalog script**: `scripts/add_missing_tools.py` — 499 unique tools (added 5 new: onnx-runtime, auto-gpt, transformers-js, kind, argo-rollouts)
+- **_CAT_SYNONYMS**: 1892 unique active keys (one-hundred-and-twelfth pass: +22 new — visx, victory, highcharts, bokeh, dash, phosphor, phosphoricons, tabler, tablericons, iconoir, parquet, haskell, ocaml, figma, cronitor, v0, tabbyml, tabby, flux, sdxl, stability, void)
+- **Catalog script**: `scripts/add_missing_tools.py` — 504 unique tools (added 5 new: bokeh, plotly-dash, tabler-icons, tabbyml, flux-1)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,49 @@ Last updated: 2026-04-17 (one-hundred-and-tenth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-17, one-hundred-and-twelfth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 22 new `_CAT_SYNONYMS` entries (1870 → 1892 unique keys, 0 duplicates):
+  - **Analytics**: `visx` → analytics — Airbnb visx React data visualization (18k★)
+  - **Analytics**: `victory` → analytics — Victory.js React chart library (10k★)
+  - **Analytics**: `highcharts` → analytics — widely-searched commercial chart library
+  - **Analytics**: `bokeh` → analytics — interactive Python visualization (19k★)
+  - **Analytics**: `dash` → analytics — Plotly Dash Python analytics web apps (21k★)
+  - **Frontend**: `phosphor` → frontend — Phosphor Icons flexible icon family (4k★)
+  - **Frontend**: `phosphoricons` → frontend — compound form for Phosphor Icons queries
+  - **Frontend**: `tabler` → frontend — Tabler Icons 5000+ open-source SVG icons (18k★)
+  - **Frontend**: `tablericons` → frontend — compound form for Tabler Icons queries
+  - **Frontend**: `iconoir` → frontend — Iconoir clean open-source icon set (4k★)
+  - **Database**: `parquet` → database — Apache Parquet columnar storage format
+  - **API**: `haskell` → api — Haskell web framework queries (Servant, Yesod, IHP)
+  - **API**: `ocaml` → api — OCaml web framework queries (Dream, Opium)
+  - **Design**: `figma` → design — "figma alternative" high-volume design query
+  - **Monitoring**: `cronitor` → monitoring — cron job monitoring and alerting
+  - **AI**: `v0` → ai — Vercel v0.dev AI UI generator
+  - **AI**: `tabbyml` → ai — TabbyML self-hosted Copilot alternative (22k★)
+  - **AI**: `tabby` → ai — short form for TabbyML queries
+  - **AI**: `flux` → ai — FLUX.1 Black Forest Labs image generation (16k★)
+  - **AI**: `sdxl` → ai — Stable Diffusion XL model queries
+  - **AI**: `stability` → ai — Stability AI API queries
+  - **Developer**: `void` → developer — Void IDE open-source Cursor alternative
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (499 → 504 unique):
+  - **Bokeh** (bokeh/bokeh, 19k★) — interactive Python visualization; analytics-metrics
+  - **Plotly Dash** (plotly/dash, 21k★) — Python analytical web app framework; analytics-metrics
+  - **Tabler Icons** (tabler/tabler-icons, 18k★) — 5000+ open-source SVG icons; frontend-frameworks
+  - **Tabby** (TabbyML/tabby, 22k★) — self-hosted AI coding assistant; ai-automation
+  - **FLUX.1** (black-forest-labs/flux, 16k★) — open-weight image generation; ai-automation
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundred-and-twelfth pass
+
+---
 
 ## Completed This Session (2026-04-17, one-hundred-and-tenth pass — autonomous improvement cycle)
 

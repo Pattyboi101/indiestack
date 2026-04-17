@@ -8458,6 +8458,89 @@ TOOLS = [
         "brew install colima",
         "code",
     ),
+    # Analytics — Python visualization libraries (112th pass) -----------------
+    (
+        "bokeh",
+        "Bokeh",
+        "Interactive data visualization library for Python",
+        "Bokeh is a Python library for creating interactive, web-ready visualizations. "
+        "Outputs standalone HTML, embeds in Jupyter notebooks, and powers Bokeh Server "
+        "for streaming and real-time data. Supports line, bar, scatter, map, and custom "
+        "plots with a clean API. A popular D3-level alternative in the Python data stack.",
+        "analytics-metrics",
+        "bokeh/bokeh",
+        19000,
+        "https://bokeh.org",
+        "python,visualization,charts,interactive,data,pandas,jupyter",
+        "pip install bokeh",
+        "code",
+    ),
+    (
+        "plotly-dash",
+        "Plotly Dash",
+        "Low-code framework for building analytical web apps in Python",
+        "Dash is a Python framework for building interactive analytical dashboards and "
+        "data apps without JavaScript. Built on Plotly.js, React, and Flask. Deploy on "
+        "the open web or behind your firewall. Used by 30,000+ companies including "
+        "Goldman Sachs, Volkswagen, and NASA for production-grade BI dashboards.",
+        "analytics-metrics",
+        "plotly/dash",
+        21000,
+        "https://dash.plotly.com",
+        "python,analytics,dashboard,visualization,plotly,data-app,react",
+        "pip install dash",
+        "code",
+    ),
+    # Frontend Frameworks — Tabler Icons (112th pass) --------------------------
+    (
+        "tabler-icons",
+        "Tabler Icons",
+        "Free and open-source SVG icons — 5000+ icons in one library",
+        "Tabler Icons is a set of over 5,000 free, MIT-licensed SVG icons for "
+        "web and app interfaces. Each icon is designed on a 24x24 grid with a "
+        "2px stroke. Available as React, Vue, Angular, and Svelte components, "
+        "plus plain SVG. Regular new icon batches and no design account required.",
+        "frontend-frameworks",
+        "tabler/tabler-icons",
+        18000,
+        "https://tabler.io/icons",
+        "icons,svg,react,vue,angular,svelte,frontend,ui,open-source",
+        "npm install @tabler/icons-react",
+        "code",
+    ),
+    # AI — Self-hosted code assistant and image generation (112th pass) --------
+    (
+        "tabbyml",
+        "Tabby",
+        "Self-hosted AI coding assistant — open-source GitHub Copilot alternative",
+        "TabbyML is an open-source, self-hosted AI coding assistant you run on your "
+        "own infrastructure. Supports code completion, inline suggestions, and RAG "
+        "over your own codebase. Compatible with VS Code, JetBrains, and Neovim. "
+        "No data leaves your servers — ideal for teams with compliance requirements.",
+        "ai-automation",
+        "TabbyML/tabby",
+        22000,
+        "https://tabby.tabbyml.com",
+        "ai,coding,copilot,self-hosted,llm,code-completion,open-source,privacy",
+        "docker pull tabbyml/tabby",
+        "code",
+    ),
+    (
+        "flux-1",
+        "FLUX.1",
+        "State-of-the-art open-weight image generation models by Black Forest Labs",
+        "FLUX.1 is a family of open-weight text-to-image generation models by Black "
+        "Forest Labs (founders of Stable Diffusion). FLUX.1-dev and FLUX.1-schnell "
+        "are released under permissive licenses. FLUX outperforms SDXL and Midjourney "
+        "v6 on benchmark image quality, especially for typography and complex prompts.",
+        "ai-automation",
+        "black-forest-labs/flux",
+        16000,
+        "https://blackforestlabs.ai",
+        "ai,image-generation,diffusion,text-to-image,open-source,ml,stable-diffusion",
+        "pip install diffusers && python -c \"from diffusers import FluxPipeline\"",
+        "code",
+    ),
 ]
 
 
