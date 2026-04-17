@@ -5009,6 +5009,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "wasm-pack": "frontend",        # hyphenated — "wasm-pack build", "wasm-pack alternative" → Frontend Frameworks
     # Auth — SAML 2.0 explicit version form (complement to "saml"→authentication already mapped)
     "saml2": "authentication",      # SAML 2.0 — "saml2 library", "saml2 python", "saml 2.0 sp" → Authentication
+    # AI — ONNX model format and runtime (canonical ML portability standard, 16k★)
+    "onnx": "ai",                   # ONNX — Open Neural Network Exchange; "onnx runtime", "onnx model" → AI & Automation
+    "onnxruntime": "ai",            # compound — "onnxruntime inference", "onnxruntime alternative" → AI & Automation
+    # AI — AutoGPT autonomous agent (still widely searched despite age, 170k★)
+    "autogpt": "ai",                # AutoGPT — autonomous GPT-4 agent framework → AI & Automation
+    # AI — GGUF/GGML quantized model formats (llama.cpp ecosystem, extremely common in local LLM queries)
+    "gguf": "ai",                   # GGUF — quantized model format for llama.cpp; "gguf model", "gguf convert" → AI
+    "ggml": "ai",                   # GGML — C tensor library underpinning llama.cpp, whisper.cpp → AI & Automation
+    # AI — LoRA / QLoRA fine-tuning techniques (dominant query segment for ML fine-tuning)
+    "lora": "ai",                   # LoRA — Low-Rank Adaptation fine-tuning; "lora adapter", "lora training" → AI
+    "qlora": "ai",                  # QLoRA — quantized LoRA; "qlora fine-tuning", "qlora training" → AI & Automation
+    # AI — Transformers.js in-browser / Node.js ML (HuggingFace, 10k★)
+    "transformerjs": "ai",          # Transformers.js — HuggingFace models in browser/Node; "transformerjs alternative" → AI
+    # AI — transformer architecture (complement to "transformers"→ai; "transformer model" queries)
+    "transformer": "ai",            # "transformer architecture", "transformer model", "transformer layer" → AI & Automation
+    # DevOps — kind (Kubernetes IN Docker) local cluster tool (13k★)
+    "kind": "devops",               # kind — run local Kubernetes clusters in Docker; "kind cluster", "kind vs minikube" → DevOps
+    # DevOps — canary and blue-green deployment strategy terms (common CI/CD pattern queries)
+    "canary": "devops",             # canary deployment — "canary release", "canary testing", "canary rollout" → DevOps
+    "bluegreen": "devops",          # compound — "bluegreen deployment", "blue green release strategy" → DevOps
+    "blue-green": "devops",         # hyphenated — "blue-green deployment", "blue-green switch" → DevOps
+    # Monitoring — SRE (Site Reliability Engineering) tooling queries (Prometheus/Grafana/PagerDuty workflows)
+    "sre": "monitoring",            # SRE — "sre tools", "sre platform", "site reliability engineering" → Monitoring & Uptime
+    # Message Queue — event bus libraries (mitt, EventEmitter; distinct from "event"→message already mapped)
+    "eventbus": "message",          # event bus — "eventbus library", "in-process eventbus", "eventbus pattern" → Message Queue
+    "event-bus": "message",         # hyphenated — "event-bus alternative", "event-bus typescript" → Message Queue
 }
 
 _FTS_STOP_WORDS = {

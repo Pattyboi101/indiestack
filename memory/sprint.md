@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-ninth pass)
+Last updated: 2026-04-17 (one-hundred-and-tenth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-17 (one-hundred-and-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1833 unique active keys (one-hundred-and-ninth pass: +15 new — vectordb, vector-db, graphdb, fuzz, fuzzing, akka, erlang, actor, geoip, geofencing, ipinfo, maxmind, wasmpack, wasm-pack, saml2)
-- **Catalog script**: `scripts/add_missing_tools.py` — 494 unique tools (added 5 new: ipinfo, akka, wasm-pack, atheris, geoip2)
+- **_CAT_SYNONYMS**: 1849 unique active keys (one-hundred-and-tenth pass: +16 new — onnx, onnxruntime, autogpt, gguf, ggml, lora, qlora, transformerjs, transformer, kind, canary, bluegreen, blue-green, sre, eventbus, event-bus)
+- **Catalog script**: `scripts/add_missing_tools.py` — 499 unique tools (added 5 new: onnx-runtime, auto-gpt, transformers-js, kind, argo-rollouts)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,43 @@ Last updated: 2026-04-17 (one-hundred-and-ninth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-17, one-hundred-and-tenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 16 new `_CAT_SYNONYMS` entries (1833 → 1849 unique keys, 0 duplicates):
+  - **AI**: `onnx` → ai — ONNX Open Neural Network Exchange runtime
+  - **AI**: `onnxruntime` → ai — compound form for "onnxruntime inference" queries
+  - **AI**: `autogpt` → ai — AutoGPT autonomous agent (170k★)
+  - **AI**: `gguf` → ai — GGUF quantized model format (llama.cpp ecosystem)
+  - **AI**: `ggml` → ai — GGML C tensor library (whisper.cpp, llama.cpp foundation)
+  - **AI**: `lora` → ai — LoRA Low-Rank Adaptation fine-tuning technique
+  - **AI**: `qlora` → ai — QLoRA quantized LoRA fine-tuning
+  - **AI**: `transformerjs` → ai — HuggingFace Transformers.js browser/Node ML
+  - **AI**: `transformer` → ai — transformer architecture query term
+  - **DevOps**: `kind` → devops — kind (Kubernetes IN Docker) local cluster
+  - **DevOps**: `canary` → devops — canary deployment strategy
+  - **DevOps**: `bluegreen` → devops — blue-green deployment (compound)
+  - **DevOps**: `blue-green` → devops — blue-green deployment (hyphenated)
+  - **Monitoring**: `sre` → monitoring — Site Reliability Engineering tooling
+  - **Message**: `eventbus` → message — event bus library/pattern queries
+  - **Message**: `event-bus` → message — hyphenated event bus form
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (494 → 499 unique):
+  - **ONNX Runtime** (microsoft/onnxruntime, 14k★) — cross-platform ML inference; ai-automation
+  - **AutoGPT** (Significant-Gravitas/AutoGPT, 170k★) — autonomous GPT-4 agent; ai-automation
+  - **Transformers.js** (huggingface/transformers.js, 12k★) — browser/Node ML; ai-automation
+  - **kind** (kubernetes-sigs/kind, 13k★) — Kubernetes IN Docker local cluster; devops-infrastructure
+  - **Argo Rollouts** (argoproj/argo-rollouts, 2.6k★) — canary/blue-green for k8s; devops-infrastructure
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundred-and-tenth pass
+
+---
 
 ## Completed This Session (2026-04-17, one-hundred-and-ninth pass — autonomous improvement cycle)
 

@@ -8288,6 +8288,91 @@ TOOLS = [
         "brew install grype",
         "code",
     ),
+    # ONNX Runtime — cross-platform ML inference engine --------------------------
+    (
+        "onnx-runtime",
+        "ONNX Runtime",
+        "Cross-platform, high-performance ML inference engine",
+        "ONNX Runtime is Microsoft's open-source inference engine for machine learning "
+        "models in the ONNX format. Supports models from PyTorch, TensorFlow, scikit-learn, "
+        "and more. Runs on CPU, GPU, and edge devices. Widely used for deploying ML models "
+        "in production Python, C++, Java, and JavaScript applications.",
+        "ai-automation",
+        "microsoft/onnxruntime",
+        14000,
+        "https://onnxruntime.ai",
+        "ml,inference,onnx,machine-learning,model-deployment,python,javascript,edge",
+        "pip install onnxruntime",
+        "code",
+    ),
+    # AutoGPT — autonomous GPT-4 agent framework ---------------------------------
+    (
+        "auto-gpt",
+        "AutoGPT",
+        "The original autonomous AI agent",
+        "AutoGPT is an open-source autonomous AI agent that chains GPT-4 thoughts "
+        "to complete complex multi-step goals without human interaction. One of the "
+        "most-starred GitHub repositories ever. Now evolved into the AgentGPT platform "
+        "with a modular agent framework, benchmarking, and a hosted builder for teams.",
+        "ai-automation",
+        "Significant-Gravitas/AutoGPT",
+        170000,
+        "https://agpt.co",
+        "ai-agent,autonomous,gpt4,llm,agentic,benchmark,workflow",
+        "pip install autogpt",
+        "code",
+    ),
+    # Transformers.js — HuggingFace ML in the browser / Node.js ------------------
+    (
+        "transformers-js",
+        "Transformers.js",
+        "State-of-the-art machine learning for the web",
+        "Transformers.js lets you run HuggingFace Transformers models directly in the "
+        "browser or Node.js via WebAssembly — no server required. Supports text "
+        "classification, NER, question answering, summarization, translation, text "
+        "generation, and more. Functionally equivalent to the Python library.",
+        "ai-automation",
+        "huggingface/transformers.js",
+        12000,
+        "https://huggingface.co/docs/transformers.js",
+        "ml,browser,node,wasm,huggingface,nlp,transformers,inference,client-side",
+        "npm install @huggingface/transformers",
+        "code",
+    ),
+    # kind — Kubernetes IN Docker local cluster tool ------------------------------
+    (
+        "kind",
+        "kind",
+        "Run local Kubernetes clusters using Docker container nodes",
+        "kind (Kubernetes IN Docker) is a tool for running local Kubernetes clusters "
+        "using Docker container nodes. Designed primarily for testing Kubernetes "
+        "itself, but also used for local development and CI. Lightweight alternative "
+        "to Minikube with multi-node cluster support and fast startup times.",
+        "devops-infrastructure",
+        "kubernetes-sigs/kind",
+        13000,
+        "https://kind.sigs.k8s.io",
+        "kubernetes,local,docker,testing,k8s,devops,cncf",
+        "brew install kind",
+        "code",
+    ),
+    # Argo Rollouts — Kubernetes progressive delivery controller -----------------
+    (
+        "argo-rollouts",
+        "Argo Rollouts",
+        "Kubernetes Progressive Delivery Controller",
+        "Argo Rollouts provides advanced deployment strategies for Kubernetes: "
+        "canary releases, blue-green deployments, and A/B testing. Integrates with "
+        "ingress controllers and service meshes to route traffic gradually, with "
+        "automated analysis for progressive promotion or rollback based on metrics.",
+        "devops-infrastructure",
+        "argoproj/argo-rollouts",
+        2600,
+        "https://argoproj.github.io/rollouts",
+        "kubernetes,canary,blue-green,progressive-delivery,deployment,k8s,argocd",
+        "kubectl apply -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml",
+        "code",
+    ),
 ]
 
 
