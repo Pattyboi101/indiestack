@@ -3007,12 +3007,31 @@ Last updated: 2026-04-17 (one-hundred-and-seventh pass)
   - Action for Patrick: bulk-reject via /admin (fastnfitness, foodyou, etc.)
   - Action for Content: add scope statement to submit/guidelines pages
 
+## Completed This Session (2026-04-17, autonomous improvement loop)
+
+### Search Quality (one-hundred-and-eighth pass)
+Added 15 new `_CAT_SYNONYMS` entries covering genuine gaps:
+- **Supply chain security**: `sbom`, `sigstore`, `cosign`, `syft`, `supply-chain`, `supplychain` → security-tools
+- **Compliance/privacy**: `consent`, `hipaa`, `pci`, `soc2`, `privacy`, `devsecops` → security-tools
+- **AI model optimisation**: `quantization`, `distillation`, `moe` → ai-automation
+
+All previous loop-requested mappings already present (state management, bundler, realtime, vector database, rate limiting).
+
+### Catalog Tools Added (5 new entries in add_missing_tools.py)
+- **sigstore** (security-tools) — Sigstore artifact signing platform (Linux Foundation)
+- **syft** (security-tools) — SBOM generator by Anchore (6k★)
+- **agentops** (ai-automation) — AI agent session replay + observability (4k★)
+- **continue** (ai-dev-tools) — open-source AI coding assistant VS Code/JetBrains (20k★)
+- **grype** (security-tools) — container vulnerability scanner by Anchore (9k★)
+
+Script now covers 490 tools. Deploy script when next on production: `python3 /app/src/indiestack/scripts/add_missing_tools.py`
+
 ## Current Priorities
 1. **Backend**: validate citation data — how many tools have >10 agent citations/month?
 2. **Frontend**: audit /maker/dashboard analytics exposure
 3. **Content**: update /why-list with AI agent discovery copy + draft maker outreach email
 4. **MCP**: rewrite PyPI README with Quick Install section
-5. **DevOps**: run /backup before Maker Pro launch work
+5. **DevOps**: run /backup before Maker Pro launch work; run add_missing_tools.py on production
 
 ## Known Blockers
 - None currently
