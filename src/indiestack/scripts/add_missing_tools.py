@@ -8109,6 +8109,94 @@ TOOLS = [
         "CREATE EXTENSION IF NOT EXISTS ai CASCADE;",
         "code",
     ),
+    # Sigstore — software artifact signing ----------------------------------------
+    (
+        "sigstore",
+        "Sigstore",
+        "Open-source software signing and verification",
+        "Sigstore is a Linux Foundation project providing free, open-source tools "
+        "for signing, verifying, and protecting software artifacts. The Cosign tool "
+        "signs and verifies container images; Rekor is a transparency log; Gitsign "
+        "brings keyless signing to git commits. Adopted by npm, PyPI, and major "
+        "cloud registries as the software supply chain security standard.",
+        "security-tools",
+        "sigstore/sigstore",
+        3500,
+        "https://sigstore.dev",
+        "security,signing,supply-chain,sbom,oci,containers,cosign,rekor",
+        "brew install sigstore/tap/cosign",
+        "code",
+    ),
+    # Syft — SBOM generator -------------------------------------------------------
+    (
+        "syft",
+        "Syft",
+        "CLI tool and library for generating SBOMs from container images",
+        "Syft is an open-source CLI tool and Go library for generating a Software "
+        "Bill of Materials (SBOM) from container images and filesystems. Supports "
+        "CycloneDX, SPDX, and Syft JSON formats. Integrates with Grype for "
+        "vulnerability scanning. Built by Anchore.",
+        "security-tools",
+        "anchore/syft",
+        6000,
+        "https://github.com/anchore/syft",
+        "security,sbom,supply-chain,containers,oci,vulnerability,anchore",
+        "brew install syft",
+        "code",
+    ),
+    # AgentOps — AI agent observability -------------------------------------------
+    (
+        "agentops",
+        "AgentOps",
+        "Observability platform for AI agents and LLM applications",
+        "AgentOps provides session replay, cost tracking, and performance monitoring "
+        "for AI agents built with frameworks like LangChain, CrewAI, AutoGen, and "
+        "OpenAI Agents SDK. See every LLM call, tool use, and agent action with "
+        "full replay. Integrates in two lines of code.",
+        "ai-automation",
+        "AgentOps-AI/agentops",
+        4000,
+        "https://agentops.ai",
+        "ai,observability,monitoring,llm,agents,langchain,crewai,autogen",
+        "pip install agentops",
+        "code",
+    ),
+    # Continue — open-source AI coding assistant ----------------------------------
+    (
+        "continue",
+        "Continue",
+        "Open-source AI coding assistant for VS Code and JetBrains",
+        "Continue is the leading open-source AI coding assistant, connecting any "
+        "LLM to VS Code and JetBrains IDEs. Supports autocomplete, chat, slash "
+        "commands, and context providers. Works with Claude, GPT-4, Ollama, "
+        "Mistral, and any OpenAI-compatible model. Highly configurable via "
+        "config.json with custom prompts, context, and actions.",
+        "ai-dev-tools",
+        "continuedev/continue",
+        20000,
+        "https://continue.dev",
+        "ai,coding-assistant,vs-code,jetbrains,autocomplete,llm,open-source",
+        "ext install Continue.continue",
+        "code",
+    ),
+    # Grype — container vulnerability scanner -------------------------------------
+    (
+        "grype",
+        "Grype",
+        "A vulnerability scanner for container images and filesystems",
+        "Grype is an open-source vulnerability scanner for container images and "
+        "filesystems by Anchore. Finds known CVEs in packages from OS "
+        "distributions, language ecosystems (npm, pip, gem, etc.), and container "
+        "layers. Integrates with Syft for SBOM-based scanning and works in CI/CD "
+        "pipelines with GitHub Actions, Jenkins, and GitLab CI.",
+        "security-tools",
+        "anchore/grype",
+        9000,
+        "https://github.com/anchore/grype",
+        "security,vulnerability,containers,sbom,cve,scanning,anchore,supply-chain",
+        "brew install grype",
+        "code",
+    ),
 ]
 
 

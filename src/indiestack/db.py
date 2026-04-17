@@ -4969,6 +4969,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "flexsearch": "search",         # FlexSearch — high-performance full-text search library for JS/TS (12k★) → Search Engines
     # AI — SWE-agent Princeton autonomous software engineering agent (15k★)
     "sweagent": "ai",               # SWE-agent — Princeton autonomous software engineering agent (15k★) → AI & Automation
+    # Security — software supply chain and SBOM tooling (fast-growing compliance segment)
+    "sbom": "security",             # SBOM (Software Bill of Materials) — Syft, CycloneDX, SPDX tooling → Security Tools
+    "sigstore": "security",         # Sigstore — artifact signing standard (Cosign, Rekor, Gitsign) → Security Tools
+    "cosign": "security",           # Cosign — container image and artifact signing (Sigstore, 4k★) → Security Tools
+    "syft": "security",             # Syft — open-source SBOM generator (Anchore, 6k★) → Security Tools
+    "supply-chain": "security",     # "supply chain security", "software supply chain" → Security Tools
+    "supplychain": "security",      # compound form — "supplychain attack", "supplychain hardening" → Security Tools
+    # Security — compliance and privacy categories missing from synonyms
+    "consent": "security",          # "consent management platform", "gdpr consent banner" → Security Tools (Cookiebot, Osano, iubenda)
+    "hipaa": "security",            # HIPAA — US healthcare privacy law compliance tooling → Security Tools
+    "pci": "security",              # PCI DSS — payment card industry compliance → Security Tools (Stripe Radar, Braintree)
+    "soc2": "security",             # SOC 2 compliance automation → Security Tools (Vanta, Drata, Secureframe)
+    "privacy": "security",          # "privacy-first analytics", "privacy tool", "user privacy" → Security Tools
+    "devsecops": "security",        # DevSecOps — "devsecops pipeline", "security in devops" → Security Tools
+    # AI — model optimization and architecture terms (fast-growing 2026 query segment)
+    "quantization": "ai",           # "model quantization", "llm quantization", "gguf quantize" → AI & Automation
+    "distillation": "ai",           # "knowledge distillation", "model distillation", "distill llm" → AI & Automation
+    "moe": "ai",                    # MoE — Mixture of Experts ("moe model", "mixture of experts" queries) → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
