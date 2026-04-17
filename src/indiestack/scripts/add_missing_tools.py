@@ -8127,6 +8127,97 @@ TOOLS = [
         "brew install sigstore/tap/cosign",
         "code",
     ),
+    # IPinfo — IP geolocation API ---------------------------------------------------
+    (
+        "ipinfo",
+        "IPinfo",
+        "Fast, accurate IP geolocation and network intelligence API",
+        "IPinfo provides accurate IP address geolocation data, ASN lookups, "
+        "IP ranges, carrier detection, and privacy detection (VPN, proxy, Tor). "
+        "Used by millions of developers to personalise content, detect fraud, "
+        "block bots, and analyse traffic. Free tier includes 50k requests/month. "
+        "SDKs for Python, Node.js, Go, Ruby, PHP, and more.",
+        "maps-location",
+        "ipinfo/mmdbwriter",
+        2000,
+        "https://ipinfo.io",
+        "geolocation,ip,geoip,maps,location,network,asn,privacy,vpn",
+        "pip install ipinfo",
+        "saas",
+    ),
+    # Akka — actor model framework ------------------------------------------------
+    (
+        "akka",
+        "Akka",
+        "Build powerful concurrent, distributed, and resilient applications",
+        "Akka is a toolkit for building highly concurrent, distributed, and "
+        "fault-tolerant applications on the JVM. Based on the Actor Model, it "
+        "provides Actors, Streams, Cluster, HTTP, and Persistence modules. "
+        "Written in Scala, with full Java API. Powers high-throughput systems at "
+        "Lightbend, LinkedIn, PayPal, and thousands of enterprises.",
+        "api-tools",
+        "akka/akka",
+        13000,
+        "https://akka.io",
+        "actor-model,scala,java,jvm,distributed,reactive,concurrency,streams",
+        'libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % "2.9.x"',
+        "code",
+    ),
+    # wasm-pack — Rust WASM build tool -------------------------------------------
+    (
+        "wasm-pack",
+        "wasm-pack",
+        "Build, test, and publish Rust-generated WebAssembly",
+        "wasm-pack is the one-stop tool for building Rust packages targeting "
+        "WebAssembly. It compiles Rust to WASM, generates JavaScript glue code "
+        "via wasm-bindgen, and publishes directly to npm. Supports bundler "
+        "targets (webpack, Rollup, Vite), Node.js, and browser usage. "
+        "Essential for Rust+WASM projects like Leptos, Yew, and Dioxus.",
+        "frontend-frameworks",
+        "rustwasm/wasm-pack",
+        6000,
+        "https://rustwasm.github.io/wasm-pack/",
+        "rust,wasm,webassembly,npm,build-tool,bundler,wasm-bindgen",
+        "cargo install wasm-pack",
+        "code",
+    ),
+    # Atheris — Python fuzzing library -------------------------------------------
+    (
+        "atheris",
+        "Atheris",
+        "Coverage-guided Python fuzzing engine by Google",
+        "Atheris is a coverage-guided Python fuzzing engine developed by Google. "
+        "It supports fuzzing pure-Python code and Python extensions written in C "
+        "or C++. Atheris is built on libFuzzer and uses instrumentation to "
+        "maximise code coverage. Ideal for finding bugs in parsers, serializers, "
+        "and data-processing libraries. Runs as a Python package — no patching required.",
+        "testing-tools",
+        "google/atheris",
+        2500,
+        "https://github.com/google/atheris",
+        "testing,fuzzing,security,python,coverage,libfuzzer,google",
+        "pip install atheris",
+        "code",
+    ),
+    # MaxMind GeoIP2 — IP geolocation database ------------------------------------
+    (
+        "geoip2",
+        "MaxMind GeoIP2",
+        "Industry-standard IP geolocation and fraud detection databases",
+        "MaxMind GeoIP2 provides highly accurate IP geolocation databases and "
+        "web services for city, country, ASN, ISP, and connection type lookups. "
+        "The GeoLite2 free tier includes city and country databases updated weekly. "
+        "Used by millions of websites for content localisation, ad targeting, "
+        "fraud detection, and compliance. SDKs for Python, Node.js, Go, PHP, Java, "
+        "Ruby, and .NET.",
+        "maps-location",
+        "maxmind/GeoIP2-python",
+        800,
+        "https://dev.maxmind.com/geoip",
+        "geolocation,ip,geoip,maps,location,fraud,maxmind,database",
+        "pip install geoip2",
+        "saas",
+    ),
     # Syft — SBOM generator -------------------------------------------------------
     (
         "syft",

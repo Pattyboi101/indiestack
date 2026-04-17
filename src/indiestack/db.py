@@ -4987,6 +4987,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "quantization": "ai",           # "model quantization", "llm quantization", "gguf quantize" → AI & Automation
     "distillation": "ai",           # "knowledge distillation", "model distillation", "distill llm" → AI & Automation
     "moe": "ai",                    # MoE — Mixture of Experts ("moe model", "mixture of experts" queries) → AI & Automation
+    # Vector database compound/hyphenated forms (complement to "vector"→database already mapped)
+    "vectordb": "database",         # "vectordb python", "vectordb alternative" → Database (Qdrant, Weaviate, Chroma, pgvector)
+    "vector-db": "database",        # hyphenated — "vector-db comparison", "vector-db for rag" → Database
+    # Graph database compound form (complement to "graph"→database, "neo4j"→database already mapped)
+    "graphdb": "database",          # "graphdb library", "graphdb query" → Database (Neo4j, ArangoDB, Dgraph)
+    # Fuzzing / fuzz testing — security and reliability testing segment
+    "fuzz": "testing",              # "fuzz testing", "fuzzer library", "afl fuzz" → Testing Tools (AFL++, libFuzzer, Atheris)
+    "fuzzing": "testing",           # "fuzzing tool", "python fuzzing", "fuzzing framework" → Testing Tools
+    # Actor model frameworks — JVM/Erlang/Elixir concurrency patterns
+    "akka": "api",                  # Akka — Scala/Java actor model framework (26k★) → API Tools (reactive distributed)
+    "erlang": "api",                # Erlang language queries → API tools (Cowboy, Ranch; complement to "elixir"→api)
+    "actor": "api",                 # "actor model", "actor framework", "actor concurrency" → API Tools
+    # IP geolocation — Maps & Location category (ipinfo.io, MaxMind, ipapi.co)
+    "geoip": "maps",                # "geoip library", "geoip lookup", "geoip database" → Maps & Location (MaxMind)
+    "geofencing": "maps",           # "geofencing API", "geofence trigger", "geofencing library" → Maps & Location
+    "ipinfo": "maps",               # IPinfo.io — IP geolocation and network intelligence API → Maps & Location
+    "maxmind": "maps",              # MaxMind GeoIP2 — most popular IP geolocation database → Maps & Location
+    # WASM build tooling — Rust+WASM (complement to "wasm"→frontend, "webassembly"→frontend already mapped)
+    "wasmpack": "frontend",         # wasm-pack — build Rust WASM packages for npm publishing (6k★) → Frontend Frameworks
+    "wasm-pack": "frontend",        # hyphenated — "wasm-pack build", "wasm-pack alternative" → Frontend Frameworks
+    # Auth — SAML 2.0 explicit version form (complement to "saml"→authentication already mapped)
+    "saml2": "authentication",      # SAML 2.0 — "saml2 library", "saml2 python", "saml 2.0 sp" → Authentication
 }
 
 _FTS_STOP_WORDS = {

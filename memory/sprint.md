@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-seventh pass)
+Last updated: 2026-04-17 (one-hundred-and-ninth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-17 (one-hundred-and-seventh pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1801 unique active keys (one-hundred-and-seventh pass: +12 new — bolt, pipecat, replit, screenpipe, apify, perplexica, agentzero, agent-zero, minisearch, pgai, flexsearch, sweagent; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 484 unique tools (added 5 new: pipecat, screenpipe, perplexica, flexsearch, pgai)
+- **_CAT_SYNONYMS**: 1833 unique active keys (one-hundred-and-ninth pass: +15 new — vectordb, vector-db, graphdb, fuzz, fuzzing, akka, erlang, actor, geoip, geofencing, ipinfo, maxmind, wasmpack, wasm-pack, saml2)
+- **Catalog script**: `scripts/add_missing_tools.py` — 494 unique tools (added 5 new: ipinfo, akka, wasm-pack, atheris, geoip2)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,42 @@ Last updated: 2026-04-17 (one-hundred-and-seventh pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-17, one-hundred-and-ninth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 15 new `_CAT_SYNONYMS` entries (1818 → 1833 unique keys, 0 duplicates):
+  - **Database**: `vectordb` → database — compound form for vector database queries
+  - **Database**: `vector-db` → database — hyphenated form
+  - **Database**: `graphdb` → database — compound form for graph database queries
+  - **Testing**: `fuzz` → testing — fuzz testing tools (AFL++, libFuzzer, Atheris)
+  - **Testing**: `fuzzing` → testing — fuzzing framework queries
+  - **API**: `akka` → api — Akka actor model framework (Scala/Java, 26k★)
+  - **API**: `erlang` → api — Erlang language queries → API tools (Cowboy, Ranch)
+  - **API**: `actor` → api — actor model pattern queries
+  - **Maps**: `geoip` → maps — IP geolocation library/database queries
+  - **Maps**: `geofencing` → maps — geofencing API queries
+  - **Maps**: `ipinfo` → maps — IPinfo.io IP geolocation service
+  - **Maps**: `maxmind` → maps — MaxMind GeoIP2 database
+  - **Frontend**: `wasmpack` → frontend — wasm-pack Rust WASM build tool
+  - **Frontend**: `wasm-pack` → frontend — hyphenated form
+  - **Auth**: `saml2` → authentication — SAML 2.0 explicit version form
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (489 → 494 unique):
+  - **IPinfo** (ipinfo/mmdbwriter, 2k★) — IP geolocation + network intelligence API; maps-location
+  - **Akka** (akka/akka, 13k★) — Scala/Java actor model reactive framework; api-tools
+  - **wasm-pack** (rustwasm/wasm-pack, 6k★) — Rust WASM build + npm publish tool; frontend-frameworks
+  - **Atheris** (google/atheris, 2.5k★) — Python coverage-guided fuzzing engine; testing-tools
+  - **MaxMind GeoIP2** (maxmind/GeoIP2-python, ~1k★) — IP geolocation database; maps-location
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundred-and-ninth pass
+
+---
 
 ## Completed This Session (2026-04-17, one-hundred-and-seventh pass — autonomous improvement cycle)
 
