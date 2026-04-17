@@ -5035,6 +5035,36 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Message Queue — event bus libraries (mitt, EventEmitter; distinct from "event"→message already mapped)
     "eventbus": "message",          # event bus — "eventbus library", "in-process eventbus", "eventbus pattern" → Message Queue
     "event-bus": "message",         # hyphenated — "event-bus alternative", "event-bus typescript" → Message Queue
+    # Frontend — canvas graphics and node-based diagram libraries
+    "konva": "frontend",            # Konva.js — 2D canvas graphics library for React/Vue/vanilla (11k★) → Frontend Frameworks
+    "fabricjs": "frontend",         # Fabric.js — canvas manipulation library; "fabricjs alternative" → Frontend Frameworks
+    "fabric": "frontend",           # short form — "fabric.js alternative", "fabric canvas library" → Frontend Frameworks
+    "reactflow": "frontend",        # React Flow — node-based UI / diagram library (27k★, xyflow/xyflow) → Frontend Frameworks
+    "react-flow": "frontend",       # hyphenated — "react-flow alternative", "react-flow v12" → Frontend Frameworks
+    "xyflow": "frontend",           # XYFlow — new org name for React Flow + Svelte Flow ecosystem → Frontend Frameworks
+    # AI — code execution sandbox and inference servers
+    "e2b": "ai",                    # E2B.dev — secure cloud sandbox for AI-generated code execution (7k★) → AI & Automation
+    "triton": "ai",                 # NVIDIA Triton Inference Server — production ML model serving (8k★) → AI & Automation
+    "greptile": "ai",               # Greptile — AI that understands your codebase; code search and Q&A → AI & Automation
+    # Monitoring — status page systems (high "alternative" query volume)
+    "statuspage": "monitoring",     # Statuspage.io — status page service; "statuspage alternative" → Monitoring & Uptime
+    "cachet": "monitoring",         # Cachet — open-source status page system (15k★) → Monitoring & Uptime
+    "upptime": "monitoring",        # Upptime — GitHub-powered uptime monitor + status page (14k★) → Monitoring & Uptime
+    # DevOps — container management and Docker Desktop alternatives
+    "colima": "devops",             # Colima — Docker Desktop alternative for macOS/Linux (18k★) → DevOps & Infrastructure
+    "portainer": "devops",          # Portainer — Docker container management UI (31k★) → DevOps & Infrastructure
+    "rancher": "devops",            # Rancher — Kubernetes cluster management platform (23k★) → DevOps & Infrastructure
+    # Background jobs — Ruby job queue (Resque is the canonical Ruby background jobs tool)
+    "resque": "background",         # Resque — Redis-backed Ruby background jobs (10k★) → Background Jobs
+    # API — HTTP testing utilities
+    "httpbin": "api",               # httpbin.org — HTTP request/response service for API testing → API Tools
+    # Security — network scanning
+    "nmap": "security",             # Nmap — open-source network security scanner (10k★) → Security Tools
+    # Documentation — living code documentation
+    "swimm": "documentation",       # Swimm — living code documentation that stays up-to-date with code → Documentation
+    # Database — TypeScript type-safe Postgres query generation
+    "pgtyped": "database",          # PgTyped — compile-time type-safe Postgres queries for TypeScript (3k★) → Database
+    "pg-typed": "database",         # hyphenated — "pg-typed alternative", "pgtyped migration" → Database
 }
 
 _FTS_STOP_WORDS = {

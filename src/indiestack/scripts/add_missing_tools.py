@@ -8373,6 +8373,91 @@ TOOLS = [
         "kubectl apply -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml",
         "code",
     ),
+    # React Flow — node-based UI / diagram library ----------------------------
+    (
+        "react-flow",
+        "React Flow",
+        "Highly customizable library for building node-based editors and interactive diagrams",
+        "React Flow (now XYFlow) is a powerful library for rendering node-based UIs, "
+        "flow diagrams, and interactive graph editors. Used by Stripe, Typeform, and "
+        "n8n. Supports custom nodes, edges, minimap, controls, and real-time "
+        "collaboration. Version 12 is framework-agnostic (React, Svelte, or vanilla JS).",
+        "frontend-frameworks",
+        "xyflow/xyflow",
+        27000,
+        "https://reactflow.dev",
+        "react,diagram,graph,canvas,flowchart,nodes,edges,interactive",
+        "npm install @xyflow/react",
+        "code",
+    ),
+    # Konva.js — 2D canvas graphics library -----------------------------------
+    (
+        "konva",
+        "Konva.js",
+        "HTML5 Canvas JavaScript framework for desktop and mobile",
+        "Konva.js is a 2D canvas library that enables high performance animations, "
+        "transitions, node nesting, layering, filtering, caching, event handling and "
+        "more. Comes with React Konva and Vue Konva bindings. Ideal for interactive "
+        "canvas apps: image editors, diagrams, games, and data visualisations.",
+        "frontend-frameworks",
+        "konvajs/konva",
+        11000,
+        "https://konvajs.org",
+        "canvas,2d,graphics,react,vue,animation,interactive",
+        "npm install konva",
+        "code",
+    ),
+    # Portainer — Docker container management UI ------------------------------
+    (
+        "portainer",
+        "Portainer",
+        "The most versatile container management platform",
+        "Portainer is an open-source lightweight container management platform that "
+        "works with Docker, Docker Swarm, Kubernetes, and Azure ACI. Its intuitive web "
+        "UI makes container management accessible to teams of all skill levels. Deploy "
+        "stacks, manage networks and volumes, and set up role-based access control.",
+        "devops-infrastructure",
+        "portainer/portainer",
+        31000,
+        "https://portainer.io",
+        "docker,kubernetes,container,management,ui,swarm,devops",
+        "docker run -d -p 9443:9443 portainer/portainer-ce",
+        "code",
+    ),
+    # E2B — secure cloud sandbox for AI-generated code execution -------------
+    (
+        "e2b",
+        "E2B",
+        "Secure cloud sandbox for running AI-generated code",
+        "E2B provides secure cloud-based sandboxes for executing AI-generated code. "
+        "Run untrusted Python, Node.js, Java, Go, and Bash in isolated environments "
+        "with file system access, long-running processes, and network access. Used by "
+        "Cursor, Perplexity, and hundreds of AI teams for safe code interpreter features.",
+        "ai-automation",
+        "e2b-dev/e2b",
+        7000,
+        "https://e2b.dev",
+        "sandbox,code-execution,ai,llm,interpreter,secure,cloud",
+        "npm install @e2b/code-interpreter",
+        "code",
+    ),
+    # Colima — Docker Desktop alternative for macOS/Linux --------------------
+    (
+        "colima",
+        "Colima",
+        "Container runtimes on macOS and Linux with minimal setup",
+        "Colima is a free, open-source Docker Desktop alternative for macOS and Linux. "
+        "Supports Docker and containerd runtimes, Kubernetes, and Volume mounts with "
+        "minimal setup. Uses Lima VMs under the hood. Popular in dev teams avoiding "
+        "Docker Desktop's licensing requirements. Works as a drop-in replacement.",
+        "devops-infrastructure",
+        "abiosoft/colima",
+        18000,
+        "https://github.com/abiosoft/colima",
+        "docker,container,macos,linux,runtime,devops,docker-desktop-alternative",
+        "brew install colima",
+        "code",
+    ),
 ]
 
 
