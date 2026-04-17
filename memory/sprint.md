@@ -1,17 +1,17 @@
 # Sprint — Current
 
-Last updated: 2026-04-16 (one-hundred-and-first pass)
+Last updated: 2026-04-17 (one-hundred-and-second pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-16)
+## System State (as of 2026-04-17)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1731 unique active keys (one-hundred-and-first pass: +12 new — isr, prerender, prerendering, statemanagement, llamastack, llama-stack, docling, kotaemon, jina, jinaai, mcp-client, mcpclient; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 454 unique tools (added 5 new: comfyui, docling, kotaemon, llama-stack, jina)
+- **_CAT_SYNONYMS**: 1743 unique active keys (one-hundred-and-second pass: +12 new — deepseek, deepseekr1, kinde, descope, scalekit, stackauth, stack-auth, nixpacks, panda-css, stylex, browserbase, playwright-mcp; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 459 unique tools (added 5 new: scalekit, stack-auth, nixpacks, stylex, descope)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-16 (one-hundred-and-first pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-17, one-hundred-and-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1731 → 1743 unique keys, 0 duplicates):
+  - **AI**: `deepseek` → ai — DeepSeek open-weight LLM family (V3, R1; 100k★+)
+  - **AI**: `deepseekr1` → ai — compound form for "deepseek r1 api" queries
+  - **Auth**: `kinde` → authentication — Kinde modern auth provider (Next.js SDK)
+  - **Auth**: `descope` → authentication — Descope no-code auth with visual flow builder
+  - **Auth**: `scalekit` → authentication — ScaleKit enterprise SSO/SCIM for B2B SaaS
+  - **Auth**: `stackauth` → authentication — Stack Auth open-source Next.js auth kit
+  - **Auth**: `stack-auth` → authentication — hyphenated form
+  - **DevOps**: `nixpacks` → devops — Nixpacks auto-detecting build system (Railway, 7k★)
+  - **Frontend**: `panda-css` → frontend — Panda CSS hyphenated form (complement to pandacss)
+  - **Frontend**: `stylex` → frontend — Meta's compile-time CSS-in-JS (powers Facebook.com, 8k★)
+  - **API**: `browserbase` → api — cloud browser API for AI agent web automation
+  - **MCP**: `playwright-mcp` → mcp — Playwright MCP browser automation server for AI agents
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (454 → 459 unique):
+  - **ScaleKit** (scalekit-com/scalekit-sdk-node, 500★) — enterprise SSO/SCIM; authentication
+  - **Stack Auth** (stack-auth/stack, 4k★) — open-source Next.js auth; authentication
+  - **Nixpacks** (railwayapp/nixpacks, 7k★) — auto-detect build system; devops-infrastructure
+  - **StyleX** (facebook/stylex, 8k★) — compile-time CSS-in-JS; frontend-frameworks
+  - **Descope** (descope-com/descope-js, 500★) — no-code auth flows; authentication
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundred-and-second pass
+
+---
 
 ## Completed This Session (2026-04-16, one-hundred-and-first pass — autonomous improvement cycle)
 

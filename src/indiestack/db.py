@@ -4845,6 +4845,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     # MCP — client-side tooling (complement to "mcp"→mcp for server queries)
     "mcp-client": "mcp",            # "mcp client library", "mcp client sdk" → MCP Servers category
     "mcpclient": "mcp",             # compound — "mcpclient setup", "mcp client implementation" → MCP Servers
+    # AI — DeepSeek open-weight LLM family (V3, R1 — hugely popular in 2026, 100k★+)
+    "deepseek": "ai",               # DeepSeek — open-source frontier LLM (V3, R1); "deepseek alternative" → AI & Automation
+    "deepseekr1": "ai",             # compound — "deepseek r1 setup", "deepseekr1 api" → AI & Automation
+    # Auth — Modern auth providers missing from synonyms (kinde, descope, scalekit)
+    "kinde": "authentication",      # Kinde — modern auth with built-in Next.js SDK (kinde.com)
+    "descope": "authentication",    # Descope — no-code auth with visual flow builder
+    "scalekit": "authentication",   # ScaleKit — enterprise SSO/SCIM for B2B SaaS
+    "stackauth": "authentication",  # Stack Auth — open-source Next.js auth kit (stack-auth/stack)
+    "stack-auth": "authentication", # hyphenated form — "stack-auth alternative", "stack auth nextjs" → Authentication
+    # DevOps — Nixpacks build system (Railway's open-source build tool; 7k★)
+    "nixpacks": "devops",           # Nixpacks — auto-detect language and build Docker image → DevOps
+    # Frontend — CSS-in-JS tools (complement to pandacss, unocss already mapped)
+    "panda-css": "frontend",        # Panda CSS hyphenated form — "panda-css alternative" → Frontend Frameworks
+    "stylex": "frontend",           # StyleX — Meta's compile-time CSS-in-JS (powers Facebook.com, 8k★) → Frontend Frameworks
+    # API / Browser automation — Browserbase cloud browser for AI agents
+    "browserbase": "api",           # Browserbase — cloud browser API for AI agent web automation → API Tools
+    # MCP — browser automation MCP server (high-growth query segment as agents use Playwright/Puppeteer)
+    "playwright-mcp": "mcp",        # Playwright MCP — browser automation MCP server for AI agents → MCP Servers
 }
 
 _FTS_STOP_WORDS = {

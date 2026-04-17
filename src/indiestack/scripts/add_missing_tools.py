@@ -7614,6 +7614,96 @@ TOOLS = [
         "pip install jina",
         "code",
     ),
+    # Auth — Scalekit enterprise SSO/SCIM for B2B SaaS ---------------------------------------
+    (
+        "scalekit",
+        "ScaleKit",
+        "Enterprise SSO, SCIM, and Directory Sync for B2B SaaS",
+        "ScaleKit is an auth infrastructure provider specialising in enterprise "
+        "authentication for B2B SaaS products. It handles SAML SSO, OIDC, SCIM "
+        "user provisioning, and Directory Sync (Okta, Azure AD, Google Workspace) "
+        "so you can add enterprise auth in days rather than months. "
+        "SDKs for Node.js, Python, Go, and Java.",
+        "authentication",
+        "scalekit-com/scalekit-sdk-node",
+        500,
+        "https://scalekit.com",
+        "sso,saml,scim,enterprise,b2b,directory-sync,okta,azure-ad",
+        "npm install @scalekit-sdk/node",
+        "saas",
+    ),
+    # Auth — Stack Auth open-source Next.js auth kit ----------------------------------------
+    (
+        "stack-auth",
+        "Stack Auth",
+        "Open-source Auth0/Clerk alternative for Next.js",
+        "Stack Auth is an open-source authentication kit designed for Next.js apps. "
+        "It handles email/password, OAuth providers, magic links, passkeys, and "
+        "multi-tenancy out of the box. Self-hostable (Docker) or managed cloud, "
+        "with React hooks and a built-in dashboard. Positioned as an open alternative "
+        "to Clerk and Auth0 for indie hackers.",
+        "authentication",
+        "stack-auth/stack",
+        4000,
+        "https://stack-auth.com",
+        "auth,nextjs,react,oauth,passkeys,self-hosted,open-source",
+        "npx @stackframe/stack@latest",
+        "code",
+    ),
+    # DevOps — Nixpacks build system (Railway's open-source tool) ---------------------------
+    (
+        "nixpacks",
+        "Nixpacks",
+        "Auto-detecting build system — source code to Docker image",
+        "Nixpacks takes a source code directory, detects the language and framework "
+        "automatically, and produces an optimised Docker image with no Dockerfile "
+        "required. Supports Node.js, Python, Ruby, Go, Rust, PHP, Java, and more. "
+        "Used internally by Railway to build deployments. Fully open-source and "
+        "usable in any CI/CD pipeline.",
+        "devops-infrastructure",
+        "railwayapp/nixpacks",
+        7000,
+        "https://nixpacks.com",
+        "docker,build,ci,deployment,railway,heroku-alternative",
+        "curl -sSL https://nixpacks.com/install.sh | bash",
+        "code",
+    ),
+    # Frontend — StyleX compile-time CSS-in-JS by Meta -------------------------------------
+    (
+        "stylex",
+        "StyleX",
+        "Compile-time CSS-in-JS that scales to millions of lines",
+        "StyleX is Meta's CSS-in-JS library powering Facebook.com, Instagram, and "
+        "WhatsApp Web. Unlike runtime CSS-in-JS solutions, StyleX compiles to static "
+        "CSS class names at build time — zero runtime overhead. It provides "
+        "type-safe style APIs, automatic deduplication, and excellent performance "
+        "at scale. Works with React and is framework-agnostic at compile time.",
+        "frontend-frameworks",
+        "facebook/stylex",
+        8000,
+        "https://stylexjs.com",
+        "css-in-js,react,performance,compile-time,meta,typescript",
+        "npm install @stylexjs/stylex",
+        "code",
+    ),
+    # Auth — Descope no-code auth with visual flow builder ----------------------------------
+    (
+        "descope",
+        "Descope",
+        "No-code authentication with drag-and-drop flow builder",
+        "Descope is a developer-first authentication platform with a unique visual "
+        "flow builder for designing auth journeys without code. Supports magic links, "
+        "OTP, passkeys, OAuth, SSO/SAML, and MFA. SDKs for React, Next.js, Vue, "
+        "Angular, Python, Node.js, and mobile. Built for B2C and B2B apps with "
+        "enterprise features like SCIM provisioning and audit logs.",
+        "authentication",
+        "descope-com/descope-js",
+        500,
+        "https://descope.com",
+        "auth,passkeys,magic-links,sso,saml,mfa,no-code,flow-builder",
+        "npm install @descope/react",
+        "saas",
+    ),
 ]
 
 
