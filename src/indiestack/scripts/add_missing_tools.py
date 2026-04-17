@@ -7790,6 +7790,88 @@ TOOLS = [
         "npm install @descope/react",
         "saas",
     ),
+    # CLI Tools — argument parsing and terminal utilities ----------------------------------
+    (
+        "yargs",
+        "Yargs",
+        "Pirate-themed CLI argument parser for Node.js",
+        "Yargs is the most widely-used Node.js command-line argument parser with 55M+ "
+        "weekly downloads. Automatically generates help menus, handles sub-commands, "
+        "positional arguments, options, and validation. Full async/await support and "
+        "TypeScript-first type definitions included.",
+        "cli-tools",
+        "yargs/yargs",
+        11000,
+        "https://yargs.js.org",
+        "cli,nodejs,argument-parser,typescript,arguments",
+        "npm install yargs",
+        "code",
+    ),
+    (
+        "commander",
+        "Commander.js",
+        "The complete solution for Node.js command-line interfaces",
+        "Commander.js is the most popular Node.js CLI framework with 26k+ GitHub stars. "
+        "Declarative command definitions, automatic help generation, sub-commands, "
+        "option parsing, and variadic arguments. Zero runtime dependencies — perfect "
+        "for CLIs that ship as standalone tools.",
+        "cli-tools",
+        "tj/commander.js",
+        26000,
+        "https://github.com/tj/commander.js",
+        "cli,nodejs,argument-parser,commands,typescript",
+        "npm install commander",
+        "code",
+    ),
+    # Developer Tools — TypeScript and Node.js dev workflow --------------------------------
+    (
+        "ts-node",
+        "ts-node",
+        "TypeScript execution and REPL for Node.js",
+        "ts-node executes TypeScript files directly in Node.js without a separate "
+        "compilation step. REPL, transpile-only mode for fast startup, ESM support, "
+        "and seamless integration with most TypeScript projects. Used in scripts, "
+        "migrations, and development workflows worldwide.",
+        "developer-tools",
+        "TypeStrong/ts-node",
+        13000,
+        "https://typestrong.org/ts-node",
+        "typescript,nodejs,runtime,repl,developer-tools",
+        "npm install ts-node typescript",
+        "code",
+    ),
+    (
+        "nodemon",
+        "nodemon",
+        "Automatically restart Node.js apps on file changes",
+        "nodemon watches your source files and automatically restarts your Node.js "
+        "application when changes are detected. Works with any Node.js app including "
+        "Express, Fastify, and NestJS. Configurable watch paths, extensions, and "
+        "delay. The de-facto standard for Node.js development workflow.",
+        "developer-tools",
+        "remy/nodemon",
+        26000,
+        "https://nodemon.io",
+        "nodejs,developer-tools,watch,restart,development",
+        "npm install nodemon --save-dev",
+        "code",
+    ),
+    (
+        "chalk",
+        "Chalk",
+        "Terminal string styling done right",
+        "Chalk is the most popular terminal string styling library for Node.js with "
+        "20k+ stars and hundreds of millions of monthly downloads. Simple API for "
+        "colors, backgrounds, text styles, and nested styles. Used in virtually "
+        "every Node.js CLI tool, logger, and build script.",
+        "cli-tools",
+        "chalk/chalk",
+        20000,
+        "https://github.com/chalk/chalk",
+        "cli,nodejs,colors,terminal,styling,developer-tools",
+        "npm install chalk",
+        "code",
+    ),
 ]
 
 

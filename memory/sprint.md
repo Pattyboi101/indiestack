@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-third pass)
+Last updated: 2026-04-17 (one-hundred-and-fourth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-17 (one-hundred-and-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1755 unique active keys (one-hundred-and-third pass: +12 new — ffmpeg, yaml, toml, dunning, vat, tokenizer, tokenization, flowbite, mermaidjs, rtl, tremor, csp; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 464 unique tools (added 5 new: kinde, flowbite, tremor, cloudinary, plausible)
+- **_CAT_SYNONYMS**: 1767 unique active keys (one-hundred-and-fourth pass: +12 new — yargs, commander, chalk, inquirer, ts-node, tsnode, nodemon, ach, sepa, sqs, sns, shaka; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 469 unique tools (added 5 new: yargs, commander, ts-node, nodemon, chalk)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-17 (one-hundred-and-third pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-17, one-hundred-and-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1755 → 1767 unique keys, 0 duplicates):
+  - **CLI**: `yargs` → cli — Yargs Node.js argument parser (55M weekly downloads, 11k★)
+  - **CLI**: `commander` → cli — Commander.js CLI framework (26k★)
+  - **CLI**: `chalk` → cli — Chalk terminal string styling (20k★)
+  - **CLI**: `inquirer` → cli — Inquirer.js interactive CLI prompts (19k★)
+  - **Developer**: `ts-node` → developer — ts-node TypeScript execution for Node.js (13k★)
+  - **Developer**: `tsnode` → developer — compound form of ts-node
+  - **Developer**: `nodemon` → developer — nodemon auto-restart on file change (26k★)
+  - **Payments**: `ach` → payments — US ACH bank transfer protocol
+  - **Payments**: `sepa` → payments — EU SEPA bank transfer standard
+  - **Message**: `sqs` → message — AWS SQS Simple Queue Service alternative queries
+  - **Notifications**: `sns` → notifications — AWS SNS Simple Notification Service alternative queries
+  - **Media**: `shaka` → media — Shaka Player Google adaptive media player (6k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (464 → 469 unique):
+  - **Yargs** (yargs/yargs, 11k★) — Node.js CLI argument parser; cli-tools
+  - **Commander.js** (tj/commander.js, 26k★) — complete Node.js CLI framework; cli-tools
+  - **ts-node** (TypeStrong/ts-node, 13k★) — TypeScript execution for Node.js; developer-tools
+  - **nodemon** (remy/nodemon, 26k★) — auto-restart Node.js on file changes; developer-tools
+  - **Chalk** (chalk/chalk, 20k★) — terminal string styling; cli-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundred-and-fourth pass
+
+---
 
 ## Completed This Session (2026-04-17, one-hundred-and-third pass — autonomous improvement cycle)
 

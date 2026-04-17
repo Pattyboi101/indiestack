@@ -4885,6 +4885,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tremor": "analytics",          # Tremor — React dashboard components for BI/analytics UIs (15k★) → Analytics & Metrics
     # Security — Content Security Policy (CSP headers, nonce generation, report-only mode)
     "csp": "security",              # CSP — Content Security Policy headers; "csp nonce", "csp middleware" → Security Tools
+    # CLI — argument parsers (top npm downloads, very high "alternative" query volume)
+    "yargs": "cli",                 # Yargs — most popular Node.js CLI argument parser (55M weekly downloads, 11k★) → CLI Tools
+    "commander": "cli",             # Commander.js — second most popular Node.js CLI framework (26k★) → CLI Tools
+    "chalk": "cli",                 # Chalk — terminal string styling (20k★); common CLI tooling query → CLI Tools
+    "inquirer": "cli",              # Inquirer.js — interactive CLI prompts (19k★); "inquirer alternative" → CLI Tools
+    # Developer — TypeScript and Node.js runtime tooling
+    "ts-node": "developer",         # ts-node — TypeScript execution for Node.js without pre-compiling (13k★) → Developer Tools
+    "tsnode": "developer",          # compound form — "tsnode alternative", "ts-node setup" → Developer Tools
+    "nodemon": "developer",         # nodemon — auto-restart Node.js on file change (26k★) → Developer Tools
+    # Payments — bank transfer standards (US ACH and EU SEPA — very common payment integration queries)
+    "ach": "payments",              # ACH — US bank transfer protocol; "ach payment api", "ach transfer" → Payments
+    "sepa": "payments",             # SEPA — EU bank transfer standard; "sepa direct debit", "sepa api" → Payments
+    # Message Queue — AWS SQS (canonical alternative query target for message queues)
+    "sqs": "message",               # AWS SQS — Simple Queue Service; "sqs alternative", "aws sqs" → Message Queues
+    # Notifications — AWS SNS (common alternative query for notification services)
+    "sns": "notifications",         # AWS SNS — Simple Notification Service; "sns alternative" → Notifications
+    # Media — Shaka Player (Google's adaptive media player for HLS/DASH streams)
+    "shaka": "media",               # Shaka Player — Google's open-source adaptive media player (6k★) → Media Server
 }
 
 _FTS_STOP_WORDS = {
