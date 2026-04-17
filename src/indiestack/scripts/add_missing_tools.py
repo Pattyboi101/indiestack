@@ -8029,6 +8029,86 @@ TOOLS = [
         "pip install git+https://github.com/openai/swarm.git",
         "code",
     ),
+    # Voice / real-time AI -------------------------------------------------------
+    (
+        "pipecat",
+        "Pipecat",
+        "Open-source framework for real-time voice and multimodal AI",
+        "Pipecat is an open-source Python framework for building voice bots, "
+        "AI companions, and real-time multimodal agents. Supports STT, TTS, LLMs, "
+        "and video via WebRTC. Built by Daily.co and used in production voice agents.",
+        "ai-automation",
+        "pipecat-ai/pipecat",
+        6000,
+        "https://www.pipecat.ai",
+        "voice-ai,real-time,webrtc,speech,python,agents",
+        "pip install pipecat-ai",
+        "code",
+    ),
+    # Local AI / screen data -------------------------------------------------------
+    (
+        "screenpipe",
+        "Screenpipe",
+        "Open-source local AI pipeline for screen and audio data",
+        "Screenpipe is an open-source Rust + Python framework that captures "
+        "your screen and microphone 24/7 and makes the data available to local LLMs. "
+        "Build personal AI that knows what you see — fully local, fully private.",
+        "ai-automation",
+        "mediar-ai/screenpipe",
+        9000,
+        "https://screenpi.pe",
+        "local-ai,privacy,screen-capture,llm,rust,python",
+        "brew install screenpipe",
+        "code",
+    ),
+    # AI-powered search -------------------------------------------------------
+    (
+        "perplexica",
+        "Perplexica",
+        "Open-source AI-powered search engine",
+        "Perplexica is an open-source alternative to Perplexity AI. It uses SearXNG "
+        "for web search and passes results through local or cloud LLMs to synthesise "
+        "answers with citations. Self-hostable via Docker.",
+        "search-engine",
+        "ItzCrazyKns/Perplexica",
+        18000,
+        "https://github.com/ItzCrazyKns/Perplexica",
+        "ai-search,llm,searxng,perplexity-alternative,self-hosted",
+        "docker-compose up -d",
+        "code",
+    ),
+    # Full-text search -------------------------------------------------------
+    (
+        "flexsearch",
+        "FlexSearch",
+        "Next-generation full-text search library for browsers and Node.js",
+        "FlexSearch is the fastest and most memory-efficient full-text search library "
+        "for JavaScript and TypeScript. Supports async indexing, tokenization, "
+        "phonetic matching, and custom encoders. Zero dependencies.",
+        "search-engine",
+        "nextapps-de/flexsearch",
+        12000,
+        "https://github.com/nextapps-de/flexsearch",
+        "search,full-text,javascript,browser,nodejs,fast",
+        "npm install flexsearch",
+        "code",
+    ),
+    # Postgres AI extension -------------------------------------------------------
+    (
+        "pgai",
+        "pgai",
+        "AI superpowers for your Postgres database",
+        "pgai is a PostgreSQL extension by Timescale that lets you call LLM APIs, "
+        "generate embeddings, and run semantic search directly from SQL. Works with "
+        "OpenAI, Ollama, Cohere, and Voyage. Pairs with pgvector for vector storage.",
+        "database",
+        "timescale/pgai",
+        3000,
+        "https://github.com/timescale/pgai",
+        "postgres,ai,embeddings,llm,vector,sql,timescale",
+        "CREATE EXTENSION IF NOT EXISTS ai CASCADE;",
+        "code",
+    ),
 ]
 
 

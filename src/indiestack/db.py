@@ -4946,6 +4946,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "swarm": "ai",                  # OpenAI Swarm — lightweight multi-agent orchestration framework → AI & Automation
     # AI — Roo Code open-source AI coding assistant (VS Code extension)
     "roocode": "ai",                # Roo Code — open-source AI coding extension (VS Code, 38k★) → AI & Automation
+    # AI — Bolt.new (StackBlitz AI web app builder from prompts, 2026 vibe-coding tool)
+    "bolt": "ai",                   # Bolt.new — AI-powered app builder from text prompts → AI & Automation
+    # AI — Pipecat real-time voice/video AI pipeline framework (6k★)
+    "pipecat": "ai",                # Pipecat — real-time voice AI framework by Daily.co (6k★) → AI & Automation
+    # AI — Replit Agent AI-assisted coding and deployment platform
+    "replit": "ai",                 # Replit Agent — AI coding + instant deployment in the browser → AI & Automation
+    # AI — Screenpipe open-source local AI screen data pipeline (9k★)
+    "screenpipe": "ai",             # Screenpipe — open-source local AI screen monitoring pipeline (9k★) → AI & Automation
+    # Developer — Apify web scraping and automation platform
+    "apify": "developer",           # Apify — web scraping, crawling, and automation platform → Developer Tools
+    # Search — Perplexica open-source AI-powered search engine (18k★)
+    "perplexica": "search",         # Perplexica — open-source Perplexity-style AI search engine (18k★) → Search Engines
+    # AI — Agent Zero open-source agentic AI OS framework
+    "agentzero": "ai",              # Agent Zero — open-source agentic AI OS framework → AI & Automation
+    "agent-zero": "ai",             # hyphenated form — "agent-zero alternative", "agent-zero python" → AI & Automation
+    # Search — MiniSearch lightweight in-browser full-text search (5k★)
+    "minisearch": "search",         # MiniSearch — lightweight in-memory full-text search for JS/TS (5k★) → Search Engines
+    # AI — pgai Timescale Postgres extension for in-database LLM operations
+    "pgai": "ai",                   # pgai — Postgres extension for AI/LLM directly in SQL (Timescale) → AI & Automation
+    # Search — FlexSearch next-generation JS full-text search library (12k★)
+    "flexsearch": "search",         # FlexSearch — high-performance full-text search library for JS/TS (12k★) → Search Engines
+    # AI — SWE-agent Princeton autonomous software engineering agent (15k★)
+    "sweagent": "ai",               # SWE-agent — Princeton autonomous software engineering agent (15k★) → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-sixth pass)
+Last updated: 2026-04-17 (one-hundred-and-seventh pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-17 (one-hundred-and-sixth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1791 unique active keys (one-hundred-and-sixth pass: +12 new — vibe, vibecoding, vibe-coding, mcpserver, mcp-server, browser-use, browseruse, stagehand, waku, risingwave, swarm, roocode; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 479 unique tools (added 5 new: browser-use, stagehand, waku, risingwave, openai-swarm)
+- **_CAT_SYNONYMS**: 1801 unique active keys (one-hundred-and-seventh pass: +12 new — bolt, pipecat, replit, screenpipe, apify, perplexica, agentzero, agent-zero, minisearch, pgai, flexsearch, sweagent; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 484 unique tools (added 5 new: pipecat, screenpipe, perplexica, flexsearch, pgai)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -20,36 +20,36 @@ Last updated: 2026-04-17 (one-hundred-and-sixth pass)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
 
-## Completed This Session (2026-04-17, one-hundred-and-sixth pass — autonomous improvement cycle)
+## Completed This Session (2026-04-17, one-hundred-and-seventh pass — autonomous improvement cycle)
 
 ### Search Quality (Step 1)
-- Added 12 new `_CAT_SYNONYMS` entries (1779 → 1791 unique keys, 0 duplicates):
-  - **AI**: `vibe` → ai — "vibe coding" (Karpathy's 2026 term for AI-assisted coding)
-  - **AI**: `vibecoding` → ai — compound form of "vibe coding"
-  - **AI**: `vibe-coding` → ai — hyphenated form
-  - **MCP**: `mcpserver` → mcp — compound "mcp server" (no space, common in queries)
-  - **MCP**: `mcp-server` → mcp — hyphenated form
-  - **AI**: `browser-use` → ai — Python AI browser automation library (25k★)
-  - **AI**: `browseruse` → ai — compound form
-  - **AI**: `stagehand` → ai — Browserbase AI browser SDK (8k★)
-  - **Frontend**: `waku` → frontend — minimal React RSC framework (5k★)
-  - **Database**: `risingwave` → database — distributed SQL streaming database (7k★)
-  - **AI**: `swarm` → ai — OpenAI Swarm multi-agent framework
-  - **AI**: `roocode` → ai — Roo Code AI coding assistant (38k★)
+- Added 12 new `_CAT_SYNONYMS` entries (1791 → 1801 unique keys, 0 duplicates):
+  - **AI**: `bolt` → ai — Bolt.new (StackBlitz AI app builder from prompts, 2026 vibe-coding tool)
+  - **AI**: `pipecat` → ai — Pipecat (Daily.co real-time voice AI framework, 6k★)
+  - **AI**: `replit` → ai — Replit Agent (AI-assisted coding + deployment)
+  - **AI**: `screenpipe` → ai — Screenpipe (open-source local AI screen monitoring, 9k★)
+  - **Developer**: `apify` → developer — Apify (web scraping + automation platform)
+  - **Search**: `perplexica` → search — Perplexica (open-source AI search engine, 18k★)
+  - **AI**: `agentzero` → ai — Agent Zero (open-source agentic AI OS framework)
+  - **AI**: `agent-zero` → ai — hyphenated form
+  - **Search**: `minisearch` → search — MiniSearch (lightweight in-browser full-text search, 5k★)
+  - **AI**: `pgai` → ai — pgai (Timescale Postgres AI extension for in-database LLMs)
+  - **Search**: `flexsearch` → search — FlexSearch (high-performance JS full-text search, 12k★)
+  - **AI**: `sweagent` → ai — SWE-agent (Princeton autonomous software engineering agent, 15k★)
 
 ### Catalog Script (Step 2)
-- Added 5 new tools to `scripts/add_missing_tools.py` (474 → 479 unique):
-  - **Browser Use** (browser-use/browser-use, 25k★) — AI browser automation; ai-automation
-  - **Stagehand** (browserbase/stagehand, 8k★) — AI browser automation SDK; ai-automation
-  - **Waku** (dai-shi/waku, 5k★) — minimal React RSC framework; frontend-frameworks
-  - **RisingWave** (risingwavelabs/risingwave, 7k★) — SQL streaming database; database
-  - **OpenAI Swarm** (openai/swarm, 9k★) — multi-agent orchestration; ai-automation
+- Added 5 new tools to `scripts/add_missing_tools.py` (479 → 484 unique):
+  - **Pipecat** (pipecat-ai/pipecat, 6k★) — real-time voice AI framework; ai-automation
+  - **Screenpipe** (mediar-ai/screenpipe, 9k★) — local AI screen monitoring; ai-automation
+  - **Perplexica** (ItzCrazyKns/Perplexica, 18k★) — open-source AI search engine; search-engine
+  - **FlexSearch** (nextapps-de/flexsearch, 12k★) — high-performance JS full-text search; search-engine
+  - **pgai** (timescale/pgai, 3k★) — Postgres AI extension for in-database LLMs; database
 
 ### Code Quality (Step 3)
 - Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
 
 ### R&D Docs (Step 4)
-- sprint.md updated to one-hundred-and-sixth pass
+- sprint.md updated to one-hundred-and-seventh pass
 
 ---
 
