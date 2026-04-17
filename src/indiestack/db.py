@@ -4789,6 +4789,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     # SEO — structured data and JSON-LD markup tools
     "jsonld": "seo",               # JSON-LD — structured data for rich results; "json-ld tool" → SEO Tools
     "schemaorg": "seo",            # Schema.org — "schema.org markup", "schema.org generator" → SEO Tools
+    # CMS — major headless CMS platforms not individually mapped
+    "datocms": "cms",               # DatoCMS — API-based headless CMS with GraphQL (popular SaaS)
+    "hygraph": "cms",               # Hygraph — GraphQL-native headless CMS (formerly GraphCMS, 2k★)
+    "graphcms": "cms",              # GraphCMS — legacy name for Hygraph; "graphcms alternative" queries still active
+    "prismic": "cms",               # Prismic — headless CMS with slice-based content modeling
+    "buttercms": "cms",             # ButterCMS — headless CMS API with marketing tools SaaS
+    "builderio": "cms",             # Builder.io — visual headless CMS + design-to-code DX platform
+    # Frontend — Vue 2 state management (still widely deployed; "vuex alternative" high-volume)
+    "vuex": "frontend",             # Vuex — Vue 2 official state management (superseded by Pinia, 28k★)
+    # Email — MailerSend transactional email (popular Mailgun/SendGrid indie alternative)
+    "mailersend": "email",          # MailerSend — transactional email API with generous free tier
+    # DevOps — Zeabur cloud deployment (fastest-growing Railway/Render alternative in 2026)
+    "zeabur": "devops",             # Zeabur — zero-config app deployment platform → DevOps & Infrastructure
+    # Database — HarperDB (graph-relational DB with built-in REST/GraphQL API)
+    "harperdb": "database",         # HarperDB — graph-relational database with built-in REST/GraphQL API (11k★)
+    # API — Grafbase GraphQL edge API platform
+    "grafbase": "api",              # Grafbase — GraphQL edge API gateway with federation support
+    # Developer — Xano no-code backend and Airtable (extremely high "alternative" query volume)
+    "xano": "developer",            # Xano — no-code backend platform (scalable APIs without code)
+    "airtable": "developer",        # Airtable — spreadsheet-database hybrid; "airtable alternative" is high-volume
+    # Frontend — FlutterFlow visual app builder and NW.js desktop framework
+    "flutterflow": "frontend",      # FlutterFlow — visual Flutter app builder for iOS/Android/Web
+    "nwjs": "frontend",             # NW.js — desktop apps with Chromium + Node.js (Electron alternative, 40k★)
 }
 
 _FTS_STOP_WORDS = {

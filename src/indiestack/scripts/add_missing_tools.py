@@ -7710,6 +7710,91 @@ TOOLS = [
         "npm install hls.js",
         "code",
     ),
+    # Prismic — headless CMS with slice content modeling -----------------------
+    (
+        "prismic",
+        "Prismic",
+        "The headless CMS with slice-based content modeling",
+        "Prismic is a headless CMS that lets developers build rich web experiences "
+        "with a slice-based content modeling system. It offers a writing room for "
+        "editors, type-safe SDKs for Next.js, Nuxt, SvelteKit, and a visual builder "
+        "for creating page layouts without touching code.",
+        "headless-cms",
+        None,
+        0,
+        "https://prismic.io",
+        "cms,headless,saas,slices,visual-builder",
+        "npm install @prismicio/client",
+        "saas",
+    ),
+    # Hygraph — GraphQL-native headless CMS ------------------------------------
+    (
+        "hygraph",
+        "Hygraph",
+        "The GraphQL-native headless CMS",
+        "Hygraph (formerly GraphCMS) is a headless CMS built around a pure GraphQL "
+        "content API. It features a powerful content modelling UI, federation to "
+        "connect multiple GraphQL APIs, webhooks, and SDKs for every major framework. "
+        "Used by teams who want a strongly-typed, schema-first content layer.",
+        "headless-cms",
+        None,
+        0,
+        "https://hygraph.com",
+        "cms,headless,graphql,saas,federation",
+        "npm install graphql-request",
+        "saas",
+    ),
+    # MailerSend — transactional email API -------------------------------------
+    (
+        "mailersend",
+        "MailerSend",
+        "Transactional email API built for developers",
+        "MailerSend is a developer-focused transactional email platform with a "
+        "generous free tier (3,000 emails/month), drag-and-drop template builder, "
+        "email verification API, and SDKs for Node.js, PHP, Python, Ruby, and Go. "
+        "A strong Mailgun and SendGrid alternative for indie makers.",
+        "email-marketing",
+        None,
+        0,
+        "https://www.mailersend.com",
+        "email,transactional,api,smtp,saas",
+        "npm install mailersend",
+        "saas",
+    ),
+    # Nhost — open-source Firebase alternative with Hasura GraphQL -------------
+    (
+        "nhost",
+        "Nhost",
+        "The open-source Firebase alternative with GraphQL",
+        "Nhost is an open-source backend-as-a-service that combines Postgres, "
+        "Hasura GraphQL, Auth (JWT + OAuth), Storage (S3-compatible), and "
+        "serverless functions into one platform. Self-host it or use Nhost Cloud. "
+        "Ideal for teams who want real-time GraphQL without the Firebase vendor lock-in.",
+        "database",
+        "nhost/nhost",
+        8000,
+        "https://nhost.io",
+        "baas,graphql,postgres,hasura,auth,storage,firebase-alternative",
+        "npm install @nhost/nhost-js",
+        "code",
+    ),
+    # Zeabur — zero-config cloud deployment platform ---------------------------
+    (
+        "zeabur",
+        "Zeabur",
+        "Deploy anything in seconds, no config needed",
+        "Zeabur is a modern platform-as-a-service that automatically detects your "
+        "language and framework, builds, and deploys your app in seconds. "
+        "Supports Node.js, Python, Go, Ruby, PHP, Java, Rust, and Docker. "
+        "A fast-growing Railway and Render alternative popular in Asia-Pacific markets.",
+        "devops-infrastructure",
+        None,
+        0,
+        "https://zeabur.com",
+        "paas,deployment,hosting,serverless,saas",
+        "npm install -g zeabur",
+        "saas",
+    ),
 ]
 
 
