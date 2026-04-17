@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-second pass)
+Last updated: 2026-04-17 (one-hundred-and-third pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-17 (one-hundred-and-second pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1743 unique active keys (one-hundred-and-second pass: +12 new — deepseek, deepseekr1, kinde, descope, scalekit, stackauth, stack-auth, nixpacks, panda-css, stylex, browserbase, playwright-mcp; 0 duplicates)
-- **Catalog script**: `scripts/add_missing_tools.py` — 459 unique tools (added 5 new: scalekit, stack-auth, nixpacks, stylex, descope)
+- **_CAT_SYNONYMS**: 1755 unique active keys (one-hundred-and-third pass: +12 new — ffmpeg, yaml, toml, dunning, vat, tokenizer, tokenization, flowbite, mermaidjs, rtl, tremor, csp; 0 duplicates)
+- **Catalog script**: `scripts/add_missing_tools.py` — 464 unique tools (added 5 new: kinde, flowbite, tremor, cloudinary, plausible)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-17 (one-hundred-and-second pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-17, one-hundred-and-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries (1743 → 1755 unique keys, 0 duplicates):
+  - **Media**: `ffmpeg` → media — FFmpeg universal multimedia framework (most-searched video tool)
+  - **Developer**: `yaml` → developer — YAML parsers/validators (js-yaml, PyYAML, yamllint)
+  - **Developer**: `toml` → developer — TOML config format parsers (toml.rs, tomllib)
+  - **Payments**: `dunning` → payments — dunning management (failed payment recovery flows)
+  - **Invoicing**: `vat` → invoicing — VAT compliance and calculation tools (EU VAT API)
+  - **AI**: `tokenizer` → ai — tokenizer tools (tiktoken, BPE tokenizers for LLM pipelines)
+  - **AI**: `tokenization` → ai — explicit form for LLM text tokenization queries
+  - **Frontend**: `flowbite` → frontend — Flowbite Tailwind CSS component library (8k★)
+  - **Developer**: `mermaidjs` → developer — compound form of mermaid.js (complement to mermaid)
+  - **Localization**: `rtl` → localization — right-to-left layout support (Arabic, Hebrew, Persian)
+  - **Analytics**: `tremor` → analytics — Tremor React dashboard component library (15k★)
+  - **Security**: `csp` → security — Content Security Policy headers middleware
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (459 → 464 unique):
+  - **Kinde** (kinde-oss/kinde-auth-nextjs, 2k★) — modern auth provider; authentication
+  - **Flowbite** (themesberg/flowbite, 8k★) — Tailwind CSS UI components; frontend-frameworks
+  - **Tremor** (tremorlabs/tremor, 15k★) — React dashboard charts; analytics-metrics
+  - **Cloudinary** (cloudinary/cloudinary_npm, 3k★) — image/video CDN+transform; file-management
+  - **Plausible Analytics** (plausible/analytics, 20k★) — privacy-friendly analytics; analytics-metrics
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundred-and-third pass
+
+---
 
 ## Completed This Session (2026-04-17, one-hundred-and-second pass — autonomous improvement cycle)
 

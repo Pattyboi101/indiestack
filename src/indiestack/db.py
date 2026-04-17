@@ -4863,6 +4863,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "browserbase": "api",           # Browserbase — cloud browser API for AI agent web automation → API Tools
     # MCP — browser automation MCP server (high-growth query segment as agents use Playwright/Puppeteer)
     "playwright-mcp": "mcp",        # Playwright MCP — browser automation MCP server for AI agents → MCP Servers
+    # Media — FFmpeg is the most-searched video/audio processing tool (every "video tool" query hits it)
+    "ffmpeg": "media",              # FFmpeg — universal multimedia framework (video transcode, stream, convert) → Media Server
+    # Developer Tools — data format parsers (config, data, interchange formats)
+    "yaml": "developer",            # YAML parsers/validators — js-yaml, PyYAML, yamllint, strictyaml → Developer Tools
+    "toml": "developer",            # TOML config parsers — toml.rs, tomllib, toml-ts, toml-node → Developer Tools
+    # Payments — dunning management (failed payment retry and recovery)
+    "dunning": "payments",          # dunning management — failed payment recovery flows → Payments (Stripe Billing, Chargebee)
+    # Invoicing — VAT compliance and calculation
+    "vat": "invoicing",             # VAT compliance — "vat calculation", "eu vat api" → Invoicing & Billing (Anrok, TaxJar, Avalara)
+    # AI — text tokenization (tokenizer tools for LLM pre-processing pipelines)
+    "tokenizer": "ai",              # tokenizer tools — "bpe tokenizer", "tiktoken alternative" → AI & Automation
+    "tokenization": "ai",           # explicit form — "text tokenization", "input tokenization for llms" → AI & Automation
+    # Frontend — Flowbite (open-source Tailwind CSS component library with React/Vue/Angular variants)
+    "flowbite": "frontend",         # Flowbite — Tailwind CSS UI component library (React/Vue/Svelte, 8k★) → Frontend Frameworks
+    # Developer Tools — Mermaid.js compound form (complement to "mermaid"→developer at line ~3538)
+    "mermaidjs": "developer",       # MermaidJS — compound form; "mermaidjs alternative", "mermaidjs tutorial" → Developer Tools
+    # Localization — RTL (right-to-left) layout support for Arabic, Hebrew, Persian, Urdu
+    "rtl": "localization",          # RTL layout support — "rtl react", "rtl languages", "rtl css" → Localization
+    # Analytics — Tremor (open-source React dashboard and charting component library)
+    "tremor": "analytics",          # Tremor — React dashboard components for BI/analytics UIs (15k★) → Analytics & Metrics
+    # Security — Content Security Policy (CSP headers, nonce generation, report-only mode)
+    "csp": "security",              # CSP — Content Security Policy headers; "csp nonce", "csp middleware" → Security Tools
 }
 
 _FTS_STOP_WORDS = {

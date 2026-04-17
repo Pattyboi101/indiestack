@@ -7686,6 +7686,92 @@ TOOLS = [
         "npm install @stylexjs/stylex",
         "code",
     ),
+    # Auth — Kinde modern authentication provider ----------------------------------------
+    (
+        "kinde",
+        "Kinde",
+        "Auth for modern applications — with generous free tier",
+        "Kinde is a modern authentication and user management platform built for developers. "
+        "Drop-in auth with Next.js, React, Python, Go, and more. Supports passwordless, "
+        "Google/GitHub OAuth, MFA, SSO/SAML, fine-grained permissions, and multi-tenancy. "
+        "Free tier supports unlimited MAUs (up to 10,500/mo). Fast setup — auth in under "
+        "10 minutes. B2B-ready with org management out of the box.",
+        "authentication",
+        "kinde-oss/kinde-auth-nextjs",
+        2000,
+        "https://kinde.com",
+        "auth,nextjs,react,oauth,mfa,sso,saml,multi-tenancy,passwordless",
+        "npm install @kinde-oss/kinde-auth-nextjs",
+        "saas",
+    ),
+    # Frontend — Flowbite Tailwind CSS component library --------------------------------
+    (
+        "flowbite",
+        "Flowbite",
+        "Open-source UI component library built on Tailwind CSS",
+        "Flowbite is a rich library of 600+ UI components built with Tailwind CSS. "
+        "Components include modals, navbars, tables, forms, dropdowns, cards, datepickers, "
+        "and 50+ more. Official React, Vue, Svelte, and Angular variants available. "
+        "Free community edition plus Flowbite Pro with 400+ extra components.",
+        "frontend-frameworks",
+        "themesberg/flowbite",
+        8000,
+        "https://flowbite.com",
+        "tailwind,ui,components,react,vue,svelte,design-system",
+        "npm install flowbite",
+        "code",
+    ),
+    # Analytics — Tremor React dashboard component library ------------------------------
+    (
+        "tremor",
+        "Tremor",
+        "React components to build charts and dashboards fast",
+        "Tremor is an open-source React component library for building analytics dashboards "
+        "and data visualizations. Pre-built components for line charts, bar charts, area charts, "
+        "KPI cards, tables, and more — all styled with Tailwind CSS. Zero-config, "
+        "fully composable, and TypeScript-first.",
+        "analytics-metrics",
+        "tremorlabs/tremor",
+        15000,
+        "https://tremor.so",
+        "react,charts,dashboard,tailwind,analytics,typescript,data-visualization",
+        "npm install @tremor/react",
+        "code",
+    ),
+    # File Management — Cloudinary image and video CDN ----------------------------------
+    (
+        "cloudinary",
+        "Cloudinary",
+        "Image and video cloud platform for developers",
+        "Cloudinary is the leading cloud platform for images and videos. On-the-fly "
+        "transformation via URL parameters, automatic format optimisation (WebP, AVIF), "
+        "smart cropping, face detection, and a global CDN. Used by 2 million+ developers. "
+        "SDKs for Node.js, Python, Ruby, PHP, Java, and more.",
+        "file-management",
+        "cloudinary/cloudinary_npm",
+        3000,
+        "https://cloudinary.com",
+        "images,video,cdn,transformation,upload,optimization,storage",
+        "npm install cloudinary",
+        "saas",
+    ),
+    # Analytics — Plausible privacy-friendly analytics ----------------------------------
+    (
+        "plausible",
+        "Plausible Analytics",
+        "Simple, privacy-friendly alternative to Google Analytics",
+        "Plausible is an open-source, lightweight web analytics tool. Tracks page views, "
+        "referrers, countries, and devices without cookies or GDPR consent popups. "
+        "Script is 1kB — 45x lighter than Google Analytics. Self-host or use Plausible Cloud. "
+        "No personal data collected, no cross-site tracking.",
+        "analytics-metrics",
+        "plausible/analytics",
+        20000,
+        "https://plausible.io",
+        "analytics,privacy,gdpr,open-source,self-hosted,google-analytics-alternative",
+        "# Add script to HTML: <script defer data-domain=\"yourdomain.com\" src=\"https://plausible.io/js/script.js\"></script>",
+        "code",
+    ),
     # Auth — Descope no-code auth with visual flow builder ----------------------------------
     (
         "descope",
