@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-18 (one-hundred-and-eighteenth pass)
+Last updated: 2026-04-18 (one-hundred-and-nineteenth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-18 (one-hundred-and-eighteenth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1995 unique active keys (one-hundred-and-eighteenth pass: +11 new — arctic, vike, orpc, gel, vine, vinejs, io-ts, runtypes, grafbase, hookform, hattip)
-- **Catalog script**: `scripts/add_missing_tools.py` — 539 unique tools (added 5 new: arctic, vike, orpc, gel, vinejs)
+- **_CAT_SYNONYMS**: 2005 unique active keys (one-hundred-and-nineteenth pass: +10 new — web3, nft, natural, tokenize, llm-proxy, llmproxy, lake, apikey, api-key, testcontainer)
+- **Catalog script**: `scripts/add_missing_tools.py` — 544 unique tools (added 5 new: localstack, testify, pact-js, flyway, weblate)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,37 @@ Last updated: 2026-04-18 (one-hundred-and-eighteenth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-18, one-hundred-and-nineteenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 10 new `_CAT_SYNONYMS` entries → 2005 unique keys:
+  - **Web3**: `web3` → developer — "web3 library", "web3 tools", "web3 development"
+  - **Web3**: `nft` → developer — "nft minting", "nft smart contract", "nft tooling"
+  - **AI**: `natural` → ai — "natural language processing", "natural language API"
+  - **AI**: `tokenize` → ai — verb form ("tokenize input", "tokenize text for llm")
+  - **AI**: `llm-proxy` → ai — "llm-proxy setup", "llm-proxy alternative"
+  - **AI**: `llmproxy` → ai — compound form for LLM proxy queries
+  - **Database**: `lake` → database — "data lake tool" (complement to "lakehouse"→database)
+  - **API**: `apikey` → api — compound form API key management (Unkey)
+  - **API**: `api-key` → api — hyphenated API key management form
+  - **Testing**: `testcontainer` → testing — singular form (complement to "testcontainers"→testing)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (539 → 544 unique):
+  - **LocalStack** (localstack/localstack, 58k★) — AWS emulation; devops-infrastructure
+  - **Testify** (stretchr/testify, 23k★) — Go testing toolkit; testing-tools
+  - **Pact JS** (pact-foundation/pact-js, 1.6k★) — consumer-driven contracts; testing-tools
+  - **Flyway** (flyway/flyway, 8k★) — SQL database migrations; database
+  - **Weblate** (WeblateOrg/weblate, 4k★) — self-hosted translation platform; localization
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-18, one-hundred-and-eighteenth pass — autonomous improvement cycle)
 

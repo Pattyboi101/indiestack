@@ -9032,6 +9032,100 @@ TOOLS = [
         "npm install @vinejs/vine",
         "code",
     ),
+    # DevOps & Infrastructure ---------------------------------------------------
+    (
+        "localstack",
+        "LocalStack",
+        "A fully functional local AWS cloud stack",
+        "LocalStack provides a fully functional local cloud stack for developing and "
+        "testing your cloud and serverless applications offline. Emulates 80+ AWS "
+        "services including S3, Lambda, DynamoDB, SQS, SNS, and API Gateway. "
+        "Runs as a Docker container and integrates with existing AWS SDKs — no code "
+        "changes needed. Dramatically speeds up CI/CD pipelines by eliminating remote "
+        "AWS calls.",
+        "devops-infrastructure",
+        "localstack/localstack",
+        58000,
+        "https://localstack.cloud",
+        "aws,testing,local-development,serverless,cloud-emulation",
+        "pip install localstack && localstack start",
+        "code",
+    ),
+    # Testing Tools -------------------------------------------------------------
+    (
+        "testify",
+        "Testify",
+        "A toolkit with common assertions and mocks for Go testing",
+        "Testify is the most popular Go testing toolkit, providing simple assertion "
+        "functions, mock object creation, and test suite utilities. Works seamlessly "
+        "with the standard 'testing' package. Includes: assert (basic assertions), "
+        "require (fatal assertions), mock (mock objects), and suite (test suites). "
+        "Used in production by the vast majority of Go projects.",
+        "testing-tools",
+        "stretchr/testify",
+        23000,
+        "https://github.com/stretchr/testify",
+        "go,golang,testing,assertions,mocking,test-suite",
+        "go get github.com/stretchr/testify",
+        "code",
+    ),
+    (
+        "pact-js",
+        "Pact JS",
+        "JavaScript implementation of Pact contract testing",
+        "Pact is a consumer-driven contract testing framework. The JavaScript "
+        "implementation supports Node.js, TypeScript, and browser environments. "
+        "Define API contracts from the consumer side (e.g. React app) and verify "
+        "the provider (e.g. Express API) automatically. Catches integration bugs "
+        "before they reach production. Used at companies like IBM, Atlassian, and "
+        "many others with microservice architectures.",
+        "testing-tools",
+        "pact-foundation/pact-js",
+        1600,
+        "https://docs.pact.io",
+        "contract-testing,consumer-driven,api-testing,microservices,node,typescript",
+        "npm install @pact-foundation/pact",
+        "code",
+    ),
+    # Database ------------------------------------------------------------------
+    (
+        "flyway",
+        "Flyway",
+        "Database migrations made easy",
+        "Flyway is an open-source database migration tool that strongly favors "
+        "simplicity and convention over configuration. Uses SQL scripts (or Java) "
+        "for versioned migrations, checksums to detect corruption, and a clean "
+        "baseline concept. Supports PostgreSQL, MySQL, MariaDB, SQLite, SQL Server, "
+        "Oracle, and more. Widely used in Java/Spring Boot ecosystems and adopted "
+        "across all backend languages.",
+        "database",
+        "flyway/flyway",
+        8000,
+        "https://flywaydb.org",
+        "migration,database,sql,versioning,schema,java,spring",
+        "# Maven: add flyway-core dependency | CLI: brew install flyway",
+        "code",
+    ),
+    # Localization --------------------------------------------------------------
+    (
+        "weblate",
+        "Weblate",
+        "Web-based localization tool with tight version control integration",
+        "Weblate is an open-source continuous localization platform with tight "
+        "version control integration. Supports 300+ file formats including "
+        "PO/POT, XLIFF, JSON, Android XML, iOS Strings, and more. Features "
+        "translation memory, machine translation (DeepL, Google, Microsoft), "
+        "glossaries, and quality checks. Self-hostable or available as "
+        "hosted.weblate.org. Used by GNOME, KDE, phpMyAdmin, and thousands of "
+        "open-source projects.",
+        "localization",
+        "WeblateOrg/weblate",
+        4000,
+        "https://weblate.org",
+        "i18n,l10n,translation,localization,self-hosted,open-source,po,xliff",
+        "pip install Weblate  # or: docker run weblate/weblate",
+        "code",
+    ),
 ]
 
 

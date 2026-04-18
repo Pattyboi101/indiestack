@@ -5244,6 +5244,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "hookform": "forms",            # hookform — shorthand; "hookform alternative", "hookform vs formik" → Forms & Surveys
     # API — HatTip server-agnostic HTTP handler framework (runs on Node, Deno, Bun, Cloudflare)
     "hattip": "api",                # HatTip — "hattip alternative", "hattip vs hono" → API Tools
+    # Web3 / blockchain — named query terms not yet mapped (complement to "blockchain"/"solidity"/"ethers" already mapped)
+    "web3": "developer",            # Web3 — "web3 library", "web3 tools", "web3 development" → Developer Tools
+    "nft": "developer",             # NFT — "nft minting", "nft smart contract", "nft tooling" → Developer Tools
+    # AI — natural language processing query patterns not yet covered
+    "natural": "ai",                # "natural language processing", "natural language API", "natural language search" → AI & Automation
+    "tokenize": "ai",               # verb form — "tokenize input", "tokenize text for llm", "tokenize document" → AI & Automation
+    # LLM proxy — routing for proxy/gateway query terms (complement to "litellm"→ai, "portkey"→ai, "openrouter"→ai)
+    "llm-proxy": "ai",              # hyphenated — "llm-proxy setup", "llm-proxy alternative", "llm-proxy caching" → AI & Automation
+    "llmproxy": "ai",               # compound — "llmproxy rate limiting", "llmproxy server" → AI & Automation
+    # Database — data lake query routing (complement to "lakehouse"→database, "iceberg"→database, "delta"→database)
+    "lake": "database",             # "data lake tool", "data lake platform", "lake formation alternative" → Database
+    # API — API key management compound/hyphenated forms (Unkey, Kong, Zuplo live in API Tools)
+    "apikey": "api",                # compound — "apikey management", "apikey generation", "apikey validation" → API Tools
+    "api-key": "api",               # hyphenated — "api-key management", "api-key service", "api-key authentication" → API Tools
+    # Testing — singular form for Testcontainers (complement to "testcontainers"→testing already mapped)
+    "testcontainer": "testing",     # singular — "testcontainer for postgres", "testcontainer setup" → Testing Tools
 }
 
 _FTS_STOP_WORDS = {
