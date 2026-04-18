@@ -8946,6 +8946,92 @@ TOOLS = [
         "npm install release-it --save-dev",
         "code",
     ),
+    # Authentication ------------------------------------------------------------
+    (
+        "arctic",
+        "Arctic",
+        "TypeScript OAuth 2.0 providers library for any runtime",
+        "Arctic is a TypeScript library that provides OAuth 2.0 client implementations "
+        "for 50+ providers (Google, GitHub, Apple, Discord, Twitch, etc.). Works on any "
+        "JS runtime — Node.js, Deno, Bun, Cloudflare Workers. Pairs naturally with "
+        "Lucia Auth; used wherever you need OAuth without heavy framework lock-in.",
+        "authentication",
+        "pilcrowonpaper/arctic",
+        3000,
+        "https://arcticjs.dev",
+        "oauth,oauth2,social-login,typescript,authentication,providers",
+        "npm install arctic",
+        "code",
+    ),
+    # Frontend Frameworks -------------------------------------------------------
+    (
+        "vike",
+        "Vike",
+        "Like Next.js but as a do-one-thing-do-it-well Vite plugin",
+        "Vike (formerly vite-plugin-ssr) is a flexible SSR/SSG framework built on Vite. "
+        "Works with React, Vue, Svelte, Solid, and any UI framework. Unlike Next.js it "
+        "gives you full control over the rendering pipeline — server-side rendering, "
+        "static generation, SPA mode, or a mix. Powers TanStack Start and SolidStart.",
+        "frontend-frameworks",
+        "vikejs/vike",
+        4000,
+        "https://vike.dev",
+        "ssr,ssg,vite,react,vue,svelte,solid,meta-framework",
+        "npm install vike",
+        "code",
+    ),
+    # API Tools -----------------------------------------------------------------
+    (
+        "orpc",
+        "oRPC",
+        "Typesafe APIs made simple, with first-class support for server actions",
+        "oRPC provides end-to-end type safety for APIs without schemas or codegen. "
+        "Define procedures in TypeScript, call them from any client with full type "
+        "inference. Supports React Server Actions, OpenAPI generation, Zod integration, "
+        "and works on Node.js, Deno, Bun, and edge runtimes. Growing tRPC alternative.",
+        "api-tools",
+        "unnoq/orpc",
+        5000,
+        "https://orpc.unnoq.com",
+        "typescript,rpc,type-safe,server-actions,openapi,trpc-alternative",
+        "npm install @orpc/server @orpc/client",
+        "code",
+    ),
+    # Database ------------------------------------------------------------------
+    (
+        "gel",
+        "Gel",
+        "The post-SQL database for modern developers",
+        "Gel (formerly EdgeDB) is a graph-relational database with a powerful type "
+        "system, declarative schema, built-in migrations, and EdgeQL — a query language "
+        "that lets you traverse object graphs without JOINs. Native TypeScript client, "
+        "Auth module, AI vector support, and HTTP/GraphQL/REST query interfaces.",
+        "database",
+        "geldata/gel",
+        15000,
+        "https://gel.com",
+        "database,graph-relational,edgeql,typescript,migrations,vector,auth",
+        "pip install gel  # or: npm install gel",
+        "code",
+    ),
+    # Developer Tools -----------------------------------------------------------
+    (
+        "vinejs",
+        "VineJS",
+        "Form data validation library for Node.js",
+        "VineJS is a fast and expressive validation library for Node.js created by "
+        "the AdonisJS team. Built for form/JSON validation on the server, it supports "
+        "complex conditional rules, nested schemas, unions, and custom validators. "
+        "Significantly faster than Zod and Yup in benchmarks; used heavily with AdonisJS "
+        "and increasingly adopted as a standalone Zod alternative in Node projects.",
+        "developer-tools",
+        "vinejs/vine",
+        2000,
+        "https://vinejs.dev",
+        "validation,schema,node,typescript,form,zod-alternative",
+        "npm install @vinejs/vine",
+        "code",
+    ),
 ]
 
 

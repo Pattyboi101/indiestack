@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-18 (one-hundred-and-seventeenth pass)
+Last updated: 2026-04-18 (one-hundred-and-eighteenth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-18 (one-hundred-and-seventeenth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1984 unique active keys (one-hundred-and-seventeenth pass: +12 new — model, serving, grounding, context-window, contextwindow, relational, offline, functional, type, workload, artifact, rollout)
-- **Catalog script**: `scripts/add_missing_tools.py` — 534 unique tools (added 5 new: alpinejs, fp-ts, changesets, litestar, release-it)
+- **_CAT_SYNONYMS**: 1995 unique active keys (one-hundred-and-eighteenth pass: +11 new — arctic, vike, orpc, gel, vine, vinejs, io-ts, runtypes, grafbase, hookform, hattip)
+- **Catalog script**: `scripts/add_missing_tools.py` — 539 unique tools (added 5 new: arctic, vike, orpc, gel, vinejs)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,38 @@ Last updated: 2026-04-18 (one-hundred-and-seventeenth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-18, one-hundred-and-eighteenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 11 new `_CAT_SYNONYMS` entries → 1995 unique keys (no new duplicates):
+  - **Auth**: `arctic` → authentication — Arctic OAuth 2.0 providers library (pilcrowOnPaper/arctic)
+  - **Frontend**: `vike` → frontend — Vike (formerly vite-plugin-ssr) SSR/SSG framework
+  - **API**: `orpc` → api — oRPC TypeScript-first type-safe RPC; "orpc vs trpc" queries
+  - **Database**: `gel` → database — Gel (formerly EdgeDB) graph-relational DB (rebranded 2025)
+  - **Developer**: `vine` → developer — VineJS Node.js validation library (AdonisJS team)
+  - **Developer**: `vinejs` → developer — compound form; "vinejs vs zod" queries
+  - **Developer**: `io-ts` → developer — gcanti's io-ts runtime type validation library
+  - **Developer**: `runtypes` → developer — TypeScript runtime type checking; "runtypes vs zod"
+  - **API**: `grafbase` → api — Grafbase serverless GraphQL API platform
+  - **Forms**: `hookform` → forms — shorthand for react-hook-form; "hookform alternative"
+  - **API**: `hattip` → api — HatTip server-agnostic HTTP handler framework
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (534 → 539 unique):
+  - **Arctic** (pilcrowonpaper/arctic, 3k★) — OAuth 2.0 providers; authentication
+  - **Vike** (vikejs/vike, 4k★) — SSR/SSG Vite plugin framework; frontend-frameworks
+  - **oRPC** (unnoq/orpc, 5k★) — TypeScript-first type-safe RPC; api-tools
+  - **Gel** (geldata/gel, 15k★) — graph-relational DB (formerly EdgeDB); database
+  - **VineJS** (vinejs/vine, 2k★) — Node.js validation library; developer-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-18, one-hundred-and-seventeenth pass — autonomous improvement cycle)
 

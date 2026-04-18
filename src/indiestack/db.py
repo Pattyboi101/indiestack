@@ -5223,6 +5223,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "workload": "devops",           # "Kubernetes workload", "workload orchestration", "workload isolation" → DevOps & Infrastructure
     "artifact": "devops",           # "artifact registry", "build artifact", "container artifact" → DevOps & Infrastructure (Harbor, Quay)
     "rollout": "devops",            # "canary rollout", "gradual rollout", "rollout strategy" → DevOps & Infrastructure
+    # Auth — OAuth provider library by the Lucia team (used for Google, GitHub, Apple OAuth flows)
+    "arctic": "authentication",     # Arctic — TypeScript OAuth 2.0 providers library (pilcrowOnPaper/arctic, 3k★) → Authentication
+    # Frontend — Vike (formerly vite-plugin-ssr); SSR/SSG framework for React, Vue, Svelte, Solid
+    "vike": "frontend",             # Vike (vite-plugin-ssr) — "vike alternative", "vike vs nextjs" → Frontend Frameworks
+    # API — oRPC TypeScript-first type-safe RPC framework (no schema, end-to-end types like tRPC)
+    "orpc": "api",                  # oRPC — TypeScript-first type-safe RPC; "orpc alternative", "orpc vs trpc" → API Tools
+    # Database — EdgeDB rebranded to Gel in 2025 (graph-relational DB with schema migration)
+    "gel": "database",              # Gel (formerly EdgeDB) — "gel alternative", "gel database", "gel edgedb" → Database
+    # Developer Tools — VineJS validation library by AdonisJS team (Node.js-first, very fast)
+    "vine": "developer",            # VineJS — Node.js validation library; "vine validation", "vinejs alternative" → Developer Tools
+    "vinejs": "developer",          # compound form — "vinejs schema", "vinejs vs zod" → Developer Tools
+    # Developer Tools — io-ts runtime type validation by gcanti (functional style, common in FP codebases)
+    "io-ts": "developer",           # io-ts — "io-ts alternative", "io-ts decoder", "io-ts vs zod" → Developer Tools
+    # Developer Tools — runtypes TypeScript runtime type checking library
+    "runtypes": "developer",        # runtypes — "runtypes alternative", "runtypes vs zod" → Developer Tools
+    # API — Grafbase GraphQL API platform (serverless GraphQL federation + edge caching)
+    "grafbase": "api",              # Grafbase — "grafbase alternative", "grafbase graphql" → API Tools
+    # Forms — hookform (shorthand for react-hook-form used in "hookform alternative" queries)
+    "hookform": "forms",            # hookform — shorthand; "hookform alternative", "hookform vs formik" → Forms & Surveys
+    # API — HatTip server-agnostic HTTP handler framework (runs on Node, Deno, Bun, Cloudflare)
+    "hattip": "api",                # HatTip — "hattip alternative", "hattip vs hono" → API Tools
 }
 
 _FTS_STOP_WORDS = {
