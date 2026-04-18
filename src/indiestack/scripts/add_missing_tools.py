@@ -8541,6 +8541,76 @@ TOOLS = [
         "pip install diffusers && python -c \"from diffusers import FluxPipeline\"",
         "code",
     ),
+    # Authentication — Passkey-first auth (113th pass) ---------------------------
+    (
+        "hanko",
+        "Hanko",
+        "Passkey-first authentication for web and mobile apps",
+        "Hanko is an open-source authentication and user management service built "
+        "passkeys-first. Provides a drop-in web component (hanko-elements), "
+        "TypeScript SDK, and backend with passkeys, OAuth, magic links, and "
+        "sessions. Self-hostable via Docker or cloud-hosted at hanko.io. "
+        "Designed for Next.js, React, Vue, and Svelte with minimal integration.",
+        "authentication",
+        "teamhanko/hanko",
+        7000,
+        "https://www.hanko.io",
+        "passkey,webauthn,authentication,oauth,magic-link,open-source,self-hosted",
+        "npm install @hanko/elements",
+        "code",
+    ),
+    (
+        "zitadel",
+        "ZITADEL",
+        "Open-source identity infrastructure for developers",
+        "ZITADEL is an open-source, cloud-native identity and access management "
+        "platform with multi-tenancy, passkeys, MFA, SCIM, and a full audit log. "
+        "API-first and self-hostable on any cloud. Enterprise-grade Auth0 or Okta "
+        "alternative with built-in user management, roles, and access control.",
+        "authentication",
+        "zitadel/zitadel",
+        9000,
+        "https://zitadel.com",
+        "authentication,iam,identity,oauth,oidc,passkey,multi-tenant,scim,self-hosted",
+        "docker run ghcr.io/zitadel/zitadel:latest start-from-init",
+        "code",
+    ),
+    # DevOps — Self-hosted Git forge (113th pass) --------------------------------
+    (
+        "forgejo",
+        "Forgejo",
+        "A self-hosted lightweight software forge",
+        "Forgejo is a community-owned, self-hosted Git service — a hard fork of "
+        "Gitea created after commercialisation concerns. Drop-in Gitea replacement "
+        "with full feature parity: repositories, pull requests, issues, Actions "
+        "CI/CD, releases, and a package registry. No external dependencies; "
+        "single-binary or Docker deployment.",
+        "devops-infrastructure",
+        "forgejo/forgejo",
+        10000,
+        "https://forgejo.org",
+        "git,self-hosted,forge,gitea-fork,ci-cd,open-source,devops",
+        "docker pull codeberg.org/forgejo/forgejo:latest",
+        "code",
+    ),
+    # AI Dev Tools — Open-source AI coding agents (113th pass) -------------------
+    (
+        "roo-code",
+        "Roo Code",
+        "Open-source AI coding agent for VS Code",
+        "Roo Code (formerly Roo-Cline) is a VS Code extension providing an "
+        "autonomous AI coding agent with four modes: Code, Architect, Ask, and "
+        "Debug. A fork of Cline with added orchestration and multi-agent support. "
+        "Supports Anthropic Claude, OpenAI, Google Gemini, and local Ollama models. "
+        "Full file system, terminal, and browser access. 38k+ GitHub stars.",
+        "ai-dev-tools",
+        "RooVetGit/Roo-Code",
+        38000,
+        "https://roosoftware.io",
+        "ai-coding,vscode,agent,llm,claude,autonomous,open-source,fork",
+        "",
+        "code",
+    ),
 ]
 
 

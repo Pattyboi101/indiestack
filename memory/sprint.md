@@ -1,17 +1,17 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-twelfth pass)
+Last updated: 2026-04-18 (one-hundred-and-thirteenth pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-17)
+## System State (as of 2026-04-18)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1892 unique active keys (one-hundred-and-twelfth pass: +22 new — visx, victory, highcharts, bokeh, dash, phosphor, phosphoricons, tabler, tablericons, iconoir, parquet, haskell, ocaml, figma, cronitor, v0, tabbyml, tabby, flux, sdxl, stability, void)
-- **Catalog script**: `scripts/add_missing_tools.py` — 504 unique tools (added 5 new: bokeh, plotly-dash, tabler-icons, tabbyml, flux-1)
+- **_CAT_SYNONYMS**: 1897 unique active keys (one-hundred-and-thirteenth pass: +5 new — i18next, react-i18next, inlang, velite, triplit)
+- **Catalog script**: `scripts/add_missing_tools.py` — 508 unique tools (added 4 new: hanko, zitadel, forgejo, roo-code)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,33 @@ Last updated: 2026-04-17 (one-hundred-and-twelfth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-18, one-hundred-and-thirteenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 5 new `_CAT_SYNONYMS` entries (1892 → 1897 unique keys, 0 duplicates):
+  - **Localization**: `i18next` → localization — most-searched JS/TS i18n framework (9k★)
+  - **Localization**: `react-i18next` → localization — official React bindings for i18next (9k★)
+  - **Localization**: `inlang` → localization — Git-based localization platform (4k★)
+  - **Headless CMS**: `velite` → cms — file-based content SDK for Next.js (Contentlayer successor, 3k★)
+  - **Database**: `triplit` → database — local-first TypeScript database with real-time sync (3k★)
+- Existing coverage verified: state-management, bundler, realtime, vector-database, rate-limiting all already mapped
+
+### Catalog Script (Step 2)
+- Added 4 new tools to `scripts/add_missing_tools.py` (504 → 508 unique):
+  - **Hanko** (teamhanko/hanko, 7k★) — passkey-first auth; authentication
+  - **ZITADEL** (zitadel/zitadel, 9k★) — open-source IAM; authentication
+  - **Forgejo** (forgejo/forgejo, 10k★) — self-hosted Git forge; devops-infrastructure
+  - **Roo Code** (RooVetGit/Roo-Code, 38k★) — open-source AI coding agent; ai-dev-tools
+  - (continue already existed in catalog — skipped duplicate)
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated to one-hundred-and-thirteenth pass
+
+---
 
 ## Completed This Session (2026-04-17, one-hundred-and-twelfth pass — autonomous improvement cycle)
 

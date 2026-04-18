@@ -5096,6 +5096,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "stability": "ai",              # Stability AI — "stability ai api", "stability diffusion" → AI & Automation
     # Developer Tools — Void open-source Cursor-alternative IDE
     "void": "developer",            # Void IDE — open-source VS Code fork with AI coding features → Developer Tools
+    # Localization — i18next (most-searched JS/TS i18n library, 9k★)
+    "i18next": "localization",          # i18next — universal JS/TS internationalization framework (9k★) → Localization
+    "react-i18next": "localization",    # react-i18next — official React bindings for i18next (9k★) → Localization
+    # Localization — Inlang platform (parent of Paraglide.js; "inlang alternative" queries)
+    "inlang": "localization",           # Inlang — Git-based localization infrastructure (4k★) → Localization
+    # Headless CMS — Velite content SDK (successor to Contentlayer for Next.js, 3k★)
+    "velite": "cms",                    # Velite — file-based content SDK for Next.js (Contentlayer successor, 3k★) → Headless CMS
+    # Database — Triplit local-first TypeScript database with real-time server sync (3k★)
+    "triplit": "database",              # Triplit — local-first TypeScript database with real-time sync (3k★) → Database
 }
 
 _FTS_STOP_WORDS = {
