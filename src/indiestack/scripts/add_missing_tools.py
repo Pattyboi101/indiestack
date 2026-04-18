@@ -9126,6 +9126,105 @@ TOOLS = [
         "pip install Weblate  # or: docker run weblate/weblate",
         "code",
     ),
+    # Database -----------------------------------------------------------------
+    (
+        "paradedb",
+        "ParadeDB",
+        "Postgres for search and analytics — Elasticsearch alternative",
+        "ParadeDB is an Elasticsearch alternative built on Postgres. It brings "
+        "full-text search (BM25 via pg_search), real-time analytics, and hybrid "
+        "search (BM25 + vector) directly inside your Postgres database. No "
+        "separate search cluster needed. pg_search extension gives sub-millisecond "
+        "BM25 queries on Postgres tables. pg_analytics adds columnar storage and "
+        "DuckDB-powered OLAP queries. Ideal for SaaS apps that need search "
+        "without operating Elasticsearch.",
+        "database",
+        "paradedb/paradedb",
+        6000,
+        "https://paradedb.com",
+        "postgres,search,elasticsearch-alternative,full-text-search,bm25,analytics,olap,vector-search",
+        "docker run --name paradedb paradedb/paradedb:latest",
+        "code",
+    ),
+    # Monitoring ---------------------------------------------------------------
+    (
+        "honeycomb",
+        "Honeycomb",
+        "Observability for production — understand your system with OpenTelemetry",
+        "Honeycomb is an observability platform built for high-cardinality "
+        "production data. Send OpenTelemetry traces, logs, and metrics and query "
+        "them with BubbleUp, heatmaps, and SLO tracking. Unlike Datadog, Honeycomb "
+        "stores every event without sampling, enabling debugging of rare failures. "
+        "Free tier: 20M events/month. Used by Stripe, HashiCorp, LaunchDarkly. "
+        "Integrates with OpenTelemetry, AWS Lambda, Kubernetes, and all major "
+        "languages via official SDKs.",
+        "monitoring-uptime",
+        None,
+        0,
+        "https://honeycomb.io",
+        "observability,opentelemetry,tracing,monitoring,distributed-tracing,otel,saas",
+        "npm install @honeycombio/opentelemetry-node",
+        "saas",
+    ),
+    # Testing ------------------------------------------------------------------
+    (
+        "detox",
+        "Detox",
+        "Grey-box end-to-end testing for React Native mobile apps",
+        "Detox is a grey-box end-to-end testing framework for React Native apps "
+        "on iOS and Android. Grey-box means Detox can observe app internals during "
+        "tests, making them deterministic and eliminating flakiness. Works with "
+        "Jest or Mocha as test runner. Supports Expo, bare React Native, and "
+        "Expo managed workflow. Created by Wix engineering. Run tests on real "
+        "devices or simulators/emulators. Integrates with CI/CD (Bitrise, CircleCI, "
+        "GitHub Actions). The de-facto standard for RN E2E testing.",
+        "testing-tools",
+        "wix/Detox",
+        11000,
+        "https://wix.github.io/Detox/",
+        "react-native,mobile,e2e,testing,ios,android,expo,grey-box",
+        "npm install detox --save-dev",
+        "code",
+    ),
+    (
+        "maestro",
+        "Maestro",
+        "Simple mobile UI testing — define flows in YAML, run on iOS and Android",
+        "Maestro is a mobile UI testing framework that lets you write end-to-end "
+        "tests as simple YAML flows. No need for code — describe taps, swipes, "
+        "text inputs, and assertions in plain YAML. Works on iOS and Android, "
+        "React Native, Flutter, and native apps. Runs on real devices and emulators. "
+        "The Maestro Cloud runs tests in parallel across multiple devices. Much "
+        "simpler setup than Detox or Appium — teams typically go from zero to first "
+        "passing test in under 30 minutes.",
+        "testing-tools",
+        "mobile-dev-inc/maestro",
+        6000,
+        "https://maestro.mobile.dev",
+        "mobile,ui-testing,ios,android,react-native,flutter,yaml,e2e,testing",
+        "curl -Ls 'https://get.maestro.mobile.dev' | bash",
+        "code",
+    ),
+    # AI & Automation ----------------------------------------------------------
+    (
+        "fal-ai",
+        "fal.ai",
+        "Serverless GPU inference API for AI image and video generation",
+        "fal.ai is a serverless GPU inference platform for AI image, video, and "
+        "audio generation. Run Stable Diffusion, FLUX, ControlNet, Whisper, and "
+        "hundreds of other models via a simple REST API — no GPU provisioning. "
+        "Pricing is pay-per-second of GPU compute. Python and JavaScript SDKs "
+        "available. Response times as low as 200ms for cached models. Features a "
+        "model playground, real-time streaming output, and a model registry. "
+        "Popular for building AI image generation features in SaaS products.",
+        "ai-automation",
+        "fal-ai/fal",
+        3000,
+        "https://fal.ai",
+        "ai,image-generation,inference,serverless,gpu,stable-diffusion,flux,video-generation",
+        "pip install fal-client",
+        "saas",
+    ),
 ]
 
 

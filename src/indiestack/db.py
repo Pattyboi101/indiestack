@@ -5260,6 +5260,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     "api-key": "api",               # hyphenated — "api-key management", "api-key service", "api-key authentication" → API Tools
     # Testing — singular form for Testcontainers (complement to "testcontainers"→testing already mapped)
     "testcontainer": "testing",     # singular — "testcontainer for postgres", "testcontainer setup" → Testing Tools
+    # Mobile testing — end-to-end and UI testing for React Native / native mobile apps
+    "detox": "testing",             # Detox — grey-box E2E testing for React Native (Wix, 11k★) → Testing Tools
+    "maestro": "testing",           # Maestro — mobile UI testing by mobile.dev; simple YAML-based flows → Testing Tools
+    # Authentication — hyphenated form of Better Auth (betterauth compound already mapped)
+    "better-auth": "authentication", # Better Auth — hyphenated query form; "better-auth alternative" → Authentication
+    # Analytics — self-hosted Google Analytics alternatives not yet in synonym map
+    "matomo": "analytics",          # Matomo — open-source privacy-friendly web analytics (19k★) → Analytics & Metrics
+    "pirsch": "analytics",          # Pirsch — privacy-friendly website analytics (cookie-free) → Analytics & Metrics
+    # AI inference — fal.ai serverless GPU API for image/video generation
+    "fal": "ai",                    # fal.ai — serverless GPU inference for Stable Diffusion/FLUX → AI & Automation
+    "fal-ai": "ai",                 # hyphenated — "fal-ai alternative", "fal-ai setup" → AI & Automation
+    # File management — CDN / object storage providers not yet mapped
+    "bunny": "file",                # BunnyCDN — fast CDN + object storage; "bunny cdn alternative" → File Management
+    "bunnycdn": "file",             # compound — "bunnycdn pricing", "bunnycdn vs cloudflare" → File Management
+    # DevOps — CDN + edge compute providers not yet mapped
+    "fastly": "devops",             # Fastly — CDN + edge cloud; "fastly alternative", "fastly waf" → DevOps & Infrastructure
+    # Database — ParadeDB: Postgres-native Elasticsearch replacement
+    "paradedb": "database",         # ParadeDB — full-text search + analytics inside Postgres → Database
+    # Maps — MapLibre GL JS: open-source Mapbox GL alternative
+    "maplibre": "maps",             # MapLibre GL JS — open-source WebGL maps (Mapbox fork, 10k★) → Maps & Location
+    # Feature flags — OpenFeature standard (CNCF spec for feature flagging)
+    "openfeature": "feature",       # OpenFeature — CNCF feature flag standard; SDK for JS/Go/Java → Feature Flags
+    # Monitoring — observability backends for OpenTelemetry
+    "honeycomb": "monitoring",      # Honeycomb.io — observability for production; OTel-first (SaaS) → Monitoring & Uptime
+    "uptrace": "monitoring",        # Uptrace — open-source Jaeger/Grafana alternative; OTel backend → Monitoring & Uptime
 }
 
 _FTS_STOP_WORDS = {

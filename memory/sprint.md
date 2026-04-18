@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-18 (one-hundred-and-nineteenth pass)
+Last updated: 2026-04-18 (one-hundred-and-twentieth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-18 (one-hundred-and-nineteenth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2005 unique active keys (one-hundred-and-nineteenth pass: +10 new — web3, nft, natural, tokenize, llm-proxy, llmproxy, lake, apikey, api-key, testcontainer)
-- **Catalog script**: `scripts/add_missing_tools.py` — 544 unique tools (added 5 new: localstack, testify, pact-js, flyway, weblate)
+- **_CAT_SYNONYMS**: 2020 unique active keys (one-hundred-and-twentieth pass: +15 new — detox, maestro, better-auth, matomo, pirsch, fal, fal-ai, bunny, bunnycdn, fastly, paradedb, maplibre, openfeature, honeycomb, uptrace)
+- **Catalog script**: `scripts/add_missing_tools.py` — 549 unique tools (added 5 new: paradedb, honeycomb, detox, maestro, fal-ai)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,42 @@ Last updated: 2026-04-18 (one-hundred-and-nineteenth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-18, one-hundred-and-twentieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 15 new `_CAT_SYNONYMS` entries → 2020 unique keys:
+  - **Testing**: `detox` → testing — Detox E2E testing for React Native (Wix, 11k★)
+  - **Testing**: `maestro` → testing — Maestro mobile UI testing (YAML flows, mobile.dev)
+  - **Auth**: `better-auth` → authentication — hyphenated form (betterauth compound already mapped)
+  - **Analytics**: `matomo` → analytics — Matomo open-source web analytics (19k★)
+  - **Analytics**: `pirsch` → analytics — Pirsch cookie-free analytics
+  - **AI**: `fal` → ai — fal.ai serverless GPU inference for image/video generation
+  - **AI**: `fal-ai` → ai — hyphenated form; "fal-ai alternative", "fal-ai setup"
+  - **File**: `bunny` → file — BunnyCDN fast CDN + object storage
+  - **File**: `bunnycdn` → file — compound form; "bunnycdn vs cloudflare"
+  - **DevOps**: `fastly` → devops — Fastly CDN + edge cloud; "fastly alternative"
+  - **Database**: `paradedb` → database — ParadeDB Postgres-native search (Elasticsearch alternative)
+  - **Maps**: `maplibre` → maps — MapLibre GL JS open-source WebGL maps (Mapbox fork, 10k★)
+  - **Feature**: `openfeature` → feature — OpenFeature CNCF feature flag standard
+  - **Monitoring**: `honeycomb` → monitoring — Honeycomb.io OTel-first observability (SaaS)
+  - **Monitoring**: `uptrace` → monitoring — Uptrace open-source OTel backend (Jaeger/Grafana alternative)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (544 → 549 unique):
+  - **ParadeDB** (paradedb/paradedb, 6k★) — Postgres-native Elasticsearch alternative; database
+  - **Honeycomb** (SaaS, 0★) — OTel-first observability for production; monitoring-uptime
+  - **Detox** (wix/Detox, 11k★) — grey-box E2E testing for React Native; testing-tools
+  - **Maestro** (mobile-dev-inc/maestro, 6k★) — mobile UI testing via YAML; testing-tools
+  - **fal.ai** (fal-ai/fal, 3k★) — serverless GPU inference for AI image/video; ai-automation
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-18, one-hundred-and-nineteenth pass — autonomous improvement cycle)
 
