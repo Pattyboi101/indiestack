@@ -1,17 +1,17 @@
 # Sprint — Current
 
-Last updated: 2026-04-17 (one-hundred-and-twelfth pass)
+Last updated: 2026-04-18 (one-hundred-and-thirteenth pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-17)
+## System State (as of 2026-04-18)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1892 unique active keys (one-hundred-and-twelfth pass: +22 new — visx, victory, highcharts, bokeh, dash, phosphor, phosphoricons, tabler, tablericons, iconoir, parquet, haskell, ocaml, figma, cronitor, v0, tabbyml, tabby, flux, sdxl, stability, void)
-- **Catalog script**: `scripts/add_missing_tools.py` — 504 unique tools (added 5 new: bokeh, plotly-dash, tabler-icons, tabbyml, flux-1)
+- **_CAT_SYNONYMS**: 1914 unique active keys (one-hundred-and-thirteenth pass: +22 new — churn, retention, ltv, lifetime, recommendation, recommender, personalization, personalisation, fingerprint, fingerprintjs, sociallogin, social-login, magic-link, reverse-etl, reversetl, multicloud, multi-cloud, hubspot, salesforce, webflow, squarespace, airtable)
+- **Catalog script**: `scripts/add_missing_tools.py` — 514 unique tools (added 5 new: fingerprint, hightouch, recombee, anrok, refine)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,49 @@ Last updated: 2026-04-17 (one-hundred-and-twelfth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-18, one-hundred-and-thirteenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 22 new `_CAT_SYNONYMS` entries (1892 → 1914 unique keys, 0 duplicates):
+  - **Analytics**: `churn` → analytics — churn rate/analysis queries
+  - **Analytics**: `retention` → analytics — user retention metrics
+  - **Analytics**: `ltv` → analytics — lifetime value (LTV) queries
+  - **Analytics**: `lifetime` → analytics — "lifetime value", "lifetime revenue"
+  - **AI**: `recommendation` → ai — recommendation engines (Recombee, LensKit, Surprise)
+  - **AI**: `recommender` → ai — recommender system queries
+  - **AI**: `personalization` → ai — AI personalization queries
+  - **AI**: `personalisation` → ai — UK spelling form
+  - **Security**: `fingerprint` → security — device fingerprinting (Fingerprint.com, FingerprintJS)
+  - **Security**: `fingerprintjs` → security — explicit named tool
+  - **Auth**: `sociallogin` → authentication — social login compound form
+  - **Auth**: `social-login` → authentication — hyphenated form
+  - **Auth**: `magic-link` → authentication — magic link auth flows
+  - **Background**: `reverse-etl` → background — reverse ETL (Hightouch, Census)
+  - **Background**: `reversetl` → background — compound form
+  - **DevOps**: `multicloud` → devops — multi-cloud management
+  - **DevOps**: `multi-cloud` → devops — hyphenated form
+  - **CRM**: `hubspot` → crm — HubSpot alternative queries
+  - **CRM**: `salesforce` → crm — Salesforce alternative queries
+  - **Landing**: `webflow` → landing — Webflow alternative queries
+  - **Landing**: `squarespace` → landing — Squarespace alternative queries
+  - **Developer**: `airtable` → developer — Airtable open-source alternative queries (NocoDB, Baserow)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (509 → 514 unique):
+  - **Fingerprint** (fingerprintjs/fingerprintjs, 22k★) — device fingerprinting/fraud; security-tools
+  - **Hightouch** — reverse ETL data activation platform; background-jobs
+  - **Recombee** — AI recommendation engine API; ai-automation
+  - **Anrok** — sales tax automation for SaaS; invoicing-billing
+  - **Refine** (refinedev/refine, 27k★) — open-source React admin panel framework; developer-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route file changes to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-17, one-hundred-and-twelfth pass — autonomous improvement cycle)
 

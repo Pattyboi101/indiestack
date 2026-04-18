@@ -5096,6 +5096,37 @@ _CAT_SYNONYMS: dict[str, str] = {
     "stability": "ai",              # Stability AI — "stability ai api", "stability diffusion" → AI & Automation
     # Developer Tools — Void open-source Cursor-alternative IDE
     "void": "developer",            # Void IDE — open-source VS Code fork with AI coding features → Developer Tools
+    # Analytics — user lifecycle and product metrics (common Mixpanel/Amplitude query patterns)
+    "churn": "analytics",           # "churn rate", "churn analysis", "churn prediction" → Analytics & Metrics
+    "retention": "analytics",       # "user retention", "retention dashboard", "retention curve" → Analytics & Metrics
+    "ltv": "analytics",             # LTV — lifetime value; "ltv calculation", "customer ltv" → Analytics & Metrics
+    "lifetime": "analytics",        # "lifetime value", "customer lifetime", "lifetime revenue" → Analytics & Metrics
+    # AI — recommendation engines and personalisation (Recombee, LensKit, Surprise.py)
+    "recommendation": "ai",         # "recommendation engine", "recommendation api" → AI & Automation
+    "recommender": "ai",            # "recommender system", "recommender framework" → AI & Automation
+    "personalization": "ai",        # "personalization engine", "ai personalization" → AI & Automation
+    "personalisation": "ai",        # UK spelling — "personalisation api", "personalisation tool" → AI & Automation
+    # Security — device fingerprinting and bot protection (Fingerprint.com, FingerprintJS)
+    "fingerprint": "security",      # "fingerprint api", "browser fingerprint", "device fingerprint" → Security Tools
+    "fingerprintjs": "security",    # FingerprintJS explicit named tool → Security Tools
+    # Auth — social login and magic link flows (very common auth pattern queries)
+    "sociallogin": "authentication", # compound — "sociallogin provider", "sociallogin sdk" → Authentication
+    "social-login": "authentication",# hyphenated — "social-login button", "social-login oauth" → Authentication
+    "magic-link": "authentication",  # hyphenated — "magic-link auth", "magic-link email" → Authentication
+    # Background jobs / ETL — reverse ETL (Hightouch, Census, Polytomic data activation)
+    "reverse-etl": "background",    # hyphenated — "reverse-etl platform", "reverse-etl alternative" → Background Jobs
+    "reversetl": "background",      # compound — "reversetl tool", "reversetl vs hightouch" → Background Jobs
+    # DevOps — multi-cloud management (Crossplane, Terraform multi-cloud, Pulumi multi-cloud)
+    "multicloud": "devops",         # compound — "multicloud management", "multicloud deployment" → DevOps & Infrastructure
+    "multi-cloud": "devops",        # hyphenated — "multi-cloud strategy", "multi-cloud provider" → DevOps & Infrastructure
+    # CRM — most-searched CRM alternative query targets
+    "hubspot": "crm",               # HubSpot — "hubspot alternative", "hubspot crm" → CRM & Sales (Twenty, Monica)
+    "salesforce": "crm",            # Salesforce — "salesforce alternative", "sfdc alternative" → CRM & Sales
+    # Landing pages — no-code website builders (high "alternative" query volume)
+    "webflow": "landing",           # Webflow — "webflow alternative", "webflow competitor" → Landing Pages
+    "squarespace": "landing",       # Squarespace — "squarespace alternative", "website builder" → Landing Pages
+    # Developer Tools — Airtable alternative queries (NocoDB, Baserow, Grist)
+    "airtable": "developer",        # Airtable — "airtable alternative", "airtable open source" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

@@ -8541,6 +8541,86 @@ TOOLS = [
         "pip install diffusers && python -c \"from diffusers import FluxPipeline\"",
         "code",
     ),
+    # ── One-hundred-and-thirteenth pass additions ───────────────────────────
+    (
+        "fingerprint",
+        "Fingerprint",
+        "Device identity and fraud detection platform",
+        "Fingerprint is the device intelligence platform for fraud detection and "
+        "user identification. The open-source FingerprintJS library generates "
+        "a unique browser fingerprint that remains stable across sessions, enabling "
+        "fraud prevention, bot detection, and personalized experiences without cookies.",
+        "security-tools",
+        "fingerprintjs/fingerprintjs",
+        22000,
+        "https://fingerprint.com",
+        "security,fraud-detection,device-fingerprinting,bot-protection,identity",
+        "npm install @fingerprintjs/fingerprintjs",
+        "code",
+    ),
+    (
+        "hightouch",
+        "Hightouch",
+        "Sync data from your warehouse to any tool your business uses",
+        "Hightouch is the reverse ETL platform that syncs customer data from your "
+        "data warehouse (Snowflake, BigQuery, Redshift, dbt) to 200+ business tools — "
+        "CRMs, marketing platforms, ad networks, and more. No data engineering required.",
+        "background-jobs",
+        None,
+        None,
+        "https://hightouch.com",
+        "reverse-etl,data-activation,data-sync,warehouse,etl,saas",
+        "",
+        "saas",
+    ),
+    (
+        "recombee",
+        "Recombee",
+        "AI-powered recommendation engine API",
+        "Recombee provides recommendation-as-a-service via a REST API. "
+        "Used by e-commerce, media, and SaaS companies to add personalized "
+        "product recommendations, content suggestions, and collaborative filtering "
+        "without building ML infrastructure from scratch.",
+        "ai-automation",
+        None,
+        None,
+        "https://recombee.com",
+        "recommendation,recommender-system,personalization,machine-learning,api,saas",
+        "pip install recombee-api-client",
+        "saas",
+    ),
+    (
+        "anrok",
+        "Anrok",
+        "Sales tax automation for modern SaaS companies",
+        "Anrok is the sales tax API built for SaaS and software businesses. "
+        "It automatically calculates and remits sales tax and VAT globally, "
+        "integrates with billing systems like Stripe, and handles economic nexus "
+        "thresholds without manual compliance work.",
+        "invoicing-billing",
+        None,
+        None,
+        "https://anrok.com",
+        "tax,sales-tax,vat,compliance,saas,billing,automation",
+        "",
+        "saas",
+    ),
+    (
+        "refine",
+        "Refine",
+        "Open-source React framework for building admin panels and dashboards",
+        "Refine is a meta-framework for building data-intensive applications like "
+        "admin panels, dashboards, and internal tools. It provides a headless UI "
+        "architecture that works with any UI library (Ant Design, Material UI, Chakra, "
+        "Mantine) and connects to REST, GraphQL, Supabase, and more via data providers.",
+        "developer-tools",
+        "refinedev/refine",
+        27000,
+        "https://refine.dev",
+        "admin-panel,react,internal-tools,dashboard,low-code,headless,data-provider",
+        "npm create refine-app@latest",
+        "code",
+    ),
 ]
 
 
