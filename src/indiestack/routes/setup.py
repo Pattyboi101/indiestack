@@ -37,28 +37,26 @@ CLAUDE_MD_TEMPLATE = """# Dependency Health Rules
 ## Setup
 MCP: `claude mcp add indiestack -- uvx --from indiestack indiestack-mcp`
 
-## CRITICAL: Dependency Verification
+## CRITICAL: Package Validation
 Before installing ANY new package via npm, pip, yarn, or pnpm:
-1. Read the current package.json or requirements.txt
-2. Call `analyze_dependencies` with the full manifest content
-3. If the health score is below 70: STOP. Show the user which dependencies
-   are unmaintained or risky. Propose the alternatives from the report.
-   Do NOT proceed with installation until the user explicitly approves.
+1. Call `validate_package(package, ecosystem)` to verify it exists and isn't a typosquat
+2. If risk_level is "danger": DO NOT INSTALL. The package is hallucinated or a typosquat.
+3. If risk_level is "caution": warn the user — package may be unmaintained
 4. After successfully integrating any tool, call `report_outcome(slug, success=true)`
-5. If integration fails, call `report_outcome(slug, success=false)`
 
 ## Before Writing Infrastructure
 Before writing auth, payments, databases, email, monitoring, or any common
 infrastructure from scratch, call `find_tools(query)` first. Use an existing
-tool instead of generating boilerplate. 6,500+ curated tools indexed. 10,000+ installs.
+tool instead of generating code. 8,000+ tools indexed.
 
 ## Available Tools
-- `analyze_dependencies(manifest)` — 0-100 health score (MUST use before installs)
+- `validate_package(package, ecosystem)` — PRE-FLIGHT CHECK before every install (catches hallucinations, typosquats)
+- `analyze_dependencies(manifest)` — 0-100 health score for your full manifest
 - `find_tools(query)` — search developer tools by need
 - `get_tool_details(slug)` — integration docs, API specs, install commands
 - `check_health(slugs)` — verify tools are still maintained
-- `report_outcome(slug, success)` — report integration result (improves recommendations)
-- `report_compatibility(tool_a, tool_b)` — report that two tools work together
+- `get_migration_data(package)` — real migration paths from GitHub repos
+- `report_outcome(slug, success)` — report integration result
 """
 
 CURSORRULES_TEMPLATE = """# IndieStack — Dependency Intelligence
@@ -76,13 +74,11 @@ Add to `.cursor/mcp.json`:
 }
 ```
 
-## CRITICAL: Dependency Verification
+## CRITICAL: Package Validation
 Before installing ANY new package via npm, pip, yarn, or pnpm:
-1. Read the current manifest (package.json or requirements.txt)
-2. Call `analyze_dependencies` with the full manifest content
-3. If score < 70: STOP. Show the user which deps are risky. Propose alternatives.
-   Do NOT proceed until the user explicitly approves.
-4. After integrating a tool, call `report_outcome(slug, success=true/false)`
+1. Call `validate_package(package, ecosystem)` — verifies it exists, catches typosquats
+2. If risk_level is "danger": DO NOT INSTALL. Package is hallucinated or a typosquat.
+3. After integrating a tool, call `report_outcome(slug, success=true/false)`
 
 Before writing auth, payments, databases, email, or monitoring from scratch,
 call `find_tools(query)` first. Use an existing tool instead of generating code.
@@ -179,7 +175,7 @@ async def setup_page(request: Request):
         <div style="background:linear-gradient(135deg,var(--success-text),#064E3B);border:1px solid var(--success-border);
                     border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;text-align:center;">
             <p style="color:#6EE7B7;font-size:20px;font-weight:700;margin:0 0 4px;">Welcome to IndieStack, {_name}!</p>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 6,500+ developer tools. 10,000+ installs and growing.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 8,000+ developer tools. 10,000+ installs and growing.</p>
         </div>'''
 
     body = f'''
@@ -325,7 +321,7 @@ jobs:
                 <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);margin:0;">Get your API key <span style="font-size:14px;font-weight:400;color:var(--ink-muted);">(free)</span></h2>
             </div>
             <p style="font-size:14px;color:var(--ink-muted);margin:0 0 16px;line-height:1.6;">
-                An API key unlocks personalized recommendations and tracks your tool discovery history.
+                An API key unlocks higher rate limits and personalized recommendations.
             </p>
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
                 <a href="{"/dashboard" if user else "/login?next=/dashboard"}"
@@ -341,7 +337,7 @@ jobs:
             <div style="font-size:14px;color:var(--ink-muted);line-height:1.8;">
                 Your AI agent will automatically search IndieStack when you need developer infrastructure.
                 Instead of generating auth code from scratch, it finds Clerk or Lucia. Instead of writing
-                a payment flow, it finds LemonSqueezy or Polar. 40 categories, 6,500+ tools, verified
+                a payment flow, it finds LemonSqueezy or Polar. 40 categories, 8,000+ tools, verified
                 compatibility data.
             </div>
         </div>
@@ -379,7 +375,7 @@ jobs:
     </script>
     '''
 
-    return HTMLResponse(page_shell("Set up IndieStack", body, description="IndieStack gives your AI agent curated access to 6,500+ developer tools, migration data from 4,500+ repos, and 93,000+ verified tool combinations. One command.", user=user))
+    return HTMLResponse(page_shell("Set up IndieStack", body, description="Set up IndieStack as a dependency guardrail for your AI agent. Validates packages before install, catches hallucinations and typosquats. One command.", user=user))
 
 
 @router.get("/setup/claude.md", response_class=PlainTextResponse)

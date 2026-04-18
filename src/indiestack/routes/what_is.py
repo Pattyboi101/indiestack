@@ -1,4 +1,4 @@
-"""What is IndieStack — explains the discovery layer between AI coding agents and developer tools."""
+"""What is IndieStack — dependency guardrail for AI coding agents."""
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -306,13 +306,13 @@ async def what_is_page(request: Request):
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "What is IndieStack",
-        "description": "IndieStack is the discovery layer between AI coding agents and developer tools — {tool_count}+ tools with Agent Cards, discoverable via MCP server.",
+        "description": "IndieStack is a dependency guardrail for AI coding agents — {tool_count}+ tools with Agent Cards, discoverable via MCP server.",
         "url": "{BASE_URL}/what-is-indiestack",
         "mainEntity": {{
             "@type": "Organization",
             "name": "IndieStack",
             "url": "{BASE_URL}",
-            "description": "The discovery layer between AI coding agents and developer tools. {tool_count}+ tools with Agent Cards and compatibility pairs, discoverable via MCP server."
+            "description": "Dependency guardrail for AI coding agents. Validates {tool_count}+ packages, catches hallucinations, migration intelligence from GitHub."
         }}
     }}</script>'''
 
@@ -320,7 +320,7 @@ async def what_is_page(request: Request):
         "What is IndieStack",
         body,
         user=user,
-        description=f"IndieStack is the discovery layer between AI coding agents and developer tools. {tool_count}+ tools with Agent Cards, discoverable by Claude, Cursor, and Windsurf via MCP.",
+        description=f"IndieStack is a dependency guardrail for AI coding agents. {tool_count}+ tools with Agent Cards, discoverable by Claude, Cursor, and Windsurf via MCP.",
         extra_head=json_ld,
         canonical="/what-is-indiestack",
     ))
