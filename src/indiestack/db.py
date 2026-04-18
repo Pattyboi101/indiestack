@@ -3034,7 +3034,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — headless browser + load testing + mocking
     "puppeteer": "testing",           # Puppeteer — headless Chrome automation
     "k6": "testing",                  # k6 — load testing tool (Grafana)
-    "msw": "testing",                 # Mock Service Worker — API mocking
     "webdriverio": "testing",         # WebdriverIO — cross-browser test automation
     # DevOps — deployment / self-hosting tools
     "kamal": "devops",                # Kamal — Rails/Docker deployment (by Basecamp)
@@ -4903,8 +4902,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sns": "notifications",         # AWS SNS — Simple Notification Service; "sns alternative" → Notifications
     # Media — Shaka Player (Google's adaptive media player for HLS/DASH streams)
     "shaka": "media",               # Shaka Player — Google's open-source adaptive media player (6k★) → Media Server
-    # Security — Open Policy Agent (CNCF policy-as-code engine)
-    "opa": "security",              # OPA — Open Policy Agent; "opa policy", "opa alternative" → Security Tools
     # Auth — Cerbos open-source authorization engine
     "cerbos": "authentication",     # Cerbos — open-source authorization service; "cerbos alternative" → Authentication
     # Database — MotherDuck cloud DuckDB service
@@ -5159,6 +5156,38 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — API mocking and test reporting
     "msw": "testing",               # MSW (Mock Service Worker) — API mocking via Service Worker (15k★) → Testing Tools
     "allure": "testing",            # Allure — multi-language test report framework (4k★) → Testing Tools
+    # Developer Tools — AST / codemod tooling (jscodeshift, ast-grep, babel-parser)
+    "codemod": "developer",         # codemod — AST-based code transformation tooling (jscodeshift, ast-grep) → Developer Tools
+    "ast": "developer",             # AST (Abstract Syntax Tree) — "ast parser", "ast manipulation", "babel ast" → Developer Tools
+    "jscodeshift": "developer",     # jscodeshift — Facebook's AST codemod runner for JS/TS (9k★) → Developer Tools
+    "ast-grep": "developer",        # ast-grep — structural search/rewrite using AST patterns (Rust, 7k★) → Developer Tools
+    # CLI — Homebrew macOS/Linux package manager (very high alternative-query volume)
+    "homebrew": "cli",              # Homebrew — the missing macOS/Linux package manager (42k★) → CLI Tools
+    # Documentation — TypeScript and JavaScript API doc generators
+    "typedoc": "documentation",     # TypeDoc — TypeScript API documentation generator (7k★) → Documentation
+    "jsdoc": "documentation",       # JSDoc — JavaScript documentation standard and generator (14k★) → Documentation
+    "compodoc": "documentation",    # Compodoc — Angular documentation generator (4k★) → Documentation
+    # Testing — classic Node.js test runners and HTTP assertion libs
+    "ava": "testing",               # AVA — concurrent test runner for Node.js (20k★) → Testing Tools
+    "nock": "testing",              # Nock — HTTP mock/interceptor for Node.js (12k★) → Testing Tools
+    "supertest": "testing",         # SuperTest — HTTP assertion library for Node.js APIs (13k★) → Testing Tools
+    "testcafe": "testing",          # TestCafe — cross-browser E2E test framework (10k★) → Testing Tools
+    "nightwatch": "testing",        # Nightwatch.js — Selenium/WebDriver E2E for Node.js (11k★) → Testing Tools
+    # DevOps — Docker Compose and low-level kernel networking
+    "compose": "devops",            # Docker Compose — "docker compose alternative", "compose file" → DevOps & Infrastructure
+    "bpf": "devops",                # BPF/eBPF complement — "bpf tool", "bpf program" (complement to "ebpf"→devops) → DevOps
+    "oci": "devops",                # OCI (Open Container Initiative) — "oci image", "oci registry", "oci runtime" → DevOps
+    # Monitoring — AWS CloudWatch (very common "alternative" query target)
+    "cloudwatch": "monitoring",     # AWS CloudWatch — "cloudwatch alternative", "cloudwatch metrics" → Monitoring & Uptime
+    # API — Postman-alternative tools and OpenAPI codegen
+    "apidog": "api",                # Apidog — API design, mock, test, and document platform → API Tools
+    "openapi-generator": "api",     # openapi-generator — generate API clients from OpenAPI specs → API Tools
+    # Database — NHost Firebase alternative (Hasura + Postgres + Auth, 8k★)
+    "nhost": "database",            # NHost — open-source Firebase alternative (GraphQL+Postgres, 8k★) → Database
+    # Frontend — Rust/WASM bindings (complement to "wasmpack"→frontend, "trunk"→frontend)
+    "wasm-bindgen": "frontend",     # wasm-bindgen — Rust/JavaScript WASM bindings → Frontend Frameworks
+    # Background Jobs — Benthos/Redpanda Connect stream processor
+    "benthos": "background",        # Benthos (Redpanda Connect) — declarative stream processor (8k★) → Background Jobs
 }
 
 _FTS_STOP_WORDS = {

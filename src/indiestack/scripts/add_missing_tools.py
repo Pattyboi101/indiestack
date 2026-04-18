@@ -8701,6 +8701,96 @@ TOOLS = [
         "npm install sortablejs",
         "code",
     ),
+    # Testing Tools ---------------------------------------------------------------
+    (
+        "testcafe",
+        "TestCafe",
+        "Cross-browser end-to-end testing framework, no WebDriver required",
+        "TestCafe is an open-source Node.js tool for automating end-to-end web testing. "
+        "Unlike Selenium-based tools, TestCafe has its own JavaScript injection engine "
+        "that works with any browser — no browser plugins, no WebDriver needed. "
+        "Supports TypeScript, async/await, page objects, and parallel test execution "
+        "across multiple browsers simultaneously.",
+        "testing-tools",
+        "DevExpress/testcafe",
+        10000,
+        "https://testcafe.io",
+        "e2e,testing,cross-browser,automation,node,typescript",
+        "npm install testcafe",
+        "code",
+    ),
+    (
+        "oxlint",
+        "OXLint",
+        "JavaScript and TypeScript linter written in Rust, 50-100× faster than ESLint",
+        "OXLint is a JavaScript and TypeScript linter written in Rust, delivering speeds "
+        "50–100× faster than ESLint with zero configuration. Part of the OXC (Oxidation "
+        "Compiler) ecosystem, it runs 500+ built-in lint rules, supports ESLint's "
+        "disable comments, and can be adopted incrementally alongside ESLint. "
+        "No plugins to install — it just works.",
+        "testing-tools",
+        "oxc-project/oxc",
+        5000,
+        "https://oxc.rs/docs/guide/usage/linter",
+        "linter,rust,javascript,typescript,fast,eslint-compatible",
+        "npm install oxlint",
+        "code",
+    ),
+    (
+        "moto",
+        "Moto",
+        "Mock AWS services in Python tests — no real AWS credentials needed",
+        "Moto is a Python library that lets you mock AWS services in your tests without "
+        "needing real AWS credentials. Supports 400+ AWS service operations including "
+        "S3, DynamoDB, Lambda, SQS, SNS, IAM, EC2, and more. Works seamlessly with "
+        "boto3, pytest, and unittest. Use the @mock_s3 decorator or context manager "
+        "to intercept all boto3 calls automatically.",
+        "testing-tools",
+        "getmoto/moto",
+        8000,
+        "https://docs.getmoto.org",
+        "aws,mocking,testing,python,boto3,s3,dynamodb,serverless",
+        "pip install moto",
+        "code",
+    ),
+    # Forms & Surveys --------------------------------------------------------------
+    (
+        "typebot",
+        "Typebot",
+        "Open-source conversational form builder — embed chatbots and lead forms anywhere",
+        "Typebot is a powerful open-source conversational form builder that lets you "
+        "create beautiful chat interfaces and embed them anywhere. Replace static forms "
+        "with interactive chatbot-style flows to boost completion rates. "
+        "Self-hostable, integrates with Webhook, Google Sheets, Notion, email, and "
+        "more. No-code builder with real-time analytics. Typeform and Landbot "
+        "alternative.",
+        "forms-surveys",
+        "baptisteArno/typebot.io",
+        10000,
+        "https://typebot.io",
+        "chatbot,form,conversational,no-code,embed,lead-generation,open-source",
+        "",
+        "saas",
+    ),
+    # Background Jobs --------------------------------------------------------------
+    (
+        "benthos",
+        "Benthos (Redpanda Connect)",
+        "Declarative stream processor — connect, transform, and route data pipelines",
+        "Benthos (now Redpanda Connect) is a high-performance declarative stream "
+        "processor that connects virtually any data source to any destination. "
+        "Define pipelines in YAML: input → processors → output. Supports 200+ "
+        "connectors (Kafka, S3, HTTP, Redis, Postgres, NATS, and more). "
+        "Excellent for ETL, event routing, data enrichment, and fan-out patterns. "
+        "Zero external dependencies, single binary deployment.",
+        "background-jobs",
+        "redpanda-data/connect",
+        8000,
+        "https://docs.redpanda.com/redpanda-connect/about",
+        "stream-processing,etl,data-pipeline,kafka,connectors,yaml,golang",
+        "brew install redpanda-data/tap/connect",
+        "code",
+    ),
 ]
 
 
