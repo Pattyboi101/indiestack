@@ -5159,6 +5159,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — API mocking and test reporting
     "msw": "testing",               # MSW (Mock Service Worker) — API mocking via Service Worker (15k★) → Testing Tools
     "allure": "testing",            # Allure — multi-language test report framework (4k★) → Testing Tools
+    # CLI Tools — Python CLI frameworks (complement to "oclif"→cli, "cobra"→cli already mapped)
+    "click": "cli",                 # Click — Python CLI toolkit by Pallets (16k★); most-used Python CLI framework
+    "typer": "cli",                 # Typer — modern Python CLI by FastAPI creator Sebastián Ramírez (16k★)
+    "clap": "cli",                  # Clap — dominant Rust CLI argument parser (14k★); "clap alternative", "clap rs"
+    # CLI Tools — Go TUI frameworks (Charm ecosystem, very active community)
+    "bubbletea": "cli",             # Bubble Tea — Elm-inspired Go TUI framework (29k★) → CLI Tools
+    "bubble-tea": "cli",            # hyphenated — "bubble-tea alternative", "bubble-tea go" → CLI Tools
+    "charm": "cli",                 # Charm — Go TUI toolkit (Bubble Tea + Lip Gloss + Glamour) → CLI Tools
+    # CLI Tools — Python TUI (growing Textual ecosystem)
+    "textual": "cli",               # Textual — Python TUI framework by Textualize/Will McGugan (26k★) → CLI Tools
+    # Documentation — self-hosted wiki / knowledge-base tools
+    "fumadocs": "documentation",    # Fumadocs — Next.js-first documentation framework (4k★) → Documentation
+    "outline": "documentation",     # Outline — open-source knowledge base & wiki (Notion-like, 29k★) → Documentation
+    "bookstack": "documentation",   # BookStack — self-hosted wiki and documentation platform (15k★) → Documentation
+    "wikijs": "documentation",      # Wiki.js — modern open-source wiki (GraphQL API, 24k★) → Documentation
+    "wiki-js": "documentation",     # hyphenated — "wiki-js alternative", "wiki-js self-hosted" → Documentation
+    # Frontend — rich text editors (complement to "tiptap"→frontend, "lexical"→frontend)
+    "slate": "frontend",            # Slate.js — highly customisable rich text editor framework (30k★) → Frontend Frameworks
+    "plate": "frontend",            # Plate — rich text editor toolkit for React built on Slate (11k★) → Frontend Frameworks
+    "ckeditor": "frontend",         # CKEditor — mature rich text editor; "ckeditor alternative", "ckeditor 5" → Frontend Frameworks
+    "tinymce": "frontend",          # TinyMCE — widely-used browser WYSIWYG editor → Frontend Frameworks
+    # Developer Tools — AI-powered terminal (complement to "ghostty"→developer, "atuin"→developer)
+    "warp": "developer",            # Warp — Rust GPU-native AI terminal (23k★); "warp terminal alternative" → Developer Tools
+    # Security — password managers (complement to "bitwarden"→security already mapped)
+    "vaultwarden": "security",      # Vaultwarden — Bitwarden-compatible self-hosted server (Rust, 40k★) → Security Tools
+    "keepass": "security",          # KeePass — open-source password manager family → Security Tools
+    "1password": "security",        # 1Password — "1password cli", "1password secrets manager" queries → Security Tools
 }
 
 _FTS_STOP_WORDS = {

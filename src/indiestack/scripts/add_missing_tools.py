@@ -8701,6 +8701,87 @@ TOOLS = [
         "npm install sortablejs",
         "code",
     ),
+    # CLI Tools — Go TUI + Python TUI + Security --------------------------------
+    (
+        "bubbletea",
+        "Bubble Tea",
+        "The fun, functional and stateful way to build terminal apps",
+        "Bubble Tea is a Go framework for building terminal user interfaces based "
+        "on the Elm Architecture. It provides a simple model-update-view pattern "
+        "for managing state and rendering. Part of the Charm toolkit alongside "
+        "Lip Gloss (styling) and Glamour (markdown rendering).",
+        "cli-tools",
+        "charmbracelet/bubbletea",
+        29000,
+        "https://github.com/charmbracelet/bubbletea",
+        "tui,terminal,go,cli,charm,elm-architecture",
+        "go get github.com/charmbracelet/bubbletea",
+        "code",
+    ),
+    (
+        "textual",
+        "Textual",
+        "Rapidly develop rich terminal user interfaces in Python",
+        "Textual is a Rapid Application Development framework for Python that lets "
+        "you build sophisticated TUI applications with a CSS-like styling system. "
+        "Created by Will McGugan (Rich author). Supports async, reactive attributes, "
+        "and ships with a full widget library.",
+        "cli-tools",
+        "textualize/textual",
+        26000,
+        "https://textual.textualize.io",
+        "tui,terminal,python,cli,rich,reactive",
+        "pip install textual",
+        "code",
+    ),
+    (
+        "outline",
+        "Outline",
+        "The fastest knowledge base for growing teams",
+        "Outline is an open-source, Notion-like knowledge base and wiki for teams. "
+        "Built with React and Node.js, it supports Markdown, rich embeds, real-time "
+        "collaboration, and integrates with Slack and Google. Self-host with Docker "
+        "or use the hosted service.",
+        "documentation",
+        "outline/outline",
+        29000,
+        "https://www.getoutline.com",
+        "wiki,knowledge-base,notion-alternative,team,self-hosted,documentation",
+        "docker pull outlinewiki/outline",
+        "code",
+    ),
+    (
+        "vaultwarden",
+        "Vaultwarden",
+        "Unofficial Bitwarden-compatible server written in Rust",
+        "Vaultwarden is an unofficial Bitwarden-compatible server implementation "
+        "written in Rust. It is much lighter and ideal for self-hosted deployments "
+        "on a Raspberry Pi or small VPS. Fully compatible with official Bitwarden "
+        "client apps, browser extensions, and the CLI.",
+        "security-tools",
+        "dani-garcia/vaultwarden",
+        40000,
+        "https://github.com/dani-garcia/vaultwarden",
+        "bitwarden,password-manager,self-hosted,rust,secrets",
+        "docker pull vaultwarden/server",
+        "code",
+    ),
+    (
+        "tinymce",
+        "TinyMCE",
+        "The world's most trusted rich text editor",
+        "TinyMCE is a feature-rich WYSIWYG HTML editor component used by millions "
+        "of developers. It provides a familiar word-processor interface with plugins "
+        "for tables, images, media embeds, spell checking, and more. Integrations "
+        "available for React, Vue, Angular, and plain JavaScript.",
+        "frontend-frameworks",
+        "tinymce/tinymce",
+        15000,
+        "https://www.tiny.cloud",
+        "rich-text-editor,wysiwyg,html-editor,content-editing,react,vue",
+        "npm install tinymce",
+        "code",
+    ),
 ]
 
 
