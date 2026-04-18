@@ -8621,6 +8621,86 @@ TOOLS = [
         "npm create refine-app@latest",
         "code",
     ),
+    (
+        "superstruct",
+        "Superstruct",
+        "A simple and composable way to validate data in JavaScript",
+        "Superstruct makes it easy to define interfaces and then validate "
+        "JavaScript data against them. Its functional approach with composable "
+        "types is TypeScript-first, zero-dependency, and gives you highly "
+        "readable validation errors for your API boundaries and form inputs.",
+        "developer-tools",
+        "ianstormtaylor/superstruct",
+        7000,
+        "https://docs.superstructjs.org",
+        "validation,typescript,schema,runtime,type-checking",
+        "npm install superstruct",
+        "code",
+    ),
+    (
+        "fullcalendar",
+        "FullCalendar",
+        "Full-sized drag-and-drop event calendar for JavaScript",
+        "FullCalendar is a full-sized, drag-and-drop event calendar that works "
+        "with React, Vue, Angular, or plain JavaScript. It supports month, week, "
+        "day, list, and timeline views, with Google Calendar integration, recurring "
+        "events, and extensive customisation via plugins.",
+        "frontend-frameworks",
+        "fullcalendar/fullcalendar",
+        18000,
+        "https://fullcalendar.io",
+        "calendar,scheduling,events,drag-and-drop,react,vue,angular",
+        "npm install @fullcalendar/core @fullcalendar/react",
+        "code",
+    ),
+    (
+        "swiper",
+        "Swiper",
+        "The most modern mobile touch slider",
+        "Swiper is the most modern free mobile touch slider with hardware-accelerated "
+        "transitions and native behaviour. Works with React, Vue, Angular, Svelte, "
+        "and vanilla JS. Features loop mode, autoplay, pagination, navigation, "
+        "lazy loading, parallax, fade, and 3D effects.",
+        "frontend-frameworks",
+        "nolimits4web/swiper",
+        40000,
+        "https://swiperjs.com",
+        "slider,carousel,touch,mobile,react,vue,angular,swipe",
+        "npm install swiper",
+        "code",
+    ),
+    (
+        "msw",
+        "Mock Service Worker",
+        "API mocking library that uses Service Worker to intercept requests",
+        "Mock Service Worker (MSW) intercepts requests on the network level "
+        "using a browser Service Worker. Mock REST and GraphQL APIs in tests, "
+        "development, and Storybook without changing application code. Works "
+        "seamlessly with React Testing Library, Vitest, Jest, and Playwright.",
+        "testing-tools",
+        "mswjs/msw",
+        15000,
+        "https://mswjs.io",
+        "mocking,testing,rest,graphql,service-worker,api,interceptor",
+        "npm install msw --save-dev",
+        "code",
+    ),
+    (
+        "sortablejs",
+        "SortableJS",
+        "Reorderable drag-and-drop lists for modern browsers and touch devices",
+        "SortableJS is a lightweight JavaScript library for reorderable drag-and-drop "
+        "lists on modern browsers and touch devices. No jQuery required. Supports "
+        "React (react-sortablejs), Vue (vuedraggable), Angular, and vanilla JS. "
+        "Features nested lists, multi-drag, animation, handle, and ghost class.",
+        "frontend-frameworks",
+        "SortableJS/Sortable",
+        29000,
+        "https://sortablejs.github.io/Sortable",
+        "drag-and-drop,sortable,reorder,list,react,vue,touch,mobile",
+        "npm install sortablejs",
+        "code",
+    ),
 ]
 
 

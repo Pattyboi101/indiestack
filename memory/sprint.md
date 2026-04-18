@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-18 (one-hundred-and-thirteenth pass)
+Last updated: 2026-04-18 (one-hundred-and-fourteenth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-18 (one-hundred-and-thirteenth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1914 unique active keys (one-hundred-and-thirteenth pass: +22 new — churn, retention, ltv, lifetime, recommendation, recommender, personalization, personalisation, fingerprint, fingerprintjs, sociallogin, social-login, magic-link, reverse-etl, reversetl, multicloud, multi-cloud, hubspot, salesforce, webflow, squarespace, airtable)
-- **Catalog script**: `scripts/add_missing_tools.py` — 514 unique tools (added 5 new: fingerprint, hightouch, recombee, anrok, refine)
+- **_CAT_SYNONYMS**: 1936 unique active keys (one-hundred-and-fourteenth pass: +22 new — i18next, react-i18next, liveview, better-stack, floating-ui, ag-grid, react-table, sortablejs, swiper, fullcalendar, ariakit, embla, cmdk, vaul, opa, open-policy-agent, spicedb, checkov, hadolint, commitizen, msw, allure)
+- **Catalog script**: `scripts/add_missing_tools.py` — 519 unique tools (added 5 new: superstruct, fullcalendar, swiper, msw, sortablejs)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,49 @@ Last updated: 2026-04-18 (one-hundred-and-thirteenth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-18, one-hundred-and-fourteenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 22 new `_CAT_SYNONYMS` entries (1914 → 1936 unique keys, 0 duplicates):
+  - **Localization**: `i18next` → localization — most popular JS i18n library
+  - **Localization**: `react-i18next` → localization — React binding for i18next
+  - **API**: `liveview` → api — Phoenix LiveView server-rendered interactive UI
+  - **Monitoring**: `better-stack` → monitoring — hyphenated form of Better Stack
+  - **Frontend**: `floating-ui` → frontend — Floating UI positioning engine (29k★)
+  - **Frontend**: `ag-grid` → frontend — AG Grid enterprise data grid (12k★)
+  - **Frontend**: `react-table` → frontend — TanStack Table / React Table (25k★)
+  - **Frontend**: `sortablejs` → frontend — SortableJS drag-and-drop (29k★)
+  - **Frontend**: `swiper` → frontend — Swiper touch slider (40k★)
+  - **Frontend**: `fullcalendar` → frontend — FullCalendar event calendar (18k★)
+  - **Frontend**: `ariakit` → frontend — accessible UI primitives (7k★)
+  - **Frontend**: `embla` → frontend — Embla Carousel (6k★)
+  - **Frontend**: `cmdk` → frontend — command palette component (10k★)
+  - **Frontend**: `vaul` → frontend — animated drawer for React
+  - **Security**: `opa` → security — Open Policy Agent (9k★)
+  - **Security**: `open-policy-agent` → security — full name form
+  - **Security**: `spicedb` → security — Zanzibar-inspired permissions DB (5k★)
+  - **Security**: `checkov` → security — Bridgecrew IaC scanner (7k★)
+  - **Security**: `hadolint` → security — Dockerfile linter
+  - **DevOps**: `commitizen` → devops — conventional commit tooling
+  - **Testing**: `msw` → testing — Mock Service Worker (15k★)
+  - **Testing**: `allure` → testing — Allure test reporting framework (4k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (514 → 519 unique):
+  - **Superstruct** (ianstormtaylor/superstruct, 7k★) — composable JS/TS validation; developer-tools
+  - **FullCalendar** (fullcalendar/fullcalendar, 18k★) — drag-and-drop event calendar; frontend-frameworks
+  - **Swiper** (nolimits4web/swiper, 40k★) — most popular mobile touch slider; frontend-frameworks
+  - **MSW** (mswjs/msw, 15k★) — Mock Service Worker API mocking; testing-tools
+  - **SortableJS** (SortableJS/Sortable, 29k★) — drag-and-drop sort library; frontend-frameworks
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-18, one-hundred-and-thirteenth pass — autonomous improvement cycle)
 

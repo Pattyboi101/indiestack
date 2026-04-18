@@ -5127,6 +5127,38 @@ _CAT_SYNONYMS: dict[str, str] = {
     "squarespace": "landing",       # Squarespace — "squarespace alternative", "website builder" → Landing Pages
     # Developer Tools — Airtable alternative queries (NocoDB, Baserow, Grist)
     "airtable": "developer",        # Airtable — "airtable alternative", "airtable open source" → Developer Tools
+    # Localisation — i18next is the dominant JS/TS i18n library (React, Vue, Angular, Node)
+    "i18next": "localization",      # i18next — most popular JS internationalisation framework → Localization
+    "react-i18next": "localization", # react-i18next — React binding for i18next → Localization
+    # API — Phoenix LiveView server-rendered interactive UI (Elixir ecosystem)
+    "liveview": "api",              # Phoenix LiveView — "liveview alternative", "liveview vs inertia" → API Tools
+    # Monitoring — Better Stack hyphenated query form (complement to "betterstack" already mapped)
+    "better-stack": "monitoring",   # hyphenated — "better-stack alternative", "better-stack logging" → Monitoring & Uptime
+    # Frontend — Floating UI positioning engine (underlies Radix, Headless UI, many UI libs)
+    "floating-ui": "frontend",      # Floating UI — floating element positioning engine (29k★) → Frontend Frameworks
+    # Frontend — data grids and table libraries
+    "ag-grid": "frontend",          # AG Grid — feature-rich enterprise data grid (12k★) → Frontend Frameworks
+    "react-table": "frontend",      # React Table / TanStack Table v8 — headless table (25k★) → Frontend Frameworks
+    "sortablejs": "frontend",       # SortableJS — drag-and-drop sort library (29k★) → Frontend Frameworks
+    "swiper": "frontend",           # Swiper — most popular mobile touch slider (40k★) → Frontend Frameworks
+    "fullcalendar": "frontend",     # FullCalendar — full-sized JavaScript event calendar (18k★) → Frontend Frameworks
+    # Frontend — accessible UI primitives and specialist components
+    "ariakit": "frontend",          # Ariakit — composable accessible UI primitives (7k★) → Frontend Frameworks
+    "embla": "frontend",            # Embla Carousel — lightweight extensible carousel (6k★) → Frontend Frameworks
+    "cmdk": "frontend",             # cmdk — command palette component for React (10k★) → Frontend Frameworks
+    "vaul": "frontend",             # Vaul — animated drawer component for React → Frontend Frameworks
+    # Security — Open Policy Agent / Zanzibar-inspired authorization
+    "opa": "security",              # OPA — Open Policy Agent policy-as-code engine (9k★) → Security Tools
+    "open-policy-agent": "security", # full name — "open policy agent alternative" → Security Tools
+    "spicedb": "security",          # SpiceDB — Google Zanzibar-inspired permissions DB (5k★) → Security Tools
+    # Security — IaC and Dockerfile scanning
+    "checkov": "security",          # Checkov — IaC security scanner by Bridgecrew (7k★) → Security Tools
+    "hadolint": "security",         # Hadolint — Dockerfile linter and security checker → Security Tools
+    # DevOps — commit message tooling (Commitizen, commitlint ecosystem)
+    "commitizen": "devops",         # Commitizen — interactive conventional commit message tooling → DevOps & Infrastructure
+    # Testing — API mocking and test reporting
+    "msw": "testing",               # MSW (Mock Service Worker) — API mocking via Service Worker (15k★) → Testing Tools
+    "allure": "testing",            # Allure — multi-language test report framework (4k★) → Testing Tools
 }
 
 _FTS_STOP_WORDS = {
