@@ -5148,7 +5148,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cmdk": "frontend",             # cmdk — command palette component for React (10k★) → Frontend Frameworks
     "vaul": "frontend",             # Vaul — animated drawer component for React → Frontend Frameworks
     # Security — Open Policy Agent / Zanzibar-inspired authorization
-    "opa": "security",              # OPA — Open Policy Agent policy-as-code engine (9k★) → Security Tools
     "open-policy-agent": "security", # full name — "open policy agent alternative" → Security Tools
     "spicedb": "security",          # SpiceDB — Google Zanzibar-inspired permissions DB (5k★) → Security Tools
     # Security — IaC and Dockerfile scanning
@@ -5157,7 +5156,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — commit message tooling (Commitizen, commitlint ecosystem)
     "commitizen": "devops",         # Commitizen — interactive conventional commit message tooling → DevOps & Infrastructure
     # Testing — API mocking and test reporting
-    "msw": "testing",               # MSW (Mock Service Worker) — API mocking via Service Worker (15k★) → Testing Tools
     "allure": "testing",            # Allure — multi-language test report framework (4k★) → Testing Tools
     # CLI Tools — Python CLI frameworks (complement to "oclif"→cli, "cobra"→cli already mapped)
     "click": "cli",                 # Click — Python CLI toolkit by Pallets (16k★); most-used Python CLI framework
@@ -5186,6 +5184,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "vaultwarden": "security",      # Vaultwarden — Bitwarden-compatible self-hosted server (Rust, 40k★) → Security Tools
     "keepass": "security",          # KeePass — open-source password manager family → Security Tools
     "1password": "security",        # 1Password — "1password cli", "1password secrets manager" queries → Security Tools
+    # Developer Tools — CSV parsing libraries (PapaParse, fast-csv, csv-parse — very high query volume)
+    "csv": "developer",             # "csv parser", "csv library", "read csv file" → Developer Tools (PapaParse, fast-csv)
+    "papaparse": "developer",       # PapaParse — fast browser + Node.js CSV parser (13k★) → Developer Tools
+    "fast-csv": "developer",        # fast-csv — Node.js CSV parsing/formatting library (3k★) → Developer Tools
+    # Developer Tools — Excel/spreadsheet libraries (very common "parse excel" query segment)
+    "excel": "developer",           # "excel library", "excel reader", "parse excel file" → Developer Tools
+    "xlsx": "developer",            # xlsx npm package (SheetJS); ".xlsx parser", "xlsx alternative" → Developer Tools
+    "sheetjs": "developer",         # SheetJS — spreadsheet parser and writer for JS/TS (35k★) → Developer Tools
+    "exceljs": "developer",         # ExcelJS — Excel workbook read/write for Node.js (13k★) → Developer Tools
+    "openpyxl": "developer",        # openpyxl — Python library for Excel 2010+ files → Developer Tools
+    "xlsxwriter": "developer",      # XlsxWriter — Python library for creating Excel .xlsx files → Developer Tools
+    # Auth — ACL and FIDO2 (complement to "rbac"→authentication and "webauthn"→authentication)
+    "acl": "authentication",        # ACL (Access Control List) — "acl library", "acl middleware" → Authentication
+    "fido": "authentication",       # FIDO — "fido2 key", "fido hardware key", "fido standard" → Authentication
+    "b2b": "authentication",        # B2B — "b2b sso", "b2b authentication", "b2b saas auth" → Authentication
+    # Background jobs — additional ELT data ingestion tools
+    "fivetran": "background",       # Fivetran — managed ELT data connectors; "fivetran alternative" → Background Jobs
+    "meltano": "background",        # Meltano — open-source Singer/dbt ELT platform → Background Jobs
+    # Notifications — self-hosted push notification servers (high self-hosters query volume)
+    "gotify": "notifications",      # Gotify — self-hosted push notification server (12k★) → Notifications
+    "pushover": "notifications",    # Pushover — simple push notifications to mobile devices → Notifications
+    "apprise": "notifications",     # Apprise — multi-platform notification library (11k★) → Notifications
+    "ntfy": "notifications",        # ntfy.sh — topic-based self-hosted push notification server (18k★) → Notifications
 }
 
 _FTS_STOP_WORDS = {

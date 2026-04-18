@@ -8782,6 +8782,86 @@ TOOLS = [
         "npm install tinymce",
         "code",
     ),
+    (
+        "sheetjs",
+        "SheetJS",
+        "Spreadsheet data toolkit for every JS engine",
+        "SheetJS (xlsx) is the most widely used JavaScript library for reading and "
+        "writing spreadsheet files. It supports XLS, XLSX, ODS, CSV, and 20+ formats. "
+        "Works in browsers, Node.js, Deno, and Bun without any native dependencies. "
+        "The community edition is MIT-licensed; the Pro edition adds advanced features.",
+        "developer-tools",
+        "SheetJS/sheetjs",
+        35000,
+        "https://sheetjs.com",
+        "excel,xlsx,csv,spreadsheet,xls,ods,javascript",
+        "npm install xlsx",
+        "code",
+    ),
+    (
+        "papaparse",
+        "PapaParse",
+        "Fast, in-browser CSV parser for JavaScript",
+        "PapaParse is the fastest, most feature-complete CSV parser for JavaScript. "
+        "It handles large files via streaming, auto-detects delimiters, parses in "
+        "web workers to avoid UI blocking, and supports both browser and Node.js. "
+        "Zero dependencies, MIT licensed. The go-to CSV library for frontend devs.",
+        "developer-tools",
+        "mholt/PapaParse",
+        13000,
+        "https://www.papaparse.com",
+        "csv,parser,javascript,browser,streaming,tsv",
+        "npm install papaparse",
+        "code",
+    ),
+    (
+        "exceljs",
+        "ExcelJS",
+        "Read, write, and manipulate Excel workbooks with Node.js",
+        "ExcelJS is a fully featured Excel workbook library for Node.js and the browser. "
+        "It reads and writes XLSX and CSV files with support for styles, conditional "
+        "formatting, charts, images, data validation, and formulas. Popular choice for "
+        "server-side report generation in Express, NestJS, and Fastify apps.",
+        "developer-tools",
+        "exceljs/exceljs",
+        13000,
+        "https://github.com/exceljs/exceljs",
+        "excel,xlsx,csv,spreadsheet,nodejs,report-generation",
+        "npm install exceljs",
+        "code",
+    ),
+    (
+        "gotify",
+        "Gotify",
+        "Self-hosted push notification server with real-time WebSocket delivery",
+        "Gotify is a simple, self-hosted server for sending and receiving push "
+        "notifications. It exposes a REST API for sending messages and a WebSocket "
+        "endpoint for real-time delivery. An official Android client is available. "
+        "Written in Go, single binary deployment, MIT licensed.",
+        "notifications",
+        "gotify/server",
+        12000,
+        "https://gotify.net",
+        "push-notifications,self-hosted,websocket,go,mobile",
+        "docker pull gotify/server",
+        "code",
+    ),
+    (
+        "apprise",
+        "Apprise",
+        "Send notifications to 80+ services from a single library",
+        "Apprise is a Python library that lets you send push notifications to every "
+        "popular service: Telegram, Discord, Slack, Pushover, Gotify, email, SMS, "
+        "and 80+ more — all through a single unified API. Works via CLI, REST API, "
+        "or directly in Python code. MIT licensed, actively maintained.",
+        "notifications",
+        "caronc/apprise",
+        11000,
+        "https://github.com/caronc/apprise",
+        "notifications,push,multi-platform,telegram,discord,slack,python",
+        "pip install apprise",
+        "code",
+    ),
 ]
 
 

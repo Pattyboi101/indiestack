@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-18 (one-hundred-and-fifteenth pass)
+Last updated: 2026-04-18 (one-hundred-and-sixteenth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-18 (one-hundred-and-fifteenth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1956 unique active keys (one-hundred-and-fifteenth pass: +20 new — click, typer, clap, bubbletea, bubble-tea, charm, textual, fumadocs, outline, bookstack, wikijs, wiki-js, slate, plate, ckeditor, tinymce, warp, vaultwarden, keepass, 1password)
-- **Catalog script**: `scripts/add_missing_tools.py` — 524 unique tools (added 5 new: bubbletea, textual, outline, vaultwarden, tinymce)
+- **_CAT_SYNONYMS**: 1972 unique active keys (one-hundred-and-sixteenth pass: +18 new — csv, papaparse, fast-csv, excel, xlsx, sheetjs, exceljs, openpyxl, xlsxwriter, acl, fido, b2b, fivetran, meltano, gotify, pushover, apprise, ntfy; also fixed 2 pre-existing duplicate keys: opa, msw)
+- **Catalog script**: `scripts/add_missing_tools.py` — 529 unique tools (added 5 new: sheetjs, papaparse, exceljs, gotify, apprise)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,45 @@ Last updated: 2026-04-18 (one-hundred-and-fifteenth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-18, one-hundred-and-sixteenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 18 new `_CAT_SYNONYMS` entries + fixed 2 pre-existing duplicates (opa, msw) → 1972 unique keys:
+  - **Developer**: `csv` → developer — CSV parsers (PapaParse, fast-csv, csv-parse)
+  - **Developer**: `papaparse` → developer — PapaParse canonical CSV parser (13k★)
+  - **Developer**: `fast-csv` → developer — fast-csv Node.js library (3k★)
+  - **Developer**: `excel` → developer — Excel libraries (SheetJS, ExcelJS, openpyxl)
+  - **Developer**: `xlsx` → developer — xlsx npm package (SheetJS)
+  - **Developer**: `sheetjs` → developer — SheetJS spreadsheet library (35k★)
+  - **Developer**: `exceljs` → developer — ExcelJS Excel/xlsx library (13k★)
+  - **Developer**: `openpyxl` → developer — Python Excel library
+  - **Developer**: `xlsxwriter` → developer — Python XlsxWriter
+  - **Auth**: `acl` → authentication — Access Control List (complement to rbac)
+  - **Auth**: `fido` → authentication — FIDO hardware key standard
+  - **Auth**: `b2b` → authentication — B2B SSO/auth queries
+  - **Background**: `fivetran` → background — managed ELT data pipelines
+  - **Background**: `meltano` → background — open-source Singer/dbt ELT platform
+  - **Notifications**: `gotify` → notifications — self-hosted push server (12k★)
+  - **Notifications**: `pushover` → notifications — mobile push notifications
+  - **Notifications**: `apprise` → notifications — multi-platform notification library (11k★)
+  - **Notifications**: `ntfy` → notifications — topic-based self-hosted push (18k★)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (524 → 529 unique):
+  - **SheetJS** (SheetJS/sheetjs, 35k★) — spreadsheet parser/writer for JS; developer-tools
+  - **PapaParse** (mholt/PapaParse, 13k★) — fast browser CSV parser; developer-tools
+  - **ExcelJS** (exceljs/exceljs, 13k★) — Excel workbook I/O for Node.js; developer-tools
+  - **Gotify** (gotify/server, 12k★) — self-hosted push notification server; notifications
+  - **Apprise** (caronc/apprise, 11k★) — multi-platform notification library; notifications
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-18, one-hundred-and-fifteenth pass — autonomous improvement cycle)
 
