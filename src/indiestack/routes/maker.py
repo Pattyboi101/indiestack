@@ -244,7 +244,7 @@ async def leaderboard(request: Request):
     elif days_left == 0:
         launch_line = 'We&rsquo;re <strong>live on Product Hunt today</strong>! Claimed makers get featured.'
     else:
-        launch_line = 'AI agents search IndieStack before building from scratch. <strong>Claimed makers rank higher.</strong>'
+        launch_line = 'AI agents validate packages through IndieStack before installing. <strong>Claimed makers rank higher.</strong>'
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">

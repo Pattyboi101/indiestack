@@ -360,14 +360,33 @@ async def render_overview(db, request, pending):
 
     follow_through = await get_follow_through_rate(db, 30)
 
+    # Guardrail stats
+    try:
+        _vc = await db.execute("SELECT COUNT(*) as cnt FROM validation_logs WHERE date(created_at) = date('now')")
+        validations_today = (await _vc.fetchone())['cnt']
+        _vd = await db.execute("SELECT COUNT(*) as cnt FROM validation_logs WHERE risk_level = 'danger' AND date(created_at) = date('now')")
+        dangers_today = (await _vd.fetchone())['cnt']
+        _va = await db.execute("SELECT COUNT(*) as cnt FROM validation_logs")
+        validations_total = (await _va.fetchone())['cnt']
+        _vda = await db.execute("SELECT COUNT(*) as cnt FROM validation_logs WHERE risk_level = 'danger'")
+        dangers_total = (await _vda.fetchone())['cnt']
+    except Exception:
+        validations_today = dangers_today = validations_total = dangers_total = 0
+
     kpi_grid = f"""
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
         {kpi_card("Page Views", f"{views_today:,}", color="var(--slate)")}
         {kpi_card("Unique Visitors", f"{unique_today:,}", color="var(--terracotta)")}
         {kpi_card("Outbound Clicks", f"{clicks_today:,}", color="#E2B764")}
         {kpi_card("Searches", f"{searches_today:,}", color="var(--accent)")}
         {kpi_card("Signups", f"{signups_today}", color="#16a34a")}
         {kpi_card("AI Recs", f"{ai_recs_today:,}", color="#7C3AED")}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
+        {kpi_card("Validations Today", f"{validations_today:,}", color="#F59E0B")}
+        {kpi_card("Dangers Caught", f"{dangers_today:,}", color="#DC2626")}
+        {kpi_card("Total Validations", f"{validations_total:,}", color="#F59E0B")}
+        {kpi_card("Total Dangers", f"{dangers_total:,}", color="#DC2626")}
     </div>
     <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:10px 14px;background:var(--cream-dark);border-radius:var(--radius-sm);">
         <span style="font-size:var(--heading-lg);font-weight:700;color:var(--accent);">{follow_through['rate']}%</span>
@@ -586,6 +605,12 @@ async def render_overview(db, request, pending):
         @media(max-width:900px){{.rates-strip{{grid-template-columns:repeat(2,1fr)!important;}}}}
         @media(max-width:600px){{.rates-strip{{grid-template-columns:repeat(1,1fr)!important;}}}}
     </style>
+    <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+        <a href="https://clarity.microsoft.com/projects/view/wcjqc0vmmu/dashboard" target="_blank" style="font-size:12px;padding:6px 14px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;text-decoration:none;color:var(--ink-light);font-weight:600;">Clarity Heatmaps &rarr;</a>
+        <a href="https://pypi.org/project/indiestack/" target="_blank" style="font-size:12px;padding:6px 14px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;text-decoration:none;color:var(--ink-light);font-weight:600;">PyPI &rarr;</a>
+        <a href="https://github.com/Pattyboi101/indiestack" target="_blank" style="font-size:12px;padding:6px 14px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;text-decoration:none;color:var(--ink-light);font-weight:600;">GitHub &rarr;</a>
+        <a href="https://fly.io/apps/indiestack/monitoring" target="_blank" style="font-size:12px;padding:6px 14px;background:var(--cream-dark);border:1px solid var(--border);border-radius:999px;text-decoration:none;color:var(--ink-light);font-weight:600;">Fly Monitoring &rarr;</a>
+    </div>
     """
 
     right_col = f"""

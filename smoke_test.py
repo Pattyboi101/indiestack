@@ -55,6 +55,8 @@ TESTS = [
     ("GET", "/submit", [200, 303], "Submit"),
 
     # API endpoints (200)
+    ("GET", "/api/validate?name=express&ecosystem=npm", 200, "Validate package (real)"),
+    ("GET", "/api/validate?name=&ecosystem=npm", 400, "Validate package (empty name)"),
     ("GET", "/api/tools/search?q=email", 200, "API search"),
     ("GET", "/api/tools/simple-analytics", 200, "API tool detail"),
     ("GET", "/health", 200, "Health check"),
