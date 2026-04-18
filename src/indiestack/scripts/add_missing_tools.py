@@ -8862,6 +8862,90 @@ TOOLS = [
         "pip install apprise",
         "code",
     ),
+    # Frontend Frameworks --------------------------------------------------------
+    (
+        "alpinejs",
+        "Alpine.js",
+        "Rugged, minimal tool for composing behavior in your markup",
+        "Alpine.js offers the reactive and declarative nature of big frameworks like "
+        "Vue or React at a much lower cost. You stay in the HTML and sprinkle in "
+        "behavior as needed. Great for adding interactivity to server-rendered pages "
+        "without a full SPA setup.",
+        "frontend-frameworks",
+        "alpinejs/alpine",
+        27000,
+        "https://alpinejs.dev",
+        "frontend,javascript,reactive,minimal,lightweight",
+        "npm install alpinejs",
+        "code",
+    ),
+    # Developer Tools ------------------------------------------------------------
+    (
+        "fp-ts",
+        "fp-ts",
+        "Typed functional programming in TypeScript",
+        "fp-ts brings strongly-typed functional programming to TypeScript. Provides "
+        "data types like Option, Either, TaskEither, and IO alongside algebraic "
+        "structures (Functor, Monad, Applicative). Used in production at major companies "
+        "for building composable, testable TypeScript applications.",
+        "developer-tools",
+        "gcanti/fp-ts",
+        10000,
+        "https://gcanti.github.io/fp-ts/",
+        "functional-programming,typescript,monads,category-theory,fp",
+        "npm install fp-ts",
+        "code",
+    ),
+    (
+        "changesets",
+        "Changesets",
+        "Manage semantic versioning and changelogs in monorepos",
+        "Changesets is a tool to manage versioning and changelogs in monorepos. "
+        "Each changeset describes what changed and at what semver bump. Automates "
+        "package publishing, changelog generation, and GitHub releases. Used by "
+        "Radix UI, TanStack, Tailwind CSS, and thousands of OSS packages.",
+        "devops-infrastructure",
+        "changesets/changesets",
+        9000,
+        "https://github.com/changesets/changesets",
+        "versioning,changelog,monorepo,semver,publishing,npm",
+        "npm install @changesets/cli --save-dev",
+        "code",
+    ),
+    # API Tools ------------------------------------------------------------------
+    (
+        "litestar",
+        "Litestar",
+        "Production-grade, flexible, lightweight ASGI framework",
+        "Litestar (formerly Starlite) is a powerful, performant Python ASGI framework. "
+        "Built-in OpenAPI schema generation, Pydantic v2 support, SQLAlchemy integration, "
+        "class-based controllers, dependency injection, and a comprehensive plugin system. "
+        "Opinionated but extensible alternative to FastAPI.",
+        "api-tools",
+        "litestar-org/litestar",
+        6000,
+        "https://litestar.dev",
+        "python,asgi,async,rest,openapi,pydantic",
+        "pip install litestar",
+        "code",
+    ),
+    # DevOps & Infrastructure ---------------------------------------------------
+    (
+        "release-it",
+        "release-it",
+        "Generic CLI tool to automate versioning and package publishing",
+        "release-it automates the tedious tasks of software releases: bump version, "
+        "create Git tag, build and publish package to npm, create GitHub/GitLab release. "
+        "Highly configurable via plugins. Works with monorepos, supports conventional "
+        "commits for automated changelogs.",
+        "devops-infrastructure",
+        "release-it/release-it",
+        7000,
+        "https://github.com/release-it/release-it",
+        "release-automation,versioning,changelog,npm,github-releases,semver",
+        "npm install release-it --save-dev",
+        "code",
+    ),
 ]
 
 

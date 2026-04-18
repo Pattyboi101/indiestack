@@ -5207,6 +5207,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pushover": "notifications",    # Pushover — simple push notifications to mobile devices → Notifications
     "apprise": "notifications",     # Apprise — multi-platform notification library (11k★) → Notifications
     "ntfy": "notifications",        # ntfy.sh — topic-based self-hosted push notification server (18k★) → Notifications
+    # AI — LLM model serving and registry (very common query prefix not yet mapped)
+    "model": "ai",                  # "model serving", "model registry", "model deployment", "language model" → AI & Automation
+    "serving": "ai",                # "model serving", "llm serving", "inference serving" → AI & Automation (complements "model")
+    "grounding": "ai",              # "grounding llm outputs", "rag grounding", "grounding with search" → AI & Automation
+    "context-window": "ai",         # "context window extension", "long context window" → AI & Automation
+    "contextwindow": "ai",          # compound form — "contextwindow size", "contextwindow llm" → AI & Automation
+    # Database — relational and offline-first query patterns not yet mapped
+    "relational": "database",       # "relational database", "relational orm", "sql relational" → Database
+    "offline": "database",          # "offline first app", "offline database", "offline sync" → Database (ElectricSQL, PocketBase, PowerSync)
+    # Developer Tools — functional programming and type tooling
+    "functional": "developer",      # "functional programming library", "fp-ts alternative", "functional js" → Developer Tools
+    "type": "developer",            # "type guard", "type builder", "runtime type check" → Developer Tools (distinct from "typecheck"→testing)
+    # DevOps — Kubernetes workload and release management patterns
+    "workload": "devops",           # "Kubernetes workload", "workload orchestration", "workload isolation" → DevOps & Infrastructure
+    "artifact": "devops",           # "artifact registry", "build artifact", "container artifact" → DevOps & Infrastructure (Harbor, Quay)
+    "rollout": "devops",            # "canary rollout", "gradual rollout", "rollout strategy" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

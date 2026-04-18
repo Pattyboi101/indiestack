@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-18 (one-hundred-and-sixteenth pass)
+Last updated: 2026-04-18 (one-hundred-and-seventeenth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-18 (one-hundred-and-sixteenth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 1972 unique active keys (one-hundred-and-sixteenth pass: +18 new — csv, papaparse, fast-csv, excel, xlsx, sheetjs, exceljs, openpyxl, xlsxwriter, acl, fido, b2b, fivetran, meltano, gotify, pushover, apprise, ntfy; also fixed 2 pre-existing duplicate keys: opa, msw)
-- **Catalog script**: `scripts/add_missing_tools.py` — 529 unique tools (added 5 new: sheetjs, papaparse, exceljs, gotify, apprise)
+- **_CAT_SYNONYMS**: 1984 unique active keys (one-hundred-and-seventeenth pass: +12 new — model, serving, grounding, context-window, contextwindow, relational, offline, functional, type, workload, artifact, rollout)
+- **Catalog script**: `scripts/add_missing_tools.py` — 534 unique tools (added 5 new: alpinejs, fp-ts, changesets, litestar, release-it)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,39 @@ Last updated: 2026-04-18 (one-hundred-and-sixteenth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-18, one-hundred-and-seventeenth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries → 1984 unique keys (no duplicates):
+  - **AI**: `model` → ai — "model serving", "model registry", "model deployment"
+  - **AI**: `serving` → ai — "model serving", "llm serving", "inference serving"
+  - **AI**: `grounding` → ai — "grounding LLM outputs", "RAG grounding"
+  - **AI**: `context-window` → ai — "long context window", "context window extension"
+  - **AI**: `contextwindow` → ai — compound form for same queries
+  - **Database**: `relational` → database — "relational database", "relational ORM"
+  - **Database**: `offline` → database — "offline first", "offline database" (ElectricSQL, PocketBase)
+  - **Developer**: `functional` → developer — "functional programming library", "fp-ts alternative"
+  - **Developer**: `type` → developer — "type guard", "type builder", "runtime type check"
+  - **DevOps**: `workload` → devops — "Kubernetes workload", "workload orchestration"
+  - **DevOps**: `artifact` → devops — "artifact registry", "build artifact" (Harbor, Quay)
+  - **DevOps**: `rollout` → devops — "canary rollout", "gradual rollout"
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (529 → 534 unique):
+  - **Alpine.js** (alpinejs/alpine, 27k★) — minimal JS behavior; frontend-frameworks
+  - **fp-ts** (gcanti/fp-ts, 10k★) — typed functional programming for TypeScript; developer-tools
+  - **Changesets** (changesets/changesets, 9k★) — monorepo versioning & changelogs; devops-infrastructure
+  - **Litestar** (litestar-org/litestar, 6k★) — production Python ASGI framework; api-tools
+  - **release-it** (release-it/release-it, 7k★) — release automation CLI; devops-infrastructure
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-18, one-hundred-and-sixteenth pass — autonomous improvement cycle)
 
