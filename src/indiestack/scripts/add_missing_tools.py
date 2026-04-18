@@ -9092,6 +9092,180 @@ TOOLS = [
         "brew install redpanda-data/tap/connect",
         "code",
     ),
+    # Developer Tools (116th pass) -----------------------------------------------
+    (
+        "sheetjs",
+        "SheetJS",
+        "Spreadsheet data toolkit for every JS engine",
+        "SheetJS (xlsx) is the most widely used JavaScript library for reading and "
+        "writing spreadsheet files. It supports XLS, XLSX, ODS, CSV, and 20+ formats. "
+        "Works in browsers, Node.js, Deno, and Bun without any native dependencies. "
+        "The community edition is MIT-licensed; the Pro edition adds advanced features.",
+        "developer-tools",
+        "SheetJS/sheetjs",
+        35000,
+        "https://sheetjs.com",
+        "excel,xlsx,csv,spreadsheet,xls,ods,javascript",
+        "npm install xlsx",
+        "code",
+    ),
+    (
+        "papaparse",
+        "PapaParse",
+        "Fast, in-browser CSV parser for JavaScript",
+        "PapaParse is the fastest, most feature-complete CSV parser for JavaScript. "
+        "It handles large files via streaming, auto-detects delimiters, parses in "
+        "web workers to avoid UI blocking, and supports both browser and Node.js. "
+        "Zero dependencies, MIT licensed.",
+        "developer-tools",
+        "mholt/PapaParse",
+        13000,
+        "https://www.papaparse.com",
+        "csv,parser,javascript,browser,streaming,tsv",
+        "npm install papaparse",
+        "code",
+    ),
+    (
+        "exceljs",
+        "ExcelJS",
+        "Read, write, and manipulate Excel workbooks with Node.js",
+        "ExcelJS is a fully featured Excel workbook library for Node.js and the browser. "
+        "It reads and writes XLSX and CSV files with support for styles, conditional "
+        "formatting, charts, images, data validation, and formulas. Popular for "
+        "server-side report generation in Express, NestJS, and Fastify apps.",
+        "developer-tools",
+        "exceljs/exceljs",
+        13000,
+        "https://github.com/exceljs/exceljs",
+        "excel,xlsx,csv,spreadsheet,nodejs,report-generation",
+        "npm install exceljs",
+        "code",
+    ),
+    # Notifications (116th pass) -------------------------------------------------
+    (
+        "gotify",
+        "Gotify",
+        "Self-hosted push notification server with real-time WebSocket delivery",
+        "Gotify is a simple, self-hosted server for sending and receiving push "
+        "notifications. It exposes a REST API for sending messages and a WebSocket "
+        "endpoint for real-time delivery. An official Android client is available. "
+        "Written in Go, single binary deployment, MIT licensed.",
+        "notifications",
+        "gotify/server",
+        12000,
+        "https://gotify.net",
+        "push-notifications,self-hosted,websocket,go,mobile",
+        "docker pull gotify/server",
+        "code",
+    ),
+    (
+        "apprise",
+        "Apprise",
+        "Send notifications to 80+ services from a single library",
+        "Apprise is a Python library that lets you send push notifications to every "
+        "popular service: Telegram, Discord, Slack, Pushover, Gotify, email, SMS, "
+        "and 80+ more — all through a single unified API. Works via CLI, REST API, "
+        "or directly in Python code. MIT licensed, actively maintained.",
+        "notifications",
+        "caronc/apprise",
+        11000,
+        "https://github.com/caronc/apprise",
+        "notifications,push,multi-platform,telegram,discord,slack,python",
+        "pip install apprise",
+        "code",
+    ),
+    # Monitoring (117th pass) ----------------------------------------------------
+    (
+        "netdata",
+        "Netdata",
+        "Real-time performance monitoring for systems, containers, and applications",
+        "Netdata is a distributed, real-time performance and health monitoring "
+        "platform. It ships with 800+ pre-built integrations and auto-detects your "
+        "infrastructure with zero configuration. Metrics are collected every second, "
+        "visualised in a built-in dashboard, and stored with full fidelity. Supports "
+        "on-prem, cloud, and Kubernetes deployments. MIT licensed, 70k+ stars.",
+        "monitoring-uptime",
+        "netdata/netdata",
+        70000,
+        "https://www.netdata.cloud",
+        "monitoring,real-time,performance,metrics,kubernetes,open-source",
+        "wget -O /tmp/netdata-kickstart.sh https://get.netdata.cloud/kickstart.sh && sh /tmp/netdata-kickstart.sh",
+        "code",
+    ),
+    (
+        "zabbix",
+        "Zabbix",
+        "Enterprise-grade open-source monitoring for networks, servers, and clouds",
+        "Zabbix is a mature, enterprise-class open-source monitoring platform. It "
+        "monitors networks, servers, virtual machines, cloud services, and "
+        "applications — collecting metrics, triggering alerts, and visualising data "
+        "in customisable dashboards. Supports agent-based and agentless monitoring, "
+        "SNMP, IPMI, JMX, and 100+ plugins. The on-prem alternative to Datadog or "
+        "New Relic for teams that own their infrastructure.",
+        "monitoring-uptime",
+        "zabbix/zabbix",
+        4000,
+        "https://www.zabbix.com",
+        "monitoring,alerts,network,server,snmp,open-source,self-hosted",
+        "docker pull zabbix/zabbix-server-pgsql",
+        "code",
+    ),
+    # Message Queue (117th pass) -------------------------------------------------
+    (
+        "eventstoredb",
+        "EventStoreDB",
+        "Open-source event store purpose-built for event sourcing",
+        "EventStoreDB is the original purpose-built event store database. It stores "
+        "immutable events as an append-only log and delivers them via persistent "
+        "subscriptions (at-least-once) or catch-up subscriptions (replay from any "
+        "position). Ideal for event sourcing, CQRS, and audit-log patterns. Provides "
+        "a built-in projection engine for computing read models from event streams. "
+        "Available as open-source (ESDB Community) or managed cloud service.",
+        "message-queue",
+        "EventStore/EventStore",
+        5000,
+        "https://www.eventstore.com",
+        "event-sourcing,cqrs,event-store,append-only,streaming,open-source",
+        "docker pull eventstore/eventstore",
+        "code",
+    ),
+    # Database (117th pass) ------------------------------------------------------
+    (
+        "postgis",
+        "PostGIS",
+        "Spatial and geographic objects for PostgreSQL",
+        "PostGIS adds spatial database capabilities to PostgreSQL, turning it into "
+        "a spatial database server. It supports geographic objects — points, lines, "
+        "polygons, and rasters — and enables spatial queries via SQL using the "
+        "ST_* function family. Powers applications that need proximity searches, "
+        "route planning, geofencing, and GIS analysis without a separate database. "
+        "The de-facto standard for open-source spatial databases.",
+        "database",
+        "postgis/postgis",
+        3000,
+        "https://postgis.net",
+        "spatial,gis,geography,postgres,geospatial,maps,location",
+        "CREATE EXTENSION postgis;",
+        "code",
+    ),
+    (
+        "nagios",
+        "Nagios Core",
+        "Industry-standard open-source IT infrastructure monitoring",
+        "Nagios Core is the classic open-source IT monitoring platform that pioneered "
+        "the field. It monitors hosts, services, and network devices, sends alerts "
+        "on failures, and provides a web UI for status overviews. The plugin "
+        "ecosystem (2,000+) covers everything from HTTP checks to database query "
+        "latency. Nagios Core is the foundation of Icinga, Sensu, and many modern "
+        "monitoring tools.",
+        "monitoring-uptime",
+        "NagiosEnterprises/nagioscore",
+        3000,
+        "https://www.nagios.org/projects/nagios-core",
+        "monitoring,alerts,network,infrastructure,checks,self-hosted",
+        "sudo apt-get install nagios3",
+        "code",
+    ),
 ]
 
 

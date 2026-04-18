@@ -5202,6 +5202,54 @@ _CAT_SYNONYMS: dict[str, str] = {
     "wasm-bindgen": "frontend",     # wasm-bindgen — Rust/JavaScript WASM bindings → Frontend Frameworks
     # Background Jobs — Benthos/Redpanda Connect stream processor
     "benthos": "background",        # Benthos (Redpanda Connect) — declarative stream processor (8k★) → Background Jobs
+    # Developer Tools — CSV parsing libraries (PapaParse, fast-csv, csv-parse — very high query volume)
+    "csv": "developer",             # "csv parser", "csv library", "read csv file" → Developer Tools (PapaParse, fast-csv)
+    "papaparse": "developer",       # PapaParse — fast browser + Node.js CSV parser (13k★) → Developer Tools
+    "fast-csv": "developer",        # fast-csv — Node.js CSV parsing/formatting library (3k★) → Developer Tools
+    # Developer Tools — Excel/spreadsheet libraries (very common "parse excel" query segment)
+    "excel": "developer",           # "excel library", "excel reader", "parse excel file" → Developer Tools
+    "xlsx": "developer",            # xlsx npm package (SheetJS); ".xlsx parser", "xlsx alternative" → Developer Tools
+    "sheetjs": "developer",         # SheetJS — spreadsheet parser and writer for JS/TS (35k★) → Developer Tools
+    "exceljs": "developer",         # ExcelJS — Excel workbook read/write for Node.js (13k★) → Developer Tools
+    "openpyxl": "developer",        # openpyxl — Python library for Excel 2010+ files → Developer Tools
+    "xlsxwriter": "developer",      # XlsxWriter — Python library for creating Excel .xlsx files → Developer Tools
+    # Auth — ACL and FIDO2 (complement to "rbac"→authentication and "webauthn"→authentication)
+    "acl": "authentication",        # ACL (Access Control List) — "acl library", "acl middleware" → Authentication
+    "fido": "authentication",       # FIDO — "fido2 key", "fido hardware key", "fido standard" → Authentication
+    "b2b": "authentication",        # B2B — "b2b sso", "b2b authentication", "b2b saas auth" → Authentication
+    # Background jobs — additional ELT data ingestion tools
+    "fivetran": "background",       # Fivetran — managed ELT data connectors; "fivetran alternative" → Background Jobs
+    "meltano": "background",        # Meltano — open-source Singer/dbt ELT platform → Background Jobs
+    # Notifications — self-hosted push notification servers (high self-hosters query volume)
+    "gotify": "notifications",      # Gotify — self-hosted push notification server (12k★) → Notifications
+    "pushover": "notifications",    # Pushover — simple push notifications to mobile devices → Notifications
+    "apprise": "notifications",     # Apprise — multi-platform notification library (11k★) → Notifications
+    "ntfy": "notifications",        # ntfy.sh — topic-based self-hosted push notification server (18k★) → Notifications
+    # Payments — open banking / bank data APIs (Plaid, Teller, Mono, Token.io)
+    "plaid": "payments",            # Plaid — canonical US open banking / bank account data API → Payments
+    "open-banking": "payments",     # hyphenated — "open-banking standard", "open banking api" → Payments
+    "openbanking": "payments",      # compound — "openbanking integration", "openbanking api" → Payments
+    # Monitoring — legacy IT monitoring platforms (very common "alternative" query targets)
+    "zabbix": "monitoring",         # Zabbix — enterprise open-source IT monitoring (15k★) → Monitoring & Uptime
+    "nagios": "monitoring",         # Nagios — classic IT/network monitoring (5k★) → Monitoring & Uptime
+    "netdata": "monitoring",        # Netdata — real-time system performance monitoring (70k★) → Monitoring & Uptime
+    "icinga": "monitoring",         # Icinga — Nagios fork with modern dashboards + clustering → Monitoring & Uptime
+    # Database — spatial/geospatial extensions and query patterns
+    "postgis": "database",          # PostGIS — spatial extension for Postgres; "postgis alternative" → Database
+    "spatial": "database",          # "spatial database", "spatial query" → PostGIS, SpatiaLite → Database
+    # Maps & Location — MapLibre (open-source Mapbox GL JS fork)
+    "maplibre": "maps",             # MapLibre GL JS — open-source fork of Mapbox GL JS (6k★) → Maps & Location
+    # Background Jobs — saga pattern (distributed transaction management)
+    "saga": "background",           # saga pattern — "saga choreography", "saga orchestration" → Background Jobs
+    # Message Queue — transactional outbox and event store patterns
+    "outbox": "message",            # transactional outbox — "outbox pattern", "outbox table" → Message Queue
+    "eventstore": "message",        # EventStoreDB — purpose-built event store; "eventstore alternative" → Message Queue
+    "event-store": "message",       # hyphenated — "event-store database", "event store pattern" → Message Queue
+    # Database — semantic / linked data (RDF stores, SPARQL, knowledge graphs)
+    "rdf": "database",              # RDF — "rdf triple store", "rdf graph database" → Database (Apache Jena, Stardog)
+    "sparql": "database",           # SPARQL — "sparql endpoint", "sparql query language" → Database
+    "knowledge-graph": "database",  # "knowledge graph database", "knowledge graph tool" → Database (Neo4j, ArangoDB)
+    "knowledgegraph": "database",   # compound — "knowledgegraph platform", "knowledge graph schema" → Database
 }
 
 _FTS_STOP_WORDS = {
