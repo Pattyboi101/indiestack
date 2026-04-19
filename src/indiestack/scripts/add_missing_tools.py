@@ -9290,6 +9290,78 @@ TOOLS = [
         "composer require getkirby/cms",
         "code",
     ),
+    # Developer Tools — Markdown parsers -------------------------------------
+    (
+        "marked",
+        "marked",
+        "Fast, low-level Markdown parser and compiler built for speed",
+        "marked is a fast, compliant Markdown parser written in JavaScript. "
+        "Designed to output HTML from Markdown with zero dependencies, it runs "
+        "in the browser and in Node.js. Supports CommonMark, GitHub Flavored "
+        "Markdown (GFM), and is highly extensible via Renderer, Tokenizer, and "
+        "Hooks APIs. Used by thousands of projects for docs, blogs, and editors.",
+        "developer-tools",
+        "markedjs/marked",
+        32000,
+        "https://marked.js.org",
+        "markdown,parser,renderer,html,javascript,commonmark,gfm,lightweight",
+        "npm install marked",
+        "code",
+    ),
+    # File Management — file uploaders ----------------------------------------
+    (
+        "uppy",
+        "Uppy",
+        "Sleek, modular open-source JavaScript file uploader with a beautiful UI",
+        "Uppy is a modular JavaScript file uploader built by Transloadit. It brings "
+        "support for picking files from the local disk, Google Drive, Dropbox, "
+        "Instagram, remote URLs, cameras and more. Uploads via XMLHttpRequest, "
+        "fetch, or tus (resumable). Ships with a polished UI (Dashboard, Drag-Drop, "
+        "Progress Bar plugins) and works with any backend.",
+        "file-management",
+        "transloadit/uppy",
+        29000,
+        "https://uppy.io",
+        "file-upload,uploader,resumable,tus,drag-drop,dashboard,javascript,react",
+        "npm install @uppy/core @uppy/dashboard",
+        "code",
+    ),
+    # Authentication — JWT / JOSE cryptographic libraries ---------------------
+    (
+        "jose",
+        "jose",
+        "JavaScript implementation of JSON Object Signing and Encryption standards",
+        "jose is a comprehensive JavaScript implementation of JSON Web Tokens (JWT), "
+        "JSON Web Signature (JWS), JSON Web Encryption (JWE), JSON Web Keys (JWK), "
+        "and related standards. Works in Node.js, browsers, Deno, Bun, and Cloudflare "
+        "Workers. Zero dependencies, supports RS256/ES256/EdDSA and more. The go-to "
+        "library for building standards-compliant auth and API security.",
+        "authentication",
+        "panva/jose",
+        10000,
+        "https://github.com/panva/jose",
+        "jwt,jwe,jws,jwk,jose,authentication,security,tokens,cryptography,typescript",
+        "npm install jose",
+        "code",
+    ),
+    # Testing Tools — HTTP assertion libraries --------------------------------
+    (
+        "supertest",
+        "SuperTest",
+        "Super-agent driven library for testing HTTP servers in Node.js",
+        "SuperTest is a high-level HTTP assertion library built on top of SuperAgent. "
+        "It lets you test Express, Fastify, Koa, and any Node.js HTTP server without "
+        "starting a real server — it binds to an ephemeral port automatically. Works "
+        "with Jest, Mocha, and any test runner. The standard for integration-testing "
+        "REST APIs in Node.js.",
+        "testing-tools",
+        "ladjs/supertest",
+        13000,
+        "https://github.com/ladjs/supertest",
+        "testing,http,integration,api,jest,mocha,express,node,assertions,rest",
+        "npm install supertest --save-dev",
+        "code",
+    ),
 ]
 
 

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
+Last updated: 2026-04-19 (one-hundred-and-twenty-second pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2022 unique active keys (one-hundred-and-twenty-first pass: +5 new — grok, moshi, sglang, trulens, lm-eval/lmeval)
-- **Catalog script**: `scripts/add_missing_tools.py` — 554 unique tools (added 5 new: dspy, marvin, mlflow, modal, ray)
+- **_CAT_SYNONYMS**: 2042 unique active keys (one-hundred-and-twenty-second pass: +20 new — file upload, JOSE/PASETO, date-fns, testing tools, GraphQL builders)
+- **Catalog script**: `scripts/add_missing_tools.py` — 558 unique tools (added 4 new: marked, uppy, jose, supertest)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,33 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-twenty-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 20 new `_CAT_SYNONYMS` entries → 2042 unique keys (no duplicates):
+  - **File**: `uploadthing`, `uppy` → file — file upload tools query routing
+  - **Security**: `jose`, `paseto` → security — JWT/JOSE lib and token standard queries
+  - **Frontend**: `date-fns` → frontend — ubiquitous date utility library
+  - **API**: `ofetch` → api — unjs fetch wrapper (Nuxt 3 default); `pothos`, `graphql-codegen`, `genql` → api — GraphQL schema/codegen tools
+  - **Documentation**: `unified`, `marked` → documentation — remark ecosystem + Markdown parser
+  - **Testing**: `pa11y`, `coveralls`, `nock`, `supertest`, `miragejs`, `istanbul`, `nyc`, `c8` → testing — accessibility, coverage, HTTP mocking
+  - **DevOps**: `bazel` → devops — Google's multi-language build system (22k★)
+
+### Catalog Script (Step 2)
+- Added 4 new tools to `scripts/add_missing_tools.py` (554 → 558 unique):
+  - **marked** (markedjs/marked, 32k★) — fast JS Markdown parser; developer-tools
+  - **Uppy** (transloadit/uppy, 29k★) — modular file uploader UI; file-management
+  - **jose** (panva/jose, 10k★) — JS JOSE JWT/JWK/JWE/JWS library; authentication
+  - **SuperTest** (ladjs/supertest, 13k★) — HTTP assertions for Node.js; testing-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-19, one-hundred-and-twenty-first pass — autonomous improvement cycle)
 

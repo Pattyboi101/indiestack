@@ -5292,6 +5292,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — EleutherAI lm-evaluation-harness (canonical open LLM benchmark runner)
     "lm-eval": "ai",                # lm-eval — EleutherAI LM evaluation harness; "lm-eval alternative" → AI & Automation
     "lmeval": "ai",                 # compound form — "lmeval benchmarks", "lmeval harness" → AI & Automation
+    # File management — file upload UI and infrastructure libraries
+    "uploadthing": "file",          # UploadThing — upload infra for Next.js/React (6k★) → File Management
+    "uppy": "file",                 # Uppy — modular file uploader UI with progress (29k★) → File Management
+    # Security — JWT alternative token standard and JOSE cryptographic primitives
+    "jose": "security",             # jose — JS JOSE (JWT/JWK/JWE/JWS) library (10k★) → Security Tools
+    "paseto": "security",           # PASETO — Platform-Agnostic SEcurity TOkens, JWT alternative → Security Tools
+    # Frontend — date utility libraries (ubiquitous dev dependency)
+    "date-fns": "frontend",         # date-fns — modern JS date utility library (34k★) → Frontend Frameworks
+    # API — lightweight fetch wrappers common in modern JS stacks
+    "ofetch": "api",                # ofetch — unjs fetch with better error handling (Nuxt 3) → API Tools
+    # Documentation — Markdown processing ecosystem
+    "unified": "documentation",     # unified — text processing ecosystem (remark/rehype base) → Documentation
+    "marked": "documentation",      # marked — fast Markdown parser + renderer for JS (32k★) → Documentation
+    # Testing — accessibility, coverage, and HTTP mocking/assertion tools
+    "pa11y": "testing",             # pa11y — automated accessibility testing CLI → Testing Tools
+    "coveralls": "testing",         # Coveralls — hosted code coverage tracking for OSS → Testing Tools
+    "nock": "testing",              # Nock — HTTP server mocking for Node.js test suites → Testing Tools
+    "supertest": "testing",         # SuperTest — HTTP assertions for Node.js REST APIs (13k★) → Testing Tools
+    "miragejs": "testing",          # Mirage JS — in-browser API mocking for front-end tests → Testing Tools
+    "istanbul": "testing",          # Istanbul — JS code coverage (foundational; now nyc/c8) → Testing Tools
+    "nyc": "testing",               # nyc — Istanbul CLI coverage runner (most-used JS coverage) → Testing Tools
+    "c8": "testing",                # c8 — native V8 code coverage for Node.js → Testing Tools
+    # DevOps — Google's hermetic multi-language monorepo build system
+    "bazel": "devops",              # Bazel — Google's multi-language build system (22k★) → DevOps & Infrastructure
+    # API — GraphQL schema building and code generation tools
+    "pothos": "api",                # Pothos — plugin-based TypeScript GraphQL schema builder → API Tools
+    "graphql-codegen": "api",       # GraphQL Code Generator — type-safe codegen from schema → API Tools
+    "genql": "api",                 # genql — type-safe GraphQL client generated from SDL → API Tools
 }
 
 _FTS_STOP_WORDS = {
