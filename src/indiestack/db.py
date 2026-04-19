@@ -5260,6 +5260,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     "api-key": "api",               # hyphenated — "api-key management", "api-key service", "api-key authentication" → API Tools
     # Testing — singular form for Testcontainers (complement to "testcontainers"→testing already mapped)
     "testcontainer": "testing",     # singular — "testcontainer for postgres", "testcontainer setup" → Testing Tools
+    # Frontend — server/client rendering terminology (SSR, CSR, hybrid) not yet directly mapped
+    "rendering": "frontend",        # "server-side rendering", "client rendering", "hybrid rendering" → Frontend Frameworks
+    # Database — persistence layer terminology (complement to "relational"→database, "offline"→database)
+    "persistence": "database",      # "persistence layer", "data persistence", "state persistence" → Database
+    "persistent": "database",       # "persistent storage", "persistent connection", "persistent cache" → Database
+    # API — bare "api" term routes "api gateway", "api testing", "api client" to API Tools
+    "api": "api",                   # "api gateway", "api testing", "api client", "api mock" → API Tools
+    # AI — Chainlit Python LLM chatbot UI framework (chainlit/chainlit, 7k★)
+    "chainlit": "ai",               # Chainlit — Python framework for LLM-powered chatbot UIs → AI & Automation
+    # AI — Chonkie fast RAG text chunking library (chonkie-ai/chonkie, 3k★)
+    "chonkie": "ai",                # Chonkie — fast, lightweight text chunking for RAG pipelines → AI & Automation
+    # API — Python asyncio event-loop queries (FastAPI, Starlette, Sanic are built on it)
+    "asyncio": "api",               # asyncio — Python async event loop; "asyncio framework", "asyncio web" → API Tools
+    # Search — FTS abbreviation (full-text search; very common in SQLite/Postgres query terms)
+    "fts": "search",                # FTS — "fts5 search", "fts index", "fts alternative" → Search Engines
+    # CMS — Kirby CMS PHP flat-file CMS (getkirby/kirby, 4k★)
+    "kirby": "cms",                 # Kirby CMS — PHP flat-file flexible CMS; "kirby cms alternative" → Headless CMS
+    # AI — CAMEL-AI multi-agent LLM framework (camel-ai/camel, 6k★)
+    "camel": "ai",                  # CAMEL-AI — Communicative Agents for Mind Exploration (multi-agent) → AI & Automation
+    "camelai": "ai",                # compound — "camelai alternative", "camel ai framework" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

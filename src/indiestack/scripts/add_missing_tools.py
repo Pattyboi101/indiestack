@@ -9126,6 +9126,89 @@ TOOLS = [
         "pip install Weblate  # or: docker run weblate/weblate",
         "code",
     ),
+    # AI & Automation -----------------------------------------------------------
+    (
+        "chainlit",
+        "Chainlit",
+        "Build production-ready conversational AI applications in minutes",
+        "Chainlit is an open-source Python framework for building production-ready "
+        "LLM-powered chatbot and copilot UIs. Drop-in integration with LangChain, "
+        "LlamaIndex, OpenAI, and any LLM. Features conversation history, human "
+        "feedback, authentication, and multi-modal support out of the box.",
+        "ai-automation",
+        "Chainlit-AI/chainlit",
+        7000,
+        "https://chainlit.io",
+        "llm,chatbot,copilot,ui,python,langchain,openai,conversational-ai",
+        "pip install chainlit",
+        "code",
+    ),
+    (
+        "chonkie",
+        "Chonkie",
+        "Fast, lightweight text chunking library for RAG pipelines",
+        "Chonkie is a blazing-fast Python text chunking library designed for "
+        "Retrieval-Augmented Generation (RAG) pipelines. Supports token chunking, "
+        "sentence chunking, semantic chunking, and recursive chunking strategies. "
+        "Zero heavy dependencies — works with any tokenizer or embedding model.",
+        "ai-automation",
+        "chonkie-ai/chonkie",
+        3000,
+        "https://chonkie.ai",
+        "rag,chunking,text-splitting,llm,nlp,embeddings,python",
+        "pip install chonkie",
+        "code",
+    ),
+    (
+        "haystack",
+        "Haystack",
+        "End-to-end NLP and LLM application framework",
+        "Haystack is an open-source framework for building NLP-powered search and "
+        "LLM applications. Build document retrieval, RAG, and agent pipelines with "
+        "modular components. Supports OpenAI, Cohere, HuggingFace, Elasticsearch, "
+        "OpenSearch, and Weaviate out of the box.",
+        "ai-automation",
+        "deepset-ai/haystack",
+        18000,
+        "https://haystack.deepset.ai",
+        "nlp,rag,llm,search,pipelines,python,openai,retrieval,agents",
+        "pip install haystack-ai",
+        "code",
+    ),
+    (
+        "camel",
+        "CAMEL",
+        "Communicative Agents for Mind Exploration — multi-agent LLM framework",
+        "CAMEL is a pioneering open-source multi-agent LLM framework. Enables "
+        "role-playing between AI agents for complex task solving, automated "
+        "workforce simulations, and data generation. Supports 20+ model providers "
+        "and agent societies with tool-use, memory, and collaboration patterns.",
+        "ai-automation",
+        "camel-ai/camel",
+        6000,
+        "https://www.camel-ai.org",
+        "multi-agent,llm,role-play,ai-agents,python,openai,autonomous",
+        "pip install camel-ai",
+        "code",
+    ),
+    # Headless CMS --------------------------------------------------------------
+    (
+        "kirby",
+        "Kirby CMS",
+        "The CMS that adapts to any project — file-based, flexible, PHP",
+        "Kirby is a flat-file PHP CMS that adapts to any project. No database "
+        "required — content is stored as plain files and folders. Features a "
+        "beautiful Panel UI, flexible blueprints, a powerful query language, "
+        "and a clean PHP API. Loved by agencies and indie developers for its "
+        "simplicity and full content ownership.",
+        "headless-cms",
+        "getkirby/kirby",
+        4000,
+        "https://getkirby.com",
+        "cms,php,flat-file,headless,content-management,panel,no-database",
+        "composer require getkirby/cms",
+        "code",
+    ),
 ]
 
 

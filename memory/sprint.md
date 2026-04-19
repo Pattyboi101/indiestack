@@ -1,17 +1,17 @@
 # Sprint — Current
 
-Last updated: 2026-04-18 (one-hundred-and-nineteenth pass)
+Last updated: 2026-04-19 (one-hundred-and-twentieth pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-18)
+## System State (as of 2026-04-19)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2005 unique active keys (one-hundred-and-nineteenth pass: +10 new — web3, nft, natural, tokenize, llm-proxy, llmproxy, lake, apikey, api-key, testcontainer)
-- **Catalog script**: `scripts/add_missing_tools.py` — 544 unique tools (added 5 new: localstack, testify, pact-js, flyway, weblate)
+- **_CAT_SYNONYMS**: 2017 unique active keys (one-hundred-and-twentieth pass: +12 new — rendering, persistence, persistent, api, chainlit, chonkie, asyncio, fts, kirby, camel, camelai + camelai)
+- **Catalog script**: `scripts/add_missing_tools.py` — 549 unique tools (added 5 new: chainlit, chonkie, haystack, camel, kirby)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,38 @@ Last updated: 2026-04-18 (one-hundred-and-nineteenth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-twentieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 12 new `_CAT_SYNONYMS` entries → 2017 unique keys:
+  - **Frontend**: `rendering` → frontend — "server-side rendering", "hybrid rendering" → Frontend Frameworks
+  - **Database**: `persistence` → database — "persistence layer", "data persistence" → Database
+  - **Database**: `persistent` → database — "persistent storage", "persistent connection" → Database
+  - **API**: `api` → api — "api gateway", "api testing", "api client" → API Tools (high-impact bare term)
+  - **AI**: `chainlit` → ai — Chainlit Python LLM chat UI framework (7k★)
+  - **AI**: `chonkie` → ai — fast RAG text chunking library (3k★)
+  - **API**: `asyncio` → api — Python asyncio queries → API Tools (FastAPI/Starlette context)
+  - **Search**: `fts` → search — full-text search abbreviation → Search Engines
+  - **CMS**: `kirby` → cms — Kirby CMS PHP flat-file CMS → Headless CMS
+  - **AI**: `camel` → ai — CAMEL-AI multi-agent LLM framework (6k★)
+  - **AI**: `camelai` → ai — compound form for CAMEL-AI queries
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (544 → 549 unique):
+  - **Chainlit** (Chainlit-AI/chainlit, 7k★) — Python LLM chatbot UI; ai-automation
+  - **Chonkie** (chonkie-ai/chonkie, 3k★) — fast RAG text chunking; ai-automation
+  - **Haystack** (deepset-ai/haystack, 18k★) — NLP+LLM pipeline framework; ai-automation
+  - **CAMEL** (camel-ai/camel, 6k★) — multi-agent LLM framework; ai-automation
+  - **Kirby CMS** (getkirby/kirby, 4k★) — PHP flat-file CMS; headless-cms
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-18, one-hundred-and-nineteenth pass — autonomous improvement cycle)
 
