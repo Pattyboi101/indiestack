@@ -9617,6 +9617,91 @@ TOOLS = [
         "npm install @formkit/auto-animate",
         "code",
     ),
+    # Frontend Frameworks — Redux Toolkit (RTK) ------------------------------
+    (
+        "redux-toolkit",
+        "Redux Toolkit",
+        "The official, opinionated, batteries-included toolset for efficient Redux development",
+        "Redux Toolkit (RTK) is the official recommended approach for writing Redux logic. "
+        "Includes utilities to simplify common use cases: store setup, reducers, immutable "
+        "update logic, and even creating entire 'slices' of state. Comes with RTK Query for "
+        "data fetching and caching. First-class TypeScript support.",
+        "frontend-frameworks",
+        "reduxjs/redux-toolkit",
+        10500,
+        "https://redux-toolkit.js.org",
+        "state-management,react,redux,typescript",
+        "npm install @reduxjs/toolkit react-redux",
+        "code",
+    ),
+    # API Tools — express-rate-limit -----------------------------------------
+    (
+        "express-rate-limit",
+        "express-rate-limit",
+        "Basic rate-limiting middleware for Express",
+        "express-rate-limit is the most popular rate-limiting middleware for Express.js. "
+        "Limits repeated requests to public APIs and endpoints. Supports custom key "
+        "generators, handlers, and pluggable stores (Redis, Memcached). Simple "
+        "drop-in solution for protecting Node.js APIs.",
+        "api-tools",
+        "express-rate-limit/express-rate-limit",
+        11000,
+        "https://express-rate-limit.mintlify.app",
+        "rate-limiting,express,nodejs,middleware,security",
+        "npm install express-rate-limit",
+        "code",
+    ),
+    # API Tools — Upstash Rate Limit -----------------------------------------
+    (
+        "upstash-ratelimit",
+        "Upstash Rate Limit",
+        "Serverless rate limiting backed by Upstash Redis",
+        "Upstash Rate Limit is a serverless-friendly rate limiting library backed by "
+        "Upstash Redis. Supports fixed window, sliding window, and token bucket algorithms. "
+        "Works in Edge Runtime, Next.js middleware, Cloudflare Workers, and any serverless "
+        "environment. No persistent connections required.",
+        "api-tools",
+        "upstash/ratelimit-js",
+        2500,
+        "https://upstash.com/docs/oss/sdks/ts/ratelimit/overview",
+        "rate-limiting,serverless,redis,edge,nextjs,cloudflare",
+        "npm install @upstash/ratelimit @upstash/redis",
+        "code",
+    ),
+    # Database — LanceDB vector database -------------------------------------
+    (
+        "lancedb",
+        "LanceDB",
+        "Developer-friendly, serverless vector database for AI applications",
+        "LanceDB is an open-source, serverless vector database written in Rust. "
+        "Embeds directly in your app — no server required. Persistent storage on local "
+        "disk or object storage (S3, GCS). Native Python and JavaScript SDKs. "
+        "Used for building RAG pipelines, semantic search, and multimodal AI apps.",
+        "database",
+        "lancedb/lancedb",
+        5500,
+        "https://lancedb.com",
+        "vector-database,vector-store,ai,rag,embedding,rust,serverless",
+        "pip install lancedb",
+        "code",
+    ),
+    # Developer Tools — Lefthook Git hooks manager ---------------------------
+    (
+        "lefthook",
+        "Lefthook",
+        "Fast and powerful Git hooks manager",
+        "Lefthook is a fast polyglot Git hooks manager written in Go. Runs hooks in "
+        "parallel, supports conditional execution, and works with any language or "
+        "framework. Drop-in alternative to Husky with zero Node.js dependency. "
+        "Configure in a single YAML file.",
+        "developer-tools",
+        "evilmartians/lefthook",
+        5000,
+        "https://evilmartians.com/products/lefthook",
+        "git,hooks,developer,cli,pre-commit,devtools",
+        "npm install lefthook --save-dev",
+        "code",
+    ),
 ]
 
 

@@ -5367,6 +5367,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "next-themes": "frontend",      # next-themes — dark mode theme provider for Next.js (3.5k★) → Frontend Frameworks
     # File management — image CDN and optimization service
     "imgix": "file",                # imgix — real-time image processing and delivery CDN → File Management
+    # Frontend — state management multi-word queries ("state management library", "state management react")
+    "state management": "frontend", # maps to Frontend Frameworks where Zustand, Jotai, MobX, Recoil live
+    "state-management": "frontend", # hyphenated form — "state-management solution", "state-management library"
+    # API Tools — rate limiting multi-word queries (Kong, Tyk, express-rate-limit, Upstash Ratelimit)
+    "rate limiting": "api",         # "rate limiting library", "rate limiting middleware", "API rate limiting"
+    "rate-limiting": "api",         # hyphenated — "rate-limiting solution", "rate-limiting service"
+    "rate limiter": "api",          # "rate limiter npm", "rate limiter implementation", "distributed rate limiter"
+    "rate-limiter": "api",          # hyphenated — "rate-limiter express", "rate-limiter redis"
+    # API Tools — real-time (alt spelling without hyphen already mapped; add hyphenated form)
+    "real-time": "api",             # "real-time updates", "real-time database" → API Tools (Ably, Pusher, Liveblocks)
+    # Database — vector database multi-word queries (Pinecone, Qdrant, Weaviate, Chroma, pgvector)
+    "vector database": "database",  # "vector database comparison", "vector database python" → Database
+    "vector-database": "database",  # hyphenated — "vector-database hosting", "vector-database open source"
+    "vector store": "database",     # "vector store integration", "vector store LangChain" → Database
+    "vector-store": "database",     # hyphenated — "vector-store backend", "vector-store retrieval"
+    # Database — LanceDB (embedded Rust vector database, common query target)
+    "lancedb": "database",          # LanceDB — serverless embedded vector DB (lancedb/lancedb, 5.5k★)
+    # Frontend — Redux Toolkit (the official opinionated Redux wrapper, 10k★)
+    "redux-toolkit": "frontend",    # hyphenated slug form — "redux-toolkit vs zustand" → Frontend Frameworks
+    "rtk": "frontend",              # RTK abbreviation — "rtk query", "rtk slice", "rtk setup" → Frontend Frameworks
+    # API Tools — express-rate-limit (most popular Node.js rate limiting middleware)
+    "express-rate-limit": "api",    # hyphenated slug — "express-rate-limit alternative" → API Tools
 }
 
 _FTS_STOP_WORDS = {

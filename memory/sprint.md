@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twenty-fifth pass)
+Last updated: 2026-04-19 (one-hundred-and-twenty-sixth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2066 unique active keys (one-hundred-and-twenty-fifth pass: +8 new — node, nodejs, json, xml, network, url, hash, starlight)
-- **Catalog script**: `scripts/add_missing_tools.py` — 573 unique tools (added 5 new: fumadocs, starlight, panda-css, nanostores, lexical)
+- **_CAT_SYNONYMS**: 2081 unique active keys (one-hundred-and-twenty-sixth pass: +15 new — state management, rate limiting, real-time, vector database variants, redux-toolkit, rtk, lancedb, express-rate-limit)
+- **Catalog script**: `scripts/add_missing_tools.py` — 578 unique tools (added 5 new: redux-toolkit, express-rate-limit, upstash-ratelimit, lancedb, lefthook)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,34 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-fifth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-twenty-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 15 new `_CAT_SYNONYMS` entries → 2081 unique keys (no duplicates):
+  - **Frontend**: `state management`, `state-management` → frontend — multi-word state management queries (Zustand, Jotai, MobX, Recoil)
+  - **API**: `rate limiting`, `rate-limiting`, `rate limiter`, `rate-limiter` → api — rate limiting queries (Kong, express-rate-limit, Upstash Ratelimit)
+  - **API**: `real-time` → api — hyphenated form complement to existing `realtime` (Ably, Pusher, Liveblocks)
+  - **Database**: `vector database`, `vector-database`, `vector store`, `vector-store` → database — multi-word vector DB queries (Pinecone, Qdrant, LanceDB)
+  - **Database**: `lancedb` → database — new catalog tool; embedded Rust vector database
+  - **Frontend**: `redux-toolkit`, `rtk` → frontend — Redux Toolkit slug and abbreviation
+  - **API**: `express-rate-limit` → api — most popular Express rate limiting middleware
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (573 → 578 unique):
+  - **Redux Toolkit** (reduxjs/redux-toolkit, 10.5k★) — official opinionated Redux toolset; frontend-frameworks
+  - **express-rate-limit** (express-rate-limit/express-rate-limit, 11k★) — Express rate limiting middleware; api-tools
+  - **Upstash Rate Limit** (upstash/ratelimit-js, 2.5k★) — serverless Redis-backed rate limiter; api-tools
+  - **LanceDB** (lancedb/lancedb, 5.5k★) — serverless embedded vector database; database
+  - **Lefthook** (evilmartians/lefthook, 5k★) — fast polyglot Git hooks manager; developer-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-19, one-hundred-and-twenty-fifth pass — autonomous improvement cycle)
 
