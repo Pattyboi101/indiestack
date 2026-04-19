@@ -9844,6 +9844,91 @@ TOOLS = [
         "",
         "code",
     ),
+    # API Tools — Sinatra Ruby micro-framework --------------------------------
+    (
+        "sinatra",
+        "Sinatra",
+        "DSL for quickly creating web applications in Ruby",
+        "Sinatra is a minimal Ruby DSL for building web applications. Famous for its "
+        "expressive routing syntax: `get '/hello' { 'Hello World' }`. Widely used for "
+        "REST APIs, microservices, and simple web apps. The spiritual predecessor to "
+        "many modern lightweight frameworks. Runs on any Rack-compatible server.",
+        "api-tools",
+        "sinatra/sinatra",
+        13000,
+        "https://sinatrarb.com",
+        "ruby,rest-api,lightweight,rack,dsl,microservice",
+        "gem install sinatra",
+        "code",
+    ),
+    # API Tools — Vapor Swift web framework -----------------------------------
+    (
+        "vapor",
+        "Vapor",
+        "Server-side Swift web framework",
+        "Vapor is the most popular server-side Swift web framework. Build high-performance "
+        "web APIs, real-time apps, and microservices in Swift. Features async/await support, "
+        "Fluent ORM, built-in authentication, WebSocket support, and Leaf templating. "
+        "Runs on Linux and macOS. The go-to backend choice for Swift developers.",
+        "api-tools",
+        "vapor/vapor",
+        24000,
+        "https://vapor.codes",
+        "swift,rest-api,async,websocket,orm,linux",
+        "swift package add https://github.com/vapor/vapor.git",
+        "code",
+    ),
+    # API Tools — Django Ninja ------------------------------------------------
+    (
+        "django-ninja",
+        "Django Ninja",
+        "Fast Django REST framework inspired by FastAPI",
+        "Django Ninja brings FastAPI-style API development to Django. Define endpoints "
+        "with Python type hints, get automatic OpenAPI/Swagger docs, Pydantic validation, "
+        "and async support — all on top of Django's battle-tested ORM and ecosystem. "
+        "10-20x faster serialization than Django REST Framework with minimal migration effort.",
+        "api-tools",
+        "vitalik/django-ninja",
+        7000,
+        "https://django-ninja.dev",
+        "django,python,rest-api,openapi,pydantic,async,fast",
+        "pip install django-ninja",
+        "code",
+    ),
+    # API Tools — aiohttp Python async HTTP -----------------------------------
+    (
+        "aiohttp",
+        "aiohttp",
+        "Async HTTP client/server framework for Python",
+        "aiohttp is the foundational async HTTP library for Python. Use it as a high-performance "
+        "WSGI-free HTTP server, or as an async HTTP client for calling external APIs. "
+        "Built on asyncio, supports WebSockets, streaming, and middleware. "
+        "Widely used in data pipelines, scrapers, and microservices before FastAPI's rise.",
+        "api-tools",
+        "aio-libs/aiohttp",
+        14000,
+        "https://docs.aiohttp.org",
+        "python,async,asyncio,rest-api,http-client,server,websocket",
+        "pip install aiohttp",
+        "code",
+    ),
+    # API Tools — Falcon Python REST framework --------------------------------
+    (
+        "falcon",
+        "Falcon",
+        "Bare-metal Python WSGI/ASGI REST framework",
+        "Falcon is a minimalist Python web framework for building fast REST APIs and "
+        "microservices. No magic, no cruft — just fast request handling. Supports both "
+        "WSGI and ASGI. Used by LinkedIn, OpenStack, and many performance-critical Python "
+        "backends. Benchmark winner for raw throughput vs Flask, Django, and FastAPI.",
+        "api-tools",
+        "falconry/falcon",
+        9000,
+        "https://falconframework.org",
+        "python,rest-api,wsgi,asgi,fast,minimalist,microservice",
+        "pip install falcon",
+        "code",
+    ),
 ]
 
 

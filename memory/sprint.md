@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twenty-eighth pass)
+Last updated: 2026-04-19 (one-hundred-and-twenty-ninth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-eighth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2106 unique active keys (one-hundred-and-twenty-eighth pass: +22 new — .NET/C# ecosystem, polling, regex, makefile/justfile)
-- **Catalog script**: `scripts/add_missing_tools.py` — 586 unique tools (added 3 new: aspnet-core, blazor, play-framework)
+- **_CAT_SYNONYMS**: 2112 unique active keys (one-hundred-and-twenty-ninth pass: +9 new — Ruby/Swift/Python/Rust web frameworks)
+- **Catalog script**: `scripts/add_missing_tools.py` — 591 unique tools (added 5 new: sinatra, vapor, django-ninja, aiohttp, falcon)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -20,21 +20,22 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-eighth pass)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
 
-## Completed This Session (2026-04-19, one-hundred-and-twenty-eighth pass — autonomous improvement cycle)
+## Completed This Session (2026-04-19, one-hundred-and-twenty-ninth pass — autonomous improvement cycle)
 
 ### Search Quality (Step 1)
-- Added 22 new `_CAT_SYNONYMS` entries → 2106 unique keys:
-  - **.NET/C# ecosystem** (9 keys): `csharp`, `c-sharp`, `dotnet`, `aspnet`, `aspnetcore`, `asp-net` → api; `blazor`, `blazorwasm`, `maui` → frontend — major unrouted language ecosystem
-  - **Language routes**: `scala` → api (Play, ZIO HTTP, Tapir); `clojure` → api (Ring, Compojure, Luminus)
-  - **Polling patterns**: `polling`, `longpolling`, `long-polling` → api — long polling vs WebSocket alternative queries
-  - **Regex tools**: `regex`, `regexp` → developer — "regex library", "regex engine", "regex tester" queries
-  - **Build task runners**: `makefile`, `gnumake`, `justfile` → devops — GNU Make and Just command runner queries
+- Added 9 new `_CAT_SYNONYMS` entries → 2112 unique keys:
+  - **Ruby frameworks** (3 keys): `sinatra` → api (13k★, most-searched Ruby micro-framework); `grape` → api (9k★, REST API DSL); `hanami` → api (3k★, full-stack Ruby)
+  - **Python frameworks** (3 keys): `aiohttp` → api (14k★, canonical asyncio HTTP); `litestar` → api (5k★, formerly Starlite ASGI); `falcon` → api (9k★, bare-metal REST); `django-ninja` → api (7k★, FastAPI-style on Django)
+  - **Rust web**: `rocket` → api (23k★, ergonomic Rust web framework — rocket.rs)
+  - **Swift web**: `vapor` → api (24k★, most popular Swift backend framework)
 
 ### Catalog Script (Step 2)
-- Added 3 new tools to `scripts/add_missing_tools.py` (583 → 586 unique):
-  - **ASP.NET Core** (dotnet/aspnetcore, 35k★) — Microsoft's cross-platform .NET web framework; api-tools
-  - **Blazor** (dotnet/aspnetcore, 35k★) — .NET WebAssembly UI framework for C# in the browser; frontend-frameworks
-  - **Play Framework** (playframework/playframework, 12.4k★) — reactive web framework for Java/Scala; api-tools
+- Added 5 new tools to `scripts/add_missing_tools.py` (586 → 591 unique):
+  - **Sinatra** (sinatra/sinatra, 13k★) — Ruby micro-framework; api-tools
+  - **Vapor** (vapor/vapor, 24k★) — server-side Swift web framework; api-tools
+  - **Django Ninja** (vitalik/django-ninja, 7k★) — FastAPI-style REST on Django; api-tools
+  - **aiohttp** (aio-libs/aiohttp, 14k★) — Python async HTTP client/server; api-tools
+  - **Falcon** (falconry/falcon, 9k★) — bare-metal Python REST framework; api-tools
 
 ### Code Quality (Step 3)
 - Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit

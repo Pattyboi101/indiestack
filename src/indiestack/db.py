@@ -5425,6 +5425,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     "makefile": "devops",           # Makefile / GNU Make — "makefile alternative", "make build tool" → DevOps & Infrastructure
     "gnumake": "devops",            # GNU Make — explicit form → DevOps & Infrastructure
     "justfile": "devops",           # Justfile — just command runner; "justfile alternative", "just task runner" → DevOps
+    # Ruby web frameworks — common alternative query targets in the Ruby ecosystem
+    "sinatra": "api",               # Sinatra — lightweight Ruby DSL for web apps (13k★); "sinatra alternative" → API Tools
+    "grape": "api",                 # Grape — Ruby REST-like API framework on Rack (9k★); "grape alternative" → API Tools
+    "hanami": "api",                # Hanami — full-stack Ruby framework (3k★); "hanami alternative" → API Tools
+    # Python async HTTP — aiohttp is the canonical asyncio HTTP framework before FastAPI era
+    "aiohttp": "api",               # aiohttp — async HTTP client/server for Python (14k★); "aiohttp alternative" → API Tools
+    # Python ASGI / REST frameworks not yet mapped
+    "litestar": "api",              # Litestar (formerly Starlite) — Python ASGI framework (5k★) → API Tools
+    "falcon": "api",                # Falcon — bare-metal Python WSGI/ASGI REST framework (9k★) → API Tools
+    "django-ninja": "api",          # Django Ninja — FastAPI-style REST on top of Django (7k★) → API Tools
+    # Rust web frameworks — rocket.rs is the most-searched Rust alternative after Axum
+    "rocket": "api",                # Rocket — ergonomic Rust web framework (23k★); "rocket alternative" → API Tools
+    # Swift server-side framework — Vapor is the dominant Swift backend framework
+    "vapor": "api",                 # Vapor — server-side Swift web framework (24k★); "vapor alternative" → API Tools
 }
 
 _FTS_STOP_WORDS = {
