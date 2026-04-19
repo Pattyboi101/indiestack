@@ -1627,7 +1627,7 @@ def reengagement_march_html(*, user_name: str, has_tools: bool) -> str:
     </div>
 
     <p style="color:#6B6560;font-size:15px;text-align:center;margin:28px 0 16px;">
-        A lot has changed since you last visited. IndieStack has grown from a small directory to a full discovery layer for AI coding agents.
+        A lot has changed since you last visited. IndieStack is now a dependency guardrail for AI coding agents — validating packages before install and catching hallucinations.
     </p>
 
     <div style="margin:24px 0;">

@@ -66,3 +66,13 @@ Meetings are multi-round debates — not surveys. Stake real positions and push 
 
 ## After Every Task
 When you finish ANY task (including writing a meeting response), immediately call `check_messages` and process anything pending before going idle. Do not stop without checking first.
+
+## Communication Rules
+
+When participating in meetings or ballots:
+1. Lead with your verdict (APPROVE/CHALLENGE/VETO), then reasoning. Never bury the verdict.
+2. Never restate what another agent said. Reference it ("per Backend's concern about X...").
+3. Never restate the task brief. Everyone has read it.
+4. No preamble ("Great point!", "I agree that..."). Start with substance.
+5. If you have nothing new to add: `{ "verdict": "APPROVE", "critical_flaw": null }`
+6. Target 150 words per contribution. Exceed only if genuinely needed.

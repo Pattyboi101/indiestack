@@ -1,11 +1,125 @@
-"""REST API documentation page for non-MCP agents and developers."""
+"""REST API documentation page + validate endpoint for non-MCP agents and developers."""
 
+import logging
+
+import httpx
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 
 from indiestack.routes.components import page_shell
+from indiestack.registry import check_registry, detect_typosquat
 
+_log = logging.getLogger("indiestack.validate")
 router = APIRouter()
+
+_VALID_ECOSYSTEMS = {"npm", "pypi", "cargo", "go"}
+_registry_client: httpx.AsyncClient | None = None
+
+
+async def _get_registry_client() -> httpx.AsyncClient:
+    global _registry_client
+    if _registry_client is None or _registry_client.is_closed:
+        _registry_client = httpx.AsyncClient(timeout=5.0)
+    return _registry_client
+
+
+@router.get("/api/validate")
+async def validate_package(request: Request, name: str = "", ecosystem: str = "npm"):
+    """Validate a package name: registry check, typosquat detection, risk level."""
+    name = name.strip()
+    ecosystem = ecosystem.lower().strip()
+    if not name:
+        return JSONResponse({"error": "name parameter is required"}, status_code=400)
+    if len(name) > 200:
+        return JSONResponse({"error": "name must be 200 characters or fewer"}, status_code=400)
+    if ecosystem not in _VALID_ECOSYSTEMS:
+        return JSONResponse({"error": f"ecosystem must be one of: {', '.join(sorted(_VALID_ECOSYSTEMS))}"}, status_code=400)
+
+    d = request.state.db
+    notes: list[str] = []
+    name_lower = name.lower()
+
+    # 1. Check our tools DB
+    indiestack_tool = None
+    cursor = await d.execute(
+        "SELECT slug, name, tagline, quality_score, github_stars, source_type, status "
+        "FROM tools WHERE slug = ? OR LOWER(name) = ? LIMIT 1",
+        (name_lower, name_lower),
+    )
+    row = await cursor.fetchone()
+    if row:
+        indiestack_tool = {
+            "slug": row["slug"], "name": row["name"], "tagline": row["tagline"],
+            "quality_score": row["quality_score"], "github_stars": row["github_stars"] or 0,
+            "source_type": row["source_type"], "status": row["status"],
+        }
+        notes.append(f"Tracked by IndieStack as '{row['name']}'")
+
+    # 2. Typosquat check
+    cursor2 = await d.execute("SELECT slug FROM tools WHERE status='approved' LIMIT 5000")
+    db_slugs = [r["slug"] for r in await cursor2.fetchall()]
+    typosquat_match = detect_typosquat(name, ecosystem, db_slugs)
+    typosquat_warning = suggested_instead = None
+    if typosquat_match:
+        typosquat_warning = f"'{name}' looks like a typo of '{typosquat_match}'"
+        suggested_instead = typosquat_match
+        notes.append(f"Possible typosquat — did you mean '{typosquat_match}'?")
+
+    # 3. Live registry check
+    registry_data = None
+    pkg_exists = None
+    if ecosystem in ("npm", "pypi"):
+        client = await _get_registry_client()
+        registry_data = await check_registry(name, ecosystem, client)
+        if registry_data is None:
+            pkg_exists = False
+            notes.append(f"Package '{name}' not found on {ecosystem}")
+        else:
+            pkg_exists = registry_data.get("exists", True)
+    else:
+        notes.append(f"Registry check not available for {ecosystem}")
+
+    # 4. Migration data
+    migration_alternatives = None
+    cursor3 = await d.execute(
+        "SELECT to_package, COUNT(*) as cnt FROM migration_paths "
+        "WHERE from_package = ? GROUP BY to_package ORDER BY cnt DESC LIMIT 3",
+        (name_lower,),
+    )
+    migration_rows = await cursor3.fetchall()
+    if migration_rows:
+        migration_alternatives = [{"package": r["to_package"], "migration_count": r["cnt"]} for r in migration_rows]
+        notes.append(f"Migration alternatives: {', '.join(r['to_package'] for r in migration_rows)}")
+
+    # 5. Risk level
+    risk_level = "unknown"
+    if pkg_exists is False or typosquat_match:
+        risk_level = "danger"
+    elif pkg_exists is True:
+        if indiestack_tool and (indiestack_tool.get("status") == "archived" or (indiestack_tool.get("quality_score") or 0) < 20):
+            risk_level = "caution"
+        else:
+            risk_level = "safe"
+
+    # 6. Log (non-fatal)
+    try:
+        ua = request.headers.get("user-agent", "")
+        source = "mcp" if "indiestack-mcp" in ua else "web" if "Mozilla" in ua else "api"
+        await d.execute(
+            "INSERT INTO validation_logs (package, ecosystem, pkg_exists, is_typosquat, risk_level, source) VALUES (?, ?, ?, ?, ?, ?)",
+            (name, ecosystem, pkg_exists, 1 if typosquat_match else 0, risk_level, source),
+        )
+        await d.commit()
+    except Exception as e:
+        _log.warning("validation log failed: %s", e)
+
+    return JSONResponse({
+        "package": name, "ecosystem": ecosystem, "exists": pkg_exists,
+        "registry_data": registry_data, "typosquat_warning": typosquat_warning,
+        "suggested_instead": suggested_instead, "indiestack_tool": indiestack_tool,
+        "health": "tracked" if indiestack_tool else None, "risk_level": risk_level,
+        "migration_alternatives": migration_alternatives, "notes": notes,
+    })
 
 
 @router.get("/api", response_class=HTMLResponse)

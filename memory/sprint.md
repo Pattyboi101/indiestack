@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2032 unique active keys (one-hundred-and-twenty-first pass: +15 new — credential, credentials, pkce, signin, sign-in, logout, signout, sign-out, role, tenant, appsync, fasthtml, marimo, litserve, aceternity)
-- **Catalog script**: `scripts/add_missing_tools.py` — 554 unique tools (added 5 new: fasthtml, marimo, primevue, litserve, zitadel)
+- **_CAT_SYNONYMS**: 2047 unique active keys (one-hundred-and-twenty-first pass: +15; one-hundred-and-twentieth pass merged +27 from two concurrent agents)
+- **Catalog script**: `scripts/add_missing_tools.py` — 559 unique tools (121st: +5; 120th merged +10 from two concurrent agents)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -75,6 +75,42 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
   - **Haystack** (deepset-ai/haystack, 18k★) — NLP+LLM pipeline framework; ai-automation
   - **CAMEL** (camel-ai/camel, 6k★) — multi-agent LLM framework; ai-automation
   - **Kirby CMS** (getkirby/kirby, 4k★) — PHP flat-file CMS; headless-cms
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
+
+## Completed This Session (2026-04-18, one-hundred-and-twentieth pass — autonomous improvement cycle, concurrent agent B)
+
+### Search Quality (Step 1)
+- Added 15 new `_CAT_SYNONYMS` entries → 2020 unique keys:
+  - **Testing**: `detox` → testing — Detox E2E testing for React Native (Wix, 11k★)
+  - **Testing**: `maestro` → testing — Maestro mobile UI testing (YAML flows, mobile.dev)
+  - **Auth**: `better-auth` → authentication — hyphenated form (betterauth compound already mapped)
+  - **Analytics**: `matomo` → analytics — Matomo open-source web analytics (19k★)
+  - **Analytics**: `pirsch` → analytics — Pirsch cookie-free analytics
+  - **AI**: `fal` → ai — fal.ai serverless GPU inference for image/video generation
+  - **AI**: `fal-ai` → ai — hyphenated form; "fal-ai alternative", "fal-ai setup"
+  - **File**: `bunny` → file — BunnyCDN fast CDN + object storage
+  - **File**: `bunnycdn` → file — compound form; "bunnycdn vs cloudflare"
+  - **DevOps**: `fastly` → devops — Fastly CDN + edge cloud; "fastly alternative"
+  - **Database**: `paradedb` → database — ParadeDB Postgres-native search (Elasticsearch alternative)
+  - **Maps**: `maplibre` → maps — MapLibre GL JS open-source WebGL maps (Mapbox fork, 10k★)
+  - **Feature**: `openfeature` → feature — OpenFeature CNCF feature flag standard
+  - **Monitoring**: `honeycomb` → monitoring — Honeycomb.io OTel-first observability (SaaS)
+  - **Monitoring**: `uptrace` → monitoring — Uptrace open-source OTel backend (Jaeger/Grafana alternative)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (544 → 549 unique):
+  - **ParadeDB** (paradedb/paradedb, 6k★) — Postgres-native Elasticsearch alternative; database
+  - **Honeycomb** (SaaS, 0★) — OTel-first observability for production; monitoring-uptime
+  - **Detox** (wix/Detox, 11k★) — grey-box E2E testing for React Native; testing-tools
+  - **Maestro** (mobile-dev-inc/maestro, 6k★) — mobile UI testing via YAML; testing-tools
+  - **fal.ai** (fal-ai/fal, 3k★) — serverless GPU inference for AI image/video; ai-automation
 
 ### Code Quality (Step 3)
 - Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
