@@ -9362,6 +9362,92 @@ TOOLS = [
         "npm install supertest --save-dev",
         "code",
     ),
+    # Testing Tools — fake data generation ------------------------------------
+    (
+        "faker",
+        "Faker.js",
+        "Generate massive amounts of fake (but realistic) data for testing",
+        "Faker.js generates realistic fake data — names, addresses, emails, phone numbers, "
+        "dates, UUIDs, lorem ipsum, and much more — for use in tests, seeding databases, "
+        "and development environments. The go-to fake data library for JavaScript and "
+        "TypeScript. Supports 50+ locales for internationalised test data.",
+        "testing-tools",
+        "faker-js/faker",
+        12000,
+        "https://fakerjs.dev",
+        "testing,fake-data,fixtures,seed,mock,jest,vitest,typescript,javascript,locale",
+        "npm install @faker-js/faker --save-dev",
+        "code",
+    ),
+    # Analytics — commercial heatmap / session recording tools ----------------
+    (
+        "hotjar",
+        "Hotjar",
+        "Heatmaps, session recordings, and user feedback in one tool",
+        "Hotjar combines heatmaps, session recordings, and feedback polls to show "
+        "exactly how users interact with your site. See where they click, scroll, "
+        "and drop off. Widely used by product teams and marketers to understand "
+        "user behaviour without writing custom analytics code. Free tier available.",
+        "analytics-metrics",
+        "",
+        0,
+        "https://www.hotjar.com",
+        "analytics,heatmap,session-recording,feedback,ux,user-research,conversion",
+        "",
+        "saas",
+    ),
+    (
+        "microsoft-clarity",
+        "Microsoft Clarity",
+        "Free heatmaps and session recordings from Microsoft",
+        "Microsoft Clarity is a completely free behaviour analytics tool that captures "
+        "heatmaps and session recordings for unlimited traffic. It integrates with Google "
+        "Analytics and provides an AI-powered Copilot to summarise user behaviour. "
+        "No sampling, no traffic limits, no cost — making it the most accessible "
+        "session replay tool for indie makers.",
+        "analytics-metrics",
+        "microsoft/clarity",
+        0,
+        "https://clarity.microsoft.com",
+        "analytics,heatmap,session-recording,free,ux,microsoft,behaviour",
+        "",
+        "saas",
+    ),
+    # AI & Automation — workflow automation platforms -------------------------
+    (
+        "zapier",
+        "Zapier",
+        "Connect your apps and automate workflows without code",
+        "Zapier connects 7,000+ apps with no-code automation workflows called Zaps. "
+        "When something happens in one app (a trigger), it automatically does something "
+        "in another (an action). The largest automation platform for indie makers and "
+        "small teams. Commonly searched as the benchmark for automation alternatives.",
+        "ai-automation",
+        "",
+        0,
+        "https://zapier.com",
+        "automation,workflow,no-code,integration,triggers,actions,zaps",
+        "",
+        "saas",
+    ),
+    # Developer Tools — no-code database / spreadsheet builder ----------------
+    (
+        "airtable",
+        "Airtable",
+        "Part spreadsheet, part database — the flexible no-code data platform",
+        "Airtable combines the familiarity of a spreadsheet with the power of a "
+        "relational database. Teams use it for project management, product catalogues, "
+        "content calendars, and lightweight CRM without writing SQL. Extensively searched "
+        "as the reference point for open-source alternatives like NocoDB, Baserow, and "
+        "Grist.",
+        "developer-tools",
+        "",
+        0,
+        "https://airtable.com",
+        "no-code,database,spreadsheet,lowcode,collaboration,data,tables",
+        "",
+        "saas",
+    ),
 ]
 
 

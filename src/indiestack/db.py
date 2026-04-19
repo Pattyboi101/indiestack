@@ -5320,6 +5320,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pothos": "api",                # Pothos — plugin-based TypeScript GraphQL schema builder → API Tools
     "graphql-codegen": "api",       # GraphQL Code Generator — type-safe codegen from schema → API Tools
     "genql": "api",                 # genql — type-safe GraphQL client generated from SDL → API Tools
+    # Automation — "automation" alone (not prefixed by "workflow") must still route to AI & Automation
+    "automation": "ai",             # "automation platform", "automation tool" → AI & Automation
+    "automate": "ai",               # "automate workflow", "automate tasks" → AI & Automation
+    # Browser / VS Code extensions — Developer Tools category hosts WXT, Plasmo, CRXJS
+    "extension": "developer",       # "browser extension framework", "VS Code extension" → Developer Tools
+    "chrome": "developer",          # "chrome extension toolkit", "chrome extension boilerplate" → Developer Tools
+    "browser-extension": "developer",  # explicit hyphenated form → Developer Tools
+    # Vanilla JS — common "vanilla js alternative" or "vanilla js state" queries
+    "vanilla": "frontend",          # "vanilla JS", "vanilla JavaScript framework" → Frontend Frameworks
+    # Template engines — Handlebars, Nunjucks, Mustache, EJS, Pug live in Developer Tools
+    "templating": "developer",      # "templating engine", "template language" → Developer Tools
+    # Rate limiting — hyphenated form complement to ratelimit→api, rate→api, limit→api
+    "rate-limit": "api",            # "rate-limit middleware", "rate-limit library" → API Tools
 }
 
 _FTS_STOP_WORDS = {

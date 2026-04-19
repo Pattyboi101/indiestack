@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twenty-second pass)
+Last updated: 2026-04-19 (one-hundred-and-twenty-third pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-second pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2042 unique active keys (one-hundred-and-twenty-second pass: +20 new — file upload, JOSE/PASETO, date-fns, testing tools, GraphQL builders)
-- **Catalog script**: `scripts/add_missing_tools.py` — 558 unique tools (added 4 new: marked, uppy, jose, supertest)
+- **_CAT_SYNONYMS**: 2050 unique active keys (one-hundred-and-twenty-third pass: +8 new — automation, automate, extension, chrome, browser-extension, vanilla, templating, rate-limit)
+- **Catalog script**: `scripts/add_missing_tools.py` — 563 unique tools (added 5 new: faker, hotjar, microsoft-clarity, zapier, airtable)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,32 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-second pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-twenty-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 8 new `_CAT_SYNONYMS` entries → 2050 unique keys (no duplicates):
+  - **AI**: `automation`, `automate` → ai — standalone "automation platform/tool" queries now route correctly to AI & Automation without needing "workflow" prefix
+  - **Developer**: `extension`, `chrome`, `browser-extension` → developer — browser extension and VS Code extension framework queries (WXT, Plasmo, CRXJS)
+  - **Frontend**: `vanilla` → frontend — "vanilla JS" / "vanilla JavaScript" queries
+  - **Developer**: `templating` → developer — template engine queries (Handlebars, Nunjucks, Mustache, EJS, Pug)
+  - **API**: `rate-limit` → api — hyphenated complement to existing ratelimit/rate/limit→api entries
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (558 → 563 unique):
+  - **Faker.js** (faker-js/faker, 12k★) — realistic fake data for tests; testing-tools
+  - **Hotjar** (commercial) — heatmaps + session recordings; analytics-metrics
+  - **Microsoft Clarity** (microsoft/clarity, free) — heatmaps + session replay; analytics-metrics
+  - **Zapier** (commercial) — workflow automation platform; ai-automation (reference tool for alternative queries)
+  - **Airtable** (commercial) — no-code spreadsheet-database; developer-tools (reference for NocoDB/Baserow alternatives)
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-19, one-hundred-and-twenty-second pass — autonomous improvement cycle)
 
