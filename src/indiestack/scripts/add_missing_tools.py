@@ -9702,6 +9702,95 @@ TOOLS = [
         "npm install lefthook --save-dev",
         "code",
     ),
+    # AI & Automation — Braintrust Data LLM evaluation -----------------------
+    (
+        "braintrust",
+        "Braintrust Data",
+        "The enterprise-grade stack for evaluating and improving LLM apps",
+        "Braintrust is an end-to-end LLM evaluation platform. Define evaluations in code, "
+        "run them in CI, and view results in a UI built for AI teams. Supports datasets, "
+        "experiments, tracing, prompt management, and human review. Works with any LLM "
+        "provider. Used by teams at Vercel, Zapier, Perplexity, and more.",
+        "ai-automation",
+        "",
+        0,
+        "https://www.braintrust.dev",
+        "llm,evaluation,evals,tracing,observability,ai,testing,prompt-management",
+        "pip install braintrust",
+        "saas",
+    ),
+    # AI & Automation — LangSmith LLM observability --------------------------
+    (
+        "langsmith",
+        "LangSmith",
+        "Debug, evaluate, and monitor your LLM applications",
+        "LangSmith is a platform for debugging, testing, evaluating, and monitoring "
+        "AI applications built with LangChain or any LLM SDK. Features include: "
+        "LLM tracing, dataset management, automated evaluations, prompt hub, and "
+        "a playground for prompt engineering. Works with LangChain, OpenAI, Anthropic, "
+        "and any custom LLM pipeline. Free tier available.",
+        "ai-automation",
+        "langchain-ai/langsmith-sdk",
+        6000,
+        "https://smith.langchain.com",
+        "llm,observability,tracing,evaluation,langchain,ai,debugging,monitoring",
+        "pip install langsmith",
+        "saas",
+    ),
+    # AI & Automation — Arize AI LLM observability ---------------------------
+    (
+        "arize",
+        "Arize AI",
+        "Observe, troubleshoot, and improve your AI and ML models in production",
+        "Arize AI is an ML observability platform for monitoring, explaining, and "
+        "troubleshooting machine learning and LLM applications. Features include: "
+        "LLM tracing with OpenTelemetry, embedding drift detection, prompt/response "
+        "logging, automated evaluations, and RAG performance analysis. "
+        "Open-source Phoenix library available for local use.",
+        "ai-automation",
+        "Arize-ai/arize",
+        3000,
+        "https://arize.com",
+        "llm,observability,ml,monitoring,tracing,evaluation,rag,opentelemetry",
+        "pip install arize",
+        "saas",
+    ),
+    # AI Dev Tools — Roo Code open-source AI coding assistant ----------------
+    (
+        "roocode",
+        "Roo Code",
+        "Open-source AI coding assistant for VS Code with multi-model support",
+        "Roo Code (formerly Roo-Cline) is an open-source AI coding extension for VS Code "
+        "with autonomous coding capabilities. Supports multiple AI providers: Anthropic, "
+        "OpenAI, Google Gemini, AWS Bedrock, Ollama (local). Features: file editing, "
+        "terminal commands, browser automation, and custom modes. "
+        "Community fork of Cline with faster model switching and extra features.",
+        "ai-dev-tools",
+        "RooVetGit/Roo-Code",
+        38000,
+        "https://roocode.com",
+        "ai-coding,vscode,code-assistant,autonomous,claude,open-source,multi-model,mcp",
+        "",
+        "code",
+    ),
+    # AI Dev Tools — Lovable AI full-stack app builder ------------------------
+    (
+        "lovable",
+        "Lovable",
+        "AI full-stack engineer that builds web apps from text prompts",
+        "Lovable is an AI-powered app builder that generates production-ready React "
+        "web applications from natural language descriptions. Automatically creates "
+        "full-stack apps with Supabase backend, Tailwind CSS styling, and shadcn/ui "
+        "components. Supports GitHub export, custom domains, and iterative editing via chat. "
+        "Popular for rapid MVP prototyping without writing code.",
+        "ai-dev-tools",
+        "",
+        0,
+        "https://lovable.dev",
+        "ai-coding,app-builder,react,supabase,no-code,vibe-coding,fullstack,prototyping",
+        "",
+        "saas",
+    ),
 ]
 
 

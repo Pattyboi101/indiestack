@@ -5389,6 +5389,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rtk": "frontend",              # RTK abbreviation — "rtk query", "rtk slice", "rtk setup" → Frontend Frameworks
     # API Tools — express-rate-limit (most popular Node.js rate limiting middleware)
     "express-rate-limit": "api",    # hyphenated slug — "express-rate-limit alternative" → API Tools
+    # CI/CD — continuous integration/delivery/deployment queries
+    # "integration" and "deployment" are in _FTS_STOP_WORDS so they're stripped, leaving
+    # "continuous" alone with no mapping. Adding here routes CI/CD queries to DevOps correctly.
+    "continuous": "devops",         # "continuous integration", "continuous deployment" → DevOps & Infrastructure
+    "delivery": "devops",           # "continuous delivery", "delivery pipeline" → DevOps & Infrastructure
+    # Git tooling — "git hooks", "git server", "git workflow", "git lfs" → DevOps & Infrastructure
+    # Fixes: "git hooks" was misrouting via "hooks"→"frontend" since "hooks" fires before no git synonym
+    "git": "devops",                # "git server", "git hooks", "git workflow" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {
