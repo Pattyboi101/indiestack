@@ -5439,6 +5439,45 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rocket": "api",                # Rocket — ergonomic Rust web framework (23k★); "rocket alternative" → API Tools
     # Swift server-side framework — Vapor is the dominant Swift backend framework
     "vapor": "api",                 # Vapor — server-side Swift web framework (24k★); "vapor alternative" → API Tools
+    # Microsoft Phi SLMs — phi-3 and phi-4 are the dominant small/local LLM query targets 2025-2026
+    "phi": "ai",                    # Phi — Microsoft Phi SLMs; "phi-3 alternative", "phi model" → AI & Automation
+    "phi3": "ai",                   # Phi-3 — "phi3 local", "phi3 mini inference" → AI & Automation
+    "phi-3": "ai",                  # hyphenated — "phi-3 alternative", "phi-3 mini setup" → AI & Automation
+    "phi4": "ai",                   # Phi-4 — "phi4 inference", "phi4 alternative" → AI & Automation
+    "phi-4": "ai",                  # hyphenated — "phi-4 local llm", "phi-4 benchmark" → AI & Automation
+    # Build systems — CMake dominates C/C++ builds (50k★); Meson/Conan are its indie alternatives
+    "cmake": "devops",              # CMake — cross-platform C/C++ build system (50k★) → DevOps & Infrastructure
+    "meson": "devops",              # Meson — fast C/C++ build system; "meson alternative" → DevOps & Infrastructure
+    "conan": "devops",              # Conan — C/C++ package manager; "conan alternative" → DevOps & Infrastructure
+    "vcpkg": "devops",              # vcpkg — Microsoft C/C++ package manager → DevOps & Infrastructure
+    # Nu Shell — modern structured data shell in Rust (32k★)
+    "nushell": "cli",               # Nu Shell — "nushell alternative", "nushell setup" → CLI Tools
+    # Nim language — compiled, efficient; "nim web framework" queries → API Tools (Jester, httpbeast)
+    "nim": "api",                   # Nim language — "nim alternative", "nim web framework" → API Tools
+    # Crystal language — Ruby-syntax compiled language (20k★); "crystal web framework" → API Tools (Lucky, Kemal)
+    "crystal": "api",               # Crystal — "crystal alternative", "crystal vs ruby" → API Tools
+    # PKCE — modern OAuth 2.0 security pattern (Proof Key for Code Exchange)
+    "pkce": "authentication",       # PKCE — "pkce library", "pkce oauth", "pkce implementation" → Authentication
+    # Zola — Rust-based fast SSG (13k★); single binary, no runtime deps
+    "zola": "frontend",             # Zola — "zola alternative", "zola vs hugo", "zola ssg" → Frontend Frameworks
+    # mdBook — Rust-based book/docs tool (19k★; used for official Rust lang docs)
+    "mdbook": "documentation",      # mdBook — "mdbook alternative", "mdbook vs docusaurus" → Documentation
+    "md-book": "documentation",     # hyphenated — "md-book setup", "md-book alternative" → Documentation
+    # Typst — modern markup-based typesetting system (33k★); LaTeX alternative for technical docs
+    "typst": "documentation",       # Typst — "typst alternative", "typst vs latex", "typst docs" → Documentation
+    # HyperFine — command-line benchmarking (22k★, Rust); more accurate than `time`
+    "hyperfine": "testing",         # HyperFine — "hyperfine alternative", "hyperfine benchmark" → Testing Tools
+    # Criterion.rs — statistics-driven Rust benchmarks (4k★); Divan is the newer alternative
+    "criterion": "testing",         # Criterion.rs — "criterion alternative", "rust benchmarks" → Testing Tools
+    "divan": "testing",             # Divan — lightweight Rust benchmarking framework → Testing Tools
+    # MindsDB — ML models via SQL interface (26k★); connects AI to existing databases
+    "mindsdb": "ai",                # MindsDB — "mindsdb alternative", "ml in sql" → AI & Automation
+    # ZenML — open-source MLOps framework in Python (4k★)
+    "zenml": "ai",                  # ZenML — "zenml alternative", "zenml pipeline" → AI & Automation
+    # GoReleaser — Go release automation: build, sign, publish binaries (14k★)
+    "goreleaser": "devops",         # GoReleaser — "goreleaser alternative", "go release tool" → DevOps & Infrastructure
+    # MetaFlow — Netflix ML workflow framework (8k★); data + compute + orchestration
+    "metaflow": "ai",               # MetaFlow — "metaflow alternative", "metaflow pipeline" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

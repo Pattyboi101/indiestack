@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twenty-ninth pass)
+Last updated: 2026-04-19 (one-hundred-and-thirtieth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2112 unique active keys (one-hundred-and-twenty-ninth pass: +9 new — Ruby/Swift/Python/Rust web frameworks)
-- **Catalog script**: `scripts/add_missing_tools.py` — 591 unique tools (added 5 new: sinatra, vapor, django-ninja, aiohttp, falcon)
+- **_CAT_SYNONYMS**: 2147 unique active keys (one-hundred-and-thirtieth pass: +35 new — Phi SLMs, CMake, Crystal, Nim, PKCE, Typst, Zola, mdBook, HyperFine, MindsDB, ZenML, GoReleaser, MetaFlow + more)
+- **Catalog script**: `scripts/add_missing_tools.py` — 596 unique tools (added 5 new: typst, zola, mdbook, hyperfine, mindsdb)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,36 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-ninth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-thirtieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 35 new `_CAT_SYNONYMS` entries → 2147 unique keys:
+  - **AI / SLMs** (5 keys): `phi`, `phi3`, `phi-3`, `phi4`, `phi-4` → ai (Microsoft Phi SLMs, dominant small-model queries)
+  - **DevOps / C++ builds** (4 keys): `cmake` → devops (50k★ C/C++ build system); `meson` → devops; `conan` → devops; `vcpkg` → devops
+  - **CLI**: `nushell` → cli (Nu Shell, Rust structured shell, 32k★)
+  - **API**: `nim` → api (Nim language web frameworks); `crystal` → api (Crystal language web frameworks)
+  - **Auth**: `pkce` → authentication (OAuth 2.0 PKCE flow pattern)
+  - **Frontend**: `zola` → frontend (Rust SSG, 13k★)
+  - **Documentation** (3 keys): `mdbook`, `md-book` → documentation; `typst` → documentation (LaTeX alternative, 33k★)
+  - **Testing** (3 keys): `hyperfine` → testing; `criterion` → testing; `divan` → testing (Rust benchmarking)
+  - **AI** (4 keys): `mindsdb` → ai; `zenml` → ai; `goreleaser` → devops; `metaflow` → ai
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (591 → 596 unique):
+  - **Typst** (typst/typst, 33k★) — markup typesetting system, LaTeX alternative; documentation
+  - **Zola** (getzola/zola, 13k★) — Rust single-binary SSG; frontend-frameworks
+  - **mdBook** (rust-lang/mdBook, 19k★) — Rust markdown book tool (official Rust docs); documentation
+  - **HyperFine** (sharkdp/hyperfine, 22k★) — CLI benchmarking tool; testing-tools
+  - **MindsDB** (mindsdb/mindsdb, 26k★) — ML models via SQL; ai-automation
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-19, one-hundred-and-twenty-ninth pass — autonomous improvement cycle)
 

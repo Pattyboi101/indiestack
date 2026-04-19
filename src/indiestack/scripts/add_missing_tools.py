@@ -9929,6 +9929,95 @@ TOOLS = [
         "pip install falcon",
         "code",
     ),
+    # Documentation — Typst modern typesetting --------------------------------
+    (
+        "typst",
+        "Typst",
+        "Modern markup-based typesetting system — a LaTeX alternative",
+        "Typst is a new markup-based typesetting system designed to be as powerful as LaTeX "
+        "while being much easier to learn and use. It compiles Typst markup to PDF, HTML, or "
+        "PNG. Features incremental compilation for instant preview, a scripting language for "
+        "automation, and a growing package ecosystem. Used for academic papers, technical "
+        "documentation, and reports. Single binary, no dependencies, 33k+ GitHub stars.",
+        "documentation",
+        "typst/typst",
+        33000,
+        "https://typst.app",
+        "typesetting,documentation,latex-alternative,pdf,markup,rust,academic",
+        "cargo install typst-cli",
+        "code",
+    ),
+    # Frontend Frameworks — Zola Rust SSG -------------------------------------
+    (
+        "zola",
+        "Zola",
+        "Fast static site generator in a single binary — built with Rust",
+        "Zola is a single-binary static site generator written in Rust. No dependencies to "
+        "install or configure. Features Sass/SCSS compilation, syntax highlighting, table of "
+        "contents, and Tera templates. Extremely fast build times comparable to Hugo but with "
+        "a simpler setup. Ideal for documentation sites, blogs, and personal sites. "
+        "13k+ GitHub stars. Zero Node.js required.",
+        "frontend-frameworks",
+        "getzola/zola",
+        13000,
+        "https://www.getzola.org",
+        "static-site-generator,ssg,rust,blog,documentation,single-binary,fast",
+        "brew install zola",
+        "code",
+    ),
+    # Documentation — mdBook Rust docs ----------------------------------------
+    (
+        "mdbook",
+        "mdBook",
+        "Create online books from Markdown — used for the official Rust book",
+        "mdBook is a command-line tool to create books with Markdown. It powers the official "
+        "Rust Programming Language book, the Rustonomicon, and thousands of open-source project "
+        "docs. Features live reload, search, themes, and a plugin system for preprocessors and "
+        "renderers. Single Rust binary, zero runtime dependencies. 19k+ GitHub stars.",
+        "documentation",
+        "rust-lang/mdBook",
+        19000,
+        "https://rust-lang.github.io/mdBook",
+        "documentation,markdown,book,rust,static-site,docs,single-binary",
+        "cargo install mdbook",
+        "code",
+    ),
+    # Testing Tools — HyperFine CLI benchmarking ------------------------------
+    (
+        "hyperfine",
+        "HyperFine",
+        "Command-line benchmarking tool — the modern replacement for `time`",
+        "HyperFine is a command-line benchmarking tool written in Rust. It runs commands "
+        "multiple times, warms up the cache, detects outliers, and gives statistical results "
+        "with mean, standard deviation, min/max, and relative comparison. Supports CSV and "
+        "Markdown output for CI integration. Far more accurate than `time` for comparing "
+        "CLI tools, scripts, and build commands. 22k+ GitHub stars.",
+        "testing-tools",
+        "sharkdp/hyperfine",
+        22000,
+        "https://github.com/sharkdp/hyperfine",
+        "benchmarking,performance,cli,rust,testing,measurement,statistics",
+        "brew install hyperfine",
+        "code",
+    ),
+    # AI & Automation — MindsDB ML in SQL -------------------------------------
+    (
+        "mindsdb",
+        "MindsDB",
+        "Machine learning inside your database — train and query ML models with SQL",
+        "MindsDB enables developers to train and deploy machine learning models directly "
+        "inside databases using SQL syntax. Connect to PostgreSQL, MySQL, MongoDB, Snowflake, "
+        "or 130+ data sources and run CREATE PREDICTOR statements to build forecasting, "
+        "classification, and NLP models. Integrates with LLMs (OpenAI, Anthropic, Hugging Face) "
+        "for AI-powered queries. 26k+ GitHub stars.",
+        "ai-automation",
+        "mindsdb/mindsdb",
+        26000,
+        "https://mindsdb.com",
+        "machine-learning,sql,database,ai,llm,ml,predictions,forecasting,nlp",
+        "pip install mindsdb",
+        "code",
+    ),
 ]
 
 
