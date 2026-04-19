@@ -9516,6 +9516,90 @@ TOOLS = [
         "npm install next-themes",
         "code",
     ),
+    # Documentation — Fumadocs Next.js docs framework -----------------------
+    (
+        "fumadocs",
+        "Fumadocs",
+        "The Next.js documentation framework",
+        "Fumadocs is a full-featured documentation framework built on Next.js App Router. "
+        "MDX content, full-text search, auto-generated sidebar, i18n, and beautiful "
+        "default theming. Type-safe with TypeScript. Used by Turso, Neon, and many "
+        "developer-focused SaaS products.",
+        "documentation",
+        "fuma-nama/fumadocs",
+        4000,
+        "https://fumadocs.vercel.app",
+        "docs,nextjs,react,mdx,typescript",
+        "npm install fumadocs-core fumadocs-ui",
+        "code",
+    ),
+    # Documentation — Astro Starlight documentation framework ----------------
+    (
+        "starlight",
+        "Astro Starlight",
+        "Build stellar documentation sites with Astro",
+        "Starlight is a full-featured documentation framework built on top of Astro. "
+        "File-based routing, automatic sidebar, full-text search, i18n, dark mode, "
+        "and markdown/MDX support out of the box. Blazing fast with Astro's island "
+        "architecture. Used by many popular open-source projects.",
+        "documentation",
+        "withastro/starlight",
+        5000,
+        "https://starlight.astro.build",
+        "docs,astro,markdown,mdx,i18n,fast",
+        "npm create astro@latest -- --template starlight",
+        "code",
+    ),
+    # Frontend Frameworks — Panda CSS zero-runtime CSS-in-JS -----------------
+    (
+        "panda-css",
+        "Panda CSS",
+        "Build modern websites using build-time and type-safe CSS-in-JS",
+        "Panda CSS is a zero-runtime, type-safe CSS-in-JS library. Write styles with "
+        "a great developer experience and get highly optimised CSS at build time. "
+        "Built by the Chakra UI team. Works with React, Vue, Solid, Svelte, and "
+        "integrates seamlessly with Astro, Next.js, and Vite.",
+        "frontend-frameworks",
+        "chakra-ui/panda",
+        3500,
+        "https://panda-css.com",
+        "css,css-in-js,typescript,styling,zero-runtime,react",
+        "npm install -D @pandacss/dev",
+        "code",
+    ),
+    # Frontend Frameworks — Nanostores micro state management ----------------
+    (
+        "nanostores",
+        "Nanostores",
+        "A tiny state manager for React, Vue, Svelte, Solid, and vanilla JS",
+        "Nanostores is a tiny (334 bytes) state management library. Framework-agnostic "
+        "atoms, maps, and computed stores. Works in React, Vue, Svelte, Solid, Angular, "
+        "and vanilla JavaScript. No boilerplate, no providers — just import and use.",
+        "frontend-frameworks",
+        "nanostores/nanostores",
+        4000,
+        "https://github.com/nanostores/nanostores",
+        "state-management,react,vue,svelte,solid,tiny",
+        "npm install nanostores",
+        "code",
+    ),
+    # Frontend Frameworks — Lexical rich text editor -------------------------
+    (
+        "lexical",
+        "Lexical",
+        "An extensible text editor framework from Meta",
+        "Lexical is an extensible JavaScript web text editor framework with an emphasis "
+        "on reliability, accessibility, and performance. Created by Meta/Facebook. "
+        "Used in production on Facebook.com, WhatsApp Web, and WorkPlace. "
+        "React bindings included; framework-agnostic core.",
+        "frontend-frameworks",
+        "facebook/lexical",
+        20000,
+        "https://lexical.dev",
+        "rich-text,editor,react,accessibility,wysiwyg,facebook",
+        "npm install lexical @lexical/react",
+        "code",
+    ),
     # Frontend Frameworks — zero-config animation ----------------------------
     (
         "auto-animate",

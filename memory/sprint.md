@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twenty-fourth pass)
+Last updated: 2026-04-19 (one-hundred-and-twenty-fifth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-fourth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2058 unique active keys (one-hundred-and-twenty-fourth pass: +8 new — parse, parser, mem0, zep, tool-calling, sonner, next-themes, imgix)
-- **Catalog script**: `scripts/add_missing_tools.py` — 568 unique tools (added 5 new: mem0, zep, sonner, next-themes, auto-animate)
+- **_CAT_SYNONYMS**: 2066 unique active keys (one-hundred-and-twenty-fifth pass: +8 new — node, nodejs, json, xml, network, url, hash, starlight)
+- **Catalog script**: `scripts/add_missing_tools.py` — 573 unique tools (added 5 new: fumadocs, starlight, panda-css, nanostores, lexical)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,34 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-fourth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-twenty-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 8 new `_CAT_SYNONYMS` entries → 2066 unique keys (no duplicates):
+  - **API**: `node`, `nodejs` → api — Node.js framework queries route to API Tools (Express, NestJS, Fastify, Hono); these were only in `_FRAMEWORK_QUERY_TERMS` for frameworks_tested filter, missing the category boost
+  - **Developer**: `json` → developer — "json parser", "json validator", "json schema" → Developer Tools (AJV, Joi)
+  - **Developer**: `xml` → developer — "xml parser", "xml library", "xslt tool" → Developer Tools
+  - **Monitoring**: `network` → monitoring — "network monitoring", "network scanner" → Monitoring & Uptime
+  - **Developer**: `url` → developer — "url parser", "url shortener", "url builder" → Developer Tools
+  - **Security**: `hash` → security — "hash function", "hash library", "hash password" → Security Tools (bcrypt, argon2)
+  - **Documentation**: `starlight` → documentation — Astro Starlight framework (paired with new catalog tool)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (568 → 573 unique):
+  - **Fumadocs** (fuma-nama/fumadocs, 4k★) — Next.js documentation framework; documentation
+  - **Astro Starlight** (withastro/starlight, 5k★) — Astro-powered docs framework; documentation
+  - **Panda CSS** (chakra-ui/panda, 3.5k★) — zero-runtime CSS-in-JS by Chakra UI team; frontend-frameworks
+  - **Nanostores** (nanostores/nanostores, 4k★) — tiny framework-agnostic state management; frontend-frameworks
+  - **Lexical** (facebook/lexical, 20k★) — Meta's extensible rich text editor framework; frontend-frameworks
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-19, one-hundred-and-twenty-fourth pass — autonomous improvement cycle)
 

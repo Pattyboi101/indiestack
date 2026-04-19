@@ -5292,6 +5292,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — EleutherAI lm-evaluation-harness (canonical open LLM benchmark runner)
     "lm-eval": "ai",                # lm-eval — EleutherAI LM evaluation harness; "lm-eval alternative" → AI & Automation
     "lmeval": "ai",                 # compound form — "lmeval benchmarks", "lmeval harness" → AI & Automation
+    # Node.js runtime — common query prefix for framework/server/backend queries
+    # "node" and "nodejs" are in _FRAMEWORK_QUERY_TERMS for frameworks_tested filter,
+    # but NOT in _CAT_SYNONYMS, so they get no category boost. Adding here so
+    # "node web framework", "nodejs server", "node backend api" route to API Tools
+    # where Express, NestJS, Fastify, Hono, Koa live.
+    "node": "api",                  # "node http server", "node web framework" → API Tools
+    "nodejs": "api",                # explicit form — "nodejs framework", "nodejs backend" → API Tools
+    # JSON — bare "json" not mapped; "jsonschema"/"json-schema" exist but not "json parser" etc.
+    "json": "developer",            # "json parser", "json validator", "json schema" → Developer Tools (AJV, Joi)
+    # XML — xml parser/library/transformer queries → Developer Tools
+    "xml": "developer",             # "xml parser", "xml library", "xslt tool" → Developer Tools
+    # Network — "network monitoring", "network scanner", "network analysis" → Monitoring & Uptime
+    "network": "monitoring",        # "network monitoring", "network scanner" → Monitoring & Uptime (Nmap, Prometheus)
+    # URL — url shortener / parser / builder queries → Developer Tools (Dub.co, YOURLS, Kutt)
+    "url": "developer",             # "url parser", "url shortener", "url builder" → Developer Tools
+    # Hash — "hash function", "password hash", "hashing library" → Security Tools
+    # "hashing" already mapped; "hash" bare form missing
+    "hash": "security",             # "hash function", "hash library", "hash password" → Security Tools (bcrypt, argon2)
+    # Astro Starlight — docs framework; pair with new catalog tool entry
+    "starlight": "documentation",   # Astro Starlight — "starlight alternative", "starlight docs" → Documentation
     # File management — file upload UI and infrastructure libraries
     "uploadthing": "file",          # UploadThing — upload infra for Next.js/React (6k★) → File Management
     "uppy": "file",                 # Uppy — modular file uploader UI with progress (29k★) → File Management
