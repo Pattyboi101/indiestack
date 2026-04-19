@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
+Last updated: 2026-04-19 (one-hundred-and-thirtieth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2047 unique active keys (one-hundred-and-twenty-first pass: +15; one-hundred-and-twentieth pass merged +27 from two concurrent agents)
-- **Catalog script**: `scripts/add_missing_tools.py` — 559 unique tools (121st: +5; 120th merged +10 from two concurrent agents)
+- **_CAT_SYNONYMS**: 2054 unique active keys (one-hundred-and-thirtieth pass: +7 — TypeSpec, Nuxt UI, MSW.js, Effect.ts, Ark UI)
+- **Catalog script**: `scripts/add_missing_tools.py` — 581 unique tools (130th: +5 — typespec, redoc, speakeasy, wiki-js, oban)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,30 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-thirtieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- _CAT_SYNONYMS already extremely comprehensive (2047+ keys). Added 7 genuinely missing entries → 2054 unique keys:
+  - **API**: `typespec` → api — Microsoft TypeSpec API definition language (16k★)
+  - **Frontend** (2 keys): `nuxt-ui`, `nuxtui` → frontend — Nuxt UI by NuxtLabs (Tailwind-based Vue components)
+  - **Testing**: `mswjs` → testing — MSW.js compound form (Mock Service Worker)
+  - **Developer Tools**: `effect-ts` → developer — Effect.ts hyphenated form (complement to "effect"→developer)
+  - **Frontend** (2 keys): `ark-ui`, `arkui` → frontend — Ark UI headless component primitives (Chakra UI team)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (576 → 581 unique):
+  - **TypeSpec** (microsoft/typespec, 16k★) — Microsoft API definition language → api-tools
+  - **Redoc** (Redocly/redoc, 23k★) — OpenAPI 3.x documentation renderer → documentation
+  - **Speakeasy** (speakeasyapi/speakeasy, 5k★) — type-safe SDK generation from OpenAPI → api-tools
+  - **Wiki.js** (requarks/wiki.js, 24k★) — modern open-source wiki → documentation
+  - **Oban** (sorentwo/oban, 3.1k★) — robust Elixir background jobs on PostgreSQL → background-jobs
+
+### Code Quality (Step 3)
+- Recent commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
 
 ## Completed This Session (2026-04-19, one-hundred-and-twenty-first pass — autonomous improvement cycle)
 

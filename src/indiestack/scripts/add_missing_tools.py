@@ -9702,6 +9702,92 @@ TOOLS = [
         "pip install fal-client",
         "saas",
     ),
+    # API Tools — TypeSpec Microsoft API definition language ------------------
+    (
+        "typespec",
+        "TypeSpec",
+        "API definition language for OpenAPI, gRPC, and JSON Schema",
+        "TypeSpec is Microsoft's API-first definition language that compiles to OpenAPI, "
+        "JSON Schema, Protocol Buffers, and client SDKs. Write your API once and emit "
+        "multiple output formats. Used in Microsoft Azure's public APIs. Replaces "
+        "hand-written OpenAPI YAML with a concise, composable TypeScript-like syntax.",
+        "api-tools",
+        "microsoft/typespec",
+        16000,
+        "https://typespec.io",
+        "api-design,openapi,grpc,json-schema,typescript,code-generation",
+        "npm install -g @typespec/compiler",
+        "code",
+    ),
+    # Documentation — Redoc OpenAPI documentation renderer -------------------
+    (
+        "redoc",
+        "Redoc",
+        "Generate beautiful OpenAPI 3.x documentation",
+        "Redoc renders OpenAPI 3.x/Swagger 2.0 definitions into an elegant three-panel "
+        "documentation site with a responsive layout, search, deep-linking, and code "
+        "samples. Used by thousands of APIs including Rebilly and Amadeus. Works as a "
+        "standalone HTML page, React component, or CLI.",
+        "documentation",
+        "Redocly/redoc",
+        23000,
+        "https://redocly.com/redoc",
+        "openapi,api-docs,swagger,documentation,openapi3",
+        "npm install redoc",
+        "code",
+    ),
+    # API Tools — Speakeasy SDK generation ------------------------------------
+    (
+        "speakeasy",
+        "Speakeasy",
+        "Generate type-safe SDKs from your OpenAPI spec",
+        "Speakeasy generates production-ready, idiomatic SDKs in TypeScript, Python, Go, "
+        "Java, Ruby, and C# directly from your OpenAPI spec. SDKs include OAuth flows, "
+        "retries, pagination, and full type safety. Used by Clerk, Cohere, and Mistral "
+        "for their official SDKs.",
+        "api-tools",
+        "speakeasyapi/speakeasy",
+        5000,
+        "https://speakeasy.com",
+        "sdk-generation,openapi,code-generation,typescript,python,golang",
+        "brew install speakeasy-api/homebrew-tap/speakeasy",
+        "saas",
+    ),
+    # Documentation — Wiki.js self-hosted wiki --------------------------------
+    (
+        "wiki-js",
+        "Wiki.js",
+        "The most powerful open-source wiki",
+        "Wiki.js is a modern, feature-rich open-source wiki built with Node.js and Vue. "
+        "Supports Git storage, Markdown, WYSIWYG, full-text search, granular permissions, "
+        "and 2FA. Runs on PostgreSQL, MySQL, SQLite, or MS SQL Server. Perfect for "
+        "internal documentation, knowledge bases, and team wikis.",
+        "documentation",
+        "requarks/wiki.js",
+        24000,
+        "https://js.wiki",
+        "wiki,knowledge-base,self-hosted,markdown,nodejs,documentation",
+        "docker run -p 3000:3000 ghcr.io/requarks/wiki:2",
+        "code",
+    ),
+    # Background Jobs — Oban Elixir job queue ---------------------------------
+    (
+        "oban",
+        "Oban",
+        "Robust job processing for Elixir and Phoenix",
+        "Oban is a reliable background job library for Elixir built on PostgreSQL. "
+        "No Redis required — jobs persist in Postgres with ACID guarantees. Features "
+        "include concurrency control, unique jobs, scheduling, retries, and a rich "
+        "telemetry integration. The go-to background job solution in the Phoenix "
+        "ecosystem.",
+        "background-jobs",
+        "sorentwo/oban",
+        3100,
+        "https://getoban.pro",
+        "elixir,phoenix,background-jobs,postgres,queue,scheduling",
+        "mix deps.get oban",
+        "code",
+    ),
 ]
 
 

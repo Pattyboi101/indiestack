@@ -5336,6 +5336,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "litserve": "ai",                # LitServe — fast AI model serving on FastAPI; "litserve alternative" → AI & Automation
     # Frontend — Aceternity UI animated Tailwind+Framer Motion component library
     "aceternity": "frontend",        # Aceternity UI — animated components; "aceternity alternative" → Frontend Frameworks
+    # API — Microsoft TypeSpec API definition language (OpenAPI/JSON Schema/gRPC codegen)
+    "typespec": "api",              # TypeSpec — Microsoft's API definition language (16k★); "typespec alternative" → API Tools
+    # Frontend — Nuxt UI by NuxtLabs (Tailwind-based Vue component library for Nuxt)
+    "nuxt-ui": "frontend",          # Nuxt UI — hyphenated form; "nuxt-ui alternative", "nuxt-ui setup" → Frontend Frameworks
+    "nuxtui": "frontend",           # Nuxt UI — compound form; "nuxtui install", "nuxtui vs shadcn" → Frontend Frameworks
+    # Testing — MSW.js compound form (complement to "msw"→testing already mapped)
+    "mswjs": "testing",             # MSW.js — compound; "mswjs alternative", "mswjs setup", "mswjs handler" → Testing Tools
+    # Developer Tools — Effect.ts hyphenated form (complement to "effect"→developer, "effectts"→developer)
+    "effect-ts": "developer",       # Effect.ts — hyphenated; "effect-ts alternative", "effect-ts vs fp-ts" → Developer Tools
+    # Frontend — Ark UI headless component primitives by Chakra UI team
+    "ark-ui": "frontend",           # Ark UI — hyphenated; "ark-ui setup", "ark-ui alternative" → Frontend Frameworks
+    "arkui": "frontend",            # Ark UI — compound; "arkui component", "arkui vs radix" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
