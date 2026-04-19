@@ -5280,6 +5280,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — CAMEL-AI multi-agent LLM framework (camel-ai/camel, 6k★)
     "camel": "ai",                  # CAMEL-AI — Communicative Agents for Mind Exploration (multi-agent) → AI & Automation
     "camelai": "ai",                # compound — "camelai alternative", "camel ai framework" → AI & Automation
+    # Auth — common query verbs and OAuth/identity patterns not yet mapped
+    "credential": "authentication",  # "credential manager", "credential store", "api credential" → Authentication
+    "credentials": "authentication", # plural — "credentials vault", "credentials management" → Authentication
+    "pkce": "authentication",        # PKCE — OAuth 2.0 Proof Key for Code Exchange → Authentication
+    "signin": "authentication",      # compound — "signin handler", "signin flow" → Authentication
+    "sign-in": "authentication",     # hyphenated — "sign-in page", "sign-in with google" → Authentication
+    "logout": "authentication",      # "logout endpoint", "logout handler", "single logout (SLO)" → Authentication
+    "signout": "authentication",     # compound — "signout flow", "signout redirect" → Authentication
+    "sign-out": "authentication",    # hyphenated — "sign-out redirect", "sign-out button" → Authentication
+    "role": "authentication",        # "role management", "user roles", "role-based" → Authentication (RBAC)
+    "tenant": "authentication",      # "tenant isolation", "single-tenant vs multi-tenant" → Authentication
+    # API — AWS AppSync managed GraphQL and FastHTML Python web framework
+    "appsync": "api",                # AWS AppSync — managed GraphQL + WebSocket + event API → API Tools
+    "fasthtml": "api",               # FastHTML — Python web framework (HTMX-based); "fasthtml alternative" → API Tools
+    # Developer Tools — Marimo reactive Python notebook (Jupyter alternative)
+    "marimo": "developer",           # Marimo — reactive Python notebook; "marimo alternative" → Developer Tools
+    # AI — LitServe fast model serving engine (Lightning AI)
+    "litserve": "ai",                # LitServe — fast AI model serving on FastAPI; "litserve alternative" → AI & Automation
+    # Frontend — Aceternity UI animated Tailwind+Framer Motion component library
+    "aceternity": "frontend",        # Aceternity UI — animated components; "aceternity alternative" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {

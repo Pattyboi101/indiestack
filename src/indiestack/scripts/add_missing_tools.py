@@ -9209,6 +9209,99 @@ TOOLS = [
         "composer require getkirby/cms",
         "code",
     ),
+    # API Tools -----------------------------------------------------------------------
+    (
+        "fasthtml",
+        "FastHTML",
+        "Python web framework for interactive apps without JavaScript",
+        "FastHTML is a Python web framework created by Jeremy Howard (fast.ai) that "
+        "lets you build dynamic, interactive web applications entirely in Python. "
+        "Uses HTMX under the hood so you get SPA-like interactivity without writing "
+        "JavaScript. Features built-in session handling, database helpers via FastLite, "
+        "and runs on Uvicorn/Starlette. Loved by the Python community for its "
+        "simplicity and 'no frontend build step' philosophy.",
+        "api-tools",
+        "AnswerDotAI/fasthtml",
+        9000,
+        "https://fastht.ml",
+        "python,web-framework,htmx,hypermedia,no-javascript,starlette,uvicorn",
+        "pip install python-fasthtml",
+        "code",
+    ),
+    # Developer Tools ---------------------------------------------------------------
+    (
+        "marimo",
+        "Marimo",
+        "Reactive Python notebook — the next-generation Jupyter alternative",
+        "Marimo is a reactive Python notebook where running a cell automatically "
+        "runs all cells that depend on it, eliminating the 'run out of order' problem "
+        "that plagues Jupyter. Notebooks are stored as pure Python .py files, making "
+        "them Git-friendly and importable as modules. Features built-in package "
+        "management, SQL cells, a WASM-powered web version, and one-command deployment "
+        "as interactive web apps.",
+        "developer-tools",
+        "marimo-team/marimo",
+        8000,
+        "https://marimo.io",
+        "python,notebook,reactive,data-science,jupyter-alternative,reproducible,wasm",
+        "pip install marimo",
+        "code",
+    ),
+    # Frontend Frameworks -----------------------------------------------------------
+    (
+        "primevue",
+        "PrimeVue",
+        "Comprehensive UI component library for Vue.js applications",
+        "PrimeVue is the most complete UI component library for Vue.js, offering 90+ "
+        "components covering data tables, forms, overlays, charts, and menus. Supports "
+        "Vue 3, TypeScript, accessibility (ARIA), and multiple built-in themes. "
+        "Provides an Unstyled mode that integrates seamlessly with Tailwind CSS for "
+        "fully customizable designs. Used worldwide in enterprise applications.",
+        "frontend-frameworks",
+        "primefaces/primevue",
+        10000,
+        "https://primevue.org",
+        "vue,components,ui-library,forms,data-table,typescript,tailwind,accessible",
+        "npm install primevue",
+        "code",
+    ),
+    # AI & Automation ---------------------------------------------------------------
+    (
+        "litserve",
+        "LitServe",
+        "Fast, flexible AI model serving engine built on FastAPI",
+        "LitServe is a lightweight model serving engine by Lightning AI that makes "
+        "deploying AI models 2× faster than plain FastAPI. Add easy batching, "
+        "GPU autoscaling, async processing, and streaming responses to any model with "
+        "minimal code changes. Works with PyTorch, JAX, TensorFlow, scikit-learn, and "
+        "custom inference logic. Designed for production-grade LLM and ML deployments.",
+        "ai-automation",
+        "Lightning-AI/LitServe",
+        3000,
+        "https://lightning.ai/litserve",
+        "python,ai,model-serving,fastapi,pytorch,machine-learning,gpu,batching",
+        "pip install litserve",
+        "code",
+    ),
+    # Authentication ----------------------------------------------------------------
+    (
+        "zitadel",
+        "ZITADEL",
+        "Open-source cloud-native identity platform with OIDC and SAML 2.0",
+        "ZITADEL is a cloud-native open-source identity and access management platform "
+        "built for modern applications. Provides OAuth 2.0, OpenID Connect, SAML 2.0, "
+        "passkeys, MFA, and machine-to-machine auth out of the box. Features a built-in "
+        "admin console, fine-grained permission system, and full multi-tenancy support "
+        "with organization management. Self-hostable via Docker or available as a "
+        "cloud-managed service. A modern alternative to Keycloak and Okta.",
+        "authentication",
+        "zitadel/zitadel",
+        9000,
+        "https://zitadel.com",
+        "auth,oidc,oauth2,saml,identity,passkeys,mfa,multi-tenant,keycloak-alternative",
+        "docker run --rm -it -p 8080:8080 ghcr.io/zitadel/zitadel:latest start-from-init",
+        "code",
+    ),
 ]
 
 

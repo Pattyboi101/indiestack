@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twentieth pass)
+Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twentieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2017 unique active keys (one-hundred-and-twentieth pass: +12 new — rendering, persistence, persistent, api, chainlit, chonkie, asyncio, fts, kirby, camel, camelai + camelai)
-- **Catalog script**: `scripts/add_missing_tools.py` — 549 unique tools (added 5 new: chainlit, chonkie, haystack, camel, kirby)
+- **_CAT_SYNONYMS**: 2032 unique active keys (one-hundred-and-twenty-first pass: +15 new — credential, credentials, pkce, signin, sign-in, logout, signout, sign-out, role, tenant, appsync, fasthtml, marimo, litserve, aceternity)
+- **Catalog script**: `scripts/add_missing_tools.py` — 554 unique tools (added 5 new: fasthtml, marimo, primevue, litserve, zitadel)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,38 @@ Last updated: 2026-04-19 (one-hundred-and-twentieth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-twenty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 15 new `_CAT_SYNONYMS` entries → 2032 unique keys:
+  - **Auth**: `credential`, `credentials` → authentication — "credential manager", "credentials vault"
+  - **Auth**: `pkce` → authentication — OAuth 2.0 Proof Key for Code Exchange flow queries
+  - **Auth**: `signin`, `sign-in` → authentication — "sign-in flow", "sign-in page", "sign-in with google"
+  - **Auth**: `logout`, `signout`, `sign-out` → authentication — "logout endpoint", "logout handler"
+  - **Auth**: `role` → authentication — "role management", "user roles", "role-based" (RBAC)
+  - **Auth**: `tenant` → authentication — "tenant isolation", "single-tenant vs multi-tenant" (complements "multitenant")
+  - **API**: `appsync` → api — AWS AppSync managed GraphQL + WebSocket + event API
+  - **API**: `fasthtml` → api — FastHTML Python web framework (HTMX-based)
+  - **Developer**: `marimo` → developer — Marimo reactive Python notebook
+  - **AI**: `litserve` → ai — LitServe fast AI model serving (Lightning AI)
+  - **Frontend**: `aceternity` → frontend — Aceternity UI animated Tailwind+Framer Motion components
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (549 → 554 unique):
+  - **FastHTML** (AnswerDotAI/fasthtml, 9k★) — Python HTMX web framework; api-tools
+  - **Marimo** (marimo-team/marimo, 8k★) — reactive Python notebook; developer-tools
+  - **PrimeVue** (primefaces/primevue, 10k★) — Vue.js UI component library; frontend-frameworks
+  - **LitServe** (Lightning-AI/LitServe, 3k★) — fast AI model serving; ai-automation
+  - **ZITADEL** (zitadel/zitadel, 9k★) — cloud-native identity platform (OIDC/SAML); authentication
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-19, one-hundred-and-twentieth pass — autonomous improvement cycle)
 
