@@ -9448,6 +9448,91 @@ TOOLS = [
         "",
         "saas",
     ),
+    # AI & Automation — agent memory layers -----------------------------------
+    (
+        "mem0",
+        "mem0",
+        "The memory layer for AI agents and assistants",
+        "mem0 provides a persistent, intelligent memory layer for AI applications. "
+        "Agents remember user preferences, conversation history, and contextual facts "
+        "across sessions. Supports self-hosted and cloud deployments. "
+        "Built-in memory extraction, deduplication, and retrieval. "
+        "Integrates with LangChain, AutoGen, and any LLM framework.",
+        "ai-automation",
+        "mem0ai/mem0",
+        22000,
+        "https://mem0.ai",
+        "memory,ai-agents,rag,langchain,llm,persistent-memory",
+        "pip install mem0ai",
+        "code",
+    ),
+    (
+        "zep",
+        "Zep",
+        "Open-source memory and knowledge graph for AI agents",
+        "Zep is a fast, scalable memory server for AI agents and assistants. "
+        "It extracts facts from conversations, builds a temporal knowledge graph, "
+        "and provides semantic retrieval for long-term agent memory. "
+        "Supports local (Docker) and cloud deployments. "
+        "Python and TypeScript SDKs. Integrates with LangChain, LlamaIndex, and more.",
+        "ai-automation",
+        "getzep/zep",
+        5000,
+        "https://getzep.com",
+        "memory,ai-agents,knowledge-graph,langchain,llamaindex",
+        "pip install zep-cloud",
+        "code",
+    ),
+    # Frontend Frameworks — notifications / toast components ------------------
+    (
+        "sonner",
+        "Sonner",
+        "An opinionated toast component for React",
+        "Sonner is a batteries-included toast notification library for React. "
+        "Beautiful defaults, smooth animations, stacking behaviour, and full "
+        "TypeScript support. Drop-in replacement for react-hot-toast. "
+        "Works with Next.js, Remix, Astro, and any React app.",
+        "frontend-frameworks",
+        "emilkowalski_/sonner",
+        9000,
+        "https://sonner.emilkowal.ski",
+        "toast,notifications,react,ui,nextjs",
+        "npm install sonner",
+        "code",
+    ),
+    (
+        "next-themes",
+        "next-themes",
+        "Dark mode and theme provider for Next.js",
+        "next-themes is the standard dark mode solution for Next.js applications. "
+        "Supports system theme detection, SSR without flash, and custom themes. "
+        "Works with App Router and Pages Router. Tiny bundle size (< 1kB). "
+        "Used by shadcn/ui and thousands of production Next.js apps.",
+        "frontend-frameworks",
+        "pacocoursey/next-themes",
+        4000,
+        "https://github.com/pacocoursey/next-themes",
+        "dark-mode,theme,nextjs,react,css-variables",
+        "npm install next-themes",
+        "code",
+    ),
+    # Frontend Frameworks — zero-config animation ----------------------------
+    (
+        "auto-animate",
+        "AutoAnimate",
+        "Zero-config animations for your React, Vue, or Vanilla JS app",
+        "AutoAnimate is a zero-config, drop-in animation utility that adds smooth "
+        "transitions to your web app. One line of code — wrap your element with "
+        "useAutoAnimate() in React or v-auto-animate in Vue. "
+        "No CSS animations to write. Handles add, remove, and move transitions automatically.",
+        "frontend-frameworks",
+        "formkit/auto-animate",
+        12000,
+        "https://auto-animate.formkit.com",
+        "animation,react,vue,transition,frontend,zero-config",
+        "npm install @formkit/auto-animate",
+        "code",
+    ),
 ]
 
 

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twenty-third pass)
+Last updated: 2026-04-19 (one-hundred-and-twenty-fourth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2050 unique active keys (one-hundred-and-twenty-third pass: +8 new — automation, automate, extension, chrome, browser-extension, vanilla, templating, rate-limit)
-- **Catalog script**: `scripts/add_missing_tools.py` — 563 unique tools (added 5 new: faker, hotjar, microsoft-clarity, zapier, airtable)
+- **_CAT_SYNONYMS**: 2058 unique active keys (one-hundred-and-twenty-fourth pass: +8 new — parse, parser, mem0, zep, tool-calling, sonner, next-themes, imgix)
+- **Catalog script**: `scripts/add_missing_tools.py` — 568 unique tools (added 5 new: mem0, zep, sonner, next-themes, auto-animate)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,33 @@ Last updated: 2026-04-19 (one-hundred-and-twenty-third pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-twenty-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 8 new `_CAT_SYNONYMS` entries → 2058 unique keys (no duplicates):
+  - **Developer**: `parse`, `parser` → developer — parser library queries (tree-sitter, xml2js, cheerio, html-parser, csv-parse)
+  - **AI**: `mem0`, `zep` → ai — AI agent memory layer tools (mem0ai/mem0 22k★, getzep/zep 5k★)
+  - **AI**: `tool-calling` → ai — hyphenated complement to "toolcalling"→ai and "function-calling"→ai
+  - **Notifications**: `sonner` → notifications — Sonner toast library for React (9k★)
+  - **Frontend**: `next-themes` → frontend — dark mode theme provider for Next.js (3.5k★)
+  - **File**: `imgix` → file — image CDN and real-time processing service
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (563 → 568 unique):
+  - **mem0** (mem0ai/mem0, 22k★) — AI agent long-term memory layer; ai-automation
+  - **Zep** (getzep/zep, 5k★) — open-source AI agent memory server with knowledge graph; ai-automation
+  - **Sonner** (emilkowalski_/sonner, 9k★) — opinionated React toast notifications; frontend-frameworks
+  - **next-themes** (pacocoursey/next-themes, 4k★) — dark mode / theme provider for Next.js; frontend-frameworks
+  - **AutoAnimate** (formkit/auto-animate, 12k★) — zero-config drop-in animation library; frontend-frameworks
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-19, one-hundred-and-twenty-third pass — autonomous improvement cycle)
 

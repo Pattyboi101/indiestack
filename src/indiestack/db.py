@@ -5333,6 +5333,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     "templating": "developer",      # "templating engine", "template language" → Developer Tools
     # Rate limiting — hyphenated form complement to ratelimit→api, rate→api, limit→api
     "rate-limit": "api",            # "rate-limit middleware", "rate-limit library" → API Tools
+    # Parser libraries — tree-sitter, xml2js, cheerio, csv-parse, html-parser → Developer Tools
+    "parse": "developer",           # "xml parse library", "html parse", "json parse" → Developer Tools
+    "parser": "developer",          # "html parser", "xml parser", "css parser" → Developer Tools
+    # AI — agent memory layers (fast-growing 2026 segment: stateful persistent agent memory)
+    "mem0": "ai",                   # mem0 — AI agent long-term memory layer (mem0ai/mem0, 22k★) → AI & Automation
+    "zep": "ai",                    # Zep — fast, scalable AI agent memory server (getzep/zep, 5k★) → AI & Automation
+    # AI — tool calling (complement to "toolcalling"→ai and "function-calling"→ai already mapped)
+    "tool-calling": "ai",           # hyphenated — "tool-calling api", "tool-calling framework" → AI & Automation
+    # Notifications — toast libraries (Sonner is the dominant React toast library in 2026)
+    "sonner": "notifications",      # Sonner — opinionated toast notifications for React (9k★) → Notifications
+    # Frontend — dark mode / theming library for Next.js
+    "next-themes": "frontend",      # next-themes — dark mode theme provider for Next.js (3.5k★) → Frontend Frameworks
+    # File management — image CDN and optimization service
+    "imgix": "file",                # imgix — real-time image processing and delivery CDN → File Management
 }
 
 _FTS_STOP_WORDS = {
