@@ -5478,6 +5478,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     "goreleaser": "devops",         # GoReleaser — "goreleaser alternative", "go release tool" → DevOps & Infrastructure
     # MetaFlow — Netflix ML workflow framework (8k★); data + compute + orchestration
     "metaflow": "ai",               # MetaFlow — "metaflow alternative", "metaflow pipeline" → AI & Automation
+    # AI — GPU / fine-tuning infrastructure (fast-growing 2026 query segment)
+    "cuda": "ai",                   # CUDA — NVIDIA GPU toolkit; "cuda setup", "run model on cuda" → AI & Automation
+    "flashattention": "ai",         # Flash Attention — memory-efficient attention; "flash attention v2" → AI & Automation
+    "flash-attention": "ai",        # hyphenated — "flash-attention install", "flash-attention v3" → AI & Automation
+    "gptq": "ai",                   # GPTQ — quantized LLM format; "gptq model", "gptq inference" → AI & Automation
+    "awq": "ai",                    # AWQ — Activation-aware Weight Quantization; "awq quantize" → AI & Automation
+    "bitsandbytes": "ai",           # bitsandbytes — 8-bit/4-bit PyTorch quantization; "bnb qlora" → AI & Automation
+    "peft": "ai",                   # HuggingFace PEFT — parameter-efficient fine-tuning; "peft lora" → AI & Automation
+    "trl": "ai",                    # HuggingFace TRL — RLHF/DPO fine-tuning library; "trl sft" → AI & Automation
+    "rlhf": "ai",                   # RLHF — Reinforcement Learning from Human Feedback; "rlhf training" → AI & Automation
+    "dpo": "ai",                    # DPO — Direct Preference Optimization; "dpo training", "dpo fine-tune" → AI & Automation
+    "accelerate": "ai",             # HuggingFace Accelerate — distributed multi-GPU training; "accelerate launch" → AI & Automation
+    # Games — major named game engines missing from synonyms
+    "unity": "games",               # Unity — most-searched game engine; "unity alternative", "unity 6" → Games & Entertainment
+    "unreal": "games",              # Unreal Engine — "unreal alternative", "ue5 alternative" → Games & Entertainment
+    "bevy": "games",                # Bevy — Rust ECS game engine (37k★); "bevy alternative" → Games & Entertainment
+    "defold": "games",              # Defold — free game engine by King; "defold alternative" → Games & Entertainment
+    # MCP — FastMCP Python framework (fast-growing; complements "mcp"→mcp, "mcpserver"→mcp)
+    "fastmcp": "mcp",               # FastMCP — Python MCP server framework (5k★); "fastmcp alternative" → MCP Servers
+    # Auth — Microsoft Entra ID (formerly Azure Active Directory)
+    "entra": "authentication",      # Microsoft Entra ID — "entra sso", "entra id alternative" → Authentication
+    "azuread": "authentication",    # Azure Active Directory / Entra — compound form queries → Authentication
+    "azure-ad": "authentication",   # hyphenated — "azure-ad sso", "azure-ad login library" → Authentication
+    # Database — Google Cloud Spanner (globally distributed SQL)
+    "spanner": "database",          # Google Cloud Spanner — "spanner alternative", "cloud spanner" → Database
 }
 
 _FTS_STOP_WORDS = {

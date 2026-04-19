@@ -10018,6 +10018,93 @@ TOOLS = [
         "pip install mindsdb",
         "code",
     ),
+    # Games — Bevy Rust ECS engine ------------------------------------------------
+    (
+        "bevy",
+        "Bevy",
+        "A refreshingly simple data-driven game engine built in Rust",
+        "Bevy is a free, open-source game engine built in Rust. It uses a modern Entity "
+        "Component System (ECS) architecture for high performance, hot-reloading assets, "
+        "a modular plugin system, and cross-platform support (Windows, macOS, Linux, "
+        "WASM, iOS, Android). Fast-growing community; 37k+ GitHub stars.",
+        "games-entertainment",
+        "bevyengine/bevy",
+        37000,
+        "https://bevyengine.org",
+        "game-engine,rust,ecs,cross-platform,open-source",
+        "cargo add bevy",
+        "code",
+    ),
+    # Games — Defold engine -------------------------------------------------------
+    (
+        "defold",
+        "Defold",
+        "Free-to-use game engine for cross-platform development",
+        "Defold is a free, source-available 2D/3D game engine backed by King. "
+        "Lua scripting, built-in editor, live update for hot-patching shipped games, "
+        "and builds for iOS, Android, HTML5, macOS, Windows, and Linux. "
+        "No royalties, strong community, used in production mobile games globally.",
+        "games-entertainment",
+        "defold/defold",
+        4000,
+        "https://defold.com",
+        "game-engine,lua,2d,mobile,cross-platform,free",
+        "# Download installer from https://defold.com/download/",
+        "code",
+    ),
+    # MCP — FastMCP Python framework ----------------------------------------------
+    (
+        "fastmcp",
+        "FastMCP",
+        "The fast, Pythonic way to build MCP servers and clients",
+        "FastMCP is a Python framework for building Model Context Protocol (MCP) "
+        "servers with minimal boilerplate. Decorator-based API similar to FastAPI — "
+        "define tools, resources, and prompts with type hints. "
+        "Auto-generates schemas, handles serialization, and integrates with "
+        "Claude Desktop, Cursor, and any MCP-compatible client. 5k+ GitHub stars.",
+        "mcp-servers",
+        "jlowin/fastmcp",
+        5000,
+        "https://gofastmcp.com",
+        "mcp,python,llm,tools,agent,claude",
+        "pip install fastmcp",
+        "code",
+    ),
+    # AI — HuggingFace PEFT parameter-efficient fine-tuning ----------------------
+    (
+        "peft",
+        "PEFT",
+        "Parameter-Efficient Fine-Tuning for large language models",
+        "PEFT (Parameter-Efficient Fine-Tuning) is HuggingFace's library for "
+        "fine-tuning large language models with a fraction of the compute: LoRA, "
+        "QLoRA, Prefix Tuning, Prompt Tuning, and IA3. Works with any HuggingFace "
+        "Transformers model. The standard library for adapting LLMs to custom tasks. "
+        "15k+ GitHub stars.",
+        "ai-automation",
+        "huggingface/peft",
+        16000,
+        "https://huggingface.co/docs/peft",
+        "fine-tuning,lora,qlora,llm,huggingface,transformers",
+        "pip install peft",
+        "code",
+    ),
+    # AI — HuggingFace TRL RLHF/DPO fine-tuning ----------------------------------
+    (
+        "trl",
+        "TRL",
+        "Train transformer language models with reinforcement learning",
+        "TRL (Transformer Reinforcement Learning) is HuggingFace's library for "
+        "RLHF, DPO, SFT, and reward model training. Implements PPO, DPO, ORPO, "
+        "SimPO, and more. Works with PEFT for memory-efficient fine-tuning. "
+        "The standard library for aligning LLMs with human preferences. 9k+ GitHub stars.",
+        "ai-automation",
+        "huggingface/trl",
+        9000,
+        "https://huggingface.co/docs/trl",
+        "rlhf,dpo,fine-tuning,llm,huggingface,alignment",
+        "pip install trl",
+        "code",
+    ),
 ]
 
 

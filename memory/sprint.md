@@ -3653,6 +3653,23 @@ All previous loop-requested mappings already present (state management, bundler,
 
 Script now covers 490 tools. Deploy script when next on production: `python3 /app/src/indiestack/scripts/add_missing_tools.py`
 
+## Completed This Session (2026-04-19, one-hundred-and-thirty-first pass)
+
+### Search Quality
+Added 19 new `_CAT_SYNONYMS` entries covering genuine gaps:
+- **AI GPU/fine-tuning**: `cuda`, `flashattention`, `flash-attention`, `gptq`, `awq`, `bitsandbytes`, `peft`, `trl`, `rlhf`, `dpo`, `accelerate` → ai-automation
+- **Games named engines**: `unity`, `unreal`, `bevy`, `defold` → games-entertainment
+- **MCP framework**: `fastmcp` → mcp-servers
+- **Auth (Microsoft identity)**: `entra`, `azuread`, `azure-ad` → authentication
+- **Database**: `spanner` → database
+
+### Catalog Tools Added (5 new entries)
+- **bevy** (games-entertainment) — Rust ECS game engine (37k★)
+- **defold** (games-entertainment) — free game engine by King (4k★)
+- **fastmcp** (mcp-servers) — Python MCP server framework (5k★)
+- **peft** (ai-automation) — HuggingFace PEFT parameter-efficient fine-tuning (16k★)
+- **trl** (ai-automation) — HuggingFace TRL RLHF/DPO fine-tuning library (9k★)
+
 ## Current Priorities
 1. **Backend**: validate citation data — how many tools have >10 agent citations/month?
 2. **Frontend**: audit /maker/dashboard analytics exposure
