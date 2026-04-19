@@ -5280,6 +5280,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — CAMEL-AI multi-agent LLM framework (camel-ai/camel, 6k★)
     "camel": "ai",                  # CAMEL-AI — Communicative Agents for Mind Exploration (multi-agent) → AI & Automation
     "camelai": "ai",                # compound — "camelai alternative", "camel ai framework" → AI & Automation
+    # AI — CAMEL-AI multi-agent LLM framework already mapped above
+    # AI — xAI Grok model (high-volume "grok alternative", "grok api" queries)
+    "grok": "ai",                   # Grok — xAI's LLM; "grok alternative", "grok api", "grok vs claude" → AI & Automation
+    # AI — Kyutai Moshi realtime voice model (open-source voice conversation AI)
+    "moshi": "ai",                  # Moshi — Kyutai's realtime voice foundation model; "moshi alternative" → AI & Automation
+    # AI — SGLang structured generation language runtime for fast LLM serving
+    "sglang": "ai",                 # SGLang — fast structured LLM serving runtime (lm-sys/sglang, 13k★) → AI & Automation
+    # AI — TruLens LLM application evaluation with feedback functions
+    "trulens": "ai",                # TruLens — LLM app evaluation with feedback functions (3k★) → AI & Automation
+    # AI — EleutherAI lm-evaluation-harness (canonical open LLM benchmark runner)
+    "lm-eval": "ai",                # lm-eval — EleutherAI LM evaluation harness; "lm-eval alternative" → AI & Automation
+    "lmeval": "ai",                 # compound form — "lmeval benchmarks", "lmeval harness" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

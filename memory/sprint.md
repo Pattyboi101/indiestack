@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-twentieth pass)
+Last updated: 2026-04-19 (one-hundred-and-twenty-first pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-19 (one-hundred-and-twentieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2017 unique active keys (one-hundred-and-twentieth pass: +12 new — rendering, persistence, persistent, api, chainlit, chonkie, asyncio, fts, kirby, camel, camelai + camelai)
-- **Catalog script**: `scripts/add_missing_tools.py` — 549 unique tools (added 5 new: chainlit, chonkie, haystack, camel, kirby)
+- **_CAT_SYNONYMS**: 2022 unique active keys (one-hundred-and-twenty-first pass: +5 new — grok, moshi, sglang, trulens, lm-eval/lmeval)
+- **Catalog script**: `scripts/add_missing_tools.py` — 554 unique tools (added 5 new: dspy, marvin, mlflow, modal, ray)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,32 @@ Last updated: 2026-04-19 (one-hundred-and-twentieth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-19, one-hundred-and-twenty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 5 new `_CAT_SYNONYMS` entries → 2022 unique keys (no duplicates):
+  - **AI**: `grok` → ai — xAI's Grok LLM; "grok alternative", "grok api", "grok vs claude" queries
+  - **AI**: `moshi` → ai — Kyutai's open-source realtime voice foundation model
+  - **AI**: `sglang` → ai — SGLang fast structured LLM serving runtime (lm-sys/sglang, 13k★)
+  - **AI**: `trulens` → ai — TruLens LLM app evaluation with feedback functions (3k★)
+  - **AI**: `lm-eval` + `lmeval` → ai — EleutherAI LM evaluation harness (canonical benchmark runner)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (549 → 554 unique):
+  - **DSPy** (stanfordnlp/dspy, 20k★) — Stanford's LM pipeline optimization framework; ai-automation
+  - **Marvin** (prefecthq/marvin, 5k★) — Prefect's Python AI toolkit for structured outputs; ai-automation
+  - **MLflow** (mlflow/mlflow, 18k★) — Open-source ML lifecycle management; ai-automation
+  - **Modal** (modal-labs/modal-python, 4k★) — Serverless GPU compute for AI/ML; ai-automation
+  - **Ray** (ray-project/ray, 35k★) — Distributed ML and parallel compute framework; ai-automation
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-19, one-hundred-and-twentieth pass — autonomous improvement cycle)
 

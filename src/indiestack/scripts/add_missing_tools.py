@@ -9191,6 +9191,87 @@ TOOLS = [
         "pip install camel-ai",
         "code",
     ),
+    # AI — ML lifecycle / serving / evaluation -----------------------------------
+    (
+        "dspy",
+        "DSPy",
+        "Programming—not prompting—language models",
+        "DSPy is Stanford's framework for algorithmically optimizing LM prompts "
+        "and weights. Replace fragile prompt strings with composable modules and "
+        "automatic optimization. Supports multi-stage pipelines, retrieval-augmented "
+        "generation, and complex reasoning chains. Works with any LM provider.",
+        "ai-automation",
+        "stanfordnlp/dspy",
+        20000,
+        "https://dspy.ai",
+        "llm,prompting,optimization,rag,agents,python,openai,multi-step",
+        "pip install dspy",
+        "code",
+    ),
+    (
+        "marvin",
+        "Marvin",
+        "The AI toolkit for building reliable, observable AI pipelines",
+        "Marvin is Prefect's Python AI engineering toolkit. Turn any Python function "
+        "into an AI-powered tool with a single decorator. Built-in support for "
+        "structured outputs, classification, entity extraction, image generation, "
+        "and speech. Integrates seamlessly with Prefect workflows.",
+        "ai-automation",
+        "prefecthq/marvin",
+        5000,
+        "https://askmarvin.ai",
+        "llm,structured-output,classification,extraction,python,openai,prefect",
+        "pip install marvin",
+        "code",
+    ),
+    (
+        "mlflow",
+        "MLflow",
+        "Open source platform for the complete machine learning lifecycle",
+        "MLflow is an open-source platform for managing the end-to-end machine "
+        "learning lifecycle: experiment tracking, model registry, model serving, "
+        "and evaluation. Track parameters, metrics, and artifacts. Deploy models "
+        "to Kubernetes, SageMaker, Azure ML, or locally. Framework-agnostic.",
+        "ai-automation",
+        "mlflow/mlflow",
+        18000,
+        "https://mlflow.org",
+        "ml,experiment-tracking,model-registry,deployment,python,monitoring",
+        "pip install mlflow",
+        "code",
+    ),
+    (
+        "modal",
+        "Modal",
+        "Run AI and data jobs in the cloud — no infrastructure required",
+        "Modal lets you run Python functions on serverless GPU/CPU cloud infrastructure "
+        "with a single decorator. Scale from zero to thousands of GPUs instantly. "
+        "Built-in web endpoints, cron jobs, persistent volumes, and secrets. "
+        "Ideal for AI inference, batch processing, and ML training workloads.",
+        "ai-automation",
+        "modal-labs/modal-python",
+        4000,
+        "https://modal.com",
+        "serverless,gpu,python,inference,batch-processing,cloud,deployment",
+        "pip install modal",
+        "code",
+    ),
+    (
+        "ray",
+        "Ray",
+        "Scale AI and Python workloads from a laptop to a cluster",
+        "Ray is an open-source distributed computing framework for scaling Python "
+        "and AI applications. Ray Core provides distributed task and actor primitives; "
+        "Ray Serve deploys ML models; Ray Train handles distributed training; "
+        "Ray Tune does hyperparameter optimization. Used by OpenAI, Uber, Shopify.",
+        "ai-automation",
+        "ray-project/ray",
+        35000,
+        "https://ray.io",
+        "distributed,ml,training,serving,python,scaling,parallel,hyperparameter",
+        "pip install ray",
+        "code",
+    ),
     # Headless CMS --------------------------------------------------------------
     (
         "kirby",
