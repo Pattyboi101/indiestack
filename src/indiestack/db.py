@@ -5397,6 +5397,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Git tooling — "git hooks", "git server", "git workflow", "git lfs" → DevOps & Infrastructure
     # Fixes: "git hooks" was misrouting via "hooks"→"frontend" since "hooks" fires before no git synonym
     "git": "devops",                # "git server", "git hooks", "git workflow" → DevOps & Infrastructure
+    # .NET / C# ecosystem — very common developer queries not yet mapped
+    # ASP.NET Core, Blazor, MVC, Minimal APIs, Razor Pages live in api-tools category
+    "csharp": "api",                # C# — "csharp web framework", "csharp api" → API Tools (ASP.NET Core, Carter)
+    "c-sharp": "api",               # hyphenated — "c-sharp alternative", "c-sharp rest api" → API Tools
+    "dotnet": "api",                # .NET — "dotnet web framework", "dotnet api" → API Tools (ASP.NET Core, Minimal APIs)
+    "aspnet": "api",                # ASP.NET — "aspnet core alternative", "aspnet mvc" → API Tools
+    "aspnetcore": "api",            # compound — "aspnetcore setup", "aspnetcore tutorial" → API Tools
+    "asp-net": "api",               # hyphenated — "asp-net core alternative", "asp-net web api" → API Tools
+    # Blazor — .NET WebAssembly + Server UI framework (lives in frontend-frameworks)
+    "blazor": "frontend",           # Blazor — "blazor alternative", "blazor wasm vs react" → Frontend Frameworks
+    "blazorwasm": "frontend",       # compound — "blazorwasm setup", "blazor webassembly" → Frontend Frameworks
+    # .NET MAUI — cross-platform mobile/desktop UI framework (lives in frontend-frameworks)
+    "maui": "frontend",             # .NET MAUI — "maui alternative", "dotnet maui mobile" → Frontend Frameworks
+    # Scala web frameworks — Akka already mapped; add Scala language term itself
+    "scala": "api",                 # Scala — "scala web framework", "scala api" → API Tools (Play, ZIO HTTP, Tapir)
+    # Clojure web development
+    "clojure": "api",               # Clojure — "clojure web framework", "clojure ring" → API Tools (Ring, Compojure, Luminus)
+    # Polling patterns — long polling, short polling are common real-time alternatives
+    "polling": "api",               # "long polling", "http polling", "polling library" → API Tools (SSE, WebSocket alternatives)
+    "longpolling": "api",           # compound — "longpolling server", "longpolling alternative" → API Tools
+    "long-polling": "api",          # hyphenated — "long-polling setup", "long-polling vs websocket" → API Tools
+    # Regex / regular expression tools — libraries, testers, engines → Developer Tools
+    "regex": "developer",           # "regex library", "regex engine", "regex tester" → Developer Tools
+    "regexp": "developer",          # compound — "regexp library", "regexp alternative" → Developer Tools
+    # Build task runners — Make, Just, Task
+    "makefile": "devops",           # Makefile / GNU Make — "makefile alternative", "make build tool" → DevOps & Infrastructure
+    "gnumake": "devops",            # GNU Make — explicit form → DevOps & Infrastructure
+    "justfile": "devops",           # Justfile — just command runner; "justfile alternative", "just task runner" → DevOps
 }
 
 _FTS_STOP_WORDS = {

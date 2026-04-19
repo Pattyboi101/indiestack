@@ -9791,6 +9791,59 @@ TOOLS = [
         "",
         "saas",
     ),
+    # API Tools — ASP.NET Core .NET web framework ----------------------------
+    (
+        "aspnet-core",
+        "ASP.NET Core",
+        "Cross-platform high-performance .NET web framework",
+        "ASP.NET Core is Microsoft's open-source, cross-platform web framework for "
+        "building modern web apps, REST APIs, and gRPC services with C# and .NET. "
+        "Supports Minimal APIs for lightweight HTTP endpoints, MVC pattern, Razor Pages, "
+        "SignalR real-time, and Blazor server-side rendering. Runs on Linux, macOS, and Windows. "
+        "Part of the dotnet/aspnetcore monorepo alongside Blazor and Entity Framework.",
+        "api-tools",
+        "dotnet/aspnetcore",
+        35000,
+        "https://dotnet.microsoft.com/en-us/apps/aspnet",
+        "dotnet,csharp,aspnet,rest-api,grpc,minimal-api,cross-platform,microsoft",
+        "dotnet new webapi -n MyApi",
+        "code",
+    ),
+    # Frontend Frameworks — Blazor .NET WebAssembly UI ----------------------
+    (
+        "blazor",
+        "Blazor",
+        "Build interactive web UIs with C# instead of JavaScript",
+        "Blazor is Microsoft's framework for building interactive web UIs using C# and "
+        "Razor syntax. Blazor WebAssembly runs client-side in the browser via WebAssembly — "
+        "no JavaScript required. Blazor Server runs on ASP.NET Core with real-time SignalR. "
+        "Blazor Hybrid lets you reuse components in .NET MAUI and WinForms desktop apps. "
+        "Full .NET ecosystem access from the browser including NuGet packages.",
+        "frontend-frameworks",
+        "dotnet/aspnetcore",
+        35000,
+        "https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor",
+        "dotnet,csharp,wasm,webassembly,ui,component-library,razor",
+        "dotnet new blazorwasm -n MyApp",
+        "code",
+    ),
+    # API Tools — Play Framework Scala/Java web framework -------------------
+    (
+        "play-framework",
+        "Play Framework",
+        "High velocity web framework for Java and Scala",
+        "Play is a reactive web framework built on Akka and Netty for building scalable, "
+        "async web applications in Java and Scala. Follows MVC architecture with hot-reload, "
+        "built-in testing, and type-safe routing. Popular in enterprise Scala stacks alongside "
+        "ZIO HTTP and http4s as a full-stack alternative to Spring Boot.",
+        "api-tools",
+        "playframework/playframework",
+        12400,
+        "https://www.playframework.com",
+        "scala,java,mvc,reactive,akka,async,rest-api,jvm",
+        "",
+        "code",
+    ),
 ]
 
 
