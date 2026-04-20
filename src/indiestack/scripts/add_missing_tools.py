@@ -10894,6 +10894,94 @@ TOOLS = [
         "brew install opa",
         "code",
     ),
+    # Developer Tools — Database GUIs ----------------------------------------
+    (
+        "dbeaver",
+        "DBeaver",
+        "Free universal database tool for developers and database admins",
+        "DBeaver Community is an open-source, cross-platform database IDE supporting "
+        "over 100 databases including PostgreSQL, MySQL, SQLite, MongoDB, Redis, and "
+        "more. Features an SQL editor with auto-completion, ER diagrams, data export/"
+        "import, and query result visualization. The go-to free alternative to "
+        "TablePlus, DataGrip, and proprietary DB GUIs.",
+        "developer-tools",
+        "dbeaver/dbeaver",
+        37000,
+        "https://dbeaver.io",
+        "database-gui,sql,postgresql,mysql,sqlite,mongodb,cross-platform,open-source",
+        "brew install --cask dbeaver-community",
+        "code",
+    ),
+    (
+        "beekeeper-studio",
+        "Beekeeper Studio",
+        "Cross-platform SQL editor and database manager — open source",
+        "Beekeeper Studio is a modern, open-source SQL editor and database manager "
+        "for Linux, macOS, and Windows. Connect to PostgreSQL, MySQL, SQLite, SQL "
+        "Server, and more. Features tabbed interface, auto-complete, query history, "
+        "and a clean UI optimized for developers who spend time in databases daily.",
+        "developer-tools",
+        "beekeeper-studio/beekeeper-studio",
+        14000,
+        "https://www.beekeeperstudio.io",
+        "database-gui,sql,postgresql,mysql,sqlite,open-source,cross-platform",
+        "brew install --cask beekeeper-studio",
+        "code",
+    ),
+    # Database — Triplit full-stack real-time offline-first ---------------------
+    (
+        "triplit",
+        "Triplit",
+        "Full-stack database with real-time sync and offline-first support",
+        "Triplit is an open-source database that runs in both the browser and on the "
+        "server, syncing data between them in real time. It supports offline-first "
+        "apps out of the box, with a typed schema, reactive queries, and built-in "
+        "access control. A strong alternative to Firebase, Replicache, and "
+        "PowerSync for apps that need low-latency local data.",
+        "database",
+        "triplit/triplit",
+        4000,
+        "https://www.triplit.dev",
+        "database,real-time,sync,offline-first,typescript,react,full-stack",
+        "npm install @triplit/client",
+        "code",
+    ),
+    # Authentication — Casdoor open-source SSO / OAuth 2.0 --------------------
+    (
+        "casdoor",
+        "Casdoor",
+        "Open-source SSO and OAuth 2.0 / OIDC identity gateway",
+        "Casdoor is an open-source Identity and Access Management (IAM) platform "
+        "supporting OAuth 2.0, OIDC, SAML, and CAS protocols. It provides a "
+        "self-hostable alternative to Auth0 and Okta with a built-in user portal, "
+        "MFA, LDAP sync, and social login integration. Based on Go and React, "
+        "it's designed to be embedded as an authentication backend for web apps.",
+        "authentication",
+        "casdoor/casdoor",
+        9000,
+        "https://casdoor.org",
+        "sso,oauth2,oidc,saml,identity,self-hosted,go,mfa,ldap",
+        "docker pull casbin/casdoor",
+        "code",
+    ),
+    # Developer Tools — pgAdmin official PostgreSQL admin UI ------------------
+    (
+        "pgadmin",
+        "pgAdmin",
+        "The most popular open-source PostgreSQL administration platform",
+        "pgAdmin 4 is the official, feature-rich administration and development "
+        "platform for PostgreSQL. Run it as a desktop app or a self-hosted web "
+        "application. Includes a query editor with syntax highlighting, schema "
+        "browser, ERD editor, backup/restore wizards, and performance dashboards. "
+        "The standard free tool for Postgres DBAs and developers.",
+        "developer-tools",
+        "pgadmin-org/pgadmin4",
+        3500,
+        "https://www.pgadmin.org",
+        "postgresql,database-gui,admin,sql,open-source,self-hosted",
+        "pip install pgadmin4",
+        "code",
+    ),
 ]
 
 

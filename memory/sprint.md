@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-thirty-ninth pass)
+Last updated: 2026-04-20 (one-hundred-and-fortieth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2357 unique active keys (one-hundred-and-thirty-ninth pass: +20 new — cloud providers, AWS services, AI eval, email deliverability, hot-reload, SOPS, Lemon Squeezy)
-- **Catalog script**: `scripts/add_missing_tools.py` — 648 unique tools (added 5 new: starship, wezterm, nushell, sops, open-policy-agent; 643→648)
+- **_CAT_SYNONYMS**: 2378 unique active keys (one-hundred-and-fortieth pass: +21 new — DB GUIs, casdoor, triplit, neondb, turf/deckgl maps, freshping/ohdear monitoring)
+- **Catalog script**: `scripts/add_missing_tools.py` — 653 unique tools (added 5 new: dbeaver, beekeeper-studio, triplit, casdoor, pgadmin; 648→653)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,32 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-ninth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-fortieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 21 new `_CAT_SYNONYMS` entries → 2378 unique keys:
+  - **Database GUIs** (6 keys): `dbeaver`, `beekeeper`, `tableplus`, `dbgate` → developer; `pgadmin`, `adminer` → database ("database GUI" and "[tool] alternative" queries)
+  - **Authentication** (1 key): `casdoor` → authentication (open-source OAuth2/OIDC server, 9k★)
+  - **Database** (3 keys): `triplit` → database; `neondb`, `neon-db` → database (compound/hyphenated Neon DB forms)
+  - **Maps** (3 keys): `turf`, `turfjs` → maps (turf.js geospatial analysis, 9k★); `deckgl` → maps (deck.gl WebGL visualization, 12k★)
+  - **Monitoring** (3 keys): `freshping` → monitoring (Freshworks uptime tool); `ohdear`, `oh-dear` → monitoring (Oh Dear! uptime/SSL/cert monitoring)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (648 → 653 unique):
+  - **DBeaver** (dbeaver/dbeaver, 37k★) — universal multi-database IDE; developer-tools
+  - **Beekeeper Studio** (beekeeper-studio/beekeeper-studio, 14k★) — open-source SQL editor; developer-tools
+  - **Triplit** (triplit/triplit, 4k★) — real-time offline-first full-stack database; database
+  - **Casdoor** (casdoor/casdoor, 9k★) — open-source SSO/OAuth2/OIDC gateway; authentication
+  - **pgAdmin** (pgadmin-org/pgadmin4, 3.5k★) — official PostgreSQL administration platform; developer-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-thirty-ninth pass — autonomous improvement cycle)
 
