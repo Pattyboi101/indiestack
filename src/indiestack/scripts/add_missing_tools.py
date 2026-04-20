@@ -10894,6 +10894,139 @@ TOOLS = [
         "brew install opa",
         "code",
     ),
+    # Go Web Frameworks ------------------------------------------------------------
+    (
+        "fiber",
+        "Fiber",
+        "Express-inspired web framework built on top of Fasthttp for Go",
+        "Fiber is a Go web framework inspired by Express.js, built on top of "
+        "Fasthttp — the fastest HTTP engine for Go. Zero memory allocation, "
+        "extreme performance, and an Express-like API make it the go-to choice "
+        "for Go developers building REST APIs and microservices.",
+        "api-tools",
+        "gofiber/fiber",
+        33000,
+        "https://gofiber.io",
+        "go,golang,rest,api,http,microservices,fast",
+        "go get github.com/gofiber/fiber/v2",
+        "code",
+    ),
+    (
+        "echo",
+        "Echo",
+        "High performance, minimalist Go web framework",
+        "Echo is a high-performance, extensible, minimalist Go web framework. "
+        "Features include automatic TLS, HTTP/2, a rich middleware ecosystem, "
+        "and a clean routing API. Used by teams that need a production-ready "
+        "Go framework with great documentation and strong community support.",
+        "api-tools",
+        "labstack/echo",
+        29000,
+        "https://echo.labstack.com",
+        "go,golang,rest,api,http,middleware,tls",
+        "go get github.com/labstack/echo/v4",
+        "code",
+    ),
+    (
+        "chi",
+        "Chi",
+        "Lightweight, idiomatic, and composable router for Go HTTP services",
+        "Chi is a lightweight Go HTTP router built for the standard library. "
+        "No dependencies, composable middleware chains, and fully compatible "
+        "with net/http — making it the preferred choice for Go developers who "
+        "want flexibility without framework lock-in.",
+        "api-tools",
+        "go-chi/chi",
+        17000,
+        "https://go-chi.io",
+        "go,golang,router,http,rest,middleware,stdlib",
+        "go get github.com/go-chi/chi/v5",
+        "code",
+    ),
+    # Database / SQL Tools ---------------------------------------------------------
+    (
+        "sqlc",
+        "sqlc",
+        "Generate type-safe Go code from SQL",
+        "sqlc compiles SQL queries into type-safe Go code. Write SQL, run sqlc, "
+        "and get idiomatic Go code with full type safety — no reflection, no "
+        "runtime errors. Works with PostgreSQL, MySQL, and SQLite. The fastest "
+        "path from SQL schema to production-ready database layer in Go.",
+        "database",
+        "sqlc-dev/sqlc",
+        12000,
+        "https://sqlc.dev",
+        "go,golang,sql,codegen,postgres,mysql,sqlite,type-safe",
+        "go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest",
+        "code",
+    ),
+    # Developer Tools / Protobuf ---------------------------------------------------
+    (
+        "buf",
+        "Buf",
+        "The best way to use Protobuf — linting, breaking change detection, and code generation",
+        "Buf is a modern Protobuf toolchain that replaces the complex protoc plugin "
+        "ecosystem. Lint schemas, detect breaking changes in CI, generate code in "
+        "any language, and publish to the Buf Schema Registry (BSR). Used by teams "
+        "building gRPC services and type-safe APIs.",
+        "developer-tools",
+        "bufbuild/buf",
+        8000,
+        "https://buf.build",
+        "protobuf,grpc,code-generation,schema,api,lint,breaking-change",
+        "brew install bufbuild/buf/buf",
+        "code",
+    ),
+    # Monitoring / Uptime ----------------------------------------------------------
+    (
+        "upptime",
+        "Upptime",
+        "GitHub-powered open-source uptime monitor and status page",
+        "Upptime uses GitHub Actions, Issues, and Pages to give you a free "
+        "uptime monitor with a status page. Zero server required — GitHub is "
+        "the infrastructure. Supports 200+ monitors, incident management, "
+        "and automatic commit history of uptime data.",
+        "monitoring-uptime",
+        "upptime/upptime",
+        14000,
+        "https://upptime.js.org",
+        "uptime,monitoring,status-page,github-actions,open-source,free",
+        "npx create-upptime",
+        "code",
+    ),
+    # Authentication / Identity ----------------------------------------------------
+    (
+        "casdoor",
+        "Casdoor",
+        "Open-source Identity as a Service / SSO platform",
+        "Casdoor is an open-source IAM/SSO platform with a web UI. Supports "
+        "OAuth 2.0, OIDC, SAML, LDAP, MFA, and social login. Self-hostable "
+        "with a Go backend and React frontend. Drop-in replacement for commercial "
+        "IdP services for teams that want full data ownership.",
+        "authentication",
+        "casdoor/casdoor",
+        10000,
+        "https://casdoor.org",
+        "auth,sso,oidc,oauth2,saml,ldap,identity,mfa",
+        "docker pull casbin/casdoor",
+        "code",
+    ),
+    (
+        "authelia",
+        "Authelia",
+        "Open-source authentication and authorization server",
+        "Authelia is a self-hosted authentication and authorization server that "
+        "provides two-factor authentication and SSO for your applications via "
+        "a reverse proxy. Supports LDAP, TOTP, WebAuthn (FIDO2), Duo, and more. "
+        "Widely used with Nginx, Traefik, and Caddy as an auth gateway.",
+        "authentication",
+        "authelia/authelia",
+        21000,
+        "https://www.authelia.com",
+        "auth,2fa,mfa,sso,nginx,traefik,caddy,ldap,totp,webauthn",
+        "docker pull authelia/authelia",
+        "code",
+    ),
     # Authentication ---------------------------------------------------------------
     (
         "lucia",

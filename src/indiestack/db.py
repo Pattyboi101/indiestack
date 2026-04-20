@@ -5848,6 +5848,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "signalwire": "notifications", # SignalWire — "signalwire alternative", "signalwire vs twilio" → Notifications
     # Analytics — Simple Analytics compound form ("simple" is a stop word so compound form needs mapping)
     "simpleanalytics": "analytics", # Simple Analytics — compound; "simpleanalytics alternative" → Analytics
+    # Developer Tools — validator libraries (class-validator, ajv, zod-validators → Developer Tools)
+    "validator": "developer",       # "validator library", "input validator", "schema validator" → Developer Tools
+    # DevOps — Envoy proxy (CNCF service proxy; used in Istio, Consul Connect, AWS App Mesh)
+    "envoy": "devops",              # Envoy — high-performance proxy by Lyft/CNCF → DevOps & Infrastructure
+    # DevOps — load balancer (complement to "loadbalancer" already mapped)
+    "load-balancer": "devops",      # hyphenated — "load-balancer setup", "load-balancer alternative" → DevOps
+    # DevOps — service mesh (complement to "istio"→devops, "envoy"→devops)
+    "servicemesh": "devops",        # compound — "servicemesh architecture", "servicemesh tool" → DevOps
+    # Frontend — form validation (React Hook Form, Formik, TanStack Form)
+    "form-validation": "frontend",  # hyphenated — "form-validation library", "form-validation react" → Frontend
+    "formvalidation": "frontend",   # compound — "formvalidation library" → Frontend Frameworks
+    # Developer Tools — Biome compound form (complement to "biome"→developer)
+    "biomejs": "developer",         # compound — "biomejs linter", "biomejs formatter" → Developer Tools
+    # Developer Tools — Conventional Commits (complement to "commitlint"→developer)
+    "conventional": "developer",    # "conventional commits", "conventional changelog" → Developer Tools
+    # Testing — WCAG accessibility compliance testing (complement to "a11y"→testing, "accessibility"→testing)
+    "wcag": "testing",              # "wcag compliance", "wcag testing tool", "wcag checker" → Testing Tools
+    # DevOps — semantic-release short form (complement to "semantic-release"→devops)
+    "semrel": "devops",             # "semrel config", "semrel alternative" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

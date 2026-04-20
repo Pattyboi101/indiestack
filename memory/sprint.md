@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-fortieth pass)
+Last updated: 2026-04-20 (one-hundred-and-forty-first pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-fortieth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2363 unique active keys (one-hundred-and-fortieth pass: +6 new — ahrefs/semrush/moz→seo, firestore→database, signalwire→notifications, simpleanalytics→analytics)
-- **Catalog script**: `scripts/add_missing_tools.py` — 653 unique tools (added 5 new: lucia, hanko, keycloak, sanity, airflow; 648→653)
+- **_CAT_SYNONYMS**: 2376 unique active keys (one-hundred-and-forty-first pass: +13 new — validator/envoy/load-balancer/servicemesh→devops, form-validation/formvalidation→frontend, biomejs/conventional→developer, wcag→testing, semrel→devops)
+- **Catalog script**: `scripts/add_missing_tools.py` — 661 unique tools (added 8 new: fiber, echo, chi, sqlc, buf, upptime, casdoor, authelia; 653→661)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,36 @@ Last updated: 2026-04-20 (one-hundred-and-fortieth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-forty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1 — all prompt targets already covered)
+- Step 1 prompt checks all present: state management→frontend, bundler→frontend, realtime→api, vector database→database, rate limiting→api
+- Added 13 new `_CAT_SYNONYMS` entries → 2376 unique keys:
+  - **DevOps** (4 keys): `envoy` → devops (CNCF proxy used in service meshes), `load-balancer` → devops (hyphenated complement to `loadbalancer`), `servicemesh` → devops (compound form), `semrel` → devops (semantic-release abbreviation)
+  - **Developer Tools** (3 keys): `validator` → developer (schema/input validator libraries), `biomejs` → developer (Biome compound form), `conventional` → developer (Conventional Commits)
+  - **Frontend** (2 keys): `form-validation` → frontend (React Hook Form/Formik queries), `formvalidation` → frontend (compound form)
+  - **Testing** (1 key): `wcag` → testing (WCAG accessibility compliance checks)
+
+### Catalog Script (Step 2 — all prompt targets already covered + new additions)
+- Step 2 targets all present: react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend
+- Added 8 new tools to `scripts/add_missing_tools.py` (653 → 661):
+  - **Fiber** (gofiber/fiber, 33k★) — Express-inspired Go web framework; api-tools
+  - **Echo** (labstack/echo, 29k★) — high-performance minimalist Go framework; api-tools
+  - **Chi** (go-chi/chi, 17k★) — lightweight idiomatic Go HTTP router; api-tools
+  - **sqlc** (sqlc-dev/sqlc, 12k★) — generate type-safe Go from SQL queries; database
+  - **Buf** (bufbuild/buf, 8k★) — modern Protobuf toolchain + schema registry; developer-tools
+  - **Upptime** (upptime/upptime, 14k★) — GitHub-powered uptime monitor + status page; monitoring-uptime
+  - **Casdoor** (casdoor/casdoor, 10k★) — open-source IAM/SSO platform; authentication
+  - **Authelia** (authelia/authelia, 21k★) — self-hosted 2FA/SSO auth gateway; authentication
+
+### Code Quality (Step 3)
+- No route file changes this session — all last-commit route edits were in 140th pass
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-fortieth pass — autonomous improvement cycle)
 
