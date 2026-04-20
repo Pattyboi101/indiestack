@@ -10297,6 +10297,109 @@ TOOLS = [
         "go install github.com/Shopify/toxiproxy/v2/cmd/toxiproxy-server@latest",
         "code",
     ),
+    # Frontend Frameworks — Solito (React Native + Next.js cross-platform nav) -------
+    (
+        "solito",
+        "Solito",
+        "React Native + Next.js, unified",
+        "Solito is the missing piece for building cross-platform React Native + Next.js "
+        "apps from a single codebase. Shared navigation, links, and params between "
+        "native and web. Works with Expo and any React Native setup. "
+        "Created by Fernando Rojo. 5k+ GitHub stars.",
+        "frontend-frameworks",
+        "nandorojo/solito",
+        5000,
+        "https://solito.dev",
+        "react-native,nextjs,cross-platform,navigation,expo",
+        "npm install solito",
+        "code",
+    ),
+    # Frontend Frameworks — Avalonia (.NET cross-platform desktop/mobile UI) ---------
+    (
+        "avalonia",
+        "Avalonia",
+        "Cross-platform .NET UI framework",
+        "Avalonia is a cross-platform UI framework for .NET that lets you build "
+        "desktop and mobile apps for Windows, macOS, Linux, iOS, Android, and "
+        "WebAssembly from a single codebase. XAML-based, fluent controls, "
+        "pixel-perfect rendering. The open-source WPF successor. 25k+ GitHub stars.",
+        "frontend-frameworks",
+        "AvaloniaUI/Avalonia",
+        25000,
+        "https://avaloniaui.net",
+        "dotnet,cross-platform,desktop,mobile,xaml,ui",
+        "dotnet new avalonia.app -o MyApp",
+        "code",
+    ),
+    # Frontend Frameworks — Tamagui (cross-platform React/RN UI + styling) -----------
+    (
+        "tamagui",
+        "Tamagui",
+        "Universal UI kit and design system for React and React Native",
+        "Tamagui is a universal UI kit that works across React Native and web. "
+        "Optimizing compiler, universal design tokens, and 100+ components styled "
+        "with a superset of React Native StyleSheet. 3-10× faster than alternatives "
+        "via compile-time optimizations. 11k+ GitHub stars.",
+        "frontend-frameworks",
+        "tamagui/tamagui",
+        11000,
+        "https://tamagui.dev",
+        "react-native,cross-platform,ui,design-system,styling",
+        "npm install tamagui @tamagui/config",
+        "code",
+    ),
+    # Frontend Frameworks — Analog (Angular meta-framework SSR/SSG/API routes) -------
+    (
+        "analog",
+        "Analog",
+        "The fullstack Angular meta-framework",
+        "Analog is a fullstack meta-framework for building Angular applications with "
+        "file-based routing, server-side rendering, static site generation, and "
+        "Vite-powered builds. API routes, Markdown content support, and Nx integration. "
+        "Think Next.js but for Angular. 3k+ GitHub stars.",
+        "frontend-frameworks",
+        "analogjs/analog",
+        3000,
+        "https://analogjs.org",
+        "angular,ssr,ssg,fullstack,vite,typescript",
+        "npm create analog@latest",
+        "code",
+    ),
+    # Frontend Frameworks — SolidStart (SolidJS meta-framework SSR/SSG) --------------
+    (
+        "solid-start",
+        "SolidStart",
+        "The SolidJS meta-framework for the web",
+        "SolidStart is the official meta-framework for SolidJS. File-based routing, "
+        "server-side rendering, server functions, streaming, and static site generation. "
+        "Built on Vinxi (Vite + Nitro). Deploys to Node, Vercel, Cloudflare, Deno, "
+        "and more. 4k+ GitHub stars.",
+        "frontend-frameworks",
+        "solidjs/solid-start",
+        4000,
+        "https://start.solidjs.com",
+        "solidjs,ssr,ssg,fullstack,vite,typescript",
+        "npm create solid@latest",
+        "code",
+    ),
+    # API Tools — ConnectRPC (gRPC-compatible HTTP/1+2 protocol, buf.build) ----------
+    (
+        "connect-rpc",
+        "ConnectRPC",
+        "Simple, reliable, interoperable gRPC-compatible RPC",
+        "ConnectRPC is a family of libraries for building browser- and gRPC-compatible "
+        "HTTP APIs. Supports Protocol Buffers over HTTP/1.1 and HTTP/2. Works with "
+        "curl and any HTTP client — no special proxy needed. Backends in Go, Python, "
+        "Swift, Kotlin, Dart, and Node. SDKs for web, Swift, Kotlin. By buf.build. "
+        "9k+ GitHub stars (Go implementation).",
+        "api-tools",
+        "connectrpc/connect-go",
+        9000,
+        "https://connectrpc.com",
+        "grpc,rpc,protobuf,http2,typescript,golang",
+        "go get connectrpc.com/connect",
+        "code",
+    ),
 ]
 
 

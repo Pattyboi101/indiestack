@@ -5577,6 +5577,49 @@ _CAT_SYNONYMS: dict[str, str] = {
     "chaos-mesh": "devops",         # Chaos Mesh — Kubernetes chaos engineering platform (6k★) → DevOps & Infrastructure
     "chaosmesh": "devops",          # compound — "chaosmesh alternative", "chaosmesh setup" → DevOps & Infrastructure
     "pumba": "devops",              # Pumba — chaos tool for Docker containers (3k★) → DevOps & Infrastructure
+    # gRPC / Protocol Buffers — "proto file", "proto schema", "proto codegen" (complement to grpc→api, protobuf→api)
+    "proto": "api",                 # proto — "proto file", "proto codegen", "proto schema" → API Tools (gRPC, ConnectRPC)
+    # ConnectRPC — gRPC-compatible HTTP/1+HTTP/2 protocol by buf.build (9k★ Go, 5k★ JS)
+    "connect-rpc": "api",           # ConnectRPC — "connect-rpc alternative", "connectrpc go" → API Tools
+    "connectrpc": "api",            # compound — "connectrpc setup", "connectrpc vs grpc" → API Tools
+    # gRPC-Web — gRPC for browser clients; "grpc-web client", "grpc-web alternative"
+    "grpc-web": "api",              # grpc-web — "grpc-web alternative", "grpc-web proxy" → API Tools
+    "grpcweb": "api",               # compound — "grpcweb client", "grpcweb setup" → API Tools
+    # Twirp — Twitch's minimal RPC framework over HTTP/JSON (12k★)
+    "twirp": "api",                 # Twirp — "twirp alternative", "twirp rpc", "twirp vs grpc" → API Tools
+    # Docker Compose — "compose file", "compose spec", "docker compose alternative"
+    # (docker→devops already; bare "compose" also needs devops mapping)
+    "compose": "devops",            # Docker Compose — "compose file", "compose spec", "compose alternative" → DevOps & Infrastructure
+    # Release automation — semantic-release (angular/semantic-release, 20k★)
+    "semantic-release": "devops",   # semantic-release — "semantic-release alternative", "semantic release setup" → DevOps
+    "semanticrelease": "devops",    # compound — "semanticrelease config", "semanticrelease ci" → DevOps
+    # Conventional Commits — commit message standard used by semantic-release, release-please, commitlint
+    "conventional-commits": "devops",  # Conventional Commits — "conventional commits standard" → DevOps & Infrastructure
+    "conventionalcommits": "devops",   # compound — "conventionalcommits spec", "conventionalcommits setup" → DevOps
+    # SolidStart — official SolidJS meta-framework (SSR/SSG/islands; like Next.js for Solid)
+    "solid-start": "frontend",      # SolidStart — "solid-start alternative", "solidstart ssr" → Frontend Frameworks
+    "solidstart": "frontend",       # compound — "solidstart setup", "solidstart vs nextjs" → Frontend Frameworks
+    # Analog — Angular meta-framework (SSR/SSG/API routes; like Next.js for Angular, 3k★)
+    "analog": "frontend",           # Analog — "analog angular framework", "analog ssr" → Frontend Frameworks
+    "analogjs": "frontend",         # compound — "analogjs alternative", "analogjs setup" → Frontend Frameworks
+    # Solito — React Native + Next.js cross-platform navigation library (5k★)
+    "solito": "frontend",           # Solito — "solito navigation", "solito alternative" → Frontend Frameworks
+    # Avalonia — .NET cross-platform desktop/mobile UI framework (25k★; WPF alternative)
+    "avalonia": "frontend",         # Avalonia — "avalonia alternative", "avalonia .net ui" → Frontend Frameworks
+    "avaloniaui": "frontend",       # compound — "avaloniaui setup", "avaloniaui vs maui" → Frontend Frameworks
+    # Tamagui — high-performance cross-platform React/React Native UI kit (11k★)
+    "tamagui": "frontend",          # Tamagui — "tamagui alternative", "tamagui rn ui" → Frontend Frameworks
+    # Gluestack UI — React Native universal UI components (5k★)
+    "gluestack": "frontend",        # Gluestack UI — "gluestack alternative", "gluestack ui" → Frontend Frameworks
+    "gluestack-ui": "frontend",     # hyphenated — "gluestack-ui setup", "gluestack-ui react-native" → Frontend Frameworks
+    # Moti — React Native animation library by Fernando Rojo (3k★; inspired by Framer Motion)
+    "moti": "frontend",             # Moti — "moti animation", "moti alternative" → Frontend Frameworks
+    # Master CSS — syntax-first CSS framework (5k★; ultra-compact utility class syntax)
+    "master-css": "frontend",       # Master CSS — "master-css alternative", "master css utility" → Frontend Frameworks
+    "mastercss": "frontend",        # compound — "mastercss setup", "mastercss vs tailwind" → Frontend Frameworks
+    # Open Props — CSS custom properties design token system (4k★; minimal, framework-agnostic)
+    "open-props": "frontend",       # Open Props — "open-props alternative", "open props css" → Frontend Frameworks
+    "openprops": "frontend",        # compound — "openprops setup", "openprops tokens" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {

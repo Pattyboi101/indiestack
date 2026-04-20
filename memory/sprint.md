@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-thirty-third pass)
+Last updated: 2026-04-20 (one-hundred-and-thirty-fourth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2209 unique active keys (one-hundred-and-thirty-third pass: +27 new — PHP testing, Go linters, Elixir tools, chaos engineering)
-- **Catalog script**: `scripts/add_missing_tools.py` — 613 unique tools (added 6 new: phpunit, phpstan, pest, rubocop, golangci-lint, toxiproxy)
+- **_CAT_SYNONYMS**: 2235 unique active keys (one-hundred-and-thirty-fourth pass: +26 new — gRPC/proto, release automation, cross-platform UI frameworks)
+- **Catalog script**: `scripts/add_missing_tools.py` — 619 unique tools (added 6 new: solito, avalonia, tamagui, analog, solid-start, connect-rpc)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,38 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-third pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-thirty-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 26 new `_CAT_SYNONYMS` entries → 2235 unique keys:
+  - **gRPC/Protocol Buffers** (5 keys): `proto` → api; `connect-rpc`, `connectrpc` → api (ConnectRPC by buf.build); `grpc-web`, `grpcweb` → api
+  - **RPC** (1 key): `twirp` → api (Twitch's minimal RPC framework, 12k★)
+  - **Docker Compose** (1 key): `compose` → devops (bare "compose" for Docker Compose queries)
+  - **Release automation** (4 keys): `semantic-release`, `semanticrelease` → devops; `conventional-commits`, `conventionalcommits` → devops
+  - **Angular meta-framework** (2 keys): `analog`, `analogjs` → frontend (Analog — Angular SSR/SSG)
+  - **SolidJS meta-framework** (2 keys): `solid-start`, `solidstart` → frontend (SolidStart)
+  - **Cross-platform .NET UI** (2 keys): `avalonia`, `avaloniaui` → frontend (WPF successor, 25k★)
+  - **React Native cross-platform** (3 keys): `solito` → frontend; `tamagui` → frontend (11k★); `moti` → frontend
+  - **React Native UI** (2 keys): `gluestack`, `gluestack-ui` → frontend (React Native UI components)
+  - **CSS frameworks** (4 keys): `master-css`, `mastercss` → frontend; `open-props`, `openprops` → frontend
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (613 → 619 unique):
+  - **Solito** (nandorojo/solito, 5k★) — React Native + Next.js unified navigation; frontend-frameworks
+  - **Avalonia** (AvaloniaUI/Avalonia, 25k★) — .NET cross-platform desktop/mobile UI; frontend-frameworks
+  - **Tamagui** (tamagui/tamagui, 11k★) — universal React/RN UI kit with compiler; frontend-frameworks
+  - **Analog** (analogjs/analog, 3k★) — Angular meta-framework (SSR/SSG/API routes); frontend-frameworks
+  - **SolidStart** (solidjs/solid-start, 4k★) — official SolidJS meta-framework; frontend-frameworks
+  - **ConnectRPC** (connectrpc/connect-go, 9k★) — gRPC-compatible HTTP/1+2 RPC protocol; api-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-thirty-third pass — autonomous improvement cycle)
 
