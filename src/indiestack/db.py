@@ -5867,6 +5867,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "wcag": "testing",              # "wcag compliance", "wcag testing tool", "wcag checker" → Testing Tools
     # DevOps — semantic-release short form (complement to "semantic-release"→devops)
     "semrel": "devops",             # "semrel config", "semrel alternative" → DevOps & Infrastructure
+    # Database GUIs — very common "[tool] alternative" queries; all route to Developer Tools
+    "dbeaver": "developer",          # DBeaver — multi-database IDE (MySQL, Postgres, SQLite, etc.) 37k★
+    "beekeeper": "developer",        # Beekeeper Studio — open-source cross-platform DB GUI 14k★
+    "tableplus": "developer",        # TablePlus — native macOS/Windows DB GUI (popular paid tool)
+    "pgadmin": "database",           # pgAdmin — official PostgreSQL administration and GUI
+    "adminer": "database",           # Adminer — single-file PHP DB management (MySQL/Postgres/SQLite)
+    "dbgate": "developer",           # DbGate — open-source SQL+NoSQL database client (4k★)
+    # Auth — Casdoor open-source OAuth 2.0 / OIDC server (9k★)
+    "casdoor": "authentication",     # "casdoor alternative", "casdoor sso", "casdoor vs keycloak" → Authentication
+    # Database — Triplit full-stack real-time offline-first database
+    "triplit": "database",           # "triplit alternative", "triplit react", "offline-first db" → Database
+    # Database — Neon compound/abbreviation forms (neon already mapped)
+    "neondb": "database",            # "neondb alternative", "neondb postgres" → Database (serverless Postgres)
+    "neon-db": "database",           # hyphenated form — "neon-db setup", "neon-db vs supabase" → Database
+    # Maps — turf.js geospatial analysis library (9k★)
+    "turf": "maps",                  # "turf alternative", "turf.js geospatial", "turf polygon" → Maps & Location
+    "turfjs": "maps",                # compound — "turfjs npm", "turfjs react" → Maps & Location
+    # Maps — deck.gl large-scale WebGL data visualization (Uber, 12k★)
+    "deckgl": "maps",                # "deckgl alternative", "deck.gl layers", "deckgl react" → Maps & Location
+    # Monitoring — specific uptime tools not yet in synonyms
+    "freshping": "monitoring",       # Freshping.io — real-time uptime monitoring by Freshworks → Monitoring & Uptime
+    "ohdear": "monitoring",          # Oh Dear! — uptime/SSL/cert/domain monitoring SaaS → Monitoring & Uptime
+    "oh-dear": "monitoring",         # hyphenated form — "oh-dear alternative", "oh dear monitoring" → Monitoring & Uptime
 }
 
 _FTS_STOP_WORDS = {

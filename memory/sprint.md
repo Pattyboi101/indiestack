@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-forty-first pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2376 unique active keys (one-hundred-and-forty-first pass: +13 new — validator/envoy/load-balancer/servicemesh→devops, form-validation/formvalidation→frontend, biomejs/conventional→developer, wcag→testing, semrel→devops)
-- **Catalog script**: `scripts/add_missing_tools.py` — 661 unique tools (added 8 new: fiber, echo, chi, sqlc, buf, upptime, casdoor, authelia; 653→661)
+- **_CAT_SYNONYMS**: 2400+ unique active keys (merged 140th+141st pass: +13 local + 21 remote + 6 stale-stats pass)
+- **Catalog script**: `scripts/add_missing_tools.py` — 665 unique tools (merged: fiber/echo/chi/sqlc/buf/upptime/casdoor/authelia + dbeaver/beekeeper-studio/triplit/pgadmin + lucia/hanko/keycloak/sanity/airflow; 648→665)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -74,6 +74,18 @@ Last updated: 2026-04-20 (one-hundred-and-forty-first pass)
   - `setup.py`: lines 50, 178, 340 ("40 categories" → "29+ categories" on line 340)
   - `components.py`: default meta description in `page_shell()`
   - `content.py`: FAQ section
+- (remote 140th pass) Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### Search Quality (Step 1) — remote 140th pass additions (merged)
+- Added 21 new `_CAT_SYNONYMS` entries:
+  - **Database GUIs** (6 keys): `dbeaver`, `beekeeper`, `tableplus`, `dbgate` → developer; `pgadmin`, `adminer` → database
+  - **Authentication** (1 key): `casdoor` → authentication
+  - **Database** (3 keys): `triplit` → database; `neondb`, `neon-db` → database
+  - **Maps** (3 keys): `turf`, `turfjs` → maps; `deckgl` → maps
+  - **Monitoring** (3 keys): `freshping` → monitoring; `ohdear`, `oh-dear` → monitoring
+
+### Catalog Script (Step 2) — remote 140th pass additions (merged)
+- Added 5 more tools (from parallel remote run): DBeaver (37k★), Beekeeper Studio (14k★), Triplit (4k★), Casdoor (9k★ remote version merged with 141st), pgAdmin (3.5k★)
 
 ### R&D Docs (Step 4)
 - docs/plans/ gitignored and not present locally — sprint.md updated
