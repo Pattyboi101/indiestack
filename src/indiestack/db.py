@@ -5681,6 +5681,40 @@ _CAT_SYNONYMS: dict[str, str] = {
     "vector-search": "search",      # "vector-search backend", "vector-search service" → Search Engine
     "semantic-search": "search",    # "semantic-search engine", "semantic-search open source" → Search Engine
     "hybrid-search": "search",      # "hybrid-search BM25 + vectors", "hybrid-search Qdrant" → Search Engine
+    # CRM & Sales — named tools missing from synonyms (common "[tool] alternative" query targets)
+    "pipedrive": "crm",             # Pipedrive — sales-focused CRM with visual pipeline (very common alt query)
+    "attio": "crm",                 # Attio — AI-native CRM for modern B2B SaaS teams
+    "monica": "crm",                # Monica — open-source personal relationship manager (monicahq/monica, 21k★)
+    "streak": "crm",                # Streak — CRM built inside Gmail; "streak alternative" → CRM & Sales
+    # Social Media — named tools missing from synonyms
+    "buffer": "social",             # Buffer — social media scheduling and analytics; "buffer alternative" → Social Media
+    "hootsuite": "social",          # Hootsuite — social media management; "hootsuite alternative" → Social Media
+    "mastodon": "social",           # Mastodon — decentralised open-source social network (joinmastodon/mastodon, 45k★)
+    # Learning & Education — key query terms not yet mapped
+    "anki": "learning",             # Anki — spaced-repetition flashcard app (ankitects/anki, 12k★) → Learning
+    "moodle": "learning",           # Moodle — open-source LMS; "moodle alternative" → Learning & Education
+    "lms": "learning",              # LMS — Learning Management System; generic query term → Learning & Education
+    "flashcard": "learning",        # "flashcard app", "flashcard library" → Learning & Education
+    "flashcards": "learning",       # plural — "flashcards API", "flashcards SRS" → Learning & Education
+    # Feedback & Reviews — key terms not individually mapped
+    "nps": "feedback",              # NPS (Net Promoter Score) — "nps tool", "nps survey" → Feedback & Reviews
+    "csat": "feedback",             # CSAT (Customer Satisfaction Score) — "csat survey" → Feedback & Reviews
+    # Publishing / Newsletters — dominant brand names not yet individually mapped
+    "substack": "newsletters",      # Substack — "substack alternative" is a top publishing query → Newsletters
+    "beehiiv": "newsletters",       # beehiiv — modern newsletter platform; "beehiiv alternative" → Newsletters
+    # Scheduling & Booking — additional named tools
+    "doodle": "scheduling",         # Doodle — group availability polling; "doodle alternative" → Scheduling
+    "acuity": "scheduling",         # Acuity Scheduling — appointment booking; "acuity alternative" → Scheduling
+    # Media Server — key named tools not yet mapped
+    "jellyfin": "media",            # Jellyfin — open-source media server (jellyfin/jellyfin, 34k★) → Media Server
+    "emby": "media",                # Emby — commercial Jellyfin-like media server; "emby alternative" → Media Server
+    # Design & Creative — open-source Figma alternatives (complement to "figma"→design already mapped)
+    "penpot": "design",             # Penpot — open-source Figma alternative (penpot/penpot, 35k★) → Design & Creative
+    # Maps & Location — additional named tools / query terms
+    "osm": "maps",                  # OpenStreetMap — "osm tiles", "osm geocoding", "osm alternative" → Maps & Location
+    "protomaps": "maps",            # Protomaps — self-hosted PMTiles map tiles (protomaps/protomaps, 3k★) → Maps & Location
+    # Games & Entertainment — additional named game engines
+    "cocos": "games",               # Cocos — cross-platform game engine; "cocos alternative", "cocos2d" → Games & Entertainment
 }
 
 _FTS_STOP_WORDS = {

@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-thirty-sixth pass)
+Last updated: 2026-04-20 (one-hundred-and-thirty-seventh pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-sixth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2279 unique active keys (one-hundred-and-thirty-sixth pass: +24 new — lint/linter/linting, property-based testing, load testing tools, visual regression, caching alternatives, vector/semantic search)
-- **Catalog script**: `scripts/add_missing_tools.py` — 631 unique tools (added 7 new: autocannon, vegeta, dredd, backstopjs, fast-check, garnet; 624→631)
+- **_CAT_SYNONYMS**: 2305 unique active keys (one-hundred-and-thirty-seventh pass: +26 new — CRM tools, social media, learning/education, feedback, newsletters, scheduling, media server, design, maps, games)
+- **Catalog script**: `scripts/add_missing_tools.py` — 637 unique tools (added 6 new: gitea, netdata, ntfy, monica, penpot, umami; 631→637)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,38 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-sixth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-thirty-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 26 new `_CAT_SYNONYMS` entries → 2305 unique keys:
+  - **CRM & Sales** (4 keys): `pipedrive`, `attio`, `monica`, `streak` → crm (routes "[tool] alternative" queries to CRM & Sales)
+  - **Social Media** (3 keys): `buffer`, `hootsuite`, `mastodon` → social (social scheduling + federated social)
+  - **Learning & Education** (5 keys): `anki`, `moodle`, `lms`, `flashcard`, `flashcards` → learning (LMS and SRS queries)
+  - **Feedback & Reviews** (2 keys): `nps`, `csat` → feedback (NPS/CSAT survey tool queries)
+  - **Publishing / Newsletters** (2 keys): `substack`, `beehiiv` → newsletters (top newsletter platform alt queries)
+  - **Scheduling & Booking** (2 keys): `doodle`, `acuity` → scheduling (group polling + appointment booking)
+  - **Media Server** (2 keys): `jellyfin`, `emby` → media (self-hosted media streaming server queries)
+  - **Design & Creative** (1 key): `penpot` → design (Figma alternative; 35k★ open-source)
+  - **Maps & Location** (2 keys): `osm`, `protomaps` → maps (OpenStreetMap + self-hosted tiles)
+  - **Games & Entertainment** (1 key): `cocos` → games (Cocos cross-platform game engine queries)
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (631 → 637 unique):
+  - **Gitea** (go-gitea/gitea, 44k★) — self-hosted Git service with Actions CI/CD; devops-infrastructure
+  - **Netdata** (netdata/netdata, 70k★) — zero-config real-time monitoring agent; monitoring-uptime
+  - **ntfy** (binwiederhier/ntfy, 18k★) — self-hosted pub/sub push notification server; notifications
+  - **Monica** (monicahq/monica, 21k★) — open-source personal relationship manager/CRM; crm-sales
+  - **Penpot** (penpot/penpot, 35k★) — open-source Figma alternative (SVG-native); design-creative
+  - **Umami** (umami-software/umami, 23k★) — privacy-first self-hosted web analytics; analytics-metrics
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-thirty-sixth pass — autonomous improvement cycle)
 

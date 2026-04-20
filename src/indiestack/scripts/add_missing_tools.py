@@ -10591,6 +10591,121 @@ TOOLS = [
         "docker pull ghcr.io/microsoft/garnet",
         "code",
     ),
+    # DevOps & Infrastructure — Gitea self-hosted Git service ----------------------------
+    (
+        "gitea",
+        "Gitea",
+        "A painless self-hosted Git service",
+        "Gitea is a lightweight self-hosted Git service written in Go. "
+        "Ships as a single binary with built-in CI/CD (Gitea Actions), "
+        "issue tracking, code review, packages registry, and a web interface "
+        "that mirrors GitHub's UX. Runs on any server with minimal resources. "
+        "First-class Docker support and Kubernetes Helm chart. "
+        "Forgejo (LGPL fork) is a fully compatible drop-in alternative.",
+        "devops-infrastructure",
+        "go-gitea/gitea",
+        44000,
+        "https://gitea.com",
+        "git,self-hosted,ci-cd,devops,github-alternative",
+        "docker pull gitea/gitea",
+        "code",
+    ),
+    # Monitoring & Uptime — Netdata real-time monitoring agent ----------------------------
+    (
+        "netdata",
+        "Netdata",
+        "Real-time performance monitoring for every system",
+        "Netdata is an open-source real-time monitoring agent that collects "
+        "thousands of metrics with zero configuration. Runs on Linux, macOS, "
+        "and in Docker. Auto-detects services (Nginx, PostgreSQL, Redis, etc.) "
+        "and visualises them in a built-in dashboard within seconds. "
+        "Supports Prometheus, InfluxDB, and Grafana exports. "
+        "Cloud edition adds multi-node dashboards and alerting.",
+        "monitoring-uptime",
+        "netdata/netdata",
+        70000,
+        "https://www.netdata.cloud",
+        "monitoring,metrics,performance,real-time,observability,linux",
+        "curl https://get.netdata.cloud/kickstart.sh | bash",
+        "code",
+    ),
+    # Notifications — ntfy self-hosted pub/sub push notification server ------------------
+    (
+        "ntfy",
+        "ntfy",
+        "Send push notifications to your phone or desktop via PUT/POST",
+        "ntfy is a simple HTTP-based pub/sub notification service. "
+        "Publish a message with a single curl call; subscribers receive "
+        "push notifications on Android, iOS, or the web — no app account required. "
+        "Self-host on any server or use the free ntfy.sh hosted service. "
+        "Supports topics, priorities, tags, click actions, attachments, "
+        "and SMTP gateway. Replaces complex webhook pipelines for devs who "
+        "just want reliable push to their own devices.",
+        "notifications",
+        "binwiederhier/ntfy",
+        18000,
+        "https://ntfy.sh",
+        "push-notifications,self-hosted,pubsub,mobile,webhooks",
+        "docker pull binwiederhier/ntfy",
+        "code",
+    ),
+    # CRM & Sales — Monica open-source personal CRM -----------------------------------
+    (
+        "monica",
+        "Monica",
+        "Open-source personal relationship manager",
+        "Monica is an open-source personal CRM that helps you organise "
+        "your relationships. Track contacts, record conversations, set "
+        "reminders for birthdays and follow-ups, and log notes about "
+        "people in your network. Self-host on any server or use Monica Cloud. "
+        "Built with Laravel and Vue.js. Designed for individuals and small "
+        "teams who want a private, self-owned alternative to Salesforce or HubSpot.",
+        "crm-sales",
+        "monicahq/monica",
+        21000,
+        "https://www.monicahq.com",
+        "crm,personal,self-hosted,contacts,relationships,laravel",
+        "docker pull monica",
+        "code",
+    ),
+    # Design & Creative — Penpot open-source Figma alternative --------------------------
+    (
+        "penpot",
+        "Penpot",
+        "The open-source design & prototyping tool for teams",
+        "Penpot is a free, open-source design and prototyping application. "
+        "It runs in the browser and is the first design tool built on open "
+        "web standards (SVG-native). Supports vector editing, components, "
+        "interactive prototyping, real-time collaboration, and developer "
+        "handoff with CSS inspection. Self-host on-premise or use the free "
+        "cloud. A true Figma alternative with no vendor lock-in.",
+        "design-creative",
+        "penpot/penpot",
+        35000,
+        "https://penpot.app",
+        "design,figma-alternative,prototyping,collaboration,svg,open-source",
+        "docker compose -f docker-compose.yaml up",
+        "code",
+    ),
+    # Analytics & Metrics — Umami privacy-first web analytics ---------------------------
+    (
+        "umami",
+        "Umami",
+        "Simple, fast, privacy-focused analytics for websites",
+        "Umami is an open-source, self-hosted web analytics solution "
+        "that is a straightforward alternative to Google Analytics. "
+        "It collects pageviews, sessions, referrers, and custom events "
+        "without cookies or personal data. GDPR-compliant by design. "
+        "Built with Next.js and PostgreSQL/MySQL. Ships as a Docker image "
+        "for easy self-hosting; free cloud tier available on umami.is.",
+        "analytics-metrics",
+        "umami-software/umami",
+        23000,
+        "https://umami.is",
+        "analytics,privacy,web-analytics,self-hosted,gdpr,google-analytics-alternative",
+        "docker pull ghcr.io/umami-software/umami:postgresql-latest",
+        "code",
+    ),
 ]
 
 
