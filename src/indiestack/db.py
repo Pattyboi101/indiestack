@@ -5848,6 +5848,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "signalwire": "notifications", # SignalWire — "signalwire alternative", "signalwire vs twilio" → Notifications
     # Analytics — Simple Analytics compound form ("simple" is a stop word so compound form needs mapping)
     "simpleanalytics": "analytics", # Simple Analytics — compound; "simpleanalytics alternative" → Analytics
+    # Publishing / RSS — content feeds and podcast hosting route to newsletters-content / media-server
+    "rss": "newsletters",           # "rss reader", "rss generator", "rss feed library" → Newsletters & Content
+    "feed": "newsletters",          # "content feed", "news feed", "atom feed" → Newsletters & Content
+    "podcast": "media",             # "podcast hosting", "podcast rss", "podcast player" → Media Servers
 }
 
 _FTS_STOP_WORDS = {

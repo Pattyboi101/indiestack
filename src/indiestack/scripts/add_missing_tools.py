@@ -10977,6 +10977,75 @@ TOOLS = [
         "pip install apache-airflow",
         "code",
     ),
+    # Monitoring & Uptime — Checkly (synthetic monitoring + monitoring as code) ----
+    (
+        "checkly",
+        "Checkly",
+        "Monitoring as code for developers",
+        "Checkly lets you write end-to-end checks using Playwright and API monitors "
+        "using JavaScript or TypeScript, then deploy them as code via the Checkly CLI. "
+        "Checks run globally across 20+ locations and alert via Slack, PagerDuty, "
+        "or webhooks when they fail. The '@checkly/cli' lets you version-control your "
+        "monitoring setup alongside your app code.",
+        "monitoring-uptime",
+        "checkly/checkly-cli",
+        5000,
+        "https://www.checklyhq.com",
+        "monitoring,e2e,playwright,synthetic,api-monitoring,monitoring-as-code",
+        "npm install --save-dev @checkly/cli",
+        "code",
+    ),
+    # Monitoring & Uptime — Cronitor (cron job + heartbeat monitoring) --------
+    (
+        "cronitor",
+        "Cronitor",
+        "Cron job monitoring and scheduling for developers",
+        "Cronitor wraps any cron job or scheduled task and alerts you when it "
+        "runs late, fails, or doesn't finish within its SLA. Send a ping from "
+        "any language with a simple HTTP request. Also monitors long-running "
+        "processes via heartbeats and provides uptime dashboards.",
+        "monitoring-uptime",
+        "cronitorio/cronitor-py",
+        2000,
+        "https://cronitor.io",
+        "cron,monitoring,heartbeat,scheduled-tasks,uptime,alerting",
+        "pip install cronitor",
+        "saas",
+    ),
+    # Monitoring — HyperDX (open-source APM, Datadog / NewRelic alternative) --
+    (
+        "hyperdx",
+        "HyperDX",
+        "Open-source observability platform — logs, traces, sessions in one place",
+        "HyperDX is an open-source full-stack observability platform. It correlates "
+        "logs, distributed traces, metrics, session replays, and exceptions in a "
+        "single UI. Ships as a Docker Compose stack or managed cloud. Uses "
+        "OpenTelemetry for ingestion so existing OTel instrumentation works immediately.",
+        "monitoring-uptime",
+        "hyperdxio/hyperdx",
+        6000,
+        "https://www.hyperdx.io",
+        "observability,apm,tracing,logs,otel,opentelemetry,session-replay,metrics",
+        "docker compose up -d",
+        "code",
+    ),
+    # Monitoring & Uptime — OpenStatus (open-source status page + monitoring) --
+    (
+        "openstatus",
+        "OpenStatus",
+        "Open-source status page and API monitoring",
+        "OpenStatus is an open-source status page and synthetic API monitoring "
+        "platform. Create beautiful public status pages, run API checks from 35+ "
+        "global regions, and alert via Discord, Slack, or email. Self-hostable "
+        "or hosted SaaS. Built with Next.js, Drizzle ORM, and Turso.",
+        "monitoring-uptime",
+        "openstatusHQ/openstatus",
+        6500,
+        "https://www.openstatus.dev",
+        "status-page,monitoring,api-monitoring,uptime,synthetic,open-source",
+        "npx create-openstatus-app@latest",
+        "code",
+    ),
 ]
 
 

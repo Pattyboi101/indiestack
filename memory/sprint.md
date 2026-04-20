@@ -1,17 +1,17 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-fortieth pass)
+Last updated: 2026-04-20 (one-hundred-and-forty-first pass)
 
 ## Status: Active
 
 ## System State (as of 2026-04-20)
 
-- **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
+- **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live; 29 @mcp.tool() functions
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2363 unique active keys (one-hundred-and-fortieth pass: +6 new — ahrefs/semrush/moz→seo, firestore→database, signalwire→notifications, simpleanalytics→analytics)
-- **Catalog script**: `scripts/add_missing_tools.py` — 653 unique tools (added 5 new: lucia, hanko, keycloak, sanity, airflow; 648→653)
+- **_CAT_SYNONYMS**: 2366 unique active keys (one-hundred-and-forty-first pass: +3 new — rss/feed→newsletters, podcast→media)
+- **Catalog script**: `scripts/add_missing_tools.py` — 657 unique tools (added 4 new: checkly, cronitor, hyperdx, openstatus; 653→657)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,28 @@ Last updated: 2026-04-20 (one-hundred-and-fortieth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-forty-first pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- All prior gaps confirmed present; found 3 genuinely missing synonyms:
+  - **Publishing/RSS** (2 keys): `rss`, `feed` → newsletters (Newsletters & Content category)
+  - **Media** (1 key): `podcast` → media (Media Servers category)
+
+### Catalog Script (Step 2)
+- All 10 prompt-specified tools already in script; added 4 high-priority monitoring tools (653 → 657):
+  - **Checkly** (checkly/checkly-cli, 5k★) — monitoring as code with Playwright; monitoring-uptime
+  - **Cronitor** (cronitorio/cronitor-py, 2k★) — cron job heartbeat monitoring; monitoring-uptime
+  - **HyperDX** (hyperdxio/hyperdx, 6k★) — open-source APM/observability; monitoring-uptime
+  - **OpenStatus** (openstatusHQ/openstatus, 6.5k★) — open-source status pages; monitoring-uptime
+
+### R&D Docs / Self-Improvement (Step 5)
+- Updated `.orchestra/departments/mcp/CLAUDE.md`:
+  - Added Agent Registry to scope (agents.py route, 3 MCP tools)
+  - Added tool count note (29 @mcp.tool() functions)
+  - Removed stale "~2,100 tokens" footprint figure in meeting participation section
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-fortieth pass — autonomous improvement cycle)
 
