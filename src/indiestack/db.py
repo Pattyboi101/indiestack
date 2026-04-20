@@ -5652,6 +5652,35 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — Ark UI accessible component primitives built on Zag.js state machines
     "arkui": "frontend",            # Ark UI — "arkui alternative", "ark ui components" → Frontend Frameworks
     "ark-ui": "frontend",           # hyphenated — "ark-ui setup", "ark-ui vs radix" → Frontend Frameworks
+    # Testing — linting tools (ESLint, Biome, OXLint, Pylint, Ruff live in Testing Tools)
+    # "lint" has no synonym despite being one of the most common dev queries
+    "lint": "testing",              # "javascript lint", "lint tool", "lint setup" → Testing Tools (ESLint, Biome, OXLint)
+    "linter": "testing",            # "css linter", "python linter", "linter alternative" → Testing Tools
+    "linting": "testing",           # "linting rules", "linting pipeline", "code linting" → Testing Tools
+    # Testing — property-based testing pattern (Hypothesis, fast-check, PropEr, QuickCheck)
+    "property-based": "testing",    # "property-based testing", "property-based test framework" → Testing Tools
+    "fast-check": "testing",        # fast-check — TypeScript property-based testing (dubzzz/fast-check, 4k★) → Testing Tools
+    "fastcheck": "testing",         # compound — "fastcheck alternative", "fastcheck setup" → Testing Tools
+    # Testing — HTTP load testing and benchmarking tools
+    "autocannon": "testing",        # autocannon — Node.js HTTP benchmarking (mcollina/autocannon, 9k★) → Testing Tools
+    "vegeta": "testing",            # Vegeta — Go HTTP load testing (tsenart/vegeta, 23k★) → Testing Tools
+    # Testing — API contract testing
+    "dredd": "testing",             # Dredd — OpenAPI/API Blueprint HTTP testing (apiaryio/dredd, 4k★) → Testing Tools
+    # Testing — visual regression testing
+    "visual-regression": "testing", # "visual-regression testing", "visual-regression tool" → Testing Tools
+    "backstop": "testing",          # BackstopJS — CSS visual regression testing (garris/backstopjs, 7k★) → Testing Tools
+    "backstopjs": "testing",        # compound — "backstopjs alternative", "backstopjs setup" → Testing Tools
+    "applitools": "testing",        # Applitools — visual AI testing (applitools/eyes-sdk-javascript) → Testing Tools
+    # Caching — Redis alternatives not yet mapped
+    "garnet": "caching",            # Microsoft Garnet — high-perf Redis-compatible cache server (microsoft/garnet, 10k★) → Caching
+    "redict": "caching",            # Redict — community LGPL Redis fork (redict-io/redict) → Caching
+    # Monitoring — Grafana eBPF auto-instrumentation and legacy agent queries
+    "beyla": "monitoring",          # Grafana Beyla — eBPF auto-instrumentation without code changes (grafana/beyla, 2k★)
+    "grafana-agent": "monitoring",  # Grafana Agent — legacy name for what is now Alloy; "grafana-agent alternative"
+    # Search — vector and semantic search query patterns (distinct from "vector database"→database)
+    "vector-search": "search",      # "vector-search backend", "vector-search service" → Search Engine
+    "semantic-search": "search",    # "semantic-search engine", "semantic-search open source" → Search Engine
+    "hybrid-search": "search",      # "hybrid-search BM25 + vectors", "hybrid-search Qdrant" → Search Engine
 }
 
 _FTS_STOP_WORDS = {

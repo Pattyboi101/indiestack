@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-thirty-fifth pass)
+Last updated: 2026-04-20 (one-hundred-and-thirty-sixth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2255 unique active keys (one-hundred-and-thirty-fifth pass: +20 new — config mgmt, REPL/LSP, unit/e2e testing, new named tools)
-- **Catalog script**: `scripts/add_missing_tools.py` — 624 unique tools (added 5 new: openmeter, logfire, huma, pgmq, unstorage)
+- **_CAT_SYNONYMS**: 2279 unique active keys (one-hundred-and-thirty-sixth pass: +24 new — lint/linter/linting, property-based testing, load testing tools, visual regression, caching alternatives, vector/semantic search)
+- **Catalog script**: `scripts/add_missing_tools.py` — 631 unique tools (added 7 new: autocannon, vegeta, dredd, backstopjs, fast-check, garnet; 624→631)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,36 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-fifth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-thirty-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 24 new `_CAT_SYNONYMS` entries → 2279 unique keys:
+  - **Linting** (3 keys): `lint`, `linter`, `linting` → testing (critical gap — ESLint, Biome, OXLint queries were unrouted)
+  - **Property-based testing** (3 keys): `property-based`, `fast-check`, `fastcheck` → testing (Hypothesis, fast-check)
+  - **HTTP load testing** (2 keys): `autocannon` → testing (9k★); `vegeta` → testing (23k★, Go)
+  - **API contract testing** (1 key): `dredd` → testing (OpenAPI/API Blueprint testing)
+  - **Visual regression** (4 keys): `visual-regression`, `backstop`, `backstopjs`, `applitools` → testing
+  - **Caching alternatives** (2 keys): `garnet` → caching (Microsoft, 10k★); `redict` → caching (LGPL Redis fork)
+  - **Monitoring** (2 keys): `beyla` → monitoring (Grafana eBPF); `grafana-agent` → monitoring (legacy Alloy name)
+  - **Search patterns** (3 keys): `vector-search`, `semantic-search`, `hybrid-search` → search (distinct from vector-database→database)
+
+### Catalog Script (Step 2)
+- Added 7 new tools to `scripts/add_missing_tools.py` (624 → 631 unique):
+  - **autocannon** (mcollina/autocannon, 9k★) — Node.js HTTP benchmarking; testing-tools
+  - **Vegeta** (tsenart/vegeta, 23k★) — Go HTTP load testing; testing-tools
+  - **Dredd** (apiaryio/dredd, 4.1k★) — OpenAPI/API Blueprint HTTP testing; testing-tools
+  - **BackstopJS** (garris/BackstopJS, 7k★) — CSS visual regression testing; testing-tools
+  - **fast-check** (dubzzz/fast-check, 4.5k★) — TypeScript property-based testing; testing-tools
+  - **Garnet** (microsoft/garnet, 10k★) — Redis-compatible high-perf cache server; caching
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-thirty-fifth pass — autonomous improvement cycle)
 

@@ -10486,6 +10486,111 @@ TOOLS = [
         "npm install unstorage",
         "code",
     ),
+    # Testing Tools — autocannon Node.js HTTP benchmarking --------------------------------
+    (
+        "autocannon",
+        "autocannon",
+        "Fast HTTP/1.1 benchmarking tool written in Node.js",
+        "autocannon is a fast HTTP/1.1 benchmarking tool, measured in requests per "
+        "second. Written in Node.js and heavily inspired by wrk and wrk2. Supports "
+        "pipelining, custom headers, request body, and concurrent connections. "
+        "Widely used for load testing Node.js APIs in CI and development.",
+        "testing-tools",
+        "mcollina/autocannon",
+        9000,
+        "https://github.com/mcollina/autocannon",
+        "load-testing,benchmarking,http,nodejs,performance",
+        "npm install autocannon",
+        "code",
+    ),
+    # Testing Tools — Vegeta Go HTTP load testing -----------------------------------------
+    (
+        "vegeta",
+        "Vegeta",
+        "HTTP load testing tool and library built in Go",
+        "Vegeta is a versatile HTTP load testing tool built on Go. Supports constant "
+        "request rate load testing with customizable attack profiles, latency histogram "
+        "reporting, and target files for complex scenarios. Output formats include "
+        "JSON, binary, and human-readable text. Widely used in Go microservices pipelines.",
+        "testing-tools",
+        "tsenart/vegeta",
+        23000,
+        "https://github.com/tsenart/vegeta",
+        "load-testing,benchmarking,http,golang,performance",
+        "go install github.com/tsenart/vegeta@latest",
+        "code",
+    ),
+    # Testing Tools — Dredd API contract testing ------------------------------------------
+    (
+        "dredd",
+        "Dredd",
+        "Language-agnostic HTTP API testing framework",
+        "Dredd is a language-agnostic command-line tool for validating API "
+        "documentation against its backend implementation. Parses OpenAPI 2/3 or "
+        "API Blueprint description files and tests each endpoint against a live "
+        "server. Integrates with CI/CD pipelines. Ensures API docs stay in sync.",
+        "testing-tools",
+        "apiaryio/dredd",
+        4100,
+        "https://dredd.org",
+        "api-testing,contract-testing,openapi,api-blueprint,ci",
+        "npm install dredd",
+        "code",
+    ),
+    # Testing Tools — BackstopJS visual regression testing --------------------------------
+    (
+        "backstopjs",
+        "BackstopJS",
+        "Catch CSS curve balls with visual regression testing",
+        "BackstopJS automates visual regression testing by comparing DOM screenshots "
+        "over time. Define viewports and scenarios in a JSON config, run a reference "
+        "capture, then test after changes. Uses Puppeteer or Playwright under the hood. "
+        "Reports side-by-side diffs in a browser-based UI. Great for UI refactors and "
+        "design system updates.",
+        "testing-tools",
+        "garris/BackstopJS",
+        7000,
+        "https://garris.github.io/BackstopJS",
+        "visual-regression,testing,puppeteer,playwright,css,screenshots",
+        "npm install backstopjs",
+        "code",
+    ),
+    # Testing Tools — fast-check TypeScript property-based testing -------------------------
+    (
+        "fast-check",
+        "fast-check",
+        "Property-based testing for JavaScript and TypeScript",
+        "fast-check is a property-based testing framework for JavaScript and TypeScript. "
+        "Instead of writing individual test cases, you define properties that hold for "
+        "any input and let fast-check generate hundreds of random inputs automatically. "
+        "When a failing case is found, it shrinks the input to the minimal reproduction. "
+        "Works with Jest, Vitest, Mocha, and any test runner.",
+        "testing-tools",
+        "dubzzz/fast-check",
+        4500,
+        "https://fast-check.dev",
+        "property-based-testing,testing,typescript,javascript,jest,vitest",
+        "npm install fast-check",
+        "code",
+    ),
+    # Caching — Microsoft Garnet Redis-compatible cache server ----------------------------
+    (
+        "garnet",
+        "Garnet",
+        "High-performance Redis-compatible cache store from Microsoft",
+        "Garnet is an open-source remote cache store from Microsoft Research, "
+        "wire-compatible with Redis clients. Built on .NET, it delivers extremely "
+        "high throughput (millions of ops/sec on a single node), low latency, "
+        "strong extensibility via C# custom transactions and procedures, and "
+        "native cluster support. Deploy as a drop-in Redis replacement.",
+        "caching",
+        "microsoft/garnet",
+        10000,
+        "https://microsoft.github.io/garnet",
+        "redis,caching,in-memory,dotnet,high-performance,key-value",
+        "docker pull ghcr.io/microsoft/garnet",
+        "code",
+    ),
 ]
 
 
