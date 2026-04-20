@@ -373,7 +373,7 @@ async def faq_page(request: Request):
             "What is IndieStack?",
             "IndieStack is a dependency guardrail for AI coding agents. It validates packages before "
             "install, catches hallucinations and typosquats, and provides migration intelligence from "
-            "real GitHub data. 8,000+ developer tools tracked, searchable via our "
+            "real GitHub data. 6,500+ developer tools tracked, searchable via our "
             "<a href='https://pypi.org/project/indiestack/' style='color:var(--accent);'>MCP server</a>."
         ),
         (

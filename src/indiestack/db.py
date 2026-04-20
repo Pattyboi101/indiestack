@@ -5838,6 +5838,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sops": "security",            # SOPS — "sops alternative", "sops encryption", "sops secrets" → Security Tools
     # Payments — Lemon Squeezy hyphenated form (compound "lemonsqueezy"→payments already mapped)
     "lemon-squeezy": "payments",   # "lemon-squeezy alternative", "lemon squeezy stripe" → Payments
+    # SEO — major SEO platforms missing from synonyms (high "alternative" query volume)
+    "ahrefs": "seo",               # Ahrefs — backlink and keyword analysis; "ahrefs alternative" → SEO Tools
+    "semrush": "seo",              # SEMrush — all-in-one SEO suite; "semrush alternative" → SEO Tools
+    "moz": "seo",                  # Moz Pro — domain authority + keyword tracking; "moz alternative" → SEO Tools
+    # Database — Firebase Firestore (complement to "firebase"→database; queried separately)
+    "firestore": "database",       # Firestore — Firebase NoSQL document DB; "firestore alternative" → Database
+    # Notifications — SignalWire (Twilio competitor for programmable voice, SMS, video)
+    "signalwire": "notifications", # SignalWire — "signalwire alternative", "signalwire vs twilio" → Notifications
+    # Analytics — Simple Analytics compound form ("simple" is a stop word so compound form needs mapping)
+    "simpleanalytics": "analytics", # Simple Analytics — compound; "simpleanalytics alternative" → Analytics
 }
 
 _FTS_STOP_WORDS = {

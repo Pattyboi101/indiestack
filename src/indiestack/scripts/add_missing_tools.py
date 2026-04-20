@@ -10894,6 +10894,89 @@ TOOLS = [
         "brew install opa",
         "code",
     ),
+    # Authentication ---------------------------------------------------------------
+    (
+        "lucia",
+        "Lucia",
+        "Lightweight session-based authentication for TypeScript",
+        "Lucia is a simple, flexible authentication library for TypeScript. "
+        "It abstracts away the complexity of handling users and sessions, "
+        "giving you full control over the auth flow without locking you into "
+        "a specific database or framework. Works with Next.js, SvelteKit, Astro, Nuxt, and more.",
+        "authentication",
+        "pilcrowonpaper/lucia",
+        10000,
+        "https://lucia-auth.com",
+        "auth,session,typescript,nodejs,cookie",
+        "npm install lucia",
+        "code",
+    ),
+    (
+        "hanko",
+        "Hanko",
+        "Open source passkey-first authentication",
+        "Hanko is an open-source authentication solution that puts passkeys "
+        "front and center. Drop in the Hanko web component for passwordless "
+        "login with FIDO2/WebAuthn, magic links, and OAuth. "
+        "Self-hostable or use the managed cloud. TypeScript SDK included.",
+        "authentication",
+        "teamhanko/hanko",
+        7000,
+        "https://www.hanko.io",
+        "auth,passkeys,webauthn,passwordless,fido2",
+        "npm install @hanko/elements",
+        "code",
+    ),
+    (
+        "keycloak",
+        "Keycloak",
+        "Open source identity and access management",
+        "Keycloak is the industry standard open-source identity solution. "
+        "Supports SSO, OIDC, SAML 2.0, LDAP federation, and social login. "
+        "Backed by Red Hat, used in enterprise and indie stacks alike. "
+        "Docker image available; extensive REST API for user management.",
+        "authentication",
+        "keycloak/keycloak",
+        21000,
+        "https://www.keycloak.org",
+        "auth,sso,oidc,saml,oauth2,identity,ldap",
+        "docker pull quay.io/keycloak/keycloak",
+        "code",
+    ),
+    # Headless CMS -----------------------------------------------------------------
+    (
+        "sanity",
+        "Sanity",
+        "The structured content platform for developers",
+        "Sanity is a headless CMS with real-time collaboration, a fully "
+        "customisable editing studio (Sanity Studio), and a powerful query "
+        "language (GROQ). Open-source studio, managed hosted API (free tier available). "
+        "Used by teams building editorial sites, e-commerce, and documentation.",
+        "headless-cms",
+        "sanity-io/sanity",
+        24000,
+        "https://www.sanity.io",
+        "cms,headless,content,groq,typescript,react,real-time",
+        "npm create sanity@latest",
+        "code",
+    ),
+    # Background Jobs / Orchestration ----------------------------------------------
+    (
+        "airflow",
+        "Apache Airflow",
+        "Platform to programmatically author, schedule, and monitor workflows",
+        "Apache Airflow is the most widely deployed open-source workflow orchestration "
+        "platform. Define DAGs in Python, schedule them with cron-like syntax, "
+        "monitor runs via the rich web UI, and integrate with any data system via 1000+ providers. "
+        "Used everywhere from startups to Fortune 500 data teams.",
+        "background-jobs",
+        "apache/airflow",
+        36000,
+        "https://airflow.apache.org",
+        "workflow,dag,orchestration,python,scheduler,etl,data-pipeline",
+        "pip install apache-airflow",
+        "code",
+    ),
 ]
 
 

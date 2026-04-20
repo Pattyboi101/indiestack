@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-thirty-ninth pass)
+Last updated: 2026-04-20 (one-hundred-and-fortieth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2357 unique active keys (one-hundred-and-thirty-ninth pass: +20 new — cloud providers, AWS services, AI eval, email deliverability, hot-reload, SOPS, Lemon Squeezy)
-- **Catalog script**: `scripts/add_missing_tools.py` — 648 unique tools (added 5 new: starship, wezterm, nushell, sops, open-policy-agent; 643→648)
+- **_CAT_SYNONYMS**: 2363 unique active keys (one-hundred-and-fortieth pass: +6 new — ahrefs/semrush/moz→seo, firestore→database, signalwire→notifications, simpleanalytics→analytics)
+- **Catalog script**: `scripts/add_missing_tools.py` — 653 unique tools (added 5 new: lucia, hanko, keycloak, sanity, airflow; 648→653)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,36 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-ninth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-fortieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1 confirmed + Step 5 self-improvement)
+- Step 1 checks all already present: state management→frontend, bundler→frontend, realtime→api, vector database→database, rate limiting→api
+- Added 6 new `_CAT_SYNONYMS` entries → 2363 unique keys:
+  - **SEO** (3 keys): `ahrefs`, `semrush`, `moz` → seo (high "[tool] alternative" query volume)
+  - **Database** (1 key): `firestore` → database (Firebase NoSQL complement to firebase→database)
+  - **Notifications** (1 key): `signalwire` → notifications (Twilio competitor)
+  - **Analytics** (1 key): `simpleanalytics` → analytics ("simple" is a stop word; compound form needed)
+
+### Catalog Script (Step 5 self-improvement)
+- Step 2 checks all already present: react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend
+- Added 5 new tools to `scripts/add_missing_tools.py` (648 → 653 unique):
+  - **Lucia** (pilcrowonpaper/lucia, 10k★) — lightweight session-based auth for TypeScript; authentication
+  - **Hanko** (teamhanko/hanko, 7k★) — passkey-first open-source auth; authentication
+  - **Keycloak** (keycloak/keycloak, 21k★) — enterprise identity and access management; authentication
+  - **Sanity** (sanity-io/sanity, 24k★) — structured content platform (headless CMS); headless-cms
+  - **Apache Airflow** (apache/airflow, 36k★) — workflow orchestration with DAGs; background-jobs
+
+### Code Quality (Step 3)
+- Fixed 5 stale "8,000+" stats across route files → "6,500+":
+  - `setup.py`: lines 50, 178, 340 ("40 categories" → "29+ categories" on line 340)
+  - `components.py`: default meta description in `page_shell()`
+  - `content.py`: FAQ section
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-thirty-ninth pass — autonomous improvement cycle)
 

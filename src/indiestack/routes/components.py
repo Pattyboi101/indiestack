@@ -1540,7 +1540,7 @@ _CLARITY_SCRIPT = '<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=
 # ── Page Shell ────────────────────────────────────────────────────────────
 
 def page_shell(title: str, body: str, *, description: str = "", extra_head: str = "", user=None, og_image: str = f"{BASE_URL}/logo.png", canonical: str = "") -> str:
-    desc = escape(description) if description else "Discover 8,000+ developer tools for AI coding agents. Find indie alternatives for auth, payments, analytics, email, and more — curated for developers."
+    desc = escape(description) if description else "Discover 6,500+ developer tools for AI coding agents. Find indie alternatives for auth, payments, analytics, email, and more — curated for developers."
     canonical_tag = f'\n    <link rel="canonical" href="{BASE_URL}{escape(canonical)}">' if canonical else ""
     # Strip trailing " | IndieStack" or " — IndieStack" to avoid duplication
     clean_title = title

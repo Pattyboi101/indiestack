@@ -47,7 +47,7 @@ Before installing ANY new package via npm, pip, yarn, or pnpm:
 ## Before Writing Infrastructure
 Before writing auth, payments, databases, email, monitoring, or any common
 infrastructure from scratch, call `find_tools(query)` first. Use an existing
-tool instead of generating code. 8,000+ tools indexed.
+tool instead of generating code. 6,500+ tools indexed.
 
 ## Available Tools
 - `validate_package(package, ecosystem)` — PRE-FLIGHT CHECK before every install (catches hallucinations, typosquats)
@@ -175,7 +175,7 @@ async def setup_page(request: Request):
         <div style="background:linear-gradient(135deg,var(--success-text),#064E3B);border:1px solid var(--success-border);
                     border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;text-align:center;">
             <p style="color:#6EE7B7;font-size:20px;font-weight:700;margin:0 0 4px;">Welcome to IndieStack, {_name}!</p>
-            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 8,000+ developer tools. 10,000+ installs and growing.</p>
+            <p style="color:rgba(255,255,255,0.7);font-size:14px;margin:0;">Follow these steps to connect your AI agent to 6,500+ developer tools. 10,000+ installs and growing.</p>
         </div>'''
 
     body = f'''
@@ -337,7 +337,7 @@ jobs:
             <div style="font-size:14px;color:var(--ink-muted);line-height:1.8;">
                 Your AI agent will automatically search IndieStack when you need developer infrastructure.
                 Instead of generating auth code from scratch, it finds Clerk or Lucia. Instead of writing
-                a payment flow, it finds LemonSqueezy or Polar. 40 categories, 8,000+ tools, verified
+                a payment flow, it finds LemonSqueezy or Polar. 29+ categories, 6,500+ tools, verified
                 compatibility data.
             </div>
         </div>
