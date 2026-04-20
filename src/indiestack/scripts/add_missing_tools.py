@@ -10194,6 +10194,109 @@ TOOLS = [
         "arkade install faas-cli",
         "code",
     ),
+    # PHP — PHPUnit (most-searched PHP testing tool) ----------------------------
+    (
+        "phpunit",
+        "PHPUnit",
+        "The PHP testing framework",
+        "PHPUnit is the de facto standard unit testing framework for PHP. "
+        "Write isolated unit tests and integration tests with a clean assertion API, "
+        "mock objects, and code coverage reports. Ships with every major PHP project "
+        "and framework including Laravel, Symfony, and WordPress. "
+        "18k+ GitHub stars.",
+        "testing-tools",
+        "sebastianbergmann/phpunit",
+        18000,
+        "https://phpunit.de",
+        "php,testing,unit-testing,coverage",
+        "composer require --dev phpunit/phpunit",
+        "code",
+    ),
+    # PHP — PHPStan static analysis ----------------------------------------------
+    (
+        "phpstan",
+        "PHPStan",
+        "PHP Static Analysis Tool — discover bugs without running code",
+        "PHPStan analyses PHP code at compile time to find bugs such as calling "
+        "undefined methods, passing wrong argument types, and accessing undefined "
+        "properties. Integrates with CI pipelines and supports custom rules. "
+        "The most widely used PHP static analyser. 12k+ GitHub stars.",
+        "testing-tools",
+        "phpstan/phpstan",
+        12000,
+        "https://phpstan.org",
+        "php,static-analysis,linting,code-quality",
+        "composer require --dev phpstan/phpstan",
+        "code",
+    ),
+    # PHP — Pest testing framework -----------------------------------------------
+    (
+        "pest",
+        "Pest",
+        "The elegant PHP testing framework",
+        "Pest is a PHP testing framework with a clean, expressive syntax inspired "
+        "by Jest. Write beautiful tests with minimal boilerplate using its "
+        "functional API. Supports parallel testing, type coverage, and mutation "
+        "testing. Built on top of PHPUnit. 10k+ GitHub stars.",
+        "testing-tools",
+        "pestphp/pest",
+        10000,
+        "https://pestphp.com",
+        "php,testing,bdd,unit-testing",
+        "composer require pestphp/pest --dev",
+        "code",
+    ),
+    # Ruby — RuboCop linter and formatter ----------------------------------------
+    (
+        "rubocop",
+        "RuboCop",
+        "Ruby static code analyzer and code formatter",
+        "RuboCop is a Ruby static code analyzer (linter) and code formatter. "
+        "Enforces the Ruby Style Guide with hundreds of cops (rules). Supports "
+        "auto-correction, custom cops, and extensions for Rails, RSpec, and "
+        "Performance. The standard Ruby code quality tool. 13k+ GitHub stars.",
+        "testing-tools",
+        "rubocop/rubocop",
+        13000,
+        "https://rubocop.org",
+        "ruby,linting,static-analysis,code-quality,formatter",
+        "gem install rubocop",
+        "code",
+    ),
+    # Go — golangci-lint meta-linter ---------------------------------------------
+    (
+        "golangci-lint",
+        "golangci-lint",
+        "Fast linters runner for Go",
+        "golangci-lint is a fast Go meta-linter that runs multiple linters in "
+        "parallel. Aggregates results from staticcheck, errcheck, govet, revive, "
+        "and 50+ other linters. Integrates with VS Code, GoLand, and GitHub Actions. "
+        "The standard Go linting tool for CI pipelines. 16k+ GitHub stars.",
+        "testing-tools",
+        "golangci/golangci-lint",
+        16000,
+        "https://golangci-lint.run",
+        "go,golang,linting,static-analysis,code-quality",
+        "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest",
+        "code",
+    ),
+    # Testing — Toxiproxy network chaos testing ----------------------------------
+    (
+        "toxiproxy",
+        "Toxiproxy",
+        "TCP proxy for simulating network and system conditions",
+        "Toxiproxy is a TCP proxy to simulate network and system conditions for "
+        "chaos engineering and resilience testing. Add latency, drop connections, "
+        "or bandwidth-limit any TCP service. Works with any programming language "
+        "via a simple HTTP API. Created by Shopify. 10k+ GitHub stars.",
+        "testing-tools",
+        "Shopify/toxiproxy",
+        10000,
+        "https://github.com/Shopify/toxiproxy",
+        "chaos-engineering,testing,network,proxy,resilience",
+        "go install github.com/Shopify/toxiproxy/v2/cmd/toxiproxy-server@latest",
+        "code",
+    ),
 ]
 
 

@@ -5545,6 +5545,38 @@ _CAT_SYNONYMS: dict[str, str] = {
     "f-sharp": "api",               # hyphenated — "f-sharp alternative", "f-sharp backend" → API Tools
     # Developer Tools — Pkl Apple's config language (2k★)
     "pkl": "developer",             # Pkl — Apple's configuration language; "pkl alternative", "pkl config" → Developer Tools
+    # PHP — testing and static analysis tools (high query volume from PHP devs)
+    "phpunit": "testing",           # PHPUnit — de facto PHP unit testing framework (18k★) → Testing Tools
+    "phpstan": "testing",           # PHPStan — PHP static analysis tool; "phpstan alternative" → Testing Tools
+    "psalm": "testing",             # Psalm — PHP static analysis by Vimeo (5k★) → Testing Tools
+    "pest": "testing",              # Pest — elegant PHP testing framework inspired by Jest (10k★) → Testing Tools
+    "rector": "developer",          # Rector — automated PHP refactoring and version upgrade tool (10k★) → Developer Tools
+    "infection": "testing",         # Infection — PHP mutation testing framework (2k★) → Testing Tools
+    # Ruby — code analysis and testing tools
+    "rubocop": "testing",           # RuboCop — Ruby linter and code formatter (13k★) → Testing Tools
+    "minitest": "testing",          # Minitest — Ruby's default test suite and benchmarking library → Testing Tools
+    "sorbet": "developer",          # Sorbet — fast Ruby type checker by Stripe (3k★) → Developer Tools
+    # Elixir — code quality and data pipeline tools
+    "credo": "testing",             # Credo — static code analysis for Elixir (5k★) → Testing Tools
+    "dialyxir": "testing",          # Dialyxir — Elixir/Erlang Dialyzer wrapper for type analysis → Testing Tools
+    "broadway": "background",       # Broadway — Elixir concurrent multi-stage data ingestion (4k★) → Background Jobs
+    "nerves": "devops",             # Nerves — Elixir embedded systems / IoT platform (3k★) → DevOps & Infrastructure
+    "livebook": "ai",               # Livebook — Elixir collaborative Jupyter-like notebook (4k★) → AI & Automation
+    # Go — static analysis, linting, and security tools
+    "golangci": "testing",          # golangci-lint — fast Go meta-linter (16k★) → Testing Tools
+    "golangci-lint": "testing",     # hyphenated — "golangci-lint alternative", "golangci-lint config" → Testing Tools
+    "staticcheck": "testing",       # staticcheck — authoritative Go vet + extras linter (5k★) → Testing Tools
+    "govulncheck": "security",      # govulncheck — official Go vulnerability scanner by Google → Security Tools
+    "gosec": "security",            # gosec — Go security checker (7k★) → Security Tools
+    "revive": "testing",            # Revive — fast, configurable Go linter (4k★) → Testing Tools
+    # Chaos engineering — testing system resilience under failure conditions
+    "chaostoolkit": "devops",       # Chaos Toolkit — open-source chaos engineering framework (2k★) → DevOps
+    "chaos-toolkit": "devops",      # hyphenated — "chaos-toolkit experiment", "chaos-toolkit alternative" → DevOps
+    "toxiproxy": "testing",         # Toxiproxy — TCP proxy for simulating network failures (10k★) → Testing Tools
+    "litmus": "devops",             # LitmusChaos — CNCF chaos engineering for Kubernetes (4k★) → DevOps & Infrastructure
+    "chaos-mesh": "devops",         # Chaos Mesh — Kubernetes chaos engineering platform (6k★) → DevOps & Infrastructure
+    "chaosmesh": "devops",          # compound — "chaosmesh alternative", "chaosmesh setup" → DevOps & Infrastructure
+    "pumba": "devops",              # Pumba — chaos tool for Docker containers (3k★) → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

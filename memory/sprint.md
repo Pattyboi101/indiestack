@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-thirty-second pass)
+Last updated: 2026-04-20 (one-hundred-and-thirty-third pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-second pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2182 unique active keys (one-hundred-and-thirty-second pass: +24 new — ZeroMQ, Hibernate, SignalR, Jetpack Compose, Kafka Connect, WireMock, HCL, OpenFaaS, Knative, Faust, Strimzi, Camunda, Zeebe, Conductor, Snowpark, Kargo, Flagger, F#, Pkl + more)
-- **Catalog script**: `scripts/add_missing_tools.py` — 601 unique tools (added 5 new: zeromq, hibernate, wiremock, camunda, openfaas)
+- **_CAT_SYNONYMS**: 2209 unique active keys (one-hundred-and-thirty-third pass: +27 new — PHP testing, Go linters, Elixir tools, chaos engineering)
+- **Catalog script**: `scripts/add_missing_tools.py` — 613 unique tools (added 6 new: phpunit, phpstan, pest, rubocop, golangci-lint, toxiproxy)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,33 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-second pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-thirty-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 27 new `_CAT_SYNONYMS` entries → 2209 unique keys:
+  - **PHP testing/analysis** (6 keys): `phpunit`, `phpstan`, `psalm`, `pest` → testing; `rector`, `sorbet` → developer; `infection` → testing
+  - **Ruby tools** (3 keys): `rubocop`, `minitest` → testing; `sorbet` → developer
+  - **Elixir ecosystem** (5 keys): `credo`, `dialyxir` → testing; `broadway` → background; `nerves` → devops; `livebook` → ai
+  - **Go linting/security** (6 keys): `golangci`, `golangci-lint`, `staticcheck`, `revive` → testing; `govulncheck`, `gosec` → security
+  - **Chaos engineering** (7 keys): `chaostoolkit`, `chaos-toolkit`, `litmus`, `chaos-mesh`, `chaosmesh`, `pumba` → devops; `toxiproxy` → testing
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (607 → 613 unique):
+  - **PHPUnit** (sebastianbergmann/phpunit, 18k★) — de facto PHP test framework; testing-tools
+  - **PHPStan** (phpstan/phpstan, 12k★) — PHP static analysis; testing-tools
+  - **Pest** (pestphp/pest, 10k★) — elegant PHP test framework (Jest-inspired); testing-tools
+  - **RuboCop** (rubocop/rubocop, 13k★) — Ruby linter and formatter; testing-tools
+  - **golangci-lint** (golangci/golangci-lint, 16k★) — Go meta-linter; testing-tools
+  - **Toxiproxy** (Shopify/toxiproxy, 10k★) — TCP proxy for chaos/network testing; testing-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-thirty-second pass — autonomous improvement cycle)
 
