@@ -5813,6 +5813,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Auth — directory services and cloud identity tools not yet mapped
     "jumpcloud": "authentication",  # JumpCloud — "jumpcloud alternative", "cloud directory service" → Authentication
     "freeipa": "authentication",    # FreeIPA — open-source identity mgmt (Red Hat); "freeipa alternative" → Authentication
+    # Cloud providers — routing "[provider] alternative" queries to DevOps & Infrastructure
+    "aws": "devops",               # AWS — "aws alternative", "replace aws", "aws free tier" → DevOps & Infrastructure
+    "gcp": "devops",               # GCP — Google Cloud Platform; "gcp alternative", "gcp free tier" → DevOps & Infrastructure
+    "azure": "devops",             # Azure — Microsoft Azure; "azure alternative", "azure free tier" → DevOps & Infrastructure
+    # AWS managed service abbreviations — very common in "[service] alternative" developer queries
+    "rds": "database",             # AWS RDS — "rds alternative", "rds postgres", "rds vs neon" → Database
+    "ec2": "devops",               # AWS EC2 — "ec2 alternative", "ec2 vps", "cloud vm alternative" → DevOps & Infrastructure
+    "ecs": "devops",               # AWS ECS — "ecs alternative", "ecs vs kubernetes" → DevOps & Infrastructure
+    "eks": "devops",               # AWS EKS — "eks alternative", "eks setup", "managed kubernetes aws" → DevOps & Infrastructure
+    "fargate": "devops",           # AWS Fargate — "fargate alternative", "serverless containers" → DevOps & Infrastructure
+    "gke": "devops",               # GKE — Google Kubernetes Engine; "gke alternative", "gke vs eks" → DevOps & Infrastructure
+    "aks": "devops",               # AKS — Azure Kubernetes Service; "aks alternative", "aks vs gke" → DevOps & Infrastructure
+    # AI — LLM evaluation singular form (complement to "evals"→ai, "evaluation"→ai already mapped)
+    "eval": "ai",                  # "llm eval", "model eval", "eval harness", "run eval" → AI & Automation
+    # Security — Open Policy Agent abbreviation (complement to "open-policy-agent"→security already mapped)
+    "opa": "security",             # OPA — Open Policy Agent; "opa policy", "opa alternative" → Security Tools
+    # Email — deliverability (DKIM/SPF/DMARC are mapped; "deliverability" bare term was missing)
+    "deliverability": "email",     # "email deliverability", "deliverability tool", "sender reputation" → Email Marketing
+    # Frontend — hot module reload queries (Vite, Webpack, esbuild all feature HMR)
+    "hot-reload": "frontend",      # "hot-reload setup", "hot-reload alternative" → Frontend Frameworks
+    "hotreload": "frontend",       # compound — "hotreload webpack", "hotreload vite" → Frontend Frameworks
+    # Security — SOPS secrets file encryption (getsops/sops, 17k★; Doppler/Vault alternative)
+    "sops": "security",            # SOPS — "sops alternative", "sops encryption", "sops secrets" → Security Tools
+    # Payments — Lemon Squeezy hyphenated form (compound "lemonsqueezy"→payments already mapped)
+    "lemon-squeezy": "payments",   # "lemon-squeezy alternative", "lemon squeezy stripe" → Payments
 }
 
 _FTS_STOP_WORDS = {

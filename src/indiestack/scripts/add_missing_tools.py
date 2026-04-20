@@ -10811,6 +10811,89 @@ TOOLS = [
         "npm install imagekit",
         "code",
     ),
+    # Developer Tools -------------------------------------------------------
+    (
+        "starship",
+        "Starship",
+        "The minimal, blazing-fast, and infinitely customizable prompt for any shell",
+        "Starship is a cross-shell prompt written in Rust. It's fast, works with "
+        "bash, zsh, fish, PowerShell, and more, and shows relevant information "
+        "from your current directory — git status, language versions, AWS profile, "
+        "and over 30 integrations. Configured via a TOML file.",
+        "developer-tools",
+        "starship-rs/starship",
+        45000,
+        "https://starship.rs",
+        "shell,prompt,terminal,rust,cross-shell,customizable",
+        "curl -sS https://starship.rs/install.sh | sh",
+        "code",
+    ),
+    (
+        "wezterm",
+        "WezTerm",
+        "GPU-accelerated terminal emulator and multiplexer written in Rust",
+        "WezTerm is a powerful, GPU-accelerated terminal emulator and multiplexer "
+        "for Linux, macOS, and Windows. Configured entirely in Lua, it supports "
+        "tab management, splits, SSH multiplexing, built-in ligatures, "
+        "and a rich plugin ecosystem.",
+        "developer-tools",
+        "wez/wezterm",
+        18000,
+        "https://wezfurlong.org/wezterm",
+        "terminal,gpu,rust,lua,multiplexer,cross-platform",
+        "",
+        "code",
+    ),
+    # CLI Tools -------------------------------------------------------------
+    (
+        "nushell",
+        "Nushell",
+        "A new type of shell — structured data meets Unix pipelines",
+        "Nushell (Nu) is a modern shell written in Rust that treats data "
+        "as structured objects rather than plain text. Pipelines carry typed "
+        "data (tables, records, lists), enabling SQL-like filtering and "
+        "transformation without grep/awk/sed gymnastics. Works on Linux, macOS, and Windows.",
+        "cli-tools",
+        "nushell/nushell",
+        34000,
+        "https://www.nushell.sh",
+        "shell,cli,structured-data,rust,cross-platform,pipelines",
+        "winget install nushell",
+        "code",
+    ),
+    # Security Tools --------------------------------------------------------
+    (
+        "sops",
+        "SOPS",
+        "Simple and flexible tool for managing secrets in files",
+        "SOPS (Secrets OPerationS) encrypts YAML, JSON, ENV, INI, and binary "
+        "files using AWS KMS, GCP KMS, Azure Key Vault, age, or PGP. Only the "
+        "values are encrypted, leaving keys readable for diffs. Widely used in "
+        "GitOps workflows (Flux, ArgoCD) to store secrets safely in Git.",
+        "security-tools",
+        "getsops/sops",
+        17000,
+        "https://getsops.io",
+        "secrets,encryption,gitops,kms,age,pgp,yaml,json",
+        "brew install sops",
+        "code",
+    ),
+    (
+        "open-policy-agent",
+        "Open Policy Agent",
+        "Policy-based control for cloud native environments",
+        "Open Policy Agent (OPA) is a CNCF graduated open-source policy engine. "
+        "Write policies in Rego, a purpose-built declarative language, and enforce "
+        "them across microservices, Kubernetes, CI/CD pipelines, and APIs. "
+        "Decouples policy logic from application code for clean authorization.",
+        "security-tools",
+        "open-policy-agent/opa",
+        9000,
+        "https://www.openpolicyagent.org",
+        "policy,authorization,rego,kubernetes,cncf,rbac,abac",
+        "brew install opa",
+        "code",
+    ),
 ]
 
 

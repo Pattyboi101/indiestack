@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-thirty-eighth pass)
+Last updated: 2026-04-20 (one-hundred-and-thirty-ninth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-eighth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2337 unique active keys (one-hundred-and-thirty-eighth pass: +32 new — PM tools, Web3, creative/design, forms, CRM, file, auth)
-- **Catalog script**: `scripts/add_missing_tools.py` — 643 unique tools (added 6 new: obs-studio, blender, audacity, inkscape, freeipa, imagekit; 637→643)
+- **_CAT_SYNONYMS**: 2357 unique active keys (one-hundred-and-thirty-ninth pass: +20 new — cloud providers, AWS services, AI eval, email deliverability, hot-reload, SOPS, Lemon Squeezy)
+- **Catalog script**: `scripts/add_missing_tools.py` — 648 unique tools (added 5 new: starship, wezterm, nushell, sops, open-policy-agent; 643→648)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,34 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-eighth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-thirty-ninth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1 + Step 5 self-improvement)
+- Added 20 new `_CAT_SYNONYMS` entries → 2357 unique keys:
+  - **Cloud Providers** (3 keys): `aws`, `gcp`, `azure` → devops ("[provider] alternative" queries)
+  - **AWS Managed Services** (7 keys): `rds` → database; `ec2`, `ecs`, `eks`, `fargate`, `gke`, `aks` → devops (very common managed service alternative queries)
+  - **AI** (1 key): `eval` → ai (LLM eval singular; complement to "evals"→ai)
+  - **Security** (2 keys): `opa` → security (Open Policy Agent abbreviation); `sops` → security
+  - **Email** (1 key): `deliverability` → email (email deliverability tools)
+  - **Frontend** (2 keys): `hot-reload`, `hotreload` → frontend (Vite/webpack HMR queries)
+  - **Payments** (1 key): `lemon-squeezy` → payments (hyphenated form)
+
+### Catalog Script (Step 5 self-improvement)
+- Added 5 new tools to `scripts/add_missing_tools.py` (643 → 648 unique):
+  - **Starship** (starship-rs/starship, 45k★) — blazing-fast cross-shell prompt; developer-tools
+  - **WezTerm** (wez/wezterm, 18k★) — GPU-accelerated terminal with Lua config; developer-tools
+  - **Nushell** (nushell/nushell, 34k★) — structured data shell in Rust; cli-tools
+  - **SOPS** (getsops/sops, 17k★) — secrets file encryption (KMS/age/PGP); security-tools
+  - **Open Policy Agent** (open-policy-agent/opa, 9k★) — policy-as-code engine (CNCF); security-tools
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-thirty-eighth pass — autonomous improvement cycle)
 
