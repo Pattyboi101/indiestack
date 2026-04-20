@@ -165,77 +165,150 @@ async def landing(request: Request):
     if len(_hero_tagline) > 35:
         _hero_tagline = _hero_tagline[:35].rsplit(' ', 1)[0] + '...'
 
-    # ── Hero ──────────────────────────────────────────────────────────
-    hero = (
-        '<section id="hero-section" style="text-align:center;padding:64px 24px 48px;'
-        '                background:var(--cream);position:relative;overflow:hidden;">'
-        '    <canvas id="grid-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>'
-        '    <div class="glow-sphere" style="width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,245,0.12) 0%,transparent 70%);top:10%;left:20%;"></div>'
-        '    <div class="glow-sphere" style="width:400px;height:400px;background:radial-gradient(circle,rgba(226,183,100,0.08) 0%,transparent 70%);bottom:10%;right:15%;"></div>'
-        '    <div style="position:relative;z-index:1;">'
-        '    <div class="status-tag" style="margin-bottom:24px;justify-content:center;">'
-        '        <span class="dot"></span>INTELLIGENCE LAYER FOR AI CODING AGENTS'
-        '    </div>'
-        '    <h1 style="font-family:var(--font-display);font-size:clamp(36px,6vw,64px);'
-        '               line-height:1.15;max-width:700px;margin:0 auto;color:var(--ink);letter-spacing:-0.03em;">'
-        '        <span class="hero-headline">Your AI knows what to build. We know what already works.</span>'
-        '    </h1>'
-        '    <p style="font-size:20px;color:var(--ink-muted);max-width:560px;margin:16px auto 32px;line-height:1.6;">'
-        f'        {tool_count}+ tools. Migration intelligence from real GitHub data. Verified package combinations. Unlimited free searches.'
-        '    </p>'
-        # Hero visual — code conversation block
-        '    <div style="max-width:560px;margin:0 auto 24px;text-align:left;background:rgba(10,14,26,0.8);'
-        '                padding:24px 24px;font-family:var(--font-mono);font-size:15px;line-height:1.9;'
-        '                box-shadow:var(--shadow-floating);position:relative;z-index:1;overflow:hidden;">'
-        '        <div style="position:absolute;top:16px;left:16px;display:flex;gap:8px;">'
-        '            <span style="width:12px;height:12px;border-radius:50%;background:#FF5F56;display:inline-block;"></span>'
-        '            <span style="width:12px;height:12px;border-radius:50%;background:var(--gold);display:inline-block;"></span>'
-        '            <span style="width:12px;height:12px;border-radius:50%;background:#27C93F;display:inline-block;"></span>'
-        '        </div>'
-        '        <div style="margin-top:16px;">'
-        '            <span style="color:var(--gold);font-weight:700;">You:</span>'
-        f'            <span style="color:white;"> &ldquo;{_hero_prompt}&rdquo;</span><br><br>'
-        '            <span style="color:var(--slate);font-weight:700;">AI: </span>'
-        '            <span style="color:rgba(255,255,255,0.85);"> &ldquo;Before I write anything &mdash;</span><br>'
-        f'            <span style="color:rgba(255,255,255,0.85);">&#160;&#160;&#160;&#160;&#160;</span>'
-        f'            <a href="/tool/{_hero_tool_slug}" style="color:var(--slate);font-weight:700;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;">{_hero_tool_name}</a>'
-        '            <span style="color:rgba(255,255,255,0.85);"> is battle-tested,</span><br>'
-        '            <span style="color:rgba(255,255,255,0.85);">&#160;&#160;&#160;&#160;&#160;verified compatible with your stack,</span><br>'
-        '            <span style="color:rgba(255,255,255,0.85);">&#160;&#160;&#160;&#160;&#160;backed by real GitHub data.&rdquo;</span>'
-        '        </div>'
-        '    </div>'
-        f'    <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;margin-bottom:0;">'
-        f'        &#9733; <a href="/tool/{_hero_tool_slug}" style="color:var(--accent);text-decoration:none;font-weight:600;">{_hero_tool_name}</a> is this week&rsquo;s Pick of the Week &mdash; featured right here.'
-        f'    </p>'
-        ''
-        # CTAs
-        '    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;margin-top:16px;">'
-        '        <a href="/setup" class="btn btn-lg btn-primary landing-neon">'
-        '            Set Up in 30 Seconds'
-        '        </a>'
-        '        <a href="/analyze" class="btn btn-lg btn-secondary">'
-        '            Scan Your Stack Free'
-        '        </a>'
-        '    </div>'
-        + '    <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:20px;">'
-        f'        <div style="text-align:center;">'
-        f'            <div style="font-family:var(--font-display);font-size:24px;color:var(--ink);font-weight:700;">{tool_count:,}</div>'
-        f'            <div style="font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em;">Tools Indexed</div>'
-        f'        </div>'
-        f'        <div style="width:1px;background:var(--border);align-self:stretch;"></div>'
-        f'        <div style="text-align:center;">'
-        f'            <div style="font-family:var(--font-display);font-size:24px;color:var(--ink);font-weight:700;">10,000+</div>'
-        f'            <div style="font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em;">PyPI Installs</div>'
-        f'        </div>'
-        f'        <div style="width:1px;background:var(--border);align-self:stretch;"></div>'
-        f'        <div style="text-align:center;">'
-        f'            <div style="font-family:var(--font-display);font-size:24px;color:var(--ink);font-weight:700;">{ai_recs:,}</div>'
-        f'            <div style="font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em;">Agent Queries</div>'
-        f'        </div>'
-        '    </div>'
-        '    </div>'  # close content wrapper
-        '</section>'
-    )
+    # ── Hero — Guardrail validator ─────────────────────────────────
+    hero = f'''
+    <section id="hero-section" style="text-align:center;padding:64px 24px 48px;
+                    background:var(--cream);position:relative;overflow:hidden;">
+        <canvas id="grid-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+        <div class="glow-sphere" style="width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,245,0.12) 0%,transparent 70%);top:10%;left:20%;"></div>
+        <div class="glow-sphere" style="width:400px;height:400px;background:radial-gradient(circle,rgba(226,183,100,0.08) 0%,transparent 70%);bottom:10%;right:15%;"></div>
+        <div style="position:relative;z-index:1;">
+        <div class="status-tag" style="margin-bottom:24px;justify-content:center;">
+            <span class="dot"></span>DEPENDENCY GUARDRAIL FOR AI CODING AGENTS
+        </div>
+        <h1 style="font-family:var(--font-display);font-size:clamp(36px,6vw,64px);
+                   line-height:1.15;max-width:700px;margin:0 auto;color:var(--ink);letter-spacing:-0.03em;">
+            Validate every package before your AI installs it.
+        </h1>
+        <p style="font-size:20px;color:var(--ink-muted);max-width:560px;margin:16px auto 32px;line-height:1.6;">
+            19.7% of AI-recommended packages don&rsquo;t exist. IndieStack catches them before your agent installs malware.
+        </p>
+
+        <!-- Static threat card — pure HTML, zero JS, instant paint -->
+        <div id="hero-result" style="max-width:560px;margin:0 auto 16px;text-align:left;background:rgba(10,14,26,0.92);
+                    border-radius:12px;padding:20px 24px;font-family:var(--font-mono);font-size:14px;line-height:1.7;
+                    box-shadow:var(--shadow-floating);position:relative;z-index:1;min-height:160px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                <span style="width:12px;height:12px;border-radius:50%;background:#FF5F56;display:inline-block;"></span>
+                <span style="width:12px;height:12px;border-radius:50%;background:var(--gold);display:inline-block;"></span>
+                <span style="width:12px;height:12px;border-radius:50%;background:#27C93F;display:inline-block;"></span>
+                <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,0.4);">indiestack guardrail</span>
+            </div>
+            <div style="color:rgba(255,255,255,0.5);margin-bottom:8px;">$ npm install react-codeshift</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="background:#DC2626;color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:0.05em;">DANGER</span>
+                <span style="color:#FF6B6B;font-weight:600;">Package does NOT exist on npm</span>
+            </div>
+            <div style="color:rgba(255,255,255,0.6);font-size:13px;">Known AI hallucination &mdash; appeared in 237+ repos via AI-generated code.</div>
+        </div>
+
+        <!-- Live validator input — JS only fires on user action -->
+        <div style="max-width:560px;margin:0 auto 24px;">
+            <div style="display:flex;gap:8px;">
+                <input type="text" id="hero-validate-input" placeholder="try: loadash, expresss, react-codeshift"
+                       style="flex:1;padding:14px 16px;font-size:15px;font-family:var(--font-body);
+                              border:1px solid var(--border);border-radius:var(--radius-sm);
+                              background:var(--card-bg);color:var(--ink);outline:none;"
+                       class="form-input">
+                <select id="hero-validate-eco" style="padding:14px 12px;font-size:14px;font-family:var(--font-body);
+                        border:1px solid var(--border);border-radius:var(--radius-sm);
+                        background:var(--card-bg);color:var(--ink);outline:none;min-width:80px;">
+                    <option value="npm">npm</option>
+                    <option value="pypi">pypi</option>
+                </select>
+                <button id="hero-validate-btn" onclick="heroValidate()"
+                        class="btn btn-primary" style="padding:14px 24px;font-size:15px;white-space:nowrap;cursor:pointer;">
+                    Check
+                </button>
+            </div>
+            <p style="font-size:12px;color:var(--ink-muted);margin-top:8px;">
+                Free. No API key. Try a suspect package name &mdash; we check the real npm/PyPI registry.
+            </p>
+        </div>
+
+        <!-- CTAs -->
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;">
+            <a href="/setup" class="btn btn-lg btn-primary landing-neon">
+                Install MCP Server
+            </a>
+            <button onclick="document.getElementById('hero-install-snippet').style.display=document.getElementById('hero-install-snippet').style.display==='none'?'block':'none'"
+                    class="btn btn-lg btn-secondary" style="cursor:pointer;">
+                Add to Claude Code
+            </button>
+        </div>
+        <div id="hero-install-snippet" style="display:none;max-width:560px;margin:0 auto 16px;text-align:left;
+                    background:rgba(10,14,26,0.8);border-radius:8px;padding:14px 18px;">
+            <code style="font-family:var(--font-mono);font-size:13px;color:var(--accent);word-break:break-all;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code>
+        </div>
+
+        <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
+            <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:24px;color:var(--ink);font-weight:700;">{tool_count:,}</div>
+                <div style="font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em;">Packages Tracked</div>
+            </div>
+            <div style="width:1px;background:var(--border);align-self:stretch;"></div>
+            <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:24px;color:var(--ink);font-weight:700;">npm + PyPI</div>
+                <div style="font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em;">Live Registry Check</div>
+            </div>
+            <div style="width:1px;background:var(--border);align-self:stretch;"></div>
+            <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:24px;color:var(--ink);font-weight:700;">422</div>
+                <div style="font-size:11px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em;">Migration Paths</div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <script>
+    function heroValidate(){{
+        var inp=document.getElementById('hero-validate-input');
+        var eco=document.getElementById('hero-validate-eco');
+        var btn=document.getElementById('hero-validate-btn');
+        var res=document.getElementById('hero-result');
+        var pkg=inp.value.trim();
+        if(!pkg)return;
+        btn.disabled=true;btn.textContent='Checking...';
+        fetch('/api/validate?name='+encodeURIComponent(pkg)+'&ecosystem='+eco.value)
+        .then(function(r){{return r.json();}})
+        .then(function(d){{
+            btn.disabled=false;btn.textContent='Check';
+            var risk=d.risk_level||'unknown';
+            var badge='',badgeColor='',msg='';
+            if(risk==='danger'){{
+                badge='DANGER';badgeColor='#DC2626';
+                msg=d.exists===false?'Package does NOT exist on '+d.ecosystem+'. This is likely a hallucinated name.'
+                    :(d.typosquat_warning||'Possible typosquat detected.');
+            }}else if(risk==='caution'){{
+                badge='CAUTION';badgeColor='#D97706';
+                msg='Package exists but may have issues.';
+            }}else if(risk==='safe'){{
+                badge='SAFE';badgeColor='#16a34a';
+                var ver=d.registry_data&&d.registry_data.latest_version?' v'+d.registry_data.latest_version:'';
+                msg='Verified on '+d.ecosystem+'.'+ver;
+            }}else{{
+                badge='UNKNOWN';badgeColor='#6b7280';msg='Could not verify — proceed with caution.';
+            }}
+            var alt=d.suggested_instead?'<div style="color:rgba(255,255,255,0.6);font-size:13px;margin-top:4px;">Did you mean <strong style="color:var(--accent);">'+d.suggested_instead+'</strong>?</div>':'';
+            var mig='';
+            if(d.migration_alternatives&&d.migration_alternatives.length>0){{
+                mig='<div style="color:rgba(255,255,255,0.5);font-size:12px;margin-top:6px;">Devs migrating to: '+d.migration_alternatives.map(function(m){{return m.package;}}).join(', ')+'</div>';
+            }}
+            res.innerHTML='<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">'
+                +'<span style="width:12px;height:12px;border-radius:50%;background:#FF5F56;display:inline-block;"></span>'
+                +'<span style="width:12px;height:12px;border-radius:50%;background:#E2B764;display:inline-block;"></span>'
+                +'<span style="width:12px;height:12px;border-radius:50%;background:#27C93F;display:inline-block;"></span>'
+                +'<span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,0.4);">indiestack guardrail</span></div>'
+                +'<div style="color:rgba(255,255,255,0.5);margin-bottom:8px;">$ npm install '+pkg.replace(/</g,'&lt;')+'</div>'
+                +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">'
+                +'<span style="background:'+badgeColor+';color:white;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:700;letter-spacing:0.05em;">'+badge+'</span>'
+                +'<span style="color:'+(risk==='safe'?'#4ADE80':'#FF6B6B')+';font-weight:600;">'+pkg.replace(/</g,'&lt;')+'</span></div>'
+                +'<div style="color:rgba(255,255,255,0.7);font-size:13px;">'+msg+'</div>'+alt+mig;
+        }})
+        .catch(function(){{btn.disabled=false;btn.textContent='Check';res.innerHTML='<div style="color:#FF6B6B;padding:16px;">Validation failed — try again.</div>';}});
+    }}
+    document.getElementById('hero-validate-input').addEventListener('keydown',function(e){{if(e.key==='Enter')heroValidate();}});
+    </script>
+    '''
 
     # ── Video Section (disabled — waiting for better video) ──────────
     video_section = ""
@@ -261,7 +334,7 @@ async def landing(request: Request):
                 How it works
             </h2>
             <p style="text-align:center;color:var(--ink-muted);font-size:16px;margin-bottom:48px;max-width:520px;margin-left:auto;margin-right:auto;">
-                Three steps. Your AI stops reinventing the wheel.
+                Three steps. Your AI stops hallucinating packages.
             </p>
 
             <!-- 3-step flow -->
@@ -279,18 +352,18 @@ async def landing(request: Request):
                     <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;
                                 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;
                                 margin:0 auto 16px;">2</div>
-                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">Your AI searches</h3>
+                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">Your AI validates</h3>
                     <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;">
-                        When you ask your AI to build something, it checks IndieStack first.
+                        Before installing any package, your AI checks IndieStack first. Catches fakes and typosquats.
                     </p>
                 </div>
                 <div style="text-align:center;padding:24px;">
                     <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;
                                 display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;
                                 margin:0 auto 16px;">3</div>
-                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">It finds what exists</h3>
+                    <h3 style="font-family:var(--font-display);font-size:17px;color:var(--ink);margin-bottom:8px;">It finds what works</h3>
                     <p style="color:var(--ink-muted);font-size:14px;line-height:1.6;">
-                        Instead of writing 50k tokens of code, your AI suggests a vetted tool.
+                        Instead of generating code from scratch, your AI recommends a vetted, maintained tool.
                     </p>
                 </div>
             </div>
@@ -304,30 +377,26 @@ async def landing(request: Request):
     </section>
     """
 
-    # Token savings estimate: ai_recs * average 15,000 tokens saved per query
-    _est_tokens_saved = ai_recs * 15000
-    if _est_tokens_saved >= 1_000_000_000:
-        _tokens_display = f'{_est_tokens_saved / 1_000_000_000:.1f}B'
-    elif _est_tokens_saved >= 1_000_000:
-        _tokens_display = f'{_est_tokens_saved / 1_000_000:.0f}M'
-    else:
-        _tokens_display = f'{_est_tokens_saved:,}'
     build_vs_buy = f"""
     <section style="padding:48px 24px;background:var(--cream-dark);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
         <div class="container" style="max-width:800px;text-align:center;">
             <h2 style="font-family:var(--font-display);font-size:clamp(22px,3vw,28px);color:var(--ink);margin-bottom:8px;">
-                Tokens not wasted
+                What your AI checks before installing
             </h2>
-            <p style="font-family:var(--font-display);font-size:clamp(36px,5vw,56px);color:var(--accent);font-weight:700;margin-bottom:8px;">
-                ~{_tokens_display}
-            </p>
-            <p style="color:var(--ink-muted);font-size:14px;max-width:480px;margin:0 auto 16px;">
-                Estimated tokens saved across {ai_recs:,} agent queries.
-                Each search that finds an existing tool prevents ~15,000 tokens of generated boilerplate.
-            </p>
-            <a href="/token-cost" style="color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;">
-                See methodology &rarr;
-            </a>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;margin-top:32px;text-align:center;">
+                <div>
+                    <div style="font-family:var(--font-display);font-size:32px;color:var(--accent);font-weight:700;">{tool_count:,}+</div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Packages tracked</div>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-display);font-size:32px;color:var(--accent);font-weight:700;">npm + PyPI</div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Live registry validation</div>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-display);font-size:32px;color:var(--accent);font-weight:700;">422</div>
+                    <div style="font-size:13px;color:var(--ink-muted);margin-top:4px;">Migration paths from GitHub</div>
+                </div>
+            </div>
         </div>
     </section>
     """
@@ -444,9 +513,9 @@ async def landing(request: Request):
         trending_strip = f"""
         <section class="container" style="padding:48px 24px;">
             <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;">
-                <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);">Trending right now</h2>
+                <h2 style="font-family:var(--font-display);font-size:22px;color:var(--ink);">Popular with AI agents</h2>
                 <a href="/explore" style="color:var(--terracotta);font-size:14px;font-weight:600;text-decoration:none;">
-                    Browse all &rarr;
+                    Explore all &rarr;
                 </a>
             </div>
             <div class="scroll-row">{trending_cards}</div>
@@ -477,7 +546,7 @@ async def landing(request: Request):
     categories_compact = f"""
     <section class="container" style="padding:48px 24px;">
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px;">
-            <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);">Browse by category</h2>
+            <h2 style="font-family:var(--font-display);font-size:24px;color:var(--ink);">What we cover</h2>
             <a href="/explore" style="color:var(--accent);font-size:14px;font-weight:600;text-decoration:none;">
                 All {category_count} categories &rarr;
             </a>
@@ -511,7 +580,7 @@ async def landing(request: Request):
     def _reveal(html):
         return f'<div class="reveal">{html}</div>'
 
-    body = hero + stats_bar + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(analyze_cta) + _reveal(maker_cta)
+    body = hero + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(analyze_cta) + _reveal(maker_cta)
 
     import json as _json
     website_ld = _json.dumps({
@@ -519,7 +588,7 @@ async def landing(request: Request):
         "@type": "WebSite",
         "name": "IndieStack",
         "url": BASE_URL,
-        "description": f"The discovery layer between AI coding agents and developer tools. Search {tool_count}+ tools before building from scratch.",
+        "description": f"Dependency guardrail for AI coding agents. Validates {tool_count}+ packages before install, catches hallucinations and typosquats, migration intelligence from real GitHub data.",
         "potentialAction": {
             "@type": "SearchAction",
             "target": f"{BASE_URL}/search?q={{search_term_string}}",
@@ -671,8 +740,8 @@ async def landing(request: Request):
         '</script>'
     )
 
-    response = HTMLResponse(page_shell("The discovery layer for AI coding agents", body,
-                                   description="IndieStack plugs into Claude, Cursor, and Windsurf. Before your AI builds from scratch, it checks if a developer tool already exists — 6,500+ tools indexed.",
+    response = HTMLResponse(page_shell("Dependency guardrail for AI coding agents", body,
+                                   description="IndieStack validates packages before install, catches hallucinations and typosquats, and provides migration intelligence. Plugs into Claude, Cursor, and Windsurf.",
                                    user=request.state.user, canonical="/", extra_head=extra_head,
                                    og_image=f"{BASE_URL}/logo.png"))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"

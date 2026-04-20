@@ -41,7 +41,7 @@ async def about_page(request: Request):
     <div style="max-width:720px;margin:0 auto;padding:64px 24px;">
 
       <h1 style="font-family:var(--font-display);font-size:clamp(28px,4vw,42px);color:var(--ink);line-height:1.2;margin-bottom:8px;">
-        Two uni students, 5 hours of sleep, and an indie catalog.
+        Two uni students, 5 hours of sleep, and a guardrail for AI agents.
       </h1>
       <p style="font-size:18px;color:var(--ink-muted);line-height:1.6;margin-bottom:48px;">
         IndieStack is built by people who know what it&rsquo;s like to ship something and have nobody see it.
@@ -69,7 +69,7 @@ async def about_page(request: Request):
         What we&rsquo;re actually building
       </h2>
       <p style="color:var(--ink-light);line-height:1.8;margin-bottom:16px;">
-        A curated catalog of developer tools that&rsquo;s searchable by both humans and AI agents. We have an
+        A dependency guardrail for AI coding agents. We have an
         <a href="https://pypi.org/project/indiestack/" style="color:var(--accent);">MCP server</a>
         that plugs into Claude, Cursor, and Windsurf &mdash; so when a developer asks their AI to build
         something, it checks IndieStack first. If a developer tool already does the job, the agent recommends
@@ -170,7 +170,7 @@ async def about_page(request: Request):
     </div>
     """
     return HTMLResponse(page_shell("About", body, user=request.state.user,
-                                    description="IndieStack is built by two uni students in Cardiff who couldn't get their own projects noticed. Now we're building the indie catalog AI agents actually use."))
+                                    description="IndieStack is built by two uni students in Cardiff. We're building the dependency guardrail that AI coding agents use to validate packages before installing."))
 
 
 @router.get("/terms", response_class=HTMLResponse)
@@ -266,7 +266,7 @@ async def terms_page(request: Request):
     return HTMLResponse(page_shell(
         "Terms of Service", body,
         user=request.state.user,
-        description="Terms of Service for IndieStack, the curated indie catalog.",
+        description="Terms of Service for IndieStack, the dependency guardrail for AI coding agents.",
         canonical="/terms",
     ))
 
@@ -371,9 +371,9 @@ async def faq_page(request: Request):
     questions = [
         (
             "What is IndieStack?",
-            "IndieStack is a hand-curated catalog of developer tools &mdash; small software products "
-            "built by solo founders and tiny teams. Every tool is reviewed by a human before it goes "
-            "live. The catalog is searchable by both humans on the website and AI agents via our "
+            "IndieStack is a dependency guardrail for AI coding agents. It validates packages before "
+            "install, catches hallucinations and typosquats, and provides migration intelligence from "
+            "real GitHub data. 8,000+ developer tools tracked, searchable via our "
             "<a href='https://pypi.org/project/indiestack/' style='color:var(--accent);'>MCP server</a>."
         ),
         (
@@ -932,7 +932,7 @@ async def blog_marketplace_launch(request: Request):
         <div {_BLOG_BODY}>
 
             <div style="background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:24px;font-size:14px;color:var(--ink-muted);">
-                <strong>Update:</strong> Direct selling is paused while we focus on building the best developer tool discovery platform. The marketplace infrastructure is built and will return.
+                <strong>Update:</strong> Direct selling is paused while we focus on the dependency guardrail and migration intelligence. The marketplace infrastructure is built and will return.
             </div>
 
             <p>

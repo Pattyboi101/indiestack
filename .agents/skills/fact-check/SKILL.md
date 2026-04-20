@@ -13,7 +13,7 @@ allowed-tools:
 
 # Fact-Check Ed's Email
 
-Ed (co-founder, toedgamings@gmail.com) uses an AI assistant that frequently hallucinates. Your job is to verify every factual claim in his email against the actual IndieStack codebase.
+Ed (co-founder) uses an AI assistant that frequently hallucinates. Your job is to verify every factual claim in his email against the actual IndieStack codebase.
 
 ## Input
 

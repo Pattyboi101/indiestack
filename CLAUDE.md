@@ -51,16 +51,54 @@ Dynamic state lives in memory files — updated each session:
 **Update memory when:** decisions are made, sprint status changes, work is completed.
 **Update gotchas.md when:** mistakes are discovered or corrections are made.
 
+## CEO Skill Routing
+
+Automatically classify every task and invoke the right skill. Never ask Patrick which skill to use.
+
+**Categories** — classify every task into one:
+1. **BUILD** — new features, components, creative work
+2. **FIX** — bugs, test failures, unexpected behaviour
+3. **SHIP** — deployment, review, branch completion
+4. **DESIGN** — frontend, UI/UX, visual polish
+5. **OPERATE** — monitoring, stats, scheduling
+
+After classifying, read `.orchestra/ceo/skills/index.md` for that category, pick the specific skill, invoke via `/skill`. For multi-step work, check `.orchestra/ceo/skills/chains.md`.
+
+## Escalation Assessment
+
+Before starting any task, assess confidence:
+```
+CONFIDENCE: {"score": 0.XX, "reasoning": "..."}
+```
+
+**Below 0.85 → escalate to OATS orchestra.** Above → handle yourself.
+
+Lowers confidence: 3+ file scopes, needs parallel workstreams, previous solo failure, needs security/UX testing.
+Raises confidence: single domain, known pattern, under 30 mins, no auth/payment changes.
+
+Hard overrides:
+- ALWAYS escalate: explicit user request, or failed twice solo
+- NEVER escalate: information retrieval, or user wants in-session handling
+
+Log decisions to `.orchestra/ceo/memory/escalation-log.md` (keep last 20).
+
+## Context Management
+
+- Keep `.orchestra/ceo/state.md` updated with focus, completed items, decisions, next steps
+- Don't re-read old tool outputs — work from notes in state.md
+- Only use `/compact` as a last resort
+
 ## Orchestra
 
 6-department agent system in tmux (launch with `orchestra` alias):
 - Frontend (Sonnet), Backend (Sonnet), DevOps (Haiku), Content (Sonnet), MCP (Sonnet), Strategy & QA (Opus)
-- Agents write results to `/tmp/orchestra-{dept}.txt`
-- 3-hourly cron trigger runs autonomous improvements (search quality, data quality, content)
+- S&QA is permanent Devil's Advocate — must CHALLENGE or VETO in ballot rounds
+- Tiered meetings: brief (no meeting), ballot (structured single-round), full (max 3 rounds)
+- Launch: `python3 .orchestra/orchestrator.py "[task brief]"`
+- CEO launcher: `.orchestra/launch-ceo.sh`
 
 ## Ed (Co-founder)
 
-Email: toedgamings@gmail.com. GitHub: rupert61622-blip.
 Handles Reddit/social + maker outreach. Check memory/ed.md for his current focus.
 
 ## Key Links

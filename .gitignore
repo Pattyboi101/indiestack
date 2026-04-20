@@ -58,6 +58,22 @@ VISION.md
 ROADMAP.md
 ARCHITECTURE.md
 drafts/
+MINDMAP.md
+SYSTEM-OVERVIEW.md
+26th-march-research/
+
+# Memory (sprint notes, decisions, outreach drafts)
+memory/
+
+# Orchestra internal state (meetings, CEO memory, Ed content, briefings)
+.orchestra/meetings/
+.orchestra/ceo/memory/
+.orchestra/ceo/state.md
+.orchestra/departments/content/ed-*
+.orchestra/departments/content/*outreach*
+.orchestra/departments/content/*leads*
+.orchestra/departments/*/briefing.md
+.orchestra/departments/*/memory.md
 
 # Database backups
 backups/
@@ -81,3 +97,16 @@ backups/
 .orchestra/reactor_state.json
 .orchestra/pattern_state.json
 .orchestra/directives/pending/
+.orchestra/directives/done/
+.orchestra/conway/
+
+# Ed-specific and revenue strategy skills
+.orchestra/master/skills/ed-*.md
+.orchestra/master/skills/first-revenue.md
+.orchestra/master/skills/outreach-batch.md
+
+# Content marketing drafts
+.orchestra/departments/content/demo-video-script.md
+.orchestra/departments/content/devto-*.md
+.orchestra/departments/content/dsp-*.md
+.orchestra/departments/content/mcp-directory-submissions.md

@@ -1965,6 +1965,21 @@ async def init_db():
             except Exception:
                 await db.execute(_ddl)
 
+        # Validation logs for guardrail endpoint
+        await db.execute("""
+            CREATE TABLE IF NOT EXISTS validation_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                package TEXT NOT NULL,
+                ecosystem TEXT NOT NULL DEFAULT 'npm',
+                pkg_exists BOOLEAN,
+                is_typosquat BOOLEAN DEFAULT 0,
+                risk_level TEXT DEFAULT 'unknown',
+                source TEXT DEFAULT '',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        await db.execute("CREATE INDEX IF NOT EXISTS idx_validation_pkg ON validation_logs(package)")
+
         # Enrich well-known tools with structured metadata
         await _enrich_tool_metadata(db)
 
@@ -3034,7 +3049,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — headless browser + load testing + mocking
     "puppeteer": "testing",           # Puppeteer — headless Chrome automation
     "k6": "testing",                  # k6 — load testing tool (Grafana)
-    "msw": "testing",                 # Mock Service Worker — API mocking
     "webdriverio": "testing",         # WebdriverIO — cross-browser test automation
     # DevOps — deployment / self-hosting tools
     "kamal": "devops",                # Kamal — Rails/Docker deployment (by Basecamp)
@@ -4481,11 +4495,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "turbo": "developer",           # Turbo — CLI name for Turborepo monorepo build system (25k★)
     # DevOps — Wrangler (Cloudflare's CLI for Workers, Pages, D1, KV, R2 deployment)
     "wrangler": "devops",           # Wrangler — Cloudflare CLI for deploying Workers and Pages (10k★)
-    # API — Kotlin language queries route to API tools (Ktor, Spring Boot, Vert.x)
+    # API — Kotlin/Gleam language queries route to API tools
     "kotlin": "api",                # Kotlin — JVM/multiplatform language; backend queries → Ktor, Spring (50k★)
-    # API — Gleam language (type-safe functional language on BEAM/Erlang VM, web backend)
     "gleam": "api",                 # Gleam — type-safe BEAM language; "gleam web framework" → API Tools (18k★)
-    # Developer — Zig language tooling queries (Zig build system, zig cc, capy, Bun uses Zig internally)
+    # Developer — Zig language tooling queries
     "zig": "developer",             # Zig — fast systems language; "zig build tool", "zig alternative" (11k★)
     # Monitoring — OpenReplay (open-source session replay + DevTools + observability)
     "openreplay": "monitoring",     # OpenReplay — open-source Hotjar/FullStory alternative (10k★)
@@ -4516,12 +4529,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "featurestore": "ai",           # compound form — "featurestore alternative" → AI & Automation
     # GraalVM — native image compilation for Java/JVM apps
     "graalvm": "devops",            # GraalVM — polyglot JVM with native image compilation (22k★)
-    # Data visualization — generic "visualization" term (missing despite "charts"/"charting" being mapped)
+    # Data visualization — generic "visualization" term
     "visualization": "analytics",  # "data visualization library", "visualization tool" → Analytics & Metrics
     "viz": "analytics",             # abbreviation — "data viz", "viz library", "viz component" → Analytics
     # Data science / Python ecosystem — DataFrame, numeric, and scientific computing tools
     "polars": "database",           # Polars — Rust DataFrame library, fast pandas alternative (34k★)
-    "pandas": "ai",                 # pandas — Python data analysis and DataFrame library (44k★); distinct from "panda"→frontend (Panda CSS)
+    "pandas": "ai",                 # pandas — Python data analysis and DataFrame library (44k★)
     "numpy": "ai",                  # NumPy — fundamental scientific computing for Python (28k★)
     "scipy": "ai",                  # SciPy — scientific algorithms and math for Python (13k★)
     "matplotlib": "analytics",      # Matplotlib — foundational Python plotting library (19k★)
@@ -4529,68 +4542,68 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Distributed computing / parallel Python — Ray (ML), Dask (big data)
     "ray": "ai",                    # Ray — distributed ML and parallel compute framework (35k★)
     "dask": "background",           # Dask — parallel Python computing for big data (12k★)
-    # Cloudflare D1 — serverless SQLite database (very common in Workers + Next.js stacks)
-    "d1": "database",               # Cloudflare D1 — serverless SQLite database on Workers (growing query volume)
-    # CLI frameworks — Go Cobra and Node.js Clack are the dominant named-tool alternative queries
+    # Cloudflare D1 — serverless SQLite database
+    "d1": "database",               # Cloudflare D1 — serverless SQLite database on Workers
+    # CLI frameworks — Go Cobra and Node.js Clack
     "cobra": "cli",                 # Cobra — dominant Go CLI framework used by Docker, kubectl, Hugo (38k★)
-    "clack": "cli",                 # Clack — modern Node.js interactive CLI prompts by Nate Wienert (3k★)
-    # Computer vision / autonomous agents — "computer" alone fires before "vision" / "use"
+    "clack": "cli",                 # Clack — modern Node.js interactive CLI prompts (3k★)
+    # Computer vision / autonomous agents
     "computer": "ai",               # "computer vision library", "computer use API" → AI & Automation
-    # Caching — Varnish HTTP accelerator (popular "varnish alternative" queries)
+    # Caching — Varnish HTTP accelerator
     "varnish": "caching",           # Varnish Cache — high-performance HTTP reverse proxy + cache (11k★)
-    # AI — audio/video transcription tools (Whisper, Deepgram, AssemblyAI)
+    # AI — audio/video transcription tools
     "transcription": "ai",          # "transcription API", "audio transcription" → AI & Automation
-    # AI — standalone "vision" term (complement to "computer-vision"→ai, "cv"→ai)
-    "vision": "ai",                 # "vision model", "vision API", "LLM vision", "vision LLM" → AI & Automation
-    # Auth — attribute-based access control (complement to "rbac"→authentication)
+    # AI — standalone "vision" term
+    "vision": "ai",                 # "vision model", "vision API", "LLM vision" → AI & Automation
+    # Auth — attribute-based access control
     "abac": "authentication",       # ABAC — attribute-based access control → Authentication
-    # DevOps — localhost tunneling tools (LocalTunnel, ngrok already mapped, zrok)
+    # DevOps — localhost tunneling tools
     "localtunnel": "devops",        # LocalTunnel — expose localhost to the web → DevOps
     "zrok": "devops",               # zrok — self-hosted ngrok alternative → DevOps
-    # DevOps — IaC tools for Azure and AWS (complement to "terraform"/"opentofu" already mapped)
+    # DevOps — IaC tools for Azure and AWS
     "bicep": "devops",              # Azure Bicep — domain-specific language for IaC on Azure
     "cdk": "devops",                # AWS CDK — Cloud Development Kit (TypeScript/Python/Java IaC)
-    # Analytics — session recording / heatmaps (very high "alternative" query volume)
-    "hotjar": "analytics",          # Hotjar — heatmaps, session recordings, and user feedback (very common alt query)
+    # Analytics — session recording / heatmaps
+    "hotjar": "analytics",          # Hotjar — heatmaps, session recordings, and user feedback
     "clarity": "analytics",         # Microsoft Clarity — free heatmaps + session recordings → Analytics
-    # Monitoring — FullStory session replay (complement to "logrocket"/"highlight" already mapped)
+    # Monitoring — FullStory session replay
     "fullstory": "monitoring",      # FullStory — enterprise session replay and digital experience analytics
     # Auth — FusionAuth CIAM platform
     "fusionauth": "authentication", # FusionAuth — customer identity and access management (CIAM) platform (10k★)
-    # MCP — ModelContextProtocol full name (complement to "mcp"→mcp and "protocol"→mcp)
+    # MCP — ModelContextProtocol full name
     "modelcontextprotocol": "mcp",  # ModelContextProtocol — MCP specification and registry → MCP Servers
-    # jQuery — most downloaded JS library ever; still widely searched despite React/Vue dominance
+    # jQuery — most downloaded JS library ever; still widely searched
     "jquery": "frontend",           # jQuery — DOM manipulation library (65k★) → Frontend Frameworks
     "jqueryui": "frontend",         # jQuery UI — interaction and widget library for jQuery → Frontend
-    # RxJS — Reactive Extensions for JavaScript (Angular core dependency, 31k★)
+    # RxJS — Reactive Extensions for JavaScript (Angular core dependency)
     "rxjs": "frontend",             # RxJS — reactive programming for JS (31k★, Angular core) → Frontend Frameworks
-    # Utility libraries — Lodash, Underscore, Ramda (among most-downloaded npm packages globally)
+    # Utility libraries — Lodash, Underscore, Ramda
     "lodash": "developer",          # Lodash — JS utility library (59k★, one of most downloaded ever) → Developer Tools
     "underscore": "developer",      # Underscore.js — classic functional JS utilities (27k★) → Developer Tools
     "ramda": "developer",           # Ramda — functional programming library for JS (23k★) → Developer Tools
-    # Nuxt.js compound form (complements "nuxt"→"frontend" already mapped)
+    # Nuxt.js compound form
     "nuxtjs": "frontend",           # NuxtJS — compound query form for Nuxt.js meta-framework
-    # AngularJS — Angular 1.x legacy framework (still searched by teams on legacy codebases)
+    # AngularJS — Angular 1.x legacy framework
     "angularjs": "frontend",        # AngularJS — Angular 1.x MVVM framework (59k★, legacy queries)
-    # GraphQL Yoga — popular GraphQL server (complement to "graphql"→"api" already mapped)
+    # GraphQL Yoga — popular GraphQL server
     "yoga": "api",                  # GraphQL Yoga — flexible GraphQL server (The Guild, 8k★) → API Tools
-    # Helmet.js — Express HTTP security headers middleware (very high query volume in Node.js security)
+    # Helmet.js — Express HTTP security headers middleware
     "helmet": "security",           # Helmet.js — secure Express apps via HTTP headers (62k★) → Security Tools
     # VS Code — most-used code editor; extension/plugin queries route to Developer Tools
     "vscode": "developer",          # VS Code — most-used code editor; extension/plugin queries → Developer Tools
-    # act — run GitHub Actions locally (nektos/act, 59k★)
+    # act — run GitHub Actions locally
     "act": "devops",                # act — run GitHub Actions locally (nektos/act, 59k★) → DevOps & Infrastructure
-    # Oh My Zsh / Starship — shell config framework and prompt (very common developer tooling queries)
+    # Oh My Zsh / Starship — shell config framework and prompt
     "ohmyzsh": "developer",         # Oh My Zsh — Zsh config framework (174k★) → Developer Tools
     "starship": "developer",        # Starship — blazing-fast cross-shell prompt (Rust, 45k★) → Developer Tools
-    # VPN / mesh networking — Tailscale, WireGuard, NetBird, ZeroTier (very common in devops/infra queries)
+    # VPN / mesh networking — Tailscale, WireGuard, NetBird, ZeroTier
     "vpn": "devops",                # generic VPN queries → DevOps & Infrastructure
     "wireguard": "devops",          # WireGuard — modern VPN protocol (Linux kernel, fast, minimal) → DevOps
     "tailscale": "devops",          # Tailscale — zero-config mesh VPN built on WireGuard (18k★) → DevOps
     "netbird": "devops",            # NetBird — open-source Tailscale alternative (11k★) → DevOps
     "zerotier": "devops",           # ZeroTier — peer-to-peer virtual Ethernet (14k★) → DevOps
     "headscale": "devops",          # Headscale — self-hosted Tailscale control server (24k★) → DevOps
-    # CLI productivity tools — tmux, fzf, zoxide (very common in developer tooling queries)
+    # CLI productivity tools — tmux, fzf, zoxide
     "tmux": "cli",                  # tmux — terminal multiplexer (34k★) → CLI Tools
     "fzf": "cli",                   # fzf — fuzzy finder for the command line (64k★) → CLI Tools
     "zoxide": "cli",                # zoxide — smarter cd command (24k★) → CLI Tools
@@ -4903,8 +4916,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sns": "notifications",         # AWS SNS — Simple Notification Service; "sns alternative" → Notifications
     # Media — Shaka Player (Google's adaptive media player for HLS/DASH streams)
     "shaka": "media",               # Shaka Player — Google's open-source adaptive media player (6k★) → Media Server
-    # Security — Open Policy Agent (CNCF policy-as-code engine)
-    "opa": "security",              # OPA — Open Policy Agent; "opa policy", "opa alternative" → Security Tools
     # Auth — Cerbos open-source authorization engine
     "cerbos": "authentication",     # Cerbos — open-source authorization service; "cerbos alternative" → Authentication
     # Database — MotherDuck cloud DuckDB service
@@ -5715,6 +5726,59 @@ _CAT_SYNONYMS: dict[str, str] = {
     "protomaps": "maps",            # Protomaps — self-hosted PMTiles map tiles (protomaps/protomaps, 3k★) → Maps & Location
     # Games & Entertainment — additional named game engines
     "cocos": "games",               # Cocos — cross-platform game engine; "cocos alternative", "cocos2d" → Games & Entertainment
+    # Mobile testing — end-to-end and UI testing for React Native / native mobile apps
+    "detox": "testing",             # Detox — grey-box E2E testing for React Native (Wix, 11k★) → Testing Tools
+    "maestro": "testing",           # Maestro — mobile UI testing by mobile.dev; simple YAML-based flows → Testing Tools
+    # Authentication — hyphenated form of Better Auth (betterauth compound already mapped)
+    "better-auth": "authentication", # Better Auth — hyphenated query form; "better-auth alternative" → Authentication
+    # Analytics — self-hosted Google Analytics alternatives not yet in synonym map
+    "matomo": "analytics",          # Matomo — open-source privacy-friendly web analytics (19k★) → Analytics & Metrics
+    "pirsch": "analytics",          # Pirsch — privacy-friendly website analytics (cookie-free) → Analytics & Metrics
+    # AI inference — fal.ai serverless GPU API for image/video generation
+    "fal": "ai",                    # fal.ai — serverless GPU inference for Stable Diffusion/FLUX → AI & Automation
+    "fal-ai": "ai",                 # hyphenated — "fal-ai alternative", "fal-ai setup" → AI & Automation
+    # File management — CDN / object storage providers not yet mapped
+    "bunny": "file",                # BunnyCDN — fast CDN + object storage; "bunny cdn alternative" → File Management
+    "bunnycdn": "file",             # compound — "bunnycdn pricing", "bunnycdn vs cloudflare" → File Management
+    # DevOps — CDN + edge compute providers not yet mapped
+    "fastly": "devops",             # Fastly — CDN + edge cloud; "fastly alternative", "fastly waf" → DevOps & Infrastructure
+    # Database — ParadeDB: Postgres-native Elasticsearch replacement
+    "paradedb": "database",         # ParadeDB — full-text search + analytics inside Postgres → Database
+    # Maps — MapLibre GL JS: open-source Mapbox GL alternative
+    "maplibre": "maps",             # MapLibre GL JS — open-source WebGL maps (Mapbox fork, 10k★) → Maps & Location
+    # Feature flags — OpenFeature standard (CNCF spec for feature flagging)
+    "openfeature": "feature",       # OpenFeature — CNCF feature flag standard; SDK for JS/Go/Java → Feature Flags
+    # Monitoring — observability backends for OpenTelemetry
+    "honeycomb": "monitoring",      # Honeycomb.io — observability for production; OTel-first (SaaS) → Monitoring & Uptime
+    "uptrace": "monitoring",        # Uptrace — open-source Jaeger/Grafana alternative; OTel backend → Monitoring & Uptime
+    # Auth — common query verbs and OAuth/identity patterns not yet mapped
+    "credential": "authentication",  # "credential manager", "credential store", "api credential" → Authentication
+    "credentials": "authentication", # plural — "credentials vault", "credentials management" → Authentication
+    "signin": "authentication",      # compound — "signin handler", "signin flow" → Authentication
+    "sign-in": "authentication",     # hyphenated — "sign-in page", "sign-in with google" → Authentication
+    "logout": "authentication",      # "logout endpoint", "logout handler", "single logout (SLO)" → Authentication
+    "signout": "authentication",     # compound — "signout flow", "signout redirect" → Authentication
+    "sign-out": "authentication",    # hyphenated — "sign-out redirect", "sign-out button" → Authentication
+    "role": "authentication",        # "role management", "user roles", "role-based" → Authentication (RBAC)
+    "tenant": "authentication",      # "tenant isolation", "single-tenant vs multi-tenant" → Authentication
+    # API — AWS AppSync managed GraphQL and FastHTML Python web framework
+    "appsync": "api",                # AWS AppSync — managed GraphQL + WebSocket + event API → API Tools
+    "fasthtml": "api",               # FastHTML — Python web framework (HTMX-based); "fasthtml alternative" → API Tools
+    # Developer Tools — Marimo reactive Python notebook (Jupyter alternative)
+    "marimo": "developer",           # Marimo — reactive Python notebook; "marimo alternative" → Developer Tools
+    # AI — LitServe fast model serving engine (Lightning AI)
+    "litserve": "ai",                # LitServe — fast AI model serving on FastAPI; "litserve alternative" → AI & Automation
+    # Frontend — Aceternity UI animated Tailwind+Framer Motion component library
+    "aceternity": "frontend",        # Aceternity UI — animated components; "aceternity alternative" → Frontend Frameworks
+    # API — Microsoft TypeSpec API definition language (OpenAPI/JSON Schema/gRPC codegen)
+    "typespec": "api",              # TypeSpec — Microsoft's API definition language (16k★); "typespec alternative" → API Tools
+    # Frontend — Nuxt UI by NuxtLabs (Tailwind-based Vue component library for Nuxt)
+    "nuxt-ui": "frontend",          # Nuxt UI — hyphenated form; "nuxt-ui alternative", "nuxt-ui setup" → Frontend Frameworks
+    "nuxtui": "frontend",           # Nuxt UI — compound form; "nuxtui install", "nuxtui vs shadcn" → Frontend Frameworks
+    # Testing — MSW.js compound form (complement to "msw"→testing already mapped)
+    "mswjs": "testing",             # MSW.js — compound; "mswjs alternative", "mswjs setup", "mswjs handler" → Testing Tools
+    # Developer Tools — Effect.ts hyphenated form (complement to "effect"→developer, "effectts"→developer)
+    "effect-ts": "developer",       # Effect.ts — hyphenated; "effect-ts alternative", "effect-ts vs fp-ts" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

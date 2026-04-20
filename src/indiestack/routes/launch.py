@@ -151,5 +151,5 @@ async def launch_page(request: Request):
         "The Discovery Layer for AI Coding Agents",
         body,
         user=user,
-        description=f"IndieStack: {tool_count} developer tools searchable by AI coding assistants. The discovery layer between AI coding agents and developer tools.",
+        description=f"IndieStack: dependency guardrail for AI coding agents. Validates {tool_count} packages before install, catches hallucinations, migration intelligence.",
     ))

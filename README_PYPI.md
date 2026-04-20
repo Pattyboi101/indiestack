@@ -1,6 +1,6 @@
-# IndieStack — MCP Server + CLI
+# IndieStack — Dependency Guardrail for AI Coding Agents
 
-Before your AI writes auth, payments, or email code from scratch — search 8,000+ curated developer tools with verified compatibility data and migration intelligence from 4,500+ repos. 10,000+ installs. Unlike a web search, you get install commands, health scores, and what tools actually work together in production.
+Before your AI installs a package, IndieStack checks if it actually exists, isn't a typosquat, and isn't deprecated. Before it writes infrastructure from scratch, IndieStack finds an existing tool that already does it. 8,000+ packages tracked, npm + PyPI live validation, 422 migration paths from real GitHub data.
 
 <!-- mcp-name: io.github.Pattyboi101/indiestack -->
 
@@ -55,16 +55,15 @@ Both the MCP server and CLI ship in the same package. No API key required.
 
 ## What it does
 
-Your AI spends thousands of tokens rebuilding auth, payments, and analytics from scratch — things independent developers already built and maintain. Meanwhile, those tools sit on GitHub with 12 stars, invisible to the AI agents that could be recommending them.
+AI coding agents hallucinate package names (~20% of recommendations don't exist on npm/PyPI), install deprecated libraries, and write custom code when maintained tools already exist. IndieStack is the guardrail that catches these mistakes before they waste your time.
 
-IndieStack fixes both sides. Install the MCP server and your AI searches 8,000+ developer tools with structured assembly metadata before writing boilerplate. Tools include API types, auth methods, SDK packages, install commands, env vars, and framework compatibility — everything an agent needs to assemble proven building blocks instead of generating from scratch.
+Install the MCP server and your AI validates packages before every install, gets migration intelligence from real GitHub repos, and finds existing tools instead of generating boilerplate.
 
-"Indie" is the curation filter — tools built by independent developers and small teams. Focused, lean, maintained, honest pricing.
-
-### Tools (28)
+### Tools (29)
 
 | Tool | What it does |
 |------|-------------|
+| `validate_package` | **PRE-FLIGHT CHECK** — verify a package exists on npm/PyPI before installing. Catches hallucinations, typosquats, dead packages. ~500 tokens, saves 10K+ |
 | `find_tools` | Search 8,000+ developer tools with 11 filters: price, health, stars, success rate, language, tags, compatibility |
 | `get_tool_details` | Integration code, pricing, API specs, and compatibility data |
 | `find_compatible` | Find tools compatible with a given tool — grouped by category, with verified stacks and conflict warnings |
@@ -111,6 +110,12 @@ IndieStack fixes both sides. Install the MCP server and your AI searches 8,000+ 
 | `save-tokens` | Audit your project for token-saving opportunities |
 | `architect-feature` | Plan a feature using existing indie building blocks |
 | `discover-indie` | Explore what indie developers have built |
+
+## What's new in v1.19
+
+- **Dependency guardrail** — New `validate_package(package, ecosystem)` tool. Call before every `npm install` / `pip install`. Checks live npm/PyPI registries, detects typosquats via edit-distance, flags dead packages, shows migration alternatives. Costs ~500 tokens, saves 10,000+ when it catches a hallucinated install.
+- **Guardrail-first instructions** — MCP server instructions rewritten. Agents now validate packages before installing, not just search for tools.
+- **29 MCP tools total** — Up from 28.
 
 ## What's new in v1.18
 
