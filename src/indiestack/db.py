@@ -5779,6 +5779,40 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mswjs": "testing",             # MSW.js — compound; "mswjs alternative", "mswjs setup", "mswjs handler" → Testing Tools
     # Developer Tools — Effect.ts hyphenated form (complement to "effect"→developer, "effectts"→developer)
     "effect-ts": "developer",       # Effect.ts — hyphenated; "effect-ts alternative", "effect-ts vs fp-ts" → Developer Tools
+    # Project Management — major named tools missing from synonyms (very high "alternative" query volume)
+    "asana": "project",             # Asana — "asana alternative", "asana open source" → Project Management
+    "monday": "project",            # Monday.com — "monday alternative", "monday.com vs jira" → Project Management
+    "shortcut": "project",          # Shortcut (formerly Clubhouse) — dev PM; "shortcut alternative" → Project Management
+    "height": "project",            # Height.app — AI-enhanced PM; "height alternative" → Project Management
+    "wrike": "project",             # Wrike — enterprise PM; "wrike alternative", "wrike vs asana" → Project Management
+    # Blockchain / Web3 — platform-specific named tools (complement to "blockchain"/"solidity"/"ethers" already mapped)
+    "solana": "developer",          # Solana — "solana sdk", "solana development", "solana web3" → Developer Tools
+    "alchemy": "developer",         # Alchemy — Web3 API + RPC; "alchemy alternative", "alchemy rpc" → Developer Tools
+    "infura": "developer",          # Infura — "infura alternative", "infura rpc node" → Developer Tools
+    "moralis": "developer",         # Moralis — "moralis alternative", "moralis web3 sdk" → Developer Tools
+    # Design & Creative — major tools missing from synonyms
+    "blender": "creative",          # Blender — 3D creation suite; "blender alternative", "blender python api" → Creative Tools (13k★)
+    "inkscape": "design",           # Inkscape — open-source SVG/vector editor; "inkscape alternative" → Design & Creative
+    "affinity": "design",           # Affinity Designer/Photo/Publisher — "affinity alternative" → Design & Creative
+    "canva": "design",              # Canva — "canva alternative", "canva api", "canva open source" → Design & Creative
+    "obs": "media",                 # OBS Studio — "obs alternative", "obs studio streaming" → Media Server (57k★)
+    "kdenlive": "creative",         # Kdenlive — KDE open-source video editor; "kdenlive alternative" → Creative Tools
+    "davinci": "creative",          # DaVinci Resolve — "davinci alternative", "davinci resolve free" → Creative Tools
+    "audacity": "creative",         # Audacity — "audacity alternative", "audio editor open source" → Creative Tools
+    # Forms — specific form backend services not yet in synonym map
+    "formspree": "forms",           # Formspree — "formspree alternative", "html form backend" → Forms & Surveys
+    "formspark": "forms",           # Formspark — "formspark alternative", "form api service" → Forms & Surveys
+    "formsubmit": "forms",          # FormSubmit.co — "formsubmit alternative", "free form backend" → Forms & Surveys
+    # CRM — additional named tools not yet mapped (common "[tool] alternative" queries)
+    "zoho": "crm",                  # Zoho CRM — "zoho alternative", "zoho crm api" → CRM & Sales
+    "freshsales": "crm",            # Freshsales — Freshworks CRM; "freshsales alternative" → CRM & Sales
+    "copper": "crm",                # Copper CRM — Google Workspace-integrated; "copper alternative" → CRM & Sales
+    # File management — image CDN and file processing services
+    "imagekit": "file",             # ImageKit.io — "imagekit alternative", "image cdn api" → File Management
+    "transloadit": "file",          # Transloadit — upload + processing API; "transloadit alternative" → File Management
+    # Auth — directory services and cloud identity tools not yet mapped
+    "jumpcloud": "authentication",  # JumpCloud — "jumpcloud alternative", "cloud directory service" → Authentication
+    "freeipa": "authentication",    # FreeIPA — open-source identity mgmt (Red Hat); "freeipa alternative" → Authentication
 }
 
 _FTS_STOP_WORDS = {

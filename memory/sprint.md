@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-thirty-seventh pass)
+Last updated: 2026-04-20 (one-hundred-and-thirty-eighth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-seventh pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2305 unique active keys (one-hundred-and-thirty-seventh pass: +26 new — CRM tools, social media, learning/education, feedback, newsletters, scheduling, media server, design, maps, games)
-- **Catalog script**: `scripts/add_missing_tools.py` — 637 unique tools (added 6 new: gitea, netdata, ntfy, monica, penpot, umami; 631→637)
+- **_CAT_SYNONYMS**: 2337 unique active keys (one-hundred-and-thirty-eighth pass: +32 new — PM tools, Web3, creative/design, forms, CRM, file, auth)
+- **Catalog script**: `scripts/add_missing_tools.py` — 643 unique tools (added 6 new: obs-studio, blender, audacity, inkscape, freeipa, imagekit; 637→643)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,35 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-seventh pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-thirty-eighth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 32 new `_CAT_SYNONYMS` entries → 2337 unique keys:
+  - **Project Management** (5 keys): `asana`, `monday`, `shortcut`, `height`, `wrike` → project (very high "[tool] alternative" query volume)
+  - **Web3/Blockchain** (4 keys): `solana`, `alchemy`, `infura`, `moralis` → developer (complement to "blockchain"/"ethers" already mapped)
+  - **Design & Creative** (8 keys): `blender`, `inkscape`, `affinity`, `canva` → design/creative; `obs`, `kdenlive`, `davinci`, `audacity` → media/creative
+  - **Forms** (3 keys): `formspree`, `formspark`, `formsubmit` → forms (form backend services)
+  - **CRM** (3 keys): `zoho`, `freshsales`, `copper` → crm (common alternative query targets)
+  - **File Management** (2 keys): `imagekit`, `transloadit` → file (image CDN + upload services)
+  - **Auth** (2 keys): `jumpcloud`, `freeipa` → authentication (directory services)
+
+### Catalog Script (Step 2)
+- Added 6 new tools to `scripts/add_missing_tools.py` (637 → 643 unique):
+  - **OBS Studio** (obsproject/obs-studio, 57k★) — video recording/streaming; media-server
+  - **Blender** (blender/blender, 13k★) — 3D creation suite with Python API; creative-tools
+  - **Audacity** (audacity/audacity, 11k★) — cross-platform audio editor; creative-tools
+  - **Inkscape** (inkscape/inkscape, 4k★) — open-source SVG vector editor; design-creative
+  - **FreeIPA** (freeipa/freeipa, 1.2k★) — open-source identity management (Kerberos+LDAP); authentication
+  - **ImageKit** (imagekit-io/imagekit-nodejs, 1.5k★) — real-time image CDN + SDK; file-management
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-thirty-seventh pass — autonomous improvement cycle)
 

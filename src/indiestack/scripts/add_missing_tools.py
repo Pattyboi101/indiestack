@@ -10706,6 +10706,111 @@ TOOLS = [
         "docker pull ghcr.io/umami-software/umami:postgresql-latest",
         "code",
     ),
+    # Media Server --------------------------------------------------------------
+    (
+        "obs-studio",
+        "OBS Studio",
+        "Free and open source software for video recording and live streaming",
+        "OBS Studio is the industry-standard open-source tool for video recording "
+        "and live streaming. Highly scriptable via Lua/Python, supports scene "
+        "switching, audio mixing, hardware encoding, and dozens of plugins. "
+        "Runs on Windows, macOS, and Linux.",
+        "media-server",
+        "obsproject/obs-studio",
+        57000,
+        "https://obsproject.com",
+        "streaming,recording,media,open-source,live-stream",
+        "",
+        "code",
+    ),
+    # Creative Tools ------------------------------------------------------------
+    (
+        "blender",
+        "Blender",
+        "Free and open source 3D creation suite",
+        "Blender is the free and open source 3D creation suite. It supports the "
+        "entirety of the 3D pipeline: modeling, rigging, animation, simulation, "
+        "rendering, compositing, and motion tracking, as well as video editing and "
+        "game creation. Blender's Python API enables pipeline integration and "
+        "custom tool development.",
+        "creative-tools",
+        "blender/blender",
+        13000,
+        "https://blender.org",
+        "3d,modeling,animation,rendering,creative,python-api",
+        "",
+        "code",
+    ),
+    (
+        "audacity",
+        "Audacity",
+        "Free, open source, cross-platform audio software",
+        "Audacity is a free, open source, cross-platform audio software for "
+        "multi-track audio editing and recording. Used by millions for podcasting, "
+        "music production, and audio processing. Supports VST/LV2 plugins and "
+        "scripting via a Python-based macro system.",
+        "creative-tools",
+        "audacity/audacity",
+        11000,
+        "https://www.audacityteam.org",
+        "audio,recording,editing,creative,open-source,podcast",
+        "",
+        "code",
+    ),
+    # Design & Creative ---------------------------------------------------------
+    (
+        "inkscape",
+        "Inkscape",
+        "Professional vector graphics editor",
+        "Inkscape is a free, open-source professional vector graphics editor. "
+        "It uses W3C SVG as its native format and is compatible with Illustrator, "
+        "CorelDraw, and other major vector graphics tools. Scriptable via Python "
+        "extensions. Widely used for UI design, icon creation, and technical "
+        "illustration.",
+        "design-creative",
+        "inkscape/inkscape",
+        4000,
+        "https://inkscape.org",
+        "vector,svg,design,creative,open-source,illustration",
+        "",
+        "code",
+    ),
+    # Authentication ------------------------------------------------------------
+    (
+        "freeipa",
+        "FreeIPA",
+        "Open-source identity management for Linux/UNIX environments",
+        "FreeIPA is Red Hat's open-source Identity, Policy, and Audit (IPA) "
+        "solution for Linux/UNIX networked environments. Provides centralized "
+        "authentication, authorization, and account information by storing data "
+        "about users, groups, hosts, and other objects. Integrates Kerberos, LDAP, "
+        "DNS, NTP, and PKI in one cohesive solution.",
+        "authentication",
+        "freeipa/freeipa",
+        1200,
+        "https://www.freeipa.org",
+        "ldap,kerberos,sso,identity,linux,self-hosted",
+        "",
+        "code",
+    ),
+    # File Management -----------------------------------------------------------
+    (
+        "imagekit",
+        "ImageKit",
+        "Real-time image and video optimization, transformation, and CDN",
+        "ImageKit is a cloud-based real-time image and video optimization and "
+        "transformation service with a global CDN. It automatically optimizes "
+        "images to WebP/AVIF, resizes on-the-fly via URL parameters, and delivers "
+        "via 250+ CDN PoPs. SDKs for Node.js, Python, PHP, Ruby, and all major "
+        "frontend frameworks.",
+        "file-management",
+        "imagekit-io/imagekit-nodejs",
+        1500,
+        "https://imagekit.io",
+        "image-cdn,optimization,transformation,cdn,media,webp",
+        "npm install imagekit",
+        "code",
+    ),
 ]
 
 
