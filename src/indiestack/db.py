@@ -5503,6 +5503,48 @@ _CAT_SYNONYMS: dict[str, str] = {
     "azure-ad": "authentication",   # hyphenated — "azure-ad sso", "azure-ad login library" → Authentication
     # Database — Google Cloud Spanner (globally distributed SQL)
     "spanner": "database",          # Google Cloud Spanner — "spanner alternative", "cloud spanner" → Database
+    # Message Queue — ZeroMQ (high-performance async messaging library, 17k★)
+    "zeromq": "message",            # ZeroMQ — "zeromq alternative", "zeromq python", "zeromq vs kafka" → Message Queue
+    "zmq": "message",               # ZMQ abbreviation — "zmq library", "zmq socket" → Message Queue
+    "0mq": "message",               # 0MQ — npm/pip package name form (zeromq/0mq ecosystem) → Message Queue
+    # Database — Hibernate Java ORM (most-searched Java ORM for alternatives, 37k★)
+    "hibernate": "database",        # Hibernate — "hibernate alternative", "hibernate orm", "hibernate vs jpa" → Database
+    # API — SignalR ASP.NET real-time framework (high .NET ecosystem query volume)
+    "signalr": "api",               # SignalR — "signalr alternative", "signalr vs websocket", "signalr core" → API Tools
+    # Frontend — Android Jetpack Compose compound/hyphenated forms (complement to "jetpack"→frontend)
+    "jetpackcompose": "frontend",   # compound — "jetpackcompose alternative", "jetpackcompose tutorial" → Frontend Frameworks
+    "jetpack-compose": "frontend",  # hyphenated — "jetpack-compose setup", "jetpack-compose vs swiftui" → Frontend Frameworks
+    # Background Jobs — Kafka Connect ETL (complement to "kafka"→message, "kafkaconnect" queries grow with data pipelines)
+    "kafkaconnect": "background",   # compound — "kafkaconnect pipeline", "kafkaconnect setup" → Background Jobs (ETL)
+    "kafka-connect": "background",  # hyphenated — "kafka-connect alternative", "kafka-connect source" → Background Jobs
+    # Testing — WireMock HTTP stub server (most popular Java integration testing mock, 6k★)
+    "wiremock": "testing",          # WireMock — "wiremock alternative", "wiremock setup", "wiremock vs msw" → Testing Tools
+    # DevOps — HashiCorp Configuration Language (Terraform/Nomad/Consul use HCL)
+    "hcl": "devops",                # HCL — "hcl syntax", "hcl alternative", "terraform hcl" → DevOps & Infrastructure
+    # DevOps — OpenFaaS open-source FaaS platform (24k★)
+    "openfaas": "devops",           # OpenFaaS — "openfaas alternative", "openfaas kubernetes" → DevOps & Infrastructure
+    # DevOps — Knative Kubernetes serverless (5k★)
+    "knative": "devops",            # Knative — "knative alternative", "knative serving", "knative eventing" → DevOps
+    # Message Queue — Faust Python stream processing (complement to Kafka/Flink synonyms)
+    "faust": "message",             # Faust — Python stream processing library (Kafka-based, robinhood/faust) → Message Queue
+    # Message Queue — Strimzi Kafka on Kubernetes operator (4k★)
+    "strimzi": "message",           # Strimzi — Kafka operator for Kubernetes; "strimzi alternative" → Message Queue
+    # Background Jobs — Camunda process automation / BPM platform (30k★, very common query)
+    "camunda": "background",        # Camunda — "camunda alternative", "camunda bpm", "camunda workflow" → Background Jobs
+    "zeebe": "background",          # Zeebe — Camunda's distributed workflow engine; "zeebe alternative" → Background Jobs
+    # Background Jobs — Conductor Netflix/Orkes workflow orchestration (14k★)
+    "conductor": "background",      # Conductor — Netflix/Orkes workflow engine; "conductor alternative" → Background Jobs
+    # Database — Snowpark Snowflake developer API (Python/Java/Scala)
+    "snowpark": "database",         # Snowpark — Snowflake's Python/Java/Scala API; "snowpark alternative" → Database
+    # DevOps — Kargo Kubernetes GitOps promotion (5k★)
+    "kargo": "devops",              # Kargo — "kargo alternative", "kargo gitops", "kargo promotion" → DevOps & Infrastructure
+    # DevOps — Flagger Kubernetes progressive delivery (5k★)
+    "flagger": "devops",            # Flagger — "flagger alternative", "flagger canary", "flagger k8s" → DevOps & Infrastructure
+    # API — F# language web framework queries (Giraffe, Saturn, Falco)
+    "fsharp": "api",                # F# — "fsharp web framework", "fsharp api" → API Tools (Giraffe, Saturn, Falco)
+    "f-sharp": "api",               # hyphenated — "f-sharp alternative", "f-sharp backend" → API Tools
+    # Developer Tools — Pkl Apple's config language (2k★)
+    "pkl": "developer",             # Pkl — Apple's configuration language; "pkl alternative", "pkl config" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

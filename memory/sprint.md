@@ -1,17 +1,17 @@
 # Sprint — Current
 
-Last updated: 2026-04-19 (one-hundred-and-thirtieth pass)
+Last updated: 2026-04-20 (one-hundred-and-thirty-second pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-19)
+## System State (as of 2026-04-20)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2147 unique active keys (one-hundred-and-thirtieth pass: +35 new — Phi SLMs, CMake, Crystal, Nim, PKCE, Typst, Zola, mdBook, HyperFine, MindsDB, ZenML, GoReleaser, MetaFlow + more)
-- **Catalog script**: `scripts/add_missing_tools.py` — 596 unique tools (added 5 new: typst, zola, mdbook, hyperfine, mindsdb)
+- **_CAT_SYNONYMS**: 2182 unique active keys (one-hundred-and-thirty-second pass: +24 new — ZeroMQ, Hibernate, SignalR, Jetpack Compose, Kafka Connect, WireMock, HCL, OpenFaaS, Knative, Faust, Strimzi, Camunda, Zeebe, Conductor, Snowpark, Kargo, Flagger, F#, Pkl + more)
+- **Catalog script**: `scripts/add_missing_tools.py` — 601 unique tools (added 5 new: zeromq, hibernate, wiremock, camunda, openfaas)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,35 @@ Last updated: 2026-04-19 (one-hundred-and-thirtieth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-thirty-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 24 new `_CAT_SYNONYMS` entries → 2182 unique keys:
+  - **Message Queue** (6 keys): `zeromq`, `zmq`, `0mq` → message (ZeroMQ, 17k★); `faust` → message (Python stream processing); `strimzi` → message (Kafka on k8s); `kafkaconnect`, `kafka-connect` → background (ETL)
+  - **Database** (2 keys): `hibernate` → database (Java ORM, 37k★); `snowpark` → database (Snowflake Python API)
+  - **API** (3 keys): `signalr` → api (ASP.NET SignalR); `fsharp`, `f-sharp` → api (F# web framework queries)
+  - **Frontend** (2 keys): `jetpackcompose`, `jetpack-compose` → frontend (Android Compose, compound/hyphenated)
+  - **Testing** (1 key): `wiremock` → testing (Java HTTP stub server, 6k★)
+  - **DevOps** (6 keys): `hcl` → devops (HashiCorp Config Language); `openfaas` → devops (24k★); `knative` → devops (k8s serverless); `kargo` → devops (GitOps promotion); `flagger` → devops (canary automation); `conductor` → background (Netflix/Orkes workflows)
+  - **Background Jobs** (3 keys): `camunda`, `zeebe` → background (BPM/workflow platform); `conductor` → background
+  - **Developer Tools** (1 key): `pkl` → developer (Apple's config language)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (596 → 601 unique):
+  - **ZeroMQ** (zeromq/libzmq, 17k★) — high-performance async messaging; message-queue
+  - **Hibernate ORM** (hibernate/hibernate-orm, 5k★) — Java ORM with JPA; database
+  - **WireMock** (wiremock/wiremock, 6k★) — HTTP stub server for testing; testing-tools
+  - **Camunda** (camunda/camunda, 4k★) — process automation / BPM; background-jobs
+  - **OpenFaaS** (openfaas/faas, 24k★) — serverless functions on Kubernetes; devops-infrastructure
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-19, one-hundred-and-thirtieth pass — autonomous improvement cycle)
 

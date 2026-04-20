@@ -10105,6 +10105,95 @@ TOOLS = [
         "pip install trl",
         "code",
     ),
+    # Message Queue — ZeroMQ high-performance async messaging ----------------------
+    (
+        "zeromq",
+        "ZeroMQ",
+        "High-performance async messaging library for distributed systems",
+        "ZeroMQ (also known as 0MQ or zmq) is a high-performance asynchronous "
+        "messaging library for distributed and concurrent applications. Supports "
+        "request-reply, pub-sub, push-pull, and dealer-router patterns. Available "
+        "for 30+ languages. The foundation for many distributed messaging systems. "
+        "17k+ GitHub stars.",
+        "message-queue",
+        "zeromq/libzmq",
+        17000,
+        "https://zeromq.org",
+        "messaging,zmq,0mq,pub-sub,distributed,sockets",
+        "pip install pyzmq",
+        "code",
+    ),
+    # Database — Hibernate Java ORM -----------------------------------------------
+    (
+        "hibernate",
+        "Hibernate ORM",
+        "Powerful ORM for Java with JPA support",
+        "Hibernate ORM is the most widely adopted Java ORM framework, providing "
+        "object-relational mapping with full JPA support. Features automatic SQL "
+        "generation, caching, lazy loading, and schema migrations. Used in Spring "
+        "Boot, Quarkus, and Jakarta EE applications. The standard Java persistence "
+        "solution for 20+ years. 5k+ GitHub stars.",
+        "database",
+        "hibernate/hibernate-orm",
+        5000,
+        "https://hibernate.org/orm",
+        "orm,java,jpa,sql,spring,persistence",
+        "# Maven: <dependency hibernate-core>",
+        "code",
+    ),
+    # Testing — WireMock HTTP stub server -----------------------------------------
+    (
+        "wiremock",
+        "WireMock",
+        "Mock HTTP server for API testing and contract testing",
+        "WireMock is an HTTP stub and mock server for testing APIs. Stub real APIs "
+        "with configurable responses, record and playback HTTP interactions, and "
+        "verify call assertions. Works standalone or embedded in JUnit/TestNG "
+        "tests. Widely used for integration and consumer-driven contract testing. "
+        "6k+ GitHub stars.",
+        "testing-tools",
+        "wiremock/wiremock",
+        6000,
+        "https://wiremock.org",
+        "mocking,http,stub,java,integration-testing,contract-testing",
+        "# Maven: <dependency wiremock-standalone>",
+        "code",
+    ),
+    # Background Jobs — Camunda BPM workflow automation ---------------------------
+    (
+        "camunda",
+        "Camunda",
+        "Open-source process automation and workflow engine",
+        "Camunda is an open-source platform for workflow and decision automation. "
+        "Model processes using BPMN 2.0, execute them with the Zeebe engine, and "
+        "monitor with Operate and Tasklist. Powers complex business processes at "
+        "scale in banking, insurance, and logistics. 4k+ GitHub stars.",
+        "background-jobs",
+        "camunda/camunda",
+        4000,
+        "https://camunda.com",
+        "bpmn,workflow,process-automation,zeebe,orchestration",
+        "# Docker: docker run camunda/camunda-bpm-platform",
+        "saas",
+    ),
+    # DevOps — OpenFaaS serverless platform ---------------------------------------
+    (
+        "openfaas",
+        "OpenFaaS",
+        "Serverless functions made simple for Kubernetes and Docker",
+        "OpenFaaS makes it easy to deploy event-driven functions and "
+        "microservices to Kubernetes without repetitive boilerplate code. "
+        "Package any function in a Docker container, deploy in seconds, "
+        "and trigger via HTTP or events. Self-hostable alternative to AWS "
+        "Lambda and Google Cloud Functions. 24k+ GitHub stars.",
+        "devops-infrastructure",
+        "openfaas/faas",
+        24000,
+        "https://www.openfaas.com",
+        "serverless,faas,kubernetes,functions,lambda-alternative",
+        "arkade install faas-cli",
+        "code",
+    ),
 ]
 
 
