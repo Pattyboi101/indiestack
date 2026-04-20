@@ -10400,6 +10400,92 @@ TOOLS = [
         "go get connectrpc.com/connect",
         "code",
     ),
+    # Invoicing & Billing — OpenMeter open-source usage metering (openmeter/openmeter) ---
+    (
+        "openmeter",
+        "OpenMeter",
+        "Open-source usage metering for AI and usage-based billing",
+        "OpenMeter is an open-source metering infrastructure for AI tokens, API calls, "
+        "compute minutes, and any custom event. Ingests millions of events per second, "
+        "aggregates in real time, and exposes a REST API compatible with Stripe Billing "
+        "and Orb. SDKs for Node.js, Python, Go. Self-host or use the cloud.",
+        "invoicing-billing",
+        "openmeter/openmeter",
+        3500,
+        "https://openmeter.io",
+        "billing,metering,usage-based,ai,stripe,saas",
+        "npm install @openmeter/sdk",
+        "code",
+    ),
+    # Monitoring & Uptime — Logfire structured observability by Pydantic ---------------
+    (
+        "logfire",
+        "Logfire",
+        "Uncomplicated observability for Python and FastAPI",
+        "Logfire is a structured observability platform from the Pydantic team. "
+        "Instruments FastAPI, SQLAlchemy, HTTPX, and OpenAI automatically via "
+        "OpenTelemetry. Ships logs, traces, and metrics with a single SDK call. "
+        "Free tier available. Designed to be the simplest way to add observability "
+        "to Python apps without a complex collector pipeline.",
+        "monitoring-uptime",
+        "pydantic/logfire",
+        5000,
+        "https://logfire.pydantic.dev",
+        "observability,python,fastapi,opentelemetry,logging,tracing",
+        "pip install logfire",
+        "code",
+    ),
+    # API Tools — Huma code-first Go API framework with OpenAPI 3.1 --------------------
+    (
+        "huma",
+        "Huma",
+        "Code-first Go API framework with automatic OpenAPI 3.1",
+        "Huma is a modern Go REST and HTTP RPC API framework with built-in support "
+        "for OpenAPI 3.1, JSON Schema, validation, and middleware. Router-agnostic — "
+        "works with Chi, Fiber, Echo, Gin, or the stdlib net/http. Auto-generates "
+        "OpenAPI specs and clients from Go type annotations with zero boilerplate.",
+        "api-tools",
+        "danielgtaylor/huma",
+        5000,
+        "https://huma.rocks",
+        "golang,rest,openapi,json-schema,http,api",
+        "go get github.com/danielgtaylor/huma/v2",
+        "code",
+    ),
+    # Message Queue — pgmq Postgres-native lightweight message queue ----------------
+    (
+        "pgmq",
+        "pgmq",
+        "Lightweight message queue built on Postgres",
+        "pgmq is a lightweight message queue built on PostgreSQL, inspired by AWS SQS. "
+        "Provides exactly-once delivery, visibility timeouts, dead-letter queues, and "
+        "partitioned queues — all as SQL functions inside your existing Postgres database. "
+        "No extra infrastructure needed. SDKs for Python, Rust, and Go. By Tembo.",
+        "message-queue",
+        "tembo-io/pgmq",
+        3000,
+        "https://tembo.io/pgmq",
+        "postgres,message-queue,sql,sqs-compatible,serverless",
+        "pip install pgmq-python",
+        "code",
+    ),
+    # File Management — Unstorage universal key-value and storage abstraction ----------
+    (
+        "unstorage",
+        "Unstorage",
+        "Universal key-value storage layer with multiple drivers",
+        "Unstorage is a universal key-value storage abstraction layer by UnJS. "
+        "Single API that works across memory, filesystem, Redis, Cloudflare KV, "
+        "Azure Blob, S3, MongoDB, GitHub, and more. Built-in caching, overlay, "
+        "and namespacing. Zero dependencies per driver. First-class Nuxt 3 support.",
+        "file-management",
+        "unjs/unstorage",
+        2000,
+        "https://unstorage.unjs.io",
+        "storage,kv,cloudflare,redis,s3,nuxt,typescript",
+        "npm install unstorage",
+        "code",
+    ),
 ]
 
 

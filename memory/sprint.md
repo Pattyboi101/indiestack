@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-thirty-fourth pass)
+Last updated: 2026-04-20 (one-hundred-and-thirty-fifth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-fourth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2235 unique active keys (one-hundred-and-thirty-fourth pass: +26 new — gRPC/proto, release automation, cross-platform UI frameworks)
-- **Catalog script**: `scripts/add_missing_tools.py` — 619 unique tools (added 6 new: solito, avalonia, tamagui, analog, solid-start, connect-rpc)
+- **_CAT_SYNONYMS**: 2255 unique active keys (one-hundred-and-thirty-fifth pass: +20 new — config mgmt, REPL/LSP, unit/e2e testing, new named tools)
+- **Catalog script**: `scripts/add_missing_tools.py` — 624 unique tools (added 5 new: openmeter, logfire, huma, pgmq, unstorage)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,32 @@ Last updated: 2026-04-20 (one-hundred-and-thirty-fourth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-20, one-hundred-and-thirty-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 20 new `_CAT_SYNONYMS` entries → 2255 unique keys:
+  - **Config management** (5 keys): `config`, `puppet`, `saltstack`, `cfengine`, `infrastructure` → devops (fixes "config management" mis-routing to frontend via "management"→frontend)
+  - **Developer tools** (4 keys): `repl` → developer; `lsp`, `language-server`, `languageserver` → developer (Language Server Protocol)
+  - **Testing** (2 keys): `unit` → testing; `end-to-end` → testing (complement to `e2e`→testing)
+  - **Frontend** (2 keys): `isomorphic` → frontend (isomorphic JS); `time-series` → database (hyphenated complement to `timeseries`→database)
+  - **Named tools** (7 keys): `huma` → api (Huma Go framework); `logfire` → monitoring (Pydantic Logfire); `openmeter` → invoicing; `pgmq` → message; `unstorage` → file; `arkui`, `ark-ui` → frontend (Ark UI)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to `scripts/add_missing_tools.py` (619 → 624 unique):
+  - **OpenMeter** (openmeter/openmeter, 3.5k★) — usage metering for AI/APIs; invoicing-billing
+  - **Logfire** (pydantic/logfire, 5k★) — structured observability for Python/FastAPI; monitoring-uptime
+  - **Huma** (danielgtaylor/huma, 5k★) — code-first Go API framework with OpenAPI 3.1; api-tools
+  - **pgmq** (tembo-io/pgmq, 3k★) — Postgres-native message queue (no extra infra); message-queue
+  - **Unstorage** (unjs/unstorage, 2k★) — universal KV/storage abstraction layer; file-management
+
+### Code Quality (Step 3)
+- Last 5 commits only touched db.py, add_missing_tools.py, sprint.md — no route files to audit
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-thirty-fourth pass — autonomous improvement cycle)
 

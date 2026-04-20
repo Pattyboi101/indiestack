@@ -5620,6 +5620,38 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Open Props — CSS custom properties design token system (4k★; minimal, framework-agnostic)
     "open-props": "frontend",       # Open Props — "open-props alternative", "open props css" → Frontend Frameworks
     "openprops": "frontend",        # compound — "openprops setup", "openprops tokens" → Frontend Frameworks
+    # Config management — Puppet, SaltStack, CFEngine live in DevOps & Infrastructure
+    # "config management" was mis-routing to Frontend via "management"→"frontend"; "config" fixes this
+    "config": "devops",             # "config management", "config server", "config file watcher" → DevOps & Infrastructure
+    "puppet": "devops",             # Puppet — declarative infrastructure config management (17k★) → DevOps
+    "saltstack": "devops",          # SaltStack — remote execution + config management (14k★) → DevOps
+    "cfengine": "devops",           # CFEngine — oldest config management tool (2k★) → DevOps & Infrastructure
+    "infrastructure": "devops",     # "infrastructure provisioning", "infrastructure management" → DevOps
+    # Developer Tools — REPL environments and Language Server Protocol
+    "repl" : "developer",           # REPL — "repl alternative", "browser repl", "node repl", "pry repl" → Developer Tools
+    "lsp": "developer",             # LSP — Language Server Protocol tooling (Neovim LSP, clangd, pyright) → Developer Tools
+    "language-server": "developer", # hyphenated — "language-server protocol", "language-server setup" → Developer Tools
+    "languageserver": "developer",  # compound — "languageserver alternative", "languageserver node" → Developer Tools
+    # Testing — singular "unit" and hyphenated "end-to-end" forms (complements to "e2e"→"testing")
+    "unit": "testing",              # "unit test framework", "unit testing library", "unit test runner" → Testing Tools
+    "end-to-end": "testing",        # "end-to-end testing framework", "end-to-end test runner" → Testing Tools
+    # Frontend — isomorphic / universal JavaScript rendering pattern
+    "isomorphic": "frontend",       # "isomorphic JavaScript", "isomorphic rendering", "universal app" → Frontend Frameworks
+    # Database — hyphenated form of "timeseries" (complement to "timeseries"→database already mapped)
+    "time-series": "database",      # "time-series database", "time-series data" → Database (TimescaleDB, InfluxDB, QuestDB)
+    # API Tools — Huma Go API framework (code-first OpenAPI 3.1, 5k★)
+    "huma": "api",                  # Huma — "huma alternative", "huma go framework", "huma openapi" → API Tools
+    # Monitoring — Pydantic Logfire structured observability for Python/FastAPI (5k★)
+    "logfire": "monitoring",        # Logfire — "logfire alternative", "logfire pydantic", "logfire fastapi" → Monitoring & Uptime
+    # Invoicing — OpenMeter open-source usage metering and billing infrastructure (3.5k★)
+    "openmeter": "invoicing",       # OpenMeter — "openmeter alternative", "openmeter billing" → Invoicing & Billing
+    # Message Queue — pgmq Postgres-native message queue (tembo-io/pgmq, 3k★)
+    "pgmq": "message",              # pgmq — "pgmq alternative", "postgres message queue" → Message Queues
+    # File Management — Unstorage universal key-value and storage layer (unjs/unstorage, 2k★)
+    "unstorage": "file",            # Unstorage — "unstorage alternative", "unstorage nuxt", "kv storage layer" → File Management
+    # Frontend — Ark UI accessible component primitives built on Zag.js state machines
+    "arkui": "frontend",            # Ark UI — "arkui alternative", "ark ui components" → Frontend Frameworks
+    "ark-ui": "frontend",           # hyphenated — "ark-ui setup", "ark-ui vs radix" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
