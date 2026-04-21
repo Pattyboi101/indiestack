@@ -141,7 +141,7 @@ async def api_docs(request: Request):
                 All responses are JSON.
             </p>
             <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
-                <span style="font-size:13px;padding:6px 12px;background:rgba(34,197,94,0.1);color:var(--success, #22C55E);border-radius:999px;font-weight:600;">Base URL: https://indiestack.ai</span>
+                <span style="font-size:13px;padding:6px 12px;background:rgba(34,197,94,0.1);color:var(--success);border-radius:999px;font-weight:600;">Base URL: https://indiestack.ai</span>
                 <span style="font-size:13px;padding:6px 12px;background:rgba(0,212,245,0.1);color:var(--accent);border-radius:999px;font-weight:600;">JSON responses</span>
                 <span style="font-size:13px;padding:6px 12px;background:var(--cream-dark);color:var(--ink-muted);border-radius:999px;font-weight:600;">No auth for reads</span>
             </div>
@@ -150,7 +150,7 @@ async def api_docs(request: Request):
         <!-- Search -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success);border-radius:4px;">GET</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/search</code>
             </div>
             <div style="padding:16px 20px;">
@@ -182,7 +182,7 @@ async def api_docs(request: Request):
         <!-- Tool Detail -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success);border-radius:4px;">GET</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/{{slug}}</code>
             </div>
             <div style="padding:16px 20px;">
@@ -196,7 +196,7 @@ async def api_docs(request: Request):
         <!-- Categories -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success);border-radius:4px;">GET</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/categories</code>
             </div>
             <div style="padding:16px 20px;">
@@ -210,7 +210,7 @@ async def api_docs(request: Request):
         <!-- New -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success);border-radius:4px;">GET</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/new</code>
             </div>
             <div style="padding:16px 20px;">
@@ -221,7 +221,7 @@ async def api_docs(request: Request):
         <!-- Tags -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success);border-radius:4px;">GET</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tags</code>
             </div>
             <div style="padding:16px 20px;">
@@ -232,7 +232,7 @@ async def api_docs(request: Request):
         <!-- Stacks -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success);border-radius:4px;">GET</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/stacks</code>
             </div>
             <div style="padding:16px 20px;">
@@ -243,7 +243,7 @@ async def api_docs(request: Request):
         <!-- Stack Builder -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success);border-radius:4px;">GET</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/stack-builder</code>
             </div>
             <div style="padding:16px 20px;">
@@ -263,7 +263,7 @@ async def api_docs(request: Request):
         <!-- Recommendations -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success);border-radius:4px;">GET</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/recommendations</code>
             </div>
             <div style="padding:16px 20px;">
@@ -280,7 +280,7 @@ async def api_docs(request: Request):
         <!-- Tools Index -->
         <div style="margin-bottom:32px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
             <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
-                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success, #22C55E);border-radius:4px;">GET</span>
+                <span style="font-size:12px;font-weight:700;padding:4px 8px;background:rgba(34,197,94,0.15);color:var(--success);border-radius:4px;">GET</span>
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--ink);">/api/tools/index.json</code>
             </div>
             <div style="padding:16px 20px;">

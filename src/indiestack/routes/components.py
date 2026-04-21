@@ -79,6 +79,7 @@ def design_tokens() -> str:
             --stagger-delay: 80ms;
 
             /* Status */
+            --success: #22C55E;
             --success-bg: #ECFDF5;
             --success-text: #065F46;
             --success-border: #A7F3D0;

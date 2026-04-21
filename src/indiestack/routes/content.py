@@ -608,7 +608,7 @@ async def blog_agent_infrastructure(request: Request):
         }}
         .blog-article pre {{
             background: var(--terracotta);
-            color: #e2e8f0;
+            color: var(--border);
             border-radius: var(--radius-sm);
             padding: 24px;
             font-family: var(--font-mono);
@@ -618,7 +618,7 @@ async def blog_agent_infrastructure(request: Request):
             margin: 24px 0;
         }}
         .blog-article pre code {{
-            color: #e2e8f0;
+            color: var(--border);
         }}
         .blog-article code {{
             font-family: var(--font-mono);
@@ -872,7 +872,7 @@ async def blog_marketplace_launch(request: Request):
         }}
         .blog-article pre {{
             background: var(--terracotta);
-            color: #e2e8f0;
+            color: var(--border);
             border-radius: var(--radius-sm);
             padding: 24px;
             font-family: var(--font-mono);
@@ -882,7 +882,7 @@ async def blog_marketplace_launch(request: Request):
             margin: 24px 0;
         }}
         .blog-article pre code {{
-            color: #e2e8f0;
+            color: var(--border);
         }}
         .blog-article code {{
             font-family: var(--font-mono);
@@ -1113,7 +1113,7 @@ async def blog_tokens_saved(request: Request):
         }}}}
         .blog-article pre {{{{
             background: var(--terracotta);
-            color: #e2e8f0;
+            color: var(--border);
             border-radius: var(--radius-sm);
             padding: 24px;
             font-family: var(--font-mono);
@@ -1123,7 +1123,7 @@ async def blog_tokens_saved(request: Request):
             margin: 24px 0;
         }}}}
         .blog-article pre code {{{{
-            color: #e2e8f0;
+            color: var(--border);
         }}}}
         .blog-article code {{{{
             font-family: var(--font-mono);
@@ -1359,7 +1359,7 @@ async def blog_stop_wasting_tokens(request: Request):
         }}
         .blog-article pre {{
             background: var(--terracotta);
-            color: #e2e8f0;
+            color: var(--border);
             border-radius: var(--radius-sm);
             padding: 24px;
             font-family: var(--font-mono);
@@ -1369,7 +1369,7 @@ async def blog_stop_wasting_tokens(request: Request):
             margin: 24px 0;
         }}
         .blog-article pre code {{
-            color: #e2e8f0;
+            color: var(--border);
         }}
         .blog-article code {{
             font-family: var(--font-mono);
@@ -1607,7 +1607,7 @@ async def blog_zero_js_frameworks(request: Request):
         }}
         .blog-article pre {{
             background: var(--terracotta);
-            color: #e2e8f0;
+            color: var(--border);
             border-radius: var(--radius-sm);
             padding: 24px;
             font-family: var(--font-mono);
@@ -1617,7 +1617,7 @@ async def blog_zero_js_frameworks(request: Request):
             margin: 24px 0;
         }}
         .blog-article pre code {{
-            color: #e2e8f0;
+            color: var(--border);
         }}
         .blog-article code {{
             font-family: var(--font-mono);
@@ -1913,7 +1913,7 @@ async def blog_indiestack_vs_stackshare(request: Request):
         }}
         .blog-article pre {{
             background: var(--terracotta);
-            color: #e2e8f0;
+            color: var(--border);
             border-radius: var(--radius-sm);
             padding: 24px;
             font-family: var(--font-mono);
@@ -1923,7 +1923,7 @@ async def blog_indiestack_vs_stackshare(request: Request):
             margin: 24px 0;
         }}
         .blog-article pre code {{
-            color: #e2e8f0;
+            color: var(--border);
         }}
         .blog-article code {{
             font-family: var(--font-mono);
