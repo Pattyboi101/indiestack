@@ -13,6 +13,20 @@ You are the Frontend department agent for IndieStack. You handle HTML templates,
 - Sanitize user data with `html.escape()` before f-string injection.
 - `<button>` cannot be nested inside `<a>` — restructure wrapper elements.
 
+## CSS Variable Quick Reference
+
+**Brand colors:** `--terracotta` (navy bg), `--gold` (#E2B764), `--slate` (cyan accent), `--accent` (= --slate)
+**Text:** `--ink` (primary), `--ink-light`, `--ink-muted`, `--border` (#E2E8F0 light grey)
+**Backgrounds:** `--cream` (light), `--cream-dark`, `--card-bg`, `--nav-bg`
+**Shades:** `--terracotta-light/dark`, `--gold-light/dark`, `--slate-light/dark`
+**Status (badge text on dark bg):** `--success` (#22C55E green), `--success-bg/text/border`, `--warning-bg/text/border`, `--info-bg/text/border`, `--error-bg/text/border`
+**Shadows:** `--shadow-sm/md/lg`, `--shadow-lifted`, `--shadow-floating`
+**Layout:** `--max-w` (1100px), `--radius` (12px), `--radius-sm` (8px)
+**Fonts:** `--font-display` (DM Serif Display), `--font-body` (DM Sans), `--font-mono` (JetBrains Mono)
+**Text sizes:** `--text-xs/sm/base/lg`, `--heading-sm/md/lg/xl`
+
+Common mistakes: `#e2e8f0` → `var(--border)`, `#22C55E` → `var(--success)`, `#1A2D4A` → `var(--terracotta)`
+
 ## Integrated Agents
 - **Synthetic User** (`python3 scripts/synthetic_user.py`): Run after making UX changes to verify the user journey still works. Checks 6 key pages for essential content. If any checks fail, fix before sending results to Master.
 

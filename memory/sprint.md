@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-21 (one-hundred-and-forty-ninth pass)
+Last updated: 2026-04-21 (one-hundred-and-fiftieth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-21 (one-hundred-and-forty-ninth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2550 unique active keys (one-hundred-and-forty-ninth pass: +6 new — crm/game/scheduling/education direct terms + leads/deal for CRM routing)
-- **Catalog script**: `scripts/add_missing_tools.py` — 689 unique tools (added 5 new: raylib, pygame, love2d, pyxel, kaboom; 684→689)
+- **_CAT_SYNONYMS**: 2560 unique active keys (one-hundred-and-fiftieth pass: +10 new — casdoor/authelia/dex auth IdPs, yugabyte/dolt/rqlite databases, concourse/gitness/teleport/pomerium devops)
+- **Catalog script**: `scripts/add_missing_tools.py` — 696 unique tools (added 7 new: casdoor, authelia, dex, yugabyte, dolt, teleport, pomerium; 689→696)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,37 @@ Last updated: 2026-04-21 (one-hundred-and-forty-ninth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-21, one-hundred-and-fiftieth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited _CAT_SYNONYMS thoroughly — prior 149 passes had excellent coverage of common terms
+- Identified 10 genuine gaps for self-hosted IdP/database/devops tools; added → 2560 keys:
+  - **Authentication** (+3): `casdoor`, `authelia`, `dex` → "authentication" (popular self-hosted IdP/SSO tools missing)
+  - **Database** (+3): `yugabyte`, `dolt`, `rqlite` → "database" (distributed SQL + Git-for-data tools)
+  - **DevOps** (+4): `concourse`, `gitness`, `teleport`, `pomerium` → "devops" (CI/CD + zero-trust access tools)
+
+### Catalog Script (Step 2)
+- Confirmed all 10 task-specified tools already in script (react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend)
+- Added 7 new tools matching the new synonym entries (689 → 696 unique):
+  - **casdoor** (casdoor/casdoor, 9.5k★) — SSO/OAuth2/OIDC IdP → authentication
+  - **authelia** (authelia/authelia, 22k★) — self-hosted 2FA + reverse-proxy auth → authentication
+  - **dex** (dex-idp/dex, 9.2k★) — CNCF OpenID Connect Identity Provider → authentication
+  - **yugabyte** (yugabyte/yugabyte-db, 9k★) — distributed PostgreSQL-compatible SQL → database
+  - **dolt** (dolthub/dolt, 18k★) — Git for data / version-controlled SQL → database
+  - **teleport** (gravitational/teleport, 18k★) — zero-trust infrastructure access → devops-infrastructure
+  - **pomerium** (pomerium/pomerium, 4k★) — identity-aware reverse proxy → devops-infrastructure
+
+### Code Quality (Step 3)
+- Found and fixed hardcoded hex colors in route files from recent commits:
+  - **content.py**: `color: #e2e8f0` → `color: var(--border)` (10 instances in blog code block styles)
+  - **components.py**: added `--success: #22C55E` to `:root` status block (was missing from CSS variable system)
+  - **api_docs.py**: `var(--success, #22C55E)` → `var(--success)` (9 instances; fallback removed now variable exists)
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated with this pass
+
+---
 
 ## Completed This Session (2026-04-21, one-hundred-and-forty-ninth pass — autonomous improvement cycle)
 
