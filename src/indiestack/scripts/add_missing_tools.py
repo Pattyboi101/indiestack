@@ -11434,6 +11434,100 @@ TOOLS = [
         "npm install @clack/prompts",
         "code",
     ),
+    # Newsletters & Content — Listmonk self-hosted newsletter manager ---------
+    (
+        "listmonk",
+        "listmonk",
+        "High performance, self-hosted newsletter and mailing list manager",
+        "listmonk is a standalone, high performance, self-hosted newsletter and "
+        "mailing list manager written in Go. Ships with a full-featured web UI, "
+        "REST API, powerful templating, double opt-in, campaign analytics, "
+        "bounce processing, and multi-user management. Used by teams sending "
+        "millions of emails a month. A drop-in replacement for Mailchimp, "
+        "Sendinblue, and ActiveCampaign for privacy-first teams.",
+        "newsletters-content",
+        "knadh/listmonk",
+        16000,
+        "https://listmonk.app",
+        "newsletter,mailing-list,self-hosted,email,open-source,go,campaigns",
+        "# Docker: docker compose up -d  (see listmonk.app/docs/installation)",
+        "code",
+    ),
+    # Learning & Education — Moodle open-source LMS ---------------------------
+    (
+        "moodle",
+        "Moodle",
+        "The world's open source learning management system",
+        "Moodle is the world's most widely used open-source learning management "
+        "system (LMS), powering 400 million+ learners at 100,000+ institutions. "
+        "Supports courses, quizzes, assignments, gradebooks, forums, SCORM/xAPI, "
+        "and a vast plugin ecosystem. Self-hostable on LAMP/LEMP; Moodle HQ also "
+        "offers cloud hosting. A self-hosted alternative to Canvas, Blackboard, "
+        "and Brightspace.",
+        "learning-education",
+        "moodle/moodle",
+        5500,
+        "https://moodle.org",
+        "lms,elearning,courses,quiz,self-hosted,open-source,php,scorm",
+        "# Download: curl -O https://download.moodle.org/latest.php",
+        "code",
+    ),
+    # Feedback & Reviews — Astuto open-source feedback board ------------------
+    (
+        "astuto",
+        "Astuto",
+        "Free, open source customer feedback tool",
+        "Astuto is an open-source user feedback and product roadmap board. "
+        "Users submit ideas, vote on features, comment, and track status — "
+        "all on a branded feedback portal. Supports email auth, OAuth (Google, "
+        "GitHub, Facebook), custom statuses, boards, and post merging. "
+        "A self-hosted alternative to Canny, UserVoice, and Nolt.",
+        "feedback-reviews",
+        "astuto/astuto",
+        2000,
+        "https://astuto.io",
+        "feedback,feature-voting,roadmap,canny-alternative,self-hosted,open-source,rails",
+        "# Docker: docker compose up  (see docs.astuto.io)",
+        "code",
+    ),
+    # Social Media — Memos open-source microblogging --------------------------
+    (
+        "memos",
+        "Memos",
+        "An open-source, lightweight note-taking service",
+        "Memos is an open-source, privacy-first microblogging and note-taking "
+        "platform. Write short notes with Markdown, tag them, and share publicly "
+        "or keep private. Ships with REST API, Telegram bot integration, "
+        "and daily reminders. Self-hostable with a single Docker command. "
+        "A lightweight alternative to Twitter/X for personal knowledge capture "
+        "and team asynchronous updates.",
+        "social-media",
+        "usememos/memos",
+        33000,
+        "https://www.usememos.com",
+        "microblogging,notes,self-hosted,open-source,go,markdown,privacy",
+        "docker run -d -p 5230:5230 neosmemo/memos:stable",
+        "code",
+    ),
+    # Landing Pages — Hugo static site generator ------------------------------
+    (
+        "hugo",
+        "Hugo",
+        "The world's fastest framework for building websites",
+        "Hugo is the fastest static site generator available, building a typical "
+        "site in under a second. Written in Go, it ships as a single binary with "
+        "no runtime dependencies. Supports themes, Markdown content, data files, "
+        "shortcodes, multilingual sites, and built-in image processing. "
+        "Power-user choice for landing pages, docs sites, portfolios, and blogs "
+        "that need Netlify/Vercel deploys without a database.",
+        "landing-pages",
+        "gohugoio/hugo",
+        77000,
+        "https://gohugo.io",
+        "static-site,ssg,landing-page,blog,docs,fast,go,jamstack",
+        "brew install hugo  # or: apt-get install hugo",
+        "code",
+    ),
 ]
 
 

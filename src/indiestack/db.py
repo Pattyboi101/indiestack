@@ -6027,6 +6027,41 @@ _CAT_SYNONYMS: dict[str, str] = {
     "a2s": "mcp",                  # A2S shorthand (agent-to-server); "a2s protocol", "a2s spec" → MCP Servers
     "tool-use": "mcp",             # "tool-use server", "tool-use sdk", "llm tool use" → MCP Servers
     "context-protocol": "mcp",    # hyphenated form of model context protocol → MCP Servers
+    # Feedback & Reviews — adding rating/voting/idea-management query terms + named tools
+    "rating": "feedback",          # "star rating widget", "rating system", "product rating" → Feedback & Reviews
+    "vote": "feedback",            # "feature vote board", "feature voting", "idea vote" → Feedback & Reviews
+    "idea": "feedback",            # "idea management board", "idea tracker", "idea voting" → Feedback & Reviews
+    "pendo": "feedback",           # Pendo — product analytics + feedback; "pendo alternative" → Feedback & Reviews
+    "delighted": "feedback",       # Delighted — NPS/CSAT survey tool; "delighted alternative" → Feedback & Reviews
+    # Landing Pages — adding conversion-optimisation tools + indie builders
+    "leadpages": "landing",        # Leadpages — "leadpages alternative", "leadpages open source" → Landing Pages
+    "unbounce": "landing",         # Unbounce — A/B landing page testing; "unbounce alternative" → Landing Pages
+    "tilda": "landing",            # Tilda — no-code website/landing builder; "tilda alternative" → Landing Pages
+    "unicorn": "landing",          # Unicorn Platform — maker-focused landing pages; "unicorn platform" → Landing Pages
+    # Newsletters & Content — adding referral/digest/decentralised newsletter tools
+    "mailbrew": "newsletters",     # Mailbrew — curated email digest service; "mailbrew alternative" → Newsletters
+    "paragraph": "newsletters",    # Paragraph.xyz — decentralised newsletter platform; "paragraph alternative" → Newsletters
+    "sparkloop": "newsletters",    # SparkLoop — newsletter referral growth; "sparkloop alternative" → Newsletters
+    # Design & Creative — adding major design app query terms
+    "photoshop": "design",         # Adobe Photoshop — "photoshop alternative", "photoshop open source" → Design & Creative
+    "excalidraw": "design",        # Excalidraw — virtual whiteboard/sketching; "excalidraw alternative" → Design & Creative
+    "procreate": "design",         # Procreate — "procreate alternative", "procreate android" → Design & Creative
+    # SEO Tools — adding popular WordPress SEO plugin names + technical SEO terms
+    "rankmath": "seo",             # Rank Math — WordPress SEO plugin; "rankmath alternative" → SEO Tools
+    "yoast": "seo",                # Yoast SEO — WordPress plugin; "yoast alternative", "yoast seo" → SEO Tools
+    "robots": "seo",               # "robots.txt generator", "robots meta tag" → SEO Tools
+    # Social Media — adding major platform names + scheduling tools
+    "threads": "social",           # Meta Threads — "threads alternative", "threads scheduler" → Social Media
+    "pixelfed": "social",          # Pixelfed — open-source Instagram alternative; "pixelfed self-hosted" → Social Media
+    "socialbee": "social",         # SocialBee — social media scheduling SaaS; "socialbee alternative" → Social Media
+    "planoly": "social",           # Planoly — visual Instagram/social planner; "planoly alternative" → Social Media
+    "instagram": "social",         # "instagram scheduler", "instagram management tool" → Social Media
+    # Learning & Education — adding major online course platform names
+    "teachable": "learning",       # Teachable — hosted course platform; "teachable alternative" → Learning & Education
+    "thinkific": "learning",       # Thinkific — online course builder; "thinkific alternative" → Learning & Education
+    "kajabi": "learning",          # Kajabi — course + community; "kajabi alternative" → Learning & Education
+    "learnworlds": "learning",     # LearnWorlds — interactive course platform; "learnworlds alternative" → Learning & Education
+    "podia": "learning",           # Podia — course + newsletter + downloads; "podia alternative" → Learning & Education
 }
 
 _FTS_STOP_WORDS = {
