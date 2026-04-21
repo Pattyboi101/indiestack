@@ -11726,6 +11726,90 @@ TOOLS = [
         "docker pull pomerium/pomerium",
         "code",
     ),
+    # Monitoring & Uptime -------------------------------------------------------
+    (
+        "dozzle",
+        "Dozzle",
+        "Real-time log viewer for Docker containers",
+        "Dozzle is a lightweight, self-hosted log viewer for Docker containers with "
+        "a real-time web interface. Zero dependencies — ships as a single binary or "
+        "Docker image. Supports multi-host, log search, and regex filtering. "
+        "No storage, no database — reads directly from the Docker daemon.",
+        "monitoring-uptime",
+        "amir20/dozzle",
+        18000,
+        "https://dozzle.dev",
+        "monitoring,docker,logs,self-hosted,real-time,containers",
+        "docker run -v /var/run/docker.sock:/var/run/docker.sock -p 8080:8080 amir20/dozzle",
+        "code",
+    ),
+    (
+        "beszel",
+        "Beszel",
+        "Lightweight server and container monitoring hub",
+        "Beszel is a simple, lightweight monitoring hub for servers and Docker "
+        "containers. Tracks CPU, memory, disk, and network usage with historical "
+        "charts. Self-hosted with a single binary agent on each machine, central "
+        "hub dashboard, and alert notifications (Slack, Telegram, PagerDuty).",
+        "monitoring-uptime",
+        "henrygd/beszel",
+        12000,
+        "https://beszel.dev",
+        "monitoring,self-hosted,server,docker,containers,metrics,alerts",
+        "docker compose up -d  # see docs for compose.yml",
+        "code",
+    ),
+    # Developer Tools ------------------------------------------------------------
+    (
+        "datasette",
+        "Datasette",
+        "An open source multi-tool for exploring and publishing data",
+        "Datasette is a tool for exploring and publishing data. It helps you take "
+        "data of any shape — CSV, JSON, SQLite — and quickly publish it as an "
+        "interactive, searchable website with a JSON API. Used by data journalists, "
+        "researchers, and developers to explore and share datasets.",
+        "developer-tools",
+        "simonw/datasette",
+        9500,
+        "https://datasette.io",
+        "developer,data,sqlite,api,open-source,data-journalism,exploration",
+        "pip install datasette",
+        "code",
+    ),
+    # AI & Automation ------------------------------------------------------------
+    (
+        "anythingllm",
+        "AnythingLLM",
+        "All-in-one AI desktop and Docker app — private, local, powerful",
+        "AnythingLLM is an open-source, all-in-one AI application that lets you "
+        "chat with documents, websites, and data using any LLM (local or remote). "
+        "Supports RAG, multi-user, custom AI agents, and 100+ integrations. "
+        "Desktop app for macOS/Windows/Linux or self-host with Docker.",
+        "ai-automation",
+        "Mintplex-Labs/anything-llm",
+        36000,
+        "https://anythingllm.com",
+        "ai,llm,rag,local,self-hosted,documents,chat,agents,open-source",
+        "docker pull mintplexlabs/anythingllm",
+        "code",
+    ),
+    # Security Tools -------------------------------------------------------------
+    (
+        "spicedb",
+        "SpiceDB",
+        "Open source, Google Zanzibar-inspired permissions database",
+        "SpiceDB is an open-source database system for managing security-critical "
+        "application permissions. Inspired by Google's Zanzibar paper, it provides "
+        "a schema language for defining permission relationships and a gRPC/HTTP API "
+        "for low-latency permission checks. Supports Postgres, CockroachDB, MySQL.",
+        "security-tools",
+        "authzed/spicedb",
+        5000,
+        "https://authzed.com/spicedb",
+        "security,authorization,permissions,zanzibar,self-hosted,grpc,fine-grained",
+        "brew install authzed/tap/spicedb  # or: docker pull authzed/spicedb",
+        "code",
+    ),
 ]
 
 

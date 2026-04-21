@@ -6085,6 +6085,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gitness": "devops",           # Gitness (Harness) — open-source DevOps + git hosting; "gitness alternative" → DevOps
     "teleport": "devops",          # Teleport — zero-trust infrastructure access; "teleport alternative" → DevOps
     "pomerium": "devops",          # Pomerium — identity-aware reverse proxy; "pomerium alternative" → DevOps
+    # Email Marketing — missing transactional/bulk email service names
+    "mailersend": "email",         # MailerSend — transactional email with generous free tier; "mailersend alternative" → Email Marketing
+    "emailoctopus": "email",       # Email Octopus — affordable email marketing; "emailoctopus alternative" → Email Marketing
+    # DevOps — missing image-builder tool
+    "packer": "devops",            # HashiCorp Packer — machine image builder (VM/container); "packer alternative" → DevOps & Infrastructure
+    # Database/BaaS — nhost (Hasura-powered Firebase alternative)
+    "nhost": "database",           # Nhost — open-source Firebase alternative (GraphQL + Postgres); "nhost alternative" → Database
+    # AI & Automation — missing local LLM app and agent toolkit
+    "anythingllm": "ai",           # AnythingLLM — all-in-one local LLM app (36k★); "anythingllm alternative" → AI & Automation
+    "agentkit": "ai",              # AgentKit (Coinbase CDP) — LLM agent toolkit; "agentkit alternative" → AI & Automation
+    # Monitoring & Uptime — missing Docker log viewer and lightweight server monitor
+    "dozzle": "monitoring",        # Dozzle — real-time Docker log viewer (18k★); "dozzle alternative" → Monitoring & Uptime
+    "beszel": "monitoring",        # Beszel — lightweight server/container monitoring (12k★); "beszel alternative" → Monitoring & Uptime
+    # Developer Tools — data exploration missing
+    "datasette": "developer",      # Datasette — instant web UI for SQLite data; "datasette alternative" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

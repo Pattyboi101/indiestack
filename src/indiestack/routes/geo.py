@@ -299,7 +299,7 @@ async def geo_landing(request: Request):
         }}
         .geo-output {{
             background: var(--terracotta-dark);
-            color: #e2e8f0;
+            color: var(--border);
             font-family: var(--font-mono);
             font-size: var(--text-sm);
             padding: 20px;
