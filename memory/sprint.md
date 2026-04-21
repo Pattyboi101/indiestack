@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-21 (one-hundred-and-fifty-second pass)
+Last updated: 2026-04-21 (one-hundred-and-fifty-third pass)
 
 ## Status: Active
 
@@ -4235,3 +4235,22 @@ Added 19 new `_CAT_SYNONYMS` entries covering genuine gaps:
 - **vale** (developer-tools) — prose linter for docs-as-code teams (4k★)
 
 Deploy script when next on production: `python3 /app/src/indiestack/scripts/add_missing_tools.py`
+
+## Completed This Session (2026-04-21, one-hundred-and-fifty-third pass)
+
+### Search Quality — 9 new _CAT_SYNONYMS (end of dict, after huly→project)
+- **Video/WebRTC**: `jitsi` → api, `mediasoup` → api (Jitsi Meet + WebRTC SFU queries)
+- **Image processing**: `imagemagick` → file, `thumbor` → file, `pillow` → file, `jimp` → file
+- **Code quality**: `codeclimate` → testing
+- **PDF generation**: `gotenberg` → developer
+
+### Catalog Tools Added (701 → 706 tools in add_missing_tools.py)
+- **jitsi** (api-tools) — open-source video conferencing (22k★)
+- **mediasoup** (api-tools) — WebRTC SFU server (6k★)
+- **thumbor** (file-management) — smart image CDN + thumbnail server (10k★)
+- **gotenberg** (developer-tools) — Docker PDF generation API (7k★)
+- **imagemagick** (file-management) — universal image manipulation CLI (12k★)
+
+### Code Quality
+- `explore.py`: MCP banner `#1A2D4A` → `var(--terracotta)`, `#00D4F5` → `var(--slate)` (3 instances)
+- `what_is.py`: "How it works" section `#1A2D4A` → `var(--terracotta)`

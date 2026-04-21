@@ -296,10 +296,10 @@ async def explore(request: Request):
     # MCP install banner — shown on default browse (no filters, page 1)
     if page == 1 and not any([q, category, tag, source_type, ejectable, compatible_with]):
         mcp_banner_html = '''
-        <div style="background:#1A2D4A;border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;
+        <div style="background:var(--terracotta);border-radius:var(--radius);padding:20px 24px;margin-bottom:32px;
             display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
             <div style="flex:1;min-width:200px;">
-                <div style="font-size:13px;font-weight:700;color:#00D4F5;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">
+                <div style="font-size:13px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">
                     MCP Server
                 </div>
                 <div style="font-size:15px;font-weight:600;color:#fff;line-height:1.4;">
@@ -308,7 +308,7 @@ async def explore(request: Request):
             </div>
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
                 <code id="mcp-install-cmd"
-                    style="background:rgba(255,255,255,0.08);color:#00D4F5;font-family:var(--font-mono);
+                    style="background:rgba(255,255,255,0.08);color:var(--slate);font-family:var(--font-mono);
                         font-size:13px;padding:8px 14px;border-radius:6px;white-space:nowrap;">
                     uvx --from indiestack indiestack-mcp
                 </code>
@@ -318,7 +318,7 @@ async def explore(request: Request):
                         white-space:nowrap;min-height:44px;">
                     Copy
                 </button>
-                <a href="/setup" style="color:#00D4F5;font-size:13px;font-weight:600;text-decoration:none;
+                <a href="/setup" style="color:var(--slate);font-size:13px;font-weight:600;text-decoration:none;
                     white-space:nowrap;padding:8px 0;min-height:44px;display:inline-flex;align-items:center;">
                     Setup guide &rarr;
                 </a>

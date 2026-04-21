@@ -11900,6 +11900,94 @@ TOOLS = [
         "docker compose up  # see github.com/hcengineering/huly-selfhost",
         "code",
     ),
+    (
+        "jitsi",
+        "Jitsi Meet",
+        "Secure, privacy-first open-source video conferencing",
+        "Jitsi Meet is an open-source video conferencing platform you can self-host "
+        "or use via meet.jit.si. Supports unlimited participants, end-to-end encryption, "
+        "screen sharing, live streaming to YouTube, lobby mode, virtual backgrounds, "
+        "and breakout rooms. Embeds via iframe or the Jitsi Meet API. Powers many "
+        "enterprise video solutions. No account required for ad-hoc calls.",
+        "api-tools",
+        "jitsi/jitsi-meet",
+        22000,
+        "https://jitsi.org",
+        "video-conferencing,webrtc,self-hosted,open-source,realtime,privacy",
+        "docker compose up  # see github.com/jitsi/docker-jitsi-meet",
+        "code",
+    ),
+    (
+        "mediasoup",
+        "mediasoup",
+        "Versatile WebRTC SFU media server for video and audio",
+        "mediasoup is a powerful WebRTC Selective Forwarding Unit (SFU) library for "
+        "Node.js and Rust. Enables scalable real-time video and audio applications — "
+        "video conferencing, live streaming, broadcasting, and co-watching. "
+        "Handles simulcast, SVC, data channels, and plain RTP. "
+        "Used as the backbone of higher-level video SDKs and services.",
+        "api-tools",
+        "versatica/mediasoup",
+        6000,
+        "https://mediasoup.org",
+        "webrtc,sfu,video,realtime,nodejs,streaming",
+        "npm install mediasoup",
+        "code",
+    ),
+    (
+        "thumbor",
+        "Thumbor",
+        "Smart on-demand image service with URL-based resizing and filters",
+        "Thumbor is an open-source smart image CDN and thumbnail service. "
+        "Resize, crop, flip, and apply filters entirely via URL parameters — "
+        "no client-side code required. Supports automatic face detection for "
+        "smart cropping, image storage backends (S3, GCS, local), lazy loading, "
+        "and result caching. Deploy as a Docker container and serve images "
+        "optimised for any viewport on the fly.",
+        "file-management",
+        "thumbor/thumbor",
+        10000,
+        "https://www.thumbor.org",
+        "image-processing,thumbnail,cdn,resize,crop,self-hosted",
+        "pip install thumbor",
+        "code",
+    ),
+    (
+        "gotenberg",
+        "Gotenberg",
+        "Docker-powered API for PDF generation from HTML and Office documents",
+        "Gotenberg is a stateless Docker microservice that provides a developer-friendly "
+        "REST API for converting HTML, Markdown, URLs, and Office documents (docx, xlsx, "
+        "pptx) to PDF. Powered by Chromium and LibreOffice under the hood. "
+        "Supports webhooks, page ranges, custom headers/footers, and PDF/A output. "
+        "Drop-in replacement for wkhtmltopdf-based stacks. "
+        "Also converts PDF to image formats.",
+        "developer-tools",
+        "gotenberg/gotenberg",
+        7000,
+        "https://gotenberg.dev",
+        "pdf,html-to-pdf,office-to-pdf,docker,microservice,chromium",
+        "docker run --rm -p 3000:3000 gotenberg/gotenberg:8",
+        "code",
+    ),
+    (
+        "imagemagick",
+        "ImageMagick",
+        "Powerful command-line image manipulation and conversion toolkit",
+        "ImageMagick is the industry-standard command-line tool for creating, editing, "
+        "compositing, and converting images. Supports 200+ formats including PNG, JPEG, "
+        "GIF, WebP, HEIC, SVG, and PDF. Batch process thousands of images with shell "
+        "scripts or integrate via bindings in Python (Wand), Node.js (gm), Ruby, PHP, "
+        "and more. Essential for resize, crop, watermark, blur, and colour manipulation "
+        "pipelines in backend services.",
+        "file-management",
+        "ImageMagick/ImageMagick",
+        12000,
+        "https://imagemagick.org",
+        "image-processing,convert,resize,crop,cli,batch,format-conversion",
+        "brew install imagemagick  # macOS\napt install imagemagick  # Debian/Ubuntu",
+        "code",
+    ),
 ]
 
 

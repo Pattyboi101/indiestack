@@ -6115,6 +6115,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "openproject": "project",      # OpenProject — open-source project management (Jira alternative, 10k★); "openproject alternative" → Project Management
     "taiga": "project",            # Taiga — open-source agile PM tool (Jira/Asana alternative); "taiga alternative" → Project Management
     "huly": "project",             # Huly — all-in-one team platform (Linear + Notion + GitHub, 17k★); "huly alternative" → Project Management
+    # Video conferencing / WebRTC — tool names missing from synonym map
+    "jitsi": "api",                # Jitsi Meet — open-source video conferencing (22k★); "jitsi alternative", "jitsi self-hosted" → API Tools
+    "mediasoup": "api",            # mediasoup — WebRTC SFU server (6k★); "mediasoup alternative", "mediasoup sfu" → API Tools
+    # File Management / Image Processing — image manipulation tools missing from synonym map
+    "imagemagick": "file",         # ImageMagick — universal image manipulation CLI (12k★); "imagemagick alternative" → File Management
+    "thumbor": "file",             # Thumbor — smart image CDN + thumbnail server (10k★); "thumbor alternative" → File Management
+    "pillow": "file",              # Pillow — Python PIL fork for image processing; "pillow python", "pillow alternative" → File Management
+    "jimp": "file",                # JIMP — pure JS image processing library (14k★); "jimp alternative", "jimp node" → File Management
+    # Testing / Code Quality — missing named tool
+    "codeclimate": "testing",      # Code Climate — automated code quality + test coverage; "codeclimate alternative" → Testing Tools
+    # Developer Tools — PDF generation service missing from synonym map
+    "gotenberg": "developer",      # Gotenberg — Docker-powered PDF generation API (7k★); "gotenberg alternative" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

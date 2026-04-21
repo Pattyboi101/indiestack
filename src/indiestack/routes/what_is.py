@@ -154,7 +154,7 @@ async def what_is_page(request: Request):
     </div>
 
     <!-- ===== HOW IT WORKS (dark) ===== -->
-    <div style="background:#1A2D4A;padding:64px 24px;margin-bottom:0;">
+    <div style="background:var(--terracotta);padding:64px 24px;margin-bottom:0;">
         <div style="max-width:800px;margin:0 auto;">
             <h2 style="font-family:var(--font-display);font-size:clamp(22px,3.5vw,30px);color:#fff;text-align:center;margin-bottom:24px;">
                 One command. Your AI knows what exists.
