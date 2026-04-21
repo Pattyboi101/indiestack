@@ -5852,6 +5852,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rss": "newsletters",           # "rss reader", "rss generator", "rss feed library" → Newsletters & Content
     "feed": "newsletters",          # "content feed", "news feed", "atom feed" → Newsletters & Content
     "podcast": "media",             # "podcast hosting", "podcast rss", "podcast player" → Media Servers
+    # Monitoring — error tracking hyphenated/compound forms (complement to sentry→monitoring, bugsnag→monitoring)
+    "error-tracking": "monitoring",  # "error-tracking tool", "error-tracking service" → Monitoring & Uptime
+    "errortracking": "monitoring",   # compound — "errortracking alternative", "errortracking open source" → Monitoring
+    # Database — graph database hyphenated/short forms (Neo4j, Memgraph, FalkorDB; graphdb→database exists)
+    "graph-database": "database",   # hyphenated — "graph-database engine", "graph-database alternative" → Database
+    "graph-db": "database",         # short hyphenated — "graph-db setup", "graph-db hosting" → Database
+    # AI — guardrail singular form (NeMo Guardrails, Guardrails AI, Llama Guard; guardrails→ai exists)
+    "guardrail": "ai",              # singular — "llm guardrail", "ai guardrail", "guardrail framework" → AI & Automation
+    # AI — LlamaIndex hyphenated form (llamaindex→ai compound already mapped; add dashed form)
+    "llama-index": "ai",            # "llama-index setup", "llama-index alternative", "llama-index rag" → AI & Automation
+    # AI — prompt engineering (writing better prompts, tooling for prompt management)
+    "prompt-engineering": "ai",     # "prompt-engineering tool", "prompt-engineering framework" → AI & Automation
+    "promptengineering": "ai",      # compound — "promptengineering library", "promptengineering guide" → AI & Automation
+    # Developer Tools — dotfile managers (chezmoi, yadm, GNU Stow, dotbot, mackup)
+    "dotfile": "developer",         # "dotfile manager", "dotfile setup", "dotfile sync" → Developer Tools
+    "dotfiles": "developer",        # plural — "dotfiles manager", "dotfiles tool", "manage dotfiles" → Developer Tools
+    # Developer Tools — PDF generation libraries (pdfkit, puppeteer PDF, WeasyPrint, ReportLab)
+    "pdf-generation": "developer",  # hyphenated — "pdf-generation library", "pdf-generation api" → Developer Tools
+    # DevOps — CI/CD hyphenated form (cicd→devops exists; add dashed variant)
+    "ci-cd": "devops",              # "ci-cd pipeline", "ci-cd platform", "ci-cd alternative" → DevOps & Infrastructure
+    # DevOps — Travis CI (major CI/CD platform; "travis alternative" is a common developer query)
+    "travis": "devops",             # Travis CI — "travis alternative", "travis ci setup", "travis pricing" → DevOps
+    # DevOps — JetBrains TeamCity CI/CD server (on-premise CI, "teamcity alternative" queries)
+    "teamcity": "devops",           # TeamCity — "teamcity alternative", "teamcity self-hosted" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

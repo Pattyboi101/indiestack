@@ -11046,6 +11046,115 @@ TOOLS = [
         "npx create-openstatus-app@latest",
         "code",
     ),
+    # Authentication — Zitadel (open-source identity platform) ----------------
+    (
+        "zitadel",
+        "ZITADEL",
+        "Open-source identity infrastructure for developers",
+        "ZITADEL is an open-source identity and access management platform "
+        "providing authentication, authorization, and user management in one "
+        "place. Features OIDC, SAML 2.0, OAuth 2.0, passkeys, MFA, "
+        "multi-tenancy, branding, and audit trails. Self-host on Kubernetes "
+        "or Docker, or use the managed cloud. Replaces Auth0/Okta for teams "
+        "wanting full data ownership.",
+        "authentication",
+        "zitadel/zitadel",
+        9000,
+        "https://zitadel.com",
+        "oidc,oauth2,saml,sso,mfa,passkeys,identity,multi-tenancy,open-source",
+        "docker compose up -d",
+        "code",
+    ),
+    # Authentication — Casdoor (open-source SSO/OAuth server) -----------------
+    (
+        "casdoor",
+        "Casdoor",
+        "Open-source SSO and OAuth 2.0 / OIDC server",
+        "Casdoor is an open-source UI-first identity and access management "
+        "platform. It acts as a centralized authentication server supporting "
+        "OAuth 2.0, OIDC, SAML, LDAP, and social logins. Easy to self-host, "
+        "ships with a full admin UI for managing apps, users, and roles. "
+        "Built by Casbin authors; pairs naturally with Casbin authorization.",
+        "authentication",
+        "casdoor/casdoor",
+        10000,
+        "https://casdoor.org",
+        "sso,oauth2,oidc,saml,ldap,identity,casbin,self-hosted",
+        "docker run -p 8000:8000 casbin/casdoor",
+        "code",
+    ),
+    # DevOps — Woodpecker CI (lightweight open-source CI/CD) ------------------
+    (
+        "woodpecker-ci",
+        "Woodpecker CI",
+        "Simple yet powerful CI/CD engine with great extensibility",
+        "Woodpecker is a community fork of Drone CI, offering a simple yet "
+        "powerful container-native CI/CD system. Define pipelines in YAML, "
+        "run steps in any Docker image, and self-host on your own infra. "
+        "Supports Gitea, Forgejo, GitHub, GitLab, and Bitbucket. "
+        "Much lighter than Jenkins or TeamCity with zero vendor lock-in.",
+        "devops-infrastructure",
+        "woodpecker-ci/woodpecker",
+        4000,
+        "https://woodpecker-ci.org",
+        "ci-cd,continuous-integration,continuous-delivery,gitea,drone,self-hosted,docker",
+        "docker compose up -d",
+        "code",
+    ),
+    # Developer Tools — Lapce (fast Rust-based code editor) -------------------
+    (
+        "lapce",
+        "Lapce",
+        "Lightning-fast and powerful code editor written in Rust",
+        "Lapce is a native GUI code editor written in Rust with GPU acceleration "
+        "via the WGPU renderer. Aims to be as fast as possible while providing "
+        "the features developers expect: LSP, syntax highlighting, vi keybindings, "
+        "remote SSH development, and a plugin ecosystem. An alternative to VS Code "
+        "for developers who want native-speed performance.",
+        "developer-tools",
+        "lapce/lapce",
+        33000,
+        "https://lapce.dev",
+        "editor,rust,gpu,lsp,fast,native,vi,vscode-alternative",
+        "# Download installer from lapce.dev",
+        "code",
+    ),
+    # Developer Tools — Rye (Python project manager) --------------------------
+    (
+        "rye",
+        "Rye",
+        "A hassle-free Python project and package manager",
+        "Rye is a comprehensive Python project manager by the creator of Flask. "
+        "It manages Python installations, virtualenvs, dependencies (via uv), "
+        "and scripts in one unified CLI. Inspired by Cargo from Rust, it brings "
+        "a coherent developer experience to the fragmented Python toolchain. "
+        "Works alongside uv for fast dependency resolution.",
+        "developer-tools",
+        "astral-sh/rye",
+        12000,
+        "https://rye.astral.sh",
+        "python,package-manager,virtualenv,project-manager,uv,pip-alternative",
+        "curl -sSf https://rye.astral.sh/get | bash",
+        "code",
+    ),
+    # Developer Tools — Vale (prose linter for docs teams) --------------------
+    (
+        "vale",
+        "Vale",
+        "A syntax-aware prose linter for documentation teams",
+        "Vale is a command-line prose linter that enforces writing style rules "
+        "defined in YAML. Supports Google Style Guide, Microsoft Writing Style, "
+        "and custom house styles. Integrates with VS Code, GitHub Actions, and "
+        "pre-commit hooks. Used by Docs-as-Code workflows to keep technical "
+        "documentation consistent and on-brand.",
+        "developer-tools",
+        "errata-ai/vale",
+        4000,
+        "https://vale.sh",
+        "prose-linter,documentation,markdown,writing-style,docs-as-code,ci",
+        "brew install vale",
+        "code",
+    ),
 ]
 
 
