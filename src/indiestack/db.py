@@ -6062,6 +6062,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "kajabi": "learning",          # Kajabi — course + community; "kajabi alternative" → Learning & Education
     "learnworlds": "learning",     # LearnWorlds — interactive course platform; "learnworlds alternative" → Learning & Education
     "podia": "learning",           # Podia — course + newsletter + downloads; "podia alternative" → Learning & Education
+    # CRM & Sales — direct query terms missing from synonym map (named tools are mapped; bare terms weren't)
+    "crm": "crm",               # "crm tool", "open source crm", "free crm" → CRM & Sales (Twenty, Monica, Pipedrive alternatives)
+    "leads": "crm",             # "leads management", "leads tracking", "sales leads" → CRM & Sales
+    "deal": "crm",              # "deal pipeline", "deal management", "crm deals" → CRM & Sales
+    # Games & Entertainment — "game" singular not yet mapped (named engines are, but generic queries weren't)
+    "game": "games",            # "game engine", "game development", "indie game" → Games & Entertainment
+    # Scheduling & Booking — "scheduling" direct form not yet mapped (only booking/calendar/appointment were)
+    "scheduling": "scheduling", # "scheduling api", "meeting scheduler", "scheduling library" → Scheduling & Booking
+    # Learning & Education — "education" variant not yet mapped (only "learning" terms were)
+    "education": "learning",    # "education platform", "online education tool" → Learning & Education
 }
 
 _FTS_STOP_WORDS = {

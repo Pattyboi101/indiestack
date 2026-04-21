@@ -11528,6 +11528,89 @@ TOOLS = [
         "brew install hugo  # or: apt-get install hugo",
         "code",
     ),
+    # Games & Entertainment — major game engines/frameworks missing from catalog --
+    (
+        "raylib",
+        "raylib",
+        "A simple and easy-to-use library to enjoy videogames programming",
+        "raylib is a simple and easy-to-use library to enjoy videogame programming. "
+        "Written in C99 with no external dependencies. Inspired by the Borland BGI "
+        "graphics library and the XNA framework, raylib supports 2D and 3D graphics, "
+        "audio, input, and shaders. Bindings exist for 60+ languages including Python, "
+        "Go, Rust, and Lua. Ideal for game jams, indie games, and teaching game dev.",
+        "games-entertainment",
+        "raysan5/raylib",
+        21000,
+        "https://www.raylib.com",
+        "games,game-engine,c,2d,3d,opengl,cross-platform,game-dev",
+        "# Linux: sudo apt install libraylib-dev  |  macOS: brew install raylib",
+        "code",
+    ),
+    (
+        "pygame",
+        "Pygame",
+        "Python game development library",
+        "Pygame is a set of Python modules for writing video games. Built on top "
+        "of SDL, it handles graphics, sound, keyboard/mouse input, and sprite "
+        "management. The most widely-used Python game library for 2D games, "
+        "simulations, visualisations, and game jams. Works with PyPy for extra speed.",
+        "games-entertainment",
+        "pygame/pygame",
+        8000,
+        "https://www.pygame.org",
+        "games,python,2d,sdl,game-dev,game-engine",
+        "pip install pygame",
+        "code",
+    ),
+    (
+        "love2d",
+        "LÖVE",
+        "A framework you can use to make 2D games in Lua",
+        "LÖVE is an *awesome* framework you can use to make 2D games in Lua. "
+        "It's free, open-source, and works on Windows, macOS, Linux, and Android/iOS. "
+        "Small runtime footprint, fast Lua scripting, and ships as a single "
+        "distributable binary. Popular for game jams and indie 2D games.",
+        "games-entertainment",
+        "love2d/love",
+        4500,
+        "https://love2d.org",
+        "games,lua,2d,game-engine,cross-platform,game-dev,jam",
+        "brew install love  # or: sudo apt install love",
+        "code",
+    ),
+    (
+        "pyxel",
+        "Pyxel",
+        "A retro game engine for Python",
+        "Pyxel is a retro game engine for Python inspired by PICO-8. With its "
+        "vintage palette of 16 colours, built-in sprite editor, and music sequencer, "
+        "it is ideal for game jams and teaching game development. Games distribute "
+        "as a single .pyxapp file. Supports Python 3.8+ on Windows/macOS/Linux.",
+        "games-entertainment",
+        "kitao/pyxel",
+        14000,
+        "https://github.com/kitao/pyxel",
+        "games,python,retro,pixel-art,game-engine,pico8,game-dev",
+        "pip install pyxel",
+        "code",
+    ),
+    (
+        "kaboom",
+        "Kaboom.js",
+        "Fun JavaScript game programming library",
+        "Kaboom.js is a fun and fast JavaScript game programming library. "
+        "Write games in the browser with a simple scene/component API, built-in "
+        "physics, tilemaps, sprites, audio, and debugging tools. No build step "
+        "required — import from CDN and start building. Powers Replit's built-in "
+        "game editor and popular with beginners learning game dev.",
+        "games-entertainment",
+        "replit/kaboom",
+        7000,
+        "https://kaboomjs.com",
+        "games,javascript,browser,2d,game-engine,game-dev,beginner",
+        "npm install kaboom",
+        "code",
+    ),
 ]
 
 
