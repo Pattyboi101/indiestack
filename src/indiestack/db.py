@@ -5992,6 +5992,41 @@ _CAT_SYNONYMS: dict[str, str] = {
     "formspree": "forms",       # Formspree — "formspree alternative", "formspree self-hosted" → Forms & Surveys
     "formbricks": "forms",      # Formbricks — open-source surveys; "formbricks alternative" → Forms & Surveys
     "questionnaire": "forms",   # "questionnaire tool", "questionnaire builder" → Forms & Surveys
+    # Customer Support — thinnest category (4 "customer" keys); adding helpdesk + named tools
+    "ticket": "support",           # "support ticket system", "ticket management", "open-source ticketing" → Customer Support
+    "groove": "customer",          # Groove — SMB helpdesk; "groove alternative", "groove helpdesk" → Customer Support
+    "gorgias": "customer",         # Gorgias — e-commerce support; "gorgias alternative" → Customer Support
+    "helpscout": "customer",       # Help Scout — "helpscout alternative", "help scout email support" → Customer Support
+    "kayako": "customer",          # Kayako — "kayako alternative", "kayako helpdesk" → Customer Support
+    "freshchat": "customer",       # Freshchat — Freshworks live chat; "freshchat alternative" → Customer Support
+    # Landing Pages — thinnest category (4 entries); adding link-in-bio + indie builders
+    "linktree": "landing",         # Linktree — "linktree alternative", "link in bio page" → Landing Pages
+    "linkinbio": "landing",        # compound — "linkinbio tool", "link-in-bio builder" → Landing Pages
+    "link-in-bio": "landing",      # hyphenated — "link-in-bio page", "link-in-bio alternative" → Landing Pages
+    "landen": "landing",           # Landen.co — indie landing page builder; "landen alternative" → Landing Pages
+    "brizy": "landing",            # Brizy — drag-drop page/site builder; "brizy alternative" → Landing Pages
+    # Newsletters & Content — thin (6 entries); adding major publishing platforms
+    "medium": "newsletters",       # Medium — "medium alternative", "medium-like platform" → Newsletters & Content
+    "kit": "email",                # Kit (ex-ConvertKit) — "kit email", "kit newsletter", "convertkit" → Email Marketing
+    "revue": "newsletters",        # Revue (retired Twitter newsletters) — "revue alternative" → Newsletters & Content
+    "writeas": "newsletters",      # Write.as — "writeas alternative", "write.as blog" → Newsletters & Content
+    # Scheduling & Booking — adding indie scheduling tools not yet mapped
+    "savvycal": "scheduling",      # SavvyCal — "savvycal alternative", "savvycal vs calendly" → Scheduling
+    "appointlet": "scheduling",    # Appointlet — "appointlet alternative" → Scheduling & Booking
+    "harmonizely": "scheduling",   # Harmonizely — "harmonizely alternative", indie Calendly clone → Scheduling
+    # CRM & Sales — adding modern/indie CRM tools
+    "folk": "crm",                 # Folk.app — modern AI CRM; "folk alternative", "folk crm" → CRM & Sales
+    "close": "crm",                # Close CRM — sales-focused; "close crm alternative" → CRM & Sales
+    "affinity": "crm",             # Affinity CRM — relationship intelligence; "affinity alternative" → CRM & Sales
+    # Creative Tools — adding major open-source creative apps
+    "gimp": "creative",            # GIMP — GNU Image Manipulation Program; "gimp alternative" → Creative Tools
+    "natron": "creative",          # Natron — open-source VFX compositor; "natron alternative" → Creative Tools
+    "resolve": "creative",         # DaVinci Resolve — "resolve alternative", "davinci resolve free" → Creative Tools
+    "premiere": "creative",        # Adobe Premiere — "premiere alternative", "video editor free" → Creative Tools
+    # MCP Servers — adding A2A protocol and tool-use query variants
+    "a2s": "mcp",                  # A2S shorthand (agent-to-server); "a2s protocol", "a2s spec" → MCP Servers
+    "tool-use": "mcp",             # "tool-use server", "tool-use sdk", "llm tool use" → MCP Servers
+    "context-protocol": "mcp",    # hyphenated form of model context protocol → MCP Servers
 }
 
 _FTS_STOP_WORDS = {

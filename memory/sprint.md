@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-21 (one-hundred-and-forty-sixth pass)
+Last updated: 2026-04-21 (one-hundred-and-forty-seventh pass)
 
 ## Status: Active
 
@@ -10,7 +10,7 @@ Last updated: 2026-04-21 (one-hundred-and-forty-sixth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2482 unique active keys (one-hundred-and-forty-sixth pass: +37 new — cli/feature-flags/maps/boilerplate/file/caching/notifications/project/forms thin-category fixes)
+- **_CAT_SYNONYMS**: 2517 unique active keys (one-hundred-and-forty-seventh pass: +35 new — customer/landing/newsletters/scheduling/crm/creative/mcp thin-category fixes)
 - **Catalog script**: `scripts/add_missing_tools.py` — 679 unique tools (added 5 new: appflowy, vikunja, formbricks, turf, clack; 674→679)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
@@ -19,6 +19,29 @@ Last updated: 2026-04-21 (one-hundred-and-forty-sixth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-21, one-hundred-and-forty-seventh pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited thinnest categories (customer: 4, landing: 4, newsletters: 6, mcp: 9, scheduling: 10, crm: 10, creative: 9); added 35 new entries → 2517 keys:
+  - **Customer Support** (6 keys): `ticket`, `groove`, `gorgias`, `helpscout`, `kayako`, `freshchat` → "customer"/"support"
+  - **Landing Pages** (5 keys): `linktree`, `linkinbio`, `link-in-bio`, `landen`, `brizy` → "landing"
+  - **Newsletters** (4 keys): `medium`, `kit`, `revue`, `writeas` → "newsletters"/"email"
+  - **Scheduling** (3 keys): `savvycal`, `appointlet`, `harmonizely` → "scheduling"
+  - **CRM** (3 keys): `folk`, `close`, `affinity` → "crm"
+  - **Creative** (4 keys): `gimp`, `natron`, `resolve`, `premiere` → "creative"
+  - **MCP Servers** (3 keys): `a2s`, `tool-use`, `context-protocol` → "mcp"
+
+### Catalog Script (Step 2)
+- No changes — script already covers all tools specified in improvement loop (react, vuejs, svelte, angular, zustand, jotai, webpack, esbuild, upstash, resend — all present at lines 22–325)
+
+### Code Quality (Step 3)
+- No issues in recently modified files (db.py, add_missing_tools.py, orchestra CLAUDEs — no route files touched)
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated with this pass
+
+---
 
 ## Completed This Session (2026-04-21, one-hundred-and-forty-sixth pass — autonomous improvement cycle)
 
