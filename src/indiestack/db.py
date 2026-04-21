@@ -6100,6 +6100,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     "beszel": "monitoring",        # Beszel — lightweight server/container monitoring (12k★); "beszel alternative" → Monitoring & Uptime
     # Developer Tools — data exploration missing
     "datasette": "developer",      # Datasette — instant web UI for SQLite data; "datasette alternative" → Developer Tools
+    # Logging — classic centralised log management platforms missing from synonym map
+    "graylog": "logging",          # Graylog — open-source centralized log management; "graylog alternative" → Logging
+    # Monitoring — APM and infrastructure monitoring tools missing from synonym map
+    "dynatrace": "monitoring",     # Dynatrace — APM + observability SaaS; "dynatrace alternative" → Monitoring & Uptime
+    "nagios": "monitoring",        # Nagios — classic IT infra monitoring (open-source core); "nagios alternative" → Monitoring & Uptime
+    "zabbix": "monitoring",        # Zabbix — open-source enterprise monitoring; "zabbix alternative" → Monitoring & Uptime
+    "statsd": "monitoring",        # StatsD — UDP-based application metrics daemon; "statsd alternative" → Monitoring & Uptime
+    "opsgenie": "monitoring",      # Atlassian OpsGenie — on-call alerting; "opsgenie alternative" → Monitoring & Uptime
+    "victorops": "monitoring",     # Splunk On-Call (VictorOps) — incident response; "victorops alternative" → Monitoring & Uptime
+    # Search — cloud-native log search engine missing from synonym map
+    "quickwit": "search",          # Quickwit — cloud-native full-text search for logs (8k★); "quickwit alternative" → Search Engine
+    # Project Management — open-source alternatives missing from synonym map
+    "openproject": "project",      # OpenProject — open-source project management (Jira alternative, 10k★); "openproject alternative" → Project Management
+    "taiga": "project",            # Taiga — open-source agile PM tool (Jira/Asana alternative); "taiga alternative" → Project Management
+    "huly": "project",             # Huly — all-in-one team platform (Linear + Notion + GitHub, 17k★); "huly alternative" → Project Management
 }
 
 _FTS_STOP_WORDS = {

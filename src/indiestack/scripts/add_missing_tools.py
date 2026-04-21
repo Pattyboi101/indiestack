@@ -11810,6 +11810,96 @@ TOOLS = [
         "brew install authzed/tap/spicedb  # or: docker pull authzed/spicedb",
         "code",
     ),
+    # Logging — centralized log management ----------------------------------------
+    (
+        "graylog",
+        "Graylog",
+        "Centralized log management — collect, index, and analyse any log data",
+        "Graylog is an open-source centralized log management platform. It ingests "
+        "logs from any source (syslog, GELF, Beats, HTTP), indexes them in "
+        "OpenSearch/Elasticsearch, and provides a web UI for searching, dashboards, "
+        "and stream-based alerting. The open-source core is self-hosted; Graylog "
+        "Cloud offers a managed SaaS option. Popular alternative to Splunk and "
+        "the ELK stack for teams that want a simpler operations model.",
+        "logging",
+        "Graylog2/graylog2-server",
+        7500,
+        "https://graylog.org",
+        "logging,log-management,search,self-hosted,gelf,syslog,alerts,open-source",
+        "docker pull graylog/graylog",
+        "code",
+    ),
+    # Search Engine — cloud-native log search ------------------------------------
+    (
+        "quickwit",
+        "Quickwit",
+        "Cloud-native search engine for log management and analytics",
+        "Quickwit is a cloud-native, distributed full-text search and analytics "
+        "engine built in Rust. Designed for log and event data at scale — indexes "
+        "data directly from object storage (S3, GCS, Azure Blob) so storage costs "
+        "are 10× lower than Elasticsearch. Supports Jaeger-compatible trace search, "
+        "Grafana integration, and a Kibana-compatible query API. Sub-second queries "
+        "on petabyte-scale datasets.",
+        "search-engine",
+        "quickwit-oss/quickwit",
+        8500,
+        "https://quickwit.io",
+        "search,logs,analytics,distributed,object-storage,rust,elasticsearch-alternative,cloud-native",
+        "curl -L https://install.quickwit.io | bash",
+        "code",
+    ),
+    # Project Management — open-source alternatives to Jira/Asana ----------------
+    (
+        "openproject",
+        "OpenProject",
+        "Open source project management software",
+        "OpenProject is the leading open-source project management tool. Supports "
+        "classic project planning (Gantt charts, milestones), agile methodologies "
+        "(Scrum/Kanban boards), time tracking, wiki, forums, and meeting management. "
+        "Self-hosted on-premise or in the cloud with a Community Edition. "
+        "Used by 6M+ users at organisations like NASA, Deutsche Bahn, and Greenpeace.",
+        "project-management",
+        "opf/openproject",
+        10000,
+        "https://www.openproject.org",
+        "project-management,jira-alternative,gantt,agile,scrum,kanban,self-hosted,open-source",
+        "docker run -it -p 8080:80 -e SECRET_KEY_BASE=secret openproject/openproject:latest",
+        "code",
+    ),
+    (
+        "taiga",
+        "Taiga",
+        "Free open source project management tool for agile teams",
+        "Taiga is a project management platform for agile developers, designers, "
+        "and project managers. Supports Scrum (sprints, backlog, burn-down), "
+        "Kanban boards, epics, user stories, issues, and wiki. "
+        "Self-hostable with Docker; cloud hosted at taiga.io. "
+        "A popular open-source alternative to Jira and Asana.",
+        "project-management",
+        "taigaio/taiga-back",
+        3000,
+        "https://taiga.io",
+        "project-management,agile,scrum,kanban,open-source,self-hosted,jira-alternative",
+        "docker compose up -d",
+        "code",
+    ),
+    (
+        "huly",
+        "Huly",
+        "All-in-one team platform — tasks, docs, chat, and HR in one place",
+        "Huly is an open-source all-in-one team collaboration platform that replaces "
+        "Linear (issues + roadmaps), Notion (docs + wikis), Slack (chat), and more. "
+        "Real-time collaborative editing, GitHub/GitLab sync, custom workflows, "
+        "time tracking, and HR profiles. Self-host with Docker or use Huly Cloud. "
+        "Built on the Huly platform (formerly Santeam) with 17k+ GitHub stars.",
+        "project-management",
+        "hcengineering/platform",
+        17000,
+        "https://huly.io",
+        "project-management,collaboration,linear-alternative,notion-alternative,chat,docs,self-hosted,open-source",
+        "docker compose up  # see github.com/hcengineering/huly-selfhost",
+        "code",
+    ),
 ]
 
 
