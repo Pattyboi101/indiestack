@@ -6072,6 +6072,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "scheduling": "scheduling", # "scheduling api", "meeting scheduler", "scheduling library" → Scheduling & Booking
     # Learning & Education — "education" variant not yet mapped (only "learning" terms were)
     "education": "learning",    # "education platform", "online education tool" → Learning & Education
+    # Authentication — self-hosted IdP and SSO tools missing from synonym map
+    "casdoor": "authentication",   # Casdoor — SSO/OAuth 2.0/OIDC server; "casdoor alternative", "casdoor sso" → Authentication
+    "authelia": "authentication",  # Authelia — self-hosted 2FA + reverse-proxy auth; "authelia alternative" → Authentication
+    "dex": "authentication",       # Dex — CNCF OpenID Connect IdP; "dex oidc", "dex idp", "dex alternative" → Authentication
+    # Database — distributed SQL and version-controlled data tools
+    "yugabyte": "database",        # YugabyteDB — distributed PostgreSQL-compatible SQL; "yugabyte alternative" → Database
+    "dolt": "database",            # Dolt — Git for data; version-controlled SQL; "dolt alternative", "dolt database" → Database
+    "rqlite": "database",          # rqlite — distributed SQLite on Raft; "rqlite alternative", "rqlite setup" → Database
+    # DevOps — CI/CD and zero-trust access tools missing from synonym map
+    "concourse": "devops",         # Concourse CI — container-native pipeline CI/CD; "concourse alternative" → DevOps
+    "gitness": "devops",           # Gitness (Harness) — open-source DevOps + git hosting; "gitness alternative" → DevOps
+    "teleport": "devops",          # Teleport — zero-trust infrastructure access; "teleport alternative" → DevOps
+    "pomerium": "devops",          # Pomerium — identity-aware reverse proxy; "pomerium alternative" → DevOps
 }
 
 _FTS_STOP_WORDS = {

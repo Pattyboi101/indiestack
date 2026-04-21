@@ -11611,6 +11611,121 @@ TOOLS = [
         "npm install kaboom",
         "code",
     ),
+    # Authentication — self-hosted IdP and SSO tools ---------------------------
+    (
+        "casdoor",
+        "Casdoor",
+        "Open-source SSO/OAuth 2.0/OIDC identity server",
+        "Casdoor is an open-source UI-first identity and access management (IAM) "
+        "platform. It supports OAuth 2.0, OIDC, SAML, CAS, LDAP, and social login "
+        "providers. Self-host on Docker or Kubernetes; SDKs for Go, Node.js, Python, "
+        "Java, and .NET. Powers SSO for dev teams and SaaS products.",
+        "authentication",
+        "casdoor/casdoor",
+        9500,
+        "https://casdoor.org",
+        "auth,sso,oauth,oidc,saml,identity,self-hosted",
+        "docker pull casbin/casdoor",
+        "code",
+    ),
+    (
+        "authelia",
+        "Authelia",
+        "Open-source authentication and authorization server",
+        "Authelia is an open-source authentication and authorization server that "
+        "provides 2FA and SSO as a reverse-proxy companion. Supports TOTP, WebAuthn, "
+        "push notifications, and LDAP/file user databases. Integrates with Nginx, "
+        "Traefik, Caddy, and HAProxy. Ideal for self-hosted homelab and production.",
+        "authentication",
+        "authelia/authelia",
+        22000,
+        "https://www.authelia.com",
+        "auth,2fa,sso,self-hosted,reverse-proxy,totp,webauthn",
+        "docker pull authelia/authelia",
+        "code",
+    ),
+    (
+        "dex",
+        "Dex",
+        "OpenID Connect Identity Provider with pluggable connectors",
+        "Dex is a federated OpenID Connect (OIDC) Identity Provider from the CNCF. "
+        "It acts as a portal to other identity providers — LDAP, GitHub, Google, "
+        "SAML, and more — via pluggable connectors. Kubernetes-native, stateless "
+        "deployments, and production-proven in many open-source platforms.",
+        "authentication",
+        "dex-idp/dex",
+        9200,
+        "https://dexidp.io",
+        "auth,oidc,identity,sso,kubernetes,cncf,federated",
+        "docker pull ghcr.io/dex-idp/dex",
+        "code",
+    ),
+    # Database — distributed SQL and version-controlled data -------------------
+    (
+        "yugabyte",
+        "YugabyteDB",
+        "Cloud-native distributed SQL database compatible with PostgreSQL",
+        "YugabyteDB is an open-source, cloud-native distributed SQL database built "
+        "on a Postgres-compatible query layer with a distributed storage engine. "
+        "Handles horizontal scaling, geo-distribution, and high availability without "
+        "application changes. Drop-in replacement for PostgreSQL at scale.",
+        "database",
+        "yugabyte/yugabyte-db",
+        9000,
+        "https://www.yugabyte.com",
+        "database,sql,postgres,distributed,cloud-native,scalable",
+        "docker pull yugabytedb/yugabyte",
+        "code",
+    ),
+    (
+        "dolt",
+        "Dolt",
+        "Git for data — a version-controlled SQL database",
+        "Dolt is a SQL database with Git-style version control. Branch, merge, "
+        "diff, and roll back your data like you do with code. Fully MySQL-compatible "
+        "— swap your MySQL connection string for Dolt's. Run locally or host on "
+        "DoltHub. Ideal for data collaboration, auditing, and reproducible ML pipelines.",
+        "database",
+        "dolthub/dolt",
+        18000,
+        "https://www.dolthub.com",
+        "database,sql,mysql,version-control,git,data,auditing",
+        "brew install dolt  # or: sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash'",
+        "code",
+    ),
+    # DevOps — zero-trust access and CI/CD ------------------------------------
+    (
+        "teleport",
+        "Teleport",
+        "Open-source zero-trust access for SSH, Kubernetes, databases, and apps",
+        "Teleport is an open-source infrastructure access platform that provides "
+        "zero-trust access to SSH servers, Kubernetes clusters, databases, and "
+        "internal web apps. Certificate-based auth, session recording, audit log, "
+        "and role-based access control. Self-host or use Teleport Cloud.",
+        "devops-infrastructure",
+        "gravitational/teleport",
+        18000,
+        "https://goteleport.com",
+        "devops,zero-trust,ssh,kubernetes,access,security,audit",
+        "brew install teleport  # or: docker pull public.ecr.aws/gravitational/teleport",
+        "code",
+    ),
+    (
+        "pomerium",
+        "Pomerium",
+        "Identity-aware reverse proxy for zero-trust access",
+        "Pomerium is an open-source identity-aware reverse proxy that enables secure "
+        "access to internal applications without a VPN. Integrates with your existing "
+        "identity provider (Google, Okta, GitHub, Azure AD). Replaces VPNs for "
+        "accessing self-hosted apps with per-request authorization.",
+        "devops-infrastructure",
+        "pomerium/pomerium",
+        4000,
+        "https://www.pomerium.com",
+        "devops,zero-trust,proxy,access,idp,security,vpn-alternative",
+        "docker pull pomerium/pomerium",
+        "code",
+    ),
 ]
 
 
