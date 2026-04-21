@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-21 (one-hundred-and-forty-fourth pass)
+Last updated: 2026-04-21 (one-hundred-and-forty-fifth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-21 (one-hundred-and-forty-fourth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2409 unique active keys (one-hundred-and-forty-fourth pass: +19 new — customer/landing/feedback/newsletters/creative thin-category fixes)
-- **Catalog script**: `scripts/add_missing_tools.py` — 663 unique tools (added 3 new: tawkto, canny, lmms; 660→663)
+- **_CAT_SYNONYMS**: 2445 unique active keys (one-hundred-and-forty-fifth pass: +36 new — design/seo/social/scheduling/feedback thin-category fixes)
+- **Catalog script**: `scripts/add_missing_tools.py` — 668 unique tools (added 5 new: tldraw, serpbear, postiz, rallly, fider; 663→668)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,30 @@ Last updated: 2026-04-21 (one-hundred-and-forty-fourth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-21, one-hundred-and-forty-fifth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Counted _CAT_SYNONYMS entries per category bucket; identified thin categories (design: 5, seo: 6, social: 6, scheduling: 7, feedback: 4)
+- Added 36 new `_CAT_SYNONYMS` entries → 2445 keys:
+  - **Design & Creative** (5 keys): `sketch`, `wireframe`, `balsamiq`, `zeplin`, `mockup` → "design"
+  - **SEO Tools** (5 keys): `backlink`, `crawl`, `serp`, `keyword`, `pagespeed` → "seo"
+  - **Social Media** (5 keys): `bluesky`, `tweet`, `linkedin`, `postiz`, `later` → "social"
+  - **Scheduling & Booking** (3 keys): `tidycal`, `zcal`, `reclaim` → "scheduling"
+  - **Feedback & Reviews** (4 keys): `productboard`, `uservoice`, `nolt`, `sleekplan` → "feedback"
+
+### Catalog Script (Step 2)
+- Added 5 new tools targeting thin synonym categories (663 → 668 unique):
+  - **tldraw** (tldraw/tldraw, 36k★) — infinite canvas SDK for drawing/wireframing; design-creative
+  - **SerpBear** (towfiqi/serpbear, 2.5k★) — self-hosted SERP rank tracker; seo-tools
+  - **Postiz** (gitroomhq/postiz-app, 17k★) — open-source social media scheduler; social-media
+  - **Rallly** (lukevella/rallly, 3.5k★) — open-source meeting scheduling polls; scheduling-booking
+  - **Fider** (getfider/fider, 2.7k★) — open-source user feedback board; feedback-reviews
+
+### Code Quality (Step 3)
+- No issues in recently modified files (db.py + catalog script — no route files touched)
+
+---
 
 ## Completed This Session (2026-04-21, one-hundred-and-forty-fourth pass — autonomous improvement cycle)
 

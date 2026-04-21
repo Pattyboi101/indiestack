@@ -11264,6 +11264,96 @@ TOOLS = [
         "# Download installer from https://lmms.io/download",
         "code",
     ),
+    # Design & Creative — tldraw infinite canvas SDK --------------------------
+    (
+        "tldraw",
+        "tldraw",
+        "SDK for building canvas-based applications",
+        "tldraw is an open-source infinite canvas SDK for building drawing, "
+        "diagramming, and whiteboard applications. It ships a fully-featured "
+        "collaborative whiteboard out of the box, and exposes a React SDK "
+        "so developers can embed infinite-canvas experiences in any web app. "
+        "Powers diagramming, wireframing, and annotation workflows.",
+        "design-creative",
+        "tldraw/tldraw",
+        36000,
+        "https://tldraw.dev",
+        "canvas,whiteboard,drawing,diagram,wireframe,infinite-canvas,sdk",
+        "npm install tldraw",
+        "code",
+    ),
+    # SEO Tools — Serpbear self-hosted rank tracker ----------------------------
+    (
+        "serpbear",
+        "SerpBear",
+        "Open source search engine position tracking app",
+        "SerpBear is a self-hosted Google SERP position tracking application. "
+        "Track keyword rankings for your domains, get email reports, and integrate "
+        "with Google Search Console for real click and impression data. "
+        "Deploy on Vercel in minutes. A lightweight, privacy-first alternative "
+        "to Ahrefs Rank Tracker and SERPWatcher.",
+        "seo-tools",
+        "towfiqi/serpbear",
+        2500,
+        "https://docs.serpbear.com",
+        "seo,serp,rank-tracking,keyword-tracking,self-hosted,google-search-console",
+        "# Deploy to Vercel: https://docs.serpbear.com/getting-started",
+        "code",
+    ),
+    # Social Media — Postiz open-source social scheduler ----------------------
+    (
+        "postiz",
+        "Postiz",
+        "Open-source social media scheduling tool",
+        "Postiz is a fully open-source social media scheduling and management "
+        "platform. Schedule posts across Twitter/X, LinkedIn, Instagram, Facebook, "
+        "TikTok, YouTube, and more from a single dashboard. Includes an AI writing "
+        "assistant, analytics, team collaboration, and a media library. "
+        "Self-hostable alternative to Buffer and Hootsuite.",
+        "social-media",
+        "gitroomhq/postiz-app",
+        17000,
+        "https://postiz.com",
+        "social-media,scheduling,twitter,linkedin,instagram,buffer-alternative,self-hosted",
+        "# Docker: docker compose up -d",
+        "code",
+    ),
+    # Scheduling & Booking — Rallly meeting poll tool --------------------------
+    (
+        "rallly",
+        "Rallly",
+        "Open-source scheduling and meeting poll tool",
+        "Rallly is a self-hostable scheduling tool for finding the best time "
+        "for group meetings. Create a poll with multiple date/time options, "
+        "share the link, and let participants vote. No account required for voters. "
+        "An open-source Doodle alternative with a clean, fast UI. "
+        "Works great for team standups, 1:1s, and event scheduling.",
+        "scheduling-booking",
+        "lukevella/rallly",
+        3500,
+        "https://rallly.co",
+        "scheduling,meeting,polls,doodle-alternative,date-picker,self-hosted",
+        "# Docker: docker compose up -d",
+        "code",
+    ),
+    # Feedback & Reviews — Fider open-source feedback board -------------------
+    (
+        "fider",
+        "Fider",
+        "Open platform to collect and prioritize user feedback",
+        "Fider is an open-source product feedback board where users can post "
+        "ideas, vote on existing suggestions, and discuss features. "
+        "Supports OAuth login (Google, Facebook, GitHub), email notifications, "
+        "status updates, and tags. A self-hosted alternative to Canny, UserVoice, "
+        "and Nolt for teams who want full ownership of their feedback data.",
+        "feedback-reviews",
+        "getfider/fider",
+        2700,
+        "https://fider.io",
+        "feedback,feature-requests,upvotes,roadmap,self-hosted,open-source",
+        "# Docker: docker run -p 3000:3000 getfider/fider",
+        "code",
+    ),
 ]
 
 

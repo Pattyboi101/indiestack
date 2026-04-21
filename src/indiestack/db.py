@@ -5912,6 +5912,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ardour": "creative",           # Ardour — open-source DAW; "ardour alternative", "ardour recording" → Creative Tools
     "openshot": "creative",         # OpenShot — open-source video editor; "openshot alternative" → Creative Tools
     "shotcut": "creative",          # Shotcut — free cross-platform video editor; "shotcut alternative" → Creative Tools
+    # Design & Creative — thin coverage (5 entries); adding design tool synonyms and query terms
+    "sketch": "design",             # Sketch — macOS vector design tool; "sketch alternative", "sketch mac" → Design & Creative
+    "wireframe": "design",          # "wireframe tool", "wireframing software", "wireframe app" → Design & Creative
+    "balsamiq": "design",           # Balsamiq — rapid wireframing; "balsamiq alternative", "balsamiq mockups" → Design & Creative
+    "zeplin": "design",             # Zeplin — design handoff tool; "zeplin alternative", "zeplin open source" → Design & Creative
+    "mockup": "design",             # "mockup generator", "mockup tool", "website mockup" → Design & Creative
+    # SEO Tools — thin coverage (6 entries); adding research + analysis query terms
+    "backlink": "seo",              # "backlink checker", "backlink analysis" → SEO Tools (Ahrefs, Moz, OpenLinkProfiler)
+    "crawl": "seo",                 # "SEO crawler", "site crawl tool", "crawl errors" → SEO Tools (Screaming Frog alternatives)
+    "serp": "seo",                  # "SERP tracker", "SERP rank checker", "SERP analysis" → SEO Tools
+    "keyword": "seo",               # "keyword research tool", "keyword tracker", "keyword difficulty" → SEO Tools
+    "pagespeed": "seo",             # "page speed test", "core web vitals tool", "pagespeed optimization" → SEO Tools
+    # Social Media — thin coverage (6 entries); adding scheduler + platform synonyms
+    "bluesky": "social",            # Bluesky — decentralised social network; "bluesky client", "bluesky alternative" → Social Media
+    "tweet": "social",              # "tweet scheduler", "tweet composer", "twitter scheduler" → Social Media
+    "linkedin": "social",           # "linkedin scheduler", "linkedin tool", "linkedin post scheduler" → Social Media
+    "postiz": "social",             # Postiz — open-source social media scheduler; "postiz alternative" → Social Media
+    "later": "social",              # Later.com — visual social media scheduler; "later alternative" → Social Media
+    # Scheduling & Booking — thin coverage (7 entries); adding indie scheduling tools
+    "tidycal": "scheduling",        # TidyCal — simple booking tool by AppSumo; "tidycal alternative" → Scheduling & Booking
+    "zcal": "scheduling",           # Zcal.com — free Calendly alternative; "zcal alternative" → Scheduling & Booking
+    "reclaim": "scheduling",        # Reclaim.ai — AI-powered time blocking; "reclaim alternative" → Scheduling & Booking
+    # Feedback & Reviews — thin coverage (4 entries); adding product feedback + roadmap tools
+    "productboard": "feedback",     # ProductBoard — product feedback and roadmap; "productboard alternative" → Feedback & Reviews
+    "uservoice": "feedback",        # UserVoice — customer feedback platform; "uservoice alternative" → Feedback & Reviews
+    "nolt": "feedback",             # Nolt.io — feature voting boards; "nolt alternative", "nolt open source" → Feedback & Reviews
+    "sleekplan": "feedback",        # SleekPlan — customer feedback widget; "sleekplan alternative" → Feedback & Reviews
 }
 
 _FTS_STOP_WORDS = {
