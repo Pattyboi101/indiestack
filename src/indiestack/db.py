@@ -5939,6 +5939,59 @@ _CAT_SYNONYMS: dict[str, str] = {
     "uservoice": "feedback",        # UserVoice — customer feedback platform; "uservoice alternative" → Feedback & Reviews
     "nolt": "feedback",             # Nolt.io — feature voting boards; "nolt alternative", "nolt open source" → Feedback & Reviews
     "sleekplan": "feedback",        # SleekPlan — customer feedback widget; "sleekplan alternative" → Feedback & Reviews
+    # CLI Tools — thin coverage (3 entries); adding framework + TUI query terms
+    "tui": "cli",               # Terminal User Interface — "tui app", "tui framework", "tui library" → CLI Tools
+    "clack": "cli",             # Clack.cc — modern CLI prompts framework; "clack alternative" → CLI Tools
+    "inquirer": "cli",          # Inquirer.js — interactive CLI prompts; "inquirer alternative" → CLI Tools
+    "oclif": "cli",             # Oclif — Salesforce CLI framework; "oclif alternative" → CLI Tools
+    "ink": "cli",               # Ink — React for CLIs; "ink cli", "ink react terminal" → CLI Tools
+    "zx": "cli",                # Google zx — shell scripting with JS; "zx alternative" → CLI Tools
+    # Feature Flags — thin coverage (4 entries); adding tool names + behaviour terms
+    "rollout": "feature",       # "gradual rollout", "rollout strategy" → Feature Flags
+    "experiment": "feature",    # "A/B experiment", "feature experiment" → Feature Flags
+    "unleash": "feature",       # Unleash — open-source feature flags; "unleash alternative" → Feature Flags
+    "flagsmith": "feature",     # Flagsmith — open-source feature flags; "flagsmith alternative" → Feature Flags
+    "growthbook": "feature",    # GrowthBook — A/B testing + flags; "growthbook alternative" → Feature Flags
+    # Maps & Location — thin coverage (4 entries); adding library names + query terms
+    "leaflet": "maps",          # Leaflet.js — interactive maps library; "leaflet alternative" → Maps & Location
+    "maplibre": "maps",         # MapLibre GL — WebGL vector maps; "maplibre alternative" → Maps & Location
+    "routing": "maps",          # "route planning api", "routing api", "directions routing" → Maps & Location
+    "directions": "maps",       # "directions api", "turn-by-turn navigation" → Maps & Location
+    "openstreetmap": "maps",    # OpenStreetMap — "openstreetmap api", "osm tiles server" → Maps & Location
+    "osm": "maps",              # OSM abbreviation — "osm api", "osm routing", "osm tiles" → Maps & Location
+    # Boilerplates & Starters — thin coverage (4 entries); adding popular starter names
+    "t3": "boilerplate",        # T3 Stack (create-t3-app); "t3 stack", "t3 boilerplate" → Boilerplates
+    "shipfast": "boilerplate",  # ShipFast — Next.js SaaS starter; "shipfast alternative" → Boilerplates
+    "makerkit": "boilerplate",  # MakerKit — SaaS starter kit; "makerkit alternative" → Boilerplates
+    "saaskit": "boilerplate",   # Generic SaaS kit; "saas kit", "saaskit boilerplate" → Boilerplates
+    # File Management — thin coverage (5 entries); adding storage service names + terms
+    "bucket": "file",           # "S3 bucket", "cloud storage bucket", "object bucket" → File Management
+    "blob": "file",             # "blob storage", "Azure Blob alternative" → File Management
+    "minio": "file",            # MinIO — self-hosted S3-compatible object storage; "minio alternative" → File Management
+    "r2": "file",               # Cloudflare R2 — "r2 alternative", "r2 storage" → File Management
+    "backblaze": "file",        # Backblaze B2 — "backblaze alternative", "backblaze b2" → File Management
+    # Caching — thin coverage (5 entries); adding Redis + modern in-memory alternatives
+    "redis": "caching",         # Redis — the primary caching/in-memory db; "redis alternative" → Caching
+    "valkey": "caching",        # Valkey — Redis fork (Linux Foundation); "valkey alternative" → Caching
+    "dragonfly": "caching",     # Dragonfly — fast Redis replacement; "dragonfly alternative" → Caching
+    "garnet": "caching",        # Garnet — Microsoft Redis-compatible cache; "garnet alternative" → Caching
+    # Notifications — thin coverage (6 entries); adding key tool names
+    "novu": "notifications",    # Novu — open-source notification infra; "novu alternative" → Notifications
+    "ntfy": "notifications",    # ntfy — self-hosted push notifications; "ntfy alternative" → Notifications
+    "gotify": "notifications",  # Gotify — self-hosted push server; "gotify alternative" → Notifications
+    "apprise": "notifications", # Apprise — universal notification library; "apprise alternative" → Notifications
+    "onesignal": "notifications", # OneSignal — "onesignal alternative", "onesignal open source" → Notifications
+    # Project Management — thin coverage (6 entries); adding tool names + query terms
+    "roadmap": "project",       # "product roadmap tool", "roadmap builder", "public roadmap" → Project Management
+    "gantt": "project",         # "gantt chart tool", "gantt open source" → Project Management
+    "plane": "project",         # Plane.so — open-source Jira alternative; "plane alternative" → Project Management
+    "basecamp": "project",      # Basecamp — "basecamp alternative", "basecamp self-hosted" → Project Management
+    "asana": "project",         # Asana — "asana alternative", "asana open source" → Project Management
+    # Forms & Surveys — thin coverage (6 entries); adding tool names + query terms
+    "jotform": "forms",         # JotForm — "jotform alternative", "jotform open source" → Forms & Surveys
+    "formspree": "forms",       # Formspree — "formspree alternative", "formspree self-hosted" → Forms & Surveys
+    "formbricks": "forms",      # Formbricks — open-source surveys; "formbricks alternative" → Forms & Surveys
+    "questionnaire": "forms",   # "questionnaire tool", "questionnaire builder" → Forms & Surveys
 }
 
 _FTS_STOP_WORDS = {

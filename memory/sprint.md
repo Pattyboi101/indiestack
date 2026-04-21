@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-21 (one-hundred-and-forty-fifth pass)
+Last updated: 2026-04-21 (one-hundred-and-forty-sixth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-21 (one-hundred-and-forty-fifth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2445 unique active keys (one-hundred-and-forty-fifth pass: +36 new — design/seo/social/scheduling/feedback thin-category fixes)
-- **Catalog script**: `scripts/add_missing_tools.py` — 668 unique tools (added 5 new: tldraw, serpbear, postiz, rallly, fider; 663→668)
+- **_CAT_SYNONYMS**: 2482 unique active keys (one-hundred-and-forty-sixth pass: +37 new — cli/feature-flags/maps/boilerplate/file/caching/notifications/project/forms thin-category fixes)
+- **Catalog script**: `scripts/add_missing_tools.py` — 679 unique tools (added 5 new: appflowy, vikunja, formbricks, turf, clack; 674→679)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,36 @@ Last updated: 2026-04-21 (one-hundred-and-forty-fifth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-21, one-hundred-and-forty-sixth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Audited all thin categories (by counting _CAT_SYNONYMS values per category); added 37 new entries → 2482 keys:
+  - **CLI Tools** (6 keys): `tui`, `clack`, `inquirer`, `oclif`, `ink`, `zx` → "cli"
+  - **Feature Flags** (5 keys): `rollout`, `experiment`, `unleash`, `flagsmith`, `growthbook` → "feature"
+  - **Maps & Location** (6 keys): `leaflet`, `maplibre`, `routing`, `directions`, `openstreetmap`, `osm` → "maps"
+  - **Boilerplates** (4 keys): `t3`, `shipfast`, `makerkit`, `saaskit` → "boilerplate"
+  - **File Management** (5 keys): `bucket`, `blob`, `minio`, `r2`, `backblaze` → "file"
+  - **Caching** (4 keys): `redis`, `valkey`, `dragonfly`, `garnet` → "caching"
+  - **Notifications** (5 keys): `novu`, `ntfy`, `gotify`, `apprise`, `onesignal` → "notifications"
+  - **Project Management** (5 keys): `roadmap`, `gantt`, `plane`, `basecamp`, `asana` → "project"
+  - **Forms & Surveys** (4 keys): `jotform`, `formspree`, `formbricks`, `questionnaire` → "forms"
+
+### Catalog Script (Step 2)
+- Added 5 new tools targeting thin-catalog categories (674 → 679 unique):
+  - **AppFlowy** (AppFlowy-IO/AppFlowy, 60k★) — open-source Notion/project management; project-management
+  - **Vikunja** (go-vikunja/vikunja, 5k★) — self-hosted task management + Gantt; project-management
+  - **Formbricks** (formbricks/formbricks, 9k★) — open-source Typeform alternative; forms-surveys
+  - **Turf.js** (Turfjs/turf, 9k★) — geospatial analysis for JS; maps-location
+  - **Clack** (bombshell-js/clack, 5k★) — modern CLI prompts framework; cli-tools
+
+### Code Quality (Step 3)
+- No issues in recently modified files (db.py + catalog script — no route files touched)
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-21, one-hundred-and-forty-fifth pass — autonomous improvement cycle)
 

@@ -11354,6 +11354,86 @@ TOOLS = [
         "# Docker: docker run -p 3000:3000 getfider/fider",
         "code",
     ),
+    # Project Management ---------------------------------------------------------
+    (
+        "appflowy",
+        "AppFlowy",
+        "Open-source Notion alternative — you own your data",
+        "AppFlowy is an open-source project management and wiki tool built with Flutter "
+        "and Rust. Notion-compatible blocks, Kanban boards, calendars, and grids — "
+        "fully self-hostable with end-to-end encryption. 60k+ GitHub stars.",
+        "project-management",
+        "AppFlowy-IO/AppFlowy",
+        60000,
+        "https://appflowy.io",
+        "notion-alternative,self-hosted,open-source,flutter,rust,kanban,wiki",
+        "# Self-host: docker compose up -d  (see docs.appflowy.io)",
+        "code",
+    ),
+    (
+        "vikunja",
+        "Vikunja",
+        "The open-source, self-hostable to-do app",
+        "Vikunja is a self-hosted task management tool with projects, tasks, subtasks, "
+        "kanban boards, Gantt charts, and team collaboration. Available as a web app, "
+        "desktop client, and mobile app. Todoist / Asana alternative for privacy-focused teams.",
+        "project-management",
+        "go-vikunja/vikunja",
+        5000,
+        "https://vikunja.io",
+        "task-management,self-hosted,open-source,kanban,gantt,todoist-alternative",
+        "docker run -p 3456:3456 vikunja/vikunja",
+        "code",
+    ),
+    # Forms & Surveys ------------------------------------------------------------
+    (
+        "formbricks",
+        "Formbricks",
+        "Open-source survey and experience management platform",
+        "Formbricks is a privacy-first, self-hostable survey platform. Build in-app "
+        "microsurveys, link surveys, and website popups. Native integrations with "
+        "Slack, Notion, and Zapier. GDPR-compliant alternative to Typeform and SurveyMonkey.",
+        "forms-surveys",
+        "formbricks/formbricks",
+        9000,
+        "https://formbricks.com",
+        "surveys,forms,typeform-alternative,self-hosted,open-source,gdpr",
+        "docker compose up -d  # see formbricks.com/docs/self-hosting",
+        "code",
+    ),
+    # Maps & Location ------------------------------------------------------------
+    (
+        "turf",
+        "Turf.js",
+        "Advanced geospatial analysis for browsers and Node.js",
+        "Turf.js is a modular geospatial engine for JavaScript. Provides 150+ functions "
+        "for spatial analysis: point-in-polygon, buffer, intersect, distance, bearing, "
+        "and more. Works with GeoJSON, runs in browser and Node, and integrates with "
+        "Leaflet, MapLibre, and Mapbox.",
+        "maps-location",
+        "Turfjs/turf",
+        9000,
+        "https://turfjs.org",
+        "geospatial,geojson,analysis,leaflet,maplibre,javascript",
+        "npm install @turf/turf",
+        "code",
+    ),
+    # CLI Tools ------------------------------------------------------------------
+    (
+        "clack",
+        "Clack",
+        "Effortlessly build beautiful command-line apps",
+        "Clack provides elegant prompts, spinners, progress bars, and confirmation "
+        "dialogs for Node.js CLI applications. Zero dependencies, framework-agnostic, "
+        "and designed for modern interactive CLIs.",
+        "cli-tools",
+        "bombshell-js/clack",
+        5000,
+        "https://www.clack.cc",
+        "cli,prompts,interactive,nodejs,typescript",
+        "npm install @clack/prompts",
+        "code",
+    ),
 ]
 
 
