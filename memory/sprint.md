@@ -3969,3 +3969,23 @@ Added 19 new `_CAT_SYNONYMS` entries covering genuine gaps:
 - Keep MCP server fully anonymous — no API key gating (see gotchas.md)
 - Maker Pro price: $19/mo (canonical source: stripe.md)
 - `_LIKE_STOP_WORDS` pattern used for FTS to avoid multi-word false matches
+
+## Completed This Session (2026-04-21, one-hundred-and-forty-second pass)
+
+### Search Quality — 14 new _CAT_SYNONYMS (2376 → 2390 keys)
+- **Error tracking**: `error-tracking`, `errortracking` → monitoring (Sentry/Bugsnag query patterns)
+- **Graph databases**: `graph-database`, `graph-db` → database (hyphenated; Neo4j, Memgraph)
+- **AI safety**: `guardrail` → ai (singular; NeMo Guardrails, Guardrails AI — plural already existed)
+- **AI tooling**: `llama-index`, `prompt-engineering`, `promptengineering` → ai
+- **Developer tools**: `dotfile`, `dotfiles`, `pdf-generation` → developer (chezmoi/yadm/pdfkit queries)
+- **CI/CD**: `ci-cd`, `travis`, `teamcity` → devops (Travis CI + TeamCity alternative queries)
+
+### Catalog Tools Added (657 → 663 tools in add_missing_tools.py)
+- **zitadel** (authentication) — open-source IAM, OIDC/SAML/passkeys (9k★)
+- **casdoor** (authentication) — open-source SSO/OAuth2/OIDC server by Casbin team (10k★)
+- **woodpecker-ci** (devops-infrastructure) — lightweight Drone CI fork (4k★)
+- **lapce** (developer-tools) — GPU-accelerated Rust code editor, VS Code alternative (33k★)
+- **rye** (developer-tools) — Python project + package manager by Flask author (12k★)
+- **vale** (developer-tools) — prose linter for docs-as-code teams (4k★)
+
+Deploy script when next on production: `python3 /app/src/indiestack/scripts/add_missing_tools.py`

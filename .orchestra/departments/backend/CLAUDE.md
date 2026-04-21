@@ -23,6 +23,8 @@ This has caused production bugs TWICE. Never use integer indexing on query resul
 - When changing shared DB function return shapes, grep ALL callers across ALL route files.
 - ALTER TABLE ADD COLUMN can't include UNIQUE — add column first, then CREATE UNIQUE INDEX.
 - Use `python3` not `python`.
+- When adding a new category to the DB, also add a matching entry to `NEED_MAPPINGS` in db.py (drives Stack Builder + Use Cases pages) and add relevant terms to `_CAT_SYNONYMS` for search routing.
+- After bulk tool updates (tags, categories, install commands): always rebuild FTS: `INSERT INTO tools_fts(tools_fts) VALUES('rebuild')` + `PRAGMA wal_checkpoint(TRUNCATE)`.
 
 ## Production SSH Pattern (CRITICAL)
 `flyctl ssh console -C "python3 -c \"...nested quotes\""` ALWAYS fails with SyntaxError.

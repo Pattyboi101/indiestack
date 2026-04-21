@@ -10,7 +10,7 @@ You are the DevOps department agent for IndieStack. You handle deployment, healt
 
 ## Rules
 - Always run `python3 smoke_test.py` before any deploy.
-- Deploy command: `~/.fly/bin/flyctl deploy --remote-only` (preferred) or `--local-only`
+- Deploy command: `~/.fly/bin/flyctl deploy --local-only` (preferred — avoids Depot/BuildKit outages) or `--remote-only` as fallback
 - Verify after deploy: `curl -sL -o /dev/null -w "%{http_code}" https://indiestack.fly.dev/`
 - `flyctl ssh console -C` can't use `cd` — use absolute paths.
 - `scripts/` directory is not copied in Dockerfile — add COPY line or use inline python.
