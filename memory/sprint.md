@@ -1,17 +1,17 @@
 # Sprint — Current
 
-Last updated: 2026-04-20 (one-hundred-and-forty-first pass)
+Last updated: 2026-04-21 (one-hundred-and-forty-third pass)
 
 ## Status: Active
 
-## System State (as of 2026-04-20)
+## System State (as of 2026-04-21)
 
 - **MCP server**: v1.18.0 (PyPI) — 10,000+ installs, agent-to-agent tools live; 29 @mcp.tool() functions
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2366 unique active keys (one-hundred-and-forty-first pass: +3 new — rss/feed→newsletters, podcast→media)
-- **Catalog script**: `scripts/add_missing_tools.py` — 657 unique tools (added 4 new: checkly, cronitor, hyperdx, openstatus; 653→657)
+- **_CAT_SYNONYMS**: 2381 unique active keys (one-hundred-and-forty-third pass: +15 new — learning/games/social thin-category fixes)
+- **Catalog script**: `scripts/add_missing_tools.py` — 660 unique tools (added 3 new: pixijs, anki, openedx; 657→660)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,41 @@ Last updated: 2026-04-20 (one-hundred-and-forty-first pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-21, one-hundred-and-forty-third pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- After exhaustive audit of 100+ potential synonym gaps: all core areas already covered (state management, bundler, realtime, vector database, rate limiting all confirmed present)
+- Found 3 genuinely thin categories; added 15 new `_CAT_SYNONYMS` entries → 2381 unique keys:
+  - **Learning & Education** (6 keys): `quiz`, `course`, `srs`, `mooc`, `e-learning`, `elearning` → "learning" (these terms were in NEED_MAPPINGS terms but missing from _CAT_SYNONYMS search routing)
+  - **Games & Entertainment** (4 keys): `pixijs` → "games" (disambiguates from pixi=conda; "pixi"→developer still correct), `kaboom`, `construct`, `gamemaker` → "games"
+  - **Social Media** (3 keys): `fediverse`, `activitypub`, `misskey` → "social" (category had only 3 entries)
+
+### Catalog Script (Step 2)
+- All 10 prompt-specified tools already in script (confirmed)
+- Added 3 new tools to thin categories (657 → 660 unique):
+  - **PixiJS** (pixijs/pixijs, 43k★) — fastest 2D WebGL renderer for browser games; games-entertainment
+  - **Anki** (ankitects/anki, 12k★) — spaced-repetition flashcard application (SRS); learning-education
+  - **Open edX** (openedx/edx-platform, 7k★) — open-source MOOC/LMS platform (powers edX, Harvard Online); learning-education
+
+### Code Quality (Step 3)
+- Fixed stale "48-endpoint" → "~70-endpoint" in `.orchestra/departments/devops/CLAUDE.md`
+  (smoke_test.py now has 71 HTTP request entries; count grows as features are added)
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
+
+## Completed This Session (2026-04-20, one-hundred-and-forty-second pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- Added 14 new `_CAT_SYNONYMS` entries (design, forms, CRM, auth, AWS cloud, error-tracking, graph-database, guardrail, llama-index, prompt-engineering, dotfile, pdf-generation, ci-cd, travis, teamcity)
+
+### Catalog Script (Step 2)
+- Added 6 new tools: OBS Studio, Blender, Audacity, Inkscape, FreeIPA, ImageKit (637→643 unique)
+
+---
 
 ## Completed This Session (2026-04-20, one-hundred-and-forty-first pass — autonomous improvement cycle)
 

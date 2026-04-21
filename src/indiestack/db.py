@@ -5876,6 +5876,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "travis": "devops",             # Travis CI — "travis alternative", "travis ci setup", "travis pricing" → DevOps
     # DevOps — JetBrains TeamCity CI/CD server (on-premise CI, "teamcity alternative" queries)
     "teamcity": "devops",           # TeamCity — "teamcity alternative", "teamcity self-hosted" → DevOps & Infrastructure
+    # Learning & Education — generic query terms not yet in synonym map
+    # NEED_MAPPINGS terms list includes these but _CAT_SYNONYMS needs them for search routing
+    "quiz": "learning",             # "quiz app alternative", "quiz platform open source" → Learning & Education
+    "course": "learning",           # "online course platform", "course builder self-hosted" → Learning & Education
+    "srs": "learning",              # SRS — Spaced Repetition System; "srs app", "srs flashcards" → Learning & Education
+    "mooc": "learning",             # MOOC — Massive Open Online Course; "mooc platform", "mooc alternative" → Learning & Education
+    "e-learning": "learning",       # hyphenated — "e-learning platform", "e-learning open source" → Learning & Education
+    "elearning": "learning",        # compound — "elearning alternative", "elearning software" → Learning & Education
+    # Games & Entertainment — PixiJS disambiguation (pixi→developer is for conda; pixijs is the 2D game renderer)
+    "pixijs": "games",              # PixiJS — fast 2D WebGL renderer for games/interactive graphics (43k★)
+    "kaboom": "games",              # Kaboom.js — fun browser JS game programming library (7k★)
+    "construct": "games",           # Construct — visual no-code cross-platform game engine (Scirra)
+    "gamemaker": "games",           # GameMaker Studio — "gamemaker alternative", "gamemaker free" → Games
+    # Social Media — federated/decentralised social platforms (thin synonym coverage)
+    "fediverse": "social",          # Fediverse — "fediverse app", "fediverse alternative", "self-host fediverse" → Social Media
+    "activitypub": "social",        # ActivityPub — "activitypub server", "activitypub implementation" → Social Media
+    "misskey": "social",            # Misskey — "misskey alternative", "misskey vs mastodon" → Social Media
 }
 
 _FTS_STOP_WORDS = {

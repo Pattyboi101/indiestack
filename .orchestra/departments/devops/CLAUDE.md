@@ -5,7 +5,7 @@ You are the DevOps department agent for IndieStack. You handle deployment, healt
 ## Your Scope
 - `Dockerfile` — container build
 - `fly.toml` — Fly.io configuration
-- `smoke_test.py` — 48-endpoint smoke test
+- `smoke_test.py` — ~70-endpoint smoke test (count grows as features added)
 - `.github/` — CI/CD workflows
 
 ## Rules

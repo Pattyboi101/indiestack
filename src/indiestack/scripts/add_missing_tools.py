@@ -11155,6 +11155,60 @@ TOOLS = [
         "brew install vale",
         "code",
     ),
+    # Games — PixiJS 2D WebGL renderer ------------------------------------------
+    (
+        "pixijs",
+        "PixiJS",
+        "The HTML5 Creation Engine — fast 2D WebGL renderer",
+        "PixiJS is the world's fastest 2D graphics library. It uses WebGL with "
+        "Canvas fallback to deliver interactive graphics, games, and data "
+        "visualisations. Powers interactive experiences at Adobe, Disney, and "
+        "BBC. Plugin ecosystem includes spine animation, tiled maps, and particle "
+        "systems. Note: slug is 'pixijs' to distinguish from Pixi (conda manager).",
+        "games-entertainment",
+        "pixijs/pixijs",
+        43000,
+        "https://pixijs.com",
+        "game-engine,2d,webgl,canvas,javascript,renderer,animation",
+        "npm install pixi.js",
+        "code",
+    ),
+    # Learning & Education — Anki spaced-repetition flashcards -----------------
+    (
+        "anki",
+        "Anki",
+        "Powerful, intelligent spaced-repetition flashcards",
+        "Anki is the most popular open-source spaced-repetition flashcard "
+        "application, used by medical students, language learners, and anyone who "
+        "wants to remember things long-term. The AnkiConnect add-on exposes a "
+        "REST API for programmatic deck and card management. AnkiDroid (Android) "
+        "and AnkiMobile (iOS) sync via AnkiWeb. 12k+ GitHub stars.",
+        "learning-education",
+        "ankitects/anki",
+        12000,
+        "https://apps.ankiweb.net",
+        "flashcards,spaced-repetition,srs,memorization,open-source,desktop",
+        "# Download installer from https://apps.ankiweb.net",
+        "code",
+    ),
+    # Learning & Education — Open edX LMS platform ----------------------------
+    (
+        "openedx",
+        "Open edX",
+        "The open-source platform powering leading online education",
+        "Open edX is the open-source learning management system that powers edX, "
+        "Harvard Online, MIT OpenCourseWare, and thousands of institutional and "
+        "corporate learning portals. Built with Django and React, it supports "
+        "video courses, certificates, graded assignments, discussion forums, "
+        "A/B testing, and comprehensive analytics. 7k+ GitHub stars.",
+        "learning-education",
+        "openedx/edx-platform",
+        7000,
+        "https://openedx.org",
+        "lms,mooc,e-learning,course-platform,django,certificates,open-source",
+        "# Deploy via Tutor: pip install tutor && tutor local launch",
+        "code",
+    ),
 ]
 
 
