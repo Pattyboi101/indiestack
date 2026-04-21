@@ -11209,6 +11209,61 @@ TOOLS = [
         "# Deploy via Tutor: pip install tutor && tutor local launch",
         "code",
     ),
+    # Customer Support — Tawk.to free live chat --------------------------------
+    (
+        "tawkto",
+        "Tawk.to",
+        "100% free live chat software for your website",
+        "Tawk.to is the most widely deployed free live chat widget, used on over "
+        "3 million websites. Includes a JavaScript snippet that drops a real-time "
+        "chat widget onto any page, a mobile app for agents, visitor monitoring, "
+        "canned responses, and ticketing. The core product is free forever; "
+        "optional paid add-ons cover white-labelling and video calls.",
+        "customer-support",
+        "tawk-to/tawk-io",
+        2000,
+        "https://www.tawk.to",
+        "live-chat,customer-support,chat-widget,free,saas",
+        "# Paste snippet in <head>: https://www.tawk.to/knowledgebase/",
+        "saas",
+    ),
+    # Feedback & Reviews — Canny product feedback boards -----------------------
+    (
+        "canny",
+        "Canny",
+        "Capture, organise, and prioritise product feedback",
+        "Canny is a product feedback and roadmap management tool. Customers submit "
+        "feature requests, upvote existing ones, and follow status updates — all "
+        "in a public or private board. Teams use the admin view to merge duplicates, "
+        "set priorities, and close the loop with changelogs. Integrates with "
+        "Intercom, Zendesk, Slack, Jira, and Linear. Free tier for small teams.",
+        "feedback-reviews",
+        "canny-io/canny",
+        1000,
+        "https://canny.io",
+        "feedback,roadmap,feature-requests,upvotes,changelog,saas",
+        "# Embed via JS snippet or use the hosted board at yourapp.canny.io",
+        "saas",
+    ),
+    # Creative Tools — LMMS free music production -----------------------------
+    (
+        "lmms",
+        "LMMS",
+        "Free, open-source, cross-platform music production",
+        "LMMS (Linux MultiMedia Studio) is a free, open-source DAW for Windows, "
+        "Mac, and Linux. Compose songs with the beat+bassline editor, piano roll, "
+        "and song editor. Ships with 100+ synthesizers, MIDI support, VST plugins, "
+        "and a built-in sequencer. Actively maintained with a large community. "
+        "A fully featured Audacity/GarageBand alternative for developers building "
+        "audio tools or needing a free DAW.",
+        "creative-tools",
+        "LMMS/lmms",
+        8000,
+        "https://lmms.io",
+        "daw,music-production,audio,midi,open-source,vst,sequencer",
+        "# Download installer from https://lmms.io/download",
+        "code",
+    ),
 ]
 
 

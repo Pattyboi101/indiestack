@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-21 (one-hundred-and-forty-third pass)
+Last updated: 2026-04-21 (one-hundred-and-forty-fourth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-21 (one-hundred-and-forty-third pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2381 unique active keys (one-hundred-and-forty-third pass: +15 new — learning/games/social thin-category fixes)
-- **Catalog script**: `scripts/add_missing_tools.py` — 660 unique tools (added 3 new: pixijs, anki, openedx; 657→660)
+- **_CAT_SYNONYMS**: 2409 unique active keys (one-hundred-and-forty-fourth pass: +19 new — customer/landing/feedback/newsletters/creative thin-category fixes)
+- **Catalog script**: `scripts/add_missing_tools.py` — 663 unique tools (added 3 new: tawkto, canny, lmms; 660→663)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,31 @@ Last updated: 2026-04-21 (one-hundred-and-forty-third pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-21, one-hundred-and-forty-fourth pass — autonomous improvement cycle)
+
+### Search Quality (Step 1)
+- All prompt-specified gaps confirmed already covered (state management, bundler, realtime, vector database, rate limiting all present)
+- Identified 5 genuinely thin synonym categories by counting entries per category bucket; added 19 new `_CAT_SYNONYMS` entries → ~2400 keys:
+  - **Customer Support** (3 keys): `livechat`, `live-chat`, `tawk` → "customer" (category had only 1 entry; routes "live chat" queries correctly)
+  - **Landing Pages** (2 keys): `carrd`, `wix` → "landing" (category had 2 entries; common "[tool] alternative" queries now routed)
+  - **Feedback & Reviews** (2 keys): `canny`, `testimonial` → "feedback" (category had 2 entries)
+  - **Newsletters & Content** (2 keys): `buttondown`, `hashnode` → "newsletters" (category had 4 entries)
+  - **Creative Tools** (5 keys): `krita`, `lmms`, `ardour`, `openshot`, `shotcut` → "creative" (category had 4 entries; DAWs + video editors now routed)
+
+### Catalog Script (Step 2)
+- All prior tools confirmed in script; added 3 new tools targeting thin categories (660 → 663 unique):
+  - **Tawk.to** (tawk-to/tawk-io, 2k★) — 100% free live chat widget, 3M+ sites; customer-support
+  - **Canny** (canny-io/canny, 1k★) — product feedback boards and roadmaps; feedback-reviews
+  - **LMMS** (LMMS/lmms, 8k★) — free open-source DAW (Linux MultiMedia Studio); creative-tools
+
+### Code Quality (Step 3)
+- No issues found in recent route file changes (no hex colors, no unescaped user input)
+
+### R&D Docs (Step 4)
+- docs/plans/ gitignored and not present locally — sprint.md updated
+
+---
 
 ## Completed This Session (2026-04-21, one-hundred-and-forty-third pass — autonomous improvement cycle)
 

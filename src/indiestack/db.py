@@ -5893,6 +5893,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "fediverse": "social",          # Fediverse — "fediverse app", "fediverse alternative", "self-host fediverse" → Social Media
     "activitypub": "social",        # ActivityPub — "activitypub server", "activitypub implementation" → Social Media
     "misskey": "social",            # Misskey — "misskey alternative", "misskey vs mastodon" → Social Media
+    # Customer Support — thin coverage (1 entry); adding live chat + named tools
+    "livechat": "customer",         # generic — "livechat software", "livechat widget" → Customer Support
+    "live-chat": "customer",        # hyphenated — "live-chat integration", "live-chat open source" → Customer Support
+    "tawk": "customer",             # Tawk.to — free live chat; "tawk alternative", "tawk.to widget" → Customer Support
+    # Landing Pages — thin coverage (2 entries); adding major website builders for "[tool] alternative" queries
+    "carrd": "landing",             # Carrd.co — simple single-page sites; "carrd alternative", "carrd vs" → Landing Pages
+    "wix": "landing",               # Wix — "wix alternative", "wix open source" → Landing Pages
+    # Feedback & Reviews — thin coverage (2 entries); adding feedback board and testimonial queries
+    "canny": "feedback",            # Canny.io — product feedback boards; "canny alternative", "canny open source" → Feedback & Reviews
+    "testimonial": "feedback",      # "testimonial tool", "collect testimonials", "testimonial widget" → Feedback & Reviews
+    # Newsletters & Content — thin coverage (4 entries); adding key publishing platform synonyms
+    "buttondown": "newsletters",    # Buttondown — indie newsletter tool; "buttondown alternative" → Newsletters & Content
+    "hashnode": "newsletters",      # Hashnode — dev blogging + newsletter; "hashnode alternative" → Newsletters & Content
+    # Creative Tools — thin coverage (4 entries); adding DAWs and video editors
+    "krita": "creative",            # Krita — digital painting application; "krita alternative" → Creative Tools
+    "lmms": "creative",             # LMMS (Linux MultiMedia Studio) — free DAW; "lmms alternative" → Creative Tools
+    "ardour": "creative",           # Ardour — open-source DAW; "ardour alternative", "ardour recording" → Creative Tools
+    "openshot": "creative",         # OpenShot — open-source video editor; "openshot alternative" → Creative Tools
+    "shotcut": "creative",          # Shotcut — free cross-platform video editor; "shotcut alternative" → Creative Tools
 }
 
 _FTS_STOP_WORDS = {
