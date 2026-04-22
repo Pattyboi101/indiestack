@@ -12416,6 +12416,101 @@ TOOLS = [
         "brew tap kubescape/tap && brew install kubescape",
         "code",
     ),
+    # Notifications (163rd pass) --------------------------------------------------
+    (
+        "novu",
+        "Novu",
+        "The open-source notification infrastructure for developers",
+        "Novu is the leading open-source notification infrastructure platform. "
+        "Send in-app, email, SMS, push, chat, and Slack notifications through "
+        "a single unified API. Features a drag-and-drop workflow editor, "
+        "template management, subscriber preferences, and a React notification "
+        "inbox component. Supports 40+ providers including Resend, Twilio, "
+        "SendGrid, Firebase, and SNS. The notification layer for modern SaaS.",
+        "notifications",
+        "novuhq/novu",
+        35000,
+        "https://novu.co",
+        "notifications,email,sms,push,in-app,webhook,multi-channel,open-source",
+        "npm install @novu/node",
+        "code",
+    ),
+    # API Tools (163rd pass) ------------------------------------------------------
+    (
+        "hono",
+        "Hono",
+        "Ultrafast web framework for the edge",
+        "Hono is a small, simple, and ultrafast web framework for the Edge. "
+        "Works on Cloudflare Workers, Fastly Compute, Deno, Bun, Vercel, AWS "
+        "Lambda, and Node.js. Provides a Express-like API with zero dependencies, "
+        "first-class TypeScript support, built-in middleware, and JSX rendering. "
+        "5x faster than Express on edge runtimes. The go-to framework for "
+        "edge-native APIs and full-stack apps.",
+        "api-tools",
+        "honojs/hono",
+        22000,
+        "https://hono.dev",
+        "api,edge,cloudflare-workers,bun,deno,typescript,middleware,fastapi",
+        "npm install hono",
+        "code",
+    ),
+    # Developer Tools (163rd pass) ------------------------------------------------
+    (
+        "zod",
+        "Zod",
+        "TypeScript-first schema validation with static type inference",
+        "Zod is a TypeScript-first schema declaration and validation library. "
+        "Define schemas once and get static TypeScript types automatically. "
+        "Zero dependencies, works in Node.js and browsers. Used to validate "
+        "API responses, form inputs, environment variables, and config files. "
+        "Pairs with React Hook Form, tRPC, and Prisma. The de-facto TypeScript "
+        "validation standard with 34k GitHub stars.",
+        "developer-tools",
+        "colinhacks/zod",
+        34000,
+        "https://zod.dev",
+        "validation,typescript,schema,form,runtime-types,type-safe,zod",
+        "npm install zod",
+        "code",
+    ),
+    # Authentication (163rd pass) -------------------------------------------------
+    (
+        "better-auth",
+        "Better Auth",
+        "The most comprehensive authentication library for TypeScript",
+        "Better Auth is a framework-agnostic authentication and authorization "
+        "library for TypeScript. Provides email/password, OAuth, magic link, "
+        "passkeys, two-factor, and more out of the box. First-class support for "
+        "Next.js, Nuxt, Remix, Astro, SvelteKit, Hono, and Express. Features "
+        "a plugin system, organization support, and admin panel. No vendor "
+        "lock-in — runs on your own database.",
+        "authentication",
+        "better-auth/better-auth",
+        12000,
+        "https://better-auth.com",
+        "auth,authentication,oauth,magic-link,passkey,2fa,typescript,nextjs",
+        "npm install better-auth",
+        "code",
+    ),
+    # Database (163rd pass) -------------------------------------------------------
+    (
+        "electric-sql",
+        "ElectricSQL",
+        "Local-first sync for Postgres",
+        "ElectricSQL is an open-source local-first sync layer for Postgres. "
+        "Sync subsets of your Postgres data into local SQLite databases inside "
+        "your apps. Provides real-time reactive queries, offline support, and "
+        "conflict-free CRDT-based sync. Works with any Postgres-compatible "
+        "database and any JavaScript framework. Ship offline-capable, "
+        "multi-user, real-time collaborative apps without building sync logic.",
+        "database",
+        "electric-sql/electric",
+        9000,
+        "https://electric-sql.com",
+        "local-first,offline,sync,postgres,sqlite,crdt,real-time,collaborative",
+        "npm install electric-sql",
+        "code",
+    ),
 ]
 
 

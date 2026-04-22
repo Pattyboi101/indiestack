@@ -6282,6 +6282,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cz": "devops",                 # cz CLI — commitizen short form; "cz commit", "cz alternative" → DevOps
     # Background Jobs — crontab expression queries (complement to "cron"→background)
     "crontab": "background",        # "crontab expression", "crontab syntax", "crontab editor" → Background Jobs
+    # Frontend — reactive programming pattern (RxJS, MobX, Vue reactivity, Signals, SolidJS)
+    "reactive": "frontend",         # "reactive programming library", "reactive state", "reactive framework" → Frontend Frameworks
+    # AI — DataFrame manipulation libraries (pandas→ai exists; bare "dataframe" query wasn't routed)
+    "dataframe": "ai",              # "dataframe library", "dataframe manipulation", "dataframe tool" → AI & Automation (Pandas, Polars, Dask)
+    # DevOps — git conventional commit tooling (conventional-commits/conventionalcommits exist; bare "conventional" didn't)
+    "conventional": "devops",       # "conventional commit message", "conventional git" → DevOps & Infrastructure (commitizen, git-cliff)
+    # DevOps — semantic versioning tooling (release/changesets already mapped; bare "semver" wasn't)
+    "semver": "devops",             # "semver tool", "semver automation", "semver library" → DevOps & Infrastructure (semantic-release, Changesets)
+    # Database — Presto/Trino distributed SQL query engines
+    "presto": "database",           # Presto — distributed SQL query engine (Facebook origin); "presto alternative" → Database
+    "trino": "database",            # Trino — community Presto fork (37k★); "trino alternative", "trino vs duckdb" → Database
+    # Message Queue — IoT messaging protocols (MQTT/AMQP; mqtt→message exists but generic "iot" wasn't)
+    "iot": "message",               # "iot messaging", "iot broker", "iot protocol" → Message Queues (Mosquitto, EMQx, HiveMQ, MQTT)
+    # DevOps — Git branching strategy tools (gitflow workflow, git-flow CLI)
+    "gitflow": "devops",            # "gitflow alternative", "gitflow branching", "gitflow vs trunk" → DevOps & Infrastructure
+    "git-flow": "devops",           # hyphenated — "git-flow tool", "git-flow workflow" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {
