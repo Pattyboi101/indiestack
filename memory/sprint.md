@@ -1,6 +1,6 @@
 # Sprint — Current
 
-Last updated: 2026-04-22 (one-hundred-and-fifty-sixth pass)
+Last updated: 2026-04-22 (one-hundred-and-fifty-eighth pass)
 
 ## Status: Active
 
@@ -10,8 +10,8 @@ Last updated: 2026-04-22 (one-hundred-and-fifty-sixth pass)
 - **Agent Registry**: `/agents` live — hire_agent, check_agent_inbox, find_agents MCP tools, contracts API
 - **Categories active**: caching, mcp-servers, ai-standards (pending), frontend-frameworks, boilerplates, maps-location + 25 others
 - **NEED_MAPPINGS**: 44 entries — comprehensive; all active categories covered
-- **_CAT_SYNONYMS**: 2588 unique active keys (one-hundred-and-fifty-sixth pass: +10 new — backstage/developer, openlit+langwatch/ai, firecracker+microvm+lxc+lxd+incus/devops, tembo/database)
-- **Catalog script**: `scripts/add_missing_tools.py` — 709 unique tools (added 4 new: backstage, firecracker, openlit, langwatch; 705→709)
+- **_CAT_SYNONYMS**: 2600 unique active keys (one-hundred-and-fifty-eighth pass: fixed 2 duplicate-key bugs + added 10 new)
+- **Catalog script**: `scripts/add_missing_tools.py` — 714 unique tools (added 5 new: ladle, histoire, tyk, netdata, supavisor; 709→714)
 - **DB migrations**: v3 category migration added to init_db() — fresh deploys now get all 5 new categories
 - **npm-\* tools**: 46 empty/duplicate npm- tools rejected in fifth pass (2026-04-05)
 - **Maker Pro price**: $19/mo (canonical: stripe.md)
@@ -19,6 +19,37 @@ Last updated: 2026-04-22 (one-hundred-and-fifty-sixth pass)
 - **Category count in copy**: "29+" — updated in main.py and route files (was stale 25)
 - **Oracle API**: x402-gated `/v1/compatibility` ($0.02) + `/v1/migration` ($0.05) live on Base mainnet
 - **Intel Dashboard**: `/intel/{slug}` admin-gated; `/api/intel/{slug}` requires `intel` API key scope
+
+## Completed This Session (2026-04-22, one-hundred-and-fifty-eighth pass — autonomous improvement cycle)
+
+### Bug Fixes (Step 1 — duplicate key discovery)
+- Found 2 genuine bugs in _CAT_SYNONYMS (Python dict: last key wins, earlier value silently lost):
+  - **`"routing"` collision**: `"routing"→"maps"` (line 5958, added pass ~157) overwrote `"routing"→"frontend"` (line 3087). "routing" queries are overwhelmingly about frontend routing (React Router, TanStack Router), not map route-planning. Fixed: changed the maps entry to `"wayfinding"→"maps"` to cover "wayfinding api" and "route planning" queries without collision.
+  - **`"affinity"` collision**: `"affinity"→"crm"` (line 6020) overwrote `"affinity"→"design"` (line 5796, Affinity Designer). Most IndieStack searches for "affinity" are for the design tool. Fixed: renamed the CRM key to `"affinity-crm"→"crm"`.
+
+### Search Quality (Step 1 — new entries)
+- Added 10 new _CAT_SYNONYMS entries covering genuine gaps:
+  - **Testing** (+2): `ladle` → "testing" (Storybook alternative, 3k★), `histoire` → "testing" (Vue/Svelte Storybook, 4k★)
+  - **Developer Tools** (+4): `stackblitz` → "developer" (WebContainers IDE, 17k★), `codesandbox` → "developer", `sandbox` → "developer" (generic), `playground` → "developer" (code playground)
+  - **API Tools** (+1): `tyk` → "api" (open-source API gateway, 9k★; complement to kong→api)
+  - **Monitoring** (+1): `netdata` → "monitoring" (real-time infra monitoring, 71k★)
+  - **Database** (+1): `supavisor` → "database" (Postgres connection pooler by Supabase, 2k★)
+  - **DevOps** (+1): `koyeb` → "devops" (fast serverless deployment platform)
+
+### Catalog Script (Step 2)
+- Added 5 new tools to add_missing_tools.py (709 → 714):
+  - **ladle** (thetarnav/ladle, 3.2k★) — Vite-powered Storybook alternative → testing-tools
+  - **histoire** (histoire-dev/histoire, 3.9k★) — Vue/Svelte component explorer → testing-tools
+  - **tyk** (TykTechnologies/tyk, 9.4k★) — open-source API gateway + dev portal → api-tools
+  - **netdata** (netdata/netdata, 71k★) — real-time infra monitoring → monitoring-uptime
+  - **supavisor** (supabase/supavisor, 2.1k★) — Postgres connection pooler → database
+
+### Code Quality (Step 3)
+- Reviewed last 5 commits (all db.py + add_missing_tools.py + sprint.md only)
+- No route files changed → no HTML escape or CSS variable issues to audit
+
+### R&D Docs (Step 4)
+- sprint.md updated with this pass's findings and fixes
 
 ## Completed This Session (2026-04-22, one-hundred-and-fifty-sixth pass — autonomous improvement cycle)
 
