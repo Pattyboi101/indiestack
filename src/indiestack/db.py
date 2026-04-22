@@ -6163,6 +6163,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "incus": "devops",             # Incus — community fork of LXD (lxc/incus, 3k★); "incus alternative" → DevOps
     # Database — Tembo.io managed PostgreSQL platform (common "tembo alternative" query target)
     "tembo": "database",           # Tembo — managed PostgreSQL stacks; "tembo alternative", "tembo postgres" → Database
+    # Testing — Biome compound form and MSW bare abbreviation (high-volume query targets)
+    "biomejs": "testing",          # Biome.js compound form; "biomejs alternative", "biomejs vs eslint" → Testing Tools
+    "msw": "testing",              # Mock Service Worker bare abbreviation; "msw setup", "msw rest handler" → Testing Tools
+    # Frontend — TanStack Query hyphenated form (complement to "react-query", "tanstack" already mapped)
+    "tanstack-query": "frontend",  # "tanstack-query alternative", "tanstack-query v5" → Frontend Frameworks
+    # API — Hono and GraphQL Yoga missing compound/hyphenated forms
+    "honojs": "api",               # Hono.js compound form; "honojs alternative", "honojs vs express" → API Tools
+    "graphql-yoga": "api",         # GraphQL Yoga hyphenated; "graphql-yoga alternative", "graphql-yoga setup" → API Tools
+    # DevOps — Canonical MicroK8s lightweight Kubernetes (complement to k3s, minikube already mapped)
+    "microk8s": "devops",          # MicroK8s — Canonical snap-deployed k8s; "microk8s alternative" → DevOps & Infrastructure
+    # AI — Pandas AI compound form (chat with DataFrames via LLMs)
+    "pandasai": "ai",              # PandasAI — "pandasai alternative", "pandasai python" → AI & Automation
+    # Database — Tortoise ORM hyphenated slug form (bare "tortoise"→database already mapped)
+    "tortoise-orm": "database",    # hyphenated slug — "tortoise-orm setup", "tortoise-orm vs sqlalchemy" → Database
+    # Testing — Pandera DataFrame validation (data quality testing for pandas/Polars pipelines)
+    "pandera": "testing",          # Pandera — DataFrame schema validation; "pandera alternative", "pandera pandas" → Testing Tools
+    # API — Strawberry GraphQL hyphenated slug form (bare "strawberry"→api already mapped)
+    "strawberry-graphql": "api",   # hyphenated slug — "strawberry-graphql alternative", "strawberry-graphql fastapi" → API Tools
 }
 
 _FTS_STOP_WORDS = {

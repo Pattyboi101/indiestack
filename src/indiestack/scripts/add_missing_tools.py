@@ -12215,6 +12215,98 @@ TOOLS = [
         "pip install langwatch",
         "code",
     ),
+    # Frontend Frameworks (157th pass) -------------------------------------------
+    (
+        "tanstack-start",
+        "TanStack Start",
+        "Type-safe full-stack React framework with file-based routing",
+        "TanStack Start is a full-stack React meta-framework built on TanStack Router. "
+        "It supports SSR, streaming, server functions, and file-based routing with "
+        "100% type safety across client, server, and loader boundaries. Built by "
+        "Tanner Linsley (creator of React Query/Table), it is positioned as a "
+        "type-safe Next.js alternative with zero runtime cost and first-class Vite "
+        "and Vinxi support.",
+        "frontend-frameworks",
+        "TanStack/router",
+        25000,
+        "https://tanstack.com/start",
+        "react,ssr,full-stack,routing,typescript,vite",
+        "npm create tsrouter-app@latest",
+        "code",
+    ),
+    # DevOps & Infrastructure (157th pass) ----------------------------------------
+    (
+        "microk8s",
+        "MicroK8s",
+        "Zero-ops Kubernetes for developers and edge",
+        "MicroK8s is Canonical's lightweight Kubernetes distribution, delivered as a "
+        "single snap package with zero configuration. It runs on Linux, macOS, and "
+        "Windows with built-in addons for DNS, storage, ingress, Prometheus, and more. "
+        "Ideal for local development, CI/CD pipelines, edge deployments, and IoT "
+        "workloads. Certified Kubernetes, production-ready, and fully CNCF conformant.",
+        "devops-infrastructure",
+        "canonical/microk8s",
+        8000,
+        "https://microk8s.io",
+        "kubernetes,k8s,container,devops,edge,iot,snap",
+        "snap install microk8s --classic",
+        "code",
+    ),
+    # Testing Tools (157th pass) --------------------------------------------------
+    (
+        "pandera",
+        "Pandera",
+        "Statistical typing and DataFrame validation for Python",
+        "Pandera is a statistical typing framework for validating pandas and Polars "
+        "DataFrames. Define schemas with Python type hints, validate data at runtime, "
+        "and write unit tests for data pipelines. Supports pandas, Polars, Spark, "
+        "Dask, and Modin backends with rich error reporting, hypothesis-based "
+        "property testing, and a decorator-based API for validating function "
+        "inputs and outputs.",
+        "testing-tools",
+        "unionai-oss/pandera",
+        3500,
+        "https://pandera.readthedocs.io",
+        "testing,pandas,polars,validation,data-quality,python,data-pipeline",
+        "pip install pandera",
+        "code",
+    ),
+    # API Tools (157th pass) ------------------------------------------------------
+    (
+        "strawberry-graphql",
+        "Strawberry",
+        "Python GraphQL library using type annotations and dataclasses",
+        "Strawberry is a developer-friendly Python GraphQL library that uses Python "
+        "type annotations and dataclasses to define schemas. Supports Django, FastAPI, "
+        "Flask, ASGI, and async frameworks. Features include GraphQL subscriptions, "
+        "Apollo Federation, async resolvers, and Pydantic v2 integration. Code-first "
+        "schema generation with full IDE support through type hints.",
+        "api-tools",
+        "strawberry-graphql/strawberry",
+        4000,
+        "https://strawberry.rocks",
+        "graphql,python,api,fastapi,django,schema,type-safe",
+        "pip install strawberry-graphql",
+        "code",
+    ),
+    # Database (157th pass) -------------------------------------------------------
+    (
+        "tortoise-orm",
+        "Tortoise ORM",
+        "Async Python ORM inspired by Django for asyncio",
+        "Tortoise ORM is an easy-to-use async Python ORM with Django-like syntax, "
+        "designed for asyncio. Supports PostgreSQL, MySQL, SQLite, and MS SQL Server "
+        "via native async drivers. Includes Pydantic integration, built-in migrations "
+        "via the Aerich CLI, and works seamlessly with FastAPI, Sanic, Starlette, and "
+        "other async Python frameworks. Familiar model definition, no boilerplate.",
+        "database",
+        "tortoise/tortoise-orm",
+        4400,
+        "https://tortoise.github.io",
+        "orm,python,asyncio,postgresql,mysql,sqlite,fastapi,django",
+        "pip install tortoise-orm",
+        "code",
+    ),
 ]
 
 
