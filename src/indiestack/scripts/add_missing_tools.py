@@ -11510,24 +11510,6 @@ TOOLS = [
         "code",
     ),
     # Landing Pages — Hugo static site generator ------------------------------
-    (
-        "hugo",
-        "Hugo",
-        "The world's fastest framework for building websites",
-        "Hugo is the fastest static site generator available, building a typical "
-        "site in under a second. Written in Go, it ships as a single binary with "
-        "no runtime dependencies. Supports themes, Markdown content, data files, "
-        "shortcodes, multilingual sites, and built-in image processing. "
-        "Power-user choice for landing pages, docs sites, portfolios, and blogs "
-        "that need Netlify/Vercel deploys without a database.",
-        "landing-pages",
-        "gohugoio/hugo",
-        77000,
-        "https://gohugo.io",
-        "static-site,ssg,landing-page,blog,docs,fast,go,jamstack",
-        "brew install hugo  # or: apt-get install hugo",
-        "code",
-    ),
     # Games & Entertainment — major game engines/frameworks missing from catalog --
     (
         "raylib",
@@ -11612,22 +11594,6 @@ TOOLS = [
         "code",
     ),
     # Authentication — self-hosted IdP and SSO tools ---------------------------
-    (
-        "casdoor",
-        "Casdoor",
-        "Open-source SSO/OAuth 2.0/OIDC identity server",
-        "Casdoor is an open-source UI-first identity and access management (IAM) "
-        "platform. It supports OAuth 2.0, OIDC, SAML, CAS, LDAP, and social login "
-        "providers. Self-host on Docker or Kubernetes; SDKs for Go, Node.js, Python, "
-        "Java, and .NET. Powers SSO for dev teams and SaaS products.",
-        "authentication",
-        "casdoor/casdoor",
-        9500,
-        "https://casdoor.org",
-        "auth,sso,oauth,oidc,saml,identity,self-hosted",
-        "docker pull casbin/casdoor",
-        "code",
-    ),
     (
         "authelia",
         "Authelia",
@@ -11760,6 +11726,58 @@ TOOLS = [
         "code",
     ),
     # Developer Tools ------------------------------------------------------------
+    # ── Pass 115 additions ────────────────────────────────────────────────
+    (
+        "marimo",
+        "Marimo",
+        "A reactive Python notebook — the successor to Jupyter",
+        "Marimo is a reactive Python notebook where every cell runs "
+        "automatically when its dependencies change. Unlike Jupyter, "
+        "cells cannot execute out of order. Notebooks are stored as "
+        "pure Python files, making them git-friendly and deployable as "
+        "interactive web apps. Supports SQL, pandas, Polars, and Altair.",
+        "ai-automation",
+        "marimo-team/marimo",
+        9000,
+        "https://marimo.io",
+        "notebook,python,reactive,data-science,interactive,jupyter-alternative",
+        "pip install marimo",
+        "code",
+    ),
+    (
+        "fasthtml",
+        "FastHTML",
+        "The fastest way to create an HTML app",
+        "FastHTML is a Python web framework built on top of Starlette and "
+        "HTMX that lets you write HTML-first web applications entirely in "
+        "Python. No JavaScript needed for most interactions. Created by "
+        "Jeremy Howard (fast.ai), it emphasises minimalism: components are "
+        "Python dataclasses that render to semantic HTML.",
+        "api-tools",
+        "AnswerDotAI/fasthtml",
+        4000,
+        "https://fastht.ml",
+        "python,htmx,html,web-framework,full-stack,starlette",
+        "pip install python-fasthtml",
+        "code",
+    ),
+    (
+        "dbeaver",
+        "DBeaver",
+        "Universal database tool — the most popular free database client",
+        "DBeaver is the most downloaded free, open-source database client "
+        "with a GUI for MySQL, PostgreSQL, SQLite, Oracle, Microsoft SQL "
+        "Server, MongoDB, Cassandra, and 100+ other databases. Features an "
+        "SQL editor, visual query builder, ER diagrams, data export, and "
+        "SSH tunnelling. Also available in Community and Pro editions.",
+        "developer-tools",
+        "dbeaver/dbeaver",
+        37000,
+        "https://dbeaver.io",
+        "database,sql,gui,db-client,postgresql,mysql,sqlite,oracle,universal",
+        "brew install --cask dbeaver-community",
+        "code",
+    ),
     (
         "datasette",
         "Datasette",
@@ -12361,23 +12379,6 @@ TOOLS = [
         "code",
     ),
     # Monitoring (158th pass) -----------------------------------------------------
-    (
-        "netdata",
-        "Netdata",
-        "Real-time infrastructure monitoring with per-second granularity",
-        "Netdata is a distributed real-time monitoring agent that collects thousands "
-        "of metrics per second with zero configuration on Linux, macOS, and "
-        "containers. Provides instant out-of-the-box dashboards for servers, "
-        "Kubernetes, databases, web servers, and 800+ integrations. The Netdata "
-        "Cloud SaaS aggregates nodes across your fleet. Self-hosted or cloud.",
-        "monitoring-uptime",
-        "netdata/netdata",
-        71000,
-        "https://netdata.cloud",
-        "monitoring,metrics,dashboards,kubernetes,real-time,infrastructure,observability",
-        "wget -O /tmp/netdata-kickstart.sh https://get.netdata.cloud/kickstart.sh && sh /tmp/netdata-kickstart.sh",
-        "code",
-    ),
     # Database (158th pass) -------------------------------------------------------
     (
         "supavisor",
@@ -12397,39 +12398,22 @@ TOOLS = [
         "code",
     ),
     # Developer Tools (160th pass) ------------------------------------------------
-    (
-        "dub",
-        "Dub.co",
-        "Open-source link management infrastructure for modern teams",
-        "Dub is the open-source link management platform for modern marketing "
-        "teams. Create short links, track clicks, and build branded links with "
-        "built-in analytics. Supports custom domains, QR codes, link expiry, "
-        "and team workspaces. Self-host or use the SaaS. Used by Vercel, "
-        "Perplexity, and thousands of indie makers.",
-        "developer-tools",
-        "dubinc/dub",
-        18000,
-        "https://dub.co",
-        "link-shortener,url-management,analytics,open-source,saas,branded-links",
-        "npm install @dub/sdk",
-        "code",
-    ),
     # Monitoring (160th pass) -----------------------------------------------------
     (
-        "openstatus",
-        "OpenStatus",
-        "Open-source status page and API monitoring platform",
-        "OpenStatus is an open-source status page and API monitoring service. "
-        "Monitor your APIs from multiple regions, get instant Slack/email/webhook "
-        "alerts on downtime, and show a public or private status page to your "
-        "users. Built with Next.js, Drizzle ORM, and deployed on the edge. "
-        "Used by hundreds of indie makers as a Betterstack/Statuspage alternative.",
-        "monitoring-uptime",
-        "openstatusHQ/openstatus",
-        8000,
-        "https://openstatus.dev",
-        "status-page,monitoring,uptime,api-monitoring,open-source,edge",
-        "npm install @openstatus/react",
+        "kubescape",
+        "Kubescape",
+        "The open-source Kubernetes security platform",
+        "Kubescape is a CNCF sandbox project for comprehensive Kubernetes "
+        "security scanning. It checks misconfigurations against NSA, MITRE "
+        "ATT&CK, and CIS benchmarks, scans container images for CVEs, and "
+        "produces risk scores with actionable remediation steps. Integrates "
+        "with CI/CD pipelines, IDE plugins, and admission controllers.",
+        "security-tools",
+        "kubescape/kubescape",
+        10000,
+        "https://kubescape.io",
+        "kubernetes,k8s,security,scanning,iac,compliance,cncf,vulnerability",
+        "brew tap kubescape/tap && brew install kubescape",
         "code",
     ),
 ]

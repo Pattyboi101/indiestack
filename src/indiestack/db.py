@@ -5158,7 +5158,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "embla": "frontend",            # Embla Carousel — lightweight extensible carousel (6k★) → Frontend Frameworks
     "cmdk": "frontend",             # cmdk — command palette component for React (10k★) → Frontend Frameworks
     "vaul": "frontend",             # Vaul — animated drawer component for React → Frontend Frameworks
-    # Security — Open Policy Agent / Zanzibar-inspired authorization
+    # Security — Open Policy Agent / Zanzibar-inspired authorization (opa already mapped at line ~4907)
     "open-policy-agent": "security", # full name — "open policy agent alternative" → Security Tools
     "spicedb": "security",          # SpiceDB — Google Zanzibar-inspired permissions DB (5k★) → Security Tools
     # Security — IaC and Dockerfile scanning
@@ -5166,7 +5166,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "hadolint": "security",         # Hadolint — Dockerfile linter and security checker → Security Tools
     # DevOps — commit message tooling (Commitizen, commitlint ecosystem)
     "commitizen": "devops",         # Commitizen — interactive conventional commit message tooling → DevOps & Infrastructure
-    # Testing — API mocking and test reporting
+    # Testing — API mocking and test reporting (msw already mapped at line ~3037)
     "allure": "testing",            # Allure — multi-language test report framework (4k★) → Testing Tools
     # CLI Tools — Python CLI frameworks (complement to "oclif"→cli, "cobra"→cli already mapped)
     "click": "cli",                 # Click — Python CLI toolkit by Pallets (16k★); most-used Python CLI framework
@@ -5610,9 +5610,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "conventionalcommits": "devops",   # compound — "conventionalcommits spec", "conventionalcommits setup" → DevOps
     # SolidStart — official SolidJS meta-framework (SSR/SSG/islands; like Next.js for Solid)
     "solid-start": "frontend",      # SolidStart — "solid-start alternative", "solidstart ssr" → Frontend Frameworks
-    "solidstart": "frontend",       # compound — "solidstart setup", "solidstart vs nextjs" → Frontend Frameworks
     # Analog — Angular meta-framework (SSR/SSG/API routes; like Next.js for Angular, 3k★)
-    "analog": "frontend",           # Analog — "analog angular framework", "analog ssr" → Frontend Frameworks
     "analogjs": "frontend",         # compound — "analogjs alternative", "analogjs setup" → Frontend Frameworks
     # Solito — React Native + Next.js cross-platform navigation library (5k★)
     "solito": "frontend",           # Solito — "solito navigation", "solito alternative" → Frontend Frameworks
@@ -5620,9 +5618,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "avalonia": "frontend",         # Avalonia — "avalonia alternative", "avalonia .net ui" → Frontend Frameworks
     "avaloniaui": "frontend",       # compound — "avaloniaui setup", "avaloniaui vs maui" → Frontend Frameworks
     # Tamagui — high-performance cross-platform React/React Native UI kit (11k★)
-    "tamagui": "frontend",          # Tamagui — "tamagui alternative", "tamagui rn ui" → Frontend Frameworks
     # Gluestack UI — React Native universal UI components (5k★)
-    "gluestack": "frontend",        # Gluestack UI — "gluestack alternative", "gluestack ui" → Frontend Frameworks
     "gluestack-ui": "frontend",     # hyphenated — "gluestack-ui setup", "gluestack-ui react-native" → Frontend Frameworks
     # Moti — React Native animation library by Fernando Rojo (3k★; inspired by Framer Motion)
     "moti": "frontend",             # Moti — "moti animation", "moti alternative" → Frontend Frameworks
@@ -5666,9 +5662,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ark-ui": "frontend",           # hyphenated — "ark-ui setup", "ark-ui vs radix" → Frontend Frameworks
     # Testing — linting tools (ESLint, Biome, OXLint, Pylint, Ruff live in Testing Tools)
     # "lint" has no synonym despite being one of the most common dev queries
-    "lint": "testing",              # "javascript lint", "lint tool", "lint setup" → Testing Tools (ESLint, Biome, OXLint)
     "linter": "testing",            # "css linter", "python linter", "linter alternative" → Testing Tools
-    "linting": "testing",           # "linting rules", "linting pipeline", "code linting" → Testing Tools
     # Testing — property-based testing pattern (Hypothesis, fast-check, PropEr, QuickCheck)
     "property-based": "testing",    # "property-based testing", "property-based test framework" → Testing Tools
     "fast-check": "testing",        # fast-check — TypeScript property-based testing (dubzzz/fast-check, 4k★) → Testing Tools
@@ -5766,7 +5760,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "appsync": "api",                # AWS AppSync — managed GraphQL + WebSocket + event API → API Tools
     "fasthtml": "api",               # FastHTML — Python web framework (HTMX-based); "fasthtml alternative" → API Tools
     # Developer Tools — Marimo reactive Python notebook (Jupyter alternative)
-    "marimo": "developer",           # Marimo — reactive Python notebook; "marimo alternative" → Developer Tools
+    "marimo": "ai",                  # Marimo — reactive Python notebook (9k★); "marimo alternative" → AI & Automation
     # AI — LitServe fast model serving engine (Lightning AI)
     "litserve": "ai",                # LitServe — fast AI model serving on FastAPI; "litserve alternative" → AI & Automation
     # Frontend — Aceternity UI animated Tailwind+Framer Motion component library
@@ -5941,56 +5935,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "nolt": "feedback",             # Nolt.io — feature voting boards; "nolt alternative", "nolt open source" → Feedback & Reviews
     "sleekplan": "feedback",        # SleekPlan — customer feedback widget; "sleekplan alternative" → Feedback & Reviews
     # CLI Tools — thin coverage (3 entries); adding framework + TUI query terms
-    "tui": "cli",               # Terminal User Interface — "tui app", "tui framework", "tui library" → CLI Tools
-    "clack": "cli",             # Clack.cc — modern CLI prompts framework; "clack alternative" → CLI Tools
-    "inquirer": "cli",          # Inquirer.js — interactive CLI prompts; "inquirer alternative" → CLI Tools
-    "oclif": "cli",             # Oclif — Salesforce CLI framework; "oclif alternative" → CLI Tools
     "ink": "cli",               # Ink — React for CLIs; "ink cli", "ink react terminal" → CLI Tools
     "zx": "cli",                # Google zx — shell scripting with JS; "zx alternative" → CLI Tools
     # Feature Flags — thin coverage (4 entries); adding tool names + behaviour terms
     "rollout": "feature",       # "gradual rollout", "rollout strategy" → Feature Flags
-    "experiment": "feature",    # "A/B experiment", "feature experiment" → Feature Flags
-    "unleash": "feature",       # Unleash — open-source feature flags; "unleash alternative" → Feature Flags
-    "flagsmith": "feature",     # Flagsmith — open-source feature flags; "flagsmith alternative" → Feature Flags
-    "growthbook": "feature",    # GrowthBook — A/B testing + flags; "growthbook alternative" → Feature Flags
     # Maps & Location — thin coverage (4 entries); adding library names + query terms
-    "leaflet": "maps",          # Leaflet.js — interactive maps library; "leaflet alternative" → Maps & Location
-    "maplibre": "maps",         # MapLibre GL — WebGL vector maps; "maplibre alternative" → Maps & Location
     "wayfinding": "maps",       # "wayfinding api", "route planning", "turn-by-turn routing" → Maps & Location
     "directions": "maps",       # "directions api", "turn-by-turn navigation" → Maps & Location
     "openstreetmap": "maps",    # OpenStreetMap — "openstreetmap api", "osm tiles server" → Maps & Location
-    "osm": "maps",              # OSM abbreviation — "osm api", "osm routing", "osm tiles" → Maps & Location
     # Boilerplates & Starters — thin coverage (4 entries); adding popular starter names
-    "t3": "boilerplate",        # T3 Stack (create-t3-app); "t3 stack", "t3 boilerplate" → Boilerplates
-    "shipfast": "boilerplate",  # ShipFast — Next.js SaaS starter; "shipfast alternative" → Boilerplates
     "makerkit": "boilerplate",  # MakerKit — SaaS starter kit; "makerkit alternative" → Boilerplates
     "saaskit": "boilerplate",   # Generic SaaS kit; "saas kit", "saaskit boilerplate" → Boilerplates
     # File Management — thin coverage (5 entries); adding storage service names + terms
     "bucket": "file",           # "S3 bucket", "cloud storage bucket", "object bucket" → File Management
-    "blob": "file",             # "blob storage", "Azure Blob alternative" → File Management
-    "minio": "file",            # MinIO — self-hosted S3-compatible object storage; "minio alternative" → File Management
-    "r2": "file",               # Cloudflare R2 — "r2 alternative", "r2 storage" → File Management
-    "backblaze": "file",        # Backblaze B2 — "backblaze alternative", "backblaze b2" → File Management
     # Caching — thin coverage (5 entries); adding Redis + modern in-memory alternatives
-    "redis": "caching",         # Redis — the primary caching/in-memory db; "redis alternative" → Caching
-    "valkey": "caching",        # Valkey — Redis fork (Linux Foundation); "valkey alternative" → Caching
-    "dragonfly": "caching",     # Dragonfly — fast Redis replacement; "dragonfly alternative" → Caching
-    "garnet": "caching",        # Garnet — Microsoft Redis-compatible cache; "garnet alternative" → Caching
     # Notifications — thin coverage (6 entries); adding key tool names
-    "novu": "notifications",    # Novu — open-source notification infra; "novu alternative" → Notifications
-    "ntfy": "notifications",    # ntfy — self-hosted push notifications; "ntfy alternative" → Notifications
-    "gotify": "notifications",  # Gotify — self-hosted push server; "gotify alternative" → Notifications
-    "apprise": "notifications", # Apprise — universal notification library; "apprise alternative" → Notifications
-    "onesignal": "notifications", # OneSignal — "onesignal alternative", "onesignal open source" → Notifications
     # Project Management — thin coverage (6 entries); adding tool names + query terms
     "roadmap": "project",       # "product roadmap tool", "roadmap builder", "public roadmap" → Project Management
-    "gantt": "project",         # "gantt chart tool", "gantt open source" → Project Management
-    "plane": "project",         # Plane.so — open-source Jira alternative; "plane alternative" → Project Management
-    "basecamp": "project",      # Basecamp — "basecamp alternative", "basecamp self-hosted" → Project Management
-    "asana": "project",         # Asana — "asana alternative", "asana open source" → Project Management
     # Forms & Surveys — thin coverage (6 entries); adding tool names + query terms
     "jotform": "forms",         # JotForm — "jotform alternative", "jotform open source" → Forms & Surveys
-    "formspree": "forms",       # Formspree — "formspree alternative", "formspree self-hosted" → Forms & Surveys
     "formbricks": "forms",      # Formbricks — open-source surveys; "formbricks alternative" → Forms & Surveys
     "questionnaire": "forms",   # "questionnaire tool", "questionnaire builder" → Forms & Surveys
     # Customer Support — thinnest category (4 "customer" keys); adding helpdesk + named tools
@@ -6177,7 +6140,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Pandas AI compound form (chat with DataFrames via LLMs)
     "pandasai": "ai",              # PandasAI — "pandasai alternative", "pandasai python" → AI & Automation
     # Database — Tortoise ORM hyphenated slug form (bare "tortoise"→database already mapped)
-    "tortoise-orm": "database",    # hyphenated slug — "tortoise-orm setup", "tortoise-orm vs sqlalchemy" → Database
     # Testing — Pandera DataFrame validation (data quality testing for pandas/Polars pipelines)
     "pandera": "testing",          # Pandera — DataFrame schema validation; "pandera alternative", "pandera pandas" → Testing Tools
     # API — Strawberry GraphQL hyphenated slug form (bare "strawberry"→api already mapped)
@@ -6297,6 +6259,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Analytics — session replay and screen recording (Hotjar, FullStory, LogRocket, Replay.io)
     "session-replay": "analytics",  # "session replay tool", "user session recording" → Analytics (Hotjar, FullStory)
     "screen-recording": "analytics",  # "screen recording for ux", "screen recording analytics" → Analytics
+    # AI — reactive Python notebooks and ML dashboards (fast-growing data-science segment)
+    "solara": "ai",                 # Solara — Python web app framework for ML/data scientists (2k★) → AI & Automation
+    "panel": "ai",                  # HoloViz Panel — Python dashboard framework for data apps (4k★) → AI & Automation
+    "evidently": "ai",              # Evidently AI — ML model monitoring and evaluation (5k★) → AI & Automation
+    "recsys": "ai",                 # abbreviation for recommendation systems → AI & Automation (LightFM, Surprise, Merlin)
+    # API — Python HTML-first frameworks and OpenAPI codegen tools
+    "serverpod": "api",             # Serverpod — Dart/Flutter full-stack server-side framework (2k★) → API Tools
+    "orval": "api",                 # Orval — TypeScript client codegen from OpenAPI specs (7k★) → API Tools
+    "openapi-ts": "api",            # hey-api/openapi-ts — TypeScript client codegen from OpenAPI (7k★) → API Tools
+    # Security — IaC and Kubernetes security scanning
+    "kubescape": "security",        # Kubescape — CNCF Kubernetes security scanning tool (10k★) → Security Tools
+    "terrascan": "security",        # Terrascan — IaC security vulnerability scanner (Tenable, 5k★) → Security Tools
+    # Developer Tools — database GUI clients (very common "alternative" query targets)
+    "tableplus": "developer",       # TablePlus — cross-platform DB GUI (MySQL, Postgres, SQLite, Redis)
+    "dbeaver": "developer",         # DBeaver — universal database client (37k★, most popular DB GUI) → Developer Tools
+    "beekeeper": "developer",       # Beekeeper Studio — open-source SQL GUI editor (15k★) → Developer Tools
+    "adminer": "developer",         # Adminer — single-file PHP DB management (15k★, phpMyAdmin alternative) → Developer Tools
+    "phpmyadmin": "developer",      # phpMyAdmin — MySQL web interface; "phpmyadmin alternative" queries → Developer Tools
+    # Testing — Go toolchain (golangci-lint is the canonical Go linting tool in CI)
+    # DevOps — commitizen short form (full "commitizen" entry already added in pass 114)
+    "cz": "devops",                 # cz CLI — commitizen short form; "cz commit", "cz alternative" → DevOps
+    # Background Jobs — crontab expression queries (complement to "cron"→background)
+    "crontab": "background",        # "crontab expression", "crontab syntax", "crontab editor" → Background Jobs
 }
 
 _FTS_STOP_WORDS = {
