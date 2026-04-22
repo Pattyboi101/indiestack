@@ -11988,6 +11988,79 @@ TOOLS = [
         "brew install imagemagick  # macOS\napt install imagemagick  # Debian/Ubuntu",
         "code",
     ),
+    # Security Tools ---------------------------------------------------------------
+    (
+        "wazuh",
+        "Wazuh",
+        "Open-source security platform: unified SIEM and XDR",
+        "Wazuh is a free, open-source security platform that unifies XDR and SIEM "
+        "capabilities in a single agent-based solution. Provides log data analysis, "
+        "vulnerability detection, intrusion detection, file integrity monitoring, "
+        "configuration assessment, and compliance reporting (PCI DSS, GDPR, HIPAA). "
+        "Scales from a single server to large multi-cloud deployments. "
+        "Active commercial support and community edition available. "
+        "Successor to OSSEC with a modern web UI and API.",
+        "security-tools",
+        "wazuh/wazuh",
+        10000,
+        "https://wazuh.com",
+        "siem,xdr,ids,intrusion-detection,log-analysis,compliance,file-integrity,open-source",
+        "curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && bash wazuh-install.sh -a",
+        "code",
+    ),
+    (
+        "ossec",
+        "OSSEC",
+        "Open-source host-based intrusion detection system (HIDS)",
+        "OSSEC is the world's most widely used open-source host-based intrusion detection "
+        "system. Performs log analysis, file integrity checking, policy monitoring, "
+        "rootkit detection, real-time alerting, and active response across Linux, "
+        "Windows, macOS, and BSD. Lightweight and battle-tested in production since 2004. "
+        "The foundation on which Wazuh's modern SIEM/XDR platform was built.",
+        "security-tools",
+        "ossec/ossec-hids",
+        4500,
+        "https://www.ossec.net",
+        "hids,intrusion-detection,log-analysis,file-integrity,rootkit-detection,siem",
+        "git clone https://github.com/ossec/ossec-hids && cd ossec-hids && ./install.sh",
+        "code",
+    ),
+    # DevOps & Infrastructure ------------------------------------------------------
+    (
+        "k0s",
+        "k0s",
+        "Zero-friction Kubernetes packaged as a single binary",
+        "k0s is an all-inclusive, zero-friction Kubernetes distribution packaged as a "
+        "single binary with no host OS dependencies beyond the Linux kernel. Supports "
+        "x86_64, ARM64, and ARMv7. Ideal for edge computing, on-premises clusters, and "
+        "resource-constrained environments. Fully CNCF-conformant Kubernetes, managed "
+        "by Mirantis. No external package managers or complex bootstrapping required.",
+        "devops-infrastructure",
+        "k0sproject/k0s",
+        8000,
+        "https://k0sproject.io",
+        "kubernetes,k8s,cluster,edge,lightweight,single-binary,cncf,on-premises",
+        "curl -sSLf https://get.k0s.sh | sh && k0s install controller --single && k0s start",
+        "code",
+    ),
+    (
+        "spinnaker",
+        "Spinnaker",
+        "Multi-cloud continuous delivery platform from Netflix",
+        "Spinnaker is an open-source, multi-cloud continuous delivery platform for "
+        "releasing software changes with high velocity and confidence. Originally built "
+        "by Netflix and open-sourced in 2015. Supports deployment targets including AWS, "
+        "GCP, Azure, Kubernetes, and Oracle Cloud. Provides deployment strategies "
+        "(blue/green, canary, rolling), pipeline management, automated rollbacks, "
+        "and deep cloud provider integrations.",
+        "devops-infrastructure",
+        "spinnaker/spinnaker",
+        9000,
+        "https://spinnaker.io",
+        "cd,continuous-delivery,multi-cloud,deployment,kubernetes,netflix,canary,blue-green",
+        "curl -O https://raw.githubusercontent.com/spinnaker/halyard/master/install/stable/InstallHalyard.sh && bash InstallHalyard.sh",
+        "code",
+    ),
 ]
 
 

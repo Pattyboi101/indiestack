@@ -6127,6 +6127,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "codeclimate": "testing",      # Code Climate — automated code quality + test coverage; "codeclimate alternative" → Testing Tools
     # Developer Tools — PDF generation service missing from synonym map
     "gotenberg": "developer",      # Gotenberg — Docker-powered PDF generation API (7k★); "gotenberg alternative" → Developer Tools
+    # Security — SIEM and intrusion detection terms missing from synonym map
+    "siem": "security",            # SIEM — Security Information and Event Management category term; "siem alternative", "open source siem" → Security Tools
+    "wazuh": "security",           # Wazuh — open-source SIEM/XDR platform (10k★); "wazuh alternative" → Security Tools
+    "ossec": "security",           # OSSEC — classic host-based intrusion detection system; "ossec alternative" → Security Tools
+    # Workflow automation — Make.com (formerly Integromat) old name still frequently searched
+    "integromat": "background",    # Make.com old name — "integromat alternative" searches → Background Jobs & Workflow Automation
+    # DevOps — lightweight Kubernetes distributions missing from synonym map
+    "k0s": "devops",               # k0s — zero-friction single-binary Kubernetes by Mirantis (8k★); "k0s alternative" → DevOps & Infrastructure
+    "spinnaker": "devops",         # Spinnaker — Netflix multi-cloud continuous delivery platform (9k★); "spinnaker alternative" → DevOps & Infrastructure
+    # Frontend — Vue 2 state management (superseded by Pinia; still heavily searched)
+    "vuex": "frontend",            # Vuex — official Vue 2 state management library; "vuex alternative" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
