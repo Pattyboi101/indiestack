@@ -6197,6 +6197,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     "supavisor": "database",        # Supavisor — cloud-native Postgres connection pooler (supabase/supavisor, 2k★) → Database
     # DevOps — Koyeb fast serverless deployment platform (growing alternative to Render/Railway)
     "koyeb": "devops",              # Koyeb — serverless deployment platform; "koyeb alternative" → DevOps & Infrastructure
+    # Monitoring — alert and incident management (very high query volume; terms in NEED_MAPPINGS but missing here)
+    "alert": "monitoring",          # "alert rule", "alert threshold", "metric alert" → Monitoring & Uptime
+    "alerts": "monitoring",         # plural — "configure alerts", "custom alerts" → Monitoring & Uptime
+    "incident": "monitoring",       # "incident management", "incident response platform" → Monitoring & Uptime (Incident.io, Rootly)
+    "on-call": "monitoring",        # "on-call management", "on-call scheduling", "on-call tool" → Monitoring & Uptime
+    "oncall": "monitoring",         # compound — "oncall platform", "oncall alternative" → Monitoring & Uptime
+    "postmortem": "monitoring",     # "postmortem tool", "incident postmortem" → Monitoring & Uptime
+    "runbook": "monitoring",        # "runbook automation", "ops runbook" → Monitoring & Uptime
+    # DevOps — chaos engineering bare term (named tools: chaostoolkit/chaos-mesh are mapped; generic queries weren't)
+    "chaos": "devops",              # "chaos engineering", "chaos testing tool" → DevOps & Infrastructure
+    # Developer Tools — IDE and internal developer portal query terms
+    "ide": "developer",             # "IDE alternative", "lightweight IDE", "ide plugin" → Developer Tools (Zed, Neovim, VS Code)
+    "portal": "developer",          # "developer portal", "internal developer portal" → Developer Tools (Backstage)
+    # Testing — load testing bare term (k6, Locust, Artillery, Gatling all mapped; bare "load" query wasn't)
+    "load": "testing",              # "load testing tool", "load generator", "load test library" → Testing Tools
 }
 
 _FTS_STOP_WORDS = {
