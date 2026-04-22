@@ -12511,6 +12511,58 @@ TOOLS = [
         "npm install electric-sql",
         "code",
     ),
+    # Developer Tools (141st pass from origin/main) --------------------------------
+    (
+        "beekeeper-studio",
+        "Beekeeper Studio",
+        "Cross-platform SQL editor and database manager — open source",
+        "Beekeeper Studio is a modern, open-source SQL editor and database manager "
+        "for Linux, macOS, and Windows. Connect to PostgreSQL, MySQL, SQLite, SQL "
+        "Server, and more. Features tabbed interface, auto-complete, query history, "
+        "and a clean UI optimized for developers who spend time in databases daily.",
+        "developer-tools",
+        "beekeeper-studio/beekeeper-studio",
+        14000,
+        "https://www.beekeeperstudio.io",
+        "database-gui,sql,postgresql,mysql,sqlite,open-source,cross-platform",
+        "brew install --cask beekeeper-studio",
+        "code",
+    ),
+    # Database (141st pass from origin/main) ----------------------------------------
+    (
+        "triplit",
+        "Triplit",
+        "Full-stack database with real-time sync and offline-first support",
+        "Triplit is an open-source database that runs in both the browser and on the "
+        "server, syncing data between them in real time. It supports offline-first "
+        "apps out of the box, with a typed schema, reactive queries, and built-in "
+        "access control. A strong alternative to Firebase, Replicache, and "
+        "PowerSync for apps that need low-latency local data.",
+        "database",
+        "triplit/triplit",
+        4000,
+        "https://www.triplit.dev",
+        "database,real-time,sync,offline-first,typescript,react,full-stack",
+        "npm install @triplit/client",
+        "code",
+    ),
+    (
+        "pgadmin",
+        "pgAdmin",
+        "The most popular open-source PostgreSQL administration platform",
+        "pgAdmin 4 is the official, feature-rich administration and development "
+        "platform for PostgreSQL. Run it as a desktop app or a self-hosted web "
+        "application. Includes a query editor with syntax highlighting, schema "
+        "browser, ERD editor, backup/restore wizards, and performance dashboards. "
+        "The standard free tool for Postgres DBAs and developers.",
+        "developer-tools",
+        "pgadmin-org/pgadmin4",
+        3500,
+        "https://www.pgadmin.org",
+        "postgresql,database-gui,admin,sql,open-source,self-hosted",
+        "pip install pgadmin4",
+        "code",
+    ),
 ]
 
 

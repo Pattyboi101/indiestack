@@ -6298,6 +6298,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — Git branching strategy tools (gitflow workflow, git-flow CLI)
     "gitflow": "devops",            # "gitflow alternative", "gitflow branching", "gitflow vs trunk" → DevOps & Infrastructure
     "git-flow": "devops",           # hyphenated — "git-flow tool", "git-flow workflow" → DevOps & Infrastructure
+    # Origin/main entries merged in (141st pass additions not in local branch)
+    "validator": "developer",       # "validator library", "input validator", "schema validator" → Developer Tools
+    "envoy": "devops",              # Envoy — high-performance proxy by Lyft/CNCF → DevOps & Infrastructure
+    "load-balancer": "devops",      # hyphenated — "load-balancer setup", "load-balancer alternative" → DevOps
+    "servicemesh": "devops",        # compound — "servicemesh architecture", "servicemesh tool" → DevOps
+    "form-validation": "frontend",  # hyphenated — "form-validation library", "form-validation react" → Frontend
+    "formvalidation": "frontend",   # compound — "formvalidation library" → Frontend Frameworks
+    "wcag": "testing",              # "wcag compliance", "wcag testing tool", "wcag checker" → Testing Tools
+    "semrel": "devops",             # "semrel config", "semrel alternative" → DevOps & Infrastructure
+    "pgadmin": "database",          # pgAdmin — official PostgreSQL administration and GUI
+    "dbgate": "developer",          # DbGate — open-source SQL+NoSQL database client (4k★)
+    "triplit": "database",          # "triplit alternative", "triplit react", "offline-first db" → Database
+    "neondb": "database",           # "neondb alternative", "neondb postgres" → Database (serverless Postgres)
+    "neon-db": "database",          # hyphenated form — "neon-db setup", "neon-db vs supabase" → Database
+    "turf": "maps",                 # "turf alternative", "turf.js geospatial", "turf polygon" → Maps & Location
+    "turfjs": "maps",               # compound — "turfjs npm", "turfjs react" → Maps & Location
+    "deckgl": "maps",               # "deckgl alternative", "deck.gl layers", "deckgl react" → Maps & Location
+    "freshping": "monitoring",      # Freshping.io — real-time uptime monitoring by Freshworks → Monitoring & Uptime
+    "ohdear": "monitoring",         # Oh Dear! — uptime/SSL/cert/domain monitoring SaaS → Monitoring & Uptime
+    "oh-dear": "monitoring",        # hyphenated form — "oh-dear alternative", "oh dear monitoring" → Monitoring & Uptime
 }
 
 _FTS_STOP_WORDS = {
