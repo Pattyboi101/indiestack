@@ -6212,6 +6212,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "portal": "developer",          # "developer portal", "internal developer portal" → Developer Tools (Backstage)
     # Testing — load testing bare term (k6, Locust, Artillery, Gatling all mapped; bare "load" query wasn't)
     "load": "testing",              # "load testing tool", "load generator", "load test library" → Testing Tools
+    # CSS preprocessors — Sass/SCSS are the dominant CSS compilation query segment
+    "sass": "frontend",             # Sass — CSS preprocessor with variables, nesting, mixins (80k★) → Frontend Frameworks
+    "scss": "frontend",             # SCSS — Sassy CSS syntax for Sass; "scss setup", "scss alternative" → Frontend Frameworks
+    "postcss": "frontend",          # PostCSS — CSS transformation via JS plugins (autoprefixer, nesting) → Frontend Frameworks
+    # CMS — major PHP CMS platforms (extremely high "drupal alternative" / "joomla alternative" query volume)
+    "drupal" : "cms",               # Drupal — enterprise PHP CMS (22k★); "drupal alternative", "drupal headless" → Headless CMS
+    "joomla": "cms",                # Joomla — open-source PHP CMS (5k★); "joomla alternative", "joomla headless" → Headless CMS
+    "typo3": "cms",                 # TYPO3 — enterprise PHP CMS popular in Europe; "typo3 alternative" → Headless CMS
+    # Package manager — npm bare term (most-searched JS package manager; pnpm/yarn already mapped to frontend)
+    "npm": "developer",             # npm — Node package manager; "npm alternative", "npm workspaces", "npm vs pnpm" → Developer Tools
+    # Testing — API mocking tools not yet individually mapped
+    "mockoon": "testing",           # Mockoon — API mocking desktop app (mockoon/mockoon, 6k★); "mockoon alternative" → Testing Tools
+    # Auth — Auth.js v5 (NextAuth.js v5 rebranding; next-auth/nextauth already mapped; bare compound form wasn't)
+    "authjs": "authentication",     # Auth.js — "authjs alternative", "authjs setup", "auth.js v5" → Authentication
+    "auth-js": "authentication",    # hyphenated — "auth-js nextjs", "auth-js provider" → Authentication
+    # API — Spectral OpenAPI schema linter (Stoplight, 2.5k★)
+    "spectral": "api",              # Spectral — OpenAPI/JSON Schema linter; "spectral alternative", "spectral lint" → API Tools
+    # DevOps — Semaphore CI/CD (fast, popular CI with no YAML-bloat design)
+    "semaphore": "devops",          # Semaphore CI — "semaphore alternative", "semaphore ci setup" → DevOps & Infrastructure
+    # API — Symfony PHP full-stack framework (major PHP ecosystem, 30k★)
+    "symfony": "api",               # Symfony — PHP full-stack framework; "symfony alternative", "symfony rest api" → API Tools
 }
 
 _FTS_STOP_WORDS = {
