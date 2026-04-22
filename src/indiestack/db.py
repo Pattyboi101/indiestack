@@ -6246,6 +6246,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "codiumai": "ai",               # CodiumAI legacy name — "codiumai alternative" queries still active → AI & Automation
     # MCP Servers — Smithery MCP registry and hub
     "smithery": "mcp",              # Smithery.ai — MCP server registry/hub; "smithery mcp" → MCP Servers
+    # Parallel processing — "parallel" → Background Jobs (Celery, Ray, Dask, multiprocessing)
+    "parallel": "background",       # "parallel processing library", "parallel tasks", "parallel workers" → Background Jobs
+    # Realtime collaboration — Liveblocks, Yjs, PartyKit, Tiptap collab live in API Tools
+    "collaborative": "api",         # "collaborative editing", "collaborative app" → API Tools (Liveblocks, Yjs)
+    "collaboration": "api",         # "real-time collaboration API", "collaboration SDK" → API Tools (Liveblocks, PartyKit)
+    "multiplayer": "api",           # "multiplayer backend", "multiplayer game server" → API Tools (Liveblocks, Ably)
+    "multi-player": "api",          # hyphenated — "multi-player sync", "multi-player realtime" → API Tools
+    # Whiteboard / infinite canvas — Excalidraw, tldraw live in Design & Creative
+    "whiteboard": "design",         # "whiteboard tool", "digital whiteboard", "online whiteboard" → Design & Creative
+    "tldraw": "design",             # tldraw — infinite canvas whiteboard SDK; "tldraw alternative" → Design & Creative
+    # Key-value store — hyphenated form (kv/keyvalue/inmemory already mapped; key-value wasn't)
+    "key-value": "caching",         # "key-value store", "key-value database", "key-value cache" → Caching (Redis, Upstash)
+    # Auto-scaling — cloud and Kubernetes horizontal scaling queries → DevOps & Infrastructure
+    "autoscaling": "devops",        # "autoscaling policy", "autoscaling k8s", "horizontal autoscaling" → DevOps & Infrastructure
+    "auto-scaling": "devops",       # hyphenated — "auto-scaling setup", "auto-scaling rules" → DevOps & Infrastructure
+    # Atomic — atomic CSS / atomic design / atomic state management → Frontend Frameworks
+    "atomic": "frontend",           # "atomic css engine", "atomic design system", "atomic state react" → Frontend Frameworks (UnoCSS, Jotai)
+    # Observable — RxJS observables, MobX observable, reactive state → Frontend Frameworks
+    "observable": "frontend",       # "observable pattern", "observable state", "rxjs observable" → Frontend Frameworks (RxJS, MobX)
+    "observables": "frontend",      # plural — "rxjs observables", "vue observables" → Frontend Frameworks
+    # Responsive — responsive CSS layout queries → Frontend Frameworks (Tailwind, Bootstrap, CSS Grid)
+    "responsive": "frontend",       # "responsive css framework", "responsive design grid", "responsive layout" → Frontend Frameworks
+    # Immutable — immutable state and data structures → Frontend Frameworks (Immer, Immutable.js)
+    "immutable": "frontend",        # "immutable state library", "immutable data structure", "immer alternative" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
