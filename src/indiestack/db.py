@@ -6138,6 +6138,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "spinnaker": "devops",         # Spinnaker — Netflix multi-cloud continuous delivery platform (9k★); "spinnaker alternative" → DevOps & Infrastructure
     # Frontend — Vue 2 state management (superseded by Pinia; still heavily searched)
     "vuex": "frontend",            # Vuex — official Vue 2 state management library; "vuex alternative" → Frontend Frameworks
+    # Config management — Chef and Salt complete the classic triad (puppet/saltstack already mapped)
+    "chef": "devops",              # Chef Infra — declarative infrastructure config management (chef/chef, 7.5k★) → DevOps
+    "salt": "devops",              # SaltStack short form — "salt alternative", "salt vs ansible" → DevOps & Infrastructure
+    "configuration": "devops",     # "configuration management tool", "configuration server" → DevOps (Ansible, Puppet, Chef)
+    # Backup and cloud sync — high-query OSS tools not yet in synonyms
+    "restic": "devops",            # Restic — fast, secure, encrypted backup (restic/restic, 26k★) → DevOps & Infrastructure
+    "rclone": "devops",            # Rclone — cloud storage sync and backup CLI (rclone/rclone, 47k★) → DevOps & Infrastructure
+    "velero": "devops",            # Velero — Kubernetes backup and disaster recovery (vmware-tanzu/velero, 8.5k★) → DevOps
+    # Service discovery — generic query term for Consul, Eureka, etcd queries
+    "discovery": "devops",         # "service discovery", "service registry", "auto-discovery" → DevOps & Infrastructure
+    # Monitoring — anomaly detection is a distinct monitoring query segment
+    "anomaly": "monitoring",       # "anomaly detection", "anomaly alerting", "anomaly in metrics" → Monitoring & Uptime
 }
 
 _FTS_STOP_WORDS = {

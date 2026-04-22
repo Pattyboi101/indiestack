@@ -259,7 +259,7 @@ async def geo_landing(request: Request):
             cursor: not-allowed;
         }}
         .geo-error {{
-            color: #e53e3e;
+            color: var(--error-text);
             font-size: var(--text-sm);
             margin-top: 10px;
             display: none;

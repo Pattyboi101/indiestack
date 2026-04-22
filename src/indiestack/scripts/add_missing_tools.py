@@ -12061,6 +12061,89 @@ TOOLS = [
         "curl -O https://raw.githubusercontent.com/spinnaker/halyard/master/install/stable/InstallHalyard.sh && bash InstallHalyard.sh",
         "code",
     ),
+    # Config management -------------------------------------------------------
+    (
+        "puppet",
+        "Puppet",
+        "Declarative infrastructure configuration management",
+        "Puppet is an open-source configuration management tool that automates the "
+        "provisioning, configuration, and management of servers. Uses a declarative "
+        "Ruby DSL to describe system state. Supports Linux, Windows, and macOS. "
+        "Widely used in enterprise DevOps pipelines alongside Ansible and Chef.",
+        "devops-infrastructure",
+        "puppetlabs/puppet",
+        7500,
+        "https://puppet.com",
+        "config-management,infrastructure,devops,automation,idempotent",
+        "brew install puppet-agent || apt-get install puppet-agent",
+        "code",
+    ),
+    (
+        "chef",
+        "Chef Infra",
+        "Infrastructure automation and configuration management",
+        "Chef Infra (part of Chef Software, now Progress Chef) automates infrastructure "
+        "configuration using Ruby-based 'recipes' and 'cookbooks'. Supports cloud, "
+        "on-premise, and hybrid environments. Works alongside Chef InSpec for compliance "
+        "testing and Chef Habitat for application build and deploy automation.",
+        "devops-infrastructure",
+        "chef/chef",
+        7500,
+        "https://chef.io",
+        "config-management,infrastructure,devops,automation,ruby",
+        "curl -L https://omnitruck.chef.io/install.sh | sudo bash",
+        "code",
+    ),
+    (
+        "salt",
+        "SaltStack",
+        "Remote execution and infrastructure automation platform",
+        "SaltStack (Salt) is an event-driven infrastructure automation and configuration "
+        "management platform. Provides both push and pull models, making it extremely "
+        "fast for remote execution across thousands of nodes simultaneously. Written in "
+        "Python. Widely used for cloud infrastructure management and orchestration.",
+        "devops-infrastructure",
+        "saltstack/salt",
+        14000,
+        "https://saltproject.io",
+        "config-management,remote-execution,infrastructure,devops,automation,python",
+        "pip install salt",
+        "code",
+    ),
+    # Backup tools ------------------------------------------------------------
+    (
+        "restic",
+        "Restic",
+        "Fast, secure, efficient backup program",
+        "Restic is a modern backup program written in Go. Backups are encrypted, "
+        "deduplicated, and incremental. Supports local, SFTP, S3-compatible, Azure Blob, "
+        "Google Cloud Storage, and more as backends. Snapshots are browsable and "
+        "restorable at any point in time. Single binary, no dependencies.",
+        "devops-infrastructure",
+        "restic/restic",
+        26000,
+        "https://restic.net",
+        "backup,encryption,deduplication,s3,golang,cli",
+        "brew install restic || apt-get install restic",
+        "code",
+    ),
+    (
+        "rclone",
+        "Rclone",
+        "Rsync for cloud storage — sync files to 70+ storage providers",
+        "Rclone is a command-line program to manage files on cloud storage. It is a "
+        "feature-rich alternative to cloud vendors' web storage interfaces. Over 70 "
+        "cloud storage products are supported including S3, Google Drive, Azure Blob, "
+        "Dropbox, Backblaze B2, SFTP, WebDAV, and more. Excellent for backups, "
+        "migrations, and automation.",
+        "devops-infrastructure",
+        "rclone/rclone",
+        47000,
+        "https://rclone.org",
+        "cloud-storage,backup,sync,s3,gdrive,cli,golang",
+        "brew install rclone || curl https://rclone.org/install.sh | sudo bash",
+        "code",
+    ),
 ]
 
 
