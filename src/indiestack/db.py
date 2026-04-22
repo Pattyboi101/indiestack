@@ -6150,6 +6150,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "discovery": "devops",         # "service discovery", "service registry", "auto-discovery" → DevOps & Infrastructure
     # Monitoring — anomaly detection is a distinct monitoring query segment
     "anomaly": "monitoring",       # "anomaly detection", "anomaly alerting", "anomaly in metrics" → Monitoring & Uptime
+    # Developer Tools — Spotify Backstage developer portal (internal developer portal platform, 27k★)
+    "backstage": "developer",      # Backstage — "backstage alternative", "developer portal tool" → Developer Tools
+    # AI — LLM observability and evaluation platforms (fast-growing 2026 segment)
+    "openlit": "ai",               # OpenLIT — open-source LLM observability; "openlit alternative" → AI & Automation
+    "langwatch": "ai",             # LangWatch — LLM testing + observability platform → AI & Automation
+    # DevOps — microVM runtimes and Linux container managers (complement to containerd/podman already mapped)
+    "firecracker": "devops",       # Firecracker — AWS microVM runtime; "firecracker alternative", "firecracker kata" → DevOps
+    "microvm": "devops",           # "microVM runtime", "microVM hypervisor" — Firecracker, Kata Containers → DevOps
+    "lxc": "devops",               # LXC — Linux Containers; "lxc alternative", "lxc vs docker" → DevOps & Infrastructure
+    "lxd": "devops",               # LXD — LXC-based container/VM manager; "lxd alternative" → DevOps & Infrastructure
+    "incus": "devops",             # Incus — community fork of LXD (lxc/incus, 3k★); "incus alternative" → DevOps
+    # Database — Tembo.io managed PostgreSQL platform (common "tembo alternative" query target)
+    "tembo": "database",           # Tembo — managed PostgreSQL stacks; "tembo alternative", "tembo postgres" → Database
 }
 
 _FTS_STOP_WORDS = {

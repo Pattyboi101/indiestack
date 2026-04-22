@@ -12144,6 +12144,77 @@ TOOLS = [
         "brew install rclone || curl https://rclone.org/install.sh | sudo bash",
         "code",
     ),
+    # Developer Portal --------------------------------------------------------
+    (
+        "backstage",
+        "Backstage",
+        "An open platform for building developer portals",
+        "Backstage is an open-source developer portal platform created by Spotify and "
+        "donated to the CNCF. It centralises all infrastructure tooling, services, and "
+        "documentation into a single unified portal. Teams use it to manage microservices, "
+        "standardise tooling, and improve developer experience at scale. Powers the "
+        "internal developer portals at Spotify, Airbnb, Netflix, and hundreds more.",
+        "developer-tools",
+        "backstage/backstage",
+        27000,
+        "https://backstage.io",
+        "developer-portal,internal-tools,platform-engineering,cncf,typescript",
+        "npx @backstage/create-app@latest",
+        "code",
+    ),
+    # MicroVM runtimes --------------------------------------------------------
+    (
+        "firecracker",
+        "Firecracker",
+        "Secure and fast microVMs for serverless computing",
+        "Firecracker is an open-source virtualisation technology developed by Amazon Web "
+        "Services for running serverless containers and functions in lightweight "
+        "microVMs. It combines the security of virtual machines with the speed and "
+        "density of containers. Powers AWS Lambda and AWS Fargate. Very fast boot times "
+        "(< 125ms) and low memory overhead per VM.",
+        "devops-infrastructure",
+        "firecracker-microvm/firecracker",
+        26000,
+        "https://firecracker-microvm.github.io",
+        "microvm,serverless,virtualization,aws,rust,security",
+        None,
+        "code",
+    ),
+    # AI Observability --------------------------------------------------------
+    (
+        "openlit",
+        "OpenLIT",
+        "Open-source LLM observability and evaluation platform",
+        "OpenLIT is an open-source platform for monitoring and evaluating LLM "
+        "applications. It provides automatic instrumentation for 20+ LLM providers "
+        "(OpenAI, Anthropic, Cohere, etc.) and vector databases, generating "
+        "OpenTelemetry traces and metrics. Includes a GPU monitoring dashboard, "
+        "prompt hub, and LLM guardrails. Self-hostable or use the cloud version.",
+        "ai-automation",
+        "openlit/openlit",
+        2000,
+        "https://openlit.io",
+        "llm-observability,opentelemetry,monitoring,tracing,evaluation",
+        "pip install openlit",
+        "code",
+    ),
+    (
+        "langwatch",
+        "LangWatch",
+        "LLM testing, monitoring, and evaluation platform",
+        "LangWatch is a platform for testing, monitoring, and evaluating LLM "
+        "applications. It provides real-time conversation monitoring, automated "
+        "evaluation pipelines, dataset management, and A/B testing for prompts. "
+        "Integrates with LangChain, OpenAI, Anthropic, and other LLM frameworks. "
+        "Open-source with a self-hosted option.",
+        "ai-automation",
+        "langwatch/langwatch",
+        1500,
+        "https://langwatch.ai",
+        "llm-observability,evaluation,testing,monitoring,llm",
+        "pip install langwatch",
+        "code",
+    ),
 ]
 
 
