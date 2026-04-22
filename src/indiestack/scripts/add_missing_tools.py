@@ -12396,6 +12396,42 @@ TOOLS = [
         "docker pull supabase/supavisor",
         "code",
     ),
+    # Developer Tools (160th pass) ------------------------------------------------
+    (
+        "dub",
+        "Dub.co",
+        "Open-source link management infrastructure for modern teams",
+        "Dub is the open-source link management platform for modern marketing "
+        "teams. Create short links, track clicks, and build branded links with "
+        "built-in analytics. Supports custom domains, QR codes, link expiry, "
+        "and team workspaces. Self-host or use the SaaS. Used by Vercel, "
+        "Perplexity, and thousands of indie makers.",
+        "developer-tools",
+        "dubinc/dub",
+        18000,
+        "https://dub.co",
+        "link-shortener,url-management,analytics,open-source,saas,branded-links",
+        "npm install @dub/sdk",
+        "code",
+    ),
+    # Monitoring (160th pass) -----------------------------------------------------
+    (
+        "openstatus",
+        "OpenStatus",
+        "Open-source status page and API monitoring platform",
+        "OpenStatus is an open-source status page and API monitoring service. "
+        "Monitor your APIs from multiple regions, get instant Slack/email/webhook "
+        "alerts on downtime, and show a public or private status page to your "
+        "users. Built with Next.js, Drizzle ORM, and deployed on the edge. "
+        "Used by hundreds of indie makers as a Betterstack/Statuspage alternative.",
+        "monitoring-uptime",
+        "openstatusHQ/openstatus",
+        8000,
+        "https://openstatus.dev",
+        "status-page,monitoring,uptime,api-monitoring,open-source,edge",
+        "npm install @openstatus/react",
+        "code",
+    ),
 ]
 
 

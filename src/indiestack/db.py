@@ -5233,7 +5233,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — Kubernetes workload and release management patterns
     "workload": "devops",           # "Kubernetes workload", "workload orchestration", "workload isolation" → DevOps & Infrastructure
     "artifact": "devops",           # "artifact registry", "build artifact", "container artifact" → DevOps & Infrastructure (Harbor, Quay)
-    "rollout": "devops",            # "canary rollout", "gradual rollout", "rollout strategy" → DevOps & Infrastructure
+    # NOTE: "rollout"→"feature" is the effective mapping (defined at line ~5950); that entry supersedes this.
+    # "canary rollout"/"gradual rollout" already covered by "canary"→"devops", "bluegreen"→"devops".
     # Auth — OAuth provider library by the Lucia team (used for Google, GitHub, Apple OAuth flows)
     "arctic": "authentication",     # Arctic — TypeScript OAuth 2.0 providers library (pilcrowOnPaper/arctic, 3k★) → Authentication
     # Frontend — Vike (formerly vite-plugin-ssr); SSR/SSG framework for React, Vue, Svelte, Solid
@@ -6233,6 +6234,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "semaphore": "devops",          # Semaphore CI — "semaphore alternative", "semaphore ci setup" → DevOps & Infrastructure
     # API — Symfony PHP full-stack framework (major PHP ecosystem, 30k★)
     "symfony": "api",               # Symfony — PHP full-stack framework; "symfony alternative", "symfony rest api" → API Tools
+    # Background jobs — hyphenated single-token variants (scanner splits on spaces, not hyphens)
+    "task-queue": "background",     # hyphenated — "task-queue alternative", "task-queue celery" → Background Jobs
+    "async-task": "background",     # hyphenated — "async-task library", "async-task python" → Background Jobs
+    # Developer Tools — Dub.co link management platform (dubinc/dub, 18k★)
+    "dub": "developer",             # Dub.co — open-source link management + analytics; "dub alternative" → Developer Tools
+    # Monitoring — Openstatus open-source monitoring + status page (openstatusHQ/openstatus, 8k★)
+    "openstatus": "monitoring",     # OpenStatus — open-source status page + API monitoring; "openstatus alternative" → Monitoring & Uptime
+    # AI — Qodo (formerly CodiumAI) AI code integrity and test generation (qodo-ai/qodana, 5k★)
+    "qodo": "ai",                   # Qodo — AI code integrity platform; "qodo alternative", "qodo gen" → AI & Automation
+    "codiumai": "ai",               # CodiumAI legacy name — "codiumai alternative" queries still active → AI & Automation
+    # MCP Servers — Smithery MCP registry and hub
+    "smithery": "mcp",              # Smithery.ai — MCP server registry/hub; "smithery mcp" → MCP Servers
 }
 
 _FTS_STOP_WORDS = {
