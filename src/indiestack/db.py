@@ -5955,7 +5955,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Maps & Location — thin coverage (4 entries); adding library names + query terms
     "leaflet": "maps",          # Leaflet.js — interactive maps library; "leaflet alternative" → Maps & Location
     "maplibre": "maps",         # MapLibre GL — WebGL vector maps; "maplibre alternative" → Maps & Location
-    "routing": "maps",          # "route planning api", "routing api", "directions routing" → Maps & Location
+    "wayfinding": "maps",       # "wayfinding api", "route planning", "turn-by-turn routing" → Maps & Location
     "directions": "maps",       # "directions api", "turn-by-turn navigation" → Maps & Location
     "openstreetmap": "maps",    # OpenStreetMap — "openstreetmap api", "osm tiles server" → Maps & Location
     "osm": "maps",              # OSM abbreviation — "osm api", "osm routing", "osm tiles" → Maps & Location
@@ -6017,7 +6017,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # CRM & Sales — adding modern/indie CRM tools
     "folk": "crm",                 # Folk.app — modern AI CRM; "folk alternative", "folk crm" → CRM & Sales
     "close": "crm",                # Close CRM — sales-focused; "close crm alternative" → CRM & Sales
-    "affinity": "crm",             # Affinity CRM — relationship intelligence; "affinity alternative" → CRM & Sales
+    "affinity-crm": "crm",         # Affinity CRM — relationship intelligence; "affinity crm alternative" → CRM & Sales
     # Creative Tools — adding major open-source creative apps
     "gimp": "creative",            # GIMP — GNU Image Manipulation Program; "gimp alternative" → Creative Tools
     "natron": "creative",          # Natron — open-source VFX compositor; "natron alternative" → Creative Tools
@@ -6181,6 +6181,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pandera": "testing",          # Pandera — DataFrame schema validation; "pandera alternative", "pandera pandas" → Testing Tools
     # API — Strawberry GraphQL hyphenated slug form (bare "strawberry"→api already mapped)
     "strawberry-graphql": "api",   # hyphenated slug — "strawberry-graphql alternative", "strawberry-graphql fastapi" → API Tools
+    # Testing — component development tools (Storybook alternatives; high "alternative" query volume)
+    "ladle": "testing",             # Ladle — fast Storybook alternative using Vite (ladledev/ladle, 3k★) → Testing Tools
+    "histoire": "testing",          # Histoire — Storybook for Vue/Svelte (histoire-dev/histoire, 4k★) → Testing Tools
+    # Developer Tools — online IDE and code sandboxes (very common developer queries)
+    "stackblitz": "developer",      # StackBlitz — browser-based WebContainers IDE (stackblitz/core, 17k★) → Developer Tools
+    "codesandbox": "developer",     # CodeSandbox — online dev environment; "codesandbox alternative" → Developer Tools
+    "sandbox": "developer",         # "code sandbox", "sandboxed environment", "browser sandbox" → Developer Tools
+    "playground": "developer",      # "code playground", "interactive playground", "online playground" → Developer Tools
+    # API — Tyk open-source API gateway (complement to "kong"→api already mapped; Tyk is 2nd most-searched OSS gateway)
+    "tyk": "api",                   # Tyk — open-source API gateway + developer portal (TykTechnologies/tyk, 9k★) → API Tools
+    # Monitoring — Netdata real-time lightweight monitoring (71k★; top "lightweight monitoring" query target)
+    "netdata": "monitoring",        # Netdata — real-time infrastructure monitoring (netdata/netdata, 71k★) → Monitoring & Uptime
+    # Database — Supavisor Postgres connection pooler by Supabase team (complement to pgbouncer/pgcat already mapped)
+    "supavisor": "database",        # Supavisor — cloud-native Postgres connection pooler (supabase/supavisor, 2k★) → Database
+    # DevOps — Koyeb fast serverless deployment platform (growing alternative to Render/Railway)
+    "koyeb": "devops",              # Koyeb — serverless deployment platform; "koyeb alternative" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

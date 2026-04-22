@@ -12307,6 +12307,95 @@ TOOLS = [
         "pip install tortoise-orm",
         "code",
     ),
+    # Testing Tools (158th pass) --------------------------------------------------
+    (
+        "ladle",
+        "Ladle",
+        "Fast Storybook alternative powered by Vite for React component development",
+        "Ladle is a drop-in Storybook replacement that uses Vite for instant dev "
+        "server startup and near-zero configuration. Write stories with the same "
+        "CSF format, then get HMR in milliseconds instead of seconds. Supports "
+        "React, TypeScript, Tailwind, and MDX out of the box. Ships a static "
+        "build for hosting story libraries as documentation.",
+        "testing-tools",
+        "thetarnav/ladle",
+        3200,
+        "https://ladle.dev",
+        "storybook,react,vite,component,testing,ui,documentation",
+        "npm install @ladle/react --save-dev",
+        "code",
+    ),
+    (
+        "histoire",
+        "Histoire",
+        "Fast and beautiful component story explorer for Vue, Svelte, and Lit",
+        "Histoire is the Storybook alternative built natively for Vue 3 and Svelte. "
+        "Powered by Vite, it provides instant HMR, a polished UI, and MDX-based "
+        "documentation pages. Supports controls, variants, state, and theming with "
+        "minimal config. Stories use a component-native format rather than CSF. "
+        "Renders Nuxt, SvelteKit, and vanilla Vite setups with no extra plugin.",
+        "testing-tools",
+        "histoire-dev/histoire",
+        3900,
+        "https://histoire.dev",
+        "storybook,vue,svelte,vite,component,testing,documentation",
+        "npm install @histoire/plugin-vue --save-dev",
+        "code",
+    ),
+    # API Tools (158th pass) ------------------------------------------------------
+    (
+        "tyk",
+        "Tyk",
+        "Open-source API gateway with a developer portal and analytics",
+        "Tyk is a high-performance open-source API gateway written in Go that "
+        "supports REST, GraphQL, and gRPC. Features include rate limiting, key "
+        "authentication, OAuth 2.0, JWT, quota enforcement, and a built-in "
+        "developer portal with API documentation. Runs on-premise or in the cloud. "
+        "Supports Kubernetes with a native operator and Helm chart.",
+        "api-tools",
+        "TykTechnologies/tyk",
+        9400,
+        "https://tyk.io",
+        "api-gateway,rate-limiting,authentication,graphql,grpc,kubernetes,go",
+        "docker pull tykio/tyk-gateway",
+        "code",
+    ),
+    # Monitoring (158th pass) -----------------------------------------------------
+    (
+        "netdata",
+        "Netdata",
+        "Real-time infrastructure monitoring with per-second granularity",
+        "Netdata is a distributed real-time monitoring agent that collects thousands "
+        "of metrics per second with zero configuration on Linux, macOS, and "
+        "containers. Provides instant out-of-the-box dashboards for servers, "
+        "Kubernetes, databases, web servers, and 800+ integrations. The Netdata "
+        "Cloud SaaS aggregates nodes across your fleet. Self-hosted or cloud.",
+        "monitoring-uptime",
+        "netdata/netdata",
+        71000,
+        "https://netdata.cloud",
+        "monitoring,metrics,dashboards,kubernetes,real-time,infrastructure,observability",
+        "wget -O /tmp/netdata-kickstart.sh https://get.netdata.cloud/kickstart.sh && sh /tmp/netdata-kickstart.sh",
+        "code",
+    ),
+    # Database (158th pass) -------------------------------------------------------
+    (
+        "supavisor",
+        "Supavisor",
+        "Cloud-native Postgres connection pooler built for multi-tenant SaaS",
+        "Supavisor is a scalable, cloud-native Postgres connection pooler written "
+        "in Elixir by the Supabase team. Supports transaction mode and session mode "
+        "pooling, handles millions of connections, and is designed for Postgres "
+        "hosting environments with multiple tenants. Replaces PgBouncer in the "
+        "Supabase stack and ships as a standalone binary or Docker image.",
+        "database",
+        "supabase/supavisor",
+        2100,
+        "https://supabase.github.io/supavisor",
+        "postgres,connection-pooling,pgbouncer,elixir,database,supabase",
+        "docker pull supabase/supavisor",
+        "code",
+    ),
 ]
 
 
