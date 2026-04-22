@@ -6270,6 +6270,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     "responsive": "frontend",       # "responsive css framework", "responsive design grid", "responsive layout" → Frontend Frameworks
     # Immutable — immutable state and data structures → Frontend Frameworks (Immer, Immutable.js)
     "immutable": "frontend",        # "immutable state library", "immutable data structure", "immer alternative" → Frontend Frameworks
+    # Design/creative — prototyping and illustration queries (Figma, Penpot, Framer, Inkscape)
+    "prototype": "design",          # "prototype tool", "interactive prototype", "rapid prototype" → Design & Creative
+    "prototyping": "design",        # "prototyping tool", "prototyping software", "ui prototyping" → Design & Creative
+    "illustration": "design",       # "illustration tool", "vector illustration", "digital illustration" → Design & Creative
+    # Frontend — design system queries (Storybook, Radix UI, Shadcn/ui, Style Dictionary)
+    "design-system": "frontend",    # "design system library", "design system tokens", "component design system" → Frontend Frameworks
+    # Boilerplate — Next.js / React starter template queries
+    "nextjs-starter": "boilerplate",  # "nextjs starter kit", "next.js starter template" → Boilerplate (Shipfast, Makerkit)
+    "nextjs-template": "boilerplate", # "nextjs template", "next.js boilerplate template" → Boilerplate
+    "react-boilerplate": "boilerplate",  # "react boilerplate", "react starter template" → Boilerplate
+    # Customer success — CRM/portal/success tools (Gainsight, ChurnZero, Vitally)
+    "customer-success": "customer", # "customer success platform", "customer success tool" → Customer Support
+    "customer-portal": "customer",  # "customer portal", "self-service portal" → Customer Support
+    # Documentation — knowledge base and FAQ queries (GitBook, Mintlify, Docusaurus)
+    "knowledge-base": "documentation",  # "knowledge base software", "help center knowledge base" → Documentation
+    "knowledgebase": "documentation",   # no-hyphen variant — "knowledgebase tool", "knowledgebase platform" → Documentation
+    "faq": "documentation",         # "faq page", "faq widget", "faq system" → Documentation
+    # Feedback — bug reporting and user research (Sentry user feedback, Usersnap, Doorbell)
+    "bug-report": "feedback",       # "bug reporting tool", "bug report widget" → Feedback (Canny, Usersnap)
+    "user-research": "feedback",    # "user research tool", "user interview platform" → Feedback
+    # Media — video hosting and image optimization queries (Mux, Cloudflare Stream, Cloudinary, imgix)
+    "video-hosting": "media",       # "video hosting platform", "video hosting api" → Media (Mux, Cloudflare Stream)
+    "image-optimization": "media",  # "image optimization api", "image optimization cdn" → Media (Cloudinary, imgix)
+    "media-library": "file",        # "media library", "digital asset library", "media management" → File Storage & CDN
+    # Analytics — session replay and screen recording (Hotjar, FullStory, LogRocket, Replay.io)
+    "session-replay": "analytics",  # "session replay tool", "user session recording" → Analytics (Hotjar, FullStory)
+    "screen-recording": "analytics",  # "screen recording for ux", "screen recording analytics" → Analytics
 }
 
 _FTS_STOP_WORDS = {
