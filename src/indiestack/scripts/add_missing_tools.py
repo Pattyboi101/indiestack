@@ -12687,6 +12687,59 @@ TOOLS = [
         "brew install orbstack",
         "saas",
     ),
+    # Search — Vespa open-source search engine (120th pass) --------------
+    (
+        "vespa",
+        "Vespa",
+        "Open-source platform for search, recommendation, and AI ranking",
+        "Vespa is Yahoo's open-source search and recommendation engine. "
+        "Supports vector search (ANN), lexical search, and ML-based re-ranking "
+        "in a single query. Scales to billions of documents with real-time "
+        "indexing and serving. Used by Yahoo, Spotify, and many enterprises "
+        "for personalized search and recommendation workloads.",
+        "search-engine",
+        "vespa-engine/vespa",
+        6000,
+        "https://vespa.ai",
+        "search,vector-search,ranking,recommendation,hybrid-search,ml,open-source",
+        "docker pull vespaengine/vespa",
+        "code",
+    ),
+    # DevOps — Kubernetes application platform (120th pass) ---------------
+    (
+        "porter",
+        "Porter",
+        "Heroku-style deployments on your own cloud",
+        "Porter is an open-source application management platform on Kubernetes. "
+        "Deploy apps from GitHub, Dockerfile, or Helm charts with a Heroku-like "
+        "workflow — no Kubernetes expertise required. Supports AWS EKS, GKE, "
+        "and DigitalOcean. Provides preview environments, CI/CD integration, "
+        "and built-in observability.",
+        "devops-infrastructure",
+        "porter-dev/porter",
+        6000,
+        "https://porter.run",
+        "kubernetes,deployment,heroku-alternative,paas,devops,open-source",
+        "brew install porter-dev/porter/porter",
+        "code",
+    ),
+    # Documentation — TypeScript doc generator (120th pass) ---------------
+    (
+        "typedoc",
+        "TypeDoc",
+        "Documentation generator for TypeScript projects",
+        "TypeDoc converts TypeScript source code and JSDoc comments into "
+        "beautiful, cross-linked HTML documentation. Supports Markdown "
+        "in comments, custom themes, and plugin extensions. The de facto "
+        "standard for generating API documentation from TypeScript packages.",
+        "documentation",
+        "TypeStrong/typedoc",
+        7000,
+        "https://typedoc.org",
+        "documentation,typescript,api-docs,jsdoc,codegen",
+        "npm install typedoc",
+        "code",
+    ),
     # Frontend — legacy hybrid mobile (119th pass) -----------------------
     (
         "cordova",

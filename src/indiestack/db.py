@@ -6379,6 +6379,38 @@ _CAT_SYNONYMS: dict[str, str] = {
     "napi-rs": "developer",         # napi-rs — Rust bindings for Node.js native addons (6k★) → Developer Tools
     "napirc": "developer",          # compound — "napirc setup", "napi-rs alternative" → Developer Tools
     "wasi": "developer",            # WASI — WebAssembly System Interface standard; "wasi runtime" → Developer Tools
+    # AI — OpenAI model version queries (high "alternative" + "api" search volume in 2026)
+    "gpt4": "ai",                   # GPT-4 — "gpt4 alternative", "gpt4 open source" → AI & Automation
+    "gpt-4": "ai",                  # hyphenated — "gpt-4 alternative", "gpt-4 api" → AI & Automation
+    "gpt4o": "ai",                  # GPT-4o — "gpt4o alternative", "gpt4o api" → AI & Automation
+    "gpt-4o": "ai",                 # hyphenated — "gpt-4o alternative", "gpt-4o open source" → AI & Automation
+    "o1": "ai",                     # OpenAI o1 — reasoning model; "o1 alternative", "openai o1" → AI & Automation
+    "o3": "ai",                     # OpenAI o3 — "o3 alternative", "openai o3 reasoning" → AI & Automation
+    "o4": "ai",                     # OpenAI o4-mini — "o4 alternative", "o4 mini api" → AI & Automation
+    "claude3": "ai",                # Claude 3 — "claude3 alternative", "claude 3 haiku" → AI & Automation
+    "claude-3": "ai",               # hyphenated — "claude-3 api", "claude-3 alternative" → AI & Automation
+    "claude4": "ai",                # Claude 4 — "claude4 alternative", "claude 4 sonnet" → AI & Automation
+    "claude-4": "ai",               # hyphenated — "claude-4 alternative", "claude-4 api" → AI & Automation
+    # AI — LLM routing / model selection (fast-growing 2026 segment; route traffic across providers)
+    "notdiamond": "ai",             # NotDiamond — AI model router; "notdiamond alternative" → AI & Automation
+    "llm-router": "ai",             # "llm-router setup", "llm-router alternative" → AI & Automation (LiteLLM, Portkey, OpenRouter)
+    "llmrouter": "ai",              # compound — "llmrouter alternative", "llmrouter service" → AI & Automation
+    # Frontend — animation and motion libraries not yet in synonym map
+    "motion": "frontend",           # Motion.dev (Framer Motion v11 rebranded, 21k★) — "motion alternative", "motion react" → Frontend Frameworks
+    "react-spring": "frontend",     # react-spring — physics-based animation for React (27k★); "react-spring alternative" → Frontend Frameworks
+    "auto-animate": "frontend",     # AutoAnimate (FormKit) — auto-animation on element changes (12k★); "auto-animate alternative" → Frontend Frameworks
+    "autoanimate": "frontend",      # compound — "autoanimate library", "autoanimate vue setup" → Frontend Frameworks
+    # Search — Vespa open-source search and ranking engine (Yahoo, 6k★)
+    "vespa": "search",              # Vespa — "vespa alternative", "vespa ml ranking", "vespa vector search" → Search Engines
+    # API — typed HTTP clients from OpenAPI specs
+    "zodios": "api",                # Zodios — Axios + Zod typed API client; "zodios alternative", "zodios vs orval" → API Tools
+    "openapi-fetch": "api",         # openapi-fetch — type-safe fetch from openapi-ts; "openapi-fetch alternative" → API Tools
+    # Documentation — code documentation generators missing from synonym map
+    "typedoc": "documentation",     # TypeDoc — TypeScript documentation generator (7k★); "typedoc alternative" → Documentation
+    "jsdoc": "documentation",       # JSDoc — JS documentation comments and generator; "jsdoc alternative" → Documentation
+    "compodoc": "documentation",    # Compodoc — Angular/NestJS doc generator; "compodoc alternative" → Documentation
+    # DevOps — Kubernetes application management platforms
+    "porter": "devops",             # Porter — Heroku-style Kubernetes manager (porter-dev/porter, 6k★) → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {
