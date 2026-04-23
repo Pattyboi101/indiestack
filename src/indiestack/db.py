@@ -6316,6 +6316,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — requirements.txt / Pipfile Python dependency file queries
     "requirements": "developer",    # requirements.txt — "manage requirements.txt", "requirements.txt alternative" → Developer Tools
     "pipfile": "developer",         # Pipfile — Pipenv's dependency manifest; "pipfile alternative" → Developer Tools
+    # Database — Python PostgreSQL/MongoDB driver queries (very common Python + DB search targets)
+    "psycopg": "database",          # psycopg — most popular PostgreSQL adapter for Python; "psycopg alternative" → Database
+    "psycopg2": "database",         # psycopg2 — classic sync version (most widely installed); "psycopg2 alternative" → Database
+    "psycopg3": "database",         # psycopg3 — new async-native rewrite; "psycopg3 vs asyncpg" → Database
+    "asyncpg": "database",          # asyncpg — high-performance async PostgreSQL driver (Python); "asyncpg alternative" → Database
+    "pymongo": "database",          # PyMongo — official MongoDB Python driver (4k★); "pymongo alternative" → Database
+    "motor": "database",            # Motor — async MongoDB driver for Python/asyncio (2k★); "motor mongodb" → Database
+    # API — PostgREST auto-generates a REST API from a PostgreSQL schema
+    "postgrest": "api",             # PostgREST — instant REST API from PostgreSQL schema (23k★); "postgrest alternative" → API Tools
+    # Developer Tools — Scrapy web scraping framework (51k★, Python's dominant scraper)
+    "scrapy": "developer",          # Scrapy — Python web scraping and crawling framework; "scrapy alternative" → Developer Tools
+    # Headless CMS — popular platforms not yet mapped
+    "prismic": "cms",               # Prismic — SaaS headless CMS with Slice Machine; "prismic alternative" → Headless CMS
+    "hygraph": "cms",               # Hygraph — GraphQL-first headless CMS (formerly GraphCMS); "hygraph alternative" → Headless CMS
+    "builderio": "cms",             # Builder.io — visual headless CMS and page builder; "builder.io alternative" → Headless CMS
+    "statamic": "cms",              # Statamic — Laravel flat-file / DB CMS; "statamic alternative" → Headless CMS
+    "umbraco": "cms",               # Umbraco — open-source .NET CMS; "umbraco alternative" → Headless CMS
+    # Frontend — Stencil.js compound form (bare "stencil"→frontend already mapped)
+    "stenciljs": "frontend",        # compound — "stenciljs alternative", "stenciljs web components" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {

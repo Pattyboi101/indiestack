@@ -12416,6 +12416,155 @@ TOOLS = [
         "brew tap kubescape/tap && brew install kubescape",
         "code",
     ),
+    # ── Python Database Drivers ───────────────────────────────────────────────
+    (
+        "psycopg",
+        "psycopg",
+        "The most popular PostgreSQL adapter for Python",
+        "psycopg is the most widely-used PostgreSQL database adapter for Python. "
+        "Version 3 (psycopg3) is a complete rewrite with native async support, "
+        "binary protocol, COPY streaming, and pipeline mode. Designed for both "
+        "synchronous (Django, Flask) and async (FastAPI, asyncio) applications.",
+        "database",
+        "psycopg/psycopg",
+        1800,
+        "https://www.psycopg.org",
+        "python,postgresql,database-driver,async,orm",
+        "pip install psycopg[binary]",
+        "code",
+    ),
+    (
+        "asyncpg",
+        "asyncpg",
+        "High-performance async PostgreSQL driver for Python",
+        "asyncpg is a Python library for asyncio and PostgreSQL. It uses the "
+        "PostgreSQL binary protocol directly, providing 2–3× higher throughput "
+        "than psycopg2. Used extensively with FastAPI, Starlette, and asyncio "
+        "web apps. Supports prepared statements, streaming, and typed parameters.",
+        "database",
+        "MagicStack/asyncpg",
+        7200,
+        "https://magicstack.github.io/asyncpg/",
+        "python,postgresql,async,asyncio,high-performance",
+        "pip install asyncpg",
+        "code",
+    ),
+    (
+        "pymongo",
+        "PyMongo",
+        "The official Python driver for MongoDB",
+        "PyMongo is the official MongoDB driver for Python. It provides a simple "
+        "and Pythonic API for connecting to MongoDB, performing CRUD operations, "
+        "aggregation pipelines, and change streams. Works synchronously out of "
+        "the box; use Motor for async/asyncio usage.",
+        "database",
+        "mongodb/mongo-python-driver",
+        4000,
+        "https://pymongo.readthedocs.io",
+        "python,mongodb,database-driver,nosql,official",
+        "pip install pymongo",
+        "code",
+    ),
+    (
+        "motor",
+        "Motor",
+        "Async Python driver for MongoDB",
+        "Motor is the official async MongoDB driver for Python. Built on top of "
+        "PyMongo, it wraps the synchronous API with asyncio coroutines. Ideal for "
+        "FastAPI and Starlette apps that need MongoDB. Supports all PyMongo "
+        "features including aggregation, change streams, and transactions.",
+        "database",
+        "mongodb/motor",
+        2300,
+        "https://motor.readthedocs.io",
+        "python,mongodb,async,asyncio,fastapi",
+        "pip install motor",
+        "code",
+    ),
+    # ── API Layer ──────────────────────────────────────────────────────────────
+    (
+        "postgrest",
+        "PostgREST",
+        "Turn your PostgreSQL database into a RESTful API",
+        "PostgREST is a standalone web server that turns your PostgreSQL database "
+        "directly into a RESTful API. The structural constraints and permissions of "
+        "the database determine the API endpoints and operations. Supports filtering, "
+        "ordering, pagination, JWT auth, and row-level security out of the box.",
+        "api-tools",
+        "PostgREST/postgrest",
+        23000,
+        "https://postgrest.org",
+        "postgresql,rest,api-gateway,serverless,automatic",
+        "brew install postgrest",
+        "code",
+    ),
+    # ── Developer Tools ────────────────────────────────────────────────────────
+    (
+        "scrapy",
+        "Scrapy",
+        "Python web scraping framework for building spiders",
+        "Scrapy is an open-source Python web crawling and scraping framework. "
+        "Define spiders that follow links and extract structured data. Supports "
+        "async I/O, middleware pipelines, item processors, and exporters to JSON, "
+        "CSV, and databases. Powers everything from small scripts to large-scale "
+        "data pipelines.",
+        "developer-tools",
+        "scrapy/scrapy",
+        51000,
+        "https://scrapy.org",
+        "python,web-scraping,crawling,spider,data-extraction",
+        "pip install scrapy",
+        "code",
+    ),
+    # ── Headless CMS ──────────────────────────────────────────────────────────
+    (
+        "prismic",
+        "Prismic",
+        "The headless page builder for modern websites",
+        "Prismic is a SaaS headless CMS with a visual Slice Machine system for "
+        "building reusable content components. Content editors use a rich visual "
+        "interface while developers query content via the REST or GraphQL API. "
+        "Works with Next.js, Nuxt, SvelteKit, and any front-end framework.",
+        "headless-cms",
+        None,
+        0,
+        "https://prismic.io",
+        "headless-cms,visual,slice-machine,saas,jamstack",
+        "npx @slicemachine/init",
+        "saas",
+    ),
+    (
+        "hygraph",
+        "Hygraph",
+        "GraphQL-native headless CMS (formerly GraphCMS)",
+        "Hygraph (formerly GraphCMS) is a headless CMS built natively on GraphQL. "
+        "All content is accessible via a powerful GraphQL API with mutations, "
+        "subscriptions, and content federation. Ideal for teams who prefer "
+        "GraphQL-first development. Supports rich media management and webhooks.",
+        "headless-cms",
+        None,
+        0,
+        "https://hygraph.com",
+        "headless-cms,graphql,api-first,federation,saas",
+        "",
+        "saas",
+    ),
+    (
+        "statamic",
+        "Statamic",
+        "The Laravel-powered CMS that's a joy to build with",
+        "Statamic is a Laravel-based CMS that can run flat-file (no database) or "
+        "with a database. Content is managed in YAML/Markdown files by default, "
+        "making it Git-friendly. Includes a powerful Antlers templating language, "
+        "live preview, and a REST or GraphQL content API for headless usage.",
+        "headless-cms",
+        "statamic/cms",
+        3900,
+        "https://statamic.com",
+        "headless-cms,laravel,php,flat-file,git-friendly",
+        "composer require statamic/cms",
+        "code",
+    ),
 ]
 
 

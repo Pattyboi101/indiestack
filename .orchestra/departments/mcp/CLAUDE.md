@@ -22,7 +22,12 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
 - Run searches against the production API (https://indiestack.ai/api/tools/search?q=QUERY&limit=5)
 - Note any issues: bad top results, missing install_command, wrong category, truncated taglines, missing migration signals
 - Report UX friction alongside your main task output
-- Useful queries to test: auth, payments, email, database, monitoring, analytics
+- Core queries (test coverage across all 29 categories):
+  - auth, payments, email, database, monitoring, analytics (established categories)
+  - caching, mcp-servers, boilerplate, frontend-frameworks (newer categories)
+  - state management, bundler, rate limiting, vector database (multi-word routing)
+  - react alternative, redis alternative, stripe alternative (brand-name alternative queries)
+  - psycopg alternative, scrapy, postgrest (Python ecosystem queries)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
