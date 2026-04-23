@@ -12653,6 +12653,58 @@ TOOLS = [
         "npm install @bull-board/api @bull-board/express",
         "code",
     ),
+    # AI — code-generation LLM frameworks (119th pass) --------------------
+    (
+        "copilotkit",
+        "CopilotKit",
+        "The open-source framework for in-app AI copilots",
+        "CopilotKit is a React framework for building in-app AI copilots, "
+        "chatbots, and AI-powered text areas. Provides CoAgent infrastructure "
+        "for multi-agent workflows, LangGraph integration, and ready-to-use "
+        "headless UI components. Works with any LLM provider.",
+        "ai-automation",
+        "CopilotKit/CopilotKit",
+        11000,
+        "https://copilotkit.ai",
+        "ai,react,copilot,agents,langchain,langgraph",
+        "npm install @copilotkit/react-core @copilotkit/react-ui",
+        "code",
+    ),
+    # DevOps — Docker Desktop alternatives (119th pass) -------------------
+    (
+        "orbstack",
+        "OrbStack",
+        "Fast, light, simple Docker for Mac",
+        "OrbStack is a fast, lightweight Docker Desktop alternative for macOS. "
+        "Runs Docker containers and Linux VMs with a small resource footprint, "
+        "native networking, and instant startup. Replaces Docker Desktop, "
+        "Colima, or Lima. Free for personal use.",
+        "devops-infrastructure",
+        "orbstack/orbstack",
+        14000,
+        "https://orbstack.dev",
+        "docker,macos,containers,vm,docker-desktop-alternative",
+        "brew install orbstack",
+        "saas",
+    ),
+    # Frontend — legacy hybrid mobile (119th pass) -----------------------
+    (
+        "cordova",
+        "Apache Cordova",
+        "Mobile apps with HTML, CSS & JS",
+        "Apache Cordova lets you build mobile apps using standard web "
+        "technologies — HTML5, CSS3, and JavaScript. Wraps your app in a "
+        "native WebView, providing access to device capabilities via plugins. "
+        "The foundation that powered PhoneGap. Widely searched as a baseline "
+        "for 'hybrid mobile app' alternative queries.",
+        "frontend-frameworks",
+        "apache/cordova",
+        35000,
+        "https://cordova.apache.org",
+        "mobile,hybrid,ios,android,webview,phonegap",
+        "npm install -g cordova",
+        "code",
+    ),
 ]
 
 

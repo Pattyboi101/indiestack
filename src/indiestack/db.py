@@ -6361,6 +6361,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "neural-search": "search",      # "neural-search engine", "neural-search api" → Search Engines (Exa, Jina, Vespa)
     "full-text-search": "search",   # hyphenated compound — "full-text-search library", "full-text-search service" → Search Engines
     "ai-search": "search",          # "ai-search api", "ai-search tool", "ai web search" → Search Engines (Tavily, Exa, Brave)
+    # AI — code-focused LLMs (fast-growing "code generation model" query segment)
+    "codellama": "ai",              # Code Llama — Meta's code-specialised LLaMA; "codellama alternative" → AI & Automation
+    "starcoder": "ai",              # StarCoder — BigCode open code LLM; "starcoder alternative" → AI & Automation
+    "starcoder2": "ai",             # StarCoder2 — improved BigCode code model; "starcoder2 inference" → AI & Automation
+    "copilotkit": "ai",             # CopilotKit — React framework for in-app AI copilots (11k★) → AI & Automation
+    # DevOps — macOS container and VM tooling (fast-growing developer-environment segment)
+    "orbstack": "devops",           # OrbStack — fast Docker Desktop alternative for macOS (14k★) → DevOps & Infrastructure
+    "multipass": "devops",          # Multipass — Canonical lightweight Ubuntu VM launcher (9k★) → DevOps & Infrastructure
+    "lima": "devops",               # Lima — Linux VMs on macOS (base for Colima); "lima alternative" → DevOps & Infrastructure
+    "buildah": "devops",            # Buildah — OCI/Dockerfile image builder (daemonless, Red Hat) → DevOps & Infrastructure
+    "skopeo": "devops",             # Skopeo — container image inspection and copy tool (Red Hat) → DevOps & Infrastructure
+    # Frontend — older hybrid mobile frameworks (still queried as "[tool] alternative")
+    "cordova": "frontend",          # Apache Cordova — "cordova alternative", "cordova vs capacitor" → Frontend Frameworks
+    "phonegap": "frontend",         # Adobe PhoneGap (Cordova-based) — "phonegap alternative" → Frontend Frameworks
+    # Developer Tools — Rust/Node.js FFI and WASM standards
+    "napi-rs": "developer",         # napi-rs — Rust bindings for Node.js native addons (6k★) → Developer Tools
+    "napirc": "developer",          # compound — "napirc setup", "napi-rs alternative" → Developer Tools
+    "wasi": "developer",            # WASI — WebAssembly System Interface standard; "wasi runtime" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
