@@ -12758,6 +12758,93 @@ TOOLS = [
         "npm install -g cordova",
         "code",
     ),
+    # Boilerplates — additional high-quality starters (121st pass) --------------------
+    (
+        "epic-stack",
+        "Epic Stack",
+        "Opinionated Remix stack for production-grade full-stack web apps",
+        "The Epic Stack is an opinionated project starter built on Remix, designed "
+        "for production by Kent C. Dodds. Ships with SQLite (via Prisma), Fly.io "
+        "deployment, GitHub Actions CI, authentication, dark mode, i18n, "
+        "accessibility testing, end-to-end Playwright tests, and comprehensive "
+        "documentation. The gold standard for full-stack TypeScript projects.",
+        "boilerplates",
+        "epicweb-dev/epic-stack",
+        11000,
+        "https://www.epicweb.dev/epic-stack",
+        "remix,typescript,sqlite,prisma,fly.io,playwright,fullstack,boilerplate",
+        "npx create-epic-app",
+        "code",
+    ),
+    (
+        "makerkit",
+        "MakerKit",
+        "SaaS starter kits for Next.js and Remix with auth, billing, and teams",
+        "MakerKit is a production-ready SaaS boilerplate available for "
+        "Next.js and Remix. Ships with Supabase or Firebase auth, Stripe "
+        "billing, teams/organizations, multi-tenancy, email via Resend, "
+        "admin panel, and TypeScript throughout. Used by hundreds of "
+        "indie SaaS founders to cut months off their initial build.",
+        "boilerplates",
+        "makerkit/next-supabase-saas-kit",
+        1600,
+        "https://makerkit.dev",
+        "nextjs,remix,supabase,stripe,saas,boilerplate,typescript,tailwind",
+        "git clone https://github.com/makerkit/next-supabase-saas-kit.git",
+        "code",
+    ),
+    # Caching — additional tools (121st pass) ----------------------------------------
+    (
+        "lru-cache",
+        "lru-cache",
+        "A cache object that deletes the least-recently-used items for Node.js",
+        "lru-cache is the most widely downloaded LRU cache implementation for "
+        "Node.js, with billions of weekly downloads. Used internally by npm and "
+        "countless packages for memoization and bounded in-memory caching. "
+        "Fully typed, supports TTL expiry, size limits, and async fetch.",
+        "caching",
+        "isaacs/node-lru-cache",
+        5000,
+        "https://github.com/isaacs/node-lru-cache",
+        "cache,lru,in-memory,nodejs,memoize,ttl",
+        "npm install lru-cache",
+        "code",
+    ),
+    (
+        "node-cache",
+        "node-cache",
+        "Simple and fast NodeJS internal caching",
+        "node-cache is a simple, fast, zero-dependency in-memory cache for "
+        "Node.js. Supports TTL expiry, checkperiod cleanup, and statistics. "
+        "Stores values as-is (no serialisation), supports strings, numbers, "
+        "Buffers, and objects. A popular lightweight alternative to Redis "
+        "for single-server caching needs.",
+        "caching",
+        "node-cache/node-cache",
+        2600,
+        "https://github.com/node-cache/node-cache",
+        "cache,in-memory,nodejs,ttl,key-value,simple",
+        "npm install node-cache",
+        "code",
+    ),
+    # MCP Servers — Git integration (121st pass) -------------------------------------
+    (
+        "mcp-git",
+        "MCP Git",
+        "Git repository operations for AI coding agents via MCP",
+        "An MCP server that exposes Git operations — reading diffs, commits, "
+        "branches, file history, and staging — to AI coding agents. Part of "
+        "the official modelcontextprotocol/servers monorepo maintained by "
+        "Anthropic. Enables agents to understand and navigate codebases "
+        "without needing shell access.",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
+        "mcp,git,version-control,ai-agent,claude,repository",
+        "uvx mcp-server-git",
+        "code",
+    ),
 ]
 
 

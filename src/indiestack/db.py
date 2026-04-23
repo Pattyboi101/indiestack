@@ -6411,6 +6411,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "compodoc": "documentation",    # Compodoc — Angular/NestJS doc generator; "compodoc alternative" → Documentation
     # DevOps — Kubernetes application management platforms
     "porter": "devops",             # Porter — Heroku-style Kubernetes manager (porter-dev/porter, 6k★) → DevOps & Infrastructure
+    # AI — Meta Llama 4 (released April 2025; very high "llama 4 alternative" query volume)
+    "llama4": "ai",                 # Llama 4 — "llama4 alternative", "llama4 setup", "run llama4 local" → AI & Automation
+    "llama-4": "ai",                # hyphenated — "llama-4 inference", "llama-4 fine-tune" → AI & Automation
+    # AI — DeepSeek hyphenated model version forms (compound "deepseekr1"→ai exists; dashed didn't)
+    "deepseek-r1": "ai",            # DeepSeek-R1 — "deepseek-r1 alternative", "deepseek-r1 local" → AI & Automation
+    "deepseek-v3": "ai",            # DeepSeek V3 — "deepseek-v3 api", "deepseek-v3 alternative" → AI & Automation
+    "deepseekv3": "ai",             # compound — "deepseekv3 setup", "deepseekv3 inference" → AI & Automation
+    # AI — Qwen2 / Qwen3 (Alibaba open-weight LLM family; fast-growing query segment in 2025-2026)
+    "qwen2": "ai",                  # Qwen2 — "qwen2 alternative", "qwen2 local inference" → AI & Automation
+    "qwen3": "ai",                  # Qwen3 (April 2026) — "qwen3 alternative", "qwen3 setup" → AI & Automation
+    # AI — Google Gemma 3 (March 2025 release; "gemma2" variants mapped; gemma3 wasn't)
+    "gemma3": "ai",                 # Gemma 3 — "gemma3 setup", "gemma3 alternative" → AI & Automation
+    "gemma-3": "ai",                # hyphenated — "gemma-3 local inference", "gemma-3 benchmark" → AI & Automation
+    # AI — Stable Diffusion 3 and hyphenated compound form (stable→ai, diffusion→ai exist; sd3/compound didn't)
+    "sd3": "ai",                    # Stable Diffusion 3 — "sd3 model", "sd3 alternative", "sd3 setup" → AI & Automation
+    "stable-diffusion": "ai",       # hyphenated compound — "stable-diffusion alternative", "stable-diffusion local" → AI & Automation
+    # AI — NVIDIA inference tooling (TensorRT, NIM, NeMo — very common GPU/AI infra queries)
+    "tensorrt": "ai",               # TensorRT — NVIDIA inference optimizer; "tensorrt alternative", "tensorrt setup" → AI & Automation
+    "nvidia": "ai",                 # NVIDIA — "nvidia nim", "nvidia nemo", "nvidia gpu inference" → AI & Automation
+    # Developer Tools — Chromium browser engine (complement to "chrome"→"developer")
+    "chromium": "developer",        # Chromium — "chromium extension", "chromium devtools", "chromium api" → Developer Tools
+    # CLI Tools — system process/resource monitors (missing from CLI/Monitoring categories)
+    "htop": "cli",                  # htop — interactive Linux process viewer (htop-dev/htop, 6k★) → CLI Tools
+    "btop": "cli",                  # btop++ — beautiful terminal system monitor (aristocratos/btop, 20k★) → CLI Tools
+    # Monitoring — Glances Python system monitor (nicolargo/glances, 26k★)
+    "glances": "monitoring",        # Glances — cross-platform Python system monitoring; "glances alternative" → Monitoring & Uptime
 }
 
 _FTS_STOP_WORDS = {
