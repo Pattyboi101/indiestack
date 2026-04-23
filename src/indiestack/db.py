@@ -6282,6 +6282,40 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cz": "devops",                 # cz CLI — commitizen short form; "cz commit", "cz alternative" → DevOps
     # Background Jobs — crontab expression queries (complement to "cron"→background)
     "crontab": "background",        # "crontab expression", "crontab syntax", "crontab editor" → Background Jobs
+    # Developer Tools — Rust package manager and toolchain installer
+    "cargo": "developer",           # Cargo — Rust's package manager and build tool; "cargo alternative", "cargo build" → Developer Tools
+    "rustup": "developer",          # Rustup — official Rust toolchain installer; "rustup alternative" → Developer Tools
+    "crate": "developer",           # "crate library", "rust crate", "crate alternative" → Developer Tools (crates.io ecosystem)
+    "crates": "developer",          # plural — "crates.io", "rust crates" → Developer Tools
+    # Developer Tools — macOS/Linux package manager (most-used CLI tool on macOS)
+    "homebrew": "developer",        # Homebrew — most popular macOS package manager (42k★); "homebrew alternative" → Developer Tools
+    "brew": "developer",            # short form — "brew install", "brew tap", "homebrew brew" → Developer Tools
+    # Developer Tools — Python pip package installer (complement to uv/poetry/pipenv already mapped)
+    "pip": "developer",             # pip — Python package installer; "pip alternative", "pip vs uv" → Developer Tools
+    "pipx": "developer",            # pipx — install Python apps in isolated envs; "pipx alternative" → Developer Tools
+    # Developer Tools — PHP Composer package manager
+    "composer": "developer",        # Composer — PHP dependency manager; "composer alternative", "composer install" → Developer Tools
+    # AI — LLaMA 3 version-specific queries (llama→ai already mapped; version forms weren't)
+    "llama3": "ai",                 # LLaMA 3 — "llama3 alternative", "llama3 setup", "run llama3 local" → AI & Automation
+    "llama-3": "ai",                # hyphenated — "llama-3 inference", "llama-3 fine-tune" → AI & Automation
+    "llama2": "ai",                 # LLaMA 2 — "llama2 alternative", "llama2 local" (still widely searched) → AI & Automation
+    "llama-2": "ai",                # hyphenated — "llama-2 setup", "llama-2 quantized" → AI & Automation
+    # AI — Mixtral (Mistral MoE model; very common local LLM query target)
+    "mixtral": "ai",                # Mixtral — Mistral's MoE model; "mixtral alternative", "run mixtral" → AI & Automation
+    # AI — Google Gemma version-specific queries (gemma→ai already mapped; v2 wasn't)
+    "gemma2": "ai",                 # Google Gemma 2 — "gemma2 setup", "gemma2 alternative" → AI & Automation
+    "gemma-2": "ai",                # hyphenated — "gemma-2 local inference", "gemma-2 alternative" → AI & Automation
+    # API — WebRTC SFU servers (mediasoup, Livekit, Janus are SFU-based)
+    "sfu": "api",                   # SFU (Selective Forwarding Unit) — "webrtc sfu", "sfu server alternative" → API Tools
+    "turn": "api",                  # TURN server — "turn server setup", "coturn alternative" → API Tools (WebRTC infrastructure)
+    "stun": "api",                  # STUN server — "stun server", "stun vs turn", "coturn stun" → API Tools
+    "coturn": "api",                # coturn — open-source TURN/STUN server; "coturn alternative" → API Tools
+    # Frontend — Rust/WASM binding and packaging tools (complement to wasm-pack, wasm-bindgen queries)
+    "wasm-bindgen": "frontend",     # wasm-bindgen — Rust⟷JS FFI for WASM modules; "wasm-bindgen alternative" → Frontend Frameworks
+    "wasmbindgen": "frontend",      # compound — "wasmbindgen setup", "wasmbindgen alternative" → Frontend Frameworks
+    # Developer Tools — requirements.txt / Pipfile Python dependency file queries
+    "requirements": "developer",    # requirements.txt — "manage requirements.txt", "requirements.txt alternative" → Developer Tools
+    "pipfile": "developer",         # Pipfile — Pipenv's dependency manifest; "pipfile alternative" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
