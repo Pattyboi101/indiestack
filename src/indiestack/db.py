@@ -6335,6 +6335,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "umbraco": "cms",               # Umbraco — open-source .NET CMS; "umbraco alternative" → Headless CMS
     # Frontend — Stencil.js compound form (bare "stencil"→frontend already mapped)
     "stenciljs": "frontend",        # compound — "stenciljs alternative", "stenciljs web components" → Frontend Frameworks
+    # Search — AI/LLM search APIs (fast-growing 2026 segment; agents use these for web retrieval in RAG pipelines)
+    "tavily": "search",             # Tavily Search — premier AI-optimised search API; official LangChain/LlamaIndex partner (2k★)
+    "exa": "search",                # Exa.ai — neural semantic search API for AI agents; finds conceptually similar content (4k★)
+    "serper": "search",             # Serper.dev — real-time Google Search results API for LLM pipelines
+    "brave-search": "search",       # Brave Search API — independent privacy-respecting search index for AI apps
+    "bravesearch": "search",        # compound — "bravesearch api", "bravesearch alternative" → Search Engines
+    "duckduckgo": "search",         # DuckDuckGo Search API — no-tracking web search; "duckduckgo api alternative" → Search Engines
+    "kagi": "search",               # Kagi Search — premium quality-focused search; Kagi API for AI apps → Search Engines
+    "you-com": "search",            # You.com AI search API — "you.com alternative", "you.com api" → Search Engines
+    # Database — new cloud-native vector databases not yet mapped
+    "turbopuffer": "database",      # turbopuffer — ultra-fast serverless vector database (sub-ms queries, 2k★) → Database
+    "vectorize": "database",        # Cloudflare Vectorize — serverless vector DB on the edge → Database
+    # MCP Servers — specific popular MCP tools/servers not yet individually mapped
+    "sequential": "mcp",            # Sequential Thinking MCP — step-by-step reasoning tool by Anthropic → MCP Servers
+    "context7": "mcp",              # Context7 — live library docs MCP server (resolves docs at query time, 7k★) → MCP Servers
+    # Background Jobs — queue monitoring dashboard
+    "bullboard": "background",      # BullBoard — real-time monitoring UI for Bull and BullMQ queues → Background Jobs
+    # AI — inference API providers not yet individually mapped
+    "sambanova": "ai",              # SambaNova Systems — ultra-fast LLM inference hardware/API → AI & Automation
+    "hyperbolic": "ai",             # Hyperbolic Labs — GPU cloud inference for open-weight LLMs → AI & Automation
+    "glhf": "ai",                   # glhf.chat — fast free open-source LLM inference (Llama, Mistral) → AI & Automation
+    "llamacloud": "ai",             # LlamaCloud — LlamaIndex managed parsing + indexing service → AI & Automation
+    # Search — compound and hyphenated AI-search query forms (complement to named tool entries above)
+    "neural-search": "search",      # "neural-search engine", "neural-search api" → Search Engines (Exa, Jina, Vespa)
+    "full-text-search": "search",   # hyphenated compound — "full-text-search library", "full-text-search service" → Search Engines
+    "ai-search": "search",          # "ai-search api", "ai-search tool", "ai web search" → Search Engines (Tavily, Exa, Brave)
 }
 
 _FTS_STOP_WORDS = {

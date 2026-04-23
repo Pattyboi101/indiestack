@@ -12565,6 +12565,94 @@ TOOLS = [
         "composer require statamic/cms",
         "code",
     ),
+    # Search Engines — AI/LLM search APIs (118th pass) ---------------------
+    (
+        "tavily",
+        "Tavily Search",
+        "The AI-optimised search API built for LLM agents",
+        "Tavily Search is a real-time web search API purpose-built for LLM "
+        "applications and AI agents. Returns structured, relevant results "
+        "optimised for RAG pipelines. Official search partner for LangChain "
+        "and LlamaIndex. Supports basic and advanced search, raw content "
+        "retrieval, and answer mode for direct Q&A.",
+        "search-engine",
+        "tavily-com/tavily-python",
+        2100,
+        "https://tavily.com",
+        "search,ai,rag,llm,langchain,llamaindex,web-search",
+        "pip install tavily-python",
+        "saas",
+    ),
+    (
+        "exa",
+        "Exa",
+        "Neural search API that finds semantically similar content",
+        "Exa (formerly Metaphor) is a neural search engine and API for AI "
+        "agents. Unlike keyword search, Exa uses semantic embeddings to find "
+        "conceptually similar pages. Supports finding pages, similar content, "
+        "and extracting structured data. Widely used in agentic pipelines "
+        "where agents need to browse and retrieve information.",
+        "search-engine",
+        "exa-labs/exa-py",
+        4200,
+        "https://exa.ai",
+        "search,ai,rag,semantic,neural,llm,agents",
+        "pip install exa-py",
+        "saas",
+    ),
+    # MCP Servers — popular tools used by AI agents (118th pass) -----------
+    (
+        "context7",
+        "Context7",
+        "Up-to-date library docs for your AI coding agent",
+        "Context7 is an MCP server that provides live, version-specific "
+        "documentation for popular libraries directly to AI coding assistants. "
+        "Instead of hallucinating outdated APIs, agents query Context7 to get "
+        "current docs at request time. Supports 10,000+ libraries. Works with "
+        "Claude, Cursor, Windsurf, and any MCP-compatible client.",
+        "mcp-servers",
+        "upstash/context7",
+        7400,
+        "https://context7.com",
+        "mcp,documentation,llm,ai-agents,coding-assistant,library-docs",
+        "npx -y @upstash/context7-mcp",
+        "code",
+    ),
+    (
+        "sequential-thinking",
+        "Sequential Thinking MCP",
+        "Dynamic, reflective problem-solving through structured thought sequences",
+        "Sequential Thinking is an MCP server that enables AI models to work "
+        "through complex problems step by step using structured thought sequences. "
+        "Each step can revise previous thinking, branch into alternative "
+        "approaches, and build a coherent solution incrementally. Particularly "
+        "useful for multi-step reasoning, planning, and debugging tasks.",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        7000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking",
+        "mcp,reasoning,thinking,planning,ai-agents,step-by-step",
+        "npx -y @modelcontextprotocol/server-sequential-thinking",
+        "code",
+    ),
+    # Background Jobs — queue monitoring (118th pass) ----------------------
+    (
+        "bullboard",
+        "BullBoard",
+        "Beautiful real-time UI for monitoring Bull and BullMQ queues",
+        "BullBoard is a web-based dashboard for monitoring Bull and BullMQ "
+        "queues in real time. Visualise active, waiting, delayed, failed, and "
+        "completed jobs. Supports retry, clean, and pause operations directly "
+        "from the UI. Framework-agnostic — adapters for Express, Fastify, "
+        "Koa, Hapi, Next.js, and more.",
+        "background-jobs",
+        "felixmosh/bull-board",
+        6100,
+        "https://github.com/felixmosh/bull-board",
+        "background-jobs,bull,bullmq,queue,monitoring,dashboard,redis",
+        "npm install @bull-board/api @bull-board/express",
+        "code",
+    ),
 ]
 
 

@@ -28,6 +28,8 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - state management, bundler, rate limiting, vector database (multi-word routing)
   - react alternative, redis alternative, stripe alternative (brand-name alternative queries)
   - psycopg alternative, scrapy, postgrest (Python ecosystem queries)
+  - tavily alternative, exa alternative (AI search API queries — routes to search-engine category)
+  - context7 mcp, sequential thinking mcp (MCP-specific tool queries)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
