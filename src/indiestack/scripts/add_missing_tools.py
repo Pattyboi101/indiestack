@@ -12563,6 +12563,69 @@ TOOLS = [
         "pip install pgadmin4",
         "code",
     ),
+    # Frontend Frameworks — Linaria (127th pass) ---------------------------
+    (
+        "linaria",
+        "Linaria",
+        "Zero-runtime CSS-in-JS for React and other frameworks",
+        "Linaria extracts CSS at build time, generating real CSS files with "
+        "zero runtime overhead. Write CSS in JS using tagged template literals "
+        "or object styles, then Linaria's Babel/webpack/Vite plugin strips all "
+        "styling code from the JS bundle and emits static CSS. Dynamic styles "
+        "use CSS custom properties (variables) — no runtime style injection, "
+        "no specificity battles. A popular alternative to Emotion and "
+        "styled-components for teams that want the developer experience of "
+        "CSS-in-JS without the runtime cost.",
+        "frontend-frameworks",
+        "callstack/linaria",
+        11000,
+        "https://linaria.dev",
+        "css-in-js,zero-runtime,react,babel,vite,webpack",
+        "npm install @linaria/core @linaria/react",
+        "code",
+    ),
+    # DevOps — Atlantis (127th pass) ----------------------------------------
+    (
+        "atlantis",
+        "Atlantis",
+        "Terraform pull request automation for teams",
+        "Atlantis is a self-hosted Golang app that listens for Terraform pull "
+        "request webhooks and runs `plan` and `apply` remotely. Teams comment "
+        "`atlantis plan` or `atlantis apply` on a PR; Atlantis posts the Terraform "
+        "output back as a comment and locks the workspace to prevent concurrent "
+        "applies. Works with GitHub, GitLab, Bitbucket, and Gitea. No third-party "
+        "SaaS required — deploy on your own infrastructure. The de-facto standard "
+        "for GitOps-style Terraform collaboration before Terraform Cloud existed, "
+        "still preferred by teams wanting self-hosted control over plan/apply.",
+        "devops-infrastructure",
+        "runatlantis/atlantis",
+        7700,
+        "https://www.runatlantis.io",
+        "terraform,gitops,pr-automation,iac,self-hosted,open-source",
+        "docker run runatlantis/atlantis",
+        "code",
+    ),
+    # DevOps — Infracost (127th pass) ----------------------------------------
+    (
+        "infracost",
+        "Infracost",
+        "Cloud cost estimates for Terraform in pull requests",
+        "Infracost shows cloud cost estimates for Terraform, Terragrunt, and "
+        "Pulumi changes directly in pull requests. Engineers see a cost breakdown "
+        "before merging — new resources, changed resources, total monthly delta. "
+        "Integrates with GitHub Actions, GitLab CI, Bitbucket Pipelines, and "
+        "Atlantis. Supports AWS, GCP, and Azure. The infracost.yml config file "
+        "lets teams set cost policies (e.g. alert if a PR increases monthly costs "
+        "by more than $100). A FinOps tool that fits naturally into IaC workflows "
+        "without requiring platform engineers to review every plan manually.",
+        "devops-infrastructure",
+        "infracost/infracost",
+        10500,
+        "https://www.infracost.io",
+        "terraform,iac,cost-estimation,finops,github-actions,open-source",
+        "brew install infracost && infracost auth login",
+        "code",
+    ),
 ]
 
 

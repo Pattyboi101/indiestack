@@ -6318,6 +6318,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "freshping": "monitoring",      # Freshping.io — real-time uptime monitoring by Freshworks → Monitoring & Uptime
     "ohdear": "monitoring",         # Oh Dear! — uptime/SSL/cert/domain monitoring SaaS → Monitoring & Uptime
     "oh-dear": "monitoring",        # hyphenated form — "oh-dear alternative", "oh dear monitoring" → Monitoring & Uptime
+    # AI — GRPO training technique (Group Relative Policy Optimization; used in DeepSeek-R1; "grpo vs ppo" queries rising)
+    "grpo": "ai",                   # GRPO — "grpo training", "grpo vs ppo", "grpo fine-tuning" → AI & Automation
+    # MCP / AI — tool use multi-word and compound forms (complement to "tool-use"→mcp already mapped)
+    "tool use": "mcp",              # "llm tool use", "tool use api", "tool use pattern" → MCP Servers
+    "tooluse": "mcp",               # compound — "tooluse server", "tooluse sdk" → MCP Servers
+    # Frontend — Linaria zero-runtime CSS-in-JS (callstack/linaria, 11k★; complement to emotion/vanilla-extract already mapped)
+    "linaria": "frontend",          # Linaria — "linaria alternative", "linaria vs emotion", "linaria setup" → Frontend Frameworks
+    # Frontend — CSS-in-JS multi-word pattern term (individual libs mapped; multi-word pattern form was missing)
+    "css-in-js": "frontend",        # "css-in-js library", "css-in-js alternative", "css-in-js react" → Frontend Frameworks
+    # Testing — component testing multi-word form (complement to "component"→developer; test-context makes it testing)
+    "component test": "testing",    # "component test library", "component test runner" → Testing Tools (Testing Library)
+    "component testing": "testing", # "component testing vitest", "component testing storybook" → Testing Tools
+    # DevOps — Terraform workflow automation and cost tooling (common IaC companion queries)
+    "atlantis": "devops",           # Atlantis — Terraform PR automation; "atlantis alternative", "atlantis setup" → DevOps
+    "infracost": "devops",          # Infracost — cloud cost estimates for Terraform; "infracost alternative" → DevOps
+    "spacelift": "devops",          # Spacelift — Terraform/Pulumi/Ansible CI/CD; "spacelift alternative" → DevOps
 }
 
 _FTS_STOP_WORDS = {

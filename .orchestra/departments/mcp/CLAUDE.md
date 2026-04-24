@@ -23,6 +23,11 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
 - Note any issues: bad top results, missing install_command, wrong category, truncated taglines, missing migration signals
 - Report UX friction alongside your main task output
 - Useful queries to test: auth, payments, email, database, monitoring, analytics
+  - grpo training, grpo vs ppo (new → ai-automation)
+  - tool use api, tooluse server (new → mcp-servers)
+  - linaria alternative, css-in-js library (new → frontend-frameworks)
+  - component testing vitest, component test runner (new → testing-tools)
+  - atlantis alternative, infracost setup (new → devops-infrastructure)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
