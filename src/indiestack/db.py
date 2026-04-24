@@ -5037,8 +5037,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "transformer": "ai",            # "transformer architecture", "transformer model", "transformer layer" → AI & Automation
     # DevOps — kind (Kubernetes IN Docker) local cluster tool (13k★)
     "kind": "devops",               # kind — run local Kubernetes clusters in Docker; "kind cluster", "kind vs minikube" → DevOps
-    # DevOps — canary and blue-green deployment strategy terms (common CI/CD pattern queries)
-    "canary": "devops",             # canary deployment — "canary release", "canary testing", "canary rollout" → DevOps
+    # DevOps — blue-green deployment strategy terms (canary → feature flags below)
     "bluegreen": "devops",          # compound — "bluegreen deployment", "blue green release strategy" → DevOps
     "blue-green": "devops",         # hyphenated — "blue-green deployment", "blue-green switch" → DevOps
     # Monitoring — SRE (Site Reliability Engineering) tooling queries (Prometheus/Grafana/PagerDuty workflows)
@@ -5233,8 +5232,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — Kubernetes workload and release management patterns
     "workload": "devops",           # "Kubernetes workload", "workload orchestration", "workload isolation" → DevOps & Infrastructure
     "artifact": "devops",           # "artifact registry", "build artifact", "container artifact" → DevOps & Infrastructure (Harbor, Quay)
-    # NOTE: "rollout"→"feature" is the effective mapping (defined at line ~5950); that entry supersedes this.
-    # "canary rollout"/"gradual rollout" already covered by "canary"→"devops", "bluegreen"→"devops".
+    # NOTE: "rollout"→"feature" is the effective mapping (defined below); "canary"→"feature" also defined below.
+    # "gradual rollout" covered by "rollout"→"feature"; "canary rollout" by "canary"→"feature"; blue-green by "bluegreen"→"devops".
     # Auth — OAuth provider library by the Lucia team (used for Google, GitHub, Apple OAuth flows)
     "arctic": "authentication",     # Arctic — TypeScript OAuth 2.0 providers library (pilcrowOnPaper/arctic, 3k★) → Authentication
     # Frontend — Vike (formerly vite-plugin-ssr); SSR/SSG framework for React, Vue, Svelte, Solid
@@ -6531,6 +6530,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "canary": "feature",            # "canary release", "canary deployment", "canary rollout" → Feature Flags (Flagsmith, Unleash)
     "dark-launch": "feature",       # "dark-launch feature", "dark-launch pattern" → Feature Flags
     "dark launch": "feature",       # multi-word — "dark launch strategy", "dark launch tool" → Feature Flags
+    # Frontend — reactive programming (RxJS, MobX, Vue 3 reactive API, SolidJS, Svelte stores)
+    "reactive": "frontend",         # "reactive programming", "reactive state", "reactive framework" → Frontend Frameworks
+    "reactivity": "frontend",       # "reactivity system", "vue reactivity", "reactivity model" → Frontend Frameworks
+    # Frontend — cross-platform framework queries (React Native, Flutter, Electron, Tauri, Capacitor)
+    "cross-platform": "frontend",   # "cross-platform framework", "cross-platform mobile" → Frontend Frameworks
+    "crossplatform": "frontend",    # compound — "crossplatform app", "crossplatform ui" → Frontend Frameworks
+    # Frontend — tree-shaking (build optimisation; Rollup, Vite, webpack, esbuild)
+    "tree-shaking": "frontend",     # "tree-shaking plugin", "enable tree-shaking" → Frontend Frameworks
+    "tree shaking": "frontend",     # multi-word — "tree shaking webpack", "tree shaking vite" → Frontend Frameworks
+    # Message Queue — event-driven architecture (complement to "event"→message already mapped)
+    "event-driven": "message",      # "event-driven architecture", "event-driven system" → Message Queue
+    "event driven": "message",      # multi-word — "event driven design", "event driven microservices" → Message Queue
 }
 
 _FTS_STOP_WORDS = {
