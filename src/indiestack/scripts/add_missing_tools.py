@@ -13020,6 +13020,69 @@ TOOLS = [
         "helm install karpenter oci://public.ecr.aws/karpenter/karpenter",
         "code",
     ),
+    # AI & Automation — LocalAI (126th pass) ----------------------------
+    (
+        "localai",
+        "LocalAI",
+        "Free, open-source OpenAI-compatible local LLM inference",
+        "LocalAI is a free, open-source alternative to the OpenAI API that "
+        "runs LLMs locally on CPU or GPU without an internet connection or "
+        "API keys. It is API-compatible with OpenAI's REST API, so existing "
+        "apps swap the base URL and work instantly. Supports Llama, Mistral, "
+        "Falcon, Whisper, Stable Diffusion, and 100+ other models through a "
+        "unified YAML model configuration. Runs on Linux, macOS, and Windows "
+        "via Docker or native binary — no Python environment required.",
+        "ai-automation",
+        "mudler/LocalAI",
+        29000,
+        "https://localai.io",
+        "llm,local,inference,self-hosted,openai-compatible,cpu,gpu",
+        "docker run -p 8080:8080 localai/localai:latest",
+        "code",
+    ),
+    # AI Dev Tools — OpenHands (126th pass) ----------------------------
+    (
+        "openhands",
+        "OpenHands",
+        "Open-source AI software engineering agent",
+        "OpenHands (formerly OpenDevin) is an open-source platform for "
+        "AI-powered software engineering agents. Agents can browse the web, "
+        "write and run code, call APIs, and manage files — autonomously "
+        "completing complex software tasks from a natural language prompt. "
+        "Supports local models via Ollama/LocalAI and hosted providers "
+        "(OpenAI, Anthropic, Google). Designed for developers who want a "
+        "self-hostable, extensible alternative to GitHub Copilot Workspace "
+        "or Devin. Used in research, CI pipelines, and interactive dev "
+        "environments.",
+        "ai-dev-tools",
+        "All-Hands-AI/OpenHands",
+        43000,
+        "https://www.all-hands.dev",
+        "ai-agent,coding-agent,software-engineering,autonomous,llm,self-hosted",
+        "docker run -it --rm -e LLM_MODEL=claude-3-5-sonnet-20241022 ghcr.io/all-hands-ai/openhands:0.28",
+        "code",
+    ),
+    # Developer Tools — Budibase (126th pass) ----------------------------
+    (
+        "budibase",
+        "Budibase",
+        "Open-source low-code platform for building internal tools",
+        "Budibase is an open-source low-code platform for building internal "
+        "business apps, admin panels, and CRUD interfaces. Connect to "
+        "PostgreSQL, MySQL, MongoDB, REST APIs, Airtable, or Google Sheets "
+        "and auto-generate forms, tables, and dashboards in minutes. Self-host "
+        "on your own infrastructure (Docker, Kubernetes, Digital Ocean) or use "
+        "Budibase Cloud. Role-based access control, SSO, and automation "
+        "workflows are built in. A Retool/AppSmith alternative that prioritises "
+        "developer-friendly configuration over drag-and-drop complexity.",
+        "developer-tools",
+        "Budibase/budibase",
+        23000,
+        "https://budibase.com",
+        "low-code,internal-tools,admin-panel,crud,self-hosted,open-source",
+        "npx @budibase/cli start",
+        "code",
+    ),
 ]
 
 

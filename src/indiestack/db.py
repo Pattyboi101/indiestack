@@ -6510,6 +6510,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "flux"→ai already mapped at line 5105; add version-specific and hyphenated forms only
     "flux1": "ai",                  # Flux.1 — "flux1 dev", "flux1 schnell", "flux1 alternative" → AI & Automation
     "flux-1": "ai",                 # hyphenated — "flux-1 dev", "flux-1 schnell", "flux-1 pro" → AI & Automation
+    # AI — LocalAI open-source local LLM inference server (mudler/LocalAI, 29k★; most-searched self-hosted LLM runner)
+    "localai": "ai",                # LocalAI — "localai alternative", "localai setup", "localai docker" → AI & Automation
+    "local-ai": "ai",               # hyphenated — "local-ai server", "local-ai alternative" → AI & Automation
+    # AI — Anthropic computer use (GUI agent API, high-volume 2025-2026 query segment)
+    "computer-use": "ai",           # "computer-use api", "computer-use tool", "computer-use alternative" → AI & Automation
+    "computeruse": "ai",            # compound — "computeruse agent", "computeruse setup" → AI & Automation
+    # AI — OpenHands (formerly OpenDevin) AI software agent (All-Hands-AI/OpenHands, 43k★)
+    "openhands": "ai",              # OpenHands — "openhands alternative", "openhands agent" → AI & Automation
+    "opendevin": "ai",              # legacy name — "opendevin alternative" queries still active → AI & Automation
+    # AI — model pruning/compression (complement to "quantization"→ai, "distillation"→ai)
+    "pruning": "ai",                # "model pruning", "weight pruning", "structured pruning" → AI & Automation
+    # Caching — LLM semantic caching (reducing redundant LLM calls via embedding-based cache hit detection)
+    "semantic cache": "caching",    # "semantic cache for llm", "semantic cache alternative" → Caching (GPTCache, Upstash)
+    "semantic-caching": "caching",  # hyphenated — "semantic-caching library", "semantic-caching middleware" → Caching
+    # Notifications — Web Push API (browser push without a native app; complement to fcm/apns already mapped)
+    "webpush": "notifications",     # "webpush library", "web push api", "webpush alternative" → Notifications (Novu, web-push-libs)
+    "web-push": "notifications",    # hyphenated — "web-push notification", "web-push setup" → Notifications
+    # Feature Flags — canary releases and dark launches (progressive delivery patterns)
+    "canary": "feature",            # "canary release", "canary deployment", "canary rollout" → Feature Flags (Flagsmith, Unleash)
+    "dark-launch": "feature",       # "dark-launch feature", "dark-launch pattern" → Feature Flags
+    "dark launch": "feature",       # multi-word — "dark launch strategy", "dark launch tool" → Feature Flags
 }
 
 _FTS_STOP_WORDS = {
