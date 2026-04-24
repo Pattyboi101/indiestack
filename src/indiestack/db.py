@@ -6456,6 +6456,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "makecom": "background",        # compound — "makecom alternative", "make.com workflow" → Background Jobs
     # DevOps — frp fast reverse proxy (fatedier/frp, 84k★; popular self-hosted ngrok alternative)
     "frp": "devops",                # frp — fast reverse proxy for exposing local servers → DevOps & Infrastructure
+    # Caching — "key value" without hyphen (complement to "key-value"→caching at line 6222; "kv store" shorthand)
+    "key value": "caching",         # "key value store", "key value database" → Caching (Redis, Upstash, Valkey)
+    "kv store": "caching",          # "kv store comparison", "kv store for edge" → Caching
+    "kv": "caching",                # short query form — "kv database", "kv cache" → Caching
+    # Message Queue — dead letter queue and fan-out patterns (high-volume architecture queries)
+    "dlq": "message",               # DLQ — "dead letter queue", "dlq setup", "dlq alternative" → Message Queue
+    "dead letter": "message",       # "dead letter queue", "dead letter exchange" → Message Queue (RabbitMQ, SQS)
+    "fanout": "message",            # "fanout messaging", "fanout exchange" → Message Queue (NATS, RabbitMQ)
+    "fan-out": "message",           # hyphenated — "fan-out pattern", "fan-out queue" → Message Queue
+    "event sourcing": "message",    # event-sourcing architecture; EventStoreDB, Axon → Message Queue
+    # Background Jobs — saga and transactional outbox patterns (microservices architecture)
+    "saga": "background",           # "saga pattern", "saga orchestration" → Background Jobs (Temporal, Restate)
+    "outbox": "background",         # "transactional outbox", "outbox pattern", "outbox relay" → Background Jobs
+    # API Tools — rate limiting algorithm queries (complement to "rate"→api and "limiting"→api)
+    "token bucket": "api",          # "token bucket algorithm", "token bucket rate limiter" → API Tools
+    "sliding window": "api",        # "sliding window rate limiter", "sliding window counter" → API Tools
+    # Database — MySQL/PostgreSQL proxy and load balancer tools
+    "proxysql": "database",         # ProxySQL — MySQL proxy with connection pooling and read/write splitting → Database
+    "pgpool": "database",           # PgPool-II — PostgreSQL proxy, load balancer, replication manager → Database
 }
 
 _FTS_STOP_WORDS = {

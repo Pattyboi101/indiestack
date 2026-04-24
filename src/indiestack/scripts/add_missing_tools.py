@@ -12898,6 +12898,65 @@ TOOLS = [
         "npm install -g @stoplight/studio",
         "code",
     ),
+    # Message Queue — event sourcing and cloud-native eventing (123rd pass) ----------
+    (
+        "eventstoredb",
+        "EventStoreDB",
+        "Purpose-built event sourcing database with append-only event streams",
+        "EventStoreDB is the original open-source database built specifically "
+        "for event sourcing. Stores business events in immutable, append-only "
+        "streams and replays them to reconstruct application state. Ships a "
+        "gRPC API, built-in projections for live event transformations, and "
+        "persistent subscriptions for competing consumer patterns. The "
+        "on-premises and cloud-managed (Event Store Cloud) editions suit "
+        "CQRS and DDD architectures that need a durable event log.",
+        "message-queue",
+        "EventStore/EventStore",
+        5500,
+        "https://www.eventstore.com",
+        "event-sourcing,cqrs,ddd,event-driven,append-only,streams",
+        None,
+        "code",
+    ),
+    (
+        "cloudevents",
+        "CloudEvents",
+        "CNCF standard specification for describing event data in a common format",
+        "CloudEvents is a CNCF specification for describing event data in a "
+        "common way. It defines a metadata envelope that makes events "
+        "portable across cloud providers, brokers, and frameworks — no more "
+        "bespoke event schemas per vendor. SDKs exist for Go, Python, "
+        "JavaScript, Java, C#, and Ruby. Adopted by Knative, Azure Event "
+        "Grid, Google Eventarc, and Serverless Workflow. Use it to "
+        "decouple event producers from consumers in event-driven systems.",
+        "message-queue",
+        "cloudevents/spec",
+        5000,
+        "https://cloudevents.io",
+        "cloud-native,event-driven,specification,cncf,interoperability",
+        "npm install cloudevents",
+        "code",
+    ),
+    # Database — PostgreSQL and MySQL proxy tools (123rd pass) ----------------------
+    (
+        "proxysql",
+        "ProxySQL",
+        "High-performance MySQL proxy with connection pooling and query routing",
+        "ProxySQL is a high-performance open-source MySQL proxy that sits "
+        "between your application and MySQL servers. Provides connection "
+        "pooling, automatic read/write splitting, query caching, query "
+        "rewriting, and seamless failover. Handles millions of connections "
+        "with microsecond latency overhead. Widely used in front of "
+        "Percona Server, MariaDB, AWS RDS, and Google Cloud SQL to "
+        "horizontally scale MySQL workloads without application changes.",
+        "database",
+        "sysown/proxysql",
+        6000,
+        "https://proxysql.com",
+        "mysql,proxy,connection-pooling,load-balancing,mariadb,rds",
+        None,
+        "code",
+    ),
 ]
 
 

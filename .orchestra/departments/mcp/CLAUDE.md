@@ -34,6 +34,11 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - jmeter alternative, appium alternative (performance/mobile testing → testing-tools)
   - localstack alternative (AWS local dev emulation → devops-infrastructure)
   - eza alternative, btop alternative (CLI/TUI tools → cli-tools)
+  - dead letter queue alternative, dlq setup (messaging patterns → message-queue)
+  - event sourcing database, eventstoredb alternative (event sourcing → message-queue)
+  - token bucket rate limiter, sliding window counter (algorithm queries → api-tools)
+  - kv store for edge, key value database (caching shorthand → caching)
+  - saga orchestration, transactional outbox (microservices patterns → background-jobs)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
