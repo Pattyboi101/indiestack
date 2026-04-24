@@ -6496,6 +6496,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     "durableobjects": "devops",     # compound — "durableobjects setup", "durableobjects pricing" → DevOps & Infrastructure
     # DevOps — AWS/CNCF Karpenter (Kubernetes node autoscaler; kubernetes-sigs/karpenter, 7k★)
     "karpenter": "devops",          # Karpenter — "karpenter alternative", "karpenter vs cluster-autoscaler" → DevOps & Infrastructure
+    # Developer Tools — hyphenated low-code / no-code forms (compound "lowcode"/"nocode"→developer already mapped)
+    "low-code": "developer",        # "low-code platform", "low-code alternative", "low-code tool" → Developer Tools
+    "no-code": "developer",         # "no-code builder", "no-code alternative", "no-code tool" → Developer Tools
+    # AI — hyphenated compound modality forms (abbreviated forms tts/stt/asr/ocr already mapped)
+    "text-to-speech": "ai",         # "text-to-speech api", "text-to-speech alternative" → AI & Automation (ElevenLabs, Coqui)
+    "speech-to-text": "ai",         # "speech-to-text library", "speech-to-text api" → AI & Automation (Deepgram, Whisper)
+    "text-to-image": "ai",          # "text-to-image model", "text-to-image api" → AI & Automation (Stable Diffusion, Flux)
+    "image-to-text": "ai",          # "image-to-text api", "image-to-text model" → AI & Automation (OCR via AI, GPT-4o Vision)
+    "txt2img": "ai",                # shorthand — "txt2img model", "txt2img pipeline" → AI & Automation (ComfyUI, A1111)
+    "img2img": "ai",                # image-to-image — "img2img pipeline", "img2img alternative" → AI & Automation
+    # AI — Flux image generation models (Black Forest Labs; very high query volume in 2026)
+    # "flux"→ai already mapped at line 5105; add version-specific and hyphenated forms only
+    "flux1": "ai",                  # Flux.1 — "flux1 dev", "flux1 schnell", "flux1 alternative" → AI & Automation
+    "flux-1": "ai",                 # hyphenated — "flux-1 dev", "flux-1 schnell", "flux-1 pro" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

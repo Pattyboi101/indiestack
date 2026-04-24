@@ -44,6 +44,9 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - react-compiler setup, reactcompiler babel (React 19 optimizer → frontend-frameworks)
   - mcp-inspector debug, mcpinspector alternative (MCP tooling → mcp-servers)
   - karpenter vs cluster-autoscaler, durable-objects cloudflare (infra queries → devops-infrastructure)
+  - text-to-image model, txt2img pipeline, flux alternative (image gen → ai-automation)
+  - text-to-speech api, speech-to-text library (modality → ai-automation)
+  - low-code platform, no-code builder (hyphenated forms → developer-tools)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
