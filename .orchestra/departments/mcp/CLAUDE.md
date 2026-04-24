@@ -39,6 +39,11 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - token bucket rate limiter, sliding window counter (algorithm queries → api-tools)
   - kv store for edge, key value database (caching shorthand → caching)
   - saga orchestration, transactional outbox (microservices patterns → background-jobs)
+  - promql alternative, logql query (observability query languages → monitoring/logging)
+  - gemini2 alternative, gemini-2 flash (versioned LLM queries → ai-automation)
+  - react-compiler setup, reactcompiler babel (React 19 optimizer → frontend-frameworks)
+  - mcp-inspector debug, mcpinspector alternative (MCP tooling → mcp-servers)
+  - karpenter vs cluster-autoscaler, durable-objects cloudflare (infra queries → devops-infrastructure)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)

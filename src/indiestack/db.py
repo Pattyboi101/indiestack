@@ -6475,6 +6475,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — MySQL/PostgreSQL proxy and load balancer tools
     "proxysql": "database",         # ProxySQL — MySQL proxy with connection pooling and read/write splitting → Database
     "pgpool": "database",           # PgPool-II — PostgreSQL proxy, load balancer, replication manager → Database
+    # Observability — query language abbreviations for Prometheus, Loki, Tempo (complement to tool names already mapped)
+    "promql": "monitoring",         # PromQL — Prometheus Query Language; "promql tutorial", "promql alternative" → Monitoring & Uptime
+    "logql": "logging",             # LogQL — Grafana Loki query language; "logql query", "logql alternative" → Logging
+    "traceql": "monitoring",        # TraceQL — Grafana Tempo trace query language; "traceql syntax" → Monitoring & Uptime
+    # AI — Gemini 2.x model version forms (gemini→ai already mapped; version compound forms weren't)
+    "gemini2": "ai",                # Gemini 2.x — "gemini2 alternative", "gemini2 flash", "gemini2 pro" → AI & Automation
+    "gemini-2": "ai",               # hyphenated — "gemini-2 flash", "gemini-2.5 pro", "gemini-2 alternative" → AI & Automation
+    # AI — Claude 3.5 Sonnet family (claude3/claude-3 are mapped; 3.5 sub-family compound forms weren't)
+    "claude35": "ai",               # Claude 3.5 — "claude35 sonnet", "claude35 alternative", "claude35 haiku" → AI & Automation
+    "claude-3-5": "ai",             # hyphenated — "claude-3-5 sonnet", "claude-3-5 api" → AI & Automation
+    # Frontend — React Compiler (React 19+ built-in optimizer; "react-compiler alternative" high-volume query)
+    "react-compiler": "frontend",   # React Compiler — AOT optimizer for React; "react-compiler setup" → Frontend Frameworks
+    "reactcompiler": "frontend",    # compound — "reactcompiler alternative", "reactcompiler babel" → Frontend Frameworks
+    # MCP Servers — official MCP Inspector debugging tool (modelcontextprotocol/inspector, 3k★)
+    "mcp-inspector": "mcp",         # MCP Inspector — "mcp-inspector setup", "mcp-inspector alternative" → MCP Servers
+    "mcpinspector": "mcp",          # compound — "mcpinspector debug", "mcpinspector alternative" → MCP Servers
+    # DevOps — Cloudflare Durable Objects (stateful serverless primitives; pairs with Workers and R2)
+    "durable-objects": "devops",    # Durable Objects — "durable-objects alternative", "durable-objects cloudflare" → DevOps
+    "durableobjects": "devops",     # compound — "durableobjects setup", "durableobjects pricing" → DevOps & Infrastructure
+    # DevOps — AWS/CNCF Karpenter (Kubernetes node autoscaler; kubernetes-sigs/karpenter, 7k★)
+    "karpenter": "devops",          # Karpenter — "karpenter alternative", "karpenter vs cluster-autoscaler" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

@@ -12957,6 +12957,69 @@ TOOLS = [
         None,
         "code",
     ),
+    # Frontend Frameworks — React Compiler (124th pass) ---------------------------
+    (
+        "react-compiler",
+        "React Compiler",
+        "Automatically optimise React apps at build time",
+        "React Compiler is an ahead-of-time (AOT) optimiser built into "
+        "React 19. It statically analyses component code and automatically "
+        "memoises values and callbacks — eliminating the need for manual "
+        "useMemo, useCallback, and React.memo. The compiler understands the "
+        "Rules of React and only transforms code it can prove is safe, "
+        "giving you the performance of full memoisation without the boilerplate. "
+        "Ships as a Babel plugin (babel-plugin-react-compiler) for Webpack, "
+        "Vite, and Next.js build pipelines.",
+        "frontend-frameworks",
+        "reactjs/react-compiler",
+        23000,
+        "https://react.dev/learn/react-compiler",
+        "react,compiler,performance,memoization,react-19,babel-plugin",
+        "npm install babel-plugin-react-compiler",
+        "code",
+    ),
+    # MCP Servers — MCP Inspector (124th pass) ------------------------------------
+    (
+        "mcp-inspector",
+        "MCP Inspector",
+        "Interactive debugging and testing tool for MCP servers",
+        "MCP Inspector is the official debugging and testing interface for "
+        "Model Context Protocol servers, maintained by Anthropic. It provides "
+        "a browser-based UI where you can connect to any MCP server via stdio "
+        "or SSE transport, browse available tools and resources, send test "
+        "requests, and inspect raw JSON-RPC messages in real time. "
+        "Essential for development and validation of MCP server implementations "
+        "before shipping to Claude Desktop, Cursor, or any other MCP client.",
+        "mcp-servers",
+        "modelcontextprotocol/inspector",
+        3000,
+        "https://modelcontextprotocol.io/docs/tools/inspector",
+        "mcp,debugging,testing,inspector,json-rpc,anthropic",
+        "npx @modelcontextprotocol/inspector",
+        "code",
+    ),
+    # DevOps & Infrastructure — Karpenter (124th pass) ----------------------------
+    (
+        "karpenter",
+        "Karpenter",
+        "Just-in-time node provisioning for Kubernetes",
+        "Karpenter is an open-source, flexible, high-performance Kubernetes "
+        "node provisioner maintained by AWS and graduated to CNCF. Instead of "
+        "predefined node groups, Karpenter provisions exactly the right "
+        "compute for pending pods within seconds — selecting instance types, "
+        "availability zones, and capacity types (spot/on-demand) based on "
+        "workload requirements. It consolidates underutilised nodes "
+        "automatically, cutting cloud compute costs by 20–60% compared to "
+        "Cluster Autoscaler. Supports AWS EC2, Azure AKS, and other providers "
+        "through a pluggable cloud provider API.",
+        "devops-infrastructure",
+        "aws/karpenter-provider-aws",
+        7000,
+        "https://karpenter.sh",
+        "kubernetes,autoscaling,node-provisioner,aws,spot,cncf,k8s",
+        "helm install karpenter oci://public.ecr.aws/karpenter/karpenter",
+        "code",
+    ),
 ]
 
 
