@@ -30,6 +30,10 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - psycopg alternative, scrapy, postgrest (Python ecosystem queries)
   - tavily alternative, exa alternative (AI search API queries — routes to search-engine category)
   - context7 mcp, sequential thinking mcp (MCP-specific tool queries)
+  - make alternative, n8n alternative (workflow automation → background-jobs)
+  - jmeter alternative, appium alternative (performance/mobile testing → testing-tools)
+  - localstack alternative (AWS local dev emulation → devops-infrastructure)
+  - eza alternative, btop alternative (CLI/TUI tools → cli-tools)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)

@@ -6437,6 +6437,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "btop": "cli",                  # btop++ — beautiful terminal system monitor (aristocratos/btop, 20k★) → CLI Tools
     # Monitoring — Glances Python system monitor (nicolargo/glances, 26k★)
     "glances": "monitoring",        # Glances — cross-platform Python system monitoring; "glances alternative" → Monitoring & Uptime
+    # DevOps — LocalStack (localstack/localstack, 55k★) AWS service emulator for local dev/testing
+    "localstack": "devops",         # LocalStack — run AWS services (S3, SQS, Lambda, DynamoDB) locally → DevOps & Infrastructure
+    # API — Stoplight OpenAPI design and documentation platform
+    "stoplight": "api",             # Stoplight — API design, linting, mock, and documentation platform → API Tools
+    # CLI — eza better ls replacement in Rust (eza-community/eza, 12k★; formerly exa)
+    "eza": "cli",                   # eza — modern replacement for ls with colour, icons, git status → CLI Tools
+    # Testing — Apache JMeter load and performance testing (apache/jmeter, 8k★)
+    "jmeter": "testing",            # Apache JMeter — load testing, performance, and functional test tool → Testing Tools
+    # Testing — Appium mobile app automation (appium/appium, 18k★)
+    "appium": "testing",            # Appium — cross-platform mobile test automation (iOS + Android) → Testing Tools
+    # API — Apidog all-in-one API design, debug, and test platform
+    "apidog": "api",                # Apidog — API design + debug + test + mock + docs, all-in-one → API Tools
+    # API — Hookdeck event delivery and webhook reliability infrastructure
+    "hookdeck": "api",              # Hookdeck — webhook delivery, filtering, and retry infrastructure → API Tools
+    # Background jobs — Make.com (Zapier alternative; compound form; "make" is also in _FRAMEWORK_QUERY_TERMS context)
+    "make": "background",           # Make.com — visual workflow automation, Zapier competitor → Background Jobs
+    "makecom": "background",        # compound — "makecom alternative", "make.com workflow" → Background Jobs
+    # DevOps — frp fast reverse proxy (fatedier/frp, 84k★; popular self-hosted ngrok alternative)
+    "frp": "devops",                # frp — fast reverse proxy for exposing local servers → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

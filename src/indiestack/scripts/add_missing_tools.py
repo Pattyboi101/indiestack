@@ -12845,6 +12845,59 @@ TOOLS = [
         "uvx mcp-server-git",
         "code",
     ),
+    # Testing — mobile and performance testing (122nd pass) -----------------------
+    (
+        "appium",
+        "Appium",
+        "Cross-platform mobile test automation for iOS and Android",
+        "Appium is the leading open-source framework for automating native, "
+        "web, and hybrid mobile applications on iOS and Android. Uses the "
+        "WebDriver protocol, allowing tests to be written in any language. "
+        "Supports real devices and simulators. The de facto standard for "
+        "mobile UI test automation in enterprise CI pipelines.",
+        "testing-tools",
+        "appium/appium",
+        18000,
+        "https://appium.io",
+        "mobile,testing,automation,ios,android,webdriver",
+        "npm install -g appium",
+        "code",
+    ),
+    (
+        "jmeter",
+        "Apache JMeter",
+        "Open-source load testing tool for performance measurement",
+        "Apache JMeter is the industry-standard open-source tool for load "
+        "testing, performance measurement, and functional testing of "
+        "web applications. Supports HTTP, HTTPS, FTP, JDBC, LDAP, SOAP, "
+        "REST, and more. Highly extensible via plugins. Ships a GUI for "
+        "building test plans and a CLI for headless CI execution.",
+        "testing-tools",
+        "apache/jmeter",
+        8000,
+        "https://jmeter.apache.org",
+        "load-testing,performance,java,open-source,ci",
+        None,
+        "code",
+    ),
+    # API — OpenAPI design and collaboration (122nd pass) --------------------------
+    (
+        "stoplight-studio",
+        "Stoplight Studio",
+        "Collaborative API design and documentation with OpenAPI",
+        "Stoplight Studio is an open-source visual OpenAPI designer for "
+        "designing, documenting, and mocking REST APIs. Integrates with "
+        "Git-based workflows and supports OpenAPI 3.1, JSON Schema, and "
+        "Markdown for descriptions. The companion Prism tool enables "
+        "instant contract testing and mock servers from any OpenAPI spec.",
+        "api-tools",
+        "stoplightio/studio",
+        2000,
+        "https://stoplight.io/studio",
+        "openapi,api-design,documentation,mock,rest,visual-editor",
+        "npm install -g @stoplight/studio",
+        "code",
+    ),
 ]
 
 
