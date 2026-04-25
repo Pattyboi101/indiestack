@@ -13348,6 +13348,99 @@ TOOLS = [
         "ext install Codeium.codeium",
         "saas",
     ),
+    # API Tools — Fastify (131st pass) ----------------------------------------
+    (
+        "fastify",
+        "Fastify",
+        "Fast and low overhead web framework for Node.js",
+        "Fastify is a highly performant, low-overhead web framework for Node.js "
+        "and Bun. Built with TypeScript first-class support and a powerful plugin "
+        "architecture. Up to 35,000 requests/second on a single server. Ships "
+        "with built-in schema-based validation via Ajv, JSON serialization via "
+        "fast-json-stringify, and an OpenAPI plugin. Express and Hapi alternative.",
+        "api-tools",
+        "fastify/fastify",
+        31000,
+        "https://fastify.dev",
+        "nodejs,typescript,web-framework,performance,rest-api",
+        "npm install fastify",
+        "code",
+    ),
+    # API Tools — Hono (131st pass) -------------------------------------------
+    (
+        "hono",
+        "Hono",
+        "Ultrafast web framework for the Edges",
+        "Hono is a small, simple, and ultra-fast web framework built on Web "
+        "Standards. Runs on Cloudflare Workers, Fastly Compute, Deno, Bun, Vercel, "
+        "AWS Lambda, and Node.js. Zero dependencies, TypeScript-first. 5× faster "
+        "than Express. Supports middleware, JSX, routing, and RPC mode with "
+        "end-to-end type safety (HonoRPC). Ideal for edge-deployed APIs and "
+        "microservices where cold starts matter.",
+        "api-tools",
+        "honojs/hono",
+        19000,
+        "https://hono.dev",
+        "edge,typescript,cloudflare-workers,deno,bun,rest-api,performance",
+        "npm install hono",
+        "code",
+    ),
+    # Frontend Frameworks — Pinia (131st pass) --------------------------------
+    (
+        "pinia",
+        "Pinia",
+        "The intuitive store for Vue.js",
+        "Pinia is the official state management library for Vue 3, replacing "
+        "Vuex. Lightweight (1.4kb), TypeScript-first, and deeply integrated with "
+        "Vue DevTools. Supports composition and options store APIs. Works with "
+        "SSR (Nuxt), Vite, and Vue Router out of the box. Hot module replacement "
+        "and plugin system included. Recommended by the Vue core team.",
+        "frontend-frameworks",
+        "vuejs/pinia",
+        12000,
+        "https://pinia.vuejs.org",
+        "vue,state-management,typescript,vuex-alternative",
+        "npm install pinia",
+        "code",
+    ),
+    # Caching — Dragonfly (131st pass) ----------------------------------------
+    (
+        "dragonfly",
+        "Dragonfly",
+        "The most performant Redis and Memcached compatible in-memory datastore",
+        "Dragonfly is a modern in-memory datastore built for the cloud. Fully "
+        "compatible with Redis and Memcached APIs while delivering 25× throughput "
+        "compared to Redis on EC2. Multi-threaded architecture uses all CPU cores "
+        "efficiently. Runs on a single node what Redis Cluster needs 25 nodes for. "
+        "Supports all major Redis data structures and commands. Drop-in replacement "
+        "requiring zero code changes.",
+        "caching",
+        "dragonflydb/dragonfly",
+        25000,
+        "https://www.dragonflydb.io",
+        "redis-compatible,memcached,in-memory,caching,performance,multi-threaded",
+        "docker run --ulimit memlock=-1 ghcr.io/dragonflydb/dragonfly",
+        "code",
+    ),
+    # MCP Servers — FastMCP (131st pass) --------------------------------------
+    (
+        "fastmcp",
+        "FastMCP",
+        "The fast, Pythonic way to build MCP servers",
+        "FastMCP is a Python framework for building Model Context Protocol (MCP) "
+        "servers with minimal boilerplate. Inspired by FastAPI, it uses decorators "
+        "to expose tools, resources, and prompts to AI clients like Claude. "
+        "Features: async support, automatic schema generation from type hints, "
+        "built-in testing utilities, and a CLI for running/inspecting servers. "
+        "The recommended way to build MCP servers in Python.",
+        "mcp-servers",
+        "jlowin/fastmcp",
+        5000,
+        "https://gofastmcp.com",
+        "mcp,python,model-context-protocol,ai-agents,claude",
+        "pip install fastmcp",
+        "code",
+    ),
     # AI Dev Tools — Gemini CLI (129th pass) --------------------------------
     (
         "gemini-cli",

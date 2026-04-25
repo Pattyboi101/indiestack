@@ -6593,6 +6593,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     "requestbin": "api",            # "requestbin alternative", "requestbin webhook test" → API Tools
     # DevOps — Smee.io webhook relay for local development (GitHub Probot ecosystem)
     "smee": "devops",               # "smee.io webhook relay", "smee alternative" → DevOps & Infrastructure
+    # Load balancer — "load" alone maps to "testing" (load testing tools), so multi-word and
+    # hyphenated "load balancer/balancing" queries need explicit devops overrides
+    "load balancer": "devops",     # "load balancer setup", "load balancer alternative" → DevOps & Infrastructure
+    "load balancing": "devops",    # "load balancing tool", "load balancing software" → DevOps & Infrastructure
+    "load-balancing": "devops",    # hyphenated — "load-balancing solution", "load-balancing nginx" → DevOps
+    # Search — full text search multi-word (no hyphen/compound) form
+    "full text search": "search",  # "full text search engine", "full text search library" → Search Engines
+    # Testing — hyphenated form of typecheck (compound forms mapped; dashed form wasn't)
+    "type-check": "testing",       # "type-check script", "type-check ci", "type-check alternative" → Testing Tools
+    # Frontend — code-splitting hyphenated form (complement to "splitting"→frontend already mapped)
+    "code-splitting": "frontend",  # "code-splitting setup", "code-splitting webpack" → Frontend Frameworks
+    # Security — key rotation and intrusion detection query terms
+    "key-rotation": "security",    # "key-rotation policy", "key-rotation aws kms", "key rotation tool" → Security Tools
+    "key rotation": "security",    # multi-word — "key rotation management", "api key rotation" → Security Tools
+    "intrusion": "security",       # "intrusion detection system", "intrusion prevention" → Security Tools (Wazuh, Falco)
+    "ids": "security",             # IDS abbreviation — "open source ids", "ids tool", "ids vs ips" → Security Tools
+    # Feature Flags — feature gating query terms (complement to flag/toggle/rollout already mapped)
+    "gating": "feature",           # "feature gating", "access gating", "rollout gating" → Feature Flags
+    "feature-gate": "feature",     # hyphenated — "feature-gate library", "feature-gate rust crate" → Feature Flags
+    "feature gate": "feature",     # multi-word — "feature gate system", "feature gate sdk" → Feature Flags
 }
 
 _FTS_STOP_WORDS = {
