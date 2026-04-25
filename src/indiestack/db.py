@@ -6531,6 +6531,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "canary": "feature",            # "canary release", "canary deployment", "canary rollout" → Feature Flags (Flagsmith, Unleash)
     "dark-launch": "feature",       # "dark-launch feature", "dark-launch pattern" → Feature Flags
     "dark launch": "feature",       # multi-word — "dark launch strategy", "dark launch tool" → Feature Flags
+    # AI — text embedding models and inference APIs (fast-growing RAG infra segment)
+    "codestral": "ai",              # Codestral — Mistral's code-generation model; "codestral alternative" → AI & Automation
+    "nemo": "ai",                   # NVIDIA NeMo / Mistral Nemo — LLM framework/model; "nemo alternative" → AI & Automation
+    "nomic": "ai",                  # Nomic AI — open embedding models (nomic-embed-text); "nomic alternative" → AI & Automation
+    "voyage": "ai",                 # VoyageAI — high-quality embedding API for RAG; "voyage alternative" → AI & Automation
+    "bge": "ai",                    # BAAI BGE — open-source text embedding models for RAG; "bge alternative" → AI & Automation
+    # AWS workflow orchestration — complement to temporal/inngest/trigger already mapped
+    "step-functions": "background", # AWS Step Functions — serverless workflow orchestration; "step-functions alternative" → Background Jobs
+    "step functions": "background", # multi-word — "step functions alternative", "aws step functions" → Background Jobs
+    "sfn": "background",            # SFN abbreviation — "sfn workflow", "aws sfn" → Background Jobs
+    # AWS EventBridge — event routing and messaging service
+    "eventbridge": "message",       # AWS EventBridge — "eventbridge alternative", "eventbridge setup" → Message Queues
+    "event-bridge": "message",      # hyphenated — "event-bridge routing", "event-bridge alternative" → Message Queues
 }
 
 _FTS_STOP_WORDS = {

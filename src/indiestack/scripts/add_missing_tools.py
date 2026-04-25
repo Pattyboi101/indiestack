@@ -13083,6 +13083,24 @@ TOOLS = [
         "npx @budibase/cli start",
         "code",
     ),
+    # Creative Tools — Remotion (127th pass) ----------------------------
+    (
+        "remotion",
+        "Remotion",
+        "Create videos programmatically in React",
+        "Remotion lets you create videos using React components. Write video "
+        "logic in TypeScript, use CSS and SVG animations, and render to MP4 "
+        "at any resolution and frame rate. Build dynamic video templates, "
+        "data-driven clips, and programmatic marketing videos. Supports "
+        "server-side rendering and cloud rendering (Remotion Lambda on AWS).",
+        "creative-tools",
+        "remotion-dev/remotion",
+        20000,
+        "https://www.remotion.dev",
+        "video,react,typescript,animation,programmatic-video,render",
+        "npm init video@latest",
+        "code",
+    ),
 ]
 
 
