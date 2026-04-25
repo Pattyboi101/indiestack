@@ -47,6 +47,14 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - text-to-image model, txt2img pipeline, flux alternative (image gen → ai-automation)
   - text-to-speech api, speech-to-text library (modality → ai-automation)
   - low-code platform, no-code builder (hyphenated forms → developer-tools)
+  - zookeeper alternative, leader election service (distributed coordination → devops-infrastructure)
+  - mitmproxy alternative, http debugging proxy (HTTP inspection → developer-tools)
+  - svix alternative, open source webhook server (webhook infra → api-tools)
+  - idempotent api design, idempotency key service (API patterns → api-tools)
+  - circuit-breaker library, circuit breaker pattern (resilience → api-tools)
+  - distributed lock service, redlock alternative (distributed mutex → background-jobs)
+  - bolt.new alternative, ai web app builder (AI builders → ai-dev-tools)
+  - codeium alternative, free ai code completion (AI coding → ai-dev-tools)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
