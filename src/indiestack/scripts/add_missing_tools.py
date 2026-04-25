@@ -13101,6 +13101,84 @@ TOOLS = [
         "npm init video@latest",
         "code",
     ),
+    # Documentation — Sphinx (128th pass) ----------------------------
+    (
+        "sphinx",
+        "Sphinx",
+        "Python documentation generator with ReStructuredText",
+        "Sphinx is the de facto standard documentation generator for Python "
+        "projects. It converts reStructuredText source files into HTML, PDF, "
+        "ePub, and many other formats. Features autodoc (pulls docstrings "
+        "directly from Python source), cross-references, search, and "
+        "versioned docs. Used by CPython, Django, Flask, NumPy, and thousands "
+        "of other projects. Extensible with themes (Furo, PyData Sphinx Theme) "
+        "and plugins. Readthedocs.org hosts most Sphinx projects for free.",
+        "documentation",
+        "sphinx-doc/sphinx",
+        6500,
+        "https://www.sphinx-doc.org",
+        "documentation,python,rst,reStructuredText,autodoc,readthedocs",
+        "pip install sphinx",
+        "code",
+    ),
+    # Frontend Frameworks — Linaria (128th pass) ----------------------------
+    (
+        "linaria",
+        "Linaria",
+        "Zero-runtime CSS-in-JS with static extraction",
+        "Linaria is a CSS-in-JS library that extracts styles to CSS files at "
+        "build time — zero runtime overhead. Write CSS in tagged template "
+        "literals in JavaScript/TypeScript and Linaria converts them to static "
+        "CSS classes. Works with Webpack, Vite, Rollup, and esbuild. Supports "
+        "dynamic styles via CSS custom properties. A lighter alternative to "
+        "styled-components and Emotion when you need zero bundle cost.",
+        "frontend-frameworks",
+        "callstack/linaria",
+        11000,
+        "https://linaria.dev",
+        "css-in-js,zero-runtime,styled-components,emotion,react,typescript",
+        "npm install @linaria/core @linaria/react",
+        "code",
+    ),
+    # Frontend Frameworks — nuqs (128th pass) ----------------------------
+    (
+        "nuqs",
+        "nuqs",
+        "Type-safe URL search params state management for React",
+        "nuqs (formerly next-usequerystate) lets you store UI state in URL "
+        "search parameters — the same way Next.js, Remix, and TanStack Router "
+        "manage pagination, filters, and tabs. It's a typed, serialization-aware "
+        "hook: `useQueryState('page', parseAsInteger.withDefault(1))`. Supports "
+        "Next.js App Router, Pages Router, React Router, Remix, and plain React. "
+        "Ideal for shareable URLs, back-button support, and SEO-friendly state.",
+        "frontend-frameworks",
+        "47ng/nuqs",
+        9000,
+        "https://nuqs.47ng.com",
+        "url-state,search-params,nextjs,react,query-string,routing",
+        "npm install nuqs",
+        "code",
+    ),
+    # Developer Tools — Tree-sitter (128th pass) ----------------------------
+    (
+        "tree-sitter",
+        "Tree-sitter",
+        "Incremental parsing library for source code",
+        "Tree-sitter is a parser generator and incremental parsing library "
+        "for programming tools. It builds a concrete syntax tree for a source "
+        "file and updates it efficiently as the file is edited. Used by Neovim, "
+        "GitHub's code search, and hundreds of language extensions to power "
+        "syntax highlighting, code folding, structural navigation, and code "
+        "intelligence. Grammars exist for 100+ languages. Bindable from C, "
+        "Rust, Python, Node.js, and WebAssembly.",
+        "developer-tools",
+        "tree-sitter/tree-sitter",
+        17000,
+        "https://tree-sitter.github.io",
+        "parser,syntax-highlighting,incremental,neovim,code-intelligence",
+        "pip install tree-sitter",
+        "code",
+    ),
 ]
 
 
