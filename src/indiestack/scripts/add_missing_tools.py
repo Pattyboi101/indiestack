@@ -13258,6 +13258,96 @@ TOOLS = [
         "docker run -p4001:4001 rqlite/rqlite",
         "code",
     ),
+    # Developer Tools — mitmproxy HTTP debugging proxy (130th pass) ----------
+    (
+        "mitmproxy",
+        "mitmproxy",
+        "Interactive HTTPS proxy for intercepting and modifying traffic",
+        "mitmproxy is an open-source interactive HTTPS proxy for intercepting, "
+        "inspecting, modifying, and replaying HTTP/HTTPS traffic. Comes in three "
+        "modes: interactive TUI (mitmproxy), non-interactive CLI (mitmdump), and "
+        "a web interface (mitmweb). Essential for debugging APIs, reverse "
+        "engineering apps, and security testing. Python-scriptable via addons.",
+        "developer-tools",
+        "mitmproxy/mitmproxy",
+        37000,
+        "https://mitmproxy.org",
+        "http,https,proxy,debugging,security,traffic-inspection",
+        "pip install mitmproxy",
+        "code",
+    ),
+    # Developer Tools — StackBlitz WebContainers online IDE (130th pass) -----
+    (
+        "stackblitz",
+        "StackBlitz",
+        "Instant full-stack web IDE powered by WebContainers",
+        "StackBlitz runs Node.js environments entirely in the browser via "
+        "WebContainers — no server required. Supports Next.js, Vite, Astro, "
+        "SvelteKit, and more with instant cold boots. Used for interactive docs, "
+        "reproducible bug reports, and collaborative coding. Bolt.new is built "
+        "on StackBlitz WebContainers.",
+        "developer-tools",
+        "stackblitz/core",
+        17000,
+        "https://stackblitz.com",
+        "online-ide,webcontainers,browser,nodejs,instant",
+        "",
+        "saas",
+    ),
+    # AI Dev Tools — Bolt.new AI full-stack web builder (130th pass) ---------
+    (
+        "bolt-new",
+        "Bolt.new",
+        "AI-powered full-stack web app builder in the browser",
+        "Bolt.new is an AI app builder from StackBlitz that runs a full Node.js "
+        "dev environment in the browser. Prompt to generate, edit, and deploy "
+        "full-stack apps (React, Next.js, Vite) without leaving the browser. "
+        "Supports npm packages, file editing, and one-click Netlify deploys. "
+        "Open-source (MIT) with bring-your-own API key support.",
+        "ai-dev-tools",
+        "stackblitz-labs/bolt.new",
+        12000,
+        "https://bolt.new",
+        "ai,app-builder,full-stack,browser,react,nextjs",
+        "",
+        "saas",
+    ),
+    # API Tools — Svix open-source webhook infrastructure (130th pass) -------
+    (
+        "svix",
+        "Svix",
+        "Open-source webhook sending service",
+        "Svix is an open-source webhook sending service with enterprise "
+        "reliability. Handles delivery retries, signing, fanout, filtering, "
+        "and consumer portals. Drop-in webhooks-as-a-service with SDKs for "
+        "Node.js, Python, Go, Ruby, Java, Kotlin, and more. "
+        "Self-hostable or managed cloud.",
+        "api-tools",
+        "svix-oss/svix-webhooks",
+        3500,
+        "https://svix.com",
+        "webhooks,event-delivery,retry,signing,open-source",
+        "npm install svix",
+        "code",
+    ),
+    # Developer Tools — Codeium AI code completion (130th pass) --------------
+    (
+        "codeium",
+        "Codeium",
+        "Free AI code completion and chat for developers",
+        "Codeium provides free AI code autocomplete and an AI chat assistant "
+        "for 70+ programming languages across 40+ editors. Uses its own "
+        "Windsurf-optimized language models. Features: unlimited completions, "
+        "codebase-aware chat, and repo-wide search. The Windsurf IDE is "
+        "the dedicated Codeium editor with agentic Cascade flows.",
+        "ai-dev-tools",
+        "Exafunction/codeium.vim",
+        4000,
+        "https://codeium.com",
+        "ai,code-completion,autocomplete,free,multi-language",
+        "ext install Codeium.codeium",
+        "saas",
+    ),
     # AI Dev Tools — Gemini CLI (129th pass) --------------------------------
     (
         "gemini-cli",

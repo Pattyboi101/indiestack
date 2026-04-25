@@ -6573,6 +6573,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — ACID transactions and CAP theorem queries
     "acid": "database",             # "acid compliant database", "acid transactions", "acid database" → Database
     "cap-theorem": "database",      # "cap theorem database", "cap theorem tool" → Database
+    # DevOps — Apache ZooKeeper distributed coordination (leader election, config, naming)
+    "zookeeper": "devops",          # "zookeeper alternative", "zookeeper setup", "zookeeper vs etcd" → DevOps
+    # DevOps — leader election patterns (Raft, Paxos, etcd-based consensus algorithms)
+    "leader-election": "devops",    # "leader election algorithm", "leader election service" → DevOps
+    # API Tools — idempotent requests (complement to "idempotency" already mapped at line 3629)
+    "idempotent": "api",            # "idempotent api", "idempotent request design" → API Tools
+    # API Tools — circuit-breaker (hyphenated complement to "circuit"→api already mapped)
+    "circuit-breaker": "api",       # "circuit-breaker pattern", "circuit-breaker library" → API Tools
+    # Background Jobs — distributed lock (Redlock, Redis-based, Etcd-based distributed mutex)
+    "distributed-lock": "background",   # "distributed lock service", "redlock alternative" → Background Jobs
+    # Developer Tools — mitmproxy HTTP debugging (37k★ Python MITM proxy; "mitmproxy setup")
+    "mitmproxy": "developer",       # "mitmproxy alternative", "mitmproxy setup", "mitmproxy filter" → Developer Tools
+    # Developer Tools — HTTP Toolkit desktop HTTP debugging (complement to "mitmproxy"→developer)
+    "httptoolkit": "developer",     # "httptoolkit alternative", "httptoolkit vs mitmproxy" → Developer Tools
+    # API Tools — Svix open-source webhook delivery infrastructure (3k★)
+    "svix": "api",                  # "svix alternative", "svix webhook", "svix setup" → API Tools
+    # API Tools — RequestBin webhook testing / inspection service
+    "requestbin": "api",            # "requestbin alternative", "requestbin webhook test" → API Tools
+    # DevOps — Smee.io webhook relay for local development (GitHub Probot ecosystem)
+    "smee": "devops",               # "smee.io webhook relay", "smee alternative" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {
