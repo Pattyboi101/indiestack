@@ -6544,6 +6544,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AWS EventBridge — event routing and messaging service
     "eventbridge": "message",       # AWS EventBridge — "eventbridge alternative", "eventbridge setup" → Message Queues
     "event-bridge": "message",      # hyphenated — "event-bridge routing", "event-bridge alternative" → Message Queues
+    # Frontend — CSS-in-JS pattern queries (complement to named tools: emotion, styled-components, vanilla-extract, stitches)
+    "css-in-js": "frontend",        # "css-in-js library", "css-in-js react", "css-in-js alternative" → Frontend Frameworks
+    "cssinjs": "frontend",          # compound — "cssinjs library", "cssinjs solution" → Frontend Frameworks
+    "css-modules": "frontend",      # "css-modules alternative", "css-modules setup", "css modules webpack" → Frontend Frameworks
+    "cssmodules": "frontend",       # compound — "cssmodules config", "cssmodules vs css-in-js" → Frontend Frameworks
+    # Frontend — Linaria CSS-in-JS library (callstack/linaria, 11k★)
+    "linaria": "frontend",          # Linaria — zero-runtime CSS-in-JS with static extraction; "linaria alternative" → Frontend Frameworks
+    # Frontend — nuqs URL state management for Next.js (nuqs/nuqs, 9k★)
+    "nuqs": "frontend",             # nuqs — type-safe URL search params for Next.js/React; "nuqs alternative" → Frontend Frameworks
+    # Developer Tools — Neovim short form (neovim→developer already mapped; "nvim" is the binary name used in queries)
+    "nvim": "developer",            # "nvim plugin", "nvim config", "nvim alternative" → Developer Tools
+    # Developer Tools — Tree-sitter incremental parsing library (tree-sitter/tree-sitter, 17k★)
+    "tree-sitter": "developer",     # Tree-sitter — "tree-sitter grammar", "tree-sitter alternative" → Developer Tools
+    "treesitter": "developer",      # compound — "treesitter setup", "treesitter parser" → Developer Tools
+    # Documentation — Sphinx Python documentation generator (sphinx-doc/sphinx, 6k★)
+    "sphinx": "documentation",      # Sphinx — Python docs generator with reStructuredText; "sphinx alternative" → Documentation
+    # Security — KMS (Key Management Service) — AWS KMS, GCP KMS, HashiCorp Vault
+    "kms": "security",              # "kms alternative", "aws kms", "kms key rotation", "kms setup" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
