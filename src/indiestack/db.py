@@ -6562,6 +6562,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sphinx": "documentation",      # Sphinx — Python docs generator with reStructuredText; "sphinx alternative" → Documentation
     # Security — KMS (Key Management Service) — AWS KMS, GCP KMS, HashiCorp Vault
     "kms": "security",              # "kms alternative", "aws kms", "kms key rotation", "kms setup" → Security Tools
+    # API Tools — HTTP/2, HTTP/3, QUIC protocol queries
+    "http2": "api",                 # "http2 server", "http2 support", "http2 library" → API Tools
+    "http3": "api",                 # "http3 server", "http3 protocol", "http3 alternative" → API Tools
+    "quic": "api",                  # QUIC — HTTP/3 transport; "quic protocol", "quic server" → API Tools
+    # Monitoring — observability abbreviation (SRE community standard)
+    "o11y": "monitoring",           # "o11y stack", "o11y platform", "o11y tool" → Monitoring & Uptime
+    # Developer Tools — web spider synonym for web crawler
+    "spider": "developer",          # "web spider", "spider tool", "spider framework" → Developer Tools
+    # Database — ACID transactions and CAP theorem queries
+    "acid": "database",             # "acid compliant database", "acid transactions", "acid database" → Database
+    "cap-theorem": "database",      # "cap theorem database", "cap theorem tool" → Database
 }
 
 _FTS_STOP_WORDS = {

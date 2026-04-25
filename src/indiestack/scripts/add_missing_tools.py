@@ -13179,6 +13179,105 @@ TOOLS = [
         "pip install tree-sitter",
         "code",
     ),
+    # Developer Tools — fnm (129th pass) ------------------------------------
+    (
+        "fnm",
+        "fnm",
+        "Fast and simple Node.js version manager",
+        "fnm (Fast Node Manager) is a blazing-fast Node.js version manager "
+        "built in Rust. Drop-in replacement for nvm with cross-platform support "
+        "on macOS, Linux, and Windows. Supports .nvmrc and .node-version files, "
+        "automatic version switching per directory, and shell completions for "
+        "bash, zsh, fish, and PowerShell. Installs in seconds via a single curl "
+        "script. Ships as a single binary with no runtime dependencies.",
+        "developer-tools",
+        "Schniz/fnm",
+        18000,
+        "https://github.com/Schniz/fnm",
+        "node,version-manager,nvm,rust,cli",
+        "curl -fsSL https://fnm.vercel.app/install | bash",
+        "code",
+    ),
+    # DevOps — go-task / Taskfile (129th pass) ------------------------------
+    (
+        "go-task",
+        "Task",
+        "Task runner and build tool via Taskfile.yml",
+        "Task is a task runner and build tool written in Go, designed as a "
+        "simpler alternative to GNU Make. Tasks are defined in a Taskfile.yml "
+        "using a straightforward YAML syntax. Supports variables, includes, "
+        "parallel execution, watching for file changes, and calling tasks from "
+        "other tasks. Cross-platform with a single binary install. Popular in "
+        "Go, Node, and polyglot monorepos as a Makefile replacement with better "
+        "readability and built-in dependency management.",
+        "devops-infrastructure",
+        "go-task/task",
+        11000,
+        "https://taskfile.dev",
+        "task-runner,makefile,build-tool,go,automation,cli",
+        "go install github.com/go-task/task/v3/cmd/task@latest",
+        "code",
+    ),
+    # API Tools — Buf CLI (129th pass) --------------------------------------
+    (
+        "buf",
+        "Buf",
+        "Modern Protobuf toolchain for API development",
+        "Buf is a Protobuf toolchain that replaces protoc with a faster, "
+        "more ergonomic workflow. Provides lint, breaking-change detection, "
+        "formatting, and a schema registry for Protobuf files. The Buf CLI "
+        "generates code stubs for gRPC and Connect APIs across 10+ languages "
+        "without complex plugin chains. The Buf Schema Registry (BSR) hosts "
+        "and versions Protobuf modules. Used by teams at Stripe, Figma, and "
+        "Square to manage large Protobuf schemas at scale.",
+        "api-tools",
+        "bufbuild/buf",
+        9000,
+        "https://buf.build",
+        "protobuf,grpc,api,lint,codegen,connect",
+        "brew install bufbuild/buf/buf",
+        "code",
+    ),
+    # Database — rqlite (129th pass) ----------------------------------------
+    (
+        "rqlite",
+        "rqlite",
+        "Distributed relational database built on SQLite",
+        "rqlite is a lightweight distributed relational database built on "
+        "SQLite, using the Raft consensus algorithm for fault-tolerant "
+        "replication. Provides a SQL interface over HTTP and gRPC, with "
+        "leader election, read-scaling via follower reads, and automatic "
+        "failover. A single binary with no external dependencies. Ideal for "
+        "edge deployments, embedded systems, and applications that need "
+        "SQLite simplicity with high-availability across multiple nodes.",
+        "database",
+        "rqlite/rqlite",
+        14000,
+        "https://rqlite.io",
+        "sqlite,distributed,raft,replication,sql,embedded",
+        "docker run -p4001:4001 rqlite/rqlite",
+        "code",
+    ),
+    # AI Dev Tools — Gemini CLI (129th pass) --------------------------------
+    (
+        "gemini-cli",
+        "Gemini CLI",
+        "Google Gemini AI assistant for the terminal",
+        "Gemini CLI is Google's open-source AI assistant for the command "
+        "line, powered by Gemini 2.5 Pro. Supports agentic workflows with "
+        "tool use: file read/write, shell execution, web search, and MCP "
+        "server integration. Handles context windows up to 1M tokens for "
+        "large-codebase tasks. Authenticated via Google account with generous "
+        "free-tier limits. Comparable to Claude Code and GitHub Copilot CLI "
+        "for AI-assisted coding directly in the terminal.",
+        "ai-dev-tools",
+        "google-gemini/gemini-cli",
+        50000,
+        "https://github.com/google-gemini/gemini-cli",
+        "ai,gemini,cli,agent,coding-assistant,mcp",
+        "npm install -g @google/gemini-cli",
+        "code",
+    ),
 ]
 
 
