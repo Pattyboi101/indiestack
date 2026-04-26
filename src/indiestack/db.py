@@ -6613,6 +6613,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gating": "feature",           # "feature gating", "access gating", "rollout gating" → Feature Flags
     "feature-gate": "feature",     # hyphenated — "feature-gate library", "feature-gate rust crate" → Feature Flags
     "feature gate": "feature",     # multi-word — "feature gate system", "feature gate sdk" → Feature Flags
+    # AI — OpenAI GPT-4.5 model family (released Feb 2025; high-volume "gpt-4.5 alternative" queries)
+    "gpt45": "ai",                  # GPT-4.5 — "gpt45 alternative", "gpt45 api", "gpt45 pricing" → AI & Automation
+    "gpt-4-5": "ai",               # hyphenated — "gpt-4-5 api", "gpt-4-5 vs claude" → AI & Automation
+    "gpt4-5": "ai",                # shorthand — "gpt4-5 alternative", "gpt4-5 setup" → AI & Automation
+    # AI — Claude 3.7 Sonnet (Anthropic, Feb 2026; hybrid reasoning model)
+    "claude37": "ai",               # Claude 3.7 — "claude37 alternative", "claude37 sonnet" → AI & Automation
+    "claude-3-7": "ai",            # hyphenated — "claude-3-7 alternative", "claude-3-7 api" → AI & Automation
+    "claude3-7": "ai",             # compact — "claude3-7 sonnet", "claude3-7 setup" → AI & Automation
+    # AI — Google Gemini 2.5 Pro/Flash (April 2026; best available reasoning benchmark)
+    "gemini25": "ai",               # Gemini 2.5 — "gemini25 pro", "gemini25 alternative" → AI & Automation
+    "gemini-2-5": "ai",            # hyphenated — "gemini-2-5 pro", "gemini-2-5 flash" → AI & Automation
+    "gemini2-5": "ai",             # compact — "gemini2-5 api", "gemini2-5 alternative" → AI & Automation
+    # AI — Meta Llama 4 Scout / Maverick variant queries (April 2026)
+    "llama4-scout": "ai",          # Llama 4 Scout — "llama4-scout setup", "llama4-scout api" → AI & Automation
+    "llama4-maverick": "ai",       # Llama 4 Maverick — "llama4-maverick alternative" → AI & Automation
+    "llama-4-scout": "ai",         # hyphenated — "llama-4-scout inference", "llama-4-scout api" → AI & Automation
+    "llama-4-maverick": "ai",      # hyphenated — "llama-4-maverick setup" → AI & Automation
+    # AI — Microsoft AG2 (AutoGen rebranded to AG2, late 2024; multi-agent conversation framework)
+    "ag2": "ai",                    # AG2 — "ag2 alternative", "ag2 multi-agent", "ag2 vs crewai" → AI & Automation
+    # AI — IBM BeeAI / Bee Agent Framework (2025; TypeScript multi-agent framework)
+    "beeai": "ai",                  # BeeAI — "beeai alternative", "beeai framework", "beeai agents" → AI & Automation
+    "bee-agent": "ai",             # hyphenated — "bee-agent framework", "bee-agent setup" → AI & Automation
+    # AI — AWS Strands Agents SDK (2025; open-source agent framework by AWS)
+    "strands": "ai",                # Strands — "strands agents", "strands sdk", "strands alternative" → AI & Automation
+    "strands-agents": "ai",        # hyphenated — "strands-agents setup", "strands-agents vs crewai" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

@@ -55,6 +55,13 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - distributed lock service, redlock alternative (distributed mutex → background-jobs)
   - bolt.new alternative, ai web app builder (AI builders → ai-dev-tools)
   - codeium alternative, free ai code completion (AI coding → ai-dev-tools)
+  - gpt45 alternative, gpt-4-5 api (OpenAI GPT-4.5 → ai-automation)
+  - claude37 sonnet, claude-3-7 alternative (Claude 3.7 → ai-automation)
+  - gemini25 pro, gemini-2-5 flash alternative (Gemini 2.5 → ai-automation)
+  - llama4-scout inference, llama-4-maverick alternative (Llama 4 variants → ai-automation)
+  - ag2 multi-agent, ag2 vs crewai (AG2/AutoGen → ai-automation)
+  - beeai framework, bee-agent alternative (IBM BeeAI → ai-automation)
+  - strands agents sdk, strands alternative (AWS Strands → ai-automation)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
