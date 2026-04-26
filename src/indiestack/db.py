@@ -6475,7 +6475,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Caching — "key value" without hyphen (complement to "key-value"→caching at line 6222; "kv store" shorthand)
     "key value": "caching",         # "key value store", "key value database" → Caching (Redis, Upstash, Valkey)
     "kv store": "caching",          # "kv store comparison", "kv store for edge" → Caching
-    "kv": "caching",                # short query form — "kv database", "kv cache" → Caching
     # Message Queue — dead letter queue and fan-out patterns (high-volume architecture queries)
     "dlq": "message",               # DLQ — "dead letter queue", "dlq setup", "dlq alternative" → Message Queue
     "dead letter": "message",       # "dead letter queue", "dead letter exchange" → Message Queue (RabbitMQ, SQS)
@@ -6543,8 +6542,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Notifications — Web Push API (browser push without a native app; complement to fcm/apns already mapped)
     "webpush": "notifications",     # "webpush library", "web push api", "webpush alternative" → Notifications (Novu, web-push-libs)
     "web-push": "notifications",    # hyphenated — "web-push notification", "web-push setup" → Notifications
-    # Feature Flags — canary releases and dark launches (progressive delivery patterns)
-    "canary": "feature",            # "canary release", "canary deployment", "canary rollout" → Feature Flags (Flagsmith, Unleash)
+    # Feature Flags — dark launches (progressive delivery patterns; "canary"→devops already mapped at line 5041)
     "dark-launch": "feature",       # "dark-launch feature", "dark-launch pattern" → Feature Flags
     "dark launch": "feature",       # multi-word — "dark launch strategy", "dark launch tool" → Feature Flags
     # AI — text embedding models and inference APIs (fast-growing RAG infra segment)
@@ -6673,15 +6671,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "devstral": "ai",               # Devstral (May 2025) — Mistral code LLM; "devstral alternative" → AI & Automation
     "pixtral": "ai",                # Pixtral (Sept 2024) — Mistral vision model; "pixtral alternative" → AI & Automation
     "magistral": "ai",              # Magistral (May 2025) — Mistral reasoning model; "magistral alternative" → AI & Automation
-    # AI — LLM inference providers (complement to "groq"→ai and "openrouter"→ai already mapped)
-    "together": "ai",               # Together.ai — hosted open-source LLM inference; "together alternative" → AI & Automation
+    # AI — LLM inference providers (compound/hyphenated forms; base "together","fireworks","cerebras","hyperbolic" already mapped)
     "togetherai": "ai",             # compound — "togetherai api", "togetherai setup" → AI & Automation
     "together-ai": "ai",            # hyphenated — "together-ai alternative", "together-ai pricing" → AI & Automation
-    "fireworks": "ai",              # Fireworks AI — fast LLM inference API; "fireworks ai alternative" → AI & Automation
     "fireworksai": "ai",            # compound — "fireworksai api", "fireworksai pricing" → AI & Automation
     "deepinfra": "ai",              # DeepInfra — low-cost LLM inference; "deepinfra alternative" → AI & Automation
-    "cerebras": "ai",               # Cerebras Inference — ultra-fast LLM (wafer-scale chip); "cerebras alternative" → AI & Automation
-    "hyperbolic": "ai",             # Hyperbolic — cheap GPU inference; "hyperbolic inference", "hyperbolic alternative" → AI & Automation
     # AI — LLM observability tools missing from synonym map (134th pass)
     "lunary": "ai",                # Lunary — open-source LLM monitoring + analytics; "lunary alternative" → AI & Automation
     "traceloop": "ai",             # Traceloop — OpenTelemetry-based LLM tracing; "traceloop alternative" → AI & Automation
