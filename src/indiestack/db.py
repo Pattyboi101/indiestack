@@ -6692,6 +6692,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — OpenAI o3-pro (high-compute reasoning tier; released 2025)
     "o3-pro": "ai",                # "o3-pro alternative", "o3-pro api", "o3-pro vs gemini" → AI & Automation
     "o3pro": "ai",                 # compound — "o3pro setup", "o3pro pricing" → AI & Automation
+    # AI — Claude 4 specific version numbers (Haiku 4.5, Sonnet 4.6, Opus 4.7 — released 2026)
+    # Base "claude4"/"claude-4" already mapped; version-number compounds need explicit entries
+    # because "claude-4-6 alternative" strips "alternative" leaving "claude-4-6" as the key term
+    "claude45": "ai",              # Claude 4.5 (Haiku) — "claude45 alternative", "claude45 api" → AI & Automation
+    "claude-4-5": "ai",            # hyphenated — "claude-4-5 alternative", "claude-4-5 haiku" → AI & Automation
+    "claude46": "ai",              # Claude 4.6 (Sonnet) — "claude46 alternative", "claude46 sonnet" → AI & Automation
+    "claude-4-6": "ai",            # hyphenated — "claude-4-6 alternative", "claude-4-6 api" → AI & Automation
+    "claude47": "ai",              # Claude 4.7 (Opus) — "claude47 alternative", "claude47 opus" → AI & Automation
+    "claude-4-7": "ai",            # hyphenated — "claude-4-7 alternative", "claude-4-7 api" → AI & Automation
+    # AI — Claude 4 tier aliases (searches like "haiku4 api", "sonnet4 alternative", "opus4 vs gpt5")
+    "haiku4": "ai",                # Haiku 4 tier — "haiku4 api", "haiku4 alternative" → AI & Automation
+    "haiku-4": "ai",               # hyphenated — "haiku-4 pricing", "haiku-4 setup" → AI & Automation
+    "sonnet4": "ai",               # Sonnet 4 tier — "sonnet4 api", "sonnet4 alternative" → AI & Automation
+    "sonnet-4": "ai",              # hyphenated — "sonnet-4 setup", "sonnet-4 vs gpt-4o" → AI & Automation
+    "opus4": "ai",                 # Opus 4 tier — "opus4 api", "opus4 alternative" → AI & Automation
+    "opus-4": "ai",                # hyphenated — "opus-4 setup", "opus-4 benchmark" → AI & Automation
+    # AI — Qwen3 hyphenated form (compound "qwen3" already mapped; hyphen variant needed for model IDs)
+    "qwen-3": "ai",                # Qwen 3 — "qwen-3 api", "qwen-3 alternative", "qwen-3-235b setup" → AI & Automation
+    # AI — Grok 3 Mini (xAI's smaller/faster variant; "grok3"/"grok-3" exist but mini tier missing)
+    "grok3-mini": "ai",            # compound — "grok3-mini api", "grok3-mini alternative" → AI & Automation
+    "grok-3-mini": "ai",           # hyphenated — "grok-3-mini fast", "grok-3-mini vs o4-mini" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
