@@ -13461,6 +13461,82 @@ TOOLS = [
         "npm install -g @google/gemini-cli",
         "code",
     ),
+    # AI Automation — Together.ai (133rd pass) --------------------------------
+    (
+        "together-ai",
+        "Together.ai",
+        "Fast and affordable hosted inference for open-source LLMs",
+        "Together.ai is a cloud platform for running open-source AI models with "
+        "fast inference and competitive pricing. Supports Llama 4 Scout/Maverick, "
+        "Mixtral, Qwen, DeepSeek, and 100+ other open models via an OpenAI-compatible "
+        "API. Features serverless endpoints (pay-per-token), dedicated GPU deployments, "
+        "fine-tuning pipelines, and a playground. Popular drop-in alternative to OpenAI "
+        "for teams wanting open-source model flexibility without managing GPU infra.",
+        "ai-automation",
+        "togethercomputer/together-python",
+        3000,
+        "https://www.together.ai",
+        "llm,inference,openai-compatible,open-source,llama,mixtral,serverless",
+        "pip install together",
+        "saas",
+    ),
+    # AI Automation — Replicate (133rd pass) ----------------------------------
+    (
+        "replicate",
+        "Replicate",
+        "Run open-source AI models with a cloud API",
+        "Replicate lets you run thousands of open-source AI models — image, video, "
+        "audio, language, and embeddings — via a simple API. No GPU setup required: "
+        "just call the API and get results. Deploy your own fine-tuned models too. "
+        "Supports Stable Diffusion, Flux, Llama, Whisper, and hundreds more. "
+        "Webhook-based async runs, streaming outputs, and predictions API. "
+        "Used by developers who want model variety without vendor lock-in.",
+        "ai-automation",
+        "replicate/cog",
+        7500,
+        "https://replicate.com",
+        "llm,image-generation,inference,open-source,api,stable-diffusion,flux",
+        "pip install replicate",
+        "saas",
+    ),
+    # AI Automation — Cerebras Inference (133rd pass) -------------------------
+    (
+        "cerebras-inference",
+        "Cerebras Inference",
+        "The world's fastest AI inference — 2,000+ tokens/second",
+        "Cerebras Inference runs LLMs on wafer-scale chips that deliver 10–70× faster "
+        "inference than GPU-based APIs. Supports Llama 3.3 70B, DeepSeek R1, and other "
+        "leading open models. OpenAI-compatible API — drop-in replacement, zero code "
+        "changes. Serverless pricing with no cold starts. Ideal for real-time apps, "
+        "voice assistants, and any use case where latency is critical. Free tier "
+        "available; enterprise plans for high-volume production workloads.",
+        "ai-automation",
+        "cerebras/cerebras-cloud-sdk-python",
+        1200,
+        "https://inference.cerebras.ai",
+        "llm,inference,fast,openai-compatible,llama,serverless",
+        "pip install cerebras-cloud-sdk",
+        "saas",
+    ),
+    # AI Automation — Fireworks AI (133rd pass) --------------------------------
+    (
+        "fireworks-ai",
+        "Fireworks AI",
+        "Fast and cheap LLM inference for production workloads",
+        "Fireworks AI provides blazing-fast hosted inference for open-source LLMs "
+        "at low cost. Supports Llama 4, DeepSeek V3, Mixtral, Gemma, and fine-tuned "
+        "models via an OpenAI-compatible REST API. Features: compound AI (FireFunction), "
+        "structured output, JSON mode, streaming, and multi-modal support. Competitive "
+        "pricing with per-token billing and volume discounts. Trusted by production "
+        "teams needing speed + price efficiency over OpenAI.",
+        "ai-automation",
+        "fw-ai/fireworks-js",
+        800,
+        "https://fireworks.ai",
+        "llm,inference,openai-compatible,fast,cheap,llama,deepseek",
+        "pip install fireworks-ai",
+        "saas",
+    ),
 ]
 
 

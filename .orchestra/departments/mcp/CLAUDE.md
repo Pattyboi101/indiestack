@@ -62,6 +62,16 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - ag2 multi-agent, ag2 vs crewai (AG2/AutoGen → ai-automation)
   - beeai framework, bee-agent alternative (IBM BeeAI → ai-automation)
   - strands agents sdk, strands alternative (AWS Strands → ai-automation)
+  - grok3 alternative, grok-3 api (xAI Grok 3 → ai-automation)
+  - grok2 alternative, grok-2 vs claude (xAI Grok 2 → ai-automation)
+  - devstral alternative, mistral code llm (Mistral Devstral → ai-automation)
+  - pixtral alternative, mistral vision model (Mistral Pixtral → ai-automation)
+  - magistral alternative, mistral reasoning model (Mistral Magistral → ai-automation)
+  - mistral-large api, mistrallarge alternative (Mistral Large → ai-automation)
+  - together ai inference, togetherai alternative (Together.ai → ai-automation)
+  - fireworks ai api, fireworksai alternative (Fireworks AI → ai-automation)
+  - cerebras inference, fast llm api (Cerebras → ai-automation)
+  - deepinfra alternative, cheap llm inference (DeepInfra → ai-automation)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)

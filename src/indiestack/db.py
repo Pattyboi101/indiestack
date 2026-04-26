@@ -6638,6 +6638,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — AWS Strands Agents SDK (2025; open-source agent framework by AWS)
     "strands": "ai",                # Strands — "strands agents", "strands sdk", "strands alternative" → AI & Automation
     "strands-agents": "ai",        # hyphenated — "strands-agents setup", "strands-agents vs crewai" → AI & Automation
+    # AI — xAI Grok version-specific forms (Grok 2: Aug 2024; Grok 3: Feb 2026)
+    # "grok" → ai is already mapped (line 5297); version compounds need explicit entries
+    # because "grok3 alternative" strips "alternative" leaving only "grok3" which didn't match
+    "grok2": "ai",                  # Grok 2 — "grok2 alternative", "grok2 api", "grok2 vs claude" → AI & Automation
+    "grok-2": "ai",                 # hyphenated — "grok-2 alternative", "grok-2 api" → AI & Automation
+    "grok3": "ai",                  # Grok 3 — "grok3 alternative", "grok3 benchmark", "grok3 setup" → AI & Automation
+    "grok-3": "ai",                 # hyphenated — "grok-3 alternative", "grok-3 api" → AI & Automation
+    # AI — Mistral model tier and specialised model forms (base "mistral" → ai already mapped)
+    # Tier forms: mistral-large (flagship), mistral-medium, mistral-small (fast/cheap)
+    "mistral-large": "ai",          # Mistral Large — "mistral-large alternative", "mistral-large api" → AI & Automation
+    "mistrallarge": "ai",           # compound — "mistrallarge setup", "mistrallarge pricing" → AI & Automation
+    "mistral-medium": "ai",         # Mistral Medium — "mistral-medium vs gpt4", "mistral-medium api" → AI & Automation
+    "mistral-small": "ai",          # Mistral Small — "mistral-small fast", "mistral-small alternative" → AI & Automation
+    "mistral-nemo": "ai",           # Mistral Nemo (Sept 2024) — 12B open-weight; "mistral-nemo alternative" → AI & Automation
+    "mistralnemo": "ai",            # compound — "mistralnemo setup", "mistralnemo local llm" → AI & Automation
+    # AI — Mistral specialised models (code + vision; complement to "codestral" already mapped)
+    "devstral": "ai",               # Devstral (May 2025) — Mistral code LLM; "devstral alternative" → AI & Automation
+    "pixtral": "ai",                # Pixtral (Sept 2024) — Mistral vision model; "pixtral alternative" → AI & Automation
+    "magistral": "ai",              # Magistral (May 2025) — Mistral reasoning model; "magistral alternative" → AI & Automation
+    # AI — LLM inference providers (complement to "groq"→ai and "openrouter"→ai already mapped)
+    "together": "ai",               # Together.ai — hosted open-source LLM inference; "together alternative" → AI & Automation
+    "togetherai": "ai",             # compound — "togetherai api", "togetherai setup" → AI & Automation
+    "together-ai": "ai",            # hyphenated — "together-ai alternative", "together-ai pricing" → AI & Automation
+    "fireworks": "ai",              # Fireworks AI — fast LLM inference API; "fireworks ai alternative" → AI & Automation
+    "fireworksai": "ai",            # compound — "fireworksai api", "fireworksai pricing" → AI & Automation
+    "deepinfra": "ai",              # DeepInfra — low-cost LLM inference; "deepinfra alternative" → AI & Automation
+    "cerebras": "ai",               # Cerebras Inference — ultra-fast LLM (wafer-scale chip); "cerebras alternative" → AI & Automation
+    "hyperbolic": "ai",             # Hyperbolic — cheap GPU inference; "hyperbolic inference", "hyperbolic alternative" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
