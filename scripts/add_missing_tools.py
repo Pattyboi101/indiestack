@@ -575,6 +575,30 @@ TOOLS = [
         "tags": "backend,typescript,go,infrastructure,queues,caching,database,serverless",
         "source_type": "code",
     },
+    {
+        "name": "Trigger.dev",
+        "slug": "trigger-dev",
+        "tagline": "Open-source background jobs for TypeScript",
+        "description": "Trigger.dev is an open-source background jobs platform for TypeScript. Write long-running, resilient tasks directly in your codebase. Handles retries, timeouts, real-time monitoring, and scheduled jobs with no separate queuing infrastructure required.",
+        "url": "https://trigger.dev",
+        "github_url": "https://github.com/triggerdotdev/trigger.dev",
+        "github_stars": 25000,
+        "category_slug": "background-jobs",
+        "tags": "background-jobs,typescript,nodejs,queue,tasks,scheduled,open-source,inngest-alternative",
+        "source_type": "code",
+    },
+    {
+        "name": "Modal",
+        "slug": "modal",
+        "tagline": "Run AI and ML code in the cloud, instantly",
+        "description": "Modal is a serverless cloud compute platform for Python. Run GPU-accelerated AI workloads, batch jobs, and inference endpoints with zero infrastructure setup. Deploy from your local Python environment with no Dockerfiles, no Kubernetes, no YAML.",
+        "url": "https://modal.com",
+        "github_url": "https://github.com/modal-labs/modal-client",
+        "github_stars": 2000,
+        "category_slug": "ai-automation",
+        "tags": "serverless,gpu,python,ml,ai,inference,compute,cloud,llm",
+        "source_type": "saas",
+    },
 ]
 
 

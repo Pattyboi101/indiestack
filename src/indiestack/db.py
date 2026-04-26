@@ -6683,6 +6683,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "wandb-weave": "ai",           # hyphenated — "wandb-weave setup", "wandb-weave tracing" → AI & Automation
     # AI — smolagents hyphenated variant (base "smolagents" already mapped at line 3180)
     "smol-agents": "ai",           # hyphenated — "smol-agents framework", "smol-agents alternative" → AI & Automation
+    # AI Dev Tools — Claude Code CLI (Anthropic's terminal agent; hyphenated form not split by whitespace tokeniser)
+    "claude-code": "ai",           # "claude-code alternative", "claude-code mcp", "claude-code setup" → AI & Automation
+    "claudecode": "ai",            # compound — "claudecode alternative", "claudecode vs cursor" → AI & Automation
+    # AI — OpenAI o1-pro (reasoning model added to API Dec 2024; hyphenated form stays single token)
+    "o1-pro": "ai",                # "o1-pro alternative", "o1-pro api", "o1-pro vs claude" → AI & Automation
+    "o1pro": "ai",                 # compound — "o1pro setup", "o1pro pricing", "o1pro vs o3" → AI & Automation
+    # AI — OpenAI o3-pro (high-compute reasoning tier; released 2025)
+    "o3-pro": "ai",                # "o3-pro alternative", "o3-pro api", "o3-pro vs gemini" → AI & Automation
+    "o3pro": "ai",                 # compound — "o3pro setup", "o3pro pricing" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
