@@ -13537,6 +13537,65 @@ TOOLS = [
         "pip install fireworks-ai",
         "saas",
     ),
+    # AI Automation — Portkey (134th pass) ------------------------------------
+    (
+        "portkey",
+        "Portkey",
+        "AI gateway with routing, fallbacks, caching, and observability",
+        "Portkey is an open-source AI gateway that sits in front of your LLM calls. "
+        "Routes traffic across 200+ LLMs (OpenAI, Anthropic, Gemini, open-source), "
+        "adds automatic retries and fallbacks, semantic caching to reduce costs, "
+        "load balancing, A/B testing, and full observability with request tracing. "
+        "Drop-in replacement for the OpenAI SDK — change one line of code. "
+        "Self-hostable or managed cloud. Essential infrastructure for production AI apps.",
+        "ai-automation",
+        "Portkey-AI/gateway",
+        6800,
+        "https://portkey.ai",
+        "ai-gateway,llm,routing,caching,observability,openai-compatible,fallback",
+        "pip install portkey-ai",
+        "code",
+    ),
+    # AI Automation — smolagents (134th pass) ----------------------------------
+    (
+        "smolagents",
+        "smolagents",
+        "Lightweight agent framework from HuggingFace",
+        "smolagents is HuggingFace's minimal, production-ready agent framework. "
+        "Write agents in ~100 lines of Python using CodeAgent (executes Python "
+        "snippets) or ToolCallingAgent (structured tool calls). Supports any LLM "
+        "via HuggingFace Hub, OpenAI, Anthropic, or local models. Built-in tools: "
+        "web search, code execution, image generation, file I/O. Multi-agent "
+        "orchestration via managed agents. Lighter and simpler than LangChain or "
+        "CrewAI — designed for composability over abstraction.",
+        "ai-automation",
+        "huggingface/smolagents",
+        12000,
+        "https://huggingface.co/docs/smolagents",
+        "agents,llm,huggingface,lightweight,code-agent,tool-calling",
+        "pip install smolagents",
+        "code",
+    ),
+    # AI Automation — Lunary (134th pass) -------------------------------------
+    (
+        "lunary",
+        "Lunary",
+        "Open-source LLM observability and analytics platform",
+        "Lunary is an open-source LLM monitoring and analytics platform. "
+        "Track costs, latency, and errors across all your LLM calls. "
+        "Built-in prompt management, dataset versioning, and A/B testing. "
+        "Supports OpenAI, Anthropic, LangChain, LlamaIndex, and any custom LLM. "
+        "Features: session replay, user feedback tracking, GDPR-compliant logging, "
+        "and Slack/PagerDuty alerts on anomalies. Cheaper and simpler alternative "
+        "to Langfuse and Arize for teams that want observability without the bloat.",
+        "ai-automation",
+        "lunary-ai/lunary",
+        2100,
+        "https://lunary.ai",
+        "llm,observability,monitoring,analytics,langchain,openai,cost-tracking",
+        "pip install lunary",
+        "code",
+    ),
 ]
 
 

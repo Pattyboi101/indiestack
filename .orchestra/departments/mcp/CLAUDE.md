@@ -72,6 +72,13 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - fireworks ai api, fireworksai alternative (Fireworks AI → ai-automation)
   - cerebras inference, fast llm api (Cerebras → ai-automation)
   - deepinfra alternative, cheap llm inference (DeepInfra → ai-automation)
+  - o3-mini alternative, o3mini api (OpenAI o3-mini → ai-automation)
+  - o4-mini alternative, o4mini api (OpenAI o4-mini → ai-automation)
+  - gpt5 alternative, gpt-5 vs claude (GPT-5 → ai-automation)
+  - codex alternative, codex vs claude code (OpenAI Codex agent → ai-automation)
+  - claude-opus alternative, claudeopus pricing (Claude Opus tier → ai-automation)
+  - claude-sonnet api, claudesonnet setup (Claude Sonnet tier → ai-automation)
+  - claude-haiku alternative, claudehaiku fast (Claude Haiku tier → ai-automation)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)

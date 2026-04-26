@@ -6385,12 +6385,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gpt4o": "ai",                  # GPT-4o — "gpt4o alternative", "gpt4o api" → AI & Automation
     "gpt-4o": "ai",                 # hyphenated — "gpt-4o alternative", "gpt-4o open source" → AI & Automation
     "o1": "ai",                     # OpenAI o1 — reasoning model; "o1 alternative", "openai o1" → AI & Automation
+    "o1-mini": "ai",               # o1-mini — smaller reasoning model; "o1-mini alternative", "o1-mini api" → AI & Automation
+    "o1mini": "ai",                # compound — "o1mini alternative", "o1mini pricing" → AI & Automation
     "o3": "ai",                     # OpenAI o3 — "o3 alternative", "openai o3 reasoning" → AI & Automation
-    "o4": "ai",                     # OpenAI o4-mini — "o4 alternative", "o4 mini api" → AI & Automation
+    "o3-mini": "ai",               # o3-mini (Jan 2025) — cheaper reasoning; "o3-mini alternative", "o3-mini api" → AI & Automation
+    "o3mini": "ai",                # compound — "o3mini api", "o3mini setup" → AI & Automation
+    "o4": "ai",                     # OpenAI o4 — "o4 alternative", "o4 api" → AI & Automation
+    "o4-mini": "ai",               # o4-mini (April 2025) — fast + cheap reasoning; "o4-mini alternative", "o4-mini api" → AI & Automation
+    "o4mini": "ai",                # compound — "o4mini alternative", "o4mini pricing" → AI & Automation
+    "gpt5": "ai",                  # GPT-5 (2025) — "gpt5 alternative", "gpt5 api", "gpt5 open source" → AI & Automation
+    "gpt-5": "ai",                 # hyphenated — "gpt-5 alternative", "gpt-5 vs claude" → AI & Automation
+    "codex": "ai",                 # OpenAI Codex (2025 relaunch) — cloud coding agent; "codex alternative", "codex vs claude code" → AI & Automation
     "claude3": "ai",                # Claude 3 — "claude3 alternative", "claude 3 haiku" → AI & Automation
     "claude-3": "ai",               # hyphenated — "claude-3 api", "claude-3 alternative" → AI & Automation
     "claude4": "ai",                # Claude 4 — "claude4 alternative", "claude 4 sonnet" → AI & Automation
     "claude-4": "ai",               # hyphenated — "claude-4 alternative", "claude-4 api" → AI & Automation
+    # AI — Claude 4 tier-specific model forms (Opus 4, Sonnet 4, Haiku 4)
+    "claude-opus": "ai",           # Claude Opus tier — "claude-opus alternative", "claude-opus api" → AI & Automation
+    "claudeopus": "ai",            # compound — "claudeopus setup", "claudeopus pricing" → AI & Automation
+    "claude-sonnet": "ai",         # Claude Sonnet tier — "claude-sonnet alternative", "claude-sonnet api" → AI & Automation
+    "claudesonnet": "ai",          # compound — "claudesonnet setup", "claudesonnet pricing" → AI & Automation
+    "claude-haiku": "ai",          # Claude Haiku tier — "claude-haiku alternative", "claude-haiku api" → AI & Automation
+    "claudehaiku": "ai",           # compound — "claudehaiku setup", "claudehaiku fast" → AI & Automation
     # AI — LLM routing / model selection (fast-growing 2026 segment; route traffic across providers)
     "notdiamond": "ai",             # NotDiamond — AI model router; "notdiamond alternative" → AI & Automation
     "llm-router": "ai",             # "llm-router setup", "llm-router alternative" → AI & Automation (LiteLLM, Portkey, OpenRouter)
@@ -6666,6 +6682,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "deepinfra": "ai",              # DeepInfra — low-cost LLM inference; "deepinfra alternative" → AI & Automation
     "cerebras": "ai",               # Cerebras Inference — ultra-fast LLM (wafer-scale chip); "cerebras alternative" → AI & Automation
     "hyperbolic": "ai",             # Hyperbolic — cheap GPU inference; "hyperbolic inference", "hyperbolic alternative" → AI & Automation
+    # AI — LLM observability tools missing from synonym map (134th pass)
+    "lunary": "ai",                # Lunary — open-source LLM monitoring + analytics; "lunary alternative" → AI & Automation
+    "traceloop": "ai",             # Traceloop — OpenTelemetry-based LLM tracing; "traceloop alternative" → AI & Automation
+    "weave": "ai",                 # Weights & Biases Weave — LLM tracing + evaluation; "weave alternative", "wandb weave" → AI & Automation
+    "wandb-weave": "ai",           # hyphenated — "wandb-weave setup", "wandb-weave tracing" → AI & Automation
+    # AI — smolagents hyphenated variant (base "smolagents" already mapped at line 3180)
+    "smol-agents": "ai",           # hyphenated — "smol-agents framework", "smol-agents alternative" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
