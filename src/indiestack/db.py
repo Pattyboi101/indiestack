@@ -6713,6 +6713,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Grok 3 Mini (xAI's smaller/faster variant; "grok3"/"grok-3" exist but mini tier missing)
     "grok3-mini": "ai",            # compound — "grok3-mini api", "grok3-mini alternative" → AI & Automation
     "grok-3-mini": "ai",           # hyphenated — "grok-3-mini fast", "grok-3-mini vs o4-mini" → AI & Automation
+    # AI — Cognee (knowledge-graph agent memory; topoteretes/cognee, 3k★)
+    "cognee": "ai",                # Cognee — "cognee alternative", "cognee knowledge graph" → AI & Automation
+    "cognee-ai": "ai",             # hyphenated — "cognee-ai setup", "cognee-ai agent memory" → AI & Automation
+    # AI — Microsoft GraphRAG (graph-based RAG; microsoft/graphrag, 22k★)
+    # NOTE: bare "graph" not added — too broad (graph databases, graph QL, etc.)
+    "graphrag": "ai",              # GraphRAG — "graphrag alternative", "graphrag setup" → AI & Automation
+    "graph-rag": "ai",             # hyphenated — "graph-rag framework", "graph-rag vs naive rag" → AI & Automation
+    "microsoft-graphrag": "ai",    # fully qualified — "microsoft-graphrag setup" → AI & Automation
+    # AI — Microsoft Guidance (constrained/structured generation; microsoft/guidance, 20k★)
+    # NOTE: bare "guidance" is intentionally not mapped — too generic ("career guidance", "setup guidance")
+    "guidance-ai": "ai",           # compound — "guidance-ai setup", "guidance-ai constrained gen" → AI & Automation
+    # AI — AI Suite by Andrew Ng (multi-provider LLM interface; andrewyng/aisuite, 9k★)
+    "aisuite": "ai",               # AI Suite — "aisuite alternative", "aisuite vs litellm" → AI & Automation
+    "ai-suite": "ai",              # hyphenated — "ai-suite setup", "ai-suite providers" → AI & Automation
+    # AI — VoltAgent (TypeScript AI agent framework; voltvector/voltagent, 3k★)
+    "voltagent": "ai",             # VoltAgent — "voltagent alternative", "voltagent typescript" → AI & Automation
+    "volt-agent": "ai",            # hyphenated — "volt-agent setup", "volt-agent vs mastra" → AI & Automation
+    # AI — Safetensors (HuggingFace safe model serialization; huggingface/safetensors, 2k★)
+    "safetensors": "ai",           # Safetensors — "safetensors format", "safetensors load" → AI & Automation
+    "safe-tensors": "ai",          # hyphenated — "safe-tensors convert", "safe-tensors vs gguf" → AI & Automation
+    # AI — Humanloop (LLM ops, evaluation, and prompt management)
+    "humanloop": "ai",             # Humanloop — "humanloop alternative", "humanloop evaluation" → AI & Automation
+    "human-loop": "ai",            # hyphenated — "human-loop setup", "human-loop vs braintrust" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
