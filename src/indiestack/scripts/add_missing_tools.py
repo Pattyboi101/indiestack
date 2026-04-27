@@ -13638,6 +13638,69 @@ TOOLS = [
         "pip install google-adk",
         "code",
     ),
+    # AI Dev Tools — Pear AI (140th pass) -----------------------------------------
+    (
+        "pearai",
+        "Pear AI",
+        "Open-source AI code editor — the self-hostable Cursor alternative",
+        "PearAI is an open-source AI code editor built on VS Code and Continue.dev. "
+        "It integrates leading AI models (Claude, GPT-4o, Gemini) directly into "
+        "your coding workflow with inline edits, multi-file chat, and autocomplete. "
+        "As a fully open-source Cursor alternative, you can self-host PearAI, "
+        "contribute to its development, and avoid vendor lock-in. Key features: "
+        "codebase-aware chat via RAG, multi-file edits, compatibility with existing "
+        "VS Code extensions, and bring-your-own-API-key support. Backed by an "
+        "active open-source community on GitHub.",
+        "ai-dev-tools",
+        "trypear/pearai-app",
+        6500,
+        "https://trypear.ai",
+        "ai,code-editor,vscode,cursor-alternative,open-source,llm,rag,autocomplete",
+        "Download from trypear.ai",
+        "code",
+    ),
+    # AI Automation — Kimi / Moonshot AI (140th pass) ------------------------------
+    (
+        "kimi",
+        "Kimi",
+        "Long-context AI assistant with million-token context window",
+        "Kimi is Moonshot AI's flagship large language model, designed for tasks "
+        "requiring very long contexts — processing entire codebases, documents, or "
+        "research papers in a single prompt. It supports a context window up to 1M "
+        "tokens (and beyond in later versions), making it ideal for agentic workflows "
+        "that need to reason over large amounts of information at once. Kimi is "
+        "available via API with competitive pricing, supports function calling and "
+        "structured outputs, and has strong multilingual capabilities. Popular in "
+        "enterprise and research settings where context length is a hard constraint.",
+        "ai-automation",
+        None,
+        0,
+        "https://kimi.moonshot.cn",
+        "llm,long-context,api,moonshot,chinese,multilingual,agents",
+        "pip install moonshot-sdk",
+        "saas",
+    ),
+    # AI Dev Tools — Trae (140th pass) ---------------------------------------------
+    (
+        "trae",
+        "Trae",
+        "ByteDance's free AI-native coding IDE built on VS Code",
+        "Trae is a free AI-native coding IDE from ByteDance, built on the VS Code "
+        "engine. It ships with built-in AI features including inline code generation, "
+        "multi-file chat, and an AI-powered agent mode that can plan and execute "
+        "multi-step tasks across your codebase. Trae supports all major VS Code "
+        "extensions, preserving existing workflows while adding deep AI integration. "
+        "It connects to multiple AI providers and offers a generous free tier, "
+        "positioning it as a zero-cost alternative to Cursor and Windsurf for "
+        "developers who want AI-first editing without a subscription.",
+        "ai-dev-tools",
+        None,
+        0,
+        "https://trae.ai",
+        "ai,code-editor,vscode,cursor-alternative,free,bytedance,agent-mode",
+        "Download from trae.ai",
+        "saas",
+    ),
 ]
 
 

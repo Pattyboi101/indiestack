@@ -6751,6 +6751,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "phi4-mini": "ai",             # compact — "phi4-mini setup", "phi4-mini local inference" → AI & Automation
     "phi-4-mini": "ai",            # hyphenated — "phi-4-mini alternative", "phi-4-mini gguf" → AI & Automation
     "phi4mini": "ai",              # compound — "phi4mini setup", "phi4mini alternative" → AI & Automation
+    # AI — Gemini 2.0 version-specific forms (Gemini 2.0 Flash released Dec 2024; gemini2→ai covers 2.x but not 2.0 explicitly)
+    "gemini20": "ai",              # compact — "gemini20 flash", "gemini20 pro", "gemini20 alternative" → AI & Automation
+    "gemini-2-0": "ai",            # hyphenated — "gemini-2-0 flash", "gemini-2-0 live api" → AI & Automation
+    "gemini2-0": "ai",             # mixed — "gemini2-0 flash", "gemini2-0 alternative" → AI & Automation
+    # AI — Cohere Command R / Command R+ (production RAG-optimised LLM; high enterprise agent query volume)
+    "command-r": "ai",             # Command R — "command-r alternative", "command-r api", "command-r rag" → AI & Automation
+    "commandr": "ai",              # compound — "commandr setup", "commandr vs claude" → AI & Automation
+    "command-r-plus": "ai",        # Command R+ — "command-r-plus alternative", "command-r-plus pricing" → AI & Automation
+    "commandrplus": "ai",          # compound — "commandrplus api", "commandrplus setup" → AI & Automation
+    # AI — Trae (ByteDance AI coding IDE; launched globally 2025; VS Code-compatible, free to use)
+    "trae": "ai",                  # Trae — "trae alternative", "trae ide", "trae vs cursor" → AI & Automation
+    "trae-ide": "ai",              # hyphenated — "trae-ide setup", "trae-ide features" → AI & Automation
+    # AI — Kimi (Moonshot AI LLM; million-token context window; widely used across global dev community)
+    "kimi": "ai",                  # Kimi — "kimi alternative", "kimi api", "kimi k1.5" → AI & Automation
+    "moonshot-ai": "ai",           # hyphenated — "moonshot-ai api", "moonshot-ai alternative", "moonshot-ai setup" → AI & Automation
+    # AI — Pear AI (open-source AI code editor forked from VS Code + Continue; trypear/pearai-app)
+    "pearai": "ai",                # Pear AI — "pearai alternative", "pearai setup", "pearai vs cursor" → AI & Automation
+    "pear-ai": "ai",               # hyphenated — "pear-ai setup", "pear-ai features" → AI & Automation
+    # AI — Mercury (Inception Labs diffusion-based LLM, March 2026; parallel decoding, not autoregressive)
+    "mercury": "ai",               # Mercury — "mercury llm", "mercury diffusion model", "mercury alternative" → AI & Automation
+    "mercury-coder": "ai",         # Mercury Coder — "mercury-coder setup", "mercury-coder alternative" → AI & Automation
+    "mercury-llm": "ai",           # qualified — "mercury-llm api", "mercury-llm vs claude" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
