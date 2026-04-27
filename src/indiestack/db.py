@@ -6334,6 +6334,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "atlantis": "devops",           # Atlantis — Terraform PR automation; "atlantis alternative", "atlantis setup" → DevOps
     "infracost": "devops",          # Infracost — cloud cost estimates for Terraform; "infracost alternative" → DevOps
     "spacelift": "devops",          # Spacelift — Terraform/Pulumi/Ansible CI/CD; "spacelift alternative" → DevOps
+    # AI — Qwen 2 hyphenated form and Qwen 2.5 variants (base "qwen2"→ai mapped; dashed + .5 tier missing)
+    "qwen-2": "ai",                # Qwen 2 — "qwen-2 api", "qwen-2 alternative", "qwen-2 local" → AI & Automation
+    "qwen25": "ai",                # Qwen 2.5 — "qwen25 alternative", "qwen25 setup" → AI & Automation
+    "qwen-2-5": "ai",              # hyphenated — "qwen-2-5 api", "qwen-2-5 coder", "qwen-2-5 math" → AI & Automation
+    "qwen2-5": "ai",               # compact — "qwen2-5 alternative", "qwen2-5 72b" → AI & Automation
+    # AI — Amazon Q Developer (AWS's AI coding assistant; "amazon" bare is too broad to map safely)
+    "amazon-q": "ai",              # "amazon-q alternative", "amazon-q setup", "amazon-q vs copilot" → AI & Automation
+    "amazonq": "ai",               # compound — "amazonq developer", "amazonq alternative" → AI & Automation
+    "amazon-q-developer": "ai",    # fully qualified — "amazon-q-developer setup", "amazon-q-developer pricing" → AI & Automation
+    # AI — Cohere Command R / Command R+ (retrieval-optimised LLMs; high RAG query volume)
+    "command-r": "ai",             # Cohere Command R — "command-r alternative", "command-r api" → AI & Automation
+    "commandr": "ai",              # compound — "commandr setup", "commandr rag" → AI & Automation
+    "command-r-plus": "ai",        # Command R+ — "command-r-plus api", "command-r-plus alternative" → AI & Automation
+    "commandrplus": "ai",          # compound — "commandrplus rag", "commandrplus setup" → AI & Automation
+    # AI — AWS Kiro (spec-first AI IDE by AWS; announced 2025; searched as IDE alternative)
+    "kiro": "ai",                  # Kiro IDE — "kiro alternative", "kiro setup", "kiro vs cursor" → AI & Automation
+    # AI — Mistral Le Chat (Mistral's consumer + enterprise chat interface)
+    "le-chat": "ai",               # Mistral Le Chat — "le-chat alternative", "le-chat api" → AI & Automation
+    "lechat": "ai",                # compound — "lechat setup", "lechat vs claude" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

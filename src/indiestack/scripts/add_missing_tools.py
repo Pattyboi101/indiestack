@@ -12626,6 +12626,48 @@ TOOLS = [
         "brew install infracost && infracost auth login",
         "code",
     ),
+    # AI Automation — Cohere (164th pass) -----------------------------------------
+    (
+        "cohere",
+        "Cohere",
+        "Enterprise LLMs for embeddings, reranking, and RAG",
+        "Cohere provides production-grade language AI APIs: Command R and Command R+ "
+        "for RAG and tool-use workflows, Embed v3 for semantic search and retrieval, "
+        "Rerank for improving search relevance, and Generate for text tasks. "
+        "Command R+ is optimised for multi-step RAG pipelines — outperforms GPT-4 "
+        "on long-context retrieval benchmarks. Embed v3 is one of the leading "
+        "text embedding models. OpenAI-compatible endpoints available. "
+        "Enterprise plans include private deployments on AWS/Azure. "
+        "Widely used in production search, document Q&A, and enterprise chatbot stacks.",
+        "ai-automation",
+        "cohere-ai/cohere-python",
+        7500,
+        "https://cohere.com",
+        "llm,embeddings,rag,rerank,enterprise,nlp,api,command-r",
+        "pip install cohere",
+        "saas",
+    ),
+    # AI Automation — Mistral AI (164th pass) -------------------------------------
+    (
+        "mistral-ai",
+        "Mistral AI",
+        "Efficient open-weight and hosted LLMs from Europe",
+        "Mistral AI provides open-weight models (Mistral 7B, Mixtral 8x7B, Codestral, "
+        "Devstral, Pixtral, Magistral) and a hosted API for fast, cost-efficient inference. "
+        "Models are known for punching above their weight class: Mistral 7B outperformed "
+        "LLaMA 2 13B across benchmarks; Codestral is a top-tier code completion model; "
+        "Magistral competes with o1-mini on reasoning tasks. Le Chat is Mistral's "
+        "consumer interface (competing with ChatGPT and Claude.ai). "
+        "All models have permissive Apache 2.0 or Mistral Research licenses. "
+        "API is OpenAI-compatible. Free tier available for developers.",
+        "ai-automation",
+        "mistralai/mistral-common",
+        10000,
+        "https://mistral.ai",
+        "llm,open-weight,european-ai,api,inference,codestral,mixtral",
+        "pip install mistralai",
+        "saas",
+    ),
 ]
 
 

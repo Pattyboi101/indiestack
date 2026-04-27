@@ -28,6 +28,13 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - linaria alternative, css-in-js library (new → frontend-frameworks)
   - component testing vitest, component test runner (new → testing-tools)
   - atlantis alternative, infracost setup (new → devops-infrastructure)
+  - amazon-q alternative, amazonq vs copilot (Amazon Q Developer → ai-automation)
+  - command-r alternative, commandr rag api (Cohere Command R → ai-automation)
+  - cohere embeddings, cohere rerank api (Cohere platform → ai-automation)
+  - mistral-ai api, mistral-large alternative (Mistral AI → ai-automation)
+  - qwen25 alternative, qwen-2-5 coder setup (Qwen 2.5 → ai-automation)
+  - kiro ide alternative, kiro vs cursor (AWS Kiro → ai-automation)
+  - le-chat alternative, lechat vs claude (Mistral Le Chat → ai-automation)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
