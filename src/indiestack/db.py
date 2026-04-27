@@ -6736,6 +6736,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Humanloop (LLM ops, evaluation, and prompt management)
     "humanloop": "ai",             # Humanloop — "humanloop alternative", "humanloop evaluation" → AI & Automation
     "human-loop": "ai",            # hyphenated — "human-loop setup", "human-loop vs braintrust" → AI & Automation
+    # AI — ElizaOS (elizaOS/eliza, 19k★; most-searched AI agent OS framework in 2025-2026)
+    "elizaos": "ai",               # ElizaOS — "elizaos alternative", "elizaos agent", "elizaos setup" → AI & Automation
+    "eliza": "ai",                 # base form — "eliza agent framework", "eliza multi-agent" → AI & Automation
+    "elizaos-agent": "ai",         # hyphenated — "elizaos-agent setup", "elizaos-agent plugin" → AI & Automation
+    # AI — Google Agent Developer Kit (google/adk-python; April 2025; official Google agent framework)
+    "google-adk": "ai",            # "google-adk alternative", "google-adk setup" → AI & Automation
+    "googleadk": "ai",             # compound — "googleadk agent", "googleadk python" → AI & Automation
+    "adk-python": "ai",            # PyPI package name — "adk-python install", "adk-python setup" → AI & Automation
+    # AI — Google Gemini CLI (google-gemini/gemini-cli; terminal-based AI coding agent)
+    "gemini-cli": "ai",            # "gemini-cli alternative", "gemini-cli setup", "gemini-cli vs claude" → AI & Automation
+    "geminicli": "ai",             # compound — "geminicli install", "geminicli usage" → AI & Automation
+    # AI — Microsoft Phi-4 Mini (fast 3.8B local model; high query volume post March 2025 launch)
+    "phi4-mini": "ai",             # compact — "phi4-mini setup", "phi4-mini local inference" → AI & Automation
+    "phi-4-mini": "ai",            # hyphenated — "phi-4-mini alternative", "phi-4-mini gguf" → AI & Automation
+    "phi4mini": "ai",              # compound — "phi4mini setup", "phi4mini alternative" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

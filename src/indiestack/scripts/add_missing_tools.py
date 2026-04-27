@@ -13596,6 +13596,48 @@ TOOLS = [
         "pip install lunary",
         "code",
     ),
+    # AI Automation — ElizaOS (139th pass) ----------------------------------------
+    (
+        "elizaos",
+        "ElizaOS",
+        "Multi-agent AI simulation framework for autonomous agents",
+        "ElizaOS (formerly Eliza) is a production-grade TypeScript framework for "
+        "building multi-agent AI systems and autonomous agent simulations. Create "
+        "agents with persistent memory, multi-modal capabilities (text, images, audio), "
+        "and multi-platform support (Discord, Twitter/X, Telegram, Slack, and custom UIs). "
+        "Agents run autonomously with pluggable action systems, adapters for major LLMs "
+        "(OpenAI, Anthropic, Llama, Grok), and built-in RAG via vector stores. "
+        "One of the most-starred AI agent frameworks in 2025-2026 — popular for "
+        "building social media bots, game NPCs, and developer tooling agents.",
+        "ai-automation",
+        "elizaOS/eliza",
+        19000,
+        "https://elizaos.ai",
+        "agents,multi-agent,typescript,autonomous,discord,twitter,memory,rag",
+        "npx elizaos create",
+        "code",
+    ),
+    # AI Automation — Google ADK (139th pass) -------------------------------------
+    (
+        "google-adk",
+        "Google Agent Development Kit",
+        "Open-source framework for building and deploying AI agents",
+        "Google's Agent Development Kit (ADK) is an open-source Python framework for "
+        "building, evaluating, and deploying AI agents. Designed for Gemini models but "
+        "supports any LLM-as-a-backbone. Key features: multi-turn conversations with "
+        "persistent state, tool calling with automatic schema generation, built-in "
+        "evaluation harness, streaming responses, and first-class Vertex AI / Cloud Run "
+        "integration for production deployment. Includes agent-to-agent (A2A) "
+        "communication support for multi-agent pipelines. Official Google framework — "
+        "the recommended starting point for teams building on Gemini.",
+        "ai-automation",
+        "google/adk-python",
+        8000,
+        "https://google.github.io/adk-docs/",
+        "agents,google,gemini,python,multi-agent,tool-calling,vertex-ai,a2a",
+        "pip install google-adk",
+        "code",
+    ),
 ]
 
 
