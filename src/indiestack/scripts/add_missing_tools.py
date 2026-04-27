@@ -12668,6 +12668,70 @@ TOOLS = [
         "pip install mistralai",
         "saas",
     ),
+    # AI Dev Tools — Roo Code (165th pass) ----------------------------------------
+    (
+        "roo-code",
+        "Roo Code",
+        "Open-source AI coding extension with expanded autonomous capabilities",
+        "Roo Code (formerly Roo Cline) is an open-source AI coding extension for VS Code, "
+        "forked from Cline with additional capabilities. Key features: multi-model "
+        "switching per task (Sonnet for coding, Haiku for quick edits), custom modes "
+        "(Code, Architect, Ask, Debug), Boomerang Tasks for orchestrating sub-agents, "
+        "and a context management system that tracks token usage across sessions. "
+        "Integrates with Claude, GPT-4, Gemini, local Ollama models, and any OpenAI-"
+        "compatible endpoint. Over 32,000 GitHub stars and one of the most-forked "
+        "AI coding tools in the ecosystem. Popular alternative to Cursor and Copilot "
+        "for teams who want full control over their AI coding workflow.",
+        "ai-dev-tools",
+        "RooVetGit/Roo-Code",
+        32000,
+        "https://roocode.com",
+        "ai-coding,vscode,autonomous,multi-model,claude,open-source,cline-fork",
+        None,
+        "code",
+    ),
+    # AI Automation — PocketFlow (165th pass) --------------------------------------
+    (
+        "pocketflow",
+        "PocketFlow",
+        "Minimalist 100-line Python framework for LLM agents and pipelines",
+        "PocketFlow is a minimalist LLM framework that fits in 100 lines of Python. "
+        "Built around three primitives — Node, Flow, and BatchFlow — it lets you compose "
+        "multi-step LLM pipelines without the abstraction overhead of LangChain or "
+        "LlamaIndex. Design patterns included: map-reduce, RAG, agent loops, and "
+        "multi-agent orchestration. Zero dependencies beyond your LLM SDK of choice. "
+        "Popular for teams who want the control of writing their own agent logic with "
+        "just enough scaffolding to avoid reinventing the wheel. The cookbook covers "
+        "real patterns: autonomous research, document QA, code review bots, and "
+        "structured extraction pipelines.",
+        "ai-automation",
+        "The-Pocket/PocketFlow",
+        10000,
+        "https://the-pocket.github.io/PocketFlow/",
+        "agents,llm,pipeline,minimalist,python,rag,map-reduce,lightweight",
+        "pip install pocketflow",
+        "code",
+    ),
+    # MCP Servers — Glama (165th pass) ---------------------------------------------
+    (
+        "glama",
+        "Glama",
+        "MCP server registry and AI tool marketplace",
+        "Glama is a registry and discovery platform for MCP (Model Context Protocol) "
+        "servers. Browse, search, and install MCP servers that give AI agents access to "
+        "tools, data, and services. Glama indexes hundreds of community-built MCP servers "
+        "across categories — databases, APIs, file systems, browsers, and developer tools "
+        "— and provides one-click installation configs for Claude Desktop, Cursor, and "
+        "other MCP clients. Also offers an AI model comparison tool and benchmark "
+        "leaderboard. One of the largest community-maintained MCP server directories.",
+        "mcp-servers",
+        None,
+        None,
+        "https://glama.ai",
+        "mcp,registry,discovery,model-context-protocol,ai-agents,catalog",
+        None,
+        "saas",
+    ),
 ]
 
 

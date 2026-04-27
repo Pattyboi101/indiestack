@@ -6353,6 +6353,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Mistral Le Chat (Mistral's consumer + enterprise chat interface)
     "le-chat": "ai",               # Mistral Le Chat — "le-chat alternative", "le-chat api" → AI & Automation
     "lechat": "ai",                # compound — "lechat setup", "lechat vs claude" → AI & Automation
+    # AI — Roo Code (open-source AI coding extension; popular Cline fork with extra capabilities, ~32k★)
+    "roo-code": "ai",              # Roo Code — "roo-code alternative", "roo-code vs cline" → AI & Automation
+    "roo-cline": "ai",             # former name — "roo-cline alternative", "roo-cline setup" → AI & Automation
+    "roocline": "ai",              # compound — "roocline vs cline", "roocline features" → AI & Automation
+    # AI — GitHub Spark (GitHub's browser-native vibe-coding AI app builder)
+    "github-spark": "ai",          # GitHub Spark — "github-spark alternative", "github-spark vs lovable" → AI & Automation
+    "githubspark": "ai",           # compound — "githubspark setup", "githubspark review" → AI & Automation
+    # AI — PocketFlow (minimalist 100-line Python LLM agent framework; The-Pocket/PocketFlow, 10k★)
+    "pocketflow": "ai",            # PocketFlow — "pocketflow alternative", "pocketflow agent" → AI & Automation
+    "pocket-flow": "ai",           # hyphenated — "pocket-flow setup", "pocket-flow vs crewai" → AI & Automation
+    # AI — Bolt.new hyphenated form (compound "boltnew"→ai already mapped; hyphenated form missing)
+    "bolt-new": "ai",              # Bolt.new — "bolt-new alternative", "bolt-new review" → AI & Automation
+    # AI — Potpie (open-source AI code review and codebase analysis agent)
+    "potpie": "ai",                # Potpie — "potpie alternative", "potpie code review" → AI & Automation
+    # MCP — Glama.ai (MCP server registry and marketplace; browse and search MCP servers)
+    "glama": "mcp",                # Glama — "glama mcp", "glama alternative", "mcp server registry" → MCP Servers
+    # MCP — mcp.run (hosted MCP server execution environment)
+    "mcp-run": "mcp",              # mcp.run — "mcp-run alternative", "mcp-run hosted" → MCP Servers
+    "mcprun": "mcp",               # compound — "mcprun setup", "mcprun alternative" → MCP Servers
 }
 
 _FTS_STOP_WORDS = {
