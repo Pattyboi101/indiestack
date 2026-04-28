@@ -6938,6 +6938,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "simplewebauthn": "authentication",  # SimpleWebAuthn — passkey/WebAuthn library; "simplewebauthn alternative" → Authentication
     # Workflow — Temporal predecessor
     "cadence": "background",       # Uber Cadence — durable workflow engine (Temporal predecessor); "cadence alternative" → Background Jobs
+    # Email templating — missing frameworks
+    "maizzle": "email",            # Maizzle — Tailwind CSS email templates; "maizzle alternative" → Email Marketing
+    "jsx-email": "email",          # JSX Email — React component email builder; "jsx-email alternative" → Email Marketing
+    "heml": "email",               # HEML — email markup language; "heml alternative" → Email Marketing
+    # Rich text editors — missing tools
+    "editorjs": "frontend",        # Editor.js — block-style rich text editor; "editorjs alternative" → Frontend Frameworks
+    "draft-js": "frontend",        # Draft.js — Meta's rich text editor framework; "draft-js alternative" → Frontend
+    # HTTP benchmarking — complement to k6/artillery
+    "wrk": "testing",              # wrk — HTTP benchmarking tool in C; "wrk alternative" → Testing & Code Quality
+    # Python task queues — complement to celery/rq
+    "dramatiq": "background",      # Dramatiq — Python task queue (Celery alternative); "dramatiq alternative" → Background Jobs
+    "huey": "background",          # Huey — lightweight Python task queue; "huey alternative" → Background Jobs
+    "arq": "background",           # arq — async Python job queues with Redis; "arq alternative" → Background Jobs
+    # React Native UI — missing kits
+    "react-native-paper": "frontend",  # React Native Paper — Material Design UI; "react-native-paper alternative" → Frontend
+    "ui-kitten": "frontend",       # UI Kitten — React Native Eva Design UI; "ui-kitten alternative" → Frontend
 }
 
 _FTS_STOP_WORDS = {
