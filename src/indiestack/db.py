@@ -6869,6 +6869,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "eventdriven": "message",      # compound — "eventdriven framework", "eventdriven pattern" → Message Queue
     # API design pattern
     "api-first": "api",            # "api-first design", "api-first architecture" → API Tools
+    # Fine-grained authorization — terms not yet mapped (complement to openfga/casbin/zanzibar)
+    "fga": "authentication",       # short for fine-grained authorization; "fga service", "fga sdk" → Authentication
+    "warrant": "authentication",   # Warrant — Zanzibar-based authz; "warrant alternative" → Authentication
+    "permify": "authentication",   # Permify — open-source authz; "permify alternative" → Authentication
+    "oso": "authentication",       # Oso — authz library; "oso authorization", "oso alternative" → Authentication
+    # Local-first / offline sync tools
+    "automerge": "database",       # Automerge — CRDT document sync; "automerge alternative" → Database
+    "watermelondb": "database",    # WatermelonDB — offline-first React Native DB; "watermelondb alternative" → Database
+    # Message queue tools not yet mapped
+    "nsq": "message",              # NSQ — Go message queue by Bitly; "nsq alternative" → Message Queue
+    "hivemq": "message",           # HiveMQ — enterprise MQTT broker; "hivemq alternative" → Message Queue
+    # Linter/formatter — missing forms
+    "dprint": "testing",           # dprint — fast Rust-based code formatter; "dprint alternative" → Testing & Code Quality
+    "rome": "testing",             # Rome — bundler+linter+formatter, Biome predecessor; "rome alternative" → Testing
+    # Notification platforms — missing providers
+    "magicbell": "notifications",  # MagicBell — notification inbox API; "magicbell alternative" → Notifications
+    "engagespot": "notifications", # Engagespot — multi-channel notifications; "engagespot alternative" → Notifications
 }
 
 _FTS_STOP_WORDS = {
