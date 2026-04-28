@@ -6954,6 +6954,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     # React Native UI — missing kits
     "react-native-paper": "frontend",  # React Native Paper — Material Design UI; "react-native-paper alternative" → Frontend
     "ui-kitten": "frontend",       # UI Kitten — React Native Eva Design UI; "ui-kitten alternative" → Frontend
+    # E-signature / document signing
+    "docusign": "forms",           # DocuSign — canonical e-signature; "docusign alternative" → Forms & Surveys
+    "hellosign": "forms",          # HelloSign (Dropbox Sign) — e-signature API; "hellosign alternative" → Forms & Surveys
+    "docuseal": "forms",           # DocuSeal — open-source e-signature; "docuseal alternative" → Forms & Surveys
+    # Survey/form tools
+    "surveyjs": "forms",           # SurveyJS — open-source form/survey builder; "surveyjs alternative" → Forms & Surveys
+    # Cloudflare Workers tooling
+    "workerd": "devops",           # workerd — open-source Cloudflare Workers runtime; "workerd alternative" → DevOps
+    "miniflare": "devops",         # Miniflare — local CF Workers simulator for testing; "miniflare alternative" → DevOps
+    # UnJS ecosystem
+    "val-town": "developer",       # Val Town — hyphenated form of valtown (already mapped compact); "val-town alternative" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
