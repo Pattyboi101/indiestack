@@ -6965,6 +6965,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "miniflare": "devops",         # Miniflare — local CF Workers simulator for testing; "miniflare alternative" → DevOps
     # UnJS ecosystem
     "val-town": "developer",       # Val Town — hyphenated form of valtown (already mapped compact); "val-town alternative" → Developer Tools
+    # UI component libraries — missing names/forms
+    "shoelace": "frontend",        # Shoelace — web components library built on Lit; "shoelace alternative" → Frontend Frameworks
+    "preline": "frontend",         # Preline UI — Tailwind CSS component library; "preline alternative" → Frontend Frameworks
+    "ant-design": "frontend",      # Ant Design hyphenated form; "ant-design alternative" → Frontend (compact "antd" already mapped)
+    # Meta-frameworks — less-common but real queries
+    "marko": "frontend",           # Marko — eBay's streaming HTML-first JS framework; "marko alternative" → Frontend Frameworks
+    "razzle": "frontend",          # Razzle — universal JS app tooling (CRA for SSR); "razzle alternative" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
