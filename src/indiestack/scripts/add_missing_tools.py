@@ -12732,6 +12732,28 @@ TOOLS = [
         None,
         "saas",
     ),
+    # AI Terminal Agents — Codex CLI (166th pass) ----------------------------------
+    (
+        "codex-cli",
+        "OpenAI Codex CLI",
+        "Lightweight open-source terminal coding agent from OpenAI",
+        "OpenAI Codex CLI is a lightweight, open-source terminal coding agent "
+        "that runs in your shell. It connects to OpenAI models and applies "
+        "multi-file code changes directly from the command line. Supports "
+        "sandboxed execution, git-aware context, and streaming output. "
+        "Designed as an open alternative to proprietary AI coding IDEs for "
+        "developers who prefer staying in the terminal. Part of the emerging "
+        "terminal-agent category alongside Claude Code and Gemini CLI — where "
+        "AI reasoning models plan and execute complex coding tasks without "
+        "leaving your existing workflow.",
+        "ai-automation",
+        "openai/codex",
+        27000,
+        "https://github.com/openai/codex",
+        "ai,coding,terminal,cli,agents,open-source,multi-file,shell",
+        "npm install -g @openai/codex",
+        "code",
+    ),
 ]
 
 

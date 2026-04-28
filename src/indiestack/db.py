@@ -6372,6 +6372,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     # MCP — mcp.run (hosted MCP server execution environment)
     "mcp-run": "mcp",              # mcp.run — "mcp-run alternative", "mcp-run hosted" → MCP Servers
     "mcprun": "mcp",               # compound — "mcprun setup", "mcprun alternative" → MCP Servers
+    # AI — xAI company (Elon Musk's AI lab, makers of Grok; "grok"/"grok3" already map to ai but the company name doesn't)
+    "xai": "ai",                   # xAI — "xai api", "xai alternative", "xai grok", "xai inference" → AI & Automation
+    # AI — multi-agent hyphenated form (compound "multiagent" already maps; hyphenated query form is common)
+    "multi-agent": "ai",           # "multi-agent framework", "multi-agent system", "multi-agent workflow" → AI & Automation
+    # AI — OpenAI Codex CLI forms (2025 terminal coding agent; bare "codex"→ai already mapped)
+    "codex-cli": "ai",             # Codex CLI — "codex-cli setup", "codex-cli alternative", "codex-cli vs claude code" → AI & Automation
+    "openai-codex": "ai",          # brand-qualified — "openai-codex setup", "openai-codex alternative" → AI & Automation
+    # AI — Agent SDK (Anthropic Agent SDK + generic agent SDK queries; "agent"→ai exists but "agent-sdk" doesn't)
+    "agent-sdk": "ai",             # "agent-sdk setup", "agent-sdk alternative", "anthropic agent sdk" → AI & Automation
+    "agentsdk": "ai",              # compound — "agentsdk python", "agentsdk alternative", "agentsdk docs" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

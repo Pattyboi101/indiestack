@@ -35,6 +35,11 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - qwen25 alternative, qwen-2-5 coder setup (Qwen 2.5 → ai-automation)
   - kiro ide alternative, kiro vs cursor (AWS Kiro → ai-automation)
   - le-chat alternative, lechat vs claude (Mistral Le Chat → ai-automation)
+  - xai api, xai alternative (xAI company → ai-automation)
+  - multi-agent framework, multi-agent system (hyphenated → ai-automation)
+  - codex-cli setup, codex-cli vs claude code (OpenAI Codex CLI → ai-automation)
+  - openai-codex alternative, openai-codex agent (brand-qualified → ai-automation)
+  - agent-sdk setup, agentsdk python (Agent SDK → ai-automation)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
