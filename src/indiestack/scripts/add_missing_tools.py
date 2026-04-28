@@ -14167,6 +14167,83 @@ TOOLS = [
         "npm install @simplewebauthn/server @simplewebauthn/browser",
         "code",
     ),
+    (
+        "dramatiq",
+        "Dramatiq",
+        "Fast and reliable background task processing for Python",
+        "Dramatiq is a Python background job library designed to be fast, reliable, and "
+        "easy to reason about. Uses Redis or RabbitMQ as a broker. Unlike Celery, Dramatiq "
+        "uses thread-per-worker concurrency (not async/greenlets), making it easier to "
+        "debug and reason about. Supports retries, rate limiting, scheduling (with APScheduler), "
+        "dead letter queues, middleware, and Django integration (django-dramatiq). Significantly "
+        "simpler configuration than Celery with fewer moving parts. Active development and "
+        "a small codebase that's easy to understand. 4k+ GitHub stars.",
+        "background-jobs",
+        "Bogdanp/dramatiq",
+        4000,
+        "https://dramatiq.io",
+        "python,celery-alternative,task-queue,redis,rabbitmq,background,workers,async",
+        "pip install dramatiq",
+        "code",
+    ),
+    (
+        "arq",
+        "arq",
+        "Fast async Python job queues and RPC with Redis",
+        "arq (async + Redis Queue) is a Python job queue and RPC framework built on asyncio "
+        "and Redis. Designed for async-native codebases, it lets you enqueue async Python "
+        "functions and process them in async workers — no sync/async mixing. Much lighter "
+        "than Celery or Dramatiq for teams already using asyncio (FastAPI, aiohttp). "
+        "Supports delayed jobs, cron scheduling, job health checks, and result storage. "
+        "Particularly popular in FastAPI ecosystems. 2k+ GitHub stars.",
+        "background-jobs",
+        "samuelcolvin/arq",
+        2000,
+        "https://arq-docs.helpmanual.io",
+        "python,async,redis,job-queue,fastapi,asyncio,workers,celery-alternative",
+        "pip install arq",
+        "code",
+    ),
+    (
+        "editorjs",
+        "Editor.js",
+        "Block-style rich text editor for the modern web",
+        "Editor.js is a block-styled WYSIWYG editor that outputs clean JSON instead of "
+        "complex HTML. Each block (paragraph, header, image, list, quote, code) is a "
+        "separate plugin, making the editor highly extensible. The clean JSON output "
+        "simplifies server-side sanitization and rendering. Widely used in CMS, note-taking, "
+        "and content platforms where controlled rich text input is needed. Over 100 community "
+        "plugins available. Works with React, Vue, and vanilla JS. Supports pasting from "
+        "Word/Google Docs, drag-and-drop block reordering, inline formatting toolbar, and "
+        "keyboard shortcuts. 28k+ GitHub stars.",
+        "frontend-frameworks",
+        "codex-team/editor.js",
+        28000,
+        "https://editorjs.io",
+        "rich-text-editor,wysiwyg,blocks,cms,typescript,javascript,open-source,content",
+        "npm install @editorjs/editorjs",
+        "code",
+    ),
+    (
+        "maizzle",
+        "Maizzle",
+        "Framework for building HTML emails with Tailwind CSS",
+        "Maizzle is a framework for rapid email template development using Tailwind CSS "
+        "and a Node.js-based build pipeline. Write your email templates in HTML with "
+        "Tailwind classes, and Maizzle's build process inlines all CSS, removes unused "
+        "styles, and optimizes the output for email clients. Supports multiple environments "
+        "(local preview with live reload, production with inlining), template components, "
+        "front matter variables, and conditional CSS. Generates email-client-compatible "
+        "HTML that works in Gmail, Outlook, Apple Mail, and others. Popular alternative "
+        "to MJML for developers who prefer Tailwind workflows. 3k+ GitHub stars.",
+        "email-marketing",
+        "maizzle/framework",
+        3000,
+        "https://maizzle.com",
+        "email,tailwind,html-email,templates,newsletter,mjml-alternative,inlining,nodejs",
+        "npm install -g @maizzle/cli && maizzle new",
+        "code",
+    ),
 ]
 
 
