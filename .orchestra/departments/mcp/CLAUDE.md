@@ -79,6 +79,12 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - claude-opus alternative, claudeopus pricing (Claude Opus tier → ai-automation)
   - claude-sonnet api, claudesonnet setup (Claude Sonnet tier → ai-automation)
   - claude-haiku alternative, claudehaiku fast (Claude Haiku tier → ai-automation)
+  - kiro alternative, amazon kiro setup (Amazon Kiro AI IDE → ai-automation)
+  - firebase studio alternative, firebase-studio vs cursor (Firebase Studio → ai-automation)
+  - project idx alternative, projectidx setup (Project IDX old name → ai-automation)
+  - sourcegraph alternative, sourcegraph cody setup (Sourcegraph → ai-automation)
+  - copilot workspace alternative, copilot-workspace vs devin (Copilot Workspace → ai-automation)
+  - github spark alternative, github-spark builder (GitHub Spark → ai-automation)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)

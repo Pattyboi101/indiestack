@@ -13746,6 +13746,45 @@ TOOLS = [
         "pip install r2r",
         "code",
     ),
+    # AI Coding IDEs — high-search competitor benchmarks (saas, no public GitHub)
+    (
+        "cursor",
+        "Cursor",
+        "The AI code editor",
+        "Cursor is an AI-first code editor forked from VS Code. It provides "
+        "deep codebase awareness through its Codebase Chat feature, letting you "
+        "ask questions about your entire repo. Composer mode writes multi-file "
+        "changes from a single prompt, while Tab autocomplete predicts your next "
+        "edit based on context. Built-in support for Claude, GPT-4o, and Gemini. "
+        "One of the most widely-adopted AI coding tools for individual developers "
+        "and engineering teams.",
+        "ai-automation",
+        None,
+        0,
+        "https://cursor.sh",
+        "ai,coding,editor,vscode,autocomplete,chat,agents,cursor-composer",
+        None,
+        "saas",
+    ),
+    (
+        "kiro",
+        "Amazon Kiro",
+        "AI-native coding IDE by AWS",
+        "Amazon Kiro is AWS's AI-powered coding IDE based on VS Code. It "
+        "introduces 'specs' — structured requirement documents that the AI uses "
+        "to plan, scaffold, and implement features end-to-end. Kiro's agent "
+        "hooks run automatically on file save and terminal events, keeping code "
+        "consistent with your specs. Powered by Claude and Amazon's own models "
+        "via Amazon Bedrock. Aimed at teams who want AI-first development with "
+        "structured engineering discipline rather than free-form prompting.",
+        "ai-automation",
+        None,
+        0,
+        "https://kiro.dev",
+        "ai,coding,ide,aws,agents,specs,vscode,amazon,bedrock",
+        None,
+        "saas",
+    ),
 ]
 
 

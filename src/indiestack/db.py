@@ -6794,6 +6794,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — R2R (SciPhi RAG framework; SciPhi-AI/R2R, 3.5k★)
     "r2r": "ai",                   # R2R — production RAG pipeline framework by SciPhi; "r2r alternative" → AI & Automation
     "sciphi": "ai",                # SciPhi — org behind R2R; "sciphi r2r", "sciphi alternative" → AI & Automation
+    # AI — Amazon Kiro AI coding IDE (AWS, 2025; VS Code-compatible with agentic coding features)
+    "kiro": "ai",                  # Kiro — "kiro alternative", "kiro vs cursor", "amazon kiro setup" → AI & Automation
+    "amazon-kiro": "ai",           # qualified — "amazon-kiro setup", "amazon-kiro pricing" → AI & Automation
+    # AI — Google Firebase Studio (formerly Project IDX, rebranded April 2025; cloud-based AI coding IDE)
+    "firebase-studio": "ai",       # Firebase Studio — "firebase-studio alternative", "firebase-studio setup" → AI & Automation
+    "firebasestudio": "ai",        # compound — "firebasestudio vs cursor", "firebasestudio pricing" → AI & Automation
+    "project-idx": "ai",           # Project IDX — old name, still heavily searched; "project-idx alternative" → AI & Automation
+    "projectidx": "ai",            # compound — "projectidx setup", "projectidx vs replit" → AI & Automation
+    # AI — Sourcegraph code intelligence platform (home of Cody AI assistant; 9k★)
+    "sourcegraph": "ai",           # Sourcegraph — "sourcegraph alternative", "sourcegraph setup", "sourcegraph cody" → AI & Automation
+    # AI — GitHub Copilot Workspace (AI coding environment from GitHub Issues to PRs, 2025)
+    "copilot-workspace": "ai",     # Copilot Workspace — "copilot-workspace alternative", "copilot-workspace vs devin" → AI & Automation
+    "copilotworkspace": "ai",      # compound — "copilotworkspace setup", "copilotworkspace pricing" → AI & Automation
+    # AI — GitHub Spark (AI micro-app builder from GitHub, 2025)
+    "github-spark": "ai",          # GitHub Spark — "github-spark alternative", "github-spark setup" → AI & Automation
+    "githubspark": "ai",           # compound — "githubspark builder", "githubspark vs bolt" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
