@@ -14068,6 +14068,105 @@ TOOLS = [
         "curl -sSL https://easypanel.io/install.sh | sh",
         "code",
     ),
+    (
+        "convoy",
+        "Convoy",
+        "Open-source high-performance webhook gateway",
+        "Convoy is an open-source webhook gateway for sending and receiving webhooks reliably. "
+        "It handles delivery, retries, rate limiting, fan-out, endpoint management, and a "
+        "searchable event log — all the infrastructure needed to run a production webhook system. "
+        "Supports portal links so customers can inspect and manage their own webhook deliveries. "
+        "Deployable as a standalone service via Docker. Provides SDKs for Node.js, Go, Python, "
+        "Ruby, and PHP. Comparable to Svix and Hookdeck but fully self-hostable. Particularly "
+        "popular with platforms that need to manage inbound webhooks from Stripe, GitHub, etc., "
+        "as well as outbound customer notifications. 4k+ GitHub stars.",
+        "message-queue",
+        "frain-dev/convoy",
+        4000,
+        "https://getconvoy.io",
+        "webhooks,gateway,self-hosted,retry,events,open-source,go,svix-alternative",
+        "docker pull docker.getconvoy.io/convoy",
+        "code",
+    ),
+    (
+        "seaweedfs",
+        "SeaweedFS",
+        "Distributed blob/object store with POSIX and S3-compatible APIs",
+        "SeaweedFS is a distributed object storage system optimized for storing billions of "
+        "small files efficiently. Written in Go, it separates metadata from data to reduce I/O "
+        "operations. Features: S3-compatible API (drop-in MinIO alternative), POSIX FUSE mount, "
+        "built-in TTL for auto-expiry, replication across data centers, erasure coding, "
+        "automatic load balancing, and a REST API. Much lighter than HDFS and faster for "
+        "small file workloads. Used in production at scale for image hosting, CDN origins, "
+        "and ML dataset storage. Supports tiering to cloud (S3, Azure, GCS). 22k+ GitHub stars.",
+        "file-management",
+        "seaweedfs/seaweedfs",
+        22000,
+        "https://github.com/seaweedfs/seaweedfs",
+        "object-storage,distributed,s3,self-hosted,go,blob,cdn,minio-alternative,files",
+        "docker pull chrislusf/seaweedfs",
+        "code",
+    ),
+    (
+        "dgraph",
+        "Dgraph",
+        "Distributed graph database with native GraphQL support",
+        "Dgraph is an open-source distributed graph database written in Go. It stores data as "
+        "nodes and predicates (edges/properties) using an adjacency list model optimized for "
+        "graph traversals. Exposes a native GraphQL API and a low-level DQL (Dgraph Query "
+        "Language) interface for complex graph queries. Supports horizontal sharding, ACID "
+        "transactions, and real-time subscriptions. Ideal for social networks, knowledge graphs, "
+        "recommendation engines, and fraud detection. Includes Dgraph Cloud (managed service), "
+        "a local self-hosted option, and a zero-dependency embedded option (Badger). 20k+ "
+        "GitHub stars.",
+        "database",
+        "dgraph-io/dgraph",
+        20000,
+        "https://dgraph.io",
+        "graph,graphql,database,distributed,go,social-graph,knowledge-graph,nosql,open-source",
+        "docker pull dgraph/dgraph",
+        "code",
+    ),
+    (
+        "moon",
+        "Moonrepo",
+        "Rust-based build system and monorepo management tool",
+        "Moon is a Rust-based task runner and monorepo management tool for JavaScript and "
+        "TypeScript repositories. It automatically infers tasks from package.json scripts, "
+        "supports affected task detection (only run tasks for changed projects), remote "
+        "caching via moonbase, and Docker layer optimization. Provides a project graph, "
+        "dependency management, and CI/CD integration. Much faster than Nx or Turborepo for "
+        "many workloads due to Rust implementation. Supports pnpm, npm, yarn, and bun workspaces. "
+        "Works alongside Nx and Turborepo for gradual adoption. 3k+ GitHub stars.",
+        "developer-tools",
+        "moonrepo/moon",
+        3000,
+        "https://moonrepo.dev",
+        "monorepo,build-system,rust,typescript,javascript,ci,caching,tasks,turborepo-alternative",
+        "npm install -g @moonrepo/cli",
+        "code",
+    ),
+    (
+        "simplewebauthn",
+        "SimpleWebAuthn",
+        "TypeScript-first library for WebAuthn (passkey) authentication",
+        "SimpleWebAuthn is a TypeScript library that simplifies implementing WebAuthn (passkeys) "
+        "in web applications. Provides both a browser-side package (@simplewebauthn/browser) "
+        "and a server-side package (@simplewebauthn/server) that handles the cryptographic "
+        "complexity of WebAuthn registration and authentication ceremonies. The server package "
+        "is framework-agnostic and works with any Node.js/Deno/Bun/Edge runtime. Supports "
+        "all FIDO2-compliant authenticators: hardware security keys (YubiKey), platform "
+        "authenticators (Face ID, Touch ID, Windows Hello), and cross-device passkeys. "
+        "Used by many indie developers as the simplest path to passkey auth without a "
+        "managed service. 4k+ GitHub stars.",
+        "authentication",
+        "MasterKale/SimpleWebAuthn",
+        4000,
+        "https://simplewebauthn.dev",
+        "webauthn,passkeys,fido2,authentication,typescript,browser,node,security,open-source",
+        "npm install @simplewebauthn/server @simplewebauthn/browser",
+        "code",
+    ),
 ]
 
 
