@@ -85,6 +85,12 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - sourcegraph alternative, sourcegraph cody setup (Sourcegraph → ai-automation)
   - copilot workspace alternative, copilot-workspace vs devin (Copilot Workspace → ai-automation)
   - github spark alternative, github-spark builder (GitHub Spark → ai-automation)
+  - momento alternative, momento cache redis (Momento Cache → caching)
+  - mcp-sdk setup, mcp python library (MCP SDK packages → mcp-servers)
+  - glama mcp, glama-ai registry (Glama MCP registry → mcp-servers)
+  - roo alternative, roo-code extension (Roo Code → ai-automation)
+  - a2a-protocol spec, agent-to-agent communication (A2A Protocol → ai-automation)
+  - mcp-gateway setup, mcp-proxy server (MCP infrastructure → mcp-servers)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)

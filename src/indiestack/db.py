@@ -6810,6 +6810,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — GitHub Spark (AI micro-app builder from GitHub, 2025)
     "github-spark": "ai",          # GitHub Spark — "github-spark alternative", "github-spark setup" → AI & Automation
     "githubspark": "ai",           # compound — "githubspark builder", "githubspark vs bolt" → AI & Automation
+    # Caching — Momento Cache (serverless caching by ex-AWS DynamoDB team; common Upstash/Redis alternative query)
+    "momento": "caching",          # Momento Cache — "momento alternative", "momento cache redis", "momento serverless" → Caching
+    "momento-cache": "caching",    # hyphenated — "momento-cache alternative", "momento-cache vs upstash" → Caching
+    "momentodb": "caching",        # compound — "momentodb setup", "momentodb pricing" → Caching
+    # MCP Servers — official SDK package names (high query volume from developers building MCP servers)
+    "mcp-sdk": "mcp",              # official MCP SDK — "mcp-sdk setup", "mcp-sdk alternative", "mcp-sdk python" → MCP Servers
+    "mcp-python": "mcp",           # Python SDK — "mcp-python install", "mcp-python setup", "mcp python library" → MCP Servers
+    "mcp-node": "mcp",             # Node.js SDK — "mcp-node setup", "mcp-node typescript", "mcp node sdk" → MCP Servers
+    "mcp-typescript": "mcp",       # TS SDK — "mcp-typescript client", "mcp-typescript alternative" → MCP Servers
+    # MCP Servers — Glama.ai registry (complement to Smithery→mcp already mapped; Glama is the other major MCP registry)
+    "glama": "mcp",                # Glama.ai — MCP server registry; "glama mcp", "glama alternative" → MCP Servers
+    "glama-ai": "mcp",             # hyphenated — "glama-ai registry", "glama-ai server search" → MCP Servers
+    # AI — Roo Code bare form (compound "roocode"→ai already mapped; bare "roo" and hyphenated weren't)
+    "roo": "ai",                   # Roo Code — "roo alternative", "roo coding agent", "roo vs cline" → AI & Automation
+    "roo-code": "ai",              # hyphenated — "roo-code setup", "roo-code extension", "roo-code alternative" → AI & Automation
+    # AI — A2A protocol compound and full-phrase forms (bare "a2a"→ai already mapped)
+    "a2a-protocol": "ai",          # hyphenated — "a2a-protocol spec", "a2a-protocol alternative" → AI & Automation
+    "agent-to-agent": "ai",        # full phrase — "agent-to-agent protocol", "agent-to-agent communication" → AI & Automation
+    "agenttoagent": "ai",          # compound — "agenttoagent spec", "agenttoagent setup" → AI & Automation
+    # MCP Servers — MCP gateway/proxy patterns (developers building multi-server MCP infra)
+    "mcp-gateway": "mcp",          # "mcp-gateway setup", "mcp-gateway alternative", "mcp proxy gateway" → MCP Servers
+    "mcp-proxy": "mcp",            # "mcp-proxy server", "mcp-proxy alternative" → MCP Servers
 }
 
 _FTS_STOP_WORDS = {
