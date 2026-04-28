@@ -13910,6 +13910,164 @@ TOOLS = [
         "npm install -g opencode-ai",
         "code",
     ),
+    (
+        "dexie",
+        "Dexie.js",
+        "Minimalistic IndexedDB wrapper for the browser",
+        "Dexie.js is the most popular wrapper around the browser's IndexedDB API. It simplifies "
+        "IndexedDB's complex asynchronous API into a clean, promise-based interface with query "
+        "syntax inspired by SQL. Supports complex queries, compound indices, transactions, and "
+        "full TypeScript generics. Works in all modern browsers, React Native (via expo-sqlite), "
+        "Node.js, and Deno. Used by millions of web apps for offline data persistence. Provides "
+        "live queries for reactive UI updates (dexie-react-hooks), cloud sync (Dexie Cloud), and "
+        "an Addon API for plugins. 12k+ GitHub stars.",
+        "database",
+        "dexie/Dexie.js",
+        12000,
+        "https://dexie.org",
+        "indexeddb,browser,offline,database,typescript,react,javascript,client-side,local-first",
+        "npm install dexie",
+        "code",
+    ),
+    (
+        "automerge",
+        "Automerge",
+        "CRDT library for building local-first, collaborative applications",
+        "Automerge is a JSON-like data structure library based on Conflict-free Replicated Data "
+        "Types (CRDTs). It enables collaborative editing and local-first applications by "
+        "automatically merging concurrent changes without conflicts. The Rust-based core "
+        "(automerge-rs) compiles to WASM and powers both the JavaScript and Rust SDKs. Supports "
+        "text, lists, maps, and counters with change history and time-travel. Used by "
+        "Inkbase, Actual Budget, and other local-first products. Part of the Local-First Software "
+        "movement. Works with any network transport (WebSockets, WebRTC, etc). 4k+ JS stars, "
+        "with the Rust core at 1.5k+ stars. Backed by Ink & Switch research lab.",
+        "database",
+        "automerge/automerge",
+        4000,
+        "https://automerge.org",
+        "crdt,local-first,collaborative,offline,sync,realtime,typescript,rust,wasm",
+        "npm install @automerge/automerge",
+        "code",
+    ),
+    (
+        "watermelondb",
+        "WatermelonDB",
+        "Reactive database for React and React Native apps",
+        "WatermelonDB is a high-performance reactive database framework for React and React Native "
+        "built on SQLite. Designed for offline-first mobile apps that need fast data access with "
+        "tens of thousands of records. Uses lazy loading — only fetches data that's currently "
+        "visible on screen — keeping apps fast regardless of data size. Full observability "
+        "with RxJS-powered reactive queries that update the UI automatically when data changes. "
+        "Supports migrations, relations, and multi-database setups. Sync adapter is transport-"
+        "agnostic, compatible with any backend. Used by Nozbe, Hey.com, and production apps "
+        "serving millions of users. 10k+ GitHub stars.",
+        "database",
+        "Nozbe/WatermelonDB",
+        10000,
+        "https://watermelondb.dev",
+        "react-native,sqlite,offline,mobile,reactive,local-first,rxjs,typescript,react",
+        "npm install @nozbe/watermelondb",
+        "code",
+    ),
+    (
+        "permify",
+        "Permify",
+        "Open-source authorization service for Google Zanzibar-inspired access control",
+        "Permify is an open-source, Zanzibar-based fine-grained authorization service designed "
+        "to be deployed as a standalone microservice. Define role-based (RBAC), attribute-based "
+        "(ABAC), and relationship-based (ReBAC) access control models using a DSL schema inspired "
+        "by Google's Zanzibar paper. Exposes a gRPC and REST API; evaluates permissions in "
+        "milliseconds against relationship tuples stored in PostgreSQL or in-memory. Ships with "
+        "a schema visualizer, a playground, and SDKs for Go, Node.js, Java, and Python. "
+        "Used to replace custom authorization code in multi-tenant SaaS products. Cloud hosted "
+        "version available (Permify Cloud). 5k+ GitHub stars.",
+        "authentication",
+        "Permify/permify",
+        5000,
+        "https://permify.co",
+        "authorization,zanzibar,rebac,rbac,abac,fga,access-control,go,grpc,multi-tenant",
+        "docker pull ghcr.io/permify/permify",
+        "code",
+    ),
+    (
+        "tantivy",
+        "Tantivy",
+        "Fast full-text search engine library in Rust",
+        "Tantivy is a full-text search engine library written in Rust, inspired by Lucene. "
+        "It is the search engine underlying Quickwit. Provides BM25 ranking, phrase queries, "
+        "range queries, custom tokenizers, faceted search, and compressed indexes. Designed for "
+        "embedding in Rust applications or wrapping via Python (tantivy-py), Node.js, or other "
+        "language bindings. Supports multi-threaded indexing and near-real-time search. The "
+        "core library is used by Quickwit, Meilisearch (partially), and various Rust-based "
+        "search tools. Much faster than Elasticsearch for many workloads at a fraction of the "
+        "memory footprint. 12k+ GitHub stars.",
+        "search",
+        "quickwit-oss/tantivy",
+        12000,
+        "https://github.com/quickwit-oss/tantivy",
+        "search,rust,full-text,lucene,bm25,indexing,embedded,fast,library",
+        "cargo add tantivy",
+        "code",
+    ),
+    (
+        "dprint",
+        "dprint",
+        "Fast, pluggable code formatter written in Rust",
+        "dprint is a pluggable code formatting platform written in Rust. It runs formatters as "
+        "WASM plugins, making it language-agnostic — supports TypeScript, JavaScript, JSON, "
+        "Markdown, TOML, and more via community plugins. Significantly faster than Prettier "
+        "because it only reformats changed files using a cache. Plugins include dprint-plugin-"
+        "typescript (a Prettier-compatible TS/JS formatter), dprint-plugin-json, and wrappers "
+        "for Rustfmt, gofmt, and others. Used as a drop-in Prettier replacement in CI pipelines. "
+        "Configuration via dprint.json. 3k+ GitHub stars.",
+        "testing",
+        "dprint/dprint",
+        3000,
+        "https://dprint.dev",
+        "formatter,linter,typescript,javascript,rust,wasm,prettier-alternative,fast,plugins",
+        "npm install -g dprint",
+        "code",
+    ),
+    (
+        "tolgee",
+        "Tolgee",
+        "Open-source localization platform with in-context translation",
+        "Tolgee is an open-source i18n platform that combines a self-hosted or cloud translation "
+        "management system (TMS) with in-context editing — developers embed the Tolgee SDK and "
+        "translators can click any text on the live page to edit it directly. Supports "
+        "React, Next.js, Vue, Angular, Svelte, and vanilla JS via official SDKs. Features "
+        "machine translation (DeepL, Google, AWS), translation memory, glossary, comments, "
+        "and screenshot context for translators. Export strings in JSON, XLIFF, PO, and other "
+        "formats. REST API and CLI for CI/CD integration. Self-host on Docker or use Tolgee "
+        "Cloud. 9k+ GitHub stars.",
+        "localization",
+        "tolgee/tolgee-platform",
+        9000,
+        "https://tolgee.io",
+        "i18n,localization,translation,react,nextjs,vue,angular,svelte,open-source,self-hosted",
+        "npm install @tolgee/react",
+        "code",
+    ),
+    (
+        "easypanel",
+        "Easypanel",
+        "Docker-based server control panel for deploying apps and databases",
+        "Easypanel is a modern server control panel that lets you deploy apps from GitHub, "
+        "Docker images, or custom Dockerfiles on any VPS or dedicated server. Provides a clean "
+        "web UI for managing services, databases (PostgreSQL, MySQL, MongoDB, Redis), SSL via "
+        "Let's Encrypt, domains, environment variables, and logs. Works as a self-hosted "
+        "alternative to Heroku, Railway, and Render. Supports one-click app templates from the "
+        "community registry (WordPress, Ghost, Plausible, etc.), horizontal scaling, and "
+        "cron jobs. Particularly popular for indie hackers and small teams that want PaaS "
+        "convenience on their own hardware. Built on Docker Swarm. 6k+ GitHub stars.",
+        "devops",
+        "easypanel-io/easypanel",
+        6000,
+        "https://easypanel.io",
+        "docker,paas,hosting,self-hosted,deployment,heroku-alternative,vps,swarm,open-source",
+        "curl -sSL https://easypanel.io/install.sh | sh",
+        "code",
+    ),
 ]
 
 
