@@ -6972,6 +6972,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Meta-frameworks — less-common but real queries
     "marko": "frontend",           # Marko — eBay's streaming HTML-first JS framework; "marko alternative" → Frontend Frameworks
     "razzle": "frontend",          # Razzle — universal JS app tooling (CRA for SSR); "razzle alternative" → Frontend Frameworks
+    # AI Dev Tools — "coding" as standalone first term routes to AI Dev Tools (Cursor, Cline, Aider, Continue)
+    # Value is "ai dev" (with space) so LOWER('AI Dev Tools') LIKE '%ai dev%' → TRUE
+    # while LOWER('AI & Automation') LIKE '%ai dev%' → FALSE — uniquely targets ai-dev-tools
+    "coding": "ai dev",            # "coding assistant", "coding helper", "coding tool" → AI Dev Tools
+    "coder": "ai dev",             # "ai coder", "code generation tool" → AI Dev Tools
+    # Auth — fine-grained authorization (Permit.io missing from auth category routing)
+    "permit": "authentication",    # Permit.io — authorization SDK + policy engine; "permit alternative" → Authentication
+    "permitio": "authentication",  # compound — "permitio alternative", "permitio setup" → Authentication
+    "aserto": "authentication",    # Aserto — policy-based fine-grained authorization; "aserto alternative" → Authentication
 }
 
 _FTS_STOP_WORDS = {
