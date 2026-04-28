@@ -6773,6 +6773,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mercury": "ai",               # Mercury — "mercury llm", "mercury diffusion model", "mercury alternative" → AI & Automation
     "mercury-coder": "ai",         # Mercury Coder — "mercury-coder setup", "mercury-coder alternative" → AI & Automation
     "mercury-llm": "ai",           # qualified — "mercury-llm api", "mercury-llm vs claude" → AI & Automation
+    # AI — Amazon Nova model family (Nov 2024; high "nova alternative" query volume from Bedrock users)
+    "amazon-nova": "ai",           # Amazon Nova — "amazon-nova alternative", "amazon nova bedrock" → AI & Automation
+    "amazonnova": "ai",            # compound — "amazonnova api", "amazonnova pricing" → AI & Automation
+    "nova-pro": "ai",              # Amazon Nova Pro — "nova-pro alternative", "nova-pro reasoning" → AI & Automation
+    "nova-lite": "ai",             # Amazon Nova Lite — "nova-lite alternative", "nova-lite cost" → AI & Automation
+    "nova-micro": "ai",            # Amazon Nova Micro — "nova-micro alternative", "nova-micro fast" → AI & Automation
+    "novapro": "ai",               # compound — "novapro setup", "novapro pricing" → AI & Automation
+    "novalite": "ai",              # compound — "novalite api", "novalite setup" → AI & Automation
+    "novamicro": "ai",             # compound — "novamicro setup", "novamicro alternative" → AI & Automation
+    # AI — Plandex open-source terminal AI coding agent (plandex-ai/plandex, 2.2k★)
+    "plandex": "ai",               # Plandex — "plandex alternative", "plandex aider" → AI & Automation
+    "plandex-ai": "ai",            # org-qualified — "plandex-ai setup", "plandex-ai plan" → AI & Automation
+    # AI — Google Jules autonomous coding agent (Google, May 2025; issues-to-PRs async coding)
+    "jules": "ai",                 # Jules — "jules alternative", "jules google", "google jules coding" → AI & Automation
+    "google-jules": "ai",          # qualified — "google-jules setup", "google-jules vs devin" → AI & Automation
+    # AI — Image/art generation tools growing in developer-API query volume
+    "ideogram": "ai",              # Ideogram — AI image generation with strong text/typography; "ideogram alternative" → AI & Automation
+    "recraft": "ai",               # Recraft — vector-native AI image generation; "recraft alternative", "recraft api" → AI & Automation
+    # AI — R2R (SciPhi RAG framework; SciPhi-AI/R2R, 3.5k★)
+    "r2r": "ai",                   # R2R — production RAG pipeline framework by SciPhi; "r2r alternative" → AI & Automation
+    "sciphi": "ai",                # SciPhi — org behind R2R; "sciphi r2r", "sciphi alternative" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

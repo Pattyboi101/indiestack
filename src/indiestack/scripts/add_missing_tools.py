@@ -13701,6 +13701,51 @@ TOOLS = [
         "Download from trae.ai",
         "saas",
     ),
+    # AI Automation — Plandex (141st pass) ----------------------------------------
+    (
+        "plandex",
+        "Plandex",
+        "Open-source AI coding agent for complex, long-running tasks",
+        "Plandex is an open-source terminal-based AI coding agent designed for "
+        "tackling large, multi-step coding tasks that span many files. Unlike "
+        "in-editor AI tools, Plandex builds and applies changes incrementally, "
+        "letting you review each step before committing. It maintains a protected "
+        "sandbox — all edits are staged and only applied when you approve. "
+        "Supports GPT-4, Claude, Gemini, and local models via OpenAI-compatible "
+        "APIs. Key features: multi-file editing with context awareness, automatic "
+        "task planning, error-correction loops, and a version-controlled plan "
+        "history so you can undo any step. Designed for developers who need AI "
+        "assistance with tasks too complex for a single prompt.",
+        "ai-automation",
+        "plandex-ai/plandex",
+        2200,
+        "https://plandex.ai",
+        "agents,ai,coding,terminal,cli,multi-file,open-source,gpt4,claude",
+        "curl -sL https://plandex.ai/install.sh | bash",
+        "code",
+    ),
+    # AI Automation — R2R (141st pass) ---------------------------------------------
+    (
+        "r2r",
+        "R2R",
+        "Production-ready RAG pipeline framework with full-stack API",
+        "R2R (Retrieval-Augmented Generation to Riches) is SciPhi's open-source "
+        "framework for building production RAG pipelines. It provides a complete "
+        "REST API out of the box — document ingestion, chunking, embedding, vector "
+        "search, and hybrid retrieval (BM25 + vector) — with a single pip install. "
+        "Key features: multimodal document parsing (PDFs, images, audio), graph-based "
+        "RAG with entity extraction, user-scoped access control, conversation memory, "
+        "analytics dashboard, and Docker-based deployment. Used by teams who need a "
+        "battle-tested RAG system without building the plumbing from scratch. "
+        "Integrates with Postgres+pgvector, Qdrant, Weaviate, and other vector stores.",
+        "ai-automation",
+        "SciPhi-AI/R2R",
+        3500,
+        "https://r2r-docs.sciphi.ai",
+        "rag,retrieval,vector-search,hybrid-search,documents,api,open-source,pgvector",
+        "pip install r2r",
+        "code",
+    ),
 ]
 
 
