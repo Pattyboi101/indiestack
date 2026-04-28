@@ -6886,6 +6886,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Notification platforms — missing providers
     "magicbell": "notifications",  # MagicBell — notification inbox API; "magicbell alternative" → Notifications
     "engagespot": "notifications", # Engagespot — multi-channel notifications; "engagespot alternative" → Notifications
+    # Feature flags — missing providers (complement to unleash/flagsmith/growthbook/launchdarkly)
+    "statsig": "feature",          # Statsig — feature flags + A/B testing + experimentation; "statsig alternative" → Feature Flags
+    "configcat": "feature",        # ConfigCat — feature flags + remote config; "configcat alternative" → Feature Flags
+    "abby": "feature",             # Abby — A/B testing + feature flags for devs; "abby alternative" → Feature Flags
+    # Auth — missing providers
+    "passage": "authentication",   # Passage by 1Password — passkey-first auth API; "passage auth alternative" → Authentication
+    "cognito": "authentication",   # AWS Cognito — user pool + identity; "cognito alternative" → Authentication
+    # Search engine — missing tools
+    "tantivy": "search",           # Tantivy — Rust full-text search library (Lucene-inspired); "tantivy alternative" → Search
+    "zinc": "search",              # ZincSearch — lightweight Elasticsearch alternative; "zinc search alternative" → Search
+    # Media/video — missing providers
+    "mux": "media",                # Mux — video infrastructure API (upload, transcode, stream); "mux alternative" → Media
+    # File management — missing providers
+    "uploadcare": "file",          # Uploadcare — file upload + CDN + transformations; "uploadcare alternative" → File
+    # Localization — missing platforms
+    "tolgee": "localization",      # Tolgee — open-source i18n with in-context translation; "tolgee alternative" → Localization
+    "localazy": "localization",    # Localazy — translation management platform; "localazy alternative" → Localization
+    "transifex": "localization",   # Transifex — popular enterprise i18n platform; "transifex alternative" → Localization
+    "phrase": "localization",      # Phrase (fka PhraseApp) — i18n strings + TMS; "phrase alternative" → Localization
 }
 
 _FTS_STOP_WORDS = {
