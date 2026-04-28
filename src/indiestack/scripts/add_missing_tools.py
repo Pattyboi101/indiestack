@@ -14244,6 +14244,48 @@ TOOLS = [
         "npm install -g @maizzle/cli && maizzle new",
         "code",
     ),
+    (
+        "docuseal",
+        "DocuSeal",
+        "Open-source DocuSign alternative for PDF form signing",
+        "DocuSeal is an open-source electronic document signing platform. Upload PDF templates, "
+        "add fillable fields (signature, initials, text, date, checkbox, photo), and send "
+        "signing requests via email or embedded forms. Signers receive a link, fill out "
+        "the fields, and sign — all without creating an account. Provides a REST API for "
+        "programmatic document creation and signing, webhooks for completion events, and "
+        "white-label embedding in your own app via the JavaScript SDK. Self-host on Docker "
+        "or use DocuSeal Cloud. GDPR-compliant audit trail and tamper-evident signed PDFs. "
+        "Popular DocuSign and HelloSign alternative for indie developers and small businesses. "
+        "8k+ GitHub stars.",
+        "forms-surveys",
+        "docusealco/docuseal",
+        8000,
+        "https://docuseal.co",
+        "esignature,pdf,forms,signing,docusign-alternative,open-source,self-hosted,ruby,api",
+        "docker pull docuseal/docuseal",
+        "code",
+    ),
+    (
+        "surveyjs",
+        "SurveyJS",
+        "Open-source JavaScript library for building complex surveys and forms",
+        "SurveyJS is a JavaScript form/survey builder library with a visual drag-and-drop "
+        "editor, 20+ question types (matrix, rating, ranking, file upload, signature pad, "
+        "geolocation), conditional logic, calculated fields, and themes. JSON-based survey "
+        "definitions that are portable and easy to store. Integrates with React, Angular, "
+        "Vue, and Knockout. Backend-agnostic — works with any server to save responses. "
+        "Includes a form creator UI (Creator), response visualization dashboard (Dashboard), "
+        "and PDF generation. The core library is MIT-licensed; the Creator and Dashboard "
+        "are commercial. Used by enterprises and indie developers alike for complex forms. "
+        "4k+ GitHub stars.",
+        "forms-surveys",
+        "surveyjs/survey-library",
+        4000,
+        "https://surveyjs.io",
+        "forms,survey,questionnaire,react,angular,vue,json,conditional-logic,open-source",
+        "npm install survey-core survey-react-ui",
+        "code",
+    ),
 ]
 
 
