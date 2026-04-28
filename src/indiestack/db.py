@@ -6905,6 +6905,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "localazy": "localization",    # Localazy — translation management platform; "localazy alternative" → Localization
     "transifex": "localization",   # Transifex — popular enterprise i18n platform; "transifex alternative" → Localization
     "phrase": "localization",      # Phrase (fka PhraseApp) — i18n strings + TMS; "phrase alternative" → Localization
+    # SMS/telephony APIs — complement to twilio/vonage
+    "sinch": "notifications",      # Sinch — cloud communication API (SMS/voice/WhatsApp); "sinch alternative" → Notifications
+    "plivo": "notifications",      # Plivo — SMS and voice API; "plivo alternative" → Notifications
+    "telnyx": "notifications",     # Telnyx — programmable telephony API; "telnyx alternative" → Notifications
+    "messagebird": "notifications",# MessageBird (Bird.com) — omnichannel messaging API; "messagebird alternative" → Notifications
+    # Billing — usage-based
+    "metronome": "invoicing",      # Metronome — usage-based billing API; "metronome billing alternative" → Invoicing & Billing
+    # Deployment platforms — self-hosted/cloud
+    "northflank": "devops",        # Northflank — container deployment + managed DBs; "northflank alternative" → DevOps
+    "easypanel": "devops",         # Easypanel — Docker-based self-hosted PaaS; "easypanel alternative" → DevOps
 }
 
 _FTS_STOP_WORDS = {
