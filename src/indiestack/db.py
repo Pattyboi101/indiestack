@@ -6832,6 +6832,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # MCP Servers — MCP gateway/proxy patterns (developers building multi-server MCP infra)
     "mcp-gateway": "mcp",          # "mcp-gateway setup", "mcp-gateway alternative", "mcp proxy gateway" → MCP Servers
     "mcp-proxy": "mcp",            # "mcp-proxy server", "mcp-proxy alternative" → MCP Servers
+    # AI — Spring AI (Pivotal/VMware's official AI integration library for Spring Boot; spring-projects/spring-ai)
+    # "spring" alone → "api" (Spring Boot web framework); compound forms route to AI & Automation
+    "spring-ai": "ai",             # Spring AI — "spring-ai alternative", "spring-ai java", "spring-ai setup" → AI & Automation
+    "springai": "ai",              # compound — "springai setup", "springai vs langchain", "springai rag" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

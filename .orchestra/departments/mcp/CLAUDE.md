@@ -91,6 +91,9 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - roo alternative, roo-code extension (Roo Code → ai-automation)
   - a2a-protocol spec, agent-to-agent communication (A2A Protocol → ai-automation)
   - mcp-gateway setup, mcp-proxy server (MCP infrastructure → mcp-servers)
+  - spring-ai alternative, spring-ai java (Spring AI → ai-automation; compound form avoids spring→api mismatch)
+  - springai vs langchain, springai rag setup (Spring AI compound → ai-automation)
+  - swe-agent alternative, swe-agent github issues (SWE-agent → ai-automation)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)

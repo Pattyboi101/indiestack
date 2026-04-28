@@ -13785,6 +13785,57 @@ TOOLS = [
         None,
         "saas",
     ),
+    # AI Automation — Spring AI (144th pass) ----------------------------------------
+    (
+        "spring-ai",
+        "Spring AI",
+        "AI integration framework for Java and Spring Boot",
+        "Spring AI is Pivotal's official AI abstraction library for Spring Boot. "
+        "It provides a unified API over popular AI providers (OpenAI, Anthropic, "
+        "Azure OpenAI, Mistral, Google Vertex) and model types (chat, embeddings, "
+        "image generation, speech-to-text). Core abstractions: ChatClient (fluent "
+        "streaming API with function calling), VectorStore (multi-provider vector "
+        "storage for RAG), and EmbeddingModel. Features include chat memory, "
+        "advisors (RAG, prompt rewriting), a document ETL pipeline, multimodal "
+        "support, and observability via Micrometer. The same code runs against "
+        "OpenAI, Ollama, Amazon Bedrock, and other providers — only the Spring "
+        "Bean configuration changes. Popular with enterprise Java teams building "
+        "AI-augmented services on existing Spring Boot microservice infrastructure. "
+        "Over 200 contributors; actively maintained by the core Spring team.",
+        "ai-automation",
+        "spring-projects/spring-ai",
+        4500,
+        "https://spring.io/projects/spring-ai",
+        "java,spring,spring-boot,ai,rag,embeddings,vector-store,llm,chat,openai,anthropic",
+        "implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0'",
+        "code",
+    ),
+    # AI Automation — SWE-agent (144th pass) -----------------------------------------
+    (
+        "swe-agent",
+        "SWE-agent",
+        "AI agent that resolves real GitHub issues autonomously",
+        "SWE-agent is Princeton NLP's open-source AI agent that autonomously "
+        "resolves GitHub issues by running inside a Docker container with access "
+        "to a UNIX shell. It uses a specialised agent-computer interface (ACI) "
+        "that gives the LLM constrained access to edit files, run commands, and "
+        "search codebases. SWE-agent achieved the first strong open-source baseline "
+        "on SWE-bench (12.47% resolved at launch) and has since been extended with "
+        "RAG-based context retrieval and multi-model support via LiteLLM. Supports "
+        "GPT-4o, Claude, Gemini, and Llama 3 locally. Key use cases: automated bug "
+        "fixing, regression patch generation, and research into AI software "
+        "engineering. The agent operates through an observe→localize→fix→verify loop "
+        "with structured tool use rather than free-form shell access. Widely "
+        "cited in AI engineering benchmarks and used by teams evaluating AI coding "
+        "agent capabilities against real-world repositories.",
+        "ai-automation",
+        "princeton-nlp/SWE-agent",
+        14000,
+        "https://swe-agent.com",
+        "agents,ai,coding,github,issues,swe-bench,llm,python,open-source,autonomous,docker",
+        "pip install sweagent",
+        "code",
+    ),
 ]
 
 
