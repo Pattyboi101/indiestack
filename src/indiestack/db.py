@@ -6915,6 +6915,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Deployment platforms — self-hosted/cloud
     "northflank": "devops",        # Northflank — container deployment + managed DBs; "northflank alternative" → DevOps
     "easypanel": "devops",         # Easypanel — Docker-based self-hosted PaaS; "easypanel alternative" → DevOps
+    # Headless UI — missing accessible primitives
+    "react-aria": "frontend",      # React Aria — Adobe's accessible headless UI; "react-aria alternative" → Frontend
+    "base-ui": "frontend",         # Base UI — MUI's unstyled headless components; "base-ui alternative" → Frontend
+    # Webhook infrastructure — missing providers
+    "convoy": "message",           # Convoy — open-source webhook gateway; "convoy webhook alternative" → Message Queue
+    "zeplo": "message",            # Zeplo — HTTP-based message queue + Cloudflare Workers; "zeplo alternative" → Message Queue
+    # Monorepo tooling — missing tools
+    "moon": "developer",           # Moonrepo — Rust build system + monorepo manager; "moon build alternative" → Developer Tools
+    "rush": "developer",           # Rush — Microsoft JS/TS monorepo manager; "rush alternative" → Developer Tools
+    "pants": "devops",             # Pants — Python/Go build system (formerly Pantsbuild); "pants build alternative" → DevOps
 }
 
 _FTS_STOP_WORDS = {
