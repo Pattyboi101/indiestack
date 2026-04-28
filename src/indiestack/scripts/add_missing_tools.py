@@ -13836,6 +13836,80 @@ TOOLS = [
         "pip install sweagent",
         "code",
     ),
+    # AI Automation — Graphiti (145th pass) ------------------------------------------
+    (
+        "graphiti",
+        "Graphiti",
+        "Temporal knowledge graph for AI agent memory",
+        "Graphiti is an open-source library for building temporally-aware knowledge "
+        "graphs that give AI agents persistent, queryable memory across conversations. "
+        "Unlike RAG which stores raw text chunks, Graphiti extracts entities and "
+        "relationships into a graph structure with timestamps — so an agent can "
+        "recall not just what was said but when facts changed. Built on Neo4j or "
+        "NetworkX, it supports semantic search over graph nodes via embeddings and "
+        "BFS traversal for relationship chains. Key use cases: long-horizon agent "
+        "tasks, personalisation across sessions, tracking state changes over time "
+        "(e.g. 'user's preferences changed on date X'). Designed to complement vector "
+        "stores rather than replace them: use Graphiti for structured facts and "
+        "temporal reasoning, vector stores for unstructured document retrieval. "
+        "Open-source under Apache 2.0; developed by the Zep team.",
+        "ai-automation",
+        "getzep/graphiti",
+        5000,
+        "https://graphiti.zep.ai",
+        "knowledge-graph,memory,agents,temporal,neo4j,python,rag,ai,llm,embeddings",
+        "pip install graphiti-core",
+        "code",
+    ),
+    # AI Automation — Outlines (145th pass) ------------------------------------------
+    (
+        "outlines",
+        "Outlines",
+        "Structured text generation with LLMs",
+        "Outlines is a Python library for reliable structured text generation from "
+        "LLMs. It constrains model output to match a JSON schema, Pydantic model, "
+        "regex pattern, or choice list — eliminating the need for brittle parsing "
+        "heuristics. Implemented via logit biasing: at each generation step, tokens "
+        "that would violate the constraint are masked, so the model can only produce "
+        "valid output. Works with any HuggingFace-compatible model, llama.cpp, "
+        "vLLM, and remote APIs via structured outputs support. Core use cases: "
+        "extracting typed data from unstructured text, building reliable LLM "
+        "pipelines, and generating synthetic datasets with guaranteed schema "
+        "conformance. Outlines is the reference implementation behind many 'structured "
+        "output' features in higher-level frameworks. Part of the dottxt-ai org "
+        "(formerly normalizing flows). 11k+ GitHub stars.",
+        "ai-automation",
+        "dottxt-ai/outlines",
+        11000,
+        "https://dottxt-ai.github.io/outlines",
+        "structured-output,llm,json-schema,pydantic,python,generation,constrained,ai",
+        "pip install outlines",
+        "code",
+    ),
+    # AI Dev Tools — OpenCode (145th pass) -------------------------------------------
+    (
+        "opencode",
+        "OpenCode",
+        "Open-source terminal AI coding agent",
+        "OpenCode is an open-source AI coding assistant that runs in the terminal, "
+        "built by the SST team. It supports multiple LLM providers (Anthropic, "
+        "OpenAI, Google, local Ollama), has a clean TUI built with Ink, and operates "
+        "on the Model Context Protocol for tool use. Unlike Cursor or GitHub Copilot "
+        "which are IDE-specific, OpenCode is editor-agnostic and works anywhere you "
+        "have a terminal. Key features: multi-file edits with diffs, shell command "
+        "execution, project-wide context via smart file selection, and a shareable "
+        "conversation history. The agent can read files, run tests, fix errors, and "
+        "commit changes — all from the CLI. Uses the same tool-call loop as Claude "
+        "Code and Aider but with a focus on a polished TUI experience and "
+        "configurability. Apache 2.0 licensed.",
+        "ai-dev-tools",
+        "sst/opencode",
+        9000,
+        "https://opencode.ai",
+        "ai,coding,terminal,cli,tui,mcp,agents,llm,open-source,cursor-alternative",
+        "npm install -g opencode-ai",
+        "code",
+    ),
 ]
 
 

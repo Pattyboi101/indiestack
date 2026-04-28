@@ -6836,6 +6836,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "spring" alone → "api" (Spring Boot web framework); compound forms route to AI & Automation
     "spring-ai": "ai",             # Spring AI — "spring-ai alternative", "spring-ai java", "spring-ai setup" → AI & Automation
     "springai": "ai",              # compound — "springai setup", "springai vs langchain", "springai rag" → AI & Automation
+    # AI — Nebius AI (ex-Yandex team; major European LLM inference cloud; fast, cheap open-weight models)
+    "nebius": "ai",                # Nebius AI — "nebius alternative", "nebius inference api", "nebius vs together" → AI & Automation
+    "nebius-ai": "ai",             # hyphenated — "nebius-ai pricing", "nebius-ai setup", "nebius-ai llama" → AI & Automation
+    # AI — Gemini 2.5 model variant forms (base gemini25→ai already mapped; Flash/Pro sub-variants weren't)
+    "gemini-2-5-flash": "ai",      # "gemini-2-5-flash alternative", "gemini-2-5-flash api" → AI & Automation
+    "gemini25flash": "ai",         # compact — "gemini25flash setup", "gemini25flash pricing" → AI & Automation
+    "gemini-2-5-pro": "ai",        # "gemini-2-5-pro alternative", "gemini-2-5-pro reasoning" → AI & Automation
+    "gemini25pro": "ai",           # compact — "gemini25pro setup", "gemini25pro vs claude" → AI & Automation
+    # AI — Claude 3.7 model-tier variant forms (base claude37→ai already mapped; sonnet/haiku sub-tiers weren't)
+    "claude-3-7-sonnet": "ai",     # "claude-3-7-sonnet alternative", "claude-3-7-sonnet api" → AI & Automation
+    "claude37sonnet": "ai",        # compact — "claude37sonnet setup", "claude37sonnet pricing" → AI & Automation
+    "claude-3-7-haiku": "ai",      # "claude-3-7-haiku alternative", "claude-3-7-haiku fast" → AI & Automation
+    "claude37haiku": "ai",         # compact — "claude37haiku cost", "claude37haiku setup" → AI & Automation
+    # MCP / Agent protocols — AG-UI (ag-ui-protocol/ag-ui; real-time streaming of agent state to UI frontends)
+    "ag-ui": "mcp",                # AG-UI — "ag-ui alternative", "ag-ui protocol setup", "agent ui streaming" → MCP Servers
+    "agui": "mcp",                 # compound — "agui setup", "agui alternative", "agui vs mcp" → MCP Servers
+    "agent-ui": "mcp",             # hyphenated — "agent-ui streaming", "agent-ui protocol" → MCP Servers
+    "ag-ui-protocol": "mcp",       # full slug — "ag-ui-protocol spec", "ag-ui-protocol setup" → MCP Servers
+    # API Tools — OpenAI Realtime API (WebSocket-based voice/audio streaming; high query volume since Oct 2024)
+    "openai-realtime": "api",      # "openai-realtime alternative", "openai-realtime setup" → API Tools
+    "openai-realtime-api": "api",  # full slug — "openai-realtime-api websocket", "openai-realtime-api voice" → API Tools
+    "realtime-api": "api",         # generic — "realtime-api alternative", "realtime-api websocket" → API Tools
 }
 
 _FTS_STOP_WORDS = {
