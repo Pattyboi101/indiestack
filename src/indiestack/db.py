@@ -6925,6 +6925,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "moon": "developer",           # Moonrepo — Rust build system + monorepo manager; "moon build alternative" → Developer Tools
     "rush": "developer",           # Rush — Microsoft JS/TS monorepo manager; "rush alternative" → Developer Tools
     "pants": "devops",             # Pants — Python/Go build system (formerly Pantsbuild); "pants build alternative" → DevOps
+    # Metrics / observability agents — not yet mapped
+    "telegraf": "monitoring",      # Telegraf — InfluxData metrics collection agent; "telegraf alternative" → Monitoring
+    # CI/CD remote build cache
+    "depot": "devops",             # Depot — fast Docker builds in CI; "depot alternative" → DevOps & Infrastructure
+    # Graph databases — missing
+    "dgraph": "database",          # Dgraph — distributed graph database (Go); "dgraph alternative" → Database
+    # Object storage — missing providers
+    "storj": "file",               # Storj — decentralized S3-compatible object storage; "storj alternative" → File Management
+    "seaweedfs": "file",           # SeaweedFS — distributed object/blob store in Go (22k★); "seaweedfs alternative" → File Management
+    # Auth — WebAuthn libraries
+    "simplewebauthn": "authentication",  # SimpleWebAuthn — passkey/WebAuthn library; "simplewebauthn alternative" → Authentication
+    # Workflow — Temporal predecessor
+    "cadence": "background",       # Uber Cadence — durable workflow engine (Temporal predecessor); "cadence alternative" → Background Jobs
 }
 
 _FTS_STOP_WORDS = {
