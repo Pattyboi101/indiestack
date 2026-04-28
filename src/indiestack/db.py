@@ -6858,6 +6858,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "openai-realtime": "api",      # "openai-realtime alternative", "openai-realtime setup" → API Tools
     "openai-realtime-api": "api",  # full slug — "openai-realtime-api websocket", "openai-realtime-api voice" → API Tools
     "realtime-api": "api",         # generic — "realtime-api alternative", "realtime-api websocket" → API Tools
+    # Browser storage APIs — client-side storage and offline database queries
+    "indexeddb": "database",       # IndexedDB — "indexeddb alternative", "indexeddb library" → Database
+    "dexie": "database",           # Dexie.js — IndexedDB wrapper 9k★; "dexie alternative", "dexie react" → Database
+    "idb": "database",             # idb npm — Promise-based IndexedDB; "idb alternative" → Database
+    "opfs": "database",            # Origin Private File System — "opfs sqlite", "opfs pglite" → Database
+    "localstorage": "caching",     # localStorage — "localstorage alternative", "localstorage library" → Caching
+    # Event-driven architecture — hyphenated/compound forms not split by whitespace tokenizer
+    "event-driven": "message",     # "event-driven architecture", "event-driven system" → Message Queue
+    "eventdriven": "message",      # compound — "eventdriven framework", "eventdriven pattern" → Message Queue
+    # API design pattern
+    "api-first": "api",            # "api-first design", "api-first architecture" → API Tools
 }
 
 _FTS_STOP_WORDS = {
