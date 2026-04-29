@@ -7019,6 +7019,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — LTX Video (Lightricks; open-source diffusion video model, 5k★)
     "ltxvideo": "ai",              # LTX Video — "ltxvideo alternative", "ltx video model" → AI & Automation
     "ltx-video": "ai",             # hyphenated — "ltx-video setup", "ltx-video inference" → AI & Automation
+    # CLI Tools — Rich Python terminal formatting library (Textualize/rich, 50k★; very high query volume)
+    "rich": "cli",                  # Rich — "rich alternative", "rich python console", "rich terminal" → CLI Tools
+    # Developer Tools — crawl4ai LLM-ready AI web crawler (unclecode/crawl4ai, 38k★; fast-growing in 2026)
+    "crawl4ai": "developer",        # crawl4ai — "crawl4ai alternative", "crawl4ai python", "llm web crawler" → Developer Tools
+    # API Tools — Nango unified OAuth integrations platform (NangoHQ/nango, 7k★)
+    "nango": "api",                 # Nango — "nango alternative", "nango oauth", "nango integration" → API Tools
+    # Authentication — Corbado passkey-first authentication platform
+    "corbado": "authentication",    # Corbado — "corbado alternative", "corbado passkey", "corbado setup" → Authentication
+    # Background Jobs — APScheduler Python Advanced Scheduler (agronholm/apscheduler, 5k★)
+    "apscheduler": "background",    # APScheduler — "apscheduler alternative", "apscheduler python", "apscheduler vs celery" → Background Jobs
+    # DevOps — Cloud Native Buildpacks (CNCF; nixpacks alternative; "buildpacks alternative" queries)
+    "buildpacks": "devops",         # Buildpacks — "buildpacks alternative", "cloud native buildpacks" → DevOps & Infrastructure
+    "buildpack": "devops",          # singular — "buildpack setup", "heroku buildpack", "buildpack alternative" → DevOps
+    # DevOps — GitHub Dependabot (complement to "renovate"→devops; Dependabot is the most-used auto-update bot)
+    "dependabot": "devops",         # Dependabot — "dependabot alternative", "dependabot vs renovate" → DevOps & Infrastructure
+    # API — JSON-RPC protocol (complement to grpc→api, trpc→api; distinct lightweight RPC over HTTP)
+    "jsonrpc": "api",               # JSON-RPC — "jsonrpc server", "jsonrpc library", "json rpc 2.0" → API Tools
+    "json-rpc": "api",              # hyphenated — "json-rpc alternative", "json-rpc vs rest", "json-rpc client" → API Tools
+    # AI — LangChain Expression Language (LCEL; complement to "langchain"→ai already mapped)
+    "lcel": "ai",                   # LCEL — "lcel chain", "lcel tutorial", "lcel vs langgraph" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

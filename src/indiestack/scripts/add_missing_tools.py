@@ -14286,6 +14286,62 @@ TOOLS = [
         "npm install survey-core survey-react-ui",
         "code",
     ),
+    # CLI Tools — Rich (129th pass) ------------------------------------------
+    (
+        "rich",
+        "Rich",
+        "Rich text and beautiful formatting in the terminal",
+        "Rich is a Python library for writing rich text (with color and style) "
+        "to the terminal, and for displaying beautiful formatting such as tables, "
+        "markdown, syntax highlighting, tracebacks, progress bars, and live "
+        "displays. Used in FastAPI, Typer, Click, uv, Ruff, and virtually every "
+        "modern Python CLI tool. Created by Will McGugan (Textualize).",
+        "cli-tools",
+        "Textualize/rich",
+        50000,
+        "https://rich.readthedocs.io",
+        "python,terminal,cli,formatting,color,syntax-highlighting",
+        "pip install rich",
+        "code",
+    ),
+    # Developer Tools — crawl4ai (129th pass) ---------------------------------
+    (
+        "crawl4ai",
+        "crawl4ai",
+        "LLM-friendly web crawling and scraping for AI pipelines",
+        "crawl4ai is the most popular open-source web crawler designed for AI "
+        "and LLM use cases. It extracts clean Markdown from any URL, handles "
+        "JavaScript-heavy sites via Playwright, and integrates directly with "
+        "RAG pipelines, AI agents, and LangChain. Supports async crawling, "
+        "structured extraction with CSS/XPath/LLM strategies, chunking, "
+        "and PDF/screenshot capture out of the box.",
+        "developer-tools",
+        "unclecode/crawl4ai",
+        38000,
+        "https://crawl4ai.com",
+        "web-scraping,llm,rag,ai,crawler,playwright,markdown",
+        "pip install crawl4ai",
+        "code",
+    ),
+    # API Tools — Nango (129th pass) -----------------------------------------
+    (
+        "nango",
+        "Nango",
+        "Open-source unified API for OAuth integrations",
+        "Nango is an open-source unified API that handles OAuth for 300+ external "
+        "APIs (GitHub, Slack, Salesforce, Google, etc.). It manages token refresh, "
+        "scopes, and credential storage so you never have to implement OAuth again. "
+        "Comes with a self-hostable backend, SDKs for Node.js and Python, and a "
+        "growing catalog of pre-built API integrations including webhooks and "
+        "bidirectional sync.",
+        "api-tools",
+        "NangoHQ/nango",
+        7000,
+        "https://www.nango.dev",
+        "oauth,integrations,api,authentication,sync,webhooks",
+        "npm install @nangohq/node",
+        "code",
+    ),
 ]
 
 
