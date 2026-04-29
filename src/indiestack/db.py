@@ -7039,6 +7039,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     "json-rpc": "api",              # hyphenated — "json-rpc alternative", "json-rpc vs rest", "json-rpc client" → API Tools
     # AI — LangChain Expression Language (LCEL; complement to "langchain"→ai already mapped)
     "lcel": "ai",                   # LCEL — "lcel chain", "lcel tutorial", "lcel vs langgraph" → AI & Automation
+    # Media — VLC and video player queries (player/playback not yet mapped; ffmpeg→media, jellyfin→media already exist)
+    "plex": "media",                # Plex Media Server — "plex alternative", "plex setup", "plex vs jellyfin" → Media Servers
+    "vlc": "media",                 # VLC — "vlc alternative", "vlc embed", "vlc streaming" → Media Servers
+    "mpv": "media",                 # mpv — "mpv alternative", "mpv setup", "mpv player" → Media Servers
+    "gstreamer": "media",           # GStreamer — multimedia framework; "gstreamer alternative", "gstreamer pipeline" → Media Servers
+    "player": "media",              # "video player", "media player library", "player alternative" → Media Servers
+    "playback": "media",            # "video playback", "playback library", "playback api" → Media Servers
+    # DevOps — version control system (VCS) short-forms not yet mapped (gitea→devops, gitlab→devops already exist)
+    "vcs": "devops",                # VCS abbreviation — "vcs alternative", "self-hosted vcs", "vcs tool" → DevOps & Infrastructure
+    "version control": "devops",    # multi-word — "version control system", "version control tool" → DevOps
+    "version-control": "devops",    # hyphenated — "version-control setup", "version-control alternative" → DevOps
+    "svn": "devops",                # Apache Subversion — "svn alternative", "svn to git migration" → DevOps
+    "mercurial": "devops",          # Mercurial — "mercurial alternative", "mercurial vs git" → DevOps
+    # CMS — "blogging" longer form not mapped ("blog"→cms already at line 2565)
+    "blogging": "cms",              # "blogging platform", "blogging tool", "blogging cms" → CMS & Content
 }
 
 _FTS_STOP_WORDS = {
