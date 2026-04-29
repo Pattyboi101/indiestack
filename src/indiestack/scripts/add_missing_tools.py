@@ -14342,6 +14342,81 @@ TOOLS = [
         "npm install @nangohq/node",
         "code",
     ),
+    # AI — Morphic open-source Perplexity alternative (131st pass) -----------
+    (
+        "morphic",
+        "Morphic",
+        "Open-source AI-powered search engine with generative UI",
+        "Morphic is an open-source, full-stack AI search engine that combines "
+        "real-time web search with LLM-generated answers and a generative UI. "
+        "Built with Next.js, Vercel AI SDK, Tavily Search API, and Upstash for "
+        "caching. Supports multiple LLM providers (OpenAI, Anthropic, Google). "
+        "Self-hostable Perplexity alternative with streaming responses and "
+        "interactive search threads.",
+        "ai-automation",
+        "miurla/morphic",
+        7000,
+        "https://morphic.sh",
+        "ai,search,perplexity-alternative,nextjs,rag,web-search,open-source",
+        "git clone https://github.com/miurla/morphic && npm install",
+        "code",
+    ),
+    # AI — Luma AI Dream Machine video generation (131st pass) ---------------
+    (
+        "luma-ai",
+        "Luma AI",
+        "Realistic AI video generation from text and images",
+        "Luma AI's Dream Machine is a state-of-the-art video generation model "
+        "that creates high-quality, realistic videos from text prompts and images. "
+        "The Luma API provides programmatic access to Dream Machine for developers "
+        "building video generation features. Supports text-to-video, image-to-video, "
+        "camera motion controls, and video extension. Used in creative tools, "
+        "marketing automation, and AI-native video apps.",
+        "ai-automation",
+        "",
+        0,
+        "https://lumalabs.ai",
+        "ai,video-generation,text-to-video,image-to-video,api,dream-machine",
+        "pip install lumaai",
+        "saas",
+    ),
+    # AI — Udio AI music generation (131st pass) -----------------------------
+    (
+        "udio",
+        "Udio",
+        "AI music generation — create any song in seconds",
+        "Udio is an AI music generation platform that creates full songs from text "
+        "prompts. Specify genre, style, mood, and lyrics to generate studio-quality "
+        "tracks with vocals and instrumentals. Supports remixing, extending tracks, "
+        "and custom voice styles. Provides an API for developers building music "
+        "generation into apps. Suno alternative with distinct audio style.",
+        "ai-automation",
+        "",
+        0,
+        "https://www.udio.com",
+        "ai,music-generation,text-to-music,audio,api,suno-alternative",
+        "",
+        "saas",
+    ),
+    # AI — Manus autonomous AI agent (131st pass) ----------------------------
+    (
+        "manus-ai",
+        "Manus",
+        "General-purpose autonomous AI agent",
+        "Manus is a general-purpose autonomous AI agent from Monica.im (China) "
+        "that completes complex real-world tasks independently. Unlike chat AI, "
+        "Manus plans and executes multi-step workflows: web research, code writing, "
+        "file management, form filling, and data analysis. Runs in an isolated "
+        "cloud sandbox. High-profile for handling tasks that previously required "
+        "human judgment — considered one of the first truly general agents.",
+        "ai-automation",
+        "",
+        0,
+        "https://manus.im",
+        "ai,autonomous-agent,agentic,multi-step,workflow,general-purpose",
+        "",
+        "saas",
+    ),
 ]
 
 
