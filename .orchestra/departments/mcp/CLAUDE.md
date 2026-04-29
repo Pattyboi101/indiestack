@@ -123,6 +123,16 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - runtime type validation, schema validation library (developer: Zod, Valibot, ArkType)
   - api key management service (api-tools: Unkey; tests "key" doesn't wrongly hit caching)
   - binary serialization format (api-tools: msgpack, protobuf, FlatBuffers)
+  - a1111 alternative, automatic1111 vs comfyui (SD WebUI → ai-automation)
+  - invokeai alternative, invokeai setup (InvokeAI → ai-automation)
+  - runway alternative, runway ml video api (Runway AI video → ai-automation)
+  - suno alternative, ai music generator (Suno → ai-automation)
+  - pika alternative, pika labs video (Pika AI video → ai-automation)
+  - kling alternative, kling ai video (Kling → ai-automation)
+  - faiss alternative, faiss vs qdrant (FAISS vector index → database)
+  - annoy vector search, hnswlib python (ANN libraries → database)
+  - exllamav2 inference, exllama alternative (quantized inference → ai-automation)
+  - hunyuanvideo alternative, wan-video model (open-source video gen → ai-automation)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)

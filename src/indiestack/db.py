@@ -6984,6 +6984,41 @@ _CAT_SYNONYMS: dict[str, str] = {
     "permit": "authentication",    # Permit.io — authorization SDK + policy engine; "permit alternative" → Authentication
     "permitio": "authentication",  # compound — "permitio alternative", "permitio setup" → Authentication
     "aserto": "authentication",    # Aserto — policy-based fine-grained authorization; "aserto alternative" → Authentication
+    # AI — AUTOMATIC1111 Stable Diffusion WebUI (140k★; most-installed SD UI; "a1111 alternative" is a top image-gen query)
+    "a1111": "ai",                 # AUTOMATIC1111 — "a1111 alternative", "a1111 setup", "a1111 vs comfyui" → AI & Automation
+    "automatic1111": "ai",         # full slug — "automatic1111 alternative", "automatic1111 install" → AI & Automation
+    # AI — InvokeAI creative Stable Diffusion UI (invokeai/InvokeAI, 25k★)
+    "invokeai": "ai",              # InvokeAI — "invokeai alternative", "invokeai setup", "invokeai vs comfyui" → AI & Automation
+    "invoke-ai": "ai",             # hyphenated — "invoke-ai setup", "invoke-ai alternative" → AI & Automation
+    # AI — Runway AI video generation (runway-ml; leading text-to-video API for developers)
+    "runway": "ai",                # Runway — "runway alternative", "runway api", "runway ml video" → AI & Automation
+    "runwayml": "ai",              # compound — "runwayml api", "runwayml alternative" → AI & Automation
+    # AI — Suno AI music generation (high query volume: "suno alternative", "suno api")
+    "suno": "ai",                  # Suno — "suno alternative", "suno api", "ai music generator" → AI & Automation
+    # AI — Pika AI video generation (pika-labs; very high "pika alternative" query volume)
+    "pika": "ai",                  # Pika — "pika alternative", "pika labs video ai", "pika vs runway" → AI & Automation
+    # AI — Kling AI video (Kuaishou; leading Chinese AI video model; fast-growing alternative queries)
+    "kling": "ai",                 # Kling — "kling alternative", "kling ai video", "kling vs runway" → AI & Automation
+    # AI — Hailuo AI video (MiniMax; growing fast in "hailuo alternative" and "minimax video" queries)
+    "hailuo": "ai",                # Hailuo — "hailuo alternative", "hailuo ai video" → AI & Automation
+    "minimax": "ai",               # MiniMax (Hailuo parent) — "minimax video", "minimax model" → AI & Automation
+    # AI — ExLlamaV2 efficient quantized inference engine (turboderp/exllamav2, 4k★)
+    "exllamav2": "ai",             # ExLlamaV2 — "exllamav2 alternative", "exllamav2 inference" → AI & Automation
+    "exllama": "ai",               # base form — "exllama setup", "exllama v2" → AI & Automation
+    # Database — FAISS (Facebook AI Similarity Search; facebookresearch/faiss, 33k★; most-used vector index)
+    "faiss": "database",           # FAISS — "faiss alternative", "faiss index", "faiss vs qdrant" → Database
+    # Database — additional vector ANN libraries not yet mapped
+    "annoy": "database",           # Annoy (Spotify) — "annoy alternative", "annoy vector search" → Database (13k★)
+    "hnswlib": "database",         # hnswlib — "hnswlib alternative", "hnswlib python" → Database (hierarchical NSW index, 4k★)
+    # AI — Wan 2.1 video generation model (Alibaba; open-source text-to-video)
+    "wanvideo": "ai",              # Wan Video — "wanvideo alternative", "wan video model" → AI & Automation
+    "wan-video": "ai",             # hyphenated — "wan-video setup", "wan-video inference" → AI & Automation
+    # AI — HunyuanVideo (Tencent; open-source video generation model, 10k★)
+    "hunyuanvideo": "ai",          # HunyuanVideo — "hunyuanvideo alternative", "hunyuan video model" → AI & Automation
+    "hunyuan-video": "ai",         # hyphenated — "hunyuan-video setup", "hunyuan-video inference" → AI & Automation
+    # AI — LTX Video (Lightricks; open-source diffusion video model, 5k★)
+    "ltxvideo": "ai",              # LTX Video — "ltxvideo alternative", "ltx video model" → AI & Automation
+    "ltx-video": "ai",             # hyphenated — "ltx-video setup", "ltx-video inference" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
