@@ -3006,9 +3006,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cors": "api",              # "CORS middleware", "CORS header" → API Tools
     "middleware": "api",        # "API middleware", "Express middleware" → API Tools
     # Package managers — JS ecosystem
+    "npm": "frontend",          # npm — default Node.js package manager ("npm alternative" → pnpm/yarn)
     "yarn": "frontend",         # Yarn — fast npm-compatible package manager
     "pnpm": "frontend",         # pnpm — efficient disk-space-saving package manager
     # Monorepo tooling
+    "dependency": "developer",  # "dependency management", "dependency graph" → Developer Tools
     "monorepo": "developer",    # "monorepo build" → Developer Tools (Turborepo, Nx, Lerna)
     # Database — SQL / NoSQL query patterns
     "nosql": "database",        # "nosql database", "nosql store" queries
@@ -3303,6 +3305,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "formatter": "testing",         # "code formatter", "js formatter" → Testing Tools
     "format": "testing",            # "code format", "auto-format" → Testing Tools (Biome, Prettier)
     # HTTP clients — Axios, Got, Ky, node-fetch live in api-tools
+    "http": "api",                  # "http client", "http server", "http framework" → API Tools
     "axios": "api",                 # Axios — most popular promise-based HTTP client for JS/TS
     "httpclient": "api",            # explicit compound form
     "httpx": "api",                 # HTTPX — async-first Python HTTP client
