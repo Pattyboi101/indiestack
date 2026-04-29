@@ -7054,6 +7054,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mercurial": "devops",          # Mercurial — "mercurial alternative", "mercurial vs git" → DevOps
     # CMS — "blogging" longer form not mapped ("blog"→cms already at line 2565)
     "blogging": "cms",              # "blogging platform", "blogging tool", "blogging cms" → CMS & Content
+    # AI — Google Veo video generation model family (Veo 2: Dec 2024; Veo 3: May 2025)
+    # "sora"→ai already mapped; Veo is its primary competitor and has comparable query volume
+    "veo": "ai",                    # Veo — "veo alternative", "veo video model", "google veo" → AI & Automation
+    "veo2": "ai",                   # Veo 2 — "veo2 alternative", "veo2 api", "veo2 setup" → AI & Automation
+    "veo-2": "ai",                  # hyphenated — "veo-2 alternative", "veo-2 text to video" → AI & Automation
+    "veo3": "ai",                   # Veo 3 — "veo3 alternative", "veo3 audio", "veo3 setup" → AI & Automation
+    "veo-3": "ai",                  # hyphenated — "veo-3 api", "veo-3 vs runway" → AI & Automation
+    # AI — Luma AI Dream Machine (video generation; lumalabs.ai; fast-growing alt-to-Runway queries)
+    "luma": "ai",                   # Luma AI — "luma alternative", "luma ai video", "luma dream machine" → AI & Automation
+    "lumaai": "ai",                 # compound — "lumaai alternative", "lumaai setup", "lumaai api" → AI & Automation
+    "luma-ai": "ai",                # hyphenated — "luma-ai alternative", "luma-ai pricing" → AI & Automation
+    "dream machine": "ai",          # Dream Machine — Luma AI's product name; "dream machine alternative" → AI & Automation
+    "dream-machine": "ai",          # hyphenated — "dream-machine video", "dream-machine vs runway" → AI & Automation
+    # AI — Udio AI music generation (fast-growing 2025-2026; complement to suno→ai already mapped)
+    "udio": "ai",                   # Udio — "udio alternative", "udio api", "udio vs suno" → AI & Automation
+    # AI — Manus AI (general-purpose autonomous agent from Chinese startup Monica.im; very high 2026 query volume)
+    "manus": "ai",                  # Manus — "manus alternative", "manus agent", "manus ai setup" → AI & Automation
+    "manus-ai": "ai",               # hyphenated — "manus-ai alternative", "manus-ai vs devin" → AI & Automation
+    # AI — Google Imagen 3 (image generation API in Vertex AI; complements vertex→ai already mapped)
+    "imagen": "ai",                 # Imagen — "imagen alternative", "google imagen api", "imagen 3" → AI & Automation
+    "imagen3": "ai",                # Imagen 3 — "imagen3 alternative", "imagen3 api", "imagen3 setup" → AI & Automation
+    "imagen-3": "ai",               # hyphenated — "imagen-3 api", "imagen-3 vs flux" → AI & Automation
+    # AI — Vertex AI hyphenated and compound forms (bare "vertex"→ai mapped at line 3889; compound forms weren't)
+    "vertex-ai": "ai",              # hyphenated — "vertex-ai alternative", "vertex-ai setup", "vertex ai gemini" → AI & Automation
+    "vertexai": "ai",               # compound — "vertexai api", "vertexai gemini", "vertexai setup" → AI & Automation
+    # AI — Morphic AI open-source Perplexity-style search (miurla/morphic, 7k★; fast-growing in 2026)
+    "morphic": "ai",                # Morphic — "morphic alternative", "morphic ai search", "morphic perplexity" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
