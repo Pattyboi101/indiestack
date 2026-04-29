@@ -113,6 +113,16 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - react-aria alternative, accessible components (headless UI → frontend-frameworks)
   - docuseal alternative, open source esignature (e-signature → forms-surveys)
   - seaweedfs alternative, distributed object storage (object store → file-management)
+  - npm alternative, best npm alternative (npm→frontend: pnpm, yarn, bun)
+  - http client library, http request library (http→api: Axios, Got, Ky, HTTPie)
+  - dependency management tool, dependency graph (dependency→developer: Renovate, Turborepo)
+  - unit test framework, unit testing library (testing-tools: Jest, Vitest, pytest, Testify)
+  - feature flag sdk, feature toggle library (feature-flags: Unleash, Flagsmith, GrowthBook)
+  - date library javascript, js date formatting (frontend: date-fns, Day.js, Luxon, Moment)
+  - react form library, react form validation (frontend: React Hook Form, Formik, Conform)
+  - runtime type validation, schema validation library (developer: Zod, Valibot, ArkType)
+  - api key management service (api-tools: Unkey; tests "key" doesn't wrongly hit caching)
+  - binary serialization format (api-tools: msgpack, protobuf, FlatBuffers)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
