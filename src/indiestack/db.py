@@ -7081,6 +7081,36 @@ _CAT_SYNONYMS: dict[str, str] = {
     "vertexai": "ai",               # compound — "vertexai api", "vertexai gemini", "vertexai setup" → AI & Automation
     # AI — Morphic AI open-source Perplexity-style search (miurla/morphic, 7k★; fast-growing in 2026)
     "morphic": "ai",                # Morphic — "morphic alternative", "morphic ai search", "morphic perplexity" → AI & Automation
+    # AI — Augment Code (augmentcode.com; ex-Sourcegraph/Google engineers; enterprise AI coding assistant)
+    # Competes directly with Cursor/Cline/Copilot; "augment alternative" is a growing query cluster in 2026
+    "augment": "ai",               # Augment Code — "augment alternative", "augment code ai", "augment vs cursor" → AI & Automation
+    "augment-code": "ai",          # hyphenated — "augment-code setup", "augment-code alternative" → AI & Automation
+    "augmentcode": "ai",           # compound — "augmentcode setup", "augmentcode pricing" → AI & Automation
+    # AI — OpenAI Codex CLI (April 2026; open-source terminal coding agent; "codex"→ai already mapped)
+    # Compound/hyphenated forms weren't mapped; high query volume post-launch
+    "codex-cli": "ai",             # Codex CLI — "codex-cli alternative", "codex-cli setup", "codex-cli vs claude code" → AI & Automation
+    "codexcli": "ai",              # compact — "codexcli alternative", "codexcli install" → AI & Automation
+    # DevOps — Daytona (daytonaio/daytona, 12k★; open-source dev environment manager; Gitpod/Codespaces alternative)
+    "daytona": "devops",           # Daytona — "daytona alternative", "daytona dev environments", "daytona vs gitpod" → DevOps & Infrastructure
+    # DevOps — GitHub Codespaces (cloud dev environments; very high "codespaces alternative" query volume)
+    "codespaces": "devops",        # GitHub Codespaces — "codespaces alternative", "codespaces setup", "codespaces pricing" → DevOps
+    "github-codespaces": "devops", # hyphenated — "github-codespaces alternative", "github-codespaces vs gitpod" → DevOps
+    # AI — Vapi (vapi.ai; AI voice infrastructure for building voice agents; primary tool for voice-AI queries in 2026)
+    # Competes with ElevenLabs + Deepgram combo; very high developer query volume
+    "vapi": "ai",                  # Vapi — "vapi alternative", "vapi voice agent", "vapi vs bland" → AI & Automation
+    "vapi.ai": "ai",               # dotted form — "vapi.ai setup", "vapi.ai pricing" → AI & Automation
+    # AI — Play.ht (ultra-realistic TTS API; play.ht; popular ElevenLabs alternative)
+    "playht": "ai",                # Play.ht — "playht alternative", "playht api", "playht vs elevenlabs" → AI & Automation
+    "play.ht": "ai",               # dotted — "play.ht pricing", "play.ht setup" → AI & Automation
+    "play-ht": "ai",               # hyphenated — "play-ht alternative", "play-ht tts" → AI & Automation
+    # AI — Open Interpreter (KillianLucas/open-interpreter, 60k★; local LLM code execution agent)
+    # "open-interpreter alternative", "open interpreter setup" — popular among DIY agent builders
+    "open-interpreter": "ai",      # hyphenated — "open-interpreter alternative", "open-interpreter setup" → AI & Automation
+    "openinterpreter": "ai",       # compact — "openinterpreter alternative", "openinterpreter python" → AI & Automation
+    # AI — Kokoro TTS (hexgrad/kokoro-82M, 20k★; fast open-source TTS model with permissive licence)
+    # Released early 2025; popular "kokoro alternative", "kokoro tts python" queries from local-LLM community
+    "kokoro": "ai",                # Kokoro — "kokoro alternative", "kokoro tts python", "kokoro vs piper" → AI & Automation
+    "kokoro-tts": "ai",            # hyphenated — "kokoro-tts setup", "kokoro-tts inference" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

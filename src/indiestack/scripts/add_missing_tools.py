@@ -14417,6 +14417,143 @@ TOOLS = [
         "",
         "saas",
     ),
+    # AI Dev Tools — Augment Code (132nd pass) --------------------------------
+    (
+        "augment-code",
+        "Augment Code",
+        "Enterprise AI coding assistant for large codebases",
+        "Augment Code is an AI coding assistant built by ex-Sourcegraph, Google, "
+        "and Microsoft engineers, purpose-built for large codebases and enterprise "
+        "teams. It indexes your entire codebase to provide deeply contextual "
+        "completions, refactors, and explanations — not just the current file. "
+        "Offers VS Code and JetBrains integrations, SOC 2 Type II compliance, "
+        "and on-premise deployment options. Competes with Cursor and GitHub "
+        "Copilot at the enterprise tier.",
+        "ai-dev-tools",
+        "",
+        0,
+        "https://www.augmentcode.com",
+        "ai-coding,code-assistant,ide-extension,enterprise,codebase-aware",
+        "",
+        "saas",
+    ),
+    # AI Dev Tools — OpenAI Codex CLI (132nd pass) ----------------------------
+    (
+        "codex-cli",
+        "Codex CLI",
+        "OpenAI's open-source terminal AI coding agent",
+        "Codex CLI is OpenAI's open-source terminal-based AI coding agent. "
+        "It reads, writes, and runs code autonomously in your terminal using "
+        "GPT-4o or o3 models. Supports sandboxed execution (macOS network and "
+        "filesystem isolation), interactive and headless modes, and multimodal "
+        "inputs (screenshots, diagrams). A direct alternative to Claude Code "
+        "and Gemini CLI for AI-powered terminal workflows.",
+        "ai-dev-tools",
+        "openai/codex",
+        25000,
+        "https://github.com/openai/codex",
+        "ai-coding,cli,terminal,code-generation,open-source,openai",
+        "npm install -g @openai/codex",
+        "code",
+    ),
+    # AI — Vapi voice infrastructure (132nd pass) ------------------------------
+    (
+        "vapi",
+        "Vapi",
+        "AI voice infrastructure for building phone and web voice agents",
+        "Vapi is the leading AI voice infrastructure platform for developers "
+        "building voice agents. It handles the full real-time voice stack: STT "
+        "(Deepgram/Whisper), LLM (GPT-4o/Claude/Gemini), and TTS (ElevenLabs/"
+        "Cartesia) in a single low-latency pipeline. Supports inbound and "
+        "outbound phone calls, web-based voice, custom voices, and function "
+        "calling. Used for customer service automation, voice assistants, and "
+        "IVR replacement. Primary alternative to building a raw WebRTC + LLM "
+        "pipeline from scratch.",
+        "ai-automation",
+        "",
+        0,
+        "https://vapi.ai",
+        "voice-ai,tts,stt,real-time,voice-agent,phone,webrtc",
+        "",
+        "saas",
+    ),
+    # AI — Play.ht TTS API (132nd pass) ----------------------------------------
+    (
+        "playht",
+        "Play.ht",
+        "Ultra-realistic text-to-speech API with voice cloning",
+        "Play.ht is a text-to-speech API offering ultra-realistic AI voices for "
+        "developers. It provides 900+ voices across 142 languages, real-time TTS "
+        "streaming, voice cloning from 3 seconds of audio, and a REST API with "
+        "Node.js and Python SDKs. Widely used for podcasts, audiobooks, IVR, and "
+        "in-app TTS. Popular ElevenLabs alternative, especially for high-volume "
+        "use cases where per-character pricing is critical.",
+        "ai-automation",
+        "",
+        0,
+        "https://play.ht",
+        "text-to-speech,tts,voice-cloning,audio,api,elevenlabs-alternative",
+        "",
+        "saas",
+    ),
+    # AI — Open Interpreter (132nd pass) ----------------------------------------
+    (
+        "open-interpreter",
+        "Open Interpreter",
+        "Open-source local code execution agent for LLMs",
+        "Open Interpreter lets LLMs run code (Python, JavaScript, Shell) "
+        "locally on your machine. It gives AI models a programming interface "
+        "to create/edit files, browse the web, render visuals, and control your "
+        "computer. Supports OpenAI, Anthropic, and local models via Ollama. "
+        "A foundational project in the local-agent space — 60k+ GitHub stars. "
+        "Often used as a self-hosted alternative to ChatGPT Code Interpreter.",
+        "ai-automation",
+        "KillianLucas/open-interpreter",
+        60000,
+        "https://openinterpreter.com",
+        "ai-agent,code-execution,local,open-source,llm,terminal",
+        "pip install open-interpreter",
+        "code",
+    ),
+    # AI — Kokoro TTS (132nd pass) -----------------------------------------------
+    (
+        "kokoro",
+        "Kokoro",
+        "Fast, open-source text-to-speech model with Apache 2.0 licence",
+        "Kokoro is a fast, open-source text-to-speech model (82M parameters) "
+        "released in early 2025. It produces high-quality speech synthesis "
+        "with very low latency, making it suitable for real-time applications. "
+        "Permissive Apache 2.0 licence allows commercial use without per-character "
+        "fees. Gained 20k+ GitHub stars quickly among the local-LLM community. "
+        "Popular alternative to ElevenLabs and Play.ht for self-hosted or "
+        "high-volume TTS workloads.",
+        "ai-automation",
+        "hexgrad/kokoro",
+        20000,
+        "https://github.com/hexgrad/kokoro",
+        "text-to-speech,tts,open-source,local,fast,apache2",
+        "pip install kokoro",
+        "code",
+    ),
+    # DevOps — Daytona (132nd pass) -------------------------------------------
+    (
+        "daytona",
+        "Daytona",
+        "Open-source development environment manager",
+        "Daytona is an open-source development environment manager that spins up "
+        "standardised, reproducible dev environments from any Git repository in "
+        "seconds. Works with VS Code, JetBrains, and Vim; runs on any cloud or "
+        "on-premise infrastructure via Docker. Uses a simple YAML config to "
+        "define dependencies, ports, and startup commands. A self-hosted "
+        "alternative to GitHub Codespaces and Gitpod with no vendor lock-in.",
+        "devops-infrastructure",
+        "daytonaio/daytona",
+        12000,
+        "https://www.daytona.io",
+        "dev-environments,open-source,self-hosted,gitpod-alternative,docker",
+        "brew install daytonaio/tap/daytona",
+        "code",
+    ),
 ]
 
 
