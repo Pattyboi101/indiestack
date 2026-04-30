@@ -89,10 +89,16 @@ Run the 6-iteration cycle:
 
 ITERATION 1 — SEARCH QUALITY:
 curl the API for these queries and check top-3 results are relevant:
-  'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring',
-  'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth',
-  'state management', 'bundler', 'realtime', 'vector database', 'rate limiting'.
+  Core: 'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring',
+        'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth'.
+  Frontend: 'state management', 'bundler', 'build tool', 'react component library'.
+  AI/Voice: 'voice agent', 'text to speech api', 'speech to text', 'tts api',
+            'ai coding assistant', 'local llm', 'llm gateway', 'agent framework'.
+  Infra: 'realtime', 'vector database', 'rate limiting', 'dev environment',
+         'cloud dev environment', 'remote development'.
+  New categories: 'mcp server', 'boilerplate saas starter', 'caching redis alternative'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
+Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
