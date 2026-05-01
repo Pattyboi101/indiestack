@@ -105,6 +105,10 @@ curl the API for these queries and check top-3 results are relevant:
   OpenAI 2026: 'openai agents sdk', 'responses api openai', 'agents sdk python alternative',
                'openai swarm replacement', 'goose ai agent', 'block goose coding agent'.
   Repo/LLM: 'repomix alternative', 'pack repo for llm', 'gitingest setup', 'repo to llm context'.
+  Browser agents: 'ai browser automation', 'browser agent python', 'steel browser alternative',
+                  'browserbase alternative', 'hyperbrowser setup', 'cloud browser api'.
+  New AI editors: 'aide ide alternative', 'melty vs cursor', 'amp coding agent', 'codestory ide'.
+  AI engineers: 'swe-agent alternative', 'sweep ai code review', 'cosine ai genie', 'devin alternative'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.

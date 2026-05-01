@@ -7167,6 +7167,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Competes with Browserbase, Steel; deploys headless browsers at scale for agent workflows
     "hyperbrowser": "api",          # Hyperbrowser — "hyperbrowser alternative", "hyperbrowser setup" → API Tools
     "hyper-browser": "api",         # hyphenated — "hyper-browser alternative", "hyper-browser api" → API Tools
+    # API Tools — Steel (steel-dev/steel, ~5k★; open-source cloud browser for AI agent web automation)
+    # Competes with Browserbase, Hyperbrowser; "steel browser alternative", "steel dev browser agent"
+    "steeldev": "api",              # compact org form — "steeldev browser", "steeldev alternative" → API Tools
+    "steel-dev": "api",             # hyphenated org — "steel-dev setup", "steel-dev vs browserbase" → API Tools
+    # AI Dev Tools — Aide by CodeStory (codestory-ide/aide, ~8k★; VS Code fork with AI pair-coding)
+    # "aide alternative", "aide ide" — NOTE: bare "aide" skipped (ambiguous with French/other uses)
+    "aide-ide": "ai dev",           # disambiguated form — "aide-ide alternative", "aide-ide setup" → AI Dev Tools
+    "codestory": "ai dev",          # org/product name — "codestory ide", "codestory alternative" → AI Dev Tools
+    # AI — Cosine AI / Genie (cosine.sh; autonomous AI software engineer; "cosine alternative", "genie agent")
+    # Competes with Devin, SWE-agent; Genie is their product name
+    "cosine-ai": "ai",              # hyphenated — "cosine-ai alternative", "cosine-ai setup" → AI & Automation
+    "genie-ai": "ai",               # product name form — "genie-ai alternative", "genie-ai vs devin" → AI & Automation
+    # AI — SWE-agent (princeton-nlp/SWE-agent, ~14k★; autonomous AI agent for software engineering tasks)
+    # Runs in a terminal, can open PRs and fix GitHub issues; "swe-agent alternative" high query volume
+    "swe-agent": "ai",              # hyphenated — "swe-agent alternative", "swe-agent setup" → AI & Automation
+    # AI — Sweep (sweepai/sweep, ~7k★; AI-powered code reviewer and pull request author)
+    # "sweepai alternative", "sweep ai code review" — bare "sweep" skipped (too generic English word)
+    "sweepai": "ai",                # org form — "sweepai alternative", "sweepai setup" → AI & Automation
+    "sweep.dev": "ai",              # dotted — "sweep.dev code review", "sweep.dev pricing" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

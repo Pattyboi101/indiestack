@@ -14759,6 +14759,74 @@ TOOLS = [
         "npm install @hyperbrowser/sdk",
         "saas",
     ),
+    (
+        "steel",
+        "Steel",
+        "Open-source cloud browser infrastructure for AI agents",
+        "Steel is an open-source cloud browser infrastructure layer for AI agents. "
+        "It provides managed browser sessions with built-in stealth mode, session "
+        "persistence, and a REST API so agents can browse the web without managing "
+        "their own browser fleet. Drop-in alternative to Browserbase and Hyperbrowser "
+        "with a self-hostable option. Works with Playwright, Puppeteer, and Selenium.",
+        "api-tools",
+        "steel-dev/steel",
+        5000,
+        "https://steel.dev",
+        "browser-automation,headless-browser,ai-agent,open-source,playwright",
+        "npm install steel-sdk",
+        "code",
+    ),
+    (
+        "aide",
+        "Aide",
+        "AI-native VS Code fork for pair programming with LLMs",
+        "Aide is an open-source AI-first code editor built on VS Code by CodeStory. "
+        "It integrates LLM pair programming directly into the editor: ask the AI to "
+        "explain code, generate edits, or fix bugs with full codebase context. Unlike "
+        "extensions, Aide modifies the editor core for tighter AI integration. "
+        "Supports Claude, GPT-4, and local models via Ollama.",
+        "ai-dev-tools",
+        "codestory-ide/aide",
+        8000,
+        "https://aide.dev",
+        "ai-coding,vs-code,open-source,llm,pair-programming",
+        "",
+        "code",
+    ),
+    (
+        "cosine",
+        "Cosine (Genie)",
+        "Autonomous AI software engineer",
+        "Cosine builds Genie, an autonomous AI software engineer that can understand "
+        "your codebase, plan changes, write code, and open pull requests. Unlike "
+        "AI pair programmers that assist humans, Genie works independently on tasks: "
+        "given a GitHub issue or a description, it navigates the repo, makes changes "
+        "across files, and submits a PR for review. Competes with Devin and SWE-agent.",
+        "ai-automation",
+        "",
+        0,
+        "https://cosine.sh",
+        "ai-agent,autonomous,code-generation,pull-request,saas",
+        "",
+        "saas",
+    ),
+    (
+        "sweepai",
+        "Sweep",
+        "AI code reviewer and pull request author",
+        "Sweep is an AI-powered GitHub assistant that turns issues and comments into "
+        "pull requests. Mention Sweep in a GitHub issue and it plans, writes, and "
+        "submits code changes for review. It understands your codebase through vector "
+        "search, writes tests alongside changes, and iterates based on CI feedback. "
+        "Self-hostable open-source with a managed cloud option.",
+        "ai-dev-tools",
+        "sweepai/sweep",
+        7000,
+        "https://sweep.dev",
+        "ai-agent,github,pull-request,code-review,open-source",
+        "pip install sweepai",
+        "code",
+    ),
 ]
 
 
