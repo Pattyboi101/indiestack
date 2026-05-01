@@ -7111,6 +7111,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Released early 2025; popular "kokoro alternative", "kokoro tts python" queries from local-LLM community
     "kokoro": "ai",                # Kokoro — "kokoro alternative", "kokoro tts python", "kokoro vs piper" → AI & Automation
     "kokoro-tts": "ai",            # hyphenated — "kokoro-tts setup", "kokoro-tts inference" → AI & Automation
+    # AI — Meta Llama 4 no-separator compact forms and standalone variant names (April 2026)
+    # Hyphenated/compound-with-dash forms already mapped (llama4-maverick etc.); missing compact + bare names
+    "maverick": "ai",              # Llama 4 Maverick — "maverick llm", "maverick inference", "run maverick local" → AI & Automation
+    "llama4maverick": "ai",        # no-separator — "llama4maverick setup", "llama4maverick api" → AI & Automation
+    "llama4scout": "ai",           # no-separator — "llama4scout setup", "llama4scout api" → AI & Automation
+    "behemoth": "ai",              # Llama 4 Behemoth — "behemoth llm", "behemoth model", "llama4 behemoth" → AI & Automation
+    "llama4-behemoth": "ai",       # compound — "llama4-behemoth api", "llama4-behemoth alternative" → AI & Automation
+    "llama4behemoth": "ai",        # no-separator — "llama4behemoth setup", "llama4behemoth inference" → AI & Automation
+    "llama-4-behemoth": "ai",      # full hyphenated — "llama-4-behemoth alternative", "llama-4-behemoth api" → AI & Automation
+    # Search — Exa.ai dotted form (bare "exa"→search already mapped at line 6343)
+    "exa.ai": "search",            # dotted — "exa.ai setup", "exa.ai pricing", "exa.ai vs perplexity" → Search Engines
+    # AI Dev Tools — Task Master AI (eyefodder/claude-task-master; MCP-based AI task orchestration, ~20k★)
+    # Helps developers break PRDs into tasks, tracks progress via Claude MCP; very high query volume in 2026
+    "taskmaster": "ai dev",        # compact — "taskmaster alternative", "taskmaster ai setup" → AI Dev Tools
+    "task-master-ai": "ai dev",    # compound — "task-master-ai setup", "task-master-ai mcp" → AI Dev Tools
+    "claude-task-master": "ai dev", # original name — "claude-task-master alternative" → AI Dev Tools
 }
 
 _FTS_STOP_WORDS = {

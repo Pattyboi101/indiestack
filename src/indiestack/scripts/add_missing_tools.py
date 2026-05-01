@@ -14554,6 +14554,25 @@ TOOLS = [
         "brew install daytonaio/tap/daytona",
         "code",
     ),
+    # AI Dev Tools — Task Master AI (133rd pass) --------------------------------
+    (
+        "task-master-ai",
+        "Task Master AI",
+        "AI-powered task management for complex software projects",
+        "Task Master AI (formerly claude-task-master) is an MCP-based task "
+        "orchestration system that integrates with Claude to manage complex "
+        "software projects. It parses PRDs into structured task lists, suggests "
+        "implementation order, tracks progress, and lets you expand or update "
+        "individual tasks via conversation. Designed for AI-assisted development "
+        "workflows where you hand off planning to the agent and focus on coding.",
+        "ai-dev-tools",
+        "eyefodder/claude-task-master",
+        20000,
+        "https://github.com/eyefodder/claude-task-master",
+        "mcp,task-management,claude,project-management,ai,coding-assistant",
+        "npm install -g task-master-ai",
+        "code",
+    ),
 ]
 
 
