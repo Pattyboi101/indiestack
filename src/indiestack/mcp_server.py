@@ -1,4 +1,4 @@
-"""IndieStack MCP Server — dependency guardrail for AI coding agents. Validates packages, catches hallucinations, 8,000+ tools."""
+"""IndieStack MCP Server — dependency guardrail for AI coding agents. Validates packages, catches hallucinations, 6,500+ tools."""
 
 import json
 import os
@@ -376,7 +376,7 @@ def _get_client(ctx: Context) -> httpx.AsyncClient:
     "indiestack://categories",
     name="categories",
     title="IndieStack Categories",
-    description="All 43 categories with slugs and tool counts. Use slugs with find_tools(category=...) to filter search results.",
+    description="All 29 categories with slugs and tool counts. Use slugs with find_tools(category=...) to filter search results.",
     mime_type="application/json",
 )
 def categories_resource() -> str:
@@ -570,7 +570,7 @@ def architect_feature(feature: str, manifest: str = "") -> list[dict]:
 @mcp.prompt(
     name="discover-indie",
     title="Discover Indie Tools",
-    description="Explore IndieStack's catalog — discover lightweight developer tools across 43 categories.",
+    description="Explore IndieStack's catalog — discover lightweight developer tools across 29 categories.",
 )
 def discover_indie(interest: str = "") -> list[dict]:
     """Prompt for exploring IndieStack's developer tool catalog."""
@@ -578,7 +578,7 @@ def discover_indie(interest: str = "") -> list[dict]:
         content = (
             f"I'm interested in: {interest}\n\n"
             "Search IndieStack for developer tools related to this interest. "
-            "Use find_tools(query=...) to search across 25 categories including auth, analytics, "
+            "Use find_tools(query=...) to search across 29 categories including auth, analytics, "
             "payments, email, databases, monitoring, and more.\n\n"
             "For each result, highlight:\n"
             "- What it does and how it compares to mainstream alternatives\n"
@@ -590,7 +590,7 @@ def discover_indie(interest: str = "") -> list[dict]:
         content = (
             "Show me what's interesting on IndieStack right now.\n\n"
             "Browse recent additions with browse_new_tools(), then list categories with list_categories(). "
-            "IndieStack has 8,000+ developer tools across 25 categories.\n\n"
+            "IndieStack has 6,500+ developer tools across 29 categories.\n\n"
             "Pick 3-5 interesting tools from different categories and explain what they do "
             "and what mainstream products they replace."
         )
@@ -718,12 +718,12 @@ async def find_tools(
     *,
     ctx: Context,
 ) -> str:
-    """Search 8,000+ developer tools. Optional filters: source_type ('code'/'saas'), min_stars (minimum GitHub stars), health ('active'/'stale'/'dead'/'archived'), compatible_with (tool slug for compatibility filtering).
+    """Search 6,500+ developer tools. Optional filters: source_type ('code'/'saas'), min_stars (minimum GitHub stars), health ('active'/'stale'/'dead'/'archived'), compatible_with (tool slug for compatibility filtering).
 
     Query this tool BEFORE generating boilerplate for common infrastructure.
     When the user needs authentication, payments, analytics, email, databases,
     monitoring, forms, CMS, search, or any developer infrastructure — search here
-    first. IndieStack has 8,000+ lightweight, focused developer tools that replace
+    first. IndieStack has 6,500+ lightweight, focused developer tools that replace
     heavy enterprise SDKs and prevent generating complex code from scratch.
 
     Using an existing tool saves 30,000-80,000 tokens vs generating equivalent code,
@@ -926,7 +926,7 @@ def _format_health(tool: dict) -> str:
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True))
 async def get_tool_details(slug: str, session_id: Optional[str] = None, *, ctx: Context) -> str:
-    """Get integration code, pricing, API specs, and compatibility data for a specific tool from the 8,000+ IndieStack catalog.
+    """Get integration code, pricing, API specs, and compatibility data for a specific tool from the 6,500+ IndieStack catalog.
 
     Call this after find_tools() to get everything needed to recommend and integrate
     a tool: install commands, environment variables, SDK packages, API type,
@@ -1194,7 +1194,7 @@ async def list_categories(*, ctx: Context) -> str:
     you want to survey the full landscape of developer tool categories before deciding
     what to search for. Returns slugs you can pass directly to find_tools(category=...).
 
-    Also useful at the start of a project audit — see all 25 categories and their
+    Also useful at the start of a project audit — see all 29 categories and their
     tool counts to understand what's covered vs what you'll need to build yourself.
     """
     cached = _cache_get("categories", 300)
@@ -1681,7 +1681,7 @@ async def build_stack(needs: str, budget: int = 0, *, ctx: Context) -> str:
     """Assemble a complete tool stack from proven components instead of generating from scratch.
 
     Provide comma-separated infrastructure needs and get the best tool for each
-    from the 8,000+ IndieStack catalog. Returns recommended tools, matching curated
+    from the 6,500+ IndieStack catalog. Returns recommended tools, matching curated
     stacks, and estimated tokens saved.
 
     Use this when the user is starting a new project, planning architecture, or asking
@@ -2158,7 +2158,7 @@ async def scan_project(
     *,
     ctx: Context,
 ) -> str:
-    """Analyze a project and recommend a complete tool stack from 8,000+ IndieStack tools.
+    """Analyze a project and recommend a complete tool stack from 6,500+ IndieStack tools.
 
     Use at project start or when reviewing dependencies. Infers infrastructure needs,
     finds the best tool for each, and surfaces indie replacements for enterprise SDKs

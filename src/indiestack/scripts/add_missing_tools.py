@@ -14654,6 +14654,42 @@ TOOLS = [
         "pip install goose-ai",
         "code",
     ),
+    # AI Dev Tools — Repo-to-LLM context tools (136th pass) ---------------------
+    (
+        "repomix",
+        "Repomix",
+        "Pack your entire repo into a single LLM-friendly file",
+        "Repomix (formerly Repopack) packs your entire codebase into a single "
+        "file optimised for AI consumption. Supports XML, Markdown, and plain "
+        "text output. Respects .gitignore, handles binary files gracefully, "
+        "and provides token count estimates so you know what fits in context. "
+        "Used by developers who want to give LLMs full project awareness for "
+        "code review, refactoring, documentation, and Q&A tasks.",
+        "ai-dev-tools",
+        "yamadashy/repomix",
+        15000,
+        "https://repomix.com",
+        "ai-coding,context-window,llm,code-review,cli,open-source",
+        "npx repomix",
+        "code",
+    ),
+    (
+        "gitingest",
+        "GitIngest",
+        "Turn any GitHub repository into an LLM-digestible text prompt",
+        "GitIngest converts GitHub repositories into clean, structured text "
+        "that LLMs can consume. Paste a GitHub URL and get back a single file "
+        "with the directory tree and file contents — ready to copy-paste into "
+        "any AI assistant. Supports filtering by file extension, size limits, "
+        "and custom ignore patterns. Self-hostable Python package.",
+        "ai-dev-tools",
+        "cyclotruc/gitingest",
+        8000,
+        "https://gitingest.com",
+        "ai-coding,context-window,llm,github,cli,open-source",
+        "pip install gitingest",
+        "code",
+    ),
 ]
 
 

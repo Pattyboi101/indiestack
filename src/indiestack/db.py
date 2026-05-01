@@ -7146,6 +7146,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "goose-block": "ai dev",        # slug form (avoids collision with "goose"→Go migration tool)
     "block-goose": "ai dev",        # reversed compound — "block goose agent", "block goose mcp" → AI Dev Tools
     "goose-ai": "ai dev",           # AI-specific form — "goose-ai setup", "goose-ai alternative" → AI Dev Tools
+    # Repo-to-LLM context tools (pack/ingest repo contents for AI consumption; ~15k★ each by 2026)
+    "repomix": "ai dev",            # Repomix — pack repo into LLM-friendly context file (yamadashy/repomix) → AI Dev Tools
+    "repopack": "ai dev",           # Repopack — former name for Repomix; legacy queries → AI Dev Tools
+    "gitingest": "ai dev",          # GitIngest — convert GitHub repos to LLM-digestible text (cyclotruc/gitingest) → AI Dev Tools
+    "git-ingest": "ai dev",         # hyphenated — "git-ingest alternative", "git-ingest setup" → AI Dev Tools
 }
 
 _FTS_STOP_WORDS = {

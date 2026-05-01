@@ -104,6 +104,7 @@ curl the API for these queries and check top-3 results are relevant:
   New categories: 'mcp server', 'boilerplate saas starter', 'caching redis alternative'.
   OpenAI 2026: 'openai agents sdk', 'responses api openai', 'agents sdk python alternative',
                'openai swarm replacement', 'goose ai agent', 'block goose coding agent'.
+  Repo/LLM: 'repomix alternative', 'pack repo for llm', 'gitingest setup', 'repo to llm context'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
@@ -135,9 +136,12 @@ Query RAG for entries tagged 'checkpoint' older than 24h — note stale ones.
 Check if recent code changes contradict stored RAG knowledge.
 
 ITERATION 6 — COPY AUDIT:
-Grep route files for hardcoded stats (tool counts, install counts, category counts).
-Verify against production DB: SELECT COUNT(*) FROM tools WHERE status='approved'.
-Fix any stale copy that's off by more than 10%. Run smoke_test.py after route changes.
+Grep route files AND mcp_server.py for hardcoded stats (tool counts, install counts, category counts).
+  grep -n "8,000\|43 categor\|25 categor" src/indiestack/mcp_server.py — fix any matches to match
+  current reality (6,500+ tools, 29 categories). mcp_server.py changes do NOT need smoke_test.py.
+Verify route-file counts against production DB: SELECT COUNT(*) FROM tools WHERE status='approved'.
+Fix any stale copy that's off by more than 10%. Run smoke_test.py after route file changes only.
+Also check: 'repomix alternative', 'gitingest setup', 'repo to llm' queries route to ai-dev-tools.
 
 AFTER: bash ~/.claude/telegram.sh '[Bot] Session summary: [what you checked/fixed/researched]'
 
