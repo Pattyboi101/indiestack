@@ -7127,6 +7127,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "taskmaster": "ai dev",        # compact — "taskmaster alternative", "taskmaster ai setup" → AI Dev Tools
     "task-master-ai": "ai dev",    # compound — "task-master-ai setup", "task-master-ai mcp" → AI Dev Tools
     "claude-task-master": "ai dev", # original name — "claude-task-master alternative" → AI Dev Tools
+    # CSS processing / linting — PostCSS ecosystem tools not individually mapped
+    "stylelint": "testing",         # Stylelint — CSS/SCSS/Less linter (14k★); "stylelint alternative" → Testing & Code Quality
+    "purgecss": "frontend",         # PurgeCSS — remove unused CSS from production build (7k★); "purgecss alternative" → Frontend Frameworks
+    "lightningcss": "frontend",     # Lightning CSS — Rust CSS parser/bundler (Parcel/Vite, 6k★); "lightningcss alternative" → Frontend Frameworks
+    "autoprefixer": "frontend",     # Autoprefixer — PostCSS plugin that adds vendor prefixes (21k★); "autoprefixer alternative" → Frontend Frameworks
+    "browserslist": "frontend",     # Browserslist — browser target configuration (queries like "browserslist config") → Frontend Frameworks
+    # Google ADK bare abbreviation (compound google-adk/googleadk/adk-python already mapped; bare "adk" wasn't)
+    "adk": "ai",                    # Google ADK — bare abbrev; "adk agent", "adk python", "adk vs crewai" → AI & Automation
+    # Frontend — Create React App (legacy but still heavily searched; CRA deprecation queries)
+    "cra": "frontend",              # CRA (Create React App) — "cra alternative", "cra vs vite", "replace cra" → Frontend Frameworks
+    "create-react-app": "frontend", # full slug — "create-react-app alternative", "migrate from cra" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {

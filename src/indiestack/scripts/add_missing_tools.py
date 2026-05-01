@@ -14554,6 +14554,45 @@ TOOLS = [
         "brew install daytonaio/tap/daytona",
         "code",
     ),
+    # AI — Google Agent Development Kit (134th pass) ---------------------------
+    (
+        "google-adk",
+        "Google Agent Development Kit",
+        "Official Python framework for building production-grade AI agents",
+        "Google Agent Development Kit (ADK) is an open-source Python framework "
+        "for building, evaluating, and deploying AI agents. It provides "
+        "first-class support for multi-agent pipelines, tool integration, "
+        "long-running sessions, and Gemini models. Ships with a local dev UI, "
+        "evaluation harness, and deployment targets including Cloud Run, "
+        "Vertex AI, and Kubernetes. Positioned as Google's answer to CrewAI "
+        "and LangGraph for agentic workloads.",
+        "ai-automation",
+        "google/adk-python",
+        8000,
+        "https://google.github.io/adk-docs/",
+        "agents,multi-agent,python,google,gemini,llm,ai-framework",
+        "pip install google-adk",
+        "code",
+    ),
+    # AI — AWS Strands Agents SDK (134th pass) ----------------------------------
+    (
+        "strands-agents",
+        "Strands Agents",
+        "AWS open-source SDK for building production AI agents",
+        "Strands Agents is an open-source Python SDK from Amazon Web Services "
+        "for building AI agents with a model-driven approach. Supports tool "
+        "calling, multi-step reasoning, and streaming. Integrates natively "
+        "with Amazon Bedrock (Claude, Llama, Titan) and works with any "
+        "OpenAI-compatible provider. Designed for production deployments on "
+        "AWS infrastructure with built-in observability hooks.",
+        "ai-automation",
+        "strands-agents/strands-agents",
+        4000,
+        "https://strandsagents.com",
+        "agents,multi-agent,python,aws,bedrock,claude,ai-framework",
+        "pip install strands-agents",
+        "code",
+    ),
     # AI Dev Tools — Task Master AI (133rd pass) --------------------------------
     (
         "task-master-ai",

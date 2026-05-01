@@ -99,6 +99,8 @@ curl the API for these queries and check top-3 results are relevant:
   Infra: 'realtime', 'vector database', 'rate limiting', 'dev environment',
          'cloud dev environment', 'remote development'.
   Search: 'exa alternative', 'exa search api', 'neural search api'.
+  CSS/ADK: 'stylelint alternative', 'purgecss setup', 'create react app alternative',
+           'cra vs vite', 'adk agent python', 'google adk alternative'.
   New categories: 'mcp server', 'boilerplate saas starter', 'caching redis alternative'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
