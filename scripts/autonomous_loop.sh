@@ -94,8 +94,11 @@ curl the API for these queries and check top-3 results are relevant:
   Frontend: 'state management', 'bundler', 'build tool', 'react component library'.
   AI/Voice: 'voice agent', 'text to speech api', 'speech to text', 'tts api',
             'ai coding assistant', 'local llm', 'llm gateway', 'agent framework'.
+  AI Models: 'maverick llm', 'llama 4 maverick', 'run maverick locally',
+             'task master ai', 'claude task master', 'taskmaster mcp'.
   Infra: 'realtime', 'vector database', 'rate limiting', 'dev environment',
          'cloud dev environment', 'remote development'.
+  Search: 'exa alternative', 'exa search api', 'neural search api'.
   New categories: 'mcp server', 'boilerplate saas starter', 'caching redis alternative'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
