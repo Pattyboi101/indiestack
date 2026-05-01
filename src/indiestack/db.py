@@ -7138,6 +7138,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — Create React App (legacy but still heavily searched; CRA deprecation queries)
     "cra": "frontend",              # CRA (Create React App) — "cra alternative", "cra vs vite", "replace cra" → Frontend Frameworks
     "create-react-app": "frontend", # full slug — "create-react-app alternative", "migrate from cra" → Frontend Frameworks
+    # AI Dev Tools — OpenAI Agents SDK (released March 2026; successor to Swarm; high query volume)
+    "openai-agents-sdk": "ai dev",  # slug form — "openai-agents-sdk setup", "openai-agents-sdk vs crewai" → AI Dev Tools
+    "agents-sdk": "ai dev",         # abbreviated — "agents sdk python", "agents sdk openai" → AI Dev Tools
+    "responses-api": "ai",          # OpenAI Responses API — "responses api", "responses api streaming" → AI & Automation
+    # AI Dev Tools — Goose by Block (open-source autonomous coding agent; ~12k★ by May 2026)
+    "goose-block": "ai dev",        # slug form (avoids collision with "goose"→Go migration tool)
+    "block-goose": "ai dev",        # reversed compound — "block goose agent", "block goose mcp" → AI Dev Tools
+    "goose-ai": "ai dev",           # AI-specific form — "goose-ai setup", "goose-ai alternative" → AI Dev Tools
 }
 
 _FTS_STOP_WORDS = {

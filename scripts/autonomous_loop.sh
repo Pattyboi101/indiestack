@@ -102,6 +102,8 @@ curl the API for these queries and check top-3 results are relevant:
   CSS/ADK: 'stylelint alternative', 'purgecss setup', 'create react app alternative',
            'cra vs vite', 'adk agent python', 'google adk alternative'.
   New categories: 'mcp server', 'boilerplate saas starter', 'caching redis alternative'.
+  OpenAI 2026: 'openai agents sdk', 'responses api openai', 'agents sdk python alternative',
+               'openai swarm replacement', 'goose ai agent', 'block goose coding agent'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.

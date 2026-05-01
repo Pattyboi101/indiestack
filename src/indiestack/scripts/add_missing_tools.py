@@ -14612,6 +14612,48 @@ TOOLS = [
         "npm install -g task-master-ai",
         "code",
     ),
+    # AI Dev Tools — OpenAI Agents SDK (135th pass) ----------------------------
+    (
+        "openai-agents-sdk",
+        "OpenAI Agents SDK",
+        "Official Python framework for building multi-agent AI workflows",
+        "The OpenAI Agents SDK (the production successor to the Swarm "
+        "experiment) is OpenAI's official Python framework for building "
+        "multi-agent systems. It introduces Agents (LLMs with instructions "
+        "and tools), Handoffs (one agent delegating to another), Guardrails "
+        "(input/output validation), and built-in tracing. Designed to work "
+        "with the Responses API and any OpenAI-compatible model endpoint. "
+        "Pairs with the Realtime API for voice agents and with structured "
+        "outputs for reliable JSON extraction.",
+        "ai-dev-tools",
+        "openai/openai-agents-python",
+        15000,
+        "https://openai.github.io/openai-agents-python/",
+        "agents,multi-agent,python,openai,llm,ai-framework,tool-calling,handoffs",
+        "pip install openai-agents",
+        "code",
+    ),
+    # AI Dev Tools — Goose by Block (135th pass) --------------------------------
+    (
+        "goose-block",
+        "Goose",
+        "Open-source autonomous AI coding agent by Block",
+        "Goose is Block's open-source AI coding agent that runs locally in "
+        "your terminal. It can autonomously edit files, run shell commands, "
+        "browse the web, and use MCP servers to complete multi-step "
+        "engineering tasks. Built on a provider-agnostic architecture "
+        "supporting Anthropic, OpenAI, and local models via Ollama. "
+        "Distinct from the Go database migration tool also named Goose; "
+        "this is Block/Square's AI agent project (formerly codename "
+        "open-source Devin).",
+        "ai-dev-tools",
+        "block/goose",
+        12000,
+        "https://block.github.io/goose/",
+        "ai-coding,autonomous-agent,terminal,mcp,python,open-source,local-llm",
+        "pip install goose-ai",
+        "code",
+    ),
 ]
 
 
