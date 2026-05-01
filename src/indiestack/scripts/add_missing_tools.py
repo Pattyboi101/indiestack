@@ -14690,6 +14690,75 @@ TOOLS = [
         "pip install gitingest",
         "code",
     ),
+    # AI Dev Tools ---------------------------------------------------------------
+    (
+        "melty",
+        "Melty",
+        "Open-source AI code editor built for AI pair programming",
+        "Melty is an open-source code editor built on VS Code with deep AI integration. "
+        "Unlike AI plugins bolted onto existing editors, Melty is designed from the ground "
+        "up for AI pair programming — the AI sees your terminal output, error messages, and "
+        "file changes in real time. It can write code, run tests, and iterate based on live "
+        "feedback without you having to copy-paste anything.",
+        "ai-dev-tools",
+        "meltylabs/melty",
+        22000,
+        "https://melty.sh",
+        "ai-coding,open-source,vscode,editor,pair-programming",
+        "",
+        "code",
+    ),
+    (
+        "amp",
+        "Amp",
+        "AI coding agent for engineering teams by Sourcegraph",
+        "Amp is Sourcegraph's AI coding agent built for engineering teams. It understands "
+        "your entire codebase — not just the open file — so it can answer questions, make "
+        "changes, and run commands across large monorepos. Amp integrates with your existing "
+        "tools and editors, and supports parallel agentic tasks so teams can ship faster "
+        "without context switching.",
+        "ai-dev-tools",
+        "",
+        0,
+        "https://ampcode.com",
+        "ai-coding,saas,teams,codebase-context,agent",
+        "",
+        "saas",
+    ),
+    (
+        "notte",
+        "Notte",
+        "Natural-language AI browser automation framework",
+        "Notte is an open-source browser automation framework designed for AI agents. "
+        "Instead of CSS selectors or XPath, you describe what you want in plain English "
+        "and Notte figures out how to interact with the page. It converts web pages into "
+        "structured action spaces that LLMs can reason over, making it easy to build "
+        "reliable web automation workflows without fragile selector chains.",
+        "ai-automation",
+        "nottelabs/notte",
+        6000,
+        "https://notte.cc",
+        "browser-automation,ai-agent,natural-language,python,open-source",
+        "pip install notte",
+        "code",
+    ),
+    (
+        "hyperbrowser",
+        "Hyperbrowser",
+        "Cloud browser infrastructure for AI agents",
+        "Hyperbrowser provides scalable headless browser infrastructure purpose-built for "
+        "AI agents. Spin up hundreds of browser sessions in parallel, each with stealth "
+        "mode, residential proxies, and CAPTCHA solving built in. Designed for agent "
+        "workflows that need to scrape, interact with, or automate web pages at scale "
+        "without managing your own browser fleet.",
+        "api-tools",
+        "",
+        0,
+        "https://hyperbrowser.ai",
+        "browser-automation,headless-browser,ai-agent,scraping,saas",
+        "npm install @hyperbrowser/sdk",
+        "saas",
+    ),
 ]
 
 

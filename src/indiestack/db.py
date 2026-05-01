@@ -7151,6 +7151,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "repopack": "ai dev",           # Repopack — former name for Repomix; legacy queries → AI Dev Tools
     "gitingest": "ai dev",          # GitIngest — convert GitHub repos to LLM-digestible text (cyclotruc/gitingest) → AI Dev Tools
     "git-ingest": "ai dev",         # hyphenated — "git-ingest alternative", "git-ingest setup" → AI Dev Tools
+    # AI Dev Tools — Melty (meltylabs/melty, ~22k★; open-source AI code editor built on VS Code)
+    # Designed for AI pair-programming; "melty alternative", "melty vs cursor", "melty ai editor"
+    "melty": "ai dev",              # Melty — "melty alternative", "melty vs cursor" → AI Dev Tools
+    "meltylabs": "ai dev",          # org form — "meltylabs editor", "meltylabs melty" → AI Dev Tools
+    # AI Dev Tools — Amp by Sourcegraph (ampcode.com; team-focused AI coding agent, 2025 launch)
+    # "ampcode" is the unambiguous compound form; bare "amp" is skipped (too ambiguous)
+    "ampcode": "ai dev",            # Amp — "ampcode alternative", "ampcode setup" → AI Dev Tools
+    "amp-code": "ai dev",           # hyphenated — "amp-code vs cursor", "amp-code setup" → AI Dev Tools
+    # AI & Automation — Notte (nottelabs/notte, ~6k★; natural-language AI browser automation)
+    # Competes with browser-use, Playwright AI; "notte alternative", "notte browser agent"
+    "notte": "ai",                  # Notte — "notte alternative", "notte browser automation" → AI & Automation
+    "nottelabs": "ai",              # org form — "nottelabs setup", "nottelabs notte" → AI & Automation
+    # API Tools — Hyperbrowser (hyperbrowser.ai; cloud browser infrastructure for AI agents)
+    # Competes with Browserbase, Steel; deploys headless browsers at scale for agent workflows
+    "hyperbrowser": "api",          # Hyperbrowser — "hyperbrowser alternative", "hyperbrowser setup" → API Tools
+    "hyper-browser": "api",         # hyphenated — "hyper-browser alternative", "hyper-browser api" → API Tools
 }
 
 _FTS_STOP_WORDS = {
