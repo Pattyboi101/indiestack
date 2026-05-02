@@ -7225,6 +7225,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Azure Prompt Flow LLM workflow orchestration (Microsoft; "promptflow alternative" high-volume)
     "promptflow": "ai",             # Azure Prompt Flow — LLM workflow orchestration and evaluation; "promptflow alternative" → AI & Automation
     "prompt-flow": "ai",            # hyphenated — "prompt-flow setup", "prompt-flow alternative" → AI & Automation
+    # DevOps — Moon / Moonrepo (moonrepo/moon, ~9k★; Rust-based task runner + build system for monorepos)
+    # "moonrepo alternative", "moon monorepo build", "moon vs nx", "moon vs turborepo" — growing query volume 2026
+    "moonrepo": "devops",           # moonrepo — "moonrepo alternative", "moonrepo monorepo", "moonrepo vs nx" → DevOps & Infrastructure
+    "moon-repo": "devops",          # hyphenated — "moon-repo setup", "moon-repo config" → DevOps & Infrastructure
+    # DevOps — Flox (flox-dev/flox; Nix-based reproducible dev environments with a friendly CLI)
+    # Competes with devenv, devbox; "flox alternative", "flox nix env" — niche but growing
+    "flox": "devops",               # Flox — "flox alternative", "flox nix", "flox dev environment" → DevOps & Infrastructure
+    "flox-env": "devops",           # hyphenated compound — "flox-env setup", "flox-env vs devbox" → DevOps & Infrastructure
+    # AI — MetaGPT (geekan/MetaGPT, ~47k★; multi-agent AI software company in a prompt)
+    # Assigns LLM roles (engineer, PM, QA) to collaborate on software tasks; "metagpt alternative" high volume
+    "metagpt": "ai",                # MetaGPT — "metagpt alternative", "metagpt setup", "metagpt vs autogen" → AI & Automation
+    "meta-gpt": "ai",               # hyphenated — "meta-gpt alternative", "meta-gpt python" → AI & Automation
+    # AI — Magentic (jackmpcollins/magentic, ~2k★; Python library for structured LLM outputs via decorators)
+    # Complement to "instructor"→ai, "outlines"→ai; "magentic alternative", "magentic structured output"
+    "magentic": "ai",               # Magentic — "magentic alternative", "magentic llm", "magentic structured" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
