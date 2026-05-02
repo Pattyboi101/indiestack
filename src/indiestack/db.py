@@ -7205,6 +7205,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gemini-code": "ai dev",        # hyphenated — "gemini-code alternative", "gemini-code setup" → AI Dev Tools
     "gemini-assist": "ai dev",      # variant — "gemini-assist alternative" → AI Dev Tools
     "gemini-code-assist": "ai dev", # full slug — "gemini-code-assist vs copilot" → AI Dev Tools
+    # Database — local-first reactive databases (offline-first web and mobile apps)
+    "rxdb": "database",             # RxDB — offline-first reactive database for JS/TS/React/Vue (30k★)
+    "pouchdb": "database",          # PouchDB — browser CouchDB-compatible offline-first database (17k★)
+    # Developer Tools — semantic versioning spec and CLI tooling
+    "semver": "developer",          # semver — "semver library", "semver parser", "semantic versioning" → Developer Tools
+    # DevOps — conventional commits spec (first meaningful term after stop-word strip)
+    "conventional": "devops",       # "conventional commits standard", "conventional commit message" → DevOps
+    "commits": "devops",            # complement — "conventional commits", "gitmoji commits" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {
