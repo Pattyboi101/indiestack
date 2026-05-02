@@ -771,6 +771,7 @@ NEED_MAPPINGS = {
     "queue": {"category": "message-queue", "terms": ["message queue", "message broker", "event streaming", "pubsub", "pub/sub", "kafka", "rabbitmq", "async messaging"], "competitors": ["Apache Kafka", "RabbitMQ", "AWS SQS", "NATS", "Redis Streams"], "title": "Message Queues", "description": "Decouple services with message brokers, event streaming, and pub/sub.", "build_estimate": "1-2 weeks", "icon": "\U0001f4ec"},
     "media": {"category": "media-server", "terms": ["video streaming", "transcoding", "media server", "audio streaming", "HLS", "video encoding", "adaptive bitrate"], "competitors": ["Mux", "Cloudinary Video", "Plex", "Jellyfin", "Bunny Stream"], "title": "Media Servers", "description": "Stream, transcode, and manage video and audio content.", "build_estimate": "2-4 weeks", "icon": "\U0001f3ac"},
     "maps": {"category": "maps-location", "terms": ["maps", "geolocation", "geocoding", "mapping", "location api", "map tiles", "leaflet", "mapbox"], "competitors": ["Google Maps", "Mapbox", "HERE Maps", "OpenLayers"], "title": "Maps & Location", "description": "Add maps, geolocation, geocoding, and location-based features to your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f5fa\ufe0f"},
+    "llmeval": {"category": "ai-standards", "terms": ["llm evaluation", "llm benchmark", "model evaluation", "llm red team", "llm safety", "ai safety eval", "garak", "lm-eval", "inspect ai"], "competitors": ["HELM", "BIG-bench", "OpenAI Evals"], "title": "AI Standards & Specs", "description": "LLM evaluation frameworks, red-teaming tools, and AI safety specs.", "build_estimate": "varies", "icon": "\U0001f52c"},
 }
 
 TECH_KEYWORDS = {
@@ -1965,6 +1966,16 @@ async def init_db():
             except Exception:
                 await db.execute(_ddl)
 
+        # Migration: add ai-standards category (AI safety evals, LLM red-teaming tools)
+        try:
+            await db.execute(
+                "INSERT INTO categories (name, slug, description, icon) VALUES (?, ?, ?, ?)",
+                ("AI Standards & Specs", "ai-standards", "AI safety evaluation frameworks, LLM red-teaming tools, and model quality specs", "🔬"),
+            )
+            await db.commit()
+        except Exception:
+            pass  # already exists
+
         # Validation logs for guardrail endpoint
         await db.execute("""
             CREATE TABLE IF NOT EXISTS validation_logs (
@@ -3005,12 +3016,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API layer — CORS and middleware
     "cors": "api",              # "CORS middleware", "CORS header" → API Tools
     "middleware": "api",        # "API middleware", "Express middleware" → API Tools
-    # Package managers — JS ecosystem
-    "npm": "frontend",          # npm — default Node.js package manager ("npm alternative" → pnpm/yarn)
+    # Package managers — JS ecosystem (npm→developer at line ~6205; yarn/pnpm stay frontend)
     "yarn": "frontend",         # Yarn — fast npm-compatible package manager
     "pnpm": "frontend",         # pnpm — efficient disk-space-saving package manager
     # Monorepo tooling
-    "dependency": "developer",  # "dependency management", "dependency graph" → Developer Tools
     "monorepo": "developer",    # "monorepo build" → Developer Tools (Turborepo, Nx, Lerna)
     # Database — SQL / NoSQL query patterns
     "nosql": "database",        # "nosql database", "nosql store" queries
@@ -3304,8 +3313,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Code formatter — Prettier, Biome, dprint live in testing-tools alongside linters
     "formatter": "testing",         # "code formatter", "js formatter" → Testing Tools
     "format": "testing",            # "code format", "auto-format" → Testing Tools (Biome, Prettier)
-    # HTTP clients — Axios, Got, Ky, node-fetch live in api-tools
-    "http": "api",                  # "http client", "http server", "http framework" → API Tools
+    # HTTP clients — Axios, Got, Ky, node-fetch live in api-tools (http→api at line ~4247)
     "axios": "api",                 # Axios — most popular promise-based HTTP client for JS/TS
     "httpclient": "api",            # explicit compound form
     "httpx": "api",                 # HTTPX — async-first Python HTTP client
@@ -5309,9 +5317,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sglang": "ai",                 # SGLang — fast structured LLM serving runtime (lm-sys/sglang, 13k★) → AI & Automation
     # AI — TruLens LLM application evaluation with feedback functions
     "trulens": "ai",                # TruLens — LLM app evaluation with feedback functions (3k★) → AI & Automation
-    # AI — EleutherAI lm-evaluation-harness (canonical open LLM benchmark runner)
-    "lm-eval": "ai",                # lm-eval — EleutherAI LM evaluation harness; "lm-eval alternative" → AI & Automation
-    "lmeval": "ai",                 # compound form — "lmeval benchmarks", "lmeval harness" → AI & Automation
+    # AI Standards — EleutherAI lm-evaluation-harness (canonical open LLM benchmark runner)
+    # Moved to ai-standards section at bottom of _CAT_SYNONYMS (lm-eval, lmeval entries there)
     # Node.js runtime — common query prefix for framework/server/backend queries
     # "node" and "nodejs" are in _FRAMEWORK_QUERY_TERMS for frameworks_tested filter,
     # but NOT in _CAT_SYNONYMS, so they get no category boost. Adding here so
@@ -7182,7 +7189,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "codestory": "ai dev",          # org/product name — "codestory ide", "codestory alternative" → AI Dev Tools
     # AI — Cosine AI / Genie (cosine.sh; autonomous AI software engineer; "cosine alternative", "genie agent")
     # Competes with Devin, SWE-agent; Genie is their product name
+    "cosine": "ai",                 # bare — "cosine alternative", "cosine.sh setup" → AI & Automation
     "cosine-ai": "ai",              # hyphenated — "cosine-ai alternative", "cosine-ai setup" → AI & Automation
+    "genie": "ai",                  # product name — "genie agent", "genie ai coder", "genie alternative" → AI & Automation
     "genie-ai": "ai",               # product name form — "genie-ai alternative", "genie-ai vs devin" → AI & Automation
     # AI — SWE-agent (princeton-nlp/SWE-agent, ~14k★; autonomous AI agent for software engineering tasks)
     # Runs in a terminal, can open PRs and fix GitHub issues; "swe-agent alternative" high query volume
@@ -7240,6 +7249,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Magentic (jackmpcollins/magentic, ~2k★; Python library for structured LLM outputs via decorators)
     # Complement to "instructor"→ai, "outlines"→ai; "magentic alternative", "magentic structured output"
     "magentic": "ai",               # Magentic — "magentic alternative", "magentic llm", "magentic structured" → AI & Automation
+    # AI Standards — garak (NVIDIA; LLM vulnerability scanner + red-teamer; ~4k★)
+    # Probes LLMs for hallucination, toxicity, jailbreaks, data leakage; "garak alternative" growing
+    "garak": "ai-standards",        # garak — "garak llm scanner", "garak red team", "garak alternative" → AI Standards & Specs
+    # AI Standards — lm-evaluation-harness (EleutherAI; canonical LLM benchmark runner; ~7k★)
+    # Supports MMLU, TruthfulQA, HellaSwag, hundreds of tasks; "lm eval harness" standard term
+    "lm-eval": "ai-standards",      # EleutherAI harness — "lm-eval setup", "lm-eval benchmarks" → AI Standards & Specs
+    "lmeval": "ai-standards",       # compact form — "lmeval harness", "lmeval alternative" → AI Standards & Specs
+    "lm-evaluation-harness": "ai-standards",  # full slug — exact match for this tool → AI Standards & Specs
+    # AI Standards — inspect-ai (UK AISI; composable eval framework for safety testing; ~2k★)
+    # Official UK gov AI safety tool; "inspect alternative", "inspect ai eval" queries
+    "inspect-ai": "ai-standards",   # hyphenated — "inspect-ai alternative", "inspect-ai evals" → AI Standards & Specs
+    "inspectai": "ai-standards",    # compact — "inspectai safety", "inspectai setup" → AI Standards & Specs
 }
 
 _FTS_STOP_WORDS = {

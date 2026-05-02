@@ -14961,6 +14961,113 @@ TOOLS = [
         "docker compose up",
         "code",
     ),
+    # ── AI Standards (144th pass) ────────────────────────────────────────────
+    (
+        "lm-evaluation-harness",
+        "lm-evaluation-harness",
+        "The standard open-source LLM benchmark runner",
+        "EleutherAI's lm-evaluation-harness is the canonical framework for evaluating "
+        "language models across hundreds of tasks: MMLU, TruthfulQA, HellaSwag, ARC, "
+        "and more. Supports any HuggingFace model, OpenAI-compatible API, or custom "
+        "model. Used by Meta, Google, Mistral, and most major AI labs to report "
+        "benchmark results. The de-facto standard for reproducible LLM evaluation. "
+        "7k+ GitHub stars.",
+        "ai-standards",
+        "EleutherAI/lm-evaluation-harness",
+        7000,
+        "https://github.com/EleutherAI/lm-evaluation-harness",
+        "llm,evaluation,benchmarks,mmlu,ai-safety,open-source",
+        "pip install lm-eval",
+        "code",
+    ),
+    (
+        "garak",
+        "garak",
+        "LLM vulnerability scanner and red-teaming framework",
+        "garak is NVIDIA's open-source LLM vulnerability scanner. It systematically "
+        "probes language models for weaknesses: hallucination, jailbreaks, prompt "
+        "injection, toxicity, data leakage, and model bias. Run it against any "
+        "OpenAI-compatible API or local model. Used by AI safety teams and red-teamers "
+        "to audit LLMs before deployment. The pip install gives you a CLI that runs "
+        "hundreds of probes and generates a structured HTML report. 4k+ GitHub stars.",
+        "ai-standards",
+        "NVIDIA/garak",
+        4000,
+        "https://garak.ai",
+        "llm,red-teaming,ai-safety,vulnerability-scanning,jailbreak,open-source",
+        "pip install garak",
+        "code",
+    ),
+    (
+        "inspect-ai",
+        "Inspect",
+        "Composable AI safety evaluation framework from UK AISI",
+        "Inspect is the UK AI Safety Institute's open-source framework for building "
+        "and running LLM safety evaluations. Define tasks, solvers, and scorers in "
+        "Python — then compose them into reusable eval pipelines. Supports any "
+        "model via an LLM API provider abstraction, parallel execution, detailed "
+        "logging, and a built-in Inspect viewer for reviewing results. Used by "
+        "government AI safety researchers and academic labs. 2k+ GitHub stars.",
+        "ai-standards",
+        "UKGovernmentBEIS/inspect_ai",
+        2000,
+        "https://inspect.ai",
+        "llm,ai-safety,evaluation,government,open-source,benchmarks",
+        "pip install inspect-ai",
+        "code",
+    ),
+    # ── MCP Servers (144th pass) ─────────────────────────────────────────────
+    (
+        "mcp-sqlite",
+        "MCP SQLite Server",
+        "Official MCP server for SQLite database access",
+        "Official MCP server that gives AI agents read/write access to a SQLite "
+        "database. Agents can list tables, inspect schemas, run SQL queries, and "
+        "create/modify data. Safe for local development — agents work directly "
+        "against a .db file with no separate server process needed. Part of the "
+        "official modelcontextprotocol/servers monorepo (14k+ GitHub stars).",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite",
+        "mcp,sqlite,database,official,ai-agent",
+        "npx -y @modelcontextprotocol/server-sqlite path/to/db.sqlite",
+        "code",
+    ),
+    (
+        "mcp-puppeteer",
+        "MCP Puppeteer Server",
+        "Official MCP server for browser automation via Puppeteer",
+        "Official MCP server that gives AI agents browser automation capabilities "
+        "via Puppeteer. Agents can navigate URLs, take screenshots, click elements, "
+        "fill forms, and execute JavaScript in a real Chromium browser. Ideal for "
+        "AI agents that need to scrape, test, or interact with web pages. Part of "
+        "the official modelcontextprotocol/servers monorepo (14k+ GitHub stars).",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer",
+        "mcp,puppeteer,browser-automation,screenshot,official,ai-agent",
+        "npx -y @modelcontextprotocol/server-puppeteer",
+        "code",
+    ),
+    (
+        "mcp-slack",
+        "MCP Slack Server",
+        "Official MCP server for Slack workspace integration",
+        "Official MCP server that gives AI agents access to your Slack workspace. "
+        "Agents can read channel history, post messages, list channels and users, "
+        "and reply to threads — enabling AI-powered bots, summaries, and automations "
+        "using your real Slack data. Requires a Slack bot token with appropriate "
+        "scopes. Part of the official modelcontextprotocol/servers monorepo.",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/slack",
+        "mcp,slack,messaging,workspace,official,ai-agent",
+        "npx -y @modelcontextprotocol/server-slack",
+        "code",
+    ),
 ]
 
 
