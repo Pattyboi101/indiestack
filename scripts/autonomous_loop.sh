@@ -111,6 +111,10 @@ curl the API for these queries and check top-3 results are relevant:
   AI engineers: 'swe-agent alternative', 'sweep ai code review', 'cosine ai genie', 'devin alternative'.
   New AI tools: 'kilo code extension', 'kilo code vs cline', 'amazon q alternative', 'q developer aws',
                'gemini code assist alternative', 'same dev app builder', 'same.dev clone'.
+  Dev envs: 'devenv nix', 'devenv alternative', 'devbox jetpack', 'cde tool', 'cloud dev environment',
+            'warp terminal alternative', 'nix dev environment', 'reproducible dev environment'.
+  Workflows: 'temporal workflow alternative', 'gitops deployment tool', 'argocd alternative',
+             'azure promptflow alternative', 'promptfoo llm testing'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.

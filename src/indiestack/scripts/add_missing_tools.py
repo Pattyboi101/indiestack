@@ -14862,6 +14862,56 @@ TOOLS = [
         "",
         "saas",
     ),
+    # Dev Environments — Nix-based reproducible dev shells ----------------------------
+    (
+        "warp",
+        "Warp",
+        "The intelligent terminal for developers",
+        "Warp is a Rust-native terminal built for modern developer workflows. "
+        "AI-powered command search, inline docs, collaborative notebooks, and "
+        "blazing-fast rendering. Supports SSH, tmux, and custom themes. "
+        "Free for individual use. Available for macOS and Linux.",
+        "developer-tools",
+        "warpdotdev/warp",
+        23000,
+        "https://warp.dev",
+        "terminal,cli,ai,rust,productivity",
+        "# Download from https://warp.dev",
+        "saas",
+    ),
+    (
+        "devenv",
+        "devenv.sh",
+        "Fast, Declarative, Reproducible, and Composable Developer Environments",
+        "devenv.sh builds reproducible developer environments using Nix. "
+        "Declare your shell dependencies in devenv.nix — languages, packages, "
+        "services (PostgreSQL, Redis, MySQL), and scripts. Works with direnv for "
+        "automatic activation. Reproducible across macOS and Linux, "
+        "with built-in process management and CI caching.",
+        "devops-infrastructure",
+        "cachix/devenv",
+        7000,
+        "https://devenv.sh",
+        "nix,dev-environment,reproducible,shell,direnv",
+        "nix profile install nixpkgs#devenv",
+        "code",
+    ),
+    (
+        "devbox",
+        "Devbox",
+        "Instant, isolated development environments with Nix",
+        "Devbox creates isolated, reproducible development environments powered by Nix — "
+        "without requiring Nix knowledge. A single devbox.json defines your tools. "
+        "Run devbox shell to drop into an isolated environment with your exact "
+        "dependencies. Works locally and in CI. Built by Jetpack.io.",
+        "devops-infrastructure",
+        "jetpack-io/devbox",
+        8000,
+        "https://www.jetpack.io/devbox",
+        "nix,dev-environment,reproducible,isolated,shell",
+        "curl -fsSL https://get.jetpack.io/devbox | bash",
+        "code",
+    ),
 ]
 
 

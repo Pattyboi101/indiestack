@@ -7213,6 +7213,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — conventional commits spec (first meaningful term after stop-word strip)
     "conventional": "devops",       # "conventional commits standard", "conventional commit message" → DevOps
     "commits": "devops",            # complement — "conventional commits", "gitmoji commits" → DevOps & Infrastructure
+    # DevOps — Nix-based reproducible dev environments and CDE abbreviation
+    "devenv": "devops",             # devenv.sh — Nix-based dev environments (cachix/devenv, 7k★); also handles "devenv setup", "devenv nix" → DevOps
+    "devbox": "devops",             # Devbox — Jetpack Nix-based isolated dev environments (8k★); "devbox alternative", "devbox setup" → DevOps
+    "cde": "devops",                # CDE — Cloud Development Environment abbreviation (Gitpod, Codespaces, Daytona, Devpod docs)
+    # AI — Azure Prompt Flow LLM workflow orchestration (Microsoft; "promptflow alternative" high-volume)
+    "promptflow": "ai",             # Azure Prompt Flow — LLM workflow orchestration and evaluation; "promptflow alternative" → AI & Automation
+    "prompt-flow": "ai",            # hyphenated — "prompt-flow setup", "prompt-flow alternative" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
