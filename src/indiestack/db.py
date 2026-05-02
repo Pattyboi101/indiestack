@@ -7186,6 +7186,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "sweepai alternative", "sweep ai code review" — bare "sweep" skipped (too generic English word)
     "sweepai": "ai",                # org form — "sweepai alternative", "sweepai setup" → AI & Automation
     "sweep.dev": "ai",              # dotted — "sweep.dev code review", "sweep.dev pricing" → AI & Automation
+    # AI Dev Tools — Kilo Code (Kilo-Code/kilo-code, ~5k★; VS Code AI coding extension, fork of Cline)
+    # "kilo code extension", "kilo code vs continue", "kilo code vs cline" — high 2026 query volume
+    "kilo": "ai dev",               # first-word — "kilo code alternative", "kilo coding" → AI Dev Tools
+    "kilo-code": "ai dev",          # hyphenated — "kilo-code extension", "kilo-code setup" → AI Dev Tools
+    "kilocode": "ai dev",           # compound — "kilocode alternative", "kilocode vs cline" → AI Dev Tools
+    # AI — Same.dev (same-dev/same, ~2k★; AI-powered web app cloner and generator)
+    # "same.dev alternative", "same dev app builder" — AI app builder query pattern
+    "same-dev": "ai",               # hyphenated — "same-dev alternative", "same-dev clone" → AI & Automation
+    "samedev": "ai",                # compound — "samedev setup", "samedev vs bolt" → AI & Automation
+    # AI Dev Tools — Amazon Q Developer (AWS AI coding assistant; high "alternative" query volume)
+    # Not in IndieStack catalog (AWS product) but queries like "amazon q alternative" should route to AI Dev Tools
+    "amazon-q": "ai dev",           # hyphenated — "amazon-q alternative", "amazon-q vs copilot" → AI Dev Tools
+    "amazonq": "ai dev",            # compound — "amazonq setup", "amazonq vs codeium" → AI Dev Tools
+    "q-developer": "ai dev",        # AWS branding — "q developer alternative", "q developer pricing" → AI Dev Tools
+    # AI Dev Tools — Gemini Code Assist (Google AI coding assistant; competitor queries → AI Dev Tools)
+    # Not in IndieStack catalog (Google product) but "gemini code assist alternative" queries should route here
+    "gemini-code": "ai dev",        # hyphenated — "gemini-code alternative", "gemini-code setup" → AI Dev Tools
+    "gemini-assist": "ai dev",      # variant — "gemini-assist alternative" → AI Dev Tools
+    "gemini-code-assist": "ai dev", # full slug — "gemini-code-assist vs copilot" → AI Dev Tools
 }
 
 _FTS_STOP_WORDS = {

@@ -14827,6 +14827,41 @@ TOOLS = [
         "pip install sweepai",
         "code",
     ),
+    (
+        "kilo-code",
+        "Kilo Code",
+        "Open-source VS Code AI coding extension",
+        "Kilo Code is an open-source AI coding extension for VS Code that brings "
+        "autonomous coding agents to your editor. Forked from Cline, it adds "
+        "multi-model support (Claude, GPT-4, Gemini, local models via Ollama), "
+        "an agent marketplace, and enhanced context awareness. Supports automated "
+        "multi-step tasks: read files, run tests, fix bugs, and open PRs — all "
+        "from a chat interface inside VS Code.",
+        "ai-dev-tools",
+        "Kilo-Code/kilo-code",
+        5000,
+        "https://kilocode.ai",
+        "ai-coding,vs-code,open-source,agent,llm",
+        "ext install kilocode.kilo-code",
+        "code",
+    ),
+    (
+        "same-dev",
+        "Same.dev",
+        "AI-powered web app cloner and builder",
+        "Same.dev is an AI-powered tool that clones and rebuilds web apps from "
+        "screenshots or URLs. Describe a UI you want to replicate and Same generates "
+        "a functional React + Tailwind implementation. Useful for rapid prototyping, "
+        "cloning competitor UIs for inspiration, or rebuilding legacy interfaces. "
+        "Runs in the browser with instant preview and export to code.",
+        "ai-automation",
+        "same-dev/same",
+        2000,
+        "https://same.dev",
+        "ai,app-builder,react,tailwind,prototyping,clone",
+        "",
+        "saas",
+    ),
 ]
 
 

@@ -1150,7 +1150,7 @@ def launch_day_html(*, tool_count: int, maker_count: int, explore_url: str = f"{
         <div style="padding:16px;background:#F0F7FA;border-radius:10px;margin-bottom:10px;border-left:4px solid #00D4F5;">
             <strong style="color:#1A2D4A;font-size:15px;">&#128269; Discover</strong>
             <p style="color:#6B6560;font-size:13px;margin:4px 0 0;line-height:1.5;">
-                Browse {tool_count} indie creations across 25 categories. No affiliate rankings, no ads &mdash; just real tools from real makers.
+                Browse {tool_count} indie creations across 29 categories. No affiliate rankings, no ads &mdash; just real tools from real makers.
             </p>
         </div>
         <div style="padding:16px;background:#F0F7FA;border-radius:10px;margin-bottom:10px;border-left:4px solid #00D4F5;">
