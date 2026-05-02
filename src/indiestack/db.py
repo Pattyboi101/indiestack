@@ -4026,6 +4026,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     # (llamacpp, llamafile already mapped above; adding the remaining high-volume terms)
     "llama": "ai",                  # LLaMA model queries — "run llama locally", "llama model" → AI
     "lmstudio": "ai",               # LM Studio — popular local LLM GUI with built-in model library
+    "lm-studio": "ai",             # hyphenated — "lm-studio alternative", "lm-studio setup" → AI & Automation
+    "lobechat": "ai",              # LobeChat — AI chat UI with plugin/MCP support (58k★)
+    "lobe-chat": "ai",             # hyphenated slug — "lobe-chat alternative", "lobe-chat mcp" → AI & Automation
+    "librechat": "ai",             # LibreChat — open-source ChatGPT alternative with multi-provider support (22k★)
+    "libre-chat": "ai",            # hyphenated — "libre-chat alternative", "libre-chat setup" → AI & Automation
     "jan": "ai",                    # Jan.ai — open-source local-first LLM chat and inference server
     # AI image generation — Stable Diffusion ecosystem has enormous agent query volume
     "stable": "ai",                 # "stable diffusion", "stable video diffusion" → AI & Automation

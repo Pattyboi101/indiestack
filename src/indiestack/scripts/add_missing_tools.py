@@ -14912,6 +14912,55 @@ TOOLS = [
         "curl -fsSL https://get.jetpack.io/devbox | bash",
         "code",
     ),
+    # AI Chat UIs — local LLM frontends (142nd pass) --------------------------
+    (
+        "lmstudio",
+        "LM Studio",
+        "Discover, download, and run local LLMs",
+        "LM Studio is a desktop app for discovering, downloading, and running local "
+        "large language models entirely offline. Ships with an OpenAI-compatible local "
+        "server so you can swap cloud APIs for local inference in your apps. "
+        "Supports GGUF models from Hugging Face. Free for personal use.",
+        "ai-automation",
+        "lmstudio-ai/lmstudio-app",
+        35000,
+        "https://lmstudio.ai",
+        "local-llm,gui,chat,model-runner,offline,openai-compatible",
+        "# Download from https://lmstudio.ai",
+        "saas",
+    ),
+    (
+        "lobechat",
+        "LobeChat",
+        "Modern AI chat framework supporting multi-model and MCP plugins",
+        "LobeChat is an open-source, extensible AI chat framework. Supports OpenAI, "
+        "Anthropic, Google Gemini, Ollama (local LLMs), and dozens of other providers. "
+        "Plugin/MCP ecosystem, vision and file attachments, knowledge base with RAG, "
+        "and a one-click Docker deployment. 58k+ GitHub stars.",
+        "ai-automation",
+        "lobehub/lobe-chat",
+        58000,
+        "https://lobechat.com",
+        "ai,chat,mcp,local-llm,multimodal,plugins,rag,self-hosted",
+        "npx @lobehub/chat",
+        "code",
+    ),
+    (
+        "librechat",
+        "LibreChat",
+        "Enhanced ChatGPT clone supporting every AI provider",
+        "LibreChat is an open-source ChatGPT alternative you self-host. Supports "
+        "OpenAI, Anthropic, Google, Azure, Mistral, Ollama (local LLMs), and more — "
+        "all in one UI. Features conversation branching, plugins, file uploads, "
+        "code execution sandbox, and multi-user management. 22k+ GitHub stars.",
+        "ai-automation",
+        "danny-avila/LibreChat",
+        22000,
+        "https://librechat.ai",
+        "ai,chat,self-hosted,openai,anthropic,multi-provider,open-source",
+        "docker compose up",
+        "code",
+    ),
 ]
 
 
