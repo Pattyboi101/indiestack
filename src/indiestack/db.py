@@ -6395,6 +6395,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     "lm-evaluation-harness": "standard",  # full slug — exact match → AI Standards & Specs
     "inspect-ai": "standard",      # UK AISI safety eval — "inspect-ai alternative" → AI Standards & Specs
     "inspectai": "standard",       # compact — "inspectai safety", "inspectai setup" → AI Standards & Specs
+    # AI Standards & Specs — SWE-bench (Princeton NLP; canonical coding AI benchmark; enormous query volume)
+    # Measures whether LLMs resolve GitHub Issues; "swe-bench score", "swe-bench leaderboard" queries
+    "swe-bench": "standard",       # SWE-bench — "swe-bench alternative", "swe-bench score" → AI Standards & Specs
+    "swebench": "standard",        # compact — "swebench results", "swebench leaderboard" → AI Standards & Specs
+    # AI — Skyvern (skyvern-ai/skyvern, ~12k★; LLM + vision browser automation agent)
+    # Replaces CSS selectors with natural language; "skyvern alternative" fast-growing 2026
+    "skyvern": "ai",               # Skyvern — "skyvern alternative", "skyvern browser" → AI & Automation
+    # AI — Julep (julep-ai/julep, ~8k★; long-running stateful AI workflows as a managed service)
+    "julep": "ai",                 # Julep — "julep alternative", "julep workflow", "julep agents" → AI & Automation
+    # AI — OpenManus (manusHQ/OpenManus, ~40k★; open-source general-purpose AI agent)
+    "openmanus": "ai",             # OpenManus — "openmanus alternative", "openmanus setup" → AI & Automation
+    "open-manus": "ai",            # hyphenated — "open-manus python", "open-manus agent" → AI & Automation
+    # AI — Gumloop (no-code/low-code AI workflow builder; visual n8n/Zapier alternative for LLM pipelines)
+    "gumloop": "ai",               # Gumloop — "gumloop alternative", "gumloop n8n" → AI & Automation
+    # DevOps — vcluster (loft-sh/vcluster, ~9k★; virtual Kubernetes clusters in namespaces)
+    "vcluster": "devops",          # vcluster — "vcluster alternative", "vcluster setup", "vcluster k8s" → DevOps & Infrastructure
+    # AI — Moondream (vikhyatk/moondream2, ~12k★; tiny, fast vision language model for edge/mobile)
+    "moondream": "ai",             # Moondream — "moondream alternative", "moondream vqa" → AI & Automation
+    # AI — Devika (stitionai/devika, ~18k★; open-source agentic AI software engineer)
+    "devika": "ai",                # Devika — "devika alternative", "devika setup", "devika vs devin" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

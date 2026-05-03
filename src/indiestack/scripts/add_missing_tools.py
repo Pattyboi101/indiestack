@@ -12813,6 +12813,60 @@ TOOLS = [
         "pip install inspect-ai",
         "code",
     ),
+    # AI Agents — OpenHands / OpenDevin (all-hands-ai/openhands, ~45k★) ----------
+    (
+        "openhands",
+        "OpenHands",
+        "Open-source AI software engineer for autonomous coding tasks",
+        "OpenHands (formerly OpenDevin) is an open-source platform for autonomous "
+        "AI software engineering. Agents can write and run code, browse the web, "
+        "read and edit files, and submit pull requests — completing complex "
+        "multi-step engineering tasks with minimal supervision. "
+        "One of the fastest-growing AI coding agent projects with 45k+ GitHub stars.",
+        "ai-automation",
+        "all-hands-ai/openhands",
+        45000,
+        "https://www.all-hands.dev",
+        "ai-agent,autonomous,coding,software-engineer,open-source",
+        "docker pull ghcr.io/all-hands-ai/runtime:0.20-nikolaik",
+        "code",
+    ),
+    # AI Browser Automation — Skyvern (skyvern-ai/skyvern, ~12k★) ----------------
+    (
+        "skyvern",
+        "Skyvern",
+        "AI-powered browser automation using LLMs and computer vision",
+        "Skyvern automates browser workflows using LLMs and computer vision instead "
+        "of brittle CSS selectors or XPath. It adapts to UI changes in real-time, "
+        "handles CAPTCHAs, and navigates dynamic single-page applications. "
+        "Useful for form filling, data extraction, and web scraping at scale. "
+        "Comes with a visual workflow builder and REST API.",
+        "ai-automation",
+        "skyvern-ai/skyvern",
+        12000,
+        "https://skyvern.com",
+        "ai-agent,browser-automation,llm,computer-vision,scraping",
+        "pip install skyvern",
+        "code",
+    ),
+    # AI Workflows — Julep (julep-ai/julep, ~8k★) ---------------------------------
+    (
+        "julep",
+        "Julep",
+        "AI workflows and persistent agents as a managed service",
+        "Julep is a platform for building long-running, stateful AI agents and "
+        "multi-step workflows. Define workflows in YAML, integrate tools (web search, "
+        "APIs, code execution), and run tasks asynchronously with built-in memory "
+        "and session management. Includes a Python/JS SDK and REST API. "
+        "Ideal for background AI tasks like report generation and data processing.",
+        "ai-automation",
+        "julep-ai/julep",
+        8000,
+        "https://julep.ai",
+        "ai-agent,workflow,memory,persistent,sdk",
+        "pip install julep",
+        "code",
+    ),
 ]
 
 
