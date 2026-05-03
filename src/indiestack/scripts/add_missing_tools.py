@@ -12754,6 +12754,65 @@ TOOLS = [
         "npm install -g @openai/codex",
         "code",
     ),
+    # AI Standards & Specs ---------------------------------------------------------
+    (
+        "lm-evaluation-harness",
+        "LM Evaluation Harness",
+        "Unified framework for evaluating language models across hundreds of tasks",
+        "The LM Evaluation Harness (by EleutherAI) is the canonical open-source "
+        "benchmark runner for large language models. Supports 200+ evaluation tasks "
+        "including MMLU, TruthfulQA, HellaSwag, GSM8K, BIG-Bench Hard, and more. "
+        "Works with any HuggingFace model, OpenAI API, or custom backends. "
+        "Used by researchers and practitioners to compare models systematically "
+        "and reproduce published benchmark results. The de facto standard for "
+        "open LLM evaluation — referenced in virtually every LLM paper.",
+        "ai-standards",
+        "EleutherAI/lm-evaluation-harness",
+        7000,
+        "https://github.com/EleutherAI/lm-evaluation-harness",
+        "llm,evaluation,benchmark,evals,eleutherai,mmlu,truthfulqa,research",
+        "pip install lm-eval",
+        "code",
+    ),
+    (
+        "garak",
+        "garak",
+        "LLM vulnerability scanner and red-teaming toolkit",
+        "garak (Generative AI Red-teaming & Assessment Kit) is an open-source "
+        "LLM vulnerability scanner from NVIDIA. Systematically probes language "
+        "models for hallucination, toxicity, jailbreaks, data leakage, "
+        "prompt injection, and dozens of other failure modes using modular "
+        "probes and detectors. Supports OpenAI, Anthropic, HuggingFace, "
+        "Ollama, and REST backends. Generates structured vulnerability reports. "
+        "Used by AI safety researchers, red teams, and enterprises to assess "
+        "model risk before deployment.",
+        "ai-standards",
+        "NVIDIA/garak",
+        4000,
+        "https://github.com/NVIDIA/garak",
+        "llm,red-team,safety,vulnerability,scanning,ai-safety,probe,jailbreak",
+        "pip install garak",
+        "code",
+    ),
+    (
+        "inspect-ai",
+        "Inspect AI",
+        "Open-source framework for LLM safety evaluations (UK AISI)",
+        "Inspect is an open-source framework for large language model evaluations "
+        "developed by the UK AI Safety Institute. Provides composable building "
+        "blocks — tasks, solvers, scorers, and datasets — for creating rigorous "
+        "safety and capability evaluations. Supports multi-turn dialogues, "
+        "tool use, sandboxed code execution, and human baselines. "
+        "Used by government safety teams and academic researchers to assess "
+        "frontier model risks. Official evaluation framework of the UK AISI.",
+        "ai-standards",
+        "UKGovernmentBEIS/inspect_ai",
+        2000,
+        "https://inspect.ai-safety-institute.org.uk",
+        "llm,safety,evaluation,evals,uk-aisi,government,composable,benchmark",
+        "pip install inspect-ai",
+        "code",
+    ),
 ]
 
 

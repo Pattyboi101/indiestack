@@ -721,6 +721,7 @@ CATEGORY_TOKEN_COSTS = {
     "mcp-servers": 50_000,
     "boilerplates": 30_000,
     "maps-location": 25_000,
+    "ai-standards": 40_000,
 }
 
 # Maps common need keywords to category slugs, search terms, and competitors.
@@ -771,6 +772,7 @@ NEED_MAPPINGS = {
     "queue": {"category": "message-queue", "terms": ["message queue", "message broker", "event streaming", "pubsub", "pub/sub", "kafka", "rabbitmq", "async messaging"], "competitors": ["Apache Kafka", "RabbitMQ", "AWS SQS", "NATS", "Redis Streams"], "title": "Message Queues", "description": "Decouple services with message brokers, event streaming, and pub/sub.", "build_estimate": "1-2 weeks", "icon": "\U0001f4ec"},
     "media": {"category": "media-server", "terms": ["video streaming", "transcoding", "media server", "audio streaming", "HLS", "video encoding", "adaptive bitrate"], "competitors": ["Mux", "Cloudinary Video", "Plex", "Jellyfin", "Bunny Stream"], "title": "Media Servers", "description": "Stream, transcode, and manage video and audio content.", "build_estimate": "2-4 weeks", "icon": "\U0001f3ac"},
     "maps": {"category": "maps-location", "terms": ["maps", "geolocation", "geocoding", "mapping", "location api", "map tiles", "leaflet", "mapbox"], "competitors": ["Google Maps", "Mapbox", "HERE Maps", "OpenLayers"], "title": "Maps & Location", "description": "Add maps, geolocation, geocoding, and location-based features to your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f5fa\ufe0f"},
+    "llmeval": {"category": "ai-standards", "terms": ["llm evaluation", "llm benchmark", "model evaluation", "llm red team", "llm safety", "ai safety eval", "garak", "lm-eval", "inspect ai"], "competitors": ["HELM", "BIG-bench", "OpenAI Evals"], "title": "AI Standards & Specs", "description": "LLM evaluation frameworks, red-teaming tools, and AI safety specs.", "build_estimate": "varies", "icon": "\U0001f52c"},
 }
 
 TECH_KEYWORDS = {
@@ -1751,6 +1753,7 @@ async def init_db():
             ("MCP Servers", "mcp-servers", "MCP server implementations that give AI agents access to tools, data, and services", "🧩"),
             ("Boilerplates", "boilerplates", "Starter kits, scaffold templates, and opinionated project starters to ship faster", "📦"),
             ("Maps & Location", "maps-location", "Maps, geolocation, geocoding, and location-based APIs", "🗺️"),
+            ("AI Standards & Specs", "ai-standards", "AI safety evaluation frameworks, LLM red-teaming tools, and model quality specs", "🔬"),
         ]:
             try:
                 await db.execute(
@@ -3465,8 +3468,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "barcode": "developer",         # "barcode scanner", "barcode generator" → Developer Tools
     # AI — LLM observability / evaluation platforms
     "langsmith": "ai",              # LangSmith — LangChain's LLM observability and tracing platform
-    "evals": "ai",                  # "llm evals", "model evaluation harness" → AI & Automation
-    "evaluation": "ai",             # "llm evaluation", "evaluation pipeline" → AI & Automation
+    # AI Standards — eval queries route to AI Standards & Specs (lm-eval, garak, inspect-ai)
+    "evals": "standard",            # "llm evals", "run evals" → AI Standards & Specs
+    "evaluation": "standard",       # "llm evaluation", "model evaluation harness" → AI Standards & Specs
     # Email — major providers/tools not yet mapped
     "brevo": "email",               # Brevo (formerly Sendinblue) — email marketing + transactional
     "plunk": "email",               # Plunk — open-source transactional email (3k★)
@@ -4786,8 +4790,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ssh": "devops",                # SSH tools — key management, tunneling, bastion hosts → DevOps & Infrastructure
     # Auth — OpenAuth.js (open-source auth framework by SST team)
     "openauth": "authentication",   # OpenAuth.js — open-source standards-based auth framework (SST team) → Authentication
-    # Testing — promptfoo LLM testing and red-teaming (5k★)
-    "promptfoo": "testing",         # promptfoo — LLM testing, red-teaming, and evaluation CLI (5k★) → Testing Tools
+    # AI Standards — promptfoo LLM red-teaming and evaluation (5k★)
+    "promptfoo": "standard",        # promptfoo — LLM red-teaming + eval CLI → AI Standards & Specs
     # Developer Tools — oslo.js auth utility library (Lucia Auth base, very commonly installed)
     "oslo": "developer",            # oslo.js — JavaScript auth utility library (base of Lucia Auth) → Developer Tools
     # AI — LlamaParse document parsing for RAG pipelines (LlamaIndex team)
@@ -5820,8 +5824,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "fargate": "devops",           # AWS Fargate — "fargate alternative", "serverless containers" → DevOps & Infrastructure
     "gke": "devops",               # GKE — Google Kubernetes Engine; "gke alternative", "gke vs eks" → DevOps & Infrastructure
     "aks": "devops",               # AKS — Azure Kubernetes Service; "aks alternative", "aks vs gke" → DevOps & Infrastructure
-    # AI — LLM evaluation singular form (complement to "evals"→ai, "evaluation"→ai already mapped)
-    "eval": "ai",                  # "llm eval", "model eval", "eval harness", "run eval" → AI & Automation
+    # AI Standards — LLM evaluation singular form (complement to "evals"→standard)
+    "eval": "standard",            # "llm eval", "model eval", "eval harness" → AI Standards & Specs
     # Security — Open Policy Agent abbreviation (complement to "open-policy-agent"→security already mapped)
     "opa": "security",             # OPA — Open Policy Agent; "opa policy", "opa alternative" → Security Tools
     # Email — deliverability (DKIM/SPF/DMARC are mapped; "deliverability" bare term was missing)
@@ -6382,6 +6386,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Agent SDK (Anthropic Agent SDK + generic agent SDK queries; "agent"→ai exists but "agent-sdk" doesn't)
     "agent-sdk": "ai",             # "agent-sdk setup", "agent-sdk alternative", "anthropic agent sdk" → AI & Automation
     "agentsdk": "ai",              # compound — "agentsdk python", "agentsdk alternative", "agentsdk docs" → AI & Automation
+    # AI Standards & Specs — LLM red-teaming, safety evals, benchmark harnesses (new category)
+    "redteam": "standard",         # "llm red team", "ai red team" → AI Standards & Specs
+    "redteaming": "standard",      # "ai red teaming", "llm redteaming" → AI Standards & Specs
+    "garak": "standard",           # garak — NVIDIA LLM vulnerability scanner → AI Standards & Specs
+    "lm-eval": "standard",         # EleutherAI eval harness — "lm-eval benchmarks" → AI Standards & Specs
+    "lmeval": "standard",          # compact — "lmeval harness", "lmeval alternative" → AI Standards & Specs
+    "lm-evaluation-harness": "standard",  # full slug — exact match → AI Standards & Specs
+    "inspect-ai": "standard",      # UK AISI safety eval — "inspect-ai alternative" → AI Standards & Specs
+    "inspectai": "standard",       # compact — "inspectai safety", "inspectai setup" → AI Standards & Specs
 }
 
 _FTS_STOP_WORDS = {
