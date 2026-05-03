@@ -6484,6 +6484,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI Standards — OpenCompass (Shanghai AI Lab; 100+ LLMs, 100+ benchmarks; 12k★)
     "opencompass": "standard",     # OpenCompass — "opencompass benchmark", "opencompass eval" → AI Standards & Specs
     # (swe-bench, swebench, bigcode already mapped earlier in this dict)
+    # AI Standards — additional benchmark names not yet routed (complement to mmlu/hellaswag/gsm8k above)
+    "bbh": "standard",             # BIG-Bench Hard — 23 distilled challenging tasks; "bbh score" → AI Standards & Specs
+    "big-bench": "standard",       # BIG-Bench — Google's 200+ task collaborative benchmark → AI Standards & Specs
+    "bigbench": "standard",        # compound — "bigbench hard", "bigbench tasks" → AI Standards & Specs
+    "winogrande": "standard",      # WinoGrande — large-scale Winograd commonsense benchmark → AI Standards & Specs
+    "arc-challenge": "standard",   # ARC Challenge — AI2 Reasoning Challenge hard questions → AI Standards & Specs
+    "arcchallenge": "standard",    # compound — "arcchallenge score", "arc challenge eval" → AI Standards & Specs
+    "llm-benchmark": "standard",   # "llm-benchmark suite", "run llm-benchmark" → AI Standards & Specs
+    "llmbenchmark": "standard",    # no-hyphen — "llmbenchmark comparison", "llmbenchmark results" → AI Standards
+    # AI Standards — AlpacaEval (Stanford; instruction-following leaderboard; ~5k★)
+    "alpacaeval": "standard",      # AlpacaEval — GPT-4-judged instruction-following benchmark → AI Standards
+    "alpaca-eval": "standard",     # hyphenated — "alpaca-eval leaderboard", "alpaca-eval alternative" → AI Standards
+    # AI Standards — Arena-Hard (LMSYS; 500-task automated benchmark, 89% Chatbot Arena correlation; ~1.5k★)
+    "arena-hard": "standard",      # Arena-Hard-Auto — "arena-hard score", "arena-hard benchmark" → AI Standards
+    "arenahard": "standard",       # compound — "arenahard leaderboard", "arenahard eval" → AI Standards & Specs
 }
 
 _FTS_STOP_WORDS = {

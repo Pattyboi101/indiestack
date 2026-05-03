@@ -13184,6 +13184,44 @@ TOOLS = [
         "pip install julep",
         "code",
     ),
+    # ── AI Standards (146th pass) ────────────────────────────────────────────
+    (
+        "alpacaeval",
+        "AlpacaEval",
+        "Fast automated LLM instruction-following evaluator with LLM-as-judge",
+        "AlpacaEval is Stanford's automated benchmark for instruction-following "
+        "quality. It uses GPT-4 or Claude as a judge to compare model outputs "
+        "against a GPT-4 Turbo reference, computing a win rate that correlates "
+        "well with human preference. The AlpacaEval 2.0 leaderboard ranks 128+ "
+        "models and is one of the most-cited instruction-following benchmarks "
+        "alongside Chatbot Arena. Run it against any OpenAI-compatible API on "
+        "805 eval prompts in minutes. 5k+ GitHub stars.",
+        "ai-standards",
+        "tatsu-lab/alpaca_eval",
+        5000,
+        "https://tatsu-lab.github.io/alpaca_eval",
+        "llm,evaluation,instruction-following,benchmark,leaderboard,open-source",
+        "pip install alpaca-eval",
+        "code",
+    ),
+    (
+        "arena-hard",
+        "Arena-Hard-Auto",
+        "Automated LLM benchmark with 89% correlation to Chatbot Arena human votes",
+        "Arena-Hard-Auto (LMSYS) selects 500 challenging prompts from real Chatbot "
+        "Arena conversations, then uses GPT-4 as a judge to score model responses. "
+        "It achieves 89%+ correlation with human preference data — the best proxy "
+        "for Chatbot Arena scores without expensive human evaluation. Widely used "
+        "to benchmark GPT-4o, Claude 3.5 Sonnet, Llama 3, and Qwen 2.5 before "
+        "public launches. 1.5k+ GitHub stars.",
+        "ai-standards",
+        "lm-sys/arena-hard-auto",
+        1500,
+        "https://github.com/lm-sys/arena-hard-auto",
+        "llm,benchmark,evaluation,chatbot-arena,instruction-following,open-source",
+        "pip install arena-hard",
+        "code",
+    ),
 ]
 
 
