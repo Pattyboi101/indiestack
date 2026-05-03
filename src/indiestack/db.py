@@ -7261,6 +7261,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Official UK gov AI safety tool; "inspect alternative", "inspect ai eval" queries
     "inspect-ai": "ai-standards",   # hyphenated — "inspect-ai alternative", "inspect-ai evals" → AI Standards & Specs
     "inspectai": "ai-standards",    # compact — "inspectai safety", "inspectai setup" → AI Standards & Specs
+    # AI Standards — SWE-bench (Princeton/MIT; coding agent benchmark; measures agent ability to resolve GitHub issues)
+    # Used to rank Devin, SWE-agent, OpenHands; "swe-bench score", "swe-bench verified" common queries
+    "swebench": "ai-standards",     # compact — "swebench score", "swebench eval" → AI Standards & Specs
+    "swe-bench": "ai-standards",    # hyphenated — "swe-bench verified", "swe-bench full" → AI Standards & Specs
+    # AI Standards — EvalPlus (HumanEval+ and MBPP+; rigorous code generation benchmarks)
+    # Extends original HumanEval with 80x more test cases to reduce pass-rate inflation
+    "evalplus": "ai-standards",     # "evalplus benchmark", "evalplus humaneval" → AI Standards & Specs
+    "humaneval": "ai-standards",    # OpenAI's code generation benchmark — "humaneval score" → AI Standards & Specs
+    # AI Standards — OpenCompass (Shanghai AI Lab; open evaluation platform supporting 100+ LLMs)
+    # Covers reasoning, coding, math, instruction-following; widely used in Chinese AI lab reports
+    "opencompass": "ai-standards",  # "opencompass benchmark", "opencompass eval" → AI Standards & Specs
+    # AI Standards — BigCode Evaluation Harness (for code generation models; HumanEval, MBPP, DS-1000)
+    # Powers the BigCode leaderboard; used to rank StarCoder, CodeLlama, DeepSeek-Coder
+    "bigcode-eval": "ai-standards",  # "bigcode-eval harness", "bigcode evaluation" → AI Standards & Specs
+    "bigcode": "ai-standards",       # bare — "bigcode leaderboard", "bigcode benchmark" → AI Standards & Specs
 }
 
 _FTS_STOP_WORDS = {

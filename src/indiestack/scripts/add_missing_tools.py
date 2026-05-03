@@ -15016,6 +15016,115 @@ TOOLS = [
         "pip install inspect-ai",
         "code",
     ),
+    # ── AI Standards (145th pass) ────────────────────────────────────────────
+    (
+        "swe-bench",
+        "SWE-bench",
+        "The benchmark for evaluating AI coding agents on real GitHub issues",
+        "SWE-bench measures AI agents' ability to resolve real GitHub issues from "
+        "popular Python repositories. Each task gives an agent a codebase and a "
+        "failing test describing a bug — the agent must write a patch that makes "
+        "the test pass without breaking other tests. SWE-bench Verified (500 tasks "
+        "hand-checked for quality) is now the standard leaderboard for ranking "
+        "coding agents like Devin, SWE-agent, OpenHands, and Aider. Published by "
+        "Princeton NLP and MIT. 15k+ GitHub stars.",
+        "ai-standards",
+        "princeton-nlp/SWE-bench",
+        15000,
+        "https://www.swebench.com",
+        "llm,benchmark,coding-agent,github,python,evaluation,open-source",
+        "pip install swe-bench",
+        "code",
+    ),
+    (
+        "evalplus",
+        "EvalPlus",
+        "Rigorous code generation benchmarks with 80x more test cases",
+        "EvalPlus extends HumanEval and MBPP with 80x more test cases generated "
+        "using LLMs + mutation testing, drastically reducing benchmark inflation. "
+        "A model that scores 90% on original HumanEval often scores 70–80% on "
+        "HumanEval+. Run `evalplus.evaluate` against any OpenAI-compatible API or "
+        "local model to get honest pass@k scores. Widely used by researchers who "
+        "suspect official leaderboard numbers are optimistic. 2k+ GitHub stars.",
+        "ai-standards",
+        "evalplus-team/evalplus",
+        2000,
+        "https://evalplus.github.io",
+        "llm,benchmark,code-generation,humaneval,mbpp,evaluation,open-source",
+        "pip install evalplus",
+        "code",
+    ),
+    (
+        "opencompass",
+        "OpenCompass",
+        "Open evaluation platform for 100+ LLMs across reasoning, coding, and math",
+        "OpenCompass is Shanghai AI Lab's open-source evaluation platform supporting "
+        "100+ LLMs (GPT-4, Claude, Llama, Qwen, DeepSeek, InternLM) across 100+ "
+        "benchmarks: MMLU, C-Eval, HumanEval, MATH, BBH, and more. One config YAML "
+        "runs a full eval suite in parallel — outputs a structured report for each "
+        "model. Powers OpenCompass Leaderboard, the main reference for Chinese AI "
+        "lab model releases. 12k+ GitHub stars.",
+        "ai-standards",
+        "open-compass/opencompass",
+        12000,
+        "https://opencompass.org.cn",
+        "llm,benchmark,evaluation,mmlu,coding,math,reasoning,open-source",
+        "pip install opencompass",
+        "code",
+    ),
+    # ── MCP Servers (145th pass) ─────────────────────────────────────────────
+    (
+        "mcp-brave-search",
+        "MCP Brave Search Server",
+        "Official MCP server for real-time web search via Brave Search API",
+        "Official MCP server that gives AI agents real-time web search capabilities "
+        "via the Brave Search API. Agents can perform web searches, get news results, "
+        "and retrieve summaries without opening a browser. Requires a free Brave "
+        "Search API key (up to 2,000 queries/month free). Ideal for agents that need "
+        "to look up current information, prices, or documentation. Part of the "
+        "official modelcontextprotocol/servers monorepo (14k+ GitHub stars).",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
+        "mcp,search,brave,web-search,official,ai-agent",
+        "npx -y @modelcontextprotocol/server-brave-search",
+        "code",
+    ),
+    (
+        "mcp-google-drive",
+        "MCP Google Drive Server",
+        "Official MCP server for Google Drive file access and search",
+        "Official MCP server that gives AI agents access to Google Drive. Agents "
+        "can search files, read documents (Docs, Sheets, Slides), list folders, and "
+        "retrieve file content — enabling document summarization, data extraction, "
+        "and knowledge-base workflows. Requires Google OAuth credentials. Part of "
+        "the official modelcontextprotocol/servers monorepo (14k+ GitHub stars).",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/gdrive",
+        "mcp,google-drive,documents,files,official,ai-agent",
+        "npx -y @modelcontextprotocol/server-gdrive",
+        "code",
+    ),
+    (
+        "mcp-notion",
+        "MCP Notion Server",
+        "Official MCP server for Notion workspace integration",
+        "Official MCP server that gives AI agents access to your Notion workspace. "
+        "Agents can search pages, read databases, create and update pages, and "
+        "query structured data — turning Notion into a live knowledge base for "
+        "AI-powered workflows. Requires a Notion integration token. Part of the "
+        "official modelcontextprotocol/servers monorepo (14k+ GitHub stars).",
+        "mcp-servers",
+        "modelcontextprotocol/servers",
+        14000,
+        "https://github.com/modelcontextprotocol/servers/tree/main/src/notion",
+        "mcp,notion,knowledge-base,documents,official,ai-agent",
+        "npx -y @modelcontextprotocol/server-notion",
+        "code",
+    ),
     # ── MCP Servers (144th pass) ─────────────────────────────────────────────
     (
         "mcp-sqlite",
