@@ -3561,7 +3561,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — additional NLP/LLM evaluation and pipeline tools
     "haystack": "ai",               # Haystack — NLP + LLM pipeline framework (18k★)
     "deepeval": "ai",               # DeepEval — open-source LLM evaluation framework (5k★)
-    "ragas": "ai",                  # RAGAS — RAG evaluation framework
+    # "ragas" → moved to ai-standards section below (RAG eval framework)
     # Testing — TDD and mutation testing
     "tdd": "testing",               # test-driven development tooling queries
     "mutation": "testing",          # "mutation testing" — Stryker, Mutmut, PITest
@@ -6463,6 +6463,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "moondream": "ai",             # Moondream — "moondream alternative", "moondream vqa" → AI & Automation
     # AI — Devika (stitionai/devika, ~18k★; open-source agentic AI software engineer)
     "devika": "ai",                # Devika — "devika alternative", "devika setup", "devika vs devin" → AI & Automation
+    # AI Standards & Specs — benchmark names and evaluation infrastructure
+    # "standard" LIKE-matches "AI Standards & Specs" category name
+    # lm-eval/garak/inspect-ai/swe-bench already mapped above; adding benchmark dataset names + infra
+    "mlperf": "standard",          # MLPerf — industry ML inference/training benchmarks by MLCommons → AI Standards & Specs
+    "mlcommons": "standard",       # MLCommons — org running MLPerf benchmarks → AI Standards & Specs
+    "truthfulqa": "standard",      # TruthfulQA — factual accuracy benchmark; "truthfulqa score" → AI Standards & Specs
+    "mmlu": "standard",            # MMLU — Massive Multitask Language Understanding; "mmlu benchmark" → AI Standards & Specs
+    "hellaswag": "standard",       # HellaSwag — commonsense NLI reasoning benchmark → AI Standards & Specs
+    "mbpp": "standard",            # MBPP — Mostly Basic Python Problems code benchmark → AI Standards & Specs
+    "gsm8k": "standard",           # GSM8K — grade school math reasoning benchmark → AI Standards & Specs
+    # AI Standards — OpenAI Evals (ancestor of modern eval frameworks; 13k★)
+    "openai-evals": "standard",    # OpenAI Evals — "openai-evals setup", "openai evals framework" → AI Standards & Specs
+    "oai-evals": "standard",       # abbreviation — "oai-evals run", "oai evals harness" → AI Standards & Specs
+    # AI Standards — Ragas (RAG evaluation metrics; faithfulness, relevancy, precision; 8k★)
+    "ragas": "standard",           # Ragas — "ragas metrics", "ragas faithfulness", "ragas rag eval" → AI Standards & Specs
+    # AI Standards — EvalPlus (HumanEval+ and MBPP+; rigorous code gen benchmarks; 2k★)
+    "evalplus": "standard",        # EvalPlus — "evalplus benchmark", "evalplus humaneval" → AI Standards & Specs
+    "humaneval": "standard",       # HumanEval — OpenAI code generation benchmark — "humaneval score" → AI Standards & Specs
+    # AI Standards — OpenCompass (Shanghai AI Lab; 100+ LLMs, 100+ benchmarks; 12k★)
+    "opencompass": "standard",     # OpenCompass — "opencompass benchmark", "opencompass eval" → AI Standards & Specs
+    # (swe-bench, swebench, bigcode already mapped earlier in this dict)
 }
 
 _FTS_STOP_WORDS = {

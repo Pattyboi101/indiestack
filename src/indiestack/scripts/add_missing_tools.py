@@ -13038,6 +13038,98 @@ TOOLS = [
         "pip install inspect-ai",
         "code",
     ),
+    # AI Standards — SWE-bench, EvalPlus, OpenCompass, OpenAI Evals, Ragas (146th pass) ──────
+    (
+        "swe-bench",
+        "SWE-bench",
+        "Benchmark for evaluating AI coding agents on real GitHub issues",
+        "SWE-bench measures AI agents' ability to resolve real GitHub issues from "
+        "popular Python repositories. Each task gives an agent a codebase and a "
+        "failing test describing a bug — the agent must write a patch that makes "
+        "the test pass without breaking others. SWE-bench Verified (500 hand-checked "
+        "tasks) is the standard leaderboard for ranking coding agents like Devin, "
+        "SWE-agent, OpenHands, and Aider. Published by Princeton NLP and MIT. "
+        "15k+ GitHub stars.",
+        "ai-standards",
+        "princeton-nlp/SWE-bench",
+        15000,
+        "https://www.swebench.com",
+        "llm,benchmark,coding-agent,github,python,evaluation,open-source",
+        "pip install swebench",
+        "code",
+    ),
+    (
+        "evalplus",
+        "EvalPlus",
+        "Rigorous code generation benchmarks with 80x more test cases",
+        "EvalPlus extends HumanEval and MBPP with 80× more test cases generated "
+        "using LLMs + mutation testing, reducing benchmark inflation. A model "
+        "scoring 90% on HumanEval often scores 70–80% on HumanEval+. Run "
+        "`evalplus.evaluate` against any OpenAI-compatible API or local model "
+        "for honest pass@k scores. Widely used by researchers who suspect "
+        "leaderboard numbers are optimistic. 2k+ GitHub stars.",
+        "ai-standards",
+        "evalplus-team/evalplus",
+        2000,
+        "https://evalplus.github.io",
+        "llm,benchmark,code-generation,humaneval,mbpp,evaluation,open-source",
+        "pip install evalplus",
+        "code",
+    ),
+    (
+        "opencompass",
+        "OpenCompass",
+        "Open evaluation platform for 100+ LLMs across reasoning, coding, and math",
+        "OpenCompass is Shanghai AI Lab's open-source evaluation platform "
+        "supporting 100+ LLMs (GPT-4, Claude, Llama, Qwen, DeepSeek, InternLM) "
+        "across 100+ benchmarks: MMLU, C-Eval, HumanEval, MATH, BBH, and more. "
+        "One config YAML runs a full eval suite in parallel. Powers the "
+        "OpenCompass Leaderboard, the main reference for Chinese AI lab releases. "
+        "12k+ GitHub stars.",
+        "ai-standards",
+        "open-compass/opencompass",
+        12000,
+        "https://opencompass.org.cn",
+        "llm,benchmark,evaluation,mmlu,coding,math,reasoning,open-source",
+        "pip install opencompass",
+        "code",
+    ),
+    (
+        "openai-evals",
+        "OpenAI Evals",
+        "The original open-source framework for evaluating LLM quality",
+        "OpenAI Evals is the evaluation framework that started the LLM eval "
+        "ecosystem. Define evals as YAML configs — model-graded, string match, "
+        "or custom Python — and run them against any OpenAI-compatible API. "
+        "Ships with hundreds of built-in evals across factual accuracy, reasoning, "
+        "code generation, and safety. The ancestor of lm-eval-harness, DeepEval, "
+        "Ragas, and Promptfoo. 13k+ GitHub stars.",
+        "ai-standards",
+        "openai/evals",
+        13000,
+        "https://github.com/openai/evals",
+        "llm,evaluation,benchmarks,openai,evals,ai-safety,open-source",
+        "pip install evals",
+        "code",
+    ),
+    (
+        "ragas",
+        "Ragas",
+        "RAG evaluation metrics — faithfulness, relevancy, precision",
+        "Ragas provides the standard metric suite for evaluating "
+        "Retrieval-Augmented Generation pipelines: faithfulness, answer relevancy, "
+        "context precision, context recall, and answer correctness. Works with any "
+        "LLM as the judge. Integrates with LangChain, LlamaIndex, and plain Python. "
+        "Run with pytest or as a standalone script to catch hallucinations and "
+        "context drift before they reach production. 8k+ GitHub stars.",
+        "ai-standards",
+        "explodinggradients/ragas",
+        8000,
+        "https://docs.ragas.io",
+        "llm,rag,evaluation,faithfulness,hallucination,metrics,langchain,llamaindex,open-source",
+        "pip install ragas",
+        "code",
+    ),
     # AI Agents — OpenHands / OpenDevin (all-hands-ai/openhands, ~45k★) ----------
     (
         "openhands",
