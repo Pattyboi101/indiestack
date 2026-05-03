@@ -91,8 +91,14 @@ ITERATION 1 — SEARCH QUALITY:
 curl the API for these queries and check top-3 results are relevant:
   'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring',
   'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth',
-  'state management', 'bundler', 'realtime', 'vector database', 'rate limiting'.
+  'state management', 'bundler', 'realtime', 'vector database', 'rate limiting',
+  'ai gateway', 'llm gateway', 'model router', 'ai proxy',
+  'load balancing', 'semantic cache', 'dark launch', 'token bucket rate limiter',
+  'mcp sentry', 'mcp stripe', 'mcp figma', 'mcp atlassian',
+  'llm observability', 'prompt management', 'llm tracing'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
+Note: _CAT_SYNONYMS now supports multi-word bigram entries (e.g. "ai gateway": "ai") —
+add multi-word keys for query patterns where individual word routing gives wrong category.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
