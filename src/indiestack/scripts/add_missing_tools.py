@@ -6229,6 +6229,92 @@ TOOLS = [
         "npx -y figma-developer-mcp --figma-api-key=YOUR_KEY",
         "code",
     ),
+    # ── MCP Servers — Vendor-Built (171st pass) ───────────────────────────────
+    (
+        "mcp-supabase",
+        "Supabase MCP Server",
+        "Official Supabase MCP server for database, auth, and storage",
+        "Official Supabase MCP server that gives AI agents full access to your "
+        "Supabase project. Agents can run SQL queries, manage tables, call Edge "
+        "Functions, read storage buckets, and administer auth users — enabling "
+        "AI agents to build, query, and manage Supabase backends through natural "
+        "language. Requires a Supabase personal access token. Maintained by Supabase.",
+        "mcp-servers",
+        "supabase-community/supabase-mcp",
+        2000,
+        "https://github.com/supabase-community/supabase-mcp",
+        "mcp,supabase,database,postgres,auth,storage,official,ai-agent",
+        "npx -y @supabase/mcp-server-supabase@latest",
+        "code",
+    ),
+    (
+        "mcp-vercel",
+        "Vercel MCP Server",
+        "Official Vercel MCP server for deployments, projects, and edge config",
+        "Official Vercel MCP server that gives AI agents control over Vercel "
+        "deployments. Agents can list projects, trigger deploys, inspect build "
+        "logs, manage environment variables, and query Edge Config — enabling "
+        "AI-driven deployment workflows and infrastructure automation. Requires "
+        "a Vercel API token. Maintained by Vercel.",
+        "mcp-servers",
+        "vercel/mcp-adapter",
+        1500,
+        "https://vercel.com/docs/mcp",
+        "mcp,vercel,deployment,infrastructure,edge,official,ai-agent",
+        "npx -y @vercel/mcp-server",
+        "code",
+    ),
+    (
+        "mcp-cloudflare",
+        "Cloudflare MCP Server",
+        "Official Cloudflare MCP server for Workers, KV, R2, D1, and DNS",
+        "Official Cloudflare MCP server that gives AI agents access to your "
+        "Cloudflare account. Agents can deploy Workers, manage KV namespaces, "
+        "query D1 databases, access R2 buckets, configure DNS records, and "
+        "monitor analytics — enabling AI-driven edge infrastructure automation. "
+        "Requires a Cloudflare API token. Maintained by Cloudflare.",
+        "mcp-servers",
+        "cloudflare/mcp-server-cloudflare",
+        2500,
+        "https://github.com/cloudflare/mcp-server-cloudflare",
+        "mcp,cloudflare,workers,kv,r2,d1,edge,official,ai-agent",
+        "npx -y @cloudflare/mcp-server-cloudflare",
+        "code",
+    ),
+    (
+        "mcp-kubernetes",
+        "MCP Kubernetes Server",
+        "Community MCP server for Kubernetes cluster management",
+        "MCP server that gives AI agents kubectl-level access to Kubernetes "
+        "clusters. Agents can list pods, deployments, and services; apply "
+        "manifests; view logs; exec into containers; and inspect cluster "
+        "health — enabling AI-driven cluster operations and debugging via "
+        "natural language. Works with any kubeconfig-accessible cluster.",
+        "mcp-servers",
+        "Flux159/mcp-server-kubernetes",
+        1800,
+        "https://github.com/Flux159/mcp-server-kubernetes",
+        "mcp,kubernetes,k8s,devops,cluster,infrastructure,ai-agent",
+        "npx -y mcp-server-kubernetes",
+        "code",
+    ),
+    (
+        "mcp-docker",
+        "MCP Docker Server",
+        "Community MCP server for Docker container and image management",
+        "MCP server that gives AI agents control over Docker. Agents can list "
+        "containers and images, start/stop/restart containers, view logs, "
+        "inspect configs, run docker-compose workflows, and manage networks "
+        "and volumes — enabling AI-driven local and remote container operations "
+        "without leaving the agent context.",
+        "mcp-servers",
+        "ckreiling/mcp-server-docker",
+        1200,
+        "https://github.com/ckreiling/mcp-server-docker",
+        "mcp,docker,containers,devops,images,ai-agent",
+        "npx -y mcp-server-docker",
+        "code",
+    ),
     # MCP Servers -----------------------------------------------------------
     (
         "mcp-brave-search",

@@ -4348,6 +4348,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "atlassian-mcp": "mcp",         # reversed form — "atlassian-mcp setup" → MCP Servers
     "mcp-figma": "mcp",             # Figma MCP — "mcp-figma setup", "figma mcp alternative" → MCP Servers
     "figma-mcp": "mcp",             # reversed form — "figma-mcp server", "figma-mcp install" → MCP Servers
+    "mcp-supabase": "mcp",          # Supabase MCP — "mcp-supabase setup", "supabase mcp server" → MCP Servers
+    "supabase-mcp": "mcp",          # reversed form — "supabase-mcp setup", "supabase-mcp install" → MCP Servers
+    "mcp-vercel": "mcp",            # Vercel MCP — "mcp-vercel setup", "vercel mcp server" → MCP Servers
+    "vercel-mcp": "mcp",            # reversed form — "vercel-mcp alternative", "vercel-mcp deploy" → MCP Servers
+    "mcp-cloudflare": "mcp",        # Cloudflare MCP — "mcp-cloudflare workers", "cloudflare mcp server" → MCP Servers
+    "cloudflare-mcp": "mcp",        # reversed form — "cloudflare-mcp setup", "cloudflare-mcp kv" → MCP Servers
+    "mcp-kubernetes": "mcp",        # Kubernetes MCP — "mcp-kubernetes setup", "k8s mcp server" → MCP Servers
+    "kubernetes-mcp": "mcp",        # reversed form — "kubernetes-mcp alternative", "kubernetes-mcp kubectl" → MCP Servers
+    "mcp-docker": "mcp",            # Docker MCP — "mcp-docker setup", "docker mcp server" → MCP Servers
+    "docker-mcp": "mcp",            # reversed form — "docker-mcp setup", "docker-mcp containers" → MCP Servers
     # Kubernetes tooling — cluster management and developer workflow tools
     "k9s": "devops",                # k9s — terminal-based Kubernetes TUI dashboard manager (27k★)
     "kustomize": "devops",          # Kustomize — Kubernetes-native configuration customization (CNCF)
@@ -4892,8 +4902,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — CSS-in-JS tools (complement to pandacss, unocss already mapped)
     "panda-css": "frontend",        # Panda CSS hyphenated form — "panda-css alternative" → Frontend Frameworks
     "stylex": "frontend",           # StyleX — Meta's compile-time CSS-in-JS (powers Facebook.com, 8k★) → Frontend Frameworks
-    # API / Browser automation — Browserbase cloud browser for AI agents
+    # API / Browser automation — Browserbase + Steel cloud browsers for AI agents
     "browserbase": "api",           # Browserbase — cloud browser API for AI agent web automation → API Tools
+    # Steel (steel-dev/steel, ~5k★; open-source cloud browser for AI agents)
+    # "steel browser alternative" would route to testing via "browser"→testing without this entry
+    "steel": "api",                 # bare — "steel browser alternative", "steel browser agent" → API Tools
+    "steeldev": "api",              # compact org form — "steeldev browser", "steeldev alternative" → API Tools
+    "steel-dev": "api",             # hyphenated org — "steel-dev setup", "steel-dev vs browserbase" → API Tools
     # MCP — browser automation MCP server (high-growth query segment as agents use Playwright/Puppeteer)
     "playwright-mcp": "mcp",        # Playwright MCP — browser automation MCP server for AI agents → MCP Servers
     # Media — FFmpeg is the most-searched video/audio processing tool (every "video tool" query hits it)
