@@ -4332,6 +4332,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "braintrust": "ai",             # Braintrust Data — LLM evaluation, tracing, and dataset management
     "agentops": "ai",               # AgentOps — LLM/AI agent session replay and observability (4k★)
     "opik": "ai",                   # Opik (Comet ML) — open-source LLM evaluation and tracing (5k★)
+    "traceloop": "ai",              # Traceloop — OpenTelemetry-based LLM tracing; "traceloop alternative" → AI & Automation
+    "openllmetry": "ai",            # OpenLLMetry — the OTel instrumentation layer from Traceloop → AI & Automation
+    "weave": "ai",                  # Weights & Biases Weave — LLM tracing + evaluation; "weave alternative" → AI & Automation
+    "humanloop": "ai",              # Humanloop — "humanloop alternative", "humanloop evaluation" → AI & Automation
+    "human-loop": "ai",             # hyphenated — "human-loop setup", "human-loop vs braintrust" → AI & Automation
+    "promptlayer": "ai",            # PromptLayer — "promptlayer alternative", "promptlayer vs langfuse" → AI & Automation
+    "prompt-layer": "ai",           # hyphenated — "prompt-layer setup", "prompt-layer logging" → AI & Automation
+    # MCP — vendor-built MCP servers (Sentry, Stripe, Atlassian, Figma)
+    "mcp-sentry": "mcp",            # Sentry MCP — "mcp-sentry setup", "sentry mcp server" → MCP Servers
+    "sentry-mcp": "mcp",            # reversed form — "sentry-mcp server", "sentry-mcp install" → MCP Servers
+    "mcp-stripe": "mcp",            # Stripe MCP — "mcp-stripe setup", "mcp-stripe alternative" → MCP Servers
+    "stripe-mcp": "mcp",            # reversed form — "stripe-mcp server", "stripe-mcp install" → MCP Servers
+    "mcp-atlassian": "mcp",         # Atlassian MCP — "mcp-atlassian setup", "mcp-atlassian jira" → MCP Servers
+    "atlassian-mcp": "mcp",         # reversed form — "atlassian-mcp setup" → MCP Servers
+    "mcp-figma": "mcp",             # Figma MCP — "mcp-figma setup", "figma mcp alternative" → MCP Servers
+    "figma-mcp": "mcp",             # reversed form — "figma-mcp server", "figma-mcp install" → MCP Servers
     # Kubernetes tooling — cluster management and developer workflow tools
     "k9s": "devops",                # k9s — terminal-based Kubernetes TUI dashboard manager (27k★)
     "kustomize": "devops",          # Kustomize — Kubernetes-native configuration customization (CNCF)
@@ -5266,9 +5282,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — natural language processing query patterns not yet covered
     "natural": "ai",                # "natural language processing", "natural language API", "natural language search" → AI & Automation
     "tokenize": "ai",               # verb form — "tokenize input", "tokenize text for llm", "tokenize document" → AI & Automation
-    # LLM proxy — routing for proxy/gateway query terms (complement to "litellm"→ai, "portkey"→ai, "openrouter"→ai)
-    "llm-proxy": "ai",              # hyphenated — "llm-proxy setup", "llm-proxy alternative", "llm-proxy caching" → AI & Automation
+    # LLM proxy / AI gateway — routing for proxy/gateway query terms (litellm, portkey, openrouter, helicone)
+    # Multi-word bigram entries ("ai gateway", "llm gateway") now matched by bigram lookup in search_tools().
+    # Single-token hyphenated/compound forms also covered for when users type them as one word.
+    "llm-proxy": "ai",              # hyphenated — "llm-proxy setup", "llm-proxy alternative" → AI & Automation
     "llmproxy": "ai",               # compound — "llmproxy rate limiting", "llmproxy server" → AI & Automation
+    "llm-gateway": "ai",            # hyphenated — "llm-gateway setup", "llm-gateway alternative" → AI & Automation
+    "llmgateway": "ai",             # compound — "llmgateway routing", "llmgateway caching" → AI & Automation
+    "ai-gateway": "ai",             # hyphenated single-token — "ai-gateway comparison" → AI & Automation
+    "aigateway": "ai",              # compound — "aigateway setup", "aigateway alternative" → AI & Automation
+    "ai-proxy": "ai",               # hyphenated — "ai-proxy service", "ai-proxy routing" → AI & Automation
+    "aiproxy": "ai",                # compound — "aiproxy alternative", "aiproxy setup" → AI & Automation
+    "ai-router": "ai",              # hyphenated — "ai-router fallback", "ai-router latency" → AI & Automation
+    "airouter": "ai",               # compound — "airouter setup", "airouter comparison" → AI & Automation
+    # Multi-word bigram entries (active now that bigram lookup is implemented)
+    "ai gateway": "ai",             # "ai gateway comparison", "ai gateway open source" → AI & Automation
+    "llm gateway": "ai",            # "llm gateway setup", "llm gateway alternative" → AI & Automation
+    "ai proxy": "ai",               # "ai proxy server", "ai proxy routing" → AI & Automation
+    "ai router": "ai",              # "ai router fallback", "ai router service" → AI & Automation
+    "model gateway": "ai",          # "model gateway routing", "model gateway caching" → AI & Automation
+    "model router": "ai",           # "model router setup", "model router alternative" → AI & Automation
     # Database — data lake query routing (complement to "lakehouse"→database, "iceberg"→database, "delta"→database)
     "lake": "database",             # "data lake tool", "data lake platform", "lake formation alternative" → Database
     # API — API key management compound/hyphenated forms (Unkey, Kong, Zuplo live in API Tools)
@@ -6642,9 +6675,15 @@ async def search_tools(
     # For queries like "self hosted auth", the first meaningful term ("self") has no
     # synonym — scan all terms and prefer the first with a known synonym so "auth"
     # from "self hosted auth" gets the 100-point Authentication category boost.
-    _syn_term = next((t for t in _meaningful_for_cat if t in _CAT_SYNONYMS), None)
-    if _syn_term:
-        _cat_term = _CAT_SYNONYMS[_syn_term]
+    # Check adjacent-word bigrams first so multi-word entries in _CAT_SYNONYMS
+    # ("load balancing"→devops, "semantic cache"→caching, "ai gateway"→ai, etc.)
+    # take precedence over their individual-word mappings which can misroute.
+    _bigrams = [f"{_meaningful_for_cat[i]} {_meaningful_for_cat[i+1]}"
+                for i in range(len(_meaningful_for_cat) - 1)]
+    _syn_key = (next((bg for bg in _bigrams if bg in _CAT_SYNONYMS), None)
+                or next((t for t in _meaningful_for_cat if t in _CAT_SYNONYMS), None))
+    if _syn_key:
+        _cat_term = _CAT_SYNONYMS[_syn_key]
     else:
         _cat_term = _raw_cat
     _engagement_params: list = [_q, _q, _q, _q, _cat_term, _cat_term, _cat_term]

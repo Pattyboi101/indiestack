@@ -6090,6 +6090,145 @@ TOOLS = [
         "npx create-supastarter-app",
         "code",
     ),
+    # ── LLM Observability (170th pass) ────────────────────────────────────────
+    (
+        "traceloop",
+        "Traceloop / OpenLLMetry",
+        "OpenTelemetry-based LLM tracing and observability for AI applications",
+        "Traceloop (OpenLLMetry) is an open-source observability framework for LLM "
+        "applications built on OpenTelemetry standards. Drop-in instrumentation for "
+        "OpenAI, Anthropic, LangChain, LlamaIndex, and more — sends traces to any "
+        "OTLP-compatible backend (Grafana, Jaeger, Datadog, or Traceloop's cloud). "
+        "Gives full request/response traces, token costs, latency, and error rates "
+        "per prompt. 3k+ GitHub stars. Works in any Python or Node.js project.",
+        "ai-automation",
+        "traceloop/openllmetry",
+        3200,
+        "https://traceloop.com",
+        "llm,observability,opentelemetry,tracing,monitoring,langchain,openai",
+        "pip install traceloop-sdk",
+        "code",
+    ),
+    (
+        "weave",
+        "Weave by W&B",
+        "LLM evaluation, tracing, and dataset management by Weights & Biases",
+        "Weave is Weights & Biases' toolkit for tracking and evaluating LLM applications. "
+        "Log prompts, completions, and chain traces automatically; build evaluation "
+        "datasets; run scoring pipelines with custom judges. Works with OpenAI, "
+        "Anthropic, LangChain, LlamaIndex, and any Python function. Free tier available. "
+        "Pairs naturally with W&B's MLflow-compatible experiment tracking.",
+        "ai-automation",
+        "wandb/weave",
+        1800,
+        "https://weave-docs.wandb.ai",
+        "llm,evaluation,tracing,observability,dataset,wandb,open-source",
+        "pip install weave",
+        "code",
+    ),
+    (
+        "humanloop",
+        "Humanloop",
+        "Prompt management, evaluation, and fine-tuning for LLM applications",
+        "Humanloop is an LLM operations platform for managing prompts, running "
+        "evaluations, and collecting human feedback at scale. Version-control prompts, "
+        "A/B test variants, auto-evaluate with LLM judges, and fine-tune models on "
+        "production data. Integrates with OpenAI, Anthropic, Google, and open-source "
+        "models. Used by engineering teams shipping AI features in production.",
+        "ai-automation",
+        "humanloop/humanloop-python",
+        400,
+        "https://humanloop.com",
+        "llm,prompt-management,evaluation,fine-tuning,observability,ai-ops",
+        "pip install humanloop",
+        "saas",
+    ),
+    (
+        "promptlayer",
+        "PromptLayer",
+        "The first platform built for prompt engineering teams",
+        "PromptLayer is a prompt management and observability platform that wraps "
+        "OpenAI and Anthropic APIs to log every request, track token costs, and "
+        "version prompts with a visual editor. Teams can search historical requests, "
+        "run regression tests when changing prompts, and share results. Free tier "
+        "available. Used by teams that treat prompts as code.",
+        "ai-automation",
+        "MagnivOrg/prompt-layer-library",
+        1100,
+        "https://promptlayer.com",
+        "llm,prompt-management,observability,openai,logging,versioning",
+        "pip install promptlayer",
+        "saas",
+    ),
+    # ── MCP Servers — Vendor-Built (170th pass) ───────────────────────────────
+    (
+        "mcp-sentry",
+        "Sentry MCP Server",
+        "Official Sentry MCP server for error tracking and issue management",
+        "Official MCP server from Sentry that gives AI agents access to your Sentry "
+        "account. Agents can list projects, search issues, retrieve stack traces and "
+        "event details, and update issue status — enabling AI-powered debugging and "
+        "triage workflows. Requires a Sentry auth token. Works with Claude, Cursor, "
+        "Windsurf, and any MCP-compatible client.",
+        "mcp-servers",
+        "getsentry/sentry-mcp",
+        800,
+        "https://github.com/getsentry/sentry-mcp",
+        "mcp,sentry,error-tracking,debugging,issues,official,ai-agent",
+        "npx -y @sentry/mcp-server",
+        "code",
+    ),
+    (
+        "mcp-stripe",
+        "Stripe Agent Toolkit / MCP Server",
+        "Official Stripe MCP server for payment operations from AI agents",
+        "Official Stripe MCP server that gives AI agents access to the Stripe API. "
+        "Agents can create payment intents, manage customers, list subscriptions, "
+        "retrieve invoices, and run refunds — enabling AI-assisted billing workflows "
+        "and finance automation. Requires a Stripe secret key. Part of the official "
+        "Stripe Agent Toolkit.",
+        "mcp-servers",
+        "stripe/agent-toolkit",
+        1200,
+        "https://github.com/stripe/agent-toolkit",
+        "mcp,stripe,payments,billing,subscriptions,official,ai-agent",
+        "npx -y @stripe/mcp",
+        "code",
+    ),
+    (
+        "mcp-atlassian",
+        "Atlassian MCP Server",
+        "Community MCP server for Jira and Confluence from AI agents",
+        "MCP server that gives AI agents access to Atlassian Jira and Confluence. "
+        "Agents can search and create Jira issues, update statuses, list sprints, "
+        "read Confluence pages, and create documentation — enabling AI-assisted "
+        "project management and knowledge base workflows. Supports both Jira Cloud "
+        "and Jira Server. 2k+ GitHub stars.",
+        "mcp-servers",
+        "sooperset/mcp-atlassian",
+        2100,
+        "https://github.com/sooperset/mcp-atlassian",
+        "mcp,jira,confluence,atlassian,project-management,ai-agent",
+        "uvx mcp-atlassian",
+        "code",
+    ),
+    (
+        "mcp-figma",
+        "Figma MCP Server",
+        "Community MCP server for reading Figma designs from AI agents",
+        "MCP server that gives AI agents read access to Figma files. Agents can "
+        "extract component names, colours, fonts, layout properties, and export "
+        "assets — enabling AI-assisted design-to-code workflows. Agents can describe "
+        "a design file and generate matching code (React, Tailwind, etc.) without "
+        "manually copying specs. Requires a Figma personal access token.",
+        "mcp-servers",
+        "GLips/Figma-Context-MCP",
+        3500,
+        "https://github.com/GLips/Figma-Context-MCP",
+        "mcp,figma,design,design-to-code,components,ai-agent",
+        "npx -y figma-developer-mcp --figma-api-key=YOUR_KEY",
+        "code",
+    ),
     # MCP Servers -----------------------------------------------------------
     (
         "mcp-brave-search",
