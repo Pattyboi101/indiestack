@@ -13,6 +13,15 @@ from indiestack.db import get_tools_for_comparison
 router = APIRouter()
 
 
+def _safe_jld(data) -> str:
+    return (
+        _json.dumps(data, ensure_ascii=False)
+        .replace("&", "\\u0026")
+        .replace("<", "\\u003c")
+        .replace(">", "\\u003e")
+    )
+
+
 def format_price(pence) -> str:
     if not pence or pence <= 0:
         return "Free"
@@ -284,7 +293,7 @@ async def compare_tools(request: Request, slugs: str):
             ld["offers"] = {"@type": "Offer", "price": "0", "priceCurrency": "GBP"}
         return ld
 
-    webpage_ld = _json.dumps({
+    webpage_ld = _safe_jld({
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": f"{tool1['name']} vs {tool2['name']} -- Agent-Verified Comparison",
@@ -293,7 +302,7 @@ async def compare_tools(request: Request, slugs: str):
         "mainEntity": [_software_ld(tool1), _software_ld(tool2)],
     })
 
-    faq_ld = _json.dumps({
+    faq_ld = _safe_jld({
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [

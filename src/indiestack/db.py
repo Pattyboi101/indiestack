@@ -7379,6 +7379,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Google NotebookLM (AI-powered research and note-taking; common developer query)
     "notebooklm": "ai",             # NotebookLM — Google's AI notebook/research tool; "notebooklm alternative" → AI & Automation
     "notebook-lm": "ai",            # hyphenated — "notebook-lm api", "notebook-lm alternative" → AI & Automation
+    # AI agent orchestration — "orchestrator" standalone fires for AI agent orchestrators (153rd pass)
+    # "orchestration" → "background" (workflow pipelines: Dagster, Prefect); "orchestrator" alone
+    # is increasingly used for AI agent orchestrators (LangGraph, CrewAI, AutoGen, Mastra) in 2026.
+    "orchestrator": "ai",           # "agent orchestrator", "llm orchestrator", "ai orchestrator" → AI & Automation
+    # Context engineering — 2026 AI term for designing/optimizing agent context windows.
+    # "context" → "frontend" (React Context API); compound "contextengineering" has no split, routes correctly.
+    "contextengineering": "ai",     # compound — "contextengineering tool", "contextengineering library" → AI & Automation
+    "context-engineering": "ai",    # hyphenated — "context-engineering framework" → AI & Automation
+    # MCP hub / registry — discovery layers for MCP servers (Smithery, MCP.run)
+    # "mcp" alone already routes to mcp-servers; compound forms ensure "mcp hub", "mcp registry" are unambiguous
+    "mcp-hub": "mcp",               # "mcp hub discovery", "mcp hub alternative" → MCP Servers
+    "mcphub": "mcp",                # compact — "mcphub setup", "mcphub search" → MCP Servers
+    "mcp-marketplace": "mcp",       # "mcp marketplace", "mcp marketplace alternative" → MCP Servers
 }
 
 _FTS_STOP_WORDS = {
