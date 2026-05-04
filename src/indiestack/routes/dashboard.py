@@ -255,6 +255,7 @@ async def dashboard_overview(request: Request):
         if _maker_tools:
             first_tool = _maker_tools[0]
             first_slug = first_tool['slug']
+            first_name = escape(str(first_tool['name']))
             has_price = first_tool.get('price_pence') and first_tool['price_pence'] > 0
             has_stripe = bool(first_tool.get('stripe_account_id'))
 
@@ -280,9 +281,9 @@ async def dashboard_overview(request: Request):
                         </div>
                         <div style="position:relative;">
                             <pre style="background:#1A1A2E;color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:11px;
-                                        font-family:var(--font-mono);overflow-x:auto;margin:0;white-space:pre-wrap;word-break:break-all;">[![{first_tool['name']} on IndieStack]({badge_url})]({tool_url})</pre>
+                                        font-family:var(--font-mono);overflow-x:auto;margin:0;white-space:pre-wrap;word-break:break-all;">[![{first_name} on IndieStack]({badge_url})]({tool_url})</pre>
                             <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
-                                    data-code="[![{first_tool['name']} on IndieStack]({badge_url})]({tool_url})"
+                                    data-code="[![{first_name} on IndieStack]({badge_url})]({tool_url})"
                                     style="position:absolute;top:8px;right:8px;padding:4px 10px;background:var(--accent);color:white;border:none;border-radius:4px;font-size:11px;cursor:pointer;">Copy</button>
                         </div>
                         <p style="font-size:11px;color:var(--ink-muted);margin-top:6px;">Paste this anywhere in your README.md file on GitHub.</p>
@@ -294,9 +295,9 @@ async def dashboard_overview(request: Request):
                         </div>
                         <div style="position:relative;">
                             <pre style="background:#1A1A2E;color:var(--slate);padding:12px 16px;border-radius:var(--radius-sm);font-size:11px;
-                                        font-family:var(--font-mono);overflow-x:auto;margin:0;white-space:pre-wrap;word-break:break-all;">&lt;a href="{tool_url}"&gt;&lt;img src="{badge_url}" alt="{first_tool['name']} on IndieStack"&gt;&lt;/a&gt;</pre>
+                                        font-family:var(--font-mono);overflow-x:auto;margin:0;white-space:pre-wrap;word-break:break-all;">&lt;a href="{tool_url}"&gt;&lt;img src="{badge_url}" alt="{first_name} on IndieStack"&gt;&lt;/a&gt;</pre>
                             <button onclick="navigator.clipboard.writeText(this.dataset.code);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)"
-                                    data-code='<a href="{tool_url}"><img src="{badge_url}" alt="{first_tool["name"]} on IndieStack"></a>'
+                                    data-code='&lt;a href="{tool_url}"&gt;&lt;img src="{badge_url}" alt="{first_name} on IndieStack"&gt;&lt;/a&gt;'
                                     style="position:absolute;top:8px;right:8px;padding:4px 10px;background:var(--accent);color:white;border:none;border-radius:4px;font-size:11px;cursor:pointer;">Copy</button>
                         </div>
                         <p style="font-size:11px;color:var(--ink-muted);margin-top:6px;">Paste this into any HTML page, landing page, or docs site.</p>
