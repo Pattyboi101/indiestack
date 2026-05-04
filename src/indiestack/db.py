@@ -7304,6 +7304,38 @@ _CAT_SYNONYMS: dict[str, str] = {
     "kimi-k2": "ai",               # hyphenated — "kimi-k2 alternative", "kimi-k2 api", "kimi-k2 weights" → AI & Automation
     "kimik2": "ai",                 # compact — "kimik2 setup", "kimik2 inference" → AI & Automation
     "kimi-k1-5": "ai",             # earlier model — "kimi-k1.5 benchmark", "kimi-k1-5 setup" → AI & Automation
+    # AI Standards — classic NLP / LLM benchmarks not yet routed to ai-standards category
+    # HELM (Stanford) — holistic benchmark covering 42 scenarios; "helm eval", "helm benchmark"
+    # Note: bare "helm" maps to devops (Kubernetes Helm); use compound forms for AI HELM
+    "helm-eval": "ai-standards",   # "helm-eval setup", "helm eval framework" → AI Standards & Specs (Stanford HELM)
+    "stanford-helm": "ai-standards",  # "stanford-helm benchmark", "stanford helm scores" → AI Standards & Specs
+    "big-bench": "ai-standards",   # BIG-bench — Google's Beyond the Imitation Game benchmark → AI Standards & Specs
+    "bigbench": "ai-standards",    # compact — "bigbench hard", "bigbench tasks", "bbh benchmark" → AI Standards & Specs
+    "bbh": "ai-standards",         # BIG-Bench Hard abbreviation — "bbh score", "bbh reasoning" → AI Standards & Specs
+    "mmlu": "ai-standards",        # MMLU — 57-subject multiple-choice; "mmlu score", "mmlu benchmark" → AI Standards & Specs
+    "mmlu-benchmark": "ai-standards",  # hyphenated — "mmlu-benchmark eval", "mmlu-benchmark pass rate" → AI Standards & Specs
+    "gsm8k": "ai-standards",       # GSM8K — grade school math word problems (CoT benchmark) → AI Standards & Specs
+    "gsm-8k": "ai-standards",      # hyphenated — "gsm-8k benchmark", "gsm-8k reasoning" → AI Standards & Specs
+    "truthfulqa": "ai-standards",  # TruthfulQA — measures LLM truthfulness and hallucination → AI Standards & Specs
+    "truthful-qa": "ai-standards", # hyphenated — "truthful-qa score", "truthful-qa benchmark" → AI Standards & Specs
+    "hellaswag": "ai-standards",   # HellaSwag — commonsense NLI benchmark → AI Standards & Specs
+    "winogrande": "ai-standards",  # WinoGrande — Winograd schema challenge at scale → AI Standards & Specs
+    "mbpp": "ai-standards",        # MBPP — Mostly Basic Python Problems (code eval) → AI Standards & Specs
+    "mt-bench": "ai-standards",    # MT-bench — multi-turn conversation evaluation (LMSys) → AI Standards & Specs
+    "mtbench": "ai-standards",     # compact — "mtbench score", "mtbench chatbot arena" → AI Standards & Specs
+    "alpacaeval": "ai-standards",  # AlpacaEval — automated instruction-following eval → AI Standards & Specs
+    "alpaca-eval": "ai-standards", # hyphenated — "alpaca-eval leaderboard", "alpaca-eval setup" → AI Standards & Specs
+    "bfcl": "ai-standards",        # BFCL — Berkeley Function-Calling Leaderboard → AI Standards & Specs
+    "chatbot-arena": "ai-standards",  # Chatbot Arena (LMSYS) — Elo-ranked pairwise human evals → AI Standards & Specs
+    "chatbotarena": "ai-standards",   # compact — "chatbotarena ranking", "chatbotarena score" → AI Standards & Specs
+    "lmsys": "ai-standards",       # LMSYS — org behind Chatbot Arena, Vicuna, MT-bench → AI Standards & Specs
+    "eqbench": "ai-standards",     # EQBench — emotional intelligence benchmark for LLMs → AI Standards & Specs
+    "aime": "ai-standards",        # AIME — American Invitational Math Exam (math competition benchmark) → AI Standards & Specs
+    "math-benchmark": "ai-standards",  # "math benchmark llm", "math eval llm" → AI Standards & Specs
+    "safety-eval": "ai-standards", # "safety eval framework", "llm safety evaluation" → AI Standards & Specs
+    "redteam": "ai-standards",     # "llm red team", "red team evaluation" → AI Standards & Specs (garak, Inspect AI)
+    "red-team": "ai-standards",    # hyphenated — "red-team llm", "red-team evaluation" → AI Standards & Specs
+    "jailbreak": "ai-standards",   # "jailbreak test", "jailbreak benchmark", "jailbreak detection" → AI Standards & Specs
 }
 
 _FTS_STOP_WORDS = {

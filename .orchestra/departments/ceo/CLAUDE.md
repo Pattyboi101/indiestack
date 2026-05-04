@@ -11,9 +11,9 @@ Review department assignments BEFORE they execute. Your job is to:
 
 ## IndieStack Context
 - Python/FastAPI/SQLite (WAL mode)/Fly.io
-- MCP server on PyPI (v1.14.0) — changes need a separate PyPI publish
+- MCP server on PyPI (v1.15.0) — changes need a separate PyPI publish
 - Production DB at /data/indiestack.db on Fly.io — data fixes need FTS rebuild after
-- Revenue model: free for devs, $49/mo Maker Pro analytics
+- Revenue model: free for devs, $19/mo Maker Pro analytics
 - Never gate MCP behind API keys — it killed adoption before
 
 ## Key Risks to Watch
