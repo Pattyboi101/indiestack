@@ -15323,6 +15323,136 @@ TOOLS = [
         "pip install arcagi",
         "code",
     ),
+    # ── AI Standards (147th pass — classic benchmarks) ───────────────────────
+    (
+        "gsm8k",
+        "GSM8K",
+        "Grade school math word problems for testing multi-step reasoning",
+        "GSM8K (Grade School Math 8K) is OpenAI's dataset of 8,500 grade-school math "
+        "word problems requiring 2–8 steps of reasoning to solve. Despite the simple "
+        "grade-school framing, frontier models weren't able to reliably solve these "
+        "until chain-of-thought prompting emerged. GPT-4 scores ~90%; smaller models "
+        "still struggle with multi-step arithmetic. Used in virtually every LLM "
+        "paper as the standard math reasoning benchmark alongside MATH and AIME. "
+        "1k+ GitHub stars.",
+        "ai-standards",
+        "openai/grade-school-math",
+        1000,
+        "https://github.com/openai/grade-school-math",
+        "llm,benchmark,math,reasoning,evaluation,open-source",
+        "pip install datasets",
+        "code",
+    ),
+    (
+        "hellaswag",
+        "HellaSwag",
+        "Commonsense NLI benchmark where humans score 95% but models once scored 48%",
+        "HellaSwag is an adversarially filtered NLI benchmark for commonsense reasoning. "
+        "Given a partial description of an everyday situation, the model picks the most "
+        "plausible continuation from 4 options. Humans score ~95%; early BERT scored "
+        "48%. GPT-4 and Claude 3 score 95%+, making it saturated at the frontier — "
+        "but still used as a floor test for smaller and open-source models. Published "
+        "by UW, CMU, and Allen AI. 1k+ GitHub stars.",
+        "ai-standards",
+        "rowanz/hellaswag",
+        1000,
+        "https://rowanzellers.com/hellaswag",
+        "llm,benchmark,commonsense,nli,evaluation,open-source",
+        "pip install datasets",
+        "code",
+    ),
+    (
+        "truthfulqa",
+        "TruthfulQA",
+        "Benchmark measuring whether LLMs generate truthful answers or repeat myths",
+        "TruthfulQA tests whether language models generate truthful answers to questions "
+        "that humans often answer incorrectly. It covers 38 categories including health, "
+        "law, finance, and conspiracy theories. Models that regurgitate internet "
+        "misinformation score low; instruction-tuned RLHF models score higher. "
+        "GPT-4 and Claude 3.5 Sonnet score ~85%. Critical for evaluating hallucination "
+        "and factual reliability. Published by Oxford and OpenAI. 2k+ GitHub stars.",
+        "ai-standards",
+        "sylinrl/TruthfulQA",
+        2000,
+        "https://github.com/sylinrl/TruthfulQA",
+        "llm,benchmark,truthfulness,hallucination,evaluation,open-source",
+        "pip install datasets",
+        "code",
+    ),
+    (
+        "mt-bench",
+        "MT-bench",
+        "Multi-turn conversation benchmark using GPT-4 as judge",
+        "MT-bench (Multi-Turn Benchmark) from LMSYS evaluates chat models on 80 "
+        "challenging multi-turn questions across writing, roleplay, math, coding, "
+        "extraction, STEM, and reasoning. GPT-4 acts as an automated judge, scoring "
+        "1–10 per answer. MT-bench scores correlate strongly with Chatbot Arena Elo "
+        "ratings and human preference. Used by Vicuna, Llama-2-chat, and most "
+        "instruction-tuned model papers to establish a comparable baseline. "
+        "36k+ GitHub stars (FastChat repo).",
+        "ai-standards",
+        "lm-sys/FastChat",
+        36000,
+        "https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge",
+        "llm,benchmark,multi-turn,chatbot,evaluation,gpt-4-judge,open-source",
+        "pip install fschat",
+        "code",
+    ),
+    (
+        "chatbot-arena",
+        "Chatbot Arena",
+        "Live Elo-ranked LLM leaderboard powered by anonymous human battles",
+        "Chatbot Arena (LMSYS) is the most trusted LLM leaderboard. Users have "
+        "anonymous side-by-side conversations with two unknown models, then vote for "
+        "the better one. Over 1 million human votes power Elo-based rankings. "
+        "The arena leaderboard is cited by Anthropic, Google, Meta, and OpenAI as "
+        "evidence of model quality. Models include Claude, GPT-4o, Gemini, Llama, "
+        "Mistral, Qwen, and hundreds more. Free to use; open-source vote data published. "
+        "36k+ GitHub stars (FastChat repo).",
+        "ai-standards",
+        "lm-sys/FastChat",
+        36000,
+        "https://chat.lmsys.org",
+        "llm,leaderboard,elo,human-eval,chatbot,benchmark,open-source",
+        "pip install fschat",
+        "code",
+    ),
+    (
+        "bfcl",
+        "Berkeley Function-Calling Leaderboard",
+        "The definitive benchmark for LLM tool use and function calling accuracy",
+        "BFCL (Berkeley Function-Calling Leaderboard) measures how reliably LLMs call "
+        "functions and APIs. It covers simple, parallel, multiple, and nested function "
+        "calls across Python, Java, JavaScript, SQL, and REST. Updated continuously with "
+        "new models. Critical for evaluating models in agentic pipelines where incorrect "
+        "tool calls cause real failures. GPT-4o, Claude 3.5, and Gemini 1.5 Pro lead "
+        "the leaderboard. Maintained by UC Berkeley GORILLA team. 1k+ GitHub stars.",
+        "ai-standards",
+        "ShishirPatil/gorilla",
+        1000,
+        "https://gorilla.cs.berkeley.edu/leaderboard.html",
+        "llm,benchmark,function-calling,tool-use,agents,api,evaluation,open-source",
+        "pip install gorilla-cli",
+        "code",
+    ),
+    (
+        "alpacaeval",
+        "AlpacaEval",
+        "Automated instruction-following evaluation using LLM-as-judge",
+        "AlpacaEval automatically evaluates instruction-following models by having "
+        "GPT-4 compare model outputs to reference answers from text-davinci-003. "
+        "The leaderboard ranks models by win rate against the reference. AlpacaEval 2.0 "
+        "uses length-controlled win rates to prevent verbose-answer gaming. Widely used "
+        "because it requires no human annotations — just an OpenAI API key. "
+        "Published by Stanford CRFM. 1k+ GitHub stars.",
+        "ai-standards",
+        "tatsu-lab/alpaca_eval",
+        1000,
+        "https://tatsu-lab.github.io/alpaca_eval",
+        "llm,benchmark,instruction-following,evaluation,automated,gpt-4-judge,open-source",
+        "pip install alpaca-eval",
+        "code",
+    ),
 ]
 
 

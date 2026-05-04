@@ -117,6 +117,9 @@ curl the API for these queries and check top-3 results are relevant:
              'azure promptflow alternative', 'promptfoo llm testing'.
   AI benchmarks: 'mmlu-pro benchmark', 'gpqa diamond score', 'livecodebench leaderboard',
                  'arc-agi benchmark', 'arc agi 2 prize', 'frontiermath eval', 'swe-bench verified'.
+  Classic benchmarks: 'gsm8k benchmark', 'hellaswag score', 'truthfulqa evaluation',
+                      'mt-bench score', 'chatbot arena ranking', 'bfcl function calling',
+                      'alpacaeval leaderboard', 'winogrande benchmark', 'mbpp code eval'.
   MCP servers (official): 'mcp stripe server', 'mcp supabase alternative', 'mcp neon database',
                           'mcp cloudflare workers', 'stripe mcp setup'.
   Kimi K2: 'kimi k2 alternative', 'kimi k2 api', 'kimi k2 weights', 'moonshot kimi model'.
