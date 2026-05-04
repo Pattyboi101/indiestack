@@ -12,6 +12,16 @@ from indiestack.db import get_tools_replacing, slugify
 
 router = APIRouter()
 
+
+def _safe_json(data) -> str:
+    return (
+        _json.dumps(data, ensure_ascii=False)
+        .replace("&", "\\u0026")
+        .replace("<", "\\u003c")
+        .replace(">", "\\u003e")
+    )
+
+
 COMPETITOR_PRICING = {
     "Datadog": {"price": "$23/host/mo", "annual": 276, "unit": "host"},
     "Vercel": {"price": "$20/member/mo", "annual": 240, "unit": "member"},
@@ -80,7 +90,7 @@ async def calculator(request: Request):
         </label>'''
 
     # Pricing data as JSON for JS
-    pricing_json = _json.dumps({slugify(k): {"name": k, "annual": v["annual"], "price": v["price"]} for k, v in COMPETITOR_PRICING.items()})
+    pricing_json = _safe_json({slugify(k): {"name": k, "annual": v["annual"], "price": v["price"]} for k, v in COMPETITOR_PRICING.items()})
 
     # JSON-LD
     jsonld = {
@@ -92,7 +102,7 @@ async def calculator(request: Request):
         "applicationCategory": "BusinessApplication",
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
     }
-    jsonld_script = f'<script type="application/ld+json">{_json.dumps(jsonld)}</script>'
+    jsonld_script = f'<script type="application/ld+json">{_safe_json(jsonld)}</script>'
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">

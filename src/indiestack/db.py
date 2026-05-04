@@ -7363,6 +7363,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # XcodeBuildMCP (getsentry/XcodeBuildMCP, ~5k★; iOS/macOS Xcode build tools for AI agents)
     "xcodebuild-mcp": "mcp",        # "xcodebuild mcp", "xcode mcp server" → MCP Servers
     "xcodebuildmcp": "mcp",         # compact — "xcodebuildmcp setup", "xcodebuildmcp xcode" → MCP Servers
+    # MCP Servers — official cloud-service MCP hyphenated compound forms (151st pass)
+    # These catch hyphenated slug queries like "stripe-mcp alternative", "supabase-mcp setup"
+    # Single-token "mcp" already routes any "mcp X" query correctly; these cover "X-mcp" form
+    "stripe-mcp": "mcp",            # Stripe MCP Server — "stripe-mcp setup", "stripe-mcp alternative" → MCP Servers
+    "supabase-mcp": "mcp",          # Supabase MCP — "supabase-mcp alternative", "supabase-mcp server" → MCP Servers
+    "neon-mcp": "mcp",              # Neon MCP — "neon-mcp database", "neon-mcp setup" → MCP Servers
+    "cloudflare-mcp": "mcp",        # Cloudflare MCP — "cloudflare-mcp workers", "cloudflare-mcp setup" → MCP Servers
+    "anthropic-mcp": "mcp",         # Anthropic MCP — "anthropic-mcp server", "anthropic-mcp sdk" → MCP Servers
+    "openai-mcp": "mcp",            # OpenAI MCP — "openai-mcp server", "openai-mcp setup" → MCP Servers
+    # AI — Google NotebookLM (AI-powered research and note-taking; common developer query)
+    "notebooklm": "ai",             # NotebookLM — Google's AI notebook/research tool; "notebooklm alternative" → AI & Automation
+    "notebook-lm": "ai",            # hyphenated — "notebook-lm api", "notebook-lm alternative" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

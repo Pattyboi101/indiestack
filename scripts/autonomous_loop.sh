@@ -127,6 +127,9 @@ curl the API for these queries and check top-3 results are relevant:
   Official MCP servers: 'github mcp server', 'figma mcp cursor', 'git mcp hallucination',
                         'aws mcp server', 'firecrawl mcp', 'desktop commander mcp',
                         'xcode mcp server', 'google mcp toolbox databases'.
+  MCP hyphenated forms: 'stripe-mcp alternative', 'supabase-mcp setup', 'neon-mcp database',
+                        'cloudflare-mcp workers', 'context7 mcp docs'.
+  AI research tools: 'notebooklm alternative', 'notebooklm api', 'notebook-lm research'.
   Headless/testing: 'headless browser', 'headless browser testing', 'headless browser automation',
                     'headless ui component', 'browser automation python', 'puppeteer alternative'.
   Enterprise auth: 'scim provisioning', 'ldap directory sync', 'active directory integration',
