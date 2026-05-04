@@ -2574,7 +2574,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "assets": "file",
     # CMS synonyms
     "blog": "cms",
-    "headless": "cms",
+    # "headless" removed — "headless cms" works via "cms" term; "headless browser"
+    # now correctly falls through to "browser" → "testing" instead of routing to CMS.
     "content": "cms",
     # Project management synonyms
     "kanban": "project",
