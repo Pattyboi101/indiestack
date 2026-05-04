@@ -15453,6 +15453,144 @@ TOOLS = [
         "pip install alpaca-eval",
         "code",
     ),
+    # MCP Servers — trending high-star tools from GitHub (149th pass) ----------------------
+    (
+        "github-mcp-server",
+        "GitHub MCP Server",
+        "GitHub's official MCP server — Issues, PRs, code search, and Actions for AI agents",
+        "GitHub's official Model Context Protocol server gives AI coding agents "
+        "direct access to GitHub: search code, read and create Issues and Pull Requests, "
+        "trigger Actions workflows, manage branches, and review file contents — all "
+        "without leaving the agent loop. The most-starred official MCP server on GitHub "
+        "with 29k+ stars. Written in Go. Works with Claude, Cursor, Windsurf, and any "
+        "MCP-compatible client.",
+        "mcp-servers",
+        "github/github-mcp-server",
+        29000,
+        "https://github.com/github/github-mcp-server",
+        "mcp,github,issues,pull-requests,code-search,actions,ai-agent,official",
+        "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server",
+        "code",
+    ),
+    (
+        "mcp-toolbox-databases",
+        "MCP Toolbox for Databases",
+        "Google's open-source MCP server for querying databases with natural language",
+        "MCP Toolbox for Databases (by Google) is an MCP server that lets AI agents "
+        "query databases using natural language. Supports PostgreSQL, MySQL, SQLite, "
+        "Spanner, BigQuery, MongoDB, Redis, Elasticsearch, and more. The agent sends "
+        "a natural-language question; the toolbox translates it to SQL or a native "
+        "query, runs it, and returns structured results. 15k+ GitHub stars. Written in Go.",
+        "mcp-servers",
+        "googleapis/mcp-toolbox",
+        15000,
+        "https://googleapis.github.io/genai-toolbox/getting-started/introduction/",
+        "mcp,databases,sql,bigquery,postgresql,mysql,google,natural-language,ai-agent",
+        "pip install toolbox-core",
+        "code",
+    ),
+    (
+        "figma-context-mcp",
+        "Figma Context MCP",
+        "Give AI coding agents live access to your Figma designs",
+        "Figma Context MCP exposes Figma file structure, component layout, styles, "
+        "and measurements directly to AI coding agents in Cursor, Claude, and Windsurf. "
+        "Instead of describing designs in chat, agents read the Figma data and generate "
+        "pixel-accurate code. Unofficial but widely used with 15k+ GitHub stars. "
+        "Works via Figma REST API — requires a Figma personal access token.",
+        "mcp-servers",
+        "GLips/Figma-Context-MCP",
+        15000,
+        "https://github.com/GLips/Figma-Context-MCP",
+        "mcp,figma,design,ui,cursor,claude,coding-agent,layout,components",
+        "npx figma-developer-mcp --figma-api-key=<key>",
+        "code",
+    ),
+    (
+        "git-mcp",
+        "GitMCP",
+        "Free remote MCP server for any GitHub project — end code hallucinations",
+        "GitMCP provides a free, hosted MCP server for any public GitHub repository. "
+        "Point your AI agent at `gitmcp.io/<owner>/<repo>` and it gains real-time "
+        "access to docs, README, code structure, and changelogs — dramatically reducing "
+        "hallucinations about library APIs. No local setup needed. Just change "
+        "github.com to gitmcp.io in the URL. 8k+ GitHub stars.",
+        "mcp-servers",
+        "idosal/git-mcp",
+        8000,
+        "https://gitmcp.io",
+        "mcp,github,documentation,hallucination,remote-mcp,ai-agent,zero-config",
+        "",
+        "saas",
+    ),
+    (
+        "aws-mcp",
+        "AWS MCP Servers",
+        "Official AWS MCP servers for S3, Lambda, Bedrock, CDK, and more",
+        "The official AWS MCP server collection (awslabs/mcp) gives AI coding agents "
+        "structured access to AWS services: query S3 buckets, invoke Lambda functions, "
+        "list Bedrock models, inspect CDK stacks, describe CloudFormation resources, "
+        "and more — all via MCP. 9k+ GitHub stars. Written in Python. Each service "
+        "is a separate server; install only what you need.",
+        "mcp-servers",
+        "awslabs/mcp",
+        9000,
+        "https://github.com/awslabs/mcp",
+        "mcp,aws,s3,lambda,bedrock,cdk,cloudformation,ai-agent,official",
+        "uvx awslabs.core-mcp-server@latest",
+        "code",
+    ),
+    (
+        "firecrawl-mcp",
+        "Firecrawl MCP Server",
+        "Web scraping and search for AI agents powered by Firecrawl",
+        "The official Firecrawl MCP server adds powerful web scraping, crawling, "
+        "and search to AI coding agents in Cursor, Claude, and Windsurf. Agents can "
+        "scrape any URL to clean Markdown, crawl entire sites, extract structured "
+        "data with LLM-powered schemas, and run web searches — all in a single tool. "
+        "6k+ GitHub stars. Requires a Firecrawl API key (free tier available).",
+        "mcp-servers",
+        "firecrawl/firecrawl-mcp-server",
+        6000,
+        "https://github.com/firecrawl/firecrawl-mcp-server",
+        "mcp,web-scraping,crawling,search,markdown,firecrawl,ai-agent",
+        "npx -y firecrawl-mcp",
+        "code",
+    ),
+    (
+        "desktop-commander-mcp",
+        "DesktopCommanderMCP",
+        "Give AI agents terminal control and file system access on your desktop",
+        "DesktopCommanderMCP gives Claude and other AI agents full terminal execution, "
+        "file system search, and diff-based file editing capabilities on your local "
+        "machine. Enables autonomous coding workflows: agents can run build commands, "
+        "edit files with precision patches, search codebases, and manage processes — "
+        "without needing a separate sandboxed environment. 6k+ GitHub stars.",
+        "mcp-servers",
+        "wonderwhy-er/DesktopCommanderMCP",
+        6000,
+        "https://github.com/wonderwhy-er/DesktopCommanderMCP",
+        "mcp,terminal,filesystem,desktop,coding-agent,claude,file-editing",
+        "npx @wonderwhy-er/desktop-commander@latest setup",
+        "code",
+    ),
+    (
+        "xcodebuild-mcp",
+        "XcodeBuildMCP",
+        "MCP server for iOS and macOS Xcode project tools — build, test, simulate",
+        "XcodeBuildMCP (by Sentry) gives AI coding agents structured access to Xcode "
+        "build workflows on macOS. Agents can build iOS/macOS targets, run tests on "
+        "simulators, list available devices, read build logs, and manage schemes — "
+        "enabling autonomous mobile development loops. 5k+ GitHub stars. Requires "
+        "Xcode installed on macOS.",
+        "mcp-servers",
+        "getsentry/XcodeBuildMCP",
+        5000,
+        "https://github.com/getsentry/XcodeBuildMCP",
+        "mcp,xcode,ios,macos,build,test,simulator,swift,objective-c,sentry",
+        "npx xcodebuildmcp@latest",
+        "code",
+    ),
 ]
 
 

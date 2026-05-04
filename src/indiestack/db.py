@@ -7338,6 +7338,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "redteam": "ai-standards",     # "llm red team", "red team evaluation" → AI Standards & Specs (garak, Inspect AI)
     "red-team": "ai-standards",    # hyphenated — "red-team llm", "red-team evaluation" → AI Standards & Specs
     "jailbreak": "ai-standards",   # "jailbreak test", "jailbreak benchmark", "jailbreak detection" → AI Standards & Specs
+    # MCP Servers — high-star official + ecosystem tools (149th pass)
+    # GitHub Official MCP Server (github/github-mcp-server, ~29k★; Issues, PRs, code search, Actions)
+    "github-mcp": "mcp",            # "github mcp server", "github mcp setup" → MCP Servers
+    "github-mcp-server": "mcp",     # full slug — "github-mcp-server alternative" → MCP Servers
+    # Google MCP Toolbox for Databases (googleapis/mcp-toolbox, ~15k★; SQL + retrieval for AI agents)
+    "mcp-toolbox": "mcp",           # "mcp toolbox databases", "mcp toolbox setup" → MCP Servers
+    "mcptoolbox": "mcp",            # compact — "mcptoolbox google", "mcptoolbox alternative" → MCP Servers
+    # Figma Context MCP (GLips/Figma-Context-MCP, ~15k★; Figma layout data for Cursor/Claude)
+    "figma-context-mcp": "mcp",     # full slug — "figma-context-mcp setup", "figma context mcp" → MCP Servers
+    "figma-mcp": "mcp",             # shortened — "figma mcp cursor", "figma mcp claude" → MCP Servers
+    # GitMCP (idosal/git-mcp, ~8k★; remote MCP for any GitHub repo, reduces hallucinations)
+    "git-mcp": "mcp",               # hyphenated — "git-mcp setup", "git-mcp alternative" → MCP Servers
+    "gitmcp": "mcp",                # compact — "gitmcp repo", "gitmcp hallucination" → MCP Servers
+    # AWS Official MCP Servers (awslabs/mcp, ~9k★; S3, Lambda, Bedrock, CDK via MCP)
+    "aws-mcp": "mcp",               # "aws mcp server", "aws mcp setup", "awslabs mcp" → MCP Servers
+    "awsmcp": "mcp",                # compact — "awsmcp alternative" → MCP Servers
+    # Firecrawl MCP (firecrawl/firecrawl-mcp-server, ~6k★; web scraping + search for AI agents)
+    "firecrawl-mcp": "mcp",         # MCP-specific form; "firecrawl"→developer is the SaaS API → MCP Servers
+    # DesktopCommanderMCP (wonderwhy-er/DesktopCommanderMCP, ~6k★; terminal + fs control via MCP)
+    "desktopcommander": "mcp",      # "desktopcommander mcp", "desktop commander mcp" → MCP Servers
+    "desktop-commander-mcp": "mcp", # full slug — "desktop-commander-mcp setup" → MCP Servers
+    # XcodeBuildMCP (getsentry/XcodeBuildMCP, ~5k★; iOS/macOS Xcode build tools for AI agents)
+    "xcodebuild-mcp": "mcp",        # "xcodebuild mcp", "xcode mcp server" → MCP Servers
+    "xcodebuildmcp": "mcp",         # compact — "xcodebuildmcp setup", "xcodebuildmcp xcode" → MCP Servers
 }
 
 _FTS_STOP_WORDS = {

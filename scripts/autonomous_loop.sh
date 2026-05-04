@@ -124,6 +124,9 @@ curl the API for these queries and check top-3 results are relevant:
                           'mcp cloudflare workers', 'stripe mcp setup'.
   Kimi K2: 'kimi k2 alternative', 'kimi k2 api', 'kimi k2 weights', 'moonshot kimi model'.
   Cloud browsers: 'steel browser alternative', 'steel browser api', 'cloud browser api'.
+  Official MCP servers: 'github mcp server', 'figma mcp cursor', 'git mcp hallucination',
+                        'aws mcp server', 'firecrawl mcp', 'desktop commander mcp',
+                        'xcode mcp server', 'google mcp toolbox databases'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
