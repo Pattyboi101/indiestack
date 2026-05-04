@@ -115,6 +115,11 @@ curl the API for these queries and check top-3 results are relevant:
             'warp terminal alternative', 'nix dev environment', 'reproducible dev environment'.
   Workflows: 'temporal workflow alternative', 'gitops deployment tool', 'argocd alternative',
              'azure promptflow alternative', 'promptfoo llm testing'.
+  AI benchmarks: 'mmlu-pro benchmark', 'gpqa diamond score', 'livecodebench leaderboard',
+                 'arc-agi benchmark', 'arc agi 2 prize', 'frontiermath eval', 'swe-bench verified'.
+  MCP servers (official): 'mcp stripe server', 'mcp supabase alternative', 'mcp neon database',
+                          'mcp cloudflare workers', 'stripe mcp setup'.
+  Kimi K2: 'kimi k2 alternative', 'kimi k2 api', 'kimi k2 weights', 'moonshot kimi model'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
