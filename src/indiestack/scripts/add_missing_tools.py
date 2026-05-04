@@ -15177,6 +15177,152 @@ TOOLS = [
         "npx -y @modelcontextprotocol/server-slack",
         "code",
     ),
+    # ── MCP Servers (146th pass) ─────────────────────────────────────────────
+    (
+        "mcp-stripe",
+        "Stripe MCP Server",
+        "Official Stripe MCP server for payment operations and data access",
+        "Stripe's official MCP server gives AI agents access to your Stripe account. "
+        "Agents can list customers, retrieve payment intents, check subscription status, "
+        "create payment links, and query transaction history — enabling AI-powered "
+        "billing assistants, revenue dashboards, and support workflows. Requires a "
+        "Stripe secret key. The most-searched MCP server for payment integrations. "
+        "7k+ GitHub stars.",
+        "mcp-servers",
+        "stripe/agent-toolkit",
+        7000,
+        "https://github.com/stripe/agent-toolkit",
+        "mcp,stripe,payments,billing,official,ai-agent",
+        "npx -y @stripe/mcp",
+        "code",
+    ),
+    (
+        "mcp-supabase",
+        "Supabase MCP Server",
+        "Official Supabase MCP server for database and auth access",
+        "Supabase's official MCP server gives AI agents direct access to your Supabase "
+        "project. Agents can run SQL queries, list tables, inspect schemas, manage auth "
+        "users, and retrieve edge function logs — ideal for AI-powered database "
+        "assistants, admin tools, and schema-aware code generation. Requires a Supabase "
+        "personal access token. 3k+ GitHub stars.",
+        "mcp-servers",
+        "supabase-community/supabase-mcp",
+        3000,
+        "https://github.com/supabase-community/supabase-mcp",
+        "mcp,supabase,database,postgres,auth,official,ai-agent",
+        "npx -y @supabase/mcp-server-supabase@latest",
+        "code",
+    ),
+    (
+        "mcp-neon",
+        "Neon MCP Server",
+        "Official Neon MCP server for serverless Postgres management",
+        "Neon's official MCP server gives AI agents control over your Neon serverless "
+        "Postgres projects. Agents can create branches, run SQL, list databases, manage "
+        "connection strings, and query project metadata — enabling AI-driven database "
+        "workflows, branch-per-PR setups, and schema migrations. Requires a Neon API "
+        "key. 1k+ GitHub stars.",
+        "mcp-servers",
+        "neondatabase/mcp-server-neon",
+        1000,
+        "https://github.com/neondatabase/mcp-server-neon",
+        "mcp,neon,postgres,serverless,database,official,ai-agent",
+        "npx -y @neondatabase/mcp-server-neon",
+        "code",
+    ),
+    (
+        "mcp-cloudflare",
+        "Cloudflare MCP Server",
+        "Official Cloudflare MCP server for Workers, KV, R2, and D1",
+        "Cloudflare's official MCP server gives AI agents access to your Cloudflare "
+        "account. Agents can deploy Workers, manage KV namespaces, query D1 databases, "
+        "list R2 buckets, and inspect DNS records — enabling AI-powered edge deployment "
+        "assistants and infrastructure automation. Requires a Cloudflare API token. "
+        "5k+ GitHub stars.",
+        "mcp-servers",
+        "cloudflare/mcp-server-cloudflare",
+        5000,
+        "https://github.com/cloudflare/mcp-server-cloudflare",
+        "mcp,cloudflare,workers,kv,r2,d1,edge,official,ai-agent",
+        "npx -y @cloudflare/mcp-server-cloudflare",
+        "code",
+    ),
+    # ── AI Standards (146th pass) ─────────────────────────────────────────────
+    (
+        "mmlu-pro",
+        "MMLU-Pro",
+        "Harder MMLU with 12k expert-vetted questions across 14 subjects",
+        "MMLU-Pro (Massive Multitask Language Understanding Professional) is a harder "
+        "successor to the original MMLU benchmark. It adds 10-choice MCQs (vs 4), "
+        "integrates CoT reasoning, and replaces easy questions with expert-level ones. "
+        "Models typically score ~10 points lower than on standard MMLU. Covers 14 "
+        "subjects: math, physics, chemistry, biology, law, engineering, and more. "
+        "Used by researchers who find original MMLU saturated at frontier model level. "
+        "Published by Carnegie Mellon & Waterloo. 2k+ GitHub stars.",
+        "ai-standards",
+        "TIGER-AI-Lab/MMLU-Pro",
+        2000,
+        "https://github.com/TIGER-AI-Lab/MMLU-Pro",
+        "llm,benchmark,evaluation,mmlu,reasoning,science,open-source",
+        "pip install datasets && python eval_mmlu_pro.py",
+        "code",
+    ),
+    (
+        "gpqa-diamond",
+        "GPQA Diamond",
+        "PhD-level benchmark that stumps even domain experts without search",
+        "GPQA (Graduate-Level Google-Proof Q&A) Diamond contains 198 extremely hard "
+        "multiple-choice questions in biology, chemistry, and physics — written by PhD "
+        "students and verified by domain experts. Even experts with internet access "
+        "score only ~65%. Frontier AI models (GPT-4o, Claude 3.5, Gemini Ultra) score "
+        "50–65%. A model passing 70%+ is approaching genuine expert-level science "
+        "reasoning. The go-to benchmark for measuring 'is this model really smart?'. "
+        "Published by Columbia University and Scale AI. 1k+ GitHub stars.",
+        "ai-standards",
+        "idavidrein/gpqa",
+        1000,
+        "https://github.com/idavidrein/gpqa",
+        "llm,benchmark,evaluation,science,phd,reasoning,hard,open-source",
+        "pip install datasets",
+        "code",
+    ),
+    (
+        "livecodebench",
+        "LiveCodeBench",
+        "Contamination-free code generation benchmark updated continuously",
+        "LiveCodeBench evaluates LLMs on code generation, self-repair, code execution, "
+        "and test output prediction — using problems collected continuously from "
+        "LeetCode, AtCoder, and CodeForces AFTER the models' training cutoffs. This "
+        "prevents benchmark contamination. Scores are typically 5–15 points lower than "
+        "HumanEval+ for the same model. Used to get honest coding ability estimates. "
+        "Published by MIT CSAIL and CMU. 2k+ GitHub stars.",
+        "ai-standards",
+        "LiveCodeBench/LiveCodeBench",
+        2000,
+        "https://livecodebench.github.io",
+        "llm,benchmark,code-generation,evaluation,contamination-free,open-source",
+        "pip install livecodebench",
+        "code",
+    ),
+    (
+        "arc-agi",
+        "ARC-AGI",
+        "The benchmark testing abstract reasoning that humans solve but AI struggles",
+        "ARC-AGI (Abstraction and Reasoning Corpus for Artificial General Intelligence) "
+        "tests AI systems on abstract pattern recognition tasks that typical humans "
+        "solve in seconds. Each task shows a few input-output grid examples; the model "
+        "must infer the transformation rule and apply it to a new input. ARC-AGI-2 "
+        "(April 2026, $1M prize) adds harder tasks where frontier models score <5%. "
+        "Created by François Chollet (Keras creator) as a measure of fluid intelligence. "
+        "Winning ARC-AGI is considered a key milestone toward AGI. 5k+ GitHub stars.",
+        "ai-standards",
+        "fchollet/ARC-AGI",
+        5000,
+        "https://arcprize.org",
+        "llm,benchmark,agi,reasoning,abstraction,evaluation,open-source",
+        "pip install arcagi",
+        "code",
+    ),
 ]
 
 

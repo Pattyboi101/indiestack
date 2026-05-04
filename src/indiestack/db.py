@@ -7276,6 +7276,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Powers the BigCode leaderboard; used to rank StarCoder, CodeLlama, DeepSeek-Coder
     "bigcode-eval": "ai-standards",  # "bigcode-eval harness", "bigcode evaluation" → AI Standards & Specs
     "bigcode": "ai-standards",       # bare — "bigcode leaderboard", "bigcode benchmark" → AI Standards & Specs
+    # AI Standards — MMLU-Pro (Carnegie Mellon; harder MMLU with 12k expert-vetted MCQs; fewer correct-by-chance answers)
+    # Models score ~10 points lower than on MMLU; "mmlu-pro benchmark", "mmlu pro score" — rising query volume
+    "mmlu-pro": "ai-standards",     # hyphenated — "mmlu-pro benchmark", "mmlu-pro score", "mmlu-pro alternative" → AI Standards & Specs
+    "mmlupro": "ai-standards",      # compact — "mmlupro setup", "mmlupro evaluation" → AI Standards & Specs
+    # AI Standards — GPQA Diamond (Google-Proof Q&A; 198 PhD-level biology/chemistry/physics questions)
+    # Frontier models score 50–65%; "gpqa diamond score", "gpqa benchmark" — primary hard-sci eval reference
+    "gpqa": "ai-standards",         # bare — "gpqa score", "gpqa benchmark", "gpqa diamond" → AI Standards & Specs
+    "gpqa-diamond": "ai-standards", # full form — "gpqa-diamond score", "gpqa-diamond alternative" → AI Standards & Specs
+    "gpqadiamond": "ai-standards",  # compact — "gpqadiamond eval", "gpqadiamond benchmark" → AI Standards & Specs
+    # AI Standards — LiveCodeBench (live online coding eval updated continuously; avoids contamination)
+    # Tests HumanEval-style with new LeetCode problems; "livecodebench score", "livecodebench leaderboard"
+    "livecodebench": "ai-standards",    # compact — "livecodebench score", "livecodebench leaderboard" → AI Standards & Specs
+    "live-code-bench": "ai-standards",  # hyphenated — "live-code-bench alternative", "live-code-bench setup" → AI Standards & Specs
+    # AI Standards — ARC-AGI (François Chollet / ARC Prize; abstraction & reasoning test humans solve but AI struggles)
+    # ARC-AGI-2 launched April 2026 with $1M prize; "arc-agi score", "arc agi 2" very high query volume
+    "arc-agi": "ai-standards",      # hyphenated — "arc-agi benchmark", "arc-agi score", "arc-agi-2" → AI Standards & Specs
+    "arcagi": "ai-standards",       # compact — "arcagi benchmark", "arcagi test" → AI Standards & Specs
+    "arc-agi-2": "ai-standards",    # version — "arc-agi-2 score", "arc-agi-2 tasks" → AI Standards & Specs
+    "arcagi2": "ai-standards",      # compact version — "arcagi2 alternative", "arcagi2 prize" → AI Standards & Specs
+    # AI Standards — FrontierMath (Epoch AI; extremely hard math problems; frontier models score <2%)
+    # Tests graduate-level math competition problems; "frontiermath benchmark", "frontier math score"
+    "frontiermath": "ai-standards", # compact — "frontiermath benchmark", "frontiermath score" → AI Standards & Specs
+    "frontier-math": "ai-standards",# hyphenated — "frontier-math eval", "frontier-math alternative" → AI Standards & Specs
+    # AI — Kimi K2 (Moonshot AI; 1T-parameter MoE reasoning model; open-source weights; May 2026)
+    # Strong on tool use and agentic tasks; "kimi k2 alternative", "kimi-k2 api" — high query volume post-launch
+    "kimi-k2": "ai",               # hyphenated — "kimi-k2 alternative", "kimi-k2 api", "kimi-k2 weights" → AI & Automation
+    "kimik2": "ai",                 # compact — "kimik2 setup", "kimik2 inference" → AI & Automation
+    "kimi-k1-5": "ai",             # earlier model — "kimi-k1.5 benchmark", "kimi-k1-5 setup" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
