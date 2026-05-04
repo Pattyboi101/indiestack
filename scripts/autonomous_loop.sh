@@ -127,6 +127,10 @@ curl the API for these queries and check top-3 results are relevant:
   Official MCP servers: 'github mcp server', 'figma mcp cursor', 'git mcp hallucination',
                         'aws mcp server', 'firecrawl mcp', 'desktop commander mcp',
                         'xcode mcp server', 'google mcp toolbox databases'.
+  Headless/testing: 'headless browser', 'headless browser testing', 'headless browser automation',
+                    'headless ui component', 'browser automation python', 'puppeteer alternative'.
+  Enterprise auth: 'scim provisioning', 'ldap directory sync', 'active directory integration',
+                   'user provisioning saas', 'directory sync tool'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
@@ -164,6 +168,10 @@ Grep route files AND mcp_server.py for hardcoded stats (tool counts, install cou
 Verify route-file counts against production DB: SELECT COUNT(*) FROM tools WHERE status='approved'.
 Fix any stale copy that's off by more than 10%. Run smoke_test.py after route file changes only.
 Also check: 'repomix alternative', 'gitingest setup', 'repo to llm' queries route to ai-dev-tools.
+JSON-LD injection check: grep -rn "_json.dumps\|json.dumps" src/indiestack/routes/ | grep "script"
+  — any match means a route is embedding raw json.dumps() inside a <script> tag without
+  .replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e') escaping.
+  See gotchas.md: tool names containing </script> break out of the block. Use _safe_jld() helper.
 
 AFTER: bash ~/.claude/telegram.sh '[Bot] Session summary: [what you checked/fixed/researched]'
 
