@@ -7372,6 +7372,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cloudflare-mcp": "mcp",        # Cloudflare MCP — "cloudflare-mcp workers", "cloudflare-mcp setup" → MCP Servers
     "anthropic-mcp": "mcp",         # Anthropic MCP — "anthropic-mcp server", "anthropic-mcp sdk" → MCP Servers
     "openai-mcp": "mcp",            # OpenAI MCP — "openai-mcp server", "openai-mcp setup" → MCP Servers
+    # Docker MCP Toolkit — Docker Desktop's official MCP container runner (152nd pass)
+    # "docker" alone → "devops" (correct for container queries); "docker-mcp" compound → MCP Servers
+    "docker-mcp": "mcp",            # hyphenated — "docker-mcp toolkit", "docker-mcp setup" → MCP Servers
+    "dockermcp": "mcp",             # compact — "dockermcp alternative", "dockermcp container" → MCP Servers
     # AI — Google NotebookLM (AI-powered research and note-taking; common developer query)
     "notebooklm": "ai",             # NotebookLM — Google's AI notebook/research tool; "notebooklm alternative" → AI & Automation
     "notebook-lm": "ai",            # hyphenated — "notebook-lm api", "notebook-lm alternative" → AI & Automation

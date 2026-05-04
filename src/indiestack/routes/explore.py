@@ -453,7 +453,7 @@ async def explore(request: Request):
         "url": f"{BASE_URL}/explore",
         "isPartOf": {"@type": "WebSite", "name": "IndieStack", "url": BASE_URL},
         "numberOfItems": total,
-    }, ensure_ascii=False)
+    }, ensure_ascii=False).replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
     explore_head = f'<script type="application/ld+json">{explore_ld}</script>'
     response = HTMLResponse(page_shell(title=explore_page_title, body=body + email_sticky_bar(), description=desc, user=user, canonical=explore_canonical, extra_head=explore_head))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"

@@ -15575,6 +15575,23 @@ TOOLS = [
         "code",
     ),
     (
+        "docker-mcp-toolkit",
+        "Docker MCP Toolkit",
+        "Run any MCP server as a Docker container — secure, portable, sandboxed",
+        "Docker MCP Toolkit integrates MCP servers into Docker Desktop and CLI. "
+        "Each MCP server runs in an isolated container, giving AI agents secure, "
+        "sandboxed access to tools without installing local binaries. Supports "
+        "the full Model Context Protocol spec. Included in Docker Desktop 4.38+. "
+        "The official Docker approach to distributing and running MCP servers at scale.",
+        "mcp-servers",
+        "docker/labs-ai-tools-for-devs",
+        8000,
+        "https://docs.docker.com/ai/mcp-catalog-and-toolkit/",
+        "mcp,docker,containers,sandboxed,ai-agent,desktop",
+        "docker mcp install",
+        "saas",
+    ),
+    (
         "xcodebuild-mcp",
         "XcodeBuildMCP",
         "MCP server for iOS and macOS Xcode project tools — build, test, simulate",
