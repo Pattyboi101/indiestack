@@ -4888,7 +4888,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — CSS-in-JS tools (complement to pandacss, unocss already mapped)
     "panda-css": "frontend",        # Panda CSS hyphenated form — "panda-css alternative" → Frontend Frameworks
     "stylex": "frontend",           # StyleX — Meta's compile-time CSS-in-JS (powers Facebook.com, 8k★) → Frontend Frameworks
-    # API / Browser automation — Browserbase cloud browser for AI agents
+    # API / Browser automation — Steel Browser + Browserbase cloud browsers for AI agents
+    "steel": "api",                 # Steel Browser — "steel browser alternative", "steel browser api" → API Tools
     "browserbase": "api",           # Browserbase — cloud browser API for AI agent web automation → API Tools
     # MCP — browser automation MCP server (high-growth query segment as agents use Playwright/Puppeteer)
     "playwright-mcp": "mcp",        # Playwright MCP — browser automation MCP server for AI agents → MCP Servers
@@ -6780,6 +6781,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "trae-ide": "ai",              # hyphenated — "trae-ide setup", "trae-ide features" → AI & Automation
     # AI — Kimi (Moonshot AI LLM; million-token context window; widely used across global dev community)
     "kimi": "ai",                  # Kimi — "kimi alternative", "kimi api", "kimi k1.5" → AI & Automation
+    "moonshot": "ai",              # bare — "moonshot kimi model", "moonshot api" → AI & Automation
     "moonshot-ai": "ai",           # hyphenated — "moonshot-ai api", "moonshot-ai alternative", "moonshot-ai setup" → AI & Automation
     # AI — Pear AI (open-source AI code editor forked from VS Code + Continue; trypear/pearai-app)
     "pearai": "ai",                # Pear AI — "pearai alternative", "pearai setup", "pearai vs cursor" → AI & Automation
