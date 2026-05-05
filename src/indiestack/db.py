@@ -7392,6 +7392,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mcp-hub": "mcp",               # "mcp hub discovery", "mcp hub alternative" → MCP Servers
     "mcphub": "mcp",                # compact — "mcphub setup", "mcphub search" → MCP Servers
     "mcp-marketplace": "mcp",       # "mcp marketplace", "mcp marketplace alternative" → MCP Servers
+    # AI multi-agent — hyphenated compound form (split() doesn't break on hyphens)
+    # "multi agent" (space) routes via "agent"→ai; "multi-agent" as single token needs explicit entry
+    "multi-agent": "ai",            # "multi-agent system", "multi-agent framework" → AI & Automation
+    # IDE rules files — Cursor and Windsurf both use project-level rules files (hyphenated compounds)
+    "cursor-rules": "ai",           # "cursor-rules setup", "cursor-rules template" → AI & Automation
+    "cursorrules": "ai",            # compact — "cursorrules file", "cursorrules example" → AI & Automation
+    "windsurf-rules": "ai",         # "windsurf-rules setup", "windsurf-rules template" → AI & Automation
+    "windsurfrules": "ai",          # compact — "windsurfrules file", "windsurfrules config" → AI & Automation
+    # MCP registry / discovery platforms (Smithery, MCP.run, PulseMCP, OpenTools)
+    "mcp-registry": "mcp",          # "mcp registry", "mcp registry alternative" → MCP Servers
+    "mcpregistry": "mcp",           # compact — "mcpregistry search", "mcpregistry setup" → MCP Servers
+    "pulsemcp": "mcp",              # PulseMCP — MCP analytics and discovery platform → MCP Servers
+    "opentools": "mcp",             # OpenTools — MCP tool registry / discovery → MCP Servers
 }
 
 _FTS_STOP_WORDS = {

@@ -136,8 +136,15 @@ curl the API for these queries and check top-3 results are relevant:
                     'headless ui component', 'browser automation python', 'puppeteer alternative'.
   Enterprise auth: 'scim provisioning', 'ldap directory sync', 'active directory integration',
                    'user provisioning saas', 'directory sync tool'.
+  IDE rules files: 'cursor rules setup', 'cursor-rules template', 'cursorrules file',
+                   'windsurf rules config', 'windsurfrules example'.
+  MCP registries: 'mcp registry', 'mcp-registry alternative', 'pulsemcp analytics',
+                  'opentools mcp discovery', 'mcp marketplace search'.
+  Multi-agent: 'multi-agent framework', 'multi-agent system', 'multi-agent orchestration'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
+After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py
+  (catches duplicate keys early — silent overrides caused the 'rollout' bug Apr 2026)
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
