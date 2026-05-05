@@ -184,9 +184,15 @@ Grep route files AND mcp_server.py for hardcoded stats (tool counts, install cou
 Verify route-file counts against production DB: SELECT COUNT(*) FROM tools WHERE status='approved'.
 Fix any stale copy that's off by more than 10%. Run smoke_test.py after route file changes only.
 Also check: 'repomix alternative', 'gitingest setup', 'repo to llm' queries route to ai-dev-tools.
-JSON-LD injection check: grep -rn "_json.dumps\|json.dumps" src/indiestack/routes/ | grep "script"
-  — any match means a route is embedding raw json.dumps() inside a <script> tag without
-  .replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e') escaping.
+JSON-LD injection checks (two patterns to catch):
+  1. Raw json.dumps in script tags:
+     grep -rn "_json.dumps\|json.dumps" src/indiestack/routes/ | grep "script"
+     — any match means a route is embedding raw json.dumps() in a <script> tag without escaping.
+  2. F-string JSON in script tags (content.py pattern — NOT caught by check 1):
+     grep -rn 'f"""{{' src/indiestack/routes/ | grep "ld\|json"
+     grep -rn "escape.*json_ld\|json_ld.*escape\|cat_name_esc" src/indiestack/routes/
+     — f-string JSON uses html.escape() which corrupts & to &amp; in JSON data.
+  Both patterns: use json.dumps() + .replace('&','\\u0026').replace('<','\\u003c').replace('>','\\u003e').
   See gotchas.md: tool names containing </script> break out of the block. Use _safe_jld() helper.
 
 AFTER: bash ~/.claude/telegram.sh '[Bot] Session summary: [what you checked/fixed/researched]'
