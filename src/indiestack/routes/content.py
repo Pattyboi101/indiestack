@@ -533,14 +533,19 @@ async def blog_index(request: Request):
         {cards}
     </div>
     """
-    blog_ld = json.dumps({
-        "@context": "https://schema.org",
-        "@type": "Blog",
-        "name": "IndieStack Blog",
-        "description": "Thoughts on developer tools, AI workflows, and the future of software discovery.",
-        "url": f"{BASE_URL}/blog",
-        "publisher": {"@type": "Organization", "name": "IndieStack", "url": BASE_URL},
-    }, ensure_ascii=False)
+    blog_ld = (
+        json.dumps({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            "name": "IndieStack Blog",
+            "description": "Thoughts on developer tools, AI workflows, and the future of software discovery.",
+            "url": f"{BASE_URL}/blog",
+            "publisher": {"@type": "Organization", "name": "IndieStack", "url": BASE_URL},
+        }, ensure_ascii=False)
+        .replace("&", "\\u0026")
+        .replace("<", "\\u003c")
+        .replace(">", "\\u003e")
+    )
     blog_head = f'<script type="application/ld+json">{blog_ld}</script>'
 
     return HTMLResponse(page_shell(

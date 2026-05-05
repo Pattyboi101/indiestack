@@ -7420,6 +7420,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI snippet/context manager — Pieces for Devs captures code snippets with AI-enriched metadata
     "pieces": "ai",                 # Pieces for Devs — "pieces alternative", "pieces app", "pieces vs github copilot" → AI & Automation
     "pieces-for-devs": "ai",        # full form — "pieces-for-devs setup", "pieces-for-devs alternative" → AI & Automation
+    # GPU compute — generic queries route to AI & Automation (RunPod, vast.ai, Modal, CoreWeave, Lambda Labs all live there)
+    "gpu": "ai",                    # "gpu cloud", "gpu compute", "gpu rental", "gpu for llm" → AI & Automation
+    # DevOps — PaaS, VPS, and reverse proxy query terms not yet covered
+    "paas": "devops",               # "paas hosting", "paas platform", "heroku alternative" → DevOps & Infrastructure
+    "vps": "devops",                # "vps hosting", "vps provider", "vps alternative" → DevOps & Infrastructure
+    "reverse-proxy": "devops",      # "reverse-proxy setup", "reverse-proxy nginx alternative" → DevOps (Caddy, Traefik)
+    "reverseproxy": "devops",       # compact — "reverseproxy config", "reverseproxy docker" → DevOps & Infrastructure
+    # Security — DDoS protection queries (Cloudflare, Fastly, Bunny; in security and devops)
+    "ddos": "security",             # "ddos protection", "ddos mitigation", "ddos shield" → Security Tools
+    # Frontend — cross-platform app frameworks (Tauri, Electron, Capacitor, Expo)
+    "cross-platform": "frontend",   # "cross-platform app", "cross-platform desktop" → Frontend Frameworks
+    "crossplatform": "frontend",    # compact — "crossplatform framework", "crossplatform native" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
