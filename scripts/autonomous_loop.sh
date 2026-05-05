@@ -157,6 +157,11 @@ curl the API for these queries and check top-3 results are relevant:
     'unstructured io document parsing', 'document chunker python', 'text splitter rag',
     'cross encoder reranking', 'bm25 search library', 'mistral ocr api',
     'colpali visual retrieval', 'hybrid search bm25 vector'.
+  Forms & e-signature (added May 2026 — fillout/heyform/paperform/esignature synonyms added):
+    'fillout alternative', 'heyform self hosted', 'paperform alternative',
+    'esignature api', 'e-signature tool', 'digital signature api',
+    'pandadoc alternative', 'signnow alternative', 'reform app forms',
+    'form backend free', 'html form endpoint', 'docuseal esignature'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py

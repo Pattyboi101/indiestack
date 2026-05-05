@@ -7444,6 +7444,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "chunker": "ai",                # "document chunker", "text chunker" — generic RAG pipeline term → AI & Automation
     "mistral-ocr": "ai",            # Mistral OCR API — high-accuracy document processing by Mistral AI → AI & Automation
     "bm25": "search",               # BM25 — ranking algorithm; "bm25 library", "bm25 vs vector search" → Search Engines
+    # Forms — e-signature tools and generic digital-signature queries (docusign/hellosign/docuseal already mapped; these cover remaining tools + generic terms)
+    "esignature": "forms",          # "esignature api", "esignature tool", "free esignature" → Forms & Surveys
+    "e-signature": "forms",         # hyphenated — "e-signature software", "e-signature integration" → Forms & Surveys
+    "signature": "forms",           # "digital signature tool", "signature api", "electronic signature" → Forms & Surveys
+    "pandadoc": "forms",            # PandaDoc — proposals + e-signature; "pandadoc alternative" → Forms & Surveys
+    "signnow": "forms",             # SignNow — e-signature API; "signnow alternative", "signnow api" → Forms & Surveys
+    "fillout": "forms",             # Fillout.com — "fillout alternative", "fillout typeform" → Forms & Surveys
+    "heyform": "forms",             # HeyForm — open-source conversational form builder; "heyform alternative" → Forms & Surveys
+    "paperform": "forms",           # Paperform — conversational forms; "paperform alternative" → Forms & Surveys
+    "reform": "forms",              # Reform.app — embed-first forms for SaaS; "reform alternative" → Forms & Surveys
+    # Forms — generic form backend / submission API terms (Formspree/Formspark/FormSubmit already mapped)
+    "form-backend": "forms",        # "form backend api", "form backend self-hosted" → Forms & Surveys
+    "form-endpoint": "forms",       # "form endpoint service", "form endpoint free" → Forms & Surveys
 }
 
 _FTS_STOP_WORDS = {
