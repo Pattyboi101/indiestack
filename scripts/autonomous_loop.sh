@@ -141,6 +141,10 @@ curl the API for these queries and check top-3 results are relevant:
   MCP registries: 'mcp registry', 'mcp-registry alternative', 'pulsemcp analytics',
                   'opentools mcp discovery', 'mcp marketplace search'.
   Multi-agent: 'multi-agent framework', 'multi-agent system', 'multi-agent orchestration'.
+  GPU cloud for LLM: 'runpod alternative', 'runpod vs lambda labs', 'vast ai gpu rental',
+                     'lambda labs gpu cloud', 'coreweave alternative', 'cheap gpu cloud llm'.
+  AI SWE agents: 'sweep ai alternative', 'sweep code review', 'pieces for devs alternative',
+                 'pieces app snippets', 'pieces vs github copilot'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py

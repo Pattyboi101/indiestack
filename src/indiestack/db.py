@@ -7405,6 +7405,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mcpregistry": "mcp",           # compact — "mcpregistry search", "mcpregistry setup" → MCP Servers
     "pulsemcp": "mcp",              # PulseMCP — MCP analytics and discovery platform → MCP Servers
     "opentools": "mcp",             # OpenTools — MCP tool registry / discovery → MCP Servers
+    # AI SWE agents — autonomous coding agents (fast-growing 2026 segment)
+    # "sweepai" already mapped; bare "sweep" catches "sweep ai code review", "sweep alternative"
+    "sweep": "ai",                  # Sweep — AI code review + PR bot (sweepai/sweep, 7k★) → AI & Automation
+    # GPU cloud providers for LLM inference — common "X alternative" queries from indie devs
+    # running Llama, Mistral, and other open models on rented GPU infrastructure
+    "runpod": "ai",                 # RunPod — GPU cloud for LLM inference; "runpod alternative" → AI & Automation
+    "run-pod": "ai",                # hyphenated — "run-pod setup", "run-pod vs lambda" → AI & Automation
+    "lambdalabs": "ai",             # Lambda Labs — GPU cloud; "lambdalabs alternative", "lambda labs pricing" → AI & Automation
+    "lambda-labs": "ai",            # hyphenated — "lambda-labs gpu", "lambda-labs vs runpod" → AI & Automation
+    "vastai": "ai",                 # Vast.ai — GPU marketplace; "vastai alternative", "vastai pricing" → AI & Automation
+    "vast-ai": "ai",                # hyphenated — "vast-ai setup", "vast-ai vs runpod" → AI & Automation
+    "coreweave": "ai",              # CoreWeave — cloud GPU for ML/AI workloads; "coreweave alternative" → AI & Automation
+    # AI snippet/context manager — Pieces for Devs captures code snippets with AI-enriched metadata
+    "pieces": "ai",                 # Pieces for Devs — "pieces alternative", "pieces app", "pieces vs github copilot" → AI & Automation
+    "pieces-for-devs": "ai",        # full form — "pieces-for-devs setup", "pieces-for-devs alternative" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
