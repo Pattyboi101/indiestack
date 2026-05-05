@@ -34,11 +34,13 @@ VALID_SHORT_NAMES = {
     "logging", "notifications", "localization", "cli", "docs",
     "testing", "security", "search", "queue", "media", "maps",
     # short-name aliases (checked by LIKE on category name)
-    "message",   # Message Queue category
-    "newsletters",  # Newsletters & Content
-    "customer",  # Customer Support (live chat tools)
-    "feature",   # Feature Flags (LIKE '%feature%')
+    "message",        # Message Queue category
+    "newsletters",    # Newsletters & Content
+    "customer",       # Customer Support (live chat tools)
+    "feature",        # Feature Flags (LIKE '%feature%')
     "documentation",  # Documentation
+    "ai dev",         # AI Dev Tools (LIKE '%ai dev%' matches "AI Dev Tools")
+    "ai standards",   # AI Standards & Specs (LIKE '%ai standards%' matches)
 }
 
 

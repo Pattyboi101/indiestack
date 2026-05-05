@@ -145,6 +145,9 @@ curl the API for these queries and check top-3 results are relevant:
                      'lambda labs gpu cloud', 'coreweave alternative', 'cheap gpu cloud llm'.
   AI SWE agents: 'sweep ai alternative', 'sweep code review', 'pieces for devs alternative',
                  'pieces app snippets', 'pieces vs github copilot'.
+  AI Standards (must route to ai-standards category — fixed May 2026 after hyphen bug):
+    'garak llm scanner', 'lm-eval setup', 'inspect-ai alternative', 'swe-bench verified',
+    'arc-agi benchmark', 'mmlu-pro benchmark', 'gpqa diamond score', 'lm evaluation harness'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py

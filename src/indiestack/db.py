@@ -7254,54 +7254,54 @@ _CAT_SYNONYMS: dict[str, str] = {
     "magentic": "ai",               # Magentic — "magentic alternative", "magentic llm", "magentic structured" → AI & Automation
     # AI Standards — garak (NVIDIA; LLM vulnerability scanner + red-teamer; ~4k★)
     # Probes LLMs for hallucination, toxicity, jailbreaks, data leakage; "garak alternative" growing
-    "garak": "ai-standards",        # garak — "garak llm scanner", "garak red team", "garak alternative" → AI Standards & Specs
+    "garak": "ai standards",        # garak — "garak llm scanner", "garak red team", "garak alternative" → AI Standards & Specs
     # AI Standards — lm-evaluation-harness (EleutherAI; canonical LLM benchmark runner; ~7k★)
     # Supports MMLU, TruthfulQA, HellaSwag, hundreds of tasks; "lm eval harness" standard term
-    "lm-eval": "ai-standards",      # EleutherAI harness — "lm-eval setup", "lm-eval benchmarks" → AI Standards & Specs
-    "lmeval": "ai-standards",       # compact form — "lmeval harness", "lmeval alternative" → AI Standards & Specs
-    "lm-evaluation-harness": "ai-standards",  # full slug — exact match for this tool → AI Standards & Specs
+    "lm-eval": "ai standards",      # EleutherAI harness — "lm-eval setup", "lm-eval benchmarks" → AI Standards & Specs
+    "lmeval": "ai standards",       # compact form — "lmeval harness", "lmeval alternative" → AI Standards & Specs
+    "lm-evaluation-harness": "ai standards",  # full slug — exact match for this tool → AI Standards & Specs
     # AI Standards — inspect-ai (UK AISI; composable eval framework for safety testing; ~2k★)
     # Official UK gov AI safety tool; "inspect alternative", "inspect ai eval" queries
-    "inspect-ai": "ai-standards",   # hyphenated — "inspect-ai alternative", "inspect-ai evals" → AI Standards & Specs
-    "inspectai": "ai-standards",    # compact — "inspectai safety", "inspectai setup" → AI Standards & Specs
+    "inspect-ai": "ai standards",   # hyphenated — "inspect-ai alternative", "inspect-ai evals" → AI Standards & Specs
+    "inspectai": "ai standards",    # compact — "inspectai safety", "inspectai setup" → AI Standards & Specs
     # AI Standards — SWE-bench (Princeton/MIT; coding agent benchmark; measures agent ability to resolve GitHub issues)
     # Used to rank Devin, SWE-agent, OpenHands; "swe-bench score", "swe-bench verified" common queries
-    "swebench": "ai-standards",     # compact — "swebench score", "swebench eval" → AI Standards & Specs
-    "swe-bench": "ai-standards",    # hyphenated — "swe-bench verified", "swe-bench full" → AI Standards & Specs
+    "swebench": "ai standards",     # compact — "swebench score", "swebench eval" → AI Standards & Specs
+    "swe-bench": "ai standards",    # hyphenated — "swe-bench verified", "swe-bench full" → AI Standards & Specs
     # AI Standards — EvalPlus (HumanEval+ and MBPP+; rigorous code generation benchmarks)
     # Extends original HumanEval with 80x more test cases to reduce pass-rate inflation
-    "evalplus": "ai-standards",     # "evalplus benchmark", "evalplus humaneval" → AI Standards & Specs
-    "humaneval": "ai-standards",    # OpenAI's code generation benchmark — "humaneval score" → AI Standards & Specs
+    "evalplus": "ai standards",     # "evalplus benchmark", "evalplus humaneval" → AI Standards & Specs
+    "humaneval": "ai standards",    # OpenAI's code generation benchmark — "humaneval score" → AI Standards & Specs
     # AI Standards — OpenCompass (Shanghai AI Lab; open evaluation platform supporting 100+ LLMs)
     # Covers reasoning, coding, math, instruction-following; widely used in Chinese AI lab reports
-    "opencompass": "ai-standards",  # "opencompass benchmark", "opencompass eval" → AI Standards & Specs
+    "opencompass": "ai standards",  # "opencompass benchmark", "opencompass eval" → AI Standards & Specs
     # AI Standards — BigCode Evaluation Harness (for code generation models; HumanEval, MBPP, DS-1000)
     # Powers the BigCode leaderboard; used to rank StarCoder, CodeLlama, DeepSeek-Coder
-    "bigcode-eval": "ai-standards",  # "bigcode-eval harness", "bigcode evaluation" → AI Standards & Specs
-    "bigcode": "ai-standards",       # bare — "bigcode leaderboard", "bigcode benchmark" → AI Standards & Specs
+    "bigcode-eval": "ai standards",  # "bigcode-eval harness", "bigcode evaluation" → AI Standards & Specs
+    "bigcode": "ai standards",       # bare — "bigcode leaderboard", "bigcode benchmark" → AI Standards & Specs
     # AI Standards — MMLU-Pro (Carnegie Mellon; harder MMLU with 12k expert-vetted MCQs; fewer correct-by-chance answers)
     # Models score ~10 points lower than on MMLU; "mmlu-pro benchmark", "mmlu pro score" — rising query volume
-    "mmlu-pro": "ai-standards",     # hyphenated — "mmlu-pro benchmark", "mmlu-pro score", "mmlu-pro alternative" → AI Standards & Specs
-    "mmlupro": "ai-standards",      # compact — "mmlupro setup", "mmlupro evaluation" → AI Standards & Specs
+    "mmlu-pro": "ai standards",     # hyphenated — "mmlu-pro benchmark", "mmlu-pro score", "mmlu-pro alternative" → AI Standards & Specs
+    "mmlupro": "ai standards",      # compact — "mmlupro setup", "mmlupro evaluation" → AI Standards & Specs
     # AI Standards — GPQA Diamond (Google-Proof Q&A; 198 PhD-level biology/chemistry/physics questions)
     # Frontier models score 50–65%; "gpqa diamond score", "gpqa benchmark" — primary hard-sci eval reference
-    "gpqa": "ai-standards",         # bare — "gpqa score", "gpqa benchmark", "gpqa diamond" → AI Standards & Specs
-    "gpqa-diamond": "ai-standards", # full form — "gpqa-diamond score", "gpqa-diamond alternative" → AI Standards & Specs
-    "gpqadiamond": "ai-standards",  # compact — "gpqadiamond eval", "gpqadiamond benchmark" → AI Standards & Specs
+    "gpqa": "ai standards",         # bare — "gpqa score", "gpqa benchmark", "gpqa diamond" → AI Standards & Specs
+    "gpqa-diamond": "ai standards", # full form — "gpqa-diamond score", "gpqa-diamond alternative" → AI Standards & Specs
+    "gpqadiamond": "ai standards",  # compact — "gpqadiamond eval", "gpqadiamond benchmark" → AI Standards & Specs
     # AI Standards — LiveCodeBench (live online coding eval updated continuously; avoids contamination)
     # Tests HumanEval-style with new LeetCode problems; "livecodebench score", "livecodebench leaderboard"
-    "livecodebench": "ai-standards",    # compact — "livecodebench score", "livecodebench leaderboard" → AI Standards & Specs
-    "live-code-bench": "ai-standards",  # hyphenated — "live-code-bench alternative", "live-code-bench setup" → AI Standards & Specs
+    "livecodebench": "ai standards",    # compact — "livecodebench score", "livecodebench leaderboard" → AI Standards & Specs
+    "live-code-bench": "ai standards",  # hyphenated — "live-code-bench alternative", "live-code-bench setup" → AI Standards & Specs
     # AI Standards — ARC-AGI (François Chollet / ARC Prize; abstraction & reasoning test humans solve but AI struggles)
     # ARC-AGI-2 launched April 2026 with $1M prize; "arc-agi score", "arc agi 2" very high query volume
-    "arc-agi": "ai-standards",      # hyphenated — "arc-agi benchmark", "arc-agi score", "arc-agi-2" → AI Standards & Specs
-    "arcagi": "ai-standards",       # compact — "arcagi benchmark", "arcagi test" → AI Standards & Specs
-    "arc-agi-2": "ai-standards",    # version — "arc-agi-2 score", "arc-agi-2 tasks" → AI Standards & Specs
-    "arcagi2": "ai-standards",      # compact version — "arcagi2 alternative", "arcagi2 prize" → AI Standards & Specs
+    "arc-agi": "ai standards",      # hyphenated — "arc-agi benchmark", "arc-agi score", "arc-agi-2" → AI Standards & Specs
+    "arcagi": "ai standards",       # compact — "arcagi benchmark", "arcagi test" → AI Standards & Specs
+    "arc-agi-2": "ai standards",    # version — "arc-agi-2 score", "arc-agi-2 tasks" → AI Standards & Specs
+    "arcagi2": "ai standards",      # compact version — "arcagi2 alternative", "arcagi2 prize" → AI Standards & Specs
     # AI Standards — FrontierMath (Epoch AI; extremely hard math problems; frontier models score <2%)
     # Tests graduate-level math competition problems; "frontiermath benchmark", "frontier math score"
-    "frontiermath": "ai-standards", # compact — "frontiermath benchmark", "frontiermath score" → AI Standards & Specs
-    "frontier-math": "ai-standards",# hyphenated — "frontier-math eval", "frontier-math alternative" → AI Standards & Specs
+    "frontiermath": "ai standards", # compact — "frontiermath benchmark", "frontiermath score" → AI Standards & Specs
+    "frontier-math": "ai standards",# hyphenated — "frontier-math eval", "frontier-math alternative" → AI Standards & Specs
     # AI — Kimi K2 (Moonshot AI; 1T-parameter MoE reasoning model; open-source weights; May 2026)
     # Strong on tool use and agentic tasks; "kimi k2 alternative", "kimi-k2 api" — high query volume post-launch
     "kimi-k2": "ai",               # hyphenated — "kimi-k2 alternative", "kimi-k2 api", "kimi-k2 weights" → AI & Automation
@@ -7310,35 +7310,35 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI Standards — classic NLP / LLM benchmarks not yet routed to ai-standards category
     # HELM (Stanford) — holistic benchmark covering 42 scenarios; "helm eval", "helm benchmark"
     # Note: bare "helm" maps to devops (Kubernetes Helm); use compound forms for AI HELM
-    "helm-eval": "ai-standards",   # "helm-eval setup", "helm eval framework" → AI Standards & Specs (Stanford HELM)
-    "stanford-helm": "ai-standards",  # "stanford-helm benchmark", "stanford helm scores" → AI Standards & Specs
-    "big-bench": "ai-standards",   # BIG-bench — Google's Beyond the Imitation Game benchmark → AI Standards & Specs
-    "bigbench": "ai-standards",    # compact — "bigbench hard", "bigbench tasks", "bbh benchmark" → AI Standards & Specs
-    "bbh": "ai-standards",         # BIG-Bench Hard abbreviation — "bbh score", "bbh reasoning" → AI Standards & Specs
-    "mmlu": "ai-standards",        # MMLU — 57-subject multiple-choice; "mmlu score", "mmlu benchmark" → AI Standards & Specs
-    "mmlu-benchmark": "ai-standards",  # hyphenated — "mmlu-benchmark eval", "mmlu-benchmark pass rate" → AI Standards & Specs
-    "gsm8k": "ai-standards",       # GSM8K — grade school math word problems (CoT benchmark) → AI Standards & Specs
-    "gsm-8k": "ai-standards",      # hyphenated — "gsm-8k benchmark", "gsm-8k reasoning" → AI Standards & Specs
-    "truthfulqa": "ai-standards",  # TruthfulQA — measures LLM truthfulness and hallucination → AI Standards & Specs
-    "truthful-qa": "ai-standards", # hyphenated — "truthful-qa score", "truthful-qa benchmark" → AI Standards & Specs
-    "hellaswag": "ai-standards",   # HellaSwag — commonsense NLI benchmark → AI Standards & Specs
-    "winogrande": "ai-standards",  # WinoGrande — Winograd schema challenge at scale → AI Standards & Specs
-    "mbpp": "ai-standards",        # MBPP — Mostly Basic Python Problems (code eval) → AI Standards & Specs
-    "mt-bench": "ai-standards",    # MT-bench — multi-turn conversation evaluation (LMSys) → AI Standards & Specs
-    "mtbench": "ai-standards",     # compact — "mtbench score", "mtbench chatbot arena" → AI Standards & Specs
-    "alpacaeval": "ai-standards",  # AlpacaEval — automated instruction-following eval → AI Standards & Specs
-    "alpaca-eval": "ai-standards", # hyphenated — "alpaca-eval leaderboard", "alpaca-eval setup" → AI Standards & Specs
-    "bfcl": "ai-standards",        # BFCL — Berkeley Function-Calling Leaderboard → AI Standards & Specs
-    "chatbot-arena": "ai-standards",  # Chatbot Arena (LMSYS) — Elo-ranked pairwise human evals → AI Standards & Specs
-    "chatbotarena": "ai-standards",   # compact — "chatbotarena ranking", "chatbotarena score" → AI Standards & Specs
-    "lmsys": "ai-standards",       # LMSYS — org behind Chatbot Arena, Vicuna, MT-bench → AI Standards & Specs
-    "eqbench": "ai-standards",     # EQBench — emotional intelligence benchmark for LLMs → AI Standards & Specs
-    "aime": "ai-standards",        # AIME — American Invitational Math Exam (math competition benchmark) → AI Standards & Specs
-    "math-benchmark": "ai-standards",  # "math benchmark llm", "math eval llm" → AI Standards & Specs
-    "safety-eval": "ai-standards", # "safety eval framework", "llm safety evaluation" → AI Standards & Specs
-    "redteam": "ai-standards",     # "llm red team", "red team evaluation" → AI Standards & Specs (garak, Inspect AI)
-    "red-team": "ai-standards",    # hyphenated — "red-team llm", "red-team evaluation" → AI Standards & Specs
-    "jailbreak": "ai-standards",   # "jailbreak test", "jailbreak benchmark", "jailbreak detection" → AI Standards & Specs
+    "helm-eval": "ai standards",   # "helm-eval setup", "helm eval framework" → AI Standards & Specs (Stanford HELM)
+    "stanford-helm": "ai standards",  # "stanford-helm benchmark", "stanford helm scores" → AI Standards & Specs
+    "big-bench": "ai standards",   # BIG-bench — Google's Beyond the Imitation Game benchmark → AI Standards & Specs
+    "bigbench": "ai standards",    # compact — "bigbench hard", "bigbench tasks", "bbh benchmark" → AI Standards & Specs
+    "bbh": "ai standards",         # BIG-Bench Hard abbreviation — "bbh score", "bbh reasoning" → AI Standards & Specs
+    "mmlu": "ai standards",        # MMLU — 57-subject multiple-choice; "mmlu score", "mmlu benchmark" → AI Standards & Specs
+    "mmlu-benchmark": "ai standards",  # hyphenated — "mmlu-benchmark eval", "mmlu-benchmark pass rate" → AI Standards & Specs
+    "gsm8k": "ai standards",       # GSM8K — grade school math word problems (CoT benchmark) → AI Standards & Specs
+    "gsm-8k": "ai standards",      # hyphenated — "gsm-8k benchmark", "gsm-8k reasoning" → AI Standards & Specs
+    "truthfulqa": "ai standards",  # TruthfulQA — measures LLM truthfulness and hallucination → AI Standards & Specs
+    "truthful-qa": "ai standards", # hyphenated — "truthful-qa score", "truthful-qa benchmark" → AI Standards & Specs
+    "hellaswag": "ai standards",   # HellaSwag — commonsense NLI benchmark → AI Standards & Specs
+    "winogrande": "ai standards",  # WinoGrande — Winograd schema challenge at scale → AI Standards & Specs
+    "mbpp": "ai standards",        # MBPP — Mostly Basic Python Problems (code eval) → AI Standards & Specs
+    "mt-bench": "ai standards",    # MT-bench — multi-turn conversation evaluation (LMSys) → AI Standards & Specs
+    "mtbench": "ai standards",     # compact — "mtbench score", "mtbench chatbot arena" → AI Standards & Specs
+    "alpacaeval": "ai standards",  # AlpacaEval — automated instruction-following eval → AI Standards & Specs
+    "alpaca-eval": "ai standards", # hyphenated — "alpaca-eval leaderboard", "alpaca-eval setup" → AI Standards & Specs
+    "bfcl": "ai standards",        # BFCL — Berkeley Function-Calling Leaderboard → AI Standards & Specs
+    "chatbot-arena": "ai standards",  # Chatbot Arena (LMSYS) — Elo-ranked pairwise human evals → AI Standards & Specs
+    "chatbotarena": "ai standards",   # compact — "chatbotarena ranking", "chatbotarena score" → AI Standards & Specs
+    "lmsys": "ai standards",       # LMSYS — org behind Chatbot Arena, Vicuna, MT-bench → AI Standards & Specs
+    "eqbench": "ai standards",     # EQBench — emotional intelligence benchmark for LLMs → AI Standards & Specs
+    "aime": "ai standards",        # AIME — American Invitational Math Exam (math competition benchmark) → AI Standards & Specs
+    "math-benchmark": "ai standards",  # "math benchmark llm", "math eval llm" → AI Standards & Specs
+    "safety-eval": "ai standards", # "safety eval framework", "llm safety evaluation" → AI Standards & Specs
+    "redteam": "ai standards",     # "llm red team", "red team evaluation" → AI Standards & Specs (garak, Inspect AI)
+    "red-team": "ai standards",    # hyphenated — "red-team llm", "red-team evaluation" → AI Standards & Specs
+    "jailbreak": "ai standards",   # "jailbreak test", "jailbreak benchmark", "jailbreak detection" → AI Standards & Specs
     # MCP Servers — high-star official + ecosystem tools (149th pass)
     # GitHub Official MCP Server (github/github-mcp-server, ~29k★; Issues, PRs, code search, Actions)
     "github-mcp": "mcp",            # "github mcp server", "github mcp setup" → MCP Servers
