@@ -148,6 +148,10 @@ curl the API for these queries and check top-3 results are relevant:
   AI Standards (must route to ai-standards category — fixed May 2026 after hyphen bug):
     'garak llm scanner', 'lm-eval setup', 'inspect-ai alternative', 'swe-bench verified',
     'arc-agi benchmark', 'mmlu-pro benchmark', 'gpqa diamond score', 'lm evaluation harness'.
+  Infra & DevOps (added May 2026 — paas/vps/reverse-proxy/gpu synonyms added):
+    'gpu cloud', 'gpu compute llm', 'cheap gpu inference', 'paas provider',
+    'vps hosting indie', 'reverse proxy setup', 'nginx alternative reverse proxy',
+    'ddos protection service', 'cross-platform desktop app', 'tauri vs electron'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py
