@@ -7432,6 +7432,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — cross-platform app frameworks (Tauri, Electron, Capacitor, Expo)
     "cross-platform": "frontend",   # "cross-platform app", "cross-platform desktop" → Frontend Frameworks
     "crossplatform": "frontend",    # compact — "crossplatform framework", "crossplatform native" → Frontend Frameworks
+    # RAG / document processing — ingestion, parsing, OCR for LLM pipelines (fast-growing query segment)
+    "markitdown": "ai",             # MarkItDown (Microsoft) — convert any file to Markdown for LLMs (46k★) → AI & Automation
+    "surya": "ai",                  # Surya — layout-aware OCR and document detection (VikParuchuri, 15k★) → AI & Automation
+    "colpali": "ai",                # ColPali — visual document retrieval via multi-vector page embeddings → AI & Automation
+    "unstructured": "ai",           # Unstructured.io — document parsing library for RAG pipelines (20k★) → AI & Automation
+    "cross-encoder": "ai",          # cross-encoder reranking model — second-pass rerank in hybrid RAG → AI & Automation
+    "crossencoder": "ai",           # compact — "crossencoder alternative", "crossencoder rerank" → AI & Automation
+    "text-splitter": "ai",          # "text-splitter library", "document splitter for RAG" → AI & Automation
+    "textsplitter": "ai",           # compact — "textsplitter chunk", "textsplitter alternative" → AI & Automation
+    "chunker": "ai",                # "document chunker", "text chunker" — generic RAG pipeline term → AI & Automation
+    "mistral-ocr": "ai",            # Mistral OCR API — high-accuracy document processing by Mistral AI → AI & Automation
+    "bm25": "search",               # BM25 — ranking algorithm; "bm25 library", "bm25 vs vector search" → Search Engines
 }
 
 _FTS_STOP_WORDS = {

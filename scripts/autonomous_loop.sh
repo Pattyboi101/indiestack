@@ -152,6 +152,11 @@ curl the API for these queries and check top-3 results are relevant:
     'gpu cloud', 'gpu compute llm', 'cheap gpu inference', 'paas provider',
     'vps hosting indie', 'reverse proxy setup', 'nginx alternative reverse proxy',
     'ddos protection service', 'cross-platform desktop app', 'tauri vs electron'.
+  RAG & document processing (added May 2026 — markitdown/surya/unstructured/bm25 synonyms added):
+    'markitdown alternative', 'convert pdf to markdown llm', 'surya ocr alternative',
+    'unstructured io document parsing', 'document chunker python', 'text splitter rag',
+    'cross encoder reranking', 'bm25 search library', 'mistral ocr api',
+    'colpali visual retrieval', 'hybrid search bm25 vector'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py
