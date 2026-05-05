@@ -2236,8 +2236,22 @@ async def best_category(request: Request, category_slug: str):
         </div>
         """
 
-    cat_name_esc = escape(cat['name'])
-    json_ld = f"""{{"@context":"https://schema.org","@type":"CollectionPage","name":"Best Indie {cat_name_esc}{'' if 'tool' in cat_name_esc.lower() else ' Tools'} in 2026","description":"{escape(intro_text)}","url":"{BASE_URL}/best/{escape(category_slug)}","numberOfItems":{total},"provider":{{"@type":"Organization","name":"IndieStack","url":"{BASE_URL}"}}}}"""
+    cat_name = cat['name']
+    page_name = f"Best Indie {cat_name}{'' if 'tool' in cat_name.lower() else ' Tools'} in 2026"
+    json_ld = (
+        json.dumps({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": page_name,
+            "description": intro_text,
+            "url": f"{BASE_URL}/best/{category_slug}",
+            "numberOfItems": total,
+            "provider": {"@type": "Organization", "name": "IndieStack", "url": BASE_URL},
+        }, ensure_ascii=False)
+        .replace("&", "\\u0026")
+        .replace("<", "\\u003c")
+        .replace(">", "\\u003e")
+    )
 
     extra_head = f'<script type="application/ld+json">{json_ld}</script>'
 
