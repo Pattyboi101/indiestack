@@ -162,6 +162,13 @@ curl the API for these queries and check top-3 results are relevant:
     'esignature api', 'e-signature tool', 'digital signature api',
     'pandadoc alternative', 'signnow alternative', 'reform app forms',
     'form backend free', 'html form endpoint', 'docuseal esignature'.
+  Waitlist / referral / in-app changelog (added May 2026 — waitlist/referral/affiliate/beamer synonyms added):
+    'waitlist tool', 'launch waitlist api', 'pre-launch email collection',
+    'referral program software', 'referral tracking tool', 'referralhero alternative',
+    'affiliate tracking software', 'rewardful alternative', 'growsurf alternative',
+    'beamer alternative', 'in-app changelog widget', 'headway changelog',
+    'olvy product changelog', 'featurebase alternative', 'noticeable announcements',
+    'product update widget', 'in-app notification tool'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py

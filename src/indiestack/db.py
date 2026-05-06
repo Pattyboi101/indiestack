@@ -7457,6 +7457,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Forms — generic form backend / submission API terms (Formspree/Formspark/FormSubmit already mapped)
     "form-backend": "forms",        # "form backend api", "form backend self-hosted" → Forms & Surveys
     "form-endpoint": "forms",       # "form endpoint service", "form endpoint free" → Forms & Surveys
+    # Waitlist / pre-launch email capture tools (GetWaitlist, Waitlist.email, Prefinery)
+    "waitlist": "email",            # "waitlist tool", "launch waitlist", "waitlist api" → Email Marketing
+    "pre-launch": "email",          # "pre-launch email collection", "pre-launch page" → Email Marketing
+    "launchlist": "email",          # LaunchList — waitlist + referral tool; "launchlist alternative" → Email Marketing
+    # Referral & affiliate marketing programs
+    "referral": "crm",              # "referral program software", "referral tracking tool" → CRM & Sales (ReferralHero, Rewardful, Growsurf)
+    "viral": "social",              # "viral loop", "viral referral growth" → Social Media
+    "affiliate": "payments",        # "affiliate tracking software", "affiliate management tool" → Payments (Rewardful, Paddle affiliate)
+    "rewardful": "payments",        # Rewardful — Stripe-native affiliate + referral tracking; "rewardful alternative" → Payments
+    "referralhero": "crm",          # ReferralHero — referral + viral loop; "referralhero alternative" → CRM & Sales
+    "growsurf": "crm",              # GrowSurf — referral program software; "growsurf alternative" → CRM & Sales
+    # In-app changelog / product announcement widgets (user-facing update feeds)
+    "beamer": "feedback",           # Beamer — in-app changelog widget; "beamer alternative" → Feedback & Reviews
+    "headwayapp": "feedback",       # Headway — in-app product changelog; "headwayapp alternative" → Feedback & Reviews
+    "olvy": "feedback",             # Olvy — in-app changelog + feedback; "olvy alternative" → Feedback & Reviews
+    "featurebase": "feedback",      # Featurebase — customer feedback + changelog board; "featurebase alternative" → Feedback & Reviews
+    "noticeable": "feedback",       # Noticeable — in-app product announcements; "noticeable alternative" → Feedback & Reviews
+    "changefeed": "feedback",       # ChangeFeed — in-app changelog widget; "changefeed alternative" → Feedback & Reviews
+    "in-app": "notifications",      # "in-app notification", "in-app announcement", "in-app messaging" → Notifications
+    "product-update": "feedback",   # "product update widget", "product update feed" → Feedback & Reviews
 }
 
 _FTS_STOP_WORDS = {
