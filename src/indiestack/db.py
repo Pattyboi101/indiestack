@@ -6014,6 +6014,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "idea": "feedback",            # "idea management board", "idea tracker", "idea voting" → Feedback & Reviews
     "pendo": "feedback",           # Pendo — product analytics + feedback; "pendo alternative" → Feedback & Reviews
     "delighted": "feedback",       # Delighted — NPS/CSAT survey tool; "delighted alternative" → Feedback & Reviews
+    # Product onboarding / user adoption platforms — "appcues alternative", "userpilot alternative" queries
+    "appcues": "feedback",          # Appcues — product adoption + onboarding platform; "appcues alternative" → Feedback & Reviews
+    "userpilot": "feedback",        # UserPilot — user onboarding + product analytics; "userpilot alternative" → Feedback & Reviews
+    "userguiding": "feedback",      # UserGuiding — no-code user onboarding; "userguiding alternative" → Feedback & Reviews
+    "productfruits": "feedback",    # Product Fruits — product tours + in-app feedback; "productfruits alternative" → Feedback & Reviews
+    # Product tour JS libraries — "intro.js alternative", "driver.js tutorial" → Frontend Frameworks
+    "introjs": "frontend",          # Intro.js — step-by-step JS guide library (22k★); "introjs alternative" → Frontend Frameworks
+    "intro-js": "frontend",         # hyphenated — "intro-js react", "intro-js tutorial" → Frontend Frameworks
+    "driverjs": "frontend",         # Driver.js — spotlight/guide JS library (24k★); "driverjs alternative" → Frontend Frameworks
+    "driver-js": "frontend",        # hyphenated — "driver-js setup", "driver-js vue" → Frontend Frameworks
+    "shepherdjs": "frontend",       # Shepherd.js — guided tour JS library (13k★); "shepherdjs alternative" → Frontend Frameworks
+    "shepherd-js": "frontend",      # hyphenated — "shepherd-js react", "shepherd-js tutorial" → Frontend Frameworks
     # Landing Pages — adding conversion-optimisation tools + indie builders
     "leadpages": "landing",        # Leadpages — "leadpages alternative", "leadpages open source" → Landing Pages
     "unbounce": "landing",         # Unbounce — A/B landing page testing; "unbounce alternative" → Landing Pages
