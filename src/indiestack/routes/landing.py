@@ -594,7 +594,7 @@ async def landing(request: Request):
             "target": f"{BASE_URL}/search?q={{search_term_string}}",
             "query-input": "required name=search_term_string"
         }
-    }, ensure_ascii=False)
+    }, ensure_ascii=False).replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
     extra_head = f'<script type="application/ld+json">{website_ld}</script>'
     # Force dark mode on landing page (doesn't save to localStorage, so other pages respect user preference)
     extra_head += (
