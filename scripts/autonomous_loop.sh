@@ -169,6 +169,11 @@ curl the API for these queries and check top-3 results are relevant:
     'beamer alternative', 'in-app changelog widget', 'headway changelog',
     'olvy product changelog', 'featurebase alternative', 'noticeable announcements',
     'product update widget', 'in-app notification tool'.
+  Product onboarding & tour libraries (added May 2026 — appcues/userpilot/driverjs synonyms added):
+    'appcues alternative', 'userpilot alternative', 'userguiding alternative',
+    'product adoption platform', 'user onboarding software',
+    'intro.js alternative', 'driver.js alternative', 'shepherd.js alternative',
+    'product tour library javascript', 'interactive guide library'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py
