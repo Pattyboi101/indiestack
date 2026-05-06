@@ -174,6 +174,10 @@ curl the API for these queries and check top-3 results are relevant:
     'product adoption platform', 'user onboarding software',
     'intro.js alternative', 'driver.js alternative', 'shepherd.js alternative',
     'product tour library javascript', 'interactive guide library'.
+  Product adoption & behavior analytics (added May 2026 — chameleon/userflow/mouseflow/smartlook synonyms added):
+    'chameleon alternative', 'chameleon io product adoption', 'userflow onboarding',
+    'mouseflow alternative', 'mouseflow heatmap', 'smartlook alternative',
+    'smartlook session recording', 'session recording tool', 'heatmap tool'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py

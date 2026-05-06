@@ -7489,6 +7489,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "changefeed": "feedback",       # ChangeFeed — in-app changelog widget; "changefeed alternative" → Feedback & Reviews
     "in-app": "notifications",      # "in-app notification", "in-app announcement", "in-app messaging" → Notifications
     "product-update": "feedback",   # "product update widget", "product update feed" → Feedback & Reviews
+    # Product adoption / user onboarding platforms (complement to appcues/userpilot/driverjs added May 2026)
+    "chameleon": "feedback",        # Chameleon.io — product adoption + in-app tours; "chameleon alternative" → Feedback & Reviews
+    "userflow": "feedback",         # Userflow — no-code user onboarding builder; "userflow alternative" → Feedback & Reviews
+    # Behavior analytics / session recording (complement to hotjar/clarity/fullstory/logrocket already mapped)
+    "mouseflow": "analytics",       # Mouseflow — heatmaps + session recording; "mouseflow alternative" → Analytics & Metrics
+    "smartlook": "analytics",       # Smartlook — session recording + event analytics; "smartlook alternative" → Analytics & Metrics
 }
 
 _FTS_STOP_WORDS = {
