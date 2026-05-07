@@ -154,6 +154,34 @@ TEST_CASES: list[tuple[str, str]] = [
     ("cli command line", "cli"),
     ("documentation api docs", "api"),      # "documentation" not in synonyms; "api" → api (acceptable)
     ("feature flag toggle", "feature"),
+    # Product adoption / onboarding (added May 2026)
+    ("appcues alternative", "feedback"),
+    ("userpilot alternative", "feedback"),
+    ("chameleon io product adoption", "feedback"),
+    ("userflow onboarding", "feedback"),
+    ("product tour library javascript", "frontend"),  # "tour" → frontend
+    # Behavior analytics / session recording (added May 2026)
+    ("mouseflow heatmap", "analytics"),
+    ("smartlook session recording", "analytics"),
+    # Observability / tracing (complementary terms)
+    ("opentelemetry alternative", "monitoring"),
+    ("distributed tracing jaeger", "monitoring"),     # "jaeger" → monitoring
+    # Monorepo / package management
+    ("monorepo build tool", "developer"),
+    ("turborepo alternative", "developer"),
+    # Code quality / linting — live in testing-tools category
+    ("linting eslint alternative", "testing"),
+    ("code formatter biome", "testing"),              # biome → testing (intentional)
+    # Secrets / environment management
+    ("secrets management doppler", "security"),
+    # Error tracking
+    ("error tracking sentry", "monitoring"),          # "error" → monitoring
+    # IaC / infra
+    ("infrastructure as code terraform", "devops"),
+    # GraphQL / API
+    ("graphql api builder", "api"),
+    # Headless CMS
+    ("headless cms sanity alternative", "cms"),
 ]
 
 

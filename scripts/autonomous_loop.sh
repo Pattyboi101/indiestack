@@ -185,6 +185,19 @@ curl the API for these queries and check top-3 results are relevant:
     'gitstream alternative', 'gitstream pr automation',
     'linearb alternative', 'linearb engineering metrics',
     'reviewdog alternative', 'reviewdog ci setup', 'inline pr comments linter'.
+  Observability & tracing (2026 — opentelemetry/otel/jaeger synonyms confirmed):
+    'opentelemetry alternative', 'opentelemetry setup nodejs', 'otel collector setup',
+    'distributed tracing jaeger', 'distributed tracing zipkin', 'apm tool open source',
+    'signoz alternative', 'grafana alternative', 'self-hosted observability stack'.
+  Monorepo & package management (2026 — turborepo/nx/pnpm synonyms confirmed):
+    'monorepo build tool', 'turborepo alternative', 'nx monorepo setup',
+    'pnpm workspaces setup', 'lerna alternative', 'changesets monorepo versioning'.
+  Code quality & linting (2026 — lint/eslint/biome/prettier in testing-tools by design):
+    'eslint alternative', 'biome linter setup', 'code formatter prettier alternative',
+    'js linter nodejs', 'typescript linter tool'.
+  Error tracking & secrets (2026 — error→monitoring, secrets→security):
+    'error tracking sentry alternative', 'bugsnag alternative', 'rollbar alternative',
+    'secrets management doppler alternative', 'infisical alternative', 'vault secrets'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run:
