@@ -40,8 +40,18 @@ def route_query(query: str) -> tuple[str, str]:
     if not meaningful_for_cat:
         meaningful_for_cat = meaningful  # fallback: use all
 
-    # Step 3: Find first term with a known synonym
-    syn_term = next((t for t in meaningful_for_cat if t in _CAT_SYNONYMS), None)
+    # Step 3: Find first term (or bigram) with a known synonym — bigrams have priority
+    # at each position so "load balancing" beats "load"→testing, etc.
+    syn_term = None
+    for i, tok in enumerate(meaningful_for_cat):
+        if i + 1 < len(meaningful_for_cat):
+            bigram = f"{tok} {meaningful_for_cat[i + 1]}"
+            if bigram in _CAT_SYNONYMS:
+                syn_term = bigram
+                break
+        if tok in _CAT_SYNONYMS:
+            syn_term = tok
+            break
     if syn_term:
         return _CAT_SYNONYMS[syn_term], syn_term
 
@@ -240,13 +250,27 @@ TEST_CASES: list[tuple[str, str]] = [
     # Usage-based / metered billing
     ("usage based billing", "invoicing"),           # "usage" → invoicing (metered billing category)
     ("metered billing api", "invoicing"),           # "metered" → invoicing
-    # Screen recording / UX analytics (recording token added May 2026)
-    ("screen recording tool", "analytics"),         # "recording" → analytics (compound "screen-recording" key never fires on space-split)
+    # Screen recording / UX analytics (bigram "screen recording" → analytics)
+    ("screen recording tool", "analytics"),         # bigram "screen recording" → analytics
     ("ux recording tool", "analytics"),             # "recording" → analytics
-    # Feedback & Reviews (feedback token added May 2026)
-    ("user feedback widget", "feedback"),           # "feedback" → feedback (fires after "user" has no synonym)
+    # Feedback & Reviews
+    ("user feedback widget", "feedback"),           # "feedback" → feedback
     ("customer feedback tool", "feedback"),         # "feedback" → feedback
     ("feedback collection", "feedback"),            # "feedback" → feedback (first token)
+    # Bigram routing fixes (added May 2026 — these previously routed to wrong categories)
+    ("session replay tool", "analytics"),           # bigram "session replay" beats "session"→authentication
+    ("user session replay", "analytics"),           # bigram "session replay" fires for mid-query too
+    ("load balancer tool", "devops"),               # bigram "load balancer" beats "load"→testing
+    ("load balancing nginx", "devops"),             # bigram "load balancing" beats "load"→testing
+    ("token bucket rate limit", "api"),             # bigram "token bucket" beats "token"→authentication
+    ("sliding window algorithm", "api"),            # bigram "sliding window" → api (rate limiting pattern)
+    ("step functions alternative", "background"),   # bigram "step functions" → background-jobs
+    ("key rotation policy", "security"),            # bigram "key rotation" → security
+    ("version control system", "devops"),           # bigram "version control" → devops
+    ("dead letter queue", "message"),               # bigram "dead letter" → message queue
+    ("semantic cache llm", "caching"),              # bigram "semantic cache" beats "semantic"→search
+    ("dark launch strategy", "feature"),            # bigram "dark launch" beats "dark"→frontend
+    ("key value database", "caching"),              # bigram "key value" → caching (no individual match)
 ]
 
 

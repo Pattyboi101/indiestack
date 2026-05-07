@@ -6289,9 +6289,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "image-optimization": "media",  # "image optimization api", "image optimization cdn" → Media (Cloudinary, imgix)
     "media-library": "file",        # "media library", "digital asset library", "media management" → File Storage & CDN
     # Analytics — session replay and screen recording (Hotjar, FullStory, LogRocket, Replay.io)
-    "session-replay": "analytics",  # "session replay tool", "user session recording" → Analytics (Hotjar, FullStory)
-    "screen-recording": "analytics",  # "screen recording for ux", "screen recording analytics" → Analytics
-    "recording": "analytics",        # "screen recording tool", "session recording" → Analytics (single-token fallback for compound forms)
+    "session-replay": "analytics",  # hyphenated — "session-replay tool" → Analytics
+    "session replay": "analytics",  # spaced — "session replay tool" wins over "session"→authentication
+    "screen recording": "analytics",  # spaced — "screen recording tool" → Analytics
+    "screen-recording": "analytics",  # hyphenated form
+    "recording": "analytics",        # single-token fallback for "session recording"
     # AI — reactive Python notebooks and ML dashboards (fast-growing data-science segment)
     "solara": "ai",                 # Solara — Python web app framework for ML/data scientists (2k★) → AI & Automation
     "panel": "ai",                  # HoloViz Panel — Python dashboard framework for data apps (4k★) → AI & Automation
@@ -7742,7 +7744,18 @@ async def search_tools(
     # For queries like "self hosted auth", the first meaningful term ("self") has no
     # synonym — scan all terms and prefer the first with a known synonym so "auth"
     # from "self hosted auth" gets the 100-point Authentication category boost.
-    _syn_term = next((t for t in _meaningful_for_cat if t in _CAT_SYNONYMS), None)
+    # Bigrams are checked before individual tokens so "load balancing" → devops wins
+    # over "load" → testing, and "session replay" → analytics wins over "session" → auth.
+    _syn_term = None
+    for _i, _tok in enumerate(_meaningful_for_cat):
+        if _i + 1 < len(_meaningful_for_cat):
+            _bigram = f"{_tok} {_meaningful_for_cat[_i + 1]}"
+            if _bigram in _CAT_SYNONYMS:
+                _syn_term = _bigram
+                break
+        if _tok in _CAT_SYNONYMS:
+            _syn_term = _tok
+            break
     if _syn_term:
         _cat_term = _CAT_SYNONYMS[_syn_term]
     else:
