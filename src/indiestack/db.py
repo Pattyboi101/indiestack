@@ -7495,6 +7495,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Behavior analytics / session recording (complement to hotjar/clarity/fullstory/logrocket already mapped)
     "mouseflow": "analytics",       # Mouseflow — heatmaps + session recording; "mouseflow alternative" → Analytics & Metrics
     "smartlook": "analytics",       # Smartlook — session recording + event analytics; "smartlook alternative" → Analytics & Metrics
+    # AI-powered PR review / code integrity — Qodo (formerly CodiumAI) rebranded; "pr-agent" slug still widely searched
+    # "qodo"→ai already mapped (bare brand); compound product names weren't covered
+    "pr-agent": "ai",               # PR-Agent (Qodo Merge) — AI PR review + auto-fix bot; "pr-agent setup", "pr-agent alternative" → AI & Automation
+    "qodo-merge": "ai",             # Qodo Merge — AI-powered PR review; "qodo-merge alternative", "qodo-merge setup" → AI & Automation
+    "qodomerge": "ai",              # compact — "qodomerge alternative", "qodomerge vs coderabbit" → AI & Automation
+    "qodo-gen": "ai",               # Qodo Gen — AI test + code generation; "qodo-gen alternative", "qodo-gen setup" → AI & Automation
+    "qodogen": "ai",                # compact — "qodogen alternative", "qodogen setup" → AI & Automation
+    # DevOps — merge queue, PR automation, and engineering metrics (high 2026 query volume)
+    "mergify": "devops",            # Mergify — merge queue + PR automation rules; "mergify alternative", "mergify setup" → DevOps & Infrastructure
+    "merge-queue": "devops",        # generic — "merge queue tool", "github merge queue alternative" → DevOps & Infrastructure
+    "mergequeue": "devops",         # compact — "mergequeue setup", "mergequeue configuration" → DevOps & Infrastructure
+    "gitstream": "devops",          # GitStream (LinearB) — AI PR labeling + automation; "gitstream alternative", "gitstream setup" → DevOps & Infrastructure
+    "linearb": "devops",            # LinearB — engineering metrics, PR analytics; "linearb alternative", "linearb setup" → DevOps & Infrastructure
+    "linear-b": "devops",           # hyphenated — "linear-b setup", "linear-b pricing" → DevOps & Infrastructure
+    # Testing — automated code review runner (CI linting/reporting tool)
+    "reviewdog": "testing",         # reviewdog — runs linters/formatters in CI and posts inline PR comments; "reviewdog alternative" → Testing Tools
 }
 
 _FTS_STOP_WORDS = {
