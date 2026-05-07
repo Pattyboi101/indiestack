@@ -209,6 +209,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("error tracking tool", "monitoring"),          # "error" → monitoring
     # IaC
     ("pulumi infrastructure", "devops"),            # "pulumi" → devops
+    # Time-series database (series→database added May 2026; time→api removed)
+    ("time series database", "database"),           # "series" → database (not "time" → api)
+    ("time series data influxdb", "database"),      # "series" → database
+    # Multi-agent AI
+    ("multi-agent framework", "ai"),                # "multi-agent" → ai
+    ("multi-agent orchestration", "ai"),            # "multi-agent" fires first, beats "orchestration"→background
+    # MCP registries / discovery
+    ("mcp registry search", "mcp"),                 # "mcp" → mcp
+    # RAG / document processing
+    ("document chunker python", "database"),        # "document" → database (known: fires before "chunker"→ai)
+    ("hybrid search bm25 vector", "search"),        # "hybrid" → search
+    # Repo-for-LLM tools
+    ("repomix alternative", "ai dev"),              # "repomix" → ai dev
+    # E-signature / forms
+    ("esignature api", "forms"),                    # "esignature" → forms
+    ("digital signature tool", "forms"),            # "signature" → forms
+    # Data engineering / ETL (added May 2026)
+    ("etl pipeline tool", "background"),            # "etl" → background
+    ("data pipeline orchestration", "background"),  # "pipeline" → background
+    ("data warehouse alternative", "database"),     # "warehouse" → database
+    ("apache airflow alternative", "background"),   # "airflow" → background
+    ("dbt alternative", "background"),              # "dbt" → background (data transform = background-jobs)
+    # Static site generators / Jamstack
+    ("static site generator", "frontend"),          # "static" → frontend
+    ("jamstack framework", "frontend"),             # "jamstack" → frontend
+    # Desktop app frameworks
+    ("electron alternative", "frontend"),           # "electron" → frontend
+    ("tauri app framework", "frontend"),            # "tauri" → frontend
+    # Usage-based / metered billing
+    ("usage based billing", "invoicing"),           # "usage" → invoicing (metered billing category)
+    ("metered billing api", "invoicing"),           # "metered" → invoicing
 ]
 
 

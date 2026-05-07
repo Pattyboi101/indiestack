@@ -198,11 +198,19 @@ curl the API for these queries and check top-3 results are relevant:
   Error tracking & secrets (2026 — error→monitoring, secrets→security):
     'error tracking sentry alternative', 'bugsnag alternative', 'rollbar alternative',
     'secrets management doppler alternative', 'infisical alternative', 'vault secrets'.
+  Time-series databases (May 2026 — series→database added; time→api REMOVED to fix false routing):
+    'time series database', 'time series data influxdb', 'timescaledb alternative',
+    'questdb alternative', 'influxdb alternative', 'time series storage'.
+    NOTE: 'time'→api was removed — realtime queries still route via 'real'→api and 'realtime'→api.
+  Data engineering & ETL (May 2026 — etl/pipeline/warehouse/lake synonyms confirmed):
+    'etl pipeline tool', 'data pipeline orchestration', 'data warehouse alternative',
+    'dbt alternative', 'apache airflow alternative', 'batch processing framework',
+    'data lake storage', 'stream processing tool'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run:
   python3 scripts/validate_synonyms.py     — catches duplicate keys (silent overrides caused the 'rollout' bug Apr 2026)
-  python3 scripts/test_search_routing.py   — tests 84 query/category routing pairs offline (no prod API needed)
+  python3 scripts/test_search_routing.py   — tests 141 query/category routing pairs offline (no prod API needed)
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
