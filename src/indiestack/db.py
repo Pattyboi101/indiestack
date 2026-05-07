@@ -2894,7 +2894,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Realtime / WebSockets — typically API-layer tools (Pusher, Ably, PartyKit)
     "realtime": "api",
     "real": "api",              # "real-time" → hyphen stripped → "real" + "time" → catches realtime queries
-    "time": "api",              # "real-time" hyphen-split → "time" reinforces realtime→api routing
     "limiting": "api",          # "rate limiting" → "rate" already maps to api, "limiting" reinforces it
     "limiter": "api",           # "rate limiter" → both "rate" and "limiter" map to api
     # websocket→message (moved from "api": WebSocket servers like Soketi/Centrifugo
@@ -4224,6 +4223,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tax": "invoicing",             # "sales tax API", "VAT compliance", "tax calculation" (Anrok, TaxJar, Avalara)
     # Database — analytical / OLAP query terms
     "timeseries": "database",       # "timeseries database" (compound, no hyphen) — TimescaleDB, InfluxDB, QuestDB
+    "series": "database",           # "time series database/data" → "time" no longer has a synonym, "series" catches it
     "olap": "database",             # OLAP (Online Analytical Processing) — ClickHouse, DuckDB, Apache Druid
     "columnar": "database",         # "columnar database", "column-store" — ClickHouse, DuckDB, Redshift alternative queries
     "multimodel": "database",       # "multi-model database" — SurrealDB, ArangoDB, OrientDB queries

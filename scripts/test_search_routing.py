@@ -131,8 +131,12 @@ TEST_CASES: list[tuple[str, str]] = [
     ("vulnerability scanning", "security"),
     # Realtime / API
     ("realtime websocket", "api"),
+    ("real time chat", "api"),
     ("rate limiting api", "api"),
     ("webhook delivery", "api"),
+    # Database — time-series (series→database added May 2026; "time"→api removed to fix false routing)
+    ("time series database", "database"),
+    ("time series data influxdb", "database"),
     # Background jobs
     ("cron job scheduler", "background"),
     ("task queue worker", "developer"),      # "task" → developer; use "cron job" for background-jobs routing
