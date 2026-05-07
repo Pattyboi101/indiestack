@@ -5720,6 +5720,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "flashcard": "learning",        # "flashcard app", "flashcard library" → Learning & Education
     "flashcards": "learning",       # plural — "flashcards API", "flashcards SRS" → Learning & Education
     # Feedback & Reviews — key terms not individually mapped
+    "feedback": "feedback",         # "user feedback widget", "customer feedback tool" → Feedback & Reviews
     "nps": "feedback",              # NPS (Net Promoter Score) — "nps tool", "nps survey" → Feedback & Reviews
     "csat": "feedback",             # CSAT (Customer Satisfaction Score) — "csat survey" → Feedback & Reviews
     # Publishing / Newsletters — dominant brand names not yet individually mapped
@@ -6290,6 +6291,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Analytics — session replay and screen recording (Hotjar, FullStory, LogRocket, Replay.io)
     "session-replay": "analytics",  # "session replay tool", "user session recording" → Analytics (Hotjar, FullStory)
     "screen-recording": "analytics",  # "screen recording for ux", "screen recording analytics" → Analytics
+    "recording": "analytics",        # "screen recording tool", "session recording" → Analytics (single-token fallback for compound forms)
     # AI — reactive Python notebooks and ML dashboards (fast-growing data-science segment)
     "solara": "ai",                 # Solara — Python web app framework for ML/data scientists (2k★) → AI & Automation
     "panel": "ai",                  # HoloViz Panel — Python dashboard framework for data apps (4k★) → AI & Automation

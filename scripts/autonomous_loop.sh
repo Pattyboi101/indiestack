@@ -206,11 +206,14 @@ curl the API for these queries and check top-3 results are relevant:
     'etl pipeline tool', 'data pipeline orchestration', 'data warehouse alternative',
     'dbt alternative', 'apache airflow alternative', 'batch processing framework',
     'data lake storage', 'stream processing tool'.
+  Screen recording & UX analytics (May 2026 — recording/feedback tokens added):
+    'screen recording tool', 'ux recording tool', 'user feedback widget',
+    'customer feedback tool', 'feedback collection tool'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run:
   python3 scripts/validate_synonyms.py     — catches duplicate keys (silent overrides caused the 'rollout' bug Apr 2026)
-  python3 scripts/test_search_routing.py   — tests 141 query/category routing pairs offline (no prod API needed)
+  python3 scripts/test_search_routing.py   — tests 146 query/category routing pairs offline (no prod API needed)
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 

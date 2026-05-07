@@ -240,6 +240,13 @@ TEST_CASES: list[tuple[str, str]] = [
     # Usage-based / metered billing
     ("usage based billing", "invoicing"),           # "usage" → invoicing (metered billing category)
     ("metered billing api", "invoicing"),           # "metered" → invoicing
+    # Screen recording / UX analytics (recording token added May 2026)
+    ("screen recording tool", "analytics"),         # "recording" → analytics (compound "screen-recording" key never fires on space-split)
+    ("ux recording tool", "analytics"),             # "recording" → analytics
+    # Feedback & Reviews (feedback token added May 2026)
+    ("user feedback widget", "feedback"),           # "feedback" → feedback (fires after "user" has no synonym)
+    ("customer feedback tool", "feedback"),         # "feedback" → feedback
+    ("feedback collection", "feedback"),            # "feedback" → feedback (first token)
 ]
 
 
