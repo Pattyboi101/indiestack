@@ -2562,7 +2562,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "upload": "file",
     "s3": "file",
     "cdn": "devops",    # CDN → DevOps & Infrastructure (Cloudflare, BunnyCDN, Fastly live there)
-    "media": "file",
+    "media": "media",   # "media server", "video streaming" → Media Servers (not File Management)
     "assets": "file",
     # CMS synonyms
     "blog": "cms",
@@ -3719,6 +3719,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "controlflow": "ai",            # ControlFlow — Python task orchestration for LLM workflows
     # Boilerplates — T3 Stack is the dominant Next.js starter ("t3 stack", "t3 boilerplate" queries)
     "t3": "boilerplate",            # T3 Stack — Next.js + TypeScript + tRPC + Tailwind + Prisma (25k★)
+    "t3-stack": "boilerplate",      # hyphenated — "t3-stack alternative", "t3-stack tutorial" → Boilerplates
+    "t3stack": "boilerplate",       # compact — "t3stack setup", "t3stack boilerplate" → Boilerplates
     "shipfast": "boilerplate",      # ShipFast — Next.js SaaS boilerplate with Stripe + auth
     "shipfa": "boilerplate",        # ShipFa.st — common shorthand used in queries
     # Frontend — Partytown (web worker script isolation from BuilderIO)
@@ -5732,6 +5734,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Caching — Redis alternatives not yet mapped
     "garnet": "caching",            # Microsoft Garnet — high-perf Redis-compatible cache server (microsoft/garnet, 10k★) → Caching
     "redict": "caching",            # Redict — community LGPL Redis fork (redict-io/redict) → Caching
+    # Caching — GPTCache and generic LLM cache terms (high agent query volume in 2026)
+    "gptcache": "caching",          # GPTCache — open-source semantic LLM response cache (Zilliz, 7k★) → Caching
+    "gpt-cache": "caching",         # hyphenated — "gpt-cache setup", "gpt-cache alternative" → Caching
+    "llm-cache": "caching",         # "llm-cache library", "llm-cache layer", "llm-cache open source" → Caching
+    "ai-cache": "caching",          # generic — "ai-cache middleware", "ai-cache for chatbot" → Caching
+    # Caching — bigram entries for LLM semantic caching (leverages bigram lookup added in pass 170)
+    "semantic cache": "caching",    # "semantic cache for llm", "semantic cache alternative" → Caching
+    "llm cache": "caching",         # "llm cache layer", "llm cache open source" → Caching
+    "ai cache": "caching",          # "ai cache middleware", "ai cache redis" → Caching
     # Monitoring — Grafana eBPF auto-instrumentation and legacy agent queries
     "beyla": "monitoring",          # Grafana Beyla — eBPF auto-instrumentation without code changes (grafana/beyla, 2k★)
     "grafana-agent": "monitoring",  # Grafana Agent — legacy name for what is now Alloy; "grafana-agent alternative"
@@ -6184,6 +6195,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "msw": "testing",              # Mock Service Worker bare abbreviation; "msw setup", "msw rest handler" → Testing Tools
     # Frontend — TanStack Query hyphenated form (complement to "react-query", "tanstack" already mapped)
     "tanstack-query": "frontend",  # "tanstack-query alternative", "tanstack-query v5" → Frontend Frameworks
+    # Frontend — remaining TanStack products (complement to "tanstack"→frontend, "tanstack-query"→frontend, "tanstack-start"→frontend)
+    "tanstack-form": "frontend",   # TanStack Form — headless form state + validation; "tanstack-form alternative" → Frontend Frameworks
+    "tanstack-router": "frontend", # TanStack Router — type-safe client-side router; "tanstack-router vs react-router" → Frontend Frameworks
+    "tanstack-table": "frontend",  # TanStack Table — headless table/datagrid; "tanstack-table alternative" → Frontend Frameworks
+    "tanstack-virtual": "frontend",# TanStack Virtual — headless list virtualizer; "tanstack-virtual setup" → Frontend Frameworks
     # API — Hono and GraphQL Yoga missing compound/hyphenated forms
     "honojs": "api",               # Hono.js compound form; "honojs alternative", "honojs vs express" → API Tools
     "graphql-yoga": "api",         # GraphQL Yoga hyphenated; "graphql-yoga alternative", "graphql-yoga setup" → API Tools
@@ -6499,6 +6515,40 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI Standards — Arena-Hard (LMSYS; 500-task automated benchmark, 89% Chatbot Arena correlation; ~1.5k★)
     "arena-hard": "standard",      # Arena-Hard-Auto — "arena-hard score", "arena-hard benchmark" → AI Standards
     "arenahard": "standard",       # compound — "arenahard leaderboard", "arenahard eval" → AI Standards & Specs
+    # AI Standards — ARC-AGI reasoning benchmark (Abstraction and Reasoning Corpus; François Chollet)
+    "arc-agi": "standard",          # "arc-agi benchmark", "arc-agi score" → AI Standards & Specs
+    "arcagi": "standard",           # compact — "arcagi alternative", "arcagi leaderboard" → AI Standards & Specs
+    # Social Media — standalone "social" term (prevents "social media scheduling" routing to media→file)
+    "social": "social",             # "social media tool", "social scheduler" → Social Media
+    # AI — newer LLM/agent brand terms missing from earlier passes
+    "kimi": "ai",                   # Kimi K2 (Moonshot AI) — large open MoE model → AI & Automation
+    "notebooklm": "ai",             # Google NotebookLM — AI research notebook → AI & Automation
+    # DevOps — deployment infra terms missing after pass reorg
+    "paas": "devops",               # "paas provider", "paas platform", "paas alternative" → DevOps & Infrastructure
+    "ddos": "security",             # "ddos protection", "ddos mitigation" → Security Tools
+    # DevOps — merge queue and PR automation tools (high 2026 query volume)
+    "mergify": "devops",            # Mergify — merge queue + PR automation; "mergify alternative" → DevOps
+    "merge-queue": "devops",        # generic — "merge queue tool", "github merge queue alternative" → DevOps
+    "mergequeue": "devops",         # compact — "mergequeue setup", "mergequeue config" → DevOps
+    "gitstream": "devops",          # GitStream (LinearB) — AI PR labeling; "gitstream alternative" → DevOps
+    "linearb": "devops",            # LinearB — engineering metrics + PR analytics; "linearb alternative" → DevOps
+    "linear-b": "devops",           # hyphenated — "linear-b pricing", "linear-b setup" → DevOps
+    # Testing — automated code review runner (linter CI reporting)
+    "reviewdog": "testing",         # reviewdog — runs linters in CI and posts inline PR comments → Testing Tools
+    # AI — Qodo (formerly CodiumAI) AI PR review tools
+    "pr-agent": "ai",               # PR-Agent (Qodo Merge) — AI PR review bot; "pr-agent setup" → AI & Automation
+    "qodo-merge": "ai",             # Qodo Merge — AI-powered PR review; "qodo-merge alternative" → AI
+    "qodomerge": "ai",              # compact — "qodomerge vs coderabbit" → AI & Automation
+    # MCP Servers — PulseMCP analytics platform
+    "pulsemcp": "mcp",              # PulseMCP — MCP server registry + analytics; "pulsemcp stats" → MCP Servers
+    # Feedback — product adoption / user onboarding platforms
+    "appcues": "feedback",          # Appcues — product adoption + in-app tours; "appcues alternative" → Feedback
+    "userpilot": "feedback",        # Userpilot — user onboarding + product adoption; "userpilot alternative" → Feedback
+    "chameleon": "feedback",        # Chameleon.io — in-app product tours; "chameleon alternative" → Feedback
+    "userflow": "feedback",         # Userflow — no-code user onboarding builder; "userflow alternative" → Feedback
+    # Analytics — behavior analytics / session recording tools
+    "mouseflow": "analytics",       # Mouseflow — heatmaps + session recording; "mouseflow alternative" → Analytics
+    "smartlook": "analytics",       # Smartlook — session recording + event analytics; "smartlook alternative" → Analytics
 }
 
 _FTS_STOP_WORDS = {
