@@ -189,6 +189,13 @@ TEST_CASES: list[tuple[str, str]] = [
     # LLM cache bigrams (bigram lookup added db.py pass 170)
     ("semantic cache llm", "caching"),
     ("llm cache layer", "caching"),
+    # New synonyms added May 2026
+    ("cloudwatch metrics alternative", "monitoring"),
+    ("alertmanager prometheus rules", "monitoring"),
+    ("bruteforce protection middleware", "security"),
+    ("brute-force rate limit", "security"),
+    ("pose detection model", "ai"),
+    ("cloudfront cdn alternative", "devops"),
 ]
 
 

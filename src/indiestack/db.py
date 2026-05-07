@@ -6549,6 +6549,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Analytics — behavior analytics / session recording tools
     "mouseflow": "analytics",       # Mouseflow — heatmaps + session recording; "mouseflow alternative" → Analytics
     "smartlook": "analytics",       # Smartlook — session recording + event analytics; "smartlook alternative" → Analytics
+    # Monitoring — AWS CloudWatch and Prometheus ecosystem
+    "cloudwatch": "monitoring",     # AWS CloudWatch — "cloudwatch alternative", "cloudwatch metrics" → Monitoring & Uptime
+    "alertmanager": "monitoring",   # Prometheus Alertmanager — "alertmanager config", "alertmanager rules" → Monitoring & Uptime
+    # Security — brute-force protection
+    "bruteforce": "security",       # "bruteforce protection", "bruteforce prevention" → Security Tools
+    "brute-force": "security",      # hyphenated — "brute-force mitigation", "brute-force rate limit" → Security Tools
+    # AI — object/anomaly detection models
+    "detection": "ai",              # "detection model", "change detection", "pose detection" → AI & Automation
+    # DevOps — AWS CloudFront CDN
+    "cloudfront": "devops",         # AWS CloudFront — "cloudfront alternative", "cloudfront cdn" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {
