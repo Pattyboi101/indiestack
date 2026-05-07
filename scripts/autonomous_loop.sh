@@ -178,6 +178,13 @@ curl the API for these queries and check top-3 results are relevant:
     'chameleon alternative', 'chameleon io product adoption', 'userflow onboarding',
     'mouseflow alternative', 'mouseflow heatmap', 'smartlook alternative',
     'smartlook session recording', 'session recording tool', 'heatmap tool'.
+  PR review, merge queues & engineering metrics (added May 2026 — pr-agent/mergify/gitstream/linearb synonyms added):
+    'pr-agent alternative', 'pr-agent setup', 'qodo merge alternative', 'qodo-merge setup',
+    'qodo gen alternative', 'ai pr review tool', 'ai code review bot',
+    'mergify alternative', 'mergify setup', 'github merge queue tool',
+    'gitstream alternative', 'gitstream pr automation',
+    'linearb alternative', 'linearb engineering metrics',
+    'reviewdog alternative', 'reviewdog ci setup', 'inline pr comments linter'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py
