@@ -2570,7 +2570,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "upload": "file",
     "s3": "file",
     "cdn": "devops",    # CDN → DevOps & Infrastructure (Cloudflare, BunnyCDN, Fastly live there)
-    "media": "file",
+    "media": "media",   # "media server", "media streaming" → Media Servers (was "file" — wrong for streaming queries)
     "assets": "file",
     # CMS synonyms
     "blog": "cms",
@@ -5937,6 +5937,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "keyword": "seo",               # "keyword research tool", "keyword tracker", "keyword difficulty" → SEO Tools
     "pagespeed": "seo",             # "page speed test", "core web vitals tool", "pagespeed optimization" → SEO Tools
     # Social Media — thin coverage (6 entries); adding scheduler + platform synonyms
+    # "social" bare was missing — "social media scheduling", "social media tool" would fall through to "media"→"media" (Media Servers)
+    "social": "social",             # bare — "social media tool", "social media management" → Social Media (Buffer, Hootsuite, Postiz)
     "bluesky": "social",            # Bluesky — decentralised social network; "bluesky client", "bluesky alternative" → Social Media
     "tweet": "social",              # "tweet scheduler", "tweet composer", "twitter scheduler" → Social Media
     "linkedin": "social",           # "linkedin scheduler", "linkedin tool", "linkedin post scheduler" → Social Media
