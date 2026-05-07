@@ -187,8 +187,9 @@ curl the API for these queries and check top-3 results are relevant:
     'reviewdog alternative', 'reviewdog ci setup', 'inline pr comments linter'.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
-After adding any db.py synonyms, run: python3 scripts/validate_synonyms.py
-  (catches duplicate keys early — silent overrides caused the 'rollout' bug Apr 2026)
+After adding any db.py synonyms, run:
+  python3 scripts/validate_synonyms.py     — catches duplicate keys (silent overrides caused the 'rollout' bug Apr 2026)
+  python3 scripts/test_search_routing.py   — tests 84 query/category routing pairs offline (no prod API needed)
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
