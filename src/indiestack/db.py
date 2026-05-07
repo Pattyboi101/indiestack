@@ -2854,7 +2854,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "astro": "frontend",
     "remix": "frontend",
     "state": "frontend",
-    "manager": "frontend",     # "state manager" → "state" or "manager" both map to frontend
+    "manager": "project",      # "project manager" → project-management; "state manager" already covered by "state"→frontend
     "bundler": "frontend",
     "build": "frontend",           # "build tool" → first term "build" → frontend-frameworks
     "vite": "frontend",
@@ -2972,8 +2972,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "swc": "frontend",          # SWC — Rust-based JS/TS transpiler (used by Next.js, Vite)
     "bun": "frontend",          # Bun — fast JS runtime + bundler + test runner
     "deno": "frontend",         # Deno — secure JS/TS runtime (Deno 2)
-    # "management" catches "state management" where "state" is not the first meaningful term
-    "management": "frontend",   # "state management tool"
+    # "management" catches generic "management" queries; "state management" is covered by "state"→frontend
+    "management": "project",    # "project management tool", "team management" → project-management; "state management" handled by "state"→frontend first
     # Node.js / edge web frameworks — for "[framework] alternative" queries
     "hono": "api",              # Hono — ultrafast edge web framework (Cloudflare, Deno, Bun)
     "express": "api",           # Express.js — classic Node.js web framework

@@ -79,7 +79,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("design ui", "frontend"),              # "ui" → frontend (UI components/libraries)
     ("feedback nps", "feedback"),
     ("social media scheduling", "social"),   # requires "social" key added May 2026
-    ("project management kanban", "frontend"), # "project" is stop word; "management"→frontend beats "kanban"→project
+    ("project management kanban", "project"),   # "project" is stop word; "management"→project (fixed May 2026)
     ("landing page builder", "landing"),
     ("api gateway", "api"),
     # Frontend
@@ -182,6 +182,29 @@ TEST_CASES: list[tuple[str, str]] = [
     ("graphql api builder", "api"),
     # Headless CMS
     ("headless cms sanity alternative", "cms"),
+    # Project management — verifies "management"/"manager" route correctly after May 2026 fix
+    ("project manager tool", "project"),            # "manager" → project (fixed)
+    ("state management tool", "frontend"),          # "state" fires first → frontend (correct)
+    ("state manager zustand", "frontend"),          # "state" fires first → frontend (correct)
+    # ORMs and database tooling
+    ("drizzle orm database", "database"),           # "drizzle" → database
+    ("prisma migrations", "database"),              # "prisma" → database
+    # API / tRPC
+    ("trpc api server", "api"),                     # "trpc" → api
+    ("graphql federation", "api"),                  # "graphql" → api
+    # Payments
+    ("stripe payment alternative", "payments"),     # "stripe" → payments
+    ("paddle billing", "payments"),                 # "paddle" → payments
+    # Email
+    ("email template builder", "email"),            # "email" → email
+    ("transactional email resend", "email"),        # "transactional" → email
+    # Auth
+    ("supabase auth alternative", "database"),       # "supabase" fires first → database (Supabase is a BaaS/database platform)
+    ("oauth2 server", "authentication"),             # "oauth2" → authentication
+    # Error tracking
+    ("error tracking tool", "monitoring"),          # "error" → monitoring
+    # IaC
+    ("pulumi infrastructure", "devops"),            # "pulumi" → devops
 ]
 
 
@@ -229,7 +252,7 @@ def main() -> int:
 
     if failed:
         print(f"\nTo add missing mappings, edit _CAT_SYNONYMS in src/indiestack/db.py")
-        print("Then re-run: python3 scripts/validate_synonyms.py")
+        print("Then re-run: python3 scripts/test_search_routing.py")
         return 1
 
     print("✅ All routing tests passed.")
