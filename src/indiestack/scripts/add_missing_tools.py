@@ -15608,6 +15608,73 @@ TOOLS = [
         "npx xcodebuildmcp@latest",
         "code",
     ),
+    # ── May 2026 additions — trending MCP servers (researched 2026-05-08) ──
+    (
+        "playwright-mcp",
+        "Playwright MCP",
+        "Official Microsoft MCP server for browser automation via Playwright",
+        "Playwright MCP (by Microsoft) gives AI agents structured browser control "
+        "using Playwright's accessibility tree — no screenshot or vision model needed. "
+        "Agents can navigate pages, click elements, fill forms, extract structured data, "
+        "and run end-to-end test flows. 32k+ GitHub stars. The de-facto standard for "
+        "browser automation in AI agent workflows.",
+        "mcp-servers",
+        "microsoft/playwright-mcp",
+        32000,
+        "https://github.com/microsoft/playwright-mcp",
+        "mcp,playwright,browser-automation,web-scraping,ai-agent,microsoft",
+        "npx @playwright/mcp@latest",
+        "code",
+    ),
+    (
+        "mcp-toolbox",
+        "MCP Toolbox for Databases",
+        "Open-source MCP server connecting AI agents to databases — by Google",
+        "MCP Toolbox for Databases (by Google/googleapis) lets AI agents query and "
+        "interact with databases via the Model Context Protocol. Supports PostgreSQL, "
+        "MySQL, SQLite, BigQuery, Cloud SQL, Spanner, AlloyDB, Redis, MongoDB, "
+        "Elasticsearch, and more. 15k+ GitHub stars. Written in Go for high performance.",
+        "mcp-servers",
+        "googleapis/mcp-toolbox",
+        15000,
+        "https://github.com/googleapis/mcp-toolbox",
+        "mcp,database,postgresql,mysql,bigquery,google,sqlite,redis,mongodb",
+        "pip install toolbox-core",
+        "code",
+    ),
+    (
+        "mcp-use",
+        "MCP-Use",
+        "Full-stack framework to build MCP apps and servers for ChatGPT and Claude",
+        "MCP-Use is an open-source TypeScript framework for building Model Context "
+        "Protocol applications and servers. Provides a gateway layer, MCP client/host "
+        "utilities, and a UI toolkit for wiring LLMs to MCP tools. Works with Claude, "
+        "ChatGPT, and any OpenAI-compatible API. 9k+ GitHub stars.",
+        "mcp-servers",
+        "mcp-use/mcp-use",
+        9000,
+        "https://github.com/mcp-use/mcp-use",
+        "mcp,framework,gateway,typescript,claude,chatgpt,llm,ai-agent",
+        "npm install mcp-use",
+        "code",
+    ),
+    (
+        "windows-mcp",
+        "Windows MCP",
+        "MCP server for Computer Use and desktop automation on Windows",
+        "Windows MCP (by CursorTouch) gives AI agents computer-use capabilities on "
+        "Windows — controlling the desktop, running applications, clicking UI elements, "
+        "reading screen content, and automating workflows. Enables AI agents to operate "
+        "Windows like a human user. 5k+ GitHub stars. Works with Claude, Cursor, and "
+        "other MCP-compatible agents.",
+        "mcp-servers",
+        "CursorTouch/Windows-MCP",
+        5000,
+        "https://github.com/CursorTouch/Windows-MCP",
+        "mcp,windows,computer-use,desktop-automation,ai-agent",
+        "pip install windows-mcp",
+        "code",
+    ),
 ]
 
 
