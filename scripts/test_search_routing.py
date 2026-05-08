@@ -282,6 +282,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("block goose coding agent", "ai dev"),         # spaced bigram "block goose" beats "goose"→database
     ("goose block agent", "ai dev"),                # reversed spaced bigram fires correctly
     ("docker mcp toolkit", "mcp"),                  # spaced bigram "docker mcp" beats "docker"→devops
+    # AI bigrams — LLM-specific compound terms that collide with non-AI single tokens (added May 2026)
+    ("context window size llm", "ai"),              # bigram "context window" beats "context"→frontend
+    ("extend context window model", "ai"),          # bigram "context window" fires mid-query too
+    ("function calling api", "ai"),                 # "function calling" bigram → ai
+    ("function calling llm example", "ai"),         # "function calling" as first bigram
+    ("tool-calling pattern llm", "ai"),             # hyphenated single token "tool-calling" → ai ("tool" is a stop word)
+    ("structured output json llm", "ai"),           # bigram "structured output" → ai
+    ("structured output pydantic", "ai"),           # bigram "structured output" fires
+    ("object detection model yolo", "ai"),          # bigram "object detection" beats "object"→file
+    ("object detection python api", "ai"),          # bigram "object detection" fires
+    ("code generation model", "ai"),                # bigram "code generation" → ai
+    ("data labeling platform open source", "ai"),   # bigram "data labeling" → ai
+    ("data annotation tool", "ai"),                 # bigram "data annotation" → ai
+    ("data engineering pipeline", "database"),      # bigram "data engineering" → database
+    ("knowledge graph database neo4j", "database"), # bigram "knowledge graph" → database
+    ("knowledge graph api tool", "database"),       # bigram "knowledge graph" fires
 ]
 
 

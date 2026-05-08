@@ -7529,6 +7529,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     "linear-b": "devops",           # hyphenated — "linear-b setup", "linear-b pricing" → DevOps & Infrastructure
     # Testing — automated code review runner (CI linting/reporting tool)
     "reviewdog": "testing",         # reviewdog — runs linters/formatters in CI and posts inline PR comments; "reviewdog alternative" → Testing Tools
+    # AI — LLM-specific bigrams that collide with non-AI single tokens (added May 2026)
+    # "context" → "frontend" (React Context API); "context window" bigram → AI (LLM concept)
+    "context window": "ai",         # "context window size", "context window limit", "extend context window" → AI & Automation
+    # "function" is unmapped; "function calling" is an LLM API concept (OpenAI tool_calls, Anthropic tools)
+    "function calling": "ai",       # "function calling api", "function calling llm", "function calling example" → AI & Automation
+    "function-calling": "ai",       # hyphenated — "function-calling setup", "function-calling alternative" → AI & Automation
+    # "tool" is filtered as a stop word so "tool calling" (spaced) bigram can never fire.
+    # Hyphenated form is a single token and works correctly.
+    "tool-calling": "ai",           # "tool-calling pattern", "tool-calling vs rag", "tool-calling llm" → AI & Automation
+    # "structured" is unmapped; "structured output" is an LLM concept (instructor, outlines, mirascope)
+    "structured output": "ai",      # "structured output llm", "structured output json", "structured output library" → AI & Automation
+    "structured-output": "ai",      # hyphenated — "structured-output alternative", "structured-output pydantic" → AI & Automation
+    # "object" → "file" (S3 object storage); "object detection" is computer vision → AI
+    "object detection": "ai",       # "object detection model", "object detection api", "object detection python" → AI & Automation
+    "object-detection": "ai",       # hyphenated — "object-detection alternative", "object-detection yolo" → AI & Automation
+    # "code" is unmapped; "code generation" → AI (LLM code gen: Copilot, Cursor, Continue)
+    "code generation": "ai",        # "code generation llm", "code generation model", "code generation tool" → AI & Automation
+    "code-generation": "ai",        # hyphenated — "code-generation alternative", "code-generation api" → AI & Automation
+    # "data" is unmapped; "data labeling" → AI (Label Studio, Labelbox, Roboflow)
+    "data labeling": "ai",          # "data labeling tool", "data labeling platform", "data labeling alternative" → AI & Automation
+    "data-labeling": "ai",          # hyphenated — "data-labeling open source", "data-labeling api" → AI & Automation
+    "data annotation": "ai",        # "data annotation tool", "data annotation service" → AI & Automation
+    "data-annotation": "ai",        # hyphenated — "data-annotation alternative", "data-annotation platform" → AI & Automation
+    # "data" is unmapped; "data engineering" → database category (dbt, Airbyte, Fivetran, Dagster)
+    "data engineering": "database", # "data engineering tool", "data engineering platform" → Database
+    # "knowledge" is unmapped; "knowledge graph" → database (Neo4j, Dgraph, NebulaGraph)
+    "knowledge graph": "database",  # "knowledge graph database", "knowledge graph tool", "knowledge graph api" → Database
+    "knowledge-graph": "database",  # hyphenated — "knowledge-graph alternative", "knowledge-graph neo4j" → Database
 }
 
 _FTS_STOP_WORDS = {
