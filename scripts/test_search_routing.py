@@ -60,7 +60,7 @@ def route_query(query: str) -> tuple[str, str]:
     return raw_cat, "raw_first"
 
 
-# ── Test cases ──────────────────────────────────────────────────────────────
+# ── Test cases ──────────────────────────────────────────────
 # Format: (query, expected_cat_term_fragment)
 # expected_cat_term_fragment must be a substring of the routed cat_term.
 # A query routing to "authentication" passes if expected is "auth" or "authentication".
@@ -328,6 +328,10 @@ TEST_CASES: list[tuple[str, str]] = [
     ("mcp server sdk", "mcp"),                      # "mcp"→mcp routes MCP server queries
     ("llm evaluation harness", "ai standards"),     # bigram "llm evaluation" → AI Standards & Specs
     ("llm benchmark comparison", "ai standards"),   # bigram "llm benchmark" → AI Standards & Specs
+    # Angular state management libraries (added May 2026)
+    ("ngrx state management", "frontend"),          # "ngrx" → frontend (Angular Redux-style state)
+    ("ngxs angular store", "frontend"),             # "ngxs" → frontend (NGXS Angular state)
+    ("akita angular state", "frontend"),            # "akita" → frontend (Akita state management)
 ]
 
 
