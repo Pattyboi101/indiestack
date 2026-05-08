@@ -7522,7 +7522,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "qodogen": "ai",                # compact — "qodogen alternative", "qodogen setup" → AI & Automation
     # DevOps — merge queue, PR automation, and engineering metrics (high 2026 query volume)
     "mergify": "devops",            # Mergify — merge queue + PR automation rules; "mergify alternative", "mergify setup" → DevOps & Infrastructure
-    "merge-queue": "devops",        # generic — "merge queue tool", "github merge queue alternative" → DevOps & Infrastructure
+    "merge queue": "devops",        # spaced bigram — "merge queue tool" beats "queue"→background for merge-queue queries
+    "merge-queue": "devops",        # hyphenated — "merge-queue tool", "github merge-queue alternative" → DevOps & Infrastructure
     "mergequeue": "devops",         # compact — "mergequeue setup", "mergequeue configuration" → DevOps & Infrastructure
     "gitstream": "devops",          # GitStream (LinearB) — AI PR labeling + automation; "gitstream alternative", "gitstream setup" → DevOps & Infrastructure
     "linearb": "devops",            # LinearB — engineering metrics, PR analytics; "linearb alternative", "linearb setup" → DevOps & Infrastructure

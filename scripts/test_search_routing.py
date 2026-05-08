@@ -128,7 +128,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("mergify alternative", "devops"),
     ("gitstream pr automation", "devops"),
     ("linearb engineering metrics", "devops"),
-    ("merge queue tool", "background"),      # "queue" → background (background-jobs covers queues); "merge-queue" compound is devops
+    ("merge queue tool", "devops"),           # "merge queue" bigram → devops (Mergify, github merge queues), not "queue"→background
     # Testing
     ("testing e2e playwright", "testing"),
     ("reviewdog ci setup", "testing"),
