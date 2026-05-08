@@ -7530,6 +7530,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "linear-b": "devops",           # hyphenated — "linear-b setup", "linear-b pricing" → DevOps & Infrastructure
     # Testing — automated code review runner (CI linting/reporting tool)
     "reviewdog": "testing",         # reviewdog — runs linters/formatters in CI and posts inline PR comments; "reviewdog alternative" → Testing Tools
+    # Monitoring — status page queries ("status page tool", "status page alternative")
+    # "statuspage"→monitoring already covers the compound form; "status" alone and the bigram fill the gap.
+    "status page": "monitoring",    # spaced bigram — "status page tool", "status page service" → Monitoring & Uptime
+    "status-page": "monitoring",    # hyphenated — "status-page open source", "status-page alternative" → Monitoring & Uptime
+    "status": "monitoring",         # single token — "status monitoring", "status check tool" → Monitoring & Uptime
+    # AI — image generation queries ("image generation ai", "image generation tool")
+    # "image"→media routes to Media Servers which is wrong for generative-AI queries.
+    # Bigrams fire before single tokens so "image generation" wins over "image"→media.
+    "image generation": "ai",       # spaced bigram — "image generation model", "image generation api" → AI & Automation
+    "image-generation": "ai",       # hyphenated — "image-generation open source", "image-generation tool" → AI & Automation
+    "text image": "ai",             # "text to image" after stop-word removal → "text image" bigram → AI & Automation
+    # AI Dev Tools — code generation queries ("code generation tool", "code gen ai")
+    # "code" alone has no mapping (falls back to raw_first); bigrams route correctly.
+    "code generation": "ai dev",    # spaced bigram — "code generation ai", "code generation model" → AI Dev Tools
+    "code-generation": "ai dev",    # hyphenated — "code-generation tool", "code-generation open source" → AI Dev Tools
+    "code gen": "ai dev",           # spaced bigram — "code gen tool", "code gen api" → AI Dev Tools
 }
 
 _FTS_STOP_WORDS = {

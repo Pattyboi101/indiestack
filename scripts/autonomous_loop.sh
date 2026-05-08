@@ -217,6 +217,16 @@ curl the API for these queries and check top-3 results are relevant:
   In-app changelog vs devops (May 2026 — bigram routing added):
     'in-app changelog widget', 'product changelog tool'. Must route to feedback-reviews.
     NOTE: 'changelog' alone still routes to devops (git-cliff, semantic-release).
+  Image generation vs media (May 2026 — bigram routing added; 'image generation' beats 'image'→media):
+    'image generation model', 'image generation api', 'text to image model', 'ai image generator',
+    'stable diffusion alternative', 'dalle alternative'. Must route to AI, NOT Media Servers.
+    NOTE: 'image editor' and 'media server' still route to media (correct).
+  Code generation (May 2026 — bigram routing added; 'code generation' and 'code gen' → AI Dev Tools):
+    'code generation tool', 'code gen api', 'code generation model', 'ai code generator'.
+    NOTE: 'code review' → developer is separate (via 'review'→developer token).
+  Status pages (May 2026 — 'status' and 'status page' bigram added → monitoring):
+    'status page tool', 'status page alternative', 'status page open source', 'uptime status page'.
+    NOTE: 'statuspage'→monitoring (compound form) was already covered; gap was spaced form.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run:
@@ -225,9 +235,13 @@ Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cau
 BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individual tokens.
   Add spaced compound entries like "session recording" → "analytics" to _CAT_SYNONYMS to override
   individual token collisions. Bigrams are checked left-to-right at adjacent positions.
-  Known May 2026 bigram fixes (already applied — skip if 168 routing tests pass):
+  Known May 2026 bigram fixes (already applied — skip if 176 routing tests pass):
     'block goose' + 'goose block' → "ai dev"  (was "database" via 'goose'→Go migration tool)
     'docker mcp' → "mcp"  (was "devops" via 'docker'→devops; covers Docker MCP Toolkit queries)
+    'image generation' → "ai"  (was "media" via 'image'→media; covers AI image gen queries)
+    'code generation' + 'code gen' → "ai dev"  (was raw_first "code"; covers codegen tool queries)
+    'status page' → "monitoring"  (was raw_first "status" with no category match)
+    'text image' → "ai"  (from "text to image" after stop-word removal; AI image model queries)
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
 ITERATION 2 — DATA QUALITY:

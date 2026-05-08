@@ -282,6 +282,15 @@ TEST_CASES: list[tuple[str, str]] = [
     ("block goose coding agent", "ai dev"),         # spaced bigram "block goose" beats "goose"→database
     ("goose block agent", "ai dev"),                # reversed spaced bigram fires correctly
     ("docker mcp toolkit", "mcp"),                  # spaced bigram "docker mcp" beats "docker"→devops
+    # Bigram routing fixes (added May 2026 — status page, image generation, code gen)
+    ("status page tool", "monitoring"),             # bigram "status page" beats "status" raw_first (no category match)
+    ("status page alternative", "monitoring"),      # bigram "status page" handles alt query
+    ("status-page open source", "monitoring"),      # hyphenated form
+    ("image generation model", "ai"),               # bigram "image generation" beats "image"→media
+    ("image generation api", "ai"),                 # bigram "image generation" beats "image"→media
+    ("text to image model", "ai"),                  # "text image" bigram (after stop-word removal of "to") → ai
+    ("code generation tool", "ai dev"),             # bigram "code generation" → AI Dev Tools
+    ("code gen api", "ai dev"),                     # bigram "code gen" → AI Dev Tools
 ]
 
 
