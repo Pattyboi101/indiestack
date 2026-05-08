@@ -2559,7 +2559,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "upload": "file",
     "s3": "file",
     "cdn": "devops",    # CDN → DevOps & Infrastructure (Cloudflare, BunnyCDN, Fastly live there)
-    "media": "file",
+    "media": "media",  # "media server", "media streaming" → Media Servers (not file storage)
     "assets": "file",
     # CMS synonyms
     "blog": "cms",
@@ -2842,7 +2842,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "astro": "frontend",
     "remix": "frontend",
     "state": "frontend",
-    "manager": "frontend",     # "state manager" → "state" or "manager" both map to frontend
+    "manager": "project",      # "project manager" → project-management; "state manager" caught by "state"→frontend first
     "bundler": "frontend",
     "build": "frontend",           # "build tool" → first term "build" → frontend-frameworks
     "vite": "frontend",
@@ -2882,7 +2882,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Realtime / WebSockets — typically API-layer tools (Pusher, Ably, PartyKit)
     "realtime": "api",
     "real": "api",              # "real-time" → hyphen stripped → "real" + "time" → catches realtime queries
-    "time": "api",              # "real-time" hyphen-split → "time" reinforces realtime→api routing
+
     "limiting": "api",          # "rate limiting" → "rate" already maps to api, "limiting" reinforces it
     "limiter": "api",           # "rate limiter" → both "rate" and "limiter" map to api
     # websocket→message (moved from "api": WebSocket servers like Soketi/Centrifugo
@@ -2960,8 +2960,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "swc": "frontend",          # SWC — Rust-based JS/TS transpiler (used by Next.js, Vite)
     "bun": "frontend",          # Bun — fast JS runtime + bundler + test runner
     "deno": "frontend",         # Deno — secure JS/TS runtime (Deno 2)
-    # "management" catches "state management" where "state" is not the first meaningful term
-    "management": "frontend",   # "state management tool"
+    # "management" catches generic management queries; "state management" is covered by "state"→frontend first
+    "management": "project",    # "project management tool", "team management" → project-management
     # Node.js / edge web frameworks — for "[framework] alternative" queries
     "hono": "api",              # Hono — ultrafast edge web framework (Cloudflare, Deno, Bun)
     "express": "api",           # Express.js — classic Node.js web framework
@@ -4083,8 +4083,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "regression": "testing",         # "regression testing", "visual regression suite" → Testing Tools
     # Analytics — generic reporting tool queries
     "report": "analytics",           # "reporting tool", "report builder", "sql report" → Analytics & Metrics
-    # Developer Tools — dependency management and code review tooling
-    "dependency": "developer",       # "dependency management", "dependency graph", "dep scanning" → Dev Tools
+    # Developer Tools — code review tooling
     "review": "developer",           # "code review tool", "automated code review" → Developer Tools
     "diff": "developer",             # "diff library", "json diff tool", "code diff" → Developer Tools
     # Database — query builders and ORMs ("sql query builder", "type-safe query")
@@ -4230,7 +4229,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "nlp": "ai",                    # "NLP library", "NLP pipeline", "nlp tool" → AI & Automation
     "sentiment": "ai",              # "sentiment analysis", "sentiment classifier" → AI & Automation
     # HTTP client / fetch wrapper libraries — Axios, Got, Ky, undici, node-fetch → api-tools
-    "http": "api",                  # "http client", "http request library" → API Tools
     "fetch": "api",                 # "fetch wrapper", "node fetch alternative" → API Tools
     # Date/time utility libraries — date-fns, dayjs, Luxon, Temporal polyfill → frontend-frameworks
     "date": "frontend",             # "date library", "date utility", "date format" → Frontend Frameworks
@@ -5304,9 +5302,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sglang": "ai",                 # SGLang — fast structured LLM serving runtime (lm-sys/sglang, 13k★) → AI & Automation
     # AI — TruLens LLM application evaluation with feedback functions
     "trulens": "ai",                # TruLens — LLM app evaluation with feedback functions (3k★) → AI & Automation
-    # AI — EleutherAI lm-evaluation-harness (canonical open LLM benchmark runner)
-    "lm-eval": "ai",                # lm-eval — EleutherAI LM evaluation harness; "lm-eval alternative" → AI & Automation
-    "lmeval": "ai",                 # compound form — "lmeval benchmarks", "lmeval harness" → AI & Automation
+    # EleutherAI lm-evaluation-harness — canonical entries at bottom of _CAT_SYNONYMS under ai-standards
     # Node.js runtime — common query prefix for framework/server/backend queries
     # "node" and "nodejs" are in _FRAMEWORK_QUERY_TERMS for frameworks_tested filter,
     # but NOT in _CAT_SYNONYMS, so they get no category boost. Adding here so
@@ -6186,8 +6182,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "drupal" : "cms",               # Drupal — enterprise PHP CMS (22k★); "drupal alternative", "drupal headless" → Headless CMS
     "joomla": "cms",                # Joomla — open-source PHP CMS (5k★); "joomla alternative", "joomla headless" → Headless CMS
     "typo3": "cms",                 # TYPO3 — enterprise PHP CMS popular in Europe; "typo3 alternative" → Headless CMS
-    # Package manager — npm bare term (most-searched JS package manager; pnpm/yarn already mapped to frontend)
-    "npm": "developer",             # npm — Node package manager; "npm alternative", "npm workspaces", "npm vs pnpm" → Developer Tools
     # Testing — API mocking tools not yet individually mapped
     "mockoon": "testing",           # Mockoon — API mocking desktop app (mockoon/mockoon, 6k★); "mockoon alternative" → Testing Tools
     # Auth — Auth.js v5 (NextAuth.js v5 rebranding; next-auth/nextauth already mapped; bare compound form wasn't)
@@ -7542,6 +7536,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     "social auth": "authentication",     # spaced bigram — "social auth library", "social auth nextjs" → Authentication
     "social sign": "authentication",     # spaced bigram — "social sign in", "social sign up" → Authentication
     "social oauth": "authentication",    # spaced bigram — "social oauth provider" → Authentication
+    # Social Media — bare "social" token for "social media tool", "social media management" queries
+    # "social"→social-media lets "social media scheduling" route correctly before "media"→file fires
+    "social": "social",             # "social media tool", "social media management" → Social Media
+    # Database — "series" catches "time series database/data" queries; "time"→api is removed (gotcha)
+    "series": "database",           # "time series database", "time series data" → Database Tools (InfluxDB, TimescaleDB)
+    # Feedback — bare "feedback" token for "user feedback widget", "customer feedback tool"
+    "feedback": "feedback",         # "user feedback widget", "customer feedback tool" → Feedback & Reviews
+    # Analytics — session replay and screen/session recording (bigrams override "session"→authentication)
+    "session replay": "analytics",      # spaced bigram — "session replay tool" beats "session"→auth → Analytics
+    "session recording": "analytics",   # spaced bigram — "session recording tool" beats "session"→auth → Analytics
+    "screen recording": "analytics",    # spaced — "screen recording tool" → Analytics & Metrics
+    "recording": "analytics",           # single-token fallback for recording queries → Analytics & Metrics
+    # Feedback — product adoption platform brands (Appcues, Userpilot, UserGuiding)
+    "appcues": "feedback",          # Appcues — product adoption + onboarding platform → Feedback & Reviews
+    "userpilot": "feedback",        # UserPilot — user onboarding + product analytics → Feedback & Reviews
+    "userguiding": "feedback",      # UserGuiding — no-code user onboarding → Feedback & Reviews
+    "productfruits": "feedback",    # Product Fruits — product tours + feedback → Feedback & Reviews
+    # Feedback — product adoption / user onboarding bigrams (beat "onboarding"→frontend for SaaS queries)
+    "product adoption": "feedback",     # bigram — "product adoption platform" beats "adoption"→raw_first → Feedback
+    "user onboarding": "feedback",      # bigram — "user onboarding software" beats "onboarding"→frontend → Feedback
+    "user-onboarding": "feedback",      # hyphenated — "user-onboarding tool" → Feedback & Reviews
+    # Feedback — in-app changelog bigrams (beat "changelog"→devops for user-facing changelog widgets)
+    "in-app changelog": "feedback",     # bigram — "in-app changelog widget" beats "changelog"→devops → Feedback
+    "product changelog": "feedback",    # bigram — "product changelog tool" beats "changelog"→devops → Feedback
+    # AI Dev Tools — spaced bigrams for Goose by Block (hyphenated forms exist; these cover natural language queries)
+    "block goose": "ai dev",            # spaced bigram — "block goose coding agent" beats "goose"→database → AI Dev Tools
+    "goose block": "ai dev",            # reversed spaced — "goose block agent" → AI Dev Tools
 }
 
 _FTS_STOP_WORDS = {
