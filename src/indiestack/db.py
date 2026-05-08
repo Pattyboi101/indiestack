@@ -7205,6 +7205,343 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gemini-code": "ai dev",        # hyphenated — "gemini-code alternative", "gemini-code setup" → AI Dev Tools
     "gemini-assist": "ai dev",      # variant — "gemini-assist alternative" → AI Dev Tools
     "gemini-code-assist": "ai dev", # full slug — "gemini-code-assist vs copilot" → AI Dev Tools
+    # Database — local-first reactive databases (offline-first web and mobile apps)
+    "rxdb": "database",             # RxDB — offline-first reactive database for JS/TS/React/Vue (30k★)
+    "pouchdb": "database",          # PouchDB — browser CouchDB-compatible offline-first database (17k★)
+    # Developer Tools — semantic versioning spec and CLI tooling
+    "semver": "developer",          # semver — "semver library", "semver parser", "semantic versioning" → Developer Tools
+    # DevOps — conventional commits spec (first meaningful term after stop-word strip)
+    "conventional": "devops",       # "conventional commits standard", "conventional commit message" → DevOps
+    "commits": "devops",            # complement — "conventional commits", "gitmoji commits" → DevOps & Infrastructure
+    # DevOps — Nix-based reproducible dev environments and CDE abbreviation
+    "devenv": "devops",             # devenv.sh — Nix-based dev environments (cachix/devenv, 7k★); also handles "devenv setup", "devenv nix" → DevOps
+    "devbox": "devops",             # Devbox — Jetpack Nix-based isolated dev environments (8k★); "devbox alternative", "devbox setup" → DevOps
+    "cde": "devops",                # CDE — Cloud Development Environment abbreviation (Gitpod, Codespaces, Daytona, Devpod docs)
+    # AI — Azure Prompt Flow LLM workflow orchestration (Microsoft; "promptflow alternative" high-volume)
+    "promptflow": "ai",             # Azure Prompt Flow — LLM workflow orchestration and evaluation; "promptflow alternative" → AI & Automation
+    "prompt-flow": "ai",            # hyphenated — "prompt-flow setup", "prompt-flow alternative" → AI & Automation
+    # DevOps — Moon / Moonrepo (moonrepo/moon, ~9k★; Rust-based task runner + build system for monorepos)
+    # "moonrepo alternative", "moon monorepo build", "moon vs nx", "moon vs turborepo" — growing query volume 2026
+    "moonrepo": "devops",           # moonrepo — "moonrepo alternative", "moonrepo monorepo", "moonrepo vs nx" → DevOps & Infrastructure
+    "moon-repo": "devops",          # hyphenated — "moon-repo setup", "moon-repo config" → DevOps & Infrastructure
+    # DevOps — Flox (flox-dev/flox; Nix-based reproducible dev environments with a friendly CLI)
+    # Competes with devenv, devbox; "flox alternative", "flox nix env" — niche but growing
+    "flox": "devops",               # Flox — "flox alternative", "flox nix", "flox dev environment" → DevOps & Infrastructure
+    "flox-env": "devops",           # hyphenated compound — "flox-env setup", "flox-env vs devbox" → DevOps & Infrastructure
+    # AI — MetaGPT (geekan/MetaGPT, ~47k★; multi-agent AI software company in a prompt)
+    # Assigns LLM roles (engineer, PM, QA) to collaborate on software tasks; "metagpt alternative" high volume
+    "metagpt": "ai",                # MetaGPT — "metagpt alternative", "metagpt setup", "metagpt vs autogen" → AI & Automation
+    "meta-gpt": "ai",               # hyphenated — "meta-gpt alternative", "meta-gpt python" → AI & Automation
+    # AI — Magentic (jackmpcollins/magentic, ~2k★; Python library for structured LLM outputs via decorators)
+    # Complement to "instructor"→ai, "outlines"→ai; "magentic alternative", "magentic structured output"
+    "magentic": "ai",               # Magentic — "magentic alternative", "magentic llm", "magentic structured" → AI & Automation
+    # AI Standards — garak (NVIDIA; LLM vulnerability scanner + red-teamer; ~4k★)
+    # Probes LLMs for hallucination, toxicity, jailbreaks, data leakage; "garak alternative" growing
+    "garak": "ai standards",        # garak — "garak llm scanner", "garak red team", "garak alternative" → AI Standards & Specs
+    # AI Standards — lm-evaluation-harness (EleutherAI; canonical LLM benchmark runner; ~7k★)
+    # Supports MMLU, TruthfulQA, HellaSwag, hundreds of tasks; "lm eval harness" standard term
+    "lm-eval": "ai standards",      # EleutherAI harness — "lm-eval setup", "lm-eval benchmarks" → AI Standards & Specs
+    "lmeval": "ai standards",       # compact form — "lmeval harness", "lmeval alternative" → AI Standards & Specs
+    "lm-evaluation-harness": "ai standards",  # full slug — exact match for this tool → AI Standards & Specs
+    # AI Standards — inspect-ai (UK AISI; composable eval framework for safety testing; ~2k★)
+    # Official UK gov AI safety tool; "inspect alternative", "inspect ai eval" queries
+    "inspect-ai": "ai standards",   # hyphenated — "inspect-ai alternative", "inspect-ai evals" → AI Standards & Specs
+    "inspectai": "ai standards",    # compact — "inspectai safety", "inspectai setup" → AI Standards & Specs
+    # AI Standards — SWE-bench (Princeton/MIT; coding agent benchmark; measures agent ability to resolve GitHub issues)
+    # Used to rank Devin, SWE-agent, OpenHands; "swe-bench score", "swe-bench verified" common queries
+    "swebench": "ai standards",     # compact — "swebench score", "swebench eval" → AI Standards & Specs
+    "swe-bench": "ai standards",    # hyphenated — "swe-bench verified", "swe-bench full" → AI Standards & Specs
+    # AI Standards — EvalPlus (HumanEval+ and MBPP+; rigorous code generation benchmarks)
+    # Extends original HumanEval with 80x more test cases to reduce pass-rate inflation
+    "evalplus": "ai standards",     # "evalplus benchmark", "evalplus humaneval" → AI Standards & Specs
+    "humaneval": "ai standards",    # OpenAI's code generation benchmark — "humaneval score" → AI Standards & Specs
+    # AI Standards — OpenCompass (Shanghai AI Lab; open evaluation platform supporting 100+ LLMs)
+    # Covers reasoning, coding, math, instruction-following; widely used in Chinese AI lab reports
+    "opencompass": "ai standards",  # "opencompass benchmark", "opencompass eval" → AI Standards & Specs
+    # AI Standards — BigCode Evaluation Harness (for code generation models; HumanEval, MBPP, DS-1000)
+    # Powers the BigCode leaderboard; used to rank StarCoder, CodeLlama, DeepSeek-Coder
+    "bigcode-eval": "ai standards",  # "bigcode-eval harness", "bigcode evaluation" → AI Standards & Specs
+    "bigcode": "ai standards",       # bare — "bigcode leaderboard", "bigcode benchmark" → AI Standards & Specs
+    # AI Standards — MMLU-Pro (Carnegie Mellon; harder MMLU with 12k expert-vetted MCQs; fewer correct-by-chance answers)
+    # Models score ~10 points lower than on MMLU; "mmlu-pro benchmark", "mmlu pro score" — rising query volume
+    "mmlu-pro": "ai standards",     # hyphenated — "mmlu-pro benchmark", "mmlu-pro score", "mmlu-pro alternative" → AI Standards & Specs
+    "mmlupro": "ai standards",      # compact — "mmlupro setup", "mmlupro evaluation" → AI Standards & Specs
+    # AI Standards — GPQA Diamond (Google-Proof Q&A; 198 PhD-level biology/chemistry/physics questions)
+    # Frontier models score 50–65%; "gpqa diamond score", "gpqa benchmark" — primary hard-sci eval reference
+    "gpqa": "ai standards",         # bare — "gpqa score", "gpqa benchmark", "gpqa diamond" → AI Standards & Specs
+    "gpqa-diamond": "ai standards", # full form — "gpqa-diamond score", "gpqa-diamond alternative" → AI Standards & Specs
+    "gpqadiamond": "ai standards",  # compact — "gpqadiamond eval", "gpqadiamond benchmark" → AI Standards & Specs
+    # AI Standards — LiveCodeBench (live online coding eval updated continuously; avoids contamination)
+    # Tests HumanEval-style with new LeetCode problems; "livecodebench score", "livecodebench leaderboard"
+    "livecodebench": "ai standards",    # compact — "livecodebench score", "livecodebench leaderboard" → AI Standards & Specs
+    "live-code-bench": "ai standards",  # hyphenated — "live-code-bench alternative", "live-code-bench setup" → AI Standards & Specs
+    # AI Standards — ARC-AGI (François Chollet / ARC Prize; abstraction & reasoning test humans solve but AI struggles)
+    # ARC-AGI-2 launched April 2026 with $1M prize; "arc-agi score", "arc agi 2" very high query volume
+    "arc-agi": "ai standards",      # hyphenated — "arc-agi benchmark", "arc-agi score", "arc-agi-2" → AI Standards & Specs
+    "arcagi": "ai standards",       # compact — "arcagi benchmark", "arcagi test" → AI Standards & Specs
+    "arc-agi-2": "ai standards",    # version — "arc-agi-2 score", "arc-agi-2 tasks" → AI Standards & Specs
+    "arcagi2": "ai standards",      # compact version — "arcagi2 alternative", "arcagi2 prize" → AI Standards & Specs
+    # AI Standards — FrontierMath (Epoch AI; extremely hard math problems; frontier models score <2%)
+    # Tests graduate-level math competition problems; "frontiermath benchmark", "frontier math score"
+    "frontiermath": "ai standards", # compact — "frontiermath benchmark", "frontiermath score" → AI Standards & Specs
+    "frontier-math": "ai standards",# hyphenated — "frontier-math eval", "frontier-math alternative" → AI Standards & Specs
+    # AI — Kimi K2 (Moonshot AI; 1T-parameter MoE reasoning model; open-source weights; May 2026)
+    # Strong on tool use and agentic tasks; "kimi k2 alternative", "kimi-k2 api" — high query volume post-launch
+    "kimi-k2": "ai",               # hyphenated — "kimi-k2 alternative", "kimi-k2 api", "kimi-k2 weights" → AI & Automation
+    "kimik2": "ai",                 # compact — "kimik2 setup", "kimik2 inference" → AI & Automation
+    "kimi-k1-5": "ai",             # earlier model — "kimi-k1.5 benchmark", "kimi-k1-5 setup" → AI & Automation
+    # AI Standards — classic NLP / LLM benchmarks not yet routed to ai-standards category
+    # HELM (Stanford) — holistic benchmark covering 42 scenarios; "helm eval", "helm benchmark"
+    # Note: bare "helm" maps to devops (Kubernetes Helm); use compound forms for AI HELM
+    "helm-eval": "ai standards",   # "helm-eval setup", "helm eval framework" → AI Standards & Specs (Stanford HELM)
+    "stanford-helm": "ai standards",  # "stanford-helm benchmark", "stanford helm scores" → AI Standards & Specs
+    "big-bench": "ai standards",   # BIG-bench — Google's Beyond the Imitation Game benchmark → AI Standards & Specs
+    "bigbench": "ai standards",    # compact — "bigbench hard", "bigbench tasks", "bbh benchmark" → AI Standards & Specs
+    "bbh": "ai standards",         # BIG-Bench Hard abbreviation — "bbh score", "bbh reasoning" → AI Standards & Specs
+    "mmlu": "ai standards",        # MMLU — 57-subject multiple-choice; "mmlu score", "mmlu benchmark" → AI Standards & Specs
+    "mmlu-benchmark": "ai standards",  # hyphenated — "mmlu-benchmark eval", "mmlu-benchmark pass rate" → AI Standards & Specs
+    "gsm8k": "ai standards",       # GSM8K — grade school math word problems (CoT benchmark) → AI Standards & Specs
+    "gsm-8k": "ai standards",      # hyphenated — "gsm-8k benchmark", "gsm-8k reasoning" → AI Standards & Specs
+    "truthfulqa": "ai standards",  # TruthfulQA — measures LLM truthfulness and hallucination → AI Standards & Specs
+    "truthful-qa": "ai standards", # hyphenated — "truthful-qa score", "truthful-qa benchmark" → AI Standards & Specs
+    "hellaswag": "ai standards",   # HellaSwag — commonsense NLI benchmark → AI Standards & Specs
+    "winogrande": "ai standards",  # WinoGrande — Winograd schema challenge at scale → AI Standards & Specs
+    "mbpp": "ai standards",        # MBPP — Mostly Basic Python Problems (code eval) → AI Standards & Specs
+    "mt-bench": "ai standards",    # MT-bench — multi-turn conversation evaluation (LMSys) → AI Standards & Specs
+    "mtbench": "ai standards",     # compact — "mtbench score", "mtbench chatbot arena" → AI Standards & Specs
+    "alpacaeval": "ai standards",  # AlpacaEval — automated instruction-following eval → AI Standards & Specs
+    "alpaca-eval": "ai standards", # hyphenated — "alpaca-eval leaderboard", "alpaca-eval setup" → AI Standards & Specs
+    "bfcl": "ai standards",        # BFCL — Berkeley Function-Calling Leaderboard → AI Standards & Specs
+    "chatbot-arena": "ai standards",  # Chatbot Arena (LMSYS) — Elo-ranked pairwise human evals → AI Standards & Specs
+    "chatbotarena": "ai standards",   # compact — "chatbotarena ranking", "chatbotarena score" → AI Standards & Specs
+    "lmsys": "ai standards",       # LMSYS — org behind Chatbot Arena, Vicuna, MT-bench → AI Standards & Specs
+    "eqbench": "ai standards",     # EQBench — emotional intelligence benchmark for LLMs → AI Standards & Specs
+    "aime": "ai standards",        # AIME — American Invitational Math Exam (math competition benchmark) → AI Standards & Specs
+    "math-benchmark": "ai standards",  # "math benchmark llm", "math eval llm" → AI Standards & Specs
+    "safety-eval": "ai standards", # "safety eval framework", "llm safety evaluation" → AI Standards & Specs
+    "redteam": "ai standards",     # "llm red team", "red team evaluation" → AI Standards & Specs (garak, Inspect AI)
+    "red-team": "ai standards",    # hyphenated — "red-team llm", "red-team evaluation" → AI Standards & Specs
+    "jailbreak": "ai standards",   # "jailbreak test", "jailbreak benchmark", "jailbreak detection" → AI Standards & Specs
+    # MCP Servers — high-star official + ecosystem tools (149th pass)
+    # GitHub Official MCP Server (github/github-mcp-server, ~29k★; Issues, PRs, code search, Actions)
+    "github-mcp": "mcp",            # "github mcp server", "github mcp setup" → MCP Servers
+    "github-mcp-server": "mcp",     # full slug — "github-mcp-server alternative" → MCP Servers
+    # Google MCP Toolbox for Databases (googleapis/mcp-toolbox, ~15k★; SQL + retrieval for AI agents)
+    "mcp-toolbox": "mcp",           # "mcp toolbox databases", "mcp toolbox setup" → MCP Servers
+    "mcptoolbox": "mcp",            # compact — "mcptoolbox google", "mcptoolbox alternative" → MCP Servers
+    # Figma Context MCP (GLips/Figma-Context-MCP, ~15k★; Figma layout data for Cursor/Claude)
+    "figma-context-mcp": "mcp",     # full slug — "figma-context-mcp setup", "figma context mcp" → MCP Servers
+    "figma-mcp": "mcp",             # shortened — "figma mcp cursor", "figma mcp claude" → MCP Servers
+    # GitMCP (idosal/git-mcp, ~8k★; remote MCP for any GitHub repo, reduces hallucinations)
+    "git-mcp": "mcp",               # hyphenated — "git-mcp setup", "git-mcp alternative" → MCP Servers
+    "gitmcp": "mcp",                # compact — "gitmcp repo", "gitmcp hallucination" → MCP Servers
+    # AWS Official MCP Servers (awslabs/mcp, ~9k★; S3, Lambda, Bedrock, CDK via MCP)
+    "aws-mcp": "mcp",               # "aws mcp server", "aws mcp setup", "awslabs mcp" → MCP Servers
+    "awsmcp": "mcp",                # compact — "awsmcp alternative" → MCP Servers
+    # Firecrawl MCP (firecrawl/firecrawl-mcp-server, ~6k★; web scraping + search for AI agents)
+    "firecrawl-mcp": "mcp",         # MCP-specific form; "firecrawl"→developer is the SaaS API → MCP Servers
+    # DesktopCommanderMCP (wonderwhy-er/DesktopCommanderMCP, ~6k★; terminal + fs control via MCP)
+    "desktopcommander": "mcp",      # "desktopcommander mcp", "desktop commander mcp" → MCP Servers
+    "desktop-commander-mcp": "mcp", # full slug — "desktop-commander-mcp setup" → MCP Servers
+    # XcodeBuildMCP (getsentry/XcodeBuildMCP, ~5k★; iOS/macOS Xcode build tools for AI agents)
+    "xcodebuild-mcp": "mcp",        # "xcodebuild mcp", "xcode mcp server" → MCP Servers
+    "xcodebuildmcp": "mcp",         # compact — "xcodebuildmcp setup", "xcodebuildmcp xcode" → MCP Servers
+    # MCP Servers — official cloud-service MCP hyphenated compound forms (151st pass)
+    # These catch hyphenated slug queries like "stripe-mcp alternative", "supabase-mcp setup"
+    # Single-token "mcp" already routes any "mcp X" query correctly; these cover "X-mcp" form
+    "stripe-mcp": "mcp",            # Stripe MCP Server — "stripe-mcp setup", "stripe-mcp alternative" → MCP Servers
+    "supabase-mcp": "mcp",          # Supabase MCP — "supabase-mcp alternative", "supabase-mcp server" → MCP Servers
+    "neon-mcp": "mcp",              # Neon MCP — "neon-mcp database", "neon-mcp setup" → MCP Servers
+    "cloudflare-mcp": "mcp",        # Cloudflare MCP — "cloudflare-mcp workers", "cloudflare-mcp setup" → MCP Servers
+    "anthropic-mcp": "mcp",         # Anthropic MCP — "anthropic-mcp server", "anthropic-mcp sdk" → MCP Servers
+    "openai-mcp": "mcp",            # OpenAI MCP — "openai-mcp server", "openai-mcp setup" → MCP Servers
+    # Docker MCP Toolkit — Docker Desktop's official MCP container runner (152nd pass)
+    # "docker" alone → "devops" (correct for container queries); "docker-mcp" compound → MCP Servers
+    "docker-mcp": "mcp",            # hyphenated — "docker-mcp toolkit", "docker-mcp setup" → MCP Servers
+    "dockermcp": "mcp",             # compact — "dockermcp alternative", "dockermcp container" → MCP Servers
+    "docker mcp": "mcp",            # spaced bigram — "docker mcp toolkit" beats "docker"→devops
+    # AI — Google NotebookLM (AI-powered research and note-taking; common developer query)
+    "notebooklm": "ai",             # NotebookLM — Google's AI notebook/research tool; "notebooklm alternative" → AI & Automation
+    "notebook-lm": "ai",            # hyphenated — "notebook-lm api", "notebook-lm alternative" → AI & Automation
+    # AI agent orchestration — "orchestrator" standalone fires for AI agent orchestrators (153rd pass)
+    # "orchestration" → "background" (workflow pipelines: Dagster, Prefect); "orchestrator" alone
+    # is increasingly used for AI agent orchestrators (LangGraph, CrewAI, AutoGen, Mastra) in 2026.
+    "orchestrator": "ai",           # "agent orchestrator", "llm orchestrator", "ai orchestrator" → AI & Automation
+    # Context engineering — 2026 AI term for designing/optimizing agent context windows.
+    # "context" → "frontend" (React Context API); compound "contextengineering" has no split, routes correctly.
+    "contextengineering": "ai",     # compound — "contextengineering tool", "contextengineering library" → AI & Automation
+    "context-engineering": "ai",    # hyphenated — "context-engineering framework" → AI & Automation
+    # MCP hub / registry — discovery layers for MCP servers (Smithery, MCP.run)
+    # "mcp" alone already routes to mcp-servers; compound forms ensure "mcp hub", "mcp registry" are unambiguous
+    "mcp-hub": "mcp",               # "mcp hub discovery", "mcp hub alternative" → MCP Servers
+    "mcphub": "mcp",                # compact — "mcphub setup", "mcphub search" → MCP Servers
+    "mcp-marketplace": "mcp",       # "mcp marketplace", "mcp marketplace alternative" → MCP Servers
+    # AI multi-agent — hyphenated compound form (split() doesn't break on hyphens)
+    # "multi agent" (space) routes via "agent"→ai; "multi-agent" as single token needs explicit entry
+    "multi-agent": "ai",            # "multi-agent system", "multi-agent framework" → AI & Automation
+    # IDE rules files — Cursor and Windsurf both use project-level rules files (hyphenated compounds)
+    "cursor-rules": "ai",           # "cursor-rules setup", "cursor-rules template" → AI & Automation
+    "cursorrules": "ai",            # compact — "cursorrules file", "cursorrules example" → AI & Automation
+    "windsurf-rules": "ai",         # "windsurf-rules setup", "windsurf-rules template" → AI & Automation
+    "windsurfrules": "ai",          # compact — "windsurfrules file", "windsurfrules config" → AI & Automation
+    # MCP registry / discovery platforms (Smithery, MCP.run, PulseMCP, OpenTools)
+    "mcp-registry": "mcp",          # "mcp registry", "mcp registry alternative" → MCP Servers
+    "mcpregistry": "mcp",           # compact — "mcpregistry search", "mcpregistry setup" → MCP Servers
+    "pulsemcp": "mcp",              # PulseMCP — MCP analytics and discovery platform → MCP Servers
+    "opentools": "mcp",             # OpenTools — MCP tool registry / discovery → MCP Servers
+    # AI SWE agents — autonomous coding agents (fast-growing 2026 segment)
+    # "sweepai" already mapped; bare "sweep" catches "sweep ai code review", "sweep alternative"
+    "sweep": "ai",                  # Sweep — AI code review + PR bot (sweepai/sweep, 7k★) → AI & Automation
+    # GPU cloud providers for LLM inference — common "X alternative" queries from indie devs
+    # running Llama, Mistral, and other open models on rented GPU infrastructure
+    "runpod": "ai",                 # RunPod — GPU cloud for LLM inference; "runpod alternative" → AI & Automation
+    "run-pod": "ai",                # hyphenated — "run-pod setup", "run-pod vs lambda" → AI & Automation
+    "lambdalabs": "ai",             # Lambda Labs — GPU cloud; "lambdalabs alternative", "lambda labs pricing" → AI & Automation
+    "lambda-labs": "ai",            # hyphenated — "lambda-labs gpu", "lambda-labs vs runpod" → AI & Automation
+    "vastai": "ai",                 # Vast.ai — GPU marketplace; "vastai alternative", "vastai pricing" → AI & Automation
+    "vast-ai": "ai",                # hyphenated — "vast-ai setup", "vast-ai vs runpod" → AI & Automation
+    "coreweave": "ai",              # CoreWeave — cloud GPU for ML/AI workloads; "coreweave alternative" → AI & Automation
+    # AI snippet/context manager — Pieces for Devs captures code snippets with AI-enriched metadata
+    "pieces": "ai",                 # Pieces for Devs — "pieces alternative", "pieces app", "pieces vs github copilot" → AI & Automation
+    "pieces-for-devs": "ai",        # full form — "pieces-for-devs setup", "pieces-for-devs alternative" → AI & Automation
+    # GPU compute — generic queries route to AI & Automation (RunPod, vast.ai, Modal, CoreWeave, Lambda Labs all live there)
+    "gpu": "ai",                    # "gpu cloud", "gpu compute", "gpu rental", "gpu for llm" → AI & Automation
+    # DevOps — PaaS, VPS, and reverse proxy query terms not yet covered
+    "paas": "devops",               # "paas hosting", "paas platform", "heroku alternative" → DevOps & Infrastructure
+    "vps": "devops",                # "vps hosting", "vps provider", "vps alternative" → DevOps & Infrastructure
+    "reverse-proxy": "devops",      # "reverse-proxy setup", "reverse-proxy nginx alternative" → DevOps (Caddy, Traefik)
+    "reverseproxy": "devops",       # compact — "reverseproxy config", "reverseproxy docker" → DevOps & Infrastructure
+    # Security — DDoS protection queries (Cloudflare, Fastly, Bunny; in security and devops)
+    "ddos": "security",             # "ddos protection", "ddos mitigation", "ddos shield" → Security Tools
+    # Frontend — cross-platform app frameworks (Tauri, Electron, Capacitor, Expo)
+    "cross-platform": "frontend",   # "cross-platform app", "cross-platform desktop" → Frontend Frameworks
+    "crossplatform": "frontend",    # compact — "crossplatform framework", "crossplatform native" → Frontend Frameworks
+    # RAG / document processing — ingestion, parsing, OCR for LLM pipelines (fast-growing query segment)
+    "markitdown": "ai",             # MarkItDown (Microsoft) — convert any file to Markdown for LLMs (46k★) → AI & Automation
+    "surya": "ai",                  # Surya — layout-aware OCR and document detection (VikParuchuri, 15k★) → AI & Automation
+    "colpali": "ai",                # ColPali — visual document retrieval via multi-vector page embeddings → AI & Automation
+    "unstructured": "ai",           # Unstructured.io — document parsing library for RAG pipelines (20k★) → AI & Automation
+    "cross-encoder": "ai",          # cross-encoder reranking model — second-pass rerank in hybrid RAG → AI & Automation
+    "crossencoder": "ai",           # compact — "crossencoder alternative", "crossencoder rerank" → AI & Automation
+    "text-splitter": "ai",          # "text-splitter library", "document splitter for RAG" → AI & Automation
+    "textsplitter": "ai",           # compact — "textsplitter chunk", "textsplitter alternative" → AI & Automation
+    "chunker": "ai",                # "document chunker", "text chunker" — generic RAG pipeline term → AI & Automation
+    "mistral-ocr": "ai",            # Mistral OCR API — high-accuracy document processing by Mistral AI → AI & Automation
+    "bm25": "search",               # BM25 — ranking algorithm; "bm25 library", "bm25 vs vector search" → Search Engines
+    # Forms — e-signature tools and generic digital-signature queries (docusign/hellosign/docuseal already mapped; these cover remaining tools + generic terms)
+    "esignature": "forms",          # "esignature api", "esignature tool", "free esignature" → Forms & Surveys
+    "e-signature": "forms",         # hyphenated — "e-signature software", "e-signature integration" → Forms & Surveys
+    "signature": "forms",           # "digital signature tool", "signature api", "electronic signature" → Forms & Surveys
+    "pandadoc": "forms",            # PandaDoc — proposals + e-signature; "pandadoc alternative" → Forms & Surveys
+    "signnow": "forms",             # SignNow — e-signature API; "signnow alternative", "signnow api" → Forms & Surveys
+    "fillout": "forms",             # Fillout.com — "fillout alternative", "fillout typeform" → Forms & Surveys
+    "heyform": "forms",             # HeyForm — open-source conversational form builder; "heyform alternative" → Forms & Surveys
+    "paperform": "forms",           # Paperform — conversational forms; "paperform alternative" → Forms & Surveys
+    "reform": "forms",              # Reform.app — embed-first forms for SaaS; "reform alternative" → Forms & Surveys
+    # Forms — generic form backend / submission API terms (Formspree/Formspark/FormSubmit already mapped)
+    "form-backend": "forms",        # "form backend api", "form backend self-hosted" → Forms & Surveys
+    "form-endpoint": "forms",       # "form endpoint service", "form endpoint free" → Forms & Surveys
+    # Waitlist / pre-launch email capture tools (GetWaitlist, Waitlist.email, Prefinery)
+    "waitlist": "email",            # "waitlist tool", "launch waitlist", "waitlist api" → Email Marketing
+    "pre-launch": "email",          # "pre-launch email collection", "pre-launch page" → Email Marketing
+    "launchlist": "email",          # LaunchList — waitlist + referral tool; "launchlist alternative" → Email Marketing
+    # Referral & affiliate marketing programs
+    "referral": "crm",              # "referral program software", "referral tracking tool" → CRM & Sales (ReferralHero, Rewardful, Growsurf)
+    "viral": "social",              # "viral loop", "viral referral growth" → Social Media
+    "affiliate": "payments",        # "affiliate tracking software", "affiliate management tool" → Payments (Rewardful, Paddle affiliate)
+    "rewardful": "payments",        # Rewardful — Stripe-native affiliate + referral tracking; "rewardful alternative" → Payments
+    "referralhero": "crm",          # ReferralHero — referral + viral loop; "referralhero alternative" → CRM & Sales
+    "growsurf": "crm",              # GrowSurf — referral program software; "growsurf alternative" → CRM & Sales
+    # In-app changelog / product announcement widgets (user-facing update feeds)
+    "beamer": "feedback",           # Beamer — in-app changelog widget; "beamer alternative" → Feedback & Reviews
+    "headwayapp": "feedback",       # Headway — in-app product changelog; "headwayapp alternative" → Feedback & Reviews
+    "olvy": "feedback",             # Olvy — in-app changelog + feedback; "olvy alternative" → Feedback & Reviews
+    "featurebase": "feedback",      # Featurebase — customer feedback + changelog board; "featurebase alternative" → Feedback & Reviews
+    "noticeable": "feedback",       # Noticeable — in-app product announcements; "noticeable alternative" → Feedback & Reviews
+    "changefeed": "feedback",       # ChangeFeed — in-app changelog widget; "changefeed alternative" → Feedback & Reviews
+    "in-app": "notifications",      # "in-app notification", "in-app announcement", "in-app messaging" → Notifications
+    "product-update": "feedback",   # "product update widget", "product update feed" → Feedback & Reviews
+    # Product adoption / user onboarding platforms (complement to appcues/userpilot/driverjs added May 2026)
+    "chameleon": "feedback",        # Chameleon.io — product adoption + in-app tours; "chameleon alternative" → Feedback & Reviews
+    "userflow": "feedback",         # Userflow — no-code user onboarding builder; "userflow alternative" → Feedback & Reviews
+    # Behavior analytics / session recording (complement to hotjar/clarity/fullstory/logrocket already mapped)
+    "mouseflow": "analytics",       # Mouseflow — heatmaps + session recording; "mouseflow alternative" → Analytics & Metrics
+    "smartlook": "analytics",       # Smartlook — session recording + event analytics; "smartlook alternative" → Analytics & Metrics
+    # AI-powered PR review / code integrity — Qodo (formerly CodiumAI) rebranded; "pr-agent" slug still widely searched
+    # "qodo"→ai already mapped (bare brand); compound product names weren't covered
+    "pr-agent": "ai",               # PR-Agent (Qodo Merge) — AI PR review + auto-fix bot; "pr-agent setup", "pr-agent alternative" → AI & Automation
+    "qodo-merge": "ai",             # Qodo Merge — AI-powered PR review; "qodo-merge alternative", "qodo-merge setup" → AI & Automation
+    "qodomerge": "ai",              # compact — "qodomerge alternative", "qodomerge vs coderabbit" → AI & Automation
+    "qodo-gen": "ai",               # Qodo Gen — AI test + code generation; "qodo-gen alternative", "qodo-gen setup" → AI & Automation
+    "qodogen": "ai",                # compact — "qodogen alternative", "qodogen setup" → AI & Automation
+    # DevOps — merge queue, PR automation, and engineering metrics (high 2026 query volume)
+    "mergify": "devops",            # Mergify — merge queue + PR automation rules; "mergify alternative", "mergify setup" → DevOps & Infrastructure
+    "merge queue": "devops",        # spaced bigram — "merge queue tool" beats "queue"→background for merge-queue queries
+    "merge-queue": "devops",        # hyphenated — "merge-queue tool", "github merge-queue alternative" → DevOps & Infrastructure
+    "mergequeue": "devops",         # compact — "mergequeue setup", "mergequeue configuration" → DevOps & Infrastructure
+    "gitstream": "devops",          # GitStream (LinearB) — AI PR labeling + automation; "gitstream alternative", "gitstream setup" → DevOps & Infrastructure
+    "linearb": "devops",            # LinearB — engineering metrics, PR analytics; "linearb alternative", "linearb setup" → DevOps & Infrastructure
+    "linear-b": "devops",           # hyphenated — "linear-b setup", "linear-b pricing" → DevOps & Infrastructure
+    # Testing — automated code review runner (CI linting/reporting tool)
+    "reviewdog": "testing",         # reviewdog — runs linters/formatters in CI and posts inline PR comments; "reviewdog alternative" → Testing Tools
+    # Monitoring — status page queries ("status page tool", "status page alternative")
+    # "statuspage"→monitoring already covers the compound form; "status" alone and the bigram fill the gap.
+    "status page": "monitoring",    # spaced bigram — "status page tool", "status page service" → Monitoring & Uptime
+    "status-page": "monitoring",    # hyphenated — "status-page open source", "status-page alternative" → Monitoring & Uptime
+    "status": "monitoring",         # single token — "status monitoring", "status check tool" → Monitoring & Uptime
+    # AI — image generation queries ("image generation ai", "image generation tool")
+    # "image"→media routes to Media Servers which is wrong for generative-AI queries.
+    # Bigrams fire before single tokens so "image generation" wins over "image"→media.
+    "image generation": "ai",       # spaced bigram — "image generation model", "image generation api" → AI & Automation
+    "image-generation": "ai",       # hyphenated — "image-generation open source", "image-generation tool" → AI & Automation
+    "text image": "ai",             # "text to image" after stop-word removal → "text image" bigram → AI & Automation
+    # AI Dev Tools — code generation queries ("code generation tool", "code gen ai")
+    # "code" alone has no mapping (falls back to raw_first); bigrams route correctly.
+    "code generation": "ai dev",    # spaced bigram — "code generation ai", "code generation model" → AI Dev Tools
+    "code-generation": "ai dev",    # hyphenated — "code-generation tool", "code-generation open source" → AI Dev Tools
+    "code gen": "ai dev",           # spaced bigram — "code gen tool", "code gen api" → AI Dev Tools
+    # AI & Automation — targeted "ai *" bigrams (single "ai" token is too broad; bigrams are precise)
+    # "ai" alone is not mapped to avoid overriding "ai browser automation"→testing,
+    # "ai pr review"→developer, etc. Each collision gets its own bigram fix instead.
+    "ai image": "ai",               # spaced bigram — "ai image generator", "ai image model" → AI & Automation
+    # AI — "ai gateway" bigram overrides "gateway"→api for LLM router/proxy queries
+    "ai gateway": "ai",             # spaced bigram — "ai gateway litellm", "ai gateway alternative" → AI & Automation
+    # CRM & Sales — compound queries that collide with other categories via individual tokens
+    # "pipeline"→background is correct for data pipelines but wrong for CRM pipelines.
+    "sales pipeline": "crm",        # spaced bigram — "sales pipeline tool", "sales pipeline crm" → CRM & Sales
+    "sales-pipeline": "crm",        # hyphenated — "sales-pipeline management", "sales-pipeline software" → CRM & Sales
+    "contact management": "crm",    # spaced bigram — "contact management tool" beats "management"→project → CRM & Sales
+    "contact-management": "crm",    # hyphenated — "contact-management software", "contact-management crm" → CRM & Sales
+    "sales": "crm",                 # single token — "sales tool", "sales tracking", "sales analytics" → CRM & Sales
+    # Landing Pages — website builder and portfolio queries with no existing token mapping
+    "website builder": "landing",   # spaced bigram — "website builder tool" → Landing Pages (Carrd, Webflow, Tilda)
+    "portfolio": "landing",         # single token — "portfolio site", "portfolio builder" → Landing Pages
+    # Background Jobs — "task queue" bigram overrides "task"→developer for queue-specific queries
+    "task queue": "background",     # spaced bigram — "task queue redis", "task queue celery" → Background Jobs
+    "task-queue": "background",     # hyphenated — "task-queue library", "task-queue worker" → Background Jobs
+    # Background Jobs — "data pipeline" bigram preserves correct routing vs "pipeline management"→crm below
+    "data pipeline": "background",  # spaced bigram — "data pipeline orchestration", "data pipeline management" → Background Jobs
+    # CRM & Sales — lead and pipeline management queries missing from CRM routing
+    "lead": "crm",                  # single token — "lead scoring", "lead management", "lead capture" → CRM & Sales
+    "pipeline management": "crm",   # spaced bigram — "pipeline management tool" beats "pipeline"→background
+    "pipeline-management": "crm",   # hyphenated — "pipeline-management crm" → CRM & Sales
+    # AI Standards — LLM evaluation queries that currently route to AI & Automation via "llm"→ai
+    # Bigram fires before "llm" single token so these route to the correct ai-standards category.
+    "llm evaluation": "ai standards",    # spaced bigram — "llm evaluation harness", "llm evaluation tool"
+    "llm-evaluation": "ai standards",    # hyphenated — "llm-evaluation alternative" → AI Standards & Specs
+    "llm benchmark": "ai standards",     # spaced bigram — "llm benchmark leaderboard", "llm benchmark comparison"
+    "llm-benchmark": "ai standards",     # hyphenated — "llm-benchmark suite" → AI Standards & Specs
+    # Monitoring — "health" token for "health check", "health endpoint", "health probe" queries
+    # "health monitoring" already works via "monitoring"→monitoring; bare "health" was unrouted
+    "health": "monitoring",              # "health check library", "health probe setup", "healthcheck" → Monitoring & Uptime
+    "healthcheck": "monitoring",         # compound — "healthcheck endpoint", "healthcheck alternative" → Monitoring & Uptime
+    "health-check": "monitoring",        # hyphenated — "health-check middleware", "health-check api" → Monitoring & Uptime
+    # Authentication — "social login" / "social auth" bigrams override "social"→social-media
+    # "social login" means OAuth with Google/GitHub/Apple, NOT social media scheduling
+    "social login": "authentication",    # spaced bigram — "social login provider", "social login setup" → Authentication
+    "social auth": "authentication",     # spaced bigram — "social auth library", "social auth nextjs" → Authentication
+    "social sign": "authentication",     # spaced bigram — "social sign in", "social sign up" → Authentication
+    "social oauth": "authentication",    # spaced bigram — "social oauth provider" → Authentication
 }
 
 _FTS_STOP_WORDS = {
