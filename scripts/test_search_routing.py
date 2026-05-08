@@ -232,6 +232,10 @@ TEST_CASES: list[tuple[str, str]] = [
     ("hybrid search bm25 vector", "search"),        # "hybrid" → search
     # Repo-for-LLM tools
     ("repomix alternative", "ai dev"),              # "repomix" → ai dev
+    ("repo to llm", "ai dev"),                      # bigram "repo llm" (stop-word "to" stripped) → AI Dev Tools
+    ("repo for llm context", "ai dev"),             # bigram "repo llm" (stop-word "for" stripped) → AI Dev Tools
+    ("codebase to llm", "ai dev"),                  # bigram "codebase llm" → AI Dev Tools
+    ("gitingest setup", "ai dev"),                  # "gitingest" → ai dev (single-token)
     # E-signature / forms
     ("esignature api", "forms"),                    # "esignature" → forms
     ("digital signature tool", "forms"),            # "signature" → forms

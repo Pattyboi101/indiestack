@@ -7195,6 +7195,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "repopack": "ai dev",           # Repopack — former name for Repomix; legacy queries → AI Dev Tools
     "gitingest": "ai dev",          # GitIngest — convert GitHub repos to LLM-digestible text (cyclotruc/gitingest) → AI Dev Tools
     "git-ingest": "ai dev",         # hyphenated — "git-ingest alternative", "git-ingest setup" → AI Dev Tools
+    # "repo to llm" / "repo for llm" — "to"/"for" are stop words, leaving "repo llm" bigram
+    # Without this: "llm" alone → "ai" (ai-automation), missing repomix/gitingest category
+    "repo llm": "ai dev",           # spaced bigram — "repo to llm", "repo for llm" → AI Dev Tools
+    "codebase llm": "ai dev",       # spaced bigram — "pack codebase for llm", "codebase to llm" → AI Dev Tools
     # AI Dev Tools — Melty (meltylabs/melty, ~22k★; open-source AI code editor built on VS Code)
     # Designed for AI pair-programming; "melty alternative", "melty vs cursor", "melty ai editor"
     "melty": "ai dev",              # Melty — "melty alternative", "melty vs cursor" → AI Dev Tools
