@@ -235,13 +235,27 @@ Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cau
 BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individual tokens.
   Add spaced compound entries like "session recording" → "analytics" to _CAT_SYNONYMS to override
   individual token collisions. Bigrams are checked left-to-right at adjacent positions.
-  Known May 2026 bigram fixes (already applied — skip if 176 routing tests pass):
+  Known May 2026 bigram fixes (already applied — skip if 185 routing tests pass):
     'block goose' + 'goose block' → "ai dev"  (was "database" via 'goose'→Go migration tool)
     'docker mcp' → "mcp"  (was "devops" via 'docker'→devops; covers Docker MCP Toolkit queries)
     'image generation' → "ai"  (was "media" via 'image'→media; covers AI image gen queries)
     'code generation' + 'code gen' → "ai dev"  (was raw_first "code"; covers codegen tool queries)
     'status page' → "monitoring"  (was raw_first "status" with no category match)
     'text image' → "ai"  (from "text to image" after stop-word removal; AI image model queries)
+    'ai image' → "ai"  (bigram for "ai image generator"; "ai" alone not mapped to avoid wide collisions)
+    'ai gateway' → "ai"  (overrides "gateway"→api for LLM proxy/router queries)
+    'sales pipeline' → "crm"  (was "background" via 'pipeline'→background)
+    'sales' → "crm"  (for "sales tool", "sales tracking" queries)
+    'contact management' → "crm"  (was "project" via 'management'→project)
+    'website builder' → "landing"  (for website builder tool queries)
+    'portfolio' → "landing"  (for portfolio site queries)
+    'task queue' → "background"  (overrides "task"→developer for queue queries)
+    'data pipeline' → "background"  (prevents 'pipeline management'→crm from stealing data pipeline queries)
+    'lead' → "crm"  (for "lead scoring", "lead management", "lead capture")
+    'pipeline management' → "crm"  (overrides "pipeline"→background for sales CRM queries)
+    'llm evaluation' + 'llm benchmark' → "ai standards"  (overrides "llm"→ai for eval-specific queries)
+  CAUTION: Do NOT add "ai" as a single-token fallback — it breaks "ai browser automation"→testing
+           and "ai pr review"→developer. Use targeted "ai *" bigrams instead.
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
 ITERATION 2 — DATA QUALITY:
