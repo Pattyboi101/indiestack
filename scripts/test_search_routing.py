@@ -157,7 +157,7 @@ TEST_CASES: list[tuple[str, str]] = [
     # MCP registries / servers
     ("smithery mcp", "mcp"),
     ("context7 mcp", "mcp"),
-    ("docker mcp setup", "devops"),         # "docker" → devops (first match wins; use "mcp server" for mcp routing)
+    ("docker mcp setup", "mcp"),            # bigram "docker mcp" → Docker MCP Toolkit → MCP Servers
     ("pulsemcp analytics", "mcp"),
     # Misc
     ("media server video", "media"),        # requires "media" → "media" fix (was "file")
@@ -271,6 +271,17 @@ TEST_CASES: list[tuple[str, str]] = [
     ("semantic cache llm", "caching"),              # bigram "semantic cache" beats "semantic"→search
     ("dark launch strategy", "feature"),            # bigram "dark launch" beats "dark"→frontend
     ("key value database", "caching"),              # bigram "key value" → caching (no individual match)
+    # Bigram routing fixes (added May 2026 — session recording, product adoption, in-app changelog)
+    ("session recording tool", "analytics"),        # bigram "session recording" beats "session"→authentication
+    ("smartlook session recording", "analytics"),   # named tool first, but also validates bigram fallback
+    ("product adoption platform", "feedback"),      # bigram "product adoption" beats individual tokens
+    ("user onboarding software", "feedback"),       # bigram "user onboarding" beats "onboarding"→frontend
+    ("in-app changelog widget", "feedback"),        # bigram "in-app changelog" beats "changelog"→devops
+    ("product changelog tool", "feedback"),         # bigram "product changelog" beats "changelog"→devops
+    # Bigram routing fixes (added May 2026 — block goose, docker mcp)
+    ("block goose coding agent", "ai dev"),         # spaced bigram "block goose" beats "goose"→database
+    ("goose block agent", "ai dev"),                # reversed spaced bigram fires correctly
+    ("docker mcp toolkit", "mcp"),                  # spaced bigram "docker mcp" beats "docker"→devops
 ]
 
 

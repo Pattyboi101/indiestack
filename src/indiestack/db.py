@@ -7187,6 +7187,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI Dev Tools — Goose by Block (open-source autonomous coding agent; ~12k★ by May 2026)
     "goose-block": "ai dev",        # slug form (avoids collision with "goose"→Go migration tool)
     "block-goose": "ai dev",        # reversed compound — "block goose agent", "block goose mcp" → AI Dev Tools
+    "block goose": "ai dev",        # spaced bigram — "block goose coding agent" beats "goose"→database
+    "goose block": "ai dev",        # reversed spaced bigram — "goose block agent" → AI Dev Tools
     "goose-ai": "ai dev",           # AI-specific form — "goose-ai setup", "goose-ai alternative" → AI Dev Tools
     # Repo-to-LLM context tools (pack/ingest repo contents for AI consumption; ~15k★ each by 2026)
     "repomix": "ai dev",            # Repomix — pack repo into LLM-friendly context file (yamadashy/repomix) → AI Dev Tools
@@ -7403,6 +7405,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "docker" alone → "devops" (correct for container queries); "docker-mcp" compound → MCP Servers
     "docker-mcp": "mcp",            # hyphenated — "docker-mcp toolkit", "docker-mcp setup" → MCP Servers
     "dockermcp": "mcp",             # compact — "dockermcp alternative", "dockermcp container" → MCP Servers
+    "docker mcp": "mcp",            # spaced bigram — "docker mcp toolkit" beats "docker"→devops
     # AI — Google NotebookLM (AI-powered research and note-taking; common developer query)
     "notebooklm": "ai",             # NotebookLM — Google's AI notebook/research tool; "notebooklm alternative" → AI & Automation
     "notebook-lm": "ai",            # hyphenated — "notebook-lm api", "notebook-lm alternative" → AI & Automation
