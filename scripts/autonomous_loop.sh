@@ -111,10 +111,162 @@ curl the API for these queries and check top-3 results are relevant:
   AI engineers: 'swe-agent alternative', 'sweep ai code review', 'cosine ai genie', 'devin alternative'.
   New AI tools: 'kilo code extension', 'kilo code vs cline', 'amazon q alternative', 'q developer aws',
                'gemini code assist alternative', 'same dev app builder', 'same.dev clone'.
+  Dev envs: 'devenv nix', 'devenv alternative', 'devbox jetpack', 'cde tool', 'cloud dev environment',
+            'warp terminal alternative', 'nix dev environment', 'reproducible dev environment'.
+  Workflows: 'temporal workflow alternative', 'gitops deployment tool', 'argocd alternative',
+             'azure promptflow alternative', 'promptfoo llm testing'.
+  AI benchmarks: 'mmlu-pro benchmark', 'gpqa diamond score', 'livecodebench leaderboard',
+                 'arc-agi benchmark', 'arc agi 2 prize', 'frontiermath eval', 'swe-bench verified'.
+  Classic benchmarks: 'gsm8k benchmark', 'hellaswag score', 'truthfulqa evaluation',
+                      'mt-bench score', 'chatbot arena ranking', 'bfcl function calling',
+                      'alpacaeval leaderboard', 'winogrande benchmark', 'mbpp code eval'.
+  MCP servers (official): 'mcp stripe server', 'mcp supabase alternative', 'mcp neon database',
+                          'mcp cloudflare workers', 'stripe mcp setup'.
+  Kimi K2: 'kimi k2 alternative', 'kimi k2 api', 'kimi k2 weights', 'moonshot kimi model'.
+  Cloud browsers: 'steel browser alternative', 'steel browser api', 'cloud browser api'.
+  Official MCP servers: 'github mcp server', 'figma mcp cursor', 'git mcp hallucination',
+                        'aws mcp server', 'firecrawl mcp', 'desktop commander mcp',
+                        'xcode mcp server', 'google mcp toolbox databases'.
+  MCP hyphenated forms: 'stripe-mcp alternative', 'supabase-mcp setup', 'neon-mcp database',
+                        'cloudflare-mcp workers', 'context7 mcp docs'.
+  Docker MCP: 'docker mcp toolkit', 'docker mcp setup', 'docker-mcp alternative',
+              'run mcp server docker', 'dockermcp container'.
+  AI research tools: 'notebooklm alternative', 'notebooklm api', 'notebook-lm research'.
+  Headless/testing: 'headless browser', 'headless browser testing', 'headless browser automation',
+                    'headless ui component', 'browser automation python', 'puppeteer alternative'.
+  Enterprise auth: 'scim provisioning', 'ldap directory sync', 'active directory integration',
+                   'user provisioning saas', 'directory sync tool'.
+  IDE rules files: 'cursor rules setup', 'cursor-rules template', 'cursorrules file',
+                   'windsurf rules config', 'windsurfrules example'.
+  MCP registries: 'mcp registry', 'mcp-registry alternative', 'pulsemcp analytics',
+                  'opentools mcp discovery', 'mcp marketplace search'.
+  Multi-agent: 'multi-agent framework', 'multi-agent system', 'multi-agent orchestration'.
+  GPU cloud for LLM: 'runpod alternative', 'runpod vs lambda labs', 'vast ai gpu rental',
+                     'lambda labs gpu cloud', 'coreweave alternative', 'cheap gpu cloud llm'.
+  AI SWE agents: 'sweep ai alternative', 'sweep code review', 'pieces for devs alternative',
+                 'pieces app snippets', 'pieces vs github copilot'.
+  AI Standards (must route to ai-standards category — fixed May 2026 after hyphen bug):
+    'garak llm scanner', 'lm-eval setup', 'inspect-ai alternative', 'swe-bench verified',
+    'arc-agi benchmark', 'mmlu-pro benchmark', 'gpqa diamond score', 'lm evaluation harness'.
+  Infra & DevOps (added May 2026 — paas/vps/reverse-proxy/gpu synonyms added):
+    'gpu cloud', 'gpu compute llm', 'cheap gpu inference', 'paas provider',
+    'vps hosting indie', 'reverse proxy setup', 'nginx alternative reverse proxy',
+    'ddos protection service', 'cross-platform desktop app', 'tauri vs electron'.
+  RAG & document processing (added May 2026 — markitdown/surya/unstructured/bm25 synonyms added):
+    'markitdown alternative', 'convert pdf to markdown llm', 'surya ocr alternative',
+    'unstructured io document parsing', 'document chunker python', 'text splitter rag',
+    'cross encoder reranking', 'bm25 search library', 'mistral ocr api',
+    'colpali visual retrieval', 'hybrid search bm25 vector'.
+  Forms & e-signature (added May 2026 — fillout/heyform/paperform/esignature synonyms added):
+    'fillout alternative', 'heyform self hosted', 'paperform alternative',
+    'esignature api', 'e-signature tool', 'digital signature api',
+    'pandadoc alternative', 'signnow alternative', 'reform app forms',
+    'form backend free', 'html form endpoint', 'docuseal esignature'.
+  Waitlist / referral / in-app changelog (added May 2026 — waitlist/referral/affiliate/beamer synonyms added):
+    'waitlist tool', 'launch waitlist api', 'pre-launch email collection',
+    'referral program software', 'referral tracking tool', 'referralhero alternative',
+    'affiliate tracking software', 'rewardful alternative', 'growsurf alternative',
+    'beamer alternative', 'in-app changelog widget', 'headway changelog',
+    'olvy product changelog', 'featurebase alternative', 'noticeable announcements',
+    'product update widget', 'in-app notification tool'.
+  Product onboarding & tour libraries (added May 2026 — appcues/userpilot/driverjs synonyms added):
+    'appcues alternative', 'userpilot alternative', 'userguiding alternative',
+    'product adoption platform', 'user onboarding software',
+    'intro.js alternative', 'driver.js alternative', 'shepherd.js alternative',
+    'product tour library javascript', 'interactive guide library'.
+  Product adoption & behavior analytics (added May 2026 — chameleon/userflow/mouseflow/smartlook synonyms added):
+    'chameleon alternative', 'chameleon io product adoption', 'userflow onboarding',
+    'mouseflow alternative', 'mouseflow heatmap', 'smartlook alternative',
+    'smartlook session recording', 'session recording tool', 'heatmap tool'.
+  PR review, merge queues & engineering metrics (added May 2026 — pr-agent/mergify/gitstream/linearb synonyms added):
+    'pr-agent alternative', 'pr-agent setup', 'qodo merge alternative', 'qodo-merge setup',
+    'qodo gen alternative', 'ai pr review tool', 'ai code review bot',
+    'mergify alternative', 'mergify setup', 'github merge queue tool',
+    'gitstream alternative', 'gitstream pr automation',
+    'linearb alternative', 'linearb engineering metrics',
+    'reviewdog alternative', 'reviewdog ci setup', 'inline pr comments linter'.
+  Observability & tracing (2026 — opentelemetry/otel/jaeger synonyms confirmed):
+    'opentelemetry alternative', 'opentelemetry setup nodejs', 'otel collector setup',
+    'distributed tracing jaeger', 'distributed tracing zipkin', 'apm tool open source',
+    'signoz alternative', 'grafana alternative', 'self-hosted observability stack'.
+  Monorepo & package management (2026 — turborepo/nx/pnpm synonyms confirmed):
+    'monorepo build tool', 'turborepo alternative', 'nx monorepo setup',
+    'pnpm workspaces setup', 'lerna alternative', 'changesets monorepo versioning'.
+  Code quality & linting (2026 — lint/eslint/biome/prettier in testing-tools by design):
+    'eslint alternative', 'biome linter setup', 'code formatter prettier alternative',
+    'js linter nodejs', 'typescript linter tool'.
+  Error tracking & secrets (2026 — error→monitoring, secrets→security):
+    'error tracking sentry alternative', 'bugsnag alternative', 'rollbar alternative',
+    'secrets management doppler alternative', 'infisical alternative', 'vault secrets'.
+  Time-series databases (May 2026 — series→database added; time→api REMOVED to fix false routing):
+    'time series database', 'time series data influxdb', 'timescaledb alternative',
+    'questdb alternative', 'influxdb alternative', 'time series storage'.
+    NOTE: 'time'→api was removed — realtime queries still route via 'real'→api and 'realtime'→api.
+  Data engineering & ETL (May 2026 — etl/pipeline/warehouse/lake synonyms confirmed):
+    'etl pipeline tool', 'data pipeline orchestration', 'data warehouse alternative',
+    'dbt alternative', 'apache airflow alternative', 'batch processing framework',
+    'data lake storage', 'stream processing tool'.
+  Screen recording & UX analytics (May 2026 — recording/feedback tokens added):
+    'screen recording tool', 'ux recording tool', 'user feedback widget',
+    'customer feedback tool', 'feedback collection tool'.
+  Session recording vs auth (May 2026 — bigram routing added; 'session recording' beats 'session'→auth):
+    'session recording tool', 'smartlook session recording'. Must route to analytics, NOT authentication.
+  Product adoption vs frontend (May 2026 — bigram routing added):
+    'product adoption platform', 'user onboarding software'. Must route to feedback-reviews.
+    NOTE: 'product tour library javascript' must still route to FRONTEND (library ≠ SaaS platform).
+  In-app changelog vs devops (May 2026 — bigram routing added):
+    'in-app changelog widget', 'product changelog tool'. Must route to feedback-reviews.
+    NOTE: 'changelog' alone still routes to devops (git-cliff, semantic-release).
+  Image generation vs media (May 2026 — bigram routing added; 'image generation' beats 'image'→media):
+    'image generation model', 'image generation api', 'text to image model', 'ai image generator',
+    'stable diffusion alternative', 'dalle alternative'. Must route to AI, NOT Media Servers.
+    NOTE: 'image editor' and 'media server' still route to media (correct).
+  Code generation (May 2026 — bigram routing added; 'code generation' and 'code gen' → AI Dev Tools):
+    'code generation tool', 'code gen api', 'code generation model', 'ai code generator'.
+    NOTE: 'code review' → developer is separate (via 'review'→developer token).
+  Status pages (May 2026 — 'status' and 'status page' bigram added → monitoring):
+    'status page tool', 'status page alternative', 'status page open source', 'uptime status page'.
+    NOTE: 'statuspage'→monitoring (compound form) was already covered; gap was spaced form.
+  Health checks (May 2026 — 'health' and 'health-check' added → monitoring):
+    'health check library', 'health check api', 'health probe setup', 'health-check middleware'.
+    NOTE: 'healthcheck' compound was already at line 3426; only bare 'health' and 'health-check' were new.
+  Social login (May 2026 — 'social login/auth/sign' bigrams added → authentication):
+    'social login provider', 'social auth library', 'social sign in flow', 'social oauth provider'.
+    NOTE: 'social media scheduling' must still route to social-media (regression guard in test suite).
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
-After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
+BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individual tokens.
+  Add spaced compound entries like "session recording" → "analytics" to _CAT_SYNONYMS to override
+  individual token collisions. Bigrams are checked left-to-right at adjacent positions.
+  Known May 2026 bigram fixes (already applied — skip if 185 routing tests pass):
+    'block goose' + 'goose block' → "ai dev"  (was "database" via 'goose'→Go migration tool)
+    'docker mcp' → "mcp"  (was "devops" via 'docker'→devops; covers Docker MCP Toolkit queries)
+    'image generation' → "ai"  (was "media" via 'image'→media; covers AI image gen queries)
+    'code generation' + 'code gen' → "ai dev"  (was raw_first "code"; covers codegen tool queries)
+    'status page' → "monitoring"  (was raw_first "status" with no category match)
+    'text image' → "ai"  (from "text to image" after stop-word removal; AI image model queries)
+    'ai image' → "ai"  (bigram for "ai image generator"; "ai" alone not mapped to avoid wide collisions)
+    'ai gateway' → "ai"  (overrides "gateway"→api for LLM proxy/router queries)
+    'sales pipeline' → "crm"  (was "background" via 'pipeline'→background)
+    'sales' → "crm"  (for "sales tool", "sales tracking" queries)
+    'contact management' → "crm"  (was "project" via 'management'→project)
+    'website builder' → "landing"  (for website builder tool queries)
+    'portfolio' → "landing"  (for portfolio site queries)
+    'task queue' → "background"  (overrides "task"→developer for queue queries)
+    'data pipeline' → "background"  (prevents 'pipeline management'→crm from stealing data pipeline queries)
+    'lead' → "crm"  (for "lead scoring", "lead management", "lead capture")
+    'pipeline management' → "crm"  (overrides "pipeline"→background for sales CRM queries)
+    'llm evaluation' + 'llm benchmark' → "ai standards"  (overrides "llm"→ai for eval-specific queries)
+    'health' + 'health-check' → "monitoring"  (was unrouted via raw_first "health"; added May 2026)
+    'social login' + 'social auth' + 'social sign' → "authentication"  (was mis-routing to "social" social-media; added May 2026)
+  CAUTION: Do NOT add "ai" as a single-token fallback — it breaks "ai browser automation"→testing
+           and "ai pr review"→developer. Use targeted "ai *" bigrams instead.
+  CAUTION: Always run validate_synonyms.py after adding entries to catch duplicate keys.
+           Duplicate keys silently override with the last value (Python dict behavior).
+           "healthcheck" (line 3426) and "task-queue" (line 6239) are canonical — do not re-add.
+After fixing db.py, run validate_synonyms.py to check for duplicates, then commit.
+After all fixes: python3 scripts/test_search_routing.py should report 192+ tests passing.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
