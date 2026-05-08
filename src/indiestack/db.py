@@ -7562,6 +7562,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Landing Pages — website builder and portfolio queries with no existing token mapping
     "website builder": "landing",   # spaced bigram — "website builder tool" → Landing Pages (Carrd, Webflow, Tilda)
     "portfolio": "landing",         # single token — "portfolio site", "portfolio builder" → Landing Pages
+    # Background Jobs — "task queue" bigram overrides "task"→developer for queue-specific queries
+    "task queue": "background",     # spaced bigram — "task queue redis", "task queue celery" → Background Jobs
+    "task-queue": "background",     # hyphenated — "task-queue library", "task-queue worker" → Background Jobs
+    # Background Jobs — "data pipeline" bigram preserves correct routing vs "pipeline management"→crm below
+    "data pipeline": "background",  # spaced bigram — "data pipeline orchestration", "data pipeline management" → Background Jobs
+    # CRM & Sales — lead and pipeline management queries missing from CRM routing
+    "lead": "crm",                  # single token — "lead scoring", "lead management", "lead capture" → CRM & Sales
+    "pipeline management": "crm",   # spaced bigram — "pipeline management tool" beats "pipeline"→background
+    "pipeline-management": "crm",   # hyphenated — "pipeline-management crm" → CRM & Sales
+    # AI Standards — LLM evaluation queries that currently route to AI & Automation via "llm"→ai
+    # Bigram fires before "llm" single token so these route to the correct ai-standards category.
+    "llm evaluation": "ai standards",    # spaced bigram — "llm evaluation harness", "llm evaluation tool"
+    "llm-evaluation": "ai standards",    # hyphenated — "llm-evaluation alternative" → AI Standards & Specs
+    "llm benchmark": "ai standards",     # spaced bigram — "llm benchmark leaderboard", "llm benchmark comparison"
+    "llm-benchmark": "ai standards",     # hyphenated — "llm-benchmark suite" → AI Standards & Specs
 }
 
 _FTS_STOP_WORDS = {

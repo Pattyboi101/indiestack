@@ -149,7 +149,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("time series data influxdb", "database"),
     # Background jobs
     ("cron job scheduler", "background"),
-    ("task queue worker", "developer"),      # "task" → developer; use "cron job" for background-jobs routing
+    ("task queue worker", "background"),     # bigram "task queue" → background-jobs (more accurate than "task"→developer)
     # PR review (added May 2026)
     ("pr-agent alternative", "ai"),
     ("qodo-merge setup", "ai"),
