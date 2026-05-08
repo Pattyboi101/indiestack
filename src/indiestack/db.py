@@ -7546,6 +7546,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "code generation": "ai dev",    # spaced bigram — "code generation ai", "code generation model" → AI Dev Tools
     "code-generation": "ai dev",    # hyphenated — "code-generation tool", "code-generation open source" → AI Dev Tools
     "code gen": "ai dev",           # spaced bigram — "code gen tool", "code gen api" → AI Dev Tools
+    # AI & Automation — targeted "ai *" bigrams (single "ai" token is too broad; bigrams are precise)
+    # "ai" alone is not mapped to avoid overriding "ai browser automation"→testing,
+    # "ai pr review"→developer, etc. Each collision gets its own bigram fix instead.
+    "ai image": "ai",               # spaced bigram — "ai image generator", "ai image model" → AI & Automation
+    # AI — "ai gateway" bigram overrides "gateway"→api for LLM router/proxy queries
+    "ai gateway": "ai",             # spaced bigram — "ai gateway litellm", "ai gateway alternative" → AI & Automation
+    # CRM & Sales — compound queries that collide with other categories via individual tokens
+    # "pipeline"→background is correct for data pipelines but wrong for CRM pipelines.
+    "sales pipeline": "crm",        # spaced bigram — "sales pipeline tool", "sales pipeline crm" → CRM & Sales
+    "sales-pipeline": "crm",        # hyphenated — "sales-pipeline management", "sales-pipeline software" → CRM & Sales
+    "contact management": "crm",    # spaced bigram — "contact management tool" beats "management"→project → CRM & Sales
+    "contact-management": "crm",    # hyphenated — "contact-management software", "contact-management crm" → CRM & Sales
+    "sales": "crm",                 # single token — "sales tool", "sales tracking", "sales analytics" → CRM & Sales
+    # Landing Pages — website builder and portfolio queries with no existing token mapping
+    "website builder": "landing",   # spaced bigram — "website builder tool" → Landing Pages (Carrd, Webflow, Tilda)
+    "portfolio": "landing",         # single token — "portfolio site", "portfolio builder" → Landing Pages
 }
 
 _FTS_STOP_WORDS = {

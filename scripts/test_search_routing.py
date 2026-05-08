@@ -291,6 +291,17 @@ TEST_CASES: list[tuple[str, str]] = [
     ("text to image model", "ai"),                  # "text image" bigram (after stop-word removal of "to") → ai
     ("code generation tool", "ai dev"),             # bigram "code generation" → AI Dev Tools
     ("code gen api", "ai dev"),                     # bigram "code gen" → AI Dev Tools
+    # Bigram routing fixes (added May 2026 — ai image, ai gateway, sales pipeline, contact management, website builder)
+    ("ai image generator", "ai"),                   # bigram "ai image" beats "image"→media for generative AI queries
+    ("ai gateway litellm", "ai"),                   # bigram "ai gateway" beats "gateway"→api for LLM proxy queries
+    ("sales pipeline software", "crm"),             # bigram "sales pipeline" beats "pipeline"→background for CRM queries
+    ("sales tool tracker", "crm"),                  # single "sales"→crm routes sales tracking queries correctly
+    ("contact management tool", "crm"),             # bigram "contact management" beats "management"→project
+    ("website builder tool", "landing"),            # bigram "website builder" → Landing Pages (Carrd, Webflow)
+    ("portfolio site builder", "landing"),          # single "portfolio"→landing routes portfolio queries correctly
+    # Regression guard — "ai" prefix must NOT override established non-AI categories
+    ("ai browser automation", "testing"),           # "browser"→testing still fires (no broad "ai" single token)
+    ("ai pr review tool", "developer"),             # "review"→developer still fires (no broad "ai" single token)
 ]
 
 
