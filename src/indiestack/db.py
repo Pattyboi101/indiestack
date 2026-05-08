@@ -3845,9 +3845,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cohort": "analytics",          # "cohort analysis", "user cohorts" → Analytics & Metrics
     # Project management — Gantt charts (commonly searched feature)
     "gantt": "project",             # "Gantt chart", "Gantt timeline view" → Project Management
-    # User onboarding / product tours (Intro.js, Shepherd.js, Driver.js)
-    "tour": "frontend",             # "product tour", "interactive tour library" → Frontend Frameworks
-    "onboarding": "frontend",       # "user onboarding flow", "onboarding wizard" → Frontend Frameworks
+    # User onboarding / product tours — platform bigrams route to feedback-reviews (Appcues, Userpilot);
+    # individual tokens route to frontend-frameworks for library searches (Intro.js, Shepherd.js, Driver.js)
+    "product adoption": "feedback",  # Appcues, Userpilot, UserGuiding → Feedback & Reviews
+    "user onboarding": "feedback",   # bigram beats "onboarding"→frontend for SaaS platform queries
+    "user-onboarding": "feedback",   # hyphenated form
+    "tour": "frontend",              # single-token: "tour library", "product tour library" → Frontend Frameworks
+    "onboarding": "frontend",        # single-token: "onboarding wizard", "onboarding library" → Frontend Frameworks
     # Vue utilities — VueUse is searched directly as a named tool
     "vueuse": "frontend",           # VueUse — Vue Composition API utility collection (21k★)
     # Debounce / rate-control hooks (use-debounce, xhook, lodash.debounce)
@@ -4522,6 +4526,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Logging — Axiom (cloud log management and analytics; Logtail/Papertrail alternative)
     "axiom": "logging",             # Axiom — developer-first log management and analytics (5k★)
     # Changelog generation — git-cliff, semantic-release, release-it, conventional-changelog
+    # In-app / product changelog widgets (Beamer, Headway, Olvy, Noticeable) route to feedback-reviews
+    "in-app changelog": "feedback",  # bigram beats "changelog"→devops for user-facing changelog widgets
+    "product changelog": "feedback", # "product changelog widget", "product updates widget" → Feedback
     "changelog": "devops",          # "changelog generator", "changelog from git" → DevOps (git-cliff, semantic-release)
     # Data lakehouse / table formats — Apache Iceberg, Delta Lake, Apache Hudi
     "lakehouse": "database",        # "data lakehouse", "lakehouse architecture" → Database
@@ -6290,7 +6297,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "media-library": "file",        # "media library", "digital asset library", "media management" → File Storage & CDN
     # Analytics — session replay and screen recording (Hotjar, FullStory, LogRocket, Replay.io)
     "session-replay": "analytics",  # hyphenated — "session-replay tool" → Analytics
-    "session replay": "analytics",  # spaced — "session replay tool" wins over "session"→authentication
+    "session replay": "analytics",  # spaced bigram wins over "session"→authentication
+    "session recording": "analytics",  # spaced bigram beats "session"→authentication for recording queries
+    "session-recording": "analytics",  # hyphenated form
     "screen recording": "analytics",  # spaced — "screen recording tool" → Analytics
     "screen-recording": "analytics",  # hyphenated form
     "recording": "analytics",        # single-token fallback for "session recording"
@@ -7745,7 +7754,7 @@ async def search_tools(
     # synonym — scan all terms and prefer the first with a known synonym so "auth"
     # from "self hosted auth" gets the 100-point Authentication category boost.
     # Bigrams are checked before individual tokens so "load balancing" → devops wins
-    # over "load" → testing, and "session replay" → analytics wins over "session" → auth.
+    # over "load" → testing, and "session recording" → analytics wins over "session" → auth.
     _syn_term = None
     for _i, _tok in enumerate(_meaningful_for_cat):
         if _i + 1 < len(_meaningful_for_cat):
