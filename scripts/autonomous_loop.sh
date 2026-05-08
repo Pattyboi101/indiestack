@@ -235,7 +235,7 @@ Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cau
 BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individual tokens.
   Add spaced compound entries like "session recording" → "analytics" to _CAT_SYNONYMS to override
   individual token collisions. Bigrams are checked left-to-right at adjacent positions.
-  Known May 2026 bigram fixes (already applied — skip if 185 routing tests pass):
+  Known May 2026 bigram fixes (already applied — skip if 189 routing tests pass):
     'block goose' + 'goose block' → "ai dev"  (was "database" via 'goose'→Go migration tool)
     'docker mcp' → "mcp"  (was "devops" via 'docker'→devops; covers Docker MCP Toolkit queries)
     'image generation' → "ai"  (was "media" via 'image'→media; covers AI image gen queries)
@@ -254,6 +254,8 @@ BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individu
     'lead' → "crm"  (for "lead scoring", "lead management", "lead capture")
     'pipeline management' → "crm"  (overrides "pipeline"→background for sales CRM queries)
     'llm evaluation' + 'llm benchmark' → "ai standards"  (overrides "llm"→ai for eval-specific queries)
+    'repo llm' → "ai dev"  (covers "repo to/for llm" after stop-word strip; repomix/gitingest queries)
+    'codebase llm' → "ai dev"  (covers "pack codebase for llm", "codebase to llm" queries)
   CAUTION: Do NOT add "ai" as a single-token fallback — it breaks "ai browser automation"→testing
            and "ai pr review"→developer. Use targeted "ai *" bigrams instead.
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
@@ -269,6 +271,11 @@ ITERATION 3 — COMPETITIVE RESEARCH:
 Search GitHub for new MCP servers trending this week (search 'mcp server' sort:stars pushed:>2026-03-01).
 Log findings to .orchestra/logs/\$(date +%Y-%m-%d)-research.md.
 If any trending MCP servers are missing from IndieStack, add them to scripts/add_missing_tools.py.
+  Known additions (May 2026 — skip if these slugs are already in add_missing_tools.py):
+    playwright-mcp (microsoft, 32k★) — browser automation via Playwright for AI agents
+    mcp-toolbox (googleapis/Google, 15k★) — MCP server for databases (PG/MySQL/BigQuery/Redis/...)
+    mcp-use (mcp-use, 9k★) — full-stack TypeScript framework for building MCP apps and servers
+    windows-mcp (CursorTouch, 5k★) — Computer Use / desktop automation MCP server for Windows
 
 ITERATION 4 — PROVOCATION:
 Run python3 scripts/provoke.py. Before acting on any suggestion, ask:
