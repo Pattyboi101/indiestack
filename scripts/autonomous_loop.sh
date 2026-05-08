@@ -123,6 +123,10 @@ curl the API for these queries and check top-3 results are relevant:
   MCP servers (official): 'mcp stripe server', 'mcp supabase alternative', 'mcp neon database',
                           'mcp cloudflare workers', 'stripe mcp setup'.
   Kimi K2: 'kimi k2 alternative', 'kimi k2 api', 'kimi k2 weights', 'moonshot kimi model'.
+  OpenAI GPT-4.1 (added May 2026 — gpt41/gpt-4-1/gpt41-mini/gpt41-nano/gpt4o-mini synonyms added):
+    'gpt-4.1 alternative', 'gpt41 api', 'gpt4-1 setup', 'gpt 4.1 mini alternative',
+    'gpt41-mini vs claude', 'gpt41 nano pricing', 'gpt-4o-mini alternative',
+    'gpt4o-mini vs claude haiku', 'gpt4omini api'. Must route to AI & Automation.
   Cloud browsers: 'steel browser alternative', 'steel browser api', 'cloud browser api'.
   Official MCP servers: 'github mcp server', 'figma mcp cursor', 'git mcp hallucination',
                         'aws mcp server', 'firecrawl mcp', 'desktop commander mcp',

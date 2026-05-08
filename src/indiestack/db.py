@@ -7569,6 +7569,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     "context window": "ai",             # bigram — "context window management", "context window limit" → AI & Automation
     "context engineering": "ai",        # bigram — "context engineering tool", "llm context engineering" → AI & Automation
     "context length": "ai",             # bigram — "context length optimization", "long context length" → AI & Automation
+    # AI — OpenAI GPT-4.1 family (released April 2025; frontier model + two cheaper variants)
+    # Very high "gpt-4.1 alternative", "gpt-4.1 api", "gpt-4.1-mini vs claude" query volume post-launch
+    "gpt41": "ai",                      # GPT-4.1 — "gpt41 alternative", "gpt41 api", "gpt41 setup" → AI & Automation
+    "gpt-4-1": "ai",                    # hyphenated — "gpt-4-1 alternative", "gpt-4-1 api" → AI & Automation
+    "gpt4-1": "ai",                     # mixed — "gpt4-1 alternative", "gpt4-1 pricing" → AI & Automation
+    "gpt41-mini": "ai",                 # GPT-4.1 mini — "gpt41-mini alternative", "gpt41-mini api" → AI & Automation
+    "gpt-4-1-mini": "ai",              # hyphenated — "gpt-4-1-mini alternative", "gpt-4-1-mini vs claude" → AI & Automation
+    "gpt41mini": "ai",                  # compact — "gpt41mini setup", "gpt41mini pricing" → AI & Automation
+    "gpt41-nano": "ai",                 # GPT-4.1 nano — "gpt41-nano alternative", "gpt41-nano cheap" → AI & Automation
+    "gpt-4-1-nano": "ai",              # hyphenated — "gpt-4-1-nano alternative", "gpt-4-1-nano api" → AI & Automation
+    "gpt41nano": "ai",                  # compact — "gpt41nano alternative", "gpt41nano cost" → AI & Automation
+    # AI — GPT-4o mini (OpenAI; July 2024 release; very high query volume as cheap GPT-4o-class model)
+    "gpt4o-mini": "ai",                 # "gpt4o-mini alternative", "gpt4o-mini api", "gpt4o-mini vs claude-haiku" → AI & Automation
+    "gpt-4o-mini": "ai",               # hyphenated — "gpt-4o-mini alternative", "gpt-4o-mini pricing" → AI & Automation
+    "gpt4omini": "ai",                  # compact — "gpt4omini setup", "gpt4omini alternative" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
