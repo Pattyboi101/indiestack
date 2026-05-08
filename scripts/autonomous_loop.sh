@@ -185,6 +185,14 @@ curl the API for these queries and check top-3 results are relevant:
     'gitstream alternative', 'gitstream pr automation',
     'linearb alternative', 'linearb engineering metrics',
     'reviewdog alternative', 'reviewdog ci setup', 'inline pr comments linter'.
+  AI-concept bigrams (added May 2026 — context window/function calling/structured output/object detection):
+    'context window size llm', 'extend context window model',
+    'function calling api llm', 'function calling openai example',
+    'tool-calling llm pattern', 'structured output json llm',
+    'structured output pydantic model', 'object detection model yolo',
+    'object detection python api', 'code generation model llm',
+    'data labeling platform open source', 'data annotation tool',
+    'data engineering pipeline', 'knowledge graph database neo4j'.
   Observability & tracing (2026 — opentelemetry/otel/jaeger synonyms confirmed):
     'opentelemetry alternative', 'opentelemetry setup nodejs', 'otel collector setup',
     'distributed tracing jaeger', 'distributed tracing zipkin', 'apm tool open source',
@@ -225,9 +233,19 @@ Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cau
 BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individual tokens.
   Add spaced compound entries like "session recording" → "analytics" to _CAT_SYNONYMS to override
   individual token collisions. Bigrams are checked left-to-right at adjacent positions.
-  Known May 2026 bigram fixes (already applied — skip if 168 routing tests pass):
+  Known May 2026 bigram fixes (already applied — skip if 183 routing tests pass):
     'block goose' + 'goose block' → "ai dev"  (was "database" via 'goose'→Go migration tool)
     'docker mcp' → "mcp"  (was "devops" via 'docker'→devops; covers Docker MCP Toolkit queries)
+  AI-concept bigrams added May 2026 (skip if 183 routing tests pass):
+    'context window' → "ai"  (was 'context'→"frontend" via React Context API)
+    'function calling' → "ai"  ('function' was unmapped)
+    'tool-calling' → "ai"  (hyphenated; 'tool' is a stop word so spaced bigram can never fire)
+    'structured output' → "ai"  ('structured' was unmapped)
+    'object detection' → "ai"  (was 'object'→"file" via S3 object storage)
+    'code generation' → "ai"  ('code' was unmapped)
+    'data labeling' / 'data annotation' → "ai"  ('data' was unmapped)
+    'data engineering' → "database"  (dbt, Airbyte, Fivetran, Dagster)
+    'knowledge graph' → "database"  (Neo4j, Dgraph, NebulaGraph)
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
 ITERATION 2 — DATA QUALITY:
