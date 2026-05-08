@@ -209,12 +209,22 @@ curl the API for these queries and check top-3 results are relevant:
   Screen recording & UX analytics (May 2026 — recording/feedback tokens added):
     'screen recording tool', 'ux recording tool', 'user feedback widget',
     'customer feedback tool', 'feedback collection tool'.
+  Session recording vs auth (May 2026 — bigram routing added; 'session recording' beats 'session'→auth):
+    'session recording tool', 'smartlook session recording'. Must route to analytics, NOT authentication.
+  Product adoption vs frontend (May 2026 — bigram routing added):
+    'product adoption platform', 'user onboarding software'. Must route to feedback-reviews.
+    NOTE: 'product tour library javascript' must still route to FRONTEND (library ≠ SaaS platform).
+  In-app changelog vs devops (May 2026 — bigram routing added):
+    'in-app changelog widget', 'product changelog tool'. Must route to feedback-reviews.
+    NOTE: 'changelog' alone still routes to devops (git-cliff, semantic-release).
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 After adding any db.py synonyms, run:
   python3 scripts/validate_synonyms.py     — catches duplicate keys (silent overrides caused the 'rollout' bug Apr 2026)
-  python3 scripts/test_search_routing.py   — tests 146 query/category routing pairs offline (no prod API needed)
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
+BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individual tokens.
+  Add spaced compound entries like "session recording" → "analytics" to _CAT_SYNONYMS to override
+  individual token collisions. Bigrams are checked left-to-right at adjacent positions.
 After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
 
 ITERATION 2 — DATA QUALITY:
