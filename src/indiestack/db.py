@@ -7517,8 +7517,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "website builder": "landing",   # spaced bigram — "website builder tool" → Landing Pages (Carrd, Webflow, Tilda)
     "portfolio": "landing",         # single token — "portfolio site", "portfolio builder" → Landing Pages
     # Background Jobs — "task queue" bigram overrides "task"→developer for queue-specific queries
+    # "task-queue" hyphenated already at line 6239; only the spaced bigram is new here
     "task queue": "background",     # spaced bigram — "task queue redis", "task queue celery" → Background Jobs
-    "task-queue": "background",     # hyphenated — "task-queue library", "task-queue worker" → Background Jobs
     # Background Jobs — "data pipeline" bigram preserves correct routing vs "pipeline management"→crm below
     "data pipeline": "background",  # spaced bigram — "data pipeline orchestration", "data pipeline management" → Background Jobs
     # CRM & Sales — lead and pipeline management queries missing from CRM routing
@@ -7533,8 +7533,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "llm-benchmark": "ai standards",     # hyphenated — "llm-benchmark suite" → AI Standards & Specs
     # Monitoring — "health" token for "health check", "health endpoint", "health probe" queries
     # "health monitoring" already works via "monitoring"→monitoring; bare "health" was unrouted
-    "health": "monitoring",              # "health check library", "health probe setup", "healthcheck" → Monitoring & Uptime
-    "healthcheck": "monitoring",         # compound — "healthcheck endpoint", "healthcheck alternative" → Monitoring & Uptime
+    # "healthcheck" compound already mapped at line 3426 — only adding bare and hyphenated forms
+    "health": "monitoring",              # "health check library", "health probe setup" → Monitoring & Uptime
     "health-check": "monitoring",        # hyphenated — "health-check middleware", "health-check api" → Monitoring & Uptime
     # Authentication — "social login" / "social auth" bigrams override "social"→social-media
     # "social login" means OAuth with Google/GitHub/Apple, NOT social media scheduling
