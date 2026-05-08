@@ -312,6 +312,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("social sign in flow", "authentication"),      # bigram "social sign" beats "social"→social
     # Regression — bare "social media" still routes correctly
     ("social media scheduling", "social"),          # "social"→social still fires for social media queries
+    # Context window bigrams (added May 2026 — beat "context"→frontend for LLM context queries)
+    ("context window management", "ai"),            # bigram "context window" beats "context"→frontend
+    ("context window limit model", "ai"),           # bigram "context window" fires before "limit"→api
+    ("context engineering tool", "ai"),             # bigram "context engineering" beats "context"→frontend
+    ("llm context engineering", "ai"),              # bigram "context engineering" fires even with "llm" stripped
+    ("context length optimization", "ai"),          # bigram "context length" beats "context"→frontend
+    # Regression — bare "context" still routes to frontend for React context API queries
+    ("react context provider", "frontend"),         # "context"→frontend still fires for React Context API
+    ("context api nextjs", "frontend"),             # "context"→frontend fires for context API queries
+    # 2026 term regressions — verify key 2026-era synonyms don't break
+    ("vibe coding workflow", "ai"),                 # "vibe"→ai routes vibe-coding queries correctly
+    ("deepseek r1 local", "ai"),                   # "deepseek"→ai routes DeepSeek model queries
+    ("llamastack inference server", "ai"),          # "llamastack"→ai routes LlamaStack queries
+    ("mcp server sdk", "mcp"),                      # "mcp"→mcp routes MCP server queries
+    ("llm evaluation harness", "ai standards"),     # bigram "llm evaluation" → AI Standards & Specs
+    ("llm benchmark comparison", "ai standards"),   # bigram "llm benchmark" → AI Standards & Specs
 ]
 
 

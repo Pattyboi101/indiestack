@@ -7563,6 +7563,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI Dev Tools — spaced bigrams for Goose by Block (hyphenated forms exist; these cover natural language queries)
     "block goose": "ai dev",            # spaced bigram — "block goose coding agent" beats "goose"→database → AI Dev Tools
     "goose block": "ai dev",            # reversed spaced — "goose block agent" → AI Dev Tools
+    # AI — LLM context management bigrams (beat "context"→frontend which covers React context API)
+    # "context" single token correctly routes "React context API" / "context provider" queries to frontend-frameworks.
+    # Bigrams fire first so "context window" / "context engineering" / "context length" route to AI & Automation.
+    "context window": "ai",             # bigram — "context window management", "context window limit" → AI & Automation
+    "context engineering": "ai",        # bigram — "context engineering tool", "llm context engineering" → AI & Automation
+    "context length": "ai",             # bigram — "context length optimization", "long context length" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

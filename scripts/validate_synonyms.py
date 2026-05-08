@@ -39,6 +39,9 @@ VALID_SHORT_NAMES = {
     "customer",  # Customer Support (live chat tools)
     "feature",   # Feature Flags (LIKE '%feature%')
     "documentation",  # Documentation
+    # Multi-word aliases — LIKE matches "AI Dev Tools" and "AI Standards & Specs"
+    "ai dev",       # AI Dev Tools category (LIKE '%ai dev%' ✓)
+    "ai standards", # AI Standards & Specs category (LIKE '%ai standards%' ✓)
 }
 
 
