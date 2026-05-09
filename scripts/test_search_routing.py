@@ -60,7 +60,7 @@ def route_query(query: str) -> tuple[str, str]:
     return raw_cat, "raw_first"
 
 
-# ── Test cases ──────────────────────────────────────────────
+# ── Test cases ────────────────────────────────────────────
 # Format: (query, expected_cat_term_fragment)
 # expected_cat_term_fragment must be a substring of the routed cat_term.
 # A query routing to "authentication" passes if expected is "auth" or "authentication".
@@ -332,6 +332,18 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ngrx state management", "frontend"),          # "ngrx" → frontend (Angular Redux-style state)
     ("ngxs angular store", "frontend"),             # "ngxs" → frontend (NGXS Angular state)
     ("akita angular state", "frontend"),            # "akita" → frontend (Akita state management)
+    # GPT-4.1 family (OpenAI, April 2025 — added 142nd pass)
+    ("gpt41 alternative", "ai"),                    # compact form routes to AI & Automation
+    ("gpt-4-1 api", "ai"),                          # hyphenated form routes to AI & Automation
+    ("gpt4-1 pricing", "ai"),                       # mixed form routes to AI & Automation
+    ("gpt41-mini alternative", "ai"),               # GPT-4.1 mini compact → AI & Automation
+    ("gpt-4-1-mini vs claude", "ai"),               # GPT-4.1 mini hyphenated → AI & Automation
+    ("gpt41-nano cost", "ai"),                      # GPT-4.1 nano compact → AI & Automation
+    ("gpt-4-1-nano alternative", "ai"),             # GPT-4.1 nano hyphenated → AI & Automation
+    # GPT-4o mini (OpenAI, July 2024 — added 142nd pass)
+    ("gpt4o-mini alternative", "ai"),               # compact-hyphenated → AI & Automation
+    ("gpt-4o-mini pricing", "ai"),                  # fully hyphenated → AI & Automation
+    ("gpt4omini setup", "ai"),                      # no-separator compound → AI & Automation
 ]
 
 

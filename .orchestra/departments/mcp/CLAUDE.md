@@ -55,6 +55,9 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - distributed lock service, redlock alternative (distributed mutex → background-jobs)
   - bolt.new alternative, ai web app builder (AI builders → ai-dev-tools)
   - codeium alternative, free ai code completion (AI coding → ai-dev-tools)
+  - gpt41 alternative, gpt-4-1-mini api (OpenAI GPT-4.1 family → ai-automation)
+  - gpt41-nano cost, gpt41mini setup (GPT-4.1 nano/mini → ai-automation)
+  - gpt4o-mini alternative, gpt-4o-mini pricing (GPT-4o mini → ai-automation)
   - gpt45 alternative, gpt-4-5 api (OpenAI GPT-4.5 → ai-automation)
   - claude37 sonnet, claude-3-7 alternative (Claude 3.7 → ai-automation)
   - gemini25 pro, gemini-2-5 flash alternative (Gemini 2.5 → ai-automation)
@@ -133,6 +136,8 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - annoy vector search, hnswlib python (ANN libraries → database)
   - exllamav2 inference, exllama alternative (quantized inference → ai-automation)
   - hunyuanvideo alternative, wan-video model (open-source video gen → ai-automation)
+  - ngrx state management, ngxs angular store (Angular state → frontend-frameworks)
+  - akita angular state, ngrx alternative (Angular state libs → frontend-frameworks)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
@@ -141,7 +146,7 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
 
 ## Output Format
 When done, output a JSON summary: {"status": "done", "files_changed": [...], "summary": "..."}
-If blocked, output: {"status": "blocked", "reason": "...", "needs": "backend|devops|..."}
+If blocked, output: {"status": "blocked", "reason": "...", "needs": "frontend|devops|..."}
 
 
 ## Communication (claude-peers)
