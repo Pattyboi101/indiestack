@@ -138,6 +138,9 @@ When working on MCP tasks, use the IndieStack MCP server to search for tools. Te
   - hunyuanvideo alternative, wan-video model (open-source video gen → ai-automation)
   - ngrx state management, ngxs angular store (Angular state → frontend-frameworks)
   - akita angular state, ngrx alternative (Angular state libs → frontend-frameworks)
+  - model evaluation framework, ai eval harness (bigram → ai-standards; NOT generic ai)
+  - ai evals tool, safety eval framework (bigram → ai-standards)
+  - capability eval suite, llm evaluation benchmark (bigram → ai-standards)
 
 ## Do NOT Touch
 - Route files (ask Frontend or Content)
