@@ -189,6 +189,13 @@ TEST_CASES: list[tuple[str, str]] = [
     # LLM cache bigrams (bigram lookup added db.py pass 170)
     ("semantic cache llm", "caching"),
     ("llm cache layer", "caching"),
+    # Gap-query routing fixes (added May 2026)
+    ("new relic alternative", "monitoring"),        # "new" stripped → "relic" → Monitoring
+    ("new relic monitoring", "monitoring"),         # same stop-word strip pattern
+    ("low code platform", "developer"),             # bigram "low code" → Developer Tools
+    ("no code builder", "developer"),              # bigram "no code" → Developer Tools
+    ("pass keys webauthn", "authentication"),       # bigram "pass keys" → Authentication
+    ("pass key support", "authentication"),         # bigram "pass key" → Authentication
 ]
 
 

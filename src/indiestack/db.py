@@ -2731,6 +2731,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Monitoring / observability
     "newrelic": "monitoring",
     "pagerduty": "monitoring",
+    "relic": "monitoring",          # "new relic" — "new" stripped by stop-words → "relic" fires → Monitoring
     # Search
     "algolia": "search",
     "elasticsearch": "search",
@@ -6549,6 +6550,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Analytics — behavior analytics / session recording tools
     "mouseflow": "analytics",       # Mouseflow — heatmaps + session recording; "mouseflow alternative" → Analytics
     "smartlook": "analytics",       # Smartlook — session recording + event analytics; "smartlook alternative" → Analytics
+    # Developer Tools — spaced low-code / no-code bigrams (hyphenated forms already mapped; these cover unigram gap)
+    "low code": "developer",            # bigram — "low code platform", "low code tool" → Developer Tools
+    "no code": "developer",             # bigram — "no code builder", "no code app" → Developer Tools
+    # Authentication — passkey spaced variants (passkey/passkeys single-token already mapped)
+    "pass key": "authentication",       # bigram — "pass key support", "implement pass key" → Authentication
+    "pass keys": "authentication",      # bigram — "pass keys authentication", "webauthn pass keys" → Authentication
 }
 
 _FTS_STOP_WORDS = {
