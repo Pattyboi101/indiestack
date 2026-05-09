@@ -349,6 +349,54 @@ TEST_CASES: list[tuple[str, str]] = [
     ("gpt4o-mini alternative", "ai"),               # compact-hyphenated → AI & Automation
     ("gpt-4o-mini pricing", "ai"),                  # fully hyphenated → AI & Automation
     ("gpt4omini setup", "ai"),                      # no-separator compound → AI & Automation
+    # 2026 AI models batch — new entries added May 2026 (256th pass)
+    # OpenAI reasoning models
+    ("o3-mini alternative", "ai"),                  # o3-mini (Jan 2025) small reasoning model → AI & Automation
+    ("o4-mini alternative", "ai"),                  # o4-mini (April 2025) fast reasoning → AI & Automation
+    ("gpt5 alternative", "ai"),                     # GPT-5 → AI & Automation
+    ("gpt-5 vs claude", "ai"),                      # GPT-5 hyphenated → AI & Automation
+    ("codex alternative", "ai"),                    # OpenAI Codex agent (2025 relaunch) → AI & Automation
+    # Anthropic Claude versions
+    ("claude37 sonnet", "ai"),                      # Claude 3.7 compact form → AI & Automation
+    ("claude-3-7 alternative", "ai"),               # Claude 3.7 hyphenated form → AI & Automation
+    ("claude4 alternative", "ai"),                  # Claude 4 compact → AI & Automation
+    ("claude-opus alternative", "ai"),              # Claude Opus tier → AI & Automation
+    # Google models
+    ("gemini25 pro", "ai"),                         # Gemini 2.5 compact → AI & Automation
+    ("gemini-2-5 flash alternative", "ai"),         # Gemini 2.5 hyphenated → AI & Automation
+    ("gemma3 setup", "ai"),                         # Gemma 3 open-weight → AI & Automation
+    # Meta Llama 4
+    ("llama4 alternative", "ai"),                   # Llama 4 compact → AI & Automation
+    ("llama4-scout setup", "ai"),                   # Llama 4 Scout variant → AI & Automation
+    ("llama4-maverick alternative", "ai"),          # Llama 4 Maverick variant → AI & Automation
+    # xAI Grok
+    ("grok2 alternative", "ai"),                    # Grok 2 → AI & Automation
+    ("grok3 alternative", "ai"),                    # Grok 3 → AI & Automation
+    # Mistral variants
+    ("devstral alternative", "ai"),                 # Mistral Devstral code LLM → AI & Automation
+    ("magistral alternative", "ai"),                # Mistral Magistral reasoning model → AI & Automation
+    # DeepSeek variants
+    ("deepseek-r1 alternative", "ai"),              # DeepSeek-R1 reasoning model → AI & Automation
+    # Amazon Nova
+    ("amazon-nova alternative", "ai"),              # Amazon Nova family → AI & Automation
+    # AI agent frameworks (2026)
+    ("ag2 vs crewai", "ai"),                        # AG2/AutoGen v2 multi-agent → AI & Automation
+    ("beeai framework", "ai"),                      # IBM BeeAI agents → AI & Automation
+    ("strands agents", "ai"),                       # AWS Strands SDK → AI & Automation
+    ("spring-ai alternative", "ai"),                # Spring AI (Java LLM integration) → AI & Automation
+    # AI IDE tools (2026)
+    ("kiro alternative", "ai"),                     # Amazon Kiro AI IDE → AI & Automation
+    ("firebase-studio vs cursor", "ai"),            # Firebase Studio AI IDE → AI & Automation
+    # MCP Servers — tooling
+    ("mcp-inspector setup", "mcp"),                 # MCP Inspector debug tool → MCP Servers
+    ("mcpinspector debug", "mcp"),                  # MCP Inspector compound form → MCP Servers
+    # Caching
+    ("momento alternative", "caching"),             # Momento Cache serverless → Caching
+    # AI modality forms
+    ("text-to-speech api", "ai"),                   # TTS → AI & Automation (ElevenLabs, Coqui, Kokoro)
+    ("text-to-image model", "ai"),                  # T2I → AI & Automation (Stable Diffusion, Flux)
+    # Qwen3 (Alibaba, April 2026)
+    ("qwen3 alternative", "ai"),                    # Qwen3 → AI & Automation
 ]
 
 
