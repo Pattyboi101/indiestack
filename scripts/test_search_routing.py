@@ -397,6 +397,15 @@ TEST_CASES: list[tuple[str, str]] = [
     ("text-to-image model", "ai"),                  # T2I → AI & Automation (Stable Diffusion, Flux)
     # Qwen3 (Alibaba, April 2026)
     ("qwen3 alternative", "ai"),                    # Qwen3 → AI & Automation
+    # Rust-based JS/TS toolchain (2025-2026)
+    ("rspack bundler alternative", "frontend"),     # Rspack — Rust webpack-compat bundler → Frontend
+    ("swc transpiler setup", "frontend"),           # SWC — Rust JS/TS transpiler (Next.js) → Frontend
+    ("rolldown vite bundler", "frontend"),          # Rolldown — Rust Rollup replacement (Vite 6) → Frontend
+    ("oxc linter javascript", "frontend"),          # OXC — Oxidation Compiler Rust toolchain → Frontend
+    ("farm build tool alternative", "frontend"),    # Farm — Rust web build tool → Frontend
+    # JS runtimes (regression: bun/deno must NOT route to ai)
+    ("bun runtime alternative", "frontend"),        # Bun — JS runtime + bundler → Frontend
+    ("deno alternative nodejs", "frontend"),        # Deno 2 — secure JS/TS runtime → Frontend
 ]
 
 
