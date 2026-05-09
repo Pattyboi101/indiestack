@@ -7815,7 +7815,18 @@ async def search_tools(
     # For queries like "self hosted auth", the first meaningful term ("self") has no
     # synonym — scan all terms and prefer the first with a known synonym so "auth"
     # from "self hosted auth" gets the 100-point Authentication category boost.
-    _syn_term = next((t for t in _meaningful_for_cat if t in _CAT_SYNONYMS), None)
+    # Bigrams are checked before individual tokens at each position so that
+    # "load balancer" → devops wins over "load" → testing.
+    _syn_term = None
+    for _i, _tok in enumerate(_meaningful_for_cat):
+        if _i + 1 < len(_meaningful_for_cat):
+            _bigram = f"{_tok} {_meaningful_for_cat[_i + 1]}"
+            if _bigram in _CAT_SYNONYMS:
+                _syn_term = _bigram
+                break
+        if _tok in _CAT_SYNONYMS:
+            _syn_term = _tok
+            break
     if _syn_term:
         _cat_term = _CAT_SYNONYMS[_syn_term]
     else:
