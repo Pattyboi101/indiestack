@@ -75,7 +75,7 @@ def main():
 
     print(f"Parsed {len(entries)} _CAT_SYNONYMS entries from {DB_PATH.name}")
 
-    # ── 1. Duplicate keys ────────────────────────────────────────────────────────────────────────────────
+    # ── 1. Duplicate keys ────────────────────────────────────────────────────────────────────────────────────────────────────────────
     seen: dict[str, tuple[int, str]] = {}
     duplicates: list[tuple[int, str, str, int, str]] = []
     for lineno, key, value in entries:
@@ -95,7 +95,7 @@ def main():
     else:
         print("✅  No duplicate keys found.")
 
-    # ── 2. Invalid short-names ────────────────────────────────────────────────────────────────────────────
+    # ── 2. Invalid short-names ──────────────────────────────────────────────────────────────────────────────────────────────────────────
     invalid = [(lineno, key, value) for lineno, key, value in entries
                if value not in VALID_SHORT_NAMES]
     if invalid:
@@ -107,16 +107,15 @@ def main():
     else:
         print("✅  All short-names are valid.")
 
-    # ── 3. Coverage summary ─────────────────────────────────────────────────────────────────────────
+    # ── 3. Coverage summary ─────────────────────────────────────────────────────────────────────────────────────────
     counts = Counter(value for _, _, value in entries)
     print(f"\n📊  Coverage by category short-name ({len(counts)} distinct):")
     for name, count in sorted(counts.items(), key=lambda x: -x[1]):
         bar = "█" * min(count // 5, 40)
         print(f"  {name:20s} {count:4d}  {bar}")
 
-    # ── 4. 3-token keys (can never fire) ─────────────────────────────────────────────────────────
-    # The router builds 2-token bigrams from adjacent token pairs after stop-word
-    # filtering. Keys with 3+ space-separated tokens will never match any query.
+    # ── 4. Multi-token keys (can never fire — router only builds bigrams) ───────
+    # Keys with 3+ space-separated tokens will never match any query.
     multi_token = [(lineno, key, value) for lineno, key, value in entries
                    if len(key.split()) > 2]
     if multi_token:
@@ -126,10 +125,10 @@ def main():
     else:
         print("✅  No 3-token keys found.")
 
-    # ── Summary ───────────────────────────────────────────────────────────────────────────────────
+    # ── Summary ─────────────────────────────────────────────────────────────────────────
     print(f"\nTotal synonyms: {len(entries)}  |  Duplicates: {len(duplicates)}  |  "
           f"Suspect values: {len(invalid)}  |  3-token keys: {len(multi_token)}")
-    sys.exit(1 if duplicates or multi_token else 0)
+    sys.exit(1 if (duplicates or multi_token) else 0)
 
 
 if __name__ == "__main__":

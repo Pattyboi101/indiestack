@@ -60,7 +60,7 @@ def route_query(query: str) -> tuple[str, str]:
     return raw_cat, "raw_first"
 
 
-# ── Test cases ──────────────────────────────────────────────────────────────────────
+# ── Test cases ──────────────────────────────────────────────────────────────────────────────────────
 # Format: (query, expected_cat_term_fragment)
 # expected_cat_term_fragment must be a substring of the routed cat_term.
 # A query routing to "authentication" passes if expected is "auth" or "authentication".
@@ -421,6 +421,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("knowledge base chatbot", "ai"),               # bigram form → AI & Automation
     # Document QA — LLM document Q&A ("document" alone → database; bigram overrides)
     ("document qa tool", "ai"),                     # "document qa" bigram overrides "document"→database → AI & Automation
+    ("document q&a chatbot", "ai"),                 # ampersand variant → AI & Automation
 ]
 
 
