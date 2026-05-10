@@ -60,7 +60,7 @@ def route_query(query: str) -> tuple[str, str]:
     return raw_cat, "raw_first"
 
 
-# ── Test cases ────────────────────────────────────────────────────────────────
+# ── Test cases ──────────────────────────────────────────────────────────
 # Format: (query, expected_cat_term_fragment)
 # expected_cat_term_fragment must be a substring of the routed cat_term.
 # A query routing to "authentication" passes if expected is "auth" or "authentication".
@@ -118,6 +118,11 @@ TEST_CASES: list[tuple[str, str]] = [
     ("garak llm scanner", "ai standards"),
     ("lm-eval setup", "ai standards"),
     ("arc-agi benchmark", "ai standards"),
+    ("model evaluation framework", "ai standards"),  # bigram "model evaluation" → AI Standards & Specs
+    ("ai eval harness", "ai standards"),             # bigram "ai eval" → AI Standards & Specs
+    ("ai evals tool", "ai standards"),               # bigram "ai evals" → AI Standards & Specs
+    ("safety eval framework", "ai standards"),       # bigram "safety eval" → AI Standards & Specs
+    ("capability eval suite", "ai standards"),       # bigram "capability eval" → AI Standards & Specs
     # DevOps / Infra
     ("hosting deployment", "devops"),
     ("docker kubernetes", "devops"),
@@ -328,11 +333,6 @@ TEST_CASES: list[tuple[str, str]] = [
     ("mcp server sdk", "mcp"),                      # "mcp"→mcp routes MCP server queries
     ("llm evaluation harness", "ai standards"),     # bigram "llm evaluation" → AI Standards & Specs
     ("llm benchmark comparison", "ai standards"),   # bigram "llm benchmark" → AI Standards & Specs
-    ("model evaluation framework", "ai standards"), # bigram "model evaluation" → AI Standards & Specs
-    ("ai eval harness", "ai standards"),            # bigram "ai eval" → AI Standards & Specs
-    ("ai evals tool", "ai standards"),              # bigram "ai evals" → AI Standards & Specs
-    ("safety eval framework", "ai standards"),      # bigram "safety eval" → AI Standards & Specs
-    ("capability eval suite", "ai standards"),      # bigram "capability eval" → AI Standards & Specs
     # Angular state management libraries (added May 2026)
     ("ngrx state management", "frontend"),          # "ngrx" → frontend (Angular Redux-style state)
     ("ngxs angular store", "frontend"),             # "ngxs" → frontend (NGXS Angular state)
@@ -406,6 +406,21 @@ TEST_CASES: list[tuple[str, str]] = [
     # JS runtimes (regression: bun/deno must NOT route to ai)
     ("bun runtime alternative", "frontend"),        # Bun — JS runtime + bundler → Frontend
     ("deno alternative nodejs", "frontend"),        # Deno 2 — secure JS/TS runtime → Frontend
+    # LLM tool/function calling — AI paradigm for models invoking external tools
+    ("tool calling api", "ai"),                     # "tool" is stop word → "calling"→ai → AI & Automation
+    ("function calling openai", "ai"),              # "function calling" bigram → AI & Automation
+    ("function calling alternative", "ai"),         # bigram form → AI & Automation
+    # AI proxy — LLM proxy/gateway tools (LiteLLM, Portkey) must NOT route to devops
+    ("ai proxy litellm", "ai"),                     # "ai proxy" bigram overrides "proxy"→devops → AI & Automation
+    ("ai proxy server alternative", "ai"),          # bigram fires before "proxy" single token → AI & Automation
+    # LLM token queries — "token" alone → authentication; bigrams route to AI & Automation
+    ("token limit gpt4", "ai"),                     # "token limit" bigram overrides "token"→auth → AI & Automation
+    ("token pricing openai", "ai"),                 # "token pricing" bigram overrides "token"→auth → AI & Automation
+    # Knowledge base — RAG / vector knowledge base queries (previously raw_first → unrouted)
+    ("knowledge base llm", "ai"),                   # "knowledge base" bigram → AI & Automation
+    ("knowledge base chatbot", "ai"),               # bigram form → AI & Automation
+    # Document QA — LLM document Q&A ("document" alone → database; bigram overrides)
+    ("document qa tool", "ai"),                     # "document qa" bigram overrides "document"→database → AI & Automation
 ]
 
 
