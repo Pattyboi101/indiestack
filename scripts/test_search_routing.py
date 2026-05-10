@@ -422,6 +422,17 @@ TEST_CASES: list[tuple[str, str]] = [
     # Document QA — LLM document Q&A ("document" alone → database; bigram overrides)
     ("document qa tool", "ai"),                     # "document qa" bigram overrides "document"→database → AI & Automation
     ("document q&a chatbot", "ai"),                 # ampersand variant → AI & Automation
+    # Search quality additions (May 2026 — 146th pass)
+    # Server-Sent Events — long-form "server sent" bigram (sse→api was already mapped)
+    ("server sent events library", "api"),          # "server sent" bigram → API Tools
+    ("server-sent events nodejs", "api"),           # hyphenated → API Tools
+    # Hypermedia — HTMX/Hotwire pattern (unmapped before this pass)
+    ("hypermedia api framework", "frontend"),       # "hypermedia" → Frontend Frameworks
+    # Connection string — DB config queries (unmapped before this pass)
+    ("connection string postgres", "database"),     # "connection" → Database
+    # Streaming LLM — fix "streaming"→media collision for AI streaming queries
+    ("streaming llm response", "ai"),               # "streaming llm" bigram → AI & Automation
+    ("llm streaming library", "ai"),                # "llm streaming" bigram → AI & Automation
 ]
 
 
