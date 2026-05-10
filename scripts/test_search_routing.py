@@ -60,7 +60,7 @@ def route_query(query: str) -> tuple[str, str]:
     return raw_cat, "raw_first"
 
 
-# ── Test cases ──────────────────────────────────────────────────────────────────────────────────────
+# ── Test cases ───────────────────────────────────────────────────────────────────────────────────────
 # Format: (query, expected_cat_term_fragment)
 # expected_cat_term_fragment must be a substring of the routed cat_term.
 # A query routing to "authentication" passes if expected is "auth" or "authentication".
