@@ -7595,6 +7595,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gpt4o-mini": "ai",                 # "gpt4o-mini alternative", "gpt4o-mini api", "gpt4o-mini vs claude-haiku" → AI & Automation
     "gpt-4o-mini": "ai",               # hyphenated — "gpt-4o-mini alternative", "gpt-4o-mini pricing" → AI & Automation
     "gpt4omini": "ai",                  # compact — "gpt4omini setup", "gpt4omini alternative" → AI & Automation
+    # LLM tool/function calling — AI API paradigm (OpenAI, Claude, Gemini tool_use)
+    # "tool" is a stop word, so "tool calling api" → _meaningful = ["calling", "api"] → "calling"→ai wins
+    "calling": "ai",                # "tool calling", "function calling" (tool stripped) → AI & Automation
+    "function calling": "ai",       # bigram — "function calling openai", "function calling spec" → AI & Automation
+    # AI proxy / gateway queries — "ai" is not a stop word; bigram fires before "proxy"→devops
+    "ai proxy": "ai",               # bigram — "ai proxy litellm", "ai proxy server alternative" → AI & Automation
+    # LLM token economics — bigram overrides "token"→authentication for pricing/limit queries
+    "token limit": "ai",            # bigram — "token limit gpt4", "token limit per request" → AI & Automation
+    "token pricing": "ai",          # bigram — "token pricing openai", "token pricing comparison" → AI & Automation
+    # Document Q&A — RAG retrieval pattern; bigram overrides "document"→database
+    "document qa": "ai",            # bigram — "document qa tool", "document qa chatbot" → AI & Automation
+    "document q&a": "ai",           # ampersand variant — "document q&a chatbot" → AI & Automation
+    # Server-Sent Events — SSE → API Tools (sse→api already mapped; add long-form variants)
+    "server sent": "api",           # bigram — "server sent events library" → API Tools
+    "server-sent": "api",           # hyphenated token — "server-sent events nodejs" → API Tools
+    # Hypermedia — HTMX and hypermedia-driven apps live in Frontend Frameworks
+    "hypermedia": "frontend",       # "hypermedia api framework", "hypermedia client" → Frontend Frameworks
+    # LLM streaming output — bigram fires before "streaming"→media
+    "streaming llm": "ai",          # bigram — "streaming llm response", "streaming llm output" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
