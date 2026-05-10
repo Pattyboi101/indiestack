@@ -6613,8 +6613,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "load balancer": "devops",     # "load balancer setup", "load balancer alternative" → DevOps & Infrastructure
     "load balancing": "devops",    # "load balancing tool", "load balancing software" → DevOps & Infrastructure
     "load-balancing": "devops",    # hyphenated — "load-balancing solution", "load-balancing nginx" → DevOps
-    # Search — full text search multi-word (no hyphen/compound) form
-    "full text search": "search",  # "full text search engine", "full text search library" → Search Engines
+    # Search — "full-text" hyphenated form ("full text search" was a dead 3-token key; replaced May 2026)
+    "full-text": "search",          # "full-text search engine", "full-text index" → Search Engines
     # Testing — hyphenated form of typecheck (compound forms mapped; dashed form wasn't)
     "type-check": "testing",       # "type-check script", "type-check ci", "type-check alternative" → Testing Tools
     # Frontend — code-splitting hyphenated form (complement to "splitting"→frontend already mapped)
@@ -7595,6 +7595,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gpt4o-mini": "ai",                 # "gpt4o-mini alternative", "gpt4o-mini api", "gpt4o-mini vs claude-haiku" → AI & Automation
     "gpt-4o-mini": "ai",               # hyphenated — "gpt-4o-mini alternative", "gpt-4o-mini pricing" → AI & Automation
     "gpt4omini": "ai",                  # compact — "gpt4omini setup", "gpt4omini alternative" → AI & Automation
+    # AI — LLM tool/function calling; "tool" is a stop word so "tool calling" tokenises to ["calling"]
+    # "function calling" bigram fires directly since "function" is not a stop word
+    "calling": "ai",                    # single token — "tool calling" strips "tool" (stop word) → "calling" → AI & Automation
+    "function calling": "ai",           # bigram — "function calling openai", "function calling alternative" → AI & Automation
+    # AI — "ai proxy" bigram overrides "proxy" → devops
+    # AI proxy tools (LiteLLM, Portkey, OpenRouter) are AI infrastructure, not network/DevOps proxies
+    "ai proxy": "ai",                   # bigram — "ai proxy litellm", "ai proxy server", "ai proxy alternative" → AI & Automation
+    # NOTE: "ai load balancer" (3 tokens) cannot be a bigram key; "llm load balancer" already routes to ai via "llm"
+    # AI — token limit / token pricing bigrams override "token" → authentication
+    # "token" alone correctly routes JWT/API token queries to auth; bigrams catch LLM-specific token queries
+    "token limit": "ai",                # bigram — "token limit per request", "token limit gpt4", "token limit api" → AI & Automation
+    "token pricing": "ai",              # bigram — "token pricing openai", "token pricing comparison" → AI & Automation
+    # AI — knowledge base bigram for RAG / vector knowledge base queries
+    # "knowledge" has no single-token mapping → falls to raw_first; "knowledge base" is common RAG query
+    "knowledge base": "ai",             # bigram — "knowledge base llm", "knowledge base rag", "knowledge base chatbot" → AI & Automation
+    # AI — "document qa" bigram overrides "document" → database
+    # "document" alone correctly routes document database (MongoDB) queries; "document qa" is LLM Q&A
+    "document qa": "ai",                # bigram — "document qa llm", "document qa python", "document qa tool" → AI & Automation
+    "document q&a": "ai",              # variant — "document q&a tool", "document q&a chatbot" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
