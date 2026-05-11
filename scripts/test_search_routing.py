@@ -189,6 +189,11 @@ TEST_CASES: list[tuple[str, str]] = [
     # LLM cache bigrams (bigram lookup added db.py pass 170)
     ("semantic cache llm", "caching"),
     ("llm cache layer", "caching"),
+    # Full text search — bigrams replacing dead 3-token "full text search" key
+    ("full text search engine", "search"),          # "full text" bigram → Search Engines
+    ("full text indexing library", "search"),       # "full text" bigram → Search Engines
+    ("text search api", "search"),                  # "text search" bigram → Search Engines
+    ("text search library", "search"),              # "text search" bigram → Search Engines
 ]
 
 

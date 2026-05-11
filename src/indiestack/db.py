@@ -2742,6 +2742,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "faceted": "search",
     "indexing": "search",
     "fulltext": "search",
+    "full text": "search",         # bigram — "full text search engine", "full text indexing" → Search Engines
+    "text search": "search",       # bigram — "text search library", "text search api" → Search Engines
     # CMS
     "contentful": "cms",
     "strapi": "cms",
@@ -2847,7 +2849,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "state": "frontend",
     "manager": "frontend",     # "state manager" → "state" or "manager" both map to frontend
     "bundler": "frontend",
-    "build": "frontend",           # "build tool" → first term "build" → frontend-frameworks
+    # NOTE: "build" is in _FTS_STOP_WORDS — "build tool" queries route via "bundler" or specific
+    # tool names (vite, esbuild, webpack) after stop-word stripping.
     "vite": "frontend",
     # CSS frameworks/libraries
     "css": "frontend",
@@ -4260,8 +4263,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "webcomponents": "frontend",    # plural — "web components standard", "custom elements" → Frontend Frameworks
     "custom-element": "frontend",   # "custom element", "custom elements API" → Frontend Frameworks (Lit, FAST)
     "custom-elements": "frontend",  # plural form — Web Components Custom Elements spec
-    # Testing — integration tests (complement to e2e, unit, bdd, coverage already mapped)
-    "integration": "testing",       # "integration test", "integration testing library" → Testing Tools
+    # Testing — integration tests route via "test"/"testing" after stop-word strip.
+    # NOTE: "integration" is in _FTS_STOP_WORDS — never fires as synonym key. Removed.
     # Database — time-series databases not individually mapped
     "influxdb": "database",         # InfluxDB — most popular open-source time-series database (28k★)
     "questdb": "database",          # QuestDB — fast SQL time-series database (14k★)
@@ -5355,9 +5358,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sglang": "ai",                 # SGLang — fast structured LLM serving runtime (lm-sys/sglang, 13k★) → AI & Automation
     # AI — TruLens LLM application evaluation with feedback functions
     "trulens": "ai",                # TruLens — LLM app evaluation with feedback functions (3k★) → AI & Automation
-    # AI — EleutherAI lm-evaluation-harness (canonical open LLM benchmark runner)
-    "lm-eval": "ai",                # lm-eval — EleutherAI LM evaluation harness; "lm-eval alternative" → AI & Automation
-    "lmeval": "ai",                 # compound form — "lmeval benchmarks", "lmeval harness" → AI & Automation
+    # AI — EleutherAI lm-evaluation-harness routes to "standard" (AI Standards & Specs category)
+    # NOTE: "lm-eval" and "lmeval" are defined later in the ai-standards section → do NOT add here
     # Node.js runtime — common query prefix for framework/server/backend queries
     # "node" and "nodejs" are in _FRAMEWORK_QUERY_TERMS for frameworks_tested filter,
     # but NOT in _CAT_SYNONYMS, so they get no category boost. Adding here so
