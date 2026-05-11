@@ -2742,6 +2742,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "faceted": "search",
     "indexing": "search",
     "fulltext": "search",
+    "full-text": "search",         # hyphenated — "full-text search", "full-text index" → Search Engines
+    "full text": "search",         # bigram — "full text search engine", "full text library" → Search Engines
     # CMS
     "contentful": "cms",
     "strapi": "cms",
@@ -5355,9 +5357,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sglang": "ai",                 # SGLang — fast structured LLM serving runtime (lm-sys/sglang, 13k★) → AI & Automation
     # AI — TruLens LLM application evaluation with feedback functions
     "trulens": "ai",                # TruLens — LLM app evaluation with feedback functions (3k★) → AI & Automation
-    # AI — EleutherAI lm-evaluation-harness (canonical open LLM benchmark runner)
-    "lm-eval": "ai",                # lm-eval — EleutherAI LM evaluation harness; "lm-eval alternative" → AI & Automation
-    "lmeval": "ai",                 # compound form — "lmeval benchmarks", "lmeval harness" → AI & Automation
     # Node.js runtime — common query prefix for framework/server/backend queries
     # "node" and "nodejs" are in _FRAMEWORK_QUERY_TERMS for frameworks_tested filter,
     # but NOT in _CAT_SYNONYMS, so they get no category boost. Adding here so
@@ -6026,6 +6025,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "helpscout": "customer",       # Help Scout — "helpscout alternative", "help scout email support" → Customer Support
     "kayako": "customer",          # Kayako — "kayako alternative", "kayako helpdesk" → Customer Support
     "freshchat": "customer",       # Freshchat — Freshworks live chat; "freshchat alternative" → Customer Support
+    "tidio": "customer",           # Tidio — live chat + chatbot combo; "tidio alternative" → Customer Support
+    "papercups": "customer",       # Papercups — open-source Intercom; "papercups alternative" → Customer Support
+    "reamaze": "customer",         # Re:amaze — e-commerce support; "reamaze alternative" → Customer Support
+    "drift": "customer",           # Drift — conversational support/marketing; "drift alternative" → Customer Support
+    "hiver": "support",            # Hiver — Gmail-based shared inbox helpdesk; "hiver alternative" → Customer Support
+    "zammad": "support",           # Zammad — open-source helpdesk; "zammad alternative" → Customer Support
+    "osticket": "support",         # osTicket — open-source ticketing; "osticket alternative" → Customer Support
     # Landing Pages — thinnest category (4 entries); adding link-in-bio + indie builders
     "linktree": "landing",         # Linktree — "linktree alternative", "link in bio page" → Landing Pages
     "linkinbio": "landing",        # compound — "linkinbio tool", "link-in-bio builder" → Landing Pages
@@ -6518,6 +6524,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI Standards — ARC-AGI reasoning benchmark (Abstraction and Reasoning Corpus; François Chollet)
     "arc-agi": "standard",          # "arc-agi benchmark", "arc-agi score" → AI Standards & Specs
     "arcagi": "standard",           # compact — "arcagi alternative", "arcagi leaderboard" → AI Standards & Specs
+    # AI Standards — additional bigrams missing from single-token entries above
+    "ai benchmark": "standard",     # bigram — "ai benchmark tool", "ai benchmark suite" → AI Standards & Specs
+    "red teaming": "standard",      # bigram — "red teaming framework", "red teaming llm" → AI Standards & Specs
+    "model comparison": "standard", # bigram — "model comparison leaderboard", "model comparison tool" → AI Standards
+    "hallucination": "standard",    # "hallucination test", "hallucination benchmark", "detect hallucination" → AI Standards
+    "hallucinations": "standard",   # plural — "llm hallucinations tool", "detect hallucinations" → AI Standards & Specs
     # Social Media — standalone "social" term (prevents "social media scheduling" routing to media→file)
     "social": "social",             # "social media tool", "social scheduler" → Social Media
     # AI — newer LLM/agent brand terms missing from earlier passes
