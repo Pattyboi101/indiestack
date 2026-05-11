@@ -23,7 +23,7 @@ def get_category_id(slug: str) -> int | None:
 
 
 TOOLS = [
-    # ── Frontend Frameworks ───────────────────────────────────────────
+    # ── Frontend Frameworks ───────────────────────────────────────────────
     {
         "name": "React",
         "slug": "react",
@@ -120,7 +120,7 @@ TOOLS = [
         "tags": "bundler,build-tool,fast,go,javascript,esbuild",
         "source_type": "code",
     },
-    # ── Caching ───────────────────────────────────────────────────────
+    # ── Caching ────────────────────────────────────────────────────
     {
         "name": "Upstash",
         "slug": "upstash",
@@ -133,7 +133,7 @@ TOOLS = [
         "tags": "redis,serverless,caching,kafka,edge",
         "source_type": "saas",
     },
-    # ── Email ─────────────────────────────────────────────────────────
+    # ── Email ───────────────────────────────────────────────────────────
     {
         "name": "Resend",
         "slug": "resend",
@@ -146,7 +146,7 @@ TOOLS = [
         "tags": "email,transactional,react,developer,smtp",
         "source_type": "saas",
     },
-    # ── Frontend Frameworks (additional) ─────────────────────────────
+    # ── Frontend Frameworks (additional) ─────────────────────────────────
     {
         "name": "Vite",
         "slug": "vite",
@@ -195,7 +195,7 @@ TOOLS = [
         "tags": "react,components,accessibility,unstyled,design-system,ui",
         "source_type": "code",
     },
-    # ── Animation Libraries ───────────────────────────────────────────
+    # ── Animation Libraries ───────────────────────────────────────────────
     {
         "name": "Framer Motion",
         "slug": "framer-motion",
@@ -220,7 +220,7 @@ TOOLS = [
         "tags": "animation,javascript,gsap,motion,svg,frontend",
         "source_type": "code",
     },
-    # ── Icon Libraries ────────────────────────────────────────────────
+    # ── Icon Libraries ────────────────────────────────────────────────────
     {
         "name": "Lucide Icons",
         "slug": "lucide-icons",
@@ -245,7 +245,7 @@ TOOLS = [
         "tags": "icons,svg,tailwind,react,components,frontend",
         "source_type": "code",
     },
-    # ── Internationalisation ──────────────────────────────────────────
+    # ── Internationalisation ───────────────────────────────────────────────
     {
         "name": "next-intl",
         "slug": "next-intl",
@@ -270,7 +270,7 @@ TOOLS = [
         "tags": "i18n,localization,javascript,internationalization,translations",
         "source_type": "code",
     },
-    # ── Workflow Automation ───────────────────────────────────────────
+    # ── Workflow Automation ───────────────────────────────────────────────
     {
         "name": "n8n",
         "slug": "n8n",
@@ -283,7 +283,7 @@ TOOLS = [
         "tags": "workflow,automation,no-code,self-hosted,integrations,zapier-alternative",
         "source_type": "code",
     },
-    # ── ORMs & Validation ────────────────────────────────────────────
+    # ── ORMs & Validation ────────────────────────────────────────────────
     {
         "name": "Prisma",
         "slug": "prisma",
@@ -332,7 +332,7 @@ TOOLS = [
         "tags": "typescript,api,rpc,nextjs,react,fullstack,type-safe",
         "source_type": "code",
     },
-    # ── Runtimes ─────────────────────────────────────────────────────
+    # ── Runtimes ───────────────────────────────────────────────────────────
     {
         "name": "Bun",
         "slug": "bun",
@@ -345,7 +345,7 @@ TOOLS = [
         "tags": "runtime,bundler,javascript,typescript,fast,nodejs-alternative",
         "source_type": "code",
     },
-    # ── API Frameworks ───────────────────────────────────────────────
+    # ── API Frameworks ───────────────────────────────────────────────────────
     {
         "name": "Hono",
         "slug": "hono",
@@ -358,7 +358,7 @@ TOOLS = [
         "tags": "web-framework,edge,cloudflare,deno,bun,typescript,nodejs,serverless",
         "source_type": "code",
     },
-    # ── Headless CMS ─────────────────────────────────────────────────
+    # ── Headless CMS ────────────────────────────────────────────────────────
     {
         "name": "Payload CMS",
         "slug": "payload-cms",
@@ -371,7 +371,7 @@ TOOLS = [
         "tags": "cms,typescript,nodejs,rest,graphql,self-hosted,headless",
         "source_type": "code",
     },
-    # ── Frontend Frameworks (meta-frameworks) ────────────────────────
+    # ── Frontend Frameworks (meta-frameworks) ───────────────────────────────
     {
         "name": "Astro",
         "slug": "astro",
@@ -396,7 +396,7 @@ TOOLS = [
         "tags": "vue,ssr,ssg,fullstack,typescript,frontend",
         "source_type": "code",
     },
-    # ── Authentication ────────────────────────────────────────────────
+    # ── Authentication ────────────────────────────────────────────────────────
     {
         "name": "Lucia",
         "slug": "lucia",
@@ -409,7 +409,7 @@ TOOLS = [
         "tags": "auth,sessions,oauth,typescript,self-hosted,sveltekit,nextjs",
         "source_type": "code",
     },
-    # ── Background Jobs ───────────────────────────────────────────────
+    # ── Background Jobs ─────────────────────────────────────────────────────
     {
         "name": "Temporal",
         "slug": "temporalio",
@@ -422,7 +422,7 @@ TOOLS = [
         "tags": "workflow,durable-execution,saga,background-jobs,orchestration,typescript,go",
         "source_type": "code",
     },
-    # ── Maps & Location ───────────────────────────────────────────────
+    # ── Maps & Location ─────────────────────────────────────────────────────
     {
         "name": "Leaflet",
         "slug": "leaflet",
@@ -435,7 +435,7 @@ TOOLS = [
         "tags": "maps,leaflet,geospatial,javascript,open-source",
         "source_type": "code",
     },
-    # ── API Tools ─────────────────────────────────────────────────────
+    # ── API Tools ───────────────────────────────────────────────────────────
     {
         "name": "Bruno",
         "slug": "bruno",
@@ -460,7 +460,7 @@ TOOLS = [
         "tags": "api,testing,rest,graphql,grpc,client,postman-alternative",
         "source_type": "code",
     },
-    # ── Database ──────────────────────────────────────────────────────
+    # ── Database ────────────────────────────────────────────────────────────
     {
         "name": "Atlas",
         "slug": "atlas",
@@ -485,7 +485,7 @@ TOOLS = [
         "tags": "react,routing,spa,frontend,remix,typescript",
         "source_type": "code",
     },
-    # ── AI & Automation ───────────────────────────────────────────────
+    # ── AI & Automation ─────────────────────────────────────────────────────
     {
         "name": "Tesseract.js",
         "slug": "tesseract-js",
@@ -498,7 +498,7 @@ TOOLS = [
         "tags": "ocr,javascript,wasm,browser,nodejs,ai,text-recognition",
         "source_type": "code",
     },
-    # ── Background Jobs (additional) ─────────────────────────────────
+    # ── Background Jobs (additional) ─────────────────────────────────────────
     {
         "name": "BullMQ",
         "slug": "bullmq",
@@ -511,7 +511,7 @@ TOOLS = [
         "tags": "queue,redis,nodejs,jobs,worker,typescript",
         "source_type": "code",
     },
-    # ── Frontend Frameworks (UI component system) ─────────────────────
+    # ── Frontend Frameworks (UI component system) ─────────────────────────────
     {
         "name": "shadcn/ui",
         "slug": "shadcn-ui",
@@ -524,7 +524,7 @@ TOOLS = [
         "tags": "react,ui,tailwindcss,radix,components,design-system,typescript",
         "source_type": "code",
     },
-    # ── Authentication ─────────────────────────────────────────────────
+    # ── Authentication ─────────────────────────────────────────────────────────
     {
         "name": "Better Auth",
         "slug": "better-auth",
@@ -537,7 +537,7 @@ TOOLS = [
         "tags": "auth,typescript,oauth,passkeys,2fa,nextjs,sveltekit,sessions",
         "source_type": "code",
     },
-    # ── AI & Automation ────────────────────────────────────────────────
+    # ── AI & Automation ──────────────────────────────────────────────────────
     {
         "name": "Mastra",
         "slug": "mastra",
@@ -562,7 +562,7 @@ TOOLS = [
         "tags": "ollama,llm,chat,local-ai,self-hosted,rag,multimodal,openai",
         "source_type": "code",
     },
-    # ── API Tools ─────────────────────────────────────────────────────
+    # ── API Tools ───────────────────────────────────────────────────────────
     {
         "name": "Encore",
         "slug": "encore",
@@ -599,7 +599,7 @@ TOOLS = [
         "tags": "serverless,gpu,python,ml,ai,inference,compute,cloud,llm",
         "source_type": "saas",
     },
-    # ── Authentication ────────────────────────────────────────────────
+    # ── Authentication ────────────────────────────────────────────────────────
     {
         "name": "Stytch",
         "slug": "stytch",
@@ -624,7 +624,7 @@ TOOLS = [
         "tags": "sso,saml,scim,enterprise,b2b,directory-sync,audit-logs,okta-alternative",
         "source_type": "saas",
     },
-    # ── Developer Tools ───────────────────────────────────────────────
+    # ── Developer Tools ─────────────────────────────────────────────────────
     {
         "name": "Biome",
         "slug": "biome",
@@ -649,7 +649,93 @@ TOOLS = [
         "tags": "linter,javascript,typescript,eslint-alternative,rust,fast,monorepo",
         "source_type": "code",
     },
-    # ── AI & Automation — 138th pass ─────────────────────────────────
+    # ── MCP Servers ───────────────────────────────────────────────────────────
+    {
+        "name": "Playwright MCP",
+        "slug": "playwright-mcp",
+        "tagline": "Browser automation MCP server powered by Playwright",
+        "description": "Official Microsoft MCP server that gives AI agents full browser automation via Playwright. Agents can navigate pages, click elements, fill forms, take screenshots, and scrape content without writing Playwright code directly. Supports Chromium, Firefox, and WebKit. Ideal for testing workflows, web research agents, and automated form filling inside Claude, Cursor, or any MCP-compatible AI environment.",
+        "url": "https://github.com/microsoft/playwright-mcp",
+        "github_url": "https://github.com/microsoft/playwright-mcp",
+        "github_stars": 12000,
+        "category_slug": "mcp-servers",
+        "tags": "mcp,browser,automation,playwright,scraping,testing",
+        "source_type": "code",
+    },
+    {
+        "name": "Filesystem MCP",
+        "slug": "filesystem-mcp",
+        "tagline": "Secure local filesystem access for AI agents via MCP",
+        "description": "Official Anthropic MCP server providing AI agents with controlled read/write access to the local filesystem. Agents can list directories, read files, write files, and move content within a sandboxed root path. Ships with the official MCP SDK and is the reference implementation for filesystem tools. Used in Claude Desktop, Cursor, and custom MCP hosts as the foundation for local code editing and file management workflows.",
+        "url": "https://github.com/modelcontextprotocol/servers",
+        "github_url": "https://github.com/modelcontextprotocol/servers",
+        "github_stars": 47000,
+        "category_slug": "mcp-servers",
+        "tags": "mcp,filesystem,files,anthropic,official,local",
+        "source_type": "code",
+    },
+    {
+        "name": "Fetch MCP",
+        "slug": "fetch-mcp",
+        "tagline": "Web fetch and HTML-to-Markdown conversion MCP server",
+        "description": "Official Anthropic MCP server that gives AI agents the ability to fetch any public URL and receive the page content as clean Markdown. Handles JavaScript-rendered pages via headless Chrome, converts HTML to structured Markdown, and strips nav/footer boilerplate. Standard tool for research agents, documentation scrapers, and any workflow that needs live web content inside Claude or a custom MCP host.",
+        "url": "https://github.com/modelcontextprotocol/servers",
+        "github_url": "https://github.com/modelcontextprotocol/servers",
+        "github_stars": 47000,
+        "category_slug": "mcp-servers",
+        "tags": "mcp,fetch,web,scraping,markdown,anthropic,official",
+        "source_type": "code",
+    },
+    {
+        "name": "MCP SQLite",
+        "slug": "mcp-sqlite",
+        "tagline": "SQLite database access and analysis tool for AI agents",
+        "description": "Official Anthropic MCP server that gives AI agents direct read/write access to SQLite databases. Agents can run SQL queries, inspect schemas, insert rows, and analyse data without leaving the conversation. Ships as a reference MCP server implementation alongside the filesystem and fetch servers. Useful for data analysis workflows, local app debugging, and any scenario where an agent needs to query a local or embedded database.",
+        "url": "https://github.com/modelcontextprotocol/servers",
+        "github_url": "https://github.com/modelcontextprotocol/servers",
+        "github_stars": 47000,
+        "category_slug": "mcp-servers",
+        "tags": "mcp,sqlite,database,sql,anthropic,official",
+        "source_type": "code",
+    },
+    # ── Boilerplates & Starters ────────────────────────────────────────────────
+    {
+        "name": "create-t3-app",
+        "slug": "create-t3-app",
+        "tagline": "The best way to start a full-stack, typesafe Next.js app",
+        "description": "create-t3-app scaffolds a Next.js application with the T3 Stack: TypeScript, tRPC, Tailwind CSS, Prisma, and NextAuth.js. Each piece is optional — you pick what you need, and the CLI wires them together correctly. Powers the T3 Stack community, which has become the default starting point for type-safe Next.js SaaS apps. Over 24k GitHub stars. Strongly opinionated about end-to-end type safety and minimal abstraction.",
+        "url": "https://create.t3.gg",
+        "github_url": "https://github.com/t3-oss/create-t3-app",
+        "github_stars": 24000,
+        "category_slug": "boilerplates",
+        "tags": "nextjs,typescript,trpc,tailwind,prisma,nextauth,t3,saas",
+        "source_type": "code",
+    },
+    {
+        "name": "Makerkit",
+        "slug": "makerkit",
+        "tagline": "SaaS boilerplate for Next.js and Supabase",
+        "description": "Makerkit is a production-ready SaaS starter kit built on Next.js 14, Supabase, Stripe, and Tailwind CSS. Ships with multi-tenancy (teams + members), authentication, billing, blog, dark mode, and email. Designed for indie hackers and small teams who want to skip the plumbing and start building their product logic on day one. Fully open-source with a permissive license.",
+        "url": "https://makerkit.dev",
+        "github_url": "https://github.com/makerkit/next-supabase-saas-kit",
+        "github_stars": 4200,
+        "category_slug": "boilerplates",
+        "tags": "nextjs,supabase,stripe,tailwind,saas,multi-tenancy,typescript",
+        "source_type": "code",
+    },
+    {
+        "name": "SaasRock",
+        "slug": "saasrock",
+        "tagline": "Enterprise SaaS boilerplate built on Remix and Prisma",
+        "description": "SaasRock is an open-source SaaS boilerplate built with Remix, Prisma, Tailwind CSS, and Stripe. Includes multi-tenancy, role-based access control, admin panel, onboarding flows, billing, blog, and REST API. The Remix-based alternative to T3 Stack for teams that prefer server-rendered apps over client-side routing. Active community with regular updates.",
+        "url": "https://saasrock.com",
+        "github_url": "https://github.com/saasrock/saasrock",
+        "github_stars": 2100,
+        "category_slug": "boilerplates",
+        "tags": "remix,prisma,tailwind,stripe,saas,multi-tenancy,rbac",
+        "source_type": "code",
+    },
+    # ── AI & Automation — 138th pass ───────────────────────────────────────────────
     {
         "name": "Cognee",
         "slug": "cognee",
