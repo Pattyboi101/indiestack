@@ -5967,6 +5967,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "helpscout": "customer",       # Help Scout — "helpscout alternative", "help scout email support" → Customer Support
     "kayako": "customer",          # Kayako — "kayako alternative", "kayako helpdesk" → Customer Support
     "freshchat": "customer",       # Freshchat — Freshworks live chat; "freshchat alternative" → Customer Support
+    "tidio": "customer",           # Tidio — live chat + chatbot combo; "tidio alternative" → Customer Support
+    "papercups": "customer",       # Papercups — open-source Intercom; "papercups alternative" → Customer Support
+    "reamaze": "customer",         # Re:amaze — e-commerce support; "reamaze alternative" → Customer Support
+    "drift": "customer",           # Drift — conversational support/marketing; "drift alternative" → Customer Support
+    "hiver": "support",            # Hiver — Gmail-based shared inbox helpdesk; "hiver alternative" → Customer Support
+    "zammad": "support",           # Zammad — open-source helpdesk; "zammad alternative" → Customer Support
+    "osticket": "support",         # osTicket — open-source ticketing; "osticket alternative" → Customer Support
     # Landing Pages — thinnest category (4 entries); adding link-in-bio + indie builders
     "linktree": "landing",         # Linktree — "linktree alternative", "link in bio page" → Landing Pages
     "linkinbio": "landing",        # compound — "linkinbio tool", "link-in-bio builder" → Landing Pages
