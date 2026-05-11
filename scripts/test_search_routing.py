@@ -439,6 +439,11 @@ TEST_CASES: list[tuple[str, str]] = [
     ("go-feature-flag alternative", "feature"),     # "go-feature-flag" → Feature Flags (specific Go library)
     ("payroll api open source", "invoicing"),       # "payroll" → Invoicing & Billing
     ("article generation api", "ai"),               # "article generation" bigram → AI & Automation
+    # AI Standards & Benchmarks — new bigrams (added May 2026)
+    ("ai benchmark tool", "ai standards"),          # "ai benchmark" bigram → AI Standards & Specs
+    ("red teaming framework llm", "ai standards"),  # "red teaming" bigram → AI Standards & Specs
+    ("model comparison leaderboard", "ai standards"),  # "model comparison" bigram → AI Standards & Specs
+    ("hallucination benchmark open source", "ai standards"),  # "hallucination" → AI Standards & Specs
 ]
 
 
