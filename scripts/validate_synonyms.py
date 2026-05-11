@@ -9,6 +9,9 @@ Checks:
 2. Coverage summary — count of synonyms per category short-name so thin areas
    are visible at a glance.
 3. Invalid short-names — values that don't correspond to a known category alias.
+4. Multi-token keys (3+) — router only builds bigrams; 3-token keys can never fire.
+5. Stop-word keys — single-token keys that are also in _FTS_STOP_WORDS can never
+   fire because stop words are filtered before synonym lookup.
 
 Usage:
     python3 scripts/validate_synonyms.py
@@ -125,10 +128,30 @@ def main():
     else:
         print("✅  No 3-token keys found.")
 
+    # ── 5. Stop-word keys (can never fire — filtered before synonym lookup) ─────────────────────────
+    # Extract _FTS_STOP_WORDS from db.py source
+    import re as _re
+    stop_match = _re.search(r'_FTS_STOP_WORDS = \{(.*?)\}', db_text, _re.DOTALL)
+    stop_words: set[str] = set()
+    if stop_match:
+        stop_words = set(_re.findall(r"'([^'\s][^']*[^'\s]|[^'\s])'", stop_match.group(1)))
+        stop_words = {w for w in stop_words if ' ' not in w}  # single words only
+    stop_key_conflicts = [
+        (lineno, key, value) for lineno, key, value in entries
+        if ' ' not in key and key in stop_words
+    ]
+    if stop_key_conflicts:
+        print(f"\n⚠️  STOP-WORD KEYS (will never fire — filtered before lookup) ({len(stop_key_conflicts)} found):")
+        for lineno, key, value in stop_key_conflicts:
+            print(f"  Line {lineno:5d}: \"{key}\" → \"{value}\"  ('{key}' is in _FTS_STOP_WORDS)")
+        print("  Fix: remove the synonym entry; the stop-word is stripped before routing.")
+    else:
+        print("✅  No stop-word keys found.")
+
     # ── Summary ──────────────────────────────────────────────────────────────────────────────────────
     print(f"\nTotal synonyms: {len(entries)}  |  Duplicates: {len(duplicates)}  |  "
-          f"Suspect values: {len(invalid)}  |  3-token keys: {len(multi_token)}")
-    sys.exit(1 if (duplicates or multi_token) else 0)
+          f"Suspect values: {len(invalid)}  |  3-token keys: {len(multi_token)}  |  Stop-word keys: {len(stop_key_conflicts)}")
+    sys.exit(1 if (duplicates or multi_token or stop_key_conflicts) else 0)
 
 
 if __name__ == "__main__":

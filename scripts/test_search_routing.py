@@ -433,6 +433,11 @@ TEST_CASES: list[tuple[str, str]] = [
     # Streaming LLM — fix "streaming"→media collision for AI streaming queries
     ("streaming llm response", "ai"),               # "streaming llm" bigram → AI & Automation
     ("llm streaming library", "ai"),                # "llm streaming" bigram → AI & Automation
+    # Full text search — bigrams replacing dead 3-token "full text search" key (May 2026)
+    ("full text search engine", "search"),          # "full text" bigram → Search Engines
+    ("full text indexing library", "search"),       # "full text" bigram → Search Engines
+    ("text search api", "search"),                  # "text search" bigram → Search Engines
+    ("text search library", "search"),              # "text search" bigram → Search Engines
 ]
 
 

@@ -2844,7 +2844,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "state": "frontend",
     "manager": "project",      # "project manager" → project-management; "state manager" caught by "state"→frontend first
     "bundler": "frontend",
-    "build": "frontend",           # "build tool" → first term "build" → frontend-frameworks
+    # NOTE: "build" is in _FTS_STOP_WORDS — "build tool" queries route via "bundler" or specific
+    # tool names (vite, esbuild, webpack) after stop-word stripping.
     "vite": "frontend",
     # CSS frameworks/libraries
     "css": "frontend",
@@ -4255,8 +4256,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "webcomponents": "frontend",    # plural — "web components standard", "custom elements" → Frontend Frameworks
     "custom-element": "frontend",   # "custom element", "custom elements API" → Frontend Frameworks (Lit, FAST)
     "custom-elements": "frontend",  # plural form — Web Components Custom Elements spec
-    # Testing — integration tests (complement to e2e, unit, bdd, coverage already mapped)
-    "integration": "testing",       # "integration test", "integration testing library" → Testing Tools
+    # Testing — integration tests route via "test"→testing or "testing"→testing after stop-word strip.
+    # NOTE: "integration" is in _FTS_STOP_WORDS — never fires as synonym key. Removed.
     # Database — time-series databases not individually mapped
     "influxdb": "database",         # InfluxDB — most popular open-source time-series database (28k★)
     "questdb": "database",          # QuestDB — fast SQL time-series database (14k★)
@@ -6613,8 +6614,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "load balancer": "devops",     # "load balancer setup", "load balancer alternative" → DevOps & Infrastructure
     "load balancing": "devops",    # "load balancing tool", "load balancing software" → DevOps & Infrastructure
     "load-balancing": "devops",    # hyphenated — "load-balancing solution", "load-balancing nginx" → DevOps
-    # Search — full text search multi-word (no hyphen/compound) form
-    "full text search": "search",  # "full text search engine", "full text search library" → Search Engines
+    # Search — full text search multi-word forms (3-token "full text search" can't fire as bigram)
+    "full text": "search",         # bigram — "full text search engine", "full text indexing" → Search Engines
+    "text search": "search",       # bigram — "text search library", "text search api" → Search Engines
     # Testing — hyphenated form of typecheck (compound forms mapped; dashed form wasn't)
     "type-check": "testing",       # "type-check script", "type-check ci", "type-check alternative" → Testing Tools
     # Frontend — code-splitting hyphenated form (complement to "splitting"→frontend already mapped)
