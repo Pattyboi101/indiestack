@@ -6614,8 +6614,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "load balancer": "devops",     # "load balancer setup", "load balancer alternative" → DevOps & Infrastructure
     "load balancing": "devops",    # "load balancing tool", "load balancing software" → DevOps & Infrastructure
     "load-balancing": "devops",    # hyphenated — "load-balancing solution", "load-balancing nginx" → DevOps
-    # Search — full text search multi-word (no hyphen/compound) form
-    "full text search": "search",  # "full text search engine", "full text search library" → Search Engines
+    # Search — full text search multi-word forms (3-token "full text search" can never fire — use bigrams)
+    "full text": "search",         # bigram — "full text search engine", "full text search library" → Search Engines
+    "full-text": "search",         # hyphenated single token — "full-text search", "full-text index" → Search Engines
     # Testing — hyphenated form of typecheck (compound forms mapped; dashed form wasn't)
     "type-check": "testing",       # "type-check script", "type-check ci", "type-check alternative" → Testing Tools
     # Frontend — code-splitting hyphenated form (complement to "splitting"→frontend already mapped)
