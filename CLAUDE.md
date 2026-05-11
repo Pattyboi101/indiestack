@@ -105,6 +105,6 @@ Handles Reddit/social + maker outreach. Check memory/ed.md for his current focus
 
 - Production: indiestack.ai (indiestack.fly.dev fallback)
 - GitHub: Pattyboi101/indiestack (public, sensitive files gitignored)
-- PyPI: indiestack (MCP server, current v1.12.0)
+- PyPI: indiestack (MCP server, current v1.20.0)
 - Command Hub: govlink.fly.dev
 - Telegram: `bash ~/.claude/telegram.sh "message"`
