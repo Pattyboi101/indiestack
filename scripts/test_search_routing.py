@@ -60,7 +60,7 @@ def route_query(query: str) -> tuple[str, str]:
     return raw_cat, "raw_first"
 
 
-# ── Test cases ───────────────────────────────────────────────────────────────────────────────────────
+# ── Test cases ───────────────────────────────────────────────────────────────────────────────────
 # Format: (query, expected_cat_term_fragment)
 # expected_cat_term_fragment must be a substring of the routed cat_term.
 # A query routing to "authentication" passes if expected is "auth" or "authentication".
@@ -433,6 +433,12 @@ TEST_CASES: list[tuple[str, str]] = [
     # Streaming LLM — fix "streaming"→media collision for AI streaming queries
     ("streaming llm response", "ai"),               # "streaming llm" bigram → AI & Automation
     ("llm streaming library", "ai"),                # "llm streaming" bigram → AI & Automation
+    # Real zero-result queries from gap-queries-2026-04.json — fixed in 147th pass
+    ("pass keys auth", "authentication"),           # "pass keys" bigram → Authentication (space-separated passkeys)
+    ("snmp monitoring tool", "monitoring"),         # "snmp" → Monitoring & Uptime (SNMP protocol)
+    ("go-feature-flag alternative", "feature"),     # "go-feature-flag" → Feature Flags (specific Go library)
+    ("payroll api open source", "invoicing"),       # "payroll" → Invoicing & Billing
+    ("article generation api", "ai"),               # "article generation" bigram → AI & Automation
 ]
 
 
