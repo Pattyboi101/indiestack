@@ -23,7 +23,7 @@ def get_category_id(slug: str) -> int | None:
 
 
 TOOLS = [
-    # ── Frontend Frameworks ───────────────────────────────────────────────
+    # ── Frontend Frameworks ──────────────────────────────────────────────────────
     {
         "name": "React",
         "slug": "react",
@@ -120,7 +120,7 @@ TOOLS = [
         "tags": "bundler,build-tool,fast,go,javascript,esbuild",
         "source_type": "code",
     },
-    # ── Caching ────────────────────────────────────────────────────
+    # ── Caching ───────────────────────────────────────────────────────────────
     {
         "name": "Upstash",
         "slug": "upstash",
@@ -133,7 +133,7 @@ TOOLS = [
         "tags": "redis,serverless,caching,kafka,edge",
         "source_type": "saas",
     },
-    # ── Email ───────────────────────────────────────────────────────────
+    # ── Email ─────────────────────────────────────────────────────────────────────
     {
         "name": "Resend",
         "slug": "resend",
@@ -146,7 +146,7 @@ TOOLS = [
         "tags": "email,transactional,react,developer,smtp",
         "source_type": "saas",
     },
-    # ── Frontend Frameworks (additional) ─────────────────────────────────
+    # ── Frontend Frameworks (additional) ───────────────────────────────────────────
     {
         "name": "Vite",
         "slug": "vite",
@@ -195,7 +195,7 @@ TOOLS = [
         "tags": "react,components,accessibility,unstyled,design-system,ui",
         "source_type": "code",
     },
-    # ── Animation Libraries ───────────────────────────────────────────────
+    # ── Animation Libraries ─────────────────────────────────────────────────────────────
     {
         "name": "Framer Motion",
         "slug": "framer-motion",
@@ -220,7 +220,7 @@ TOOLS = [
         "tags": "animation,javascript,gsap,motion,svg,frontend",
         "source_type": "code",
     },
-    # ── Icon Libraries ────────────────────────────────────────────────────
+    # ── Icon Libraries ───────────────────────────────────────────────────────────────
     {
         "name": "Lucide Icons",
         "slug": "lucide-icons",
@@ -245,7 +245,7 @@ TOOLS = [
         "tags": "icons,svg,tailwind,react,components,frontend",
         "source_type": "code",
     },
-    # ── Internationalisation ───────────────────────────────────────────────
+    # ── Internationalisation ─────────────────────────────────────────────────────────────
     {
         "name": "next-intl",
         "slug": "next-intl",
@@ -270,7 +270,7 @@ TOOLS = [
         "tags": "i18n,localization,javascript,internationalization,translations",
         "source_type": "code",
     },
-    # ── Workflow Automation ───────────────────────────────────────────────
+    # ── Workflow Automation ─────────────────────────────────────────────────────────────
     {
         "name": "n8n",
         "slug": "n8n",
@@ -283,7 +283,7 @@ TOOLS = [
         "tags": "workflow,automation,no-code,self-hosted,integrations,zapier-alternative",
         "source_type": "code",
     },
-    # ── ORMs & Validation ────────────────────────────────────────────────
+    # ── ORMs & Validation ────────────────────────────────────────────────────────────────
     {
         "name": "Prisma",
         "slug": "prisma",
@@ -332,7 +332,7 @@ TOOLS = [
         "tags": "typescript,api,rpc,nextjs,react,fullstack,type-safe",
         "source_type": "code",
     },
-    # ── Runtimes ───────────────────────────────────────────────────────────
+    # ── Runtimes ───────────────────────────────────────────────────────────────────────
     {
         "name": "Bun",
         "slug": "bun",
@@ -345,7 +345,7 @@ TOOLS = [
         "tags": "runtime,bundler,javascript,typescript,fast,nodejs-alternative",
         "source_type": "code",
     },
-    # ── API Frameworks ───────────────────────────────────────────────────────
+    # ── API Frameworks ───────────────────────────────────────────────────────────────────
     {
         "name": "Hono",
         "slug": "hono",
@@ -358,7 +358,7 @@ TOOLS = [
         "tags": "web-framework,edge,cloudflare,deno,bun,typescript,nodejs,serverless",
         "source_type": "code",
     },
-    # ── Headless CMS ────────────────────────────────────────────────────────
+    # ── Headless CMS ─────────────────────────────────────────────────────────────────
     {
         "name": "Payload CMS",
         "slug": "payload-cms",
@@ -371,7 +371,7 @@ TOOLS = [
         "tags": "cms,typescript,nodejs,rest,graphql,self-hosted,headless",
         "source_type": "code",
     },
-    # ── Frontend Frameworks (meta-frameworks) ───────────────────────────────
+    # ── Frontend Frameworks (meta-frameworks) ──────────────────────────────────────────
     {
         "name": "Astro",
         "slug": "astro",
@@ -396,7 +396,7 @@ TOOLS = [
         "tags": "vue,ssr,ssg,fullstack,typescript,frontend",
         "source_type": "code",
     },
-    # ── Authentication ────────────────────────────────────────────────────────
+    # ── Authentication ────────────────────────────────────────────────────────────────────
     {
         "name": "Lucia",
         "slug": "lucia",
@@ -409,7 +409,7 @@ TOOLS = [
         "tags": "auth,sessions,oauth,typescript,self-hosted,sveltekit,nextjs",
         "source_type": "code",
     },
-    # ── Background Jobs ─────────────────────────────────────────────────────
+    # ── Background Jobs ────────────────────────────────────────────────────────────────
     {
         "name": "Temporal",
         "slug": "temporalio",
@@ -422,7 +422,7 @@ TOOLS = [
         "tags": "workflow,durable-execution,saga,background-jobs,orchestration,typescript,go",
         "source_type": "code",
     },
-    # ── Maps & Location ─────────────────────────────────────────────────────
+    # ── Maps & Location ───────────────────────────────────────────────────────────────
     {
         "name": "Leaflet",
         "slug": "leaflet",
@@ -435,7 +435,7 @@ TOOLS = [
         "tags": "maps,leaflet,geospatial,javascript,open-source",
         "source_type": "code",
     },
-    # ── API Tools ───────────────────────────────────────────────────────────
+    # ── API Tools ──────────────────────────────────────────────────────────────────────
     {
         "name": "Bruno",
         "slug": "bruno",
@@ -460,7 +460,7 @@ TOOLS = [
         "tags": "api,testing,rest,graphql,grpc,client,postman-alternative",
         "source_type": "code",
     },
-    # ── Database ────────────────────────────────────────────────────────────
+    # ── Database ──────────────────────────────────────────────────────────────────────
     {
         "name": "Atlas",
         "slug": "atlas",
@@ -485,7 +485,7 @@ TOOLS = [
         "tags": "react,routing,spa,frontend,remix,typescript",
         "source_type": "code",
     },
-    # ── AI & Automation ─────────────────────────────────────────────────────
+    # ── AI & Automation ───────────────────────────────────────────────────────────────
     {
         "name": "Tesseract.js",
         "slug": "tesseract-js",
@@ -498,7 +498,7 @@ TOOLS = [
         "tags": "ocr,javascript,wasm,browser,nodejs,ai,text-recognition",
         "source_type": "code",
     },
-    # ── Background Jobs (additional) ─────────────────────────────────────────
+    # ── Background Jobs (additional) ───────────────────────────────────────────────────
     {
         "name": "BullMQ",
         "slug": "bullmq",
@@ -511,7 +511,7 @@ TOOLS = [
         "tags": "queue,redis,nodejs,jobs,worker,typescript",
         "source_type": "code",
     },
-    # ── Frontend Frameworks (UI component system) ─────────────────────────────
+    # ── Frontend Frameworks (UI component system) ──────────────────────────────────────
     {
         "name": "shadcn/ui",
         "slug": "shadcn-ui",
@@ -524,7 +524,7 @@ TOOLS = [
         "tags": "react,ui,tailwindcss,radix,components,design-system,typescript",
         "source_type": "code",
     },
-    # ── Authentication ─────────────────────────────────────────────────────────
+    # ── Authentication ─────────────────────────────────────────────────────────────────────
     {
         "name": "Better Auth",
         "slug": "better-auth",
@@ -537,7 +537,7 @@ TOOLS = [
         "tags": "auth,typescript,oauth,passkeys,2fa,nextjs,sveltekit,sessions",
         "source_type": "code",
     },
-    # ── AI & Automation ──────────────────────────────────────────────────────
+    # ── AI & Automation ───────────────────────────────────────────────────────────────
     {
         "name": "Mastra",
         "slug": "mastra",
@@ -562,7 +562,7 @@ TOOLS = [
         "tags": "ollama,llm,chat,local-ai,self-hosted,rag,multimodal,openai",
         "source_type": "code",
     },
-    # ── API Tools ───────────────────────────────────────────────────────────
+    # ── API Tools ──────────────────────────────────────────────────────────────────────
     {
         "name": "Encore",
         "slug": "encore",
@@ -599,7 +599,7 @@ TOOLS = [
         "tags": "serverless,gpu,python,ml,ai,inference,compute,cloud,llm",
         "source_type": "saas",
     },
-    # ── Authentication ────────────────────────────────────────────────────────
+    # ── Authentication ────────────────────────────────────────────────────────────────
     {
         "name": "Stytch",
         "slug": "stytch",
@@ -624,7 +624,7 @@ TOOLS = [
         "tags": "sso,saml,scim,enterprise,b2b,directory-sync,audit-logs,okta-alternative",
         "source_type": "saas",
     },
-    # ── Developer Tools ─────────────────────────────────────────────────────
+    # ── Developer Tools ───────────────────────────────────────────────────────────────
     {
         "name": "Biome",
         "slug": "biome",
@@ -649,7 +649,7 @@ TOOLS = [
         "tags": "linter,javascript,typescript,eslint-alternative,rust,fast,monorepo",
         "source_type": "code",
     },
-    # ── MCP Servers ───────────────────────────────────────────────────────────
+    # ── MCP Servers ────────────────────────────────────────────────────────────────────
     {
         "name": "Playwright MCP",
         "slug": "playwright-mcp",
@@ -698,7 +698,7 @@ TOOLS = [
         "tags": "mcp,sqlite,database,sql,anthropic,official",
         "source_type": "code",
     },
-    # ── Boilerplates & Starters ────────────────────────────────────────────────
+    # ── Boilerplates & Starters ──────────────────────────────────────────────────────────
     {
         "name": "create-t3-app",
         "slug": "create-t3-app",
@@ -735,7 +735,7 @@ TOOLS = [
         "tags": "remix,prisma,tailwind,stripe,saas,multi-tenancy,rbac",
         "source_type": "code",
     },
-    # ── AI & Automation — 138th pass ───────────────────────────────────────────────
+    # ── AI & Automation — 138th pass ──────────────────────────────────────────────────────
     {
         "name": "Cognee",
         "slug": "cognee",
