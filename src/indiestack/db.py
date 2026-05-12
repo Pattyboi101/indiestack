@@ -4414,6 +4414,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — React Query (original npm package name before TanStack rebranding)
     "react-query": "frontend",      # React Query — original name; "react-query alternative" high-volume
     "reactquery": "frontend",       # compound form — "reactquery vs swr", "react query v5" queries
+    # Frontend — spaced bigrams; "react" is a framework qualifier so the standard loop strips it
+    # before bigram checks, causing "react form" to route to forms-surveys and "react query"
+    # to database. These bigrams are matched by a pre-pass on _meaningful (pre-strip) in search_tools().
+    "react form": "frontend",       # "react form library", "react form validation" → React Hook Form, Formik
+    "react query": "frontend",      # "react query setup", "react query v5" → TanStack Query (frontend lib)
     # Frontend — RedwoodJS full-stack React framework (not yet individually mapped)
     "redwood": "frontend",          # RedwoodJS — opinionated full-stack framework (React+GraphQL, 17k★)
     "redwoodjs": "frontend",        # explicit form — "redwoodjs alternative", "redwoodjs starter" queries
@@ -7860,16 +7865,27 @@ async def search_tools(
     # from "self hosted auth" gets the 100-point Authentication category boost.
     # Bigrams are checked before individual tokens at each position so that
     # "load balancer" → devops wins over "load" → testing.
+    #
+    # Pre-pass: check bigrams on _meaningful (before framework stripping) first.
+    # This catches compound queries like "react form library" and "react query" where
+    # the framework qualifier ("react") is the semantically important disambiguator
+    # — stripping it causes "form" → forms-surveys instead of "react form" → frontend.
     _syn_term = None
-    for _i, _tok in enumerate(_meaningful_for_cat):
-        if _i + 1 < len(_meaningful_for_cat):
-            _bigram = f"{_tok} {_meaningful_for_cat[_i + 1]}"
-            if _bigram in _CAT_SYNONYMS:
-                _syn_term = _bigram
-                break
-        if _tok in _CAT_SYNONYMS:
-            _syn_term = _tok
+    for _i in range(len(_meaningful) - 1):
+        _bigram = f"{_meaningful[_i]} {_meaningful[_i + 1]}"
+        if _bigram in _CAT_SYNONYMS:
+            _syn_term = _bigram
             break
+    if _syn_term is None:
+        for _i, _tok in enumerate(_meaningful_for_cat):
+            if _i + 1 < len(_meaningful_for_cat):
+                _bigram = f"{_tok} {_meaningful_for_cat[_i + 1]}"
+                if _bigram in _CAT_SYNONYMS:
+                    _syn_term = _bigram
+                    break
+            if _tok in _CAT_SYNONYMS:
+                _syn_term = _tok
+                break
     if _syn_term:
         _cat_term = _CAT_SYNONYMS[_syn_term]
     else:

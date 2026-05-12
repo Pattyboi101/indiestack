@@ -42,16 +42,24 @@ def route_query(query: str) -> tuple[str, str]:
 
     # Step 3: Find first term (or bigram) with a known synonym — bigrams have priority
     # at each position so "load balancing" beats "load"→testing, etc.
+    # Pre-pass: check bigrams on meaningful (before framework stripping) to catch
+    # "react form", "react query" etc. where stripping the qualifier causes mis-routing.
     syn_term = None
-    for i, tok in enumerate(meaningful_for_cat):
-        if i + 1 < len(meaningful_for_cat):
-            bigram = f"{tok} {meaningful_for_cat[i + 1]}"
-            if bigram in _CAT_SYNONYMS:
-                syn_term = bigram
-                break
-        if tok in _CAT_SYNONYMS:
-            syn_term = tok
+    for i in range(len(meaningful) - 1):
+        bigram = f"{meaningful[i]} {meaningful[i + 1]}"
+        if bigram in _CAT_SYNONYMS:
+            syn_term = bigram
             break
+    if syn_term is None:
+        for i, tok in enumerate(meaningful_for_cat):
+            if i + 1 < len(meaningful_for_cat):
+                bigram = f"{tok} {meaningful_for_cat[i + 1]}"
+                if bigram in _CAT_SYNONYMS:
+                    syn_term = bigram
+                    break
+            if tok in _CAT_SYNONYMS:
+                syn_term = tok
+                break
     if syn_term:
         return _CAT_SYNONYMS[syn_term], syn_term
 
@@ -97,6 +105,10 @@ TEST_CASES: list[tuple[str, str]] = [
     ("bundler vite webpack", "frontend"),
     ("build tool esbuild", "frontend"),
     ("react component library", "frontend"),
+    ("react form library", "frontend"),          # "react form" bigram pre-pass; was wrongly → forms
+    ("react form validation", "frontend"),       # same fix — React Hook Form, Formik
+    ("react query setup", "frontend"),           # "react query" bigram pre-pass; was wrongly → database
+    ("react query v5", "frontend"),              # TanStack Query v5 queries
     ("javascript framework", "frontend"),
     ("css framework tailwind", "frontend"),
     ("svelte alternative", "frontend"),
