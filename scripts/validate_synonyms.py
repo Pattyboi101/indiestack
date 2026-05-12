@@ -75,7 +75,7 @@ def main():
 
     print(f"Parsed {len(entries)} _CAT_SYNONYMS entries from {DB_PATH.name}")
 
-    # ── 1. Duplicate keys ───────────────────────────────────────────────────────────────────────────────────────
+    # ── 1. Duplicate keys ────────────────────────────────────────────────────────────────────────────────────────────
     seen: dict[str, tuple[int, str]] = {}
     duplicates: list[tuple[int, str, str, int, str]] = []
     for lineno, key, value in entries:
@@ -95,7 +95,7 @@ def main():
     else:
         print("✅  No duplicate keys found.")
 
-    # ── 2. Invalid short-names ──────────────────────────────────────────────────────────────────────────────────────────
+    # ── 2. Invalid short-names ─────────────────────────────────────────────────────────────────────────────────────────────────
     invalid = [(lineno, key, value) for lineno, key, value in entries
                if value not in VALID_SHORT_NAMES]
     if invalid:
@@ -107,7 +107,7 @@ def main():
     else:
         print("✅  All short-names are valid.")
 
-    # ── 3. Coverage summary ──────────────────────────────────────────────────────────────────────────────────────
+    # ── 3. Coverage summary ───────────────────────────────────────────────────────────────────────────────────────
     counts = Counter(value for _, _, value in entries)
     print(f"\n📊  Coverage by category short-name ({len(counts)} distinct):")
     for name, count in sorted(counts.items(), key=lambda x: -x[1]):
