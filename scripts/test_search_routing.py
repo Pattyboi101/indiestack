@@ -537,6 +537,15 @@ TEST_CASES: list[tuple[str, str]] = [
     # Routing fix — background removal routing to background-jobs via "background"→background
     ("background removal api", "ai"),                # bigram "background removal" → AI & Automation
     ("background removal python", "ai"),             # bigram form → AI & Automation
+    # Routing fix — firebase studio routing to database via "firebase"→database
+    ("firebase studio alternative", "ai"),           # spaced bigram → AI & Automation
+    ("firebase studio vs cursor", "ai"),             # spaced bigram form → AI & Automation
+    # Routing fix — github spark routing to devops via "github"→devops
+    ("github spark alternative", "ai"),              # spaced bigram → AI & Automation
+    ("github spark builder", "ai"),                  # spaced bigram form → AI & Automation
+    # Routing fix — project idx with project=stop word leaving just "idx"
+    ("project idx alternative", "ai"),               # "idx" bare token → AI & Automation
+    ("project idx setup", "ai"),                     # bare token form → AI & Automation
 ]
 
 

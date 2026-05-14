@@ -6812,8 +6812,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Google Firebase Studio (formerly Project IDX, rebranded April 2025; cloud-based AI coding IDE)
     "firebase-studio": "ai",       # Firebase Studio — "firebase-studio alternative", "firebase-studio setup" → AI & Automation
     "firebasestudio": "ai",        # compound — "firebasestudio vs cursor", "firebasestudio pricing" → AI & Automation
+    "firebase studio": "ai",       # spaced bigram — "firebase studio alternative", "firebase studio vs cursor" → AI & Automation
     "project-idx": "ai",           # Project IDX — old name, still heavily searched; "project-idx alternative" → AI & Automation
     "projectidx": "ai",            # compound — "projectidx setup", "projectidx vs replit" → AI & Automation
+    "idx": "ai",                   # bare token — "project idx" (project=stop word leaves just "idx") → AI & Automation
     # AI — Sourcegraph code intelligence platform (home of Cody AI assistant; 9k★)
     "sourcegraph": "ai",           # Sourcegraph — "sourcegraph alternative", "sourcegraph setup", "sourcegraph cody" → AI & Automation
     # AI — GitHub Copilot Workspace (AI coding environment from GitHub Issues to PRs, 2025)
@@ -6822,6 +6824,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — GitHub Spark (AI micro-app builder from GitHub, 2025)
     "github-spark": "ai",          # GitHub Spark — "github-spark alternative", "github-spark setup" → AI & Automation
     "githubspark": "ai",           # compound — "githubspark builder", "githubspark vs bolt" → AI & Automation
+    "github spark": "ai",          # spaced bigram — "github spark alternative", "github spark builder" → AI & Automation
     # Caching — Momento Cache (serverless caching by ex-AWS DynamoDB team; common Upstash/Redis alternative query)
     "momento": "caching",          # Momento Cache — "momento alternative", "momento cache redis", "momento serverless" → Caching
     "momento-cache": "caching",    # hyphenated — "momento-cache alternative", "momento-cache vs upstash" → Caching
