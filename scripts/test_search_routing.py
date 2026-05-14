@@ -475,6 +475,32 @@ TEST_CASES: list[tuple[str, str]] = [
     ("file storage upload", "file"),
     ("object storage s3", "file"),
     ("video streaming server", "media"),
+    # Routing gaps fixed — eventstoredb, transactional outbox, leader election
+    ("eventstoredb alternative", "message"),         # EventStoreDB → Message Queues (was raw_first)
+    ("transactional outbox pattern", "background"),  # bigram overrides "transactional"→email → Background Jobs
+    ("transactional outbox setup", "background"),    # bigram form → Background Jobs
+    ("leader election service", "devops"),           # bigram "leader election" → DevOps (Zookeeper, etcd)
+    ("leader election algorithm", "devops"),         # bigram form → DevOps & Infrastructure
+    # MCP dept dog-fooding queries — verified routing, added as regression coverage
+    ("sequential thinking mcp", "mcp"),             # MCP-specific tool → MCP Servers
+    ("n8n alternative", "background"),              # workflow automation → Background Jobs
+    ("jmeter alternative", "testing"),              # load/perf testing tool → Testing Tools
+    ("appium alternative", "testing"),              # mobile test automation → Testing Tools
+    ("localstack alternative", "devops"),           # AWS local emulation → DevOps & Infrastructure
+    ("eza alternative", "cli"),                     # modern ls replacement → CLI Tools
+    ("btop alternative", "cli"),                    # system monitor TUI → CLI Tools
+    ("dlq setup", "message"),                       # dead-letter queue config → Message Queues
+    ("event sourcing database", "message"),         # CQRS/ES pattern → Message Queues
+    ("kv store for edge", "caching"),               # bigram "kv store" → Caching
+    ("saga orchestration", "background"),           # Saga pattern → Background Jobs (Temporal, Restate)
+    ("promql alternative", "monitoring"),           # Prometheus query lang → Monitoring & Uptime
+    ("logql query", "logging"),                     # Loki query lang → Logging
+    ("gemini2 alternative", "ai"),                  # Gemini 2 versioned → AI & Automation
+    ("react-compiler setup", "frontend"),           # React 19 compiler → Frontend Frameworks
+    ("karpenter vs cluster-autoscaler", "devops"),  # K8s autoscaling → DevOps & Infrastructure
+    ("txt2img pipeline", "ai"),                     # text-to-image → AI & Automation
+    ("speech-to-text library", "ai"),               # STT API → AI & Automation
+    ("zookeeper alternative", "devops"),            # distributed coord → DevOps & Infrastructure
 ]
 
 
