@@ -7642,6 +7642,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — article generation (LLM-driven content writing; complement to "content"→cms and "writing"→ai)
     # "article" alone has no synonym; bigram ensures it routes to AI not CMS
     "article generation": "ai",     # bigram — "article generation api", "article generation llm" → AI & Automation
+    # Database — language-prefixed ORM queries (language token fires before "orm" single token)
+    # "typescript"→frontend, "ts"→frontend, "python"→api, "go"→api, "rust"→api all win first.
+    # Bigrams correct the routing so "X orm" always lands in Database (Prisma, Drizzle, SQLAlchemy, GORM…)
+    "typescript orm": "database",   # bigram — "typescript orm comparison", "typescript orm drizzle" → Database
+    "ts orm": "database",           # bigram — "ts orm setup", "ts orm drizzle vs prisma" → Database
+    "python orm": "database",       # bigram — "python orm async", "python orm sqlalchemy" → Database
+    "go orm": "database",           # bigram — "go orm gorm", "go orm comparison" → Database
+    "rust orm": "database",         # bigram — "rust orm diesel", "rust orm seaorm" → Database
+    # Database — serverless and edge database queries route to devops via "serverless"→devops / "edge"→devops.
+    # Bigrams ensure Neon, PlanetScale, Turso, D1 land in Database not DevOps.
+    "serverless database": "database",  # bigram — "serverless database postgres", "serverless database free" → Database
+    "edge database": "database",        # bigram — "edge database turso", "edge database sqlite" → Database
+    # AI — Vercel AI SDK queries route to devops via "vercel"→devops (Vercel's hosting platform).
+    # Bigram ensures "vercel ai" queries land in AI & Automation (Vercel AI SDK is an LLM library).
+    "vercel ai": "ai",              # bigram — "vercel ai sdk alternative", "vercel ai sdk setup" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

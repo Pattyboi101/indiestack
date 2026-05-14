@@ -513,6 +513,18 @@ TEST_CASES: list[tuple[str, str]] = [
     ("low code platform", "developer"),              # bigram form → Developer Tools (Retool, Budibase)
     ("e-commerce platform", "developer"),            # hyphenated beats raw_first → Developer Tools (Medusa, Saleor)
     ("e-commerce open source", "developer"),         # hyphenated + qualifier → Developer Tools
+    # Routing fixes — language-prefixed ORM queries (language token was beating "orm"→database)
+    ("typescript orm drizzle", "database"),          # bigram "typescript orm" → Database
+    ("ts orm comparison", "database"),               # bigram "ts orm" → Database
+    ("python orm async", "database"),                # bigram "python orm" → Database (SQLAlchemy, Tortoise)
+    ("go orm gorm", "database"),                     # bigram "go orm" → Database (GORM, Ent)
+    ("rust orm diesel", "database"),                 # bigram "rust orm" → Database (Diesel, SeaORM)
+    # Routing fixes — serverless/edge database queries (serverless→devops / edge→devops was firing first)
+    ("serverless database postgres", "database"),    # bigram "serverless database" → Database (Neon, PlanetScale)
+    ("edge database sqlite", "database"),            # bigram "edge database" → Database (Turso, D1)
+    # Routing fix — Vercel AI SDK (vercel→devops was firing before ai→ai-automation)
+    ("vercel ai sdk alternative", "ai"),             # bigram "vercel ai" → AI & Automation
+    ("vercel ai sdk setup", "ai"),                   # bigram form → AI & Automation
 ]
 
 
