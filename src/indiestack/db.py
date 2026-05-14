@@ -7657,6 +7657,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Vercel AI SDK queries route to devops via "vercel"→devops (Vercel's hosting platform).
     # Bigram ensures "vercel ai" queries land in AI & Automation (Vercel AI SDK is an LLM library).
     "vercel ai": "ai",              # bigram — "vercel ai sdk alternative", "vercel ai sdk setup" → AI & Automation
+    # Testing — headless browser queries route to CMS via "headless"→cms (correct for headless-cms queries).
+    # Bigrams fire before the single token so browser/chrome/test + headless lands in Testing Tools.
+    "headless browser": "testing",  # bigram — "headless browser puppeteer", "headless browser testing" → Testing Tools
+    "headless chrome": "testing",   # bigram — "headless chrome screenshot", "headless chrome automation" → Testing Tools
+    "headless test": "testing",     # bigram — "headless test runner", "headless test automation" → Testing Tools
+    # File Management — thumbnail generation has no synonym; raw_first fires with no category boost.
+    # Sharp, imgix, Cloudinary (thumbnail generation) live in file-management.
+    "thumbnail": "file",            # "thumbnail generation api", "thumbnail resize", "thumbnail cdn" → File Management
+    # AI — "background removal" routes to background-jobs via "background"→background token.
+    # Bigram fires first to route image background removal tools (remove.bg type) to AI & Automation.
+    "background removal": "ai",     # bigram — "background removal api", "background removal python" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

@@ -525,6 +525,18 @@ TEST_CASES: list[tuple[str, str]] = [
     # Routing fix — Vercel AI SDK (vercel→devops was firing before ai→ai-automation)
     ("vercel ai sdk alternative", "ai"),             # bigram "vercel ai" → AI & Automation
     ("vercel ai sdk setup", "ai"),                   # bigram form → AI & Automation
+    # Routing fixes — headless browser/chrome queries routing to CMS via "headless"→cms
+    ("headless browser puppeteer", "testing"),       # bigram "headless browser" → Testing Tools
+    ("headless browser testing", "testing"),         # bigram form → Testing Tools
+    ("headless chrome screenshot", "testing"),       # bigram "headless chrome" → Testing Tools
+    ("headless chrome automation", "testing"),       # bigram form → Testing Tools
+    ("headless test runner", "testing"),             # bigram "headless test" → Testing Tools
+    # Routing fix — thumbnail has no synonym (raw_first with no boost)
+    ("thumbnail generation api", "file"),            # "thumbnail" → File Management
+    ("thumbnail resize api", "file"),                # "thumbnail" token → File Management
+    # Routing fix — background removal routing to background-jobs via "background"→background
+    ("background removal api", "ai"),                # bigram "background removal" → AI & Automation
+    ("background removal python", "ai"),             # bigram form → AI & Automation
 ]
 
 
