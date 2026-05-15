@@ -561,6 +561,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("object relational mapping", "database"),       # bigram form → Database
     # Regression — bare "object" still routes to file for object storage queries
     ("object storage minio", "file"),                # "object"→file still fires for object storage
+    # Routing fixes — 12 thin-category gaps found in May 2026 audit
+    # Landing pages — component queries had no synonym
+    ("coming soon page", "landing"),        # bigram "coming soon" → Landing Pages
+    ("coming soon builder", "landing"),     # bigram form → Landing Pages
+    ("hero section builder", "landing"),    # bigram "hero section" → Landing Pages
+    ("hero section react", "landing"),      # bigram form → Landing Pages
+    # Newsletters — "ghost"→cms was firing for newsletter queries
+    ("ghost newsletter alternative", "newsletters"),  # bigram "ghost newsletter" → Newsletters
+    ("ghost newsletter platform", "newsletters"),     # bigram form → Newsletters
+    # SEO — web vitals and page speed were routing wrong
+    ("core web vitals", "seo"),             # bigram "web vitals" → SEO Tools (beats "vitals"→monitoring)
+    ("web vitals monitoring", "seo"),       # bigram form → SEO Tools
+    ("page speed test", "seo"),             # bigram "page speed" → SEO Tools (beats "test"→testing)
+    ("page speed optimization", "seo"),     # bigram form → SEO Tools
     # Routing fixes — 7 thin-category gaps found in May 2026 audit
     # "seo" token itself was missing — all "seo X" queries fell through to "audit"→logging etc.
     ("seo audit tool", "seo"),              # "seo"→seo fires before "audit"→logging

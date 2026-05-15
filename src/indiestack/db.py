@@ -7689,9 +7689,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — "object relational mapper" routes to file via bare "object"→file (for object storage).
     # ORM queries (Prisma, SQLAlchemy, GORM, Diesel) should route to Database, not File Management.
     "object relational": "database",    # bigram — "object relational mapper python" → Database
+    # Landing pages — landing page components/builders had no synonym
+    "coming soon": "landing",           # "coming soon page", "coming soon builder" → Landing Pages
+    "hero section": "landing",          # "hero section builder", "hero section react" → Landing Pages
+    # Newsletters — "ghost newsletter" routes to cms via "ghost"→cms; bigram overrides
+    "ghost newsletter": "newsletters",  # "ghost newsletter alternative", "ghost newsletter platform" → Newsletters
     # SEO — "seo" token itself was missing; every "seo X" query fell through to whatever came next
     "seo": "seo",                       # "seo audit tool", "seo ranking", etc. → SEO Tools
     # SEO-specific bigrams — compound queries that would otherwise route wrong
+    "web vitals": "seo",                # bigram — "core web vitals", "web vitals monitoring" → SEO (beats "vitals"→monitoring)
+    "page speed": "seo",                # bigram — "page speed test", "page speed optimization" → SEO (beats "test"→testing)
     "meta tags": "seo",                 # "meta tags generator", "meta tags nextjs" → SEO Tools
     "xml sitemap": "seo",               # bigram beats "xml"→developer for sitemap queries
     # Scheduling — "meeting" unmapped and "scheduler"→background fires wrong for calendar scheduling
