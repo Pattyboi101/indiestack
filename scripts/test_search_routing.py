@@ -561,6 +561,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("object relational mapping", "database"),       # bigram form → Database
     # Regression — bare "object" still routes to file for object storage queries
     ("object storage minio", "file"),                # "object"→file still fires for object storage
+    # Routing fixes — headless UI/component library (bare "headless"→cms was firing; May 2026)
+    ("headless ui component", "frontend"),           # bigram "headless ui" beats "headless"→cms
+    ("headless ui react", "frontend"),               # bigram form → Frontend Frameworks
+    ("headless ui vue", "frontend"),                 # bigram form → Frontend Frameworks
+    ("headless component library", "frontend"),      # bigram "headless component" beats "headless"→cms
+    ("headless component react", "frontend"),        # bigram form → Frontend Frameworks
+    # Regression — bare "headless" still routes to cms for CMS queries
+    ("headless cms nextjs", "cms"),                  # "headless"→cms still fires for actual CMS queries
+    # Routing fix — data streaming was routing to media via bare "streaming"→media
+    ("data streaming platform", "message"),          # bigram "data streaming" → Message Queues (Kafka, Redpanda)
+    ("data streaming kafka", "message"),             # bigram form → Message Queues
+    # Routing fixes — micro-prefixed queries
+    # "micro service" can't form bigram ("service" is stop word) — compound form already works
+    ("microservice framework", "api"),               # "microservice" unigram → API Tools (already mapped)
+    ("microservices architecture", "api"),           # "microservices" unigram → API Tools (already mapped)
+    # "micro frontend" bigram works ("frontend" is NOT a stop word)
+    ("micro frontend framework", "frontend"),        # bigram "micro frontend" → Frontend Frameworks
+    ("micro frontend react", "frontend"),            # bigram form → Frontend Frameworks
 ]
 
 

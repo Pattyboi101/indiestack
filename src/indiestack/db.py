@@ -7689,6 +7689,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — "object relational mapper" routes to file via bare "object"→file (for object storage).
     # ORM queries (Prisma, SQLAlchemy, GORM, Diesel) should route to Database, not File Management.
     "object relational": "database",    # bigram — "object relational mapper python" → Database
+    # Headless UI/component library — bare "headless"→cms fires first; bigrams override to frontend
+    "headless ui": "frontend",          # "headless ui component", "headless ui react" → Frontend (Headless UI, Radix, Ark)
+    "headless component": "frontend",   # "headless component library", "headless component react" → Frontend
+    # Data streaming — bare "streaming"→media fires first; bigram routes event/data streaming to message queue
+    "data streaming": "message",        # "data streaming platform", "data streaming kafka" → Message Queues
+    # Micro-prefixed queries — "micro" is unmapped so raw_first fires; bigrams route correctly
+    # Note: "micro service" can't be a bigram because "service" is in _FTS_STOP_WORDS —
+    # space-separated "micro service" users should use compound "microservice" (already mapped).
+    "micro frontend": "frontend",       # "micro frontend framework", "micro frontend react" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
