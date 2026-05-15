@@ -630,6 +630,9 @@ TEST_CASES: list[tuple[str, str]] = [
     ("syntax highlighting react", "documentation"),  # bigram form → Documentation
     # Regression — bare "highlight" still routes to monitoring (Highlight.io) when no overriding bigram
     ("highlight error tracking", "monitoring"),      # "highlight"→monitoring fires (no overriding bigram)
+    # SEO — "og" token routes OG image generator queries (bare "og" = Open Graph abbreviation)
+    ("og image tool", "seo"),                   # "og"→seo fires before "image"→media → SEO Tools
+    ("og image generator react", "seo"),         # "og" unigram → SEO Tools
     # Frontend — "rich text" bigram overrides "rich"→cli for text editor queries
     ("rich text editor", "frontend"),            # bigram "rich text" → Frontend (TipTap, ProseMirror, Lexical)
     ("rich text component react", "frontend"),   # bigram form → Frontend Frameworks

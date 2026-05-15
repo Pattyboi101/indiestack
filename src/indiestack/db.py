@@ -3966,6 +3966,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # SEO — sitemap generators and Open Graph / meta tag tools
     "sitemap": "seo",               # next-sitemap, @astrojs/sitemap, nuxt-simple-sitemap → SEO Tools
     "opengraph": "seo",             # Open Graph meta tag tools, og-image generators → SEO Tools
+    "og": "seo",                    # OG abbreviation — "og image tool", "og image generator" → SEO Tools
     "metatag": "seo",               # meta tag generators ("metatag alternative") → SEO Tools
     # Testing — visual regression and load testing tools not yet mapped
     "screenshot": "testing",        # visual regression: Percy, Chromatic, Playwright screenshots
