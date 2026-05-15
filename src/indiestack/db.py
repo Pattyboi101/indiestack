@@ -7682,6 +7682,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — "change data capture" (CDC) routes to raw_first "change" with no mapping.
     # CDC tools (Debezium, Airbyte CDC, etc.) are database-adjacent data pipeline tooling.
     "change data": "database",      # bigram — "change data capture", "CDC tool" → Database
+    # Analytics — "embedded analytics" routes to database via bare "embedded"→database.
+    # Embedded BI / charting (Tremor, Superset embed, Metabase embed) are analytics, not databases.
+    "embedded analytics": "analytics",  # bigram — "embedded analytics react", "embedded analytics dashboard" → Analytics
+    "embedded bi": "analytics",         # bigram — "embedded bi dashboard", "embedded bi tool" → Analytics
+    # Database — "object relational mapper" routes to file via bare "object"→file (for object storage).
+    # ORM queries (Prisma, SQLAlchemy, GORM, Diesel) should route to Database, not File Management.
+    "object relational": "database",    # bigram — "object relational mapper python" → Database
 }
 
 _FTS_STOP_WORDS = {

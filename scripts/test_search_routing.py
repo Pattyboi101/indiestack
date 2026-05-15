@@ -550,6 +550,17 @@ TEST_CASES: list[tuple[str, str]] = [
     # Routing fix — "change data capture" routed to raw_first "change" with no mapping
     ("change data capture", "database"),             # bigram "change data" → Database
     ("change data capture tool", "database"),        # bigram form → Database
+    # Routing fixes — embedded analytics and object relational mapper (added May 2026)
+    ("embedded analytics react", "analytics"),       # bigram "embedded analytics" beats "embedded"→database
+    ("embedded analytics dashboard", "analytics"),   # bigram form → Analytics & Metrics
+    ("embedded bi dashboard", "analytics"),          # bigram "embedded bi" beats "embedded"→database
+    ("embedded bi tool", "analytics"),               # bigram form → Analytics & Metrics
+    # Regression — bare "embedded" still routes to database for embedded DB queries
+    ("embedded database sqlite", "database"),        # "embedded"→database still fires for embedded DB
+    ("object relational mapper python", "database"), # bigram "object relational" beats "object"→file
+    ("object relational mapping", "database"),       # bigram form → Database
+    # Regression — bare "object" still routes to file for object storage queries
+    ("object storage minio", "file"),                # "object"→file still fires for object storage
 ]
 
 
