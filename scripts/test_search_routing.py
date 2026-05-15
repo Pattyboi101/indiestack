@@ -537,6 +537,19 @@ TEST_CASES: list[tuple[str, str]] = [
     # Routing fix — background removal routing to background-jobs via "background"→background
     ("background removal api", "ai"),                # bigram "background removal" → AI & Automation
     ("background removal python", "ai"),             # bigram form → AI & Automation
+    # Routing fixes — "hot"/"live"/"tree" had no synonym; raw_first fired returning unmapped token
+    ("hot reload dev server", "developer"),          # bigram "hot reload" → Developer Tools
+    ("hot reload vite", "developer"),                # bigram form → Developer Tools
+    ("live reload webpack", "developer"),            # bigram "live reload" → Developer Tools
+    ("hot module replacement", "frontend"),          # bigram "hot module" → Frontend Frameworks
+    ("tree shaking bundler", "frontend"),            # bigram "tree shaking" → Frontend Frameworks
+    ("tree shaking webpack", "frontend"),            # bigram form → Frontend Frameworks
+    # Routing fix — "schema migration" routed to developer via "schema"→developer token
+    ("schema migration tool", "database"),           # bigram "schema migration" → Database
+    ("schema migration flyway", "database"),         # bigram form → Database
+    # Routing fix — "change data capture" routed to raw_first "change" with no mapping
+    ("change data capture", "database"),             # bigram "change data" → Database
+    ("change data capture tool", "database"),        # bigram form → Database
 ]
 
 

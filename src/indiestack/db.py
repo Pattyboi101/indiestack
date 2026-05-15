@@ -2905,6 +2905,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "boilerplate": "boilerplate",
     "starter": "boilerplate",
     "scaffold": "boilerplate",
+    "scaffolding": "boilerplate",   # gerund form — "code scaffolding", "api scaffolding" → Boilerplates
     "template": "boilerplate",
     # MCP servers — dedicated category
     "protocol": "mcp",          # "model context protocol" → first term after stop words
@@ -7668,6 +7669,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — "background removal" routes to background-jobs via "background"→background token.
     # Bigram fires first to route image background removal tools (remove.bg type) to AI & Automation.
     "background removal": "ai",     # bigram — "background removal api", "background removal python" → AI & Automation
+    # Frontend — "hot reload" / "live reload" / "hot module replacement" have no single-token mappings
+    # so raw_first fires returning "hot"/"live"/"tree" which never matches a category.
+    # HMR and live-reload are bundler/dev-server features; tree shaking is a bundler optimization.
+    "hot reload": "developer",      # bigram — "hot reload dev server", "hot reload vite" → Developer Tools
+    "live reload": "developer",     # bigram — "live reload webpack", "live reload browser" → Developer Tools
+    "hot module": "frontend",       # bigram — "hot module replacement", "hot module reloading" → Frontend Frameworks
+    "tree shaking": "frontend",     # bigram — "tree shaking bundler", "tree shaking webpack" → Frontend Frameworks
+    # Database — "schema migration" routes to developer via "schema"→developer token first.
+    # Schema migrations (Flyway, Liquibase, Prisma Migrate, Atlas) are clearly database tooling.
+    "schema migration": "database", # bigram — overrides "schema"→developer for migration-specific queries
+    # Database — "change data capture" (CDC) routes to raw_first "change" with no mapping.
+    # CDC tools (Debezium, Airbyte CDC, etc.) are database-adjacent data pipeline tooling.
+    "change data": "database",      # bigram — "change data capture", "CDC tool" → Database
 }
 
 _FTS_STOP_WORDS = {
