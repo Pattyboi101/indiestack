@@ -7689,6 +7689,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — "object relational mapper" routes to file via bare "object"→file (for object storage).
     # ORM queries (Prisma, SQLAlchemy, GORM, Diesel) should route to Database, not File Management.
     "object relational": "database",    # bigram — "object relational mapper python" → Database
+    # Database — "column store" routes to frontend via bare "store"→frontend (Zustand/Redux stores).
+    # Column-store database queries (DuckDB, ClickHouse) should route to Database.
+    "column store": "database",         # bigram — "column store database", "column store analytics" → Database
+    # DevOps — "progressive delivery" routes to frontend via bare "progressive"→frontend (PWA).
+    # Progressive delivery (canary/blue-green/feature-flag rollouts) is a DevOps concept.
+    "progressive delivery": "devops",   # bigram — "progressive delivery tool", "progressive delivery platform" → DevOps
+    # AI Dev Tools — "ai pair", "pair programmer", "pair programming" are all UNROUTED.
+    # "ai" alone is intentionally unmapped; bigrams fix ai-coding-assistant queries.
+    "ai pair": "ai dev",                # bigram — "ai pair programmer", "ai pair programming" → AI Dev Tools
+    "pair programmer": "ai dev",        # bigram — "pair programmer tool", "pair programmer vscode" → AI Dev Tools
+    "pair programming": "ai dev",       # bigram — "ai pair programming tool" → AI Dev Tools
 }
 
 _FTS_STOP_WORDS = {

@@ -561,6 +561,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("object relational mapping", "database"),       # bigram form → Database
     # Regression — bare "object" still routes to file for object storage queries
     ("object storage minio", "file"),                # "object"→file still fires for object storage
+    # Routing fix — "column store" routed to frontend via "store"→frontend (Zustand stores)
+    ("column store database", "database"),           # bigram "column store" → Database (DuckDB, ClickHouse)
+    ("column store analytics", "database"),          # bigram form → Database
+    # Regression — bare "column" still unrouted (no mapping), "oriented database" falls through to database
+    ("columnar database clickhouse", "database"),    # "columnar"→database still fires
+    # Routing fix — "progressive delivery" routed to frontend via "progressive"→frontend (PWA)
+    ("progressive delivery tool", "devops"),         # bigram "progressive delivery" → DevOps
+    ("progressive delivery platform", "devops"),     # bigram form → DevOps
+    # Regression — bare "progressive" still routes to frontend for PWA queries
+    ("progressive web app builder", "frontend"),     # "progressive"→frontend still fires for PWA
+    # Routing fix — "ai pair programmer" / "pair programming" was UNROUTED
+    ("ai pair programmer", "ai dev"),                # bigram "ai pair" → AI Dev Tools
+    ("ai pair programming", "ai dev"),               # bigram form → AI Dev Tools
+    ("pair programmer tool", "ai dev"),              # bigram "pair programmer" → AI Dev Tools
+    ("pair programmer vscode extension", "ai dev"),  # bigram form → AI Dev Tools
+    ("pair programming assistant", "ai dev"),        # bigram "pair programming" → AI Dev Tools
 ]
 
 

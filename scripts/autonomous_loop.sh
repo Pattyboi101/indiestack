@@ -270,7 +270,7 @@ BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individu
            Duplicate keys silently override with the last value (Python dict behavior).
            "healthcheck" (line 3426) and "task-queue" (line 6239) are canonical — do not re-add.
 After fixing db.py, run validate_synonyms.py to check for duplicates, then commit.
-After all fixes: python3 scripts/test_search_routing.py should report 192+ tests passing.
+After all fixes: python3 scripts/test_search_routing.py should report 394+ tests passing.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
