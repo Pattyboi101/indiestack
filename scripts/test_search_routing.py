@@ -39,6 +39,14 @@ When hunting for routing gaps, these query forms are historically tricky:
 
 7. Domain/infrastructure tokens — check "registrar", "domain", "nameserver": these
    often have no synonym so raw_first fires.
+
+8. "X lookup / X address" — bare noun queries where the noun is a technical term
+   with no _CAT_SYNONYMS entry. "ip lookup" → raw_first "ip". "country detection"
+   → raw_first "country". Probe: probe the first token of infra/geo queries.
+
+9. "X formatting / X parsing" — utility library queries where the noun carries
+   all the routing weight. "number formatting", "date parsing", "currency format".
+   These live in developer-tools. Probe: "[noun] formatting", "[noun] parsing".
 """
 
 import sys
@@ -695,6 +703,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("landing page builder", "landing"),             # "landing"→landing → Landing Pages category
     ("launch page builder", "landing"),              # "launch"→landing → Landing Pages category
     ("product launch page", "landing"),              # "launch" fires for product launch page queries
+    # Maps & Location — "ip" and "country" tokens (was raw_first with no category boost)
+    ("ip lookup", "maps"),                           # "ip"→maps → Maps & Location (ipapi.co, ipinfo.io)
+    ("ip address api", "maps"),                      # "ip" fires in first position → Maps & Location
+    ("ip geolocation nodejs", "maps"),               # "ip" wins before framework qualifier strips
+    ("country detection", "maps"),                   # "country"→maps → Maps & Location
+    ("country lookup api", "maps"),                  # "country" fires → Maps & Location
+    # DevOps — "nameserver" and "domain" tokens (was raw_first with no category boost)
+    ("nameserver lookup", "devops"),                 # "nameserver"→devops → DevOps & Infrastructure
+    ("nameserver configuration", "devops"),          # "nameserver" fires → DevOps
+    ("domain management", "devops"),                 # "domain"→devops fires before "management"→project
+    ("domain registrar alternative", "devops"),      # "domain"→devops → DevOps & Infrastructure
+    # Developer Tools — "number" token routes number-formatting queries (was raw_first)
+    ("number formatting", "developer"),              # "number"→developer → Developer Tools
+    ("number parsing library", "developer"),         # "number" fires → Developer Tools
 ]
 
 

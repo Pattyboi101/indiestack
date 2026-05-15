@@ -2677,6 +2677,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "map": "maps",
     "geo": "maps",
     "location": "maps",
+    "ip": "maps",           # "ip lookup", "ip address api", "ip geolocation" → Maps & Location (ipapi.co, ipinfo.io)
+    "country": "maps",      # "country detection", "country lookup api" → Maps & Location (IP-based geo tools)
     "serverless": "devops",
     # Caching → moved to dedicated section below (caching category now exists)
     # Named tools → their primary category (fixes "[tool] alternative" queries so
@@ -3305,6 +3307,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DNS — DNS tools and providers live in DevOps & Infrastructure
     "dns": "devops",                # "DNS provider", "DNS management", "DNS server" → DevOps
     "registrar": "devops",          # "domain registrar", "registrar alternative" → DevOps & Infrastructure
+    "nameserver": "devops",         # "nameserver lookup", "nameserver config" → DevOps (was raw_first)
+    "domain": "devops",             # "domain management", "domain name provider" → DevOps (was raw_first)
     # Code formatter — Prettier, Biome, dprint live in testing-tools alongside linters
     "formatter": "testing",         # "code formatter", "js formatter" → Testing Tools
     "format": "testing",            # "code format", "auto-format" → Testing Tools (Biome, Prettier)
@@ -3479,6 +3483,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "plunk": "email",               # Plunk — open-source transactional email (3k★)
     # Schema validation / data modeling
     "schema": "developer",          # "json schema validator", "schema definition" → Developer Tools
+    # Number / currency formatting — numeral.js, accounting.js, Intl.NumberFormat wrappers
+    "number": "developer",          # "number formatting", "number parsing library" → Developer Tools (was raw_first)
     # Frontend — infinite scroll / virtual list patterns
     "infinite": "frontend",         # "infinite scroll", "infinite loading" → Frontend Frameworks
     "virtual": "frontend",          # "virtual list", "virtual scroll", "react-virtual" → Frontend Frameworks
