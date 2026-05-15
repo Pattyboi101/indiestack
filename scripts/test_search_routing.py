@@ -550,6 +550,15 @@ TEST_CASES: list[tuple[str, str]] = [
     # Routing fix — "change data capture" routed to raw_first "change" with no mapping
     ("change data capture", "database"),             # bigram "change data" → Database
     ("change data capture tool", "database"),        # bigram form → Database
+    # Routing fix — "image optimization" routed to media-server via "image"→media token
+    ("image optimization cdn", "file"),             # bigram "image optimization" → File Management
+    ("image optimization library", "file"),         # bigram form → File Management (Sharp, Imgproxy)
+    ("image compress api", "file"),                 # bigram "image compress" → File Management
+    # Routing fix — "design system tokens" routed to authentication via "tokens"→authentication
+    ("design system tokens", "design"),             # bigram "design system" → Design & Creative
+    ("design system components", "design"),         # bigram form → Design & Creative (Storybook DS)
+    ("design token tool", "frontend"),              # bigram "design token" → Frontend Frameworks
+    ("design tokens css", "frontend"),              # bigram "design tokens" → Frontend Frameworks
 ]
 
 

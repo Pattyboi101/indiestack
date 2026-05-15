@@ -7682,6 +7682,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — "change data capture" (CDC) routes to raw_first "change" with no mapping.
     # CDC tools (Debezium, Airbyte CDC, etc.) are database-adjacent data pipeline tooling.
     "change data": "database",      # bigram — "change data capture", "CDC tool" → Database
+    # File Management — "image optimization" routes to media-server via "image"→media token.
+    # Image optimization tools (Imgproxy, Sharp, Squoosh, Thumbor) live in file-management.
+    "image optimization": "file",   # bigram — "image optimization cdn", "image optimization library" → File Management
+    "image compress": "file",       # bigram — "image compression api", "image compress node" → File Management
+    # Design — "design system tokens" routes to authentication via "tokens"→authentication.
+    # CSS design tokens (Style Dictionary, Theo, Cobalt) and design system queries belong in Design.
+    "design system": "design",      # bigram — "design system tokens", "design system components" → Design & Creative
+    "design token": "frontend",     # bigram — "design token tool", "design token style dictionary" → Frontend Frameworks
+    "design tokens": "frontend",    # bigram — "design tokens css", "design tokens figma" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
