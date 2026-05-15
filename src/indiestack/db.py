@@ -7708,6 +7708,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — "pair programming" has no token match; raw_first fires with "pair" (no synonym).
     # Tools like Tuple, CodeTogether, Code With Me are developer workflow tools.
     "pair programming": "developer",    # bigram — "pair programming tool", "pair programming app" → Developer Tools
+    # CLI Tools — "command line interface" raw_first returns "command" with no synonym match.
+    # Bigram "command line" catches queries like "command line interface", "command line tool".
+    "command line": "cli",              # bigram — "command line interface", "command line tool" → CLI Tools
+    # Security — "zero trust network" routes to monitoring via "network"→monitoring token.
+    # Zero Trust architecture tools (Tailscale, Twingate, Cloudflare Access) are security tooling.
+    "zero trust": "security",          # bigram — "zero trust network", "zero trust architecture" → Security Tools
 }
 
 _FTS_STOP_WORDS = {

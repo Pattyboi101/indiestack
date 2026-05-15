@@ -575,6 +575,12 @@ TEST_CASES: list[tuple[str, str]] = [
     # Routing fix — "pair programming" had no mapping; raw_first returned "pair" (no synonym)
     ("pair programming tool", "developer"),         # bigram "pair programming" → Developer Tools
     ("pair programming app", "developer"),          # bigram form → Developer Tools (Tuple, CodeTogether)
+    # Routing fix — "command line interface" had no mapping; raw_first returned "command" (no synonym)
+    ("command line interface", "cli"),              # bigram "command line" → CLI Tools
+    ("command line tool", "cli"),                   # bigram form → CLI Tools
+    # Routing fix — "zero trust network" routed to monitoring via "network"→monitoring
+    ("zero trust network", "security"),             # bigram "zero trust" → Security Tools
+    ("zero trust architecture", "security"),        # bigram form → Security Tools (Tailscale, Twingate)
 ]
 
 
