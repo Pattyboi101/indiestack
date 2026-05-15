@@ -561,6 +561,29 @@ TEST_CASES: list[tuple[str, str]] = [
     ("object relational mapping", "database"),       # bigram form → Database
     # Regression — bare "object" still routes to file for object storage queries
     ("object storage minio", "file"),                # "object"→file still fires for object storage
+    # Routing fixes — 7 thin-category gaps found in May 2026 audit
+    # "seo" token itself was missing — all "seo X" queries fell through to "audit"→logging etc.
+    ("seo audit tool", "seo"),              # "seo"→seo fires before "audit"→logging
+    ("seo ranking factor", "seo"),          # "seo" unigram → SEO Tools
+    ("seo checklist", "seo"),               # "seo" unigram → SEO Tools
+    # Meta tags — "meta" was unmapped, raw_first fired
+    ("meta tags generator", "seo"),         # bigram "meta tags" → SEO Tools
+    ("meta tags nextjs", "seo"),            # bigram form → SEO Tools
+    # XML sitemap — "xml"→developer was firing before "sitemap"→seo
+    ("xml sitemap generator", "seo"),       # bigram "xml sitemap" beats "xml"→developer
+    ("xml sitemap nextjs", "seo"),          # bigram form → SEO Tools
+    # Meeting scheduler — "scheduler"→background was firing wrong for calendar scheduling
+    ("meeting scheduler open source", "scheduling"),  # bigram "meeting scheduler" → Scheduling
+    ("meeting scheduler app", "scheduling"),          # bigram form → Scheduling & Booking
+    # Calendly — brand name unmapped, raw_first fired
+    ("calendly alternative", "scheduling"), # "calendly"→scheduling → Scheduling & Booking
+    ("calendly open source", "scheduling"), # token form → Scheduling & Booking
+    # Help desk — bigram missing, raw_first "help" fired
+    ("help desk software", "support"),      # bigram "help desk" → Customer Support
+    ("help desk open source", "support"),   # bigram form → Customer Support
+    # Coding tutorial — "coding"→ai dev was firing for learning platform queries
+    ("coding tutorial platform", "learning"),  # bigram "coding tutorial" → Learning & Education
+    ("coding tutorial site", "learning"),      # bigram form → Learning & Education
     # Routing fixes — headless UI/component library (bare "headless"→cms was firing; May 2026)
     ("headless ui component", "frontend"),           # bigram "headless ui" beats "headless"→cms
     ("headless ui react", "frontend"),               # bigram form → Frontend Frameworks

@@ -7689,6 +7689,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — "object relational mapper" routes to file via bare "object"→file (for object storage).
     # ORM queries (Prisma, SQLAlchemy, GORM, Diesel) should route to Database, not File Management.
     "object relational": "database",    # bigram — "object relational mapper python" → Database
+    # SEO — "seo" token itself was missing; every "seo X" query fell through to whatever came next
+    "seo": "seo",                       # "seo audit tool", "seo ranking", etc. → SEO Tools
+    # SEO-specific bigrams — compound queries that would otherwise route wrong
+    "meta tags": "seo",                 # "meta tags generator", "meta tags nextjs" → SEO Tools
+    "xml sitemap": "seo",               # bigram beats "xml"→developer for sitemap queries
+    # Scheduling — "meeting" unmapped and "scheduler"→background fires wrong for calendar scheduling
+    "meeting scheduler": "scheduling",  # bigram — "meeting scheduler open source" → Scheduling & Booking
+    "calendly": "scheduling",           # brand token — "calendly alternative" → Scheduling & Booking
+    # Customer support — "help desk" bigram missing
+    "help desk": "support",             # "help desk software", "help desk open source" → Customer Support
+    # Learning — "coding tutorial" bigram overrides "coding"→ai dev for learning queries
+    "coding tutorial": "learning",      # "coding tutorial platform", "coding tutorial site" → Learning
     # Headless UI/component library — bare "headless"→cms fires first; bigrams override to frontend
     "headless ui": "frontend",          # "headless ui component", "headless ui react" → Frontend (Headless UI, Radix, Ark)
     "headless component": "frontend",   # "headless component library", "headless component react" → Frontend
