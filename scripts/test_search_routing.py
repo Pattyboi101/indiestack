@@ -12,6 +12,33 @@ Usage:
     python3 scripts/test_search_routing.py --query "state management"  # test one query
 
 Exit code 0 = all pass, 1 = failures found.
+
+── ROUTING AUDIT PROBE PATTERNS (for autonomous improvement loops) ──────────────
+When hunting for routing gaps, these query forms are historically tricky:
+
+1. "X engine / X orchestrator" — the category for a tool type may differ from
+   the tool's primary verb. "workflow"→ai but "workflow engine"→background.
+   Probe: "[verb] engine [tool]", "[verb] orchestrator [tool]"
+
+2. "headless X" — "headless"→cms fires for most headless queries. Always verify:
+   "headless browser", "headless chrome", "headless test" → testing
+   "headless ui", "headless component" → frontend
+   "headless scraper", "headless web" → developer
+   "headless cms" → cms (correct, the regression guard)
+
+3. Brand abbreviations — verify short abbrevs have their own token: "og" (open
+   graph), "mcp", "cdn", "dns". If missing, "raw_first" fires with no category boost.
+
+4. "rich X" — "rich"→cli fires for Python Rich library; "rich text" must override.
+
+5. "workflow" category split — automation tools (n8n/Make/Zapier)→ai, but engine/
+   orchestrator/runtime tools (Temporal/Inngest/Restate)→background.
+
+6. "open X Y" — "open" is in _FTS_STOP_WORDS, so "open graph" can't form a bigram.
+   Must use the bare token ("og") or compound form ("opengraph") instead.
+
+7. Domain/infrastructure tokens — check "registrar", "domain", "nameserver": these
+   often have no synonym so raw_first fires.
 """
 
 import sys
