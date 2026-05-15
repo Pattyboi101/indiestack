@@ -683,6 +683,18 @@ TEST_CASES: list[tuple[str, str]] = [
     # Social Media — "activity pub" bigram routes ActivityPub server queries
     ("activity pub server", "social"),               # bigram "activity pub" → Social Media
     ("activity pub implementation", "social"),       # bigram form → Social Media
+    # DevOps — "content delivery network" bigram overrides "content"→cms
+    ("content delivery network", "devops"),          # bigram "content delivery" → DevOps (CDN tools)
+    ("content delivery cdn", "devops"),              # bigram form → DevOps & Infrastructure
+    # Regression — bare "content" still routes to cms
+    ("content management system", "cms"),            # "content"→cms still fires for CMS queries
+    # Background Jobs — "reverse etl" bigram overrides "reverse"→devops
+    ("reverse etl census", "background"),            # bigram "reverse etl" → Background Jobs
+    ("reverse etl tool", "background"),              # bigram form → Background Jobs
+    # Landing Pages — "landing" and "launch" tokens route page builder queries
+    ("landing page builder", "landing"),             # "landing"→landing → Landing Pages category
+    ("launch page builder", "landing"),              # "launch"→landing → Landing Pages category
+    ("product launch page", "landing"),              # "launch" fires for product launch page queries
 ]
 
 

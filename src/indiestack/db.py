@@ -7745,6 +7745,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Social Media — "activity pub" (ActivityPub protocol) has no single-token synonym.
     # ActivityPub servers (Mastodon, Misskey, Lemmy, PeerTube) live in Social Media category.
     "activity pub": "social",              # "activity pub server", "activitypub implementation" → Social Media
+    # DevOps — "content delivery network" fires "content"→cms before reaching "delivery"→devops.
+    # Bigram override so CDN queries (BunnyCDN, Fastly, Cloudflare CDN) reach DevOps & Infrastructure.
+    "content delivery": "devops",         # "content delivery network", "content delivery cdn" → DevOps
+    # Background Jobs — "reverse etl" fires "reverse"→devops (intended for "reverse proxy").
+    # Reverse ETL tools (Census, Hightouch, Polytomic) live in Background Jobs (data pipelines).
+    "reverse etl": "background",          # "reverse etl census", "reverse etl tool" → Background Jobs
+    # Landing Pages — "landing" and "launch" are unmapped; raw_first fires for common page queries.
+    "landing": "landing",                 # "landing page builder", "landing page template" → Landing Pages
+    "launch": "landing",                  # "launch page builder", "product launch page" → Landing Pages
 }
 
 _FTS_STOP_WORDS = {
