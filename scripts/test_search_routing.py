@@ -559,6 +559,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("design system components", "design"),         # bigram form → Design & Creative (Storybook DS)
     ("design token tool", "frontend"),              # bigram "design token" → Frontend Frameworks
     ("design tokens css", "frontend"),              # bigram "design tokens" → Frontend Frameworks
+    # Routing fix — "static analysis" routed to frontend via "static"→frontend (SSG context)
+    ("static analysis tool", "security"),           # bigram "static analysis" → Security Tools
+    ("static analysis python", "security"),         # bigram form → Security Tools (Semgrep, Bandit)
+    # Routing fix — "penetration testing" routed to testing-tools via "testing" token
+    ("penetration testing tool", "security"),       # bigram "penetration testing" → Security Tools
+    ("penetration testing framework", "security"),  # bigram form → Security Tools
+    # Routing fix — "dependency scanning" routed to developer via "dependency"→developer
+    ("dependency scanning ci", "security"),         # bigram "dependency scanning" → Security Tools
+    ("dependency scanning npm", "security"),        # bigram form → Security Tools (Snyk, Trivy)
+    ("dependency audit tool", "security"),          # bigram "dependency audit" → Security Tools
+    # Routing fix — "crypto payment" routed to security via "crypto"→security (cryptography context)
+    ("crypto payment processor", "payments"),       # bigram "crypto payment" → Payments
+    ("accept crypto payments", "payments"),         # bigram "crypto payments" → Payments
+    # Routing fix — "pair programming" had no mapping; raw_first returned "pair" (no synonym)
+    ("pair programming tool", "developer"),         # bigram "pair programming" → Developer Tools
+    ("pair programming app", "developer"),          # bigram form → Developer Tools (Tuple, CodeTogether)
 ]
 
 

@@ -7691,6 +7691,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "design system": "design",      # bigram — "design system tokens", "design system components" → Design & Creative
     "design token": "frontend",     # bigram — "design token tool", "design token style dictionary" → Frontend Frameworks
     "design tokens": "frontend",    # bigram — "design tokens css", "design tokens figma" → Frontend Frameworks
+    # Security — "static analysis" routes to frontend via "static"→frontend (SSG context).
+    # SAST tools (SonarQube, Semgrep, CodeQL, Snyk Code) are security tooling.
+    "static analysis": "security",  # bigram — "static analysis tool", "static analysis python" → Security Tools
+    # Security — "penetration testing" routes to testing-tools via "testing" token.
+    # Pentest tools (Metasploit, OWASP ZAP, Burp Suite alternatives) live in security-tools.
+    "penetration testing": "security",  # bigram — "penetration testing tool", "pentest framework" → Security Tools
+    # Security — "dependency scanning" routes to developer via "dependency"→developer token.
+    # Dependency vulnerability scanners (Snyk, Trivy, OWASP DC) belong in security-tools.
+    "dependency scanning": "security",  # bigram — "dependency scanning ci", "dependency scanning npm" → Security Tools
+    "dependency audit": "security",     # bigram — "dependency audit tool", "npm dependency audit" → Security Tools
+    # Payments — "crypto payment" routes to security via "crypto"→security (cryptography context).
+    # Cryptocurrency payment processors (BTCPay Server, OpenNode, Coinbase Commerce) are payments.
+    "crypto payment": "payments",   # bigram — "crypto payment processor", "crypto payment gateway" → Payments
+    "crypto payments": "payments",  # bigram — "crypto payments integration", "accept crypto payments" → Payments
+    # Developer Tools — "pair programming" has no token match; raw_first fires with "pair" (no synonym).
+    # Tools like Tuple, CodeTogether, Code With Me are developer workflow tools.
+    "pair programming": "developer",    # bigram — "pair programming tool", "pair programming app" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
