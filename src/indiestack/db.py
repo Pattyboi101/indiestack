@@ -3304,6 +3304,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rpc": "api",                   # "rpc framework", "rpc protocol" → API Tools (Hono, tRPC, gRPC)
     # DNS — DNS tools and providers live in DevOps & Infrastructure
     "dns": "devops",                # "DNS provider", "DNS management", "DNS server" → DevOps
+    "registrar": "devops",          # "domain registrar", "registrar alternative" → DevOps & Infrastructure
     # Code formatter — Prettier, Biome, dprint live in testing-tools alongside linters
     "formatter": "testing",         # "code formatter", "js formatter" → Testing Tools
     "format": "testing",            # "code format", "auto-format" → Testing Tools (Biome, Prettier)
@@ -7029,6 +7030,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — LTX Video (Lightricks; open-source diffusion video model, 5k★)
     "ltxvideo": "ai",              # LTX Video — "ltxvideo alternative", "ltx video model" → AI & Automation
     "ltx-video": "ai",             # hyphenated — "ltx-video setup", "ltx-video inference" → AI & Automation
+    # Frontend Frameworks — "rich text" bigram must fire BEFORE "rich"→cli single token.
+    # Rich text editors (TipTap, ProseMirror, Lexical, Quill, Slate) are Frontend components.
+    "rich text": "frontend",            # bigram — "rich text editor", "rich text component" → Frontend Frameworks
     # CLI Tools — Rich Python terminal formatting library (Textualize/rich, 50k★; very high query volume)
     "rich": "cli",                  # Rich — "rich alternative", "rich python console", "rich terminal" → CLI Tools
     # Developer Tools — crawl4ai LLM-ready AI web crawler (unclecode/crawl4ai, 38k★; fast-growing in 2026)

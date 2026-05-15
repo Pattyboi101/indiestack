@@ -630,6 +630,14 @@ TEST_CASES: list[tuple[str, str]] = [
     ("syntax highlighting react", "documentation"),  # bigram form → Documentation
     # Regression — bare "highlight" still routes to monitoring (Highlight.io) when no overriding bigram
     ("highlight error tracking", "monitoring"),      # "highlight"→monitoring fires (no overriding bigram)
+    # Frontend — "rich text" bigram overrides "rich"→cli for text editor queries
+    ("rich text editor", "frontend"),            # bigram "rich text" → Frontend (TipTap, ProseMirror, Lexical)
+    ("rich text component react", "frontend"),   # bigram form → Frontend Frameworks
+    # Regression — bare "rich" still routes to CLI (Rich Python library)
+    ("rich python terminal", "cli"),             # "rich"→cli still fires for Rich library queries
+    # DevOps — "registrar" token routes domain registrar queries to DevOps & Infrastructure
+    ("domain registrar alternative", "devops"),  # "registrar"→devops → DevOps & Infrastructure
+    ("domain name registrar", "devops"),         # "registrar" fires in 3rd position → DevOps
     # Background Jobs — "workflow engine/orchestrator" bigrams override "workflow"→ai
     ("workflow engine temporal", "background"),      # bigram "workflow engine" → Background Jobs
     ("workflow engine open source", "background"),   # bigram form → Background Jobs
