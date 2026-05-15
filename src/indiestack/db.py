@@ -7727,6 +7727,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Syntax highlighting libraries (Shiki, Prism.js) live in the Documentation category.
     "syntax highlight": "documentation",   # "syntax highlight library", "syntax highlight react" → Documentation
     "syntax highlighting": "documentation",# "syntax highlighting tool", "syntax highlighting react" → Documentation
+    # Background Jobs — "workflow engine/orchestrator" must NOT route to AI & Automation.
+    # "workflow"→ai fires for n8n/Make/Zapier queries (correct). But "workflow engine" and
+    # "workflow orchestrator" refer to durable execution engines (Temporal, Inngest, Restate)
+    # which live in Background Jobs. Bigrams fire before the single "workflow" token.
+    "workflow engine": "background",        # "workflow engine temporal", "workflow engine open source" → Background Jobs
+    "workflow orchestrator": "background",  # "workflow orchestrator temporal", "workflow orchestrator" → Background Jobs
+    # Developer Tools — "headless scraper" / "headless web" routes to cms via bare "headless"→cms.
+    # Web scrapers (Crawlee, Playwright-extra, Apify) live in Developer Tools.
+    "headless scraper": "developer",        # "headless scraper puppeteer", "headless scraper library" → Developer Tools
+    "headless web": "developer",            # "headless web scraper", "headless web browser" → Developer Tools
+    # Social Media — "activity pub" (ActivityPub protocol) has no single-token synonym.
+    # ActivityPub servers (Mastodon, Misskey, Lemmy, PeerTube) live in Social Media category.
+    "activity pub": "social",              # "activity pub server", "activitypub implementation" → Social Media
 }
 
 _FTS_STOP_WORDS = {

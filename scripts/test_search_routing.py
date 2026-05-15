@@ -630,6 +630,21 @@ TEST_CASES: list[tuple[str, str]] = [
     ("syntax highlighting react", "documentation"),  # bigram form → Documentation
     # Regression — bare "highlight" still routes to monitoring (Highlight.io) when no overriding bigram
     ("highlight error tracking", "monitoring"),      # "highlight"→monitoring fires (no overriding bigram)
+    # Background Jobs — "workflow engine/orchestrator" bigrams override "workflow"→ai
+    ("workflow engine temporal", "background"),      # bigram "workflow engine" → Background Jobs
+    ("workflow engine open source", "background"),   # bigram form → Background Jobs
+    ("workflow orchestrator temporal", "background"),# bigram "workflow orchestrator" → Background Jobs
+    # Regression — bare "workflow" still routes to ai for automation tool queries
+    ("workflow automation n8n", "ai"),               # "workflow"→ai still fires (no overriding bigram)
+    # Developer Tools — "headless scraper" bigrams override "headless"→cms
+    ("headless scraper puppeteer", "developer"),     # bigram "headless scraper" → Developer Tools
+    ("headless scraper library", "developer"),       # bigram form → Developer Tools
+    ("headless web scraper", "developer"),           # bigram "headless web" → Developer Tools
+    # Regression — "headless browser" still routes to testing (not developer)
+    ("headless browser playwright", "testing"),      # "headless browser" bigram → Testing Tools
+    # Social Media — "activity pub" bigram routes ActivityPub server queries
+    ("activity pub server", "social"),               # bigram "activity pub" → Social Media
+    ("activity pub implementation", "social"),       # bigram form → Social Media
 ]
 
 
