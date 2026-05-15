@@ -616,6 +616,20 @@ TEST_CASES: list[tuple[str, str]] = [
     # "micro frontend" bigram works ("frontend" is NOT a stop word)
     ("micro frontend framework", "frontend"),        # bigram "micro frontend" → Frontend Frameworks
     ("micro frontend react", "frontend"),            # bigram form → Frontend Frameworks
+    # Auth routing fixes — "user management" was routing to project via "management"→project
+    ("user management system", "authentication"),    # bigram "user management" → Authentication
+    ("user management sdk", "authentication"),       # bigram form → Authentication
+    ("account management portal", "authentication"), # bigram "account management" → Authentication
+    # CIAM term — no token matched, now explicitly mapped
+    ("ciam solution", "authentication"),             # "ciam" token → Authentication
+    ("open source ciam", "authentication"),          # "ciam" fires in 3rd position → Authentication
+    # Regression — "user authentication" still routes correctly via second token
+    ("user authentication library", "authentication"), # "authentication" fires → Authentication (not broken)
+    # Documentation routing fix — "syntax highlight" was routing to monitoring via "highlight"→monitoring
+    ("syntax highlight library", "documentation"),   # bigram "syntax highlight" → Documentation
+    ("syntax highlighting react", "documentation"),  # bigram form → Documentation
+    # Regression — bare "highlight" still routes to monitoring (Highlight.io) when no overriding bigram
+    ("highlight error tracking", "monitoring"),      # "highlight"→monitoring fires (no overriding bigram)
 ]
 
 

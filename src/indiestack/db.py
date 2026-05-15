@@ -7717,6 +7717,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Note: "micro service" can't be a bigram because "service" is in _FTS_STOP_WORDS —
     # space-separated "micro service" users should use compound "microservice" (already mapped).
     "micro frontend": "frontend",       # "micro frontend framework", "micro frontend react" → Frontend Frameworks
+    # Auth — "user management" and "account management" route to project via "management"→project.
+    # User/account management tools (Clerk, Auth0, WorkOS, Logto) live in Authentication.
+    "user management": "authentication",   # "user management system", "user management sdk" → Authentication
+    "account management": "authentication",# "account management portal", "user account management" → Authentication
+    # Auth — CIAM (Customer Identity and Access Management) term; no single token matches
+    "ciam": "authentication",              # "ciam solution", "ciam platform", "open source ciam" → Authentication
+    # Documentation — "syntax highlight" routes to monitoring via bare "highlight"→monitoring (Highlight.io).
+    # Syntax highlighting libraries (Shiki, Prism.js) live in the Documentation category.
+    "syntax highlight": "documentation",   # "syntax highlight library", "syntax highlight react" → Documentation
+    "syntax highlighting": "documentation",# "syntax highlighting tool", "syntax highlighting react" → Documentation
 }
 
 _FTS_STOP_WORDS = {
