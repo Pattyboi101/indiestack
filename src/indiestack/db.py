@@ -5356,8 +5356,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — TruLens LLM application evaluation with feedback functions
     "trulens": "ai",                # TruLens — LLM app evaluation with feedback functions (3k★) → AI & Automation
     # AI — EleutherAI lm-evaluation-harness (canonical open LLM benchmark runner)
-    "lm-eval": "ai",                # lm-eval — EleutherAI LM evaluation harness; "lm-eval alternative" → AI & Automation
-    "lmeval": "ai",                 # compound form — "lmeval benchmarks", "lmeval harness" → AI & Automation
+    # "lm-eval" and "lmeval" are re-mapped to "standard" (AI Standards) below — entries removed here
+    # to prevent Python's silent duplicate-key override (last value wins; "standard" is correct target).
     # Node.js runtime — common query prefix for framework/server/backend queries
     # "node" and "nodejs" are in _FRAMEWORK_QUERY_TERMS for frameworks_tested filter,
     # but NOT in _CAT_SYNONYMS, so they get no category boost. Adding here so
@@ -6549,6 +6549,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Analytics — behavior analytics / session recording tools
     "mouseflow": "analytics",       # Mouseflow — heatmaps + session recording; "mouseflow alternative" → Analytics
     "smartlook": "analytics",       # Smartlook — session recording + event analytics; "smartlook alternative" → Analytics
+    # Invoicing — expense/bookkeeping/timesheet terms fell to raw_first (no synonyms mapped).
+    # Expense tools (Wave, Lunch Money), bookkeeping (Beancount, GnuCash, ledger-cli),
+    # and timesheet tools live in Invoicing & Billing.
+    # Note: "time tracking" bigram can't fire — "tracking" is in _FTS_STOP_WORDS.
+    # "time"→api (line 2888) must stay to reinforce real-time routing; left as known gap.
+    "expense": "invoicing",            # "expense tracking", "expense report", "expense management" → Invoicing
+    "reimbursement": "invoicing",      # "expense reimbursement software", "reimbursement tool" → Invoicing
+    "bookkeeping": "invoicing",        # "bookkeeping software open source", "bookkeeping app" → Invoicing
+    "timesheet": "invoicing",          # "timesheet management", "timesheet tracking app" → Invoicing
+    # Creative Tools — music, MIDI, DAW, pixel art, 3D modeling fell to raw_first.
+    # These terms appear in NEED_MAPPINGS for creative-tools but were absent from _CAT_SYNONYMS.
+    # Indie creative software (LMMS, Ardour, Aseprite, Blender, Sonic Pi) lives in Creative Tools.
+    "music": "creative",               # "music production tool", "music software indie" → Creative Tools
+    "midi": "creative",                # "midi controller software", "midi library python" → Creative Tools
+    "daw": "creative",                 # "daw open source", "daw alternative" → Creative Tools
+    "music production": "creative",    # bigram — compound form; bare "audio"→media fires instead
+    "pixel art": "creative",           # bigram — avoids ambiguity with bare "pixel" (Facebook Pixel→analytics)
+    "3d modeling": "creative",         # bigram — "3d modeling open source", "3d modeling tool" → Creative Tools
 }
 
 _FTS_STOP_WORDS = {

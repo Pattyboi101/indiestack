@@ -189,6 +189,20 @@ TEST_CASES: list[tuple[str, str]] = [
     # LLM cache bigrams (bigram lookup added db.py pass 170)
     ("semantic cache llm", "caching"),
     ("llm cache layer", "caching"),
+    # Invoicing — expense/bookkeeping/timesheet terms (173rd pass)
+    ("expense tracking open source", "invoicing"),   # "expense"→invoicing
+    ("expense report tool", "invoicing"),            # fires before "report"→analytics
+    ("bookkeeping software indie", "invoicing"),     # "bookkeeping"→invoicing
+    ("reimbursement software open source", "invoicing"), # "reimbursement"→invoicing
+    ("timesheet tracking app", "invoicing"),         # "timesheet"→invoicing
+    ("open source accounting software", "invoicing"), # "accounting"→invoicing (regression guard)
+    # Creative Tools — music/MIDI/DAW/pixel-art/3D-modeling (173rd pass)
+    ("music production open source", "creative"),    # "music"→creative
+    ("midi library python", "creative"),             # "midi"→creative
+    ("daw open source alternative", "creative"),     # "daw"→creative
+    ("pixel art open source", "creative"),           # bigram "pixel art"→creative
+    ("3d modeling open source", "creative"),         # bigram "3d modeling"→creative
+    ("video streaming open source", "media"),        # regression: "video"→media unchanged
 ]
 
 
