@@ -47,6 +47,16 @@ When hunting for routing gaps, these query forms are historically tricky:
 9. "X formatting / X parsing" — utility library queries where the noun carries
    all the routing weight. "number formatting", "date parsing", "currency format".
    These live in developer-tools. Probe: "[noun] formatting", "[noun] parsing".
+
+10. "X map" compound analytics terms — "map"→maps fires for the second word, but
+    visual analytics tools use "map" as a noun modifier ("heat map", "click map",
+    "scroll map"). Need bigrams to override. Always probe: "heat map", "click map",
+    "scroll map", "[visual] map [tool]". Similarly, "X graph" vs "graph database".
+
+11. "X click" / "X drag" / "X rich" — single-word tokens with popular developer tools:
+    "click"→cli (Click Python), "drag"→? "rich"→cli (Rich library). Compound forms like
+    "click map", "rich text", "drag drop" need bigrams to override. Probe any analytics
+    or UI term whose first token collides with a named-tool synonym.
 """
 
 import sys
