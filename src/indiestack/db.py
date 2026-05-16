@@ -7769,6 +7769,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "heat maps": "analytics",            # plural — "heat maps user behavior" → Analytics & Metrics
     "scroll map": "analytics",           # "scroll map tool", "scroll map heatmap" → Analytics & Metrics
     "click map": "analytics",            # "click map tool", "click map heatmap" → Analytics & Metrics (beats "click"→cli)
+    # AI — LLM token economics: "token"→authentication fires first for bare "token" queries.
+    # "token usage" and "token count" are AI/LLM concerns (Helicone, LangSmith, OpenMeter).
+    # Bigrams override "token"→authentication so these land in AI & Automation.
+    "token usage": "ai",                 # bigram — "token usage tracking", "token usage api" → AI & Automation
+    "token count": "ai",                 # bigram — "token count library", "token count openai" → AI & Automation
+    # AI — "content moderation" routes to CMS via bare "content"→cms token.
+    # Content moderation tools (Perspective API, Hive, Moderation API) live in AI & Automation.
+    "content moderation": "ai",          # bigram — "content moderation api", "content moderation llm" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

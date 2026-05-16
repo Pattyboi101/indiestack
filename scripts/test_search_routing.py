@@ -745,6 +745,18 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — "heatmap" (one word) and "hotjar" still route to analytics
     ("heatmap tool", "analytics"),                   # "heatmap"→analytics single token (unchanged)
     ("hotjar alternative", "analytics"),             # "hotjar"→analytics (unchanged)
+    # AI — LLM token economics: "token usage" / "token count" were routing to Authentication
+    # via bare "token"→authentication. Bigrams fire first so these land in AI & Automation.
+    ("token usage api", "ai"),                       # bigram "token usage" → AI & Automation
+    ("token usage tracking", "ai"),                  # bigram fires; "tracking" is a stop word → AI
+    ("token count library", "ai"),                   # bigram "token count" → AI & Automation
+    ("token count openai", "ai"),                    # "token count" bigram beats "token"→auth
+    # AI — "content moderation" was routing to CMS via bare "content"→cms token
+    ("content moderation api", "ai"),                # bigram "content moderation" → AI & Automation
+    ("content moderation llm", "ai"),                # bigram fires before "content"→cms
+    # Regression — bare "token" for auth tokens still routes to Authentication
+    ("token refresh", "authentication"),             # "token"→authentication (no bigram, unchanged)
+    ("access token", "authentication"),              # "token"→authentication (unchanged)
 ]
 
 
