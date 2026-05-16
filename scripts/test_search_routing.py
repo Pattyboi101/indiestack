@@ -211,6 +211,17 @@ TEST_CASES: list[tuple[str, str]] = [
     # Analytics — data quality / lineage bigrams (174th pass)
     ("data quality tool", "analytics"),              # bigram "data quality"→analytics (Great Expectations, Soda)
     ("data lineage tool", "analytics"),              # bigram "data lineage"→analytics (OpenLineage, DataHub)
+    # AI — "feature store" spaced bigram (175th pass): "feature"→feature-flags fires first without bigram
+    ("feature store ml", "ai"),                      # bigram "feature store"→ai (Feast, Tecton, Hopsworks)
+    ("feature store python", "ai"),                  # bigram fires before "feature"→feature-flags single token
+    # Regression — bare "feature" still routes to Feature Flags
+    ("feature flag react", "feature"),               # "feature"→feature-flags unchanged
+    # DevOps — "blue green" spaced bigram (175th pass): "bluegreen" compound exists but agents use spaces
+    ("blue green deployment", "devops"),             # bigram "blue green"→devops (Argo Rollouts, Spinnaker)
+    ("blue green release", "devops"),                # bigram fires before raw_first "blue"
+    # DevOps — rolling deployment strategies (175th pass): "rolling" has no single-token mapping
+    ("rolling update kubernetes", "devops"),         # bigram "rolling update"→devops
+    ("rolling deploy strategy", "devops"),           # bigram "rolling deploy"→devops
 ]
 
 

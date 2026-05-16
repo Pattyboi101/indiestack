@@ -6580,6 +6580,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DataHub lineage, Atlan). "data" has no mapping; second tokens also unmapped → raw_first.
     "data quality": "analytics",        # bigram — "data quality tool", "data quality dbt" → Analytics & Metrics
     "data lineage": "analytics",        # bigram — "data lineage tool", "open source data lineage" → Analytics & Metrics
+    # AI — "feature store" (spaced) overrides bare "feature"→feature-flags which fires first.
+    # ML feature stores (Feast, Tecton, Hopsworks) live in AI & Automation, not Feature Flags.
+    # The hyphenated form "feature-store"→ai exists; this covers the space-separated query form.
+    "feature store": "ai",               # bigram — "feature store ml", "feature store python" → AI & Automation
+    # DevOps — "blue green" (space-separated) deployment strategy. "bluegreen" compound exists but
+    # agents typically write it as two words. "blue" alone has no synonym → raw_first fires.
+    "blue green": "devops",              # bigram — "blue green deployment", "blue green release" → DevOps
+    # DevOps — "rolling update" / "rolling deploy" deployment strategies (Kubernetes, Spinnaker).
+    # "rolling" has no single-token synonym → raw_first fires; "update"/"deploy" are common non-mapped words.
+    "rolling update": "devops",          # bigram — "rolling update kubernetes", "rolling update strategy" → DevOps
+    "rolling deploy": "devops",          # bigram — "rolling deploy tool", "rolling deployment manager" → DevOps
 }
 
 _FTS_STOP_WORDS = {
