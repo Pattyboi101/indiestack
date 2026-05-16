@@ -203,6 +203,14 @@ TEST_CASES: list[tuple[str, str]] = [
     ("pixel art open source", "creative"),           # bigram "pixel art"→creative
     ("3d modeling open source", "creative"),         # bigram "3d modeling"→creative
     ("video streaming open source", "media"),        # regression: "video"→media unchanged
+    # Database — data storage sub-domain bigrams (174th pass)
+    ("data lake storage", "database"),               # bigram "data lake"→database (LakeFS, Delta Lake)
+    ("open source data lake", "database"),           # "open"/"source" stop words; bigram fires on remaining
+    ("time series data", "database"),                # bigram "time series"→database (TimescaleDB, InfluxDB)
+    ("column store database", "database"),           # bigram "column store"→database (ClickHouse, DuckDB)
+    # Analytics — data quality / lineage bigrams (174th pass)
+    ("data quality tool", "analytics"),              # bigram "data quality"→analytics (Great Expectations, Soda)
+    ("data lineage tool", "analytics"),              # bigram "data lineage"→analytics (OpenLineage, DataHub)
 ]
 
 

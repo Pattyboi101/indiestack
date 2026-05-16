@@ -6567,6 +6567,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "music production": "creative",    # bigram — compound form; bare "audio"→media fires instead
     "pixel art": "creative",           # bigram — avoids ambiguity with bare "pixel" (Facebook Pixel→analytics)
     "3d modeling": "creative",         # bigram — "3d modeling open source", "3d modeling tool" → Creative Tools
+    # Database — data storage sub-domains where "data" has no synonym and the second token also
+    # lacks a mapping, so raw_first fires with no category boost.
+    # Delta Lake, Apache Iceberg, LakeFS → Database; "lake" alone has no mapping.
+    "data lake": "database",            # bigram — "data lake storage", "open source data lake" → Database
+    # TimescaleDB, InfluxDB, QuestDB, VictoriaMetrics — spaced form not covered by "timeseries"
+    # and "time-series" single-token entries (those only match when written without spaces).
+    "time series": "database",          # bigram — "time series data", "time series monitoring" → Database
+    # ClickHouse, DuckDB — "columnar"→database exists, but "column store" bigram was missing.
+    "column store": "database",         # bigram — "column store database", "column store analytics" → Database
+    # Analytics — data quality / lineage tools (Great Expectations, Soda Core, OpenLineage,
+    # DataHub lineage, Atlan). "data" has no mapping; second tokens also unmapped → raw_first.
+    "data quality": "analytics",        # bigram — "data quality tool", "data quality dbt" → Analytics & Metrics
+    "data lineage": "analytics",        # bigram — "data lineage tool", "open source data lineage" → Analytics & Metrics
 }
 
 _FTS_STOP_WORDS = {
