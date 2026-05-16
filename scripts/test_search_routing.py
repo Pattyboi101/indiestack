@@ -189,6 +189,19 @@ TEST_CASES: list[tuple[str, str]] = [
     # LLM cache bigrams (bigram lookup added db.py pass 170)
     ("semantic cache llm", "caching"),
     ("llm cache layer", "caching"),
+    # Code quality / static analysis routing (added May 2026)
+    # "static"→frontend breaks "static analysis tool"; bigram overrides
+    ("static analysis tool", "testing"),             # bigram "static analysis" → Testing Tools
+    ("static analysis sonarqube", "testing"),        # bigram fires for tool-name query
+    ("code smell detection", "testing"),             # bigram "code smell" → Testing Tools
+    ("technical debt tool", "testing"),              # bigram "technical debt" → Testing Tools
+    ("code complexity metric", "testing"),           # bigram "code complexity" → Testing Tools
+    ("code climate alternative", "testing"),         # bigram "code climate" → Testing Tools
+    ("code scanning tool", "security"),              # bigram "code scanning" → Security (SAST)
+    ("software composition analysis", "security"),   # "software" stripped → bigram "composition analysis"
+    ("sca scanner", "security"),                     # "sca" single token → Security Tools
+    # Regression — bare "static" still routes to frontend (static site generators)
+    ("static site generator", "frontend"),           # "static"→frontend (unchanged)
 ]
 
 

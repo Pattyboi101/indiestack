@@ -6549,6 +6549,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Analytics — behavior analytics / session recording tools
     "mouseflow": "analytics",       # Mouseflow — heatmaps + session recording; "mouseflow alternative" → Analytics
     "smartlook": "analytics",       # Smartlook — session recording + event analytics; "smartlook alternative" → Analytics
+    # Testing Tools — code quality / static analysis queries route to wrong categories.
+    # "static"→frontend fires for "static site generator" (correct) but breaks "static analysis tool".
+    # "code" alone has no synonym so raw_first fires for "code smell", "code complexity" etc.
+    # Bigrams fire before single tokens so these land in Testing Tools (SonarQube, DeepSource, Code Climate).
+    "static analysis": "testing",       # "static analysis tool", "static analysis sonarqube" → Testing Tools
+    "static-analysis": "testing",       # hyphenated — "static-analysis linter", "static-analysis python" → Testing Tools
+    "code smell": "testing",            # "code smell detection", "code smell refactor" → Testing Tools
+    "code-smell": "testing",            # hyphenated form → Testing Tools
+    "technical debt": "testing",        # "technical debt tool", "technical debt tracker" → Testing Tools
+    "technical-debt": "testing",        # hyphenated form → Testing Tools
+    "code complexity": "testing",       # "code complexity metric", "code complexity analysis" → Testing Tools
+    "code climate": "testing",          # "code climate alternative", "code climate review" → Testing Tools
+    "code scanning": "security",        # "code scanning tool", "code scanning github" → Security (SAST)
+    # Security — "software composition analysis" (SCA): "software" is a stop word → stripped.
+    # Remaining tokens "composition" + "analysis" form the bigram. SCA tools (Snyk, FOSSA, Mend) → Security.
+    "composition analysis": "security", # bigram after stop-word strip — "software composition analysis" → Security
+    "sca": "security",                  # SCA abbreviation — "sca tool", "sca scanner" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
