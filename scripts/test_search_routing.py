@@ -847,6 +847,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("cookie consent gdpr", "security"),             # bigram fires before "cookie"→authentication
     # Regression — bare "cookie" still routes to Authentication (session/token queries)
     ("cookie session management", "authentication"), # "cookie"→authentication (unchanged)
+    # Creative Tools — video editor / audio production / pixel art routing fixes (May 2026)
+    ("video editor open source", "creative"),        # bigram "video editor" overrides "video"→media
+    ("video editing software linux", "creative"),    # bigram "video editing" overrides "video"→media
+    ("daw software alternative", "creative"),        # "daw" → Creative Tools (was raw_first)
+    ("digital audio workstation", "creative"),       # bigram "digital audio" overrides "audio"→media
+    ("music production software", "creative"),       # bigram "music production" (was raw_first "music")
+    ("pixel art editor", "creative"),                # bigram "pixel art" overrides raw_first "pixel"
+    ("aseprite alternative", "creative"),            # "aseprite" → Creative Tools (was raw_first)
+    # Regression — bare "video" still routes to Media Servers (jellyfin, Plex queries)
+    ("video streaming server", "media"),             # "video"→media (unchanged)
+    # Creative Tools — whiteboard now routes to "creative" (boosts Creative Tools + Design & Creative)
+    ("whiteboard tool", "creative"),                 # "whiteboard"→creative (was "design"-only)
+    ("digital whiteboard open source", "creative"),  # "whiteboard"→creative via second token position
+    # Newsletters & Content — brand tools previously returning raw_first with no category boost
+    ("writefreely alternative", "newsletters"),      # "writefreely" → Newsletters & Content
+    ("audiobookshelf alternative", "newsletters"),   # "audiobookshelf" → Newsletters & Content
+    ("wallabag alternative", "newsletters"),         # "wallabag" → Newsletters & Content
+    # Customer Support — "contact center" bigram (bare "contact" is unmapped)
+    ("contact center software", "support"),          # bigram "contact center" → Customer Support
+    ("open source contact center", "support"),       # bigram fires before raw_first "open"
 ]
 
 

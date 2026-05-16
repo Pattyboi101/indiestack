@@ -6235,8 +6235,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "collaboration": "api",         # "real-time collaboration API", "collaboration SDK" → API Tools (Liveblocks, PartyKit)
     "multiplayer": "api",           # "multiplayer backend", "multiplayer game server" → API Tools (Liveblocks, Ably)
     "multi-player": "api",          # hyphenated — "multi-player sync", "multi-player realtime" → API Tools
-    # Whiteboard / infinite canvas — Excalidraw, tldraw live in Design & Creative
-    "whiteboard": "design",         # "whiteboard tool", "digital whiteboard", "online whiteboard" → Design & Creative
+    # Whiteboard / infinite canvas — Excalidraw, tldraw live in Creative Tools (not just Design & Creative)
+    # "creative" → LIKE '%creative%' boosts BOTH Creative Tools AND Design & Creative; "design" only boosts the latter
+    "whiteboard": "creative",       # "whiteboard tool", "digital whiteboard", "online whiteboard" → Creative Tools + Design & Creative
     "tldraw": "design",             # tldraw — infinite canvas whiteboard SDK; "tldraw alternative" → Design & Creative
     # Key-value store — hyphenated form (kv/keyvalue/inmemory already mapped; key-value wasn't)
     "key-value": "caching",         # "key-value store", "key-value database", "key-value cache" → Caching (Redis, Upstash)
@@ -7812,6 +7813,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Security — "cookie consent" overrides bare "cookie" → authentication for consent/GDPR queries.
     # Cookie consent banners (Cookiebot, CookieYes, Axeptio) are privacy/compliance tools → Security.
     "cookie consent": "security",       # bigram — "cookie consent banner", "cookie consent gdpr" → Security Tools
+    # Creative Tools — video editor bigrams (override "video"→media for editing-specific queries)
+    # Kdenlive, OpenShot, Shotcut, DaVinci Resolve, Kdenlive are all in Creative Tools
+    "video editor": "creative",     # bigram — "video editor linux", "video editor open source" → Creative Tools
+    "video editing": "creative",    # bigram — "video editing software", "video editing free" → Creative Tools
+    # Creative Tools — DAW / audio production (override "audio"→media for production-specific queries)
+    # LMMS, Ardour, Audacity all live in Creative Tools, not Media Servers
+    "daw": "creative",              # DAW abbreviation — "daw software", "daw alternative", "best daw linux" → Creative Tools
+    "digital audio": "creative",    # bigram — "digital audio workstation", "digital audio editor" → Creative Tools
+    "music production": "creative", # bigram — "music production software", "music production open source" → Creative Tools
+    # Creative Tools — pixel art queries (override raw_first "pixel" with no category match)
+    "pixel art": "creative",        # bigram — "pixel art editor", "pixel art tool" → Creative Tools
+    "aseprite": "creative",         # Aseprite — popular pixel art editor (30k★); "aseprite alternative" → Creative Tools
+    # Newsletters & Content — brand tools seeded in newsletters-content but lacking synonym entries
+    "writefreely": "newsletters",   # WriteFreely — federated open-source blog/newsletter; "writefreely alternative" → Newsletters & Content
+    "audiobookshelf": "newsletters",# Audiobookshelf — self-hosted podcast/audiobook server; "audiobookshelf alternative" → Newsletters
+    "wallabag": "newsletters",      # Wallabag — self-hosted read-it-later app; "wallabag alternative" → Newsletters & Content
+    # Customer Support — "contact center" bigram (bare "contact" is unmapped; LIKE '%contact%' matches no category name)
+    "contact center": "support",    # bigram — "contact center software", "open source contact center" → Customer Support
 }
 
 _FTS_STOP_WORDS = {
