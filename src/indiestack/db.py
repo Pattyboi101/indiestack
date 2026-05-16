@@ -7802,6 +7802,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "optimistic locking": "database",    # bigram — "optimistic locking library", "optimistic locking postgres" → Database
     "distributed lock": "database",      # bigram — "distributed lock redis", "distributed lock service" → Database
     "distributed locking": "database",  # bigram — "distributed locking service", "distributed locking redis" → Database
+    # Analytics — data catalog queries fall through to raw_first with no boost ("data" has no synonym).
+    # DataHub, Amundsen, OpenMetadata, Apache Atlas all live in Analytics & Metrics.
+    "data catalog": "analytics",        # bigram — "data catalog tool", "open source data catalog" → Analytics & Metrics
+    "data governance": "analytics",     # bigram — "data governance platform", "data governance tool" → Analytics & Metrics
+    # Analytics — "privacy analytics" should route to Analytics (Plausible, Fathom, Simple Analytics),
+    # NOT Security. Bare "privacy" → security is correct for GDPR/cookie tools; this bigram overrides.
+    "privacy analytics": "analytics",  # bigram — "privacy analytics tool", "privacy focused analytics" → Analytics
+    # Security — "cookie consent" overrides bare "cookie" → authentication for consent/GDPR queries.
+    # Cookie consent banners (Cookiebot, CookieYes, Axeptio) are privacy/compliance tools → Security.
+    "cookie consent": "security",       # bigram — "cookie consent banner", "cookie consent gdpr" → Security Tools
 }
 
 _FTS_STOP_WORDS = {

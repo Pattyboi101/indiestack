@@ -815,6 +815,23 @@ TEST_CASES: list[tuple[str, str]] = [
     ("optimistic locking postgres", "database"),     # bigram fires before raw_first
     ("distributed lock redis", "database"),          # bigram "distributed lock" → Database
     ("distributed locking service", "database"),     # bigram fires before "distributed"→raw_first
+    # Analytics — data catalog queries had no synonym (raw_first with no boost); now fixed with bigrams.
+    # DataHub, Amundsen, OpenMetadata, Apache Atlas live in Analytics & Metrics.
+    ("data catalog tool", "analytics"),              # bigram "data catalog" → Analytics & Metrics
+    ("open source data catalog", "analytics"),       # bigram fires before raw_first
+    ("data governance platform", "analytics"),       # bigram "data governance" → Analytics & Metrics
+    ("data governance tool", "analytics"),           # bigram fires before raw_first
+    # Analytics — "privacy analytics" must route to Analytics, not Security.
+    # Plausible, Fathom, Simple Analytics, Matomo are the canonical tools for this query.
+    ("privacy analytics tool", "analytics"),         # bigram "privacy analytics" → Analytics & Metrics
+    ("privacy analytics gdpr", "analytics"),         # bigram fires before "privacy"→security
+    # Regression — bare "privacy" still routes to Security (GDPR compliance tools)
+    ("privacy policy generator", "security"),        # "privacy"→security (unchanged)
+    # Security — "cookie consent" overrides bare "cookie"→authentication for consent/GDPR banners.
+    ("cookie consent banner", "security"),           # bigram "cookie consent" → Security Tools
+    ("cookie consent gdpr", "security"),             # bigram fires before "cookie"→authentication
+    # Regression — bare "cookie" still routes to Authentication (session/token queries)
+    ("cookie session management", "authentication"), # "cookie"→authentication (unchanged)
 ]
 
 
