@@ -63,6 +63,26 @@ When hunting for routing gaps, these query forms are historically tricky:
     Covered bigrams: "code generation", "code gen", "code completion", "code review"
     (developer). Probe: "code [noun]" where [noun] is a standalone tool type — if the
     bigram is missing, raw_first fires and no category boost is applied.
+
+13. "Hyphenated-form only" traps — a hyphenated entry like "two-factor" only fires when
+    the query is written with a hyphen. The space-separated form "two factor" falls to
+    raw_first because hyphen removal happens at FTS normalisation, NOT before bigram
+    matching. Always add BOTH "foo bar" (space) and "foo-bar" (hyphen) for compound
+    authentication / security terms. Probe: type the term with a space; if raw_first
+    fires, the spaced bigram is missing.
+
+14. "Category word as first token" collisions — some tokens are strong synonyms for a
+    specific category BUT appear as the FIRST word of a query targeting a DIFFERENT
+    category. Examples: "static"→frontend clashes with "static analysis" (testing);
+    "design"→design-creative clashes with "design system" (frontend). Always probe
+    "[synonym] [qualifier]" pairs where the qualifier changes the category intent. Fix
+    with a compound bigram that overrides the single-token mapping.
+
+15. "Noun coordination/concurrency patterns" — database concurrency primitives like
+    "optimistic locking", "distributed lock", "distributed locking" have no single-token
+    mapping ("optimistic", "distributed" are raw_first). Similarly, "pull request",
+    "zero downtime" are DevOps concepts with no token mapping. Probe any architecture
+    pattern term by splitting on the first word and checking its raw token mapping.
 """
 
 import sys
