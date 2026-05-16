@@ -7760,6 +7760,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Landing Pages — "landing" and "launch" are unmapped; raw_first fires for common page queries.
     "landing": "landing",                 # "landing page builder", "landing page template" → Landing Pages
     "launch": "landing",                  # "launch page builder", "product launch page" → Landing Pages
+    # Analytics — "heat map" (two words) routes to maps via bare "map" token.
+    # Heatmap tools (Hotjar, Smartlook, Microsoft Clarity) live in Analytics & Metrics.
+    # Bigram fires before "map"→maps so two-word form lands in analytics.
+    "heat map": "analytics",             # "heat map tool", "heat map analytics" → Analytics & Metrics
+    "heat maps": "analytics",            # plural — "heat maps user behavior" → Analytics & Metrics
+    "scroll map": "analytics",           # "scroll map tool", "scroll map heatmap" → Analytics & Metrics
+    "click map": "analytics",            # "click map tool", "click map heatmap" → Analytics & Metrics (beats "click"→cli)
 }
 
 _FTS_STOP_WORDS = {

@@ -717,6 +717,16 @@ TEST_CASES: list[tuple[str, str]] = [
     # Developer Tools — "number" token routes number-formatting queries (was raw_first)
     ("number formatting", "developer"),              # "number"→developer → Developer Tools
     ("number parsing library", "developer"),         # "number" fires → Developer Tools
+    # Analytics — "heat map" two-word form was routing to maps via bare "map" token
+    # Bigrams "heat map", "heat maps", "scroll map", "click map" route to Analytics & Metrics
+    ("heat map tool", "analytics"),                  # bigram "heat map" → Analytics & Metrics
+    ("heat map analytics", "analytics"),             # bigram fires before "analytics" token
+    ("heat maps user behavior", "analytics"),        # "heat maps" plural bigram → Analytics & Metrics
+    ("scroll map heatmap", "analytics"),             # "scroll map" bigram → Analytics & Metrics
+    ("click map tool", "analytics"),                 # "click map" bigram beats "click"→cli → Analytics
+    # Regression — "heatmap" (one word) and "hotjar" still route to analytics
+    ("heatmap tool", "analytics"),                   # "heatmap"→analytics single token (unchanged)
+    ("hotjar alternative", "analytics"),             # "hotjar"→analytics (unchanged)
 ]
 
 
