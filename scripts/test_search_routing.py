@@ -189,6 +189,14 @@ TEST_CASES: list[tuple[str, str]] = [
     # LLM cache bigrams (bigram lookup added db.py pass 170)
     ("semantic cache llm", "caching"),
     ("llm cache layer", "caching"),
+    # Developer Tools — crud generator and internal tool builder had no routing (raw_first).
+    # "internal builder" bigram fires after stop-word stripping removes "tool" from the query.
+    ("crud generator", "developer"),                 # "crud"→developer → Developer Tools
+    ("crud app builder", "developer"),               # "crud"→developer → Developer Tools
+    ("internal tool builder", "developer"),          # bigram "internal builder" → Developer Tools (after "tool"→stop)
+    # Regression — "internal" alone does NOT map to developer (too broad).
+    ("internal api design", "api"),                  # "internal" unmapped → falls through to "api" ✓
+    ("internal metrics dashboard", "analytics"),     # "internal" unmapped → falls through to "metrics"→analytics ✓
 ]
 
 

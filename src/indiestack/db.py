@@ -3929,6 +3929,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tooljet": "developer",         # ToolJet — open-source Retool alternative (28k★)
     "budibase": "developer",        # Budibase — open-source low-code app builder for teams (22k★)
     "admin": "developer",           # "admin panel builder", "admin dashboard" → Developer Tools
+    "crud": "developer",            # "crud generator", "crud app builder" → Developer Tools (Retool, Appsmith, Tooljet)
+    # Developer Tools — "internal builder" bigram fires after stop-word stripping:
+    # "internal tool builder" → ["internal", "builder"] → bigram "internal builder" → Developer Tools.
+    # Standalone "internal" intentionally NOT mapped — too broad; hijacks "internal api"→api etc.
+    "internal builder": "developer",  # bigram — "internal tool builder" (after "tool"→stop) → Developer Tools
     # Ory open-source identity stack (Hydra, Kratos, Keto, Oathkeeper)
     "ory": "authentication",        # Ory — full open-source identity infrastructure platform
     "hydra": "authentication",      # Ory Hydra — certified OAuth 2.0 and OpenID Connect server
