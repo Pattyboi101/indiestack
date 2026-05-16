@@ -7528,6 +7528,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "code generation": "ai dev",    # spaced bigram — "code generation ai", "code generation model" → AI Dev Tools
     "code-generation": "ai dev",    # hyphenated — "code-generation tool", "code-generation open source" → AI Dev Tools
     "code gen": "ai dev",           # spaced bigram — "code gen tool", "code gen api" → AI Dev Tools
+    "code completion": "ai dev",    # spaced bigram — "code completion tool", "code completion open source" → AI Dev Tools
+    "code-completion": "ai dev",    # hyphenated — "code-completion plugin", "code-completion api" → AI Dev Tools
     # AI & Automation — targeted "ai *" bigrams (single "ai" token is too broad; bigrams are precise)
     # "ai" alone is not mapped to avoid overriding "ai browser automation"→testing,
     # "ai pr review"→developer, etc. Each collision gets its own bigram fix instead.

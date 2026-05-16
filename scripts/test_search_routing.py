@@ -57,6 +57,12 @@ When hunting for routing gaps, these query forms are historically tricky:
     "click"→cli (Click Python), "drag"→? "rich"→cli (Rich library). Compound forms like
     "click map", "rich text", "drag drop" need bigrams to override. Probe any analytics
     or UI term whose first token collides with a named-tool synonym.
+
+12. "code X" compound queries — "code" alone has no _CAT_SYNONYMS entry (falls back to
+    raw_first). For queries where "code" is the first token, a bigram is REQUIRED.
+    Covered bigrams: "code generation", "code gen", "code completion", "code review"
+    (developer). Probe: "code [noun]" where [noun] is a standalone tool type — if the
+    bigram is missing, raw_first fires and no category boost is applied.
 """
 
 import sys
@@ -353,6 +359,8 @@ TEST_CASES: list[tuple[str, str]] = [
     ("text to image model", "ai"),                  # "text image" bigram (after stop-word removal of "to") → ai
     ("code generation tool", "ai dev"),             # bigram "code generation" → AI Dev Tools
     ("code gen api", "ai dev"),                     # bigram "code gen" → AI Dev Tools
+    ("code completion tool", "ai dev"),             # bigram "code completion" → AI Dev Tools (Codeium, Tabnine)
+    ("code completion open source", "ai dev"),      # bigram fires before raw_first fallback
     # Bigram routing fixes (added May 2026 — ai image, ai gateway, sales pipeline, contact management, website builder)
     ("ai image generator", "ai"),                   # bigram "ai image" beats "image"→media for generative AI queries
     ("ai gateway litellm", "ai"),                   # bigram "ai gateway" beats "gateway"→api for LLM proxy queries
