@@ -203,6 +203,18 @@ TEST_CASES: list[tuple[str, str]] = [
     ("pixel art open source", "creative"),           # bigram "pixel art"→creative
     ("3d modeling open source", "creative"),         # bigram "3d modeling"→creative
     ("video streaming open source", "media"),        # regression: "video"→media unchanged
+    # ML feature store — "feature store" routes to feature-flags via "feature" single token;
+    # spaced bigram "feature store" overrides to AI (Feast, Hopsworks, Tecton)
+    ("feature store alternative", "ai"),             # bigram "feature store" → AI & Automation
+    ("feature store ml", "ai"),                      # bigram form → AI & Automation
+    # Regression — bare "feature" still routes to feature flags
+    ("feature flag tool", "feature"),                # "feature"→feature-flags (unchanged)
+    # Data quality — "quality"→testing fires before "data" (no synonym); bigram overrides to analytics
+    ("data quality tool", "analytics"),              # bigram "data quality" → Analytics & Metrics
+    ("data quality framework", "analytics"),         # bigram form → Analytics & Metrics
+    # Data lineage — no token mapping; bigram + bare token fix routing
+    ("data lineage tool", "analytics"),              # bigram "data lineage" → Analytics & Metrics
+    ("lineage tracking", "analytics"),               # bare "lineage"→analytics → Analytics & Metrics
 ]
 
 

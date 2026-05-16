@@ -6567,6 +6567,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "music production": "creative",    # bigram — compound form; bare "audio"→media fires instead
     "pixel art": "creative",           # bigram — avoids ambiguity with bare "pixel" (Facebook Pixel→analytics)
     "3d modeling": "creative",         # bigram — "3d modeling open source", "3d modeling tool" → Creative Tools
+    # AI — ML feature store spaced bigram (hyphenated "feature-store" already mapped at line 4560;
+    # the spaced form "feature store" would otherwise fire "feature"→feature-flags first).
+    "feature store": "ai",              # bigram — "feature store alternative", "feature store ml" → AI & Automation
+    # Analytics — "data quality" routes to testing via bare "quality"→testing (code quality tools).
+    # Data quality tools (Great Expectations, Soda, dbt tests) belong in Analytics & Metrics.
+    "data quality": "analytics",        # bigram — "data quality tool", "data quality framework" → Analytics
+    # Analytics — "data lineage" has no token mapping (both "data" and "lineage" unrouted → raw_first).
+    # Data lineage tools (OpenLineage, Marquez, DataHub) live in Analytics & Metrics.
+    "data lineage": "analytics",        # bigram — "data lineage tool", "data lineage tracking" → Analytics
+    "lineage": "analytics",             # bare token — "lineage graph", "lineage tool" → Analytics & Metrics
 }
 
 _FTS_STOP_WORDS = {
