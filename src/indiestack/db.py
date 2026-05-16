@@ -7777,6 +7777,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — "content moderation" routes to CMS via bare "content"→cms token.
     # Content moderation tools (Perspective API, Hive, Moderation API) live in AI & Automation.
     "content moderation": "ai",          # bigram — "content moderation api", "content moderation llm" → AI & Automation
+    # Authentication — spaced bigram forms of "two-factor"/"multi-factor" (hyphenated covered at line ~4296).
+    # Bare "two"→raw_first and "multi"→raw_first fire instead of the hyphenated entries.
+    "two factor": "authentication",      # bigram — "two factor auth", "two factor authentication library" → Authentication
+    "multi factor": "authentication",    # bigram — "multi factor auth", "multi factor authentication" → Authentication
+    "multi-factor": "authentication",    # compound — "multi-factor authentication", "multi-factor OTP" → Authentication
+    # Security — bot detection / fraud prevention (Cloudflare Bot Management, DataDome, Kasada, Arkose Labs).
+    # "bot" alone and "bot detection" bigram both lack mappings; raw_first fires with no category boost.
+    "bot detection": "security",         # bigram — "bot detection service", "bot detection open source" → Security Tools
+    "bot protection": "security",        # bigram — "bot protection library", "bot protection api" → Security Tools
+    # Testing — static analysis overrides "static"→frontend for code quality / linting queries.
+    # SonarQube, CodeClimate, Semgrep, DeepSource live in Testing Tools, NOT Frontend Frameworks.
+    "static analysis": "testing",        # bigram — "static analysis tool", "static analysis typescript" → Testing Tools
+    "code analysis": "testing",          # bigram — "code analysis tool", "code analysis linting" → Testing Tools
+    # Frontend Frameworks — "design system" queries target component libraries (shadcn/ui, Radix, MUI, Storybook).
+    # Bare "design"→design-creative is correct for Figma alternatives; "design system" is UI component territory.
+    "design system": "frontend",         # bigram — "design system react", "open source design system" → Frontend Frameworks
+    "design systems": "frontend",        # plural — "design systems tools", "best design systems 2025" → Frontend Frameworks
+    "design tokens": "frontend",         # bigram — "design tokens css", "design tokens tool" → Frontend Frameworks
+    # DevOps — deployment pattern and Git workflow queries that hit raw_first with no category boost.
+    "pull request": "devops",            # bigram — "pull request automation", "pull request review tool" → DevOps
+    "zero downtime": "devops",           # bigram — "zero downtime deployment", "zero downtime migration" → DevOps
+    # Database — distributed coordination patterns; "optimistic"/"distributed" have no individual mappings.
+    "optimistic locking": "database",    # bigram — "optimistic locking library", "optimistic locking postgres" → Database
+    "distributed lock": "database",      # bigram — "distributed lock redis", "distributed lock service" → Database
+    "distributed locking": "database",  # bigram — "distributed locking service", "distributed locking redis" → Database
 }
 
 _FTS_STOP_WORDS = {

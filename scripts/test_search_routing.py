@@ -757,6 +757,44 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — bare "token" for auth tokens still routes to Authentication
     ("token refresh", "authentication"),             # "token"→authentication (no bigram, unchanged)
     ("access token", "authentication"),              # "token"→authentication (unchanged)
+    # Authentication — spaced/hyphenated bigrams for 2FA/MFA: "two factor" and "multi factor"
+    # were hitting raw_first because only the hyphenated "two-factor" was in _CAT_SYNONYMS.
+    ("two factor auth", "authentication"),           # bigram "two factor" → Authentication
+    ("two factor authentication library", "authentication"),  # bigram fires before raw_first
+    ("multi factor authentication", "authentication"),        # bigram "multi factor" → Authentication
+    ("multi factor otp", "authentication"),          # bigram "multi factor" beats "multi"→raw_first
+    ("multi-factor authentication", "authentication"),        # hyphenated compound → Authentication
+    # Regression — bare "2fa" and "mfa" still route to Authentication
+    ("2fa library", "authentication"),               # "2fa"→authentication (unchanged)
+    ("mfa provider", "authentication"),              # "mfa"→authentication (unchanged)
+    # Security — bot detection; "bot detection" had no mapping → raw_first with no boost
+    ("bot detection service", "security"),           # bigram "bot detection" → Security Tools
+    ("bot detection open source", "security"),       # bigram fires before raw_first
+    ("bot protection library", "security"),          # bigram "bot protection" → Security Tools
+    # Testing — static analysis overrides "static"→frontend for code quality queries
+    ("static analysis tool", "testing"),             # bigram fires before "static"→frontend
+    ("static analysis typescript", "testing"),       # bigram fires before "static"→frontend
+    ("code analysis linting", "testing"),            # bigram "code analysis" → Testing Tools
+    # Regression — "static site" still routes to Frontend Frameworks
+    ("static site generator", "frontend"),           # "static"→frontend single token (unchanged)
+    # Frontend Frameworks — "design system" overrides "design"→design-creative for component queries
+    ("design system react", "frontend"),             # bigram fires before "design"→design-creative
+    ("open source design system", "frontend"),       # bigram "design system" → Frontend Frameworks
+    ("design systems tools", "frontend"),            # plural bigram → Frontend Frameworks
+    ("design tokens css", "frontend"),               # bigram "design tokens" → Frontend Frameworks
+    # Regression — bare "design" still routes to Design & Creative
+    ("design tool", "design"),                       # "design"→design-creative (unchanged)
+    ("design software", "design"),                   # "design"→design-creative (unchanged)
+    # DevOps — pull request and zero downtime deployment queries hit raw_first before fix
+    ("pull request automation", "devops"),           # bigram "pull request" → DevOps
+    ("pull request review tool", "devops"),          # bigram fires before raw_first
+    ("zero downtime deployment", "devops"),          # bigram "zero downtime" → DevOps
+    ("zero downtime migration", "devops"),           # bigram fires before "zero"→raw_first
+    # Database — distributed coordination patterns: "optimistic"/"distributed" had no mapping
+    ("optimistic locking library", "database"),      # bigram "optimistic locking" → Database
+    ("optimistic locking postgres", "database"),     # bigram fires before raw_first
+    ("distributed lock redis", "database"),          # bigram "distributed lock" → Database
+    ("distributed locking service", "database"),     # bigram fires before "distributed"→raw_first
 ]
 
 
