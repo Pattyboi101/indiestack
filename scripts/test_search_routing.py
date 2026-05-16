@@ -83,6 +83,21 @@ When hunting for routing gaps, these query forms are historically tricky:
     mapping ("optimistic", "distributed" are raw_first). Similarly, "pull request",
     "zero downtime" are DevOps concepts with no token mapping. Probe any architecture
     pattern term by splitting on the first word and checking its raw token mapping.
+
+16. "Conflicting first/second token synonyms" — both tokens have valid synonyms but
+    they disagree. The first token wins, routing to the wrong category. Examples:
+    "privacy analytics" → "privacy"→security but "analytics"→analytics (want analytics);
+    "cookie consent" → "cookie"→authentication but "consent"→security (want security).
+    Pattern: any query where first-token and second-token map to different categories.
+    Fix: add a bigram that overrides. Probe: for each category boundary, enumerate
+    tool-type nouns that could appear after a first-token synonym from a different cat.
+
+17. "Leading data/administrative noun with no synonym" — common in analytics/data-
+    engineering queries: "data catalog", "data governance", "data lineage". "data" has
+    no _CAT_SYNONYMS entry → raw_first fires with no category boost. These tools live
+    in Analytics & Metrics. Similarly check: "schema", "spec", "model", "graph" as
+    leading tokens in data-engineering contexts. Probe: "data [noun]" where [noun] is
+    a data-engineering or BI concept — if raw_first fires, add the bigram.
 """
 
 import sys
