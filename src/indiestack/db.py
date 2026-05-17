@@ -6591,6 +6591,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "rolling" has no single-token synonym → raw_first fires; "update"/"deploy" are common non-mapped words.
     "rolling update": "devops",          # bigram — "rolling update kubernetes", "rolling update strategy" → DevOps
     "rolling deploy": "devops",          # bigram — "rolling deploy tool", "rolling deployment manager" → DevOps
+    # API — "streaming api" / "server streaming" → API Tools (SSE, gRPC, HTTP/2 streaming)
+    # Bare "streaming"→media fires first for video/audio streaming queries (Plex, Jellyfin, HLS) — correct.
+    # Bigrams override for API-type streaming patterns where the developer wants an SDK, not a media server.
+    "streaming api": "api",         # bigram — "streaming api nodejs", "streaming api sse" → API Tools
+    "server streaming": "api",      # bigram — "server streaming grpc", "server streaming http2" → API Tools
+    # Testing — "performance testing" bigrams override "performance"→monitoring.
+    # k6, Artillery, Locust, JMeter are performance testing tools in Testing Tools, not Monitoring & Uptime.
+    # Bare "performance"→monitoring remains correct for APM / runtime performance queries.
+    "performance testing": "testing",  # bigram — "performance testing tool", "performance testing k6" → Testing
+    "performance test": "testing",     # bigram — "performance test runner", "performance test suite" → Testing
 }
 
 _FTS_STOP_WORDS = {

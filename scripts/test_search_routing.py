@@ -222,6 +222,20 @@ TEST_CASES: list[tuple[str, str]] = [
     # DevOps — rolling deployment strategies (175th pass): "rolling" has no single-token mapping
     ("rolling update kubernetes", "devops"),         # bigram "rolling update"→devops
     ("rolling deploy strategy", "devops"),           # bigram "rolling deploy"→devops
+    # API — streaming api / server streaming (176th pass)
+    # "streaming"→media fires for bare streaming queries; bigrams override for API-type streaming.
+    ("streaming api nodejs", "api"),                 # bigram "streaming api"→api (SSE, gRPC streaming)
+    ("streaming api sse", "api"),                    # bigram fires before "streaming"→media
+    ("server streaming grpc", "api"),                # bigram "server streaming"→api (gRPC bidirectional)
+    ("server streaming http2", "api"),               # bigram form → API Tools
+    ("video streaming server", "media"),             # regression: bare "streaming"→media unchanged
+    # Testing — performance testing (176th pass)
+    # "performance"→monitoring fires for APM queries; bigrams override for testing-specific queries.
+    ("performance testing tool", "testing"),         # bigram "performance testing"→testing (k6, Artillery)
+    ("performance testing k6", "testing"),           # bigram fires before "performance"→monitoring
+    ("performance test runner", "testing"),          # bigram "performance test"→testing
+    ("performance test suite", "testing"),           # bigram form → Testing Tools
+    ("performance monitoring", "monitoring"),        # regression: bare "performance"→monitoring unchanged
 ]
 
 
