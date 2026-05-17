@@ -14862,6 +14862,74 @@ TOOLS = [
         "",
         "saas",
     ),
+    (
+        "trulens",
+        "TruLens",
+        "Evaluate and track LLM applications with ground-truth and feedback",
+        "TruLens is an open-source library for evaluating and tracking LLM applications. "
+        "Record app inputs/outputs, define feedback functions (relevance, groundedness, "
+        "harmlessness) using any LLM as judge, and visualise results in a local dashboard. "
+        "Integrates with LangChain, LlamaIndex, and raw LLM calls. Useful for RAG "
+        "quality measurement, safety testing, and iterative prompt improvement.",
+        "ai-automation",
+        "truera/trulens",
+        2200,
+        "https://trulens.org",
+        "llm-evaluation,rag,tracing,feedback,langchain,llamaindex",
+        "pip install trulens",
+        "code",
+    ),
+    (
+        "rebuff",
+        "Rebuff",
+        "Self-hardening prompt injection detector for LLM apps",
+        "Rebuff is an open-source prompt injection detection library that uses a "
+        "multi-layered defence: heuristic filters, a fine-tuned classifier, and a "
+        "canary-token vector store that learns from attacks. Protects LLM-powered "
+        "applications from user inputs designed to override system prompts or leak "
+        "context. Available as a Python/TypeScript SDK and hosted API.",
+        "security-tools",
+        "protectai/rebuff",
+        900,
+        "https://rebuff.ai",
+        "prompt-injection,llm-security,ai-safety,guardrails",
+        "pip install rebuff",
+        "code",
+    ),
+    (
+        "llama-guard",
+        "Llama Guard",
+        "Meta's open LLM safety classifier for input/output moderation",
+        "Llama Guard is a fine-tuned Llama model from Meta designed to classify "
+        "LLM inputs and outputs against a customisable set of harm categories "
+        "(violence, hate speech, sexual content, etc.). Run it locally or via "
+        "the Llama API to build content moderation pipelines that are both "
+        "transparent and cost-effective compared to hosted APIs.",
+        "security-tools",
+        "meta-llama/llama-guard",
+        4000,
+        "https://llama.meta.com",
+        "llm-safety,content-moderation,ai-safety,meta,llama",
+        "pip install llama-models",
+        "code",
+    ),
+    (
+        "weave",
+        "Weave",
+        "Lightweight LLM tracing, evaluation, and versioning by W&B",
+        "Weave is Weights & Biases's open-source toolkit for tracking LLM application "
+        "development. Automatically traces calls to OpenAI, Anthropic, and other LLM "
+        "providers. Version prompts and models, run evaluations with custom scorers, "
+        "and visualise traces in the W&B UI. Pairs naturally with wandb for experiment "
+        "tracking and complements deepeval/ragas for structured evals.",
+        "ai-automation",
+        "wandb/weave",
+        3200,
+        "https://weave-docs.wandb.ai",
+        "llm-tracing,evaluation,wandb,observability,openai,anthropic",
+        "pip install weave",
+        "code",
+    ),
 ]
 
 

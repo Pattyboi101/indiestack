@@ -867,6 +867,15 @@ TEST_CASES: list[tuple[str, str]] = [
     # Customer Support — "contact center" bigram (bare "contact" is unmapped)
     ("contact center software", "support"),          # bigram "contact center" → Customer Support
     ("open source contact center", "support"),       # bigram fires before raw_first "open"
+    # AI — llms.txt (LLM-readable web standard); "llms" was unmapped → raw_first
+    ("llms txt implementation", "ai"),               # bigram "llms txt" → AI & Automation
+    ("llmstxt generator", "ai"),                     # compact "llmstxt" single token → AI & Automation
+    ("llms-txt tool", "ai"),                         # hyphenated single token → AI & Automation
+    # AI — local LLM tools with unmapped first tokens
+    ("koboldai local", "ai"),                        # "koboldai" → AI & Automation
+    ("lm studio alternative", "ai"),                 # bigram "lm studio" → AI & Automation
+    # AI — "pydantic ai" (spaced) was routing to Developer via "pydantic"→developer
+    ("pydantic ai framework", "ai"),                 # bigram "pydantic ai" → AI & Automation
 ]
 
 

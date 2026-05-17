@@ -4036,7 +4036,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Local LLM inference tools — very high query volume as devs set up local AI
     # (llamacpp, llamafile already mapped above; adding the remaining high-volume terms)
     "llama": "ai",                  # LLaMA model queries — "run llama locally", "llama model" → AI
+    "llms": "ai",                   # "llms" bare (large language models general) → AI & Automation
     "lmstudio": "ai",               # LM Studio — popular local LLM GUI with built-in model library
+    "koboldai": "ai",               # KoboldAI — browser-based local LLM frontend (koboldorg/KoboldAI)
     "jan": "ai",                    # Jan.ai — open-source local-first LLM chat and inference server
     # AI image generation — Stable Diffusion ecosystem has enormous agent query volume
     "stable": "ai",                 # "stable diffusion", "stable video diffusion" → AI & Automation
@@ -7672,6 +7674,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Vercel AI SDK queries route to devops via "vercel"→devops (Vercel's hosting platform).
     # Bigram ensures "vercel ai" queries land in AI & Automation (Vercel AI SDK is an LLM library).
     "vercel ai": "ai",              # bigram — "vercel ai sdk alternative", "vercel ai sdk setup" → AI & Automation
+    # AI — "lm studio" spaced bigram (bare "lm" is unmapped; "lmstudio" compound already maps to ai).
+    "lm studio": "ai",              # bigram — "lm studio alternative", "lm studio local llm" → AI & Automation
+    # AI — "pydantic ai" spaced bigram (hyphenated "pydantic-ai" already maps to ai but spaced form routes to developer).
+    "pydantic ai": "ai",            # bigram — "pydantic ai agent", "pydantic ai framework" → AI & Automation
+    # AI — llms.txt is the emerging standard for LLM-readable website docs; routing was raw_first.
+    "llms txt": "ai",               # bigram — "llms txt implementation", "llms txt website" → AI & Automation
+    "llms-txt": "ai",               # hyphenated — "llms-txt tool", "llms-txt generator" → AI & Automation
+    "llmstxt": "ai",                # compact — "llmstxt generator", "llmstxt implementation" → AI & Automation
     # Testing — headless browser queries route to CMS via "headless"→cms (correct for headless-cms queries).
     # Bigrams fire before the single token so browser/chrome/test + headless lands in Testing Tools.
     "headless browser": "testing",  # bigram — "headless browser puppeteer", "headless browser testing" → Testing Tools
