@@ -4304,10 +4304,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — data labeling / annotation platforms (Label Studio, Argilla, Prodigy, Scale AI alternatives)
     "labeling": "ai",               # "data labeling tool", "ml labeling platform" → AI & Automation
     "annotation": "ai",             # "data annotation", "training data annotation" → AI & Automation
+    "argilla": "ai",                # Argilla (HF) — open-source data labeling for LLM fine-tuning (4k★) → AI & Automation
+    "labelstudio": "ai",            # Label Studio — compact form; "labelstudio alternative" → AI & Automation
+    "label-studio": "ai",           # hyphenated — "label-studio setup", "label-studio ml backend" → AI & Automation
     # AI — synthetic data generation (Gretel.ai, Mostly AI, SDV, DataSynthesizer)
     "synthetic": "ai",              # "synthetic data", "synthetic training data" → AI & Automation
     # AI — content moderation / LLM output filtering (Perspective API, OpenAI Mod, Llama Guard)
     "moderation": "ai",             # "content moderation api", "llm moderation" → AI & Automation
+    # Security — LLM safety / prompt injection tools (Llama Guard, Rebuff)
+    "llamaguard": "security",       # Meta LlamaGuard — LLM content safety classification → Security Tools
+    "llama-guard": "security",      # hyphenated — "llama-guard setup", "llama-guard alternative" → Security Tools
+    "rebuff": "security",           # Rebuff — prompt injection detection; "rebuff alternative" → Security Tools
     # Auth — identity management terminology not yet mapped
     "idp": "authentication",        # IDP (Identity Provider) — Okta, Keycloak, ZITADEL, PingOne
     "iam": "authentication",        # IAM (Identity and Access Management) — authz policy engines
@@ -4960,6 +4967,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gradio": "ai",                 # Gradio — build ML demos and web UIs in Python (34k★) → AI & Automation
     # AI — Streamlit Python data app framework (36k★)
     "streamlit": "ai",              # Streamlit — turn Python scripts into shareable data apps (36k★) → AI & Automation
+    # Frontend — Reflex Python full-stack web framework (React backend in pure Python)
+    "reflex": "frontend",           # Reflex.dev — Python full-stack web framework; "reflex alternative" → Frontend Frameworks
+    "reflexdev": "frontend",        # compound — "reflexdev setup", "reflexdev vs streamlit" → Frontend Frameworks
     # AI — Google Gemma open-weight models
     "gemma": "ai",                  # Google Gemma — open-weight LLMs for local deployment → AI & Automation
     # AI — Alibaba Qwen open-weight models
@@ -7863,6 +7873,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — "local ai" routes to raw_first "local" (no mapping) — misses AI & Automation category.
     # Local AI tools (Ollama, Jan, LM Studio, llamafile, GPT4All) live in AI & Automation.
     "local ai": "ai",               # bigram — "local ai model", "local ai inference", "local ai assistant" → AI & Automation
+    # AI — txtai (neuml/txtai, 10k★; all-in-one semantic search + RAG + embeddings library)
+    "txtai": "ai",                  # txtai — "txtai alternative", "txtai rag", "txtai embeddings" → AI & Automation
+    # AI — LightRAG (HKUDS/LightRAG, 13k★; simple fast graph-based RAG with relationship extraction)
+    "lightrag": "ai",               # LightRAG — "lightrag alternative", "lightrag setup", "lightrag vs graphrag" → AI & Automation
+    "light-rag": "ai",              # hyphenated — "light-rag alternative", "light-rag framework" → AI & Automation
+    # AI — "label studio" spaced bigram (bare "label" is unmapped; "labelstudio" compound maps to ai above)
+    # Label Studio is the most-searched data labeling tool; "label" alone is too generic to map safely
+    "label studio": "ai",           # bigram — "label studio alternative", "label studio ml" → AI & Automation
+    # DevOps — "deno deploy" routes to Frontend via bare "deno"→frontend (Deno JS runtime).
+    # Deno Deploy is an edge hosting/deployment platform — correctly categorized under DevOps.
+    "deno deploy": "devops",        # bigram — "deno deploy alternative", "deno deploy setup" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

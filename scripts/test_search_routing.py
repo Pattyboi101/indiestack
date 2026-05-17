@@ -910,6 +910,27 @@ TEST_CASES: list[tuple[str, str]] = [
     # AI — "local ai" was routing to raw_first "local" with no category boost
     ("local ai model", "ai"),                        # bigram "local ai" → AI & Automation
     ("local ai inference", "ai"),                    # bigram fires before "local"→raw_first
+    # Security — AI safety tools with no prior synonym entries
+    ("llamaguard setup", "security"),                # "llamaguard" → Security Tools (Meta LlamaGuard)
+    ("llama-guard alternative", "security"),         # hyphenated form → Security Tools
+    ("rebuff prompt injection", "security"),         # "rebuff" → Security Tools
+    # AI — data labeling / annotation tools not yet individually mapped
+    ("argilla alternative", "ai"),                   # "argilla" → AI & Automation (HF data labeling)
+    ("labelstudio alternative", "ai"),               # compact form → AI & Automation
+    ("label-studio ml backend", "ai"),               # hyphenated → AI & Automation
+    ("label studio alternative", "ai"),              # bigram "label studio" → AI & Automation
+    # Frontend — Reflex Python full-stack web framework
+    ("reflex alternative", "frontend"),              # "reflex" → Frontend Frameworks
+    ("reflexdev python", "frontend"),                # compound form → Frontend Frameworks
+    # AI — txtai semantic search and RAG library
+    ("txtai alternative", "ai"),                     # "txtai" → AI & Automation
+    ("txtai embeddings", "ai"),                      # secondary query → AI & Automation
+    # AI — LightRAG graph RAG framework
+    ("lightrag alternative", "ai"),                  # "lightrag" → AI & Automation
+    ("light-rag setup", "ai"),                       # hyphenated → AI & Automation
+    # DevOps — "deno deploy" collision fix (bare "deno" → frontend)
+    ("deno deploy alternative", "devops"),           # bigram "deno deploy" → DevOps & Infrastructure
+    ("deno deploy setup", "devops"),                 # bigram fires before "deno"→frontend
 ]
 
 
