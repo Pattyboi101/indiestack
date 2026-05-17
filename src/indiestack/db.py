@@ -2525,6 +2525,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sendgrid": "email",
     "resend": "email",
     "mailgun": "email",
+    "sparkpost": "email",           # SparkPost — transactional email delivery service
     # Database synonyms
     "db": "database",
     "postgres": "database",
@@ -2692,6 +2693,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "lemonsqueezy": "payments",
     "gumroad": "payments",
     "braintree": "payments",
+    "autumn": "payments",           # Autumn.js — usage-based subscription management library
     # Auth providers
     "clerk": "authentication",
     "auth0": "authentication",
@@ -2754,6 +2756,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "posthog": "analytics",
     "plausible": "analytics",
     "fathom": "analytics",
+    "hydrolix": "analytics",        # Hydrolix — streaming analytics data platform
     "metrics": "analytics",
     "dashboard": "analytics",
     "dashboards": "analytics",
@@ -2861,6 +2864,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "stylesheet": "frontend",
     "rollup": "frontend",
     "parcel": "frontend",
+    "snowpack": "frontend",         # Snowpack — legacy ESM-first JS build tool
     "turbopack": "frontend",
     "esbuild": "frontend",
     "webpack": "frontend",
@@ -3148,6 +3152,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "infisical": "security",         # Infisical — open-source secrets manager
     "doppler": "security",           # Doppler — env and secrets management platform
     "bitwarden": "security",         # Bitwarden — open-source password/secrets manager
+    "presidio": "security",          # Microsoft Presidio — PII detection and data anonymization
     # API / Realtime — collaborative realtime (CRDT-based)
     "liveblocks": "api",             # Liveblocks — collaborative realtime infrastructure
     "yjs": "api",                    # Y.js — CRDT-based collaborative realtime framework
@@ -3269,6 +3274,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "instructor": "ai",             # Instructor — structured LLM outputs with Pydantic
     "outlines": "ai",               # Outlines — guided text generation (structured sampling)
     "guardrails": "ai",             # Guardrails AI — LLM output validation and correction
+    "llamaguard": "ai",             # Meta LlamaGuard — AI safety and content moderation model
+    "rebuff": "ai",                 # Rebuff — open-source prompt injection detection
     "mirascope": "ai",              # Mirascope — clean Python LLM abstractions
     # Vue state management
     "pinia": "frontend",            # Pinia — official Vue 3 state management library
@@ -3429,6 +3436,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "prompting": "ai",              # "chain-of-thought prompting", "few-shot prompting" → AI
     "finetuning": "ai",             # "llm finetuning", "model finetuning" → AI & Automation
     "finetune": "ai",               # "finetune llm", "finetune model" → AI & Automation
+    "fine-tuning": "ai",            # hyphenated — "fine-tuning llm", "fine-tuning guide" → AI & Automation
     "generative": "ai",             # "generative AI", "generative model" → AI & Automation
     "genai": "ai",                  # abbreviation for "generative AI" — growing query term
     # ML / deep learning — fix routing: "machine learning" and "deep learning" must NOT map to
@@ -3995,6 +4003,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Billing/metering SaaS — routes "lago alternative", "usage based billing" → Invoicing & Billing
     "lago": "invoicing",            # Lago — open-source metering and billing API (6k★)
     "orb": "invoicing",             # Orb — usage-based billing platform (metered pricing SaaS)
+    "m3ter": "invoicing",           # m3ter — usage-based billing and metering infrastructure
     # Product-led pricing / feature access management
     "stigg": "payments",            # Stigg — pricing & entitlements infrastructure for SaaS
     # AI coding assistants — "aider alternative", "codeium vs copilot", "ai pair programmer"
@@ -4029,7 +4038,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # (llamacpp, llamafile already mapped above; adding the remaining high-volume terms)
     "llama": "ai",                  # LLaMA model queries — "run llama locally", "llama model" → AI
     "lmstudio": "ai",               # LM Studio — popular local LLM GUI with built-in model library
+    "koboldai": "ai",               # KoboldAI — local LLM inference with story/creative writing UI
     "jan": "ai",                    # Jan.ai — open-source local-first LLM chat and inference server
+    "llmstxt": "ai",                # compact — "llmstxt generator", "llmstxt implementation" → AI & Automation
+    "llms.txt": "ai",               # dot-form — "llms.txt standard", "llms.txt for my site" → AI & Automation
     # AI image generation — Stable Diffusion ecosystem has enormous agent query volume
     "stable": "ai",                 # "stable diffusion", "stable video diffusion" → AI & Automation
     "diffusion": "ai",              # "diffusion model", "latent diffusion" → AI & Automation
@@ -6601,6 +6613,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Bare "performance"→monitoring remains correct for APM / runtime performance queries.
     "performance testing": "testing",  # bigram — "performance testing tool", "performance testing k6" → Testing
     "performance test": "testing",     # bigram — "performance test runner", "performance test suite" → Testing
+    # AI — "lm studio" (spaced) was raw_first because "lm" alone is unmapped; "lmstudio" compound exists.
+    "lm studio": "ai",              # bigram — "lm studio alternative", "lm studio local llm" → AI & Automation
+    # AI — llms.txt (LLM-readable web standard); "llms txt" spaced bigram for queries with a space between terms.
+    "llms txt": "ai",               # bigram — "llms txt implementation", "llms txt website" → AI & Automation
+    "llms-txt": "ai",               # hyphenated — "llms-txt tool", "llms-txt generator" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

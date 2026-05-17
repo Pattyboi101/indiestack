@@ -236,6 +236,34 @@ TEST_CASES: list[tuple[str, str]] = [
     ("performance test runner", "testing"),          # bigram "performance test"→testing
     ("performance test suite", "testing"),           # bigram form → Testing Tools
     ("performance monitoring", "monitoring"),        # regression: bare "performance"→monitoring unchanged
+    # Frontend — Snowpack (legacy ESM build tool; "snowpack" was unmapped → raw_first)
+    ("snowpack build tool", "frontend"),             # "snowpack" → Frontend Frameworks
+    ("snowpack alternative", "frontend"),            # single token — regression check
+    # AI — LlamaGuard / Rebuff (AI safety tools; both were unmapped → raw_first)
+    ("llamaguard safety", "ai"),                     # "llamaguard" → AI & Automation
+    ("rebuff prompt injection", "ai"),               # "rebuff" → AI & Automation (via "rebuff" not "prompt")
+    # AI — fine-tuning hyphenated form ("finetuning"/"finetune" existed; hyphen form was gap)
+    ("fine-tuning llm", "ai"),                       # hyphenated single token → AI & Automation
+    # AI — llms.txt variants (dot-form and spaced bigram were gaps alongside existing "llmstxt")
+    ("llms.txt standard", "ai"),                     # dot-separated token → AI & Automation
+    ("llmstxt generator", "ai"),                     # compact token → AI & Automation
+    ("llms txt implementation", "ai"),               # bigram → AI & Automation
+    ("llms-txt tool", "ai"),                         # hyphenated → AI & Automation
+    # AI — LM Studio spaced bigram ("lmstudio" existed; "lm studio" with space was raw_first)
+    ("lm studio alternative", "ai"),                 # bigram "lm studio" → AI & Automation
+    ("lm studio local llm", "ai"),                   # bigram fires before raw_first "lm"
+    # AI — KoboldAI (local LLM; "koboldai" was unmapped → raw_first)
+    ("koboldai setup", "ai"),                        # "koboldai" → AI & Automation
+    # Email — SparkPost (transactional email; "sparkpost" was unmapped → raw_first)
+    ("sparkpost alternative", "email"),              # "sparkpost" → Email Marketing
+    # Payments — Autumn.js ("autumn" first token was unmapped)
+    ("autumn payments", "payments"),                 # "autumn" → Payments
+    # Invoicing — m3ter (usage-based billing; "m3ter" was unmapped → raw_first)
+    ("m3ter billing", "invoicing"),                  # "m3ter" → Invoicing & Billing
+    # Analytics — Hydrolix (streaming analytics; "hydrolix" was unmapped → raw_first)
+    ("hydrolix analytics", "analytics"),             # "hydrolix" → Analytics & Metrics
+    # Security — Microsoft Presidio (PII detection; "presidio" was unmapped → raw_first)
+    ("presidio pii detection", "security"),          # "presidio" → Security Tools
 ]
 
 
