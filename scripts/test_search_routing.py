@@ -931,6 +931,22 @@ TEST_CASES: list[tuple[str, str]] = [
     # DevOps — "deno deploy" collision fix (bare "deno" → frontend)
     ("deno deploy alternative", "devops"),           # bigram "deno deploy" → DevOps & Infrastructure
     ("deno deploy setup", "devops"),                 # bigram fires before "deno"→frontend
+    # Developer Tools — ID/UUID generation libraries
+    ("uuid library", "developer"),                   # "uuid" → Developer Tools
+    ("uuid generator nodejs", "developer"),          # "uuid" first token → Developer Tools
+    ("ulid library", "developer"),                   # "ulid" → Developer Tools
+    ("cuid alternative", "developer"),               # "cuid" → Developer Tools
+    ("nanoid alternative", "developer"),             # "nanoid" → Developer Tools
+    # Developer Tools — emoji libraries
+    ("emoji library javascript", "developer"),       # "emoji" (not flag→feature) → Developer Tools
+    ("emoji picker react", "developer"),             # "emoji" first token → Developer Tools
+    # Testing — fake data generation (raw "fake" token, no Faker.js brand)
+    ("fake data generator", "testing"),              # "fake" → Testing Tools
+    ("fake api server", "testing"),                  # "fake" → Testing Tools
+    # Developer Tools — timezone handling (spaced form)
+    ("time zone library", "developer"),              # bigram "time zone" → Developer Tools
+    ("time zone conversion tool", "developer"),      # bigram fires before "time"→raw_cat
+    ("timezones javascript", "developer"),           # plural "timezones" → Developer Tools
 ]
 
 

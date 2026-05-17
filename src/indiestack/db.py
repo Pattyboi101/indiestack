@@ -3764,6 +3764,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — container-based integration testing and test data generation
     "testcontainers": "testing",    # Testcontainers — real service containers for integration tests
     "faker": "testing",             # Faker.js / Faker.py — realistic fake data for tests
+    "fake": "testing",              # "fake data generator", "fake api" → Testing Tools
+    # Developer Tools — ID/UUID generation libraries (uuid, nanoid, ulid, cuid, ksuid)
+    "uuid": "developer",            # "uuid library", "uuid generator" → Developer Tools
+    "ulid": "developer",            # ULID — sortable UUID alternative (ulid, ulid-factory)
+    "cuid": "developer",            # CUID/CUID2 — collision-resistant IDs for distributed systems
+    "nanoid": "developer",          # Nano ID — URL-friendly unique string ID generator
+    "ksuid": "developer",           # KSUID — K-Sortable Unique Identifiers
+    # Developer Tools — emoji libraries and utilities
+    "emoji": "developer",           # "emoji library", "emoji picker", "emoji parser" → Developer Tools
     # Speech / Voice AI — growing segment of AI queries (TTS, STT, ASR tools)
     "tts": "ai",                    # text-to-speech — ElevenLabs, Cartesia, Coqui TTS
     "stt": "ai",                    # speech-to-text (STT abbreviation) — Deepgram, Whisper
@@ -4142,6 +4151,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ejs": "developer",             # EJS — embedded JavaScript templating
     # Developer Tools — timezone handling (date-fns-tz, spacetime, temporal)
     "timezone": "developer",        # "timezone library", "timezone conversion" → Developer Tools
+    "time zone": "developer",       # spaced form — "time zone library", "time zone conversion" → Developer Tools
+    "timezones": "developer",       # plural form — "timezones javascript" → Developer Tools
     # Note: "luxon" already maps to "frontend" at line 3777 — no duplicate here
     # Maps & Location — named mapping libraries (Leaflet is most-searched maps alternative)
     "leaflet": "maps",              # Leaflet.js — most popular open-source interactive map library (41k★)
