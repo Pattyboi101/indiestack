@@ -271,6 +271,19 @@ TEST_CASES: list[tuple[str, str]] = [
     ("private ai redaction", "security"),            # bigram "private ai" → Security Tools
     # AI — "private llm" (self-hosted AI deployments; bigram avoids ambiguity with "private"→raw_first)
     ("private llm hosting", "ai"),                   # bigram "private llm" → AI & Automation
+    # Security — "zero trust" spaced form ("zerotrust" compound and "zero-trust" hyphen already mapped)
+    ("zero trust model", "security"),               # bigram "zero trust" → Security Tools
+    ("zero trust architecture", "security"),        # bigram fires before "zero"→raw_first
+    # Regression — compound/hyphenated forms still route correctly
+    ("zerotrust network", "security"),              # "zerotrust" → Security Tools (unchanged)
+    # Security — "zero knowledge" for ZK proof tooling (snarkjs, bellman, circom)
+    ("zero knowledge proof", "security"),           # bigram "zero knowledge" → Security Tools
+    # Security — SBOM spaced form ("software bill of materials")
+    # Stop words strip "software" and "of" → ["bill","materials"]; bigram covers it
+    ("software bill of materials tool", "security"), # bigram "bill materials" → Security Tools
+    ("bill of materials generator", "security"),    # bigram fires before "bill"→raw_first
+    # Regression — "sbom" abbreviation still routes correctly
+    ("sbom scanner", "security"),                   # "sbom" → Security Tools (unchanged)
 ]
 
 

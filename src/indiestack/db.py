@@ -6623,6 +6623,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Security — "private ai" / "private llm" (Private AI is a PII detection SaaS; bare "private" is too generic)
     "private ai": "security",       # bigram — "private ai pii", "private ai redaction" → Security Tools
     "private llm": "ai",            # bigram — "private llm hosting", "private llm deployment" → AI & Automation
+    # Security — "zero trust" (spaced form). "zerotrust" and "zero-trust" are already mapped;
+    # the natural two-word spaced form hits raw_first because "zero" alone has no synonym.
+    "zero trust": "security",       # bigram — "zero trust model", "zero trust architecture" → Security Tools
+    # Security — "zero knowledge" for ZK proof tooling (snarkjs, bellman, circom, zkp libraries).
+    # Neither "zero" nor "knowledge" has an individual synonym → both forms hit raw_first without this entry.
+    "zero knowledge": "security",   # bigram — "zero knowledge proof", "zero knowledge protocol" → Security Tools
+    # Security — SBOM spaced form. "sbom" already maps; "software bill of materials" after stop-word
+    # stripping ("software"+"of" are stop words) leaves ["bill","materials"] → bigram covers it.
+    "bill materials": "security",   # bigram — "bill of materials tool", "software bill of materials" → Security Tools
 }
 
 _FTS_STOP_WORDS = {

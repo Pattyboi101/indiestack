@@ -76,6 +76,19 @@ Must pass with zero failures before committing.
 
 Add corresponding test cases to the `TEST_CASES` list in `scripts/test_search_routing.py`.
 
+## Pattern: Spaced-Form Gaps + Stop-Word Erosion
+
+Compound terms often have their hyphenated form (`"zero-trust"`) and compounded form (`"zerotrust"`) mapped but the natural spaced two-word form (`"zero trust"`) missing. Always check all three forms:
+
+```
+for term in ["zero trust", "zerotrust", "zero-trust"]:
+    route_query(term)
+```
+
+Also watch for **stop-word erosion**: a phrase like "software bill of materials" has "software" and "of" as stop words, so surviving tokens are `["bill","materials"]`. The bigram `"bill materials"` must be explicitly mapped.
+
+Historically found: "zero trust" (spaced), "zero knowledge", "bill materials" (from SBOM queries).
+
 ## Common Gap Categories to Probe
 
 These areas historically generate `raw_first` misses:
