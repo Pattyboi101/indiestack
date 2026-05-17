@@ -901,6 +901,15 @@ TEST_CASES: list[tuple[str, str]] = [
     # Security — SCA (Software Composition Analysis) had no mapping → raw_first with no boost
     ("sca tool", "security"),                        # "sca" → Security Tools
     ("sca scanner open source", "security"),         # "sca" fires in first position → Security
+    # Developer Tools — "commit message" was routing to Message Queue via bare "message"→message
+    ("commit message linter", "developer"),          # bigram "commit message" → Developer Tools
+    ("commit message format", "developer"),          # bigram fires before "message"→message-queue
+    # DevOps — "cloud native" was routing to Frontend via bare "native"→frontend (React Native)
+    ("cloud native deployment", "devops"),           # bigram "cloud native" → DevOps & Infrastructure
+    ("cloud native monitoring", "devops"),           # bigram fires before "native"→frontend
+    # AI — "local ai" was routing to raw_first "local" with no category boost
+    ("local ai model", "ai"),                        # bigram "local ai" → AI & Automation
+    ("local ai inference", "ai"),                    # bigram fires before "local"→raw_first
 ]
 
 

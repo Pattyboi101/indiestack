@@ -83,12 +83,24 @@ These areas historically generate `raw_first` misses:
 | Domain | Tokens to test |
 |--------|---------------|
 | AI frameworks 2025-2026 | pydantic ai, agno, mastra, smolagents |
-| Local LLM tooling | lm studio, koboldai, llms, llmstxt |
+| Local LLM tooling | lm studio, koboldai, llms, llmstxt, local ai |
 | LLMOps / eval | trulens, braintrust, weave, ragas |
 | AI safety | llamaguard, rebuff, guardrails, prompt injection |
 | Data engineering | etl, elt, dbt, airbyte, fivetran |
 | Edge/serverless | val town, deno deploy, cloudflare workers |
 | Standards | llms.txt, a2a, mcp, openai agents |
+| Token collision traps | cloud native (native→frontend), commit message (message→queue), local ai (local→raw_first) |
+
+### Pattern 16 — "conflicting first/second token" probe queries
+
+For each synonym in `_CAT_SYNONYMS`, test it as the SECOND word of a two-word query where the first word is a common modifier. If the first token has its own synonym routing to a different category, the result is a collision. Examples found:
+
+- `"cloud native"` → "native"→frontend (React Native) collides with intended "devops"
+- `"commit message"` → "message"→message-queue collides with intended "developer"
+- `"privacy analytics"` → "privacy"→security collides with intended "analytics" (already fixed)
+- `"video editor"` → "video"→media collides with intended "creative" (already fixed)
+
+Probe by running: `for q in ["cloud X", "commit X", "hot X", "local X"]: route_query(q)`
 
 ## Commit Style
 

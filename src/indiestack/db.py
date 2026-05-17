@@ -7854,6 +7854,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "road map": "project",          # bigram — "road map planning", "road map tool", "product road map" → Project Management
     # Security — SCA abbreviation (Software Composition Analysis: Snyk, OWASP Dependency-Check, Trivy)
     "sca": "security",              # SCA — "sca tool", "sca scanner", "sca open source" → Security Tools
+    # Developer Tools — "commit message" routes to Message Queue via bare "message"→message token.
+    # Commit linting tools (commitlint, commitizen, conventional-changelog) live in Developer Tools.
+    "commit message": "developer",  # bigram — "commit message linter", "commit message format" → Developer Tools
+    # DevOps — "cloud native" routes to Frontend via bare "native"→frontend (React Native collision).
+    # Cloud-native patterns/tooling (k8s, Helm, Istio, Dapr) live in DevOps & Infrastructure.
+    "cloud native": "devops",       # bigram — "cloud native deployment", "cloud native monitoring" → DevOps
+    # AI — "local ai" routes to raw_first "local" (no mapping) — misses AI & Automation category.
+    # Local AI tools (Ollama, Jan, LM Studio, llamafile, GPT4All) live in AI & Automation.
+    "local ai": "ai",               # bigram — "local ai model", "local ai inference", "local ai assistant" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
