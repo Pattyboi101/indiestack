@@ -98,6 +98,14 @@ When hunting for routing gaps, these query forms are historically tricky:
     in Analytics & Metrics. Similarly check: "schema", "spec", "model", "graph" as
     leading tokens in data-engineering contexts. Probe: "data [noun]" where [noun] is
     a data-engineering or BI concept — if raw_first fires, add the bigram.
+
+18. "Stop-word bigram trap" — a bigram like "source map" CAN NEVER fire because "source"
+    is in _FTS_STOP_WORDS; it's stripped before bigram matching. Same for "open source",
+    "open graph", "best [tool]", etc. Always check BOTH tokens of a proposed bigram
+    against _FTS_STOP_WORDS before adding it. Fix: use the compound form ("sourcemap")
+    or map the surviving token directly. Probe: write the bigram, split it, check each
+    half against _FTS_STOP_WORDS. If either half is a stop word, the bigram is dead.
+    Key stop words to watch: "source", "open", "best", "free", "new", "fast", "simple".
 """
 
 import sys
@@ -876,6 +884,23 @@ TEST_CASES: list[tuple[str, str]] = [
     ("lm studio alternative", "ai"),                 # bigram "lm studio" → AI & Automation
     # AI — "pydantic ai" (spaced) was routing to Developer via "pydantic"→developer
     ("pydantic ai framework", "ai"),                 # bigram "pydantic ai" → AI & Automation
+    # Developer Tools — sourcemap compound forms (bigram "source map" CANNOT fire: "source" is a stop word)
+    # sourcemap explorer, webpack sourcemaps, etc. now route to Developer Tools
+    ("sourcemap explorer", "developer"),             # compound token "sourcemap" → Developer Tools
+    ("sourcemaps webpack", "developer"),             # compound plural "sourcemaps" → Developer Tools
+    # SEO — "site map" two-word form collides with "map"→maps-location; bigram overrides
+    ("site map generator", "seo"),                   # bigram "site map" → SEO Tools
+    ("xml site map", "seo"),                         # bigram fires before "xml"→raw_first
+    # Regression — "sitemap" (compound) still routes to SEO correctly
+    ("sitemap xml generator", "seo"),                # "sitemap"→seo (unchanged)
+    # Project Management — "road map" two-word form collides with "map"→maps-location; bigram overrides
+    ("road map planning", "project"),                # bigram "road map" → Project Management
+    ("product road map", "project"),                 # bigram fires before "product"→raw_first
+    # Regression — "roadmap" (compound) still routes to Project Management
+    ("roadmap tool", "project"),                     # "roadmap"→project (unchanged)
+    # Security — SCA (Software Composition Analysis) had no mapping → raw_first with no boost
+    ("sca tool", "security"),                        # "sca" → Security Tools
+    ("sca scanner open source", "security"),         # "sca" fires in first position → Security
 ]
 
 

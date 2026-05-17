@@ -7841,6 +7841,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "wallabag": "newsletters",      # Wallabag — self-hosted read-it-later app; "wallabag alternative" → Newsletters & Content
     # Customer Support — "contact center" bigram (bare "contact" is unmapped; LIKE '%contact%' matches no category name)
     "contact center": "support",    # bigram — "contact center software", "open source contact center" → Customer Support
+    # Developer Tools — "sourcemap" / "source map" collide with "map"→maps-location.
+    # Source maps are JavaScript build artifacts (bundlers, error-tracking). Bigram form CANNOT fire
+    # because "source" is in _FTS_STOP_WORDS — use compound single-token entries instead.
+    "sourcemap": "developer",       # compound — "sourcemap explorer", "sourcemap upload" → Developer Tools
+    "sourcemaps": "developer",      # compound plural — "enable sourcemaps", "sourcemaps webpack" → Developer Tools
+    # SEO — "site map" (two words) collides with "map"→maps-location.
+    # "sitemap" (compound) already routes to seo; this bigram covers the two-word form.
+    "site map": "seo",              # bigram — "site map generator", "xml site map", "site map crawl" → SEO Tools
+    # Project Management — "road map" (two words) collides with "map"→maps-location.
+    # "roadmap" (compound) already routes to project; this bigram covers the two-word form.
+    "road map": "project",          # bigram — "road map planning", "road map tool", "product road map" → Project Management
+    # Security — SCA abbreviation (Software Composition Analysis: Snyk, OWASP Dependency-Check, Trivy)
+    "sca": "security",              # SCA — "sca tool", "sca scanner", "sca open source" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
