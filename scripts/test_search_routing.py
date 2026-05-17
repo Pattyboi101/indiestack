@@ -947,6 +947,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("time zone library", "developer"),              # bigram "time zone" → Developer Tools
     ("time zone conversion tool", "developer"),      # bigram fires before "time"→raw_cat
     ("timezones javascript", "developer"),           # plural "timezones" → Developer Tools
+    # AI — "token counting" (-ing form) routes to auth via "token"→authentication without bigram
+    ("token counting library", "ai"),                # bigram "token counting" → AI & Automation
+    ("token counting openai", "ai"),                 # bigram fires before "token"→authentication
+    # AI — "ai pipeline" routes to background via "pipeline"→background without bigram
+    ("ai pipeline framework", "ai"),                 # bigram "ai pipeline" → AI & Automation
+    ("ai pipeline langchain", "ai"),                 # bigram fires before "pipeline"→background
+    # AI — "ai orchestration" routes to background via "orchestration"→background without bigram
+    ("ai orchestration framework", "ai"),            # bigram "ai orchestration" → AI & Automation
+    ("ai orchestration crewai", "ai"),               # bigram fires before "orchestration"→background
+    # Message Queue — "domain events" routes to devops via "domain"→devops without bigram
+    ("domain events pattern", "message"),            # bigram "domain events" → Message Queue
+    ("domain events library", "message"),            # bigram fires before "domain"→devops
+    # Developer Tools — "domain driven" routes to devops via "domain"→devops without bigram
+    ("domain driven design", "developer"),           # bigram "domain driven" → Developer Tools
+    ("domain driven architecture", "developer"),     # bigram fires before "domain"→devops
+    # Developer Tools — DDD abbreviation (raw_first without mapping)
+    ("ddd framework", "developer"),                  # "ddd" → Developer Tools
+    ("ddd architecture", "developer"),               # "ddd" → Developer Tools
 ]
 
 

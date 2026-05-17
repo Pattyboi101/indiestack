@@ -3675,7 +3675,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "behave": "testing",            # Behave — Python BDD framework
     "specflow": "testing",          # SpecFlow — .NET BDD framework
     "gherkin": "testing",           # Gherkin — BDD DSL used by Cucumber/Behave
-    # DevOps — service discovery, config, and VM tooling
+    # Developer Tools — DDD (Domain-Driven Design) architecture tooling
+    "ddd": "developer",             # domain-driven design queries → Developer Tools (EventStoreDB, MediatR)
     "consul": "devops",             # HashiCorp Consul — service discovery + config + mesh
     "etcd": "devops",               # etcd — distributed key-value store (Kubernetes backbone)
     "vagrant": "devops",            # Vagrant — VM provisioning with declarative config
@@ -7806,6 +7807,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Bigrams override "token"→authentication so these land in AI & Automation.
     "token usage": "ai",                 # bigram — "token usage tracking", "token usage api" → AI & Automation
     "token count": "ai",                 # bigram — "token count library", "token count openai" → AI & Automation
+    "token counting": "ai",              # bigram — "token counting library", "token counting openai" (-ing form) → AI & Automation
     # AI — "content moderation" routes to CMS via bare "content"→cms token.
     # Content moderation tools (Perspective API, Hive, Moderation API) live in AI & Automation.
     "content moderation": "ai",          # bigram — "content moderation api", "content moderation llm" → AI & Automation
@@ -7895,6 +7897,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — "deno deploy" routes to Frontend via bare "deno"→frontend (Deno JS runtime).
     # Deno Deploy is an edge hosting/deployment platform — correctly categorized under DevOps.
     "deno deploy": "devops",        # bigram — "deno deploy alternative", "deno deploy setup" → DevOps & Infrastructure
+    # AI — "ai pipeline" routes to background via bare "pipeline"→background (ETL/data pipeline collision).
+    # AI pipeline tools (LangChain, Haystack, LlamaIndex, Marvin) live in AI & Automation.
+    "ai pipeline": "ai",            # bigram — "ai pipeline framework", "ai pipeline orchestration" → AI & Automation
+    # AI — "ai orchestration" routes to background via bare "orchestration"→background (job scheduler collision).
+    # AI agent orchestration tools (CrewAI, AutoGen, LangGraph) live in AI & Automation.
+    "ai orchestration": "ai",       # bigram — "ai orchestration framework", "ai orchestration tool" → AI & Automation
+    # Message Queue — "domain events" routes to DevOps via bare "domain"→devops (domain registrar collision).
+    # Domain events are DDD/event-driven patterns — tools like EventStoreDB, Axon live in Message Queue.
+    "domain events": "message",     # bigram — "domain events pattern", "domain events library" → Message Queue
+    # Developer Tools — "domain driven" routes to DevOps via bare "domain"→devops.
+    # Domain-driven design queries target DDD tooling → Developer Tools.
+    "domain driven": "developer",   # bigram — "domain driven design", "domain driven architecture" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
