@@ -3153,6 +3153,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "doppler": "security",           # Doppler — env and secrets management platform
     "bitwarden": "security",         # Bitwarden — open-source password/secrets manager
     "presidio": "security",          # Microsoft Presidio — PII detection and data anonymization
+    "skyflow": "security",           # Skyflow — data privacy vault for PII tokenization and storage
+    "arcjet": "security",            # Arcjet — application security (rate limiting, bot detection, WAF)
     # API / Realtime — collaborative realtime (CRDT-based)
     "liveblocks": "api",             # Liveblocks — collaborative realtime infrastructure
     "yjs": "api",                    # Y.js — CRDT-based collaborative realtime framework
@@ -6618,6 +6620,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — llms.txt (LLM-readable web standard); "llms txt" spaced bigram for queries with a space between terms.
     "llms txt": "ai",               # bigram — "llms txt implementation", "llms txt website" → AI & Automation
     "llms-txt": "ai",               # hyphenated — "llms-txt tool", "llms-txt generator" → AI & Automation
+    # Security — "private ai" / "private llm" (Private AI is a PII detection SaaS; bare "private" is too generic)
+    "private ai": "security",       # bigram — "private ai pii", "private ai redaction" → Security Tools
+    "private llm": "ai",            # bigram — "private llm hosting", "private llm deployment" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

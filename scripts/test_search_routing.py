@@ -264,6 +264,13 @@ TEST_CASES: list[tuple[str, str]] = [
     ("hydrolix analytics", "analytics"),             # "hydrolix" → Analytics & Metrics
     # Security — Microsoft Presidio (PII detection; "presidio" was unmapped → raw_first)
     ("presidio pii detection", "security"),          # "presidio" → Security Tools
+    # Security — Skyflow and Arcjet (PII vault / app security; both unmapped → raw_first)
+    ("skyflow pii vault", "security"),               # "skyflow" → Security Tools
+    ("arcjet bot detection", "security"),            # "arcjet" → Security Tools
+    # Security — "private ai" bigram (bare "private" is too generic; bigram targets the PII SaaS)
+    ("private ai redaction", "security"),            # bigram "private ai" → Security Tools
+    # AI — "private llm" (self-hosted AI deployments; bigram avoids ambiguity with "private"→raw_first)
+    ("private llm hosting", "ai"),                   # bigram "private llm" → AI & Automation
 ]
 
 
