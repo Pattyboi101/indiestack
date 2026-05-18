@@ -1095,6 +1095,15 @@ TEST_CASES: list[tuple[str, str]] = [
     ("cookie banner gdpr", "security"),               # bigram "cookie banner"→security
     # Regression — "cookie consent" already covered
     ("cookie consent banner", "security"),            # bigram "cookie consent"→security unchanged
+    # CLI — "command line" spaced bigram; "commandline" compound was mapped but space form wasn't
+    ("command line interface", "cli"),                # bigram "command line"→cli-tools
+    ("command line tool", "cli"),                     # second form
+    # Frontend — "canvas" bare token for HTML canvas drawing library queries
+    ("canvas drawing library", "frontend"),           # "canvas"→frontend (Konva, Fabric, p5.js)
+    # Database — "entity" for .NET Entity Framework and ORM entity-relationship queries
+    ("entity framework alternative", "database"),     # "entity"→database
+    # API — Apache Thrift RPC framework
+    ("thrift alternative", "api"),                    # "thrift"→api-tools
 ]
 
 

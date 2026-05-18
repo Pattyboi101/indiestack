@@ -2954,6 +2954,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "terminal": "cli",
     "shell": "cli",
     "tui": "cli",                       # Terminal UI tools
+    "command line": "cli",              # spaced bigram — "command line interface", "command line tool" → CLI Tools
+    "command-line": "cli",             # hyphenated — "command-line parser", "command-line app" → CLI Tools
     # Documentation — "Documentation" category, LIKE '%documentation%' matches ✓
     "docs": "documentation",
     "wiki": "documentation",
@@ -3247,6 +3249,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "inngest": "background",   # Inngest — event-driven background jobs for Next.js/Node
     "trigger": "background",   # Trigger.dev — open-source background jobs with SDK
     # Database — ORM / query builder named tools (very common agent queries)
+    "entity": "database",           # "entity framework alternative", "entity relationship" → Database (ORM context)
     "typeorm": "database",          # TypeORM — TypeScript/JS ORM supporting many databases
     "sequelize": "database",        # Sequelize — classic Node.js ORM (PostgreSQL, MySQL, SQLite)
     "mongoose": "database",         # Mongoose — MongoDB object modelling for Node.js
@@ -3315,6 +3318,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "crawlee": "developer",         # Crawlee — Apify's open-source web scraping/crawling library
     # RPC — generic query term (beyond gRPC)
     "rpc": "api",                   # "rpc framework", "rpc protocol" → API Tools (Hono, tRPC, gRPC)
+    "thrift": "api",                # Apache Thrift — "thrift alternative", "thrift rpc" → API Tools
     # DNS — DNS tools and providers live in DevOps & Infrastructure
     "dns": "devops",                # "DNS provider", "DNS management", "DNS server" → DevOps
     "registrar": "devops",          # "domain registrar", "registrar alternative" → DevOps & Infrastructure
@@ -5112,6 +5116,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "eventbus": "message",          # event bus — "eventbus library", "in-process eventbus", "eventbus pattern" → Message Queue
     "event-bus": "message",         # hyphenated — "event-bus alternative", "event-bus typescript" → Message Queue
     # Frontend — canvas graphics and node-based diagram libraries
+    "canvas": "frontend",           # bare token — "canvas drawing library", "html canvas api" → Frontend (Konva, Fabric, p5.js)
     "konva": "frontend",            # Konva.js — 2D canvas graphics library for React/Vue/vanilla (11k★) → Frontend Frameworks
     "fabricjs": "frontend",         # Fabric.js — canvas manipulation library; "fabricjs alternative" → Frontend Frameworks
     "fabric": "frontend",           # short form — "fabric.js alternative", "fabric canvas library" → Frontend Frameworks
