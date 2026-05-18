@@ -1115,6 +1115,12 @@ TEST_CASES: list[tuple[str, str]] = [
     # Frontend — "server actions" spaced bigram (hyphenated form was mapped, space form wasn't)
     ("server actions nextjs", "frontend"),            # bigram "server actions"→frontend
     ("server actions form", "frontend"),              # second form
+    # Maps — geo dead zones ("reverse geocoding", "postal code", "distance matrix")
+    ("reverse geocoding api", "maps"),                # bigram "reverse geocoding"→maps (overrides "reverse"→devops)
+    ("postal code lookup", "maps"),                   # bigram "postal code"→maps
+    ("distance matrix api", "maps"),                  # bare "distance"→maps
+    # Regression — bare "reverse" still routes to devops for reverse proxy queries
+    ("reverse proxy caddy", "devops"),                # "reverse"→devops unchanged
     # Security — "browser fingerprinting" bigram overrides "browser"→testing
     ("browser fingerprinting", "security"),           # bigram "browser fingerprinting"→security
     # Regression — bare "browser" still routes to testing (Playwright, Puppeteer)

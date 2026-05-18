@@ -7840,6 +7840,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Background Jobs — "reverse etl" fires "reverse"→devops (intended for "reverse proxy").
     # Reverse ETL tools (Census, Hightouch, Polytomic) live in Background Jobs (data pipelines).
     "reverse etl": "background",          # "reverse etl census", "reverse etl tool" → Background Jobs
+    # Maps — "reverse geocoding" fires "reverse"→devops without bigram (reverse geocoding ≠ reverse proxy)
+    "reverse geocoding": "maps",          # bigram — "reverse geocoding api", "reverse geocode address" → Maps & Location
+    # Maps — postal code / zip code geo queries have no synonym; raw_first fires
+    "postal": "maps",                     # "postal code lookup", "postal code validation" → Maps & Location
+    "postal code": "maps",               # bigram — "postal code api", "postal code library" → Maps & Location
+    "distance": "maps",                   # "distance matrix", "distance calculation api" → Maps & Location
     # Landing Pages — "landing" and "launch" are unmapped; raw_first fires for common page queries.
     "landing": "landing",                 # "landing page builder", "landing page template" → Landing Pages
     "launch": "landing",                  # "launch page builder", "product launch page" → Landing Pages
