@@ -7876,6 +7876,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "design system": "frontend",         # bigram — "design system react", "open source design system" → Frontend Frameworks
     "design systems": "frontend",        # plural — "design systems tools", "best design systems 2025" → Frontend Frameworks
     "design tokens": "frontend",         # bigram — "design tokens css", "design tokens tool" → Frontend Frameworks
+    "design token": "frontend",          # singular — "design token system", "design token management" → Frontend Frameworks
     # DevOps — deployment pattern and Git workflow queries that hit raw_first with no category boost.
     "pull request": "devops",            # bigram — "pull request automation", "pull request review tool" → DevOps
     "zero downtime": "devops",           # bigram — "zero downtime deployment", "zero downtime migration" → DevOps

@@ -1108,6 +1108,10 @@ TEST_CASES: list[tuple[str, str]] = [
     ("internal tool builder", "developer"),           # "internal"→developer (tool is a stop word → "internal builder")
     # Regression — "internal catalog" bigram keeps service catalog queries routing to DevOps
     ("internal catalog tool", "devops"),             # bigram "internal catalog"→devops (overrides "internal"→developer)
+    # Frontend — "design token" singular bigram (design tokens plural was mapped, singular wasn't)
+    ("design token system", "frontend"),              # bigram "design token"→frontend (overrides "token"→authentication)
+    # Regression — bare "token" still routes to authentication (jwt tokens, access tokens)
+    ("jwt token auth", "authentication"),             # "token"→authentication unchanged
     # Security — "browser fingerprinting" bigram overrides "browser"→testing
     ("browser fingerprinting", "security"),           # bigram "browser fingerprinting"→security
     # Regression — bare "browser" still routes to testing (Playwright, Puppeteer)
