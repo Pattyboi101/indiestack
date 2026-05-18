@@ -8012,6 +8012,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cloud cost": "devops",         # bigram — "cloud cost optimizer", "cloud cost tool" → DevOps (bare "cloud" is too broad)
     "infracost": "devops",          # Infracost — "infracost alternative", "infracost setup" → DevOps & Infrastructure
     "opencost": "devops",           # OpenCost — CNCF k8s cost monitoring; "opencost alternative" → DevOps & Infrastructure
+    # Dot-domain suffix forms — agents and users often include the TLD in queries
+    # (e.g. "make.com alternative", "cal.com setup"). The base name is already mapped
+    # above; these entries catch the dot-domain variant without extra stop-word stripping.
+    "make.com": "background",       # Make.com — dot-domain form; "make"→background already mapped
+    "cal.com": "scheduling",        # Cal.com — open-source scheduling; "cal" has no base mapping
+    "posthog.com": "analytics",     # PostHog — dot-domain form; "posthog"→analytics already mapped
+    "vercel.com": "devops",         # Vercel — dot-domain form; "vercel"→devops already mapped
+    "liveblocks.io": "api",         # Liveblocks — dot-domain form; "liveblocks"→api already mapped
+    "val.town": "developer",        # Val Town — dot-domain form; "val"→developer already mapped
+    "railway.app": "devops",        # Railway — dot-domain form; "railway"→devops already mapped
+    "render.com": "devops",         # Render — dot-domain form; "render"→devops already mapped
+    "sentry.io": "monitoring",      # Sentry — dot-domain form; "sentry"→monitoring already mapped
+    "highlight.io": "monitoring",   # Highlight.io — dot-domain form; "highlight"→monitoring already mapped
+    "neon.tech": "database",        # Neon — dot-domain form; "neon"→database already mapped
+    "turso.tech": "database",       # Turso — dot-domain form; "turso"→database already mapped
+    "resend.com": "email",          # Resend — dot-domain form; "resend"→email already mapped
+    "plausible.io": "analytics",    # Plausible — dot-domain form; "plausible"→analytics already mapped
+    "umami.is": "analytics",        # Umami — dot-domain form; "umami"→analytics already mapped
 }
 
 _FTS_STOP_WORDS = {

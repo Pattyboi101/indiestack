@@ -1219,6 +1219,25 @@ TEST_CASES: list[tuple[str, str]] = [
     ("documentation site builder", "documentation"), # second form
     # Analytics — SaaS metrics (prevent "saas"→boilerplate poisoning)
     ("saas metrics dashboard", "analytics"),         # bigram "saas metrics"→analytics
+    # Probe pattern 27 — dot-domain suffix queries
+    # Agents and users often include the TLD when querying specific tools.
+    # The bare name is already mapped; these test the dot-domain form.
+    ("make.com alternative", "background"),           # "make.com"→background (bare "make" also maps)
+    ("make.com workflow", "background"),              # "make.com" fires before "workflow"→ai
+    ("cal.com alternative", "scheduling"),            # "cal.com"→scheduling (cal has no bare mapping)
+    ("cal.com setup", "scheduling"),                  # second form
+    ("posthog.com setup", "analytics"),              # "posthog.com"→analytics
+    ("vercel.com alternative", "devops"),             # "vercel.com"→devops
+    ("liveblocks.io setup", "api"),                  # "liveblocks.io"→api
+    ("val.town alternative", "developer"),            # "val.town"→developer
+    ("railway.app vs render", "devops"),             # "railway.app"→devops fires before "render"→devops
+    ("sentry.io setup", "monitoring"),               # "sentry.io"→monitoring
+    ("highlight.io alternative", "monitoring"),       # "highlight.io"→monitoring
+    ("resend.com transactional email", "email"),      # "resend.com"→email
+    ("plausible.io self hosted", "analytics"),        # "plausible.io"→analytics
+    ("umami.is alternative", "analytics"),            # "umami.is"→analytics
+    ("neon.tech postgres", "database"),              # "neon.tech"→database
+    ("turso.tech libsql", "database"),               # "turso.tech"→database
 ]
 
 
