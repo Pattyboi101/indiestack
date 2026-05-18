@@ -1083,6 +1083,18 @@ TEST_CASES: list[tuple[str, str]] = [
     # Analytics — data lineage tools (Marquez, OpenLineage); "data" has no synonym so bigram needed
     ("data lineage tool", "analytics"),               # bigram "data lineage"→analytics
     ("lineage tracking", "analytics"),                # bare "lineage"→analytics
+    # Message Queues — "pub sub" spaced form; "pubsub" already mapped, space form was missing
+    ("pub sub messaging", "message"),                 # bigram "pub sub"→message-queue
+    ("pub sub pattern", "message"),                   # second form
+    # Logging — "access log" bigram overrides "access"→authentication for log parsing queries
+    ("access logs nginx", "logging"),                 # bigram "access logs"→logging
+    ("access log parser", "logging"),                 # bigram "access log"→logging
+    # Regression — bare "access" still routes to authentication (access control unchanged)
+    ("access control list", "authentication"),         # "access"→authentication unchanged
+    # Security — "cookie banner" bigram overrides "cookie"→authentication for GDPR banner queries
+    ("cookie banner gdpr", "security"),               # bigram "cookie banner"→security
+    # Regression — "cookie consent" already covered
+    ("cookie consent banner", "security"),            # bigram "cookie consent"→security unchanged
 ]
 
 

@@ -2588,6 +2588,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "message": "message",
     "queues": "message",
     "pubsub": "message",
+    "pub sub": "message",           # spaced form — "pub sub pattern", "pub sub messaging" → Message Queues
     "kafka": "message",
     "rabbitmq": "message",
     "nats": "message",
@@ -2932,6 +2933,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "permission": "authentication",   # "permissions management", "fine-grained permission"
     "permissions": "authentication",  # plural
     "access": "authentication",       # "access control", "access management"
+    "access log": "logging",          # bigram — overrides "access"→auth for log parsing queries → Logging Tools
+    "access logs": "logging",         # plural — "access logs nginx", "access log parser" → Logging Tools
     # Internationalisation / localisation — dedicated "Localization" category exists
     # LIKE '%localization%' matches category name "Localization" ✓
     "i18n": "localization",
@@ -7874,9 +7877,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Analytics — "privacy analytics" should route to Analytics (Plausible, Fathom, Simple Analytics),
     # NOT Security. Bare "privacy" → security is correct for GDPR/cookie tools; this bigram overrides.
     "privacy analytics": "analytics",  # bigram — "privacy analytics tool", "privacy focused analytics" → Analytics
-    # Security — "cookie consent" overrides bare "cookie" → authentication for consent/GDPR queries.
+    # Security — "cookie consent" / "cookie banner" override bare "cookie" → authentication for consent/GDPR queries.
     # Cookie consent banners (Cookiebot, CookieYes, Axeptio) are privacy/compliance tools → Security.
     "cookie consent": "security",       # bigram — "cookie consent banner", "cookie consent gdpr" → Security Tools
+    "cookie banner": "security",        # bigram — "cookie banner gdpr", "cookie banner react" → Security Tools
     # Creative Tools — video editor bigrams (override "video"→media for editing-specific queries)
     # Kdenlive, OpenShot, Shotcut, DaVinci Resolve, Kdenlive are all in Creative Tools
     "video editor": "creative",     # bigram — "video editor linux", "video editor open source" → Creative Tools
