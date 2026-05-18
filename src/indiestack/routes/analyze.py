@@ -156,9 +156,9 @@ def _render_migration_intel(migration_data: list = None) -> str:
 
         items += f'''
         <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
-            <code style="font-family:var(--font-mono);font-size:var(--text-sm);color:#EF4444;">{from_pkg}</code>
+            <code style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--error-text);">{from_pkg}</code>
             <span style="color:var(--ink-muted);">&#8594;</span>
-            <code style="font-family:var(--font-mono);font-size:var(--text-sm);color:#10B981;">{to_pkg}</code>
+            <code style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--success);">{to_pkg}</code>
             <span style="margin-left:auto;font-family:var(--font-mono);font-size:var(--text-xs);color:{conf_color};font-weight:600;">{count} repos</span>
         </div>'''
 

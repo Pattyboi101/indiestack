@@ -7721,6 +7721,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "headless browser": "testing",  # bigram — "headless browser puppeteer", "headless browser testing" → Testing Tools
     "headless chrome": "testing",   # bigram — "headless chrome screenshot", "headless chrome automation" → Testing Tools
     "headless test": "testing",     # bigram — "headless test runner", "headless test automation" → Testing Tools
+    "browser extension": "developer", # bigram — "browser extension framework", "chrome extension" → Developer Tools (Plasmo, WXT)
     # File Management — thumbnail generation has no synonym; raw_first fires with no category boost.
     # Sharp, imgix, Cloudinary (thumbnail generation) live in file-management.
     "thumbnail": "file",            # "thumbnail generation api", "thumbnail resize", "thumbnail cdn" → File Management
