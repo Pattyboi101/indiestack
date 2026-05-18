@@ -185,6 +185,20 @@ When hunting for routing gaps, these query forms are historically tricky:
     (b) add direct tool-name synonyms when the compound includes a stop word.
     Fixed: "saas metrics"→analytics, "time tracker" bigram + toggl/harvest/clockify→project,
     "expense"/"expenses"→invoicing, "documentation"→documentation (May 2026).
+
+27. "Suffix-form and plural gaps" — a word mapped in one morphological form but not
+    others. "theme"→frontend was present but "theming" wasn't. "digital product" was
+    mapped but "digital products" (plural) wasn't. "self hosted" (space) routes to
+    DevOps but "self-hosted" (hyphenated) was a dead zone because the hyphen survives
+    the test simulator's split() but gets stripped in production tokenisation. Pattern:
+    for each new mapping, also add: (a) -ing/-ed/-s suffix forms if they're commonly
+    used, (b) both spaced and hyphenated compound variants. Also check for entirely
+    unmapped standalone tokens that represent commerce/billing concepts: "seat" (per-seat
+    pricing), "marketplace" (Stripe Connect style), "theming" (CSS-in-JS), "terms" (ToS
+    generators), "tos" (same). Probe: "[noun] based [billing-term]", "per [noun] [term]".
+    Fixed: "theming"→frontend, "time picker"→frontend, "self hosted"→devops,
+    "selfhosted"→devops, "seat"→invoicing, "marketplace"→payments,
+    "digital product/products"→payments, "terms"/"tos"→security (May 2026).
 """
 
 import sys
@@ -1219,6 +1233,28 @@ TEST_CASES: list[tuple[str, str]] = [
     ("documentation site builder", "documentation"), # second form
     # Analytics — SaaS metrics (prevent "saas"→boilerplate poisoning)
     ("saas metrics dashboard", "analytics"),         # bigram "saas metrics"→analytics
+    # Probe pattern 27: theming/-ing, time picker, self-hosted, seat/marketplace/digital routing
+    # "theming" suffix form — "theme"→frontend was present but "theming" wasn't
+    ("theming system", "frontend"),                  # "theming"→frontend
+    ("css theming library", "frontend"),             # "theming"→frontend (not raw_first)
+    # time picker bigram — bare "time" too broad for frontend; bigram is precise
+    ("time picker component", "frontend"),           # bigram "time picker"→frontend
+    ("time picker react", "frontend"),               # bigram "time picker"→frontend (framework context)
+    # self-hosted — compound bigram; user wants devops deployment tools
+    ("self hosted analytics", "devops"),             # bigram "self hosted"→devops
+    ("self hosted auth server", "devops"),           # bigram fires before "auth" token
+    # seat-based billing — invoicing category
+    ("seat based pricing model", "invoicing"),       # "seat"→invoicing
+    ("per seat billing", "invoicing"),               # "seat"→invoicing (after stop-word "per")
+    # marketplace payments — Stripe Connect style tools
+    ("marketplace payments api", "payments"),        # "marketplace"→payments
+    ("build a marketplace", "payments"),             # "marketplace"→payments
+    # digital product selling — Gumroad/Polar style
+    ("digital product store", "payments"),           # bigram "digital product"→payments (singular)
+    ("sell digital products online", "payments"),    # bigram "digital products"→payments (plural)
+    # legal compliance — ToS generators
+    ("terms of service generator", "security"),      # "terms"→security
+    ("tos generator tool", "security"),              # "tos"→security
 ]
 
 

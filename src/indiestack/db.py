@@ -8012,6 +8012,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cloud cost": "devops",         # bigram — "cloud cost optimizer", "cloud cost tool" → DevOps (bare "cloud" is too broad)
     "infracost": "devops",          # Infracost — "infracost alternative", "infracost setup" → DevOps & Infrastructure
     "opencost": "devops",           # OpenCost — CNCF k8s cost monitoring; "opencost alternative" → DevOps & Infrastructure
+    # Frontend — theming suffix form (bare "theme"→frontend already present, add -ing form)
+    "theming": "frontend",          # "theming system", "theming library", "css theming" → Frontend Frameworks
+    # Frontend — time picker UI component (bare "time" is too broad; bigram is precise)
+    "time picker": "frontend",      # bigram — "time picker component", "time picker react" → Frontend Frameworks
+    # DevOps — self-hosted deployment queries (Coolify, Kamal, Dokku, CapRover)
+    "self hosted": "devops",        # bigram — "self hosted analytics", "self hosted auth" → DevOps & Infrastructure
+    "selfhosted": "devops",         # compound form after hyphen-strip in production tokenization
+    # Invoicing — per-seat billing (dev tools context: seat-based = per-user subscription pricing)
+    "seat": "invoicing",            # "seat based pricing", "per seat billing", "seat license" → Invoicing & Billing
+    # Payments — marketplace payment flows (Stripe Connect, Gumroad, Paddle marketplace)
+    "marketplace": "payments",      # "marketplace payments", "marketplace api", "build a marketplace" → Payments
+    # Payments — digital product sales (Gumroad-style selling; "digital"+"product" pair)
+    "digital product": "payments",  # bigram — "digital product store", "digital product sales" → Payments
+    "digital products": "payments", # plural form — "sell digital products", "digital products api" → Payments
+    # Security — legal compliance generators (terms of service, ToS generators)
+    "terms": "security",            # "terms of service generator", "terms page" → Security Tools
+    "tos": "security",              # "tos generator", "tos page" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
