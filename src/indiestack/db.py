@@ -8012,6 +8012,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cloud cost": "devops",         # bigram — "cloud cost optimizer", "cloud cost tool" → DevOps (bare "cloud" is too broad)
     "infracost": "devops",          # Infracost — "infracost alternative", "infracost setup" → DevOps & Infrastructure
     "opencost": "devops",           # OpenCost — CNCF k8s cost monitoring; "opencost alternative" → DevOps & Infrastructure
+    # Developer Tools — developer experience (DX) tooling queries (Backstage, Port, Cortex, Graphite)
+    "dx": "developer",              # "dx tool", "dx platform", "dx improvement" → Developer Tools
+    "devex": "developer",           # "devex platform", "devex tooling" → Developer Tools (alternative spelling)
+    # Analytics — business intelligence bigram (bare "business" has no synonym; "bi"→analytics already mapped)
+    "business intelligence": "analytics",  # bigram — "business intelligence tool", "business intelligence dashboard" → Analytics
+    # Developer Tools — CRUD generators, admin panel builders (Forest Admin, React Admin, Refine, Appsmith)
+    "crud": "developer",            # "crud generator", "crud app builder", "crud maker" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

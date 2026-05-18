@@ -185,6 +185,22 @@ When hunting for routing gaps, these query forms are historically tricky:
     (b) add direct tool-name synonyms when the compound includes a stop word.
     Fixed: "saas metrics"→analytics, "time tracker" bigram + toggl/harvest/clockify→project,
     "expense"/"expenses"→invoicing, "documentation"→documentation (May 2026).
+
+27. "Initialism / compound-concept dead zones" — short acronyms and compound phrases
+    whose individual tokens either have no synonym or are too generic to map safely.
+    Examples: "dx" (developer experience), "devex" (same concept), "crud" (CRUD
+    generators/admin panels), "business intelligence" (BI tools). "bi"→analytics is
+    already mapped (catches "bi dashboard"), but the full phrase "business intelligence"
+    was a dead zone because "business" has no synonym. Similarly, "faas" is mapped but
+    "function as a service" reduces to bare "function" after stop-word stripping —
+    "function" is too generic to map safely, so rely on "faas" / "serverless" synonyms.
+    Probe strategy: (1) for each sub-domain acronym (dx, devex, bi, iac, faas, etl,
+    cicd), verify the abbreviation has a _CAT_SYNONYMS entry; (2) for each multi-word
+    concept name, check if the full phrase is a valid bigram (both tokens survive stop
+    words) and if it's missing, add it; (3) for CRUD/admin queries, check "crud generator",
+    "admin panel builder", "internal tool" — "admin" and "internal" are already mapped to
+    developer, but "crud" was a dead zone. Fixed: "dx"/"devex"→developer,
+    "business intelligence"→analytics, "crud"→developer (May 2026).
 """
 
 import sys
@@ -1219,6 +1235,23 @@ TEST_CASES: list[tuple[str, str]] = [
     ("documentation site builder", "documentation"), # second form
     # Analytics — SaaS metrics (prevent "saas"→boilerplate poisoning)
     ("saas metrics dashboard", "analytics"),         # bigram "saas metrics"→analytics
+    # Developer Tools — DX / developer experience tooling (Backstage, Port, Cortex)
+    ("dx tooling", "developer"),                     # "dx"→developer
+    ("dx platform", "developer"),                    # second form
+    ("devex platform", "developer"),                 # "devex"→developer (alternative spelling)
+    # Regression — "admin" and "internal" still route to developer for related queries
+    ("admin panel builder", "developer"),            # "admin"→developer unchanged
+    ("internal tool builder", "developer"),          # "internal"→developer unchanged
+    # Analytics — business intelligence bigram
+    ("business intelligence tool", "analytics"),     # bigram "business intelligence"→analytics
+    ("business intelligence dashboard", "analytics"), # second form
+    # Regression — "bi"→analytics still routes directly for short-form queries
+    ("bi dashboard", "analytics"),                   # "bi"→analytics unchanged
+    # Developer Tools — CRUD generators and admin builders
+    ("crud generator", "developer"),                 # "crud"→developer
+    ("crud app builder", "developer"),               # second form
+    # Regression — "faas" still routes to devops for acronym queries
+    ("faas platform", "devops"),                     # "faas"→devops unchanged
 ]
 
 
