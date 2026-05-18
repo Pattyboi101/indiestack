@@ -89,6 +89,21 @@ Also watch for **stop-word erosion**: a phrase like "software bill of materials"
 
 Historically found: "zero trust" (spaced), "zero knowledge", "bill materials" (from SBOM queries).
 
+## Pattern: Orphaned Second-Token Poisoning
+
+When the **first token has no synonym** (raw_first), the **second token becomes the effective routing signal**. If that second token maps to the *wrong* category, the query is silently mis-routed — unlike raw_first dead zones, these queries *do* return a category, just the wrong one.
+
+Probe: for any two-word tech concept, check (a) whether token-0 is in `_CAT_SYNONYMS`; if NOT, check (b) whether token-1 maps to the right category. High-risk second tokens: `"contract"→testing`, `"proof"→(missing)`, `"recorder"→(missing)`, `"pipeline"→(missing)`.
+
+```python
+# Check token-0 then token-1 individually
+route_query("smart")     # raw_first → second-token risk
+route_query("contract")  # testing → wrong for "smart contract" queries
+route_query("smart contract")  # bigram needed
+```
+
+Historically found: "smart contract"→testing (was developer), "streaming pipeline"→media (was message), "html to pdf"→frontend (was file) via stop-word "to" removal.
+
 ## Common Gap Categories to Probe
 
 These areas historically generate `raw_first` misses:
@@ -110,6 +125,10 @@ These areas historically generate `raw_first` misses:
 | PII / data privacy | presidio, arcjet, skyflow, private ai |
 | Observability new | phoenix (arize), honeycomb, lightstep |
 | New AI coding tools | zed editor, helix editor, cursor ide |
+| Web3 / blockchain | smart contract, zk proof, zk rollup, hardhat, foundry |
+| Screen tools | screen recorder, screen capture (developer tools) |
+| Media pipeline | streaming pipeline, data pipeline (message vs media) |
+| Document conversion | html to pdf, markdown to html (file management) |
 
 ## Commit Style
 

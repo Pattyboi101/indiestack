@@ -88,19 +88,24 @@ After fixing anything, rag_store() the knowledge so other agents benefit.
 Run the 6-iteration cycle:
 
 ITERATION 1 — SEARCH QUALITY:
-curl the API for these queries and check top-3 results are relevant:
-  'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring',
-  'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth',
-  'state management', 'bundler', 'realtime', 'vector database', 'rate limiting',
-  'ai gateway', 'llm gateway', 'model router', 'ai proxy',
-  'load balancing', 'semantic cache', 'dark launch', 'token bucket rate limiter',
-  'mcp sentry', 'mcp stripe', 'mcp figma', 'mcp atlassian',
-  'llm observability', 'prompt management', 'llm tracing'.
-For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
-Note: _CAT_SYNONYMS now supports multi-word bigram entries (e.g. "ai gateway": "ai") —
-add multi-word keys for query patterns where individual word routing gives wrong category.
-Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
-After fixing db.py, commit with 'fix: improve search mappings for [queries]'.
+Run offline routing audit first (no API needed, catches regressions fast):
+  python3 scripts/test_search_routing.py
+If any tests fail, fix _CAT_SYNONYMS in db.py before continuing.
+
+Then probe new gaps using the offline route_query() helper — test these query patterns:
+  Core: 'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring'
+  Search quality: 'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth'
+  State/build: 'state management', 'bundler', 'realtime', 'vector database', 'rate limiting'
+  AI: 'ai gateway', 'llm gateway', 'model router', 'ai proxy', 'llm observability'
+  Streaming: 'streaming pipeline', 'event streaming', 'data pipeline'
+  Web3/security: 'smart contract', 'zk proof library', 'zero knowledge proof'
+  Screen tools: 'screen recorder', 'screen capture library'
+  Docs/conversion: 'html to pdf converter', 'pdf generator'
+  New AI agents: 'pydantic ai', 'agno framework', 'mastra ai', 'smolagents'
+  Orphaned 2nd-token probe: for any two-word concept, check each token individually —
+    if token-0 is raw_first AND token-1 maps to the wrong category, add a bigram.
+For each misfire, check _CAT_SYNONYMS (supports bigram keys). Fix and commit.
+After fixing db.py, commit with 'fix: N search routing gaps — [short desc] (M/M pass)'.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
