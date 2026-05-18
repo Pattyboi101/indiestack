@@ -1149,6 +1149,9 @@ TEST_CASES: list[tuple[str, str]] = [
     # Frontend — "micro frontends" plural spaced form + "module federation" bigram
     ("micro frontends module federation", "frontend"),# bigram "micro frontends"→frontend
     ("module federation webpack", "frontend"),         # bigram "module federation"→frontend
+    # Developer — Web3/DeFi tokens (defi + wallet were dead zones routing to mcp/raw_first)
+    ("defi protocol", "developer"),                   # "defi"→developer (was routing to "protocol"→mcp)
+    ("wallet connect", "developer"),                  # "wallet"→developer (was raw_first)
 ]
 
 

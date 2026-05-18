@@ -5343,6 +5343,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Web3 / blockchain — named query terms not yet mapped (complement to "blockchain"/"solidity"/"ethers" already mapped)
     "web3": "developer",            # Web3 — "web3 library", "web3 tools", "web3 development" → Developer Tools
     "nft": "developer",             # NFT — "nft minting", "nft smart contract", "nft tooling" → Developer Tools
+    "defi": "developer",            # DeFi — "defi protocol", "defi smart contract" → Developer Tools (Hardhat, Foundry)
+    "wallet": "developer",          # "wallet connect", "wallet sdk", "web3 wallet" → Developer Tools
     # AI — natural language processing query patterns not yet covered
     "natural": "ai",                # "natural language processing", "natural language API", "natural language search" → AI & Automation
     "tokenize": "ai",               # verb form — "tokenize input", "tokenize text for llm", "tokenize document" → AI & Automation
