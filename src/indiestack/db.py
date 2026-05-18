@@ -3965,6 +3965,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Singular devtool form (complement to existing "devtools" → "developer" mapping)
     "devtool": "developer",         # singular — "devtool extension", "devtool panel" → Developer Tools
     # Admin panel / internal tool builders — Appsmith, ToolJet, Budibase, Retool → Developer Tools
+    # Note: "internal tool" can't form bigram — "tool" is in _FTS_STOP_WORDS; use bare "internal" token.
+    "internal": "developer",        # "internal tool builder" → stops as "internal [builder]" → Developer Tools
     "retool": "developer",          # Retool — leading internal tool builder (very common alternative query)
     "appsmith": "developer",        # Appsmith — open-source internal tools builder (31k★)
     "tooljet": "developer",         # ToolJet — open-source Retool alternative (28k★)
@@ -7961,6 +7963,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "service" is in _FTS_STOP_WORDS so "service catalog" reduces to bare "catalog" → raw_first.
     # Internal developer portals and service catalogs live in DevOps & Infrastructure.
     "catalog": "devops",            # "service catalog", "developer portal catalog" → DevOps & Infrastructure
+    "internal catalog": "devops",   # bigram — overrides "internal"→developer for service catalog queries → DevOps
     # Frontend — light mode complement to existing "dark"→frontend (next-themes, shadcn, Tailwind)
     "light": "frontend",            # "light mode library", "light theme toggle" → Frontend Frameworks
     # AI — pair programming bigram (bare "pair"→ai risks collision with "key pair" auth context)

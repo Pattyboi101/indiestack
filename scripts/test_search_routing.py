@@ -1104,6 +1104,10 @@ TEST_CASES: list[tuple[str, str]] = [
     ("entity framework alternative", "database"),     # "entity"→database
     # API — Apache Thrift RPC framework
     ("thrift alternative", "api"),                    # "thrift"→api-tools
+    # Developer — "internal" bare token for internal tool builder queries (Retool, Appsmith)
+    ("internal tool builder", "developer"),           # "internal"→developer (tool is a stop word → "internal builder")
+    # Regression — "internal catalog" bigram keeps service catalog queries routing to DevOps
+    ("internal catalog tool", "devops"),             # bigram "internal catalog"→devops (overrides "internal"→developer)
     # Security — "browser fingerprinting" bigram overrides "browser"→testing
     ("browser fingerprinting", "security"),           # bigram "browser fingerprinting"→security
     # Regression — bare "browser" still routes to testing (Playwright, Puppeteer)
