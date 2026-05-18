@@ -341,7 +341,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("push notification service", "notifications"),
     ("i18n localization", "localization"),
     ("cli command line", "cli"),
-    ("documentation api docs", "api"),      # "documentation" not in synonyms; "api" → api (acceptable)
+    ("documentation api docs", "documentation"),  # "documentation" now mapped; routes to docs (Mintlify, Docusaurus)
     ("feature flag toggle", "feature"),
     # Product adoption / onboarding (added May 2026)
     ("appcues alternative", "feedback"),
@@ -1189,6 +1189,21 @@ TEST_CASES: list[tuple[str, str]] = [
     ("cloud cost monitoring", "devops"),              # second form
     ("infracost alternative", "devops"),              # "infracost"→devops
     ("opencost setup", "devops"),                     # "opencost"→devops
+    # Invoicing — expense tracking (Toggl, Harvest, Expense.so)
+    ("expense tracker app", "invoicing"),             # "expense"→invoicing
+    ("expenses tracking tool", "invoicing"),          # "expenses"→invoicing
+    # Project Management — time tracking (Toggl, Harvest, Clockify)
+    # Note: "time tracking app" can't use bigram — "tracking" and "app" are stop words;
+    # covered instead by named tool synonyms (toggl, harvest, clockify) + "time tracker" bigram
+    ("time tracker freelancer", "project"),           # bigram "time tracker"→project
+    ("toggl alternative", "project"),                 # "toggl"→project
+    ("clockify setup", "project"),                   # "clockify"→project
+    ("timesheet software", "project"),               # "timesheet"→project
+    # Documentation — bare "documentation" word now mapped
+    ("documentation generator", "documentation"),    # "documentation"→documentation
+    ("documentation site builder", "documentation"), # second form
+    # Analytics — SaaS metrics (prevent "saas"→boilerplate poisoning)
+    ("saas metrics dashboard", "analytics"),         # bigram "saas metrics"→analytics
 ]
 
 

@@ -2513,6 +2513,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "subscription": "payments",
     "invoice": "invoicing",
     "receipt": "invoicing",
+    "expense": "invoicing",         # "expense tracker", "expense report" → Invoicing & Billing
+    "expenses": "invoicing",        # plural form
     # Email synonyms
     "smtp": "email",
     "newsletter": "email",
@@ -2571,6 +2573,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sprint": "project",
     "agile": "project",
     "scrum": "project",
+    "time tracking": "project",     # bigram — "time tracking tool", "time tracking app" → Project Management
+    "time tracker": "project",      # bigram — "time tracker for freelancers" → Project Management
+    "timesheet": "project",         # "timesheet app", "employee timesheet" → Project Management
     # API synonyms
     "webhook": "api",
     "webhooks": "api",   # plural form
@@ -2960,6 +2965,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "command line": "cli",              # spaced bigram — "command line interface", "command line tool" → CLI Tools
     "command-line": "cli",             # hyphenated — "command-line parser", "command-line app" → CLI Tools
     # Documentation — "Documentation" category, LIKE '%documentation%' matches ✓
+    "documentation": "documentation",  # bare word — "documentation generator", "documentation site"
     "docs": "documentation",
     "wiki": "documentation",
     "readme": "documentation",
@@ -3297,6 +3303,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # React hooks libraries ("react hooks library", "custom hooks", "useHooks")
     "hooks": "frontend",            # React hooks / hooks libraries → Frontend Frameworks
     # SaaS starters / boilerplates ("saas boilerplate", "saas starter kit")
+    "saas metrics": "analytics",    # bigram — "saas metrics dashboard", "saas mrr" → Analytics (beats saas→boilerplate)
     "saas": "boilerplate",          # SaaS starter queries → Boilerplates category
     # Micro-frontends architecture (module federation, single-spa, qiankun)
     "microfrontend": "frontend",    # "micro-frontend framework" → Frontend Frameworks
@@ -4210,6 +4217,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — WebGL (lower level than Three.js, but queried directly)
     "webgl": "frontend",            # WebGL — browser 3D graphics API; queries route to Three.js/Babylon.js
     "babylon": "frontend",          # Babylon.js — WebGL-based 3D engine (alternative to Three.js, 23k★)
+    # Time tracking — tools like Toggl, Harvest, Clockify (project-management category)
+    "toggl": "project",             # Toggl Track — most-searched time tracker
+    "harvest": "project",           # Harvest — time tracking + invoicing
+    "clockify": "project",          # Clockify — free time tracker
+    "everhour": "project",          # Everhour — team time tracking
     # Project management — named tools not yet mapped (very common alternative query targets)
     "jira": "project",              # Jira — most-searched PM tool; "jira alternative" is the canonical query
     "clickup": "project",           # ClickUp — all-in-one productivity platform; popular alternative queries
