@@ -1133,6 +1133,14 @@ TEST_CASES: list[tuple[str, str]] = [
     # Authentication — "phone" bare token for phone verification/OTP queries
     ("phone verification", "authentication"),          # "phone"→authentication (Twilio Verify, Firebase Phone Auth)
     ("phone otp", "authentication"),                   # second form
+    # AI — "named entity" bigram overrides "entity"→database for NER queries
+    ("named entity recognition", "ai"),               # bigram "named entity"→ai (spaCy, NLTK)
+    # Regression — bare "entity" still routes to database (Entity Framework, ORM)
+    ("entity framework alternative", "database"),     # "entity"→database unchanged
+    # AI — "audio transcription" bigram overrides "audio"→media for speech-to-text queries
+    ("audio transcription api", "ai"),                # bigram "audio transcription"→ai (Deepgram, AssemblyAI)
+    # Regression — bare "audio" still routes to media for streaming queries
+    ("audio streaming", "media"),                     # "audio"→media unchanged
 ]
 
 

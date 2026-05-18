@@ -4146,6 +4146,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "hydrate": "frontend",           # "hydrate component", "client hydrate" → Frontend Frameworks
     # Database — NoSQL document stores ("document database", "document store")
     "document": "database",          # "document store", "document database" → Database (MongoDB, Firestore)
+    # AI — named entity recognition (NER) queries; "entity"→database would wrongly fire without bigram
+    "named entity": "ai",            # bigram — "named entity recognition", "named entity extraction" → AI & Automation
     # Frontend — React context API ("react context api", "context provider" queries)
     "context": "frontend",           # "react context", "context provider", "context api" → Frontend Frameworks
     # Frontend — virtual DOM queries (React, Preact, Inferno)
@@ -4621,6 +4623,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Caching — Varnish HTTP accelerator
     "varnish": "caching",           # Varnish Cache — high-performance HTTP reverse proxy + cache (11k★)
     # AI — audio/video transcription tools
+    # "audio transcription" bigram overrides "audio"→media for speech-to-text queries (Deepgram, AssemblyAI)
+    "audio transcription": "ai",    # bigram — "audio transcription api" → AI & Automation
     "transcription": "ai",          # "transcription API", "audio transcription" → AI & Automation
     # AI — standalone "vision" term
     "vision": "ai",                 # "vision model", "vision API", "LLM vision" → AI & Automation
