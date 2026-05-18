@@ -1152,6 +1152,10 @@ TEST_CASES: list[tuple[str, str]] = [
     # Developer — Web3/DeFi tokens (defi + wallet were dead zones routing to mcp/raw_first)
     ("defi protocol", "developer"),                   # "defi"→developer (was routing to "protocol"→mcp)
     ("wallet connect", "developer"),                  # "wallet"→developer (was raw_first)
+    # Analytics — "conversion rate" bigram overrides "rate"→api for CRO queries
+    ("conversion rate optimization", "analytics"),    # bigram "conversion rate"→analytics
+    # Regression — bare "rate" still routes to api for rate limiting queries
+    ("rate limiting api", "api"),                     # "rate"→api unchanged (via "rate limiting" bigram)
 ]
 
 

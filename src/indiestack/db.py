@@ -3879,6 +3879,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "replay": "monitoring",         # "session replay" (LogRocket, Highlight.io, PostHog) → Monitoring
     "heatmap": "analytics",         # "click heatmap", "scroll heatmap" (Hotjar, Clarity) → Analytics
     "funnel": "analytics",          # "conversion funnel", "funnel analysis" → Analytics & Metrics
+    "conversion rate": "analytics", # bigram — "conversion rate optimization" → Analytics (overrides "rate"→api)
     "cohort": "analytics",          # "cohort analysis", "user cohorts" → Analytics & Metrics
     # Project management — Gantt charts (commonly searched feature)
     "gantt": "project",             # "Gantt chart", "Gantt timeline view" → Project Management
