@@ -4337,6 +4337,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Security — Zero Trust architecture (growing segment in enterprise security queries)
     "zerotrust": "security",        # "zero trust model", "zerotrust network" → Security Tools
     "zero-trust": "security",       # hyphenated form — "zero-trust architecture", "zero-trust auth"
+    "zero trust": "security",       # bigram spaced form — "zero trust model", "zero trust architecture"
+    # Security — Zero Knowledge proofs (ZK, snarkjs, bellman, circom, zkp libraries)
+    "zero knowledge": "security",   # bigram — "zero knowledge proof", "zero knowledge protocol"
+    # Security — SBOM spaced form ("software" and "of" are stop words → "bill materials" bigram)
+    "bill materials": "security",   # bigram — "bill of materials tool", "software bill of materials"
+    # Security — specific vendor tools (Skyflow: PII vault; Arcjet: app security/rate-limiting/WAF)
+    "skyflow": "security",          # Skyflow — data privacy vault for PII tokenization and storage
+    "arcjet": "security",           # Arcjet — app security (rate limiting, bot detection, WAF)
     # API — rate-limit compound form (complement to "rate"→api, "limit"→api, "limiting"→api)
     "ratelimit": "api",             # "rate-limit" normalised → Unkey, Kong, Upstash Rate Limiting → API Tools
     # Frontend — Web Workers (browser parallelism; Comlink, Partytown, workbox-background-sync)
