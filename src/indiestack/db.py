@@ -7842,6 +7842,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — "content delivery network" fires "content"→cms before reaching "delivery"→devops.
     # Bigram override so CDN queries (BunnyCDN, Fastly, Cloudflare CDN) reach DevOps & Infrastructure.
     "content delivery": "devops",         # "content delivery network", "content delivery cdn" → DevOps
+    # Security — "content security policy" (CSP headers) fires "content"→cms without bigram.
+    "content security": "security",       # bigram — "content security policy", "csp header" → Security Tools
     # Background Jobs — "reverse etl" fires "reverse"→devops (intended for "reverse proxy").
     # Reverse ETL tools (Census, Hightouch, Polytomic) live in Background Jobs (data pipelines).
     "reverse etl": "background",          # "reverse etl census", "reverse etl tool" → Background Jobs
