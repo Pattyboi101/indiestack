@@ -4124,7 +4124,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sanitize": "security",          # verb form — "sanitize html input", "sanitize output" → Security
     "dompurify": "security",         # DOMPurify — fast, permissive XSS sanitizer for HTML (13k★)
     # Frontend — HTML template engines, parsers, and editors
-    "html": "frontend",              # "html parser", "html template engine", "html-in-js" → Frontend
+    "html": "frontend",              # "html template engine", "html-in-js" → Frontend
+    # Override bigrams for html-prefix collision (html→frontend fires before second token)
+    "html email": "email",           # "html email template", "html email builder" → Email (MJML, React Email)
+    "html pdf": "file",              # "html to pdf", "html pdf generator" → File (wkhtmltopdf, WeasyPrint)
+    "html parse": "developer",       # "html parse library", "html parser node" → Developer Tools (Cheerio)
     # Auth — OpenID Connect standard (complement to "oidc"→authentication)
     "openid": "authentication",      # OpenID Connect — "openid provider", "openid connect library"
     # Developer Tools — dependency injection containers (InversifyJS, tsyringe, Wire)

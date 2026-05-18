@@ -170,6 +170,18 @@ When hunting for routing gaps, these query forms are historically tricky:
     "finops" had no synonym. Probe: "cloud cost", "cloud pricing", "finops", "infracost"
     — if any hit raw_first or the wrong category, add bare token or bigram. Fixed:
     "sitemaps"→seo, "flame graph"→monitoring, "finops"/"cloud cost"→devops (May 2026).
+
+26. "HTML/markup first-token category collision" — "html"→frontend is correct for most
+    queries (HTML template engines, web component libraries), but "html X" compound
+    queries where X implies a different tool category get mis-routed because the "html"
+    token fires before the second noun. Bigrams are required to override. Key collisions:
+    "html email" (MJML, React Email → Email Marketing), "html pdf" (wkhtmltopdf, WeasyPrint
+    → File Management), "html parse" (Cheerio, htmlparser2 → Developer Tools). Pattern:
+    for any tech/markup name that maps to a primary category, probe "[name] [different-cat-noun]"
+    — if the name token fires instead of the noun, add a bigram override. Same risk applies
+    to any strongly-mapped single token: "css"→frontend, "json"→developer, "xml"→developer
+    — check "[token] [out-of-category noun]" compound queries. Fixed: "html email"→email,
+    "html pdf"→file, "html parse"→developer (May 2026).
 """
 
 import sys
@@ -387,6 +399,14 @@ TEST_CASES: list[tuple[str, str]] = [
     # Email
     ("email template builder", "email"),            # "email" → email
     ("transactional email resend", "email"),        # "transactional" → email
+    # HTML first-token collision (pattern 26) — html→frontend would fire without bigrams
+    ("html email template", "email"),               # bigram "html email"→email (MJML, React Email)
+    ("html email builder", "email"),                # second form
+    ("html pdf generator", "file"),                 # bigram "html pdf"→file (wkhtmltopdf, WeasyPrint)
+    ("html to pdf", "file"),                        # "to" stripped → meaningful "html pdf" → bigram fires
+    ("html parse library", "developer"),            # bigram "html parse"→developer (Cheerio, htmlparser2)
+    # Regression — bare "html" still routes to frontend for framework queries
+    ("html component library", "frontend"),         # "html"→frontend unchanged
     # Auth
     ("supabase auth alternative", "database"),       # "supabase" fires first → database (Supabase is a BaaS/database platform)
     ("oauth2 server", "authentication"),             # "oauth2" → authentication
