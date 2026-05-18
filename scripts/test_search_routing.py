@@ -1062,6 +1062,14 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ai safety testing", "ai standards"),             # second form
     ("ai governance framework", "ai standards"),       # "ai governance" bigram
     ("ai governance tool", "ai standards"),            # second form
+    # API — "protocol buffer" bigram overrides "protocol"→mcp for protobuf queries
+    ("protocol buffer grpc", "api"),                   # bigram "protocol buffer" fires before "protocol"→mcp
+    ("protocol buffer golang", "api"),                 # second form
+    # Regression — bare "protocol" still routes to MCP (model context protocol queries)
+    ("protocol", "mcp"),                              # "protocol"→mcp unchanged
+    # Notifications — "telephony" has no synonym; add it for Twilio/Vonage/Telnyx queries
+    ("telephony api voip", "notifications"),           # "telephony"→notifications
+    ("telephony sdk", "notifications"),               # second form
 ]
 
 

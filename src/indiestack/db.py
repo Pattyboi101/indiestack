@@ -2719,6 +2719,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "convertkit": "email",
     "twilio": "notifications",
     "vonage": "notifications",
+    "telephony": "notifications",    # "telephony api", "telephony sdk" → Notifications (Twilio/Vonage/Telnyx)
     "novu": "notifications",         # Novu — open-source multi-channel notification platform
     "knock": "notifications",        # Knock — notification infrastructure API
     "onesignal": "notifications",    # OneSignal — push + in-app + email notifications
@@ -3198,6 +3199,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "prefect": "background",         # Prefect — modern Python workflow orchestration
     "airflow": "background",         # Apache Airflow — DAG-based workflow scheduler
     # API protocol — gRPC / Protobuf
+    # "protocol buffer" bigram overrides "protocol"→mcp (which exists for MCP server queries)
+    # so that "protocol buffer grpc", "protocol buffers golang" route to API Tools not MCP Servers.
+    "protocol buffer": "api",        # bigram — "protocol buffer golang", "protocol buffer grpc" → API Tools
     "grpc": "api",                   # gRPC — high-performance RPC framework
     "protobuf": "api",               # Protocol Buffers — binary serialization by Google
     # Programming language routing — "python web framework", "go http framework" etc.
