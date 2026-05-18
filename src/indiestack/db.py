@@ -7387,6 +7387,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "redteam": "ai standards",     # "llm red team", "red team evaluation" → AI Standards & Specs (garak, Inspect AI)
     "red-team": "ai standards",    # hyphenated — "red-team llm", "red-team evaluation" → AI Standards & Specs
     "jailbreak": "ai standards",   # "jailbreak test", "jailbreak benchmark", "jailbreak detection" → AI Standards & Specs
+    # AI Standards — high-level concept bigrams that override raw_first dead-ends
+    # "responsible ai" → raw_cat="responsible" (no category match without bigram)
+    # "red teaming" → raw_cat="red" (no category match without bigram)
+    # "ai benchmark" → overrides "benchmark"→testing for AI model eval queries
+    # "ai safety" → overrides raw_first "ai"→ai-automation; safety eval/red-team lives in ai-standards
+    "responsible ai": "ai standards",   # bigram — "responsible ai framework", "responsible ai toolkit" → AI Standards & Specs
+    "red teaming": "ai standards",      # bigram — "red teaming tool", "red teaming llm" → AI Standards & Specs (complement to "red-team")
+    "ai benchmark": "ai standards",     # bigram — "ai benchmark tool", "ai benchmark suite" → AI Standards & Specs (overrides "benchmark"→testing)
+    "ai safety": "ai standards",        # bigram — "ai safety framework", "ai safety testing" → AI Standards & Specs
+    "ai governance": "ai standards",    # bigram — "ai governance tool", "ai governance framework" → AI Standards & Specs
     # MCP Servers — high-star official + ecosystem tools (149th pass)
     # GitHub Official MCP Server (github/github-mcp-server, ~29k★; Issues, PRs, code search, Actions)
     "github-mcp": "mcp",            # "github mcp server", "github mcp setup" → MCP Servers

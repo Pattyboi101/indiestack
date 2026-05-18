@@ -146,6 +146,19 @@ When hunting for routing gaps, these query forms are historically tricky:
     "application X", "software X" where X is a tool category noun — if X has no synonym,
     add it. Fixed: "service catalog"→devops, "pair programming"→ai, "graceful"→devops,
     "light mode"→frontend (May 2026).
+
+24. "High-level concept bigrams for niche categories" — for newer/smaller categories
+    (ai-standards, mcp-servers, boilerplates, localization), generic concept queries
+    ("responsible ai", "red teaming", "ai benchmark") may use tokens that either (a)
+    route to a more populous category via single-token fallback ("benchmark"→testing)
+    or (b) hit a dead-end first token with no category match ("responsible", "red").
+    Always probe high-level concept queries for newer categories: check if the first
+    token has a _CAT_SYNONYMS entry, and if that entry points to the right category.
+    If not, add the bigram. Probe: "[concept] [tool/framework/suite/alternative]" for
+    each sub-domain of ai-standards (safety, governance, benchmarking, red-teaming).
+    Fixed: "responsible ai"→ai standards, "red teaming"→ai standards,
+    "ai benchmark"→ai standards, "ai safety"→ai standards, "ai governance"→ai standards
+    (May 2026).
 """
 
 import sys
@@ -1038,6 +1051,17 @@ TEST_CASES: list[tuple[str, str]] = [
     # DevOps — graceful process management
     ("graceful shutdown library", "devops"),          # "graceful"→devops
     ("graceful degradation pattern", "devops"),       # "graceful"→devops
+    # AI Standards — high-level concept bigrams (150th pass)
+    ("responsible ai framework", "ai standards"),      # "responsible ai" bigram
+    ("responsible ai toolkit", "ai standards"),        # second form
+    ("red teaming tool", "ai standards"),              # "red teaming" bigram
+    ("red teaming llm", "ai standards"),               # second form
+    ("ai benchmark tool", "ai standards"),             # "ai benchmark" bigram (overrides "benchmark"→testing)
+    ("ai benchmark suite", "ai standards"),            # second form
+    ("ai safety framework", "ai standards"),           # "ai safety" bigram
+    ("ai safety testing", "ai standards"),             # second form
+    ("ai governance framework", "ai standards"),       # "ai governance" bigram
+    ("ai governance tool", "ai standards"),            # second form
 ]
 
 
