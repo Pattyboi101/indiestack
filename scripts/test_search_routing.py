@@ -185,6 +185,26 @@ When hunting for routing gaps, these query forms are historically tricky:
     (b) add direct tool-name synonyms when the compound includes a stop word.
     Fixed: "saas metrics"→analytics, "time tracker" bigram + toggl/harvest/clockify→project,
     "expense"/"expenses"→invoicing, "documentation"→documentation (May 2026).
+
+27. "Adjective-modified dual dead zones" — queries of the form "[adjective] [noun]" where
+    BOTH tokens are unmapped (raw_first fires for each), creating a category void even when
+    a single named category clearly owns the tool type. These are invisible: no collision
+    alert exists because no token has a wrong mapping — they simply have NO mapping.
+    Common adjectives that create dead zones: "cold" (outreach, email sequencing),
+    "facial" (recognition → AI), "screen" (capture → Analytics), "biometric" (→ AI).
+    Common nouns that are unmapped: "outreach", "capture", "anonymization", "pii",
+    "redaction", "masking" (data context). Probe strategy:
+    (a) For each marketing/sales modifier ("cold", "warm", "outbound"), probe "[modifier]
+        outreach", "[modifier] email" — if raw_first fires, add bigram.
+    (b) For each AI-perception verb ("facial", "voice", "gesture", "biometric"), probe
+        "[verb] recognition" — if raw_first fires, add bare token → AI.
+    (c) For each privacy/data noun ("pii", "anonymization", "masking", "redaction"),
+        probe bare token — if raw_first fires, add bare token → security.
+    (d) "screen [action]" queries — "screen capture", "screen grab" — if "screen" is
+        raw_first, add bigram to analytics (session-recording / heatmap tools).
+    Fixed: "cold outreach"→crm, "screen capture"→analytics, "pii"→security,
+    "anonymization"/"anonymisation"→security, "data masking"→security,
+    "redaction"→security, "facial"→ai, "biometric"→ai (May 2026).
 """
 
 import sys
@@ -1219,6 +1239,25 @@ TEST_CASES: list[tuple[str, str]] = [
     ("documentation site builder", "documentation"), # second form
     # Analytics — SaaS metrics (prevent "saas"→boilerplate poisoning)
     ("saas metrics dashboard", "analytics"),         # bigram "saas metrics"→analytics
+    # CRM — cold outreach and sales outreach dead zones (probe 27)
+    ("cold outreach", "crm"),                        # bigram "cold outreach"→crm (was dual raw_first)
+    ("cold outreach tool", "crm"),                   # second form
+    ("outreach crm", "crm"),                         # "outreach"→crm bare token
+    # Regression — queries with "outreach" in non-CRM context still route via their main token
+    ("sales outreach automation", "crm"),            # "sales"→crm wins (first token)
+    # Analytics — screen capture dead zone (probe 27)
+    ("screen capture tool", "analytics"),            # bigram "screen capture"→analytics (was dual raw_first)
+    ("screen capture analytics", "analytics"),       # second form
+    # Regression — "screen recording" still routes to analytics
+    ("screen recording software", "analytics"),      # existing bigram unchanged
+    # Security — PII / data anonymization dead zones (probe 27)
+    ("pii detection tool", "security"),              # "pii"→security bare token
+    ("data anonymization tool", "security"),         # "anonymization"→security bare token
+    ("data masking software", "security"),           # bigram "data masking"→security (was dual raw_first)
+    ("redaction tool", "security"),                  # "redaction"→security bare token
+    # AI — facial recognition dead zone (probe 27)
+    ("facial recognition api", "ai"),                # "facial"→ai bare token (was raw_first)
+    ("biometric verification", "ai"),                # "biometric"→ai bare token
 ]
 
 

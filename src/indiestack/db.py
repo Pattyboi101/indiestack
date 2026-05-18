@@ -3011,6 +3011,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "encryption": "security",   # encryption libraries and key management
     "ssl": "security",          # SSL certificate management
     "tls": "security",          # TLS configuration tools
+    "pii": "security",          # PII detection/redaction tools → Security Tools
+    "anonymization": "security", # "data anonymization tool" → Security Tools
+    "anonymisation": "security", # British spelling — same routing
+    "redaction": "security",    # "data redaction", "pii redaction" → Security Tools
+    "data masking": "security",  # bigram — "data masking tool" beats dual raw_first → Security Tools
     # Frontend rendering patterns — SSR/SSG/PWA/SPA (common agent query terms)
     "ssr": "frontend",          # Server-Side Rendering (Next.js, SvelteKit, Nuxt)
     "ssg": "frontend",          # Static Site Generation (Astro, Eleventy, Jekyll)
@@ -4171,8 +4176,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — debugging utilities (pdb, node --inspect, Chrome DevTools protocol)
     "debugger": "developer",        # "node debugger", "python debugger", "remote debugger" → Developer Tools
     "debugging": "developer",       # "debugging tool", "remote debugging", "debug middleware" → Developer Tools
-    # AI — OCR and optical character recognition (Tesseract.js, PaddleOCR, pytesseract)
+    # AI — OCR, computer vision, and biometric recognition
     "ocr": "ai",                    # "ocr library", "ocr api", "ocr tool" → AI & Automation
+    "facial": "ai",                 # "facial recognition", "facial detection" → AI & Automation
+    "biometric": "ai",              # "biometric authentication", "biometric verification" → AI & Automation
     # Developer Tools — phone number validation/formatting (libphonenumber-js, phone-fns)
     "phonenumber": "developer",     # "phonenumber library", "phone number validation" → Developer Tools
     "libphonenumber": "developer",  # explicit library name queries → Developer Tools
@@ -7640,6 +7647,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "contact management": "crm",    # spaced bigram — "contact management tool" beats "management"→project → CRM & Sales
     "contact-management": "crm",    # hyphenated — "contact-management software", "contact-management crm" → CRM & Sales
     "sales": "crm",                 # single token — "sales tool", "sales tracking", "sales analytics" → CRM & Sales
+    "cold outreach": "crm",         # bigram — "cold outreach tool" beats "cold"→raw_first → CRM & Sales (Apollo, Lemlist, Instantly)
+    "outreach": "crm",              # single token — "outreach tool", "outreach crm" → CRM & Sales
     # Landing Pages — website builder and portfolio queries with no existing token mapping
     "website builder": "landing",   # spaced bigram — "website builder tool" → Landing Pages (Carrd, Webflow, Tilda)
     "portfolio": "landing",         # single token — "portfolio site", "portfolio builder" → Landing Pages
@@ -7680,6 +7689,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "session replay": "analytics",      # spaced bigram — "session replay tool" beats "session"→auth → Analytics
     "session recording": "analytics",   # spaced bigram — "session recording tool" beats "session"→auth → Analytics
     "screen recording": "analytics",    # spaced — "screen recording tool" → Analytics & Metrics
+    "screen capture": "analytics",      # spaced bigram — "screen capture tool" beats "screen"→raw_first → Analytics
     "recording": "analytics",           # single-token fallback for recording queries → Analytics & Metrics
     # Feedback — product adoption platform brands (Appcues, Userpilot, UserGuiding)
     "appcues": "feedback",          # Appcues — product adoption + onboarding platform → Feedback & Reviews
