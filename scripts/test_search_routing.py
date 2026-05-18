@@ -133,6 +133,19 @@ When hunting for routing gaps, these query forms are historically tricky:
     "scaffold" is a boilerplate concept except "scaffolding tool" (code generation →
     developer). Probe: "[template|scaffold] [rendering noun]" vs "[template|scaffold]
     [starter noun]". Fixed: "template engine" → developer (May 2026).
+
+23. "Dual raw_first dead zone" — queries where BOTH tokens are unmapped (raw_first fires
+    for the first meaningful token with no category boost). These are invisible because
+    no single token collision exists to alert you. Probe by splitting any compound
+    developer term and checking each token individually: if both return raw_first, the
+    query is a dead zone. Common dead zones to probe: "[adjective] [tool-type]" where
+    the adjective is a modifier not yet in _CAT_SYNONYMS (graceful, incremental, atomic,
+    idempotent, composable, reactive). Also check stop-word context loss: when a compound
+    like "service catalog" loses its meaningful first token ("service") to stop-word
+    stripping, the surviving token ("catalog") may also be unmapped. Probe: "service X",
+    "application X", "software X" where X is a tool category noun — if X has no synonym,
+    add it. Fixed: "service catalog"→devops, "pair programming"→ai, "graceful"→devops,
+    "light mode"→frontend (May 2026).
 """
 
 import sys
