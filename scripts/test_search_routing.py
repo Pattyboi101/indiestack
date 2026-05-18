@@ -159,6 +159,17 @@ When hunting for routing gaps, these query forms are historically tricky:
     Fixed: "responsible ai"→ai standards, "red teaming"→ai standards,
     "ai benchmark"→ai standards, "ai safety"→ai standards, "ai governance"→ai standards
     (May 2026).
+
+25. "Plural/compound form gaps" — a token mapped in singular/compound form but NOT in
+    its plural or spaced-variant form. "sitemap"→seo was mapped but "sitemaps" wasn't.
+    "flamegraph"→monitoring was mapped but "flame graph" (spaced) wasn't — "graph" then
+    fired as the first meaningful token, routing to database. Pattern: for each recently
+    added single-token synonym, also add the plural (append 's') and the spaced form if
+    the token is compound. Also probe "finops" / "cloud cost" style FinOps/cost-mgmt
+    queries: these tools (Infracost, OpenCost, Vantage) live in DevOps but "cloud" and
+    "finops" had no synonym. Probe: "cloud cost", "cloud pricing", "finops", "infracost"
+    — if any hit raw_first or the wrong category, add bare token or bigram. Fixed:
+    "sitemaps"→seo, "flame graph"→monitoring, "finops"/"cloud cost"→devops (May 2026).
 """
 
 import sys
