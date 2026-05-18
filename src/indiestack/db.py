@@ -7921,6 +7921,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — "domain driven" routes to DevOps via bare "domain"→devops.
     # Domain-driven design queries target DDD tooling → Developer Tools.
     "domain driven": "developer",   # bigram — "domain driven design", "domain driven architecture" → Developer Tools
+    # DevOps — service catalog queries (Backstage, Cortex, OpsLevel, Port) lose "service" to stop words.
+    # "service" is in _FTS_STOP_WORDS so "service catalog" reduces to bare "catalog" → raw_first.
+    # Internal developer portals and service catalogs live in DevOps & Infrastructure.
+    "catalog": "devops",            # "service catalog", "developer portal catalog" → DevOps & Infrastructure
+    # Frontend — light mode complement to existing "dark"→frontend (next-themes, shadcn, Tailwind)
+    "light": "frontend",            # "light mode library", "light theme toggle" → Frontend Frameworks
+    # AI — pair programming bigram (bare "pair"→ai risks collision with "key pair" auth context)
+    "pair programming": "ai",       # bigram — "pair programming tool", "ai pair programmer" → AI & Automation
+    # DevOps — graceful process management (shutdown, restart, degradation patterns)
+    "graceful": "devops",           # "graceful shutdown", "graceful restart", "graceful degradation" → DevOps
 }
 
 _FTS_STOP_WORDS = {

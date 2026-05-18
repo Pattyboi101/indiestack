@@ -1013,6 +1013,18 @@ TEST_CASES: list[tuple[str, str]] = [
     # Background Jobs — RPA queries (n8n, Windmill live in Background Jobs)
     ("rpa tool", "background"),                       # "rpa" → Background Jobs
     ("rpa open source", "background"),                # "rpa" fires first → Background Jobs
+    # DevOps — service catalog (Backstage, Cortex, OpsLevel, Port); "service" is a stop word
+    ("service catalog", "devops"),                    # "catalog"→devops (service stripped)
+    ("internal catalog tool", "devops"),              # "catalog"→devops (internal+tool stripped)
+    # Frontend — light mode complement to "dark"→frontend
+    ("light mode library", "frontend"),               # "light"→frontend
+    ("light theme toggle", "frontend"),               # "light"→frontend
+    # AI — pair programming bigram
+    ("pair programming tool", "ai"),                  # bigram "pair programming" → AI & Automation
+    ("ai pair programmer", "ai"),                     # "ai"→ai fires first (pair unchanged)
+    # DevOps — graceful process management
+    ("graceful shutdown library", "devops"),          # "graceful"→devops
+    ("graceful degradation pattern", "devops"),       # "graceful"→devops
 ]
 
 
