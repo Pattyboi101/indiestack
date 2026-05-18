@@ -106,6 +106,33 @@ When hunting for routing gaps, these query forms are historically tricky:
     or map the surviving token directly. Probe: write the bigram, split it, check each
     half against _FTS_STOP_WORDS. If either half is a stop word, the bigram is dead.
     Key stop words to watch: "source", "open", "best", "free", "new", "fast", "simple".
+
+19. "Performance/quality noun collision" — "performance"→monitoring correctly handles
+    APM queries, but "performance testing" (k6, Locust, Gatling, Artillery) should route
+    to Testing. Similarly, "quality"→testing is broad — "code quality" tools may be in
+    Developer Tools. Any time a quality/perf noun also names a specific subcategory of
+    tool, probe "[noun] testing/benchmark/load" to check if the bigram is needed.
+    Fixed: "performance testing", "performance test" → testing (May 2026).
+
+20. "Synthetic/real modifier collisions" — "synthetic"→ai (synthetic data tools) and
+    "real"→api (real-time tools) are correct single-token mappings, BUT compound forms
+    like "synthetic monitoring" and "real user monitoring" target Monitoring. Probe any
+    category-specific adjective as a first token before a second token from a DIFFERENT
+    category. "synthetic [monitoring term]", "real [analytics term]" are the key traps.
+    Fixed: "synthetic monitoring" → monitoring, "user monitoring" → monitoring (May 2026).
+
+21. "Column store / key-value store collisions" — "store"→frontend (state management)
+    is correct for React/Redux queries but wrong for database storage queries. Bigrams:
+    "column store" → database (ClickHouse, DuckDB). Check: "key value store" (both
+    "key" and "value" tokens exist but "key value" bigram may be missing). Probe any
+    compound where "store" is the second token and the first token names a DB paradigm.
+
+22. "Template/scaffold ambiguity" — "template"→boilerplate and "starter"→boilerplate are
+    correct for starter-kit queries, but "template engine" refers to rendering libraries
+    (Handlebars, Mustache, Jinja, Nunjucks) that live in Developer Tools. Similarly,
+    "scaffold" is a boilerplate concept except "scaffolding tool" (code generation →
+    developer). Probe: "[template|scaffold] [rendering noun]" vs "[template|scaffold]
+    [starter noun]". Fixed: "template engine" → developer (May 2026).
 """
 
 import sys
