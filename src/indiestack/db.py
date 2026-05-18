@@ -4009,6 +4009,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "bree": "background",           # Bree — worker thread-based JavaScript job scheduler (3k★)
     # SEO — sitemap generators and Open Graph / meta tag tools
     "sitemap": "seo",               # next-sitemap, @astrojs/sitemap, nuxt-simple-sitemap → SEO Tools
+    "sitemaps": "seo",              # plural — "generate sitemaps", "sitemaps nextjs" → SEO Tools
     "opengraph": "seo",             # Open Graph meta tag tools, og-image generators → SEO Tools
     "og": "seo",                    # OG abbreviation — "og image tool", "og image generator" → SEO Tools
     "metatag": "seo",               # meta tag generators ("metatag alternative") → SEO Tools
@@ -4914,6 +4915,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pyroscope": "monitoring",      # Pyroscope — continuous profiling platform (Grafana/pyroscope, 10k★)
     "parca": "monitoring",          # Parca — open-source continuous profiling by Polar Signals (4k★)
     "flamegraph": "monitoring",     # "flame graph", "flamegraph viewer" — profiling visualization → Monitoring
+    "flame graph": "monitoring",    # bigram — spaced form; "graph"→database fires without this bigram override
     # DevOps — git commit and release automation (very common in CI/CD setup queries)
     "commitlint": "devops",         # commitlint — lint commit messages against Conventional Commits (17k★)
     "release-please": "devops",     # release-please — Google's PR-based release automation tool (7k★)
@@ -7993,6 +7995,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pair programming": "ai",       # bigram — "pair programming tool", "ai pair programmer" → AI & Automation
     # DevOps — graceful process management (shutdown, restart, degradation patterns)
     "graceful": "devops",           # "graceful shutdown", "graceful restart", "graceful degradation" → DevOps
+    # DevOps — cloud cost management / FinOps (Infracost, Vantage, CloudHealth, OpenCost)
+    "finops": "devops",             # "finops tool", "finops platform" → DevOps & Infrastructure
+    "cloud cost": "devops",         # bigram — "cloud cost optimizer", "cloud cost tool" → DevOps (bare "cloud" is too broad)
+    "infracost": "devops",          # Infracost — "infracost alternative", "infracost setup" → DevOps & Infrastructure
+    "opencost": "devops",           # OpenCost — CNCF k8s cost monitoring; "opencost alternative" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

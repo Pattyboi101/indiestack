@@ -1162,6 +1162,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ux recording tool", "analytics"),               # bigram "ux recording"→analytics (overrides "ux"→design)
     # Design — "customer journey" bigram for journey mapping tools
     ("customer journey map", "design"),               # bigram "customer journey"→design
+    # Monitoring — "flame graph" bigram overrides "graph"→database for profiling viz queries
+    ("flame graph profiling", "monitoring"),          # bigram "flame graph"→monitoring (flamegraph compound already mapped)
+    ("flame graph viewer", "monitoring"),             # second form
+    # Regression — "graph"→database still fires for graph database queries
+    ("graph database neo4j", "database"),             # "graph"→database unchanged
+    # SEO — "sitemaps" plural (bare "sitemap" was mapped, plural form wasn't)
+    ("generate sitemaps nextjs", "seo"),              # "sitemaps"→seo (plural form)
+    ("sitemaps xml", "seo"),                          # second form
+    # Regression — bare "sitemap" still routes to seo
+    ("sitemap generator", "seo"),                     # "sitemap"→seo unchanged
+    # DevOps — FinOps / cloud cost management (Infracost, Vantage, OpenCost)
+    ("finops tool", "devops"),                        # "finops"→devops
+    ("cloud cost optimizer", "devops"),               # bigram "cloud cost"→devops
+    ("cloud cost monitoring", "devops"),              # second form
+    ("infracost alternative", "devops"),              # "infracost"→devops
+    ("opencost setup", "devops"),                     # "opencost"→devops
 ]
 
 
