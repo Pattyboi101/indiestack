@@ -7112,6 +7112,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "vcs": "devops",                # VCS abbreviation — "vcs alternative", "self-hosted vcs", "vcs tool" → DevOps & Infrastructure
     "version control": "devops",    # multi-word — "version control system", "version control tool" → DevOps
     "version-control": "devops",    # hyphenated — "version-control setup", "version-control alternative" → DevOps
+    "semantic versioning": "devops",# bigram — overrides "semantic"→search for semver/release queries → DevOps
+    "version": "devops",            # bare token — "version bumping", "version management" → DevOps (semantic-release, changesets)
     "svn": "devops",                # Apache Subversion — "svn alternative", "svn to git migration" → DevOps
     "mercurial": "devops",          # Mercurial — "mercurial alternative", "mercurial vs git" → DevOps
     # CMS — "blogging" longer form not mapped ("blog"→cms already at line 2565)
@@ -7867,6 +7869,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DataHub, Amundsen, OpenMetadata, Apache Atlas all live in Analytics & Metrics.
     "data catalog": "analytics",        # bigram — "data catalog tool", "open source data catalog" → Analytics & Metrics
     "data governance": "analytics",     # bigram — "data governance platform", "data governance tool" → Analytics & Metrics
+    "data lineage": "analytics",        # bigram — "data lineage tool", "data lineage tracking" → Analytics & Metrics
+    "lineage": "analytics",             # bare token — "lineage tool", "openlineage alternative" → Analytics (Marquez, OpenLineage)
     # Analytics — "privacy analytics" should route to Analytics (Plausible, Fathom, Simple Analytics),
     # NOT Security. Bare "privacy" → security is correct for GDPR/cookie tools; this bigram overrides.
     "privacy analytics": "analytics",  # bigram — "privacy analytics tool", "privacy focused analytics" → Analytics

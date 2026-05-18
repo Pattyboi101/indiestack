@@ -1070,6 +1070,19 @@ TEST_CASES: list[tuple[str, str]] = [
     # Notifications — "telephony" has no synonym; add it for Twilio/Vonage/Telnyx queries
     ("telephony api voip", "notifications"),           # "telephony"→notifications
     ("telephony sdk", "notifications"),               # second form
+    # DevOps — "semantic versioning" bigram overrides "semantic"→search for semver/release queries
+    ("semantic versioning tool", "devops"),            # bigram "semantic versioning" → DevOps
+    ("semantic versioning npm", "devops"),             # second form
+    # Regression — bare "semantic" still routes to search for semantic search queries
+    ("semantic search engine", "search"),              # "semantic"→search unchanged
+    # DevOps — bare "version" for "version bumping", "version management" queries
+    ("version bumping", "devops"),                    # "version"→devops
+    ("version management", "devops"),                 # second form
+    # Regression — "version control" bigram still overrides to devops (unchanged)
+    ("version control system", "devops"),             # bigram "version control"→devops (unchanged)
+    # Analytics — data lineage tools (Marquez, OpenLineage); "data" has no synonym so bigram needed
+    ("data lineage tool", "analytics"),               # bigram "data lineage"→analytics
+    ("lineage tracking", "analytics"),                # bare "lineage"→analytics
 ]
 
 
