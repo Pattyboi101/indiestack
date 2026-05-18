@@ -1156,6 +1156,12 @@ TEST_CASES: list[tuple[str, str]] = [
     ("conversion rate optimization", "analytics"),    # bigram "conversion rate"→analytics
     # Regression — bare "rate" still routes to api for rate limiting queries
     ("rate limiting api", "api"),                     # "rate"→api unchanged (via "rate limiting" bigram)
+    # Design — "ux" bare token for UX design tool queries
+    ("ux design tool", "design"),                     # "ux"→design (Design & Creative)
+    # Regression — "ux recording" bigram keeps session replay tools in analytics
+    ("ux recording tool", "analytics"),               # bigram "ux recording"→analytics (overrides "ux"→design)
+    # Design — "customer journey" bigram for journey mapping tools
+    ("customer journey map", "design"),               # bigram "customer journey"→design
 ]
 
 

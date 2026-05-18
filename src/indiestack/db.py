@@ -5177,6 +5177,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ocaml": "api",                 # OCaml web framework queries → API Tools (Dream, Opium) → API Tools
     # Design — Figma (most-searched design tool; "figma alternative" is a top query)
     "figma": "design",              # Figma — "figma alternative", "figma open source" → Design & Creative
+    "ux": "design",                 # "ux design tool", "ux research" → Design & Creative
+    "ux recording": "analytics",    # bigram — "ux recording tool" → Analytics (session replay, Hotjar); overrides "ux"→design
+    "customer journey": "design",   # bigram — "customer journey map", "customer journey tool" → Design & Creative
     # Monitoring — cron job monitoring (high "alternative" query volume)
     "cronitor": "monitoring",       # Cronitor — cron monitoring and alerting service → Monitoring & Uptime
     # AI — Vercel v0 AI UI builder and TabbyML self-hosted code assistant
