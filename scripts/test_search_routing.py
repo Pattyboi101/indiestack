@@ -284,6 +284,29 @@ TEST_CASES: list[tuple[str, str]] = [
     ("bill of materials generator", "security"),    # bigram fires before "bill"→raw_first
     # Regression — "sbom" abbreviation still routes correctly
     ("sbom scanner", "security"),                   # "sbom" → Security Tools (unchanged)
+    # ── Probe pattern: Orphaned second-token poisoning ───────────────────────
+    # First token has NO synonym (raw_first), second token maps to wrong category.
+    # Web3 — "smart" unmapped, "contract"→testing → mis-routes to testing
+    ("smart contract auditor", "developer"),        # bigram "smart contract" → Developer Tools
+    ("smart contract development", "developer"),    # second form
+    ("smart contracts framework", "developer"),     # plural bigram
+    # Regression — bare "contract"→testing still fires for contract testing
+    ("contract testing pact", "testing"),           # "contract" → Testing (unchanged)
+    # Screen recording — "screen" unmapped, raw_first fires with no boost
+    ("screen recorder open source", "developer"),   # bigram "screen recorder" → Developer Tools
+    ("screen capture library", "developer"),        # bigram "screen capture" → Developer Tools
+    # Security — "zk" abbreviation was raw_first (zero-knowledge proof tools)
+    ("zk proof library", "security"),               # "zk" → Security Tools
+    ("zk rollup ethereum", "security"),             # second form
+    # Regression — "zero knowledge" bigram still routes correctly
+    ("zero knowledge proof system", "security"),    # bigram "zero knowledge" → Security Tools (unchanged)
+    # Message Queue — "streaming pipeline" routed to media via "streaming"→media
+    ("streaming pipeline kafka", "message"),        # bigram overrides "streaming"→media
+    # File management — "html to pdf" loses "to" stop word; "html"→frontend fires
+    ("html to pdf converter", "file"),              # bigram "html pdf" → File Management
+    ("html pdf generator", "file"),                 # second form
+    # Regression — bare "html"→frontend still fires for non-pdf queries
+    ("html component library", "frontend"),         # "html" → Frontend (unchanged)
 ]
 
 

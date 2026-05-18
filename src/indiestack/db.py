@@ -6632,6 +6632,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Security — SBOM spaced form. "sbom" already maps; "software bill of materials" after stop-word
     # stripping ("software"+"of" are stop words) leaves ["bill","materials"] → bigram covers it.
     "bill materials": "security",   # bigram — "bill of materials tool", "software bill of materials" → Security Tools
+    # Web3 — "smart contract" bigram overrides bare "contract"→testing for blockchain tool queries.
+    # "contract" alone correctly routes contract-testing tools (Pact, Specmatic) to Testing; the
+    # bigram fires first when "smart" is the preceding token (Hardhat, Foundry, Truffle).
+    "smart contract": "developer",  # bigram — "smart contract auditor", "smart contract framework" → Developer Tools
+    "smart contracts": "developer", # plural — "smart contracts testing", "smart contracts tooling" → Developer Tools
+    # Screen recording / capture — "screen" has no single-token synonym, causing raw_first.
+    # Only add specific bigrams; do NOT map bare "screen" (would steal "screen reader" queries).
+    "screen recorder": "developer", # bigram — "screen recorder open source", "screen recorder api" → Developer Tools
+    "screen capture": "developer",  # bigram — "screen capture library", "screen capture sdk" → Developer Tools
+    # Security — "zk" abbreviation for zero-knowledge proofs (circom, snarkjs, noir, halo2).
+    # "zero knowledge" bigram already handles the spelled-out form; "zk" is the common abbreviation.
+    "zk": "security",               # bare token — "zk proof library", "zk rollup" → Security Tools
+    # Message Queue — "streaming pipeline" overrides "streaming"→media for data-engineering queries.
+    # Bare "streaming" correctly routes media queries; the bigram fires first for pipeline context.
+    "streaming pipeline": "message",# bigram — "streaming pipeline kafka", "streaming pipeline flink" → Message Queues
+    # File management — "html to pdf" loses "to" (stop word); remaining tokens are ["html","pdf"].
+    # Bare "html"→frontend fires incorrectly for pdf-generation queries; bigram overrides it.
+    "html pdf": "file",             # bigram — "html to pdf converter", "html pdf generator" → File Management
 }
 
 _FTS_STOP_WORDS = {
