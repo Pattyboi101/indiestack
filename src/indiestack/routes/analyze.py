@@ -32,10 +32,10 @@ SAMPLE_PACKAGE_JSON = """{
 
 def _score_color(score: int) -> str:
     if score >= 80:
-        return "#10B981"
+        return "var(--success-text)"
     elif score >= 60:
         return "var(--gold)"
-    return "#EF4444"
+    return "var(--error-text)"
 
 
 def _score_label(score: int) -> str:

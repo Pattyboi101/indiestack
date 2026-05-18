@@ -965,6 +965,27 @@ TEST_CASES: list[tuple[str, str]] = [
     # Developer Tools — DDD abbreviation (raw_first without mapping)
     ("ddd framework", "developer"),                  # "ddd" → Developer Tools
     ("ddd architecture", "developer"),               # "ddd" → Developer Tools
+    # Testing — performance testing bigrams override "performance"→monitoring
+    ("performance testing k6", "testing"),           # bigram "performance testing" → Testing Tools
+    ("performance test framework", "testing"),       # bigram "performance test" → Testing Tools
+    # Regression — bare "performance" still routes to Monitoring
+    ("performance monitoring", "monitoring"),         # "performance"→monitoring (unchanged)
+    # Monitoring — synthetic monitoring bigram overrides "synthetic"→ai
+    ("synthetic monitoring tool", "monitoring"),      # bigram "synthetic monitoring" → Monitoring & Uptime
+    # Monitoring — "real user monitoring" RUM bigram overrides "real"→api
+    ("real user monitoring", "monitoring"),           # bigram "user monitoring" fires at position 1
+    # Database — column store bigram overrides "store"→frontend for columnar DB queries
+    ("column store database", "database"),            # bigram "column store" → Database
+    # Regression — bare "store" for state-management queries still routes to Frontend
+    ("redux store", "frontend"),                      # "store"→frontend (unchanged)
+    # Developer Tools — "template engine" bigram overrides "template"→boilerplate
+    ("template engine node", "developer"),            # bigram "template engine" → Developer Tools
+    ("template engine javascript", "developer"),      # bigram fires before "template"→boilerplate
+    # Regression — bare "template" still routes to Boilerplates
+    ("template starter kit", "boilerplate"),          # "starter"→boilerplate (unchanged)
+    # Background Jobs — RPA queries (n8n, Windmill live in Background Jobs)
+    ("rpa tool", "background"),                       # "rpa" → Background Jobs
+    ("rpa open source", "background"),                # "rpa" fires first → Background Jobs
 ]
 
 

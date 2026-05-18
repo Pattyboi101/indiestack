@@ -2909,6 +2909,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "scaffold": "boilerplate",
     "scaffolding": "boilerplate",   # gerund form — "code scaffolding", "api scaffolding" → Boilerplates
     "template": "boilerplate",
+    # Developer Tools — "template engine" bigram overrides "template"→boilerplate for rendering libs
+    "template engine": "developer",    # Handlebars, Mustache, Jinja, Nunjucks, EJS → Developer Tools
     # MCP servers — dedicated category
     "protocol": "mcp",          # "model context protocol" → first term after stop words
     # Frontend frameworks — named tools missing from earlier pass
@@ -3049,6 +3051,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "clickhouse": "database",         # ClickHouse — fast OLAP database
     "neo4j": "database",              # Neo4j — graph database
     "graph": "database",              # "graph database" queries (Neo4j, Amazon Neptune)
+    # Database — bigram to override "store"→frontend for columnar queries
+    "column store": "database",       # ClickHouse, DuckDB — "column store database" overrides "store"→frontend
     "timescale": "database",          # TimescaleDB — time-series PostgreSQL extension
     "timescaledb": "database",        # explicit form
     # Caching — Redis fork/alternatives
@@ -3357,6 +3361,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rum": "monitoring",            # RUM (Real User Monitoring) — frontend performance tracking
     "vitals": "monitoring",         # Core Web Vitals monitoring tools
     "speedlify": "monitoring",      # Speedlify — automated performance benchmarking
+    # Monitoring — bigrams to override "synthetic"→ai and "real"→api for monitoring-intent queries
+    "synthetic monitoring": "monitoring",  # Checkly, Uptime Kuma — "synthetic monitoring tool" → Monitoring
+    "user monitoring": "monitoring",       # RUM — "real user monitoring", "user monitoring dashboard" → Monitoring
     # AI agent frameworks — graph-based orchestration
     "langgraph": "ai",              # LangGraph — LangChain's graph-based multi-agent framework
     "composio": "ai",               # Composio — tool integrations for AI agents (GitHub, Slack, etc.)
@@ -3371,6 +3378,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — load / performance testing
     "artillery": "testing",         # Artillery — load testing and performance testing framework
     "locust": "testing",            # Locust — scalable Python load testing (write tests in Python)
+    # Testing — bigrams to override "performance"→monitoring for load/perf testing queries
+    "performance testing": "testing",  # k6, Gatling, Locust, Artillery — "performance testing k6" → Testing
+    "performance test": "testing",     # singular — "performance test framework" → Testing
     # Developer Tools — web scraping optimised for LLMs
     "firecrawl": "developer",       # Firecrawl — LLM-ready web scraping API (Markdown output)
     # Developer Tools — TypeScript runtime validation (Zod alternatives)
@@ -5401,6 +5411,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Automation — "automation" alone (not prefixed by "workflow") must still route to AI & Automation
     "automation": "ai",             # "automation platform", "automation tool" → AI & Automation
     "automate": "ai",               # "automate workflow", "automate tasks" → AI & Automation
+    # Background Jobs — RPA (Robotic Process Automation) queries (n8n, Windmill live in background-jobs)
+    "rpa": "background",            # "rpa tool", "rpa open source" → Background Jobs
     # Browser / VS Code extensions — Developer Tools category hosts WXT, Plasmo, CRXJS
     "extension": "developer",       # "browser extension framework", "VS Code extension" → Developer Tools
     "chrome": "developer",          # "chrome extension toolkit", "chrome extension boilerplate" → Developer Tools
