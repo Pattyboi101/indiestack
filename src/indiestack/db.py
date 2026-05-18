@@ -3277,6 +3277,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "bcrypt": "security",           # bcrypt — adaptive password hashing function
     "argon2": "security",           # Argon2 — memory-hard password hashing (PHC winner)
     "crypto": "security",           # "crypto library", "node:crypto" queries → Security Tools
+    "crypto payment": "payments",   # bigram — "crypto payment gateway", "accept crypto" → Payments (overrides crypto→security)
     # CI/CD — common pipeline and build-automation tool queries
     "circleci": "devops",           # CircleCI — cloud CI/CD platform
     "jenkins": "devops",            # Jenkins — open-source automation server
@@ -6320,7 +6321,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "customer-success": "customer", # "customer success platform", "customer success tool" → Customer Support
     "customer-portal": "customer",  # "customer portal", "self-service portal" → Customer Support
     # Documentation — knowledge base and FAQ queries (GitBook, Mintlify, Docusaurus)
-    "knowledge-base": "documentation",  # "knowledge base software", "help center knowledge base" → Documentation
+    # NOTE: "knowledge base" spaced bigram intentionally NOT added — "knowledge base llm/chatbot"
+    # queries must route to AI (RAG/retrieval use case). Hyphenated/compound forms cover the rest.
+    "knowledge-base": "documentation",  # "knowledge-base tool", "help center knowledge-base" → Documentation
     "knowledgebase": "documentation",   # no-hyphen variant — "knowledgebase tool", "knowledgebase platform" → Documentation
     "faq": "documentation",         # "faq page", "faq widget", "faq system" → Documentation
     # Feedback — bug reporting and user research (Sentry user feedback, Usersnap, Doorbell)
