@@ -1130,6 +1130,9 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ip blacklist lookup", "security"),              # bigram "ip blacklist"→security
     # Regression — bare "ip" for geolocation still routes to maps
     ("ip address lookup", "maps"),                    # "ip"→maps unchanged
+    # Authentication — "phone" bare token for phone verification/OTP queries
+    ("phone verification", "authentication"),          # "phone"→authentication (Twilio Verify, Firebase Phone Auth)
+    ("phone otp", "authentication"),                   # second form
 ]
 
 

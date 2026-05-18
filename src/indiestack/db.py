@@ -2628,6 +2628,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sms": "notifications",
     "otp": "authentication",
     "totp": "authentication",
+    "phone": "authentication",      # "phone verification", "phone otp", "phone auth" → Authentication (Twilio Verify)
     # "chat" has no dedicated category — map to "customer" for Customer Support boost
     # (live chat tools like Crisp, Tawk.to, Chatwoot live there)
     "chat": "customer",
