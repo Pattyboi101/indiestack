@@ -7816,6 +7816,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Note: "micro service" can't be a bigram because "service" is in _FTS_STOP_WORDS —
     # space-separated "micro service" users should use compound "microservice" (already mapped).
     "micro frontend": "frontend",       # "micro frontend framework", "micro frontend react" → Frontend Frameworks
+    "micro frontends": "frontend",      # plural spaced — "micro frontends module federation" → Frontend Frameworks
+    "module federation": "frontend",    # bigram — "module federation webpack", "module federation react" → Frontend Frameworks
     # Auth — "user management" and "account management" route to project via "management"→project.
     # User/account management tools (Clerk, Auth0, WorkOS, Logto) live in Authentication.
     "user management": "authentication",   # "user management system", "user management sdk" → Authentication

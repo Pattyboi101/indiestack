@@ -1146,6 +1146,9 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — "content management" and "content delivery" still route correctly
     ("content management system", "cms"),             # "content"→cms unchanged
     ("content delivery network", "devops"),           # bigram "content delivery"→devops unchanged
+    # Frontend — "micro frontends" plural spaced form + "module federation" bigram
+    ("micro frontends module federation", "frontend"),# bigram "micro frontends"→frontend
+    ("module federation webpack", "frontend"),         # bigram "module federation"→frontend
 ]
 
 
