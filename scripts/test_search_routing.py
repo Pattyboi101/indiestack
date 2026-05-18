@@ -1104,6 +1104,15 @@ TEST_CASES: list[tuple[str, str]] = [
     ("entity framework alternative", "database"),     # "entity"→database
     # API — Apache Thrift RPC framework
     ("thrift alternative", "api"),                    # "thrift"→api-tools
+    # Security — "browser fingerprinting" bigram overrides "browser"→testing
+    ("browser fingerprinting", "security"),           # bigram "browser fingerprinting"→security
+    # Regression — bare "browser" still routes to testing (Playwright, Puppeteer)
+    ("browser testing playwright", "testing"),        # "browser"→testing unchanged
+    # Security — IP reputation/blacklist bigrams override "ip"→maps for security queries
+    ("ip reputation check", "security"),              # bigram "ip reputation"→security
+    ("ip blacklist lookup", "security"),              # bigram "ip blacklist"→security
+    # Regression — bare "ip" for geolocation still routes to maps
+    ("ip address lookup", "maps"),                    # "ip"→maps unchanged
 ]
 
 

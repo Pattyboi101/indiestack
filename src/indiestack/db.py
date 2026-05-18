@@ -2679,6 +2679,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "geo": "maps",
     "location": "maps",
     "ip": "maps",           # "ip lookup", "ip address api", "ip geolocation" → Maps & Location (ipapi.co, ipinfo.io)
+    "ip reputation": "security",    # bigram — "ip reputation check", "ip reputation api" → Security Tools (AbuseIPDB)
+    "ip blacklist": "security",     # bigram — "ip blacklist detection", "ip blacklist lookup" → Security Tools
     "country": "maps",      # "country detection", "country lookup api" → Maps & Location (IP-based geo tools)
     "serverless": "devops",
     # Caching → moved to dedicated section below (caching category now exists)
@@ -5188,6 +5190,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "personalization": "ai",        # "personalization engine", "ai personalization" → AI & Automation
     "personalisation": "ai",        # UK spelling — "personalisation api", "personalisation tool" → AI & Automation
     # Security — device fingerprinting and bot protection (Fingerprint.com, FingerprintJS)
+    # "browser fingerprinting" bigram overrides "browser"→testing for device-tracking queries.
+    "browser fingerprinting": "security",  # bigram — "browser fingerprinting api" → Security Tools
+    "device fingerprint": "security",      # bigram — "device fingerprint detection" → Security Tools
     "fingerprint": "security",      # "fingerprint api", "browser fingerprint", "device fingerprint" → Security Tools
     "fingerprintjs": "security",    # FingerprintJS explicit named tool → Security Tools
     # Auth — social login and magic link flows (very common auth pattern queries)
