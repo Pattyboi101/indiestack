@@ -170,6 +170,21 @@ When hunting for routing gaps, these query forms are historically tricky:
     "finops" had no synonym. Probe: "cloud cost", "cloud pricing", "finops", "infracost"
     — if any hit raw_first or the wrong category, add bare token or bigram. Fixed:
     "sitemaps"→seo, "flame graph"→monitoring, "finops"/"cloud cost"→devops (May 2026).
+
+26. "Category-prefix poisoning" — a word that correctly maps to category A (e.g.
+    "saas"→boilerplate, "crm"→crm, "devops"→devops) becomes the first meaningful token
+    in a compound query where the SECOND token indicates a completely different category.
+    "saas metrics" → "saas"→boilerplate fires, not analytics. "crm analytics" → "crm"→crm
+    fires, not analytics (acceptable here, but pattern still applies). Probe: for any
+    category-key word, check "[word] analytics", "[word] metrics", "[word] dashboard",
+    "[word] monitoring" — if the first token routes to the wrong category, add the bigram.
+    Also applies to stop-word + meaningful-token pairs: "time tracking" can never fire as
+    a bigram because "tracking" is in _FTS_STOP_WORDS. In that case, add named-tool
+    synonyms (toggl, harvest, clockify) instead of the bigram. General fix strategy:
+    (a) add bigram for the compound if both tokens survive stop-word filtering, or
+    (b) add direct tool-name synonyms when the compound includes a stop word.
+    Fixed: "saas metrics"→analytics, "time tracker" bigram + toggl/harvest/clockify→project,
+    "expense"/"expenses"→invoicing, "documentation"→documentation (May 2026).
 """
 
 import sys
