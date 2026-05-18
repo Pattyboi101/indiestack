@@ -1112,6 +1112,9 @@ TEST_CASES: list[tuple[str, str]] = [
     ("design token system", "frontend"),              # bigram "design token"→frontend (overrides "token"→authentication)
     # Regression — bare "token" still routes to authentication (jwt tokens, access tokens)
     ("jwt token auth", "authentication"),             # "token"→authentication unchanged
+    # Frontend — "server actions" spaced bigram (hyphenated form was mapped, space form wasn't)
+    ("server actions nextjs", "frontend"),            # bigram "server actions"→frontend
+    ("server actions form", "frontend"),              # second form
     # Security — "browser fingerprinting" bigram overrides "browser"→testing
     ("browser fingerprinting", "security"),           # bigram "browser fingerprinting"→security
     # Regression — bare "browser" still routes to testing (Playwright, Puppeteer)

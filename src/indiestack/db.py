@@ -4293,7 +4293,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rsc": "frontend",              # "RSC alternative", "react server component" → Frontend Frameworks
     "server-component": "frontend", # "server component", "server-component streaming" → Frontend Frameworks
     "server-components": "frontend",# plural — "server components pattern", "react server components"
-    "server-actions": "frontend",   # "server actions nextjs", "server action form" → Frontend Frameworks
+    "server-actions": "frontend",   # "server actions nextjs", "server action form" → Frontend Frameworks (hyphenated)
+    "server actions": "frontend",   # spaced bigram — "server actions nextjs", "server action form" → Frontend Frameworks
     # Version managers / JS toolchains — "nvm alternative", "node version manager", "mise setup"
     "nvm": "developer",             # nvm — Node Version Manager (bash, 80k★); most-used node switcher
     "fnm": "developer",             # fnm — Fast Node Manager (Rust, 17k★); faster nvm alternative
