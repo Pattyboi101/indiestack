@@ -1239,6 +1239,27 @@ TEST_CASES: list[tuple[str, str]] = [
     # DevOps — Grafana Tanka (Jsonnet-based k8s config management)
     ("tanka alternative", "devops"),                 # "tanka"→devops
     ("tanka jsonnet kubernetes", "devops"),          # second form
+    # Probe pattern 27: Sign-in / SSO / user-X / cloud-function dead zones
+    # Auth — "sign": "in"/"on" are stop words so bigrams can't fire; bare "sign" routes correctly
+    ("sign in", "authentication"),                   # "in" stripped → bare "sign"→authentication
+    ("sign in provider", "authentication"),          # "in" stripped → ["sign", "provider"] → "sign"→auth
+    ("sign up flow", "authentication"),              # "up" not a stop word → "sign up" bigram; falls back to "sign"→auth
+    ("sign in with google", "authentication"),       # stripped → ["sign", "google"] → "sign"→auth
+    # SSO — "single sign on": "on" stripped → ["single", "sign"] → "single sign" bigram
+    ("single sign on", "authentication"),            # bigram "single sign"→authentication
+    ("single sign on provider", "authentication"),   # second form
+    # Auth — user-X bigrams that previously fired raw_first "user"
+    ("user registration api", "authentication"),     # bigram "user registration"→authentication
+    ("user profile page", "authentication"),         # bigram "user profile"→authentication
+    ("user roles management", "authentication"),     # bigram "user roles"→authentication
+    # Regression — "user management" bigram still routes to auth
+    ("user management system", "authentication"),    # bigram "user management"→authentication (unchanged)
+    # Regression — "sign document" routes to forms not auth
+    ("sign document api", "forms"),                  # bigram "sign document"→forms (regression guard)
+    # DevOps — cloud function bigrams
+    ("cloud function alternative", "devops"),        # bigram "cloud function"→devops
+    ("cloud functions provider", "devops"),          # bigram "cloud functions"→devops
+    ("cloud functions vs lambda", "devops"),         # second form
 ]
 
 

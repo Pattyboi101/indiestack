@@ -8026,6 +8026,22 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cuelang": "developer",         # CUE language — "cuelang alternative", "cuelang setup", "cue schema" → Developer Tools
     # DevOps — Grafana Tanka (Jsonnet-based Kubernetes config management tool, 2k★)
     "tanka": "devops",              # Tanka — "tanka alternative", "tanka jsonnet k8s", "tanka vs helm" → DevOps & Infrastructure
+    # Authentication — "sign" dead zone: "in"/"on"/"up" are stop words so bigrams like "sign in" can't fire.
+    # All of "sign in", "sign up", "sign on" reduce to bare "sign" after stop-word removal.
+    "sign": "authentication",         # "sign in", "sign up", "sign on", "sign in provider" → Authentication
+    "single sign": "authentication",  # bigram — "single sign on", "single sign-on" (SSO) beats bare "single" → Authentication
+    # Regression guards — "sign X" for e-signature contexts override "sign"→authentication
+    "sign document": "forms",         # "sign document api", "sign document free" → Forms & Surveys (DocuSign, Hellosign)
+    "sign pdf": "forms",              # "sign pdf api", "sign pdf online" → Forms & Surveys
+    # Authentication — "user X" dead zones where "user" fires raw_first; each bigram fires before the bare token
+    # Note: "user management" bigram already exists; these cover remaining auth-specific user queries
+    "user registration": "authentication",  # "user registration api", "user registration form" → Authentication
+    "user profile": "authentication",       # "user profile page", "user profile api" → Authentication
+    "user roles": "authentication",         # beats "role"→auth which can't fire when "user" comes first → Authentication
+    # DevOps — "cloud function(s)" dead zone: "cloud" has no mapping so raw_first fires
+    # Serverless function platforms (AWS Lambda, Cloudflare Workers, Vercel Functions) live in DevOps
+    "cloud function": "devops",       # bigram — "cloud function alternative", "cloud function runtime" → DevOps & Infrastructure
+    "cloud functions": "devops",      # plural — "cloud functions provider", "cloud functions vs lambda" → DevOps
 }
 
 _FTS_STOP_WORDS = {
