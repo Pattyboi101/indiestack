@@ -771,13 +771,13 @@ async def demand_pro(request: Request):
         opp = c['opportunity_score']
 
         if c['zero_count'] >= 10:
-            badge_label, badge_bg, badge_color = 'HIGH', 'rgba(239,68,68,0.12)', '#EF4444'
+            badge_label, badge_bg, badge_color = 'HIGH', 'var(--error-bg, rgba(239,68,68,0.12))', 'var(--error-text, #EF4444)'
         elif c['zero_count'] >= 5:
-            badge_label, badge_bg, badge_color = 'GROWING', 'rgba(226,183,100,0.12)', '#E2B764'
+            badge_label, badge_bg, badge_color = 'GROWING', 'var(--warning-bg, rgba(226,183,100,0.12))', 'var(--warning-text, #E2B764)'
         elif c['zero_count'] >= 2:
-            badge_label, badge_bg, badge_color = 'EMERGING', 'rgba(0,212,245,0.12)', 'var(--accent)'
+            badge_label, badge_bg, badge_color = 'EMERGING', 'var(--info-bg, rgba(0,212,245,0.12))', 'var(--info-text, #00D4F5)'
         else:
-            badge_label, badge_bg, badge_color = 'NEW', 'rgba(255,255,255,0.04)', 'var(--ink-muted)'
+            badge_label, badge_bg, badge_color = 'NEW', 'var(--bg-card, rgba(255,255,255,0.04))', 'var(--ink-muted)'
 
         cluster_rows += f'''
             <tr style="border-bottom:1px solid var(--border);" data-opp="{opp}" data-zero="{c['zero_count']}" data-last="{idx}">
@@ -787,7 +787,7 @@ async def demand_pro(request: Request):
                 </td>
                 <td style="padding:12px 16px;text-align:center;">{spark}</td>
                 <td style="padding:12px 16px;text-align:center;">{density_html}</td>
-                <td style="padding:12px 16px;text-align:center;color:#EF4444;font-weight:600;">{c['zero_count']}</td>
+                <td style="padding:12px 16px;text-align:center;color:var(--error-text, #EF4444);font-weight:600;">{c['zero_count']}</td>
                 <td style="padding:12px 16px;text-align:center;color:var(--ink-muted);">{c['search_count']}</td>
                 <td style="padding:12px 16px;text-align:center;font-size:12px;color:var(--ink-muted);">{last_seen}</td>
                 <td style="padding:12px 16px;text-align:center;">
