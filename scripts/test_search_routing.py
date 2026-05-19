@@ -1351,6 +1351,23 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — bare "git" queries still route to devops (git hosting/workflows)
     ("git hosting", "devops"),                       # "git"→devops regression guard
     ("git workflow", "devops"),                      # second form
+
+    # Probe pattern 32: background jobs dead zones — step function (singular) / task scheduler / periodic task
+    # Background Jobs — "step function" singular was unrouted (raw_first "step"); plural "step functions" was already mapped
+    ("step function alternative", "background"),    # bigram "step function"→background (singular form of AWS Step Functions)
+    ("step function workflow", "background"),        # second form
+    # Background Jobs — "task scheduler" bigram overrides "task"→developer for scheduler queries
+    ("task scheduler nodejs", "background"),         # bigram "task scheduler"→background
+    ("task scheduler python", "background"),         # second form
+    # Background Jobs — "task scheduling" bigram overrides "scheduling"→scheduling-booking
+    ("task scheduling library", "background"),       # bigram "task scheduling"→background
+    # Background Jobs — "periodic task" (Celery beat, APScheduler)
+    ("periodic task runner", "background"),          # bigram "periodic task"→background
+    ("periodic task celery", "background"),          # second form
+    # Regression — bare "task" still routes to developer (Grunt, Gulp, go-task)
+    ("task runner nodejs", "developer"),             # "task"→developer regression guard
+    # NOTE: "taskfile" → devops (go-task, Taskfile.dev is a devops/build-system tool)
+    ("taskfile alternative", "devops"),              # taskfile is correctly devops, not developer
 ]
 
 

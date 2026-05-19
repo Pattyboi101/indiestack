@@ -6665,6 +6665,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AWS workflow orchestration — complement to temporal/inngest/trigger already mapped
     "step-functions": "background", # AWS Step Functions — serverless workflow orchestration; "step-functions alternative" → Background Jobs
     "step functions": "background", # multi-word — "step functions alternative", "aws step functions" → Background Jobs
+    "step function": "background",  # singular — "step function alternative", "step function workflow" → Background Jobs
     "sfn": "background",            # SFN abbreviation — "sfn workflow", "aws sfn" → Background Jobs
     # AWS EventBridge — event routing and messaging service
     "eventbridge": "message",       # AWS EventBridge — "eventbridge alternative", "eventbridge setup" → Message Queues
@@ -7650,6 +7651,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Background Jobs — "task queue" bigram overrides "task"→developer for queue-specific queries
     # "task-queue" hyphenated already at line 6239; only the spaced bigram is new here
     "task queue": "background",     # spaced bigram — "task queue redis", "task queue celery" → Background Jobs
+    "task scheduler": "background", # bigram — "task scheduler nodejs", "task scheduler python" → Background Jobs
+    "task scheduling": "background",# bigram — "task scheduling library" (overrides "scheduling"→scheduling-booking) → Background Jobs
+    "periodic task": "background",  # bigram — "periodic task runner", "periodic task celery" → Background Jobs
     # Background Jobs — "data pipeline" bigram preserves correct routing vs "pipeline management"→crm below
     "data pipeline": "background",  # spaced bigram — "data pipeline orchestration", "data pipeline management" → Background Jobs
     # Background Jobs — "data transformation" / "data extraction" dead zones

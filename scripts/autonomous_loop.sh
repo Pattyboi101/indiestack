@@ -279,7 +279,8 @@ BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individu
            Stop words are stripped before bigram matching. Always verify both tokens survive.
            Example: "web framework"→impossible (framework is stop word); "web server"→possible.
 After fixing db.py, run validate_synonyms.py to check for duplicates, then commit.
-After all fixes: python3 scripts/test_search_routing.py should report 792+ tests passing (31 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 801+ tests passing (32 probe patterns).
+  Probe pattern 32 (May 2026): background jobs dead zones — "step function" singular unrouted (raw_first "step"); "task scheduler/scheduling" routed to developer/scheduling-booking; "periodic task" unrouted. Fixed bigrams: "step function"→background, "task scheduler"→background, "task scheduling"→background, "periodic task"→background.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
