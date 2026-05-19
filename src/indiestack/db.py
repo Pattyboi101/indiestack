@@ -3239,6 +3239,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # NOTE: "dotenv" must map to "developer" — it's the .env loader library (Developer Tools), NOT secrets
     # management. Gotchas.md: "Always use developer (matches 'Developer Tools'). Previously broken: dotenv".
     # "env secrets" / "environment secrets" queries already route via "env"→security above.
+    # "development environment" and "dev environment" bigrams override "environment"→security for local-dev queries
+    "development environment": "devops",  # bigram — "development environment tool" → DevOps (Vagrant, devcontainers, Nix)
+    "dev environment": "devops",          # bigram — "dev environment setup", "dev environment docker" → DevOps
     # Data pipeline / ETL
     "etl": "background",       # ETL pipeline tools → background-jobs (Dagster, Prefect, Airflow)
     "elt": "background",       # ELT — modern variant of ETL (dbt, Airbyte pattern)
@@ -6272,6 +6275,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "oncall": "monitoring",         # compound — "oncall platform", "oncall alternative" → Monitoring & Uptime
     "postmortem": "monitoring",     # "postmortem tool", "incident postmortem" → Monitoring & Uptime
     "runbook": "monitoring",        # "runbook automation", "ops runbook" → Monitoring & Uptime
+    "playbook": "monitoring",       # "incident playbook", "ops playbook" → Monitoring & Uptime (complement to runbook)
     # DevOps — chaos engineering bare term (named tools: chaostoolkit/chaos-mesh are mapped; generic queries weren't)
     "chaos": "devops",              # "chaos engineering", "chaos testing tool" → DevOps & Infrastructure
     # Developer Tools — IDE and internal developer portal query terms
@@ -7648,6 +7652,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "task queue": "background",     # spaced bigram — "task queue redis", "task queue celery" → Background Jobs
     # Background Jobs — "data pipeline" bigram preserves correct routing vs "pipeline management"→crm below
     "data pipeline": "background",  # spaced bigram — "data pipeline orchestration", "data pipeline management" → Background Jobs
+    # Background Jobs — "data transformation" / "data extraction" dead zones
+    # "data" has no single-token synonym; these bigrams cover common ETL/ELT query patterns.
+    "data transformation": "background",  # bigram — "data transformation tool", "data transformation pipeline" → Background Jobs (dbt)
+    "data extraction": "background",      # bigram — "data extraction tool", "data extraction pipeline" → Background Jobs (ETL)
+    # Database — "data modeling" queries (schema tools: dbdiagram.io, DrawSQL, ERD tools)
+    "data modeling": "database",          # bigram — "data modeling tool", "data modeling database" → Database
     # CRM & Sales — lead and pipeline management queries missing from CRM routing
     "lead": "crm",                  # single token — "lead scoring", "lead management", "lead capture" → CRM & Sales
     "pipeline management": "crm",   # spaced bigram — "pipeline management tool" beats "pipeline"→background

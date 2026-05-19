@@ -1285,6 +1285,25 @@ TEST_CASES: list[tuple[str, str]] = [
     # Security — CVE scanning
     ("cve scanner", "security"),                     # "cve"→security
     ("cve tracker", "security"),                     # second form
+    # Probe pattern 29: "data X" dead zones + "environment" local-dev misrouting
+    # Background Jobs — "data transformation" / "data extraction" bigrams
+    ("data transformation tool", "background"),      # bigram "data transformation"→background (dbt, Dagster)
+    ("data transformation pipeline", "background"),  # second form
+    ("data extraction tool", "background"),          # bigram "data extraction"→background (ETL tools)
+    ("data extraction pipeline", "background"),      # second form
+    # Database — "data modeling" bigram for ERD / schema diagramming tools
+    ("data modeling tool", "database"),              # bigram "data modeling"→database (dbdiagram, DrawSQL)
+    ("data modeling database", "database"),          # second form
+    # Monitoring — "playbook" bare token (complement to "runbook"→monitoring)
+    ("playbook tool", "monitoring"),                 # "playbook"→monitoring
+    ("incident playbook", "monitoring"),             # second form
+    # DevOps — "development environment" / "dev environment" bigrams override "environment"→security
+    ("development environment tool", "devops"),      # bigram "development environment"→devops
+    ("dev environment setup", "devops"),             # bigram "dev environment"→devops
+    ("dev environment docker", "devops"),            # second form
+    # Regression — bare "environment" (env var/secrets) still routes to security
+    ("environment variables management", "security"),# "environment"→security still fires for secrets queries
+    ("env secrets manager", "security"),             # "env"→security regression guard
 ]
 
 
