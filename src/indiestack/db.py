@@ -8012,6 +8012,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cloud cost": "devops",         # bigram — "cloud cost optimizer", "cloud cost tool" → DevOps (bare "cloud" is too broad)
     "infracost": "devops",          # Infracost — "infracost alternative", "infracost setup" → DevOps & Infrastructure
     "opencost": "devops",           # OpenCost — CNCF k8s cost monitoring; "opencost alternative" → DevOps & Infrastructure
+    # DevOps — Envoy Proxy (CNCF, 25k★; used by Istio, AWS App Mesh, Consul Connect)
+    "envoy": "devops",              # Envoy Proxy — "envoy alternative", "envoy sidecar", "envoy xds" → DevOps & Infrastructure
+    # Logging — Grafana Loki log shipping agent (promtail → Loki pipeline; widely deployed)
+    "promtail": "logging",          # Promtail — Loki's log shipping agent; "promtail alternative", "promtail config" → Logging
+    # Monitoring — OpenTelemetry Collector shorthand (receives + exports traces/metrics/logs)
+    "otelcol": "monitoring",        # otelcol — OTel Collector CLI; "otelcol setup", "otelcol config" → Monitoring & Uptime
+    # Developer Tools — per-directory environment variable manager (12k★)
+    "direnv": "developer",          # direnv — "direnv alternative", "direnv setup", "direnv .envrc" → Developer Tools
+    # Developer Tools — configuration languages (Jsonnet, Dhall, CUE — common k8s/infra tooling)
+    "jsonnet": "developer",         # Jsonnet — "jsonnet alternative", "jsonnet vs yaml", "tanka jsonnet" → Developer Tools
+    "dhall": "developer",           # Dhall — functional config language; "dhall alternative", "dhall vs cue" → Developer Tools
+    "cuelang": "developer",         # CUE language — "cuelang alternative", "cuelang setup", "cue schema" → Developer Tools
+    # DevOps — Grafana Tanka (Jsonnet-based Kubernetes config management tool, 2k★)
+    "tanka": "devops",              # Tanka — "tanka alternative", "tanka jsonnet k8s", "tanka vs helm" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

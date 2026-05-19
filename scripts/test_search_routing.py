@@ -1219,6 +1219,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("documentation site builder", "documentation"), # second form
     # Analytics — SaaS metrics (prevent "saas"→boilerplate poisoning)
     ("saas metrics dashboard", "analytics"),         # bigram "saas metrics"→analytics
+    # DevOps — Envoy Proxy (CNCF service proxy, "envoy" alone now maps to devops)
+    ("envoy proxy alternative", "devops"),           # "envoy"→devops
+    ("envoy sidecar setup", "devops"),               # second form
+    # Logging — Promtail (Grafana Loki log shipping agent)
+    ("promtail alternative", "logging"),             # "promtail"→logging
+    ("promtail config loki", "logging"),             # second form
+    # Monitoring — OpenTelemetry Collector shorthand
+    ("otelcol setup", "monitoring"),                 # "otelcol"→monitoring
+    ("otelcol config", "monitoring"),                # second form
+    # Developer Tools — direnv per-directory env manager
+    ("direnv alternative", "developer"),             # "direnv"→developer
+    ("direnv setup envrc", "developer"),             # second form
+    # Developer Tools — configuration languages (Jsonnet, Dhall, CUE)
+    ("jsonnet alternative", "developer"),            # "jsonnet"→developer
+    ("jsonnet vs yaml", "developer"),                # second form (yaml stripped as stop word; jsonnet survives)
+    ("dhall alternative", "developer"),              # "dhall"→developer
+    ("cuelang alternative", "developer"),            # "cuelang"→developer (unambiguous CUE lang form)
+    # DevOps — Grafana Tanka (Jsonnet-based k8s config management)
+    ("tanka alternative", "devops"),                 # "tanka"→devops
+    ("tanka jsonnet kubernetes", "devops"),          # second form
 ]
 
 
