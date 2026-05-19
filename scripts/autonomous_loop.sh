@@ -166,6 +166,12 @@ curl the API for these queries and check top-3 results are relevant:
     'esignature api', 'e-signature tool', 'digital signature api',
     'pandadoc alternative', 'signnow alternative', 'reform app forms',
     'form backend free', 'html form endpoint', 'docuseal esignature'.
+  User research / fintech / trust (added May 2026 — probe pattern 31):
+    'user research platform', 'user interview platform', 'qualitative research tool',
+    'virtual card api', 'corporate card management', 'spend tracking tool',
+    'spend management software', 'commission tracking software', 'sales commission tool',
+    'partner program management', 'trust and safety platform', 'toxicity filter api'.
+    All must route to correct categories (feedback/payments/invoicing/crm/security/ai).
   Waitlist / referral / in-app changelog (added May 2026 — waitlist/referral/affiliate/beamer synonyms added):
     'waitlist tool', 'launch waitlist api', 'pre-launch email collection',
     'referral program software', 'referral tracking tool', 'referralhero alternative',
@@ -269,6 +275,13 @@ BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individu
     'web server' → "api"  (backend web servers — was raw_first "web"; added May 2026)
     'code generator' → "ai dev"  (complements "code generation" bigram; added May 2026)
     'clean architecture' + 'hexagonal architecture' + 'onion architecture' → "developer"  (added May 2026)
+    'user research' + 'user interview' + 'qualitative research' → "feedback"  (was raw_first; added May 2026)
+    'virtual card' + 'corporate card' → "payments"  (overrides "virtual"→frontend; added May 2026)
+    'spend' + 'spending' → "invoicing"  (was raw_first; covers spend tracking/management; added May 2026)
+    'commission' + 'sales commission' → "payments"  (was raw_first; added May 2026)
+    'partner program' → "crm"  (was raw_first; added May 2026)
+    'trust' → "security"  (trust and safety, trust center; added May 2026)
+    'toxicity' → "ai"  (content moderation/toxicity detection; added May 2026)
     NOTE: "web framework" CANNOT be a bigram — "framework" is in _FTS_STOP_WORDS. Known gap.
   CAUTION: Do NOT add "ai" as a single-token fallback — it breaks "ai browser automation"→testing
            and "ai pr review"→developer. Use targeted "ai *" bigrams instead.
@@ -279,7 +292,7 @@ BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individu
            Stop words are stripped before bigram matching. Always verify both tokens survive.
            Example: "web framework"→impossible (framework is stop word); "web server"→possible.
 After fixing db.py, run validate_synonyms.py to check for duplicates, then commit.
-After all fixes: python3 scripts/test_search_routing.py should report 434+ tests passing (30 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 795+ tests passing (31 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
