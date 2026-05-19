@@ -6650,6 +6650,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     # File management — "html to pdf" loses "to" (stop word); remaining tokens are ["html","pdf"].
     # Bare "html"→frontend fires incorrectly for pdf-generation queries; bigram overrides it.
     "html pdf": "file",             # bigram — "html to pdf converter", "html pdf generator" → File Management
+    # AI — "ai observability" routes to Monitoring via bare "observability"→monitoring.
+    # LLM observability tools (Langfuse, Helicone, Braintrust, Phoenix) live in AI & Automation.
+    "ai observability": "ai",       # bigram — "ai observability platform", "ai observability tool" → AI & Automation
+    # AI — "ai cost" has no token mapping; "ai" alone is not in _CAT_SYNONYMS, raw_first fires.
+    # LLM cost-tracking tools (OpenMeter, Helicone cost view, LangSmith) live in AI & Automation.
+    "ai cost": "ai",                # bigram — "ai cost tracking", "ai cost management" → AI & Automation
+    "ai spend": "ai",               # bigram — "ai spend monitoring", "ai spend optimization" → AI & Automation
+    # Caching — "browser cache" and "browser caching" route to Testing via bare "browser"→testing.
+    # Browser cache management (Workbox, cache-control headers, service workers) lives in Caching.
+    "browser cache": "caching",     # bigram — "browser cache management", "browser cache invalidation" → Caching
+    "browser caching": "caching",   # bigram — "browser caching strategy", "browser caching headers" → Caching
 }
 
 _FTS_STOP_WORDS = {

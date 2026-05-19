@@ -307,6 +307,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("html pdf generator", "file"),                 # second form
     # Regression — bare "html"→frontend still fires for non-pdf queries
     ("html component library", "frontend"),         # "html" → Frontend (unchanged)
+    # AI — "ai observability" was routing to Monitoring via "observability"→monitoring
+    ("ai observability platform", "ai"),             # bigram "ai observability"→ai (Langfuse, Helicone)
+    ("ai observability tool", "ai"),                 # second form
+    # Regression — bare "observability" still routes to monitoring for infra queries
+    ("observability monitoring tool", "monitoring"), # "observability"→monitoring unchanged
+    # AI — "ai cost" / "ai spend" were raw_first; now explicit bigrams
+    ("ai cost tracking", "ai"),                      # bigram "ai cost"→ai
+    ("ai cost management", "ai"),                    # second form
+    ("ai spend monitoring", "ai"),                   # bigram "ai spend"→ai
+    # Caching — "browser cache/caching" was routing to Testing via "browser"→testing
+    ("browser cache management", "caching"),         # bigram "browser cache"→caching
+    ("browser caching headers", "caching"),          # bigram "browser caching"→caching
+    # Regression — bare "browser" still routes to testing for automation queries
+    ("browser automation puppeteer", "testing"),     # "browser"→testing unchanged
 ]
 
 
