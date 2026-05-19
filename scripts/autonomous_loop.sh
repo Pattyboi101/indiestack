@@ -279,7 +279,7 @@ BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individu
            Stop words are stripped before bigram matching. Always verify both tokens survive.
            Example: "web framework"→impossible (framework is stop word); "web server"→possible.
 After fixing db.py, run validate_synonyms.py to check for duplicates, then commit.
-After all fixes: python3 scripts/test_search_routing.py should report 434+ tests passing (30 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 792+ tests passing (31 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:

@@ -8082,6 +8082,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "clean architecture": "developer",    # bigram — "clean architecture framework" → Developer Tools
     "hexagonal architecture": "developer",# bigram — "hexagonal architecture framework" → Developer Tools
     "onion architecture": "developer",    # bigram — "onion architecture example" → Developer Tools
+    # Probe pattern 31: security dead zones — "dependency"→developer fires before security terms;
+    # "penetration" unmapped so "testing"→testing fires wrong; "iast" not in dict; "git"→devops
+    # wins over "secrets" for "git secrets" queries.
+    # Security — penetration testing (pentest tools: OWASP ZAP, BurpSuite Community, w3af, Metasploitable)
+    # "penetration" has no synonym — bare "testing"→testing fires which is wrong.
+    "penetration testing": "security",    # bigram — "penetration testing tool", "penetration testing open source" → Security
+    "penetration test": "security",       # bigram — "penetration test framework", "penetration test alternative" → Security
+    # Security — dependency vulnerability scanning (Snyk, Trivy, OWASP Dependency-Check, Dependabot)
+    # "dependency"→developer fires first for bare token; bigrams override for scanning/vulnerability queries.
+    "dependency scanning": "security",    # bigram — "dependency scanning tool", "dependency scanning ci" → Security Tools
+    "dependency check": "security",       # bigram — "dependency check owasp", "dependency check alternative" → Security Tools
+    "dependency vulnerability": "security",# bigram — "dependency vulnerability scanner", "dependency vulnerability audit" → Security
+    # Security — SCA: "software" is in _FTS_STOP_WORDS so "software composition analysis"
+    # strips to ["composition","analysis"]. Use post-strip bigrams to cover SCA queries.
+    # Software Composition Analysis tools (FOSSA, Black Duck, License Finder, Scancode) → Security.
+    "composition analysis": "security",   # bigram — "software composition analysis" → ["composition","analysis"] → Security
+    "composition scanning": "security",   # bigram — "software composition scanning" → Security
+    # Security — IAST (Interactive Application Security Testing; Contrast Security, HCL AppScan)
+    "iast": "security",                   # "iast tool", "iast alternative", "iast vs dast" → Security Tools
+    # Security — "git secrets" misroutes via "git"→devops; bigram overrides for secrets-in-git queries.
+    # git-secrets, Gitleaks, TruffleHog all scan git history for leaked secrets → Security.
+    "git secrets": "security",            # bigram — "git secrets tool", "git secrets alternative" → Security Tools (overrides git→devops)
+    "git secret": "security",             # singular — "git secret scanning", "git secret leak" → Security Tools
 }
 
 _FTS_STOP_WORDS = {

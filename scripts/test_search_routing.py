@@ -1326,6 +1326,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("clean architecture framework", "developer"),   # bigram "clean architecture"→developer
     ("hexagonal architecture framework", "developer"),# bigram "hexagonal architecture"→developer
     ("onion architecture example", "developer"),     # bigram "onion architecture"→developer
+    # Probe pattern 31: security dead zones — pentest/dependency-scanning/IAST/git-secrets misrouting
+    # Security — penetration testing (OWASP ZAP, BurpSuite) must NOT land in Testing Tools
+    ("penetration testing tool", "security"),        # bigram "penetration testing"→security
+    ("penetration testing open source", "security"), # second form
+    ("penetration test framework", "security"),      # bigram "penetration test"→security
+    ("penetration test alternative", "security"),    # second form
+    # Security — dependency vulnerability scanning (Snyk, Trivy, OWASP Dependency-Check)
+    ("dependency scanning tool", "security"),        # bigram "dependency scanning"→security
+    ("dependency scanning ci", "security"),          # second form
+    ("dependency check owasp", "security"),          # bigram "dependency check"→security
+    ("dependency check alternative", "security"),    # second form
+    ("dependency vulnerability scanner", "security"),# bigram "dependency vulnerability"→security
+    # Security — Software Composition Analysis (FOSSA, Black Duck, Scancode)
+    # "software" is in stop words → meaningful terms are ["composition","analysis"/"scanning"]
+    ("software composition analysis", "security"),   # bigram "composition analysis"→security (after stop-word strip)
+    ("software composition scanning", "security"),   # bigram "composition scanning"→security (after stop-word strip)
+    # Security — IAST (Interactive Application Security Testing)
+    ("iast tool", "security"),                       # "iast"→security
+    ("iast alternative", "security"),                # second form
+    # Security — git secrets scanning (git-secrets, Gitleaks, TruffleHog)
+    ("git secrets tool", "security"),                # bigram "git secrets"→security (overrides "git"→devops)
+    ("git secret scanning", "security"),             # bigram "git secret"→security
+    # Regression — bare "git" queries still route to devops (git hosting/workflows)
+    ("git hosting", "devops"),                       # "git"→devops regression guard
+    ("git workflow", "devops"),                      # second form
 ]
 
 
