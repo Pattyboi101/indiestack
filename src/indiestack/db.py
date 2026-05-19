@@ -8065,6 +8065,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "progressive delivery" misroutes via "progressive"→frontend (PWA connotation); override with bigram
     "progressive delivery": "feature",  # canary/blue-green/feature-flag concept → Feature Flags
     "cve": "security",                # "cve scanner", "cve tracker", "cve database" → Security Tools
+    # Probe pattern 30: ERD / diagramming / web-server / code-generator / architecture dead zones
+    # Database — ERD tools (dbdiagram.io, DrawSQL, ERD editors)
+    # Note: "erd tool" can't be a bigram — "tool" is in _FTS_STOP_WORDS; bare "erd" fires instead.
+    "erd": "database",                    # bare token — "erd alternative", "erd editor", "best erd tool" → Database
+    "erd diagram": "database",            # bigram — "erd diagram generator" → Database (overrides "diagram"→developer)
+    # Developer Tools — diagramming tools (Mermaid, draw.io, Excalidraw, PlantUML)
+    "diagramming": "developer",           # bare token — "diagramming tool", "diagramming software" → Developer Tools
+    # API Tools — "web server" dead zone: "web" alone has no synonym so raw_first fires.
+    # "web framework" CANNOT be a bigram — "framework" is in _FTS_STOP_WORDS and is stripped.
+    # "web server" works because "server" is NOT a stop word.
+    "web server": "api",                  # bigram — "web server golang", "web server rust" → API Tools
+    # AI Dev Tools — "code generator" dead zone: "code generation" bigram exists but "code generator" doesn't
+    "code generator": "ai dev",           # bigram — "code generator ai", "code generator openapi" → AI Dev Tools
+    # Developer Tools — software architecture patterns (developers search for frameworks that support these)
+    "clean architecture": "developer",    # bigram — "clean architecture framework" → Developer Tools
+    "hexagonal architecture": "developer",# bigram — "hexagonal architecture framework" → Developer Tools
+    "onion architecture": "developer",    # bigram — "onion architecture example" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

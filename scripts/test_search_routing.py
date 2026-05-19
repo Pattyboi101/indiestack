@@ -1304,6 +1304,28 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — bare "environment" (env var/secrets) still routes to security
     ("environment variables management", "security"),# "environment"→security still fires for secrets queries
     ("env secrets manager", "security"),             # "env"→security regression guard
+    # Probe pattern 30: ERD / diagramming / web server / code generator / architecture dead zones
+    # Database — ERD tools (dbdiagram.io, DrawSQL, ERD editors)
+    ("erd", "database"),                             # bare "erd"→database
+    ("erd diagram", "database"),                     # bigram "erd diagram"→database
+    ("best erd tool", "database"),                   # "tool" stripped; bare "erd" fires
+    # Developer Tools — diagramming tools (Mermaid, draw.io, Excalidraw)
+    ("diagramming tool", "developer"),               # "tool" stripped; bare "diagramming"→developer
+    ("diagramming software", "developer"),           # second form
+    # Regression — "architecture diagram" still routes to developer via "diagram"→developer
+    ("architecture diagram", "developer"),           # "diagram"→developer bigram still fires
+    # API Tools — "web server" dead zone resolved ("web framework" can't be fixed — "framework" is stop word)
+    ("web server golang", "api"),                    # bigram "web server"→api
+    ("web server rust", "api"),                      # second form
+    # AI Dev Tools — "code generator" dead zone resolved
+    ("code generator ai", "ai dev"),                 # bigram "code generator"→ai dev
+    ("code generator openapi", "ai dev"),            # second form
+    # Regression — "code generation" still routes to ai dev
+    ("code generation tool", "ai dev"),              # pre-existing bigram still fires
+    # Developer Tools — software architecture pattern queries
+    ("clean architecture framework", "developer"),   # bigram "clean architecture"→developer
+    ("hexagonal architecture framework", "developer"),# bigram "hexagonal architecture"→developer
+    ("onion architecture example", "developer"),     # bigram "onion architecture"→developer
 ]
 
 

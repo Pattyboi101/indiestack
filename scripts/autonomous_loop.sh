@@ -264,13 +264,22 @@ BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individu
     'llm evaluation' + 'llm benchmark' → "ai standards"  (overrides "llm"→ai for eval-specific queries)
     'health' + 'health-check' → "monitoring"  (was unrouted via raw_first "health"; added May 2026)
     'social login' + 'social auth' + 'social sign' → "authentication"  (was mis-routing to "social" social-media; added May 2026)
+    'erd' + 'erd diagram' → "database"  (ERD tools — was raw_first "erd"; added May 2026)
+    'diagramming' → "developer"  (Mermaid/draw.io — was raw_first; added May 2026)
+    'web server' → "api"  (backend web servers — was raw_first "web"; added May 2026)
+    'code generator' → "ai dev"  (complements "code generation" bigram; added May 2026)
+    'clean architecture' + 'hexagonal architecture' + 'onion architecture' → "developer"  (added May 2026)
+    NOTE: "web framework" CANNOT be a bigram — "framework" is in _FTS_STOP_WORDS. Known gap.
   CAUTION: Do NOT add "ai" as a single-token fallback — it breaks "ai browser automation"→testing
            and "ai pr review"→developer. Use targeted "ai *" bigrams instead.
   CAUTION: Always run validate_synonyms.py after adding entries to catch duplicate keys.
            Duplicate keys silently override with the last value (Python dict behavior).
            "healthcheck" (line 3426) and "task-queue" (line 6239) are canonical — do not re-add.
+  CAUTION: Bigrams that include stop words (framework, tool, service, app, library, etc.) can NEVER fire.
+           Stop words are stripped before bigram matching. Always verify both tokens survive.
+           Example: "web framework"→impossible (framework is stop word); "web server"→possible.
 After fixing db.py, run validate_synonyms.py to check for duplicates, then commit.
-After all fixes: python3 scripts/test_search_routing.py should report 192+ tests passing.
+After all fixes: python3 scripts/test_search_routing.py should report 434+ tests passing (30 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
