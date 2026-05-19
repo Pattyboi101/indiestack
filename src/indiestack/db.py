@@ -8042,6 +8042,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Serverless function platforms (AWS Lambda, Cloudflare Workers, Vercel Functions) live in DevOps
     "cloud function": "devops",       # bigram — "cloud function alternative", "cloud function runtime" → DevOps & Infrastructure
     "cloud functions": "devops",      # plural — "cloud functions provider", "cloud functions vs lambda" → DevOps
+    # Probe pattern 28: Platform engineering / DX / CVE / progressive delivery dead zones
+    # "platform" is a stop word → "platform engineering" reduces to bare "engineering" → DevOps & Infrastructure
+    "engineering": "devops",          # "platform engineering tool", "engineering toolchain" → DevOps
+    # "developer" is a stop word → "developer experience platform" reduces to bare "experience"
+    "experience": "developer",        # "developer experience platform", "developer experience tools" → Developer Tools
+    "devex": "developer",             # DX / DevEx abbreviation — "devex platform", "devex improvement" → Developer Tools
+    # Bigrams — must precede single-token entries for overlapping terms
+    "paved road": "devops",           # IDP golden-path concept — "paved road tooling", "paved road template" → DevOps
+    "technical writing": "documentation",  # "technical writing tools", "technical writing assistant" → Documentation
+    "async communication": "notifications",  # "async communication tools", "async communication platform" → Notifications
+    # "progressive delivery" misroutes via "progressive"→frontend (PWA connotation); override with bigram
+    "progressive delivery": "feature",  # canary/blue-green/feature-flag concept → Feature Flags
+    "cve": "security",                # "cve scanner", "cve tracker", "cve database" → Security Tools
 }
 
 _FTS_STOP_WORDS = {

@@ -1260,6 +1260,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("cloud function alternative", "devops"),        # bigram "cloud function"→devops
     ("cloud functions provider", "devops"),          # bigram "cloud functions"→devops
     ("cloud functions vs lambda", "devops"),         # second form
+    # Probe pattern 28: Platform engineering / DX / CVE / progressive delivery dead zones
+    # DevOps — "platform" is stop word → "platform engineering" reduces to bare "engineering"
+    ("platform engineering tool", "devops"),         # "engineering"→devops
+    ("platform engineering alternative", "devops"),  # second form
+    # Developer Tools — "developer" is stop word → "developer experience" reduces to bare "experience"
+    ("developer experience platform", "developer"),  # "experience"→developer
+    ("developer experience tools", "developer"),     # second form
+    ("devex platform", "developer"),                 # "devex"→developer
+    ("devex improvement", "developer"),              # second form
+    # DevOps — IDP golden-path bigram (neither word is a stop word)
+    ("paved road tooling", "devops"),                # bigram "paved road"→devops
+    ("paved road template", "devops"),               # second form
+    # Documentation — "technical writing" bigram
+    ("technical writing tool", "documentation"),     # bigram "technical writing"→documentation
+    ("technical writing assistant", "documentation"),# second form
+    # Notifications — "async communication" bigram
+    ("async communication tool", "notifications"),   # bigram "async communication"→notifications
+    # Feature Flags — "progressive delivery" overrides "progressive"→frontend PWA misrouting
+    ("progressive delivery tool", "feature"),        # bigram "progressive delivery"→feature
+    ("progressive delivery platform", "feature"),    # second form
+    # Regression — "progressive web app" still routes to frontend via "progressive"→frontend
+    ("progressive web app", "frontend"),             # "progressive"→frontend still fires for PWA
+    # Security — CVE scanning
+    ("cve scanner", "security"),                     # "cve"→security
+    ("cve tracker", "security"),                     # second form
 ]
 
 
