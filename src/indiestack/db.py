@@ -8130,6 +8130,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     # git-secrets, Gitleaks, TruffleHog all scan git history for leaked secrets → Security.
     "git secrets": "security",            # bigram — "git secrets tool", "git secrets alternative" → Security Tools (overrides git→devops)
     "git secret": "security",             # singular — "git secret scanning", "git secret leak" → Security Tools
+    # Probe pattern 35: UX research / user research dead zones
+    # "user research", "user interview" etc. fire raw_first via "user" which has no mapping.
+    # Tools: Maze, Lookback, UserTesting, Dovetail — all live in Feedback & Reviews category.
+    "user research": "feedback",          # bigram — "user research tool", "user research platform" → Feedback & Reviews
+    "user interview": "feedback",         # bigram — "user interview tool", "user interview recording" → Feedback & Reviews
+    "qualitative": "feedback",            # "qualitative research", "qualitative feedback" → Feedback & Reviews
+    "maze": "feedback",                   # Maze.design — prototype testing + user research → Feedback & Reviews
+    "usertesting": "feedback",            # UserTesting.com — remote user research → Feedback & Reviews
+    "lookback": "feedback",              # Lookback.io — user interview and observation platform → Feedback & Reviews
+    "dovetail": "feedback",              # Dovetail — research repository, insight management → Feedback & Reviews
 }
 
 _FTS_STOP_WORDS = {

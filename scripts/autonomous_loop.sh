@@ -284,7 +284,11 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     before bare "qr"→developer. Fixed: bigrams "pdf generation", "pdf generator", "pdf creator"→developer;
     "html pdf"→developer (matches "html to pdf" after stop-word "to" stripping); "qr code"→developer.
     Bare "pdf"→file-management unaffected (editor/viewer queries still route there).
-After all fixes: python3 scripts/test_search_routing.py should report 830+ tests passing (34 probe patterns).
+  Probe pattern 35 (May 2026): UX research dead zones — "user research"/"user interview" fired raw_first
+    because "user" has no synonym mapping. "maze", "usertesting", "lookback", "dovetail" also unmapped.
+    Fixed: bigrams "user research"/"user interview"→feedback; bare "qualitative","maze","usertesting",
+    "lookback","dovetail"→feedback. Regressions guarded for "user authentication"→auth, "user analytics"→analytics.
+After all fixes: python3 scripts/test_search_routing.py should report 846+ tests passing (35 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:

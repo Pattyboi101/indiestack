@@ -31,6 +31,7 @@ This has caused production bugs TWICE. Never use integer indexing on query resul
 - IMPORTANT: bigrams that include a token from `_FTS_STOP_WORDS` can NEVER fire — stop words are stripped before bigram matching. For example `"micro service"` will never match because "service" is a stop word. Always check if both tokens survive stop-word stripping before adding a bigram entry.
 - 3-token compound keys (e.g. `"ai load balancer"`) can NEVER fire — the router only builds 2-token bigrams from adjacent token pairs. If a target term has 3 words, either map the first 2 tokens or use a single-token fallback.
 - After bulk tool updates (tags, categories, install commands): always rebuild FTS: `INSERT INTO tools_fts(tools_fts) VALUES('rebuild')` + `PRAGMA wal_checkpoint(TRUNCATE)`.
+- Probe pattern 35 (May 2026): UX research dead zones — "user research"/"user interview" fired raw_first because "user" has no mapping. "maze", "usertesting", "lookback", "dovetail" were also unmapped. Fixed: bigrams "user research"/"user interview"→feedback; bare tokens "qualitative","maze","usertesting","lookback","dovetail"→feedback. Regressions guarded: "user authentication"→auth, "user analytics"→analytics unaffected. Now 846/846 routing tests pass.
 
 ## Production SSH Pattern (CRITICAL)
 `flyctl ssh console -C "python3 -c \"...nested quotes\""` ALWAYS fails with SyntaxError.

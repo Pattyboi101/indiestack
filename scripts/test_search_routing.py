@@ -1406,6 +1406,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("qr code scanner", "developer"),               # "qr code" bigram covers scanner queries
     ("pdf", "file"),                                 # regression: bare "pdf"→file-management unaffected
     ("pdf editor", "file"),                          # regression: "pdf editor"→file (editor not a bigram key)
+    # Probe pattern 35 — UX research / user research dead zones
+    # "user research", "user interview" etc. fired raw_first via unmapped "user" token.
+    # Maze, Lookback, UserTesting, Dovetail → Feedback & Reviews category.
+    ("user research", "feedback"),                   # bigram "user research"→feedback (Maze, UserTesting)
+    ("user research tool", "feedback"),              # bigram fires before raw_first
+    ("user research platform", "feedback"),          # bigram covers platform form too
+    ("user interview", "feedback"),                  # bigram "user interview"→feedback (Lookback, Moderated.us)
+    ("user interview tool", "feedback"),             # bigram fires before raw_first
+    ("qualitative research", "feedback"),            # "qualitative"→feedback covers qualitative UX research
+    ("qualitative feedback", "feedback"),            # second form
+    ("maze alternative", "feedback"),                # "maze"→feedback (Maze.design UX research)
+    ("maze ux research", "feedback"),                # secondary form
+    ("usertesting alternative", "feedback"),         # "usertesting"→feedback (UserTesting.com)
+    ("lookback alternative", "feedback"),            # "lookback"→feedback (Lookback.io user interviews)
+    ("dovetail alternative", "feedback"),            # "dovetail"→feedback (Dovetail research repository)
+    # Regressions — unrelated "user X" queries must still route correctly
+    ("user authentication", "authentication"),       # "authentication"→auth wins over "user" raw_first
+    ("user feedback", "feedback"),                   # "feedback"→feedback wins (already covered)
+    ("user analytics", "analytics"),                 # "analytics"→analytics wins over "user" raw_first
+    ("user survey", "forms"),                        # "survey"→forms wins over "user" raw_first
 ]
 
 
