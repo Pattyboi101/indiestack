@@ -2810,6 +2810,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "chartjs": "analytics",     # Chart.js — simple canvas charts
     # PDF generation / processing
     "pdf": "file",              # PDFKit, Puppeteer PDF, WeasyPrint → file-management
+    # PDF generation bigrams — "pdf generation" etc. should route to Developer Tools not file-management.
+    # "library" is in _FTS_STOP_WORDS so "pdf library" can't form a bigram; bare "pdf" stays as "file".
+    "pdf generation": "developer",  # "pdf generation api", "pdf generation tool" → Developer Tools
+    "pdf generator": "developer",   # "pdf generator nodejs", "pdf generator python" → Developer Tools
+    "pdf creator": "developer",     # "pdf creator library", "pdf creator api" → Developer Tools
+    "html pdf": "developer",        # "html to pdf" (stop-word "to" stripped → "html pdf") → Developer Tools
     # Markdown processing — editors, renderers, parsers
     "markdown": "documentation", # markdown editors/renderers → Documentation category
     # Security tools — "security" as raw term already LIKE-matches "Security Tools",
@@ -3516,6 +3522,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "snackbar": "notifications",    # "snackbar notification" (MUI/Android term) → Notifications
     # Developer Tools — QR code generation and barcode libraries
     "qr": "developer",              # "qr code generator", "qr code library" → Developer Tools
+    "qr code": "developer",         # bigram — fires before "code generator"→ai-dev for "qr code generator"
     "barcode": "developer",         # "barcode scanner", "barcode generator" → Developer Tools
     # AI — LLM observability / evaluation platforms
     "langsmith": "ai",              # LangSmith — LangChain's LLM observability and tracing platform

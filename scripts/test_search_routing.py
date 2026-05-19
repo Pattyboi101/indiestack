@@ -1392,6 +1392,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("accessibility checker", "testing"),            # bigram "accessibility checker"→testing
     ("accessibility library", "frontend"),           # regression: "accessibility"→frontend unaffected
     ("a11y", "frontend"),                            # regression: "a11y"→frontend unaffected
+    # Probe pattern 34 — PDF generation + QR code dead zones
+    # "pdf generation/generator/creator" were routing to file-management via bare "pdf"→file.
+    # "qr code generator" was routing to ai-dev via "code generator" bigram before "qr"→developer.
+    ("pdf generation", "developer"),                 # bigram "pdf generation"→developer (PDFKit, WeasyPrint)
+    ("pdf generator", "developer"),                  # bigram "pdf generator"→developer
+    ("pdf generator nodejs", "developer"),           # bigram "pdf generator" fires before framework strip
+    ("pdf creator", "developer"),                    # bigram "pdf creator"→developer
+    ("html to pdf", "developer"),                    # "to" stripped → bigram "html pdf"→developer
+    ("html to pdf nodejs", "developer"),             # same + framework qualifier
+    ("qr code generator", "developer"),              # bigram "qr code"→developer fires before "code generator"→ai-dev
+    ("qr code library", "developer"),               # bigram "qr code"→developer (regression guard)
+    ("qr code scanner", "developer"),               # "qr code" bigram covers scanner queries
+    ("pdf", "file"),                                 # regression: bare "pdf"→file-management unaffected
+    ("pdf editor", "file"),                          # regression: "pdf editor"→file (editor not a bigram key)
 ]
 
 
