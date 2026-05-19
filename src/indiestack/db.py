@@ -2515,6 +2515,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "receipt": "invoicing",
     "expense": "invoicing",         # "expense tracker", "expense report" → Invoicing & Billing
     "expenses": "invoicing",        # plural form
+    "spend": "invoicing",           # "spend tracking", "spend management" → Invoicing & Billing
+    "spending": "invoicing",        # "spending report", "business spending tracker" → Invoicing & Billing
     # Email synonyms
     "smtp": "email",
     "newsletter": "email",
@@ -3288,6 +3290,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "argon2": "security",           # Argon2 — memory-hard password hashing (PHC winner)
     "crypto": "security",           # "crypto library", "node:crypto" queries → Security Tools
     "crypto payment": "payments",   # bigram — "crypto payment gateway", "accept crypto" → Payments (overrides crypto→security)
+    "virtual card": "payments",     # bigram — "virtual card api", "virtual card issuance" → Payments (overrides "virtual"→frontend)
+    "corporate card": "payments",   # bigram — "corporate card management", "corporate card software" → Payments
     # CI/CD — common pipeline and build-automation tool queries
     "circleci": "devops",           # CircleCI — cloud CI/CD platform
     "jenkins": "devops",            # Jenkins — open-source automation server
@@ -4276,6 +4280,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "fraud": "security",            # "fraud detection", "fraud prevention" (Fingerprint, SEON, Stripe Radar)
     "kyc": "security",              # KYC verification — "kyc tool", "know your customer" (Onfido, Persona)
     "spam": "security",             # "spam protection", "spam filter" (Akismet, Cleantalk, hCaptcha)
+    "trust": "security",            # "trust and safety", "trust center", "trust management" → Security Tools
+    "toxicity": "ai",               # "toxicity filter", "toxicity detection" → AI & Automation (Perspective API, Moderation APIs)
     # Invoicing — tax calculation for SaaS
     "tax": "invoicing",             # "sales tax API", "VAT compliance", "tax calculation" (Anrok, TaxJar, Avalara)
     # Database — analytical / OLAP query terms
@@ -6361,6 +6367,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Feedback — bug reporting and user research (Sentry user feedback, Usersnap, Doorbell)
     "bug-report": "feedback",       # "bug reporting tool", "bug report widget" → Feedback (Canny, Usersnap)
     "user-research": "feedback",    # "user research tool", "user interview platform" → Feedback
+    "user research": "feedback",    # bigram — "user research platform", "user research software" → Feedback & Reviews
+    "user interview": "feedback",   # bigram — "user interview scheduling", "user interview tool" → Feedback & Reviews
+    "qualitative research": "feedback",  # bigram — "qualitative research tool", "qualitative research platform" → Feedback & Reviews
     # Media — video hosting and image optimization queries (Mux, Cloudflare Stream, Cloudinary, imgix)
     "video-hosting": "media",       # "video hosting platform", "video hosting api" → Media (Mux, Cloudflare Stream)
     "image-optimization": "media",  # "image optimization api", "image optimization cdn" → Media (Cloudinary, imgix)
@@ -7578,6 +7587,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "referral": "crm",              # "referral program software", "referral tracking tool" → CRM & Sales (ReferralHero, Rewardful, Growsurf)
     "viral": "social",              # "viral loop", "viral referral growth" → Social Media
     "affiliate": "payments",        # "affiliate tracking software", "affiliate management tool" → Payments (Rewardful, Paddle affiliate)
+    "commission": "payments",       # "commission tracking", "commission management" → Payments
+    "sales commission": "payments", # bigram — "sales commission tool", "sales commission software" → Payments (overrides "sales"→crm)
+    "partner program": "crm",       # bigram — "partner program management", "partner program software" → CRM & Sales
     "rewardful": "payments",        # Rewardful — Stripe-native affiliate + referral tracking; "rewardful alternative" → Payments
     "referralhero": "crm",          # ReferralHero — referral + viral loop; "referralhero alternative" → CRM & Sales
     "growsurf": "crm",              # GrowSurf — referral program software; "growsurf alternative" → CRM & Sales

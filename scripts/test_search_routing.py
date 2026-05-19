@@ -1326,6 +1326,35 @@ TEST_CASES: list[tuple[str, str]] = [
     ("clean architecture framework", "developer"),   # bigram "clean architecture"→developer
     ("hexagonal architecture framework", "developer"),# bigram "hexagonal architecture"→developer
     ("onion architecture example", "developer"),     # bigram "onion architecture"→developer
+    # Probe pattern 31: user research / fintech / trust & safety dead zones
+    # Feedback — user research + qualitative research bigrams
+    ("user research platform", "feedback"),          # bigram "user research"→feedback
+    ("user research tool", "feedback"),              # second form
+    ("user interview platform", "feedback"),         # bigram "user interview"→feedback
+    ("user interview scheduling", "feedback"),       # second form
+    ("qualitative research tool", "feedback"),       # bigram "qualitative research"→feedback
+    # Payments — virtual card / corporate card bigrams (override "virtual"→frontend)
+    ("virtual card api", "payments"),                # bigram "virtual card"→payments
+    ("virtual card issuance", "payments"),           # second form
+    ("corporate card management", "payments"),       # bigram "corporate card"→payments
+    # Invoicing — spend management (override "management"→project + bare "spend")
+    ("spend tracking tool", "invoicing"),            # bare "spend"→invoicing
+    ("spend management software", "invoicing"),      # second form
+    # Payments — commission tracking (new bare token)
+    ("commission tracking software", "payments"),    # bare "commission"→payments
+    ("sales commission tool", "payments"),           # second form
+    # CRM — partner program bigram
+    ("partner program management", "crm"),           # bigram "partner program"→crm
+    ("partner program software", "crm"),             # second form
+    # Security — trust and safety (new bare "trust" token)
+    ("trust and safety platform", "security"),       # bare "trust"→security
+    ("trust center tool", "security"),               # second form
+    # AI — toxicity detection / content moderation
+    ("toxicity filter api", "ai"),                   # bare "toxicity"→ai
+    ("toxicity detection model", "ai"),              # second form
+    # Regression — "virtual list" still routes to frontend (not payments)
+    ("virtual list react", "frontend"),              # "virtual"→frontend still fires for virtualization
+    ("virtual scroll component", "frontend"),        # second form
 ]
 
 
