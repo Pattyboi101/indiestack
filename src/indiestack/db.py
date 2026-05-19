@@ -3031,6 +3031,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "npm": "frontend",          # npm — default Node.js package manager ("npm alternative" → pnpm/yarn)
     "yarn": "frontend",         # Yarn — fast npm-compatible package manager
     "pnpm": "frontend",         # pnpm — efficient disk-space-saving package manager
+    # Developer Tools — private npm/package registries (Verdaccio, Nexus, JFrog)
+    # "npm" alone → frontend (package managers), but "private npm" means a registry server
+    "private npm": "developer",     # bigram — "private npm registry", "private npm server" → Developer Tools
+    "private registry": "developer",# bigram — "private registry npm", "private registry docker" → Developer Tools
     # Monorepo tooling
     "dependency": "developer",  # "dependency management", "dependency graph" → Developer Tools
     "monorepo": "developer",    # "monorepo build" → Developer Tools (Turborepo, Nx, Lerna)
@@ -3437,6 +3441,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Accessibility (a11y) tooling — axe, React Aria, Radix UI
     "accessibility": "frontend",    # "accessibility library", "a11y component" → Frontend Frameworks
     "a11y": "frontend",             # short-form — "a11y testing", "a11y linting", "a11y audit"
+    # Testing — accessibility testing tools (axe, Deque, Wave) live in Testing Tools not Frontend
+    # "accessibility"→frontend fires first without bigram; testing-specific queries need override
+    "accessibility testing": "testing", # bigram — "accessibility testing tool", "a11y test runner" → Testing Tools
+    "accessibility checker": "testing", # bigram — "accessibility checker automated", "a11y checker" → Testing Tools
     # Hot Module Replacement — Vite HMR, webpack HMR
     "hmr": "frontend",              # Hot Module Replacement — Vite/webpack feature query term
     # Polyfills / browser compatibility shims — core-js, polyfill.io
@@ -3998,6 +4006,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI SDK — Vercel AI SDK is the most widely adopted unified provider SDK
     "vercel-ai": "ai",              # Vercel AI SDK — TypeScript SDK for Next.js AI apps (11k★)
     "aisdk": "ai",                  # short form — "ai sdk alternative", "ai sdk streaming" queries
+    "ai sdk": "ai",                 # bigram — "ai sdk python", "ai sdk javascript" → AI & Automation
+    # "sdk" alone → api (generic SDKs), but "ai sdk" specifically means LLM/AI framework SDKs
+    # (Vercel AI SDK, LangChain, LlamaIndex, Hugging Face transformers)
     # CSS-in-JS styling libraries
     "styled-components": "frontend", # styled-components — CSS-in-JS with tagged templates (React)
     "styledcomponents": "frontend",  # compound form — "styledcomponents alternative" queries

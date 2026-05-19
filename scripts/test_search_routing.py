@@ -1374,6 +1374,24 @@ TEST_CASES: list[tuple[str, str]] = [
     # Acceptable gap: no safe single-token mapping for "vs". Non-framework comparisons work correctly:
     ("postgres vs mysql", "database"),               # "postgres"→database (not a framework term)
     ("redis vs memcached", "caching"),               # "redis"→caching (not a framework term)
+    # Probe pattern 33: AI SDK / private registry / accessibility testing dead zones
+    # AI & Automation — "ai sdk" was routing to api via sdk→api (ai→None missed)
+    ("ai sdk", "ai"),                                # bigram "ai sdk"→ai (Vercel AI SDK, LangChain)
+    ("ai sdk python", "ai"),                         # bigram fires before "sdk"→api
+    ("ai sdk javascript", "ai"),                     # second form
+    ("sdk python", "api"),                           # regression: bare "sdk"→api unaffected
+    ("aisdk", "ai"),                                 # regression: "aisdk" compound form unaffected
+    # Developer Tools — private package registries (Verdaccio, Nexus, JFrog Artifactory)
+    ("private npm", "developer"),                    # bigram "private npm"→developer
+    ("private npm registry", "developer"),           # bigram fires before "npm"→frontend
+    ("private registry", "developer"),               # bigram — "private registry docker/npm" → Developer Tools
+    ("npm alternative", "frontend"),                 # regression: bare "npm alternative" stays frontend
+    # Testing — accessibility testing tools (axe, Wave, Deque) live in Testing Tools
+    ("accessibility testing", "testing"),            # bigram "accessibility testing"→testing
+    ("accessibility testing tool", "testing"),       # bigram fires before "accessibility"→frontend
+    ("accessibility checker", "testing"),            # bigram "accessibility checker"→testing
+    ("accessibility library", "frontend"),           # regression: "accessibility"→frontend unaffected
+    ("a11y", "frontend"),                            # regression: "a11y"→frontend unaffected
 ]
 
 
