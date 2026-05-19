@@ -4133,8 +4133,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sanitizer": "security",         # "html sanitizer", "input sanitizer" → Security Tools (DOMPurify)
     "sanitize": "security",          # verb form — "sanitize html input", "sanitize output" → Security
     "dompurify": "security",         # DOMPurify — fast, permissive XSS sanitizer for HTML (13k★)
-    # Frontend — HTML template engines, parsers, and editors
-    "html": "frontend",              # "html parser", "html template engine", "html-in-js" → Frontend
+    # Developer Tools — HTML parsers and scrapers (bigrams override "html"→frontend below)
+    "html parser": "developer",      # HTML parsers (Cheerio, htmlparser2, html5lib) → Developer Tools
+    "html parsing": "developer",     # "html parsing library", "html parsing nodejs" → Developer Tools
+    "html scraper": "developer",     # HTML scrapers → Developer Tools (complement to "scraper"→developer)
+    "html scraping": "developer",    # "html scraping tool", "html scraping python" → Developer Tools
+    # Security — HTML sanitizers (bigram overrides "html"→frontend; "sanitizer"→security alone can't fire first)
+    "html sanitizer": "security",    # DOMPurify, sanitize-html — "html sanitizer" → Security Tools
+    # Frontend — HTML components, templates, and frameworks
+    "html": "frontend",              # "html component", "html template engine", "html-in-js" → Frontend
     # Auth — OpenID Connect standard (complement to "oidc"→authentication)
     "openid": "authentication",      # OpenID Connect — "openid provider", "openid connect library"
     # Developer Tools — dependency injection containers (InversifyJS, tsyringe, Wire)

@@ -1351,6 +1351,29 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — bare "git" queries still route to devops (git hosting/workflows)
     ("git hosting", "devops"),                       # "git"→devops regression guard
     ("git workflow", "devops"),                      # second form
+    # Probe pattern 32: "html X" mis-routing — bigrams override broad "html"→frontend
+    # Developer Tools — HTML parsers (Cheerio, htmlparser2, BeautifulSoup, html5lib)
+    # "html" alone correctly routes to frontend (HTML frameworks, components, templates)
+    # but compound queries naming a tool type need bigrams so "html" doesn't win
+    ("html parser", "developer"),                    # bigram "html parser"→developer
+    ("html parser python", "developer"),             # bigram fires before "html"→frontend
+    ("html parsing library", "developer"),           # bigram "html parsing"→developer
+    ("html parsing nodejs", "developer"),            # second form
+    # Developer Tools — HTML scrapers (complement to "scraper"→developer; html fires first without bigram)
+    ("html scraper", "developer"),                   # bigram "html scraper"→developer
+    ("html scraping tool", "developer"),             # bigram "html scraping"→developer
+    ("html scraping python", "developer"),           # second form
+    # Security — HTML sanitizers: bigram overrides "html"→frontend; "sanitizer"→security can't win alone
+    ("html sanitizer", "security"),                  # bigram "html sanitizer"→security (DOMPurify, sanitize-html)
+    ("html sanitizer javascript", "security"),       # second form
+    # Regression — bare "html" and unambiguous html queries still route to frontend
+    ("html component", "frontend"),                  # "html"→frontend (html component libraries)
+    ("html css", "frontend"),                        # "html"→frontend (Bootstrap, Bulma)
+    # Known dead zone — framework "vs" comparison queries (both tokens stripped by _FRAMEWORK_QUERY_TERMS)
+    # "react vs vue", "nextjs vs remix" → raw_first "vs" (no category boost, but FTS still runs)
+    # Acceptable gap: no safe single-token mapping for "vs". Non-framework comparisons work correctly:
+    ("postgres vs mysql", "database"),               # "postgres"→database (not a framework term)
+    ("redis vs memcached", "caching"),               # "redis"→caching (not a framework term)
 ]
 
 
