@@ -321,6 +321,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("browser caching headers", "caching"),          # bigram "browser caching"→caching
     # Regression — bare "browser" still routes to testing for automation queries
     ("browser automation puppeteer", "testing"),     # "browser"→testing unchanged
+    # ── Probe pattern 39: CLI arg parsing / SEO structured data / mapping ────
+    # CLI — bare "argument"/"args" → cli; bigrams for compound parser queries
+    ("argument parser python", "cli"),               # "argument"→cli
+    ("args parser nodejs", "cli"),                   # "args parser" bigram
+    ("arg parser library", "cli"),                   # "arg parser" bigram
+    ("flag parser library", "cli"),                  # bigram overrides "flag"→feature
+    ("option parser cli", "cli"),                    # "option parser" bigram
+    ("argparse alternative", "cli"),                 # "argparse"→cli
+    ("minimist alternative", "cli"),                 # "minimist"→cli
+    # Regression — bare "flag"→feature still fires without "parser" qualifier
+    ("feature flag react", "feature"),               # "feature"→feature unchanged
+    # Maps — "mapping" bare token → maps; "data mapping" bigram → developer
+    ("mapping library", "maps"),                     # "mapping"→maps
+    ("data mapping tool", "developer"),              # "data mapping" bigram overrides "mapping"→maps
+    # SEO — structured data and schema markup
+    ("structured data validation", "seo"),           # "structured data" bigram
+    ("schema markup nextjs", "seo"),                 # bigram overrides "schema"→developer
+    ("json ld generator", "seo"),                    # "json ld" bigram
+    ("meta tag generator", "seo"),                   # "meta tag" bigram
+    # Regression — structured logging must route to logging, not seo
+    ("structured logging library", "logging"),       # "structured logging" bigram overrides "structured"→seo
+    # Regression — "schema migration" still routes to database
+    ("schema migration tool", "database"),           # "schema migration" bigram fires before "schema"→developer
+    # Invoicing — revenue recognition bigram
+    ("revenue recognition saas", "invoicing"),       # bigram fires; without it "saas"→boilerplate fires
+    # Feature Flags — multivariate testing
+    ("multivariate test tool", "feature"),           # "multivariate test" bigram
+    ("multivariate experiment", "feature"),          # "multivariate"→feature
+    # DevOps — changelogs plural
+    ("automated changelogs ci", "devops"),           # "changelogs"→devops
 ]
 
 

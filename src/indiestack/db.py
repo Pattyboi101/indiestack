@@ -6661,6 +6661,37 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Browser cache management (Workbox, cache-control headers, service workers) lives in Caching.
     "browser cache": "caching",     # bigram — "browser cache management", "browser cache invalidation" → Caching
     "browser caching": "caching",   # bigram — "browser caching strategy", "browser caching headers" → Caching
+    # Probe pattern 39: CLI argument parsing / geospatial mapping / SEO structured data dead zones.
+    # CLI — "argument parser" / "args parser" etc. fire "parser"→developer without bigrams.
+    # argparse (Python), cobra (Go), clap (Rust), yargs (Node) all live in CLI Tools.
+    "argument": "cli",              # "argument parser", "argument handling" → CLI Tools (argparse, cobra, clap)
+    "args": "cli",                  # "cli args", "parse args", "args parser" → CLI Tools
+    "arg parser": "cli",            # bigram — "arg parser library", "arg parser python" → CLI Tools
+    "args parser": "cli",           # bigram — "args parser nodejs", "args parser go" → CLI Tools
+    "flag parser": "cli",           # bigram — overrides "flag"→feature; "flag parser library" → CLI Tools
+    "option parser": "cli",         # bigram — "option parser nodejs", "cli option parser" → CLI Tools
+    "argparse": "cli",              # argparse — Python stdlib argument parser; "argparse alternative" → CLI Tools
+    "docopt": "cli",                # docopt — POSIX-style argument parser; "docopt alternative" → CLI Tools
+    "minimist": "cli",              # minimist — minimal Node.js args parser; "minimist alternative" → CLI Tools
+    # Maps — bare "mapping" has no entry; "mapping library" fires raw_first with no category boost.
+    # Geospatial mapping libs (Leaflet, MapLibre, deck.gl, OpenLayers) live in Maps & Location.
+    "mapping": "maps",              # "mapping library", "mapping component", "tile mapping" → Maps & Location
+    "data mapping": "developer",    # bigram override for ETL/ORM data mapping queries → Developer Tools
+    # SEO — structured data (schema.org JSON-LD) has no token mapping; raw_first fires.
+    "structured": "seo",            # "structured data", "structured schema" → SEO Tools
+    "structured data": "seo",       # bigram — "add structured data", "structured data validation" → SEO Tools
+    "structured logging": "logging",# bigram — overrides "structured"→seo; "structured log format" → Logging
+    "schema markup": "seo",         # bigram — overrides "schema"→developer for SEO markup queries → SEO Tools
+    "schema migration": "database", # bigram — "schema migration tool", "schema migration library" → Database
+    "json ld": "seo",               # bigram — JSON-LD structured data (schema.org) → SEO Tools
+    "meta tag": "seo",              # bigram — "meta tag generator", "meta tag preview" (singular) → SEO Tools
+    # Invoicing — "revenue recognition" mis-routes via bare "revenue" (which routes to boilerplate here).
+    "revenue recognition": "invoicing",  # bigram — "revenue recognition saas", "revenue recognition api" → Invoicing
+    # Feature Flags — "multivariate test" fires "test"→testing without bigram override.
+    "multivariate": "feature",      # "multivariate test", "multivariate experiment" → Feature Flags
+    "multivariate test": "feature", # bigram — "multivariate test tool", "multivariate testing" → Feature Flags
+    # DevOps — "changelogs" (plural) missing; bare "changelog"→devops already exists.
+    "changelogs": "devops",         # "changelogs generator", "automated changelogs" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {
