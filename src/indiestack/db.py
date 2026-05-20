@@ -6716,6 +6716,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "custom elements registry" routes to devops via "registry"→devops (package-registry context).
     # Web Components / Custom Elements queries belong in Frontend Frameworks.
     "custom elements": "frontend",      # bigram — "custom elements registry", "custom elements api" → Frontend Frameworks
+    # Probe pattern 41 (May 2026): fintech / PII / data-privacy dead zones.
+    # Fintech: "plaid"/"bank"/"banking"/"fintech" had no synonym → raw_first with no boost.
+    # Plaid (bank-account data API), Teller, Lean, Open Banking PSD2 tools → Payments.
+    "plaid": "payments",                         # Plaid — bank account data API; "plaid alternative" → Payments
+    "bank": "payments",                          # bank connection, bank API → Payments (Teller, Lean)
+    "banking": "payments",                       # open banking, banking SDK → Payments (Open Banking PSD2)
+    "fintech": "payments",                       # fintech developer tools → Payments
+    # PII / data privacy: "pii"/"anonymization"/"masking" had no synonyms → raw_first fires.
+    # Presidio (MS), Faker, DataMasker, Gretel, ARX → Security Tools.
+    "pii": "security",                           # "pii masking tool", "pii detection api" → Security Tools
+    "anonymization": "security",                 # "anonymization library", "data anonymization" → Security Tools
+    "masking": "security",                       # "data masking api", "masking library" → Security Tools
+    "pii detection": "security",                 # bigram — "pii detection api", "detect pii python" → Security Tools
+    "pii redaction": "security",                 # bigram — "pii redaction api", "redact pii" → Security Tools
+    "pii masking": "security",                   # bigram — "pii masking tool", "mask pii data" → Security Tools
+    "data anonymization": "security",            # bigram — "data anonymization gdpr", "anonymize dataset" → Security Tools
+    "data masking": "security",                  # bigram — "data masking tool", "mask sensitive data" → Security Tools
 }
 
 _FTS_STOP_WORDS = {

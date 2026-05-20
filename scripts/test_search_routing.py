@@ -381,6 +381,33 @@ TEST_CASES: list[tuple[str, str]] = [
     # "custom elements registry" routed to devops via "registry"→devops
     ("custom elements registry", "frontend"),       # bigram "custom elements" fires before "registry"→devops
     ("custom elements api", "frontend"),            # bigram at i=0-1
+    # Probe pattern 41 (May 2026): fintech / PII / data-privacy dead zones.
+    # Fintech — Plaid, Teller, Lean, Open Banking; all previously raw_first with no boost.
+    ("plaid alternative", "payments"),              # "plaid"→payments (bank account data API)
+    ("plaid sdk", "payments"),                      # "plaid"→payments fires before sdk→api
+    ("bank connection api", "payments"),            # "bank"→payments fires before api→api
+    ("banking sdk", "payments"),                    # "banking"→payments
+    ("banking api", "payments"),                    # "banking"→payments fires before api→api
+    ("open banking standard", "payments"),          # "open" stripped → "banking"→payments fires
+    ("open banking api", "payments"),               # "open" stripped → "banking"→payments fires
+    ("fintech toolkit", "payments"),                # "fintech"→payments
+    ("fintech api python", "payments"),             # "fintech"→payments fires before api→api
+    # Regression — payment/billing/checkout queries still route to payments
+    ("stripe payment alternative", "payments"),     # "stripe"→payments (regression guard)
+    ("billing subscriptions", "payments"),          # "billing"→payments (regression guard)
+    # PII / data privacy — previously raw_first with no boost.
+    ("pii masking tool", "security"),               # "pii"→security fires at i=0
+    ("pii redaction api", "security"),              # bigram "pii redaction"→security fires at i=0
+    ("pii detection api", "security"),              # bigram "pii detection"→security fires at i=0
+    ("pii masking postgres", "security"),           # bigram "pii masking"→security fires at i=0
+    ("anonymization library python", "security"),   # "anonymization"→security fires at i=0
+    ("data anonymization gdpr", "security"),        # bigram "data anonymization"→security fires at i=0
+    ("data anonymization tool", "security"),        # bigram fires at i=0
+    ("data masking postgres", "security"),          # bigram "data masking"→security fires at i=0
+    ("data masking tool", "security"),              # bigram fires at i=0
+    ("masking library", "security"),                # "masking"→security fires at i=0
+    # Regression — GDPR compliance tools still route to security
+    ("gdpr compliance tool", "security"),           # "gdpr"→security fires at i=0
 ]
 
 
