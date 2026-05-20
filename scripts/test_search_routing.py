@@ -351,6 +351,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("multivariate experiment", "feature"),          # "multivariate"→feature
     # DevOps — changelogs plural
     ("automated changelogs ci", "devops"),           # "changelogs"→devops
+    # ── Probe pattern 40: 3D web / CDP / API-mocking / metadata-catalog / error-boundary / web-components ──
+    # "three.js" (period-dot form) was unmapped; "babylon.js"/"babylonjs" also unmapped → raw_first
+    ("three.js alternative", "frontend"),           # "three.js" bare token → frontend
+    ("babylon.js 3d engine", "frontend"),           # "babylon.js" bare token → frontend
+    ("babylonjs alternative", "frontend"),          # no-dot compound form → frontend
+    # Regression: "threejs" and "r3f" still route to frontend
+    ("threejs react alternative", "frontend"),      # "threejs"→frontend (unchanged)
+    ("r3f react three fiber", "frontend"),          # "r3f"→frontend (unchanged)
+    # "customer data platform" fired raw_first — "customer" + "cdp" had no mapping
+    ("customer data platform", "analytics"),        # bigram "customer data" fires
+    ("customer data integration", "analytics"),     # bigram at i=0-1
+    ("cdp alternative", "analytics"),               # CDP abbreviation → analytics
+    # "api mock server" routed to api-tools because "api"→api fired before "mock"→testing
+    ("api mock server", "testing"),                 # bigram "api mock" fires at i=0
+    ("api mocking tool", "testing"),                # bigram "api mocking" fires at i=0
+    # Regression: bare "mock" queries still route to testing
+    ("mock api endpoint", "testing"),               # "mock"→testing fires at i=0 (no change)
+    # "metadata catalog" fired raw_first — "metadata" and "catalog" were both unmapped
+    ("metadata catalog tool", "analytics"),         # bigram fires before raw_first
+    ("metadata catalog open source", "analytics"), # bigram at i=0-1
+    # Regression: service catalog still routes to devops (bare "catalog"→devops added)
+    ("service catalog platform", "devops"),         # "catalog"→devops fires at i=1
+    # "error boundary react" routed to monitoring via "error"→monitoring
+    ("error boundary react", "frontend"),           # bigram "error boundary" fires before "error"→monitoring
+    ("error boundary component", "frontend"),       # bigram at i=0-1
+    # Regression: bare "error" queries still route to monitoring
+    ("error tracking production", "monitoring"),    # "error"→monitoring fires (no bigram collision)
+    # "custom elements registry" routed to devops via "registry"→devops
+    ("custom elements registry", "frontend"),       # bigram "custom elements" fires before "registry"→devops
+    ("custom elements api", "frontend"),            # bigram at i=0-1
 ]
 
 

@@ -6692,6 +6692,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     "multivariate test": "feature", # bigram — "multivariate test tool", "multivariate testing" → Feature Flags
     # DevOps — "changelogs" (plural) missing; bare "changelog"→devops already exists.
     "changelogs": "devops",         # "changelogs generator", "automated changelogs" → DevOps & Infrastructure
+    # Probe pattern 40: 3D web / CDP / API-mocking / metadata-catalog / service-catalog / error-boundary / web-components dead zones.
+    # "three.js" (with period) tokenizes to "three.js" which has no mapping (bare "threejs" already mapped above).
+    # "babylon.js" and "babylonjs" also unmapped — 3D library queries fire raw_first.
+    "three.js": "frontend",             # Three.js — the standard WebGL/3D library for the web
+    "babylon.js": "frontend",           # Babylon.js — 3D engine by Microsoft
+    "babylonjs": "frontend",            # no-dot compound form — "babylonjs alternative"
+    # "customer data platform" fires raw_first because "customer" and "cdp" have no mapping.
+    # CDPs (Segment, RudderStack, Snowplow) live in Analytics & Metrics.
+    "customer data": "analytics",       # bigram — "customer data platform", "customer data integration" → Analytics
+    "cdp": "analytics",                 # CDP abbreviation — "cdp alternative", "cdp open source" → Analytics
+    # "api mock server" routes to api-tools because "api"→api fires before "mock"→testing.
+    # API mocking tools (WireMock, MockServer, Prism, Mirage.js) live in Testing Tools.
+    "api mock": "testing",              # bigram at i=0 — "api mock server", "api mock tool" → Testing Tools
+    "api mocking": "testing",           # bigram at i=0 — "api mocking tool", "api mocking framework" → Testing Tools
+    # "metadata catalog" and "service catalog" fire raw_first — "catalog" and "metadata" are unmapped.
+    # Data cataloging tools (DataHub, Amundsen, Apache Atlas) → Analytics; service catalogs → DevOps.
+    "metadata catalog": "analytics",   # bigram — "metadata catalog tool", "metadata catalog open source" → Analytics
+    "catalog": "devops",               # "service catalog", "internal catalog" → DevOps & Infrastructure
+    # "error boundary react" routes to monitoring via "error"→monitoring bare token.
+    # Error boundary is a React/frontend pattern — not a monitoring tool.
+    "error boundary": "frontend",       # bigram — "error boundary react", "error boundary component" → Frontend Frameworks
+    # "custom elements registry" routes to devops via "registry"→devops (package-registry context).
+    # Web Components / Custom Elements queries belong in Frontend Frameworks.
+    "custom elements": "frontend",      # bigram — "custom elements registry", "custom elements api" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {
