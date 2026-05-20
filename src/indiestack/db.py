@@ -8140,6 +8140,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "usertesting": "feedback",            # UserTesting.com — remote user research → Feedback & Reviews
     "lookback": "feedback",              # Lookback.io — user interview and observation platform → Feedback & Reviews
     "dovetail": "feedback",              # Dovetail — research repository, insight management → Feedback & Reviews
+    # Probe pattern 36: binary serialization / content moderation / SVG / address dead zones
+    # Serialization — "protocol buffers" plural misroutes to mcp via bare "protocol"→mcp.
+    # "protocol buffer" (singular) bigram already maps to api; plural form needs its own entry.
+    "protocol buffers": "api",           # bigram plural — "protocol buffers golang", "protocol buffers vs json" → API Tools
+    "protobufs": "api",                  # compound abbreviation — "protobufs alternative", "protobufs tutorial" → API Tools
+    "messagepack": "api",                # MessagePack — binary serialization; "messagepack alternative", "msgpack" → API Tools
+    "msgpack": "api",                    # common alias — "msgpack python", "msgpack vs protobuf" → API Tools
+    # Content moderation — "profanity" / "toxicity" have no mapping; raw_first fires.
+    # Perspective API, CleanSpeak, purgomalum, hatesonar all live in AI & Automation.
+    "profanity": "ai",                   # "profanity filter", "profanity detection", "profanity api" → AI & Automation
+    "toxicity": "ai",                    # "toxicity detection", "toxicity classifier", "toxicity scoring" → AI & Automation
+    # Frontend — SVG manipulation libraries (SVG.js, Snap.svg, Paper.js, Rough.js)
+    # "svg" alone has no mapping; raw_first fires with no category boost.
+    "svg": "frontend",                   # "svg library", "svg animation", "svg manipulation" → Frontend Frameworks
+    # Maps — "address validation" routes to Developer via bare "validation"→developer token.
+    # Address validation/autocomplete tools (Lob, SmartyStreets, Google Places) → Maps & Location.
+    "address validation": "maps",        # bigram — "address validation api", "address validation library" → Maps & Location
+    "address autocomplete": "maps",      # bigram — "address autocomplete api", "address autocomplete js" → Maps & Location
+    "address lookup": "maps",            # bigram — "address lookup api", "address lookup service" → Maps & Location
 }
 
 _FTS_STOP_WORDS = {

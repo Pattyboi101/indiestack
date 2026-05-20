@@ -1426,6 +1426,29 @@ TEST_CASES: list[tuple[str, str]] = [
     ("user feedback", "feedback"),                   # "feedback"→feedback wins (already covered)
     ("user analytics", "analytics"),                 # "analytics"→analytics wins over "user" raw_first
     ("user survey", "forms"),                        # "survey"→forms wins over "user" raw_first
+    # Probe pattern 36 — binary serialization / content moderation / SVG / address dead zones
+    # Serialization: "protocol buffers" (plural) misrouted to mcp via bare "protocol"→mcp
+    ("protocol buffers", "api"),                     # bigram plural overrides "protocol"→mcp → API Tools
+    ("protocol buffers golang", "api"),              # with qualifier
+    ("protobufs", "api"),                            # compound abbreviation → API Tools
+    ("protobufs alternative", "api"),                # alternative form
+    ("messagepack alternative", "api"),              # MessagePack binary serialization → API Tools
+    ("msgpack python", "api"),                       # msgpack alias → API Tools
+    # Content moderation: raw_first fires for "profanity" and "toxicity" (no mapping)
+    ("profanity filter", "ai"),                      # → AI & Automation (Perspective API, CleanSpeak)
+    ("profanity detection", "ai"),                   # detection form
+    ("toxicity detection", "ai"),                    # → AI & Automation (Perspective API)
+    ("toxicity classifier", "ai"),                   # classifier form
+    # SVG: "svg library" → raw_first (no mapping); should route to Frontend Frameworks
+    ("svg library", "frontend"),                     # SVG.js, Snap.svg, Paper.js → Frontend Frameworks
+    ("svg animation", "frontend"),                   # animation override via "animation"→frontend still works
+    # Maps: "address validation" misroutes to developer via bare "validation"→developer
+    ("address validation", "maps"),                  # bigram overrides "validation"→developer → Maps & Location
+    ("address autocomplete", "maps"),                # address autocomplete apis → Maps & Location
+    ("address lookup", "maps"),                      # address lookup services → Maps & Location
+    # Regressions — ensure "validation" still routes to developer for non-address contexts
+    ("input validation", "developer"),               # "validation"→developer (no bigram override) → Developer Tools
+    ("schema validation", "developer"),              # "validation"→developer → Developer Tools
 ]
 
 
