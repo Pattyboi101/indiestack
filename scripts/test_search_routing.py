@@ -1449,6 +1449,37 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — ensure "validation" still routes to developer for non-address contexts
     ("input validation", "developer"),               # "validation"→developer (no bigram override) → Developer Tools
     ("schema validation", "developer"),              # "validation"→developer → Developer Tools
+    # Probe pattern 37 — cross-platform / token counter / content safety / PII dead zones
+    # Frontend — "cross platform" after stop-word stripping becomes bare "cross" → raw_first.
+    # Cross-platform desktop/mobile tools (Electron, Tauri, Neutralino, Capacitor) are Frontend Frameworks.
+    ("cross platform app", "frontend"),              # "platform" stripped → bare "cross"→frontend
+    ("cross platform desktop", "frontend"),          # second form
+    ("cross platform mobile", "frontend"),           # mobile qualifier
+    # Regression — unrelated "cross X" queries should not be affected (no collision exists)
+    ("cross origin request", "api"),                 # "origin"→api (CORS); "cross" alone doesn't override
+    # AI — "token counter" mis-routes to auth via bare "token"→authentication.
+    # LLM tokenizer tools (tiktoken, tokenizers, tokenize-gpt) live in AI & Automation.
+    ("token counter", "ai"),                         # bigram "token counter"→ai (was auth)
+    ("token counter python", "ai"),                  # bigram fires before "token"→auth
+    ("token counter openai", "ai"),                  # with qualifier
+    # Regression — auth token queries unaffected by the new bigram
+    ("api token management", "api"),                 # "api"→api wins before "token"→auth
+    ("session token", "authentication"),             # "session"→auth; "token" alone doesn't fire bigram
+    # AI — "content safety" and "content filter" mis-route to CMS via bare "content"→cms.
+    # Azure Content Safety, Guardrails AI, Llama Guard → AI & Automation.
+    ("content safety api", "ai"),                    # bigram "content safety"→ai (was cms)
+    ("content safety azure", "ai"),                  # second form
+    ("content filter llm", "ai"),                    # bigram "content filter"→ai (was cms)
+    ("content filtering api", "ai"),                 # alternate form
+    # Regression — CMS / content-first queries still route correctly
+    ("content management", "cms"),                   # "management"→project wins; "content"→cms secondary
+    ("headless cms", "cms"),                         # "headless"→cms still fires
+    # Security — "pii detection" / "pii scrubbing" have no token mapping → raw_first fires.
+    # Presidio, Piiano, TextBlind, Phildini/detect-secrets → Security Tools.
+    ("pii detection", "security"),                   # bare "pii"→security (was raw_first)
+    ("pii scrubbing", "security"),                   # bare "pii"→security
+    ("pii masking tool", "security"),                # bigram "pii masking"→security
+    ("pii masking python", "security"),              # second form
 ]
 
 

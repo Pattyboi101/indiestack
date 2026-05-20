@@ -8145,8 +8145,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "protocol buffer" (singular) bigram already maps to api; plural form needs its own entry.
     "protocol buffers": "api",           # bigram plural — "protocol buffers golang", "protocol buffers vs json" → API Tools
     "protobufs": "api",                  # compound abbreviation — "protobufs alternative", "protobufs tutorial" → API Tools
-    "messagepack": "api",                # MessagePack — binary serialization; "messagepack alternative", "msgpack" → API Tools
-    "msgpack": "api",                    # common alias — "msgpack python", "msgpack vs protobuf" → API Tools
+    "messagepack": "api",                # MessagePack — binary serialization; "messagepack alternative" → API Tools
     # Content moderation — "profanity" / "toxicity" have no mapping; raw_first fires.
     # Perspective API, CleanSpeak, purgomalum, hatesonar all live in AI & Automation.
     "profanity": "ai",                   # "profanity filter", "profanity detection", "profanity api" → AI & Automation
@@ -8159,6 +8158,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "address validation": "maps",        # bigram — "address validation api", "address validation library" → Maps & Location
     "address autocomplete": "maps",      # bigram — "address autocomplete api", "address autocomplete js" → Maps & Location
     "address lookup": "maps",            # bigram — "address lookup api", "address lookup service" → Maps & Location
+    # Probe pattern 37: cross-platform / token counter / content safety / PII dead zones
+    # Frontend — "cross platform" loses "platform" to stop-word stripping, leaving bare "cross" → raw_first.
+    # Cross-platform desktop/mobile apps (Electron, Tauri, Neutralino, Capacitor) live in Frontend Frameworks.
+    "cross": "frontend",                 # "cross platform app", "cross platform desktop" → Frontend Frameworks
+    "cross origin": "api",              # bigram — CORS queries override "cross"→frontend; "cross origin request/header" → API Tools
+    # AI — "token counter" routes to auth via bare "token"→authentication. LLM token counters
+    # (tiktoken, tokenizers, tokenize-gpt) are AI tools and should not land in auth.
+    "token counter": "ai",              # bigram — "token counter python", "token counter openai" → AI & Automation
+    # AI — "content safety" / "content filter" route to CMS via bare "content"→cms.
+    # Azure Content Safety, Guardrails AI, Llama Guard, CleanSpeak all live in AI & Automation.
+    "content safety": "ai",             # bigram — "content safety api", "content safety azure" → AI & Automation
+    "content filter": "ai",             # bigram — "content filter llm" → AI & Automation
+    "content filtering": "ai",          # gerund form — "content filtering api", "content filtering library" → AI & Automation
+    # Security — PII detection/masking tools (Presidio, Piiano, TextBlind) have no token mapping.
+    # "pii" is an acronym with no synonym, so raw_first fires with no category boost.
+    "pii": "security",                  # "pii detection", "pii scrubbing", "pii masking" → Security Tools
+    "pii detection": "security",        # bigram — reinforces bare "pii"→security with extra precision
+    "pii masking": "security",          # bigram — "pii masking python", "pii masking tool" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
