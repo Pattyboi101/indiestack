@@ -288,7 +288,10 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     because "user" has no synonym mapping. "maze", "usertesting", "lookback", "dovetail" also unmapped.
     Fixed: bigrams "user research"/"user interview"→feedback; bare "qualitative","maze","usertesting",
     "lookback","dovetail"→feedback. Regressions guarded for "user authentication"→auth, "user analytics"→analytics.
-After all fixes: python3 scripts/test_search_routing.py should report 846+ tests passing (35 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 882+ tests passing (37 probe patterns).
+  Probe pattern 36 (May 2026): protocol buffers plural + profanity/toxicity + svg + address validation dead zones (fixed).
+  Probe pattern 37 (May 2026): cross-platform ("cross"→frontend, "cross origin"→api), token counter (bigram→ai),
+    content safety/filter/filtering (bigrams→ai, override "content"→cms), pii/pii-detection/pii-masking (→security).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
