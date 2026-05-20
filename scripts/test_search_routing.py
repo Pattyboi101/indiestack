@@ -1611,6 +1611,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("knowledge base llm", "ai"),                   # "llm"→ai fires; no "knowledge base" bigram
     # Regression: "sprint" still routes to project (no change)
     ("sprint planning tool", "project"),            # "sprint"→project fires at i=0
+
+    # Probe pattern 42 (May 2026): DAST / memory-profiler / image-scanning dead zones.
+    # "dynamic analysis" fired raw_first — OWASP ZAP, Burp Suite, Nuclei unreachable.
+    # "memory profiler"/"memory profiling" routed to caching via bare "memory"→caching
+    #   firing before "profiler"→monitoring (token order mattered; bigrams now fix it).
+    # "image scanning"/"image scan" routed to media via "image"→media (wrong; Trivy,
+    #   Grype, Snyk Container live in security).
+    # Fixed: bigram "dynamic analysis"→security, bigrams "memory profiler"/"memory
+    #   profiling"→monitoring, bigrams "image scanning"/"image scan"→security.
+    ("dynamic analysis tool", "security"),          # bigram "dynamic analysis"→security (was raw_first)
+    ("dynamic application security testing", "security"),  # dast bare token also maps → security
+    ("memory profiler python", "monitoring"),        # bigram "memory profiler"→monitoring (overrides memory→caching)
+    ("memory profiling nodejs", "monitoring"),       # bigram "memory profiling"→monitoring
+    ("image scanning docker", "security"),           # bigram "image scanning"→security (was image→media)
+    ("image scan trivy grype", "security"),          # bigram "image scan"→security
+    # Regression: bare "memory" queries (no profiler) still route to caching.
+    ("memory store redis", "caching"),               # "memory"→caching unaffected (no profiler token)
+    ("in memory cache", "caching"),                  # "memory"→caching (stop-word "in" stripped)
+    # Regression: "dynamic" alone still routes via other tokens.
+    ("dynamic import javascript", "frontend"),       # "javascript"→frontend fires (no "analysis" token)
 ]
 
 

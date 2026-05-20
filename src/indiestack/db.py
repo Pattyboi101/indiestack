@@ -3096,6 +3096,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Security — static/dynamic analysis
     "sast": "security",               # static application security testing
     "dast": "security",               # dynamic application security testing
+    "dynamic analysis": "security",   # bigram — "dynamic analysis tool" → Security (OWASP ZAP, Burp Suite, Nuclei)
     "owasp": "security",              # OWASP tooling (OWASP ZAP, OWASP Top 10)
     # Rate limiting — complement to "rate"→"api", "limiting"→"api", "limiter"→"api"
     "limit": "api",              # "rate limit" → both "rate" and "limit" reinforce api routing
@@ -3955,6 +3956,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "trivy": "security",            # Trivy — container and IaC vulnerability scanner (Aqua, 22k★)
     "semgrep": "security",          # Semgrep — fast, open-source SAST (static analysis, 10k★)
     "grype": "security",            # Grype — container and filesystem vulnerability scanner (Anchore)
+    "image scanning": "security",   # bigram — "image scanning docker", "docker image scan" → Security (Trivy, Grype)
+    "image scan": "security",       # bigram — short form "image scan tool" → Security
     # AI — cloud ML platforms (commonly queried as "[platform] alternative" or SDK queries)
     "cohere": "ai",                 # Cohere — enterprise LLM APIs (Rerank, Embed, Generate)
     "vertex": "ai",                 # Google Vertex AI — managed ML platform and LLM APIs
@@ -4541,6 +4544,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "yeoman": "developer",          # Yeoman — classic scaffolding tool for web projects (4k★)
     # Caching — "in-memory" query routing (hyphen stripped to single token in raw split)
     "in-memory": "caching",         # "in-memory cache", "in-memory database" — Redis, Memcached, Upstash
+    "memory profiler": "monitoring",   # bigram — overrides "memory"→caching; pyspy/memray/heaptrack → Monitoring
+    "memory profiling": "monitoring",  # bigram — "nodejs memory profiling", "python memory profiling" → Monitoring
     "memory": "caching",            # "in memory" after stop-word strip: "in" removed → "memory" first term
     "inmemory": "caching",          # compound form — "inmemory store", "inmemory cache" → Caching
     # Security — certificate/TLS management tools (Let's Encrypt ecosystem)
