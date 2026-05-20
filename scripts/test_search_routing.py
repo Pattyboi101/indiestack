@@ -1449,6 +1449,26 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — ensure "validation" still routes to developer for non-address contexts
     ("input validation", "developer"),               # "validation"→developer (no bigram override) → Developer Tools
     ("schema validation", "developer"),              # "validation"→developer → Developer Tools
+    # Probe pattern 37: SaaS metrics + product feedback dead zones
+    # SaaS metrics — mrr/arr/cac/revenue had no mapping → raw_first fired
+    ("mrr dashboard tool", "analytics"),             # Monthly Recurring Revenue → Analytics & Metrics
+    ("mrr tracker alternative", "analytics"),        # "mrr" bare token → Analytics
+    ("arr analytics saas", "analytics"),             # Annual Recurring Revenue → Analytics & Metrics
+    ("cac calculation tool", "analytics"),           # Customer Acquisition Cost → Analytics & Metrics
+    ("revenue analytics dashboard", "analytics"),    # "revenue" bare token → Analytics
+    ("revenue tracking saas", "analytics"),          # "revenue" → Analytics & Metrics
+    # Regression: feature flags must NOT be affected
+    ("feature flag toggle", "feature"),              # regression — "feature"→feature-flags still fires
+    ("feature toggle launchdarkly", "feature"),      # regression — feature toggle → Feature Flags
+    # Product feedback — "feature request" must route to feedback NOT feature-flags
+    ("feature request tool", "feedback"),            # bigram "feature request" overrides "feature"→feature-flags
+    ("feature request board canny", "feedback"),     # bigram fires first → Feedback & Reviews
+    ("collect feature requests", "feedback"),        # plural bigram → Feedback & Reviews
+    # Release notes — in-app changelog widget queries should route to feedback
+    ("release notes widget", "feedback"),            # bigram "release notes" overrides "release"→devops
+    ("release notes page alternative", "feedback"),  # bigram form → Feedback & Reviews
+    # Regression: git release management still routes to devops via bare "release" token
+    ("release version management", "devops"),        # "release"→devops when no "notes" bigram present
 ]
 
 

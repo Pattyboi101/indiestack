@@ -8146,7 +8146,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "protocol buffers": "api",           # bigram plural — "protocol buffers golang", "protocol buffers vs json" → API Tools
     "protobufs": "api",                  # compound abbreviation — "protobufs alternative", "protobufs tutorial" → API Tools
     "messagepack": "api",                # MessagePack — binary serialization; "messagepack alternative", "msgpack" → API Tools
-    "msgpack": "api",                    # common alias — "msgpack python", "msgpack vs protobuf" → API Tools
+    # "msgpack" already mapped at line 3688 — duplicate removed
     # Content moderation — "profanity" / "toxicity" have no mapping; raw_first fires.
     # Perspective API, CleanSpeak, purgomalum, hatesonar all live in AI & Automation.
     "profanity": "ai",                   # "profanity filter", "profanity detection", "profanity api" → AI & Automation
@@ -8159,6 +8159,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     "address validation": "maps",        # bigram — "address validation api", "address validation library" → Maps & Location
     "address autocomplete": "maps",      # bigram — "address autocomplete api", "address autocomplete js" → Maps & Location
     "address lookup": "maps",            # bigram — "address lookup api", "address lookup service" → Maps & Location
+    # Probe pattern 37: SaaS metrics + product feedback dead zones.
+    # "mrr"/"arr"/"cac"/"revenue" have no bare-token mapping → raw_first fires (no category boost).
+    # Tools: ChartMogul, Baremetrics, ProfitWell, Stripe Revenue Recognition → Analytics & Metrics.
+    "mrr": "analytics",                  # Monthly Recurring Revenue — "mrr dashboard", "mrr tracker" → Analytics & Metrics
+    "arr": "analytics",                  # Annual Recurring Revenue — "arr calculator", "arr reporting" → Analytics & Metrics
+    "cac": "analytics",                  # Customer Acquisition Cost — "cac calculation", "cac tracker" → Analytics & Metrics
+    "revenue": "analytics",              # "revenue analytics", "revenue dashboard", "revenue tracking" → Analytics & Metrics
+    # Feedback — "feature request" mis-routes via bare "feature"→feature-flags.
+    # Tools: Canny, Productboard, Upvoty, Fider → Feedback & Reviews.
+    "feature request": "feedback",       # bigram — "feature request tool", "feature request board" → Feedback & Reviews
+    "feature requests": "feedback",      # plural — "feature requests tracker", "collect feature requests" → Feedback & Reviews
+    # Feedback — "release notes" for in-app user-facing changelog widgets (Beamer, Headway, ReleaseNotes.io).
+    # Bare "release"→devops covers git release automation (git-cliff, semantic-release); bigram overrides for widget queries.
+    "release notes": "feedback",         # bigram — "release notes widget", "release notes page" → Feedback & Reviews
 }
 
 _FTS_STOP_WORDS = {

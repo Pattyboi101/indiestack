@@ -703,7 +703,7 @@ async def demand_pro(request: Request):
                     <div style="font-size:12px;color:var(--ink-muted);">Searches (30d)</div>
                 </div>
                 <div style="flex:1;background:var(--card-bg);padding:20px 16px;text-align:center;">
-                    <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:#EF4444;margin-bottom:4px;">{zero_results_30d:,}</div>
+                    <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--error-text, #EF4444);margin-bottom:4px;">{zero_results_30d:,}</div>
                     <div style="font-size:12px;color:var(--ink-muted);">Zero Results</div>
                 </div>
                 <div style="flex:1;background:var(--card-bg);padding:20px 16px;text-align:center;">
