@@ -185,6 +185,23 @@ When hunting for routing gaps, these query forms are historically tricky:
     (b) add direct tool-name synonyms when the compound includes a stop word.
     Fixed: "saas metrics"→analytics, "time tracker" bigram + toggl/harvest/clockify→project,
     "expense"/"expenses"→invoicing, "documentation"→documentation (May 2026).
+
+27. "Security / AI / analytics compound dead zones" — advanced compound patterns that each
+    involve two unmapped tokens (dual raw_first) or a token that correctly maps to the wrong
+    category when context changes. Examples: (a) "zero trust" spaced form — "zerotrust"
+    (compound) and "zero-trust" (hyphenated) were mapped but "zero trust network X" routed
+    via "network"→monitoring since neither spaced token had a mapping. (b) "reactive" bare
+    token — tools like RxJS, MobX, Valtio are reactive but the word "reactive" had no
+    synonym so queries like "reactive programming" fired raw_first. (c) "hallucination"
+    bare token — LLM hallucination detection tools (Guardrails AI, RAGAS, Giskard) were
+    unreachable since "hallucination" had no mapping. (d) "data quality" bigram —
+    "quality"→testing fires for code-quality tools but "data quality" should route to
+    analytics where Monte Carlo, Soda, Great Expectations live. (e) "schema registry"
+    bigram — "schema"→developer fires first but schema registry tools (Confluent, Karapace)
+    belong in message-queue ecosystem. Probe: "[adjective/acronym] [category noun]" where
+    the adjective is a new domain concept without a synonym. Fixed: "zero trust"→security
+    bigram, "ztna"→security, "reactive"→frontend, "hallucination"→ai,
+    "data quality"→analytics bigram, "schema registry"→message bigram (May 2026).
 """
 
 import sys
@@ -1508,6 +1525,35 @@ TEST_CASES: list[tuple[str, str]] = [
     # "focus management" bigram → frontend; overrides "management"→project
     ("focus management react", "frontend"),          # bigram fires before "management"→project
     ("keyboard focus management", "frontend"),       # bigram at i=1-2 fires
+    # Probe pattern 39: zero-trust / reactive / hallucination / data-quality / schema-registry dead zones
+    # "zero trust" (spaced) mis-routed via "network"→monitoring; now bigram "zero trust"→security overrides
+    ("zero trust network", "security"),              # bigram fires before "network"→monitoring collision
+    ("zero trust access control", "security"),       # bigram fires at i=0
+    ("ztna alternative", "security"),               # ZTNA abbreviation → security
+    # Regression: hyphenated and compound forms still route to security
+    ("zero-trust architecture", "security"),         # hyphenated form unaffected
+    ("zerotrust model", "security"),                 # compound form unaffected
+    # "reactive"→frontend now maps; RxJS, MobX, Svelte signals queries route to Frontend Frameworks
+    ("reactive programming library", "frontend"),    # "reactive"→frontend fires at i=0
+    ("reactive ui component", "frontend"),           # "reactive" fires before "component"→frontend
+    ("reactive state management", "frontend"),       # "reactive" fires before "state"→frontend (both correct)
+    # Regression: event-driven messaging correctly routes to message-queue (event→message fires at i=0)
+    ("event driven messaging", "message"),           # "event"→message fires before "reactive" could appear
+    # "hallucination"→ai now maps; Guardrails AI / RAGAS / Giskard queries route correctly
+    ("hallucination detection tool", "ai"),          # "hallucination"→ai fires at i=0
+    ("hallucination checker llm", "ai"),             # "hallucination" fires first (llm→ai would also fire)
+    # Regression: "llm hallucination" still routes via "llm"→ai (no change)
+    ("llm hallucination mitigation", "ai"),          # "llm"→ai fires at i=0 (regression guard)
+    # "data quality" bigram → analytics overrides bare "quality"→testing
+    ("data quality tool", "analytics"),              # bigram fires before "quality"→testing
+    ("data quality monitoring", "analytics"),        # bigram fires at i=0-1
+    # Regression: bare "quality" still routes to testing when "data" prefix is absent
+    ("code quality gate", "testing"),               # "quality"→testing fires (no bigram collision)
+    # "schema registry" bigram → message overrides bare "schema"→developer for Kafka ecosystem queries
+    ("schema registry kafka", "message"),            # bigram fires before "schema"→developer
+    ("schema registry alternative", "message"),     # bigram fires at i=0-1
+    # Regression: bare "schema" without "registry" still routes to developer
+    ("schema validation library", "developer"),     # "schema"→developer fires (no bigram collision)
 ]
 
 

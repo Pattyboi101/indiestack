@@ -307,7 +307,7 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     bigram "semantic release"→devops; "sortable"→frontend; bigram "focus management"→frontend.
     Regression guards: "modal serverless gpu"→ai (Modal.com bare token), "subscription cost billing"→payments,
     "semantic search engine"→search all still pass.
-After all fixes: python3 scripts/test_search_routing.py should report 902+ tests passing (38 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 920+ tests passing (39 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:

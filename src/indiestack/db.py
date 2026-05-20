@@ -8195,6 +8195,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sortable": "frontend",              # "sortable list", "sortable table", "sortable drag drop" → Frontend Frameworks
     # "management" → project fires for "focus management"; bigram overrides for focus-trap component queries.
     "focus management": "frontend",      # bigram — "focus trap", "focus management react", "dialog focus" → Frontend Frameworks
+    # Probe pattern 39: zero-trust / reactive / hallucination / data-quality / schema-registry dead zones.
+    # "zero trust" (spaced) had no bigram — "zero trust network X" mis-routed via "network"→monitoring.
+    # "zerotrust" and "zero-trust" (hyphenated) were already mapped; spaced form needs its own entry.
+    "zero trust": "security",           # bigram — "zero trust network", "zero trust access" → Security Tools (Tailscale, Twingate, Cloudflare Access)
+    "ztna": "security",                 # ZTNA (Zero Trust Network Access) abbreviation → Security Tools
+    # "reactive" has no bare-token mapping; reactive-programming queries (RxJS, MobX signals, Valtio) mis-route.
+    # Note: "reactive streams java" will route to frontend — acceptable; Java-specific tools (Vert.x, Akka) already mapped by name.
+    "reactive": "frontend",             # "reactive programming", "reactive state", "reactive ui" → Frontend Frameworks (RxJS, MobX)
+    # "hallucination" has no mapping; LLM hallucination-detection tools fire raw_first.
+    # Guardrails AI, RAGAS, Giskard, Phoenix (Arize) all live in AI & Automation.
+    "hallucination": "ai",              # "hallucination detection", "hallucination checker", "llm hallucination" → AI & Automation
+    # "data quality" mis-routes via "quality"→testing (code-quality tool collision).
+    # Data observability/quality tools (Monte Carlo, Soda, Great Expectations) live in Analytics & Metrics.
+    "data quality": "analytics",        # bigram — "data quality tool", "data quality monitoring" → Analytics & Metrics
+    # "schema registry" mis-routes via "schema"→developer (schema-validation collision).
+    # Schema Registry tools (Confluent, Karapace, AWS Glue Schema Registry) are message-queue ecosystem.
+    "schema registry": "message",       # bigram — "schema registry kafka", "schema registry alternative" → Message Queues
 }
 
 _FTS_STOP_WORDS = {
