@@ -297,7 +297,17 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     Test queries: 'mrr dashboard', 'arr analytics', 'cac calculation', 'revenue tracking' → analytics.
     'feature request tool', 'collect feature requests' → feedback.
     'release notes widget' → feedback; 'release version management' → devops.
-After all fixes: python3 scripts/test_search_routing.py should report 877+ tests passing (37 probe patterns).
+  Probe pattern 38 (May 2026): typography / versioning / modal-dialog / contrast / cost / sortable dead zones.
+    "typography" → raw_first (no boost); "versioning" → raw_first; "contrast checker" → raw_first;
+    "modal dialog" → ai (wrong: Modal.com override); "cost optimization" → raw_first; "sortable list" → raw_first;
+    "focus management" → project (wrong: "management"→project collision); "semantic release" → search (wrong:
+    "semantic"→search collision); "screen reader" → raw_first; "keyboard navigation" → raw_first.
+    Fixed: "typography"→frontend; "versioning"→devops; bigram "modal dialog"→frontend (overrides Modal.com);
+    "contrast"→testing; bigrams "screen reader"→testing, "keyboard navigation"→testing; "cost"→devops;
+    bigram "semantic release"→devops; "sortable"→frontend; bigram "focus management"→frontend.
+    Regression guards: "modal serverless gpu"→ai (Modal.com bare token), "subscription cost billing"→payments,
+    "semantic search engine"→search all still pass.
+After all fixes: python3 scripts/test_search_routing.py should report 902+ tests passing (38 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:

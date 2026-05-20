@@ -8173,6 +8173,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Feedback — "release notes" for in-app user-facing changelog widgets (Beamer, Headway, ReleaseNotes.io).
     # Bare "release"→devops covers git release automation (git-cliff, semantic-release); bigram overrides for widget queries.
     "release notes": "feedback",         # bigram — "release notes widget", "release notes page" → Feedback & Reviews
+    # Probe pattern 38: typography / versioning / modal / contrast / cost / sortable dead zones.
+    # "typography" raw_first → no category boost; fonts/type tools (Fontsource, typography.js) → Frontend Frameworks.
+    "typography": "frontend",            # "typography tool", "web typography", "font typography" → Frontend Frameworks
+    # "versioning" raw_first → no boost; version mgmt tools (semantic-release, standard-version) → DevOps.
+    "versioning": "devops",              # "versioning workflow", "versioning strategy", "package versioning" → DevOps & Infrastructure
+    # "modal" → ai (Modal.com serverless GPU); bigram overrides for UI dialog component queries.
+    "modal dialog": "frontend",          # bigram — overrides "modal"→ai; "modal dialog component", "react modal dialog" → Frontend Frameworks
+    # "contrast" raw_first → no boost; accessibility contrast tools (axe-core, Lighthouse contrast) → Testing Tools.
+    "contrast": "testing",               # "contrast checker", "contrast ratio tool", "color contrast api" → Testing Tools
+    # a11y screen reader testing — bare "screen" raw_first, bigram captures the compound query.
+    "screen reader": "testing",          # bigram — "screen reader testing", "screen reader compatible" → Testing Tools
+    # a11y keyboard nav — bare "keyboard" raw_first, bigram captures the compound query.
+    "keyboard navigation": "testing",    # bigram — "keyboard navigation testing", "keyboard nav a11y" → Testing Tools
+    # "cost" raw_first → no boost; cloud cost tools (Infracost, cloud-pricing-api) → DevOps.
+    # "payment"/"subscription" fire first for billing queries so no regression risk.
+    "cost": "devops",                    # "cost optimization", "infra cost", "cloud cost monitoring" → DevOps & Infrastructure
+    # "semantic" → search (semantic search/vector search); bigram overrides for release automation queries.
+    "semantic release": "devops",        # bigram — "semantic-release config", "semantic release alternative" → DevOps (git-cliff, changesets)
+    # "sortable" raw_first → no boost; drag-and-drop sortable UI libs (SortableJS, react-sortable-hoc) → Frontend.
+    "sortable": "frontend",              # "sortable list", "sortable table", "sortable drag drop" → Frontend Frameworks
+    # "management" → project fires for "focus management"; bigram overrides for focus-trap component queries.
+    "focus management": "frontend",      # bigram — "focus trap", "focus management react", "dialog focus" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {

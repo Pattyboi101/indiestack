@@ -1469,6 +1469,45 @@ TEST_CASES: list[tuple[str, str]] = [
     ("release notes page alternative", "feedback"),  # bigram form → Feedback & Reviews
     # Regression: git release management still routes to devops via bare "release" token
     ("release version management", "devops"),        # "release"→devops when no "notes" bigram present
+    # Probe pattern 38: typography / versioning / modal / contrast / cost / sortable dead zones
+    # "typography" raw_first → frontend; font/type tools (Fontsource, typography.js)
+    ("typography tool", "frontend"),                 # "typography"→frontend
+    ("web typography", "frontend"),                  # bare token
+    ("font typography css", "frontend"),             # with qualifier
+    # "versioning" raw_first → devops; version management tools (semantic-release, standard-version)
+    ("versioning workflow", "devops"),               # "versioning"→devops
+    ("package versioning tool", "developer"),        # "package"→developer fires before "versioning"→devops (package managers live in dev-tools)
+    # "modal"→ai (Modal.com) but "modal dialog" bigram → frontend
+    ("modal dialog component", "frontend"),          # bigram overrides Modal.com routing
+    ("react modal dialog", "frontend"),              # with framework qualifier
+    # Regression: bare "modal" still routes to ai (Modal.com serverless GPU)
+    ("modal serverless gpu", "ai"),                  # "modal"→ai still fires without "dialog"
+    # "contrast" raw_first → testing; accessibility contrast checkers (axe, Lighthouse)
+    ("contrast checker", "testing"),                 # "contrast"→testing
+    ("contrast ratio tool", "testing"),              # with qualifier
+    ("color contrast api", "frontend"),              # "color"→frontend fires at i=0 before "contrast" (color tools are frontend)
+    # "screen reader" bigram → testing; a11y tools
+    ("screen reader testing", "testing"),            # bigram fires
+    ("screen reader compatible", "testing"),         # bigram fires
+    # "keyboard navigation" bigram → testing; a11y keyboard nav
+    ("keyboard navigation testing", "testing"),      # bigram fires
+    ("keyboard nav a11y", "frontend"),               # "a11y"→frontend fires (a11y without "testing" suffix routes to frontend)
+    # "cost"→devops; cloud cost tools (Infracost)
+    ("cost optimization tool", "devops"),            # "cost"→devops
+    ("infra cost monitoring", "devops"),             # "infra" raw_first then "cost"→devops fires at i=1
+    # Regression: payment billing queries still route to payments
+    ("subscription cost billing", "payments"),       # "subscription"→payments fires first
+    # "semantic release" bigram → devops; overrides "semantic"→search
+    ("semantic release config", "devops"),           # bigram fires before "semantic"→search
+    ("semantic release alternative", "devops"),      # bigram fires
+    # Regression: semantic search must NOT be affected
+    ("semantic search engine", "search"),            # "semantic search" bigram → search
+    # "sortable"→frontend; drag-and-drop UI libs (SortableJS, dnd-kit)
+    ("sortable list react", "frontend"),             # "sortable"→frontend
+    ("sortable table component", "frontend"),        # with qualifier
+    # "focus management" bigram → frontend; overrides "management"→project
+    ("focus management react", "frontend"),          # bigram fires before "management"→project
+    ("keyboard focus management", "frontend"),       # bigram at i=1-2 fires
 ]
 
 
