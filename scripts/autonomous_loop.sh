@@ -237,6 +237,13 @@ curl the API for these queries and check top-3 results are relevant:
   Social login (May 2026 — 'social login/auth/sign' bigrams added → authentication):
     'social login provider', 'social auth library', 'social sign in flow', 'social oauth provider'.
     NOTE: 'social media scheduling' must still route to social-media (regression guard in test suite).
+  Security/privacy & cross-platform (added May 2026 — probe pattern 37):
+    'pii detection', 'pii scrubbing', 'pii masking python'. Must route to security.
+    'content safety api', 'content filter llm', 'content filtering api'. Must route to ai (NOT cms).
+    'token counter python', 'token counter openai'. Must route to ai (NOT authentication).
+    'cross platform app', 'cross platform desktop'. Must route to frontend.
+    'cross origin request'. Must route to api (CORS tools — bigram "cross origin"→api overrides "cross"→frontend).
+    NOTE: bare 'cross' alone routes to frontend — regression guard needed for CORS queries.
 For each misfire, check if a _CAT_SYNONYMS entry or NEED_MAPPINGS term is missing in db.py.
 Before adding any synonym: grep '"<term>"' db.py to avoid silent duplicate-key overrides.
 Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cause misses.
