@@ -719,6 +719,7 @@ CATEGORY_TOKEN_COSTS = {
     "frontend-frameworks": 80_000,
     "caching": 35_000,
     "mcp-servers": 50_000,
+    "ai-standards": 40_000,
     "boilerplates": 30_000,
     "maps-location": 25_000,
 }
@@ -771,6 +772,7 @@ NEED_MAPPINGS = {
     "queue": {"category": "message-queue", "terms": ["message queue", "message broker", "event streaming", "pubsub", "pub/sub", "kafka", "rabbitmq", "async messaging"], "competitors": ["Apache Kafka", "RabbitMQ", "AWS SQS", "NATS", "Redis Streams"], "title": "Message Queues", "description": "Decouple services with message brokers, event streaming, and pub/sub.", "build_estimate": "1-2 weeks", "icon": "\U0001f4ec"},
     "media": {"category": "media-server", "terms": ["video streaming", "transcoding", "media server", "audio streaming", "HLS", "video encoding", "adaptive bitrate"], "competitors": ["Mux", "Cloudinary Video", "Plex", "Jellyfin", "Bunny Stream"], "title": "Media Servers", "description": "Stream, transcode, and manage video and audio content.", "build_estimate": "2-4 weeks", "icon": "\U0001f3ac"},
     "maps": {"category": "maps-location", "terms": ["maps", "geolocation", "geocoding", "mapping", "location api", "map tiles", "leaflet", "mapbox"], "competitors": ["Google Maps", "Mapbox", "HERE Maps", "OpenLayers"], "title": "Maps & Location", "description": "Add maps, geolocation, geocoding, and location-based features to your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f5fa\ufe0f"},
+    "llmeval": {"category": "ai-standards", "terms": ["llm evaluation", "llm benchmark", "model evaluation", "llm red team", "llm safety", "ai safety eval", "garak", "lm-eval", "inspect ai"], "competitors": ["HELM", "BIG-bench", "OpenAI Evals"], "title": "AI Standards & Specs", "description": "LLM evaluation frameworks, red-teaming tools, and AI safety specs.", "build_estimate": "varies", "icon": "\U0001f52c"},
 }
 
 TECH_KEYWORDS = {
@@ -1751,6 +1753,7 @@ async def init_db():
             ("MCP Servers", "mcp-servers", "MCP server implementations that give AI agents access to tools, data, and services", "🧩"),
             ("Boilerplates", "boilerplates", "Starter kits, scaffold templates, and opinionated project starters to ship faster", "📦"),
             ("Maps & Location", "maps-location", "Maps, geolocation, geocoding, and location-based APIs", "🗺️"),
+            ("AI Standards & Specs", "ai-standards", "AI safety evaluation frameworks, LLM red-teaming tools, and model quality specs", "🔬"),
         ]:
             try:
                 await db.execute(
