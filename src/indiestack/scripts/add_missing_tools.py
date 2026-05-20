@@ -14930,6 +14930,45 @@ TOOLS = [
         "pip install weave",
         "code",
     ),
+    # Logging — modern cloud-native log management (added May 2026) -------------------
+    (
+        "axiom",
+        "Axiom",
+        "Serverless logging and observability for any scale",
+        "Axiom is a cloud-native log management and observability platform that stores "
+        "data in object storage (S3-compatible) so you pay for what you use — no "
+        "infrastructure to manage. Ingest logs, metrics, and traces from any source "
+        "via the OpenTelemetry collector, Vector, Fluentd, or direct HTTP. Query with "
+        "APL (Axiom Processing Language), build dashboards, and set up alerts. "
+        "Free tier includes 500 GB/month. Popular with serverless and edge workloads "
+        "where traditional log aggregators are expensive.",
+        "logging",
+        "axiomhq/axiom-go",
+        600,
+        "https://axiom.co",
+        "logging,observability,serverless,object-storage,opentelemetry,logs,analytics,cloud-native",
+        "npm install @axiomhq/js",
+        "saas",
+    ),
+    (
+        "betterstack",
+        "Better Stack",
+        "Uptime monitoring, incident management, and log management in one place",
+        "Better Stack (formerly Logtail) combines uptime monitoring, on-call alerting, "
+        "status pages, and structured log management in a single indie-friendly platform. "
+        "Logtail ingests logs from any stack via OpenTelemetry, Vector, or Fluent Bit, "
+        "stores them in ClickHouse for fast SQL-based queries, and integrates with "
+        "PagerDuty, Slack, and Grafana. Uptime checks every 3 seconds from 13+ global "
+        "locations. Generous free tier. Popular with solo founders and small teams "
+        "replacing multiple tools (Datadog + PagerDuty + Statuspage).",
+        "logging",
+        "BetterStackHQ/better-stack-community",
+        600,
+        "https://betterstack.com",
+        "logging,uptime-monitoring,incident-management,status-page,logtail,opentelemetry,clickhouse,structured-logs",
+        "npm install @logtail/node",
+        "saas",
+    ),
 ]
 
 

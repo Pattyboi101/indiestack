@@ -8229,6 +8229,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tech debt": "developer",           # bigram — "tech debt tracker", "tech debt management" → Developer Tools
     # "dead code" bigram — Knip, ts-prune, unimported; bare "dead"→raw_first, bare "code"→raw_first.
     "dead code": "testing",             # bigram — "dead code detection", "dead code analyzer" → Testing Tools
+    # Probe pattern 41 (May 2026): bundle analysis / project management dead zones.
+    # "bundle" bare token had no mapping — "bundle size analyzer", "bundle stats", "bundle budget"
+    # all fired raw_first with no category boost. Bundle analysis tools (webpack-bundle-analyzer,
+    # vite-bundle-visualizer, Bundlephobia, Rollup Visualizer) live in Frontend Frameworks.
+    "bundle": "frontend",               # "bundle size", "bundle analyzer", "bundle stats" → Frontend Frameworks
+    # "bug" bare token had no mapping — "bug tracker", "bug tracking tool", "bug reporting" all
+    # fired raw_first. Bug trackers (Linear, Plane, Jira, Sentry) → Project Management.
+    "bug": "project",                   # "bug tracker", "bug tracking tool" → Project Management
+    # "retro" / "retrospective" — retrospective tooling (TeamRetro, Retrium, EasyRetro) → Project Management.
+    # Both raw_first fired with no category boost.
+    "retro": "project",                 # "retro app", "retro meeting tool" → Project Management
+    "retrospective": "project",         # "retrospective tool", "agile retrospective" → Project Management
+    # "okr" — OKR-tracking tools (Lattice, Perdoo, 15Five, Betterworks) → Project Management.
+    "okr": "project",                   # "okr tool", "okr software", "okr tracking" → Project Management
+    # "standup" — async standup tools (Geekbot, Standuply, Range) → Project Management.
+    "standup": "project",               # "standup bot", "daily standup tool" → Project Management
+    # "issue tracker" bigram — Linear, Plane, GitLab Issues, YouTrack → Project Management.
+    # NOTE: "issue tracking" bigram intentionally NOT added — "tracking" is in _FTS_STOP_WORDS,
+    # so the bigram can never form. "issue tracker" (bare "tracker" not a stop word) works.
+    "issue tracker": "project",         # bigram — "issue tracker open source", "issue tracker github" → Project Management
+    # "knowledge base" spaced bigram intentionally NOT added (see line ~6381 note) —
+    # "knowledge base llm/chatbot" must route to AI (RAG use case). Hyphenated forms already cover
+    # pure KB-tooling queries: "knowledge-base"→documentation, "knowledgebase"→documentation.
 }
 
 _FTS_STOP_WORDS = {

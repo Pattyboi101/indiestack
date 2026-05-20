@@ -1582,6 +1582,35 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression: "accessibility library"→frontend, "accessibility testing"→testing (existing bigrams)
     ("accessibility library react", "frontend"),    # "accessibility"→frontend fires (no dead-code collision)
     ("accessibility testing runner", "testing"),    # "accessibility testing" bigram fires first
+    # Probe pattern 41 (May 2026): bundle analysis / project management dead zones.
+    # "bundle"→frontend: bundle analysis tools (webpack-bundle-analyzer, Bundlephobia) now route correctly.
+    ("bundle size analyzer", "frontend"),           # "bundle"→frontend fires at i=0
+    ("bundle stats webpack", "frontend"),           # "bundle"→frontend fires at i=0
+    ("bundle budget tool", "frontend"),             # "bundle"→frontend fires at i=0
+    # Regression: "webpack bundle analyzer" still routes via "webpack"→frontend (no change)
+    ("webpack bundle analyzer", "frontend"),        # "webpack"→frontend fires at i=0
+    # "bug"→project: bug trackers (Linear, Plane, Jira) now route to Project Management.
+    ("bug tracker", "project"),                     # "bug"→project fires at i=0
+    ("bug tracking tool", "project"),               # "bug"→project fires at i=0
+    # Regression: "debugging tool"→developer (separate token, not affected by "bug"→project)
+    ("debugging tool", "developer"),                # "debugging"→developer fires (not "bug"→project)
+    # "retro"/"retrospective"→project: retrospective tools route to Project Management.
+    ("retro app", "project"),                       # "retro"→project fires at i=0
+    ("retrospective tool agile", "project"),        # "retrospective"→project fires at i=0
+    # "okr"→project: OKR tracking tools route to Project Management.
+    ("okr tool", "project"),                        # "okr"→project fires at i=0
+    ("okr tracking software", "project"),           # "okr"→project fires at i=0
+    # "standup"→project: async standup bots route to Project Management.
+    ("standup bot", "project"),                     # "standup"→project fires at i=0
+    ("daily standup tool", "project"),              # "standup"→project fires at i=1 (daily has no mapping)
+    # "issue tracker" bigram → project; note "issue tracking" can't form — "tracking" is a stop word.
+    ("issue tracker open source", "project"),       # bigram fires at i=0-1
+    ("issue tracker github", "project"),            # bigram fires at i=0-1
+    # "knowledge base" spaced bigram intentionally NOT added (see db.py note ~6381).
+    # Regression guard: "knowledge base llm" still routes to AI (no bigram collision).
+    ("knowledge base llm", "ai"),                   # "llm"→ai fires; no "knowledge base" bigram
+    # Regression: "sprint" still routes to project (no change)
+    ("sprint planning tool", "project"),            # "sprint"→project fires at i=0
 ]
 
 
