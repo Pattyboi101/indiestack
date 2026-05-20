@@ -307,7 +307,19 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     bigram "semantic release"→devops; "sortable"→frontend; bigram "focus management"→frontend.
     Regression guards: "modal serverless gpu"→ai (Modal.com bare token), "subscription cost billing"→payments,
     "semantic search engine"→search all still pass.
-After all fixes: python3 scripts/test_search_routing.py should report 920+ tests passing (39 probe patterns).
+  Probe pattern 40 (May 2026): performance/latency monitoring dead zones + supply-chain/cloud-provider.
+    "p99"/"p95"/"p50" — latency percentile terms — had no mapping; APM/tracing queries fired raw_first.
+    "apdex" — Application Performance Index — monitoring metric with no _CAT_SYNONYMS entry.
+    "percentile" — "latency percentile", "99th percentile response" — no mapping, raw_first fired.
+    "bottleneck" — "performance bottleneck analysis", "bottleneck profiler" — no monitoring entry.
+    "server timing" bigram — Server-Timing HTTP header / APM breakdown — both tokens unmapped.
+    "supply chain" bigram — "supply chain attack/security" — bare "supply" had no entry.
+    "cloud provider" bigram — "cloud provider alternative" — "cloud" alone intentionally unmapped.
+    Fixed: "p99","p95","p50","apdex","percentile","bottleneck"→monitoring; bigrams "server timing"→monitoring,
+    "supply chain"→security, "cloud provider"→devops.
+    Regression guards: "cloud function runtime"→devops, "sbom generator"→security, "cloud hosting"→devops,
+    "bottleneck" not colliding with "profiling"→monitoring or "performance testing"→testing.
+After all fixes: python3 scripts/test_search_routing.py should report 939+ tests passing (40 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:

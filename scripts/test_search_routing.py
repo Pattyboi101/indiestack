@@ -1554,6 +1554,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("schema registry alternative", "message"),     # bigram fires at i=0-1
     # Regression: bare "schema" without "registry" still routes to developer
     ("schema validation library", "developer"),     # "schema"→developer fires (no bigram collision)
+
+    # Probe pattern 40: performance/latency monitoring dead zones + supply-chain/cloud-provider
+    # "p99"/"p95"/"p50" — latency percentiles — had no mapping; APM/tracing queries fired raw_first
+    ("p99 latency tool", "monitoring"),             # "p99"→monitoring fires at i=0
+    ("p95 response time", "monitoring"),            # "p95"→monitoring fires at i=0
+    ("p50 median latency", "monitoring"),           # "p50"→monitoring fires at i=0
+    # "apdex" — Application Performance Index — no entry; monitoring queries fired raw_first
+    ("apdex score monitoring", "monitoring"),       # "apdex"→monitoring fires at i=0
+    ("apdex alternative", "monitoring"),            # "apdex"→monitoring fires at i=0
+    # "percentile" — "99th percentile response" — no entry; raw_first fired
+    ("latency percentile analysis", "monitoring"),  # "percentile"→monitoring fires at i=1
+    ("99th percentile response", "monitoring"),     # "percentile"→monitoring fires at i=1
+    # "bottleneck" — performance bottleneck analysis — no entry; raw_first fired
+    ("bottleneck analysis tool", "monitoring"),     # "bottleneck"→monitoring fires at i=0
+    ("performance bottleneck finder", "monitoring"),# "profiling"→monitoring fires… actually "bottleneck"→monitoring via i=1
+    # "server timing" bigram — Server-Timing HTTP header — both tokens unmapped individually
+    ("server timing api", "monitoring"),            # bigram fires at i=0-1
+    ("server timing header middleware", "monitoring"),  # bigram fires at i=0-1
+    # "supply chain" bigram — supply chain security — "supply" had no entry
+    ("supply chain attack", "security"),            # bigram fires at i=0-1
+    ("supply chain security tool", "security"),     # bigram fires at i=0-1
+    ("software supply chain", "security"),          # "software" is stop word; bigram "supply chain" fires from remaining tokens
+    # Regression: bare "sbom" still routes to security (existing mapping unaffected)
+    ("sbom generator", "security"),                 # "sbom"→security fires (no bigram collision)
+    # "cloud provider" bigram — cloud provider comparison — "cloud" intentionally unmapped as bare token
+    ("cloud provider alternative", "devops"),       # bigram fires at i=0-1
+    ("cloud provider comparison", "devops"),        # bigram fires at i=0-1
+    # Regression: "cloud function" bigram still routes to devops (existing mapping unaffected)
+    ("cloud function runtime", "devops"),            # "cloud function"→devops fires (regression guard)
+    # Regression: "cloud hosting" still routes via "hosting"→devops (no collision with "cloud provider" bigram)
+    ("cloud hosting provider", "devops"),            # "hosting"→devops fires at i=1 (regression guard)
 ]
 
 

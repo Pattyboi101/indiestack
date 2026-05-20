@@ -8212,6 +8212,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "schema registry" mis-routes via "schema"→developer (schema-validation collision).
     # Schema Registry tools (Confluent, Karapace, AWS Glue Schema Registry) are message-queue ecosystem.
     "schema registry": "message",       # bigram — "schema registry kafka", "schema registry alternative" → Message Queues
+    # Probe pattern 40 (May 2026): performance/latency monitoring dead zones + supply-chain/cloud-provider
+    # "p99", "p95", "p50" — latency percentile terms — had no mapping, raw_first fired for APM/tracing queries.
+    # "apdex" — Application Performance Index score — monitoring metric with no entry.
+    # "percentile" — "latency percentile", "99th percentile response" — no mapping, fired raw_first.
+    # "bottleneck" — "performance bottleneck analysis", "bottleneck profiler" — monitoring/profiling tools.
+    # "server timing" bigram — Server-Timing HTTP header; both tokens unmapped individually.
+    # "supply chain" bigram — "supply chain attack/security" — fired raw_first via bare "supply" (no entry).
+    # "cloud provider" bigram — "cloud provider alternative/comparison" — "cloud" alone intentionally unmapped.
+    "p99": "monitoring",                # p99 latency percentile — APM/observability queries → Monitoring & Uptime
+    "p95": "monitoring",                # p95 latency percentile
+    "p50": "monitoring",                # p50 median latency / baseline throughput
+    "apdex": "monitoring",              # Application Performance Index — monitoring metric (0-1 satisfaction score)
+    "percentile": "monitoring",         # "latency percentile", "99th percentile response time" → Monitoring & Uptime
+    "bottleneck": "monitoring",         # "performance bottleneck", "bottleneck analysis tool" → Monitoring (profiling)
+    "server timing": "monitoring",      # bigram — Server-Timing HTTP header / APM timing breakdown → Monitoring
+    "supply chain": "security",         # bigram — "supply chain attack", "supply chain security" → Security Tools
+    "cloud provider": "devops",         # bigram — "cloud provider alternative", "cloud provider comparison" → DevOps
 }
 
 _FTS_STOP_WORDS = {
