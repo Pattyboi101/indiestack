@@ -1554,6 +1554,34 @@ TEST_CASES: list[tuple[str, str]] = [
     ("schema registry alternative", "message"),     # bigram fires at i=0-1
     # Regression: bare "schema" without "registry" still routes to developer
     ("schema validation library", "developer"),     # "schema"→developer fires (no bigram collision)
+    # Probe pattern 40 (May 2026): code quality / accessibility testing dead zones.
+    # "complexity"→testing; cyclomatic/code complexity analyzers (SonarQube, CodeClimate, Lizard).
+    ("cyclomatic complexity", "testing"),           # "complexity"→testing fires at i=1
+    ("code complexity analyzer", "testing"),        # "complexity"→testing fires at i=1
+    # Regression: "password complexity"→security (password→security fires first)
+    ("password complexity check", "security"),      # "password"→security fires at i=0
+    # "axe"→testing; Deque axe-core accessibility testing library.
+    ("axe alternative", "testing"),                 # "axe"→testing fires at i=0
+    ("axe devtools setup", "testing"),              # "axe"→testing fires at i=0
+    # "a11y testing" bigram → testing; overrides bare "a11y"→frontend
+    ("a11y testing tool", "testing"),               # bigram fires before "a11y"→frontend
+    ("a11y test runner", "testing"),                # bigram "a11y test" fires at i=0-1
+    # Regression: bare "a11y" without "testing"/"test" still routes to frontend
+    ("a11y linting rule", "frontend"),              # "a11y"→frontend fires (no bigram collision)
+    # "wcag"→testing; any wcag query routes to Testing Tools
+    ("wcag compliance checker", "testing"),         # "wcag"→testing fires at i=0
+    ("wcag 2.1 compliance", "testing"),             # "wcag"→testing fires at i=0
+    # Regression: bare "compliance" without "wcag" still routes to security
+    ("soc2 compliance automation", "security"),     # "compliance"→security fires (no bigram collision)
+    # "tech debt" bigram → developer; bare "tech"→raw_first, bare "debt"→raw_first
+    ("tech debt tracker", "developer"),             # bigram fires at i=0-1
+    ("tech debt management", "developer"),          # bigram fires at i=0-1
+    # "dead code" bigram → testing; Knip, ts-prune, unimported
+    ("dead code detection", "testing"),             # bigram fires at i=0-1
+    ("dead code analyzer", "testing"),              # bigram fires at i=0-1
+    # Regression: "accessibility library"→frontend, "accessibility testing"→testing (existing bigrams)
+    ("accessibility library react", "frontend"),    # "accessibility"→frontend fires (no dead-code collision)
+    ("accessibility testing runner", "testing"),    # "accessibility testing" bigram fires first
 ]
 
 

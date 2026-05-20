@@ -8212,6 +8212,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "schema registry" mis-routes via "schema"→developer (schema-validation collision).
     # Schema Registry tools (Confluent, Karapace, AWS Glue Schema Registry) are message-queue ecosystem.
     "schema registry": "message",       # bigram — "schema registry kafka", "schema registry alternative" → Message Queues
+    # Probe pattern 40 (May 2026): code quality / accessibility testing dead zones.
+    # "cyclomatic complexity", "code complexity analyzer" — bare "complexity" had no mapping → raw_first.
+    # Code-complexity tools (SonarQube, CodeClimate, Codacy, Lizard) → Testing Tools.
+    "complexity": "testing",            # "cyclomatic complexity", "code complexity" → Testing Tools
+    # "axe" — Deque axe-core accessibility testing library; no bare token existed → raw_first fired.
+    "axe": "testing",                   # Deque axe-core, axe DevTools, Wave → Testing Tools
+    # "a11y testing" / "a11y test" bigrams — "a11y"→frontend fires without bigram; testing queries need override.
+    "a11y testing": "testing",          # bigram — "a11y testing tool", "a11y testing runner" → Testing Tools
+    "a11y test": "testing",             # bigram — "a11y test runner", "a11y test suite" → Testing Tools
+    # "wcag" bare token → Testing; WCAG is exclusively an accessibility standard, always a testing concern.
+    "wcag": "testing",                  # "wcag 2.1 compliance", "wcag audit", "wcag aa check" → Testing Tools
+    "wcag compliance": "testing",       # bigram — "wcag compliance checker" → Testing Tools (overrides "compliance"→security)
+    # "tech debt" bigram — bare "tech"→raw_first, bare "debt"→raw_first; neither has a category mapping.
+    # Tech debt tools: SonarQube, CodeClimate, Codacy, Codecov, Checkmarx SAST → Developer Tools.
+    "tech debt": "developer",           # bigram — "tech debt tracker", "tech debt management" → Developer Tools
+    # "dead code" bigram — Knip, ts-prune, unimported; bare "dead"→raw_first, bare "code"→raw_first.
+    "dead code": "testing",             # bigram — "dead code detection", "dead code analyzer" → Testing Tools
 }
 
 _FTS_STOP_WORDS = {
