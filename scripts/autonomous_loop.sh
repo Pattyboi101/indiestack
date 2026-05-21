@@ -313,7 +313,7 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     supabase.com, vercel.com, planetscale.com, neon.tech, turso.tech, pocketbase.io, clerk.com,
     auth0.com, workos.com, resend.com, loops.so, posthog.com, plane.so, cal.com, netlify.com, heroku.com.
     RULE: Always add TLD variants alongside bare names when adding a new tool to _CAT_SYNONYMS.
-After all fixes: python3 scripts/test_search_routing.py should report 1048+ tests passing (46 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 1058+ tests passing (47 probe patterns).
   Probe 44 (May 2026): container/docker security collision, supply chain spaced bigram, threat bare token,
     key management security, saas billing/payments/subscription payments. Fixed: 22 new tests added.
   Probe 45 (May 2026): workflow-automation collisions, LLM monitoring dead zones, SBOM routing,
@@ -336,6 +336,15 @@ After all fixes: python3 scripts/test_search_routing.py should report 1048+ test
     "phrase","transifex"→localization; "cookiebot","osano","onetrust","usercentrics"→security; "grunt","gulp"→
     frontend; bigrams "flux cd"/"flux gitops"→devops; bigrams "code formatting"/"code format"→testing.
     Regression guard: bare "flux" without qualifier still routes to ai. 20 new tests added.
+  Probe 47 (May 2026): PKM/note-taking and CDP dead zones — "obsidian","logseq","pkm","zettelkasten","zettlr"
+    all fired raw_first (Logseq/Zettlr are seeded as learning-education; Obsidian is a PKM tool in the same
+    space). Bigrams "note taking" and "second brain" also fired raw_first. "rudderstack" fired raw_first
+    (open-source Segment CDP alternative; Segment already maps via "segment"→analytics).
+    Fixed: bare "obsidian","logseq","pkm","zettelkasten","zettlr","notetaking"→learning; bigrams "note
+    taking","second brain"→learning; bare "rudderstack"→analytics. Also: CSS var cleanup in admin_outreach.py
+    (#F3F4F6→var(--border), #6B7280→var(--ink-muted), #0D1B2A→var(--ink)). 10 new tests added.
+
+After all fixes: python3 scripts/test_search_routing.py should report 1058+ tests passing (47 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
