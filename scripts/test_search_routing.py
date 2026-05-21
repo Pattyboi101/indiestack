@@ -439,6 +439,21 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression: existing multi-tenant terms still route correctly
     ("multi tenant architecture", "authentication"), # "tenant"→auth pre-existing
     ("tenant isolation", "authentication"),          # "tenant"→auth pre-existing
+    #
+    # Probe 47 (May 2026): Preview environments / ephemeral deployments dead zones.
+    # "environment"→security was overriding "preview environment" and "ephemeral environment"
+    # queries that target DevOps tools (Uffizzi, Bunnyshell, Tugboat, Qovery).
+    # Fixed: bigrams "preview environment"/"ephemeral environment"→devops;
+    #        bare "preview"→devops; bare "uffizzi"/"qovery"/"bunnyshell"→devops.
+    ("preview environment tool", "devops"),          # bigram "preview environment"→devops (was "security" via "environment")
+    ("ephemeral environment docker", "devops"),      # bigram "ephemeral environment"→devops (was "security")
+    ("branch preview deployment", "devops"),         # bare "preview"→devops (was raw_first)
+    ("uffizzi alternative", "devops"),               # bare "uffizzi"→devops (was raw_first)
+    ("qovery alternative", "devops"),                # bare "qovery"→devops (was raw_first)
+    ("bunnyshell preview env", "devops"),            # bare "bunnyshell"→devops (was raw_first)
+    # Regressions — "environment variables" still routes to security; "email preview" still routes to email.
+    ("environment variables manager", "security"),  # "environment"→security unaffected (no preview bigram)
+    ("email preview template", "email"),             # "email"→email fires before "preview"→devops
 ]
 
 

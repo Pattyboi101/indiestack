@@ -6762,6 +6762,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Bare token fires raw_first; no category boost.
     "license": "developer",              # "license checker", "open source license", "license compliance" → Developer Tools
     "fossa": "developer",                # FOSSA — license compliance and dependency scanning tool → Developer Tools
+    #
+    # Preview environments / ephemeral deployments — dead zone (probe 47, May 2026).
+    # "environment"→security fires for "preview environment" and "ephemeral environment".
+    # These queries target ephemeral/branch preview tools (Uffizzi, Bunnyshell, Tugboat, Qovery)
+    # which live in DevOps & Infrastructure. Bigrams override "environment"→security.
+    "preview environment": "devops",   # bigram — "preview environment tool", "preview environment kubernetes"
+    "ephemeral environment": "devops", # bigram — "ephemeral environment pr preview", "ephemeral environment docker"
+    "preview": "devops",               # bare — "branch preview", "preview deployment" (deploy fires too)
+    "uffizzi": "devops",               # Uffizzi — ephemeral preview environments for PRs (uffizzi/uffizzi)
+    "qovery": "devops",                # Qovery — developer self-service PaaS + preview envs (qovery/engine)
+    "bunnyshell": "devops",            # Bunnyshell — environment-as-a-service, preview envs per PR
 }
 
 _FTS_STOP_WORDS = {
