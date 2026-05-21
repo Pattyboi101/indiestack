@@ -1842,6 +1842,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("code format on save", "testing"),              # bigram "code format"→testing
     # Regression — "code analysis" bigram was already mapped to testing.
     ("static code analysis", "testing"),             # "code analysis" bigram unchanged
+    #
+    # Probe pattern 47 — PKM/note-taking and CDP dead zones
+    #
+    # PKM tools (Obsidian, Logseq, Zettlr) are seeded as learning-education in IndieStack.
+    # "obsidian", "logseq", "pkm", "zettelkasten", "notetaking", "second brain" all fired raw_first.
+    # Fixed: added bare-token synonyms → "learning" and bigrams "note taking", "second brain".
+    ("obsidian alternative", "learning"),            # bare "obsidian"→learning (was raw_first)
+    ("logseq alternative", "learning"),              # bare "logseq"→learning (was raw_first)
+    ("pkm app", "learning"),                         # bare "pkm"→learning (was raw_first)
+    ("zettelkasten tool", "learning"),               # bare "zettelkasten"→learning (was raw_first)
+    ("note taking app", "learning"),                 # bigram "note taking"→learning (was raw_first)
+    ("second brain app", "learning"),                # bigram "second brain"→learning (was raw_first)
+    ("notetaking alternative", "learning"),          # compound "notetaking"→learning (was raw_first)
+    # Regression — "knowledge base LLM" must still route to AI (no bare "knowledge" token added).
+    ("knowledge base llm", "ai"),                    # regression guard: unchanged
+    # CDP tools — RudderStack fired raw_first (Segment already maps via "segment"→analytics).
+    # Fixed: added bare "rudderstack"→analytics.
+    ("rudderstack alternative", "analytics"),        # bare "rudderstack"→analytics (was raw_first)
+    # Regression — "segment alternative" still routes to analytics via "segment"→analytics.
+    ("segment alternative", "analytics"),            # "segment"→analytics unchanged
 ]
 
 

@@ -52,7 +52,7 @@ def _render_totw_panel(top_tools):
                     <input type="hidden" name="slug" value="{slug}">
                     <button type="submit"
                             onclick="return confirm('Send Tool of the Week email for {name}?')"
-                            style="padding:4px 12px;font-size:12px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;">
+                            style="padding:4px 12px;font-size:12px;background:var(--slate);color:var(--ink);border:none;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;">
                         Send Winner Email
                     </button>
                 </form>
@@ -107,7 +107,7 @@ def _render_digest_panel(new_count, top_clicked_name, top_search, subscriber_cou
             <input type="hidden" name="action" value="send_digest_all">
             <button type="submit"
                     onclick="return confirm(\'Send weekly digest to all {subscriber_count} subscribers?\')"
-                    style="padding:8px 16px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
+                    style="padding:8px 16px;background:var(--slate);color:var(--ink);border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
                 Send to All {subscriber_count}
             </button>
         </form>
@@ -158,7 +158,7 @@ def _render_launch_day_panel(subscriber_count, tool_count, maker_count):
             <input type="hidden" name="action" value="send_launch_all">
             <button type="submit"
                     onclick="return confirm(\'Send launch day email to all {subscriber_count} subscribers?\')"
-                    style="padding:8px 16px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
+                    style="padding:8px 16px;background:var(--slate);color:var(--ink);border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
                 Send to All {subscriber_count}
             </button>
         </form>
@@ -183,7 +183,7 @@ def _render_maker_countdown_panel(claimed_maker_count):
             <input type="hidden" name="action" value="send_maker_countdown_all">
             <button type="submit"
                     onclick="return confirm(\'Send countdown email to all {claimed_maker_count} claimed makers?\')"
-                    style="padding:8px 16px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
+                    style="padding:8px 16px;background:var(--slate);color:var(--ink);border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
                 Send to All {claimed_maker_count} Makers
             </button>
         </form>
@@ -220,7 +220,7 @@ def _render_email_tab(subscribers, result_html="", totw_html="", digest_html="",
             <input type="hidden" name="target" value="all">
             <button type="submit"
                     onclick="return confirm('Send marketplace preview to all {count} subscribers?')"
-                    style="padding:8px 16px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
+                    style="padding:8px 16px;background:var(--slate);color:var(--ink);border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
                 Send to All {count}
             </button>
         </form>
@@ -466,7 +466,7 @@ def _render_stale_tab(stale_tools, counts):
         <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--success-bg);color:var(--success-text);">{active_count} Active</span>
         <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--warning-bg);color:var(--warning-text);">{stale_count} Stale</span>
         <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--error-bg);color:var(--error-text);">{inactive_count} Inactive</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#F3F4F6;color:#6B7280;">{unknown_count} Unknown &middot; {no_github} No GitHub</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--border);color:var(--ink-muted);">{unknown_count} Unknown &middot; {no_github} No GitHub</span>
     </div>"""
 
     if not stale_tools:

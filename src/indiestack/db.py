@@ -6048,6 +6048,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mooc": "learning",             # MOOC — Massive Open Online Course; "mooc platform", "mooc alternative" → Learning & Education
     "e-learning": "learning",       # hyphenated — "e-learning platform", "e-learning open source" → Learning & Education
     "elearning": "learning",        # compound — "elearning alternative", "elearning software" → Learning & Education
+    # Learning & Education — PKM / note-taking apps (Logseq, Zettlr, Obsidian all seeded as learning-education)
+    "pkm": "learning",              # PKM — Personal Knowledge Management; "pkm app", "pkm tool" → Learning & Education
+    "obsidian": "learning",         # Obsidian — graph-based PKM; "obsidian alternative" high volume → Learning & Education
+    "logseq": "learning",           # Logseq — already seeded as learning-education; synonym confirms routing
+    "zettlr": "learning",           # Zettlr — Markdown/academic editor seeded as learning-education
+    "note taking": "learning",      # bigram — "note taking app", "note taking tool" → Learning & Education
+    "notetaking": "learning",       # compound — "notetaking alternative" → Learning & Education
+    "zettelkasten": "learning",     # Zettelkasten — note-linking methodology; tools in Learning & Education
+    "second brain": "learning",     # bigram — "second brain app", "second brain tool" → Learning & Education (Tiago Forte)
+    # Analytics — Customer Data Platform tools (complement to "segment"→analytics)
+    "rudderstack": "analytics",     # RudderStack — open-source Segment CDP alternative (4k★) → Analytics & Metrics
     # Games & Entertainment — PixiJS disambiguation (pixi→developer is for conda; pixijs is the 2D game renderer)
     "pixijs": "games",              # PixiJS — fast 2D WebGL renderer for games/interactive graphics (43k★)
     "kaboom": "games",              # Kaboom.js — fun browser JS game programming library (7k★)
