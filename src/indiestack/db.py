@@ -6733,6 +6733,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pii masking": "security",                   # bigram — "pii masking tool", "mask pii data" → Security Tools
     "data anonymization": "security",            # bigram — "data anonymization gdpr", "anonymize dataset" → Security Tools
     "data masking": "security",                  # bigram — "data masking tool", "mask sensitive data" → Security Tools
+    "anonymisation": "security",                 # British spelling — "anonymisation library" → Security Tools
+    "data anonymisation": "security",            # British spelling bigram — same routing → Security Tools
+    "data obfuscation": "security",              # "data obfuscation technique", "obfuscate sensitive fields" → Security Tools
+    # AI-generated content detection / deepfakes — fired raw_first or mis-routed to CMS.
+    "gptzero": "ai",                             # brand — "gptzero alternative", "gptzero api" → AI & Automation
+    "deepfake": "ai",                            # "deepfake detection", "deepfake generator" → AI & Automation
+    # Bigrams override "content"→cms collision for AI detection queries.
+    "content detection": "ai",                  # "ai content detection", "llm content detection" → AI & Automation
+    "content authenticity": "ai",               # "content authenticity api", "c2pa standard" → AI & Automation
     # Probe pattern 43 (May 2026): headless commerce / iPaaS / license-compliance dead zones.
     # "headless"→cms fires at i=0 for ALL "headless X" queries, even when X is a commerce term.
     # headless commerce/ecommerce/storefront tools (Medusa, Saleor, Vendure) live in Developer Tools.
