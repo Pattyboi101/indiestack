@@ -202,6 +202,16 @@ When hunting for routing gaps, these query forms are historically tricky:
     the adjective is a new domain concept without a synonym. Fixed: "zero trust"→security
     bigram, "ztna"→security, "reactive"→frontend, "hallucination"→ai,
     "data quality"→analytics bigram, "schema registry"→message bigram (May 2026).
+
+28. "TLD-variant domain queries" — users paste tool domain names (make.com, supabase.com,
+    railway.app) into search. These become single tokens with the TLD attached and never
+    match bare tool names ("make", "supabase", "railway"). Always add TLD-variant entries
+    (.com/.io/.app/.so/.tech) alongside bare tool names in _CAT_SYNONYMS. Probe:
+    "<toolname>.com alternative" — if UNROUTED, the TLD form is missing.
+    Fixed (probe pattern 43, May 2026): make.com, render.com, railway.app, supabase.com,
+    vercel.com, planetscale.com, neon.tech, turso.tech, pocketbase.io, clerk.com,
+    auth0.com, workos.com, resend.com, loops.so, posthog.com, plane.so, cal.com,
+    netlify.com, heroku.com.
 """
 
 import sys
@@ -1631,6 +1641,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("in memory cache", "caching"),                  # "memory"→caching (stop-word "in" stripped)
     # Regression: "dynamic" alone still routes via other tokens.
     ("dynamic import javascript", "frontend"),       # "javascript"→frontend fires (no "analysis" token)
+    # Probe pattern 43 (May 2026): TLD-variant dead zones.
+    # Queries like "make.com alternative" or "supabase.com alternative" produce a
+    # single token ("make.com") that never matched bare "make" → raw_first fired.
+    # Fixed: added .com/.app/.io/.tech/.so entries for 19 popular tools.
+    ("make.com alternative", "background"),          # make.com → background (workflow automation)
+    ("render.com alternative", "devops"),            # render.com → devops
+    ("railway.app alternative", "devops"),           # railway.app → devops
+    ("supabase.com alternative", "database"),        # supabase.com → database
+    ("vercel.com alternative", "devops"),            # vercel.com → devops
+    ("planetscale.com alternative", "database"),     # planetscale.com → database
+    ("neon.tech alternative", "database"),           # neon.tech → database
+    ("turso.tech alternative", "database"),          # turso.tech → database
+    ("pocketbase.io alternative", "database"),       # pocketbase.io → database
+    ("clerk.com alternative", "authentication"),     # clerk.com → authentication
+    ("auth0.com alternative", "authentication"),     # auth0.com → authentication
+    ("workos.com alternative", "authentication"),    # workos.com → authentication
+    ("resend.com alternative", "email"),             # resend.com → email
+    ("loops.so alternative", "email"),               # loops.so → email
+    ("posthog.com alternative", "analytics"),        # posthog.com → analytics
+    ("plane.so alternative", "project"),             # plane.so → project
+    ("cal.com alternative", "scheduling"),           # cal.com → scheduling
+    # Regression: bare tool names without TLD still route correctly.
+    ("make workflow automation", "background"),      # bare "make"→background unaffected
+    ("supabase postgres", "database"),               # bare "supabase"→database unaffected
+    ("railway deployment", "devops"),                # bare "railway"→devops unaffected
 ]
 
 
