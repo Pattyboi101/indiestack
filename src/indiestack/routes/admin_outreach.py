@@ -168,7 +168,7 @@ def _render_launch_day_panel(subscriber_count, tool_count, maker_count):
 
 def _render_maker_countdown_panel(claimed_maker_count):
     """Render the Maker Launch Countdown email panel."""
-    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #E2B764;">
+    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid var(--gold);">
     <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 4px;">Maker Launch Countdown</h3>
     <p style="color:var(--ink-muted);font-size:13px;margin:0 0 8px;">Personalized email to claimed makers — connect Stripe before March 2. {claimed_maker_count} claimed makers.</p>
     <div style="display:flex;gap:10px;">
@@ -379,9 +379,9 @@ def _render_makers_tab(makers, needs_stripe_ids=None):
     dormant = sum(1 for m in makers if m["status"] == "dormant")
 
     pills = f"""<div style="display:flex;gap:10px;margin-bottom:20px;">
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#DCFCE7;color:#16a34a;">{active} Active</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#FEF3C7;color:#D97706;">{idle} Idle</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#FEE2E2;color:#DC2626;">{dormant} Dormant</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--success-bg);color:var(--success-text);">{active} Active</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--warning-bg);color:var(--warning-text);">{idle} Idle</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--error-bg);color:var(--error-text);">{dormant} Dormant</span>
     </div>"""
 
     needs_stripe_ids = needs_stripe_ids or set()
@@ -463,10 +463,10 @@ def _render_stale_tab(stale_tools, counts):
     no_github = counts.get("no_github", 0)
 
     pills = f"""<div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#DCFCE7;color:#16a34a;">{active_count} Active</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#FEF3C7;color:#D97706;">{stale_count} Stale</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#FEE2E2;color:#DC2626;">{inactive_count} Inactive</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#F3F4F6;color:#6B7280;">{unknown_count} Unknown &middot; {no_github} No GitHub</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--success-bg);color:var(--success-text);">{active_count} Active</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--warning-bg);color:var(--warning-text);">{stale_count} Stale</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--error-bg);color:var(--error-text);">{inactive_count} Inactive</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--cream-dark);color:var(--ink-muted);">{unknown_count} Unknown &middot; {no_github} No GitHub</span>
     </div>"""
 
     if not stale_tools:
@@ -543,7 +543,7 @@ def _social_card(card_id, title, text, include_tweet=False):
             style="display:inline-block;padding:8px 16px;background:#1DA1F2;color:white;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;">
             Tweet
         </a>'''
-    return f'''<div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
+    return f'''<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
     <h3 style="font-family:var(--font-display);font-size:15px;color:var(--ink);margin:0 0 10px;">{escape(title)}</h3>
     <div id="{card_id}" style="white-space:pre-wrap;font-size:13px;background:var(--cream-dark);padding:12px;border-radius:var(--radius-sm);margin-bottom:12px;line-height:1.5;">{escaped_text}</div>
     <div style="display:flex;gap:8px;">
@@ -619,7 +619,7 @@ async def render_email_section(db, request) -> str:
     toast = request.query_params.get("toast", "")
     result_html = ""
     if toast:
-        result_html = f'<div style="padding:12px 16px;background:#DCFCE7;color:#16a34a;border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;font-weight:600;">{escape(toast)}</div>'
+        result_html = f'<div style="padding:12px 16px;background:var(--success-bg);color:var(--success-text);border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;font-weight:600;">{escape(toast)}</div>'
     # Tool of the Week data
     top_tools = await get_top_tools_by_metric(db, metric='clicks', days=7, limit=5)
     for t in top_tools:
@@ -681,7 +681,7 @@ async def render_makers_section(db, request) -> str:
     toast = request.query_params.get("toast", "")
     toast_html = ""
     if toast:
-        toast_html = f'<div style="padding:12px 16px;background:#DCFCE7;color:#16a34a;border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;font-weight:600;">{escape(toast)}</div>'
+        toast_html = f'<div style="padding:12px 16px;background:var(--success-bg);color:var(--success-text);border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;font-weight:600;">{escape(toast)}</div>'
     # Maker readiness KPIs
     _c1 = await db.execute("SELECT COUNT(DISTINCT m.id) as cnt FROM makers m JOIN users u ON u.maker_id = m.id")
     total_claimed = (await _c1.fetchone())["cnt"]
@@ -695,9 +695,9 @@ async def render_makers_section(db, request) -> str:
         return f'<div class="card" style="text-align:center;padding:16px;"><div style="color:var(--ink-muted);font-size:13px;">{label}</div><div style="font-family:var(--font-display);font-size:26px;margin-top:4px;color:{color};">{value}</div></div>'
     readiness_html = f'''<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
         {_kpi("Claimed Makers", str(total_claimed))}
-        {_kpi("Stripe Connected", f"{stripe_count}/{total_claimed}", "#10B981" if stripe_count > 0 else "#DC2626")}
-        {_kpi("Have Pricing", f"{priced_count}/{total_claimed}", "#10B981" if priced_count > 0 else "#D97706")}
-        {_kpi("Ready to Sell", f"{ready_count}/{total_claimed}", "#10B981" if ready_count > 0 else "#DC2626")}
+        {_kpi("Stripe Connected", f"{stripe_count}/{total_claimed}", "var(--success)" if stripe_count > 0 else "var(--danger)")}
+        {_kpi("Have Pricing", f"{priced_count}/{total_claimed}", "var(--success)" if priced_count > 0 else "var(--warning-text)")}
+        {_kpi("Ready to Sell", f"{ready_count}/{total_claimed}", "var(--success)" if ready_count > 0 else "var(--danger)")}
     </div>'''
     return toast_html + readiness_html + _render_makers_tab(makers, needs_stripe_ids=needs_stripe_ids)
 

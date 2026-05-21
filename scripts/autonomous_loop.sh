@@ -104,6 +104,7 @@ Then probe new gaps using the offline route_query() helper — test these query 
   New AI agents: 'pydantic ai', 'agno framework', 'mastra ai', 'smolagents'
   Orphaned 2nd-token probe: for any two-word concept, check each token individually —
     if token-0 is raw_first AND token-1 maps to the wrong category, add a bigram.
+  Auth: 'multi tenancy', 'impersonation', 'user impersonation', 'tenant isolation'
 For each misfire, check _CAT_SYNONYMS (supports bigram keys). Fix and commit.
 After fixing db.py, commit with 'fix: N search routing gaps — [short desc] (M/M pass)'.
 

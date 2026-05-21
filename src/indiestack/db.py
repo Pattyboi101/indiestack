@@ -3430,6 +3430,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Multi-tenancy (multi-tenant SaaS auth, tenant isolation)
     "multitenancy": "authentication",  # "multi-tenancy", "tenant isolation" → Authentication
     "multitenant": "authentication",   # "multitenant auth", "multitenant saas" → Authentication
+    "tenancy": "authentication",       # "multi tenancy" spaced form; "data tenancy isolation" → Authentication
+    "multi tenancy": "authentication", # bigram — overrides raw_first for exact "multi tenancy" query
+    # Impersonation — WorkOS/Clerk "user impersonation" feature; lives in Authentication
+    "impersonation": "authentication", # "user impersonation", "impersonation login" → Authentication
+    "impersonate": "authentication",   # "impersonate user", "impersonate account" → Authentication
     # Web scraping (verb form, e.g. "scrape a website")
     "scrape": "developer",          # "scrape website", "scrape html" → Developer Tools
     # AI — chatbots, prompt engineering, fine-tuning

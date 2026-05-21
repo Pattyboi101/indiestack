@@ -427,6 +427,18 @@ TEST_CASES: list[tuple[str, str]] = [
     ("fossa alternative", "developer"),             # "fossa"→developer (was raw_first)
     # Regression: "compliance" without "license" still routes to security
     ("soc2 compliance tool", "security"),           # "compliance"→security fires (no collision)
+    # Probe pattern (May 2026): multi-tenancy / impersonation dead zones.
+    # "multi tenancy" (spaced) fired raw_first — neither "multi" nor "tenancy" was mapped.
+    # "impersonation"/"impersonate" also fired raw_first. WorkOS, Clerk, Auth0 handle
+    # multi-tenant orgs and user impersonation — all live in Authentication.
+    ("multi tenancy", "authentication"),             # bigram + "tenancy" token → Authentication
+    ("multi tenancy saas", "authentication"),        # 3-token — "tenancy" at position 1 fires
+    ("impersonation", "authentication"),             # bare token → Authentication
+    ("user impersonation", "authentication"),        # "impersonation" token fires
+    ("impersonate user", "authentication"),          # "impersonate" token → Authentication
+    # Regression: existing multi-tenant terms still route correctly
+    ("multi tenant architecture", "authentication"), # "tenant"→auth pre-existing
+    ("tenant isolation", "authentication"),          # "tenant"→auth pre-existing
 ]
 
 
