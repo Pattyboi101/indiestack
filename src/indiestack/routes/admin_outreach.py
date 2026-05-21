@@ -29,7 +29,7 @@ SMTP_FROM = os.environ.get("SMTP_FROM", "")
 def _render_totw_panel(top_tools):
     """Render Tool of the Week panel with top 5 tools by clicks."""
     if not top_tools:
-        return '''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #00D4F5;">
+        return '''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid var(--slate);">
             <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 8px;">Tool of the Week</h3>
             <p style="color:var(--ink-muted);font-size:13px;margin:0;">No click data this week yet.</p>
         </div>'''
@@ -42,7 +42,7 @@ def _render_totw_panel(top_tools):
         maker_email = escape(str(t.get("maker_email") or "\u2014"))
         rows += f'''<tr style="border-bottom:1px solid var(--border);">
             <td style="padding:8px;font-size:13px;font-weight:600;">
-                <a href="/tool/{slug}" style="color:#00D4F5;text-decoration:none;">{name}</a>
+                <a href="/tool/{slug}" style="color:var(--slate);text-decoration:none;">{name}</a>
             </td>
             <td style="padding:8px;font-size:13px;text-align:center;font-weight:700;color:var(--ink);">{clicks}</td>
             <td style="padding:8px;font-size:13px;font-family:var(--font-mono);">{maker_email}</td>
@@ -52,14 +52,14 @@ def _render_totw_panel(top_tools):
                     <input type="hidden" name="slug" value="{slug}">
                     <button type="submit"
                             onclick="return confirm('Send Tool of the Week email for {name}?')"
-                            style="padding:4px 12px;font-size:12px;background:#00D4F5;color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;">
+                            style="padding:4px 12px;font-size:12px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;">
                         Send Winner Email
                     </button>
                 </form>
             </td>
         </tr>'''
 
-    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #00D4F5;">
+    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid var(--slate);">
     <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 4px;">Tool of the Week</h3>
     <p style="color:var(--ink-muted);font-size:13px;margin:0 0 12px;">Top 5 tools by outbound clicks (last 7 days). Send a winner congrats email.</p>
     <div style="overflow-x:auto;">
@@ -89,7 +89,7 @@ def _render_digest_panel(new_count, top_clicked_name, top_search, subscriber_cou
         summary_parts.append(f"top search: {escape(top_search)}")
     summary = ", ".join(summary_parts)
 
-    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #00D4F5;">
+    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid var(--slate);">
     <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 4px;">Weekly Digest Newsletter</h3>
     <p style="color:var(--ink-muted);font-size:13px;margin:0 0 8px;">Auto-generated from DB data. Zero writing needed — one click to send.</p>
     <p style="font-size:13px;color:var(--ink);margin:0 0 12px;padding:8px 12px;background:var(--cream-dark);border-radius:var(--radius-sm);">
@@ -107,7 +107,7 @@ def _render_digest_panel(new_count, top_clicked_name, top_search, subscriber_cou
             <input type="hidden" name="action" value="send_digest_all">
             <button type="submit"
                     onclick="return confirm(\'Send weekly digest to all {subscriber_count} subscribers?\')"
-                    style="padding:8px 16px;background:#00D4F5;color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
+                    style="padding:8px 16px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
                 Send to All {subscriber_count}
             </button>
         </form>
@@ -143,7 +143,7 @@ def _render_ph_launch_panel(subscriber_count, user_count, tool_count):
 
 def _render_launch_day_panel(subscriber_count, tool_count, maker_count):
     """Render the Launch Day Email one-click card."""
-    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #00D4F5;">
+    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid var(--slate);">
     <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 4px;">Launch Day Blast</h3>
     <p style="color:var(--ink-muted);font-size:13px;margin:0 0 8px;">March 2 launch email. {tool_count} tools, {maker_count} makers.</p>
     <div style="display:flex;gap:10px;">
@@ -158,7 +158,7 @@ def _render_launch_day_panel(subscriber_count, tool_count, maker_count):
             <input type="hidden" name="action" value="send_launch_all">
             <button type="submit"
                     onclick="return confirm(\'Send launch day email to all {subscriber_count} subscribers?\')"
-                    style="padding:8px 16px;background:#00D4F5;color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
+                    style="padding:8px 16px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
                 Send to All {subscriber_count}
             </button>
         </form>
@@ -183,7 +183,7 @@ def _render_maker_countdown_panel(claimed_maker_count):
             <input type="hidden" name="action" value="send_maker_countdown_all">
             <button type="submit"
                     onclick="return confirm(\'Send countdown email to all {claimed_maker_count} claimed makers?\')"
-                    style="padding:8px 16px;background:#00D4F5;color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
+                    style="padding:8px 16px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
                 Send to All {claimed_maker_count} Makers
             </button>
         </form>
@@ -203,7 +203,7 @@ def _render_email_tab(subscribers, result_html="", totw_html="", digest_html="",
 {digest_html}
 {launch_day_html_panel}
 {maker_countdown_panel}
-<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #00D4F5;">
+<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid var(--slate);">
     <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 8px;">Marketplace Preview Email</h3>
     <p style="color:var(--ink-muted);font-size:13px;margin:0 0 12px;">Auto-generated email featuring top priced tools. Subject: "Marketplace Opens Monday"</p>
     <div style="display:flex;gap:10px;">
@@ -220,7 +220,7 @@ def _render_email_tab(subscribers, result_html="", totw_html="", digest_html="",
             <input type="hidden" name="target" value="all">
             <button type="submit"
                     onclick="return confirm('Send marketplace preview to all {count} subscribers?')"
-                    style="padding:8px 16px;background:#00D4F5;color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
+                    style="padding:8px 16px;background:var(--slate);color:#0D1B2A;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;">
                 Send to All {count}
             </button>
         </form>
@@ -417,7 +417,7 @@ def _render_makers_tab(makers, needs_stripe_ids=None):
                     onsubmit="return confirm('Send Stripe Connect nudge to {name}?')">
                 <input type="hidden" name="action" value="send_stripe_nudge">
                 <input type="hidden" name="maker_id" value="{maker_id}">
-                <button type="submit" class="btn btn-sm" style="background:#00D4F5;color:#1A2D4A;font-size:12px;padding:4px 10px;">
+                <button type="submit" class="btn btn-sm" style="background:var(--slate);color:#1A2D4A;font-size:12px;padding:4px 10px;">
                     Stripe Nudge
                 </button>
             </form>'''
@@ -495,7 +495,7 @@ def _render_stale_tab(stale_tools, counts):
 
         rows += f"""<tr style="border-bottom:1px solid var(--border);">
             <td style="padding:10px 8px;font-size:13px;font-weight:600;">
-                <a href="/tool/{slug}" style="color:#00D4F5;text-decoration:none;">{name}</a>
+                <a href="/tool/{slug}" style="color:var(--slate);text-decoration:none;">{name}</a>
             </td>
             <td style="padding:10px 8px;font-size:13px;">
                 {'<a href="' + github_url + '" target="_blank" style="color:var(--ink-muted);text-decoration:none;font-family:var(--font-mono);font-size:12px;">' + github_url.replace("https://github.com/", "") + '</a>' if github_url else ''}
@@ -508,7 +508,7 @@ def _render_stale_tab(stale_tools, counts):
     instructions = '''<div style="margin-top:24px;padding:16px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--radius-sm);">
         <h4 style="font-family:var(--font-display);font-size:14px;color:var(--ink);margin:0 0 8px;">Run Freshness Check</h4>
         <p style="font-size:13px;color:var(--ink-muted);margin:0 0 8px;">SSH into the server and run the checker script:</p>
-        <code style="display:block;padding:10px;background:#1A2D4A;color:#00D4F5;border-radius:6px;font-size:13px;font-family:var(--font-mono);overflow-x:auto;">flyctl ssh console -a indiestack -C "python3 scripts/check_tool_freshness.py"</code>
+        <code style="display:block;padding:10px;background:var(--terracotta);color:var(--slate);border-radius:6px;font-size:13px;font-family:var(--font-mono);overflow-x:auto;">flyctl ssh console -a indiestack -C "python3 scripts/check_tool_freshness.py"</code>
         <p style="font-size:12px;color:var(--ink-muted);margin:8px 0 0;">Set GITHUB_TOKEN env var on Fly for higher API rate limits (5000 req/hr vs 60).</p>
     </div>'''
 
