@@ -408,6 +408,25 @@ TEST_CASES: list[tuple[str, str]] = [
     ("masking library", "security"),                # "masking"→security fires at i=0
     # Regression — GDPR compliance tools still route to security
     ("gdpr compliance tool", "security"),           # "gdpr"→security fires at i=0
+
+    # Probe pattern 43 (May 2026): headless commerce / iPaaS / license-compliance dead zones.
+    # "headless"→cms fires for ALL "headless X"; bigrams now override for commerce/checkout intent.
+    ("headless commerce platform", "developer"),     # bigram "headless commerce"→developer (overrides "headless"→cms)
+    ("headless ecommerce engine", "developer"),      # bigram "headless ecommerce"→developer
+    ("headless storefront nextjs", "developer"),     # bigram "headless storefront"→developer
+    ("headless checkout flow", "payments"),          # bigram "headless checkout"→payments
+    # Regression: "headless cms" and "headless blog" still route to cms
+    ("headless cms contentful", "cms"),              # "headless"→cms fires (no commerce bigram)
+    ("headless blog platform", "cms"),               # "headless"→cms still fires correctly
+    # "ipaas" bare token → ai (n8n, Make.com, Zapier alternatives in AI & Automation)
+    ("ipaas tool", "ai"),                            # "ipaas"→ai (was raw_first)
+    ("ipaas vs zapier", "ai"),                       # "ipaas"→ai fires at i=0
+    # "license" bare token → developer; FOSSA, licensecheck, REUSE → Developer Tools
+    ("license checker", "developer"),               # "license"→developer (was raw_first)
+    ("license scanning tool", "developer"),         # "license"→developer fires at i=0
+    ("fossa alternative", "developer"),             # "fossa"→developer (was raw_first)
+    # Regression: "compliance" without "license" still routes to security
+    ("soc2 compliance tool", "security"),           # "compliance"→security fires (no collision)
 ]
 
 

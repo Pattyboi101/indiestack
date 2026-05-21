@@ -6733,6 +6733,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pii masking": "security",                   # bigram — "pii masking tool", "mask pii data" → Security Tools
     "data anonymization": "security",            # bigram — "data anonymization gdpr", "anonymize dataset" → Security Tools
     "data masking": "security",                  # bigram — "data masking tool", "mask sensitive data" → Security Tools
+    # Probe pattern 43 (May 2026): headless commerce / iPaaS / license-compliance dead zones.
+    # "headless"→cms fires at i=0 for ALL "headless X" queries, even when X is a commerce term.
+    # headless commerce/ecommerce/storefront tools (Medusa, Saleor, Vendure) live in Developer Tools.
+    # Bigrams checked before bare tokens so these override the "headless"→cms bare mapping.
+    "headless commerce": "developer",    # bigram — "headless commerce platform", "headless commerce engine" → Developer Tools
+    "headless ecommerce": "developer",   # bigram — "headless ecommerce solution" → Developer Tools (Medusa, Saleor, Vendure)
+    "headless storefront": "developer",  # bigram — "headless storefront nextjs" → Developer Tools
+    "headless checkout": "payments",     # bigram — "headless checkout flow", "custom checkout" → Payments
+    # "iPaaS" (Integration Platform as a Service) — n8n, Make.com, Zapier, Activepieces → AI & Automation.
+    # Note: "integration platform" can't form a bigram — both "integration" and "platform" are stop words.
+    "ipaas": "ai",                       # iPaaS abbreviation — "ipaas tool", "ipaas vs zapier" → AI & Automation
+    # "license" — FOSSA, licensecheck, choose-a-license, REUSE tool → Developer Tools.
+    # Bare token fires raw_first; no category boost.
+    "license": "developer",              # "license checker", "open source license", "license compliance" → Developer Tools
+    "fossa": "developer",                # FOSSA — license compliance and dependency scanning tool → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
