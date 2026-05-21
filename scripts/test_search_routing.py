@@ -454,6 +454,32 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — "environment variables" still routes to security; "email preview" still routes to email.
     ("environment variables manager", "security"),  # "environment"→security unaffected (no preview bigram)
     ("email preview template", "email"),             # "email"→email fires before "preview"→devops
+    #
+    # Probe 48 (May 2026): BI + product onboarding/walkthrough dead zones.
+    # "business intelligence tool" fired raw_first — bare "business" and "intelligence" had no mapping
+    # ("bi" covered the abbreviation but not the spelled-out phrase). Metabase/Redash/Superset unreachable
+    # for this natural-language query form. Fixed: bigram "business intelligence"→analytics.
+    # "user onboarding software"/"product onboarding flow" mis-routed via "onboarding"→frontend —
+    # tool synonyms (appcues/userpilot/userflow) existed but no generic bigrams covered the pattern.
+    # "onboarding flow builder" same issue. Fixed: bigrams "user onboarding","product onboarding",
+    # "onboarding flow"→feedback.
+    # "interactive walkthrough" fired raw_first — bare "walkthrough" unmapped. Appcues/Pendo/Userpilot
+    # all use walkthrough as a synonym for in-app product tours. Fixed: bare "walkthrough"→feedback
+    # + bigram "interactive walkthrough"→feedback.
+    # NOTE: "product tour" bigram intentionally NOT added — would break regression test
+    # "product tour library javascript"→frontend (bare "library" is a stop word so meaningful=
+    # [product,tour,javascript]; bigram "product tour" fires before "javascript"→frontend).
+    ("business intelligence tool", "analytics"),    # bigram "business intelligence"→analytics (was raw_first)
+    ("business intelligence platform", "analytics"),# second form
+    ("user onboarding software", "feedback"),        # bigram "user onboarding"→feedback (was frontend)
+    ("product onboarding flow", "feedback"),         # bigram "product onboarding"→feedback (was frontend)
+    ("product onboarding software", "feedback"),     # second form
+    ("onboarding flow builder", "feedback"),         # bigram "onboarding flow"→feedback (was frontend)
+    ("interactive walkthrough", "feedback"),         # bigram → Feedback (was raw_first)
+    ("product walkthrough guide", "feedback"),       # bare "walkthrough"→feedback (was raw_first)
+    # Regressions — "bi tool" / "product tour library" unaffected.
+    ("bi tool", "analytics"),                        # bare "bi"→analytics unchanged
+    ("product tour library javascript", "frontend"), # bare "tour"→frontend unchanged (library=stop word)
 ]
 
 

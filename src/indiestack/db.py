@@ -3633,6 +3633,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "disaster": "devops",           # "disaster recovery", "DR strategy" → DevOps
     # Analytics — BI and reporting tools (Metabase, Redash, Superset, Lightdash)
     "bi": "analytics",              # "BI tool", "business intelligence" → Analytics & Metrics
+    "business intelligence": "analytics",  # bigram — "business intelligence tool" → Analytics (bare tokens have no mapping)
     "reporting": "analytics",       # "reporting tool", "sql report" → Analytics & Metrics
     "metabase": "analytics",        # Metabase — open-source BI and dashboards (38k★)
     "redash": "analytics",          # Redash — data visualization and dashboards (26k★)
@@ -6565,6 +6566,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "userpilot": "feedback",        # Userpilot — user onboarding + product adoption; "userpilot alternative" → Feedback
     "chameleon": "feedback",        # Chameleon.io — in-app product tours; "chameleon alternative" → Feedback
     "userflow": "feedback",         # Userflow — no-code user onboarding builder; "userflow alternative" → Feedback
+    # Feedback — onboarding/walkthrough bigrams (beat "onboarding"→frontend for SaaS queries)
+    "user onboarding": "feedback",      # bigram — "user onboarding software" beats "onboarding"→frontend → Feedback
+    "product onboarding": "feedback",   # bigram — "product onboarding flow" beats "onboarding"→frontend → Feedback
+    "onboarding flow": "feedback",      # bigram — "onboarding flow builder" beats "onboarding"→frontend → Feedback
+    "walkthrough": "feedback",          # bare — "product walkthrough", "interactive walkthrough" → Feedback & Reviews
+    "interactive walkthrough": "feedback",  # bigram — overrides raw_first → Feedback & Reviews
     # Analytics — behavior analytics / session recording tools
     "mouseflow": "analytics",       # Mouseflow — heatmaps + session recording; "mouseflow alternative" → Analytics
     "smartlook": "analytics",       # Smartlook — session recording + event analytics; "smartlook alternative" → Analytics
