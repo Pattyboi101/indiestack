@@ -379,9 +379,9 @@ def _render_makers_tab(makers, needs_stripe_ids=None):
     dormant = sum(1 for m in makers if m["status"] == "dormant")
 
     pills = f"""<div style="display:flex;gap:10px;margin-bottom:20px;">
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#DCFCE7;color:#16a34a;">{active} Active</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#FEF3C7;color:#D97706;">{idle} Idle</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#FEE2E2;color:#DC2626;">{dormant} Dormant</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--success-bg);color:var(--success-text);">{active} Active</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--warning-bg);color:var(--warning-text);">{idle} Idle</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--error-bg);color:var(--error-text);">{dormant} Dormant</span>
     </div>"""
 
     needs_stripe_ids = needs_stripe_ids or set()
@@ -463,9 +463,9 @@ def _render_stale_tab(stale_tools, counts):
     no_github = counts.get("no_github", 0)
 
     pills = f"""<div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#DCFCE7;color:#16a34a;">{active_count} Active</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#FEF3C7;color:#D97706;">{stale_count} Stale</span>
-        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#FEE2E2;color:#DC2626;">{inactive_count} Inactive</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--success-bg);color:var(--success-text);">{active_count} Active</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--warning-bg);color:var(--warning-text);">{stale_count} Stale</span>
+        <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:var(--error-bg);color:var(--error-text);">{inactive_count} Inactive</span>
         <span style="padding:4px 14px;border-radius:9999px;font-size:13px;font-weight:600;background:#F3F4F6;color:#6B7280;">{unknown_count} Unknown &middot; {no_github} No GitHub</span>
     </div>"""
 
@@ -619,7 +619,7 @@ async def render_email_section(db, request) -> str:
     toast = request.query_params.get("toast", "")
     result_html = ""
     if toast:
-        result_html = f'<div style="padding:12px 16px;background:#DCFCE7;color:#16a34a;border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;font-weight:600;">{escape(toast)}</div>'
+        result_html = f'<div style="padding:12px 16px;background:var(--success-bg);color:var(--success-text);border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;font-weight:600;">{escape(toast)}</div>'
     # Tool of the Week data
     top_tools = await get_top_tools_by_metric(db, metric='clicks', days=7, limit=5)
     for t in top_tools:
@@ -681,7 +681,7 @@ async def render_makers_section(db, request) -> str:
     toast = request.query_params.get("toast", "")
     toast_html = ""
     if toast:
-        toast_html = f'<div style="padding:12px 16px;background:#DCFCE7;color:#16a34a;border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;font-weight:600;">{escape(toast)}</div>'
+        toast_html = f'<div style="padding:12px 16px;background:var(--success-bg);color:var(--success-text);border-radius:var(--radius-sm);margin-bottom:16px;font-size:14px;font-weight:600;">{escape(toast)}</div>'
     # Maker readiness KPIs
     _c1 = await db.execute("SELECT COUNT(DISTINCT m.id) as cnt FROM makers m JOIN users u ON u.maker_id = m.id")
     total_claimed = (await _c1.fetchone())["cnt"]
@@ -695,9 +695,9 @@ async def render_makers_section(db, request) -> str:
         return f'<div class="card" style="text-align:center;padding:16px;"><div style="color:var(--ink-muted);font-size:13px;">{label}</div><div style="font-family:var(--font-display);font-size:26px;margin-top:4px;color:{color};">{value}</div></div>'
     readiness_html = f'''<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
         {_kpi("Claimed Makers", str(total_claimed))}
-        {_kpi("Stripe Connected", f"{stripe_count}/{total_claimed}", "#10B981" if stripe_count > 0 else "#DC2626")}
-        {_kpi("Have Pricing", f"{priced_count}/{total_claimed}", "#10B981" if priced_count > 0 else "#D97706")}
-        {_kpi("Ready to Sell", f"{ready_count}/{total_claimed}", "#10B981" if ready_count > 0 else "#DC2626")}
+        {_kpi("Stripe Connected", f"{stripe_count}/{total_claimed}", "var(--success)" if stripe_count > 0 else "var(--danger)")}
+        {_kpi("Have Pricing", f"{priced_count}/{total_claimed}", "var(--success)" if priced_count > 0 else "var(--warning-text)")}
+        {_kpi("Ready to Sell", f"{ready_count}/{total_claimed}", "var(--success)" if ready_count > 0 else "var(--danger)")}
     </div>'''
     return toast_html + readiness_html + _render_makers_tab(makers, needs_stripe_ids=needs_stripe_ids)
 

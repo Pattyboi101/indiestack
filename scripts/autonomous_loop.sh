@@ -327,6 +327,15 @@ After all fixes: python3 scripts/test_search_routing.py should report 1048+ test
     "llm monitoring"/"llm observability"→monitoring; bigram "prompt injection"→security;
     bigram "bill materials"→security (survives stop-word strip of "software"/"of");
     bigram "mobile analytics"→analytics. 23 new tests added.
+  Probe 46 (May 2026): localization/consent/build-tool/flux dead zones — "locize"/"lokalise" fired
+    raw_first (Crowdin/Weblate already mapped; missing named-tool synonyms). "cookiebot","osano","onetrust",
+    "usercentrics" fired raw_first — GDPR consent tools belong in Security. "grunt","gulp" fired raw_first —
+    JS task runners belong in Frontend. "flux cd"/"flux gitops" mis-routed to ai via bare "flux"→ai (FLUX.1
+    image model collision; FluxCD is a CNCF GitOps operator). "code formatting tool" fired raw_first ("code"
+    has no standalone mapping; bigram "code formatting" was missing). Fixed: bare "locize","lokalise",
+    "phrase","transifex"→localization; "cookiebot","osano","onetrust","usercentrics"→security; "grunt","gulp"→
+    frontend; bigrams "flux cd"/"flux gitops"→devops; bigrams "code formatting"/"code format"→testing.
+    Regression guard: bare "flux" without qualifier still routes to ai. 20 new tests added.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
