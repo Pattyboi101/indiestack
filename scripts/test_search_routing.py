@@ -1862,6 +1862,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("rudderstack alternative", "analytics"),        # bare "rudderstack"→analytics (was raw_first)
     # Regression — "segment alternative" still routes to analytics via "segment"→analytics.
     ("segment alternative", "analytics"),            # "segment"→analytics unchanged
+    #
+    # Probe pattern 48 — "event X" analytics dead zones
+    #
+    # "event" bare token → message (Message Queue) for event streaming (Kafka, Kinesis).
+    # But "event analytics" / "event capture" queries target product analytics (PostHog, Mixpanel).
+    # "tracking" is in _FTS_STOP_WORDS so "event tracking" bigram can never fire;
+    # use second-token bigrams "event analytics" and "event capture" instead.
+    # "product events" fires "events"→message at i=1 — bigram overrides at i=0.
+    ("event analytics tool", "analytics"),           # bigram "event analytics"→analytics (overrides "event"→message)
+    ("event capture sdk", "analytics"),              # bigram "event capture"→analytics (overrides "event"→message)
+    ("product events analytics", "analytics"),       # bigram "product events"→analytics (overrides "events"→message)
+    # Regression — event streaming/sourcing must still route to message queue.
+    ("event streaming kafka", "message"),            # bare "event"→message unchanged
+    ("event driven architecture", "message"),        # bare "event"→message unchanged
 ]
 
 

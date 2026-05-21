@@ -3939,6 +3939,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "funnel": "analytics",          # "conversion funnel", "funnel analysis" → Analytics & Metrics
     "conversion rate": "analytics", # bigram — "conversion rate optimization" → Analytics (overrides "rate"→api)
     "cohort": "analytics",          # "cohort analysis", "user cohorts" → Analytics & Metrics
+    # Analytics — "event X" bigrams override bare "event"→message for product-analytics queries.
+    # "event tracking" can't use a bigram — "tracking" is in _FTS_STOP_WORDS and is stripped.
+    # Use the second surviving token as a bigram anchor instead.
+    "event analytics": "analytics",     # bigram — "event analytics dashboard", "product event analytics" → Analytics (overrides "event"→message at i=0)
+    "event capture": "analytics",       # bigram — "event capture sdk", "event capture library" (PostHog, Heap) → Analytics
+    "product events": "analytics",      # bigram — "product events analytics", "product events sdk" → Analytics (overrides "events"→message at i=1)
     # Project management — Gantt charts (commonly searched feature)
     "gantt": "project",             # "Gantt chart", "Gantt timeline view" → Project Management
     # User onboarding / product tours (Intro.js, Shepherd.js, Driver.js)
