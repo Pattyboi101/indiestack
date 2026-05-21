@@ -313,7 +313,12 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     supabase.com, vercel.com, planetscale.com, neon.tech, turso.tech, pocketbase.io, clerk.com,
     auth0.com, workos.com, resend.com, loops.so, posthog.com, plane.so, cal.com, netlify.com, heroku.com.
     RULE: Always add TLD variants alongside bare names when adding a new tool to _CAT_SYNONYMS.
-After all fixes: python3 scripts/test_search_routing.py should report 983+ tests passing (43 probe patterns).
+  Probe pattern 44 (May 2026): functional-testing / parallel-test dead zones.
+    "functional testing"/"functional test" fired "functional"→developer (fp-ts/Ramda collision).
+    "parallel test runner"/"parallel testing" fired "parallel"→background (Celery/Ray collision).
+    Fixed: bigrams "functional testing"/"functional test"→testing; "parallel test"/"parallel testing"→testing.
+    Regressions guarded: "functional programming"→developer, "parallel processing"→background unaffected.
+After all fixes: python3 scripts/test_search_routing.py should report 992+ tests passing (44 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:

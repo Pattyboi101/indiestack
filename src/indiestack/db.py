@@ -8277,6 +8277,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "knowledge base" spaced bigram intentionally NOT added (see line ~6381 note) —
     # "knowledge base llm/chatbot" must route to AI (RAG use case). Hyphenated forms already cover
     # pure KB-tooling queries: "knowledge-base"→documentation, "knowledgebase"→documentation.
+
+    # Probe pattern 44 (May 2026): functional-testing / parallel-test dead zones.
+    # "functional testing"/"functional test" → bare "functional"→developer fires first (fp-ts, Ramda etc.)
+    # but "functional testing" is an established QA term (Selenium, Playwright, Cypress) → Testing Tools.
+    # "parallel test"/"parallel testing" → bare "parallel"→background fires first (Celery, Ray, Dask)
+    # but "parallel test runner"/"parallel testing" means pytest-xdist, Vitest, Jest --maxWorkers → Testing.
+    # Bigrams fire before individual tokens so these override without breaking regressions.
+    "functional testing": "testing",    # bigram — "functional testing framework", "functional testing suite" → Testing Tools
+    "functional test": "testing",       # bigram — "functional test runner", "functional test automation" → Testing Tools
+    "parallel test": "testing",         # bigram — "parallel test runner", "parallel test execution" → Testing Tools
+    "parallel testing": "testing",      # bigram — "parallel testing vitest", "run parallel testing" → Testing Tools
+    # Regressions guarded: "functional programming"→developer, "functional reactive"→developer,
+    # "parallel processing"→background, "parallel workers celery"→background all unaffected
+    # (none of those queries contain "test"/"testing" as a second token).
 }
 
 _FTS_STOP_WORDS = {

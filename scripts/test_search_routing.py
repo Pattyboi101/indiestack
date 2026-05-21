@@ -1666,6 +1666,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("make workflow automation", "background"),      # bare "make"→background unaffected
     ("supabase postgres", "database"),               # bare "supabase"→database unaffected
     ("railway deployment", "devops"),                # bare "railway"→devops unaffected
+    # Probe pattern 44 (May 2026): functional-testing / parallel-test dead zones.
+    # "functional testing" fired "functional"→developer (fp-ts collision).
+    # "parallel test runner" fired "parallel"→background (Celery/Ray collision).
+    # Fixed: bigrams "functional testing"/"functional test"→testing; "parallel test"/"parallel testing"→testing.
+    ("functional testing framework", "testing"),     # bigram "functional testing"→testing (was developer)
+    ("functional test automation", "testing"),       # bigram "functional test"→testing (was developer)
+    ("parallel test runner", "testing"),             # bigram "parallel test"→testing (was background)
+    ("parallel testing vitest", "testing"),          # bigram "parallel testing"→testing (was background)
+    ("parallel test execution", "testing"),          # bigram "parallel test"→testing
+    # Regression: functional/parallel without testing tokens still route correctly.
+    ("functional programming library", "developer"), # "functional"→developer unaffected (no test token)
+    ("functional reactive rxjs", "developer"),       # "functional"→developer unaffected
+    ("parallel processing celery", "background"),    # "parallel"→background unaffected (no test token)
+    ("parallel workers ray", "background"),          # "parallel"→background unaffected
 ]
 
 
