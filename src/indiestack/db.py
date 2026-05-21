@@ -2899,6 +2899,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "turbopack": "frontend",
     "esbuild": "frontend",
     "webpack": "frontend",
+    "grunt": "frontend",        # Grunt — JS task runner (webpack/gulp era build tooling)
+    "gulp": "frontend",         # Gulp — streaming build system for JS projects
     "zustand": "frontend",
     "mobx": "frontend",
     "jotai": "frontend",
@@ -2982,6 +2984,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "internationalization": "localization",
     "crowdin": "localization",          # Crowdin — i18n platform
     "weblate": "localization",          # Weblate — self-hosted translation
+    "locize": "localization",           # Locize — i18n-as-a-service backed by i18next
+    "lokalise": "localization",         # Lokalise — translation management platform
+    "phrase": "localization",           # Phrase (formerly Memsource) — i18n SaaS
+    "transifex": "localization",        # Transifex — localization platform
+    "usercentrics": "security",         # Usercentrics — consent management (GDPR/CCPA)
+    "cookiebot": "security",            # Cookiebot — cookie consent & GDPR compliance
+    "osano": "security",                # Osano — privacy compliance platform
+    "onetrust": "security",             # OneTrust — enterprise privacy/consent SaaS
     # CLI tools — "CLI Tools" category name, LIKE '%cli%' matches ✓
     "cli": "cli",                       # bare "cli" query — "cli parser", "cli framework rust"
     "commandline": "cli",
@@ -3239,6 +3249,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "helm": "devops",               # Helm — Kubernetes package manager (charts)
     "argocd": "devops",             # Argo CD — GitOps continuous delivery for Kubernetes
     "fluxcd": "devops",             # Flux CD — GitOps operator for Kubernetes
+    "flux cd": "devops",            # bigram — "flux cd alternative", "flux cd vs argo" → DevOps (overrides flux→ai)
+    "flux gitops": "devops",        # bigram — "flux gitops kubernetes", "flux gitops operator" → DevOps
     # Background / workflow orchestration
     "dagster": "background",         # Dagster — data pipeline + asset-based orchestration
     "prefect": "background",         # Prefect — modern Python workflow orchestration
@@ -7967,6 +7979,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # SonarQube, CodeClimate, Semgrep, DeepSource live in Testing Tools, NOT Frontend Frameworks.
     "static analysis": "testing",        # bigram — "static analysis tool", "static analysis typescript" → Testing Tools
     "code analysis": "testing",          # bigram — "code analysis tool", "code analysis linting" → Testing Tools
+    "code formatting": "testing",        # bigram — "code formatting tool", "code formatting javascript" → Testing (Prettier, ESLint, Biome)
+    "code format": "testing",            # bigram — "code format tool", "code format on save" → Testing Tools
     # Frontend Frameworks — "design system" queries target component libraries (shadcn/ui, Radix, MUI, Storybook).
     # Bare "design"→design-creative is correct for Figma alternatives; "design system" is UI component territory.
     "design system": "frontend",         # bigram — "design system react", "open source design system" → Frontend Frameworks

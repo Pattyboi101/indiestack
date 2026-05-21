@@ -1784,6 +1784,47 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — bare "mobile" queries (no analytics) still route to frontend.
     ("mobile sdk integration", "frontend"),          # "mobile"→frontend bare token unchanged
     ("mobile app framework", "frontend"),            # "mobile"→frontend fires (no analytics bigram match)
+    #
+    # Probe pattern 46 — localization/consent/build-tool/flux dead zones
+    #
+    # Localization tools — locize and lokalise fired raw_first (no bare token mapping).
+    # Weblate and crowdin were already mapped; added locize, lokalise, phrase, transifex.
+    ("locize alternative", "localization"),          # bare "locize"→localization (was raw_first)
+    ("lokalise alternative", "localization"),        # bare "lokalise"→localization (was raw_first)
+    ("phrase i18n", "localization"),                 # bare "phrase"→localization
+    ("transifex alternative", "localization"),       # bare "transifex"→localization
+    # Regression — "weblate" was already mapped; unchanged.
+    ("weblate alternative", "localization"),         # "weblate"→localization unchanged
+    #
+    # Consent/privacy tools — cookiebot, osano, onetrust, usercentrics all fired raw_first.
+    # "consent" and "privacy" bare tokens already mapped to security; added named tools.
+    ("cookiebot alternative", "security"),           # bare "cookiebot"→security (was raw_first)
+    ("osano alternative", "security"),               # bare "osano"→security (was raw_first)
+    ("onetrust alternative", "security"),            # bare "onetrust"→security (was raw_first)
+    ("usercentrics alternative", "security"),        # bare "usercentrics"→security (was raw_first)
+    # Regression — "consent management" already routed to security via "consent".
+    ("gdpr consent banner", "security"),             # "gdpr"→security bare token unchanged
+    #
+    # Grunt/Gulp — fired raw_first; JS build tools belong in Frontend (same as webpack/esbuild).
+    ("grunt build tool", "frontend"),                # bare "grunt"→frontend (was raw_first)
+    ("gulp alternative", "frontend"),                # bare "gulp"→frontend (was raw_first)
+    # Regression — webpack/esbuild/vite unaffected.
+    ("webpack alternative", "frontend"),             # "webpack"→frontend unchanged
+    ("esbuild alternative", "frontend"),             # "esbuild"→frontend unchanged
+    #
+    # FluxCD GitOps — "flux"→ai (FLUX.1 image model) was overriding GitOps queries.
+    # fluxcd (compound) already mapped to devops; added "flux cd" and "flux gitops" bigrams.
+    ("flux cd alternative", "devops"),               # bigram "flux cd"→devops (overrides flux→ai)
+    ("flux gitops kubernetes", "devops"),            # bigram "flux gitops"→devops
+    # Regression — bare "flux" without qualifier still routes to ai (ambiguous).
+    ("flux image generation", "ai"),                 # "flux"→ai bare token unchanged
+    #
+    # Code formatting — "code formatting tool" fired raw_first via bare "code".
+    # Added bigrams "code formatting"→testing and "code format"→testing.
+    ("code formatting tool", "testing"),             # bigram "code formatting"→testing (was raw_first)
+    ("code format on save", "testing"),              # bigram "code format"→testing
+    # Regression — "code analysis" bigram was already mapped to testing.
+    ("static code analysis", "testing"),             # "code analysis" bigram unchanged
 ]
 
 

@@ -168,7 +168,7 @@ def _render_launch_day_panel(subscriber_count, tool_count, maker_count):
 
 def _render_maker_countdown_panel(claimed_maker_count):
     """Render the Maker Launch Countdown email panel."""
-    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid #E2B764;">
+    return f'''<div class="card" style="padding:20px;margin-bottom:24px;border-left:3px solid var(--gold);">
     <h3 style="font-family:var(--font-display);font-size:16px;color:var(--ink);margin:0 0 4px;">Maker Launch Countdown</h3>
     <p style="color:var(--ink-muted);font-size:13px;margin:0 0 8px;">Personalized email to claimed makers — connect Stripe before March 2. {claimed_maker_count} claimed makers.</p>
     <div style="display:flex;gap:10px;">
