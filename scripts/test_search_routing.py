@@ -241,6 +241,23 @@ When hunting for routing gaps, these query forms are historically tricky:
     category keyword as a first token before billing/payment/subscription second tokens.
     Fixed: bigrams "saas billing"/"saas payments"/"saas subscription"→payments
     (probe pattern 44, May 2026). Note: "saas metrics"→analytics was fixed in probe 26.
+
+33. "Named tool dead zones in covered categories" — when a category has bare synonyms
+    (e.g. "consent"→security) but the specific tool names are not mapped, "cookiebot
+    alternative" still fires raw_first because "cookiebot" is first and maps to nothing.
+    The second token "alternative" has no mapping either, so the bigram fails too.
+    Probe: for each covered category, enumerate major tool names and check each one
+    directly. Don't assume that mapping "consent"→security means all consent tools
+    are reachable — named-tool bare tokens are required. Fixed: cookiebot, osano,
+    onetrust, usercentrics, locize, lokalise, phrase, transifex (probe 46, May 2026).
+
+34. "High-strength bare token overriding a GitOps qualifier" — when a tool name maps
+    to one category (e.g. "flux"→ai for FLUX.1 image model) but the SAME name is used
+    for a completely different tool in a different category (FluxCD, a CNCF GitOps
+    operator), bare token collision means all "flux X" queries land in the wrong category
+    even when a disambiguating qualifier is present ("cd", "gitops"). Always add
+    bigrams "[toolname] [qualifier]" to override high-strength bare-token mappings.
+    Fixed: "flux cd"→devops, "flux gitops"→devops (probe 46, May 2026).
 """
 
 import sys
