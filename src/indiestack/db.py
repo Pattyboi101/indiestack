@@ -4274,7 +4274,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "kyc": "security",              # KYC verification — "kyc tool", "know your customer" (Onfido, Persona)
     "spam": "security",             # "spam protection", "spam filter" (Akismet, Cleantalk, hCaptcha)
     # Invoicing — tax calculation for SaaS
-    "tax": "invoicing",             # "sales tax API", "VAT compliance", "tax calculation" (Anrok, TaxJar, Avalara)
+    # "sales tax" bigram must come before single "tax" and "sales" tokens —
+    # "sales" alone maps to crm which would misroute "sales tax api" queries.
+    "sales tax": "invoicing",       # bigram — "sales tax api", "sales tax calculation" → Invoicing (Anrok, TaxJar, Avalara)
+    "tax": "invoicing",             # "tax API", "VAT compliance", "tax calculation" (Anrok, TaxJar, Avalara)
+    "avalara": "invoicing",         # Avalara — cloud tax compliance platform (sales tax, VAT, GST)
+    "taxjar": "invoicing",          # TaxJar — automated sales tax compliance (SmartCalcs API)
     # Database — analytical / OLAP query terms
     "timeseries": "database",       # "timeseries database" (compound, no hyphen) — TimescaleDB, InfluxDB, QuestDB
     "olap": "database",             # OLAP (Online Analytical Processing) — ClickHouse, DuckDB, Apache Druid

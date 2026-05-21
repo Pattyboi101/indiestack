@@ -1238,6 +1238,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("umami.is alternative", "analytics"),            # "umami.is"→analytics
     ("neon.tech postgres", "database"),              # "neon.tech"→database
     ("turso.tech libsql", "database"),               # "turso.tech"→database
+    #
+    # Probe pattern 47 — sales-tax misroute + named tax-tool dead zones
+    #
+    # "sales tax" queries were routing to crm via bare "sales"→crm token.
+    # Fixed: bigram "sales tax"→invoicing fires before "sales"→crm token.
+    ("sales tax api", "invoicing"),                  # bigram "sales tax"→invoicing (was crm via sales)
+    ("sales tax calculation", "invoicing"),          # bigram "sales tax"→invoicing
+    ("avalara alternative", "invoicing"),            # bare "avalara"→invoicing (was raw_first)
+    ("taxjar alternative", "invoicing"),             # bare "taxjar"→invoicing (was raw_first)
+    # Regression — bare "tax" and "vat" still route to invoicing as before.
+    ("tax compliance tool", "invoicing"),            # "tax"→invoicing bare token unchanged
+    ("vat compliance", "invoicing"),                 # "vat"→invoicing bare token unchanged
+    # Regression — "sales pipeline" still routes to crm via "sales".
+    ("sales pipeline crm", "crm"),                  # "sales"→crm bare token unchanged (no "tax" after it)
 ]
 
 
