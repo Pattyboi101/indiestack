@@ -427,6 +427,30 @@ TEST_CASES: list[tuple[str, str]] = [
     ("fossa alternative", "developer"),             # "fossa"→developer (was raw_first)
     # Regression: "compliance" without "license" still routes to security
     ("soc2 compliance tool", "security"),           # "compliance"→security fires (no collision)
+    # Probe pattern 44 (May 2026): high-traffic SaaS TLD-variant dead zones.
+    # "tool.com alternative" queries where bare names route fine but TLD form fires raw_first.
+    ("stripe.com alternative", "payments"),         # stripe.com → payments
+    ("paddle.com alternative", "payments"),         # paddle.com → payments
+    ("linear.app alternative", "project"),          # linear.app → project
+    ("algolia.com alternative", "search"),          # algolia.com → search
+    ("sendgrid.com alternative", "email"),          # sendgrid.com → email
+    ("mailchimp.com alternative", "email"),         # mailchimp.com → email
+    ("notion.so alternative", "cms"),               # notion.so → cms
+    ("hubspot.com alternative", "crm"),             # hubspot.com → crm
+    ("zendesk.com alternative", "support"),         # zendesk.com → support
+    ("intercom.com alternative", "support"),        # intercom.com → support
+    ("segment.com alternative", "analytics"),       # segment.com → analytics
+    ("amplitude.com alternative", "analytics"),     # amplitude.com → analytics
+    ("mixpanel.com alternative", "analytics"),      # mixpanel.com → analytics
+    ("datadog.com alternative", "monitoring"),      # datadog.com → monitoring
+    ("sentry.io alternative", "monitoring"),        # sentry.io → monitoring
+    ("bugsnag.com alternative", "monitoring"),      # bugsnag.com → monitoring
+    ("jira.com alternative", "project"),            # jira.com → project
+    ("asana.com alternative", "project"),           # asana.com → project
+    # Regression: bare names still route correctly
+    ("stripe payments sdk", "payments"),            # bare "stripe"→payments unaffected
+    ("notion database", "cms"),                     # bare "notion"→cms unaffected
+    ("jira project board", "project"),              # bare "jira"→project unaffected
 ]
 
 
