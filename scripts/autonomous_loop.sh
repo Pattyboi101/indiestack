@@ -313,9 +313,20 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     supabase.com, vercel.com, planetscale.com, neon.tech, turso.tech, pocketbase.io, clerk.com,
     auth0.com, workos.com, resend.com, loops.so, posthog.com, plane.so, cal.com, netlify.com, heroku.com.
     RULE: Always add TLD variants alongside bare names when adding a new tool to _CAT_SYNONYMS.
-After all fixes: python3 scripts/test_search_routing.py should report 1005+ tests passing (44 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 1028+ tests passing (45 probe patterns).
   Probe 44 (May 2026): container/docker security collision, supply chain spaced bigram, threat bare token,
     key management security, saas billing/payments/subscription payments. Fixed: 22 new tests added.
+  Probe 45 (May 2026): workflow-automation collisions, LLM monitoring dead zones, SBOM routing,
+    mobile analytics collision. "workflow builder"/"workflow automation" mis-routed to ai via "workflow"→ai
+    (n8n/Make.com/Activepieces/Temporal are Background Jobs). "visual workflow builder" mis-routed to testing
+    via "visual"→testing. "llm monitoring"/"llm observability" mis-routed to ai — Langfuse/Helicone/Arize
+    Phoenix are Monitoring tools. "prompt injection" mis-routed to ai — injection detection tools are Security.
+    "software bill of materials" had no route → raw_first (sbom bare token was mapped; spaced form wasn't).
+    "mobile analytics" mis-routed to frontend via "mobile"→frontend.
+    Fixed: bigrams "workflow builder"/"workflow automation"/"visual workflow"→background; bigrams
+    "llm monitoring"/"llm observability"→monitoring; bigram "prompt injection"→security;
+    bigram "bill materials"→security (survives stop-word strip of "software"/"of");
+    bigram "mobile analytics"→analytics. 23 new tests added.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:

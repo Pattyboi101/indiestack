@@ -876,8 +876,9 @@ TEST_CASES: list[tuple[str, str]] = [
     ("workflow engine temporal", "background"),      # bigram "workflow engine" → Background Jobs
     ("workflow engine open source", "background"),   # bigram form → Background Jobs
     ("workflow orchestrator temporal", "background"),# bigram "workflow orchestrator" → Background Jobs
-    # Regression — bare "workflow" still routes to ai for automation tool queries
-    ("workflow automation n8n", "ai"),               # "workflow"→ai still fires (no overriding bigram)
+    # Regression — "workflow automation" bigram now routes to background (probe 45 fix).
+    # n8n IS a background-jobs tool, so this is the correct routing.
+    ("workflow automation n8n", "background"),       # bigram "workflow automation"→background (probe 45)
     # Developer Tools — "headless scraper" bigrams override "headless"→cms
     ("headless scraper puppeteer", "developer"),     # bigram "headless scraper" → Developer Tools
     ("headless scraper library", "developer"),       # bigram form → Developer Tools
@@ -1733,6 +1734,56 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — "saas metrics" still routes to analytics, "saas boilerplate" still to boilerplate.
     ("saas metrics dashboard", "analytics"),         # bigram "saas metrics"→analytics unchanged
     ("saas starter", "boilerplate"),                 # bare "saas"→boilerplate unchanged for starter queries
+    # Probe pattern 45 (May 2026): workflow-automation collisions, LLM monitoring dead zones,
+    # SBOM routing, mobile analytics collision.
+    #
+    # Workflow automation — "workflow"→ai and "visual"→testing collide with no-code automation tool
+    # queries. n8n, Make.com, Activepieces, Temporal live in Background Jobs.
+    # Fixed: bigrams "workflow builder", "workflow automation", "visual workflow" → background.
+    ("workflow builder open source", "background"),  # bigram "workflow builder"→background (overrides workflow→ai)
+    ("workflow automation nocode", "background"),    # bigram "workflow automation"→background fires at i=0-1
+    ("visual workflow builder", "background"),       # bigram "visual workflow"→background (overrides visual→testing)
+    ("visual workflow editor", "background"),        # bigram "visual workflow"→background fires at i=0-1
+    # Regression — bare "workflow" without "builder"/"automation" still routes to ai (Dify, Flowise, etc.)
+    ("ai workflow orchestration", "ai"),             # "workflow"→ai bare token unchanged
+    # Regression — "visual regression testing" must still route to testing (not confused by visual→background)
+    ("visual regression testing tool", "testing"),   # "visual regression"→testing bigram fires before "visual workflow"
+    #
+    # LLM monitoring / observability — Langfuse, Helicone, Arize Phoenix, Traceloop are monitoring
+    # tools; "llm"→ai was firing for all llm-prefixed queries including these.
+    # Fixed: bigrams "llm monitoring" and "llm observability" → monitoring.
+    ("llm monitoring tool", "monitoring"),           # bigram "llm monitoring"→monitoring (overrides llm→ai)
+    ("llm monitoring dashboard", "monitoring"),      # bigram fires at i=0-1
+    ("llm observability platform", "monitoring"),    # bigram "llm observability"→monitoring
+    ("llm observability open source", "monitoring"), # bigram fires at i=0-1
+    # Regression — bare "llm" queries (no monitoring/observability) still route to ai.
+    ("llm api wrapper", "ai"),                       # "llm"→ai bare token unchanged
+    ("llm gateway proxy", "ai"),                     # "llm"→ai fires (no monitoring bigram match)
+    #
+    # Prompt injection — "prompt"→ai was firing for security-focused injection detection tools.
+    # Rebuff, LLM Guard, Guardrails AI belong in Security Tools.
+    # Fixed: bigram "prompt injection" → security.
+    ("prompt injection detection", "security"),      # bigram "prompt injection"→security (overrides prompt→ai)
+    ("prompt injection prevention", "security"),     # bigram fires at i=0-1
+    # Regression — bare "prompt" queries without "injection" still route to ai.
+    ("prompt management tool", "ai"),                # "prompt"→ai bare token unchanged
+    ("prompt template library", "ai"),               # "prompt"→ai fires (no injection bigram match)
+    #
+    # SBOM / software bill of materials — "software" is a stop word so "software bill of materials"
+    # reduces to "bill materials" bigram after stripping. Added "bill materials"→security.
+    ("software bill of materials", "security"),      # "bill materials" bigram → Security (SBOM tools)
+    ("bill of materials sbom", "security"),          # "bill materials" bigram at i=0-1 (stop-word strip)
+    # Regression — bare "sbom" still routes to security (token mapping unchanged).
+    ("sbom generator", "security"),                  # "sbom"→security bare token unchanged
+    #
+    # Mobile analytics — "mobile"→frontend was firing before "analytics" token.
+    # Firebase Analytics (mobile), Amplitude Mobile, Mixpanel Mobile are in Analytics.
+    # Fixed: bigram "mobile analytics" → analytics.
+    ("mobile analytics sdk", "analytics"),           # bigram "mobile analytics"→analytics (overrides mobile→frontend)
+    ("mobile analytics dashboard", "analytics"),     # bigram fires at i=0-1
+    # Regression — bare "mobile" queries (no analytics) still route to frontend.
+    ("mobile sdk integration", "frontend"),          # "mobile"→frontend bare token unchanged
+    ("mobile app framework", "frontend"),            # "mobile"→frontend fires (no analytics bigram match)
 ]
 
 

@@ -8311,6 +8311,36 @@ _CAT_SYNONYMS: dict[str, str] = {
     "saas billing": "payments",        # bigram — "saas billing platform", "saas billing tool" → Payments
     "saas payments": "payments",       # bigram — "saas payments integration", "saas payment provider" → Payments
     "saas subscription": "payments",   # bigram — "saas subscription billing", "saas subscription management" → Payments
+    #
+    # ── Probe pattern 45 (May 2026): workflow-automation collisions, LLM monitoring dead zones,
+    # SBOM routing, mobile analytics collision. ──────────────────────────────────────────────────
+    #
+    # Workflow automation — "workflow"→ai and "visual"→testing fire for queries that are really about
+    # no-code/low-code automation tools (n8n, Make.com, Activepieces, Temporal, Prefect) in Background Jobs.
+    # Fix: bigrams that override the bare "workflow"→ai and "visual"→testing tokens.
+    "workflow builder": "background",   # bigram — "workflow builder", "visual workflow builder" step 0-1
+    "workflow automation": "background", # bigram — "workflow automation tool", "workflow automation nocode"
+    "visual workflow": "background",    # bigram — "visual workflow builder", "visual workflow editor" → BG Jobs
+    #
+    # LLM monitoring / observability — "llm"→ai fires for ALL llm-prefixed queries including
+    # monitoring-specific ones. Langfuse, Helicone, Arize Phoenix, Traceloop are observability
+    # tools that belong in Monitoring, not AI & Automation.
+    "llm monitoring": "monitoring",    # bigram — "llm monitoring tool", "llm monitoring dashboard"
+    "llm observability": "monitoring", # bigram — "llm observability platform", "llm observability open source"
+    #
+    # Prompt injection — "prompt"→ai fires; security-focused prompt injection detection tools
+    # (Rebuff, LLM Guard, Guardrails AI for safety) belong in Security Tools.
+    "prompt injection": "security",    # bigram — "prompt injection detection", "prompt injection prevention"
+    #
+    # SBOM / software bill of materials — spaced form fires raw_first; "sbom" bare token already
+    # maps to security but "software bill of materials" has no mapping at all.
+    # "software" is in _FTS_STOP_WORDS so "software bill" bigram won't fire; bare "bill" has no mapping.
+    # Adding "bill materials" (what remains after stop-word strip) + the compound form.
+    "bill materials": "security",      # bigram — "software bill of materials" → stop-strips to "bill materials"
+    #
+    # Mobile analytics collision — "mobile"→frontend fires before "analytics" token for any
+    # "mobile analytics" query. Firebase Analytics, Amplitude mobile, Mixpanel mobile are in Analytics.
+    "mobile analytics": "analytics",   # bigram — "mobile analytics sdk", "mobile analytics dashboard"
 }
 
 _FTS_STOP_WORDS = {
