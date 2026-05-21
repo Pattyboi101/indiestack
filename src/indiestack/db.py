@@ -8277,6 +8277,40 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "knowledge base" spaced bigram intentionally NOT added (see line ~6381 note) —
     # "knowledge base llm/chatbot" must route to AI (RAG use case). Hyphenated forms already cover
     # pure KB-tooling queries: "knowledge-base"→documentation, "knowledgebase"→documentation.
+    # Probe pattern 44 (May 2026): container/docker security collisions + threat dead zones +
+    # supply-chain spaced form + SaaS billing collision.
+    #
+    # "container X" / "docker X" security queries — "container"→devops and "docker"→devops fire
+    # correctly for infra queries, but "container scanning/security/vulnerability" should route
+    # to Security Tools (Trivy, Grype, Snyk Container, Anchore). Category-prefix poisoning (probe 26).
+    "container scanning": "security",  # bigram — "container scanning tool", "container image scanning" → Security (Trivy, Grype)
+    "container security": "security",  # bigram — "container security scanner", "container security tool" → Security Tools
+    "container vulnerability": "security",  # bigram — "container vulnerability scanner" → Security (Trivy, Grype)
+    "docker security": "security",     # bigram — "docker security scanner", "docker security audit" → Security Tools
+    "docker vulnerability": "security",# bigram — "docker vulnerability scan" → Security (Trivy, Grype, Snyk)
+    #
+    # "supply chain" spaced form — "supplychain"→security and "supply-chain"→security were mapped
+    # but the space-separated form "supply chain" fired raw_first because neither bare token has a
+    # synonym. Probe pattern 13 (hyphenated-form-only trap). Fix: spaced bigram.
+    "supply chain": "security",        # bigram — "supply chain security", "supply chain attack" → Security Tools
+    #
+    # "threat" bare token — no mapping existed. "threat detection", "threat modeling" both fired
+    # raw_first with no category boost. Security tools (Falco, OSSEC, Snort, Wazuh) are unreachable
+    # for generic threat-oriented queries. "threat"→security is safe: the word only means security in dev tool context.
+    "threat": "security",              # "threat detection", "threat modeling", "threat intelligence" → Security Tools
+    #
+    # "key management" — "key"→? no mapping; "management"→project fires (wrong).
+    # Key management = cryptographic key stores (HashiCorp Vault, AWS KMS, Google Cloud KMS, SOPS).
+    # "key"→security single-token is too broad (key-value, API key, keyboard key).
+    # Bigram is safer: "key management" specifically means cryptographic KMS context.
+    "key management": "security",      # bigram — "key management system", "key management server" → Security Tools
+    #
+    # SaaS billing collision — "saas"→boilerplate fires before "billing/payments/subscription" tokens.
+    # "saas metrics"→analytics (probe 26) fixed the analytics collision; this probe fixes payments.
+    # Recurring billing, subscription management, and payment integration for SaaS are in Payments.
+    "saas billing": "payments",        # bigram — "saas billing platform", "saas billing tool" → Payments
+    "saas payments": "payments",       # bigram — "saas payments integration", "saas payment provider" → Payments
+    "saas subscription": "payments",   # bigram — "saas subscription billing", "saas subscription management" → Payments
 }
 
 _FTS_STOP_WORDS = {

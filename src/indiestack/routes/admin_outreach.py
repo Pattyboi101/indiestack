@@ -417,7 +417,7 @@ def _render_makers_tab(makers, needs_stripe_ids=None):
                     onsubmit="return confirm('Send Stripe Connect nudge to {name}?')">
                 <input type="hidden" name="action" value="send_stripe_nudge">
                 <input type="hidden" name="maker_id" value="{maker_id}">
-                <button type="submit" class="btn btn-sm" style="background:var(--slate);color:#1A2D4A;font-size:12px;padding:4px 10px;">
+                <button type="submit" class="btn btn-sm" style="background:var(--slate);color:var(--terracotta);font-size:12px;padding:4px 10px;">
                     Stripe Nudge
                 </button>
             </form>'''

@@ -212,6 +212,35 @@ When hunting for routing gaps, these query forms are historically tricky:
     vercel.com, planetscale.com, neon.tech, turso.tech, pocketbase.io, clerk.com,
     auth0.com, workos.com, resend.com, loops.so, posthog.com, plane.so, cal.com,
     netlify.com, heroku.com.
+
+29. "Category-prefix poisoning for security" — tokens like "container" and "docker"
+    correctly route to DevOps for infra queries, but compound queries like "container
+    scanning", "docker security", "container vulnerability" target Security Tools (Trivy,
+    Grype, Snyk). The first token wins and sends users to the wrong category. Fix: add
+    compound bigrams that override the single-token devops mapping for security-intent
+    compound forms. Fixed: "container scanning/security/vulnerability"→security,
+    "docker security/vulnerability"→security (probe pattern 44, May 2026).
+
+30. "Spaced form missing for hyphenated/compound synonyms" — a synonym added as
+    "supply-chain" (hyphenated) and "supplychain" (compound) misses the natural
+    space-separated form "supply chain" because neither bare token ("supply", "chain")
+    has a mapping and the router never falls back to try the spaced bigram implicitly.
+    Always add all three forms for critical compound terms. Fixed: "supply chain"→security
+    bigram (probe pattern 44, May 2026).
+
+31. "Bare noun dead zones for niche security concepts" — abstract security nouns like
+    "threat" have no single-token mapping because they're infrequent enough to be
+    overlooked in synonym audits. "threat detection" and "threat modeling" both hit
+    raw_first. Fix: add the bare noun as a synonym if it's unambiguously tied to one
+    category. "threat" in developer tool context exclusively means security. Fixed:
+    "threat"→security (probe pattern 44, May 2026).
+
+32. "SaaS category prefix collision with payments" — "saas"→boilerplate fires for any
+    "saas X" compound query, including "saas billing", "saas payments", "saas subscription"
+    which should route to Payments (Stripe, Polar, LemonSqueezy, Chargebee). Probe any
+    category keyword as a first token before billing/payment/subscription second tokens.
+    Fixed: bigrams "saas billing"/"saas payments"/"saas subscription"→payments
+    (probe pattern 44, May 2026). Note: "saas metrics"→analytics was fixed in probe 26.
 """
 
 import sys
@@ -1666,6 +1695,44 @@ TEST_CASES: list[tuple[str, str]] = [
     ("make workflow automation", "background"),      # bare "make"→background unaffected
     ("supabase postgres", "database"),               # bare "supabase"→database unaffected
     ("railway deployment", "devops"),                # bare "railway"→devops unaffected
+    # Probe pattern 44 (May 2026): container/docker security collisions + threat dead zones +
+    # supply-chain spaced form + SaaS billing collision.
+    #
+    # Container/Docker security — "container"→devops and "docker"→devops fire correctly for infra
+    # queries but "container scanning/security/vulnerability" must route to Security Tools (Trivy, Grype).
+    ("container scanning tool", "security"),         # bigram "container scanning"→security (Trivy, Grype)
+    ("container security scanner", "security"),      # bigram "container security"→security
+    ("container vulnerability scanner", "security"), # bigram "container vulnerability"→security
+    ("docker security audit", "security"),           # bigram "docker security"→security
+    ("docker vulnerability scan", "security"),       # bigram "docker vulnerability"→security
+    # Regression — "container orchestration" / "docker compose" still route to devops.
+    ("container orchestration", "devops"),           # "container"→devops single token (unchanged)
+    ("docker compose", "devops"),                    # "docker"→devops single token (unchanged)
+    #
+    # Supply chain spaced form — hyphenated/compound were mapped; spaced bigram was missing.
+    ("supply chain security", "security"),           # bigram "supply chain"→security (Sigstore, Syft)
+    ("supply chain attack detection", "security"),   # bigram fires at i=0-1
+    # Regression — hyphenated/compound forms still route correctly.
+    ("supply-chain security", "security"),           # "supply-chain"→security hyphenated (unchanged)
+    ("supplychain attack", "security"),              # "supplychain"→security compound (unchanged)
+    #
+    # Threat detection — bare "threat" had no mapping; raw_first fired for all threat queries.
+    ("threat detection tool", "security"),           # "threat"→security bare token
+    ("threat modeling", "security"),                 # "threat"→security bare token
+    ("threat intelligence", "security"),             # "threat"→security bare token
+    #
+    # Key management — "key"→? no mapping; "management"→project fires (wrong for KMS queries).
+    ("key management system", "security"),           # bigram "key management"→security (Vault, AWS KMS)
+    ("key management server", "security"),           # bigram fires at i=0-1
+    #
+    # SaaS billing collision — "saas"→boilerplate fires before billing/payment/subscription tokens.
+    ("saas billing platform", "payments"),           # bigram "saas billing"→payments
+    ("saas payments integration", "payments"),       # bigram "saas payments"→payments
+    ("saas subscription billing", "payments"),       # bigram "saas subscription"→payments
+    ("saas subscription management", "payments"),    # bigram "saas subscription"→payments fires first
+    # Regression — "saas metrics" still routes to analytics, "saas boilerplate" still to boilerplate.
+    ("saas metrics dashboard", "analytics"),         # bigram "saas metrics"→analytics unchanged
+    ("saas starter", "boilerplate"),                 # bare "saas"→boilerplate unchanged for starter queries
 ]
 
 

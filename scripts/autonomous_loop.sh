@@ -243,7 +243,7 @@ Fix missing mappings. Also check _FTS_STOP_WORDS — overly broad stop words cau
 BIGRAM ROUTING NOTE (May 2026): db.py routing now checks bigrams BEFORE individual tokens.
   Add spaced compound entries like "session recording" → "analytics" to _CAT_SYNONYMS to override
   individual token collisions. Bigrams are checked left-to-right at adjacent positions.
-  Known May 2026 bigram fixes (already applied — skip if 983 routing tests pass):
+  Known May 2026 bigram fixes (already applied — skip if 1005 routing tests pass):
     'block goose' + 'goose block' → "ai dev"  (was "database" via 'goose'→Go migration tool)
     'docker mcp' → "mcp"  (was "devops" via 'docker'→devops; covers Docker MCP Toolkit queries)
     'image generation' → "ai"  (was "media" via 'image'→media; covers AI image gen queries)
@@ -313,7 +313,9 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     supabase.com, vercel.com, planetscale.com, neon.tech, turso.tech, pocketbase.io, clerk.com,
     auth0.com, workos.com, resend.com, loops.so, posthog.com, plane.so, cal.com, netlify.com, heroku.com.
     RULE: Always add TLD variants alongside bare names when adding a new tool to _CAT_SYNONYMS.
-After all fixes: python3 scripts/test_search_routing.py should report 983+ tests passing (43 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 1005+ tests passing (44 probe patterns).
+  Probe 44 (May 2026): container/docker security collision, supply chain spaced bigram, threat bare token,
+    key management security, saas billing/payments/subscription payments. Fixed: 22 new tests added.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
