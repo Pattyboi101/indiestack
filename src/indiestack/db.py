@@ -6804,6 +6804,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mobile push": "notifications",     # bigram — "mobile push notification sdk" → Notifications
     "ios push": "notifications",        # bigram — "ios push notification" → Notifications (OneSignal, APNs)
     "android push": "notifications",    # bigram — "android push notification" → Notifications (FCM, OneSignal)
+    # ── Probe pattern 56 (May 2026): AI agent memory vocabulary colliding with Caching ──
+    #
+    # "memory"→caching is correct for Redis/Memcached (in-memory stores) but mis-routes
+    # AI agent memory queries. Compound queries like "long-term memory agent" or
+    # "conversational memory llm" route to Caching because "long-term"/"conversational"
+    # are unmapped, falling through to "memory"→caching at the next position.
+    # Agent memory tools (Mem0, Zep, Letta/MemGPT) live in AI & Automation.
+    # Fix: bigrams that override "memory"→caching for AI-agent-specific compound forms.
+    "long-term memory": "ai",           # bigram — "long-term memory agent", "long-term memory store" → AI (Mem0, Zep)
+    "conversational memory": "ai",      # bigram — "conversational memory layer", "llm conversational memory" → AI
+    "episodic": "ai",                   # bare token — "episodic memory", "episodic recall" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

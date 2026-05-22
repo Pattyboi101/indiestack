@@ -516,6 +516,18 @@ TEST_CASES: list[tuple[str, str]] = [
     ("mcp server typescript", "mcp"),                      # bare "mcp"→mcp unchanged
     # Regression — bare "protocol" without "context" still routes to mcp.
     ("messaging protocol nodejs", "mcp"),                  # bare "protocol"→mcp unchanged
+
+    # Probe pattern 56 — AI agent memory vocabulary colliding with Caching
+    # "memory"→caching is correct for Redis/Memcached but wrong for AI agent memory tools
+    # (Mem0, Zep, Letta). "long-term memory agent" and "conversational memory llm" both
+    # routed to Caching via memory→caching after the first token fell through (unmapped).
+    ("long-term memory agent store", "ai"),                # bigram "long-term memory"→ai (was: memory→caching)
+    ("long-term memory layer mem0", "ai"),                 # same bigram, different query form
+    ("conversational memory llm", "ai"),                   # bigram "conversational memory"→ai
+    ("episodic memory retrieval", "ai"),                   # bare "episodic"→ai (Letta, Zep episodic store)
+    # Regression — bare "memory" without AI qualifier still routes to caching.
+    ("in memory cache redis", "caching"),                  # "memory"→caching unchanged (stop-word "in" stripped)
+    ("memory store redis", "caching"),                     # "memory"→caching unchanged
 ]
 
 
