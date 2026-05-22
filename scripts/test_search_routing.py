@@ -2409,6 +2409,13 @@ TEST_CASES: list[tuple[str, str]] = [
     ("document storage cloud", "file"),                    # bigram fires at pos 0
     # Regression — document database queries still route to database.
     ("document database couchdb", "database"),             # "document"→database unchanged
+    # Probe pattern 60 — model-card dead zone
+    #
+    # "model card generator" → "model"→ai misfired; model cards are ML documentation for AI Standards.
+    ("model card generator", "ai standards"),              # bigram "model card"→ai standards (beats model→ai)
+    ("model cards documentation", "ai standards"),         # bigram "model cards"→ai standards
+    # Regression — generic model queries still route to ai.
+    ("language model api", "ai"),                          # "model"→ai unchanged
 ]
 
 

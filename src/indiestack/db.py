@@ -8557,6 +8557,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # File management — "document storage" overrides "document"→database (document DB terminology).
     # Document storage APIs (Cloudflare R2, Filestack, Uploadcare) live in File Management.
     "document storage": "file",                # bigram — "document storage api", "document storage cloud" → File Management
+    # AI Standards — "model card" overrides "model"→ai (generic ML model queries).
+    # Model cards are structured documentation for ML models — AI safety/standards tools (Hugging Face Cards).
+    "model card": "ai standards",              # bigram — "model card generator", "model card template" → AI Standards
+    "model cards": "ai standards",             # plural — "model cards ml", "model cards documentation" → AI Standards
 }
 
 _FTS_STOP_WORDS = {
