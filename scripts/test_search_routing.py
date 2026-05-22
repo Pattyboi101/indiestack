@@ -2381,6 +2381,34 @@ TEST_CASES: list[tuple[str, str]] = [
     ("image optimization api", "file"),                    # same bigram
     # Regression — raw image/video queries still route to media.
     ("image processing video", "media"),                   # "image"→media unchanged when no "optimization" bigram
+    # Probe pattern 59 — feedback-form collision / 3d dead zone / boilerplate-codegen collision / document-storage
+    #
+    # "feedback form" → "feedback"→feedback-reviews misfired; form builders (Typeform, Tally, Jotform)
+    # for collecting feedback are Forms & Surveys, not Feedback & Reviews (Canny, ProductBoard).
+    ("feedback form builder", "forms"),                    # bigram "feedback form"→forms (beats feedback→feedback)
+    ("feedback form alternative", "forms"),                # bigram fires at pos 0
+    # Regression — feedback/NPS tools still route to feedback-reviews.
+    ("feedback widget nps", "feedback"),                   # bare "feedback"→feedback unchanged
+    ("product feedback canny", "feedback"),                # "feedback"→feedback unchanged
+    #
+    # "3d modeling tool" → "3d" unmapped → raw_first. 3D tools (Three.js, Blender, Babylon.js) are Creative Tools.
+    ("3d modeling tool", "creative"),                      # bare "3d"→creative
+    ("3d rendering api", "creative"),                      # bare "3d"→creative
+    ("3d modeling open source", "creative"),               # bigram "3d modeling"→creative
+    #
+    # "boilerplate code generator" → "code generator"→ai dev bigram fires at pos 1 (wrong).
+    # "boilerplate code" bigram added at pos 0 to override.
+    ("boilerplate code generator", "boilerplate"),         # bigram "boilerplate code"→boilerplate fires before "code generator"→ai dev
+    ("boilerplate code nextjs", "boilerplate"),            # same bigram
+    # Regression — generic code generator queries still route to ai dev.
+    ("code generator openai api", "ai dev"),               # "code generator"→ai dev unchanged
+    #
+    # "document storage" → "document"→database misfired (document-store/MongoDB terminology).
+    # Document storage APIs (Cloudflare R2, Filestack, Uploadcare) live in File Management.
+    ("document storage api", "file"),                      # bigram "document storage"→file (beats document→database)
+    ("document storage cloud", "file"),                    # bigram fires at pos 0
+    # Regression — document database queries still route to database.
+    ("document database couchdb", "database"),             # "document"→database unchanged
 ]
 
 

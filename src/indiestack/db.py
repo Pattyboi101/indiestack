@@ -8545,6 +8545,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # File management — "image optimization" overrides "image"→media.
     # Image CDN/optimization tools (Cloudinary, imgix, Cloudflare Images) live in File Management.
     "image optimization": "file",              # bigram — "image optimization cdn", "image optimization api" → File Management
+    # Forms — "feedback form" overrides "feedback"→feedback-reviews; a feedback form is a form tool.
+    # (Typeform, Tally, Jotform for collecting feedback ≠ Canny/ProductBoard for product feedback management)
+    "feedback form": "forms",                  # bigram — "feedback form builder", "feedback form alternative" → Forms & Surveys
+    # Creative — "3d" bare token unmapped; 3D tools (Blender API, Three.js, Babylon.js) live in Creative Tools.
+    "3d": "creative",                          # bare — "3d modeling tool", "3d rendering api" → Creative Tools
+    "3d modeling": "creative",                 # bigram — "3d modeling open source", "3d modeling web" → Creative Tools
+    # Boilerplate — "boilerplate code generator" mis-routes to ai dev via "code generator" bigram at position 1.
+    # Adding "boilerplate code" bigram at position 0 fires first and returns Boilerplates category.
+    "boilerplate code": "boilerplate",         # bigram — "boilerplate code generator", "boilerplate code react" → Boilerplates
+    # File management — "document storage" overrides "document"→database (document DB terminology).
+    # Document storage APIs (Cloudflare R2, Filestack, Uploadcare) live in File Management.
+    "document storage": "file",                # bigram — "document storage api", "document storage cloud" → File Management
 }
 
 _FTS_STOP_WORDS = {
