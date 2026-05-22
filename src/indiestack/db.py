@@ -3119,6 +3119,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — deployment / self-hosting tools
     "kamal": "devops",                # Kamal — Rails/Docker deployment (by Basecamp)
     "coolify": "devops",              # Coolify — self-hosted Heroku/Netlify alternative
+    # DevOps — generic "self hosted/hosting" queries — both tokens are individually unmapped (Pattern 23)
+    # "self hosted redis", "self hosted analytics", "self hosted alternative" → DevOps & Infrastructure
+    "self hosted": "devops",          # bigram — "self hosted solution", "self hosted alternative" → DevOps
+    "self host": "devops",            # bigram — "self host tool", "self host nextjs" → DevOps
+    "self-hosted": "devops",          # hyphenated single token — "self-hosted version", "self-hosted open source" → DevOps
+    "self-hosting": "devops",         # gerund — "self-hosting guide", "self-hosting option" → DevOps
     "fly": "devops",                  # short form of "fly.io" in queries
     # Frontend — modern frameworks not yet covered
     "qwik": "frontend",               # Qwik — resumable JavaScript framework
@@ -3234,8 +3240,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "chromatic": "testing",          # Chromatic — visual testing and review tool for Storybook
     # AI dev tools — Google's open Agent-to-Agent protocol
     "a2a": "ai",                     # A2A (Agent2Agent) — Google's open agent interop protocol
-    # DevOps — monorepo release and changelog management
-    "changesets": "devops",          # Changesets — monorepo versioning and changelog automation
+    # Developer Tools — monorepo release and changelog management
+    "changesets": "developer",       # Changesets — JS monorepo versioning tool (npmjs.com/changesets), not devops
     # Frontend — Angular meta-framework (file-based routing + SSR for Angular)
     "analog": "frontend",            # Analog — Angular meta-framework (Next.js for Angular)
     # AI agent frameworks — increasingly common in developer queries
@@ -7747,6 +7753,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "llm-evaluation": "ai standards",    # hyphenated — "llm-evaluation alternative" → AI Standards & Specs
     "llm benchmark": "ai standards",     # spaced bigram — "llm benchmark leaderboard", "llm benchmark comparison"
     "llm-benchmark": "ai standards",     # hyphenated — "llm-benchmark suite" → AI Standards & Specs
+    "llm eval": "ai standards",          # short form bigram — "llm eval setup", "llm eval tool" → AI Standards (was: "llm"→ai)
+    "llm benchmarking": "ai standards",  # gerund bigram — "llm benchmarking tool", "llm benchmarking result" → AI Standards
+    "ai evaluation": "ai standards",     # full-word bigram — "ai evaluation framework", "ai evaluation tool" → AI Standards
+    "evals benchmark": "ai standards",   # "evals benchmark comparison", "evals benchmark result" → AI Standards
     # Monitoring — "health" token for "health check", "health endpoint", "health probe" queries
     # "health monitoring" already works via "monitoring"→monitoring; bare "health" was unrouted
     # "healthcheck" compound already mapped at line 3426 — only adding bare and hyphenated forms

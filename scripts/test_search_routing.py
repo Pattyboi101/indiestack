@@ -292,6 +292,28 @@ When hunting for routing gaps, these query forms are historically tricky:
     risks collisions with "slack oauth"→authentication and "slack notification"→notifications
     — prefer the compound bigram "team messaging"→developer over bare-tool mapping.
     Fixed: "team messaging"→developer (probe 50, May 2026).
+
+38. "Short-form / gerund variant gaps for bigram families" — when a bigram family is
+    added (e.g. "llm evaluation", "llm-evaluation", "llm benchmark", "llm-benchmark"),
+    the short form ("llm eval") and the gerund form ("llm benchmarking") are often
+    overlooked. The first token ("llm"→ai) then wins, routing to the wrong category.
+    Strategy: after adding any bigram family, also add (a) the 4-letter abbreviation if
+    the second token has a common short form ("evaluation"→"eval", "generation"→"gen"),
+    and (b) the gerund form of the second token ("-ing" suffix). Similarly, check
+    "ai evaluation" vs "ai eval" — if "ai eval" is mapped but "ai evaluation" is not,
+    add the full-word variant. Always probe both short and long forms before committing.
+    Fixed: "llm eval"→ai standards, "llm benchmarking"→ai standards,
+    "ai evaluation"→ai standards, "evals benchmark"→ai standards (probe 51, May 2026).
+
+39. "Self-hosted dual raw_first dead zone" — "self hosted" and "self-hosted" are very
+    common developer queries (searching for self-hostable alternatives to SaaS tools),
+    but both tokens ("self", "hosted") have no individual _CAT_SYNONYMS entry so
+    raw_first fires with no category boost (Pattern 23). Strategy: add (a) the spaced
+    bigram "self hosted"→devops, (b) the hyphenated single token "self-hosted"→devops,
+    (c) the gerund "self-hosting"→devops, and (d) "self host"→devops. Route to DevOps &
+    Infrastructure since self-hosting implies deployment/infrastructure decisions.
+    Fixed: "self hosted", "self-hosted", "self hosting", "self host" → devops (probe 51,
+    May 2026).
 """
 
 import sys
@@ -1987,6 +2009,42 @@ TEST_CASES: list[tuple[str, str]] = [
     # "matrix protocol" → Social Media (Element, Synapse; overrides "protocol"→mcp)
     ("matrix protocol server", "social"),                  # bigram "matrix protocol"→social (overrides "protocol"→mcp)
     ("matrix protocol alternative", "social"),             # bigram fires at i=0
+
+    # Probe pattern 51 — LLM eval short-form / self-hosted / changesets dead zones
+    #
+    # "llm eval" short form — "llm evaluation" was mapped but "llm eval" (short) was not.
+    # Pattern 25 (plural/compound form gaps): always add short/gerund variants alongside the full form.
+    ("llm eval setup", "ai standards"),                    # bigram "llm eval"→ai standards (short form was missing)
+    ("llm eval tool", "ai standards"),                     # bigram fires before "llm"→ai
+    ("llm benchmarking suite", "ai standards"),            # bigram "llm benchmarking"→ai standards (gerund was missing)
+    ("llm benchmarking result", "ai standards"),           # bigram fires; "llm benchmark" (non-gerund) already worked
+    #
+    # "ai evaluation" — "model evaluation" and "ai eval" bigrams existed but "ai evaluation" full words didn't.
+    ("ai evaluation framework", "ai standards"),           # bigram "ai evaluation"→ai standards
+    ("ai evaluation tool", "ai standards"),                # bigram fires before "ai"→ai single-token
+    # Regression — "ai eval" bigram still works.
+    ("ai eval harness", "ai standards"),                   # bare "ai eval"→ai standards unchanged
+    #
+    # "evals benchmark" — "evals"→ai fires before bigram "evals benchmark" is checked.
+    # Fix: bigram "evals benchmark" overrides bare "evals"→ai.
+    ("evals benchmark comparison", "ai standards"),        # bigram "evals benchmark"→ai standards
+    ("evals benchmark result", "ai standards"),            # bigram fires at i=0
+    # Regression — bare "evals" still routes to ai (correct catch-all for AI Automation).
+    ("evals pipeline", "ai"),                              # bare "evals"→ai unchanged; only bigram form overrides
+    #
+    # "self hosted" / "self-hosted" — Pattern 23 (dual raw_first dead zone).
+    # Both "self" and "hosted" are individually unmapped; bigrams fix the routing.
+    ("self hosted redis", "devops"),                       # bigram "self hosted"→devops
+    ("self hosted alternative", "devops"),                 # bigram fires at i=0
+    ("self-hosted solution", "devops"),                    # hyphenated single token → devops
+    ("self-hosting guide", "devops"),                      # gerund form → devops
+    ("self host tool", "devops"),                          # bigram "self host"→devops
+    #
+    # "changesets" fixed from devops → developer (JS monorepo versioning, not DevOps automation).
+    ("changesets npm", "developer"),                       # bare "changesets"→developer (fixed; was "devops")
+    ("changesets release", "developer"),                   # bare "changesets"→developer
+    # Regression — "semantic release" still routes to devops (CI/CD release automation).
+    ("semantic release tool", "devops"),                   # bare "semantic"→devops unchanged
 ]
 
 
