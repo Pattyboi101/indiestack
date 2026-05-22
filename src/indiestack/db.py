@@ -8464,6 +8464,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "matrix protocol" collision — bare "protocol"→mcp fires at i=1 (wrong category).
     # Matrix is a decentralized open messaging protocol; tools like Element, Synapse → Social Media.
     "matrix protocol": "social",               # bigram — "matrix protocol server", "matrix protocol alternative" → Social Media
+    # ── Probe pattern 53 (May 2026): codegen collision / realtime-database / smart-contract dead zones ──
+    #
+    # "code generator" / "code generation" bigrams fire at position 1+ when an API-layer
+    # tool appears at position 0 — overriding the correct first-token route to api-tools.
+    # Fix: add "[tool] code" bigrams at position 0 that fire before the ai-dev bigram.
+    # Affected queries: "openapi code generator", "swagger code generator",
+    # "graphql code generator", "protobuf code generation" → api or developer (not ai-dev).
+    "openapi code": "api",                     # bigram pos-0 — beats "code generator"→ai-dev at pos-1
+    "swagger code": "documentation",           # bigram — swagger-codegen → documentation (spec-gen tools)
+    "graphql code": "api",                     # bigram — graphql-code-generator → API Tools
+    "protobuf code": "developer",              # bigram — protoc, buf → Developer Tools
+    "proto code": "developer",                 # short-form variant — "proto code gen", "proto code generation"
+    #
+    # "realtime database" — bare "realtime"→api fires but Firebase-RT-DB / Supabase Realtime
+    # / ElectricSQL sync queries expect Database category.
+    "realtime database": "database",           # bigram — "realtime database firebase", "realtime database sync" → Database
+    #
+    # "smart contract" — bare "contract"→testing (Pact contract testing) fires incorrectly
+    # for smart contract / blockchain queries. Smart-contract dev tools live in Developer Tools.
+    "smart contract": "developer",             # bigram — "smart contract solidity", "smart contract testing" → Developer Tools
+    "smart contracts": "developer",            # plural — "smart contracts ethereum", "smart contracts audit" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

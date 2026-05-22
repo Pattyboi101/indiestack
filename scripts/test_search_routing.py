@@ -344,6 +344,31 @@ When hunting for routing gaps, these query forms are historically tricky:
     B-context queries need a bigram override. Fixed: "e2e encryption"→security and
     "e2e encrypted"→security bigrams (override bare "e2e"→testing for security queries;
     probe 52, May 2026).
+
+44. "Codegen bigram swallowing first-token route" — when a query has an API-layer tool
+    at position 0 followed by "code generator"/"code generation" at positions 1-2, the
+    bigram at pos 1 fires before the single-token at pos 0 is ever checked. The
+    algorithm scans bigrams forward from position 0; if "tool code" is not in the dict,
+    it falls through to "code generator" at the next position. Strategy: for any bigram
+    family X that routes to category A (e.g. "code generator"→ai-dev), probe
+    "[domain-tool] code" where domain-tool is a well-known term in a DIFFERENT category.
+    If the result is wrong, add "[domain-tool] code"→correct-category as a pos-0 bigram
+    that fires first. Fixed: "openapi code"→api, "swagger code"→documentation,
+    "graphql code"→api, "protobuf code"→developer (probe 53, May 2026).
+
+45. "realtime database vs realtime api" — bare "realtime"→api is correct for
+    "realtime api websocket" but wrong for "realtime database firebase" (Firebase
+    Realtime DB, Supabase Realtime, ElectricSQL). The two contexts share the first
+    token. Strategy: add a bigram "[context] database"→database to route the DB
+    variant correctly while leaving the bare token for the API category. Fixed:
+    "realtime database"→database (probe 53, May 2026).
+
+46. "Named-concept collision — contract testing vs smart contracts" — "contract"→testing
+    (Pact consumer-driven contract testing) fires incorrectly for smart-contract /
+    blockchain queries where the word order is "[adjective] contract". Strategy: probe
+    "[modifier] [token]" where modifier is a category-specific adjective (here "smart")
+    and add a bigram that overrides the bare-token mapping. Fixed: "smart contract"→
+    developer, "smart contracts"→developer (probe 53, May 2026).
 """
 
 import sys
@@ -2108,6 +2133,35 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — bare "e2e testing" still routes to testing.
     ("e2e testing playwright", "testing"),                 # bare "e2e"→testing unchanged
     ("e2e test runner", "testing"),                        # bare "e2e"→testing unchanged
+
+    # Probe pattern 53 — codegen collision / realtime-database / smart-contract dead zones
+    #
+    # "code generator"/"code generation" bigram fires at position 1+ when an API-layer tool
+    # appears at position 0 — overriding correct routing. Fix: "[tool] code" bigrams at pos 0.
+    ("openapi code generator", "api"),                     # bigram "openapi code"→api (beats "code generator"→ai-dev)
+    ("swagger code generator", "documentation"),           # bigram "swagger code"→documentation
+    ("graphql code generator", "api"),                     # bigram "graphql code"→api
+    ("protobuf code generation", "developer"),             # bigram "protobuf code"→developer
+    ("proto code gen", "developer"),                       # short-form — "proto code"→developer
+    # Regression — standalone "code generator" still routes to ai-dev.
+    ("code generator javascript", "ai dev"),               # bare "code generator"→ai-dev unchanged
+    # Regression — "openapi generator" (no "code") still routes to api.
+    ("openapi generator nodejs", "api"),                   # bare "openapi"→api unchanged
+    #
+    # "realtime database" — "realtime"→api fired but realtime-sync DB tools live in Database.
+    ("realtime database firebase", "database"),            # bigram "realtime database"→database
+    ("realtime database sync", "database"),                # bigram fires over bare "realtime"→api
+    # Regression — bare "realtime sync" still routes to database (probe 49).
+    ("realtime sync engine", "database"),                  # bigram "realtime sync"→database unchanged
+    # Regression — "realtime api" still routes to api.
+    ("realtime api websocket", "api"),                     # bare "realtime"→api unchanged
+    #
+    # "smart contract" — "contract"→testing (Pact) fired for smart-contract queries.
+    ("smart contract solidity", "developer"),              # bigram "smart contract"→developer
+    ("smart contracts ethereum", "developer"),             # plural bigram
+    ("smart contract audit", "developer"),                 # audit context also → developer (not security)
+    # Regression — bare "contract testing" still routes to testing.
+    ("contract testing pact", "testing"),                  # bare "contract"→testing unchanged
 ]
 
 
