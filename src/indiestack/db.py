@@ -8485,6 +8485,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # for smart contract / blockchain queries. Smart-contract dev tools live in Developer Tools.
     "smart contract": "developer",             # bigram — "smart contract solidity", "smart contract testing" → Developer Tools
     "smart contracts": "developer",            # plural — "smart contracts ethereum", "smart contracts audit" → Developer Tools
+    #
+    # Probe pattern 54 (May 2026): PKM / digital-garden / spreadsheet-database dead zones.
+    # "knowledge management" mis-routed to project via bare "management"→project — PKM tools
+    # (Notion, Logseq, Obsidian-based stacks) live in Learning & Education.
+    # "personal knowledge" / "digital garden" fired raw_first — no token mapping.
+    # "roam" fired raw_first — Roam Research is a PKM peer of Logseq/Obsidian.
+    # "grist" / "teable" fired raw_first — spreadsheet-database tools live in Developer Tools
+    # (consistent with "nocodb"→developer, "baserow"→developer already in this dict).
+    # "glide" fired raw_first — Glide Apps (no-code app builder) → Developer Tools.
+    # "spreadsheet database" mis-routed to frontend via bare "spreadsheet"→frontend.
+    "knowledge management": "learning",    # bigram — overrides "management"→project for PKM queries
+    "personal knowledge": "learning",      # bigram — "personal knowledge base/management" → Learning
+    "digital garden": "learning",          # bigram — Foam, Quartz, Obsidian Publish; overrides raw_first "digital"
+    "garden": "learning",                  # bare — fallback for bare "garden" queries in dev context
+    "roam": "learning",                    # bare — Roam Research (PKM tool; peer of Logseq/Obsidian)
+    "grist": "developer",                  # bare — Grist (open-source spreadsheet database / internal tool)
+    "teable": "developer",                 # bare — Teable (open-source Airtable alternative)
+    "glide": "developer",                  # bare — Glide Apps (no-code app builder from spreadsheets)
+    "spreadsheet database": "developer",   # bigram — NocoDB/Grist/Teable queries; overrides "spreadsheet"→frontend
 }
 
 _FTS_STOP_WORDS = {

@@ -369,6 +369,21 @@ When hunting for routing gaps, these query forms are historically tricky:
     "[modifier] [token]" where modifier is a category-specific adjective (here "smart")
     and add a bigram that overrides the bare-token mapping. Fixed: "smart contract"→
     developer, "smart contracts"→developer (probe 53, May 2026).
+
+47. "Second-token category poisoning in compound domain concepts" — a well-mapped
+    category token appears as the SECOND word in a compound whose overall concept belongs
+    to a DIFFERENT category. "knowledge management": "management"→project fires but PKM
+    tools live in Learning & Education. "spreadsheet database": "spreadsheet"→frontend fires
+    but NocoDB/Grist/Teable live in Developer Tools. This is distinct from Pattern 14
+    (first-token collision) because here the FIRST token often has no mapping (raw_first)
+    and the SECOND token drags routing to the wrong category. Strategy: (a) probe
+    "[domain-noun] [category-keyword]" where the category-keyword maps to a different
+    category than the compound; (b) add the bigram for the compound concept. Also probe
+    bare named tools in niche subcategories (spreadsheet-DBs, digital gardens) that share
+    a name with a different tool type. Fixed: "knowledge management"→learning,
+    "personal knowledge"→learning, "digital garden"→learning, "garden"→learning,
+    "roam"→learning, "grist"→developer, "teable"→developer, "glide"→developer,
+    "spreadsheet database"→developer (probe 54, May 2026).
 """
 
 import sys
@@ -2134,6 +2149,49 @@ TEST_CASES: list[tuple[str, str]] = [
     ("e2e testing playwright", "testing"),                 # bare "e2e"→testing unchanged
     ("e2e test runner", "testing"),                        # bare "e2e"→testing unchanged
 
+    # Probe pattern 54 — PKM / digital-garden / spreadsheet-database dead zones
+    #
+    # "knowledge management" — bare "management"→project mis-routes PKM queries.
+    ("knowledge management", "learning"),           # bigram overrides "management"→project
+    ("knowledge management tool", "learning"),      # "tool" stripped; bigram still fires
+    ("personal knowledge management", "learning"),  # "personal knowledge" bigram fires first
+    ("personal knowledge base", "learning"),        # bigram — PKM / knowledge base variant
+    # Regression — "project management" still routes to project (not learning).
+    ("project management kanban", "project"),
+    ("project management scrum", "project"),
+    #
+    # "digital garden" — "digital" bare token has no mapping (raw_first).
+    ("digital garden", "learning"),                 # bigram — Foam, Quartz, Obsidian Publish
+    ("digital garden tool", "learning"),            # "tool" stripped; bigram fires
+    ("garden", "learning"),                         # bare token fallback
+    #
+    # "roam" — Roam Research (PKM) was raw_first.
+    ("roam research", "learning"),                  # bare "roam"→learning
+    ("roam alternative", "learning"),               # "alternative" stripped; bare "roam" fires
+    #
+    # Spreadsheet-database tools — "grist" / "teable" were raw_first.
+    ("grist", "developer"),                         # bare — open-source spreadsheet DB
+    ("grist alternative", "developer"),             # "alternative" stripped; bare "grist"
+    ("teable", "developer"),                        # bare — Airtable alternative
+    ("teable alternative", "developer"),            # "alternative" stripped; bare "teable"
+    #
+    # "glide" — Glide Apps (no-code builder) was raw_first.
+    ("glide apps", "developer"),                    # bare "glide"→developer
+    ("glide alternative", "developer"),             # "alternative" stripped; bare "glide"
+    #
+    # "spreadsheet database" — mis-routed to frontend via bare "spreadsheet"→frontend.
+    ("spreadsheet database", "developer"),          # bigram overrides "spreadsheet"→frontend
+    ("spreadsheet database tool", "developer"),     # "tool" stripped; bigram fires
+    #
+    # Regressions — "spreadsheet component" still routes to frontend.
+    ("spreadsheet component react", "frontend"),    # bare "spreadsheet"→frontend unchanged
+    ("excel like table", "developer"),              # "like" stripped; "excel"→developer (Excel parser libs)
+    # Regressions — existing PKM tokens unchanged.
+    ("obsidian alternative", "learning"),           # bare "obsidian"→learning unchanged
+    ("logseq plugin", "learning"),                  # bare "logseq"→learning unchanged
+    ("note taking app", "learning"),                # bigram "note taking"→learning unchanged
+    ("second brain tool", "learning"),              # bigram "second brain"→learning unchanged
+    #
     # Probe pattern 53 — codegen collision / realtime-database / smart-contract dead zones
     #
     # "code generator"/"code generation" bigram fires at position 1+ when an API-layer tool
