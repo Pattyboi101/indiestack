@@ -7829,6 +7829,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "context management": "ai",         # bigram — "context management tool", "llm context management" → AI & Automation (beats "context"→frontend)
     # AI — "ai deployment" overrides "deployment"→devops: AI model deployment tools (BentoML, Modal, Baseten) live in AI & Automation.
     "ai deployment": "ai",              # bigram — "ai deployment tool", "ai model deployment" → AI & Automation (beats "deployment"→devops)
+    # AI — "ai memory" overrides "memory"→caching: AI agent memory tools (MemGPT, Mem0, Zep) are AI & Automation, not caching.
+    "ai memory": "ai",                  # bigram — "ai memory tool", "ai agent memory" → AI & Automation (beats "memory"→caching)
+    # AI — "ai chat" overrides "chat"→customer: AI chatbots (Chatbase, OpenChat) live in AI & Automation, not Customer Support.
+    "ai chat": "ai",                    # bigram — "ai chat tool", "ai chat alternative" → AI & Automation (beats "chat"→customer)
     # AI — OpenAI GPT-4.1 family (released April 2025; frontier model + two cheaper variants)
     # Very high "gpt-4.1 alternative", "gpt-4.1 api", "gpt-4.1-mini vs claude" query volume post-launch
     "gpt41": "ai",                      # GPT-4.1 — "gpt41 alternative", "gpt41 api", "gpt41 setup" → AI & Automation

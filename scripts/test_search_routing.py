@@ -2300,6 +2300,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ai model deployment bentoml", "ai"),                 # bigram fires at pos 0
     # Regression — bare "deployment" still routes to devops for general CI/CD queries.
     ("deployment pipeline github actions", "devops"),      # "deployment"→devops unchanged
+    # Probe pattern 56 — AI-prefix wrong-subcategory: memory / chat collisions
+    #
+    # "ai memory" → "memory"→caching misfired; AI agent memory (MemGPT, Mem0, Zep) live in AI & Automation.
+    ("ai memory tool", "ai"),                              # bigram "ai memory"→ai (beats "memory"→caching)
+    ("ai agent memory", "ai"),                             # bigram fires at pos 1 (agent→ai at pos 0; ai memory at pos 1+)
+    # Regression — bare "memory"/"redis cache" still route to caching.
+    ("redis memory cache", "caching"),                     # "redis"→caching unchanged
+    #
+    # "ai chat" → "chat"→customer misfired; AI chatbot builders (Chatbase, OpenChat) live in AI & Automation.
+    ("ai chat tool", "ai"),                                # bigram "ai chat"→ai (beats "chat"→customer)
+    ("ai chat alternative", "ai"),                         # bigram fires at pos 0
+    # Regression — live/support chat still routes to customer support.
+    ("live chat widget", "customer"),                      # "chat"→customer unchanged
+    ("customer chat support", "customer"),                 # "customer"→customer unchanged
 ]
 
 
