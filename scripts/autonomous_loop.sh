@@ -313,7 +313,6 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     supabase.com, vercel.com, planetscale.com, neon.tech, turso.tech, pocketbase.io, clerk.com,
     auth0.com, workos.com, resend.com, loops.so, posthog.com, plane.so, cal.com, netlify.com, heroku.com.
     RULE: Always add TLD variants alongside bare names when adding a new tool to _CAT_SYNONYMS.
-After all fixes: python3 scripts/test_search_routing.py should report 1058+ tests passing (47 probe patterns).
   Probe 44 (May 2026): container/docker security collision, supply chain spaced bigram, threat bare token,
     key management security, saas billing/payments/subscription payments. Fixed: 22 new tests added.
   Probe 45 (May 2026): workflow-automation collisions, LLM monitoring dead zones, SBOM routing,
@@ -343,8 +342,22 @@ After all fixes: python3 scripts/test_search_routing.py should report 1058+ test
     Fixed: bare "obsidian","logseq","pkm","zettelkasten","zettlr","notetaking"→learning; bigrams "note
     taking","second brain"→learning; bare "rudderstack"→analytics. Also: CSS var cleanup in admin_outreach.py
     (#F3F4F6→var(--border), #6B7280→var(--ink-muted), #0D1B2A→var(--ink)). 10 new tests added.
+  Probe 48 (May 2026): "event X" analytics dead zones — "event analytics"/"event capture"/"product events"
+    mis-routed to Message Queue via bare "event"/"events"→message. Product analytics tools (PostHog,
+    Mixpanel, Heap) surface in Analytics & Metrics but "event tracking" can't use a bigram ("tracking" is a
+    stop word). Fixed: bigrams "event analytics"/"event capture"→analytics (override "event"→message at i=0);
+    "product events"→analytics (overrides "events"→message at i=1). Regression guards: "event streaming kafka"
+    and "event driven architecture" still correctly route to Message Queue. 5 new tests added.
+  Probe 49 (May 2026): social-auth / realtime-sync / github-oauth / edge-caching dead zones.
+    "social authentication" missing spaced bigram (social login/auth/sign/oauth existed). "realtime sync"
+    routed to api via bare "realtime"→api — should be database (ElectricSQL, PowerSync, InstantDB).
+    "github oauth"/"github sso"/"github login" routed to devops via "github"→devops — GitHub as OAuth
+    provider → Authentication. "edge caching"/"edge cache" routed to devops via "edge"→devops — edge KV
+    stores (Upstash, Cloudflare KV) → Caching. Regression guards: "social media scheduling"→social,
+    "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
+    13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 1058+ tests passing (47 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 1076+ tests passing (49 probe patterns).
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:

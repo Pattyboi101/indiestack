@@ -8372,6 +8372,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Mobile analytics collision — "mobile"→frontend fires before "analytics" token for any
     # "mobile analytics" query. Firebase Analytics, Amplitude mobile, Mixpanel mobile are in Analytics.
     "mobile analytics": "analytics",   # bigram — "mobile analytics sdk", "mobile analytics dashboard"
+    # ── Probe pattern 49 (May 2026): social-auth / realtime-sync / github-oauth / edge-caching dead zones ──
+    #
+    # "social authentication" routes to social-media via bare "social"→social at i=0.
+    # "social login" + "social auth" + "social sign" + "social oauth" bigrams already exist (line ~7757);
+    # "social authentication" (full word) was missing. Fix: spaced bigram.
+    "social authentication": "authentication",  # bigram — "social authentication provider", "social auth methods" → Authentication
+    #
+    # "realtime sync" routes to api via bare "realtime"→api at i=0.
+    # Real-time sync/local-first DB tools (ElectricSQL, PowerSync, InstantDB) live in Database Tools.
+    # "realtime collaboration" correctly stays in api (Liveblocks, Yjs); only sync queries need override.
+    "realtime sync": "database",                # bigram — "realtime sync engine", "realtime sync database" → Database Tools
+    #
+    # "github oauth" / "github sso" / "github login" route to devops via bare "github"→devops.
+    # GitHub-as-OAuth-provider queries (GitHub social login, GitHub SSO for teams) → Authentication.
+    # Regression guard: "github actions", "github ci" still route to devops (no bigram collision).
+    "github oauth": "authentication",           # bigram — "github oauth setup", "github oauth provider" → Authentication
+    "github sso": "authentication",             # bigram — "github sso setup", "github sso teams" → Authentication
+    "github login": "authentication",           # bigram — "github login provider", "github login button" → Authentication
+    #
+    # "edge caching" / "edge cache" route to devops via bare "edge"→devops.
+    # Edge KV stores and CDN caches (Upstash Redis, Cloudflare KV, Deno KV) live in Caching category.
+    # "edge database" bigram (line ~7856) correctly routes to database; this covers the caching variant.
+    "edge caching": "caching",                  # bigram — "edge caching redis", "edge caching cloudflare" → Caching
+    "edge cache": "caching",                    # bigram singular — "edge cache setup", "edge cache alternative" → Caching
 }
 
 _FTS_STOP_WORDS = {

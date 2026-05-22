@@ -1876,6 +1876,32 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — event streaming/sourcing must still route to message queue.
     ("event streaming kafka", "message"),            # bare "event"→message unchanged
     ("event driven architecture", "message"),        # bare "event"→message unchanged
+    # Probe pattern 49 — social-auth / realtime-sync / github-oauth / edge-caching dead zones
+    #
+    # "social authentication" was the missing spaced bigram (social login/auth/sign/oauth already existed).
+    ("social authentication provider", "authentication"),  # bigram "social authentication"→authentication
+    ("social authentication methods", "authentication"),   # bigram fires at i=0 before "social"→social
+    # Regression — bare "social" still routes to social-media for non-auth queries.
+    ("social media scheduling", "social"),                 # bare "social"→social (no bigram collision)
+    #
+    # "realtime sync" routes to database (ElectricSQL, PowerSync, InstantDB).
+    ("realtime sync engine", "database"),                  # bigram "realtime sync"→database (overrides "realtime"→api)
+    ("realtime sync database", "database"),                # bigram form at i=0
+    # Regression — "realtime collaboration" still routes to api (Liveblocks, Yjs).
+    ("realtime collaboration tool", "api"),                # bare "realtime"→api unchanged
+    #
+    # "github oauth/sso/login" routes to authentication (GitHub as OAuth provider).
+    ("github oauth setup", "authentication"),              # bigram "github oauth"→authentication (overrides "github"→devops)
+    ("github sso setup", "authentication"),                # bigram "github sso"→authentication
+    ("github login provider", "authentication"),           # bigram "github login"→authentication
+    # Regression — "github actions" still routes to devops.
+    ("github actions ci", "devops"),                       # bare "github"→devops unchanged
+    #
+    # "edge caching/cache" routes to caching (Upstash, Cloudflare KV).
+    ("edge caching redis", "caching"),                     # bigram "edge caching"→caching (overrides "edge"→devops)
+    ("edge cache alternative", "caching"),                 # bigram "edge cache"→caching (singular form)
+    # Regression — "edge database" still routes to database (Turso, D1).
+    ("edge database sqlite", "database"),                  # bigram "edge database"→database unchanged
 ]
 
 
