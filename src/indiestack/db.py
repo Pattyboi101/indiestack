@@ -8524,6 +8524,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — "pre commit" spaced form (complement to "pre-commit"→devops hyphenated form at line 3747).
     # "pre commit hooks" routed to frontend via "hooks"→frontend; bigram fires first to correct this.
     "pre commit": "devops",                    # bigram — "pre commit hooks", "pre commit runner" → DevOps & Infrastructure
+    # Learning — "coding bootcamp" overrides "coding"→ai dev (AI coding tools).
+    # "developer tutorials" has "tutorials" unmapped; bare token + bigram added.
+    "coding bootcamp": "learning",             # bigram — "coding bootcamp platform", "coding bootcamp alternative" → Learning
+    "tutorials": "learning",                   # bare — "developer tutorials platform", "tutorials site" → Learning
+    "tutorial": "learning",                    # bare — "interactive tutorial", "tutorial generator" → Learning
+    "bootcamp": "learning",                    # bare — "bootcamp platform", "bootcamp builder" → Learning
+    # Documentation — "api docs" routes to api-tools via bare "api"→api (wrong; Swagger UI, Stoplight, ReadMe).
+    # Bigram fires before bare "api" to route API documentation tools to Documentation.
+    "api docs": "documentation",               # bigram — "api docs generator", "api docs site" → Documentation
+    "api documentation": "documentation",      # bigram — "api documentation generator", "openapi documentation" → Documentation
+    # CRM — "customer relationship" overrides "management"→project (wrong; Salesforce/HubSpot-type tools are CRM).
+    "customer relationship": "crm",            # bigram — "customer relationship management", "customer relationship tool" → CRM
+    # Landing pages — "sales page" overrides "sales"→crm (wrong; sales landing pages are Landing Pages category).
+    "sales page": "landing",                   # bigram — "sales page creator", "sales page builder" → Landing Pages
+    # Newsletters — "newsletter monetization" overrides "newsletter"→email.
+    # Newsletter business tools (Beehiiv, Substack) are Newsletters & Content, not Email Marketing.
+    "newsletter monetization": "newsletters",  # bigram — "newsletter monetization tool", "newsletter revenue" → Newsletters
+    # NOTE: "newsletter platform" bigram can NEVER fire — "platform" is in _FTS_STOP_WORDS.
+    # File management — "image optimization" overrides "image"→media.
+    # Image CDN/optimization tools (Cloudinary, imgix, Cloudflare Images) live in File Management.
+    "image optimization": "file",              # bigram — "image optimization cdn", "image optimization api" → File Management
 }
 
 _FTS_STOP_WORDS = {

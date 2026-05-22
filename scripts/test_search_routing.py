@@ -2341,6 +2341,46 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — React hooks / git queries still route correctly.
     ("react hooks state", "frontend"),                     # "hooks"→frontend unchanged (react framework-strips react)
     ("git lfs storage", "devops"),                         # "git"→devops unchanged (bare git queries → DevOps)
+    # Probe pattern 58 — learning / api-docs / crm / landing / newsletter / image-opt dead zones
+    #
+    # "coding bootcamp" → "coding"→ai dev misfired; bootcamp platforms are Learning & Education.
+    # "developer tutorials" → "tutorials" unmapped; raw_first fired.
+    ("coding bootcamp platform", "learning"),              # bigram "coding bootcamp"→learning (beats coding→ai dev)
+    ("developer tutorials platform", "learning"),          # bare "tutorials"→learning
+    ("bootcamp builder", "learning"),                      # bare "bootcamp"→learning
+    ("interactive tutorial", "learning"),                  # bare "tutorial"→learning
+    # Regression — AI coding tools still route correctly.
+    ("coding assistant aider", "ai dev"),                  # "coding"→ai dev unchanged
+    ("coding tutorial platform", "learning"),              # existing bigram "coding tutorial"→learning unchanged
+    #
+    # "api docs generator" → bare "api"→api fired (wrong; Swagger UI, Stoplight, ReadMe are Documentation).
+    ("api docs generator", "documentation"),               # bigram "api docs"→documentation (beats api→api)
+    ("api documentation openapi", "documentation"),        # bigram "api documentation"→documentation
+    # Regression — bare "api" still routes to api-tools for non-docs queries.
+    ("api gateway rate limiting", "api"),                  # "api"→api unchanged
+    #
+    # "customer relationship management" → "management"→project misfired; CRM tools are CRM category.
+    ("customer relationship management", "crm"),           # bigram "customer relationship"→crm (beats management→project)
+    # Regression — "project management" still routes correctly.
+    ("project management linear", "project"),              # "management"→project unchanged
+    #
+    # "sales page creator" → "sales"→crm misfired; sales/landing page builders are Landing Pages.
+    ("sales page creator", "landing"),                     # bigram "sales page"→landing (beats sales→crm)
+    ("sales page builder", "landing"),                     # same bigram
+    # Regression — bare "sales" still routes to crm for CRM-intent queries.
+    ("sales pipeline crm", "crm"),                         # "sales pipeline" bigram→crm unchanged
+    #
+    # "newsletter monetization" → "newsletter"→email misfired; newsletter business tools are Newsletters.
+    ("newsletter monetization tool", "newsletters"),       # bigram "newsletter monetization"→newsletters
+    # Regression — generic newsletter queries still route to email-marketing.
+    ("newsletter email marketing", "email"),               # "newsletter"→email unchanged
+    ("newsletter sendgrid", "email"),                      # "newsletter"→email unchanged
+    #
+    # "image optimization cdn" → "image"→media misfired; image CDN/optimization tools are File Management.
+    ("image optimization cdn", "file"),                    # bigram "image optimization"→file (beats image→media)
+    ("image optimization api", "file"),                    # same bigram
+    # Regression — raw image/video queries still route to media.
+    ("image processing video", "media"),                   # "image"→media unchanged when no "optimization" bigram
 ]
 
 
