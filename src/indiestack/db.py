@@ -2915,6 +2915,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "template": "boilerplate",
     # MCP servers — dedicated category
     "protocol": "mcp",          # "model context protocol" → first term after stop words
+    # "context protocol" bigram beats "context"→frontend for "model context protocol" queries
+    # ("model"→ai fires first on bare tokens; bigram at i=1 catches "context protocol" before single-token scan)
+    "context protocol": "mcp",  # bigram — "model context protocol server", "context protocol implementation" → MCP Servers
     # Frontend frameworks — named tools missing from earlier pass
     "tanstack": "frontend",     # TanStack Query, TanStack Router, TanStack Table
     "radix": "frontend",        # Radix UI primitives

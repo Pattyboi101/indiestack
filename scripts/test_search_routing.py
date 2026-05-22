@@ -506,6 +506,16 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — bare "mobile"/"ios" still routes to frontend for non-push queries.
     ("mobile app framework", "frontend"),                  # bare "mobile"→frontend unchanged
     ("ios development", "frontend"),                       # bare "ios"→frontend unchanged
+
+    # Probe pattern 55 — "model context protocol" dead zone
+    # "model"→ai fires first; "protocol"→mcp never reached. Fix: "context protocol" bigram at i=1.
+    ("model context protocol server", "mcp"),              # bigram "context protocol"→mcp at i=1
+    ("context protocol implementation", "mcp"),            # bigram fires at i=0
+    ("model context protocol typescript", "mcp"),          # bigram fires at i=1 in longer query
+    # Regression — bare "mcp server" still routes to mcp.
+    ("mcp server typescript", "mcp"),                      # bare "mcp"→mcp unchanged
+    # Regression — bare "protocol" without "context" still routes to mcp.
+    ("messaging protocol nodejs", "mcp"),                  # bare "protocol"→mcp unchanged
 ]
 
 
