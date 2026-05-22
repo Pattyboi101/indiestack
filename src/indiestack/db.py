@@ -2759,6 +2759,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "webrtc": "api",                 # WebRTC queries — real-time video/audio API tools
     # Monitoring / observability
     "newrelic": "monitoring",
+    "relic": "monitoring",          # "new relic" → "new" stripped (stop word) → bare "relic" → Monitoring
     "pagerduty": "monitoring",
     # Search
     "algolia": "search",
@@ -3332,6 +3333,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "highlight": "monitoring",      # Highlight.io — open-source full-stack session replay
     "uptimerobot": "monitoring",    # UptimeRobot — uptime monitoring with alerts
     "betterstack": "monitoring",    # Better Stack (ex-Logtail + Uptime) — monitoring platform
+    "betterstack logging": "logging",  # bigram — "betterstack logging setup" → Logging (Logtail product)
     # Password / cryptography — security libraries ("bcrypt alternative", "password hashing")
     "password": "security",         # "password hashing", "password manager" → Security Tools
     "hashing": "security",          # "password hashing library", "hashing algorithm" → Security
@@ -7717,7 +7719,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Bigrams fire before single tokens so "image generation" wins over "image"→media.
     "image generation": "ai",       # spaced bigram — "image generation model", "image generation api" → AI & Automation
     "image-generation": "ai",       # hyphenated — "image-generation open source", "image-generation tool" → AI & Automation
+    "image optimization": "file",   # bigram — "image optimization library", "image optimization cdn" → File Management (Sharp, Cloudinary)
+    "image optimisation": "file",   # British spelling — "image optimisation tool" → File Management
     "text image": "ai",             # "text to image" after stop-word removal → "text image" bigram → AI & Automation
+    # Media monitoring — "media"→media-servers fires for bare token; bigram overrides for brand/PR monitoring queries
+    "media monitoring": "analytics",  # bigram — "media monitoring tool", "social media monitoring" → Analytics & Metrics
     # AI Dev Tools — code generation queries ("code generation tool", "code gen ai")
     # "code" alone has no mapping (falls back to raw_first); bigrams route correctly.
     "code generation": "ai dev",    # spaced bigram — "code generation ai", "code generation model" → AI Dev Tools

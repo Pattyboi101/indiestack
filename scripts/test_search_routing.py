@@ -2162,6 +2162,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("smart contract audit", "developer"),                 # audit context also → developer (not security)
     # Regression — bare "contract testing" still routes to testing.
     ("contract testing pact", "testing"),                  # bare "contract"→testing unchanged
+
+    # Probe pattern 54 — "new relic" stop-word drop / media-monitoring collision / image-optimization / betterstack-logging dead zones
+    #
+    # "new relic" — "new" is a stop word; bare "relic" fell through to raw_first with no category boost.
+    # Fix: "relic"→monitoring so the remaining token routes correctly.
+    ("new relic alternative", "monitoring"),               # bare "relic"→monitoring ("new" stripped)
+    ("new relic apm", "monitoring"),                       # bare "relic"→monitoring
+    # Regression — "newrelic" compound still routes to monitoring.
+    ("newrelic monitoring", "monitoring"),                 # bare "newrelic"→monitoring unchanged
+    #
+    # "betterstack logging" — "betterstack"→monitoring fired; logging product unrouted.
+    # Fix: bigram "betterstack logging"→logging overrides bare "betterstack"→monitoring.
+    ("betterstack logging setup", "logging"),              # bigram "betterstack logging"→logging
+    ("betterstack logging alternative", "logging"),        # bigram fires at i=0
+    # Regression — bare "betterstack" still routes to monitoring (uptime product).
+    ("betterstack uptime", "monitoring"),                  # bare "betterstack"→monitoring unchanged
+    #
+    # "image optimization" — bare "image"→media fired; Sharp/Cloudinary/imgix live in File Management.
+    # Fix: bigram "image optimization"→file overrides bare "image"→media.
+    ("image optimization library", "file"),                # bigram "image optimization"→file (Sharp, Cloudinary)
+    ("image optimization cdn", "file"),                    # bigram fires at i=0
+    # Regression — "image generation" still routes to ai (AI image generators).
+    ("image generation model", "ai"),                      # bigram "image generation"→ai unchanged
+    #
+    # "media monitoring" — bare "media"→media-servers fired; brand/PR monitoring tools live in Analytics.
+    # Fix: bigram "media monitoring"→analytics overrides bare "media"→media.
+    ("media monitoring tool", "analytics"),                # bigram "media monitoring"→analytics
+    ("media monitoring brand", "analytics"),               # bigram fires at i=0
+    # Regression — bare "media server" still routes to media (streaming servers).
+    ("media server streaming", "media"),                   # bare "media"→media unchanged
 ]
 
 
