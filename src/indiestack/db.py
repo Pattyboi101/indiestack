@@ -2803,10 +2803,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "chroma": "database",
     "pinecone": "database",
     "milvus": "database",
-    # AI dev tools
-    "cursor": "ai",
-    "windsurf": "ai",
-    "copilot": "ai",
+    # AI dev tools — these are AI coding assistants (ai-dev-tools), not AI automation (ai-automation).
+    # "ai dev" uniquely matches "AI Dev Tools" via LOWER(c.name) LIKE '%ai dev%'.
+    "cursor": "ai dev",
+    "windsurf": "ai dev",
+    "copilot": "ai dev",
     "linear": "project",
     # Background job tools
     "trigger.dev": "background",
@@ -3777,6 +3778,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — monitoring: Prometheus + Grafana (canonical stack for metrics)
     "prometheus": "monitoring",     # Prometheus — open-source monitoring + alerting (52k★)
     "grafana": "monitoring",        # Grafana — observability dashboards + visualization (64k★)
+    # File storage — "file hosting" bigram overrides bare "hosting"→devops.
+    # "file hosting service", "file hosting s3" should land in File Management, not DevOps.
+    "file hosting": "file",         # bigram — "file hosting service", "file hosting alternative" → File Management
     # File storage — object storage (MinIO, Backblaze B2, Tigris, Cloudflare R2)
     "minio": "file",                # MinIO — open-source S3-compatible object storage (47k★)
     "backblaze": "file",            # Backblaze B2 — cheap S3-alternative object storage
@@ -7411,6 +7415,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gemini-code": "ai dev",        # hyphenated — "gemini-code alternative", "gemini-code setup" → AI Dev Tools
     "gemini-assist": "ai dev",      # variant — "gemini-assist alternative" → AI Dev Tools
     "gemini-code-assist": "ai dev", # full slug — "gemini-code-assist vs copilot" → AI Dev Tools
+    # AI Dev Tools — "github copilot" bigram overrides bare "github"→devops for copilot queries.
+    # Without this bigram "github copilot alternative" routes to DevOps via "github".
+    "github copilot": "ai dev",    # bigram — "github copilot alternative", "github copilot replacement" → AI Dev Tools
+    # AI Dev Tools — "ai ide" bigram overrides bare "ide"→developer for AI-enhanced IDE queries.
+    # "ai ide alternative", "best ai ide 2025" should land in AI Dev Tools, not Developer Tools.
+    "ai ide": "ai dev",            # bigram — "ai ide alternative", "ai ide setup" → AI Dev Tools
     # Database — local-first reactive databases (offline-first web and mobile apps)
     "rxdb": "database",             # RxDB — offline-first reactive database for JS/TS/React/Vue (30k★)
     "pouchdb": "database",          # PouchDB — browser CouchDB-compatible offline-first database (17k★)
@@ -8370,6 +8380,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Fix: bigrams that override the bare "workflow"→ai and "visual"→testing tokens.
     "workflow builder": "background",   # bigram — "workflow builder", "visual workflow builder" step 0-1
     "workflow automation": "background", # bigram — "workflow automation tool", "workflow automation nocode"
+    "automation workflow": "background", # reversed form — "automation workflow n8n", "automation workflow engine"
     "visual workflow": "background",    # bigram — "visual workflow builder", "visual workflow editor" → BG Jobs
     #
     # LLM monitoring / observability — "llm"→ai fires for ALL llm-prefixed queries including

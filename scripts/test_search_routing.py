@@ -369,6 +369,36 @@ When hunting for routing gaps, these query forms are historically tricky:
     "[modifier] [token]" where modifier is a category-specific adjective (here "smart")
     and add a bigram that overrides the bare-token mapping. Fixed: "smart contract"→
     developer, "smart contracts"→developer (probe 53, May 2026).
+
+47. "AI Dev Tools precision — bare 'ai' vs 'ai dev'" — tokens like "cursor", "windsurf",
+    "copilot" were mapped to bare "ai", which boosts BOTH "AI & Automation" AND
+    "AI Dev Tools" (both category names contain the substring "ai"). Changing to "ai dev"
+    uniquely targets "AI Dev Tools" via LOWER(c.name) LIKE '%ai dev%'. Strategy: for
+    any AI coding assistant or IDE tool, always use "ai dev" not bare "ai" to get a
+    precise category boost. Fixed: cursor/windsurf/copilot → "ai dev" (probe 54, May 2026).
+
+48. "Brand-prefix collision — 'github copilot' dead zone" — "github" alone maps to devops
+    (GitHub Actions/CI), which fires first for "github copilot alternative" and routes to
+    the wrong category. The second token "copilot"→ai dev never fires since the first
+    synonym wins. Strategy: add a bigram for the full brand name that overrides the
+    misleading first-token routing. Probe: "[big-tech-tool] [product-name]" where
+    big-tech-tool has an existing synonym pointing to a different category. Fixed:
+    "github copilot"→ai dev (probe 54, May 2026).
+
+49. "AI IDE dead zone — 'ai' prefix + 'ide' bare token" — "ide" maps to developer
+    (VS Code, Zed, Neovim), which is correct for non-AI contexts, but "ai ide" queries
+    target AI-enhanced IDEs (Cursor, Windsurf, Aide) in AI Dev Tools. The first
+    meaningful token "ai" has no synonym, so "ide"→developer fires. Strategy: add a
+    bigram "ai ide"→"ai dev" so the compound query routes correctly. Probe: "ai [X]"
+    where X has a correct single-token mapping to a non-AI category; if the "ai" prefix
+    changes the intent, the bigram is needed. Fixed: "ai ide"→ai dev (probe 54, May 2026).
+
+50. "File hosting dead zone — 'hosting' prefix overreach" — "hosting"→devops correctly
+    routes infrastructure hosting queries, but "file hosting service" should land in
+    File Management (MinIO, Backblaze B2, Cloudflare R2). The bare first token "file" has
+    no synonym so "hosting"→devops fires at pos 1. Strategy: add bigram "file hosting"→
+    file to override. Probe: "file [X]" where X has a synonym pointing to a different
+    category. Fixed: "file hosting"→file (probe 54, May 2026).
 """
 
 import sys
@@ -2162,6 +2192,45 @@ TEST_CASES: list[tuple[str, str]] = [
     ("smart contract audit", "developer"),                 # audit context also → developer (not security)
     # Regression — bare "contract testing" still routes to testing.
     ("contract testing pact", "testing"),                  # bare "contract"→testing unchanged
+    # Probe pattern 54 — AI Dev Tools routing precision / GitHub Copilot collision / file-hosting dead zone
+    #
+    # cursor/windsurf/copilot were mapped to bare "ai" which boosts BOTH AI & Automation AND AI Dev Tools.
+    # Changed to "ai dev" to precisely target AI Dev Tools (Cursor, Windsurf, Copilot are AI coding tools).
+    ("cursor alternative", "ai dev"),                      # "cursor"→"ai dev" (was "ai")
+    ("windsurf alternative", "ai dev"),                    # "windsurf"→"ai dev" (was "ai")
+    ("copilot alternative", "ai dev"),                     # "copilot"→"ai dev" (was "ai")
+    # Regression — general AI/automation tools still route to "ai" not "ai dev".
+    ("langchain alternative", "ai"),                       # "langchain"→"ai" unchanged
+    ("n8n workflow", "background"),                        # workflow automation unchanged
+    #
+    # "github copilot alternative" — bare "github"→devops fired over "copilot"→ai dev.
+    # Fix: bigram "github copilot" → "ai dev" wins at position 0 before "github" fires.
+    ("github copilot alternative", "ai dev"),              # bigram "github copilot"→"ai dev"
+    ("github copilot replacement", "ai dev"),              # same bigram
+    ("github copilot vs cursor", "ai dev"),                # bigram fires first at pos 0
+    # Regression — bare "github" still routes to devops for non-copilot contexts.
+    ("github actions alternative", "devops"),              # "github"→devops unchanged
+    #
+    # "ai ide" — bare "ide"→developer fired for AI IDE queries.
+    # Fix: bigram "ai ide" → "ai dev".
+    ("ai ide alternative", "ai dev"),                      # bigram "ai ide"→"ai dev"
+    ("ai ide 2025", "ai dev"),                             # same bigram pattern
+    # Regression — bare "ide" still routes to developer for non-AI IDE contexts.
+    ("ide plugin neovim", "developer"),                    # "ide"→developer unchanged
+    #
+    # "file hosting" — bare "hosting"→devops fired instead of file-management category.
+    # Fix: bigram "file hosting" → "file".
+    ("file hosting service", "file"),                      # bigram "file hosting"→file
+    ("file hosting s3 compatible", "file"),                # bigram fires first
+    # Regression — bare "hosting" still routes to devops for general hosting queries.
+    ("hosting provider vps", "devops"),                    # "hosting"→devops unchanged
+    #
+    # "automation workflow" (reversed word order vs "workflow automation") — "automation"→ai fired.
+    # Fix: bigram "automation workflow" → "background" (symmetric with "workflow automation").
+    ("automation workflow n8n", "background"),             # bigram "automation workflow"→background
+    ("automation workflow engine", "background"),          # same bigram
+    # Regression — bare "workflow automation" still routes to background (probe 5).
+    ("workflow automation python", "background"),          # "workflow automation"→background unchanged
 ]
 
 
