@@ -92,21 +92,38 @@ Run offline routing audit first (no API needed, catches regressions fast):
   python3 scripts/test_search_routing.py
 If any tests fail, fix _CAT_SYNONYMS in db.py before continuing.
 
-Then probe new gaps using the offline route_query() helper — test these query patterns:
-  Core: 'auth for nextjs', 'payments', 'email sending', 'database', 'monitoring'
-  Search quality: 'stripe alternative', 'cron job scheduler nodejs', 'self hosted auth'
-  State/build: 'state management', 'bundler', 'realtime', 'vector database', 'rate limiting'
-  AI: 'ai gateway', 'llm gateway', 'model router', 'ai proxy', 'llm observability'
-  Streaming: 'streaming pipeline', 'event streaming', 'data pipeline'
-  Web3/security: 'smart contract', 'zk proof library', 'zero knowledge proof'
-  Screen tools: 'screen recorder', 'screen capture library'
-  Docs/conversion: 'html to pdf converter', 'pdf generator'
-  New AI agents: 'pydantic ai', 'agno framework', 'mastra ai', 'smolagents'
-  Orphaned 2nd-token probe: for any two-word concept, check each token individually —
-    if token-0 is raw_first AND token-1 maps to the wrong category, add a bigram.
-  Auth: 'multi tenancy', 'impersonation', 'user impersonation', 'tenant isolation'
-For each misfire, check _CAT_SYNONYMS (supports bigram keys). Fix and commit.
-After fixing db.py, commit with 'fix: N search routing gaps — [short desc] (M/M pass)'.
+Then probe new gaps using the offline route_query() helper. Use these probe strategies:
+
+  STRATEGY A — Named-tool dead zones (peer-tool audit):
+    When you map one tool in a category, probe all peer tools in that family.
+    New agents/AI: 'agno framework', 'smolagents', 'dspy framework', 'haystack ai', 'pydantic ai'
+    New databases: 'turso serverless', 'xata database', 'neon serverless', 'motherduck duckdb'
+    New auth: 'hanko passkey', 'scalekit sso', 'stytch auth', 'ory kratos'
+    New payments: 'lemon squeezy', 'polar sh', 'creem payments', 'dodopayments'
+    New MCP: 'model context protocol server', 'context protocol implementation', 'mcp gateway'
+
+  STRATEGY B — Shadowed single-token probe (probe pattern 55 style):
+    For any query where token-0 maps to catA but the INTENT is catB, check if a
+    bigram starting at token-1 can override. Example: "model"→ai shadows "protocol"→mcp
+    in "model context protocol"; fix: "context protocol"→mcp bigram fires at i=1.
+    Test: 'full text search engine', 'server sent events', 'model context protocol server'
+
+  STRATEGY C — Stop-word drop probe (probe pattern 52 style):
+    For spaced compound queries, strip all stop words and check if the remainder is
+    in _CAT_SYNONYMS. Common stop words: on, of, for, with, using, via, in, at.
+    Test: 'on call alerting', 'open source license scanner', 'e2e encryption library'
+
+  STRATEGY D — Category fan-out probe (probe pattern 54 style):
+    For any "X Y" where X has a single-token map, probe "X analytics", "X monitoring",
+    "X notifications", "X logging" — each non-primary category needs its own bigram.
+    Test: 'realtime analytics', 'realtime monitoring', 'realtime notifications'
+
+  STRATEGY E — Short-form/gerund gaps (probe pattern 51 style):
+    After adding a bigram "X evaluation"→cat, always add "X eval", "X evaluating" too.
+    Test: 'llm eval', 'llm benchmarking', 'ai evaluation framework'
+
+For each misfire, add the missing entry to _CAT_SYNONYMS and a test case. Commit.
+After fixing db.py, commit with 'fix: probe pattern N — [short desc] (M/M pass)'.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
