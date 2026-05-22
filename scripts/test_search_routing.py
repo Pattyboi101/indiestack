@@ -1902,6 +1902,57 @@ TEST_CASES: list[tuple[str, str]] = [
     ("edge cache alternative", "caching"),                 # bigram "edge cache"→caching (singular form)
     # Regression — "edge database" still routes to database (Turso, D1).
     ("edge database sqlite", "database"),                  # bigram "edge database"→database unchanged
+    #
+    # Probe pattern 50 — favicon / OG / PII / team-messaging / syslog / HMAC dead zones
+    #
+    # "favicon" → Frontend Frameworks (favicon.io, RealFaviconGenerator)
+    ("favicon generator", "frontend"),                     # bare "favicon"→frontend
+    ("favicon creator", "frontend"),                       # bare "favicon"→frontend (plural form)
+    # Regression — "graph database" still routes to database via bare "graph".
+    ("graph database alternative", "database"),            # bare "graph"→database unchanged
+    #
+    # "meta tag/tags" → SEO Tools (metatags.io, Open Graph Preview)
+    ("meta tag generator", "seo"),                         # bigram "meta tag"→seo
+    ("meta tags checker", "seo"),                          # bigram "meta tags"→seo (plural)
+    #
+    # "og image" routes to seo via bare "og"→seo token.
+    # Note: "open graph" bigram NOT added — "open" is in _FTS_STOP_WORDS and is always stripped.
+    # Users typically use the "og" abbreviation in technical queries.
+    ("og image generator", "seo"),                         # bare "og"→seo unchanged
+    #
+    # "graph ql" spaced form → API Tools (overrides bare "graph"→database)
+    ("graph ql alternative", "api"),                       # bigram "graph ql"→api (overrides "graph"→database)
+    ("graph ql client", "api"),                            # bigram fires for spaced form
+    # Regression — "graphql" compound still routes to api.
+    ("graphql client", "api"),                             # bare "graphql"→api unchanged
+    #
+    # "syslog" / "rsyslog" → Logging (rsyslog, syslog-ng, Papertrail syslog)
+    ("syslog server", "logging"),                          # bare "syslog"→logging
+    ("rsyslog alternative", "logging"),                    # bare "rsyslog"→logging
+    #
+    # PII / data-privacy dead zones → Security Tools
+    ("pii detection library", "security"),                 # bare "pii"→security
+    ("pii redaction api", "security"),                     # bigram "pii redaction"→security
+    ("data masking tool", "security"),                     # bigram "data masking"→security
+    ("data anonymization gdpr", "security"),               # bigram "data anonymization"→security
+    ("data residency compliance", "security"),             # bigram "data residency"→security
+    ("data sovereignty cloud", "security"),                # bigram "data sovereignty"→security
+    # Regression — "data quality" still routes to analytics (Monte Carlo, Soda).
+    ("data quality monitoring", "analytics"),              # bigram "data quality"→analytics unchanged
+    #
+    # "hmac" / "request signing" → Security Tools
+    ("hmac verification", "security"),                     # bare "hmac"→security
+    ("request signing library", "security"),               # bigram "request signing"→security
+    # Regression — bare "signature"→forms (e-signature tools) unchanged.
+    ("signature tool", "forms"),                           # bare "signature"→forms unchanged
+    #
+    # "team messaging" → Developer Tools (Mattermost, Rocket.Chat, Zulip)
+    ("team messaging tool", "developer"),                  # bigram "team messaging"→developer
+    ("team messaging self-hosted", "developer"),           # bigram fires before bare "team"→?
+    #
+    # "matrix protocol" → Social Media (Element, Synapse; overrides "protocol"→mcp)
+    ("matrix protocol server", "social"),                  # bigram "matrix protocol"→social (overrides "protocol"→mcp)
+    ("matrix protocol alternative", "social"),             # bigram fires at i=0
 ]
 
 

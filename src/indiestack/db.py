@@ -8396,6 +8396,55 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "edge database" bigram (line ~7856) correctly routes to database; this covers the caching variant.
     "edge caching": "caching",                  # bigram — "edge caching redis", "edge caching cloudflare" → Caching
     "edge cache": "caching",                    # bigram singular — "edge cache setup", "edge cache alternative" → Caching
+    # ── Probe pattern 50 (May 2026): favicon / OG / PII / team-messaging / syslog / HMAC dead zones ──
+    #
+    # "favicon" bare token — no mapping; favicon tools (favicon.io, RealFaviconGenerator, Faviconer)
+    # live in Frontend Frameworks as small frontend utilities.
+    "favicon": "frontend",                      # "favicon generator", "favicon creator", "favicon sizes" → Frontend Frameworks
+    #
+    # "meta tag" spaced bigrams — "meta"→ai fires without bigram; meta tags are SEO territory.
+    # Tools: metatags.io, Open Graph Preview, MetaTags.io → SEO Tools.
+    "meta tag": "seo",                          # bigram — "meta tag generator", "meta tag preview" → SEO Tools
+    "meta tags": "seo",                         # plural — "meta tags generator", "meta tags checker" → SEO Tools
+    #
+    # NOTE: "open graph" bigram intentionally NOT added — "open" is in _FTS_STOP_WORDS and is
+    # always stripped, so the bigram can never fire. "og image" / "og meta" queries route
+    # correctly via bare "og"→seo. "open graph X" queries lose "open" and route via "graph"→database
+    # (acceptable; users typically use the "og" abbreviation in technical queries).
+    #
+    # "graph ql" spaced form — FTS tokenizes "GraphQL" as "graph"+"ql" when space-separated.
+    # "graphql" (no-space compound) already maps to api; the spaced form needs its own bigram.
+    "graph ql": "api",                          # bigram — "graph ql alternative", "graph ql client" → API Tools
+    #
+    # "syslog" bare token — no mapping; syslog server/relay tools (rsyslog, syslog-ng, Papertrail syslog)
+    # and structured logging pipelines live in Logging category.
+    "syslog": "logging",                        # "syslog server", "syslog alternative", "syslog ng" → Logging
+    "rsyslog": "logging",                       # rsyslog — most widely deployed Unix syslog daemon → Logging
+    #
+    # PII / data-privacy dead zones — "pii", "anonymization", "masking", "residency", "sovereignty"
+    # have no bare-token mapping; PII tools (Presidio, ARX, Faker) → Security Tools.
+    "pii": "security",                          # "pii detection", "pii redaction", "pii scrubbing" → Security Tools
+    "pii detection": "security",               # bigram — reinforces bare token (avoids Testing collision)
+    "pii redaction": "security",               # bigram — "pii redaction library", "pii redaction api" → Security Tools
+    "data masking": "security",                # bigram — "data masking tool", "data masking database" → Security Tools
+    "data anonymization": "security",          # bigram — "data anonymization gdpr", "data anonymization library" → Security Tools
+    "data residency": "security",              # bigram — "data residency requirements", "data residency compliance" → Security Tools
+    "data sovereignty": "security",            # bigram — "data sovereignty gdpr", "data sovereignty cloud" → Security Tools
+    #
+    # "hmac" bare token — no mapping; HMAC verification tools (webhook signature validation,
+    # request authentication) → Security Tools.
+    # Note: bare "signature"→forms (e-signature) so "hmac" needs its own mapping.
+    "hmac": "security",                         # "hmac verification", "hmac webhook", "hmac signing" → Security Tools
+    "request signing": "security",             # bigram — "request signing aws", "request signing library" → Security Tools
+    #
+    # Team messaging dead zones — "team messaging", "team chat" have no mapping.
+    # Self-hosted team messaging tools (Mattermost, Rocket.Chat, Zulip) → Developer Tools.
+    # Note: bare "chat"→customer (live chat / support) so a bigram is needed.
+    "team messaging": "developer",             # bigram — "team messaging tool", "team messaging self-hosted" → Developer Tools
+    #
+    # "matrix protocol" collision — bare "protocol"→mcp fires at i=1 (wrong category).
+    # Matrix is a decentralized open messaging protocol; tools like Element, Synapse → Social Media.
+    "matrix protocol": "social",               # bigram — "matrix protocol server", "matrix protocol alternative" → Social Media
 }
 
 _FTS_STOP_WORDS = {

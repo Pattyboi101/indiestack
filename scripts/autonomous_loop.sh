@@ -357,7 +357,12 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 1076+ tests passing (49 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 1101+ tests passing (50 probe patterns).
+
+Probe 50 (May 2026): "favicon"→frontend, "meta tag"/"meta tags"→seo, "graph ql" bigram→api (spaced GraphQL
+form; "graphql" compound already mapped), "syslog"/"rsyslog"→logging, "pii" + PII bigrams→security, "hmac"→
+security, "request signing"→security, "team messaging"→developer, "matrix protocol" bigram→social.
+NOTE: "open graph" bigram intentionally NOT added — "open" is in _FTS_STOP_WORDS; "og" token already → seo.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
