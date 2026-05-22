@@ -8504,6 +8504,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "teable": "developer",                 # bare — Teable (open-source Airtable alternative)
     "glide": "developer",                  # bare — Glide Apps (no-code app builder from spreadsheets)
     "spreadsheet database": "developer",   # bigram — NocoDB/Grist/Teable queries; overrides "spreadsheet"→frontend
+    #
+    # Probe pattern 55 (May 2026): database-GUI / BI / HTTP-client dead zones.
+    # "pgadmin" / "pgadmin4" fired raw_first — popular PostgreSQL admin GUI (should be database).
+    # "sqliteweb" fired raw_first — SQLite web browser; peer of dbeaver/tableplus (database).
+    # "curl" fired raw_first — HTTP client; "curl alternative" queries target api-tools.
+    # "business intelligence" fired raw_first — both tokens unmapped; BI tools live in analytics.
+    "pgadmin": "database",                 # bare — pgAdmin (PostgreSQL GUI); "pgadmin alternative"
+    "pgadmin4": "database",                # bare — pgAdmin 4 version-specific variant
+    "sqliteweb": "database",               # bare — sqlite-web browser; peer of dbeaver/tableplus
+    "curl": "api",                         # bare — HTTP client; "curl alternative" → API Tools
+    "business intelligence": "analytics", # bigram — BI tools (Metabase, Redash, Superset, Apache Superset)
 }
 
 _FTS_STOP_WORDS = {

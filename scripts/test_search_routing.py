@@ -370,6 +370,17 @@ When hunting for routing gaps, these query forms are historically tricky:
     and add a bigram that overrides the bare-token mapping. Fixed: "smart contract"→
     developer, "smart contracts"→developer (probe 53, May 2026).
 
+48. "Named database-admin tools and HTTP-client CLIs as dead zones" — specific tool
+    names for database GUI clients (pgAdmin, sqliteweb) and HTTP client CLIs (curl,
+    HTTPie) are often missing from _CAT_SYNONYMS because they're considered "support
+    infrastructure" rather than primary tools. Yet "pgadmin alternative" and
+    "curl alternative" are high-volume developer queries. Also covers generic two-word
+    BI compound queries where both tokens ("business", "intelligence") are unmapped —
+    a Pattern 23 (dual raw_first) dead zone. Strategy: enumerate major tooling GUIs
+    (db admin clients, API clients, HTTP CLIs) and probe each bare name. Fixed:
+    "pgadmin"→database, "pgadmin4"→database, "sqliteweb"→database, "curl"→api,
+    "business intelligence"→analytics bigram (probe 55, May 2026).
+
 47. "Second-token category poisoning in compound domain concepts" — a well-mapped
     category token appears as the SECOND word in a compound whose overall concept belongs
     to a DIFFERENT category. "knowledge management": "management"→project fires but PKM
@@ -2149,6 +2160,27 @@ TEST_CASES: list[tuple[str, str]] = [
     ("e2e testing playwright", "testing"),                 # bare "e2e"→testing unchanged
     ("e2e test runner", "testing"),                        # bare "e2e"→testing unchanged
 
+    # Probe pattern 55 — database-GUI / BI / HTTP-client dead zones
+    #
+    # "pgadmin" / "pgadmin4" — PostgreSQL GUI tools fired raw_first.
+    ("pgadmin", "database"),                          # bare — pgAdmin (PostgreSQL GUI)
+    ("pgadmin4", "database"),                         # bare — pgAdmin 4 version-specific variant
+    ("pgadmin alternative", "database"),              # "alternative" stripped; bare "pgadmin" fires
+    # "sqliteweb" — SQLite web browser fired raw_first.
+    ("sqliteweb", "database"),                        # bare — sqlite-web browser tool
+    # "curl" — HTTP client fired raw_first.
+    ("curl", "api"),                                  # bare — "curl alternative" → API Tools
+    ("curl alternative", "api"),                      # "alternative" stripped; bare "curl" fires
+    # "business intelligence" — both tokens unmapped (dual raw_first dead zone).
+    ("business intelligence", "analytics"),           # bigram — Metabase, Superset, Redash
+    ("business intelligence tool", "analytics"),      # "tool" stripped; bigram fires
+    ("business intelligence dashboard", "analytics"), # bigram fires before "dashboard"→analytics
+    # Regressions — dbeaver/tableplus already mapped.
+    ("dbeaver", "developer"),                         # unchanged
+    ("tableplus", "developer"),                       # unchanged
+    # Regression — "bi dashboard" still routes via "bi"→analytics.
+    ("bi dashboard", "analytics"),                    # bare "bi"→analytics unchanged
+    #
     # Probe pattern 54 — PKM / digital-garden / spreadsheet-database dead zones
     #
     # "knowledge management" — bare "management"→project mis-routes PKM queries.
