@@ -314,6 +314,36 @@ When hunting for routing gaps, these query forms are historically tricky:
     Infrastructure since self-hosting implies deployment/infrastructure decisions.
     Fixed: "self hosted", "self-hosted", "self hosting", "self host" → devops (probe 51,
     May 2026).
+
+40. "Shell bare-token dead zones" — "zsh" and "bash" are common shell names that appear
+    in CLI tool queries ("zsh alternative", "bash scripting tool") but had no synonyms.
+    "fish" (Fish Shell) was already mapped but the other major shells weren't. Strategy:
+    after mapping a named tool in a category, probe its peer tools in the same family —
+    if Fish Shell→cli is mapped, also probe Zsh and Bash. Fixed: "zsh"→cli, "bash"→cli
+    (probe 52, May 2026).
+
+41. "Stop-word prefix dropping first token" — when a query's first word is a stop word
+    (e.g. "on" in "on call"), the meaningful token ("call") becomes the first term that
+    the router checks. If "call" has no synonym, raw_first fires. Strategy: when adding
+    a hyphenated compound ("on-call"→monitoring), also probe the space-separated form
+    after stop-word stripping — if the surviving first token ("call") has no synonym,
+    add it directly. Fixed: "call"→monitoring (bare token for "on call" queries after
+    "on" stripped; probe 52, May 2026).
+
+42. "License compliance dead zone" — "license" as a bare token had no _CAT_SYNONYMS
+    entry, so "license checker" and "open source license scanner" fired raw_first. (Note:
+    "open" and "source" are both in _FTS_STOP_WORDS, leaving bare "license".) License
+    compliance tools (FOSSA, SPDX tooling, LicenseChecker) belong in Security Tools.
+    Fixed: "license"→security, "fossa"→security (probe 52, May 2026).
+
+43. "Same-token collision between testing and security" — "e2e"→testing is correct for
+    "e2e testing playwright" but wrong for "e2e encryption library". When a token is
+    shared between two categories, the category with higher query volume wins the bare-
+    token mapping; the lower-volume category needs bigrams. Strategy: for any token that
+    correctly maps to category A, probe "[token] [B-concept]" forms to find cases where
+    B-context queries need a bigram override. Fixed: "e2e encryption"→security and
+    "e2e encrypted"→security bigrams (override bare "e2e"→testing for security queries;
+    probe 52, May 2026).
 """
 
 import sys
@@ -2045,6 +2075,39 @@ TEST_CASES: list[tuple[str, str]] = [
     ("changesets release", "developer"),                   # bare "changesets"→developer
     # Regression — "semantic release" still routes to devops (CI/CD release automation).
     ("semantic release tool", "devops"),                   # bare "semantic"→devops unchanged
+
+    # Probe pattern 52 — shell bare tokens / on-call stop-word drop / license dead zones / e2e collision
+    #
+    # "zsh" / "bash" bare tokens — common shell queries fired raw_first (Pattern 23 dual dead zone).
+    # Fish Shell was already mapped but Zsh/Bash bare tokens were not.
+    ("zsh alternative", "cli"),                            # bare "zsh"→cli (oh-my-zsh, zimfw alternatives)
+    ("zsh plugin manager", "cli"),                         # bare "zsh"→cli
+    ("bash scripting tool", "cli"),                        # bare "bash"→cli
+    ("bash utility library", "cli"),                       # bare "bash"→cli
+    # Regression — "fish shell" still routes to cli (was already mapped).
+    ("fish shell alternative", "cli"),                     # bare "fish"→cli unchanged
+    #
+    # "on call" — "on" is a stop word, leaving bare "call" with no synonym.
+    # "on-call" (hyphenated) was already mapped to monitoring; spaced form was a dead zone.
+    ("on call tool", "monitoring"),                        # bare "call"→monitoring (stop-word "on" stripped)
+    ("on call management", "monitoring"),                  # bigram "on call" not needed; bare "call" fires
+    # Regression — "on-call schedule" still routes to monitoring (hyphenated form unchanged).
+    ("on-call schedule", "monitoring"),                    # "on-call"→monitoring unchanged
+    #
+    # "license" / "fossa" bare tokens — license compliance tools fired raw_first.
+    ("license checker python", "security"),                # bare "license"→security (FOSSA, SPDX, licensecheck)
+    ("open source license scanner", "security"),           # "open"/"source" are stop words → "license"→security
+    ("fossa alternative", "security"),                     # bare "fossa"→security (FOSSA license tool)
+    # Regression — "license compliance scanner" still routes via "compliance"→security (unaffected).
+    ("license compliance scanner", "security"),            # "compliance"→security unchanged
+    #
+    # "e2e encryption" — "e2e"→testing collides with security context for encryption queries.
+    # Bigrams "e2e encryption" and "e2e encrypted" override bare "e2e"→testing.
+    ("e2e encryption library", "security"),                # bigram "e2e encryption"→security (overrides e2e→testing)
+    ("e2e encrypted messenger", "security"),               # bigram "e2e encrypted"→security
+    # Regression — bare "e2e testing" still routes to testing.
+    ("e2e testing playwright", "testing"),                 # bare "e2e"→testing unchanged
+    ("e2e test runner", "testing"),                        # bare "e2e"→testing unchanged
 ]
 
 

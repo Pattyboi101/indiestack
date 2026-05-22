@@ -3041,9 +3041,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "surrealdb": "database",    # SurrealDB — multi-model DB (SQL + graph + document + KV)
     "webauthn": "authentication",   # WebAuthn — W3C passkey standard
     "fido2": "authentication",      # FIDO2 — underlying passkey protocol
-    # Security — compliance, encryption, certificates
+    # Security — compliance, encryption, certificates, license scanning
     "compliance": "security",   # GDPR/SOC2 compliance tooling
     "gdpr": "security",         # GDPR compliance tools
+    "license": "security",      # "license checker", "open source license scanner" → Security Tools (FOSSA, SPDX, LicenseChecker)
+    "fossa": "security",        # FOSSA — open source license compliance and security scanning → Security Tools
     "encryption": "security",   # encryption libraries and key management
     "ssl": "security",          # SSL certificate management
     "tls": "security",          # TLS configuration tools
@@ -4794,8 +4796,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "jetpack": "frontend",          # Android Jetpack Compose — Google's modern declarative Android UI
     # Mobile / offline database
     "realm": "database",            # Realm — offline-first mobile database (MongoDB Realm, iOS/Android, 12k★)
-    # Shell — Fish Shell (interactive, Bash/Zsh replacement)
+    # Shell — Fish Shell (interactive, Bash/Zsh replacement) + common shell bare tokens
     "fish": "cli",                  # Fish Shell — friendly interactive shell (fish-shell/fish-shell, 26k★)
+    "zsh": "cli",                   # Zsh — "zsh alternative", "zsh plugin manager", "oh-my-zsh alternative" → CLI Tools
+    "bash": "cli",                  # Bash — "bash scripting tool", "bash utility", "bash alternative" → CLI Tools
     # AI — plural forms and LLM interaction patterns (new terms growing in agent query volume)
     "agents": "ai",                 # plural "agents" — "AI agents framework", "multi-agent system" queries
     "hybrid": "search",             # "hybrid search" — BM25+vector combined retrieval (key RAG term)
@@ -5824,6 +5828,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — singular "unit" and hyphenated "end-to-end" forms (complements to "e2e"→"testing")
     "unit": "testing",              # "unit test framework", "unit testing library", "unit test runner" → Testing Tools
     "end-to-end": "testing",        # "end-to-end testing framework", "end-to-end test runner" → Testing Tools
+    # Security — "e2e encryption" bigram overrides bare "e2e"→testing for security context
+    # "e2e"→testing is correct for "e2e testing" but wrong for "e2e encryption" (end-to-end encryption)
+    "e2e encryption": "security",   # bigram — "e2e encryption library", "e2e encrypted chat" → Security Tools
+    "e2e encrypted": "security",    # bigram — "e2e encrypted storage", "e2e encrypted messenger" → Security Tools
     # Frontend — isomorphic / universal JavaScript rendering pattern
     "isomorphic": "frontend",       # "isomorphic JavaScript", "isomorphic rendering", "universal app" → Frontend Frameworks
     # Database — hyphenated form of "timeseries" (complement to "timeseries"→database already mapped)
@@ -6357,6 +6365,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "alerts": "monitoring",         # plural — "configure alerts", "custom alerts" → Monitoring & Uptime
     "incident": "monitoring",       # "incident management", "incident response platform" → Monitoring & Uptime (Incident.io, Rootly)
     "on-call": "monitoring",        # "on-call management", "on-call scheduling", "on-call tool" → Monitoring & Uptime
+    "call": "monitoring",           # bare form — "on call" reduces to "call" after stop-word "on" stripped → Monitoring
     "oncall": "monitoring",         # compound — "oncall platform", "oncall alternative" → Monitoring & Uptime
     "postmortem": "monitoring",     # "postmortem tool", "incident postmortem" → Monitoring & Uptime
     "runbook": "monitoring",        # "runbook automation", "ops runbook" → Monitoring & Uptime
