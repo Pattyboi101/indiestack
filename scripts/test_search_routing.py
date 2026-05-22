@@ -480,6 +480,32 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — "bi tool" / "product tour library" unaffected.
     ("bi tool", "analytics"),                        # bare "bi"→analytics unchanged
     ("product tour library javascript", "frontend"), # bare "tour"→frontend unchanged (library=stop word)
+
+    # Probe pattern 54 — headless-X gerunds/abbrevs + realtime-category fan-out + platform-push
+    # "headless X" — existing bigrams cover commerce/ecommerce/storefront/checkout (probe 43).
+    ("headless testing framework", "testing"),             # bigram "headless testing" → Testing (not CMS)
+    ("headless automation testing", "testing"),            # bigram "headless automation" → Testing Tools
+    ("headless e2e playwright", "testing"),                # bigram "headless e2e" → Testing Tools
+    # Regression — existing headless commerce/ecommerce bigrams unchanged.
+    ("headless commerce engine", "developer"),             # existing bigram → Developer Tools
+    ("headless ecommerce storefront", "developer"),        # existing bigram → Developer Tools
+    # "realtime X" — bare "realtime"→api; new bigrams override for non-api categories.
+    ("realtime analytics dashboard", "analytics"),         # bigram "realtime analytics" → Analytics & Metrics
+    ("realtime monitoring alerts", "monitoring"),          # bigram "realtime monitoring" → Monitoring & Uptime
+    ("realtime push notifications", "notifications"),      # bigram "realtime push" → Notifications
+    ("realtime notifications novu", "notifications"),      # bigram "realtime notifications" → Notifications
+    ("realtime search nextjs", "search"),                  # bigram "realtime search" → Search Engines
+    ("realtime log streaming", "logging"),                 # bigram "realtime log" → Logging
+    ("realtime logging service", "logging"),               # bigram "realtime logging" → Logging
+    # Regression — bare "realtime"→api unchanged for api-context queries.
+    ("realtime api websocket", "api"),                     # bare "realtime"→api unchanged
+    # Platform push notifications — "mobile"/"ios"/"android"→frontend fires before "push"→notifications.
+    ("mobile push notification sdk", "notifications"),     # bigram "mobile push" → Notifications
+    ("ios push notification onesignal", "notifications"),  # bigram "ios push" → Notifications
+    ("android push notification firebase", "notifications"), # bigram "android push" → Notifications
+    # Regression — bare "mobile"/"ios" still routes to frontend for non-push queries.
+    ("mobile app framework", "frontend"),                  # bare "mobile"→frontend unchanged
+    ("ios development", "frontend"),                       # bare "ios"→frontend unchanged
 ]
 
 

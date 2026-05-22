@@ -6780,6 +6780,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "uffizzi": "devops",               # Uffizzi — ephemeral preview environments for PRs (uffizzi/uffizzi)
     "qovery": "devops",                # Qovery — developer self-service PaaS + preview envs (qovery/engine)
     "bunnyshell": "devops",            # Bunnyshell — environment-as-a-service, preview envs per PR
+    # ── Probe pattern 54 (May 2026): headless-X / realtime-category / platform-push dead zones ──
+    # "headless X" — existing bigrams cover commerce/ecommerce/storefront/checkout (probe 43).
+    # Missing: testing (gerund form), automation, e2e.
+    "headless testing": "testing",      # bigram — "headless testing framework" → Testing Tools (not CMS)
+    "headless automation": "testing",   # bigram — "headless automation testing" → Testing Tools
+    "headless e2e": "testing",          # bigram — "headless e2e playwright" → Testing Tools
+    #
+    # "realtime X" — bare "realtime"→api fires for most compound queries.
+    # Missing: analytics, monitoring, notifications, search, logging.
+    "realtime analytics": "analytics",          # bigram — "realtime analytics dashboard" → Analytics & Metrics
+    "realtime monitoring": "monitoring",        # bigram — "realtime monitoring alerts" → Monitoring & Uptime
+    "realtime notifications": "notifications",  # bigram — "realtime notifications novu" → Notifications
+    "realtime push": "notifications",           # bigram — "realtime push notifications" → Notifications
+    "realtime search": "search",                # bigram — "realtime search nextjs" → Search Engines
+    "realtime logging": "logging",              # bigram — "realtime logging service" → Logging
+    "realtime log": "logging",                  # bigram — "realtime log streaming", "realtime log viewer" → Logging
+    #
+    # Platform-specific push notifications — "mobile"/"ios"/"android"→frontend fires before "push".
+    "mobile push": "notifications",     # bigram — "mobile push notification sdk" → Notifications
+    "ios push": "notifications",        # bigram — "ios push notification" → Notifications (OneSignal, APNs)
+    "android push": "notifications",    # bigram — "android push notification" → Notifications (FCM, OneSignal)
 }
 
 _FTS_STOP_WORDS = {
