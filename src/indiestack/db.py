@@ -7421,6 +7421,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI Dev Tools — "ai ide" bigram overrides bare "ide"→developer for AI-enhanced IDE queries.
     # "ai ide alternative", "best ai ide 2025" should land in AI Dev Tools, not Developer Tools.
     "ai ide": "ai dev",            # bigram — "ai ide alternative", "ai ide setup" → AI Dev Tools
+    # AI Dev Tools — LLM observability and tracing overrides.
+    # "ai tracing" → "tracing"→monitoring without bigram; LLM trace viewers (LangSmith, Langfuse) live in AI Dev Tools.
+    # "ai observability" → "observability"→monitoring without bigram; LLM observability tools live in AI Dev Tools.
+    "ai tracing": "ai dev",        # bigram — "ai tracing tool", "llm ai tracing" → AI Dev Tools
+    "ai observability": "ai dev",  # bigram — "ai observability platform", "llm ai observability" → AI Dev Tools
     # Database — local-first reactive databases (offline-first web and mobile apps)
     "rxdb": "database",             # RxDB — offline-first reactive database for JS/TS/React/Vue (30k★)
     "pouchdb": "database",          # PouchDB — browser CouchDB-compatible offline-first database (17k★)
@@ -7552,6 +7557,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "ai safety" → overrides raw_first "ai"→ai-automation; safety eval/red-team lives in ai-standards
     "responsible ai": "ai standards",   # bigram — "responsible ai framework", "responsible ai toolkit" → AI Standards & Specs
     "red teaming": "ai standards",      # bigram — "red teaming tool", "red teaming llm" → AI Standards & Specs (complement to "red-team")
+    "red team": "ai standards",         # bigram — "red team llm", "red team evaluation" → AI Standards & Specs ("red" alone has no category match)
     "ai benchmark": "ai standards",     # bigram — "ai benchmark tool", "ai benchmark suite" → AI Standards & Specs (overrides "benchmark"→testing)
     "ai safety": "ai standards",        # bigram — "ai safety framework", "ai safety testing" → AI Standards & Specs
     "ai governance": "ai standards",    # bigram — "ai governance tool", "ai governance framework" → AI Standards & Specs
@@ -7820,6 +7826,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "context window": "ai",             # bigram — "context window management", "context window limit" → AI & Automation
     "context engineering": "ai",        # bigram — "context engineering tool", "llm context engineering" → AI & Automation
     "context length": "ai",             # bigram — "context length optimization", "long context length" → AI & Automation
+    "context management": "ai",         # bigram — "context management tool", "llm context management" → AI & Automation (beats "context"→frontend)
+    # AI — "ai deployment" overrides "deployment"→devops: AI model deployment tools (BentoML, Modal, Baseten) live in AI & Automation.
+    "ai deployment": "ai",              # bigram — "ai deployment tool", "ai model deployment" → AI & Automation (beats "deployment"→devops)
     # AI — OpenAI GPT-4.1 family (released April 2025; frontier model + two cheaper variants)
     # Very high "gpt-4.1 alternative", "gpt-4.1 api", "gpt-4.1-mini vs claude" query volume post-launch
     "gpt41": "ai",                      # GPT-4.1 — "gpt41 alternative", "gpt41 api", "gpt41 setup" → AI & Automation

@@ -2231,6 +2231,40 @@ TEST_CASES: list[tuple[str, str]] = [
     ("automation workflow engine", "background"),          # same bigram
     # Regression — bare "workflow automation" still routes to background (probe 5).
     ("workflow automation python", "background"),          # "workflow automation"→background unchanged
+    # Probe pattern 55 — AI routing dead zones: red-team / context-management / AI observability / AI deployment
+    #
+    # "red team" (spaced) had no bigram; "red" has no category match so raw_first fired with +0 boost.
+    # "redteam", "red-team", "red teaming" were already mapped — this closes the spaced-form gap.
+    ("red team evaluation", "ai standards"),               # bigram "red team"→"ai standards"
+    ("red team llm testing", "ai standards"),              # bigram fires at pos 0
+    ("red team alternative", "ai standards"),              # bigram fires at pos 0
+    # Regression — "red teaming" and "redteam" still route correctly.
+    ("red teaming tool", "ai standards"),                  # "red teaming"→"ai standards" unchanged
+    ("redteam framework", "ai standards"),                 # "redteam"→"ai standards" unchanged
+    #
+    # "context management" → "context"→frontend misfired; LLM context management ≠ React Context API.
+    # Bigram override needed (same pattern as "context window", "context engineering").
+    ("context management tool", "ai"),                     # bigram "context management"→ai
+    ("llm context management", "ai"),                      # bigram fires at pos 1
+    # Regression — React Context API queries still route to frontend.
+    ("react context api", "frontend"),                     # "context"→frontend unchanged (react framework-stripped → context first)
+    ("context provider react", "frontend"),                # "context"→frontend unchanged
+    #
+    # "ai tracing" → "tracing"→monitoring misfired; LLM trace viewers live in AI Dev Tools.
+    # "ai observability" → "observability"→monitoring misfired; LLM observability tools live in AI Dev Tools.
+    ("ai tracing tool", "ai dev"),                         # bigram "ai tracing"→"ai dev"
+    ("ai tracing langsmith", "ai dev"),                    # bigram fires at pos 0
+    ("ai observability platform", "ai dev"),               # bigram "ai observability"→"ai dev"
+    ("ai observability alternative", "ai dev"),            # bigram fires at pos 0
+    # Regression — generic tracing/observability still routes to monitoring.
+    ("distributed tracing tool", "monitoring"),            # "tracing"→monitoring unchanged
+    ("observability platform grafana", "monitoring"),      # "observability"→monitoring unchanged
+    #
+    # "ai deployment" → "deployment"→devops misfired; AI model serving tools live in AI & Automation.
+    ("ai deployment tool", "ai"),                          # bigram "ai deployment"→ai
+    ("ai model deployment bentoml", "ai"),                 # bigram fires at pos 0
+    # Regression — bare "deployment" still routes to devops for general CI/CD queries.
+    ("deployment pipeline github actions", "devops"),      # "deployment"→devops unchanged
 ]
 
 
