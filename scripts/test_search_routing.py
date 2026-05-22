@@ -399,6 +399,41 @@ When hunting for routing gaps, these query forms are historically tricky:
     no synonym so "hosting"→devops fires at pos 1. Strategy: add bigram "file hosting"→
     file to override. Probe: "file [X]" where X has a synonym pointing to a different
     category. Fixed: "file hosting"→file (probe 54, May 2026).
+
+51. "'ai [X]' wrong-subcategory routing — second token wins when 'ai' is unmapped" —
+    "ai" has no _CAT_SYNONYMS entry, so for any "ai [X]" query the SECOND meaningful
+    token fires. This is correct when the second token's category matches AI intent
+    (e.g. "ai workflow"→"workflow"→ai ✓), but fails when X has a non-AI category
+    mapping: "ai tracing"→"tracing"→monitoring (wrong; LLM tracers like LangSmith live
+    in AI Dev Tools), "ai observability"→"observability"→monitoring (wrong; LLM
+    observability is AI Dev Tools), "ai deployment"→"deployment"→devops (wrong; AI model
+    serving is AI & Automation). Strategy: probe every "ai [X]" query where X has a
+    non-AI category mapping, and add the bigram when the AI-prefixed version targets a
+    different sub-domain. Key LIKE targets: "ai dev" for AI Dev Tools, "ai" for AI &
+    Automation. Fixed: "ai tracing"→ai dev, "ai observability"→ai dev,
+    "ai deployment"→ai (probe 55, May 2026).
+
+52. "'context management' frontend collision — 'context' first-token overreach" —
+    "context"→frontend (React Context API) correctly routes React context queries, but
+    "context management" in 2026 predominantly refers to LLM context window management
+    (MemGPT, Mem0, AI memory tools) which live in AI & Automation. The existing bigrams
+    "context window", "context engineering", "context length" cover specific LLM-context
+    compound forms but "context management" was missing. Strategy: whenever a token has
+    a broad category mapping (frontend, developer, etc.) and a common "ai" compound form
+    exists for a DIFFERENT target category, add the compound bigram explicitly. Check
+    the full list of "context [noun]" forms: window, engineering, length, management,
+    compression — all should route to AI, not frontend. Fixed: "context management"→ai
+    (probe 55, May 2026).
+
+53. "Spaced-form gap in a synonym family" — when a compound security concept has
+    hyphenated, compact, and gerund forms mapped but the natural spaced form is missing,
+    'raw_first' fires with no category boost. "redteam"→ai standards, "red-team"→ai
+    standards, "red teaming"→ai standards were all mapped, but "red team" (two words,
+    no hyphen, no gerund) fell through to raw_first "red" which has no category match.
+    Strategy: for any concept family with multiple variant entries, explicitly enumerate
+    ALL surface forms: [compact] [hyphenated] [spaced] [gerund]. Probe the spaced form
+    of every security/AI-standards concept that has only hyphenated or gerund coverage.
+    Fixed: "red team"→ai standards (probe 55, May 2026).
 """
 
 import sys
