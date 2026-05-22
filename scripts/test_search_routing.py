@@ -258,6 +258,40 @@ When hunting for routing gaps, these query forms are historically tricky:
     even when a disambiguating qualifier is present ("cd", "gitops"). Always add
     bigrams "[toolname] [qualifier]" to override high-strength bare-token mappings.
     Fixed: "flux cd"→devops, "flux gitops"→devops (probe 46, May 2026).
+
+35. "Privacy / data-protection dead zones" — PII and compliance technical terms are
+    often unmapped because they don't match existing category keywords. The tokens
+    ("pii", "hmac", "masking", "anonymization", "residency") are practitioner terms
+    but not tool category words, so neither single-token nor bigram mappings exist by
+    default. Strategy: enumerate the privacy/data-protection practitioner vocabulary
+    and check each term: (a) PII-related: "pii", "pii detection", "pii redaction",
+    "data masking", "data anonymization"; (b) Compliance/jurisdiction: "data residency",
+    "data sovereignty", "gdpr tooling"; (c) Cryptographic auth: "hmac", "request
+    signing", "webhook signature". All of these route to Security Tools. Fixed in
+    probe 50 (May 2026). Probe pattern: "personally identifiable information", "data
+    masking tool", "hmac library", "request signing aws" — if raw_first fires, the
+    bare token or bigram is missing.
+
+36. "Protocol-name disambiguation" — some protocol/standard names collide with existing
+    category keywords. "matrix protocol" fires "protocol"→mcp (wrong; Matrix is a
+    decentralized messaging protocol, not an MCP server). "graph ql" (space-separated)
+    fires "graph"→database (wrong; should be api). Strategy: for any well-known protocol
+    that contains a token already mapped to a different category, add a bigram with the
+    protocol's disambiguating qualifier. Pattern: "[protocol-name] [qualifier]" bigrams
+    take precedence over bare-token synonyms. Always probe both the compound form
+    ("graphql") and the spaced form ("graph ql"), since users may type either. Fixed:
+    "graph ql"→api, "matrix protocol"→social (probe 50, May 2026).
+
+37. "Team messaging dead zones" — self-hosted/alternative team messaging tools (Mattermost,
+    Rocket.Chat, Zulip) live in Developer Tools, but bare "slack" / "discord" have no
+    synonym (alternative is stripped by _FTS_STOP_WORDS so "slack alternative" reduces
+    to bare "slack"). The generic compound "team messaging" also has no bigram mapping.
+    Strategy: probe "[well-known chat tool] alternative" queries by stripping the stop
+    word and checking if the bare tool name maps anywhere. Also probe "team messaging",
+    "team chat", "group messaging" as generic queries. Note: adding bare "slack"→developer
+    risks collisions with "slack oauth"→authentication and "slack notification"→notifications
+    — prefer the compound bigram "team messaging"→developer over bare-tool mapping.
+    Fixed: "team messaging"→developer (probe 50, May 2026).
 """
 
 import sys
