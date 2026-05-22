@@ -8509,6 +8509,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # for smart contract / blockchain queries. Smart-contract dev tools live in Developer Tools.
     "smart contract": "developer",             # bigram — "smart contract solidity", "smart contract testing" → Developer Tools
     "smart contracts": "developer",            # plural — "smart contracts ethereum", "smart contracts audit" → Developer Tools
+    # Feedback — changelog widget queries route to devops via "changelog"→devops (git changelog generators).
+    # Bigrams fire first so "changelog widget / embed / sdk" routes to Feedback (AnnounceKit, Beamer, Featurebase).
+    "changelog widget": "feedback",            # bigram — "changelog widget react", "changelog widget alternative" → Feedback & Reviews
+    "changelog embed": "feedback",             # bigram — "changelog embed", "changelog embed tool" → Feedback & Reviews
+    # Feedback — "what's new" / "whats new" product announcement queries (AnnounceKit, Beamer).
+    # NOTE: "whats new" bigram can NEVER fire — "new" is in _FTS_STOP_WORDS and gets stripped.
+    # "whats new widget" → meaningful = ["whats", "widget"] → raw_first (no safe fix without mapping bare "whats").
+    # Covered by "changelog widget"→feedback and "in-app changelog"→feedback bigrams instead.
+    # Forms — "document signing" overrides "document"→database (document-store/MongoDB terminology).
+    # E-signature APIs (DocuSign, HelloSign, PandaDoc) live in Forms & Surveys.
+    "document signing": "forms",               # bigram — "document signing api", "document signing integration" → Forms & Surveys
+    "esign": "forms",                          # bare — "esign api", "esign integration" → Forms & Surveys
+    # DevOps — "pre commit" spaced form (complement to "pre-commit"→devops hyphenated form at line 3747).
+    # "pre commit hooks" routed to frontend via "hooks"→frontend; bigram fires first to correct this.
+    "pre commit": "devops",                    # bigram — "pre commit hooks", "pre commit runner" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

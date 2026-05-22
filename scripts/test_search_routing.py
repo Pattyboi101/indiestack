@@ -2314,6 +2314,33 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — live/support chat still routes to customer support.
     ("live chat widget", "customer"),                      # "chat"→customer unchanged
     ("customer chat support", "customer"),                 # "customer"→customer unchanged
+    # Probe pattern 57 — changelog-widget collision / document-signing dead zone / pre-commit hooks collision
+    #
+    # "changelog widget" → "changelog"→devops fired (git-cliff/semantic-release type tools).
+    # Product changelog widgets (AnnounceKit, Beamer, Featurebase) are Feedback & Reviews, not DevOps.
+    ("changelog widget react", "feedback"),                # bigram "changelog widget"→feedback (beats changelog→devops)
+    ("changelog widget alternative", "feedback"),          # bigram fires at pos 0
+    ("changelog embed tool", "feedback"),                  # bigram "changelog embed"→feedback
+    # Regression — git-based changelog tools still route to devops.
+    ("changelog generator git", "devops"),                 # "changelog"→devops unchanged
+    ("release changelog generator", "devops"),             # "changelog"→devops unchanged
+    #
+    # "document signing" → "document"→database fired (document-store/MongoDB terminology).
+    # E-signature APIs (DocuSign, HelloSign, PandaDoc) live in Forms & Surveys.
+    ("document signing api", "forms"),                     # bigram "document signing"→forms (beats document→database)
+    ("document signing integration", "forms"),             # bigram fires at pos 0
+    ("esign api alternative", "forms"),                    # bare "esign"→forms
+    # Regression — document-database queries still route to database.
+    ("document database mongodb", "database"),             # "document"→database unchanged
+    ("document store nosql", "database"),                  # "document"→database unchanged
+    #
+    # "pre commit hooks" → "hooks"→frontend fired (React hooks terminology).
+    # Pre-commit hook runners (Husky, pre-commit, Lefthook) live in DevOps, not Frontend.
+    ("pre commit hooks nodejs", "devops"),                 # bigram "pre commit"→devops (beats hooks→frontend)
+    ("pre commit runner alternative", "devops"),           # bigram fires at pos 0
+    # Regression — React hooks / git queries still route correctly.
+    ("react hooks state", "frontend"),                     # "hooks"→frontend unchanged (react framework-strips react)
+    ("git lfs storage", "devops"),                         # "git"→devops unchanged (bare git queries → DevOps)
 ]
 
 
