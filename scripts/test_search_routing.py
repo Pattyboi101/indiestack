@@ -369,6 +369,29 @@ When hunting for routing gaps, these query forms are historically tricky:
     "[modifier] [token]" where modifier is a category-specific adjective (here "smart")
     and add a bigram that overrides the bare-token mapping. Fixed: "smart contract"→
     developer, "smart contracts"→developer (probe 53, May 2026).
+
+47. "Stop-word drop on brand first token" — when a brand name starts with a common
+    stop word ("new" in "New Relic", "old" in "Old Trusty"), stripping the stop word
+    leaves a bare noun ("relic", "trusty") with no _CAT_SYNONYMS entry → raw_first
+    fires. Strategy: (a) add the compound form "newrelic"→category, AND (b) add the
+    bare second token "relic"→category. Both are needed because users query both forms:
+    "new relic alternative" (stop word stripped, bare "relic" remains) and "newrelic
+    monitoring" (compound, handled by the compound entry). Probe: split any brand name
+    on spaces; if the first word is in _FTS_STOP_WORDS, check whether the remaining
+    token has a synonym. Fixed: "relic"→monitoring (probe 54, May 2026).
+
+48. "Media/file category ambiguity for image utility tools" — "image"→media routes
+    queries like "image server" or "image hosting" to Media Servers, which is correct.
+    But image utility tools (Sharp, Cloudinary image processing, Squoosh, Imagemin)
+    live in File Management, and "image optimization" / "image processing" should route
+    there instead. The same first token ("image") covers two different tool categories.
+    Strategy: add bigrams for the utility-tool intent ("image optimization"→file,
+    "image processing"→file, "image compression"→file) that override bare "image"→media.
+    Leave bare "image"→media unchanged since streaming/hosting is the more common intent.
+    Also probe the monitoring/brand-monitoring collision: "media monitoring" (brand
+    monitoring, PR tools → Analytics) vs "media server" (streaming → Media Servers).
+    Fixed: "image optimization"→file, "image optimisation"→file, "media monitoring"→
+    analytics (probe 54, May 2026).
 """
 
 import sys
