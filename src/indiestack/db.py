@@ -3857,6 +3857,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "heatmap": "analytics",         # "click heatmap", "scroll heatmap" (Hotjar, Clarity) → Analytics
     "funnel": "analytics",          # "conversion funnel", "funnel analysis" → Analytics & Metrics
     "cohort": "analytics",          # "cohort analysis", "user cohorts" → Analytics & Metrics
+    # Analytics — conversion optimisation, attribution, and user-behaviour dead zones (probe pattern 57, May 2026)
+    # "tracking" is a stop word so "conversion tracking" reduces to bare "conversion" → needs this mapping.
+    # "attribution model" was mis-routed to ai via bare "model"→ai firing at pos 1 — bare "attribution" fires first now.
+    # "mobile attribution" and "mobile analytics" were routed to frontend via "mobile"→frontend — bigrams override.
+    "conversion": "analytics",          # bare — "conversion tracking", "conversion optimisation" → Analytics & Metrics
+    "attribution": "analytics",         # bare — "attribution model", "marketing attribution", "mobile mmp" → Analytics & Metrics
+    "cro": "analytics",                 # abbreviation — "cro tool", "cro platform", "cro software" → Analytics & Metrics
+    "user behavior": "analytics",       # bigram — "user behaviour analytics", "user behaviour data" → Analytics & Metrics
+    "user journey": "analytics",        # bigram — "user journey mapping", "user journey analytics" → Analytics & Metrics
+    "mobile attribution": "analytics",  # bigram — "mobile attribution sdk" (overrides mobile→frontend) → Analytics & Metrics
+    "mobile analytics": "analytics",    # bigram — "mobile app analytics", "mobile analytics sdk" (overrides mobile→frontend) → Analytics & Metrics
     # Project management — Gantt charts (commonly searched feature)
     "gantt": "project",             # "Gantt chart", "Gantt timeline view" → Project Management
     # User onboarding / product tours (Intro.js, Shepherd.js, Driver.js)
@@ -5054,6 +5065,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "soc2": "security",             # SOC 2 compliance automation → Security Tools (Vanta, Drata, Secureframe)
     "privacy": "security",          # "privacy-first analytics", "privacy tool", "user privacy" → Security Tools
     "devsecops": "security",        # DevSecOps — "devsecops pipeline", "security in devops" → Security Tools
+    # Security — data protection dead zone (probe pattern 57, May 2026)
+    # "data protection" is a dual raw_first: neither "data" nor "protection" had a mapping.
+    # "data protection gdpr" was rescued by "gdpr"→security but the bare 2-token form was not.
+    "data protection": "security",  # bigram — "data protection law", "data protection tool" → Security Tools
     # AI — model optimization and architecture terms (fast-growing 2026 query segment)
     "quantization": "ai",           # "model quantization", "llm quantization", "gguf quantize" → AI & Automation
     "distillation": "ai",           # "knowledge distillation", "model distillation", "distill llm" → AI & Automation

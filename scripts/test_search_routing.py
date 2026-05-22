@@ -528,6 +528,25 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — bare "memory" without AI qualifier still routes to caching.
     ("in memory cache redis", "caching"),                  # "memory"→caching unchanged (stop-word "in" stripped)
     ("memory store redis", "caching"),                     # "memory"→caching unchanged
+    #
+    # Probe pattern 57 — conversion / attribution / user-behaviour / mobile-analytics / data-protection dead zones
+    # "tracking" is a stop word so "conversion tracking" → bare "conversion" → was raw_first.
+    # "attribution model" was mis-routed to ai via "model"→ai at pos 1 (bare "attribution" unmapped).
+    # "mobile attribution" and "mobile analytics" were mis-routed via "mobile"→frontend.
+    # "data protection" is a Pattern-23 dual dead zone (neither "data" nor "protection" had a mapping).
+    ("conversion tracking", "analytics"),                  # "tracking" stop-word stripped → bare "conversion"→analytics
+    ("conversion optimization", "analytics"),              # bare "conversion"→analytics fires first
+    ("cro tool", "analytics"),                             # abbreviation "cro"→analytics
+    ("attribution model", "analytics"),                    # bare "attribution" fires before "model"→ai at pos 1
+    ("marketing attribution", "analytics"),                # bare "attribution" fires at pos 1 ("marketing" unmapped)
+    ("mobile attribution platform", "analytics"),          # bigram "mobile attribution"→analytics beats mobile→frontend
+    ("mobile app analytics sdk", "analytics"),             # bigram "mobile analytics"→analytics beats mobile→frontend
+    ("user behavior analytics", "analytics"),              # bigram "user behavior"→analytics
+    ("user journey mapping", "analytics"),                 # bigram "user journey"→analytics
+    ("data protection tool", "security"),                  # bigram "data protection"→security (dual raw_first fix)
+    # Regressions — existing mappings must be unaffected.
+    ("conversion rate optimization", "analytics"),         # bare "conversion"→analytics still correct (or any "conversion rate" bigram)
+    ("data protection gdpr", "security"),                  # "data protection" bigram fires; "gdpr"→security also intact
 ]
 
 
