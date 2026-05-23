@@ -8580,6 +8580,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — "commit lint" spaced form overrides "lint"→testing (commitlint is a git workflow tool).
     # complement to bare "commitlint"→devops (line ~5017). Conventional Commits enforcement lives in DevOps.
     "commit lint": "devops",                   # bigram — "commit lint setup", "commit lint husky" → DevOps
+    # ── Probe pattern 62 (May 2026): git branching strategy / preview environment dead zones ──
+    #
+    # Dead zones:
+    # "trunk based development" → "trunk"→frontend fires (Trunk.io build tool collision).
+    #   trunk-based development is a git branching strategy — DevOps.
+    # "gitflow branching" → raw_first "gitflow" (GitFlow is a git branching model — DevOps).
+    # "branch protection rules" → raw_first "branch" (GitHub branch protection tooling — DevOps).
+    # "feature branch deployment" → "feature"→feature-flags fires (git feature branches — DevOps).
+    # "preview environment deployment" → "environment"→security fires (deploy preview envs — DevOps).
+    # "staging environment" → "environment"→security fires (staging envs are DevOps infra).
+    # "ephemeral environment" → "environment"→security fires (ephemeral deploy envs — DevOps).
+    #
+    # DevOps — "trunk based" bigram overrides "trunk"→frontend for branching strategy queries.
+    # Regression: "trunk linter"/"trunk io" still route to frontend (bare "trunk" token unaffected).
+    "trunk based": "devops",                   # bigram — "trunk based development", "trunk based workflow" → DevOps
+    # DevOps — "gitflow" bare token (GitFlow git branching model; tools like git-flow, gitkraken).
+    "gitflow": "devops",                       # bare — "gitflow alternative", "gitflow branching" → DevOps
+    # DevOps — "branch protection" bigram (GitHub/GitLab branch protection rules and policies).
+    # "branch" alone is unmapped → raw_first; bigram catches the actionable query form.
+    "branch protection": "devops",             # bigram — "branch protection rules", "branch protection github" → DevOps
+    # DevOps — "feature branch" bigram overrides "feature"→feature-flags for git-workflow queries.
+    # Regression: "feature flag toggle"/"feature toggle" still route to feature-flags (different bigrams).
+    "feature branch": "devops",               # bigram — "feature branch deployment", "feature branch workflow" → DevOps
+    # DevOps — environment X bigrams override "environment"→security for deployment-environment queries.
+    # (Vercel preview URLs, Railway staging, ephemeral environments for CI preview deploys.)
+    "preview environment": "devops",           # bigram — "preview environment deployment", "preview environment ci" → DevOps
+    "staging environment": "devops",           # bigram — "staging environment setup", "staging environment deployment" → DevOps
+    "ephemeral environment": "devops",         # bigram — "ephemeral environment kubernetes", "ephemeral environment ci" → DevOps
 }
 
 _FTS_STOP_WORDS = {

@@ -2465,6 +2465,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("monorepo build tool", "developer"),                  # bare "monorepo"→developer unchanged
     ("pull request automation", "devops"),                 # "pull request"→devops bigram unchanged
     ("linting javascript", "testing"),                     # "linting"→testing unchanged
+    # Probe pattern 62 — git branching strategy / preview-environment dead zones
+    #
+    # Dead zones:
+    # "trunk based development" → "trunk"→frontend (Trunk.io collision; branching strategy is DevOps).
+    # "gitflow branching" → raw_first "gitflow" (GitFlow is a git branching model — DevOps).
+    # "branch protection rules" → raw_first "branch" (GitHub branch protection tooling — DevOps).
+    # "feature branch deployment" → "feature"→feature-flags (git feature branches are DevOps).
+    # "preview environment deployment" → "environment"→security (deploy preview envs are DevOps).
+    # "staging environment" → "environment"→security (staging envs are DevOps infra).
+    # "ephemeral environment" → "environment"→security (ephemeral deploy envs are DevOps).
+    ("trunk based development", "devops"),     # bigram "trunk based"→devops (beats "trunk"→frontend)
+    ("trunk based workflow", "devops"),        # bigram "trunk based"→devops
+    ("gitflow alternative", "devops"),         # bare "gitflow"→devops
+    ("gitflow branching strategy", "devops"),  # bare "gitflow"→devops fires first
+    ("branch protection rules", "devops"),     # bigram "branch protection"→devops (branch was raw_first)
+    ("branch protection github", "devops"),    # bigram "branch protection"→devops
+    ("feature branch deployment", "devops"),   # bigram "feature branch"→devops (beats "feature"→feature)
+    ("feature branch workflow", "devops"),     # bigram "feature branch"→devops
+    ("preview environment deployment", "devops"),   # bigram "preview environment"→devops (beats environment→security)
+    ("preview environment ci", "devops"),           # bigram "preview environment"→devops
+    ("staging environment setup", "devops"),        # bigram "staging environment"→devops
+    ("staging environment deployment", "devops"),   # bigram "staging environment"→devops
+    ("ephemeral environment kubernetes", "devops"), # bigram "ephemeral environment"→devops
+    ("ephemeral environment ci", "devops"),         # bigram "ephemeral environment"→devops
+    # Regressions — nearby tokens should not be affected.
+    ("trunk linter", "frontend"),              # bare "trunk"→frontend unchanged (Trunk.io linter)
+    ("feature flag toggle", "feature"),        # "feature flag" bigram unchanged (different from "feature branch")
+    ("feature toggle gradual", "feature"),     # "feature"→feature unchanged
+    ("environment variables secrets", "security"),  # "environment"→security unchanged for secrets queries
+    ("development environment setup", "devops"),    # "development environment"→devops unchanged
 ]
 
 
