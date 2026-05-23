@@ -6898,6 +6898,45 @@ _CAT_SYNONYMS: dict[str, str] = {
     "command-line": "cli",                    # hyphenated — "command-line interface", "command-line flag" → CLI Tools
     # Frontend — command palette (cmdk, kbar); "command line" bigram above guards regression.
     "command palette": "frontend",            # bigram — "command palette react", "command palette shadcn" → Frontend
+    # ── Probe pattern 69 (May 2026): SaaS-prefix category mis-routing ──────────────────────────────
+    #
+    # "saas"→boilerplate fires as the first meaningful token for ALL "saas X" queries,
+    # even when X clearly names a different category. The bare "saas" mapping is correct
+    # for "saas boilerplate"/"saas starter"/"saas template" — but mis-routes category-specific queries.
+    #
+    # Dead zones (all route to Boilerplates when they should route elsewhere):
+    # "saas analytics" → Analytics (PostHog, Mixpanel, Amplitude built for SaaS)
+    # "saas metrics" → Analytics (ChartMogul, Baremetrics — SaaS MRR/ARR dashboards)
+    # "saas billing" → Payments (Stripe Billing, Paddle — recurring billing for SaaS)
+    # "saas payments" → Payments (payment providers for SaaS apps)
+    # "saas subscription" → Payments (subscription management tools)
+    # "saas auth" / "saas authentication" → Authentication (Clerk, Auth0, WorkOS for SaaS)
+    # "saas crm" → CRM & Sales (Attio, Twenty — CRMs built for SaaS companies)
+    # "saas email" → Email Marketing (Resend, Mailgun — transactional email for SaaS)
+    # "saas monitoring" → Monitoring (Sentry, Highlight — error/uptime monitoring for SaaS)
+    #
+    # Strategy: add pos-0 bigrams that fire BEFORE the bare "saas"→boilerplate token.
+    # NOTE: bigrams require "saas" and the category word to be ADJACENT in the query.
+    # Extra words between them (e.g. "saas user analytics") break bigram adjacency and
+    # fall back to bare "saas"→boilerplate. Regressions guarded: bare "saas" queries
+    # ("saas starter", "saas boilerplate", "saas template") unchanged.
+    #
+    # Analytics — SaaS product analytics and SaaS metrics dashboards.
+    "saas analytics": "analytics",          # bigram — "saas analytics tool", "saas analytics posthog" → Analytics
+    "saas metrics": "analytics",            # bigram — "saas metrics dashboard", "saas metrics baremetrics" → Analytics
+    # Payments — recurring billing and subscription management for SaaS.
+    "saas billing": "payments",             # bigram — "saas billing stripe", "saas billing paddle" → Payments
+    "saas payments": "payments",            # bigram — "saas payments provider", "saas payments integration" → Payments
+    "saas subscription": "payments",        # bigram — "saas subscription billing", "saas subscription management" → Payments
+    # Authentication — identity and auth providers built for SaaS.
+    "saas auth": "authentication",          # bigram — "saas auth provider", "saas auth clerk" → Authentication
+    "saas authentication": "authentication", # long form — "saas authentication nextjs", "saas authentication tool" → Authentication
+    # CRM — CRM tools built for SaaS companies (Attio, Twenty, folk).
+    "saas crm": "crm",                      # bigram — "saas crm tool", "saas crm attio" → CRM & Sales
+    # Email — transactional/marketing email for SaaS (Resend, Mailgun, Sendgrid).
+    "saas email": "email",                  # bigram — "saas email provider", "saas email resend" → Email Marketing
+    # Monitoring — error and uptime monitoring for SaaS apps (Sentry, Highlight, Glitchtip).
+    "saas monitoring": "monitoring",        # bigram — "saas monitoring tool", "saas monitoring sentry" → Monitoring
 }
 
 _FTS_STOP_WORDS = {

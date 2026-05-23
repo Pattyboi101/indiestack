@@ -624,6 +624,31 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — command line must stay cli, lazy loading stays frontend via "lazy".
     ("command line tool", "cli"),              # "command line"→cli bigram fires before bare "command"
     ("lazy loading images", "frontend"),       # "lazy"→frontend fires before bare "loading"
+    # Probe pattern 69 (May 2026): SaaS-prefix category mis-routing.
+    # "saas"→boilerplate fired as first token for all "saas X" queries.
+    # Bigrams override for specific categories when "saas" and the category word are adjacent.
+    ("saas analytics tool", "analytics"),          # bigram "saas analytics"→analytics
+    ("saas analytics posthog", "analytics"),       # bigram fires at i=0-1
+    ("saas metrics dashboard", "analytics"),       # bigram "saas metrics"→analytics
+    ("saas metrics baremetrics", "analytics"),     # bigram fires at i=0-1
+    ("saas billing stripe", "payments"),           # bigram "saas billing"→payments
+    ("saas billing paddle", "payments"),           # bigram fires at i=0-1
+    ("saas payments provider", "payments"),        # bigram "saas payments"→payments
+    ("saas subscription billing", "payments"),     # bigram "saas subscription"→payments
+    ("saas subscription management", "payments"),  # bigram fires at i=0-1
+    ("saas auth provider", "authentication"),      # bigram "saas auth"→authentication
+    ("saas auth clerk", "authentication"),         # bigram fires at i=0-1
+    ("saas authentication nextjs", "authentication"), # long-form bigram → Authentication
+    ("saas crm tool", "crm"),                      # bigram "saas crm"→crm
+    ("saas crm attio", "crm"),                     # bigram fires at i=0-1
+    ("saas email provider", "email"),              # bigram "saas email"→email
+    ("saas email resend", "email"),                # bigram fires at i=0-1
+    ("saas monitoring tool", "monitoring"),        # bigram "saas monitoring"→monitoring
+    ("saas monitoring sentry", "monitoring"),      # bigram fires at i=0-1
+    # Regressions — bare "saas" queries must still route to boilerplate.
+    ("saas starter kit", "boilerplate"),           # bare "saas"→boilerplate unchanged
+    ("saas boilerplate nextjs", "boilerplate"),    # bare "saas"→boilerplate unchanged
+    ("saas template react", "boilerplate"),        # bare "saas"→boilerplate unchanged
 ]
 
 
