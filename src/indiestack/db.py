@@ -6949,6 +6949,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     "session analytics": "analytics",   # bigram — "session analytics tool" beats "session"→auth → Analytics & Metrics
     # API — HTTP streaming response for LLM APIs / SSE ("streaming"→media fires first without bigram)
     "streaming response": "api",        # bigram — "streaming response api" beats "streaming"→media → API Tools (SSE, chunked transfer)
+    # ── Probe pattern 66 (May 2026): keyboard-shortcut / consumer-driven-contracts dead zones ──
+    #
+    # Dead zones:
+    # "hotkey library" → "hotkey" unmapped → raw_first (react-hotkeys-hook, hotkeys-js, tinykeys → Frontend).
+    # "keybinding library" → "keybinding" unmapped → raw_first (keyboard shortcut libs → Frontend).
+    # "consumer driven contracts" → "consumer"/"driven"/"contracts" all unmapped → raw_first
+    #   (Pact consumer-driven contract testing → Testing Tools).
+    # "keyboard shortcut handler" → bare "shortcut"→project fires (Shortcut.com PM collision);
+    #   keyboard shortcut UI libs belong in Frontend.
+    #
+    # Frontend — hotkey/keybinding bare tokens (react-hotkeys-hook, hotkeys-js, tinykeys, mousetrap).
+    "hotkey": "frontend",                        # bare — "hotkey library react", "hotkey manager" → Frontend
+    "hotkeys": "frontend",                       # plural — "hotkeys library", "hotkeys global register" → Frontend
+    "keybinding": "frontend",                    # bare — "keybinding handler", "keybinding react" → Frontend
+    "keybindings": "frontend",                   # plural — "keybindings library", "keybindings manager" → Frontend
+    # Testing — "contracts" plural overrides raw_first (complement to "contract"→testing already mapped).
+    "contracts": "testing",                      # bare — "consumer-driven contracts pact", "api contracts" → Testing
+    # Frontend — "keyboard shortcut" bigram overrides "shortcut"→project (Shortcut.com PM) for keyboard libs.
+    # Regression: bare "shortcut" still routes to project (Shortcut.com); only bigram form overridden.
+    "keyboard shortcut": "frontend",             # bigram — "keyboard shortcut react", "keyboard shortcut handler" → Frontend
 }
 
 _FTS_STOP_WORDS = {

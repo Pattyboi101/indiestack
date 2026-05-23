@@ -697,6 +697,24 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — video streaming still routes to media; "streaming api" bigram overrides audio context.
     ("streaming video server", "media"),           # "streaming"→media unchanged (no "response" bigram)
     ("audio streaming api", "api"),                # "streaming api" bigram fires at pos 1 → API Tools (audio APIs)
+    # Probe pattern 66 — keyboard-shortcut / consumer-driven-contracts dead zones.
+    # "hotkey library" → "hotkey" unmapped → raw_first; react-hotkeys-hook, hotkeys-js → Frontend.
+    # "keybinding library" → "keybinding" unmapped → raw_first; keyboard shortcut libs → Frontend.
+    # "consumer driven contracts" → all tokens unmapped → raw_first; Pact → Testing Tools.
+    # "keyboard shortcut handler" → bare "shortcut"→project (Shortcut.com) mis-fires → Frontend.
+    ("hotkey library", "frontend"),                # "hotkey"→frontend; react-hotkeys-hook, hotkeys-js
+    ("hotkey manager react", "frontend"),          # "hotkey"→frontend fires on bare token
+    ("hotkeys global register", "frontend"),       # "hotkeys"→frontend (plural form)
+    ("keybinding handler", "frontend"),            # "keybinding"→frontend; tinykeys, mousetrap
+    ("keybindings library", "frontend"),           # "keybindings"→frontend (plural)
+    ("consumer driven contracts", "testing"),      # "contracts"→testing; Pact consumer-driven contract tests
+    ("consumer driven contracts pact", "testing"), # "contracts"→testing + "pact"→testing both fire
+    ("keyboard shortcut react", "frontend"),       # bigram "keyboard shortcut"→frontend overrides shortcut→project
+    ("keyboard shortcut handler", "frontend"),     # bigram "keyboard shortcut"→frontend
+    # Regressions — nearby entries unchanged.
+    ("shortcut alternative", "project"),           # bare "shortcut"→project (Shortcut.com PM) unchanged
+    ("contract testing pact", "testing"),          # "contract"→testing unchanged
+    ("keyboard navigation component", "frontend"), # "navigation"→frontend; nav UI libs (react-router, tanstack-router)
 ]
 
 
