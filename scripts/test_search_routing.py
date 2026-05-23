@@ -565,6 +565,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("realtime database sync", "database"),       # bigram "realtime database"→database
     # Regressions — plain realtime queries unaffected.
     ("real time api", "api"),                     # bare "real"→api unchanged
+    # Probe pattern 65 — canvas/drawing dead zones + pdf viewer component
+    ("canvas drawing", "frontend"),       # bare "canvas"→frontend (Fabric.js, Konva.js)
+    ("canvas library javascript", "frontend"),  # bare "canvas"→frontend fires before "javascript"→frontend
+    ("html canvas react", "frontend"),    # bare "canvas"→frontend (javascript stripped as framework term)
+    ("drawing library react", "frontend"),  # bare "drawing"→frontend
+    ("drawing tool javascript", "frontend"),  # bare "drawing"→frontend
+    ("pdf viewer react", "frontend"),     # bigram "pdf viewer"→frontend (react-pdf component)
+    ("pdf viewer component", "frontend"), # bigram "pdf viewer"→frontend
+    # Regressions — PDF generation still routes to file management.
+    ("pdf generation react", "file"),     # bare "pdf"→file unchanged for generation queries
+    ("html to pdf nodejs", "file"),       # bigram "html pdf"→file unchanged
+    # graph visualization / network graph → frontend
+    ("graph visualization react", "frontend"),  # bigram "graph visualization"→frontend (D3, vis.js, Cytoscape)
+    ("network graph react", "frontend"),        # bigram "network graph"→frontend (vis.js, Sigma.js)
+    ("network graph d3", "frontend"),           # bigram fires before bare "network"→monitoring
+    # Regressions — graph databases still route to database.
+    ("graph database neo4j", "database"),       # bare "graph"→database unchanged
+    ("graph db typescript", "database"),        # bare "graph"→database unchanged
 ]
 
 

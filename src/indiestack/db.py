@@ -3579,6 +3579,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "launchdarkly": "feature",      # LaunchDarkly — enterprise feature management platform
     "optimizely": "feature",        # Optimizely — experimentation + feature flags (full-stack)
     # Diagramming and technical drawing
+    "graph visualization": "frontend",  # bigram — "graph visualization react", D3/vis.js/Cytoscape → Frontend Frameworks
+    "network graph": "frontend",        # bigram — "network graph react", vis.js, Sigma.js → Frontend Frameworks
     "mermaid": "developer",         # Mermaid.js — diagrams in Markdown / code (72k★)
     "diagram": "developer",         # "diagram tool", "diagramming library" → Developer Tools
     "diagrams": "developer",        # plural form
@@ -5130,6 +5132,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "eventbus": "message",          # event bus — "eventbus library", "in-process eventbus", "eventbus pattern" → Message Queue
     "event-bus": "message",         # hyphenated — "event-bus alternative", "event-bus typescript" → Message Queue
     # Frontend — canvas graphics and node-based diagram libraries
+    "canvas": "frontend",           # "canvas library", "canvas api react", "html canvas" → Frontend Frameworks (Fabric.js, Konva.js)
+    "drawing": "frontend",          # "drawing library react", "drawing tool javascript" → Frontend Frameworks
     "konva": "frontend",            # Konva.js — 2D canvas graphics library for React/Vue/vanilla (11k★) → Frontend Frameworks
     "fabricjs": "frontend",         # Fabric.js — canvas manipulation library; "fabricjs alternative" → Frontend Frameworks
     "fabric": "frontend",           # short form — "fabric.js alternative", "fabric canvas library" → Frontend Frameworks
@@ -6688,6 +6692,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # File management — "html to pdf" loses "to" (stop word); remaining tokens are ["html","pdf"].
     # Bare "html"→frontend fires incorrectly for pdf-generation queries; bigram overrides it.
     "html pdf": "file",             # bigram — "html to pdf converter", "html pdf generator" → File Management
+    "pdf viewer": "frontend",       # bigram — "pdf viewer react", "pdf viewer component" → Frontend (react-pdf, pdfjs-dist)
     # AI — "ai observability" routes to Monitoring via bare "observability"→monitoring.
     # LLM observability tools (Langfuse, Helicone, Braintrust, Phoenix) live in AI & Automation.
     "ai observability": "ai",       # bigram — "ai observability platform", "ai observability tool" → AI & Automation
