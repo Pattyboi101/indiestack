@@ -2603,6 +2603,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("liveblocks realtime", "api"),                # "liveblocks"→api unchanged
     ("model serving", "ai"),                       # bare "model"→ai unchanged (no "multi" prefix)
     ("yjs crdt", "api"),                           # "yjs"→api unchanged
+    # Probe pattern 66 — keyboard-shortcut / consumer-driven-contracts dead zones.
+    # "hotkey library" → "hotkey" was unmapped → raw_first; react-hotkeys-hook, hotkeys-js → Frontend.
+    # "keybinding library" → "keybinding" was unmapped → raw_first; keybinding libs → Frontend.
+    # "consumer driven contracts" → "consumer"/"driven"/"contracts" all unmapped → raw_first; Pact → Testing.
+    # "keyboard shortcut" → bare "shortcut"→project (Shortcut.com) fired first; keyboard libs → Frontend.
+    ("hotkey library", "frontend"),                # "hotkey"→frontend; react-hotkeys-hook, hotkeys-js
+    ("hotkey manager react", "frontend"),          # "hotkey"→frontend
+    ("hotkeys global register", "frontend"),       # "hotkeys"→frontend (plural)
+    ("keybinding handler", "frontend"),            # "keybinding"→frontend; tinykeys, mousetrap
+    ("keybindings library", "frontend"),           # "keybindings"→frontend (plural)
+    ("consumer driven contracts", "testing"),      # "contracts"→testing; Pact consumer-driven contract tests
+    ("consumer driven contracts pact", "testing"), # "contracts"→testing (+ "pact"→testing, any fires)
+    ("keyboard shortcut react", "frontend"),       # bigram "keyboard shortcut"→frontend (overrides shortcut→project)
+    ("keyboard shortcut handler", "frontend"),     # bigram "keyboard shortcut"→frontend
+    # Regressions — nearby entries should not be affected.
+    ("shortcut alternative", "project"),           # bare "shortcut"→project (Shortcut.com PM) unchanged
+    ("contract testing pact", "testing"),          # "contract"→testing unchanged
+    ("keyboard navigation testing", "testing"),    # "keyboard navigation"→testing (a11y) unchanged
 ]
 
 
