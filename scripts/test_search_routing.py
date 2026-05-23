@@ -473,6 +473,18 @@ When hunting for routing gaps, these query forms are historically tricky:
     check: does the token's category make sense for a "[token] component" query? If not,
     add override bigrams. Fixed: "modal component"/"modal window"→frontend (probe 63,
     May 2026).
+
+57. "Category-semantic mismatch — tool class routed to wrong high-level bucket"
+    — a bare token maps to a plausible but wrong category because the token's primary
+    meaning overlaps two buckets. Three patterns found: (a) "storybook"→testing (wrong;
+    Storybook is a component development environment, not a test runner — changed to
+    frontend); (b) component UI tool with a bare noun owned by a media/file bucket
+    (e.g., "image"→media makes "image cropper" misroute — add bigram before bare token);
+    (c) raw_first dead zone where no token has any mapping (e.g., "custom element" bare
+    "custom" is unmapped — add the compound bigram). Strategy: for any agent query with
+    a clear expected category that misfires, check which token fires (via route_query --query)
+    then add a targeted bigram before it. Fixed: "storybook"→frontend, "image cropper"→
+    frontend, "pdf viewer"→frontend, "custom element"→frontend (probe 64, May 2026).
 """
 
 import sys
@@ -2532,6 +2544,24 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — modal bare token and modal dialog should not be affected.
     ("modal serverless python", "ai"),         # bare "modal"→ai unchanged (Modal.com)
     ("modal dialog component", "frontend"),    # "modal dialog"→frontend bigram (probe 38) still fires
+    # Probe pattern 64 — component dead zones: storybook collision, custom element, PDF/image UI components
+    # "storybook" → was "testing" (wrong — Storybook is a component dev environment, not a test runner);
+    # now routes to "frontend". "storybook alternative" previously hit testing dead zone.
+    ("storybook component", "frontend"),       # bare "storybook"→frontend (was testing)
+    ("storybook alternative", "frontend"),     # "alternative" is stop word; bare "storybook"→frontend fires
+    # "custom element" → bare "custom" was raw_first dead zone; bigram "custom element"→frontend now fires.
+    ("custom element lit", "frontend"),        # bigram "custom element"→frontend before bare "custom"
+    ("custom element accessible", "frontend"), # bigram "custom element"→frontend
+    # "image cropper" → bare "image"→media misfired; bigram "image cropper"→frontend now fires first.
+    ("image cropper react", "frontend"),       # bigram "image cropper"→frontend (beats "image"→media)
+    ("image cropper component", "frontend"),   # bigram "image cropper"→frontend
+    # "pdf viewer" → bare "pdf"→file misfired; bigram "pdf viewer"→frontend now fires first.
+    ("pdf viewer react", "frontend"),          # bigram "pdf viewer"→frontend (beats "pdf"→file)
+    ("pdf viewer component", "frontend"),      # bigram "pdf viewer"→frontend
+    # Regressions — nearby pdf and image entries should not be affected.
+    ("pdf generation node", "developer"),      # "pdf generation"→developer bigram unchanged
+    ("pdf generator python", "developer"),     # "pdf generator"→developer bigram unchanged
+    ("image processing", "media"),             # bare "image"→media unchanged (no cropper token)
 ]
 
 

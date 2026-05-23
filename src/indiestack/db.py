@@ -2650,7 +2650,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "jest": "testing",
     "vitest": "testing",
     "selenium": "testing",
-    "storybook": "testing",     # component testing / UI development
+    "storybook": "frontend",    # component development environment (Chromatic, Storybook — UI dev not test runner)
     "ci": "devops",
     "cicd": "devops",
     "deploy": "devops",
@@ -2837,6 +2837,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pdf generator": "developer",   # "pdf generator nodejs", "pdf generator python" → Developer Tools
     "pdf creator": "developer",     # "pdf creator library", "pdf creator api" → Developer Tools
     "html pdf": "developer",        # "html to pdf" (stop-word "to" stripped → "html pdf") → Developer Tools
+    "pdf viewer": "frontend",       # "pdf viewer react", "pdf viewer component" → Frontend (react-pdf, pdfjs-dist)
     # Markdown processing — editors, renderers, parsers
     "markdown": "documentation", # markdown editors/renderers → Documentation category
     # Security tools — "security" as raw term already LIKE-matches "Security Tools",
@@ -2860,6 +2861,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "xero": "invoicing",
     "wave": "invoicing",
     # Media/uploads — image and audio are common queries beyond just "video"
+    "image cropper": "frontend",    # "image cropper react", "image cropper component" → Frontend (Cropper.js, react-image-crop)
     "image": "media",
     "audio": "media",
     "cloudinary": "media",
@@ -4408,6 +4410,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "webcomponents": "frontend",    # plural — "web components standard", "custom elements" → Frontend Frameworks
     "custom-element": "frontend",   # "custom element", "custom elements API" → Frontend Frameworks (Lit, FAST)
     "custom-elements": "frontend",  # plural form — Web Components Custom Elements spec
+    "custom element": "frontend",   # spaced form (no hyphen) — bare "custom" is raw_first dead zone without this
     # Testing — integration tests (complement to e2e, unit, bdd, coverage already mapped)
     "integration": "testing",       # "integration test", "integration testing library" → Testing Tools
     # Database — time-series databases not individually mapped
