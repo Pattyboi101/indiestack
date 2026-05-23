@@ -547,6 +547,16 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — existing mappings must be unaffected.
     ("conversion rate optimization", "analytics"),         # bare "conversion"→analytics still correct (or any "conversion rate" bigram)
     ("data protection gdpr", "security"),                  # "data protection" bigram fires; "gdpr"→security also intact
+    # Probe: accessibility audit collision + api contract testing collision
+    # "accessibility audit tool" → "accessibility"→frontend fires (auditing tools like Lighthouse/axe are Testing).
+    # "api contract testing" → "api"→api-tools fires (Pact/Dredd/Schemathesis are Testing Tools).
+    ("accessibility audit tool", "testing"),        # bigram "accessibility audit"→testing (beats accessibility→frontend)
+    ("accessibility audit website", "testing"),     # bigram "accessibility audit"→testing
+    ("accessibility library react", "frontend"),    # bare "accessibility"→frontend unchanged (regression)
+    ("api contract testing", "testing"),            # bigram "api contract"→testing (beats api→api-tools)
+    ("api contract validation", "testing"),         # bigram "api contract"→testing
+    ("api gateway rate limiting", "api"),           # "api"→api-tools unchanged (regression)
+    ("contract testing pact", "testing"),           # bare "contract"→testing unchanged (regression)
 ]
 
 

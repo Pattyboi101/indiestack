@@ -3394,6 +3394,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Contract testing — Pact, Dredd (consumer-driven contract tests)
     "pact": "testing",              # Pact — consumer-driven contract testing framework
     "contract": "testing",          # "contract testing", "consumer-driven contracts"
+    "api contract": "testing",      # bigram — "api contract testing", "api contract validation" → Testing Tools (overrides api→api-tools)
     # Release / changelog automation — semantic-release, Changesets, release-it
     "release": "devops",            # "release automation", "semantic release", "release management"
     # Desktop app frameworks — Electron, Tauri, Wails
@@ -3406,6 +3407,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Accessibility (a11y) tooling — axe, React Aria, Radix UI
     "accessibility": "frontend",    # "accessibility library", "a11y component" → Frontend Frameworks
     "a11y": "frontend",             # short-form — "a11y testing", "a11y linting", "a11y audit"
+    "accessibility audit": "testing",   # bigram — "accessibility audit tool", "accessibility audit website" → Testing Tools (overrides accessibility→frontend)
     # Hot Module Replacement — Vite HMR, webpack HMR
     "hmr": "frontend",              # Hot Module Replacement — Vite/webpack feature query term
     # Polyfills / browser compatibility shims — core-js, polyfill.io
