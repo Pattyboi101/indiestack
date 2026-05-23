@@ -597,6 +597,40 @@ TEST_CASES: list[tuple[str, str]] = [
     # money → developer (money formatting/parsing libraries)
     ("money formatting react", "developer"),    # bare "money"→developer (accounting.js, dinero.js)
     ("money library javascript", "developer"),  # bare "money"→developer
+    # ── Probe pattern 68 (May 2026): time-tracking / team-chat / session-store / bot-builder dead zones ──
+    #
+    # "time"→project (was "api"): "time tracking tool" stripped to bare "time" (tracking=stop word).
+    # "real"→api still fires first for all "real time X" queries (first position in token list).
+    ("time tracking tool", "project"),         # bare "time"→project (stop: tracking) → Project Management
+    ("time tracking app", "project"),          # bare "time"→project → Project Management
+    ("time management app", "project"),        # bare "time"→project (stop: management) → Project Management
+    # "billable hours" — both tokens unmapped → raw_first; "billable"→invoicing added.
+    ("billable hours tracker", "invoicing"),   # bare "billable"→invoicing → Invoicing & Billing
+    # "team chat app" — "chat"→customer fires (live chat); bigram "team chat"→developer overrides.
+    ("team chat app", "developer"),            # bigram "team chat"→developer (beats "chat"→customer)
+    # Bare tokens for messaging alternatives — "alternative" is a stop word.
+    ("slack alternative", "developer"),        # bare "slack"→developer (stop: alternative) → Developer Tools
+    ("mattermost alternative", "developer"),   # bare "mattermost"→developer → Developer Tools
+    ("telegram alternative", "developer"),     # bare "telegram"→developer → Developer Tools
+    ("toggl alternative", "project"),          # bare "toggl"→project → Project Management
+    # Bot builders — all raw_first before; bigrams added.
+    ("discord bot builder", "developer"),      # bigram "discord bot"→developer → Developer Tools
+    ("slack bot sdk", "developer"),            # bigram "slack bot"→developer → Developer Tools
+    ("telegram bot python", "developer"),      # bigram "telegram bot"→developer → Developer Tools
+    # "session store redis" — "session"→auth fired; bigram "session store"→caching overrides.
+    ("session store redis", "caching"),        # bigram "session store"→caching (beats "session"→auth)
+    ("express session store", "caching"),      # bigram "session store"→caching (express-session)
+    # "ai standard specification" → "specification"→api (wrong); bigram "ai standard"→standard added.
+    ("ai standard specification", "standard"), # bigram "ai standard"→standard (singular of ai standards)
+    # "fullstack starter/template" — "fullstack"→frontend fired at i=0; bigrams added.
+    ("fullstack starter template", "boilerplate"), # bigram "fullstack starter"→boilerplate
+    ("fullstack template app", "boilerplate"),     # bigram "fullstack template"→boilerplate
+    # Regressions — pre-existing routes must be unaffected.
+    ("time series database", "database"),      # "time series"→database bigram unchanged
+    ("real time analytics", "api"),            # "real"→api fires before "time"→project (first position)
+    ("real time database", "database"),        # "time database"→database bigram unchanged
+    ("real time api", "api"),                  # "real"→api unchanged
+    ("live chat widget", "customer"),          # bare "chat"→customer unchanged (no "live" bigram)
 ]
 
 

@@ -2507,6 +2507,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "login": "authentication",
     "signup": "authentication",
     "session": "authentication",
+    "session store": "caching",         # bigram — "session store redis", "express session store" → Caching
     "jwt": "authentication",
     "passkey": "authentication",
     "passwordless": "authentication",
@@ -2894,7 +2895,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Realtime / WebSockets — typically API-layer tools (Pusher, Ably, PartyKit)
     "realtime": "api",
     "real": "api",              # "real-time" → hyphen stripped → "real" + "time" → catches realtime queries
-    "time": "api",              # "real-time" hyphen-split → "time" reinforces realtime→api routing
+    "time": "project",          # bare — "time tracking tool/app" (stop: tracking); "real"→api at i=0 covers real-time
     "limiting": "api",          # "rate limiting" → "rate" already maps to api, "limiting" reinforces it
     "limiter": "api",           # "rate limiter" → both "rate" and "limiter" map to api
     # websocket→message (moved from "api": WebSocket servers like Soketi/Centrifugo
@@ -6359,9 +6360,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — design system queries (Storybook, Radix UI, Shadcn/ui, Style Dictionary)
     "design-system": "frontend",    # "design system library", "design system tokens", "component design system" → Frontend Frameworks
     # Boilerplate — Next.js / React starter template queries
-    "nextjs-starter": "boilerplate",  # "nextjs starter kit", "next.js starter template" → Boilerplate (Shipfast, Makerkit)
-    "nextjs-template": "boilerplate", # "nextjs template", "next.js boilerplate template" → Boilerplate
-    "react-boilerplate": "boilerplate",  # "react boilerplate", "react starter template" → Boilerplate
+    "nextjs-starter": "boilerplate",     # slug — "nextjs-starter alternative" → Boilerplate
+    "nextjs-template": "boilerplate",    # slug — "nextjs-template alternative" → Boilerplate
+    "react-boilerplate": "boilerplate",  # slug — "react-boilerplate github" → Boilerplate
+    # Spaced bigrams — "fullstack"→frontend fires at i=0; bigrams override for starter/template queries.
+    "fullstack starter": "boilerplate",  # bigram — "fullstack starter kit", "fullstack starter template" → Boilerplate
+    "fullstack template": "boilerplate", # bigram — "fullstack template app" → Boilerplate
     # Customer success — CRM/portal/success tools (Gainsight, ChurnZero, Vitally)
     "customer-success": "customer", # "customer success platform", "customer success tool" → Customer Support
     "customer-portal": "customer",  # "customer portal", "self-service portal" → Customer Support
@@ -6503,6 +6507,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "agent-sdk": "ai",             # "agent-sdk setup", "agent-sdk alternative", "anthropic agent sdk" → AI & Automation
     "agentsdk": "ai",              # compound — "agentsdk python", "agentsdk alternative", "agentsdk docs" → AI & Automation
     # AI Standards & Specs — LLM red-teaming, safety evals, benchmark harnesses (new category)
+    "ai standard": "standard",     # bigram — "ai standard specification", "ai standard compliance" → AI Standards & Specs (singular)
     "redteam": "standard",         # "llm red team", "ai red team" → AI Standards & Specs
     "redteaming": "standard",      # "ai red teaming", "llm redteaming" → AI Standards & Specs
     "garak": "standard",           # garak — NVIDIA LLM vulnerability scanner → AI Standards & Specs
@@ -6611,11 +6616,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Expense tools (Wave, Lunch Money), bookkeeping (Beancount, GnuCash, ledger-cli),
     # and timesheet tools live in Invoicing & Billing.
     # Note: "time tracking" bigram can't fire — "tracking" is in _FTS_STOP_WORDS.
-    # "time"→api (line 2888) must stay to reinforce real-time routing; left as known gap.
+    # "time"→project (changed from api): "real"→api at first token covers real-time queries.
+    # Guard bigrams "time series"→database + "time database"→database protect DB queries.
     "expense": "invoicing",            # "expense tracking", "expense report", "expense management" → Invoicing
     "reimbursement": "invoicing",      # "expense reimbursement software", "reimbursement tool" → Invoicing
     "bookkeeping": "invoicing",        # "bookkeeping software open source", "bookkeeping app" → Invoicing
     "timesheet": "invoicing",          # "timesheet management", "timesheet tracking app" → Invoicing
+    "billable": "invoicing",           # bare — "billable hours", "billable time tracking" → Invoicing & Billing
     # Creative Tools — music, MIDI, DAW, pixel art, 3D modeling fell to raw_first.
     # These terms appear in NEED_MAPPINGS for creative-tools but were absent from _CAT_SYNONYMS.
     # Indie creative software (LMMS, Ardour, Aseprite, Blender, Sonic Pi) lives in Creative Tools.
@@ -6823,6 +6830,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "headless chrome": "testing",       # bigram — "headless chrome puppeteer", "headless chrome automation" → Testing Tools
     "html parser": "developer",         # bigram — "html parser nodejs", "html parser python" → Developer Tools (Cheerio, BeautifulSoup)
     "html scraper": "developer",        # bigram — "html scraper javascript", "html scraper python" → Developer Tools
+    # Team messaging — self-hosted/alternative tools (Mattermost, Rocket.Chat, Zulip) → Developer Tools.
+    # "chat"→customer fires for bare queries (live chat support); bigrams/bare-tokens needed here.
+    "team chat": "developer",           # bigram — "team chat app", "self-hosted team chat" → Developer Tools
+    "slack": "developer",               # bare — "slack alternative" (stop: alternative) → Developer Tools
+    "mattermost": "developer",          # bare — "mattermost alternative", "mattermost setup" → Developer Tools
+    "telegram": "developer",            # bare — "telegram alternative", "telegram bot" → Developer Tools
+    "toggl": "project",                 # bare — "toggl alternative", "toggl track" → Project Management
+    # Bot builders — Discord/Slack/Telegram bot SDKs → Developer Tools.
+    "discord bot": "developer",         # bigram — "discord bot builder", "discord bot framework" → Developer Tools
+    "slack bot": "developer",           # bigram — "slack bot builder", "slack bot sdk" → Developer Tools
+    "telegram bot": "developer",        # bigram — "telegram bot python", "telegram bot library" → Developer Tools
     #
     # "realtime X" — bare "realtime"→api fires for most compound queries.
     # Missing: analytics, monitoring, notifications, search, logging.
