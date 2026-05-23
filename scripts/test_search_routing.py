@@ -597,6 +597,33 @@ TEST_CASES: list[tuple[str, str]] = [
     # money → developer (money formatting/parsing libraries)
     ("money formatting react", "developer"),    # bare "money"→developer (accounting.js, dinero.js)
     ("money library javascript", "developer"),  # bare "money"→developer
+    # ── Probe pattern 68 (May 2026): loading-state / navigation UI component dead zones ──
+    # "skeleton loader react" → "skeleton" unmapped → raw_first; now routes to frontend.
+    ("skeleton loader react", "frontend"),     # bare "skeleton"→frontend
+    ("skeleton screen component", "frontend"), # bigram "skeleton screen"→frontend
+    ("skeleton component shadcn", "frontend"), # bare "skeleton"→frontend
+    # "loading spinner" → both tokens unmapped → raw_first; now routes to frontend.
+    ("loading spinner react", "frontend"),     # bigram "loading spinner"→frontend
+    ("loading state react", "frontend"),       # bare "loading"→frontend
+    ("loading overlay component", "frontend"), # bare "loading"→frontend
+    # "progress bar component" → "progress" unmapped → raw_first; now routes to frontend.
+    ("progress bar component", "frontend"),    # bigram "progress bar"→frontend
+    ("progress indicator circular", "frontend"), # bigram "progress indicator"→frontend
+    # "breadcrumb navigation" → both tokens unmapped → raw_first; now routes to frontend.
+    ("breadcrumb navigation", "frontend"),     # bare "breadcrumb"→frontend
+    ("breadcrumb component react", "frontend"), # bare "breadcrumb"→frontend
+    # "navbar component" → "navbar" unmapped → raw_first; now routes to frontend.
+    ("navbar component react", "frontend"),    # bare "navbar"→frontend
+    ("sidebar navigation component", "frontend"), # bare "sidebar"→frontend
+    # "navigation menu radix" → "navigation" unmapped → raw_first; now routes to frontend.
+    ("navigation menu radix", "frontend"),     # bigram "navigation menu"→frontend
+    ("navigation bar component", "frontend"),  # bare "navigation"→frontend
+    # "command palette react" → "command" unmapped → raw_first; now routes to frontend.
+    ("command palette react", "frontend"),     # bigram "command palette"→frontend
+    ("command palette shadcn", "frontend"),    # bigram "command palette"→frontend
+    # Regressions — command line must stay cli, lazy loading stays frontend via "lazy".
+    ("command line tool", "cli"),              # "command line"→cli bigram fires before bare "command"
+    ("lazy loading images", "frontend"),       # "lazy"→frontend fires before bare "loading"
 ]
 
 

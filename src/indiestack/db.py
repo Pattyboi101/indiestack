@@ -6851,6 +6851,53 @@ _CAT_SYNONYMS: dict[str, str] = {
     "long-term memory": "ai",           # bigram — "long-term memory agent", "long-term memory store" → AI (Mem0, Zep)
     "conversational memory": "ai",      # bigram — "conversational memory layer", "llm conversational memory" → AI
     "episodic": "ai",                   # bare token — "episodic memory", "episodic recall" → AI & Automation
+    # ── Probe pattern 68 (May 2026): loading-state / navigation UI component dead zones ──
+    #
+    # Dead zones:
+    # "skeleton loader react" → "skeleton" unmapped → raw_first.
+    #   React loading skeletons (react-loading-skeleton, shadcn Skeleton) live in Frontend.
+    # "loading spinner" → both tokens unmapped → raw_first.
+    #   Spinner/loading UI (react-spinners, shadcn Spinner) live in Frontend Frameworks.
+    # "progress bar component" → "progress" unmapped → raw_first.
+    #   Progress UI (NProgress, shadcn Progress, react-circular-progressbar) live in Frontend.
+    # "breadcrumb navigation" → both tokens unmapped → raw_first.
+    #   Breadcrumb UI (shadcn Breadcrumb, react-router breadcrumbs) live in Frontend.
+    # "navbar component" → "navbar" unmapped → raw_first.
+    #   Navigation bars (shadcn Nav, headless-ui nav) live in Frontend Frameworks.
+    # "sidebar component" → "sidebar" unmapped → raw_first.
+    #   Sidebar UI (shadcn Sidebar, react-pro-sidebar) live in Frontend Frameworks.
+    # "navigation menu radix" → "navigation" unmapped → raw_first.
+    #   Navigation menus (Radix Navigation Menu, shadcn Nav Menu) live in Frontend.
+    # "command palette react" → "command" unmapped → raw_first.
+    #   Command palettes (cmdk, kbar) live in Frontend Frameworks.
+    #
+    # Frontend — loading-state components (skeleton loaders, spinners, progress indicators).
+    # Regressions guarded: "lazy loading"→frontend ("lazy"→frontend fires before "loading"),
+    #   "command line"→cli bigram fires before bare "command" for CLI queries.
+    "skeleton": "frontend",                   # bare — "skeleton loader", "skeleton screen", "skeleton ui" → Frontend
+    "skeleton loader": "frontend",            # bigram — "skeleton loader react", "skeleton loader component" → Frontend
+    "skeleton screen": "frontend",            # bigram — "skeleton screen component", "skeleton screen library" → Frontend
+    "spinner": "frontend",                    # bare — "loading spinner", "spinner component" → Frontend Frameworks
+    "loading spinner": "frontend",            # bigram — "loading spinner react", "loading spinner shadcn" → Frontend
+    "loading": "frontend",                    # bare — "loading state", "loading ui", "loading overlay" → Frontend
+    # Frontend — progress bar / indicator components.
+    "progress bar": "frontend",               # bigram — "progress bar component", "progress bar react" → Frontend
+    "progress indicator": "frontend",         # bigram — "progress indicator circular", "progress indicator shadcn" → Frontend
+    # Frontend — navigation UI components (breadcrumb, navbar, sidebar, navigation menu).
+    # Regression: "navigation system" in maps/location context is rare enough not to collide.
+    "breadcrumb": "frontend",                 # bare — "breadcrumb component", "breadcrumb navigation" → Frontend
+    "breadcrumbs": "frontend",                # plural — "breadcrumbs react", "breadcrumbs shadcn" → Frontend
+    "navbar": "frontend",                     # bare — "navbar component", "navbar sticky", "navbar react" → Frontend
+    "nav": "frontend",                        # bare — "nav component", "nav bar", "nav menu" → Frontend Frameworks
+    "sidebar": "frontend",                    # bare — "sidebar component", "sidebar navigation" → Frontend Frameworks
+    "navigation": "frontend",                 # bare — "navigation menu", "navigation bar", "react navigation" → Frontend
+    "navigation menu": "frontend",            # bigram — "navigation menu radix", "navigation menu shadcn" → Frontend
+    # CLI Tools — "command line" bigram routes CLI queries correctly and guards the
+    # "command palette"→frontend entry from misfiring on "command line tool" queries.
+    "command line": "cli",                    # bigram — "command line tool", "command line parser" → CLI Tools
+    "command-line": "cli",                    # hyphenated — "command-line interface", "command-line flag" → CLI Tools
+    # Frontend — command palette (cmdk, kbar); "command line" bigram above guards regression.
+    "command palette": "frontend",            # bigram — "command palette react", "command palette shadcn" → Frontend
 }
 
 _FTS_STOP_WORDS = {
