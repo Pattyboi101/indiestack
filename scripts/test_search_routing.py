@@ -2562,6 +2562,28 @@ TEST_CASES: list[tuple[str, str]] = [
     ("pdf generation node", "developer"),      # "pdf generation"→developer bigram unchanged
     ("pdf generator python", "developer"),     # "pdf generator"→developer bigram unchanged
     ("image processing", "media"),             # bare "image"→media unchanged (no cropper token)
+    # Probe pattern 65 — realtime-collaboration dead zones and multi-model database collision.
+    # "operational transform" → bare "operational" hits raw_first (OT collab algorithm — API Tools).
+    # "shared editing" → bare "shared" hits raw_first (Yjs, ShareDB — API Tools).
+    # "presence awareness"/"presence tracking" → bare "presence" hits raw_first (Liveblocks — API Tools).
+    # "live cursors" → bare "live" hits raw_first (Liveblocks cursors — API Tools).
+    # "multi model database" → "model"→ai fires before "database"→database (SurrealDB, FaunaDB → Database).
+    ("operational transform sharedb", "api"),      # bigram "operational transform"→api
+    ("operational transform algorithm", "api"),    # bigram "operational transform"→api
+    ("shared editing yjs", "api"),                 # bigram "shared editing"→api
+    ("shared editing crdt", "api"),                # bigram "shared editing"→api
+    ("presence awareness liveblocks", "api"),      # bigram "presence awareness"→api
+    ("presence awareness realtime", "api"),        # bigram "presence awareness"→api
+    ("presence tracking realtime", "api"),         # "tracking" stripped → ["presence","realtime"] → "realtime"→api
+    ("presence tracking partykit", "api"),         # "tracking" stripped → ["presence","partykit"] → "partykit"→api
+    ("live cursors liveblocks", "api"),            # bigram "live cursors"→api
+    ("live cursors component", "api"),             # bigram "live cursors"→api
+    ("multi model database surreal", "database"),  # bigram "multi model"→database (beats "model"→ai)
+    ("multi model db fauna", "database"),          # bigram "multi model"→database
+    # Regressions — nearby tokens should not be affected.
+    ("liveblocks realtime", "api"),                # "liveblocks"→api unchanged
+    ("model serving", "ai"),                       # bare "model"→ai unchanged (no "multi" prefix)
+    ("yjs crdt", "api"),                           # "yjs"→api unchanged
 ]
 
 

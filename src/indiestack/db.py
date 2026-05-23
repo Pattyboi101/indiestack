@@ -8640,6 +8640,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — "select component" bigram (React Select, Radix Select; avoids ambiguous bare "select").
     # Bare "select" skipped — SQL SELECT collides with database category, too ambiguous alone.
     "select component": "frontend",           # bigram — "select component accessible", "select component react" → Frontend
+    # ── Probe pattern 65 (May 2026): realtime-collaboration dead zones / multi-model DB collision ──
+    #
+    # Dead zones:
+    # "operational transform" → "operational" hits raw_first; OT is a realtime collab algorithm → API Tools.
+    # "shared editing" → "shared" hits raw_first; shared editing tools (Yjs, ShareDB) → API Tools.
+    # "presence awareness" → "presence" hits raw_first; presence APIs (Liveblocks, PartyKit) → API Tools.
+    # "presence tracking" → "presence" hits raw_first; same category.
+    # "live cursors" → "live" hits raw_first; cursor presence (Liveblocks) → API Tools.
+    # "multi model database" → bare "model"→ai fires before "database"→database;
+    #   multi-model DBs (SurrealDB, FaunaDB, ArangoDB, EdgeDB) belong in Database.
+    #
+    # API Tools — "operational transform" bigram (OT algorithm for realtime collab: ShareDB, Firepad).
+    "operational transform": "api",           # bigram — "operational transform sharedb", "operational transform algorithm" → API Tools
+    # API Tools — "shared editing" bigram (Yjs, Automerge; avoids bare "shared" dead zone).
+    "shared editing": "api",                  # bigram — "shared editing yjs", "shared editing crdt" → API Tools
+    # API Tools — "presence awareness" bigram (Liveblocks, PartyKit presence features).
+    # NOTE: bare "presence tracking" bigram CAN NEVER fire — "tracking" is in _FTS_STOP_WORDS.
+    # "presence tracking realtime" routes correctly via "realtime"→api after "tracking" is stripped.
+    "presence awareness": "api",              # bigram — "presence awareness liveblocks", "presence awareness realtime" → API Tools
+    # API Tools — "live cursors" bigram (Liveblocks cursor feature; avoids bare "live" dead zone).
+    "live cursors": "api",                    # bigram — "live cursors liveblocks", "live cursors component" → API Tools
+    # Database — "multi model" bigram overrides "model"→ai for multi-model database queries.
+    # SurrealDB, FaunaDB, ArangoDB, EdgeDB support multiple data models in one engine.
+    # Regression: "model serving"/"model inference" still route to ai (no "multi" prefix).
+    "multi model": "database",               # bigram — "multi model database surreal", "multi model db fauna" → Database
 }
 
 _FTS_STOP_WORDS = {
