@@ -458,6 +458,21 @@ When hunting for routing gaps, these query forms are historically tricky:
     agents commonly use the half-form, add the standalone or bigram. Fixed:
     "mono repo"→developer, "pr automation"→devops, "commit lint"→devops,
     "dev server"→frontend (probe 61, May 2026).
+
+56. "Named-SaaS-tool collision — bare UI token misfires via commercial product synonym"
+    — when a bare token is claimed by a well-known SaaS product (via an exact synonym)
+    but agents also use that token as a generic UI-component term. Classic case: bare
+    "modal"→ai (Modal.com serverless Python) fires for UI queries like "modal component
+    react" which should route to frontend. Detection: grep _CAT_SYNONYMS for bare tokens
+    that point to a category that doesn't match the UI component meaning. Strategy: add a
+    bigram "[component type] component" or "[component type] window" that fires before
+    the bare token collision. Pattern also applies to: "toast"→notifications (correct for
+    toast notification; but "toast UI editor" should → frontend — bigram "toast editor"
+    needed if queried), "graph"→database (correct for graph DB; but "graph component"
+    → analytics via bare "graph" — bigram "graph component"→analytics if needed). Always
+    check: does the token's category make sense for a "[token] component" query? If not,
+    add override bigrams. Fixed: "modal component"/"modal window"→frontend (probe 63,
+    May 2026).
 """
 
 import sys
