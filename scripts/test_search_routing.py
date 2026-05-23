@@ -547,6 +547,24 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — existing mappings must be unaffected.
     ("conversion rate optimization", "analytics"),         # bare "conversion"→analytics still correct (or any "conversion rate" bigram)
     ("data protection gdpr", "security"),                  # "data protection" bigram fires; "gdpr"→security also intact
+    # Probe pattern 64 — adjective/gerund dead zones + markdown editor + real-time database
+    ("virtualized list react", "frontend"),       # bare "virtualized"→frontend (react-virtualized library)
+    ("react virtualized", "frontend"),            # bare "virtualized"→frontend (library name; react stripped as framework)
+    ("windowing library", "frontend"),            # bare "windowing"→frontend (react-window)
+    ("window virtualization react", "frontend"),  # bigram "window virtualization"→frontend
+    # Regressions — existing virtual-scroll mappings unchanged.
+    ("virtual list component", "frontend"),       # bare "virtual"→frontend unchanged
+    # "markdown editor" → frontend (bigram overrides bare "markdown"→documentation).
+    ("markdown editor react", "frontend"),        # bigram "markdown editor"→frontend
+    ("markdown renderer react", "frontend"),      # bigram "markdown renderer"→frontend
+    ("markdown component react", "frontend"),     # bigram "markdown component"→frontend
+    # Regressions — bare markdown for docs-intent stays in documentation.
+    ("markdown documentation", "documentation"),  # bare "markdown"→docs unchanged
+    # "real time database" → database (bigram "time database" fires before bare "real"→api).
+    ("real time database", "database"),           # bigram "time database"→database
+    ("realtime database sync", "database"),       # bigram "realtime database"→database
+    # Regressions — plain realtime queries unaffected.
+    ("real time api", "api"),                     # bare "real"→api unchanged
 ]
 
 

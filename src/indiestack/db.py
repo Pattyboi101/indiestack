@@ -2804,8 +2804,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "chartjs": "analytics",     # Chart.js — simple canvas charts
     # PDF generation / processing
     "pdf": "file",              # PDFKit, Puppeteer PDF, WeasyPrint → file-management
-    # Markdown processing — editors, renderers, parsers
-    "markdown": "documentation", # markdown editors/renderers → Documentation category
+    # Markdown processing — bigrams override bare "markdown"→documentation for UI component queries.
+    # NOTE: "react markdown" can't be a bigram — "react" is stripped as a framework qualifier
+    # before bigram checks; bare "markdown" then routes to documentation (correct for that form).
+    "markdown editor": "frontend",      # bigram — "markdown editor react", "markdown editor component" → Frontend
+    "markdown renderer": "frontend",    # bigram — "markdown renderer react" → Frontend
+    "markdown component": "frontend",   # bigram — "markdown component react" → Frontend
+    "markdown": "documentation", # bare "markdown" → Documentation category
     # Security tools — "security" as raw term already LIKE-matches "Security Tools",
     # but named tools and non-obvious terms need explicit mapping
     "security": "security",
@@ -3498,6 +3503,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "infinite": "frontend",         # "infinite scroll", "infinite loading" → Frontend Frameworks
     "virtual": "frontend",          # "virtual list", "virtual scroll", "react-virtual" → Frontend Frameworks
     "virtualizer": "frontend",      # TanStack Virtual (formerly react-virtual) → Frontend Frameworks
+    "virtualized": "frontend",      # "react-virtualized", "virtualized list" → Frontend Frameworks
+    "windowing": "frontend",        # "windowing library", "react-window" → Frontend Frameworks (virtual scrolling)
+    "window virtualization": "frontend",  # bigram — "window virtualization react" → Frontend
     # Frontend — spreadsheet / Excel-like grid components (Handsontable, AG Grid, react-datasheet)
     "spreadsheet": "frontend",      # "spreadsheet component", "excel-like table" → Frontend Frameworks
     # Frontend — animation libraries (Framer Motion, GSAP)
@@ -6807,6 +6815,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     #
     # "realtime X" — bare "realtime"→api fires for most compound queries.
     # Missing: analytics, monitoring, notifications, search, logging.
+    "realtime database": "database",           # bigram — "realtime database firebase", "realtime database sync" → Database
+    "time database": "database",               # bigram — "real time database" (hyphen stripped → two tokens) → Database
     "realtime analytics": "analytics",          # bigram — "realtime analytics dashboard" → Analytics & Metrics
     "realtime monitoring": "monitoring",        # bigram — "realtime monitoring alerts" → Monitoring & Uptime
     "realtime notifications": "notifications",  # bigram — "realtime notifications novu" → Notifications
