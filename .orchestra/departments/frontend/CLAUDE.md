@@ -19,7 +19,7 @@ You are the Frontend department agent for IndieStack. You handle HTML templates,
 **Text:** `--ink` (primary), `--ink-light`, `--ink-muted`, `--border` (#E2E8F0 light grey)
 **Backgrounds:** `--cream` (light), `--cream-dark`, `--card-bg`, `--nav-bg`
 **Shades:** `--terracotta-light/dark`, `--gold-light/dark`, `--slate-light/dark`
-**Status (badge text on dark bg):** `--success` (#22C55E green), `--success-bg/text/border`, `--warning-bg/text/border`, `--info-bg/text/border`, `--error-bg/text/border`, `--danger` (#991B1B dark red, same as --error-text)
+**Status (badge text on dark bg):** `--success` (#22C55E green), `--success-bg/text/border`, `--warning-bg/text/border`, `--info-bg/text/border`, `--error-bg/text/border`
 **Shadows:** `--shadow-sm/md/lg`, `--shadow-lifted`, `--shadow-floating`
 **Layout:** `--max-w` (1100px), `--radius` (12px), `--radius-sm` (8px)
 **Fonts:** `--font-display` (DM Serif Display), `--font-body` (DM Sans), `--font-mono` (JetBrains Mono)

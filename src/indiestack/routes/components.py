@@ -92,7 +92,6 @@ def design_tokens() -> str:
             --error-bg: #FEF2F2;
             --error-text: #991B1B;
             --error-border: #FECACA;
-            --danger: #991B1B;
         }
 
         [data-theme="dark"] {
@@ -132,7 +131,6 @@ def design_tokens() -> str:
             --error-bg: #2D0F0F;
             --error-text: #FCA5A5;
             --error-border: #7F1D1D;
-            --danger: #FCA5A5;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

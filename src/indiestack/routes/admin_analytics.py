@@ -293,8 +293,8 @@ async def render_funnels_section(db) -> str:
 
     # Funnel summary bar
     stages = [
-        ("Views", total_views, "#1A2D4A"),
-        ("Clicks", total_clicks, "#00D4F5"),
+        ("Views", total_views, "var(--terracotta)"),
+        ("Clicks", total_clicks, "var(--slate)"),
         ("Bookmarks", total_wishlists, "#16a34a"),
         ("Purchases", total_purchases, "#EA580C"),
     ]

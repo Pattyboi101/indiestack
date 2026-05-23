@@ -81,16 +81,16 @@ def _density_indicator(count: int) -> str:
     """Render competitor density as 5 colored squares."""
     if count == 0:
         label = 'Empty market'
-        color = 'var(--success-text, #22C55E)'
+        color = '#22C55E'
     elif count <= 2:
         label = f'{count} similar tool{"s" if count > 1 else ""}'
-        color = 'var(--success, #84CC16)'
+        color = '#84CC16'
     elif count <= 4:
         label = f'{count} similar tools'
-        color = 'var(--warning-text, #E2B764)'
+        color = 'var(--gold)'
     else:
         label = f'{count}+ similar tools'
-        color = 'var(--error-text, #EF4444)'
+        color = '#EF4444'
     filled = min(count, 5)
     squares = ''
     for i in range(5):
@@ -455,12 +455,12 @@ async def gap_detail(request: Request, query_slug: str):
     # Demand tier
     if search_count >= 10:
         tier_label = 'HIGH DEMAND'
-        tier_color = 'var(--error-text, #EF4444)'
-        tier_bg = 'var(--error-bg, rgba(239,68,68,0.12))'
+        tier_color = '#EF4444'
+        tier_bg = 'rgba(239,68,68,0.12)'
     elif search_count >= 5:
         tier_label = 'GROWING'
-        tier_color = 'var(--warning-text, #F59E0B)'
-        tier_bg = 'var(--warning-bg, rgba(245,158,11,0.12))'
+        tier_color = '#F59E0B'
+        tier_bg = 'rgba(245,158,11,0.12)'
     elif search_count >= 2:
         tier_label = 'EMERGING'
         tier_color = 'var(--accent)'
@@ -484,9 +484,9 @@ async def gap_detail(request: Request, query_slug: str):
             rg_slug = rg['query'].lower().replace(' ', '-')
             rg_count = rg['count']
             if rg_count >= 10:
-                rg_badge = '<span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:var(--error-bg, rgba(239,68,68,0.12));color:var(--error-text, #EF4444);">HIGH</span>'
+                rg_badge = '<span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(239,68,68,0.12);color:#EF4444;">HIGH</span>'
             elif rg_count >= 5:
-                rg_badge = '<span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:var(--warning-bg, rgba(245,158,11,0.12));color:var(--warning-text, #F59E0B);">GROWING</span>'
+                rg_badge = '<span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(245,158,11,0.12);color:#F59E0B;">GROWING</span>'
             elif rg_count >= 2:
                 rg_badge = '<span style="padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:var(--info-bg, rgba(0,212,245,0.12));color:var(--accent);">EMERGING</span>'
             else:
@@ -703,7 +703,7 @@ async def demand_pro(request: Request):
                     <div style="font-size:12px;color:var(--ink-muted);">Searches (30d)</div>
                 </div>
                 <div style="flex:1;background:var(--card-bg);padding:20px 16px;text-align:center;">
-                    <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--error-text, #EF4444);margin-bottom:4px;">{zero_results_30d:,}</div>
+                    <div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:#EF4444;margin-bottom:4px;">{zero_results_30d:,}</div>
                     <div style="font-size:12px;color:var(--ink-muted);">Zero Results</div>
                 </div>
                 <div style="flex:1;background:var(--card-bg);padding:20px 16px;text-align:center;">
@@ -771,13 +771,13 @@ async def demand_pro(request: Request):
         opp = c['opportunity_score']
 
         if c['zero_count'] >= 10:
-            badge_label, badge_bg, badge_color = 'HIGH', 'var(--error-bg, rgba(239,68,68,0.12))', 'var(--error-text, #EF4444)'
+            badge_label, badge_bg, badge_color = 'HIGH', 'var(--error-bg)', 'var(--error-text)'
         elif c['zero_count'] >= 5:
-            badge_label, badge_bg, badge_color = 'GROWING', 'var(--warning-bg, rgba(226,183,100,0.12))', 'var(--warning-text, #E2B764)'
+            badge_label, badge_bg, badge_color = 'GROWING', 'var(--warning-bg)', 'var(--warning-text)'
         elif c['zero_count'] >= 2:
-            badge_label, badge_bg, badge_color = 'EMERGING', 'var(--info-bg, rgba(0,212,245,0.12))', 'var(--info-text, #00D4F5)'
+            badge_label, badge_bg, badge_color = 'EMERGING', 'var(--info-bg)', 'var(--accent)'
         else:
-            badge_label, badge_bg, badge_color = 'NEW', 'var(--bg-card, rgba(255,255,255,0.04))', 'var(--ink-muted)'
+            badge_label, badge_bg, badge_color = 'NEW', 'rgba(255,255,255,0.04)', 'var(--ink-muted)'
 
         cluster_rows += f'''
             <tr style="border-bottom:1px solid var(--border);" data-opp="{opp}" data-zero="{c['zero_count']}" data-last="{idx}">
@@ -787,7 +787,7 @@ async def demand_pro(request: Request):
                 </td>
                 <td style="padding:12px 16px;text-align:center;">{spark}</td>
                 <td style="padding:12px 16px;text-align:center;">{density_html}</td>
-                <td style="padding:12px 16px;text-align:center;color:var(--error-text, #EF4444);font-weight:600;">{c['zero_count']}</td>
+                <td style="padding:12px 16px;text-align:center;color:var(--error-text);font-weight:600;">{c['zero_count']}</td>
                 <td style="padding:12px 16px;text-align:center;color:var(--ink-muted);">{c['search_count']}</td>
                 <td style="padding:12px 16px;text-align:center;font-size:12px;color:var(--ink-muted);">{last_seen}</td>
                 <td style="padding:12px 16px;text-align:center;">
@@ -867,7 +867,7 @@ async def demand_pro(request: Request):
     pulse_section = f'''
     <style>
         @keyframes blink {{ 0%, 100% {{ opacity: 1; }} 50% {{ opacity: 0.3; }} }}
-        .pulse-live-dot {{ display:inline-block;width:8px;height:8px;background:var(--error-text, #EF4444);border-radius:50%;animation:blink 1.5s ease-in-out infinite; }}
+        .pulse-live-dot {{ display:inline-block;width:8px;height:8px;background:#EF4444;border-radius:50%;animation:blink 1.5s ease-in-out infinite; }}
     </style>
     <section style="padding:0 24px 40px;">
         <div class="container" style="max-width:900px;">

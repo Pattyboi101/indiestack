@@ -23,7 +23,7 @@ def get_category_id(slug: str) -> int | None:
 
 
 TOOLS = [
-    # ── Frontend Frameworks ──────────────────────────────────────────────────────
+    # ── Frontend Frameworks ───────────────────────────────────────────
     {
         "name": "React",
         "slug": "react",
@@ -120,7 +120,7 @@ TOOLS = [
         "tags": "bundler,build-tool,fast,go,javascript,esbuild",
         "source_type": "code",
     },
-    # ── Caching ───────────────────────────────────────────────────────────────
+    # ── Caching ───────────────────────────────────────────────────────
     {
         "name": "Upstash",
         "slug": "upstash",
@@ -133,7 +133,7 @@ TOOLS = [
         "tags": "redis,serverless,caching,kafka,edge",
         "source_type": "saas",
     },
-    # ── Email ─────────────────────────────────────────────────────────────────────
+    # ── Email ─────────────────────────────────────────────────────────
     {
         "name": "Resend",
         "slug": "resend",
@@ -146,7 +146,7 @@ TOOLS = [
         "tags": "email,transactional,react,developer,smtp",
         "source_type": "saas",
     },
-    # ── Frontend Frameworks (additional) ───────────────────────────────────────────
+    # ── Frontend Frameworks (additional) ─────────────────────────────
     {
         "name": "Vite",
         "slug": "vite",
@@ -195,7 +195,7 @@ TOOLS = [
         "tags": "react,components,accessibility,unstyled,design-system,ui",
         "source_type": "code",
     },
-    # ── Animation Libraries ─────────────────────────────────────────────────────────────
+    # ── Animation Libraries ───────────────────────────────────────────
     {
         "name": "Framer Motion",
         "slug": "framer-motion",
@@ -220,7 +220,7 @@ TOOLS = [
         "tags": "animation,javascript,gsap,motion,svg,frontend",
         "source_type": "code",
     },
-    # ── Icon Libraries ───────────────────────────────────────────────────────────────
+    # ── Icon Libraries ────────────────────────────────────────────────
     {
         "name": "Lucide Icons",
         "slug": "lucide-icons",
@@ -245,7 +245,7 @@ TOOLS = [
         "tags": "icons,svg,tailwind,react,components,frontend",
         "source_type": "code",
     },
-    # ── Internationalisation ─────────────────────────────────────────────────────────────
+    # ── Internationalisation ──────────────────────────────────────────
     {
         "name": "next-intl",
         "slug": "next-intl",
@@ -270,7 +270,7 @@ TOOLS = [
         "tags": "i18n,localization,javascript,internationalization,translations",
         "source_type": "code",
     },
-    # ── Workflow Automation ─────────────────────────────────────────────────────────────
+    # ── Workflow Automation ───────────────────────────────────────────
     {
         "name": "n8n",
         "slug": "n8n",
@@ -283,7 +283,7 @@ TOOLS = [
         "tags": "workflow,automation,no-code,self-hosted,integrations,zapier-alternative",
         "source_type": "code",
     },
-    # ── ORMs & Validation ────────────────────────────────────────────────────────────────
+    # ── ORMs & Validation ────────────────────────────────────────────
     {
         "name": "Prisma",
         "slug": "prisma",
@@ -332,7 +332,7 @@ TOOLS = [
         "tags": "typescript,api,rpc,nextjs,react,fullstack,type-safe",
         "source_type": "code",
     },
-    # ── Runtimes ───────────────────────────────────────────────────────────────────────
+    # ── Runtimes ─────────────────────────────────────────────────────
     {
         "name": "Bun",
         "slug": "bun",
@@ -345,7 +345,7 @@ TOOLS = [
         "tags": "runtime,bundler,javascript,typescript,fast,nodejs-alternative",
         "source_type": "code",
     },
-    # ── API Frameworks ───────────────────────────────────────────────────────────────────
+    # ── API Frameworks ───────────────────────────────────────────────
     {
         "name": "Hono",
         "slug": "hono",
@@ -358,7 +358,7 @@ TOOLS = [
         "tags": "web-framework,edge,cloudflare,deno,bun,typescript,nodejs,serverless",
         "source_type": "code",
     },
-    # ── Headless CMS ─────────────────────────────────────────────────────────────────
+    # ── Headless CMS ─────────────────────────────────────────────────
     {
         "name": "Payload CMS",
         "slug": "payload-cms",
@@ -371,7 +371,7 @@ TOOLS = [
         "tags": "cms,typescript,nodejs,rest,graphql,self-hosted,headless",
         "source_type": "code",
     },
-    # ── Frontend Frameworks (meta-frameworks) ──────────────────────────────────────────
+    # ── Frontend Frameworks (meta-frameworks) ────────────────────────
     {
         "name": "Astro",
         "slug": "astro",
@@ -396,7 +396,7 @@ TOOLS = [
         "tags": "vue,ssr,ssg,fullstack,typescript,frontend",
         "source_type": "code",
     },
-    # ── Authentication ────────────────────────────────────────────────────────────────────
+    # ── Authentication ────────────────────────────────────────────────
     {
         "name": "Lucia",
         "slug": "lucia",
@@ -409,7 +409,7 @@ TOOLS = [
         "tags": "auth,sessions,oauth,typescript,self-hosted,sveltekit,nextjs",
         "source_type": "code",
     },
-    # ── Background Jobs ────────────────────────────────────────────────────────────────
+    # ── Background Jobs ───────────────────────────────────────────────
     {
         "name": "Temporal",
         "slug": "temporalio",
@@ -422,7 +422,7 @@ TOOLS = [
         "tags": "workflow,durable-execution,saga,background-jobs,orchestration,typescript,go",
         "source_type": "code",
     },
-    # ── Maps & Location ───────────────────────────────────────────────────────────────
+    # ── Maps & Location ───────────────────────────────────────────────
     {
         "name": "Leaflet",
         "slug": "leaflet",
@@ -435,7 +435,7 @@ TOOLS = [
         "tags": "maps,leaflet,geospatial,javascript,open-source",
         "source_type": "code",
     },
-    # ── API Tools ──────────────────────────────────────────────────────────────────────
+    # ── API Tools ─────────────────────────────────────────────────────
     {
         "name": "Bruno",
         "slug": "bruno",
@@ -460,7 +460,7 @@ TOOLS = [
         "tags": "api,testing,rest,graphql,grpc,client,postman-alternative",
         "source_type": "code",
     },
-    # ── Database ──────────────────────────────────────────────────────────────────────
+    # ── Database ──────────────────────────────────────────────────────
     {
         "name": "Atlas",
         "slug": "atlas",
@@ -485,7 +485,7 @@ TOOLS = [
         "tags": "react,routing,spa,frontend,remix,typescript",
         "source_type": "code",
     },
-    # ── AI & Automation ───────────────────────────────────────────────────────────────
+    # ── AI & Automation ───────────────────────────────────────────────
     {
         "name": "Tesseract.js",
         "slug": "tesseract-js",
@@ -498,7 +498,7 @@ TOOLS = [
         "tags": "ocr,javascript,wasm,browser,nodejs,ai,text-recognition",
         "source_type": "code",
     },
-    # ── Background Jobs (additional) ───────────────────────────────────────────────────
+    # ── Background Jobs (additional) ─────────────────────────────────
     {
         "name": "BullMQ",
         "slug": "bullmq",
@@ -511,7 +511,7 @@ TOOLS = [
         "tags": "queue,redis,nodejs,jobs,worker,typescript",
         "source_type": "code",
     },
-    # ── Frontend Frameworks (UI component system) ──────────────────────────────────────
+    # ── Frontend Frameworks (UI component system) ─────────────────────
     {
         "name": "shadcn/ui",
         "slug": "shadcn-ui",
@@ -524,7 +524,7 @@ TOOLS = [
         "tags": "react,ui,tailwindcss,radix,components,design-system,typescript",
         "source_type": "code",
     },
-    # ── Authentication ─────────────────────────────────────────────────────────────────────
+    # ── Authentication ─────────────────────────────────────────────────
     {
         "name": "Better Auth",
         "slug": "better-auth",
@@ -537,7 +537,7 @@ TOOLS = [
         "tags": "auth,typescript,oauth,passkeys,2fa,nextjs,sveltekit,sessions",
         "source_type": "code",
     },
-    # ── AI & Automation ───────────────────────────────────────────────────────────────
+    # ── AI & Automation ────────────────────────────────────────────────
     {
         "name": "Mastra",
         "slug": "mastra",
@@ -562,7 +562,7 @@ TOOLS = [
         "tags": "ollama,llm,chat,local-ai,self-hosted,rag,multimodal,openai",
         "source_type": "code",
     },
-    # ── API Tools ──────────────────────────────────────────────────────────────────────
+    # ── API Tools ─────────────────────────────────────────────────────
     {
         "name": "Encore",
         "slug": "encore",
@@ -573,278 +573,6 @@ TOOLS = [
         "github_stars": 8000,
         "category_slug": "api-tools",
         "tags": "backend,typescript,go,infrastructure,queues,caching,database,serverless",
-        "source_type": "code",
-    },
-    {
-        "name": "Trigger.dev",
-        "slug": "trigger-dev",
-        "tagline": "Open-source background jobs for TypeScript",
-        "description": "Trigger.dev is an open-source background jobs platform for TypeScript. Write long-running, resilient tasks directly in your codebase. Handles retries, timeouts, real-time monitoring, and scheduled jobs with no separate queuing infrastructure required.",
-        "url": "https://trigger.dev",
-        "github_url": "https://github.com/triggerdotdev/trigger.dev",
-        "github_stars": 25000,
-        "category_slug": "background-jobs",
-        "tags": "background-jobs,typescript,nodejs,queue,tasks,scheduled,open-source,inngest-alternative",
-        "source_type": "code",
-    },
-    {
-        "name": "Modal",
-        "slug": "modal",
-        "tagline": "Run AI and ML code in the cloud, instantly",
-        "description": "Modal is a serverless cloud compute platform for Python. Run GPU-accelerated AI workloads, batch jobs, and inference endpoints with zero infrastructure setup. Deploy from your local Python environment with no Dockerfiles, no Kubernetes, no YAML.",
-        "url": "https://modal.com",
-        "github_url": "https://github.com/modal-labs/modal-client",
-        "github_stars": 2000,
-        "category_slug": "ai-automation",
-        "tags": "serverless,gpu,python,ml,ai,inference,compute,cloud,llm",
-        "source_type": "saas",
-    },
-    # ── Authentication ────────────────────────────────────────────────────────────────
-    {
-        "name": "Stytch",
-        "slug": "stytch",
-        "tagline": "Authentication APIs for modern applications",
-        "description": "Stytch is a developer-first authentication platform offering magic links, passkeys, SMS OTP, OAuth, and TOTP. Built for B2C apps with SDKs for React, Next.js, Python, Go, and Ruby. Strong passkey support and a generous free tier make it a popular Clerk alternative.",
-        "url": "https://stytch.com",
-        "github_url": "https://github.com/stytchauth/stytch-node",
-        "github_stars": 500,
-        "category_slug": "authentication",
-        "tags": "auth,passkeys,magic-link,sms,otp,oauth,nextjs,react,clerk-alternative",
-        "source_type": "saas",
-    },
-    {
-        "name": "WorkOS",
-        "slug": "workos",
-        "tagline": "Enterprise-grade auth and user management",
-        "description": "WorkOS provides enterprise SSO (SAML), SCIM directory sync, and audit logs as drop-in APIs. Add Okta/Azure AD/Google Workspace SSO to any app in hours. Free up to 1M MAUs. Trusted by Vercel, Perplexity, and hundreds of B2B SaaS companies.",
-        "url": "https://workos.com",
-        "github_url": "https://github.com/workos/workos-node",
-        "github_stars": 800,
-        "category_slug": "authentication",
-        "tags": "sso,saml,scim,enterprise,b2b,directory-sync,audit-logs,okta-alternative",
-        "source_type": "saas",
-    },
-    # ── Developer Tools ───────────────────────────────────────────────────────────────
-    {
-        "name": "Biome",
-        "slug": "biome",
-        "tagline": "One toolchain for your web project — fast linter + formatter",
-        "description": "Biome is a fast, batteries-included JavaScript/TypeScript toolchain. It replaces both ESLint and Prettier in a single Rust binary — 97% compatible with Prettier formatting and 200+ lint rules. Zero config for most projects. 35x faster than Prettier on large codebases.",
-        "url": "https://biomejs.dev",
-        "github_url": "https://github.com/biomejs/biome",
-        "github_stars": 18000,
-        "category_slug": "developer-tools",
-        "tags": "linter,formatter,javascript,typescript,eslint-alternative,prettier-alternative,rust,fast",
-        "source_type": "code",
-    },
-    {
-        "name": "Oxlint",
-        "slug": "oxlint",
-        "tagline": "Rust-based JavaScript linter — 50-100x faster than ESLint",
-        "description": "Oxlint is a high-performance JavaScript and TypeScript linter written in Rust, part of the Oxc (JavaScript Oxidation Compiler) project. It runs 50-100x faster than ESLint and supports 500+ rules. Designed as a drop-in ESLint replacement for large monorepos.",
-        "url": "https://oxc.rs/docs/guide/usage/linter",
-        "github_url": "https://github.com/oxc-project/oxc",
-        "github_stars": 12000,
-        "category_slug": "developer-tools",
-        "tags": "linter,javascript,typescript,eslint-alternative,rust,fast,monorepo",
-        "source_type": "code",
-    },
-    # ── MCP Servers ────────────────────────────────────────────────────────────────────
-    {
-        "name": "Playwright MCP",
-        "slug": "playwright-mcp",
-        "tagline": "Browser automation MCP server powered by Playwright",
-        "description": "Official Microsoft MCP server that gives AI agents full browser automation via Playwright. Agents can navigate pages, click elements, fill forms, take screenshots, and scrape content without writing Playwright code directly. Supports Chromium, Firefox, and WebKit. Ideal for testing workflows, web research agents, and automated form filling inside Claude, Cursor, or any MCP-compatible AI environment.",
-        "url": "https://github.com/microsoft/playwright-mcp",
-        "github_url": "https://github.com/microsoft/playwright-mcp",
-        "github_stars": 12000,
-        "category_slug": "mcp-servers",
-        "tags": "mcp,browser,automation,playwright,scraping,testing",
-        "source_type": "code",
-    },
-    {
-        "name": "Filesystem MCP",
-        "slug": "filesystem-mcp",
-        "tagline": "Secure local filesystem access for AI agents via MCP",
-        "description": "Official Anthropic MCP server providing AI agents with controlled read/write access to the local filesystem. Agents can list directories, read files, write files, and move content within a sandboxed root path. Ships with the official MCP SDK and is the reference implementation for filesystem tools. Used in Claude Desktop, Cursor, and custom MCP hosts as the foundation for local code editing and file management workflows.",
-        "url": "https://github.com/modelcontextprotocol/servers",
-        "github_url": "https://github.com/modelcontextprotocol/servers",
-        "github_stars": 47000,
-        "category_slug": "mcp-servers",
-        "tags": "mcp,filesystem,files,anthropic,official,local",
-        "source_type": "code",
-    },
-    {
-        "name": "Fetch MCP",
-        "slug": "fetch-mcp",
-        "tagline": "Web fetch and HTML-to-Markdown conversion MCP server",
-        "description": "Official Anthropic MCP server that gives AI agents the ability to fetch any public URL and receive the page content as clean Markdown. Handles JavaScript-rendered pages via headless Chrome, converts HTML to structured Markdown, and strips nav/footer boilerplate. Standard tool for research agents, documentation scrapers, and any workflow that needs live web content inside Claude or a custom MCP host.",
-        "url": "https://github.com/modelcontextprotocol/servers",
-        "github_url": "https://github.com/modelcontextprotocol/servers",
-        "github_stars": 47000,
-        "category_slug": "mcp-servers",
-        "tags": "mcp,fetch,web,scraping,markdown,anthropic,official",
-        "source_type": "code",
-    },
-    {
-        "name": "MCP SQLite",
-        "slug": "mcp-sqlite",
-        "tagline": "SQLite database access and analysis tool for AI agents",
-        "description": "Official Anthropic MCP server that gives AI agents direct read/write access to SQLite databases. Agents can run SQL queries, inspect schemas, insert rows, and analyse data without leaving the conversation. Ships as a reference MCP server implementation alongside the filesystem and fetch servers. Useful for data analysis workflows, local app debugging, and any scenario where an agent needs to query a local or embedded database.",
-        "url": "https://github.com/modelcontextprotocol/servers",
-        "github_url": "https://github.com/modelcontextprotocol/servers",
-        "github_stars": 47000,
-        "category_slug": "mcp-servers",
-        "tags": "mcp,sqlite,database,sql,anthropic,official",
-        "source_type": "code",
-    },
-    # ── Boilerplates & Starters ──────────────────────────────────────────────────────────
-    {
-        "name": "create-t3-app",
-        "slug": "create-t3-app",
-        "tagline": "The best way to start a full-stack, typesafe Next.js app",
-        "description": "create-t3-app scaffolds a Next.js application with the T3 Stack: TypeScript, tRPC, Tailwind CSS, Prisma, and NextAuth.js. Each piece is optional — you pick what you need, and the CLI wires them together correctly. Powers the T3 Stack community, which has become the default starting point for type-safe Next.js SaaS apps. Over 24k GitHub stars. Strongly opinionated about end-to-end type safety and minimal abstraction.",
-        "url": "https://create.t3.gg",
-        "github_url": "https://github.com/t3-oss/create-t3-app",
-        "github_stars": 24000,
-        "category_slug": "boilerplates",
-        "tags": "nextjs,typescript,trpc,tailwind,prisma,nextauth,t3,saas",
-        "source_type": "code",
-    },
-    {
-        "name": "Makerkit",
-        "slug": "makerkit",
-        "tagline": "SaaS boilerplate for Next.js and Supabase",
-        "description": "Makerkit is a production-ready SaaS starter kit built on Next.js 14, Supabase, Stripe, and Tailwind CSS. Ships with multi-tenancy (teams + members), authentication, billing, blog, dark mode, and email. Designed for indie hackers and small teams who want to skip the plumbing and start building their product logic on day one. Fully open-source with a permissive license.",
-        "url": "https://makerkit.dev",
-        "github_url": "https://github.com/makerkit/next-supabase-saas-kit",
-        "github_stars": 4200,
-        "category_slug": "boilerplates",
-        "tags": "nextjs,supabase,stripe,tailwind,saas,multi-tenancy,typescript",
-        "source_type": "code",
-    },
-    {
-        "name": "SaasRock",
-        "slug": "saasrock",
-        "tagline": "Enterprise SaaS boilerplate built on Remix and Prisma",
-        "description": "SaasRock is an open-source SaaS boilerplate built with Remix, Prisma, Tailwind CSS, and Stripe. Includes multi-tenancy, role-based access control, admin panel, onboarding flows, billing, blog, and REST API. The Remix-based alternative to T3 Stack for teams that prefer server-rendered apps over client-side routing. Active community with regular updates.",
-        "url": "https://saasrock.com",
-        "github_url": "https://github.com/saasrock/saasrock",
-        "github_stars": 2100,
-        "category_slug": "boilerplates",
-        "tags": "remix,prisma,tailwind,stripe,saas,multi-tenancy,rbac",
-        "source_type": "code",
-    },
-    # ── AI & Automation — 138th pass ──────────────────────────────────────────────────────
-    {
-        "name": "Cognee",
-        "slug": "cognee",
-        "tagline": "Knowledge graph memory for AI agents",
-        "description": "Cognee builds deterministic, customizable knowledge graphs for AI agents by ingesting data from text, PDFs, audio, and databases. Agents query the graph to retrieve contextually relevant information instead of relying on flat vector search. Supports LangChain, LlamaIndex, and direct Python. Features: graph-based entity extraction, automatic relationship discovery, incremental graph updates, and configurable storage backends (Neo4j, Weaviate, pgvector). Lighter and more structured than mem0 or MemGPT for teams that need auditable, graph-queryable agent memory.",
-        "url": "https://www.cognee.ai",
-        "github_url": "https://github.com/topoteretes/cognee",
-        "github_stars": 3200,
-        "category_slug": "ai-automation",
-        "tags": "agents,memory,knowledge-graph,rag,langchain,llamaindex",
-        "source_type": "code",
-    },
-    {
-        "name": "GraphRAG",
-        "slug": "microsoft-graphrag",
-        "tagline": "Graph-based retrieval-augmented generation by Microsoft",
-        "description": "GraphRAG is Microsoft Research's open-source framework for knowledge-graph enhanced RAG. It builds a knowledge graph from source documents, then uses graph community summaries to answer complex, multi-hop questions that naive vector RAG misses entirely. Best for querying large document corpora where relationships between concepts matter. Features: global and local search modes, community detection, automatic entity and relationship extraction, and support for any OpenAI-compatible LLM. Complements vector databases rather than replacing them.",
-        "url": "https://microsoft.github.io/graphrag/",
-        "github_url": "https://github.com/microsoft/graphrag",
-        "github_stars": 22000,
-        "category_slug": "ai-automation",
-        "tags": "rag,knowledge-graph,llm,microsoft,retrieval,documents",
-        "source_type": "code",
-    },
-    {
-        "name": "AI Suite",
-        "slug": "aisuite",
-        "tagline": "Simple, unified interface to multiple LLM providers",
-        "description": "AI Suite (by Andrew Ng / DeepLearning.AI) provides a simple, unified Python interface to call multiple LLM providers using a single, standardised API. Switch between OpenAI, Anthropic, Google, AWS Bedrock, Groq, Mistral, Ollama, and more by changing a single provider string. No vendor lock-in, no custom SDK per provider. Think of it as a minimal, opinionated alternative to LiteLLM — ideal for prototyping, education, and small projects that need multi-provider flexibility without the overhead of a full LLM gateway.",
-        "url": "https://github.com/andrewyng/aisuite",
-        "github_url": "https://github.com/andrewyng/aisuite",
-        "github_stars": 9200,
-        "category_slug": "ai-automation",
-        "tags": "llm,multi-provider,openai,anthropic,groq,litellm,sdk",
-        "source_type": "code",
-    },
-    {
-        "name": "VoltAgent",
-        "slug": "voltagent",
-        "tagline": "TypeScript framework for building and orchestrating AI agents",
-        "description": "VoltAgent is an open-source TypeScript framework for building, orchestrating, and monitoring multi-agent AI systems. Provides a declarative agent definition API, built-in tool use, memory management, and sub-agent spawning. Ships with VoltOps — a visual console to observe agent runs, inspect tool calls, and debug conversations in real time. First-class integrations with OpenAI, Anthropic, Google Gemini, and Vercel AI SDK. Sits between the simplicity of Vercel AI SDK and the complexity of LangGraph — structured enough to scale, lean enough to start in minutes.",
-        "url": "https://voltagent.dev",
-        "github_url": "https://github.com/voltvector/voltagent",
-        "github_stars": 3100,
-        "category_slug": "ai-automation",
-        "tags": "agents,typescript,orchestration,multi-agent,tool-use,monitoring",
-        "source_type": "code",
-    },
-    # ── AI Standards & Specs — 150th pass ─────────────────────────────────────────────────
-    # Added to back the "responsible ai", "red teaming", "ai benchmark", "ai safety" routing
-    # bigrams added to _CAT_SYNONYMS (May 2026). These are the canonical tools for each query.
-    {
-        "name": "garak",
-        "slug": "garak",
-        "tagline": "LLM vulnerability scanner and red-teamer by NVIDIA",
-        "description": "garak is an open-source LLM vulnerability scanner built by NVIDIA. It probes language models for failure modes including hallucination, toxicity, jailbreaks, prompt injection, data leakage, and sycophancy. Runs hundreds of probe classes against any LLM API (OpenAI, Anthropic, Hugging Face, Ollama). The standard tool for red-teaming LLMs in both research and production contexts. Outputs structured reports with pass/fail rates per probe category.",
-        "url": "https://garak.ai",
-        "github_url": "https://github.com/NVIDIA/garak",
-        "github_stars": 4000,
-        "category_slug": "ai-standards",
-        "tags": "red-teaming,llm,safety,vulnerability,jailbreak,ai-safety,responsible-ai",
-        "source_type": "code",
-    },
-    {
-        "name": "lm-evaluation-harness",
-        "slug": "lm-evaluation-harness",
-        "tagline": "The standard framework for evaluating language models — EleutherAI",
-        "description": "lm-evaluation-harness (by EleutherAI) is the de-facto standard benchmark runner for large language models. Supports 200+ tasks including MMLU, TruthfulQA, HellaSwag, GSM8K, HumanEval, and more. Used to produce the Open LLM Leaderboard on Hugging Face. Evaluate any Hugging Face model, OpenAI-compatible API, or custom model with a single command. The canonical tool for reproducible LLM benchmark comparisons.",
-        "url": "https://github.com/EleutherAI/lm-evaluation-harness",
-        "github_url": "https://github.com/EleutherAI/lm-evaluation-harness",
-        "github_stars": 7200,
-        "category_slug": "ai-standards",
-        "tags": "benchmarks,llm,evaluation,mmlu,truthfulqa,gsm8k,huggingface,ai-standards",
-        "source_type": "code",
-    },
-    {
-        "name": "Inspect AI",
-        "slug": "inspect-ai",
-        "tagline": "Composable AI safety evaluation framework by UK AISI",
-        "description": "Inspect is an open-source AI safety evaluation framework developed by the UK AI Safety Institute (AISI). Provides a composable Python API for building custom evals: define tasks, solvers, scorers, and datasets as reusable components. Supports multi-turn agent evals, tool use, sandboxed code execution, and parallel grading. The official evaluation framework used by the UK government for frontier model safety assessments. First-class integrations with OpenAI, Anthropic, Google, and HuggingFace models.",
-        "url": "https://inspect.ai-safety-institute.org.uk",
-        "github_url": "https://github.com/UKGovernmentBEIS/inspect_ai",
-        "github_stars": 2200,
-        "category_slug": "ai-standards",
-        "tags": "ai-safety,evaluation,red-teaming,uk-aisi,responsible-ai,benchmarks,agents",
-        "source_type": "code",
-    },
-    {
-        "name": "DeepEval",
-        "slug": "deepeval",
-        "tagline": "The open-source LLM evaluation framework",
-        "description": "DeepEval is an open-source framework for evaluating LLM outputs. Run automated evaluations on answer relevancy, faithfulness, contextual precision, hallucination, toxicity, and more — using LLM judges or deterministic metrics. Integrates with pytest for CI/CD LLM testing. Supports RAG pipelines, conversational agents, and single-turn QA. Includes a hosted platform (Confident AI) for tracking eval results over time. Popular alternative to RAGAS for teams that want framework-agnostic LLM quality checks.",
-        "url": "https://docs.confident-ai.com",
-        "github_url": "https://github.com/confident-ai/deepeval",
-        "github_stars": 8000,
-        "category_slug": "ai-standards",
-        "tags": "llm,evaluation,rag,hallucination,benchmarks,pytest,ai-quality",
-        "source_type": "code",
-    },
-    {
-        "name": "RAGAS",
-        "slug": "ragas",
-        "tagline": "Evaluation framework for Retrieval-Augmented Generation pipelines",
-        "description": "RAGAS (Retrieval Augmented Generation Assessment) is the standard framework for evaluating RAG pipelines. Measures answer faithfulness, answer relevancy, context precision, context recall, and context entity recall — all without requiring labeled ground truth. Works with LangChain, LlamaIndex, and custom RAG setups. Widely used in production RAG evaluations and academic research. RAGAS scores are now the industry benchmark for reporting RAG quality.",
-        "url": "https://docs.ragas.io",
-        "github_url": "https://github.com/explodinggradients/ragas",
-        "github_stars": 8500,
-        "category_slug": "ai-standards",
-        "tags": "rag,evaluation,llm,faithfulness,relevancy,langchain,llamaindex",
         "source_type": "code",
     },
 ]

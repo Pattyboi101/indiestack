@@ -6090,6 +6090,231 @@ TOOLS = [
         "npx create-supastarter-app",
         "code",
     ),
+    # ── LLM Observability (170th pass) ────────────────────────────────────────
+    (
+        "traceloop",
+        "Traceloop / OpenLLMetry",
+        "OpenTelemetry-based LLM tracing and observability for AI applications",
+        "Traceloop (OpenLLMetry) is an open-source observability framework for LLM "
+        "applications built on OpenTelemetry standards. Drop-in instrumentation for "
+        "OpenAI, Anthropic, LangChain, LlamaIndex, and more — sends traces to any "
+        "OTLP-compatible backend (Grafana, Jaeger, Datadog, or Traceloop's cloud). "
+        "Gives full request/response traces, token costs, latency, and error rates "
+        "per prompt. 3k+ GitHub stars. Works in any Python or Node.js project.",
+        "ai-automation",
+        "traceloop/openllmetry",
+        3200,
+        "https://traceloop.com",
+        "llm,observability,opentelemetry,tracing,monitoring,langchain,openai",
+        "pip install traceloop-sdk",
+        "code",
+    ),
+    (
+        "weave",
+        "Weave by W&B",
+        "LLM evaluation, tracing, and dataset management by Weights & Biases",
+        "Weave is Weights & Biases' toolkit for tracking and evaluating LLM applications. "
+        "Log prompts, completions, and chain traces automatically; build evaluation "
+        "datasets; run scoring pipelines with custom judges. Works with OpenAI, "
+        "Anthropic, LangChain, LlamaIndex, and any Python function. Free tier available. "
+        "Pairs naturally with W&B's MLflow-compatible experiment tracking.",
+        "ai-automation",
+        "wandb/weave",
+        1800,
+        "https://weave-docs.wandb.ai",
+        "llm,evaluation,tracing,observability,dataset,wandb,open-source",
+        "pip install weave",
+        "code",
+    ),
+    (
+        "humanloop",
+        "Humanloop",
+        "Prompt management, evaluation, and fine-tuning for LLM applications",
+        "Humanloop is an LLM operations platform for managing prompts, running "
+        "evaluations, and collecting human feedback at scale. Version-control prompts, "
+        "A/B test variants, auto-evaluate with LLM judges, and fine-tune models on "
+        "production data. Integrates with OpenAI, Anthropic, Google, and open-source "
+        "models. Used by engineering teams shipping AI features in production.",
+        "ai-automation",
+        "humanloop/humanloop-python",
+        400,
+        "https://humanloop.com",
+        "llm,prompt-management,evaluation,fine-tuning,observability,ai-ops",
+        "pip install humanloop",
+        "saas",
+    ),
+    (
+        "promptlayer",
+        "PromptLayer",
+        "The first platform built for prompt engineering teams",
+        "PromptLayer is a prompt management and observability platform that wraps "
+        "OpenAI and Anthropic APIs to log every request, track token costs, and "
+        "version prompts with a visual editor. Teams can search historical requests, "
+        "run regression tests when changing prompts, and share results. Free tier "
+        "available. Used by teams that treat prompts as code.",
+        "ai-automation",
+        "MagnivOrg/prompt-layer-library",
+        1100,
+        "https://promptlayer.com",
+        "llm,prompt-management,observability,openai,logging,versioning",
+        "pip install promptlayer",
+        "saas",
+    ),
+    # ── MCP Servers — Vendor-Built (170th pass) ───────────────────────────────
+    (
+        "mcp-sentry",
+        "Sentry MCP Server",
+        "Official Sentry MCP server for error tracking and issue management",
+        "Official MCP server from Sentry that gives AI agents access to your Sentry "
+        "account. Agents can list projects, search issues, retrieve stack traces and "
+        "event details, and update issue status — enabling AI-powered debugging and "
+        "triage workflows. Requires a Sentry auth token. Works with Claude, Cursor, "
+        "Windsurf, and any MCP-compatible client.",
+        "mcp-servers",
+        "getsentry/sentry-mcp",
+        800,
+        "https://github.com/getsentry/sentry-mcp",
+        "mcp,sentry,error-tracking,debugging,issues,official,ai-agent",
+        "npx -y @sentry/mcp-server",
+        "code",
+    ),
+    (
+        "mcp-stripe",
+        "Stripe Agent Toolkit / MCP Server",
+        "Official Stripe MCP server for payment operations from AI agents",
+        "Official Stripe MCP server that gives AI agents access to the Stripe API. "
+        "Agents can create payment intents, manage customers, list subscriptions, "
+        "retrieve invoices, and run refunds — enabling AI-assisted billing workflows "
+        "and finance automation. Requires a Stripe secret key. Part of the official "
+        "Stripe Agent Toolkit.",
+        "mcp-servers",
+        "stripe/agent-toolkit",
+        1200,
+        "https://github.com/stripe/agent-toolkit",
+        "mcp,stripe,payments,billing,subscriptions,official,ai-agent",
+        "npx -y @stripe/mcp",
+        "code",
+    ),
+    (
+        "mcp-atlassian",
+        "Atlassian MCP Server",
+        "Community MCP server for Jira and Confluence from AI agents",
+        "MCP server that gives AI agents access to Atlassian Jira and Confluence. "
+        "Agents can search and create Jira issues, update statuses, list sprints, "
+        "read Confluence pages, and create documentation — enabling AI-assisted "
+        "project management and knowledge base workflows. Supports both Jira Cloud "
+        "and Jira Server. 2k+ GitHub stars.",
+        "mcp-servers",
+        "sooperset/mcp-atlassian",
+        2100,
+        "https://github.com/sooperset/mcp-atlassian",
+        "mcp,jira,confluence,atlassian,project-management,ai-agent",
+        "uvx mcp-atlassian",
+        "code",
+    ),
+    (
+        "mcp-figma",
+        "Figma MCP Server",
+        "Community MCP server for reading Figma designs from AI agents",
+        "MCP server that gives AI agents read access to Figma files. Agents can "
+        "extract component names, colours, fonts, layout properties, and export "
+        "assets — enabling AI-assisted design-to-code workflows. Agents can describe "
+        "a design file and generate matching code (React, Tailwind, etc.) without "
+        "manually copying specs. Requires a Figma personal access token.",
+        "mcp-servers",
+        "GLips/Figma-Context-MCP",
+        3500,
+        "https://github.com/GLips/Figma-Context-MCP",
+        "mcp,figma,design,design-to-code,components,ai-agent",
+        "npx -y figma-developer-mcp --figma-api-key=YOUR_KEY",
+        "code",
+    ),
+    # ── MCP Servers — Vendor-Built (171st pass) ───────────────────────────────
+    (
+        "mcp-supabase",
+        "Supabase MCP Server",
+        "Official Supabase MCP server for database, auth, and storage",
+        "Official Supabase MCP server that gives AI agents full access to your "
+        "Supabase project. Agents can run SQL queries, manage tables, call Edge "
+        "Functions, read storage buckets, and administer auth users — enabling "
+        "AI agents to build, query, and manage Supabase backends through natural "
+        "language. Requires a Supabase personal access token. Maintained by Supabase.",
+        "mcp-servers",
+        "supabase-community/supabase-mcp",
+        2000,
+        "https://github.com/supabase-community/supabase-mcp",
+        "mcp,supabase,database,postgres,auth,storage,official,ai-agent",
+        "npx -y @supabase/mcp-server-supabase@latest",
+        "code",
+    ),
+    (
+        "mcp-vercel",
+        "Vercel MCP Server",
+        "Official Vercel MCP server for deployments, projects, and edge config",
+        "Official Vercel MCP server that gives AI agents control over Vercel "
+        "deployments. Agents can list projects, trigger deploys, inspect build "
+        "logs, manage environment variables, and query Edge Config — enabling "
+        "AI-driven deployment workflows and infrastructure automation. Requires "
+        "a Vercel API token. Maintained by Vercel.",
+        "mcp-servers",
+        "vercel/mcp-adapter",
+        1500,
+        "https://vercel.com/docs/mcp",
+        "mcp,vercel,deployment,infrastructure,edge,official,ai-agent",
+        "npx -y @vercel/mcp-server",
+        "code",
+    ),
+    (
+        "mcp-cloudflare",
+        "Cloudflare MCP Server",
+        "Official Cloudflare MCP server for Workers, KV, R2, D1, and DNS",
+        "Official Cloudflare MCP server that gives AI agents access to your "
+        "Cloudflare account. Agents can deploy Workers, manage KV namespaces, "
+        "query D1 databases, access R2 buckets, configure DNS records, and "
+        "monitor analytics — enabling AI-driven edge infrastructure automation. "
+        "Requires a Cloudflare API token. Maintained by Cloudflare.",
+        "mcp-servers",
+        "cloudflare/mcp-server-cloudflare",
+        2500,
+        "https://github.com/cloudflare/mcp-server-cloudflare",
+        "mcp,cloudflare,workers,kv,r2,d1,edge,official,ai-agent",
+        "npx -y @cloudflare/mcp-server-cloudflare",
+        "code",
+    ),
+    (
+        "mcp-kubernetes",
+        "MCP Kubernetes Server",
+        "Community MCP server for Kubernetes cluster management",
+        "MCP server that gives AI agents kubectl-level access to Kubernetes "
+        "clusters. Agents can list pods, deployments, and services; apply "
+        "manifests; view logs; exec into containers; and inspect cluster "
+        "health — enabling AI-driven cluster operations and debugging via "
+        "natural language. Works with any kubeconfig-accessible cluster.",
+        "mcp-servers",
+        "Flux159/mcp-server-kubernetes",
+        1800,
+        "https://github.com/Flux159/mcp-server-kubernetes",
+        "mcp,kubernetes,k8s,devops,cluster,infrastructure,ai-agent",
+        "npx -y mcp-server-kubernetes",
+        "code",
+    ),
+    (
+        "mcp-docker",
+        "MCP Docker Server",
+        "Community MCP server for Docker container and image management",
+        "MCP server that gives AI agents control over Docker. Agents can list "
+        "containers and images, start/stop/restart containers, view logs, "
+        "inspect configs, run docker-compose workflows, and manage networks "
+        "and volumes — enabling AI-driven local and remote container operations "
+        "without leaving the agent context.",
+        "mcp-servers",
+        "ckreiling/mcp-server-docker",
+        1200,
+        "https://github.com/ckreiling/mcp-server-docker",
+        "mcp,docker,containers,devops,images,ai-agent",
+        "npx -y mcp-server-docker",
+        "code",
+    ),
     # MCP Servers -----------------------------------------------------------
     (
         "mcp-brave-search",
@@ -12416,2558 +12641,586 @@ TOOLS = [
         "brew tap kubescape/tap && brew install kubescape",
         "code",
     ),
-    # ── Python Database Drivers ───────────────────────────────────────────────
+    # Notifications (163rd pass) --------------------------------------------------
     (
-        "psycopg",
-        "psycopg",
-        "The most popular PostgreSQL adapter for Python",
-        "psycopg is the most widely-used PostgreSQL database adapter for Python. "
-        "Version 3 (psycopg3) is a complete rewrite with native async support, "
-        "binary protocol, COPY streaming, and pipeline mode. Designed for both "
-        "synchronous (Django, Flask) and async (FastAPI, asyncio) applications.",
-        "database",
-        "psycopg/psycopg",
-        1800,
-        "https://www.psycopg.org",
-        "python,postgresql,database-driver,async,orm",
-        "pip install psycopg[binary]",
-        "code",
-    ),
-    (
-        "asyncpg",
-        "asyncpg",
-        "High-performance async PostgreSQL driver for Python",
-        "asyncpg is a Python library for asyncio and PostgreSQL. It uses the "
-        "PostgreSQL binary protocol directly, providing 2–3× higher throughput "
-        "than psycopg2. Used extensively with FastAPI, Starlette, and asyncio "
-        "web apps. Supports prepared statements, streaming, and typed parameters.",
-        "database",
-        "MagicStack/asyncpg",
-        7200,
-        "https://magicstack.github.io/asyncpg/",
-        "python,postgresql,async,asyncio,high-performance",
-        "pip install asyncpg",
-        "code",
-    ),
-    (
-        "pymongo",
-        "PyMongo",
-        "The official Python driver for MongoDB",
-        "PyMongo is the official MongoDB driver for Python. It provides a simple "
-        "and Pythonic API for connecting to MongoDB, performing CRUD operations, "
-        "aggregation pipelines, and change streams. Works synchronously out of "
-        "the box; use Motor for async/asyncio usage.",
-        "database",
-        "mongodb/mongo-python-driver",
-        4000,
-        "https://pymongo.readthedocs.io",
-        "python,mongodb,database-driver,nosql,official",
-        "pip install pymongo",
-        "code",
-    ),
-    (
-        "motor",
-        "Motor",
-        "Async Python driver for MongoDB",
-        "Motor is the official async MongoDB driver for Python. Built on top of "
-        "PyMongo, it wraps the synchronous API with asyncio coroutines. Ideal for "
-        "FastAPI and Starlette apps that need MongoDB. Supports all PyMongo "
-        "features including aggregation, change streams, and transactions.",
-        "database",
-        "mongodb/motor",
-        2300,
-        "https://motor.readthedocs.io",
-        "python,mongodb,async,asyncio,fastapi",
-        "pip install motor",
-        "code",
-    ),
-    # ── API Layer ──────────────────────────────────────────────────────────────
-    (
-        "postgrest",
-        "PostgREST",
-        "Turn your PostgreSQL database into a RESTful API",
-        "PostgREST is a standalone web server that turns your PostgreSQL database "
-        "directly into a RESTful API. The structural constraints and permissions of "
-        "the database determine the API endpoints and operations. Supports filtering, "
-        "ordering, pagination, JWT auth, and row-level security out of the box.",
-        "api-tools",
-        "PostgREST/postgrest",
-        23000,
-        "https://postgrest.org",
-        "postgresql,rest,api-gateway,serverless,automatic",
-        "brew install postgrest",
-        "code",
-    ),
-    # ── Developer Tools ────────────────────────────────────────────────────────
-    (
-        "scrapy",
-        "Scrapy",
-        "Python web scraping framework for building spiders",
-        "Scrapy is an open-source Python web crawling and scraping framework. "
-        "Define spiders that follow links and extract structured data. Supports "
-        "async I/O, middleware pipelines, item processors, and exporters to JSON, "
-        "CSV, and databases. Powers everything from small scripts to large-scale "
-        "data pipelines.",
-        "developer-tools",
-        "scrapy/scrapy",
-        51000,
-        "https://scrapy.org",
-        "python,web-scraping,crawling,spider,data-extraction",
-        "pip install scrapy",
-        "code",
-    ),
-    # ── Headless CMS ──────────────────────────────────────────────────────────
-    (
-        "prismic",
-        "Prismic",
-        "The headless page builder for modern websites",
-        "Prismic is a SaaS headless CMS with a visual Slice Machine system for "
-        "building reusable content components. Content editors use a rich visual "
-        "interface while developers query content via the REST or GraphQL API. "
-        "Works with Next.js, Nuxt, SvelteKit, and any front-end framework.",
-        "headless-cms",
-        None,
-        0,
-        "https://prismic.io",
-        "headless-cms,visual,slice-machine,saas,jamstack",
-        "npx @slicemachine/init",
-        "saas",
-    ),
-    (
-        "hygraph",
-        "Hygraph",
-        "GraphQL-native headless CMS (formerly GraphCMS)",
-        "Hygraph (formerly GraphCMS) is a headless CMS built natively on GraphQL. "
-        "All content is accessible via a powerful GraphQL API with mutations, "
-        "subscriptions, and content federation. Ideal for teams who prefer "
-        "GraphQL-first development. Supports rich media management and webhooks.",
-        "headless-cms",
-        None,
-        0,
-        "https://hygraph.com",
-        "headless-cms,graphql,api-first,federation,saas",
-        "",
-        "saas",
-    ),
-    (
-        "statamic",
-        "Statamic",
-        "The Laravel-powered CMS that's a joy to build with",
-        "Statamic is a Laravel-based CMS that can run flat-file (no database) or "
-        "with a database. Content is managed in YAML/Markdown files by default, "
-        "making it Git-friendly. Includes a powerful Antlers templating language, "
-        "live preview, and a REST or GraphQL content API for headless usage.",
-        "headless-cms",
-        "statamic/cms",
-        3900,
-        "https://statamic.com",
-        "headless-cms,laravel,php,flat-file,git-friendly",
-        "composer require statamic/cms",
-        "code",
-    ),
-    # Search Engines — AI/LLM search APIs (118th pass) ---------------------
-    (
-        "tavily",
-        "Tavily Search",
-        "The AI-optimised search API built for LLM agents",
-        "Tavily Search is a real-time web search API purpose-built for LLM "
-        "applications and AI agents. Returns structured, relevant results "
-        "optimised for RAG pipelines. Official search partner for LangChain "
-        "and LlamaIndex. Supports basic and advanced search, raw content "
-        "retrieval, and answer mode for direct Q&A.",
-        "search-engine",
-        "tavily-com/tavily-python",
-        2100,
-        "https://tavily.com",
-        "search,ai,rag,llm,langchain,llamaindex,web-search",
-        "pip install tavily-python",
-        "saas",
-    ),
-    (
-        "exa",
-        "Exa",
-        "Neural search API that finds semantically similar content",
-        "Exa (formerly Metaphor) is a neural search engine and API for AI "
-        "agents. Unlike keyword search, Exa uses semantic embeddings to find "
-        "conceptually similar pages. Supports finding pages, similar content, "
-        "and extracting structured data. Widely used in agentic pipelines "
-        "where agents need to browse and retrieve information.",
-        "search-engine",
-        "exa-labs/exa-py",
-        4200,
-        "https://exa.ai",
-        "search,ai,rag,semantic,neural,llm,agents",
-        "pip install exa-py",
-        "saas",
-    ),
-    # MCP Servers — popular tools used by AI agents (118th pass) -----------
-    (
-        "context7",
-        "Context7",
-        "Up-to-date library docs for your AI coding agent",
-        "Context7 is an MCP server that provides live, version-specific "
-        "documentation for popular libraries directly to AI coding assistants. "
-        "Instead of hallucinating outdated APIs, agents query Context7 to get "
-        "current docs at request time. Supports 10,000+ libraries. Works with "
-        "Claude, Cursor, Windsurf, and any MCP-compatible client.",
-        "mcp-servers",
-        "upstash/context7",
-        7400,
-        "https://context7.com",
-        "mcp,documentation,llm,ai-agents,coding-assistant,library-docs",
-        "npx -y @upstash/context7-mcp",
-        "code",
-    ),
-    (
-        "sequential-thinking",
-        "Sequential Thinking MCP",
-        "Dynamic, reflective problem-solving through structured thought sequences",
-        "Sequential Thinking is an MCP server that enables AI models to work "
-        "through complex problems step by step using structured thought sequences. "
-        "Each step can revise previous thinking, branch into alternative "
-        "approaches, and build a coherent solution incrementally. Particularly "
-        "useful for multi-step reasoning, planning, and debugging tasks.",
-        "mcp-servers",
-        "modelcontextprotocol/servers",
-        7000,
-        "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking",
-        "mcp,reasoning,thinking,planning,ai-agents,step-by-step",
-        "npx -y @modelcontextprotocol/server-sequential-thinking",
-        "code",
-    ),
-    # Background Jobs — queue monitoring (118th pass) ----------------------
-    (
-        "bullboard",
-        "BullBoard",
-        "Beautiful real-time UI for monitoring Bull and BullMQ queues",
-        "BullBoard is a web-based dashboard for monitoring Bull and BullMQ "
-        "queues in real time. Visualise active, waiting, delayed, failed, and "
-        "completed jobs. Supports retry, clean, and pause operations directly "
-        "from the UI. Framework-agnostic — adapters for Express, Fastify, "
-        "Koa, Hapi, Next.js, and more.",
-        "background-jobs",
-        "felixmosh/bull-board",
-        6100,
-        "https://github.com/felixmosh/bull-board",
-        "background-jobs,bull,bullmq,queue,monitoring,dashboard,redis",
-        "npm install @bull-board/api @bull-board/express",
-        "code",
-    ),
-    # AI — code-generation LLM frameworks (119th pass) --------------------
-    (
-        "copilotkit",
-        "CopilotKit",
-        "The open-source framework for in-app AI copilots",
-        "CopilotKit is a React framework for building in-app AI copilots, "
-        "chatbots, and AI-powered text areas. Provides CoAgent infrastructure "
-        "for multi-agent workflows, LangGraph integration, and ready-to-use "
-        "headless UI components. Works with any LLM provider.",
-        "ai-automation",
-        "CopilotKit/CopilotKit",
-        11000,
-        "https://copilotkit.ai",
-        "ai,react,copilot,agents,langchain,langgraph",
-        "npm install @copilotkit/react-core @copilotkit/react-ui",
-        "code",
-    ),
-    # DevOps — Docker Desktop alternatives (119th pass) -------------------
-    (
-        "orbstack",
-        "OrbStack",
-        "Fast, light, simple Docker for Mac",
-        "OrbStack is a fast, lightweight Docker Desktop alternative for macOS. "
-        "Runs Docker containers and Linux VMs with a small resource footprint, "
-        "native networking, and instant startup. Replaces Docker Desktop, "
-        "Colima, or Lima. Free for personal use.",
-        "devops-infrastructure",
-        "orbstack/orbstack",
-        14000,
-        "https://orbstack.dev",
-        "docker,macos,containers,vm,docker-desktop-alternative",
-        "brew install orbstack",
-        "saas",
-    ),
-    # Search — Vespa open-source search engine (120th pass) --------------
-    (
-        "vespa",
-        "Vespa",
-        "Open-source platform for search, recommendation, and AI ranking",
-        "Vespa is Yahoo's open-source search and recommendation engine. "
-        "Supports vector search (ANN), lexical search, and ML-based re-ranking "
-        "in a single query. Scales to billions of documents with real-time "
-        "indexing and serving. Used by Yahoo, Spotify, and many enterprises "
-        "for personalized search and recommendation workloads.",
-        "search-engine",
-        "vespa-engine/vespa",
-        6000,
-        "https://vespa.ai",
-        "search,vector-search,ranking,recommendation,hybrid-search,ml,open-source",
-        "docker pull vespaengine/vespa",
-        "code",
-    ),
-    # DevOps — Kubernetes application platform (120th pass) ---------------
-    (
-        "porter",
-        "Porter",
-        "Heroku-style deployments on your own cloud",
-        "Porter is an open-source application management platform on Kubernetes. "
-        "Deploy apps from GitHub, Dockerfile, or Helm charts with a Heroku-like "
-        "workflow — no Kubernetes expertise required. Supports AWS EKS, GKE, "
-        "and DigitalOcean. Provides preview environments, CI/CD integration, "
-        "and built-in observability.",
-        "devops-infrastructure",
-        "porter-dev/porter",
-        6000,
-        "https://porter.run",
-        "kubernetes,deployment,heroku-alternative,paas,devops,open-source",
-        "brew install porter-dev/porter/porter",
-        "code",
-    ),
-    # Documentation — TypeScript doc generator (120th pass) ---------------
-    (
-        "typedoc",
-        "TypeDoc",
-        "Documentation generator for TypeScript projects",
-        "TypeDoc converts TypeScript source code and JSDoc comments into "
-        "beautiful, cross-linked HTML documentation. Supports Markdown "
-        "in comments, custom themes, and plugin extensions. The de facto "
-        "standard for generating API documentation from TypeScript packages.",
-        "documentation",
-        "TypeStrong/typedoc",
-        7000,
-        "https://typedoc.org",
-        "documentation,typescript,api-docs,jsdoc,codegen",
-        "npm install typedoc",
-        "code",
-    ),
-    # Frontend — legacy hybrid mobile (119th pass) -----------------------
-    (
-        "cordova",
-        "Apache Cordova",
-        "Mobile apps with HTML, CSS & JS",
-        "Apache Cordova lets you build mobile apps using standard web "
-        "technologies — HTML5, CSS3, and JavaScript. Wraps your app in a "
-        "native WebView, providing access to device capabilities via plugins. "
-        "The foundation that powered PhoneGap. Widely searched as a baseline "
-        "for 'hybrid mobile app' alternative queries.",
-        "frontend-frameworks",
-        "apache/cordova",
+        "novu",
+        "Novu",
+        "The open-source notification infrastructure for developers",
+        "Novu is the leading open-source notification infrastructure platform. "
+        "Send in-app, email, SMS, push, chat, and Slack notifications through "
+        "a single unified API. Features a drag-and-drop workflow editor, "
+        "template management, subscriber preferences, and a React notification "
+        "inbox component. Supports 40+ providers including Resend, Twilio, "
+        "SendGrid, Firebase, and SNS. The notification layer for modern SaaS.",
+        "notifications",
+        "novuhq/novu",
         35000,
-        "https://cordova.apache.org",
-        "mobile,hybrid,ios,android,webview,phonegap",
-        "npm install -g cordova",
+        "https://novu.co",
+        "notifications,email,sms,push,in-app,webhook,multi-channel,open-source",
+        "npm install @novu/node",
         "code",
     ),
-    # Boilerplates — additional high-quality starters (121st pass) --------------------
+    # API Tools (163rd pass) ------------------------------------------------------
     (
-        "epic-stack",
-        "Epic Stack",
-        "Opinionated Remix stack for production-grade full-stack web apps",
-        "The Epic Stack is an opinionated project starter built on Remix, designed "
-        "for production by Kent C. Dodds. Ships with SQLite (via Prisma), Fly.io "
-        "deployment, GitHub Actions CI, authentication, dark mode, i18n, "
-        "accessibility testing, end-to-end Playwright tests, and comprehensive "
-        "documentation. The gold standard for full-stack TypeScript projects.",
-        "boilerplates",
-        "epicweb-dev/epic-stack",
-        11000,
-        "https://www.epicweb.dev/epic-stack",
-        "remix,typescript,sqlite,prisma,fly.io,playwright,fullstack,boilerplate",
-        "npx create-epic-app",
-        "code",
-    ),
-    (
-        "makerkit",
-        "MakerKit",
-        "SaaS starter kits for Next.js and Remix with auth, billing, and teams",
-        "MakerKit is a production-ready SaaS boilerplate available for "
-        "Next.js and Remix. Ships with Supabase or Firebase auth, Stripe "
-        "billing, teams/organizations, multi-tenancy, email via Resend, "
-        "admin panel, and TypeScript throughout. Used by hundreds of "
-        "indie SaaS founders to cut months off their initial build.",
-        "boilerplates",
-        "makerkit/next-supabase-saas-kit",
-        1600,
-        "https://makerkit.dev",
-        "nextjs,remix,supabase,stripe,saas,boilerplate,typescript,tailwind",
-        "git clone https://github.com/makerkit/next-supabase-saas-kit.git",
-        "code",
-    ),
-    # Caching — additional tools (121st pass) ----------------------------------------
-    (
-        "lru-cache",
-        "lru-cache",
-        "A cache object that deletes the least-recently-used items for Node.js",
-        "lru-cache is the most widely downloaded LRU cache implementation for "
-        "Node.js, with billions of weekly downloads. Used internally by npm and "
-        "countless packages for memoization and bounded in-memory caching. "
-        "Fully typed, supports TTL expiry, size limits, and async fetch.",
-        "caching",
-        "isaacs/node-lru-cache",
-        5000,
-        "https://github.com/isaacs/node-lru-cache",
-        "cache,lru,in-memory,nodejs,memoize,ttl",
-        "npm install lru-cache",
-        "code",
-    ),
-    (
-        "node-cache",
-        "node-cache",
-        "Simple and fast NodeJS internal caching",
-        "node-cache is a simple, fast, zero-dependency in-memory cache for "
-        "Node.js. Supports TTL expiry, checkperiod cleanup, and statistics. "
-        "Stores values as-is (no serialisation), supports strings, numbers, "
-        "Buffers, and objects. A popular lightweight alternative to Redis "
-        "for single-server caching needs.",
-        "caching",
-        "node-cache/node-cache",
-        2600,
-        "https://github.com/node-cache/node-cache",
-        "cache,in-memory,nodejs,ttl,key-value,simple",
-        "npm install node-cache",
-        "code",
-    ),
-    # MCP Servers — Git integration (121st pass) -------------------------------------
-    (
-        "mcp-git",
-        "MCP Git",
-        "Git repository operations for AI coding agents via MCP",
-        "An MCP server that exposes Git operations — reading diffs, commits, "
-        "branches, file history, and staging — to AI coding agents. Part of "
-        "the official modelcontextprotocol/servers monorepo maintained by "
-        "Anthropic. Enables agents to understand and navigate codebases "
-        "without needing shell access.",
-        "mcp-servers",
-        "modelcontextprotocol/servers",
-        14000,
-        "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
-        "mcp,git,version-control,ai-agent,claude,repository",
-        "uvx mcp-server-git",
-        "code",
-    ),
-    # Testing — mobile and performance testing (122nd pass) -----------------------
-    (
-        "appium",
-        "Appium",
-        "Cross-platform mobile test automation for iOS and Android",
-        "Appium is the leading open-source framework for automating native, "
-        "web, and hybrid mobile applications on iOS and Android. Uses the "
-        "WebDriver protocol, allowing tests to be written in any language. "
-        "Supports real devices and simulators. The de facto standard for "
-        "mobile UI test automation in enterprise CI pipelines.",
-        "testing-tools",
-        "appium/appium",
-        18000,
-        "https://appium.io",
-        "mobile,testing,automation,ios,android,webdriver",
-        "npm install -g appium",
-        "code",
-    ),
-    (
-        "jmeter",
-        "Apache JMeter",
-        "Open-source load testing tool for performance measurement",
-        "Apache JMeter is the industry-standard open-source tool for load "
-        "testing, performance measurement, and functional testing of "
-        "web applications. Supports HTTP, HTTPS, FTP, JDBC, LDAP, SOAP, "
-        "REST, and more. Highly extensible via plugins. Ships a GUI for "
-        "building test plans and a CLI for headless CI execution.",
-        "testing-tools",
-        "apache/jmeter",
-        8000,
-        "https://jmeter.apache.org",
-        "load-testing,performance,java,open-source,ci",
-        None,
-        "code",
-    ),
-    # API — OpenAPI design and collaboration (122nd pass) --------------------------
-    (
-        "stoplight-studio",
-        "Stoplight Studio",
-        "Collaborative API design and documentation with OpenAPI",
-        "Stoplight Studio is an open-source visual OpenAPI designer for "
-        "designing, documenting, and mocking REST APIs. Integrates with "
-        "Git-based workflows and supports OpenAPI 3.1, JSON Schema, and "
-        "Markdown for descriptions. The companion Prism tool enables "
-        "instant contract testing and mock servers from any OpenAPI spec.",
+        "hono",
+        "Hono",
+        "Ultrafast web framework for the edge",
+        "Hono is a small, simple, and ultrafast web framework for the Edge. "
+        "Works on Cloudflare Workers, Fastly Compute, Deno, Bun, Vercel, AWS "
+        "Lambda, and Node.js. Provides a Express-like API with zero dependencies, "
+        "first-class TypeScript support, built-in middleware, and JSX rendering. "
+        "5x faster than Express on edge runtimes. The go-to framework for "
+        "edge-native APIs and full-stack apps.",
         "api-tools",
-        "stoplightio/studio",
-        2000,
-        "https://stoplight.io/studio",
-        "openapi,api-design,documentation,mock,rest,visual-editor",
-        "npm install -g @stoplight/studio",
+        "honojs/hono",
+        22000,
+        "https://hono.dev",
+        "api,edge,cloudflare-workers,bun,deno,typescript,middleware,fastapi",
+        "npm install hono",
         "code",
     ),
-    # Message Queue — event sourcing and cloud-native eventing (123rd pass) ----------
+    # Developer Tools (163rd pass) ------------------------------------------------
     (
-        "eventstoredb",
-        "EventStoreDB",
-        "Purpose-built event sourcing database with append-only event streams",
-        "EventStoreDB is the original open-source database built specifically "
-        "for event sourcing. Stores business events in immutable, append-only "
-        "streams and replays them to reconstruct application state. Ships a "
-        "gRPC API, built-in projections for live event transformations, and "
-        "persistent subscriptions for competing consumer patterns. The "
-        "on-premises and cloud-managed (Event Store Cloud) editions suit "
-        "CQRS and DDD architectures that need a durable event log.",
-        "message-queue",
-        "EventStore/EventStore",
-        5500,
-        "https://www.eventstore.com",
-        "event-sourcing,cqrs,ddd,event-driven,append-only,streams",
-        None,
-        "code",
-    ),
-    (
-        "cloudevents",
-        "CloudEvents",
-        "CNCF standard specification for describing event data in a common format",
-        "CloudEvents is a CNCF specification for describing event data in a "
-        "common way. It defines a metadata envelope that makes events "
-        "portable across cloud providers, brokers, and frameworks — no more "
-        "bespoke event schemas per vendor. SDKs exist for Go, Python, "
-        "JavaScript, Java, C#, and Ruby. Adopted by Knative, Azure Event "
-        "Grid, Google Eventarc, and Serverless Workflow. Use it to "
-        "decouple event producers from consumers in event-driven systems.",
-        "message-queue",
-        "cloudevents/spec",
-        5000,
-        "https://cloudevents.io",
-        "cloud-native,event-driven,specification,cncf,interoperability",
-        "npm install cloudevents",
-        "code",
-    ),
-    # Database — PostgreSQL and MySQL proxy tools (123rd pass) ----------------------
-    (
-        "proxysql",
-        "ProxySQL",
-        "High-performance MySQL proxy with connection pooling and query routing",
-        "ProxySQL is a high-performance open-source MySQL proxy that sits "
-        "between your application and MySQL servers. Provides connection "
-        "pooling, automatic read/write splitting, query caching, query "
-        "rewriting, and seamless failover. Handles millions of connections "
-        "with microsecond latency overhead. Widely used in front of "
-        "Percona Server, MariaDB, AWS RDS, and Google Cloud SQL to "
-        "horizontally scale MySQL workloads without application changes.",
-        "database",
-        "sysown/proxysql",
-        6000,
-        "https://proxysql.com",
-        "mysql,proxy,connection-pooling,load-balancing,mariadb,rds",
-        None,
-        "code",
-    ),
-    # Frontend Frameworks — React Compiler (124th pass) ---------------------------
-    (
-        "react-compiler",
-        "React Compiler",
-        "Automatically optimise React apps at build time",
-        "React Compiler is an ahead-of-time (AOT) optimiser built into "
-        "React 19. It statically analyses component code and automatically "
-        "memoises values and callbacks — eliminating the need for manual "
-        "useMemo, useCallback, and React.memo. The compiler understands the "
-        "Rules of React and only transforms code it can prove is safe, "
-        "giving you the performance of full memoisation without the boilerplate. "
-        "Ships as a Babel plugin (babel-plugin-react-compiler) for Webpack, "
-        "Vite, and Next.js build pipelines.",
-        "frontend-frameworks",
-        "reactjs/react-compiler",
-        23000,
-        "https://react.dev/learn/react-compiler",
-        "react,compiler,performance,memoization,react-19,babel-plugin",
-        "npm install babel-plugin-react-compiler",
-        "code",
-    ),
-    # MCP Servers — MCP Inspector (124th pass) ------------------------------------
-    (
-        "mcp-inspector",
-        "MCP Inspector",
-        "Interactive debugging and testing tool for MCP servers",
-        "MCP Inspector is the official debugging and testing interface for "
-        "Model Context Protocol servers, maintained by Anthropic. It provides "
-        "a browser-based UI where you can connect to any MCP server via stdio "
-        "or SSE transport, browse available tools and resources, send test "
-        "requests, and inspect raw JSON-RPC messages in real time. "
-        "Essential for development and validation of MCP server implementations "
-        "before shipping to Claude Desktop, Cursor, or any other MCP client.",
-        "mcp-servers",
-        "modelcontextprotocol/inspector",
-        3000,
-        "https://modelcontextprotocol.io/docs/tools/inspector",
-        "mcp,debugging,testing,inspector,json-rpc,anthropic",
-        "npx @modelcontextprotocol/inspector",
-        "code",
-    ),
-    # DevOps & Infrastructure — Karpenter (124th pass) ----------------------------
-    (
-        "karpenter",
-        "Karpenter",
-        "Just-in-time node provisioning for Kubernetes",
-        "Karpenter is an open-source, flexible, high-performance Kubernetes "
-        "node provisioner maintained by AWS and graduated to CNCF. Instead of "
-        "predefined node groups, Karpenter provisions exactly the right "
-        "compute for pending pods within seconds — selecting instance types, "
-        "availability zones, and capacity types (spot/on-demand) based on "
-        "workload requirements. It consolidates underutilised nodes "
-        "automatically, cutting cloud compute costs by 20–60% compared to "
-        "Cluster Autoscaler. Supports AWS EC2, Azure AKS, and other providers "
-        "through a pluggable cloud provider API.",
-        "devops-infrastructure",
-        "aws/karpenter-provider-aws",
-        7000,
-        "https://karpenter.sh",
-        "kubernetes,autoscaling,node-provisioner,aws,spot,cncf,k8s",
-        "helm install karpenter oci://public.ecr.aws/karpenter/karpenter",
-        "code",
-    ),
-    # AI & Automation — LocalAI (126th pass) ----------------------------
-    (
-        "localai",
-        "LocalAI",
-        "Free, open-source OpenAI-compatible local LLM inference",
-        "LocalAI is a free, open-source alternative to the OpenAI API that "
-        "runs LLMs locally on CPU or GPU without an internet connection or "
-        "API keys. It is API-compatible with OpenAI's REST API, so existing "
-        "apps swap the base URL and work instantly. Supports Llama, Mistral, "
-        "Falcon, Whisper, Stable Diffusion, and 100+ other models through a "
-        "unified YAML model configuration. Runs on Linux, macOS, and Windows "
-        "via Docker or native binary — no Python environment required.",
-        "ai-automation",
-        "mudler/LocalAI",
-        29000,
-        "https://localai.io",
-        "llm,local,inference,self-hosted,openai-compatible,cpu,gpu",
-        "docker run -p 8080:8080 localai/localai:latest",
-        "code",
-    ),
-    # AI Dev Tools — OpenHands (126th pass) ----------------------------
-    (
-        "openhands",
-        "OpenHands",
-        "Open-source AI software engineering agent",
-        "OpenHands (formerly OpenDevin) is an open-source platform for "
-        "AI-powered software engineering agents. Agents can browse the web, "
-        "write and run code, call APIs, and manage files — autonomously "
-        "completing complex software tasks from a natural language prompt. "
-        "Supports local models via Ollama/LocalAI and hosted providers "
-        "(OpenAI, Anthropic, Google). Designed for developers who want a "
-        "self-hostable, extensible alternative to GitHub Copilot Workspace "
-        "or Devin. Used in research, CI pipelines, and interactive dev "
-        "environments.",
-        "ai-dev-tools",
-        "All-Hands-AI/OpenHands",
-        43000,
-        "https://www.all-hands.dev",
-        "ai-agent,coding-agent,software-engineering,autonomous,llm,self-hosted",
-        "docker run -it --rm -e LLM_MODEL=claude-3-5-sonnet-20241022 ghcr.io/all-hands-ai/openhands:0.28",
-        "code",
-    ),
-    # Developer Tools — Budibase (126th pass) ----------------------------
-    (
-        "budibase",
-        "Budibase",
-        "Open-source low-code platform for building internal tools",
-        "Budibase is an open-source low-code platform for building internal "
-        "business apps, admin panels, and CRUD interfaces. Connect to "
-        "PostgreSQL, MySQL, MongoDB, REST APIs, Airtable, or Google Sheets "
-        "and auto-generate forms, tables, and dashboards in minutes. Self-host "
-        "on your own infrastructure (Docker, Kubernetes, Digital Ocean) or use "
-        "Budibase Cloud. Role-based access control, SSO, and automation "
-        "workflows are built in. A Retool/AppSmith alternative that prioritises "
-        "developer-friendly configuration over drag-and-drop complexity.",
+        "zod",
+        "Zod",
+        "TypeScript-first schema validation with static type inference",
+        "Zod is a TypeScript-first schema declaration and validation library. "
+        "Define schemas once and get static TypeScript types automatically. "
+        "Zero dependencies, works in Node.js and browsers. Used to validate "
+        "API responses, form inputs, environment variables, and config files. "
+        "Pairs with React Hook Form, tRPC, and Prisma. The de-facto TypeScript "
+        "validation standard with 34k GitHub stars.",
         "developer-tools",
-        "Budibase/budibase",
-        23000,
-        "https://budibase.com",
-        "low-code,internal-tools,admin-panel,crud,self-hosted,open-source",
-        "npx @budibase/cli start",
+        "colinhacks/zod",
+        34000,
+        "https://zod.dev",
+        "validation,typescript,schema,form,runtime-types,type-safe,zod",
+        "npm install zod",
         "code",
     ),
-    # Creative Tools — Remotion (127th pass) ----------------------------
+    # Authentication (163rd pass) -------------------------------------------------
     (
-        "remotion",
-        "Remotion",
-        "Create videos programmatically in React",
-        "Remotion lets you create videos using React components. Write video "
-        "logic in TypeScript, use CSS and SVG animations, and render to MP4 "
-        "at any resolution and frame rate. Build dynamic video templates, "
-        "data-driven clips, and programmatic marketing videos. Supports "
-        "server-side rendering and cloud rendering (Remotion Lambda on AWS).",
-        "creative-tools",
-        "remotion-dev/remotion",
-        20000,
-        "https://www.remotion.dev",
-        "video,react,typescript,animation,programmatic-video,render",
-        "npm init video@latest",
+        "better-auth",
+        "Better Auth",
+        "The most comprehensive authentication library for TypeScript",
+        "Better Auth is a framework-agnostic authentication and authorization "
+        "library for TypeScript. Provides email/password, OAuth, magic link, "
+        "passkeys, two-factor, and more out of the box. First-class support for "
+        "Next.js, Nuxt, Remix, Astro, SvelteKit, Hono, and Express. Features "
+        "a plugin system, organization support, and admin panel. No vendor "
+        "lock-in — runs on your own database.",
+        "authentication",
+        "better-auth/better-auth",
+        12000,
+        "https://better-auth.com",
+        "auth,authentication,oauth,magic-link,passkey,2fa,typescript,nextjs",
+        "npm install better-auth",
         "code",
     ),
-    # Documentation — Sphinx (128th pass) ----------------------------
+    # Database (163rd pass) -------------------------------------------------------
     (
-        "sphinx",
-        "Sphinx",
-        "Python documentation generator with ReStructuredText",
-        "Sphinx is the de facto standard documentation generator for Python "
-        "projects. It converts reStructuredText source files into HTML, PDF, "
-        "ePub, and many other formats. Features autodoc (pulls docstrings "
-        "directly from Python source), cross-references, search, and "
-        "versioned docs. Used by CPython, Django, Flask, NumPy, and thousands "
-        "of other projects. Extensible with themes (Furo, PyData Sphinx Theme) "
-        "and plugins. Readthedocs.org hosts most Sphinx projects for free.",
-        "documentation",
-        "sphinx-doc/sphinx",
-        6500,
-        "https://www.sphinx-doc.org",
-        "documentation,python,rst,reStructuredText,autodoc,readthedocs",
-        "pip install sphinx",
+        "electric-sql",
+        "ElectricSQL",
+        "Local-first sync for Postgres",
+        "ElectricSQL is an open-source local-first sync layer for Postgres. "
+        "Sync subsets of your Postgres data into local SQLite databases inside "
+        "your apps. Provides real-time reactive queries, offline support, and "
+        "conflict-free CRDT-based sync. Works with any Postgres-compatible "
+        "database and any JavaScript framework. Ship offline-capable, "
+        "multi-user, real-time collaborative apps without building sync logic.",
+        "database",
+        "electric-sql/electric",
+        9000,
+        "https://electric-sql.com",
+        "local-first,offline,sync,postgres,sqlite,crdt,real-time,collaborative",
+        "npm install electric-sql",
         "code",
     ),
-    # Frontend Frameworks — Linaria (128th pass) ----------------------------
+    # Developer Tools (141st pass from origin/main) --------------------------------
+    (
+        "beekeeper-studio",
+        "Beekeeper Studio",
+        "Cross-platform SQL editor and database manager — open source",
+        "Beekeeper Studio is a modern, open-source SQL editor and database manager "
+        "for Linux, macOS, and Windows. Connect to PostgreSQL, MySQL, SQLite, SQL "
+        "Server, and more. Features tabbed interface, auto-complete, query history, "
+        "and a clean UI optimized for developers who spend time in databases daily.",
+        "developer-tools",
+        "beekeeper-studio/beekeeper-studio",
+        14000,
+        "https://www.beekeeperstudio.io",
+        "database-gui,sql,postgresql,mysql,sqlite,open-source,cross-platform",
+        "brew install --cask beekeeper-studio",
+        "code",
+    ),
+    # Database (141st pass from origin/main) ----------------------------------------
+    (
+        "triplit",
+        "Triplit",
+        "Full-stack database with real-time sync and offline-first support",
+        "Triplit is an open-source database that runs in both the browser and on the "
+        "server, syncing data between them in real time. It supports offline-first "
+        "apps out of the box, with a typed schema, reactive queries, and built-in "
+        "access control. A strong alternative to Firebase, Replicache, and "
+        "PowerSync for apps that need low-latency local data.",
+        "database",
+        "triplit/triplit",
+        4000,
+        "https://www.triplit.dev",
+        "database,real-time,sync,offline-first,typescript,react,full-stack",
+        "npm install @triplit/client",
+        "code",
+    ),
+    (
+        "pgadmin",
+        "pgAdmin",
+        "The most popular open-source PostgreSQL administration platform",
+        "pgAdmin 4 is the official, feature-rich administration and development "
+        "platform for PostgreSQL. Run it as a desktop app or a self-hosted web "
+        "application. Includes a query editor with syntax highlighting, schema "
+        "browser, ERD editor, backup/restore wizards, and performance dashboards. "
+        "The standard free tool for Postgres DBAs and developers.",
+        "developer-tools",
+        "pgadmin-org/pgadmin4",
+        3500,
+        "https://www.pgadmin.org",
+        "postgresql,database-gui,admin,sql,open-source,self-hosted",
+        "pip install pgadmin4",
+        "code",
+    ),
+    # Frontend Frameworks — Linaria (127th pass) ---------------------------
     (
         "linaria",
         "Linaria",
-        "Zero-runtime CSS-in-JS with static extraction",
-        "Linaria is a CSS-in-JS library that extracts styles to CSS files at "
-        "build time — zero runtime overhead. Write CSS in tagged template "
-        "literals in JavaScript/TypeScript and Linaria converts them to static "
-        "CSS classes. Works with Webpack, Vite, Rollup, and esbuild. Supports "
-        "dynamic styles via CSS custom properties. A lighter alternative to "
-        "styled-components and Emotion when you need zero bundle cost.",
+        "Zero-runtime CSS-in-JS for React and other frameworks",
+        "Linaria extracts CSS at build time, generating real CSS files with "
+        "zero runtime overhead. Write CSS in JS using tagged template literals "
+        "or object styles, then Linaria's Babel/webpack/Vite plugin strips all "
+        "styling code from the JS bundle and emits static CSS. Dynamic styles "
+        "use CSS custom properties (variables) — no runtime style injection, "
+        "no specificity battles. A popular alternative to Emotion and "
+        "styled-components for teams that want the developer experience of "
+        "CSS-in-JS without the runtime cost.",
         "frontend-frameworks",
         "callstack/linaria",
         11000,
         "https://linaria.dev",
-        "css-in-js,zero-runtime,styled-components,emotion,react,typescript",
+        "css-in-js,zero-runtime,react,babel,vite,webpack",
         "npm install @linaria/core @linaria/react",
         "code",
     ),
-    # Frontend Frameworks — nuqs (128th pass) ----------------------------
+    # DevOps — Atlantis (127th pass) ----------------------------------------
     (
-        "nuqs",
-        "nuqs",
-        "Type-safe URL search params state management for React",
-        "nuqs (formerly next-usequerystate) lets you store UI state in URL "
-        "search parameters — the same way Next.js, Remix, and TanStack Router "
-        "manage pagination, filters, and tabs. It's a typed, serialization-aware "
-        "hook: `useQueryState('page', parseAsInteger.withDefault(1))`. Supports "
-        "Next.js App Router, Pages Router, React Router, Remix, and plain React. "
-        "Ideal for shareable URLs, back-button support, and SEO-friendly state.",
-        "frontend-frameworks",
-        "47ng/nuqs",
-        9000,
-        "https://nuqs.47ng.com",
-        "url-state,search-params,nextjs,react,query-string,routing",
-        "npm install nuqs",
-        "code",
-    ),
-    # Developer Tools — Tree-sitter (128th pass) ----------------------------
-    (
-        "tree-sitter",
-        "Tree-sitter",
-        "Incremental parsing library for source code",
-        "Tree-sitter is a parser generator and incremental parsing library "
-        "for programming tools. It builds a concrete syntax tree for a source "
-        "file and updates it efficiently as the file is edited. Used by Neovim, "
-        "GitHub's code search, and hundreds of language extensions to power "
-        "syntax highlighting, code folding, structural navigation, and code "
-        "intelligence. Grammars exist for 100+ languages. Bindable from C, "
-        "Rust, Python, Node.js, and WebAssembly.",
-        "developer-tools",
-        "tree-sitter/tree-sitter",
-        17000,
-        "https://tree-sitter.github.io",
-        "parser,syntax-highlighting,incremental,neovim,code-intelligence",
-        "pip install tree-sitter",
-        "code",
-    ),
-    # Developer Tools — fnm (129th pass) ------------------------------------
-    (
-        "fnm",
-        "fnm",
-        "Fast and simple Node.js version manager",
-        "fnm (Fast Node Manager) is a blazing-fast Node.js version manager "
-        "built in Rust. Drop-in replacement for nvm with cross-platform support "
-        "on macOS, Linux, and Windows. Supports .nvmrc and .node-version files, "
-        "automatic version switching per directory, and shell completions for "
-        "bash, zsh, fish, and PowerShell. Installs in seconds via a single curl "
-        "script. Ships as a single binary with no runtime dependencies.",
-        "developer-tools",
-        "Schniz/fnm",
-        18000,
-        "https://github.com/Schniz/fnm",
-        "node,version-manager,nvm,rust,cli",
-        "curl -fsSL https://fnm.vercel.app/install | bash",
-        "code",
-    ),
-    # DevOps — go-task / Taskfile (129th pass) ------------------------------
-    (
-        "go-task",
-        "Task",
-        "Task runner and build tool via Taskfile.yml",
-        "Task is a task runner and build tool written in Go, designed as a "
-        "simpler alternative to GNU Make. Tasks are defined in a Taskfile.yml "
-        "using a straightforward YAML syntax. Supports variables, includes, "
-        "parallel execution, watching for file changes, and calling tasks from "
-        "other tasks. Cross-platform with a single binary install. Popular in "
-        "Go, Node, and polyglot monorepos as a Makefile replacement with better "
-        "readability and built-in dependency management.",
+        "atlantis",
+        "Atlantis",
+        "Terraform pull request automation for teams",
+        "Atlantis is a self-hosted Golang app that listens for Terraform pull "
+        "request webhooks and runs `plan` and `apply` remotely. Teams comment "
+        "`atlantis plan` or `atlantis apply` on a PR; Atlantis posts the Terraform "
+        "output back as a comment and locks the workspace to prevent concurrent "
+        "applies. Works with GitHub, GitLab, Bitbucket, and Gitea. No third-party "
+        "SaaS required — deploy on your own infrastructure. The de-facto standard "
+        "for GitOps-style Terraform collaboration before Terraform Cloud existed, "
+        "still preferred by teams wanting self-hosted control over plan/apply.",
         "devops-infrastructure",
-        "go-task/task",
-        11000,
-        "https://taskfile.dev",
-        "task-runner,makefile,build-tool,go,automation,cli",
-        "go install github.com/go-task/task/v3/cmd/task@latest",
+        "runatlantis/atlantis",
+        7700,
+        "https://www.runatlantis.io",
+        "terraform,gitops,pr-automation,iac,self-hosted,open-source",
+        "docker run runatlantis/atlantis",
         "code",
     ),
-    # API Tools — Buf CLI (129th pass) --------------------------------------
+    # DevOps — Infracost (127th pass) ----------------------------------------
     (
-        "buf",
-        "Buf",
-        "Modern Protobuf toolchain for API development",
-        "Buf is a Protobuf toolchain that replaces protoc with a faster, "
-        "more ergonomic workflow. Provides lint, breaking-change detection, "
-        "formatting, and a schema registry for Protobuf files. The Buf CLI "
-        "generates code stubs for gRPC and Connect APIs across 10+ languages "
-        "without complex plugin chains. The Buf Schema Registry (BSR) hosts "
-        "and versions Protobuf modules. Used by teams at Stripe, Figma, and "
-        "Square to manage large Protobuf schemas at scale.",
-        "api-tools",
-        "bufbuild/buf",
-        9000,
-        "https://buf.build",
-        "protobuf,grpc,api,lint,codegen,connect",
-        "brew install bufbuild/buf/buf",
+        "infracost",
+        "Infracost",
+        "Cloud cost estimates for Terraform in pull requests",
+        "Infracost shows cloud cost estimates for Terraform, Terragrunt, and "
+        "Pulumi changes directly in pull requests. Engineers see a cost breakdown "
+        "before merging — new resources, changed resources, total monthly delta. "
+        "Integrates with GitHub Actions, GitLab CI, Bitbucket Pipelines, and "
+        "Atlantis. Supports AWS, GCP, and Azure. The infracost.yml config file "
+        "lets teams set cost policies (e.g. alert if a PR increases monthly costs "
+        "by more than $100). A FinOps tool that fits naturally into IaC workflows "
+        "without requiring platform engineers to review every plan manually.",
+        "devops-infrastructure",
+        "infracost/infracost",
+        10500,
+        "https://www.infracost.io",
+        "terraform,iac,cost-estimation,finops,github-actions,open-source",
+        "brew install infracost && infracost auth login",
         "code",
     ),
-    # Database — rqlite (129th pass) ----------------------------------------
+    # AI Automation — Cohere (164th pass) -----------------------------------------
     (
-        "rqlite",
-        "rqlite",
-        "Distributed relational database built on SQLite",
-        "rqlite is a lightweight distributed relational database built on "
-        "SQLite, using the Raft consensus algorithm for fault-tolerant "
-        "replication. Provides a SQL interface over HTTP and gRPC, with "
-        "leader election, read-scaling via follower reads, and automatic "
-        "failover. A single binary with no external dependencies. Ideal for "
-        "edge deployments, embedded systems, and applications that need "
-        "SQLite simplicity with high-availability across multiple nodes.",
-        "database",
-        "rqlite/rqlite",
-        14000,
-        "https://rqlite.io",
-        "sqlite,distributed,raft,replication,sql,embedded",
-        "docker run -p4001:4001 rqlite/rqlite",
-        "code",
-    ),
-    # Developer Tools — mitmproxy HTTP debugging proxy (130th pass) ----------
-    (
-        "mitmproxy",
-        "mitmproxy",
-        "Interactive HTTPS proxy for intercepting and modifying traffic",
-        "mitmproxy is an open-source interactive HTTPS proxy for intercepting, "
-        "inspecting, modifying, and replaying HTTP/HTTPS traffic. Comes in three "
-        "modes: interactive TUI (mitmproxy), non-interactive CLI (mitmdump), and "
-        "a web interface (mitmweb). Essential for debugging APIs, reverse "
-        "engineering apps, and security testing. Python-scriptable via addons.",
-        "developer-tools",
-        "mitmproxy/mitmproxy",
-        37000,
-        "https://mitmproxy.org",
-        "http,https,proxy,debugging,security,traffic-inspection",
-        "pip install mitmproxy",
-        "code",
-    ),
-    # Developer Tools — StackBlitz WebContainers online IDE (130th pass) -----
-    (
-        "stackblitz",
-        "StackBlitz",
-        "Instant full-stack web IDE powered by WebContainers",
-        "StackBlitz runs Node.js environments entirely in the browser via "
-        "WebContainers — no server required. Supports Next.js, Vite, Astro, "
-        "SvelteKit, and more with instant cold boots. Used for interactive docs, "
-        "reproducible bug reports, and collaborative coding. Bolt.new is built "
-        "on StackBlitz WebContainers.",
-        "developer-tools",
-        "stackblitz/core",
-        17000,
-        "https://stackblitz.com",
-        "online-ide,webcontainers,browser,nodejs,instant",
-        "",
-        "saas",
-    ),
-    # AI Dev Tools — Bolt.new AI full-stack web builder (130th pass) ---------
-    (
-        "bolt-new",
-        "Bolt.new",
-        "AI-powered full-stack web app builder in the browser",
-        "Bolt.new is an AI app builder from StackBlitz that runs a full Node.js "
-        "dev environment in the browser. Prompt to generate, edit, and deploy "
-        "full-stack apps (React, Next.js, Vite) without leaving the browser. "
-        "Supports npm packages, file editing, and one-click Netlify deploys. "
-        "Open-source (MIT) with bring-your-own API key support.",
-        "ai-dev-tools",
-        "stackblitz-labs/bolt.new",
-        12000,
-        "https://bolt.new",
-        "ai,app-builder,full-stack,browser,react,nextjs",
-        "",
-        "saas",
-    ),
-    # API Tools — Svix open-source webhook infrastructure (130th pass) -------
-    (
-        "svix",
-        "Svix",
-        "Open-source webhook sending service",
-        "Svix is an open-source webhook sending service with enterprise "
-        "reliability. Handles delivery retries, signing, fanout, filtering, "
-        "and consumer portals. Drop-in webhooks-as-a-service with SDKs for "
-        "Node.js, Python, Go, Ruby, Java, Kotlin, and more. "
-        "Self-hostable or managed cloud.",
-        "api-tools",
-        "svix-oss/svix-webhooks",
-        3500,
-        "https://svix.com",
-        "webhooks,event-delivery,retry,signing,open-source",
-        "npm install svix",
-        "code",
-    ),
-    # Developer Tools — Codeium AI code completion (130th pass) --------------
-    (
-        "codeium",
-        "Codeium",
-        "Free AI code completion and chat for developers",
-        "Codeium provides free AI code autocomplete and an AI chat assistant "
-        "for 70+ programming languages across 40+ editors. Uses its own "
-        "Windsurf-optimized language models. Features: unlimited completions, "
-        "codebase-aware chat, and repo-wide search. The Windsurf IDE is "
-        "the dedicated Codeium editor with agentic Cascade flows.",
-        "ai-dev-tools",
-        "Exafunction/codeium.vim",
-        4000,
-        "https://codeium.com",
-        "ai,code-completion,autocomplete,free,multi-language",
-        "ext install Codeium.codeium",
-        "saas",
-    ),
-    # API Tools — Fastify (131st pass) ----------------------------------------
-    (
-        "fastify",
-        "Fastify",
-        "Fast and low overhead web framework for Node.js",
-        "Fastify is a highly performant, low-overhead web framework for Node.js "
-        "and Bun. Built with TypeScript first-class support and a powerful plugin "
-        "architecture. Up to 35,000 requests/second on a single server. Ships "
-        "with built-in schema-based validation via Ajv, JSON serialization via "
-        "fast-json-stringify, and an OpenAPI plugin. Express and Hapi alternative.",
-        "api-tools",
-        "fastify/fastify",
-        31000,
-        "https://fastify.dev",
-        "nodejs,typescript,web-framework,performance,rest-api",
-        "npm install fastify",
-        "code",
-    ),
-    # API Tools — Hono (131st pass) -------------------------------------------
-    (
-        "hono",
-        "Hono",
-        "Ultrafast web framework for the Edges",
-        "Hono is a small, simple, and ultra-fast web framework built on Web "
-        "Standards. Runs on Cloudflare Workers, Fastly Compute, Deno, Bun, Vercel, "
-        "AWS Lambda, and Node.js. Zero dependencies, TypeScript-first. 5× faster "
-        "than Express. Supports middleware, JSX, routing, and RPC mode with "
-        "end-to-end type safety (HonoRPC). Ideal for edge-deployed APIs and "
-        "microservices where cold starts matter.",
-        "api-tools",
-        "honojs/hono",
-        19000,
-        "https://hono.dev",
-        "edge,typescript,cloudflare-workers,deno,bun,rest-api,performance",
-        "npm install hono",
-        "code",
-    ),
-    # Frontend Frameworks — Pinia (131st pass) --------------------------------
-    (
-        "pinia",
-        "Pinia",
-        "The intuitive store for Vue.js",
-        "Pinia is the official state management library for Vue 3, replacing "
-        "Vuex. Lightweight (1.4kb), TypeScript-first, and deeply integrated with "
-        "Vue DevTools. Supports composition and options store APIs. Works with "
-        "SSR (Nuxt), Vite, and Vue Router out of the box. Hot module replacement "
-        "and plugin system included. Recommended by the Vue core team.",
-        "frontend-frameworks",
-        "vuejs/pinia",
-        12000,
-        "https://pinia.vuejs.org",
-        "vue,state-management,typescript,vuex-alternative",
-        "npm install pinia",
-        "code",
-    ),
-    # Caching — Dragonfly (131st pass) ----------------------------------------
-    (
-        "dragonfly",
-        "Dragonfly",
-        "The most performant Redis and Memcached compatible in-memory datastore",
-        "Dragonfly is a modern in-memory datastore built for the cloud. Fully "
-        "compatible with Redis and Memcached APIs while delivering 25× throughput "
-        "compared to Redis on EC2. Multi-threaded architecture uses all CPU cores "
-        "efficiently. Runs on a single node what Redis Cluster needs 25 nodes for. "
-        "Supports all major Redis data structures and commands. Drop-in replacement "
-        "requiring zero code changes.",
-        "caching",
-        "dragonflydb/dragonfly",
-        25000,
-        "https://www.dragonflydb.io",
-        "redis-compatible,memcached,in-memory,caching,performance,multi-threaded",
-        "docker run --ulimit memlock=-1 ghcr.io/dragonflydb/dragonfly",
-        "code",
-    ),
-    # MCP Servers — FastMCP (131st pass) --------------------------------------
-    (
-        "fastmcp",
-        "FastMCP",
-        "The fast, Pythonic way to build MCP servers",
-        "FastMCP is a Python framework for building Model Context Protocol (MCP) "
-        "servers with minimal boilerplate. Inspired by FastAPI, it uses decorators "
-        "to expose tools, resources, and prompts to AI clients like Claude. "
-        "Features: async support, automatic schema generation from type hints, "
-        "built-in testing utilities, and a CLI for running/inspecting servers. "
-        "The recommended way to build MCP servers in Python.",
-        "mcp-servers",
-        "jlowin/fastmcp",
-        5000,
-        "https://gofastmcp.com",
-        "mcp,python,model-context-protocol,ai-agents,claude",
-        "pip install fastmcp",
-        "code",
-    ),
-    # AI Dev Tools — Gemini CLI (129th pass) --------------------------------
-    (
-        "gemini-cli",
-        "Gemini CLI",
-        "Google Gemini AI assistant for the terminal",
-        "Gemini CLI is Google's open-source AI assistant for the command "
-        "line, powered by Gemini 2.5 Pro. Supports agentic workflows with "
-        "tool use: file read/write, shell execution, web search, and MCP "
-        "server integration. Handles context windows up to 1M tokens for "
-        "large-codebase tasks. Authenticated via Google account with generous "
-        "free-tier limits. Comparable to Claude Code and GitHub Copilot CLI "
-        "for AI-assisted coding directly in the terminal.",
-        "ai-dev-tools",
-        "google-gemini/gemini-cli",
-        50000,
-        "https://github.com/google-gemini/gemini-cli",
-        "ai,gemini,cli,agent,coding-assistant,mcp",
-        "npm install -g @google/gemini-cli",
-        "code",
-    ),
-    # AI Automation — Together.ai (133rd pass) --------------------------------
-    (
-        "together-ai",
-        "Together.ai",
-        "Fast and affordable hosted inference for open-source LLMs",
-        "Together.ai is a cloud platform for running open-source AI models with "
-        "fast inference and competitive pricing. Supports Llama 4 Scout/Maverick, "
-        "Mixtral, Qwen, DeepSeek, and 100+ other open models via an OpenAI-compatible "
-        "API. Features serverless endpoints (pay-per-token), dedicated GPU deployments, "
-        "fine-tuning pipelines, and a playground. Popular drop-in alternative to OpenAI "
-        "for teams wanting open-source model flexibility without managing GPU infra.",
+        "cohere",
+        "Cohere",
+        "Enterprise LLMs for embeddings, reranking, and RAG",
+        "Cohere provides production-grade language AI APIs: Command R and Command R+ "
+        "for RAG and tool-use workflows, Embed v3 for semantic search and retrieval, "
+        "Rerank for improving search relevance, and Generate for text tasks. "
+        "Command R+ is optimised for multi-step RAG pipelines — outperforms GPT-4 "
+        "on long-context retrieval benchmarks. Embed v3 is one of the leading "
+        "text embedding models. OpenAI-compatible endpoints available. "
+        "Enterprise plans include private deployments on AWS/Azure. "
+        "Widely used in production search, document Q&A, and enterprise chatbot stacks.",
         "ai-automation",
-        "togethercomputer/together-python",
-        3000,
-        "https://www.together.ai",
-        "llm,inference,openai-compatible,open-source,llama,mixtral,serverless",
-        "pip install together",
-        "saas",
-    ),
-    # AI Automation — Replicate (133rd pass) ----------------------------------
-    (
-        "replicate",
-        "Replicate",
-        "Run open-source AI models with a cloud API",
-        "Replicate lets you run thousands of open-source AI models — image, video, "
-        "audio, language, and embeddings — via a simple API. No GPU setup required: "
-        "just call the API and get results. Deploy your own fine-tuned models too. "
-        "Supports Stable Diffusion, Flux, Llama, Whisper, and hundreds more. "
-        "Webhook-based async runs, streaming outputs, and predictions API. "
-        "Used by developers who want model variety without vendor lock-in.",
-        "ai-automation",
-        "replicate/cog",
+        "cohere-ai/cohere-python",
         7500,
-        "https://replicate.com",
-        "llm,image-generation,inference,open-source,api,stable-diffusion,flux",
-        "pip install replicate",
+        "https://cohere.com",
+        "llm,embeddings,rag,rerank,enterprise,nlp,api,command-r",
+        "pip install cohere",
         "saas",
     ),
-    # AI Automation — Cerebras Inference (133rd pass) -------------------------
+    # AI Automation — Mistral AI (164th pass) -------------------------------------
     (
-        "cerebras-inference",
-        "Cerebras Inference",
-        "The world's fastest AI inference — 2,000+ tokens/second",
-        "Cerebras Inference runs LLMs on wafer-scale chips that deliver 10–70× faster "
-        "inference than GPU-based APIs. Supports Llama 3.3 70B, DeepSeek R1, and other "
-        "leading open models. OpenAI-compatible API — drop-in replacement, zero code "
-        "changes. Serverless pricing with no cold starts. Ideal for real-time apps, "
-        "voice assistants, and any use case where latency is critical. Free tier "
-        "available; enterprise plans for high-volume production workloads.",
+        "mistral-ai",
+        "Mistral AI",
+        "Efficient open-weight and hosted LLMs from Europe",
+        "Mistral AI provides open-weight models (Mistral 7B, Mixtral 8x7B, Codestral, "
+        "Devstral, Pixtral, Magistral) and a hosted API for fast, cost-efficient inference. "
+        "Models are known for punching above their weight class: Mistral 7B outperformed "
+        "LLaMA 2 13B across benchmarks; Codestral is a top-tier code completion model; "
+        "Magistral competes with o1-mini on reasoning tasks. Le Chat is Mistral's "
+        "consumer interface (competing with ChatGPT and Claude.ai). "
+        "All models have permissive Apache 2.0 or Mistral Research licenses. "
+        "API is OpenAI-compatible. Free tier available for developers.",
         "ai-automation",
-        "cerebras/cerebras-cloud-sdk-python",
-        1200,
-        "https://inference.cerebras.ai",
-        "llm,inference,fast,openai-compatible,llama,serverless",
-        "pip install cerebras-cloud-sdk",
-        "saas",
-    ),
-    # AI Automation — Fireworks AI (133rd pass) --------------------------------
-    (
-        "fireworks-ai",
-        "Fireworks AI",
-        "Fast and cheap LLM inference for production workloads",
-        "Fireworks AI provides blazing-fast hosted inference for open-source LLMs "
-        "at low cost. Supports Llama 4, DeepSeek V3, Mixtral, Gemma, and fine-tuned "
-        "models via an OpenAI-compatible REST API. Features: compound AI (FireFunction), "
-        "structured output, JSON mode, streaming, and multi-modal support. Competitive "
-        "pricing with per-token billing and volume discounts. Trusted by production "
-        "teams needing speed + price efficiency over OpenAI.",
-        "ai-automation",
-        "fw-ai/fireworks-js",
-        800,
-        "https://fireworks.ai",
-        "llm,inference,openai-compatible,fast,cheap,llama,deepseek",
-        "pip install fireworks-ai",
-        "saas",
-    ),
-    # AI Automation — Portkey (134th pass) ------------------------------------
-    (
-        "portkey",
-        "Portkey",
-        "AI gateway with routing, fallbacks, caching, and observability",
-        "Portkey is an open-source AI gateway that sits in front of your LLM calls. "
-        "Routes traffic across 200+ LLMs (OpenAI, Anthropic, Gemini, open-source), "
-        "adds automatic retries and fallbacks, semantic caching to reduce costs, "
-        "load balancing, A/B testing, and full observability with request tracing. "
-        "Drop-in replacement for the OpenAI SDK — change one line of code. "
-        "Self-hostable or managed cloud. Essential infrastructure for production AI apps.",
-        "ai-automation",
-        "Portkey-AI/gateway",
-        6800,
-        "https://portkey.ai",
-        "ai-gateway,llm,routing,caching,observability,openai-compatible,fallback",
-        "pip install portkey-ai",
-        "code",
-    ),
-    # AI Automation — smolagents (134th pass) ----------------------------------
-    (
-        "smolagents",
-        "smolagents",
-        "Lightweight agent framework from HuggingFace",
-        "smolagents is HuggingFace's minimal, production-ready agent framework. "
-        "Write agents in ~100 lines of Python using CodeAgent (executes Python "
-        "snippets) or ToolCallingAgent (structured tool calls). Supports any LLM "
-        "via HuggingFace Hub, OpenAI, Anthropic, or local models. Built-in tools: "
-        "web search, code execution, image generation, file I/O. Multi-agent "
-        "orchestration via managed agents. Lighter and simpler than LangChain or "
-        "CrewAI — designed for composability over abstraction.",
-        "ai-automation",
-        "huggingface/smolagents",
-        12000,
-        "https://huggingface.co/docs/smolagents",
-        "agents,llm,huggingface,lightweight,code-agent,tool-calling",
-        "pip install smolagents",
-        "code",
-    ),
-    # AI Automation — Lunary (134th pass) -------------------------------------
-    (
-        "lunary",
-        "Lunary",
-        "Open-source LLM observability and analytics platform",
-        "Lunary is an open-source LLM monitoring and analytics platform. "
-        "Track costs, latency, and errors across all your LLM calls. "
-        "Built-in prompt management, dataset versioning, and A/B testing. "
-        "Supports OpenAI, Anthropic, LangChain, LlamaIndex, and any custom LLM. "
-        "Features: session replay, user feedback tracking, GDPR-compliant logging, "
-        "and Slack/PagerDuty alerts on anomalies. Cheaper and simpler alternative "
-        "to Langfuse and Arize for teams that want observability without the bloat.",
-        "ai-automation",
-        "lunary-ai/lunary",
-        2100,
-        "https://lunary.ai",
-        "llm,observability,monitoring,analytics,langchain,openai,cost-tracking",
-        "pip install lunary",
-        "code",
-    ),
-    # AI Automation — ElizaOS (139th pass) ----------------------------------------
-    (
-        "elizaos",
-        "ElizaOS",
-        "Multi-agent AI simulation framework for autonomous agents",
-        "ElizaOS (formerly Eliza) is a production-grade TypeScript framework for "
-        "building multi-agent AI systems and autonomous agent simulations. Create "
-        "agents with persistent memory, multi-modal capabilities (text, images, audio), "
-        "and multi-platform support (Discord, Twitter/X, Telegram, Slack, and custom UIs). "
-        "Agents run autonomously with pluggable action systems, adapters for major LLMs "
-        "(OpenAI, Anthropic, Llama, Grok), and built-in RAG via vector stores. "
-        "One of the most-starred AI agent frameworks in 2025-2026 — popular for "
-        "building social media bots, game NPCs, and developer tooling agents.",
-        "ai-automation",
-        "elizaOS/eliza",
-        19000,
-        "https://elizaos.ai",
-        "agents,multi-agent,typescript,autonomous,discord,twitter,memory,rag",
-        "npx elizaos create",
-        "code",
-    ),
-    # AI Automation — Google ADK (139th pass) -------------------------------------
-    (
-        "google-adk",
-        "Google Agent Development Kit",
-        "Open-source framework for building and deploying AI agents",
-        "Google's Agent Development Kit (ADK) is an open-source Python framework for "
-        "building, evaluating, and deploying AI agents. Designed for Gemini models but "
-        "supports any LLM-as-a-backbone. Key features: multi-turn conversations with "
-        "persistent state, tool calling with automatic schema generation, built-in "
-        "evaluation harness, streaming responses, and first-class Vertex AI / Cloud Run "
-        "integration for production deployment. Includes agent-to-agent (A2A) "
-        "communication support for multi-agent pipelines. Official Google framework — "
-        "the recommended starting point for teams building on Gemini.",
-        "ai-automation",
-        "google/adk-python",
-        8000,
-        "https://google.github.io/adk-docs/",
-        "agents,google,gemini,python,multi-agent,tool-calling,vertex-ai,a2a",
-        "pip install google-adk",
-        "code",
-    ),
-    # AI Dev Tools — Pear AI (140th pass) -----------------------------------------
-    (
-        "pearai",
-        "Pear AI",
-        "Open-source AI code editor — the self-hostable Cursor alternative",
-        "PearAI is an open-source AI code editor built on VS Code and Continue.dev. "
-        "It integrates leading AI models (Claude, GPT-4o, Gemini) directly into "
-        "your coding workflow with inline edits, multi-file chat, and autocomplete. "
-        "As a fully open-source Cursor alternative, you can self-host PearAI, "
-        "contribute to its development, and avoid vendor lock-in. Key features: "
-        "codebase-aware chat via RAG, multi-file edits, compatibility with existing "
-        "VS Code extensions, and bring-your-own-API-key support. Backed by an "
-        "active open-source community on GitHub.",
-        "ai-dev-tools",
-        "trypear/pearai-app",
-        6500,
-        "https://trypear.ai",
-        "ai,code-editor,vscode,cursor-alternative,open-source,llm,rag,autocomplete",
-        "Download from trypear.ai",
-        "code",
-    ),
-    # AI Automation — Kimi / Moonshot AI (140th pass) ------------------------------
-    (
-        "kimi",
-        "Kimi",
-        "Long-context AI assistant with million-token context window",
-        "Kimi is Moonshot AI's flagship large language model, designed for tasks "
-        "requiring very long contexts — processing entire codebases, documents, or "
-        "research papers in a single prompt. It supports a context window up to 1M "
-        "tokens (and beyond in later versions), making it ideal for agentic workflows "
-        "that need to reason over large amounts of information at once. Kimi is "
-        "available via API with competitive pricing, supports function calling and "
-        "structured outputs, and has strong multilingual capabilities. Popular in "
-        "enterprise and research settings where context length is a hard constraint.",
-        "ai-automation",
-        None,
-        0,
-        "https://kimi.moonshot.cn",
-        "llm,long-context,api,moonshot,chinese,multilingual,agents",
-        "pip install moonshot-sdk",
-        "saas",
-    ),
-    # AI Dev Tools — Trae (140th pass) ---------------------------------------------
-    (
-        "trae",
-        "Trae",
-        "ByteDance's free AI-native coding IDE built on VS Code",
-        "Trae is a free AI-native coding IDE from ByteDance, built on the VS Code "
-        "engine. It ships with built-in AI features including inline code generation, "
-        "multi-file chat, and an AI-powered agent mode that can plan and execute "
-        "multi-step tasks across your codebase. Trae supports all major VS Code "
-        "extensions, preserving existing workflows while adding deep AI integration. "
-        "It connects to multiple AI providers and offers a generous free tier, "
-        "positioning it as a zero-cost alternative to Cursor and Windsurf for "
-        "developers who want AI-first editing without a subscription.",
-        "ai-dev-tools",
-        None,
-        0,
-        "https://trae.ai",
-        "ai,code-editor,vscode,cursor-alternative,free,bytedance,agent-mode",
-        "Download from trae.ai",
-        "saas",
-    ),
-    # AI Automation — Plandex (141st pass) ----------------------------------------
-    (
-        "plandex",
-        "Plandex",
-        "Open-source AI coding agent for complex, long-running tasks",
-        "Plandex is an open-source terminal-based AI coding agent designed for "
-        "tackling large, multi-step coding tasks that span many files. Unlike "
-        "in-editor AI tools, Plandex builds and applies changes incrementally, "
-        "letting you review each step before committing. It maintains a protected "
-        "sandbox — all edits are staged and only applied when you approve. "
-        "Supports GPT-4, Claude, Gemini, and local models via OpenAI-compatible "
-        "APIs. Key features: multi-file editing with context awareness, automatic "
-        "task planning, error-correction loops, and a version-controlled plan "
-        "history so you can undo any step. Designed for developers who need AI "
-        "assistance with tasks too complex for a single prompt.",
-        "ai-automation",
-        "plandex-ai/plandex",
-        2200,
-        "https://plandex.ai",
-        "agents,ai,coding,terminal,cli,multi-file,open-source,gpt4,claude",
-        "curl -sL https://plandex.ai/install.sh | bash",
-        "code",
-    ),
-    # AI Automation — R2R (141st pass) ---------------------------------------------
-    (
-        "r2r",
-        "R2R",
-        "Production-ready RAG pipeline framework with full-stack API",
-        "R2R (Retrieval-Augmented Generation to Riches) is SciPhi's open-source "
-        "framework for building production RAG pipelines. It provides a complete "
-        "REST API out of the box — document ingestion, chunking, embedding, vector "
-        "search, and hybrid retrieval (BM25 + vector) — with a single pip install. "
-        "Key features: multimodal document parsing (PDFs, images, audio), graph-based "
-        "RAG with entity extraction, user-scoped access control, conversation memory, "
-        "analytics dashboard, and Docker-based deployment. Used by teams who need a "
-        "battle-tested RAG system without building the plumbing from scratch. "
-        "Integrates with Postgres+pgvector, Qdrant, Weaviate, and other vector stores.",
-        "ai-automation",
-        "SciPhi-AI/R2R",
-        3500,
-        "https://r2r-docs.sciphi.ai",
-        "rag,retrieval,vector-search,hybrid-search,documents,api,open-source,pgvector",
-        "pip install r2r",
-        "code",
-    ),
-    # AI Coding IDEs — high-search competitor benchmarks (saas, no public GitHub)
-    (
-        "cursor",
-        "Cursor",
-        "The AI code editor",
-        "Cursor is an AI-first code editor forked from VS Code. It provides "
-        "deep codebase awareness through its Codebase Chat feature, letting you "
-        "ask questions about your entire repo. Composer mode writes multi-file "
-        "changes from a single prompt, while Tab autocomplete predicts your next "
-        "edit based on context. Built-in support for Claude, GPT-4o, and Gemini. "
-        "One of the most widely-adopted AI coding tools for individual developers "
-        "and engineering teams.",
-        "ai-automation",
-        None,
-        0,
-        "https://cursor.sh",
-        "ai,coding,editor,vscode,autocomplete,chat,agents,cursor-composer",
-        None,
-        "saas",
-    ),
-    (
-        "kiro",
-        "Amazon Kiro",
-        "AI-native coding IDE by AWS",
-        "Amazon Kiro is AWS's AI-powered coding IDE based on VS Code. It "
-        "introduces 'specs' — structured requirement documents that the AI uses "
-        "to plan, scaffold, and implement features end-to-end. Kiro's agent "
-        "hooks run automatically on file save and terminal events, keeping code "
-        "consistent with your specs. Powered by Claude and Amazon's own models "
-        "via Amazon Bedrock. Aimed at teams who want AI-first development with "
-        "structured engineering discipline rather than free-form prompting.",
-        "ai-automation",
-        None,
-        0,
-        "https://kiro.dev",
-        "ai,coding,ide,aws,agents,specs,vscode,amazon,bedrock",
-        None,
-        "saas",
-    ),
-    # AI Automation — Spring AI (144th pass) ----------------------------------------
-    (
-        "spring-ai",
-        "Spring AI",
-        "AI integration framework for Java and Spring Boot",
-        "Spring AI is Pivotal's official AI abstraction library for Spring Boot. "
-        "It provides a unified API over popular AI providers (OpenAI, Anthropic, "
-        "Azure OpenAI, Mistral, Google Vertex) and model types (chat, embeddings, "
-        "image generation, speech-to-text). Core abstractions: ChatClient (fluent "
-        "streaming API with function calling), VectorStore (multi-provider vector "
-        "storage for RAG), and EmbeddingModel. Features include chat memory, "
-        "advisors (RAG, prompt rewriting), a document ETL pipeline, multimodal "
-        "support, and observability via Micrometer. The same code runs against "
-        "OpenAI, Ollama, Amazon Bedrock, and other providers — only the Spring "
-        "Bean configuration changes. Popular with enterprise Java teams building "
-        "AI-augmented services on existing Spring Boot microservice infrastructure. "
-        "Over 200 contributors; actively maintained by the core Spring team.",
-        "ai-automation",
-        "spring-projects/spring-ai",
-        4500,
-        "https://spring.io/projects/spring-ai",
-        "java,spring,spring-boot,ai,rag,embeddings,vector-store,llm,chat,openai,anthropic",
-        "implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0'",
-        "code",
-    ),
-    # AI Automation — SWE-agent (144th pass) -----------------------------------------
-    (
-        "swe-agent",
-        "SWE-agent",
-        "AI agent that resolves real GitHub issues autonomously",
-        "SWE-agent is Princeton NLP's open-source AI agent that autonomously "
-        "resolves GitHub issues by running inside a Docker container with access "
-        "to a UNIX shell. It uses a specialised agent-computer interface (ACI) "
-        "that gives the LLM constrained access to edit files, run commands, and "
-        "search codebases. SWE-agent achieved the first strong open-source baseline "
-        "on SWE-bench (12.47% resolved at launch) and has since been extended with "
-        "RAG-based context retrieval and multi-model support via LiteLLM. Supports "
-        "GPT-4o, Claude, Gemini, and Llama 3 locally. Key use cases: automated bug "
-        "fixing, regression patch generation, and research into AI software "
-        "engineering. The agent operates through an observe→localize→fix→verify loop "
-        "with structured tool use rather than free-form shell access. Widely "
-        "cited in AI engineering benchmarks and used by teams evaluating AI coding "
-        "agent capabilities against real-world repositories.",
-        "ai-automation",
-        "princeton-nlp/SWE-agent",
-        14000,
-        "https://swe-agent.com",
-        "agents,ai,coding,github,issues,swe-bench,llm,python,open-source,autonomous,docker",
-        "pip install sweagent",
-        "code",
-    ),
-    # AI Automation — Graphiti (145th pass) ------------------------------------------
-    (
-        "graphiti",
-        "Graphiti",
-        "Temporal knowledge graph for AI agent memory",
-        "Graphiti is an open-source library for building temporally-aware knowledge "
-        "graphs that give AI agents persistent, queryable memory across conversations. "
-        "Unlike RAG which stores raw text chunks, Graphiti extracts entities and "
-        "relationships into a graph structure with timestamps — so an agent can "
-        "recall not just what was said but when facts changed. Built on Neo4j or "
-        "NetworkX, it supports semantic search over graph nodes via embeddings and "
-        "BFS traversal for relationship chains. Key use cases: long-horizon agent "
-        "tasks, personalisation across sessions, tracking state changes over time "
-        "(e.g. 'user's preferences changed on date X'). Designed to complement vector "
-        "stores rather than replace them: use Graphiti for structured facts and "
-        "temporal reasoning, vector stores for unstructured document retrieval. "
-        "Open-source under Apache 2.0; developed by the Zep team.",
-        "ai-automation",
-        "getzep/graphiti",
-        5000,
-        "https://graphiti.zep.ai",
-        "knowledge-graph,memory,agents,temporal,neo4j,python,rag,ai,llm,embeddings",
-        "pip install graphiti-core",
-        "code",
-    ),
-    # AI Automation — Outlines (145th pass) ------------------------------------------
-    (
-        "outlines",
-        "Outlines",
-        "Structured text generation with LLMs",
-        "Outlines is a Python library for reliable structured text generation from "
-        "LLMs. It constrains model output to match a JSON schema, Pydantic model, "
-        "regex pattern, or choice list — eliminating the need for brittle parsing "
-        "heuristics. Implemented via logit biasing: at each generation step, tokens "
-        "that would violate the constraint are masked, so the model can only produce "
-        "valid output. Works with any HuggingFace-compatible model, llama.cpp, "
-        "vLLM, and remote APIs via structured outputs support. Core use cases: "
-        "extracting typed data from unstructured text, building reliable LLM "
-        "pipelines, and generating synthetic datasets with guaranteed schema "
-        "conformance. Outlines is the reference implementation behind many 'structured "
-        "output' features in higher-level frameworks. Part of the dottxt-ai org "
-        "(formerly normalizing flows). 11k+ GitHub stars.",
-        "ai-automation",
-        "dottxt-ai/outlines",
-        11000,
-        "https://dottxt-ai.github.io/outlines",
-        "structured-output,llm,json-schema,pydantic,python,generation,constrained,ai",
-        "pip install outlines",
-        "code",
-    ),
-    # AI Dev Tools — OpenCode (145th pass) -------------------------------------------
-    (
-        "opencode",
-        "OpenCode",
-        "Open-source terminal AI coding agent",
-        "OpenCode is an open-source AI coding assistant that runs in the terminal, "
-        "built by the SST team. It supports multiple LLM providers (Anthropic, "
-        "OpenAI, Google, local Ollama), has a clean TUI built with Ink, and operates "
-        "on the Model Context Protocol for tool use. Unlike Cursor or GitHub Copilot "
-        "which are IDE-specific, OpenCode is editor-agnostic and works anywhere you "
-        "have a terminal. Key features: multi-file edits with diffs, shell command "
-        "execution, project-wide context via smart file selection, and a shareable "
-        "conversation history. The agent can read files, run tests, fix errors, and "
-        "commit changes — all from the CLI. Uses the same tool-call loop as Claude "
-        "Code and Aider but with a focus on a polished TUI experience and "
-        "configurability. Apache 2.0 licensed.",
-        "ai-dev-tools",
-        "sst/opencode",
-        9000,
-        "https://opencode.ai",
-        "ai,coding,terminal,cli,tui,mcp,agents,llm,open-source,cursor-alternative",
-        "npm install -g opencode-ai",
-        "code",
-    ),
-    (
-        "dexie",
-        "Dexie.js",
-        "Minimalistic IndexedDB wrapper for the browser",
-        "Dexie.js is the most popular wrapper around the browser's IndexedDB API. It simplifies "
-        "IndexedDB's complex asynchronous API into a clean, promise-based interface with query "
-        "syntax inspired by SQL. Supports complex queries, compound indices, transactions, and "
-        "full TypeScript generics. Works in all modern browsers, React Native (via expo-sqlite), "
-        "Node.js, and Deno. Used by millions of web apps for offline data persistence. Provides "
-        "live queries for reactive UI updates (dexie-react-hooks), cloud sync (Dexie Cloud), and "
-        "an Addon API for plugins. 12k+ GitHub stars.",
-        "database",
-        "dexie/Dexie.js",
-        12000,
-        "https://dexie.org",
-        "indexeddb,browser,offline,database,typescript,react,javascript,client-side,local-first",
-        "npm install dexie",
-        "code",
-    ),
-    (
-        "automerge",
-        "Automerge",
-        "CRDT library for building local-first, collaborative applications",
-        "Automerge is a JSON-like data structure library based on Conflict-free Replicated Data "
-        "Types (CRDTs). It enables collaborative editing and local-first applications by "
-        "automatically merging concurrent changes without conflicts. The Rust-based core "
-        "(automerge-rs) compiles to WASM and powers both the JavaScript and Rust SDKs. Supports "
-        "text, lists, maps, and counters with change history and time-travel. Used by "
-        "Inkbase, Actual Budget, and other local-first products. Part of the Local-First Software "
-        "movement. Works with any network transport (WebSockets, WebRTC, etc). 4k+ JS stars, "
-        "with the Rust core at 1.5k+ stars. Backed by Ink & Switch research lab.",
-        "database",
-        "automerge/automerge",
-        4000,
-        "https://automerge.org",
-        "crdt,local-first,collaborative,offline,sync,realtime,typescript,rust,wasm",
-        "npm install @automerge/automerge",
-        "code",
-    ),
-    (
-        "watermelondb",
-        "WatermelonDB",
-        "Reactive database for React and React Native apps",
-        "WatermelonDB is a high-performance reactive database framework for React and React Native "
-        "built on SQLite. Designed for offline-first mobile apps that need fast data access with "
-        "tens of thousands of records. Uses lazy loading — only fetches data that's currently "
-        "visible on screen — keeping apps fast regardless of data size. Full observability "
-        "with RxJS-powered reactive queries that update the UI automatically when data changes. "
-        "Supports migrations, relations, and multi-database setups. Sync adapter is transport-"
-        "agnostic, compatible with any backend. Used by Nozbe, Hey.com, and production apps "
-        "serving millions of users. 10k+ GitHub stars.",
-        "database",
-        "Nozbe/WatermelonDB",
+        "mistralai/mistral-common",
         10000,
-        "https://watermelondb.dev",
-        "react-native,sqlite,offline,mobile,reactive,local-first,rxjs,typescript,react",
-        "npm install @nozbe/watermelondb",
-        "code",
-    ),
-    (
-        "permify",
-        "Permify",
-        "Open-source authorization service for Google Zanzibar-inspired access control",
-        "Permify is an open-source, Zanzibar-based fine-grained authorization service designed "
-        "to be deployed as a standalone microservice. Define role-based (RBAC), attribute-based "
-        "(ABAC), and relationship-based (ReBAC) access control models using a DSL schema inspired "
-        "by Google's Zanzibar paper. Exposes a gRPC and REST API; evaluates permissions in "
-        "milliseconds against relationship tuples stored in PostgreSQL or in-memory. Ships with "
-        "a schema visualizer, a playground, and SDKs for Go, Node.js, Java, and Python. "
-        "Used to replace custom authorization code in multi-tenant SaaS products. Cloud hosted "
-        "version available (Permify Cloud). 5k+ GitHub stars.",
-        "authentication",
-        "Permify/permify",
-        5000,
-        "https://permify.co",
-        "authorization,zanzibar,rebac,rbac,abac,fga,access-control,go,grpc,multi-tenant",
-        "docker pull ghcr.io/permify/permify",
-        "code",
-    ),
-    (
-        "tantivy",
-        "Tantivy",
-        "Fast full-text search engine library in Rust",
-        "Tantivy is a full-text search engine library written in Rust, inspired by Lucene. "
-        "It is the search engine underlying Quickwit. Provides BM25 ranking, phrase queries, "
-        "range queries, custom tokenizers, faceted search, and compressed indexes. Designed for "
-        "embedding in Rust applications or wrapping via Python (tantivy-py), Node.js, or other "
-        "language bindings. Supports multi-threaded indexing and near-real-time search. The "
-        "core library is used by Quickwit, Meilisearch (partially), and various Rust-based "
-        "search tools. Much faster than Elasticsearch for many workloads at a fraction of the "
-        "memory footprint. 12k+ GitHub stars.",
-        "search",
-        "quickwit-oss/tantivy",
-        12000,
-        "https://github.com/quickwit-oss/tantivy",
-        "search,rust,full-text,lucene,bm25,indexing,embedded,fast,library",
-        "cargo add tantivy",
-        "code",
-    ),
-    (
-        "dprint",
-        "dprint",
-        "Fast, pluggable code formatter written in Rust",
-        "dprint is a pluggable code formatting platform written in Rust. It runs formatters as "
-        "WASM plugins, making it language-agnostic — supports TypeScript, JavaScript, JSON, "
-        "Markdown, TOML, and more via community plugins. Significantly faster than Prettier "
-        "because it only reformats changed files using a cache. Plugins include dprint-plugin-"
-        "typescript (a Prettier-compatible TS/JS formatter), dprint-plugin-json, and wrappers "
-        "for Rustfmt, gofmt, and others. Used as a drop-in Prettier replacement in CI pipelines. "
-        "Configuration via dprint.json. 3k+ GitHub stars.",
-        "testing",
-        "dprint/dprint",
-        3000,
-        "https://dprint.dev",
-        "formatter,linter,typescript,javascript,rust,wasm,prettier-alternative,fast,plugins",
-        "npm install -g dprint",
-        "code",
-    ),
-    (
-        "tolgee",
-        "Tolgee",
-        "Open-source localization platform with in-context translation",
-        "Tolgee is an open-source i18n platform that combines a self-hosted or cloud translation "
-        "management system (TMS) with in-context editing — developers embed the Tolgee SDK and "
-        "translators can click any text on the live page to edit it directly. Supports "
-        "React, Next.js, Vue, Angular, Svelte, and vanilla JS via official SDKs. Features "
-        "machine translation (DeepL, Google, AWS), translation memory, glossary, comments, "
-        "and screenshot context for translators. Export strings in JSON, XLIFF, PO, and other "
-        "formats. REST API and CLI for CI/CD integration. Self-host on Docker or use Tolgee "
-        "Cloud. 9k+ GitHub stars.",
-        "localization",
-        "tolgee/tolgee-platform",
-        9000,
-        "https://tolgee.io",
-        "i18n,localization,translation,react,nextjs,vue,angular,svelte,open-source,self-hosted",
-        "npm install @tolgee/react",
-        "code",
-    ),
-    (
-        "easypanel",
-        "Easypanel",
-        "Docker-based server control panel for deploying apps and databases",
-        "Easypanel is a modern server control panel that lets you deploy apps from GitHub, "
-        "Docker images, or custom Dockerfiles on any VPS or dedicated server. Provides a clean "
-        "web UI for managing services, databases (PostgreSQL, MySQL, MongoDB, Redis), SSL via "
-        "Let's Encrypt, domains, environment variables, and logs. Works as a self-hosted "
-        "alternative to Heroku, Railway, and Render. Supports one-click app templates from the "
-        "community registry (WordPress, Ghost, Plausible, etc.), horizontal scaling, and "
-        "cron jobs. Particularly popular for indie hackers and small teams that want PaaS "
-        "convenience on their own hardware. Built on Docker Swarm. 6k+ GitHub stars.",
-        "devops",
-        "easypanel-io/easypanel",
-        6000,
-        "https://easypanel.io",
-        "docker,paas,hosting,self-hosted,deployment,heroku-alternative,vps,swarm,open-source",
-        "curl -sSL https://easypanel.io/install.sh | sh",
-        "code",
-    ),
-    (
-        "convoy",
-        "Convoy",
-        "Open-source high-performance webhook gateway",
-        "Convoy is an open-source webhook gateway for sending and receiving webhooks reliably. "
-        "It handles delivery, retries, rate limiting, fan-out, endpoint management, and a "
-        "searchable event log — all the infrastructure needed to run a production webhook system. "
-        "Supports portal links so customers can inspect and manage their own webhook deliveries. "
-        "Deployable as a standalone service via Docker. Provides SDKs for Node.js, Go, Python, "
-        "Ruby, and PHP. Comparable to Svix and Hookdeck but fully self-hostable. Particularly "
-        "popular with platforms that need to manage inbound webhooks from Stripe, GitHub, etc., "
-        "as well as outbound customer notifications. 4k+ GitHub stars.",
-        "message-queue",
-        "frain-dev/convoy",
-        4000,
-        "https://getconvoy.io",
-        "webhooks,gateway,self-hosted,retry,events,open-source,go,svix-alternative",
-        "docker pull docker.getconvoy.io/convoy",
-        "code",
-    ),
-    (
-        "seaweedfs",
-        "SeaweedFS",
-        "Distributed blob/object store with POSIX and S3-compatible APIs",
-        "SeaweedFS is a distributed object storage system optimized for storing billions of "
-        "small files efficiently. Written in Go, it separates metadata from data to reduce I/O "
-        "operations. Features: S3-compatible API (drop-in MinIO alternative), POSIX FUSE mount, "
-        "built-in TTL for auto-expiry, replication across data centers, erasure coding, "
-        "automatic load balancing, and a REST API. Much lighter than HDFS and faster for "
-        "small file workloads. Used in production at scale for image hosting, CDN origins, "
-        "and ML dataset storage. Supports tiering to cloud (S3, Azure, GCS). 22k+ GitHub stars.",
-        "file-management",
-        "seaweedfs/seaweedfs",
-        22000,
-        "https://github.com/seaweedfs/seaweedfs",
-        "object-storage,distributed,s3,self-hosted,go,blob,cdn,minio-alternative,files",
-        "docker pull chrislusf/seaweedfs",
-        "code",
-    ),
-    (
-        "dgraph",
-        "Dgraph",
-        "Distributed graph database with native GraphQL support",
-        "Dgraph is an open-source distributed graph database written in Go. It stores data as "
-        "nodes and predicates (edges/properties) using an adjacency list model optimized for "
-        "graph traversals. Exposes a native GraphQL API and a low-level DQL (Dgraph Query "
-        "Language) interface for complex graph queries. Supports horizontal sharding, ACID "
-        "transactions, and real-time subscriptions. Ideal for social networks, knowledge graphs, "
-        "recommendation engines, and fraud detection. Includes Dgraph Cloud (managed service), "
-        "a local self-hosted option, and a zero-dependency embedded option (Badger). 20k+ "
-        "GitHub stars.",
-        "database",
-        "dgraph-io/dgraph",
-        20000,
-        "https://dgraph.io",
-        "graph,graphql,database,distributed,go,social-graph,knowledge-graph,nosql,open-source",
-        "docker pull dgraph/dgraph",
-        "code",
-    ),
-    (
-        "moon",
-        "Moonrepo",
-        "Rust-based build system and monorepo management tool",
-        "Moon is a Rust-based task runner and monorepo management tool for JavaScript and "
-        "TypeScript repositories. It automatically infers tasks from package.json scripts, "
-        "supports affected task detection (only run tasks for changed projects), remote "
-        "caching via moonbase, and Docker layer optimization. Provides a project graph, "
-        "dependency management, and CI/CD integration. Much faster than Nx or Turborepo for "
-        "many workloads due to Rust implementation. Supports pnpm, npm, yarn, and bun workspaces. "
-        "Works alongside Nx and Turborepo for gradual adoption. 3k+ GitHub stars.",
-        "developer-tools",
-        "moonrepo/moon",
-        3000,
-        "https://moonrepo.dev",
-        "monorepo,build-system,rust,typescript,javascript,ci,caching,tasks,turborepo-alternative",
-        "npm install -g @moonrepo/cli",
-        "code",
-    ),
-    (
-        "simplewebauthn",
-        "SimpleWebAuthn",
-        "TypeScript-first library for WebAuthn (passkey) authentication",
-        "SimpleWebAuthn is a TypeScript library that simplifies implementing WebAuthn (passkeys) "
-        "in web applications. Provides both a browser-side package (@simplewebauthn/browser) "
-        "and a server-side package (@simplewebauthn/server) that handles the cryptographic "
-        "complexity of WebAuthn registration and authentication ceremonies. The server package "
-        "is framework-agnostic and works with any Node.js/Deno/Bun/Edge runtime. Supports "
-        "all FIDO2-compliant authenticators: hardware security keys (YubiKey), platform "
-        "authenticators (Face ID, Touch ID, Windows Hello), and cross-device passkeys. "
-        "Used by many indie developers as the simplest path to passkey auth without a "
-        "managed service. 4k+ GitHub stars.",
-        "authentication",
-        "MasterKale/SimpleWebAuthn",
-        4000,
-        "https://simplewebauthn.dev",
-        "webauthn,passkeys,fido2,authentication,typescript,browser,node,security,open-source",
-        "npm install @simplewebauthn/server @simplewebauthn/browser",
-        "code",
-    ),
-    (
-        "dramatiq",
-        "Dramatiq",
-        "Fast and reliable background task processing for Python",
-        "Dramatiq is a Python background job library designed to be fast, reliable, and "
-        "easy to reason about. Uses Redis or RabbitMQ as a broker. Unlike Celery, Dramatiq "
-        "uses thread-per-worker concurrency (not async/greenlets), making it easier to "
-        "debug and reason about. Supports retries, rate limiting, scheduling (with APScheduler), "
-        "dead letter queues, middleware, and Django integration (django-dramatiq). Significantly "
-        "simpler configuration than Celery with fewer moving parts. Active development and "
-        "a small codebase that's easy to understand. 4k+ GitHub stars.",
-        "background-jobs",
-        "Bogdanp/dramatiq",
-        4000,
-        "https://dramatiq.io",
-        "python,celery-alternative,task-queue,redis,rabbitmq,background,workers,async",
-        "pip install dramatiq",
-        "code",
-    ),
-    (
-        "arq",
-        "arq",
-        "Fast async Python job queues and RPC with Redis",
-        "arq (async + Redis Queue) is a Python job queue and RPC framework built on asyncio "
-        "and Redis. Designed for async-native codebases, it lets you enqueue async Python "
-        "functions and process them in async workers — no sync/async mixing. Much lighter "
-        "than Celery or Dramatiq for teams already using asyncio (FastAPI, aiohttp). "
-        "Supports delayed jobs, cron scheduling, job health checks, and result storage. "
-        "Particularly popular in FastAPI ecosystems. 2k+ GitHub stars.",
-        "background-jobs",
-        "samuelcolvin/arq",
-        2000,
-        "https://arq-docs.helpmanual.io",
-        "python,async,redis,job-queue,fastapi,asyncio,workers,celery-alternative",
-        "pip install arq",
-        "code",
-    ),
-    (
-        "editorjs",
-        "Editor.js",
-        "Block-style rich text editor for the modern web",
-        "Editor.js is a block-styled WYSIWYG editor that outputs clean JSON instead of "
-        "complex HTML. Each block (paragraph, header, image, list, quote, code) is a "
-        "separate plugin, making the editor highly extensible. The clean JSON output "
-        "simplifies server-side sanitization and rendering. Widely used in CMS, note-taking, "
-        "and content platforms where controlled rich text input is needed. Over 100 community "
-        "plugins available. Works with React, Vue, and vanilla JS. Supports pasting from "
-        "Word/Google Docs, drag-and-drop block reordering, inline formatting toolbar, and "
-        "keyboard shortcuts. 28k+ GitHub stars.",
-        "frontend-frameworks",
-        "codex-team/editor.js",
-        28000,
-        "https://editorjs.io",
-        "rich-text-editor,wysiwyg,blocks,cms,typescript,javascript,open-source,content",
-        "npm install @editorjs/editorjs",
-        "code",
-    ),
-    (
-        "maizzle",
-        "Maizzle",
-        "Framework for building HTML emails with Tailwind CSS",
-        "Maizzle is a framework for rapid email template development using Tailwind CSS "
-        "and a Node.js-based build pipeline. Write your email templates in HTML with "
-        "Tailwind classes, and Maizzle's build process inlines all CSS, removes unused "
-        "styles, and optimizes the output for email clients. Supports multiple environments "
-        "(local preview with live reload, production with inlining), template components, "
-        "front matter variables, and conditional CSS. Generates email-client-compatible "
-        "HTML that works in Gmail, Outlook, Apple Mail, and others. Popular alternative "
-        "to MJML for developers who prefer Tailwind workflows. 3k+ GitHub stars.",
-        "email-marketing",
-        "maizzle/framework",
-        3000,
-        "https://maizzle.com",
-        "email,tailwind,html-email,templates,newsletter,mjml-alternative,inlining,nodejs",
-        "npm install -g @maizzle/cli && maizzle new",
-        "code",
-    ),
-    (
-        "docuseal",
-        "DocuSeal",
-        "Open-source DocuSign alternative for PDF form signing",
-        "DocuSeal is an open-source electronic document signing platform. Upload PDF templates, "
-        "add fillable fields (signature, initials, text, date, checkbox, photo), and send "
-        "signing requests via email or embedded forms. Signers receive a link, fill out "
-        "the fields, and sign — all without creating an account. Provides a REST API for "
-        "programmatic document creation and signing, webhooks for completion events, and "
-        "white-label embedding in your own app via the JavaScript SDK. Self-host on Docker "
-        "or use DocuSeal Cloud. GDPR-compliant audit trail and tamper-evident signed PDFs. "
-        "Popular DocuSign and HelloSign alternative for indie developers and small businesses. "
-        "8k+ GitHub stars.",
-        "forms-surveys",
-        "docusealco/docuseal",
-        8000,
-        "https://docuseal.co",
-        "esignature,pdf,forms,signing,docusign-alternative,open-source,self-hosted,ruby,api",
-        "docker pull docuseal/docuseal",
-        "code",
-    ),
-    (
-        "surveyjs",
-        "SurveyJS",
-        "Open-source JavaScript library for building complex surveys and forms",
-        "SurveyJS is a JavaScript form/survey builder library with a visual drag-and-drop "
-        "editor, 20+ question types (matrix, rating, ranking, file upload, signature pad, "
-        "geolocation), conditional logic, calculated fields, and themes. JSON-based survey "
-        "definitions that are portable and easy to store. Integrates with React, Angular, "
-        "Vue, and Knockout. Backend-agnostic — works with any server to save responses. "
-        "Includes a form creator UI (Creator), response visualization dashboard (Dashboard), "
-        "and PDF generation. The core library is MIT-licensed; the Creator and Dashboard "
-        "are commercial. Used by enterprises and indie developers alike for complex forms. "
-        "4k+ GitHub stars.",
-        "forms-surveys",
-        "surveyjs/survey-library",
-        4000,
-        "https://surveyjs.io",
-        "forms,survey,questionnaire,react,angular,vue,json,conditional-logic,open-source",
-        "npm install survey-core survey-react-ui",
-        "code",
-    ),
-    # CLI Tools — Rich (129th pass) ------------------------------------------
-    (
-        "rich",
-        "Rich",
-        "Rich text and beautiful formatting in the terminal",
-        "Rich is a Python library for writing rich text (with color and style) "
-        "to the terminal, and for displaying beautiful formatting such as tables, "
-        "markdown, syntax highlighting, tracebacks, progress bars, and live "
-        "displays. Used in FastAPI, Typer, Click, uv, Ruff, and virtually every "
-        "modern Python CLI tool. Created by Will McGugan (Textualize).",
-        "cli-tools",
-        "Textualize/rich",
-        50000,
-        "https://rich.readthedocs.io",
-        "python,terminal,cli,formatting,color,syntax-highlighting",
-        "pip install rich",
-        "code",
-    ),
-    # Developer Tools — crawl4ai (129th pass) ---------------------------------
-    (
-        "crawl4ai",
-        "crawl4ai",
-        "LLM-friendly web crawling and scraping for AI pipelines",
-        "crawl4ai is the most popular open-source web crawler designed for AI "
-        "and LLM use cases. It extracts clean Markdown from any URL, handles "
-        "JavaScript-heavy sites via Playwright, and integrates directly with "
-        "RAG pipelines, AI agents, and LangChain. Supports async crawling, "
-        "structured extraction with CSS/XPath/LLM strategies, chunking, "
-        "and PDF/screenshot capture out of the box.",
-        "developer-tools",
-        "unclecode/crawl4ai",
-        38000,
-        "https://crawl4ai.com",
-        "web-scraping,llm,rag,ai,crawler,playwright,markdown",
-        "pip install crawl4ai",
-        "code",
-    ),
-    # API Tools — Nango (129th pass) -----------------------------------------
-    (
-        "nango",
-        "Nango",
-        "Open-source unified API for OAuth integrations",
-        "Nango is an open-source unified API that handles OAuth for 300+ external "
-        "APIs (GitHub, Slack, Salesforce, Google, etc.). It manages token refresh, "
-        "scopes, and credential storage so you never have to implement OAuth again. "
-        "Comes with a self-hostable backend, SDKs for Node.js and Python, and a "
-        "growing catalog of pre-built API integrations including webhooks and "
-        "bidirectional sync.",
-        "api-tools",
-        "NangoHQ/nango",
-        7000,
-        "https://www.nango.dev",
-        "oauth,integrations,api,authentication,sync,webhooks",
-        "npm install @nangohq/node",
-        "code",
-    ),
-    # AI — Morphic open-source Perplexity alternative (131st pass) -----------
-    (
-        "morphic",
-        "Morphic",
-        "Open-source AI-powered search engine with generative UI",
-        "Morphic is an open-source, full-stack AI search engine that combines "
-        "real-time web search with LLM-generated answers and a generative UI. "
-        "Built with Next.js, Vercel AI SDK, Tavily Search API, and Upstash for "
-        "caching. Supports multiple LLM providers (OpenAI, Anthropic, Google). "
-        "Self-hostable Perplexity alternative with streaming responses and "
-        "interactive search threads.",
-        "ai-automation",
-        "miurla/morphic",
-        7000,
-        "https://morphic.sh",
-        "ai,search,perplexity-alternative,nextjs,rag,web-search,open-source",
-        "git clone https://github.com/miurla/morphic && npm install",
-        "code",
-    ),
-    # AI — Luma AI Dream Machine video generation (131st pass) ---------------
-    (
-        "luma-ai",
-        "Luma AI",
-        "Realistic AI video generation from text and images",
-        "Luma AI's Dream Machine is a state-of-the-art video generation model "
-        "that creates high-quality, realistic videos from text prompts and images. "
-        "The Luma API provides programmatic access to Dream Machine for developers "
-        "building video generation features. Supports text-to-video, image-to-video, "
-        "camera motion controls, and video extension. Used in creative tools, "
-        "marketing automation, and AI-native video apps.",
-        "ai-automation",
-        "",
-        0,
-        "https://lumalabs.ai",
-        "ai,video-generation,text-to-video,image-to-video,api,dream-machine",
-        "pip install lumaai",
+        "https://mistral.ai",
+        "llm,open-weight,european-ai,api,inference,codestral,mixtral",
+        "pip install mistralai",
         "saas",
     ),
-    # AI — Udio AI music generation (131st pass) -----------------------------
+    # AI Dev Tools — Roo Code (165th pass) ----------------------------------------
     (
-        "udio",
-        "Udio",
-        "AI music generation — create any song in seconds",
-        "Udio is an AI music generation platform that creates full songs from text "
-        "prompts. Specify genre, style, mood, and lyrics to generate studio-quality "
-        "tracks with vocals and instrumentals. Supports remixing, extending tracks, "
-        "and custom voice styles. Provides an API for developers building music "
-        "generation into apps. Suno alternative with distinct audio style.",
-        "ai-automation",
-        "",
-        0,
-        "https://www.udio.com",
-        "ai,music-generation,text-to-music,audio,api,suno-alternative",
-        "",
-        "saas",
-    ),
-    # AI — Manus autonomous AI agent (131st pass) ----------------------------
-    (
-        "manus-ai",
-        "Manus",
-        "General-purpose autonomous AI agent",
-        "Manus is a general-purpose autonomous AI agent from Monica.im (China) "
-        "that completes complex real-world tasks independently. Unlike chat AI, "
-        "Manus plans and executes multi-step workflows: web research, code writing, "
-        "file management, form filling, and data analysis. Runs in an isolated "
-        "cloud sandbox. High-profile for handling tasks that previously required "
-        "human judgment — considered one of the first truly general agents.",
-        "ai-automation",
-        "",
-        0,
-        "https://manus.im",
-        "ai,autonomous-agent,agentic,multi-step,workflow,general-purpose",
-        "",
-        "saas",
-    ),
-    # AI Dev Tools — Augment Code (132nd pass) --------------------------------
-    (
-        "augment-code",
-        "Augment Code",
-        "Enterprise AI coding assistant for large codebases",
-        "Augment Code is an AI coding assistant built by ex-Sourcegraph, Google, "
-        "and Microsoft engineers, purpose-built for large codebases and enterprise "
-        "teams. It indexes your entire codebase to provide deeply contextual "
-        "completions, refactors, and explanations — not just the current file. "
-        "Offers VS Code and JetBrains integrations, SOC 2 Type II compliance, "
-        "and on-premise deployment options. Competes with Cursor and GitHub "
-        "Copilot at the enterprise tier.",
+        "roo-code",
+        "Roo Code",
+        "Open-source AI coding extension with expanded autonomous capabilities",
+        "Roo Code (formerly Roo Cline) is an open-source AI coding extension for VS Code, "
+        "forked from Cline with additional capabilities. Key features: multi-model "
+        "switching per task (Sonnet for coding, Haiku for quick edits), custom modes "
+        "(Code, Architect, Ask, Debug), Boomerang Tasks for orchestrating sub-agents, "
+        "and a context management system that tracks token usage across sessions. "
+        "Integrates with Claude, GPT-4, Gemini, local Ollama models, and any OpenAI-"
+        "compatible endpoint. Over 32,000 GitHub stars and one of the most-forked "
+        "AI coding tools in the ecosystem. Popular alternative to Cursor and Copilot "
+        "for teams who want full control over their AI coding workflow.",
         "ai-dev-tools",
-        "",
-        0,
-        "https://www.augmentcode.com",
-        "ai-coding,code-assistant,ide-extension,enterprise,codebase-aware",
-        "",
+        "RooVetGit/Roo-Code",
+        32000,
+        "https://roocode.com",
+        "ai-coding,vscode,autonomous,multi-model,claude,open-source,cline-fork",
+        None,
+        "code",
+    ),
+    # AI Automation — PocketFlow (165th pass) --------------------------------------
+    (
+        "pocketflow",
+        "PocketFlow",
+        "Minimalist 100-line Python framework for LLM agents and pipelines",
+        "PocketFlow is a minimalist LLM framework that fits in 100 lines of Python. "
+        "Built around three primitives — Node, Flow, and BatchFlow — it lets you compose "
+        "multi-step LLM pipelines without the abstraction overhead of LangChain or "
+        "LlamaIndex. Design patterns included: map-reduce, RAG, agent loops, and "
+        "multi-agent orchestration. Zero dependencies beyond your LLM SDK of choice. "
+        "Popular for teams who want the control of writing their own agent logic with "
+        "just enough scaffolding to avoid reinventing the wheel. The cookbook covers "
+        "real patterns: autonomous research, document QA, code review bots, and "
+        "structured extraction pipelines.",
+        "ai-automation",
+        "The-Pocket/PocketFlow",
+        10000,
+        "https://the-pocket.github.io/PocketFlow/",
+        "agents,llm,pipeline,minimalist,python,rag,map-reduce,lightweight",
+        "pip install pocketflow",
+        "code",
+    ),
+    # MCP Servers — Glama (165th pass) ---------------------------------------------
+    (
+        "glama",
+        "Glama",
+        "MCP server registry and AI tool marketplace",
+        "Glama is a registry and discovery platform for MCP (Model Context Protocol) "
+        "servers. Browse, search, and install MCP servers that give AI agents access to "
+        "tools, data, and services. Glama indexes hundreds of community-built MCP servers "
+        "across categories — databases, APIs, file systems, browsers, and developer tools "
+        "— and provides one-click installation configs for Claude Desktop, Cursor, and "
+        "other MCP clients. Also offers an AI model comparison tool and benchmark "
+        "leaderboard. One of the largest community-maintained MCP server directories.",
+        "mcp-servers",
+        None,
+        None,
+        "https://glama.ai",
+        "mcp,registry,discovery,model-context-protocol,ai-agents,catalog",
+        None,
         "saas",
     ),
-    # AI Dev Tools — OpenAI Codex CLI (132nd pass) ----------------------------
+    # AI Terminal Agents — Codex CLI (166th pass) ----------------------------------
     (
         "codex-cli",
-        "Codex CLI",
-        "OpenAI's open-source terminal AI coding agent",
-        "Codex CLI is OpenAI's open-source terminal-based AI coding agent. "
-        "It reads, writes, and runs code autonomously in your terminal using "
-        "GPT-4o or o3 models. Supports sandboxed execution (macOS network and "
-        "filesystem isolation), interactive and headless modes, and multimodal "
-        "inputs (screenshots, diagrams). A direct alternative to Claude Code "
-        "and Gemini CLI for AI-powered terminal workflows.",
-        "ai-dev-tools",
+        "OpenAI Codex CLI",
+        "Lightweight open-source terminal coding agent from OpenAI",
+        "OpenAI Codex CLI is a lightweight, open-source terminal coding agent "
+        "that runs in your shell. It connects to OpenAI models and applies "
+        "multi-file code changes directly from the command line. Supports "
+        "sandboxed execution, git-aware context, and streaming output. "
+        "Designed as an open alternative to proprietary AI coding IDEs for "
+        "developers who prefer staying in the terminal. Part of the emerging "
+        "terminal-agent category alongside Claude Code and Gemini CLI — where "
+        "AI reasoning models plan and execute complex coding tasks without "
+        "leaving your existing workflow.",
+        "ai-automation",
         "openai/codex",
-        25000,
+        27000,
         "https://github.com/openai/codex",
-        "ai-coding,cli,terminal,code-generation,open-source,openai",
+        "ai,coding,terminal,cli,agents,open-source,multi-file,shell",
         "npm install -g @openai/codex",
         "code",
     ),
-    # AI — Vapi voice infrastructure (132nd pass) ------------------------------
+    # AI Standards & Specs ---------------------------------------------------------
     (
-        "vapi",
-        "Vapi",
-        "AI voice infrastructure for building phone and web voice agents",
-        "Vapi is the leading AI voice infrastructure platform for developers "
-        "building voice agents. It handles the full real-time voice stack: STT "
-        "(Deepgram/Whisper), LLM (GPT-4o/Claude/Gemini), and TTS (ElevenLabs/"
-        "Cartesia) in a single low-latency pipeline. Supports inbound and "
-        "outbound phone calls, web-based voice, custom voices, and function "
-        "calling. Used for customer service automation, voice assistants, and "
-        "IVR replacement. Primary alternative to building a raw WebRTC + LLM "
-        "pipeline from scratch.",
-        "ai-automation",
-        "",
-        0,
-        "https://vapi.ai",
-        "voice-ai,tts,stt,real-time,voice-agent,phone,webrtc",
-        "",
-        "saas",
-    ),
-    # AI — Play.ht TTS API (132nd pass) ----------------------------------------
-    (
-        "playht",
-        "Play.ht",
-        "Ultra-realistic text-to-speech API with voice cloning",
-        "Play.ht is a text-to-speech API offering ultra-realistic AI voices for "
-        "developers. It provides 900+ voices across 142 languages, real-time TTS "
-        "streaming, voice cloning from 3 seconds of audio, and a REST API with "
-        "Node.js and Python SDKs. Widely used for podcasts, audiobooks, IVR, and "
-        "in-app TTS. Popular ElevenLabs alternative, especially for high-volume "
-        "use cases where per-character pricing is critical.",
-        "ai-automation",
-        "",
-        0,
-        "https://play.ht",
-        "text-to-speech,tts,voice-cloning,audio,api,elevenlabs-alternative",
-        "",
-        "saas",
-    ),
-    # AI — Open Interpreter (132nd pass) ----------------------------------------
-    (
-        "open-interpreter",
-        "Open Interpreter",
-        "Open-source local code execution agent for LLMs",
-        "Open Interpreter lets LLMs run code (Python, JavaScript, Shell) "
-        "locally on your machine. It gives AI models a programming interface "
-        "to create/edit files, browse the web, render visuals, and control your "
-        "computer. Supports OpenAI, Anthropic, and local models via Ollama. "
-        "A foundational project in the local-agent space — 60k+ GitHub stars. "
-        "Often used as a self-hosted alternative to ChatGPT Code Interpreter.",
-        "ai-automation",
-        "KillianLucas/open-interpreter",
-        60000,
-        "https://openinterpreter.com",
-        "ai-agent,code-execution,local,open-source,llm,terminal",
-        "pip install open-interpreter",
-        "code",
-    ),
-    # AI — Kokoro TTS (132nd pass) -----------------------------------------------
-    (
-        "kokoro",
-        "Kokoro",
-        "Fast, open-source text-to-speech model with Apache 2.0 licence",
-        "Kokoro is a fast, open-source text-to-speech model (82M parameters) "
-        "released in early 2025. It produces high-quality speech synthesis "
-        "with very low latency, making it suitable for real-time applications. "
-        "Permissive Apache 2.0 licence allows commercial use without per-character "
-        "fees. Gained 20k+ GitHub stars quickly among the local-LLM community. "
-        "Popular alternative to ElevenLabs and Play.ht for self-hosted or "
-        "high-volume TTS workloads.",
-        "ai-automation",
-        "hexgrad/kokoro",
-        20000,
-        "https://github.com/hexgrad/kokoro",
-        "text-to-speech,tts,open-source,local,fast,apache2",
-        "pip install kokoro",
-        "code",
-    ),
-    # DevOps — Daytona (132nd pass) -------------------------------------------
-    (
-        "daytona",
-        "Daytona",
-        "Open-source development environment manager",
-        "Daytona is an open-source development environment manager that spins up "
-        "standardised, reproducible dev environments from any Git repository in "
-        "seconds. Works with VS Code, JetBrains, and Vim; runs on any cloud or "
-        "on-premise infrastructure via Docker. Uses a simple YAML config to "
-        "define dependencies, ports, and startup commands. A self-hosted "
-        "alternative to GitHub Codespaces and Gitpod with no vendor lock-in.",
-        "devops-infrastructure",
-        "daytonaio/daytona",
-        12000,
-        "https://www.daytona.io",
-        "dev-environments,open-source,self-hosted,gitpod-alternative,docker",
-        "brew install daytonaio/tap/daytona",
-        "code",
-    ),
-    # AI — Google Agent Development Kit (134th pass) ---------------------------
-    (
-        "google-adk",
-        "Google Agent Development Kit",
-        "Official Python framework for building production-grade AI agents",
-        "Google Agent Development Kit (ADK) is an open-source Python framework "
-        "for building, evaluating, and deploying AI agents. It provides "
-        "first-class support for multi-agent pipelines, tool integration, "
-        "long-running sessions, and Gemini models. Ships with a local dev UI, "
-        "evaluation harness, and deployment targets including Cloud Run, "
-        "Vertex AI, and Kubernetes. Positioned as Google's answer to CrewAI "
-        "and LangGraph for agentic workloads.",
-        "ai-automation",
-        "google/adk-python",
-        8000,
-        "https://google.github.io/adk-docs/",
-        "agents,multi-agent,python,google,gemini,llm,ai-framework",
-        "pip install google-adk",
-        "code",
-    ),
-    # AI — AWS Strands Agents SDK (134th pass) ----------------------------------
-    (
-        "strands-agents",
-        "Strands Agents",
-        "AWS open-source SDK for building production AI agents",
-        "Strands Agents is an open-source Python SDK from Amazon Web Services "
-        "for building AI agents with a model-driven approach. Supports tool "
-        "calling, multi-step reasoning, and streaming. Integrates natively "
-        "with Amazon Bedrock (Claude, Llama, Titan) and works with any "
-        "OpenAI-compatible provider. Designed for production deployments on "
-        "AWS infrastructure with built-in observability hooks.",
-        "ai-automation",
-        "strands-agents/strands-agents",
-        4000,
-        "https://strandsagents.com",
-        "agents,multi-agent,python,aws,bedrock,claude,ai-framework",
-        "pip install strands-agents",
-        "code",
-    ),
-    # AI Dev Tools — Task Master AI (133rd pass) --------------------------------
-    (
-        "task-master-ai",
-        "Task Master AI",
-        "AI-powered task management for complex software projects",
-        "Task Master AI (formerly claude-task-master) is an MCP-based task "
-        "orchestration system that integrates with Claude to manage complex "
-        "software projects. It parses PRDs into structured task lists, suggests "
-        "implementation order, tracks progress, and lets you expand or update "
-        "individual tasks via conversation. Designed for AI-assisted development "
-        "workflows where you hand off planning to the agent and focus on coding.",
-        "ai-dev-tools",
-        "eyefodder/claude-task-master",
-        20000,
-        "https://github.com/eyefodder/claude-task-master",
-        "mcp,task-management,claude,project-management,ai,coding-assistant",
-        "npm install -g task-master-ai",
-        "code",
-    ),
-    # AI Dev Tools — OpenAI Agents SDK (135th pass) ----------------------------
-    (
-        "openai-agents-sdk",
-        "OpenAI Agents SDK",
-        "Official Python framework for building multi-agent AI workflows",
-        "The OpenAI Agents SDK (the production successor to the Swarm "
-        "experiment) is OpenAI's official Python framework for building "
-        "multi-agent systems. It introduces Agents (LLMs with instructions "
-        "and tools), Handoffs (one agent delegating to another), Guardrails "
-        "(input/output validation), and built-in tracing. Designed to work "
-        "with the Responses API and any OpenAI-compatible model endpoint. "
-        "Pairs with the Realtime API for voice agents and with structured "
-        "outputs for reliable JSON extraction.",
-        "ai-dev-tools",
-        "openai/openai-agents-python",
-        15000,
-        "https://openai.github.io/openai-agents-python/",
-        "agents,multi-agent,python,openai,llm,ai-framework,tool-calling,handoffs",
-        "pip install openai-agents",
-        "code",
-    ),
-    # AI Dev Tools — Goose by Block (135th pass) --------------------------------
-    (
-        "goose-block",
-        "Goose",
-        "Open-source autonomous AI coding agent by Block",
-        "Goose is Block's open-source AI coding agent that runs locally in "
-        "your terminal. It can autonomously edit files, run shell commands, "
-        "browse the web, and use MCP servers to complete multi-step "
-        "engineering tasks. Built on a provider-agnostic architecture "
-        "supporting Anthropic, OpenAI, and local models via Ollama. "
-        "Distinct from the Go database migration tool also named Goose; "
-        "this is Block/Square's AI agent project (formerly codename "
-        "open-source Devin).",
-        "ai-dev-tools",
-        "block/goose",
-        12000,
-        "https://block.github.io/goose/",
-        "ai-coding,autonomous-agent,terminal,mcp,python,open-source,local-llm",
-        "pip install goose-ai",
-        "code",
-    ),
-    # AI Dev Tools — Repo-to-LLM context tools (136th pass) ---------------------
-    (
-        "repomix",
-        "Repomix",
-        "Pack your entire repo into a single LLM-friendly file",
-        "Repomix (formerly Repopack) packs your entire codebase into a single "
-        "file optimised for AI consumption. Supports XML, Markdown, and plain "
-        "text output. Respects .gitignore, handles binary files gracefully, "
-        "and provides token count estimates so you know what fits in context. "
-        "Used by developers who want to give LLMs full project awareness for "
-        "code review, refactoring, documentation, and Q&A tasks.",
-        "ai-dev-tools",
-        "yamadashy/repomix",
-        15000,
-        "https://repomix.com",
-        "ai-coding,context-window,llm,code-review,cli,open-source",
-        "npx repomix",
-        "code",
-    ),
-    (
-        "gitingest",
-        "GitIngest",
-        "Turn any GitHub repository into an LLM-digestible text prompt",
-        "GitIngest converts GitHub repositories into clean, structured text "
-        "that LLMs can consume. Paste a GitHub URL and get back a single file "
-        "with the directory tree and file contents — ready to copy-paste into "
-        "any AI assistant. Supports filtering by file extension, size limits, "
-        "and custom ignore patterns. Self-hostable Python package.",
-        "ai-dev-tools",
-        "cyclotruc/gitingest",
-        8000,
-        "https://gitingest.com",
-        "ai-coding,context-window,llm,github,cli,open-source",
-        "pip install gitingest",
-        "code",
-    ),
-    # AI Dev Tools ---------------------------------------------------------------
-    (
-        "melty",
-        "Melty",
-        "Open-source AI code editor built for AI pair programming",
-        "Melty is an open-source code editor built on VS Code with deep AI integration. "
-        "Unlike AI plugins bolted onto existing editors, Melty is designed from the ground "
-        "up for AI pair programming — the AI sees your terminal output, error messages, and "
-        "file changes in real time. It can write code, run tests, and iterate based on live "
-        "feedback without you having to copy-paste anything.",
-        "ai-dev-tools",
-        "meltylabs/melty",
-        22000,
-        "https://melty.sh",
-        "ai-coding,open-source,vscode,editor,pair-programming",
-        "",
-        "code",
-    ),
-    (
-        "amp",
-        "Amp",
-        "AI coding agent for engineering teams by Sourcegraph",
-        "Amp is Sourcegraph's AI coding agent built for engineering teams. It understands "
-        "your entire codebase — not just the open file — so it can answer questions, make "
-        "changes, and run commands across large monorepos. Amp integrates with your existing "
-        "tools and editors, and supports parallel agentic tasks so teams can ship faster "
-        "without context switching.",
-        "ai-dev-tools",
-        "",
-        0,
-        "https://ampcode.com",
-        "ai-coding,saas,teams,codebase-context,agent",
-        "",
-        "saas",
-    ),
-    (
-        "notte",
-        "Notte",
-        "Natural-language AI browser automation framework",
-        "Notte is an open-source browser automation framework designed for AI agents. "
-        "Instead of CSS selectors or XPath, you describe what you want in plain English "
-        "and Notte figures out how to interact with the page. It converts web pages into "
-        "structured action spaces that LLMs can reason over, making it easy to build "
-        "reliable web automation workflows without fragile selector chains.",
-        "ai-automation",
-        "nottelabs/notte",
-        6000,
-        "https://notte.cc",
-        "browser-automation,ai-agent,natural-language,python,open-source",
-        "pip install notte",
-        "code",
-    ),
-    (
-        "hyperbrowser",
-        "Hyperbrowser",
-        "Cloud browser infrastructure for AI agents",
-        "Hyperbrowser provides scalable headless browser infrastructure purpose-built for "
-        "AI agents. Spin up hundreds of browser sessions in parallel, each with stealth "
-        "mode, residential proxies, and CAPTCHA solving built in. Designed for agent "
-        "workflows that need to scrape, interact with, or automate web pages at scale "
-        "without managing your own browser fleet.",
-        "api-tools",
-        "",
-        0,
-        "https://hyperbrowser.ai",
-        "browser-automation,headless-browser,ai-agent,scraping,saas",
-        "npm install @hyperbrowser/sdk",
-        "saas",
-    ),
-    (
-        "steel",
-        "Steel",
-        "Open-source cloud browser infrastructure for AI agents",
-        "Steel is an open-source cloud browser infrastructure layer for AI agents. "
-        "It provides managed browser sessions with built-in stealth mode, session "
-        "persistence, and a REST API so agents can browse the web without managing "
-        "their own browser fleet. Drop-in alternative to Browserbase and Hyperbrowser "
-        "with a self-hostable option. Works with Playwright, Puppeteer, and Selenium.",
-        "api-tools",
-        "steel-dev/steel",
-        5000,
-        "https://steel.dev",
-        "browser-automation,headless-browser,ai-agent,open-source,playwright",
-        "npm install steel-sdk",
-        "code",
-    ),
-    (
-        "aide",
-        "Aide",
-        "AI-native VS Code fork for pair programming with LLMs",
-        "Aide is an open-source AI-first code editor built on VS Code by CodeStory. "
-        "It integrates LLM pair programming directly into the editor: ask the AI to "
-        "explain code, generate edits, or fix bugs with full codebase context. Unlike "
-        "extensions, Aide modifies the editor core for tighter AI integration. "
-        "Supports Claude, GPT-4, and local models via Ollama.",
-        "ai-dev-tools",
-        "codestory-ide/aide",
-        8000,
-        "https://aide.dev",
-        "ai-coding,vs-code,open-source,llm,pair-programming",
-        "",
-        "code",
-    ),
-    (
-        "cosine",
-        "Cosine (Genie)",
-        "Autonomous AI software engineer",
-        "Cosine builds Genie, an autonomous AI software engineer that can understand "
-        "your codebase, plan changes, write code, and open pull requests. Unlike "
-        "AI pair programmers that assist humans, Genie works independently on tasks: "
-        "given a GitHub issue or a description, it navigates the repo, makes changes "
-        "across files, and submits a PR for review. Competes with Devin and SWE-agent.",
-        "ai-automation",
-        "",
-        0,
-        "https://cosine.sh",
-        "ai-agent,autonomous,code-generation,pull-request,saas",
-        "",
-        "saas",
-    ),
-    (
-        "sweepai",
-        "Sweep",
-        "AI code reviewer and pull request author",
-        "Sweep is an AI-powered GitHub assistant that turns issues and comments into "
-        "pull requests. Mention Sweep in a GitHub issue and it plans, writes, and "
-        "submits code changes for review. It understands your codebase through vector "
-        "search, writes tests alongside changes, and iterates based on CI feedback. "
-        "Self-hostable open-source with a managed cloud option.",
-        "ai-dev-tools",
-        "sweepai/sweep",
+        "lm-evaluation-harness",
+        "LM Evaluation Harness",
+        "Unified framework for evaluating language models across hundreds of tasks",
+        "The LM Evaluation Harness (by EleutherAI) is the canonical open-source "
+        "benchmark runner for large language models. Supports 200+ evaluation tasks "
+        "including MMLU, TruthfulQA, HellaSwag, GSM8K, BIG-Bench Hard, and more. "
+        "Works with any HuggingFace model, OpenAI API, or custom backends. "
+        "Used by researchers and practitioners to compare models systematically "
+        "and reproduce published benchmark results. The de facto standard for "
+        "open LLM evaluation — referenced in virtually every LLM paper.",
+        "ai-standards",
+        "EleutherAI/lm-evaluation-harness",
         7000,
-        "https://sweep.dev",
-        "ai-agent,github,pull-request,code-review,open-source",
-        "pip install sweepai",
+        "https://github.com/EleutherAI/lm-evaluation-harness",
+        "llm,evaluation,benchmark,evals,eleutherai,mmlu,truthfulqa,research",
+        "pip install lm-eval",
         "code",
     ),
     (
-        "kilo-code",
-        "Kilo Code",
-        "Open-source VS Code AI coding extension",
-        "Kilo Code is an open-source AI coding extension for VS Code that brings "
-        "autonomous coding agents to your editor. Forked from Cline, it adds "
-        "multi-model support (Claude, GPT-4, Gemini, local models via Ollama), "
-        "an agent marketplace, and enhanced context awareness. Supports automated "
-        "multi-step tasks: read files, run tests, fix bugs, and open PRs — all "
-        "from a chat interface inside VS Code.",
-        "ai-dev-tools",
-        "Kilo-Code/kilo-code",
-        5000,
-        "https://kilocode.ai",
-        "ai-coding,vs-code,open-source,agent,llm",
-        "ext install kilocode.kilo-code",
-        "code",
-    ),
-    (
-        "same-dev",
-        "Same.dev",
-        "AI-powered web app cloner and builder",
-        "Same.dev is an AI-powered tool that clones and rebuilds web apps from "
-        "screenshots or URLs. Describe a UI you want to replicate and Same generates "
-        "a functional React + Tailwind implementation. Useful for rapid prototyping, "
-        "cloning competitor UIs for inspiration, or rebuilding legacy interfaces. "
-        "Runs in the browser with instant preview and export to code.",
-        "ai-automation",
-        "same-dev/same",
-        2000,
-        "https://same.dev",
-        "ai,app-builder,react,tailwind,prototyping,clone",
-        "",
-        "saas",
-    ),
-    (
-        "trulens",
-        "TruLens",
-        "Evaluate and track LLM applications with ground-truth and feedback",
-        "TruLens is an open-source library for evaluating and tracking LLM applications. "
-        "Record app inputs/outputs, define feedback functions (relevance, groundedness, "
-        "harmlessness) using any LLM as judge, and visualise results in a local dashboard. "
-        "Integrates with LangChain, LlamaIndex, and raw LLM calls. Useful for RAG "
-        "quality measurement, safety testing, and iterative prompt improvement.",
-        "ai-automation",
-        "truera/trulens",
-        2200,
-        "https://trulens.org",
-        "llm-evaluation,rag,tracing,feedback,langchain,llamaindex",
-        "pip install trulens",
-        "code",
-    ),
-    (
-        "rebuff",
-        "Rebuff",
-        "Self-hardening prompt injection detector for LLM apps",
-        "Rebuff is an open-source prompt injection detection library that uses a "
-        "multi-layered defence: heuristic filters, a fine-tuned classifier, and a "
-        "canary-token vector store that learns from attacks. Protects LLM-powered "
-        "applications from user inputs designed to override system prompts or leak "
-        "context. Available as a Python/TypeScript SDK and hosted API.",
-        "security-tools",
-        "protectai/rebuff",
-        900,
-        "https://rebuff.ai",
-        "prompt-injection,llm-security,ai-safety,guardrails",
-        "pip install rebuff",
-        "code",
-    ),
-    (
-        "llama-guard",
-        "Llama Guard",
-        "Meta's open LLM safety classifier for input/output moderation",
-        "Llama Guard is a fine-tuned Llama model from Meta designed to classify "
-        "LLM inputs and outputs against a customisable set of harm categories "
-        "(violence, hate speech, sexual content, etc.). Run it locally or via "
-        "the Llama API to build content moderation pipelines that are both "
-        "transparent and cost-effective compared to hosted APIs.",
-        "security-tools",
-        "meta-llama/llama-guard",
+        "garak",
+        "garak",
+        "LLM vulnerability scanner and red-teaming toolkit",
+        "garak (Generative AI Red-teaming & Assessment Kit) is an open-source "
+        "LLM vulnerability scanner from NVIDIA. Systematically probes language "
+        "models for hallucination, toxicity, jailbreaks, data leakage, "
+        "prompt injection, and dozens of other failure modes using modular "
+        "probes and detectors. Supports OpenAI, Anthropic, HuggingFace, "
+        "Ollama, and REST backends. Generates structured vulnerability reports. "
+        "Used by AI safety researchers, red teams, and enterprises to assess "
+        "model risk before deployment.",
+        "ai-standards",
+        "NVIDIA/garak",
         4000,
-        "https://llama.meta.com",
-        "llm-safety,content-moderation,ai-safety,meta,llama",
-        "pip install llama-models",
+        "https://github.com/NVIDIA/garak",
+        "llm,red-team,safety,vulnerability,scanning,ai-safety,probe,jailbreak",
+        "pip install garak",
         "code",
     ),
     (
-        "weave",
-        "Weave",
-        "Lightweight LLM tracing, evaluation, and versioning by W&B",
-        "Weave is Weights & Biases's open-source toolkit for tracking LLM application "
-        "development. Automatically traces calls to OpenAI, Anthropic, and other LLM "
-        "providers. Version prompts and models, run evaluations with custom scorers, "
-        "and visualise traces in the W&B UI. Pairs naturally with wandb for experiment "
-        "tracking and complements deepeval/ragas for structured evals.",
+        "inspect-ai",
+        "Inspect AI",
+        "Open-source framework for LLM safety evaluations (UK AISI)",
+        "Inspect is an open-source framework for large language model evaluations "
+        "developed by the UK AI Safety Institute. Provides composable building "
+        "blocks — tasks, solvers, scorers, and datasets — for creating rigorous "
+        "safety and capability evaluations. Supports multi-turn dialogues, "
+        "tool use, sandboxed code execution, and human baselines. "
+        "Used by government safety teams and academic researchers to assess "
+        "frontier model risks. Official evaluation framework of the UK AISI.",
+        "ai-standards",
+        "UKGovernmentBEIS/inspect_ai",
+        2000,
+        "https://inspect.ai-safety-institute.org.uk",
+        "llm,safety,evaluation,evals,uk-aisi,government,composable,benchmark",
+        "pip install inspect-ai",
+        "code",
+    ),
+    # AI Standards — SWE-bench, EvalPlus, OpenCompass, OpenAI Evals, Ragas (146th pass) ──────
+    (
+        "swe-bench",
+        "SWE-bench",
+        "Benchmark for evaluating AI coding agents on real GitHub issues",
+        "SWE-bench measures AI agents' ability to resolve real GitHub issues from "
+        "popular Python repositories. Each task gives an agent a codebase and a "
+        "failing test describing a bug — the agent must write a patch that makes "
+        "the test pass without breaking others. SWE-bench Verified (500 hand-checked "
+        "tasks) is the standard leaderboard for ranking coding agents like Devin, "
+        "SWE-agent, OpenHands, and Aider. Published by Princeton NLP and MIT. "
+        "15k+ GitHub stars.",
+        "ai-standards",
+        "princeton-nlp/SWE-bench",
+        15000,
+        "https://www.swebench.com",
+        "llm,benchmark,coding-agent,github,python,evaluation,open-source",
+        "pip install swebench",
+        "code",
+    ),
+    (
+        "evalplus",
+        "EvalPlus",
+        "Rigorous code generation benchmarks with 80x more test cases",
+        "EvalPlus extends HumanEval and MBPP with 80× more test cases generated "
+        "using LLMs + mutation testing, reducing benchmark inflation. A model "
+        "scoring 90% on HumanEval often scores 70–80% on HumanEval+. Run "
+        "`evalplus.evaluate` against any OpenAI-compatible API or local model "
+        "for honest pass@k scores. Widely used by researchers who suspect "
+        "leaderboard numbers are optimistic. 2k+ GitHub stars.",
+        "ai-standards",
+        "evalplus-team/evalplus",
+        2000,
+        "https://evalplus.github.io",
+        "llm,benchmark,code-generation,humaneval,mbpp,evaluation,open-source",
+        "pip install evalplus",
+        "code",
+    ),
+    (
+        "opencompass",
+        "OpenCompass",
+        "Open evaluation platform for 100+ LLMs across reasoning, coding, and math",
+        "OpenCompass is Shanghai AI Lab's open-source evaluation platform "
+        "supporting 100+ LLMs (GPT-4, Claude, Llama, Qwen, DeepSeek, InternLM) "
+        "across 100+ benchmarks: MMLU, C-Eval, HumanEval, MATH, BBH, and more. "
+        "One config YAML runs a full eval suite in parallel. Powers the "
+        "OpenCompass Leaderboard, the main reference for Chinese AI lab releases. "
+        "12k+ GitHub stars.",
+        "ai-standards",
+        "open-compass/opencompass",
+        12000,
+        "https://opencompass.org.cn",
+        "llm,benchmark,evaluation,mmlu,coding,math,reasoning,open-source",
+        "pip install opencompass",
+        "code",
+    ),
+    (
+        "openai-evals",
+        "OpenAI Evals",
+        "The original open-source framework for evaluating LLM quality",
+        "OpenAI Evals is the evaluation framework that started the LLM eval "
+        "ecosystem. Define evals as YAML configs — model-graded, string match, "
+        "or custom Python — and run them against any OpenAI-compatible API. "
+        "Ships with hundreds of built-in evals across factual accuracy, reasoning, "
+        "code generation, and safety. The ancestor of lm-eval-harness, DeepEval, "
+        "Ragas, and Promptfoo. 13k+ GitHub stars.",
+        "ai-standards",
+        "openai/evals",
+        13000,
+        "https://github.com/openai/evals",
+        "llm,evaluation,benchmarks,openai,evals,ai-safety,open-source",
+        "pip install evals",
+        "code",
+    ),
+    (
+        "ragas",
+        "Ragas",
+        "RAG evaluation metrics — faithfulness, relevancy, precision",
+        "Ragas provides the standard metric suite for evaluating "
+        "Retrieval-Augmented Generation pipelines: faithfulness, answer relevancy, "
+        "context precision, context recall, and answer correctness. Works with any "
+        "LLM as the judge. Integrates with LangChain, LlamaIndex, and plain Python. "
+        "Run with pytest or as a standalone script to catch hallucinations and "
+        "context drift before they reach production. 8k+ GitHub stars.",
+        "ai-standards",
+        "explodinggradients/ragas",
+        8000,
+        "https://docs.ragas.io",
+        "llm,rag,evaluation,faithfulness,hallucination,metrics,langchain,llamaindex,open-source",
+        "pip install ragas",
+        "code",
+    ),
+    # AI Agents — OpenHands / OpenDevin (all-hands-ai/openhands, ~45k★) ----------
+    (
+        "openhands",
+        "OpenHands",
+        "Open-source AI software engineer for autonomous coding tasks",
+        "OpenHands (formerly OpenDevin) is an open-source platform for autonomous "
+        "AI software engineering. Agents can write and run code, browse the web, "
+        "read and edit files, and submit pull requests — completing complex "
+        "multi-step engineering tasks with minimal supervision. "
+        "One of the fastest-growing AI coding agent projects with 45k+ GitHub stars.",
         "ai-automation",
-        "wandb/weave",
-        3200,
-        "https://weave-docs.wandb.ai",
-        "llm-tracing,evaluation,wandb,observability,openai,anthropic",
-        "pip install weave",
+        "all-hands-ai/openhands",
+        45000,
+        "https://www.all-hands.dev",
+        "ai-agent,autonomous,coding,software-engineer,open-source",
+        "docker pull ghcr.io/all-hands-ai/runtime:0.20-nikolaik",
         "code",
     ),
-    # Logging — modern cloud-native log management (added May 2026) -------------------
+    # AI Browser Automation — Skyvern (skyvern-ai/skyvern, ~12k★) ----------------
     (
-        "axiom",
-        "Axiom",
-        "Serverless logging and observability for any scale",
-        "Axiom is a cloud-native log management and observability platform that stores "
-        "data in object storage (S3-compatible) so you pay for what you use — no "
-        "infrastructure to manage. Ingest logs, metrics, and traces from any source "
-        "via the OpenTelemetry collector, Vector, Fluentd, or direct HTTP. Query with "
-        "APL (Axiom Processing Language), build dashboards, and set up alerts. "
-        "Free tier includes 500 GB/month. Popular with serverless and edge workloads "
-        "where traditional log aggregators are expensive.",
-        "logging",
-        "axiomhq/axiom-go",
-        600,
-        "https://axiom.co",
-        "logging,observability,serverless,object-storage,opentelemetry,logs,analytics,cloud-native",
-        "npm install @axiomhq/js",
-        "saas",
+        "skyvern",
+        "Skyvern",
+        "AI-powered browser automation using LLMs and computer vision",
+        "Skyvern automates browser workflows using LLMs and computer vision instead "
+        "of brittle CSS selectors or XPath. It adapts to UI changes in real-time, "
+        "handles CAPTCHAs, and navigates dynamic single-page applications. "
+        "Useful for form filling, data extraction, and web scraping at scale. "
+        "Comes with a visual workflow builder and REST API.",
+        "ai-automation",
+        "skyvern-ai/skyvern",
+        12000,
+        "https://skyvern.com",
+        "ai-agent,browser-automation,llm,computer-vision,scraping",
+        "pip install skyvern",
+        "code",
+    ),
+    # AI Workflows — Julep (julep-ai/julep, ~8k★) ---------------------------------
+    (
+        "julep",
+        "Julep",
+        "AI workflows and persistent agents as a managed service",
+        "Julep is a platform for building long-running, stateful AI agents and "
+        "multi-step workflows. Define workflows in YAML, integrate tools (web search, "
+        "APIs, code execution), and run tasks asynchronously with built-in memory "
+        "and session management. Includes a Python/JS SDK and REST API. "
+        "Ideal for background AI tasks like report generation and data processing.",
+        "ai-automation",
+        "julep-ai/julep",
+        8000,
+        "https://julep.ai",
+        "ai-agent,workflow,memory,persistent,sdk",
+        "pip install julep",
+        "code",
+    ),
+    # ── AI Standards (146th pass) ────────────────────────────────────────────
+    (
+        "alpacaeval",
+        "AlpacaEval",
+        "Fast automated LLM instruction-following evaluator with LLM-as-judge",
+        "AlpacaEval is Stanford's automated benchmark for instruction-following "
+        "quality. It uses GPT-4 or Claude as a judge to compare model outputs "
+        "against a GPT-4 Turbo reference, computing a win rate that correlates "
+        "well with human preference. The AlpacaEval 2.0 leaderboard ranks 128+ "
+        "models and is one of the most-cited instruction-following benchmarks "
+        "alongside Chatbot Arena. Run it against any OpenAI-compatible API on "
+        "805 eval prompts in minutes. 5k+ GitHub stars.",
+        "ai-standards",
+        "tatsu-lab/alpaca_eval",
+        5000,
+        "https://tatsu-lab.github.io/alpaca_eval",
+        "llm,evaluation,instruction-following,benchmark,leaderboard,open-source",
+        "pip install alpaca-eval",
+        "code",
     ),
     (
-        "betterstack",
-        "Better Stack",
-        "Uptime monitoring, incident management, and log management in one place",
-        "Better Stack (formerly Logtail) combines uptime monitoring, on-call alerting, "
-        "status pages, and structured log management in a single indie-friendly platform. "
-        "Logtail ingests logs from any stack via OpenTelemetry, Vector, or Fluent Bit, "
-        "stores them in ClickHouse for fast SQL-based queries, and integrates with "
-        "PagerDuty, Slack, and Grafana. Uptime checks every 3 seconds from 13+ global "
-        "locations. Generous free tier. Popular with solo founders and small teams "
-        "replacing multiple tools (Datadog + PagerDuty + Statuspage).",
-        "logging",
-        "BetterStackHQ/better-stack-community",
-        600,
-        "https://betterstack.com",
-        "logging,uptime-monitoring,incident-management,status-page,logtail,opentelemetry,clickhouse,structured-logs",
-        "npm install @logtail/node",
-        "saas",
+        "arena-hard",
+        "Arena-Hard-Auto",
+        "Automated LLM benchmark with 89% correlation to Chatbot Arena human votes",
+        "Arena-Hard-Auto (LMSYS) selects 500 challenging prompts from real Chatbot "
+        "Arena conversations, then uses GPT-4 as a judge to score model responses. "
+        "It achieves 89%+ correlation with human preference data — the best proxy "
+        "for Chatbot Arena scores without expensive human evaluation. Widely used "
+        "to benchmark GPT-4o, Claude 3.5 Sonnet, Llama 3, and Qwen 2.5 before "
+        "public launches. 1.5k+ GitHub stars.",
+        "ai-standards",
+        "lm-sys/arena-hard-auto",
+        1500,
+        "https://github.com/lm-sys/arena-hard-auto",
+        "llm,benchmark,evaluation,chatbot-arena,instruction-following,open-source",
+        "pip install arena-hard",
+        "code",
     ),
 ]
 

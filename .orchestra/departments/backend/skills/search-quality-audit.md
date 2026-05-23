@@ -3,7 +3,7 @@ name: search-quality-audit
 description: "Audit _CAT_SYNONYMS routing gaps and add missing entries to improve search quality. Use when search queries return wrong categories or raw_first with no category boost."
 metadata:
   version: 1.0.0
-  author: Master Agent
+  author: autonomous-loop
   category: search
   updated: 2026-05-17
 ---
@@ -23,11 +23,11 @@ You are responsible for finding and fixing routing gaps in `_CAT_SYNONYMS` in `s
 
 ### 1. Check existing coverage for the target area
 
+Always grep BEFORE adding — Python dicts silently override duplicate keys with the last value.
+
 ```bash
 grep -n '"term"' src/indiestack/db.py | head -20
 ```
-
-Always grep BEFORE adding — Python dicts silently override duplicate keys with the last value.
 
 ### 2. Probe queries offline
 
@@ -37,7 +37,7 @@ from scripts.test_search_routing import route_query
 queries = ['your queries here']
 for q in queries:
     cat, via = route_query(q)
-    print(f'{q!r:40s} -> {cat!r} (via {via!r})')
+    print(repr(q) + ' -> ' + repr(cat) + ' via ' + repr(via))
 "
 ```
 
@@ -62,19 +62,47 @@ Add single-token entries in the relevant thematic block in `_CAT_SYNONYMS`. Add 
 - ALWAYS add both hyphenated and non-hyphenated variants for compound terms
 - Bigrams that contain a stop word from `_FTS_STOP_WORDS` can NEVER fire — verify both tokens survive
 - 3-token compound keys can NEVER fire — use bigram + single-token fallback instead
+- Check `_FTS_STOP_WORDS` before adding bigrams: `python3 -c "from indiestack.db import _FTS_STOP_WORDS; print('token' in _FTS_STOP_WORDS)"`
 
 ### 5. Validate
 
 ```bash
-PYTHONPATH=src python3 scripts/validate_synonyms.py
 PYTHONPATH=src python3 scripts/test_search_routing.py
 ```
 
-Both must pass with zero failures and zero duplicates before committing.
+Must pass with zero failures before committing.
 
 ### 6. Add test cases
 
-Add corresponding test cases to the `TEST_CASES` list in `scripts/test_search_routing.py`. Update the test count comment in `.orchestra/departments/backend/CLAUDE.md`.
+Add corresponding test cases to the `TEST_CASES` list in `scripts/test_search_routing.py`.
+
+## Pattern: Spaced-Form Gaps + Stop-Word Erosion
+
+Compound terms often have their hyphenated form (`"zero-trust"`) and compounded form (`"zerotrust"`) mapped but the natural spaced two-word form (`"zero trust"`) missing. Always check all three forms:
+
+```
+for term in ["zero trust", "zerotrust", "zero-trust"]:
+    route_query(term)
+```
+
+Also watch for **stop-word erosion**: a phrase like "software bill of materials" has "software" and "of" as stop words, so surviving tokens are `["bill","materials"]`. The bigram `"bill materials"` must be explicitly mapped.
+
+Historically found: "zero trust" (spaced), "zero knowledge", "bill materials" (from SBOM queries).
+
+## Pattern: Orphaned Second-Token Poisoning
+
+When the **first token has no synonym** (raw_first), the **second token becomes the effective routing signal**. If that second token maps to the *wrong* category, the query is silently mis-routed — unlike raw_first dead zones, these queries *do* return a category, just the wrong one.
+
+Probe: for any two-word tech concept, check (a) whether token-0 is in `_CAT_SYNONYMS`; if NOT, check (b) whether token-1 maps to the right category. High-risk second tokens: `"contract"→testing`, `"proof"→(missing)`, `"recorder"→(missing)`, `"pipeline"→(missing)`.
+
+```python
+# Check token-0 then token-1 individually
+route_query("smart")     # raw_first → second-token risk
+route_query("contract")  # testing → wrong for "smart contract" queries
+route_query("smart contract")  # bigram needed
+```
+
+Historically found: "smart contract"→testing (was developer), "streaming pipeline"→media (was message), "html to pdf"→frontend (was file) via stop-word "to" removal.
 
 ## Common Gap Categories to Probe
 
@@ -83,24 +111,24 @@ These areas historically generate `raw_first` misses:
 | Domain | Tokens to test |
 |--------|---------------|
 | AI frameworks 2025-2026 | pydantic ai, agno, mastra, smolagents |
-| Local LLM tooling | lm studio, koboldai, llms, llmstxt, local ai |
+| Local LLM tooling | lm studio, koboldai, llms.txt (dot), llmstxt |
 | LLMOps / eval | trulens, braintrust, weave, ragas |
 | AI safety | llamaguard, rebuff, guardrails, prompt injection |
 | Data engineering | etl, elt, dbt, airbyte, fivetran |
 | Edge/serverless | val town, deno deploy, cloudflare workers |
 | Standards | llms.txt, a2a, mcp, openai agents |
-| Token collision traps | cloud native (native→frontend), commit message (message→queue), local ai (local→raw_first) |
-
-### Pattern 16 — "conflicting first/second token" probe queries
-
-For each synonym in `_CAT_SYNONYMS`, test it as the SECOND word of a two-word query where the first word is a common modifier. If the first token has its own synonym routing to a different category, the result is a collision. Examples found:
-
-- `"cloud native"` → "native"→frontend (React Native) collides with intended "devops"
-- `"commit message"` → "message"→message-queue collides with intended "developer"
-- `"privacy analytics"` → "privacy"→security collides with intended "analytics" (already fixed)
-- `"video editor"` → "video"→media collides with intended "creative" (already fixed)
-
-Probe by running: `for q in ["cloud X", "commit X", "hot X", "local X"]: route_query(q)`
+| Frontend build tools | snowpack, farm, parcel, turbopack |
+| Email delivery | sparkpost, mailgun, postmark, sendgrid |
+| Usage-based billing | m3ter, lago, orb, autumn, stigg |
+| Analytics databases | hydrolix, tinybird, clickhouse, motherduck |
+| AI hyphenated forms | fine-tuning, llms.txt (dot form), pydantic-ai |
+| PII / data privacy | presidio, arcjet, skyflow, private ai |
+| Observability new | phoenix (arize), honeycomb, lightstep |
+| New AI coding tools | zed editor, helix editor, cursor ide |
+| Web3 / blockchain | smart contract, zk proof, zk rollup, hardhat, foundry |
+| Screen tools | screen recorder, screen capture (developer tools) |
+| Media pipeline | streaming pipeline, data pipeline (message vs media) |
+| Document conversion | html to pdf, markdown to html (file management) |
 
 ## Commit Style
 
@@ -108,4 +136,4 @@ Probe by running: `for q in ["cloud X", "commit X", "hot X", "local X"]: route_q
 fix: N search routing gaps — [short description] (M/M pass)
 ```
 
-Example: `fix: 6 search routing gaps — llms.txt, koboldai, pydantic ai (541/541 pass)`
+Example: `fix: 13 search routing gaps — snowpack, llamaguard, llms.txt + 10 more (166/166 pass)`
