@@ -485,6 +485,25 @@ When hunting for routing gaps, these query forms are historically tricky:
     a clear expected category that misfires, check which token fires (via route_query --query)
     then add a targeted bigram before it. Fixed: "storybook"→frontend, "image cropper"→
     frontend, "pdf viewer"→frontend, "custom element"→frontend (probe 64, May 2026).
+
+58. "Realtime-collaboration dead zones — unmapped OT/CRDT concept tokens + stop-word
+    bigram trap" — realtime collaboration concept terms use academic/architectural words
+    ("operational transform", "shared editing", "presence awareness", "live cursors") that
+    lack _CAT_SYNONYMS entries. Because these words are technical-context-specific and
+    not tool names, they're commonly overlooked in synonym audits. All four misfired to
+    raw_first (dead zone). Strategy: when covering a cross-cutting tool category like
+    realtime collaboration, enumerate the key architectural concept terms, not just the
+    tool names. Probe: "operational [noun]", "shared [editing/workspace]", "presence
+    [noun]", "live [noun]". Also found: "multi model database" where bare "model"→ai
+    fires before "database"→database — the "multi" prefix has no synonym so the ai
+    override isn't blocked. Fix: add bigram "multi model"→database so it fires before
+    bare "model"→ai. STOP-WORD TRAP: "presence tracking" bigram CANNOT fire — "tracking"
+    is in _FTS_STOP_WORDS. For any proposed bigram where the second token looks like a
+    gerund or action verb, check _FTS_STOP_WORDS first: tracking, running, managing are
+    all stripped. If the bigram is dead, rely on a surviving third token or add the bare
+    first-token synonym if it's unambiguous enough. Fixed: "operational transform"→api,
+    "shared editing"→api, "presence awareness"→api, "live cursors"→api,
+    "multi model"→database (probe 65, May 2026).
 """
 
 import sys
