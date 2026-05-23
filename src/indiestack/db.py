@@ -3839,8 +3839,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cookie": "authentication",     # "cookie session", "cookie-based auth", "iron-session" → Auth
     "token": "authentication",      # "jwt token", "access token", "token refresh" → Authentication
     "tokens": "authentication",     # plural — "oauth tokens", "refresh tokens" → Authentication
-    # Payments — currency formatting/conversion queries
+    # Payments / Developer — currency and money formatting
     "currency": "payments",         # "currency formatter", "currency conversion API" → Payments
+    "money": "developer",           # "money formatting react", "money parsing library" → Developer Tools (accounting.js, dinero)
     # File management — image processing beyond "upload" / "media"
     "sharp": "file",                # Sharp — high-performance Node.js image processing (27k★)
     "resize": "file",               # "image resize library", "image resizer" → File Management

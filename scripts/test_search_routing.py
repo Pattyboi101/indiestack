@@ -594,6 +594,9 @@ TEST_CASES: list[tuple[str, str]] = [
     # html parser / scraper → developer tools
     ("html parser nodejs", "developer"),        # bigram "html parser"→developer (Cheerio, node-html-parser)
     ("html scraper python", "developer"),       # bigram "html scraper"→developer (BeautifulSoup, Scrapy)
+    # money → developer (money formatting/parsing libraries)
+    ("money formatting react", "developer"),    # bare "money"→developer (accounting.js, dinero.js)
+    ("money library javascript", "developer"),  # bare "money"→developer
 ]
 
 
