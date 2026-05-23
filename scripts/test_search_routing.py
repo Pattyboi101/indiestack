@@ -583,6 +583,17 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — graph databases still route to database.
     ("graph database neo4j", "database"),       # bare "graph"→database unchanged
     ("graph db typescript", "database"),        # bare "graph"→database unchanged
+    # intl → localization (react-intl / FormatJS)
+    ("react intl", "localization"),             # bare "intl"→localization (react stripped as framework)
+    ("intl library", "localization"),           # bare "intl"→localization
+    # headless browser / chrome → testing (overrides headless→cms)
+    ("headless browser nodejs", "testing"),     # bigram "headless browser"→testing
+    ("headless chrome puppeteer", "testing"),   # bigram "headless chrome"→testing
+    # Regressions — headless CMS queries still route to cms.
+    ("headless cms strapi", "cms"),             # bare "headless"→cms unchanged
+    # html parser / scraper → developer tools
+    ("html parser nodejs", "developer"),        # bigram "html parser"→developer (Cheerio, node-html-parser)
+    ("html scraper python", "developer"),       # bigram "html scraper"→developer (BeautifulSoup, Scrapy)
 ]
 
 

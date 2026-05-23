@@ -2945,6 +2945,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # LIKE '%localization%' matches category name "Localization" ✓
     "i18n": "localization",
     "l10n": "localization",
+    "intl": "localization",             # "react intl", "intl library" → Localization (react-intl, FormatJS)
     "translate": "localization",
     "translation": "localization",      # "translation library", "translation API"
     "locale": "localization",           # "locale formatting", "locale config"
@@ -6817,6 +6818,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "headless testing": "testing",      # bigram — "headless testing framework" → Testing Tools (not CMS)
     "headless automation": "testing",   # bigram — "headless automation testing" → Testing Tools
     "headless e2e": "testing",          # bigram — "headless e2e playwright" → Testing Tools
+    "headless browser": "testing",      # bigram — "headless browser nodejs", "headless browser scraping" → Testing Tools
+    "headless chrome": "testing",       # bigram — "headless chrome puppeteer", "headless chrome automation" → Testing Tools
+    "html parser": "developer",         # bigram — "html parser nodejs", "html parser python" → Developer Tools (Cheerio, BeautifulSoup)
+    "html scraper": "developer",        # bigram — "html scraper javascript", "html scraper python" → Developer Tools
     #
     # "realtime X" — bare "realtime"→api fires for most compound queries.
     # Missing: analytics, monitoring, notifications, search, logging.
