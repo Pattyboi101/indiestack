@@ -2674,6 +2674,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "toggle": "feature",        # "feature toggle" queries
     "toggles": "feature",
     "experiment": "feature",    # "a/b experiment" / "experimentation platform"
+    "experiment run": "ai",       # bigram — "experiment run wandb" beats "experiment"→feature → AI (MLflow, W&B)
+    "experiment manager": "ai",   # bigram — "experiment manager mlflow" beats "experiment"→feature → AI
     "error": "monitoring",
     "errors": "monitoring",
     "video": "media",
@@ -3572,6 +3574,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mlflow": "ai",                 # MLflow — open-source ML lifecycle management (18k★)
     "dvc": "ai",                    # DVC — data version control + ML pipelines (13k★)
     "kubeflow": "ai",               # Kubeflow — ML toolkit on Kubernetes
+    "training run": "ai",           # bigram — "training run tracker" beats raw_first → AI (W&B, MLflow, ClearML)
+    "training data": "ai",          # bigram — "training data pipeline" beats raw_first → AI (Scale AI, Argilla)
+    # NOTE: bare "training"→ai intentionally NOT added — misroutes LMS queries when "developer"+"platform" both stripped
     # Self-hosted Git services
     "gitea": "devops",              # Gitea — self-hosted lightweight Git service (44k★)
     "forgejo": "devops",            # Forgejo — community fork of Gitea
@@ -4126,6 +4131,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "openid": "authentication",      # OpenID Connect — "openid provider", "openid connect library"
     # Developer Tools — dependency injection containers (InversifyJS, tsyringe, Wire)
     "injection": "developer",        # "dependency injection", "constructor injection" → Developer Tools
+    "fault injection": "testing",   # bigram — "fault injection testing" beats "injection"→developer → Testing (Toxiproxy, Pumba)
     "di": "developer",               # DI container shorthand — "di framework", "di library for ts"
     # Testing — code quality and regression testing patterns
     "quality": "testing",            # "code quality tool", "quality gate" → Testing Tools (SonarQube, Codacy)
@@ -4235,6 +4241,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Invoicing — usage-based / metered billing (Lago, Orb, Stripe Metering, Stigg)
     "metered": "invoicing",         # "metered billing", "pay-per-use model" → Invoicing & Billing
     "usage": "invoicing",           # "usage-based billing", "usage metering" → Invoicing & Billing
+    "usage analytics": "analytics", # bigram — "usage analytics dashboard" beats "usage"→invoicing → Analytics (Amplitude, Mixpanel)
     # Payments — feature entitlements and content paywalls
     "entitlements": "payments",     # "entitlements management", "feature entitlements" (Stigg, Orb)
     "paywall": "payments",          # "paywall implementation", "content paywall" → Payments
@@ -6937,6 +6944,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "saas email": "email",                  # bigram — "saas email provider", "saas email resend" → Email Marketing
     # Monitoring — error and uptime monitoring for SaaS apps (Sentry, Highlight, Glitchtip).
     "saas monitoring": "monitoring",        # bigram — "saas monitoring tool", "saas monitoring sentry" → Monitoring
+    # Analytics — session replay/analytics vs auth-session collision ("session"→authentication fires first without bigrams)
+    "session replay": "analytics",      # bigram — "session replay hotjar" beats "session"→auth → Analytics & Metrics
+    "session analytics": "analytics",   # bigram — "session analytics tool" beats "session"→auth → Analytics & Metrics
+    # API — HTTP streaming response for LLM APIs / SSE ("streaming"→media fires first without bigram)
+    "streaming response": "api",        # bigram — "streaming response api" beats "streaming"→media → API Tools (SSE, chunked transfer)
 }
 
 _FTS_STOP_WORDS = {

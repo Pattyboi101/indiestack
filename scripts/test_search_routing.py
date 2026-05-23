@@ -649,6 +649,54 @@ TEST_CASES: list[tuple[str, str]] = [
     ("saas starter kit", "boilerplate"),           # bare "saas"→boilerplate unchanged
     ("saas boilerplate nextjs", "boilerplate"),    # bare "saas"→boilerplate unchanged
     ("saas template react", "boilerplate"),        # bare "saas"→boilerplate unchanged
+    # Probe pattern 70 — ML experiment / session analytics / usage analytics / fault injection / streaming response dead zones
+    #
+    # "experiment tracking" is a stop-word bigram trap — "tracking" in _FTS_STOP_WORDS means
+    # bigram "experiment tracking" CANNOT fire. Fix: add bigrams for surviving-token variants.
+    ("experiment run wandb", "ai"),                # bigram "experiment run"→ai (MLflow, W&B)
+    ("experiment run dashboard", "ai"),            # bigram fires before "experiment"→feature
+    ("experiment manager mlflow", "ai"),           # bigram "experiment manager"→ai (ML lifecycle)
+    # Regression — A/B experiment queries still route to feature flags.
+    ("experiment feature flags", "feature"),       # bare "experiment"→feature unchanged
+    ("ab experiment platform", "feature"),         # "ab"→feature unchanged
+    #
+    # "usage analytics" bigram overrides "usage"→invoicing for product analytics queries.
+    ("usage analytics dashboard", "analytics"),    # bigram "usage analytics"→analytics (Amplitude, Mixpanel)
+    ("usage analytics platform", "analytics"),     # bigram fires before "usage"→invoicing
+    # Regression — usage-based billing still routes to invoicing.
+    ("usage based billing", "invoicing"),          # bare "usage"→invoicing unchanged
+    ("usage metering api", "invoicing"),           # "usage"→invoicing unchanged
+    #
+    # "session analytics" bigram overrides "session"→authentication for product analytics.
+    ("session analytics tool", "analytics"),       # bigram "session analytics"→analytics
+    ("session analytics dashboard", "analytics"),  # bigram fires before "session"→auth
+    # "session replay" spaced bigram (hyphenated form existed; spaced form was missing).
+    ("session replay hotjar", "analytics"),        # bigram "session replay"→analytics (beats "session"→auth)
+    ("session replay tool", "analytics"),          # bigram fires before bare "session"→auth
+    # Regression — session auth management still routes to authentication.
+    ("session management library", "authentication"),  # bare "session"→authentication unchanged
+    #
+    # "training run" / "training data" bigrams route ML queries to AI (raw_first before fix).
+    # NOTE: bare "training"→ai intentionally NOT added (misroutes LMS "developer training" queries
+    # since both "developer" and "platform" are stop words, leaving only "training" → would force ai).
+    ("training run tracker", "ai"),                # bigram "training run"→ai (W&B, MLflow, ClearML)
+    ("training run dashboard", "ai"),              # bigram "training run"→ai
+    ("training data pipeline", "ai"),              # bigram "training data"→ai (data pipelines for ML)
+    ("training data management", "ai"),            # bigram "training data"→ai (Scale AI, Argilla)
+    #
+    # "fault injection" bigram overrides "injection"→developer for chaos engineering queries.
+    ("fault injection tool", "testing"),           # bigram "fault injection"→testing (Toxiproxy, Pumba)
+    ("fault injection testing", "testing"),        # bigram fires before "injection"→developer
+    # Regression — dependency injection still routes to developer.
+    ("dependency injection framework", "developer"),  # bare "dependency"→developer unchanged
+    ("constructor injection", "developer"),        # bare "injection"→developer fires at pos 1
+    #
+    # "streaming response" bigram overrides "streaming"→media for HTTP streaming queries.
+    ("streaming response api", "api"),             # bigram "streaming response"→api (SSE, chunked transfer)
+    ("streaming response nodejs", "api"),          # bigram fires before "streaming"→media
+    # Regression — video streaming still routes to media; "streaming api" bigram overrides audio context.
+    ("streaming video server", "media"),           # "streaming"→media unchanged (no "response" bigram)
+    ("audio streaming api", "api"),                # "streaming api" bigram fires at pos 1 → API Tools (audio APIs)
 ]
 
 
