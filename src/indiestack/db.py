@@ -8608,6 +8608,35 @@ _CAT_SYNONYMS: dict[str, str] = {
     "preview environment": "devops",           # bigram — "preview environment deployment", "preview environment ci" → DevOps
     "staging environment": "devops",           # bigram — "staging environment setup", "staging environment deployment" → DevOps
     "ephemeral environment": "devops",         # bigram — "ephemeral environment kubernetes", "ephemeral environment ci" → DevOps
+    # ── Probe pattern 63 (May 2026): UI component dead zones / modal collision ──
+    #
+    # Dead zones:
+    # "modal component" → bare "modal"→ai fires (Modal.com serverless collision).
+    #   React/Vue modal dialog components live in Frontend Frameworks, not AI & Automation.
+    # "modal window" → same "modal"→ai collision.
+    # "dropdown" / "dropdown menu" → unmapped → raw_first.
+    #   Dropdown components (React Select, Radix Dropdown, Headless UI) live in Frontend.
+    # "sorting" → unmapped → raw_first.
+    #   Table sorting (TanStack Table, ag-Grid) lives in Frontend Frameworks.
+    # "infinite scroll" → both tokens unmapped → raw_first (dual dead zone per Pattern 23).
+    #   Infinite scroll (react-infinite-scroll, TanStack Virtual) lives in Frontend.
+    # "select component" → bare "select" unmapped → raw_first.
+    #   React Select, Radix Select, shadcn/ui Select live in Frontend Frameworks.
+    #
+    # Frontend — "modal component"/"modal window" bigrams override "modal"→ai.
+    # Regression: bare "modal" (Modal.com serverless) still routes to ai; only bigram forms fixed.
+    "modal component": "frontend",             # bigram — "modal component react", "modal component shadcn" → Frontend
+    "modal window": "frontend",               # bigram — "modal window component", "modal window library" → Frontend
+    # Frontend — "dropdown" bare token + bigram (Radix Dropdown, Headless UI, React Select).
+    "dropdown": "frontend",                   # bare — "dropdown component", "dropdown menu react" → Frontend
+    "dropdown menu": "frontend",              # bigram — "dropdown menu component", "dropdown menu accessible" → Frontend
+    # Frontend — "sorting" bare token (TanStack Table sorting, ag-Grid, sortable libraries).
+    "sorting": "frontend",                    # bare — "table sorting react", "sorting library javascript" → Frontend
+    # Frontend — "infinite scroll" both tokens unmapped; bigram needed.
+    "infinite scroll": "frontend",            # bigram — "infinite scroll react", "infinite scroll component" → Frontend
+    # Frontend — "select component" bigram (React Select, Radix Select; avoids ambiguous bare "select").
+    # Bare "select" skipped — SQL SELECT collides with database category, too ambiguous alone.
+    "select component": "frontend",           # bigram — "select component accessible", "select component react" → Frontend
 }
 
 _FTS_STOP_WORDS = {

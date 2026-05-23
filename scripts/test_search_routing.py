@@ -2495,6 +2495,28 @@ TEST_CASES: list[tuple[str, str]] = [
     ("feature toggle gradual", "feature"),     # "feature"→feature unchanged
     ("environment variables secrets", "security"),  # "environment"→security unchanged for secrets queries
     ("development environment setup", "devops"),    # "development environment"→devops unchanged
+    # Probe pattern 63 — UI component dead zones / modal collision
+    # "modal component"/"modal window" → bare "modal"→ai fires (Modal.com serverless collision).
+    ("modal component react", "frontend"),     # bigram "modal component"→frontend (beats "modal"→ai)
+    ("modal component shadcn", "frontend"),    # bigram "modal component"→frontend
+    ("modal window component", "frontend"),    # bigram "modal window"→frontend (beats "modal"→ai)
+    ("modal window library", "frontend"),      # bigram "modal window"→frontend
+    # "dropdown"/"dropdown menu" → unmapped → raw_first; now routes to frontend.
+    ("dropdown component", "frontend"),        # bare "dropdown"→frontend
+    ("dropdown menu react", "frontend"),       # bigram "dropdown menu"→frontend (fires at pos 0 before bare "dropdown")
+    ("dropdown menu accessible", "frontend"),  # bigram "dropdown menu"→frontend
+    # "sorting" → unmapped → raw_first; now routes to frontend (TanStack Table, sortable libs).
+    ("table sorting react", "frontend"),       # bare "sorting"→frontend fires at pos 1 (after "table"→frontend at pos 0)
+    ("sorting library javascript", "frontend"), # bare "sorting"→frontend fires first
+    # "infinite scroll" → both tokens unmapped → raw_first; bigram now routes to frontend.
+    ("infinite scroll react", "frontend"),     # bigram "infinite scroll"→frontend
+    ("infinite scroll component", "frontend"), # bigram "infinite scroll"→frontend
+    # "select component" → bigram routes to frontend (React Select, Radix Select).
+    ("select component accessible", "frontend"),  # bigram "select component"→frontend
+    ("select component react", "frontend"),       # bigram "select component"→frontend
+    # Regressions — modal bare token and modal dialog should not be affected.
+    ("modal serverless python", "ai"),         # bare "modal"→ai unchanged (Modal.com)
+    ("modal dialog component", "frontend"),    # "modal dialog"→frontend bigram (probe 38) still fires
 ]
 
 
