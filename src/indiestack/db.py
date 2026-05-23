@@ -8561,6 +8561,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Model cards are structured documentation for ML models — AI safety/standards tools (Hugging Face Cards).
     "model card": "ai standards",              # bigram — "model card generator", "model card template" → AI Standards
     "model cards": "ai standards",             # plural — "model cards ml", "model cards documentation" → AI Standards
+    # Developer Tools — "mono repo" spaced form (complement to "monorepo"→developer already mapped).
+    # "mono repo tool", "mono repo architecture" route raw_first via "mono" (unmapped).
+    "mono repo": "developer",                  # bigram — "mono repo tool", "mono repo support" → Developer Tools
+    # DevOps — "pr automation" overrides "automation"→ai for pull-request workflow tooling.
+    # PR bots (Danger.js, Renovate, Dependabot, ReviewDog) live in DevOps & Infrastructure.
+    # NOTE: "pull request" bigram already maps to devops; "pr" bare token is unmapped → "automation"→ai fires.
+    "pr automation": "devops",                 # bigram — "pr automation tool", "pr automation github" → DevOps
+    "pr bot": "devops",                        # bigram — "pr bot review", "pr bot comment" → DevOps
+    # Security — "security testing" overrides downstream "testing"→testing token.
+    # SAST/DAST tools (Semgrep, Snyk Code, ZAP, Checkmarx) are Security Tools, not Testing Tools.
+    # Also fixes: "static application security testing" → meaningful ["static","security","testing"] →
+    # bigram "security testing" fires at pos 1-2, returning "security" (beats "static"→frontend at pos 0).
+    "security testing": "security",            # bigram — "security testing sast", "security testing pipeline" → Security Tools
+    # Frontend — "dev server" both tokens unmapped individually; bigram needed.
+    # Vite, webpack-dev-server, Bun serve, Parcel serve live in Frontend Frameworks.
+    "dev server": "frontend",                  # bigram — "dev server vite", "dev server hmr" → Frontend Frameworks
+    # DevOps — "commit lint" spaced form overrides "lint"→testing (commitlint is a git workflow tool).
+    # complement to bare "commitlint"→devops (line ~5017). Conventional Commits enforcement lives in DevOps.
+    "commit lint": "devops",                   # bigram — "commit lint setup", "commit lint husky" → DevOps
 }
 
 _FTS_STOP_WORDS = {

@@ -434,6 +434,30 @@ When hunting for routing gaps, these query forms are historically tricky:
     ALL surface forms: [compact] [hyphenated] [spaced] [gerund]. Probe the spaced form
     of every security/AI-standards concept that has only hyphenated or gerund coverage.
     Fixed: "red team"→ai standards (probe 55, May 2026).
+
+54. "Stop-word stripping reveals hidden first-token collision" — when a stop word sits
+    between two content tokens and is stripped, two unrelated tokens become adjacent and
+    form an unexpected bigram. "static APPLICATION security testing" → strip "application"
+    → meaningful = ["static", "security", "testing"]. Now "static" fires first → frontend
+    (wrong: should be Security Tools). Fix: add the bigram that spans the now-adjacent
+    tokens AFTER stop-word removal ("security testing"→security), so it fires at pos 1-2
+    and overrides the earlier single-token match at pos 0. General pattern: any time a
+    stop word sits between two content tokens where each token maps to a DIFFERENT category,
+    stripping the stop word can create a new first-token collision. Probe: think of
+    common query forms "[category-A-word] [stop-word] [category-B-word]" and check which
+    fires first. Fixed: "security testing"→security overrides "static"→frontend for
+    SAST/DAST queries (probe 61, May 2026).
+
+55. "Short-form / abbreviation gap for multi-word tool names" — tools with long names
+    get queried by their abbreviated prefix even when only the full compound form is
+    mapped. "pr automation" → "pr" unmapped, "automation"→ai fires (wrong: PR bots are
+    DevOps). "mono repo" spaced → "mono" unmapped, raw_first fires (wrong: monorepo is
+    mapped but only as one token). Strategy: whenever a well-known compound is added,
+    also add the common abbreviation and the space-separated variant. Probe: take each
+    compound synonym and split it — does each half have its own mapping? If not, and
+    agents commonly use the half-form, add the standalone or bigram. Fixed:
+    "mono repo"→developer, "pr automation"→devops, "commit lint"→devops,
+    "dev server"→frontend (probe 61, May 2026).
 """
 
 import sys
@@ -2416,6 +2440,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("model cards documentation", "ai standards"),         # bigram "model cards"→ai standards
     # Regression — generic model queries still route to ai.
     ("language model api", "ai"),                          # "model"→ai unchanged
+    # Probe pattern 61 — mono-repo spaced form / PR automation / security-testing collision /
+    #                     dev-server dead zone / commit-lint spaced form
+    #
+    # Dead zones:
+    # "mono repo tool" → raw_first ("mono" unmapped); "monorepo" was mapped but spaced form wasn't.
+    # "pr automation github" → "automation"→ai misfired; PR bots live in DevOps.
+    # "static application security testing" → "static"→frontend misfired; SAST lives in Security.
+    # "dev server vite" → raw_first ("dev" and "server" both unmapped); Vite/webpack-dev-server are Frontend.
+    # "commit lint setup" → "lint"→testing misfired; commitlint (and bare form) lives in DevOps.
+    ("mono repo tool", "developer"),                       # bigram "mono repo"→developer (spaced form)
+    ("mono repo architecture", "developer"),               # bigram "mono repo"→developer
+    ("pr automation tool", "devops"),                      # bigram "pr automation"→devops (beats "automation"→ai)
+    ("pr automation github", "devops"),                    # bigram "pr automation"→devops
+    ("pr bot review", "devops"),                           # bigram "pr bot"→devops
+    ("security testing pipeline", "security"),             # bigram "security testing"→security
+    ("static application security testing", "security"),   # bigram "security testing" fires at pos 1-2
+    ("dev server vite", "frontend"),                       # bigram "dev server"→frontend
+    ("dev server setup", "frontend"),                      # bigram "dev server"→frontend
+    ("commit lint setup", "devops"),                       # bigram "commit lint"→devops (beats "lint"→testing)
+    ("commit lint husky", "devops"),                       # bigram "commit lint"→devops
+    # Regressions — nearby tokens should not be affected.
+    ("security audit tool", "security"),                   # "security"→security unchanged
+    ("monorepo build tool", "developer"),                  # bare "monorepo"→developer unchanged
+    ("pull request automation", "devops"),                 # "pull request"→devops bigram unchanged
+    ("linting javascript", "testing"),                     # "linting"→testing unchanged
 ]
 
 
