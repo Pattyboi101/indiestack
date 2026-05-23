@@ -2603,6 +2603,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("liveblocks realtime", "api"),                # "liveblocks"→api unchanged
     ("model serving", "ai"),                       # bare "model"→ai unchanged (no "multi" prefix)
     ("yjs crdt", "api"),                           # "yjs"→api unchanged
+    # ── Probe pattern 66 (May 2026): UI-component second-pass + mind-map/collaborative dead zones ──
+    # "mind map tool" → "map"→maps misfired; bigram "mind map"→developer now fires first.
+    ("mind map tool", "developer"),                # bigram "mind map"→developer (beats "map"→maps)
+    ("mind map react", "developer"),               # bigram "mind map"→developer
+    # "mind mapping react" → both tokens unmapped → raw_first; bigram "mind mapping"→developer added.
+    ("mind mapping react", "developer"),           # bigram "mind mapping"→developer
+    ("mind mapping software", "developer"),        # bigram "mind mapping"→developer ("software" is stop word)
+    # "mindmap react" → "mindmap" unmapped → raw_first; bare "mindmap"→developer added.
+    ("mindmap open source", "developer"),          # bare "mindmap"→developer
+    ("mindmap javascript", "developer"),           # bare "mindmap"→developer (beats "javascript"→frontend)
+    # "markdown editor react" → "markdown"→documentation misfired; bigram "markdown editor"→frontend.
+    ("markdown editor react", "frontend"),         # bigram "markdown editor"→frontend (beats "markdown"→docs)
+    ("markdown editor wysiwyg", "frontend"),       # bigram "markdown editor"→frontend
+    # "calendar component" → "calendar"→scheduling misfired; bigram "calendar component"→frontend.
+    ("calendar component react", "frontend"),      # bigram "calendar component"→frontend (beats "calendar"→scheduling)
+    ("calendar component accessible", "frontend"), # bigram "calendar component"→frontend
+    # "toast notification react" → "toast"→notifications misfired; bigram "toast notification"→frontend.
+    ("toast notification react", "frontend"),      # bigram "toast notification"→frontend (beats "toast"→notifications)
+    ("toast notification library", "frontend"),    # bigram "toast notification"→frontend
+    # "breadcrumb navigation" → "breadcrumb" unmapped → raw_first; bare "breadcrumb"→frontend added.
+    ("breadcrumb navigation", "frontend"),         # bare "breadcrumb"→frontend
+    ("breadcrumb component react", "frontend"),    # bare "breadcrumb"→frontend
+    # "collaborative coding" → "collaborative"→api misfired; bigram "collaborative coding"→developer.
+    ("collaborative coding tool", "developer"),    # bigram "collaborative coding"→developer (beats "collaborative"→api)
+    ("collaborative coding ide", "developer"),     # bigram "collaborative coding"→developer
+    # Regressions — nearby tokens should not be affected.
+    ("map tiles leaflet", "maps"),                 # bare "map"→maps unchanged (map tiles are Maps & Location)
+    ("markdown parser", "documentation"),          # bare "markdown"→docs unchanged (no "editor" token)
+    ("calendar api", "scheduling"),                # bare "calendar"→scheduling unchanged (no "component" token)
+    ("toast pop up", "notifications"),             # bare "toast"→notifications unchanged (no "notification" token)
+    ("collaborative editing", "api"),              # bare "collaborative"→api unchanged (not "coding")
 ]
 
 

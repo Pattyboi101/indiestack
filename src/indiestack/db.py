@@ -8665,6 +8665,42 @@ _CAT_SYNONYMS: dict[str, str] = {
     # SurrealDB, FaunaDB, ArangoDB, EdgeDB support multiple data models in one engine.
     # Regression: "model serving"/"model inference" still route to ai (no "multi" prefix).
     "multi model": "database",               # bigram — "multi model database surreal", "multi model db fauna" → Database
+    # ── Probe pattern 66 (May 2026): UI-component second-pass + mind-map/collaborative dead zones ──
+    #
+    # Dead zones:
+    # "mind map tool" → bare "map"→maps fires at pos 1 (wrong; mind-map tools are Developer Tools).
+    # "mind mapping react" → both "mind" and "mapping" unmapped → raw_first "mind".
+    # "mindmap react" → "mindmap" unmapped → raw_first.
+    # "markdown editor react" → bare "markdown"→documentation fires (wrong; markdown editors
+    #   like TipTap, Milkdown, ProseMirror are frontend UI components).
+    # "calendar component" → bare "calendar"→scheduling fires (wrong; calendar UI components
+    #   like React Big Calendar, FullCalendar are frontend libs, not scheduling apps).
+    # "toast notification react" → bare "toast"→notifications fires (wrong; toast libs like
+    #   react-hot-toast, Sonner, react-toastify are frontend UI components).
+    # "breadcrumb navigation" → "breadcrumb" unmapped → raw_first.
+    # "collaborative coding" → bare "collaborative"→api fires (wrong; collaborative IDE tools
+    #   like CodeTogether, CodeWithMe, Duckly are Developer Tools).
+    #
+    # Frontend — mind map bigrams (Markmap, React Flow, mxGraph; bare "map" fires maps-location).
+    "mind map": "developer",                 # bigram — "mind map tool", "mind map react" → Developer Tools
+    "mind mapping": "developer",             # bigram — "mind mapping react", "mind mapping javascript" → Developer Tools
+    "mindmap": "developer",                  # bare — "mindmap open source", "mindmap react" → Developer Tools
+    # Frontend — "markdown editor" bigram overrides bare "markdown"→documentation for editor queries.
+    # ProseMirror, TipTap, Milkdown, Plate are frontend editor frameworks, not doc-site generators.
+    # Regression: bare "markdown" still routes to documentation (correct for "markdown parser/renderer").
+    "markdown editor": "frontend",           # bigram — "markdown editor react", "markdown editor wysiwyg" → Frontend
+    # Frontend — "calendar component" bigram overrides "calendar"→scheduling for UI-component queries.
+    # React Big Calendar, FullCalendar, React DayPicker are UI libs; Calendly/Cal.com are scheduling apps.
+    "calendar component": "frontend",        # bigram — "calendar component react", "calendar component accessible" → Frontend
+    # Frontend — "toast notification" bigram overrides "toast"→notifications for UI-component queries.
+    # react-hot-toast, Sonner, react-toastify are frontend libs; OneSignal/Novu are push notification services.
+    "toast notification": "frontend",        # bigram — "toast notification react", "toast notification library" → Frontend
+    # Frontend — "breadcrumb" bare token (React Breadcrumb, Radix Breadcrumb, MUI Breadcrumbs).
+    "breadcrumb": "frontend",                # bare — "breadcrumb navigation", "breadcrumb component react" → Frontend
+    # Developer Tools — "collaborative coding" bigram overrides "collaborative"→api.
+    # CodeTogether, CodeWithMe, Duckly, Tuple are dev-tools for pair programming, not API libraries.
+    # Regression: "collaborative editing" still correctly routes to api (Yjs, Liveblocks).
+    "collaborative coding": "developer",     # bigram — "collaborative coding tool", "collaborative coding ide" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
