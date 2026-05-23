@@ -6969,6 +6969,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — "keyboard shortcut" bigram overrides "shortcut"→project (Shortcut.com PM) for keyboard libs.
     # Regression: bare "shortcut" still routes to project (Shortcut.com); only bigram form overridden.
     "keyboard shortcut": "frontend",             # bigram — "keyboard shortcut react", "keyboard shortcut handler" → Frontend
+    # ── Probe pattern 67 (May 2026): cloud-function / DX / inner-dev-loop dead zones ──
+    #
+    # Dead zones:
+    # "cloud function" → "cloud" unmapped, "function" unmapped → raw_first
+    #   (AWS Lambda, GCP Cloud Functions, Cloudflare Workers → DevOps & Infrastructure).
+    # "dx developer experience" → "developer" stripped by _FRAMEWORK_QUERY_TERMS, "tool" in stop words,
+    #   "dx" and "experience" both unmapped → raw_first (DX tools, dev experience tooling → Developer Tools).
+    # "inner loop dev" → "inner"/"loop"/"dev" all unmapped → raw_first
+    #   (local dev workflow, inner dev loop tooling → Developer Tools).
+    #
+    # DevOps — "cloud function" bigram (AWS Lambda, GCP Cloud Functions, Cloudflare Workers).
+    # NOTE: bare "cloud" not added — too ambiguous (cloud storage → file, cloud database → database, etc.).
+    "cloud function": "devops",                  # bigram — "cloud function deploy", "cloud functions nodejs" → DevOps
+    "cloud functions": "devops",                 # plural — "cloud functions trigger", "cloud functions gcp" → DevOps
+    # Developer Tools — "dx" bare token (Developer Experience tooling, DX monitoring, dx.tips).
+    "dx": "developer",                           # bare — "dx developer experience", "dx tooling", "dx audit" → Developer Tools
+    # Developer Tools — "inner loop" bigram (local dev loop tools: Tilt, Skaffold, Garden, DevSpace).
+    "inner loop": "developer",                   # bigram — "inner loop dev workflow", "inner loop kubernetes" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

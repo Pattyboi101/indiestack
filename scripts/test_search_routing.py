@@ -715,6 +715,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("shortcut alternative", "project"),           # bare "shortcut"→project (Shortcut.com PM) unchanged
     ("contract testing pact", "testing"),          # "contract"→testing unchanged
     ("keyboard navigation component", "frontend"), # "navigation"→frontend; nav UI libs (react-router, tanstack-router)
+    # Probe pattern 67 — cloud-function / DX / inner-dev-loop dead zones.
+    # "cloud function" → "cloud"/"function" both unmapped → raw_first; serverless (Lambda, CF Workers) → DevOps.
+    # "dx developer experience" → "developer" stripped by _FRAMEWORK_QUERY_TERMS; "dx" unmapped → raw_first.
+    # "inner loop dev" → all tokens unmapped → raw_first; local dev workflow tools → Developer Tools.
+    ("cloud function deploy", "devops"),           # bigram "cloud function"→devops (AWS Lambda, GCP CF)
+    ("cloud functions nodejs", "devops"),          # "cloud functions"→devops (plural form)
+    ("cloud functions gcp", "devops"),             # bigram fires at position 0
+    ("dx developer experience", "developer"),      # "dx"→developer; dev experience tooling
+    ("dx tooling", "developer"),                   # "dx"→developer (bare token)
+    ("dx audit", "developer"),                     # "dx"→developer
+    ("inner loop dev workflow", "developer"),      # bigram "inner loop"→developer; Tilt, Skaffold
+    ("inner loop kubernetes", "developer"),        # bigram "inner loop"→developer
+    # Regressions — nearby entries unchanged.
+    ("serverless deploy", "devops"),               # "serverless"→devops unchanged
+    ("lambda function", "devops"),                 # "lambda"→devops unchanged (no "cloud" needed)
+    ("edge function", "devops"),                   # "edge"→devops unchanged
 ]
 
 
