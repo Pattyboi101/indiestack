@@ -7164,6 +7164,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Monitoring — Prometheus ecosystem tools
     "alertmanager": "monitoring",           # bare — "alertmanager config", "alertmanager alternative" → Monitoring
     # NOTE: "prometheus"→monitoring already mapped above (line ~3712); not repeated here.
+    # ── Probe pattern 76 (May 2026): database performance / query optimization dead zones ──
+    #
+    # Dead zones:
+    # "explain plan" → raw_first "explain" (PostgreSQL EXPLAIN / EXPLAIN ANALYZE → Database).
+    # "vacuum analyze" → raw_first "vacuum" (PostgreSQL VACUUM ANALYZE maintenance → Database).
+    # "index optimization" → raw_first "index" (database index tuning → Database).
+    # NOTE: "connection pool/pooling" → database correctly (via bare "pool"/"pooling"→database).
+    # NOTE: "query plan"/"slow query" → database correctly (via "query"→database).
+    #
+    # Database — PostgreSQL query analysis (EXPLAIN, EXPLAIN ANALYZE)
+    "explain": "database",                  # bare — "explain plan", "explain analyze", "explain query" → Database
+    "vacuum": "database",                   # bare — "vacuum analyze postgres", "autovacuum tuning" → Database
+    "index": "database",                    # bare — "index optimization", "database index", "partial index" → Database
 }
 
 _FTS_STOP_WORDS = {

@@ -850,6 +850,15 @@ TEST_CASES: list[tuple[str, str]] = [
     ("error budget slo", "monitoring"),            # bare "error"→monitoring unchanged
     ("slo service level", "monitoring"),           # bare "slo"→monitoring unchanged
     ("incident response", "monitoring"),           # bare "incident"→monitoring unchanged
+    # ── Probe 76 (May 2026): database performance / query optimization dead zones ──
+    # Database — PostgreSQL query analysis / index tuning
+    ("explain plan postgres", "database"),         # bare "explain"→database
+    ("explain analyze query", "database"),         # bare "explain"→database
+    ("vacuum analyze postgres", "database"),       # bare "vacuum"→database
+    ("index optimization postgres", "database"),   # bare "index"→database
+    ("partial index postgres", "database"),        # bare "index"→database
+    # Regressions — search keeps its priority over bare "index"
+    ("elasticsearch index", "search"),             # bare "elasticsearch"→search fires before "index"→database
     # ── Probe 74 (May 2026): LSP / IDE / code editor dead zones ──
     # Developer — Language Server Protocol
     ("language server protocol", "developer"),     # bigram "language server"→developer
