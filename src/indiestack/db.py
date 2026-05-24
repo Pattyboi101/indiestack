@@ -7034,6 +7034,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — "mutation hook" bigram overrides bare "mutation"→testing (mutation-testing collision)
     # Context: React/TanStack Query "useMutation" hook; mutation-testing tools (Stryker) are Testing.
     "mutation hook": "frontend",            # bigram — "mutation hook react", "usemutation hook" → Frontend
+    # ── Probe pattern 70 (May 2026): security headers / policy-agent / dependency-scanning dead zones ──
+    #
+    # Dead zones:
+    # "content security policy" → cms via bare "content"→cms (highest-priority token at pos 0).
+    #   CSP (Content Security Policy) is a web security header → Security Tools (helmet.js, h3).
+    #   Bigram "content security" overrides bare "content"→cms and fires at pos [0,1].
+    # "click jacking prevention" → cli via bare "click"→cli (Python Click collision at pos 0).
+    #   Clickjacking is a UI-redress security attack → Security Tools (X-Frame-Options, CSP).
+    #   Bare "clickjacking" (compound) and bigram "click jacking" added → security.
+    # "dependency scanning" → developer via bare "dependency"→developer (dep mgmt tools are DevTools).
+    #   Dependency vulnerability scanning (Snyk, OWASP Dependency-Check, Trivy) → Security Tools.
+    #   Bigram "dependency scanning" overrides bare "dependency"→developer.
+    # "open policy agent" → ai via bare "agent"→ai (LLM agent collision; "open" stripped as stop word).
+    #   OPA (Open Policy Agent) is a policy-as-code engine → Security Tools (not an AI agent).
+    #   Bigrams "policy agent"→security and bare "rego"→security added.
+    #
+    # Security — Content Security Policy (CSP) headers
+    "content security": "security",        # bigram — "content security policy", "content security header" → Security
+    # Security — clickjacking UI-redress attack prevention
+    "clickjacking": "security",             # compound — "clickjacking prevention", "clickjacking protection" → Security
+    "click jacking": "security",            # spaced — "click jacking attack", "click jacking prevention" → Security
+    # Security — dependency vulnerability scanning (overrides bare "dependency"→developer)
+    "dependency scanning": "security",      # bigram — "dependency scanning tool", "dependency scanning snyk" → Security
+    "dependency audit": "security",         # bigram — "dependency audit npm", "dependency audit vulnerabilities" → Security
+    # Security — OPA / policy-as-code (overrides bare "agent"→ai for policy agent queries)
+    "policy agent": "security",             # bigram — "open policy agent", "policy agent rego" → Security (OPA)
+    "rego": "security",                     # bare — "rego policy", "rego rule language" → Security (OPA Rego DSL)
 }
 
 _FTS_STOP_WORDS = {

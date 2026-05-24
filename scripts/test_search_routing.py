@@ -771,6 +771,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("react-query alternative", "frontend"),       # compound "react-query"→frontend works correctly
     ("tanstack query setup", "frontend"),          # "tanstack"→frontend fires correctly
     ("swr data fetching", "frontend"),             # "swr"→frontend fires correctly
+    # ── Probe 70 (May 2026): security headers / policy-agent / dependency-scanning dead zones ──
+    # Security — CSP (Content Security Policy) headers
+    ("content security policy", "security"),       # bigram "content security"→security overrides bare "content"→cms
+    ("content security header", "security"),       # bigram "content security"→security
+    # Security — clickjacking prevention
+    ("clickjacking prevention", "security"),       # bare "clickjacking"→security
+    ("clickjacking protection", "security"),       # bare "clickjacking"→security
+    ("click jacking attack", "security"),          # bigram "click jacking"→security overrides bare "click"→cli
+    # Security — dependency vulnerability scanning
+    ("dependency scanning snyk", "security"),      # bigram "dependency scanning"→security overrides bare "dependency"→developer
+    ("dependency audit npm", "security"),          # bigram "dependency audit"→security
+    # Security — OPA policy-as-code (overrides bare "agent"→ai)
+    ("open policy agent", "security"),             # bigram "policy agent"→security overrides bare "agent"→ai
+    ("policy agent rego", "security"),             # bigram "policy agent"→security
+    ("rego policy rule", "security"),              # bare "rego"→security
+    # Regressions — nearby mappings unchanged
+    ("content marketing tool", "cms"),             # bare "content"→cms unchanged (no "security" adjacent)
+    ("dependency management npm", "developer"),    # bare "dependency"→developer unchanged (no "scanning"/"audit" adjacent)
 ]
 
 
