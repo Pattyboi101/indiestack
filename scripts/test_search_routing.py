@@ -2771,6 +2771,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("date picker react", "frontend"),             # "date"→frontend unchanged (not "time picker")
     ("structured logs", "logging"),                # "logs"→logging unchanged (not "structured data")
     ("structured output llm", "ai"),               # "output"→ai fires; "structured" stops before "output"
+    # ── Probe pattern 73 (May 2026): "click" UI collision / file-upload component / WebGL graphics / masked-input ──
+    # WebGL / graphics dead zones — bare tokens fired raw_first.
+    ("glsl shader editor", "frontend"),            # bare "glsl"→frontend (WebGL shader language)
+    ("shader programming webgl", "frontend"),      # bare "shader"→frontend (overrides raw_first)
+    ("opengl library javascript", "frontend"),     # bare "opengl"→frontend (OpenGL → WebGL context)
+    # File upload / image upload UI component collision — "upload"→file, "image"→media fire wrong.
+    ("file upload react component", "frontend"),   # bigram "file upload"→frontend (overrides "upload"→file)
+    ("file upload dropzone library", "frontend"),  # bigram "file upload"→frontend (fires before "upload"→file)
+    ("image upload widget react", "frontend"),     # bigram "image upload"→frontend (overrides "image"→media)
+    ("image editor javascript react", "frontend"), # bigram "image editor"→frontend (overrides "image"→media)
+    # "click" UI collision — bare "click"→cli (Python Click) fires for non-CLI UI/analytics queries.
+    # NOTE: "click tracking" bigram CANNOT fire — "tracking" is in _FTS_STOP_WORDS.
+    ("right click menu react", "frontend"),        # bigram "right click"→frontend (context menus; overrides "click"→cli)
+    ("right click context menu", "frontend"),      # bigram "right click"→frontend
+    ("click outside hook react", "frontend"),      # bigram "click outside"→frontend (overrides "click"→cli)
+    ("use click outside react", "frontend"),       # bigram "click outside"→frontend
+    ("click heatmap analytics", "analytics"),      # bigram "click heatmap"→analytics (overrides "click"→cli)
+    # Masked input / number input UI components — raw_first or wrong category without bigrams.
+    ("masked input react", "frontend"),            # bigram "masked input"→frontend (imask.js, Cleave.js)
+    ("masked input component", "frontend"),        # bare "masked"→frontend
+    ("number input component react", "frontend"),  # bigram "number input"→frontend (overrides "number"→developer)
+    ("number format react", "frontend"),           # bigram "number format"→frontend (react-number-format)
+    ("photo crop react", "frontend"),              # bigram "photo crop"→frontend (Cropper.js, react-image-crop)
+    # Regressions — existing mappings must not be affected.
+    ("click python cli", "cli"),                   # bare "click"→cli unchanged (Python Click framework)
+    ("click map tool", "analytics"),               # "click map" bigram→analytics unchanged
+    ("upload file storage api", "file"),           # bare "upload"→file still fires when no bigram at i=0
+    ("number parsing utility", "developer"),       # bare "number"→developer unchanged (no input/format bigram)
+    ("image optimization cdn", "file"),            # "image optimization" bigram→file still fires
+    ("shader editor vscode", "frontend"),          # "shader"→frontend + "editor" both route frontend
 ]
 
 

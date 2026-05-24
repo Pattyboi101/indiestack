@@ -2559,6 +2559,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "availability": "scheduling",
     # File / storage synonyms
     "upload": "file",
+    # File upload UI component bigrams — "upload"→file fires for bare queries, but these override
+    # for embedded UI component searches (react-dropzone, FilePond, Uppy, Filepond).
+    "file upload": "frontend",      # bigram — overrides "upload"→file for UI component queries
+    "image upload": "frontend",     # bigram — overrides "image"→media for upload widget queries
+    "image editor": "frontend",     # bigram — embedded image editor component (Filerobot, react-image-editor)
     "s3": "file",
     "cdn": "devops",    # CDN → DevOps & Infrastructure (Cloudflare, BunnyCDN, Fastly live there)
     "media": "media",  # "media server", "media streaming" → Media Servers (not file storage)
@@ -3579,6 +3584,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "schema": "developer",          # "json schema validator", "schema definition" → Developer Tools
     # Number / currency formatting — numeral.js, accounting.js, Intl.NumberFormat wrappers
     "number": "developer",          # "number formatting", "number parsing library" → Developer Tools (was raw_first)
+    # Number/masked input UI components — bigrams override "number"→developer for form widget queries
+    "number input": "frontend",     # bigram — number input UI (react-number-format, cleave.js numeric; overrides "number"→developer)
+    "number format": "frontend",    # bigram — react-number-format, numeral.js as UI widget (overrides "number"→developer)
+    "masked": "frontend",           # masked inputs (imask.js, Cleave.js, react-imask) → Frontend Frameworks
+    "masked input": "frontend",     # bigram — "masked input react", "masked input component" → Frontend Frameworks
+    "photo crop": "frontend",       # bigram — Cropper.js, react-image-crop (overrides raw_first "photo")
     # Frontend — infinite scroll / virtual list patterns
     "infinite": "frontend",         # "infinite scroll", "infinite loading" → Frontend Frameworks
     "virtual": "frontend",          # "virtual list", "virtual scroll", "react-virtual" → Frontend Frameworks
@@ -4300,6 +4311,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — WebGL (lower level than Three.js, but queried directly)
     "webgl": "frontend",            # WebGL — browser 3D graphics API; queries route to Three.js/Babylon.js
     "babylon": "frontend",          # Babylon.js — WebGL-based 3D engine (alternative to Three.js, 23k★)
+    "shader": "frontend",           # WebGL shader queries → Three.js/Babylon.js/React Three Fiber context
+    "glsl": "frontend",             # GLSL — WebGL shader language; "glsl editor", "glsl tutorial" → Frontend
+    "opengl": "frontend",           # OpenGL → browser WebGL graphics; "opengl library" → Frontend Frameworks
     # Time tracking — tools like Toggl, Harvest, Clockify (project-management category)
     "toggl": "project",             # Toggl Track — most-searched time tracker
     "harvest": "project",           # Harvest — time tracking + invoicing
@@ -7114,8 +7128,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Localization — missing platforms
     "tolgee": "localization",      # Tolgee — open-source i18n with in-context translation; "tolgee alternative" → Localization
     "localazy": "localization",    # Localazy — translation management platform; "localazy alternative" → Localization
-    "transifex": "localization",   # Transifex — popular enterprise i18n platform; "transifex alternative" → Localization
-    "phrase": "localization",      # Phrase (fka PhraseApp) — i18n strings + TMS; "phrase alternative" → Localization
     # SMS/telephony APIs — complement to twilio/vonage
     "sinch": "notifications",      # Sinch — cloud communication API (SMS/voice/WhatsApp); "sinch alternative" → Notifications
     "plivo": "notifications",      # Plivo — SMS and voice API; "plivo alternative" → Notifications
@@ -8019,6 +8031,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "heat maps": "analytics",            # plural — "heat maps user behavior" → Analytics & Metrics
     "scroll map": "analytics",           # "scroll map tool", "scroll map heatmap" → Analytics & Metrics
     "click map": "analytics",            # "click map tool", "click map heatmap" → Analytics & Metrics (beats "click"→cli)
+    # "click" UI collision bigrams — bare "click"→cli (Python Click) fires for non-CLI queries; bigrams override.
+    # NOTE: "click tracking" bigram CANNOT fire — "tracking" is in _FTS_STOP_WORDS.
+    "right click": "frontend",           # bigram — context menu UI libs (Radix, Headless UI; overrides "click"→cli)
+    "click outside": "frontend",         # bigram — useClickOutside / onClickOutside hooks (overrides "click"→cli)
+    "click heatmap": "analytics",        # bigram — heatmap analytics tools (Hotjar, Clarity; overrides "click"→cli)
     # AI — LLM token economics: "token"→authentication fires first for bare "token" queries.
     # "token usage" and "token count" are AI/LLM concerns (Helicone, LangSmith, OpenMeter).
     # Bigrams override "token"→authentication so these land in AI & Automation.
@@ -8451,7 +8468,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "meta tag" spaced bigrams — "meta"→ai fires without bigram; meta tags are SEO territory.
     # Tools: metatags.io, Open Graph Preview, MetaTags.io → SEO Tools.
     "meta tag": "seo",                          # bigram — "meta tag generator", "meta tag preview" → SEO Tools
-    "meta tags": "seo",                         # plural — "meta tags generator", "meta tags checker" → SEO Tools
     #
     # NOTE: "open graph" bigram intentionally NOT added — "open" is in _FTS_STOP_WORDS and is
     # always stripped, so the bigram can never fire. "og image" / "og meta" queries route
