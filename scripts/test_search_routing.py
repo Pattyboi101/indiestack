@@ -2671,6 +2671,34 @@ TEST_CASES: list[tuple[str, str]] = [
     ("model deployment cloud", "ai"),              # bare "model"→ai unchanged (not followed by "context")
     ("react context api", "frontend"),             # "react"→frontend fires before bigram check (framework term)
     ("context menu react", "frontend"),            # bare "context"→frontend unchanged (not followed by "protocol")
+    # ── Probe pattern 69 (May 2026): DB GUI / distributed SQL / VoIP / big-data dead zones ──
+    # "pgadmin" → raw_first dead zone; DB GUI tools live in Developer Tools (like TablePlus, DBeaver).
+    ("pgadmin alternative", "developer"),          # bare "pgadmin"→developer
+    ("pgadmin open source", "developer"),          # bare "pgadmin"→developer
+    # "trino" / "presto" → raw_first dead zones; distributed SQL engines belong in Database.
+    ("trino alternative", "database"),             # bare "trino"→database
+    ("trino sql", "database"),                     # bare "trino"→database
+    ("presto alternative", "database"),            # bare "presto"→database
+    ("presto distributed sql", "database"),        # bare "presto"→database (beats "sql"→database)
+    # "voip" / "sip" → raw_first dead zones; VoIP tools live in Notifications (Twilio, Telnyx, Vonage).
+    ("voip api", "notifications"),                 # bare "voip"→notifications (beats "api"→api at pos 1)
+    ("voip sdk nodejs", "notifications"),          # bare "voip"→notifications fires first
+    ("sip server", "notifications"),               # bare "sip"→notifications
+    ("sip trunk provider", "notifications"),       # bare "sip"→notifications fires first
+    # "hbase" / "druid" / "rethinkdb" / "janusgraph" / "hadoop" → raw_first dead zones.
+    ("hbase alternative", "database"),             # bare "hbase"→database
+    ("hbase nosql", "database"),                   # bare "hbase"→database
+    ("druid alternative", "database"),             # bare "druid"→database
+    ("druid olap", "database"),                    # bare "druid"→database (beats "olap"→database)
+    ("rethinkdb alternative", "database"),         # bare "rethinkdb"→database
+    ("janusgraph graph", "database"),              # bare "janusgraph"→database
+    ("hadoop mapreduce", "background"),            # bare "hadoop"→background
+    ("hadoop alternative", "background"),          # bare "hadoop"→background
+    # Regressions — nearby tokens must not be affected.
+    ("tableplus alternative", "developer"),        # "tableplus"→developer unchanged (already mapped)
+    ("dbeaver alternative", "developer"),          # "dbeaver"→developer unchanged (already mapped)
+    ("kafka alternative", "message"),              # "kafka"→message unchanged (not Hadoop)
+    ("voip integration", "notifications"),         # "voip"→notifications (integration is stop word)
 ]
 
 

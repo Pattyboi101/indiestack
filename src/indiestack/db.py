@@ -8756,6 +8756,35 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Bare "watcher" added for standalone queries; bigram "file watcher" closes the compound form.
     "file watcher": "developer",             # bigram — "file watcher nodejs", "file watcher rust" → Developer Tools
     "watcher": "developer",                  # bare — "filesystem watcher", "watcher react" → Developer Tools
+    # ── Probe pattern 69 (May 2026): DB GUI / distributed SQL / VoIP / big-data dead zones ──
+    #
+    # Dead zones:
+    # "pgadmin" → raw_first (pgAdmin is a PostgreSQL DB admin GUI — same tier as TablePlus/DBeaver → Developer Tools).
+    # "trino" → raw_first (Trino is a distributed SQL query engine → Database, like ClickHouse/DuckDB).
+    # "presto" → raw_first (Presto — Meta's distributed SQL engine, predecessor to Trino → Database).
+    # "voip" → raw_first (VoIP tools live in Notifications — Twilio Voice, Telnyx, Vonage Voice).
+    # "sip" → raw_first (SIP is the VoIP signalling protocol → Notifications).
+    # "hbase" → raw_first (Apache HBase — distributed wide-column NoSQL → Database).
+    # "druid" → raw_first (Apache Druid — real-time OLAP analytics DB → Database).
+    # "rethinkdb" → raw_first (RethinkDB — real-time document DB → Database).
+    # "janusgraph" → raw_first (JanusGraph — distributed graph database → Database).
+    # "hadoop" → raw_first (Apache Hadoop — big data batch processing → Background Jobs / ETL).
+    #
+    # Developer Tools — DB GUI/admin clients (pgAdmin alongside TablePlus, DBeaver).
+    "pgadmin": "developer",                  # pgAdmin — PostgreSQL web + desktop admin tool → Developer Tools
+    # Database — distributed SQL query engines (same tier as ClickHouse, DuckDB, OLAP DBs).
+    "trino": "database",                     # Trino — distributed SQL over S3/Iceberg/Hive → Database
+    "presto": "database",                    # Presto — Meta's distributed SQL engine (Trino ancestor) → Database
+    # Notifications — VoIP / telephony (Twilio Voice, Telnyx, Vonage Voice, Plivo live in Notifications).
+    "voip": "notifications",                 # VoIP — "voip api", "voip sdk", "voip alternative" → Notifications
+    "sip": "notifications",                  # SIP — "sip server", "sip trunk", "sip provider" → Notifications
+    # Database — additional wide-column / graph / OLAP / document DBs.
+    "hbase": "database",                     # Apache HBase — distributed wide-column store → Database
+    "druid": "database",                     # Apache Druid — real-time OLAP analytics database → Database
+    "rethinkdb": "database",                 # RethinkDB — real-time document DB (archived but queried) → Database
+    "janusgraph": "database",               # JanusGraph — distributed graph database → Database
+    # Background Jobs — Hadoop is a big-data batch processing framework (ETL/pipeline tier).
+    "hadoop": "background",                  # Apache Hadoop — MapReduce batch processing → Background Jobs
 }
 
 _FTS_STOP_WORDS = {
