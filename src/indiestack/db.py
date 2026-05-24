@@ -8701,6 +8701,36 @@ _CAT_SYNONYMS: dict[str, str] = {
     # CodeTogether, CodeWithMe, Duckly, Tuple are dev-tools for pair programming, not API libraries.
     # Regression: "collaborative editing" still correctly routes to api (Yjs, Liveblocks).
     "collaborative coding": "developer",     # bigram — "collaborative coding tool", "collaborative coding ide" → Developer Tools
+    # ── Probe pattern 67 (May 2026): ETL / metrics / billing / back-office dead zones ──
+    #
+    # Dead zones:
+    # "extract transform load" → bare "load"→testing fires (wrong; ETL pipelines like
+    #   dbt, Airbyte, Prefect belong in Background Jobs, not test runners).
+    # "metrics collection" → bare "metrics"→analytics fires (wrong; infrastructure metrics
+    #   tools like Prometheus, VictoriaMetrics, StatsD are Monitoring, not analytics dashboards).
+    # "usage billing" / "metered billing" → bare "usage"/"metered"→invoicing fires (wrong;
+    #   usage-based billing like Metronome, Orb, Lago are Payments tools).
+    # "backoffice" → unmapped → raw_first (wrong; back-office admin builders like Retool,
+    #   Appsmith, Tooljet are Developer Tools).
+    #
+    # Background Jobs — ETL bigrams (bare "load" fires testing via "load testing").
+    "transform load": "background",          # bigram — "extract transform load", "transform load pipeline" → Background Jobs
+    "extract transform": "background",       # bigram — "extract transform load", "extract transform pipeline" → Background Jobs
+    # Monitoring — "metrics collection" bigram overrides "metrics"→analytics for infra queries.
+    # Prometheus/StatsD/Telegraf are Monitoring tools; bare "metrics" still fires analytics (correct
+    # for product-metrics queries like "user metrics dashboard").
+    "metrics collection": "monitoring",      # bigram — "metrics collection open source", "metrics collection agent" → Monitoring
+    "metrics server": "monitoring",          # bigram — "metrics server prometheus", "metrics server k8s" → Monitoring
+    # Payments — usage-based / metered billing bigrams override "usage"/"metered"→invoicing.
+    # Metronome, Orb, Lago, Stripe Billing Meters are Payments; bare "usage" still fires invoicing
+    # (acceptable for invoicing-adjacent queries).
+    "usage billing": "payments",             # bigram — "usage billing saas", "usage billing api" → Payments
+    "usage based": "payments",               # bigram — "usage based pricing", "usage based billing" → Payments
+    "metered billing": "payments",           # bigram — "metered billing stripe", "metered billing open source" → Payments
+    "consumption billing": "payments",       # bigram — "consumption billing", "consumption based billing" → Payments
+    # Developer Tools — back-office admin builders (Retool, Appsmith, Tooljet, Budibase).
+    "backoffice": "developer",               # bare — "backoffice builder", "backoffice admin react" → Developer Tools
+    "back office": "developer",              # bigram — "back office builder", "back office tool" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

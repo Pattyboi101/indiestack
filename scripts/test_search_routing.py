@@ -756,9 +756,9 @@ TEST_CASES: list[tuple[str, str]] = [
     # Desktop app frameworks
     ("electron alternative", "frontend"),           # "electron" → frontend
     ("tauri app framework", "frontend"),            # "tauri" → frontend
-    # Usage-based / metered billing
-    ("usage based billing", "invoicing"),           # "usage" → invoicing (metered billing category)
-    ("metered billing api", "invoicing"),           # "metered" → invoicing
+    # Usage-based / metered billing — now routed to payments via bigrams (probe 67)
+    ("usage based billing", "payments"),            # bigram "usage based"→payments (Metronome, Orb, Lago)
+    ("metered billing api", "payments"),            # bigram "metered billing"→payments
     # Screen recording / UX analytics (bigram "screen recording" → analytics)
     ("screen recording tool", "analytics"),         # bigram "screen recording" → analytics
     ("ux recording tool", "analytics"),             # "recording" → analytics
@@ -2634,6 +2634,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("calendar api", "scheduling"),                # bare "calendar"→scheduling unchanged (no "component" token)
     ("toast pop up", "notifications"),             # bare "toast"→notifications unchanged (no "notification" token)
     ("collaborative editing", "api"),              # bare "collaborative"→api unchanged (not "coding")
+    # ── Probe pattern 67 (May 2026): ETL / metrics / billing / back-office dead zones ──
+    # "extract transform load" → bare "load"→testing misfired; bigram "transform load"→background.
+    ("extract transform load", "background"),      # bigram "transform load"→background (beats "load"→testing)
+    ("extract transform pipeline", "background"),  # bigram "extract transform"→background
+    # "metrics collection" → bare "metrics"→analytics misfired; bigram "metrics collection"→monitoring.
+    ("metrics collection open source", "monitoring"),  # bigram "metrics collection"→monitoring (beats "metrics"→analytics)
+    ("metrics server k8s", "monitoring"),          # bigram "metrics server"→monitoring
+    # "metered billing" / "usage billing" → "metered"/"usage"→invoicing misfired; bigrams→payments.
+    ("metered billing stripe", "payments"),        # bigram "metered billing"→payments (beats "metered"→invoicing)
+    ("metered billing open source", "payments"),   # bigram "metered billing"→payments
+    ("usage billing saas", "payments"),            # bigram "usage billing"→payments (beats "usage"→invoicing)
+    ("usage based pricing", "payments"),           # bigram "usage based"→payments
+    ("consumption billing api", "payments"),       # bigram "consumption billing"→payments
+    # "backoffice" → unmapped → raw_first; bare "backoffice"→developer added.
+    ("backoffice builder", "developer"),           # bare "backoffice"→developer
+    ("back office admin react", "developer"),      # bigram "back office"→developer
+    # Regressions — nearby tokens should not be affected.
+    ("load testing nodejs", "testing"),            # bare "load"→testing unchanged (not preceded by "transform")
+    ("metrics dashboard react", "analytics"),      # bare "metrics"→analytics unchanged (no "collection"/"server" token)
+    ("usage tracking", "invoicing"),               # bare "usage"→invoicing unchanged (not preceded by "based"/"billing")
 ]
 
 
