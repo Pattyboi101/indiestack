@@ -8932,6 +8932,39 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Regressions: "image text overlay" → ai (edge case; dominated by AI/OCR use case in IndieStack context).
     "image text": "ai",                 # bigram — "image to text api" (stop-word-stripped) → AI & Automation (OCR)
     "pdf text": "ai",                   # bigram — "pdf to text python" (stop-word-stripped) → AI & Automation
+    # ── Probe pattern 78 (May 2026): business intelligence / headless automation / kill switch / user behavior / multivariate dead zones ──
+    #
+    # Dead zones:
+    # "business intelligence" → raw_first "business" — bare "bi"→analytics existed but the spaced bigram was missing.
+    #   BI tools (Metabase, Redash, Superset, Lightdash, Evidence) live in Analytics & Metrics.
+    #   Fix: bigram "business intelligence" → analytics.
+    #
+    # "headless automation" → cms via bare "headless"→cms collision.
+    #   Headless browser automation tools (Puppeteer, Playwright-cluster, Browserless) live in Testing.
+    #   Fix: bigram "headless automation" → testing (pre-pass bigram fires before bare "headless"→cms).
+    #
+    # "kill switch" → raw_first "kill" — no synonym existed for kill switch feature flag terminology.
+    #   Kill switch is a canonical feature-flag pattern (instant disable without redeploy).
+    #   Fix: bigram "kill switch" → feature-flags.
+    #
+    # "user behavior" → raw_first "user" — bare "user" has no synonym; bigram was missing.
+    #   User behaviour analytics tools (PostHog, Mixpanel, FullStory, Heap) live in Analytics.
+    #   "user behavior tracking" reduces to ["user","behavior"] after stop-word strip → bigram fires.
+    #   Fix: bigram "user behavior" → analytics.
+    #
+    # "multivariate" → raw_first — no bare token mapping existed.
+    #   Multivariate testing (A/B + multiple variants) is the core use case of Feature Flag tools.
+    #   Fix: bare "multivariate" → feature-flags.
+    #
+    # Analytics — BI spaced compound form
+    "business intelligence": "analytics",  # bigram — "business intelligence tool", "business intelligence dashboard" → Analytics
+    # Testing — headless automation override (bigram fires before bare "headless"→cms)
+    "headless automation": "testing",      # bigram — "headless automation puppeteer", "headless automation server" → Testing
+    # Feature Flags — kill switch + multivariate testing
+    "kill switch": "feature",              # bigram — "kill switch feature flag", "kill switch deployment" → Feature Flags
+    "multivariate": "feature",            # bare — "multivariate test", "multivariate a/b testing" → Feature Flags
+    # Analytics — user behavior tracking (PostHog, FullStory, Heap, Mixpanel use-case)
+    "user behavior": "analytics",         # bigram — "user behavior tracking", "user behavior analytics" → Analytics
 }
 
 _FTS_STOP_WORDS = {

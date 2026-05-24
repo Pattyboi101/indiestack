@@ -2920,6 +2920,30 @@ TEST_CASES: list[tuple[str, str]] = [
     ("image captioning api", "ai"),                # bigram "image captioning"→ai unchanged (probe 76)
     ("pdf viewer react", "frontend"),              # bigram "pdf viewer"→frontend unchanged
     ("pdf parsing python", "ai"),                  # bigram "pdf parsing"→ai unchanged (probe 76)
+    # ── Probe pattern 78 (May 2026): business intelligence / headless automation / kill switch / user behavior / multivariate dead zones ──
+    # "business intelligence" bigram → Analytics (bare "business"→raw_first was missing the spaced form).
+    ("business intelligence tool", "analytics"),   # bigram "business intelligence"→analytics (Metabase, Redash, Superset)
+    ("business intelligence dashboard", "analytics"), # bigram "business intelligence"→analytics
+    # "headless automation" bigram → Testing (overrides bare "headless"→cms).
+    ("headless automation puppeteer", "testing"),  # bigram "headless automation"→testing (Playwright, Browserless)
+    ("headless automation server", "testing"),     # bigram "headless automation"→testing
+    # "kill switch" bigram → Feature Flags (kill switch = instant feature disable without redeploy).
+    ("kill switch feature", "feature"),            # bigram "kill switch"→feature-flags
+    ("kill switch deployment", "feature"),         # bigram "kill switch"→feature-flags
+    # "multivariate" bare token → Feature Flags (A/B + multiple variants experimentation).
+    ("multivariate test", "feature"),             # bare "multivariate"→feature-flags
+    ("multivariate testing react", "feature"),    # bare "multivariate"→feature-flags
+    # "user behavior" bigram → Analytics (PostHog, FullStory, Heap, Mixpanel behavioural analytics).
+    ("user behavior tracking", "analytics"),      # bigram "user behavior"→analytics (stop-word "tracking" stripped)
+    ("user behavior analytics", "analytics"),     # bigram "user behavior"→analytics
+    # Regressions — nearby routes must not change.
+    ("business logic validation", "developer"),    # "validation"→developer unchanged; "business"→raw_first doesn't override
+    ("headless cms", "cms"),                       # bare "headless"→cms unchanged for headless-cms queries
+    ("headless browser testing", "testing"),       # bigram "headless browser"→testing unchanged
+    ("feature flag toggle", "feature"),            # bare "feature"→feature-flags unchanged
+    ("ab testing tool", "feature"),                # bare "ab"→feature-flags unchanged (probe 77 region)
+    ("user research tool", "feedback"),            # bigram "user research"→feedback unchanged (probe 35)
+    ("user authentication", "authentication"),     # "user"→raw_first; "authentication"→auth fires second token unchanged
 ]
 
 
