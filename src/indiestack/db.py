@@ -7107,6 +7107,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "dashboarding": "analytics",            # bare — "dashboarding tool", "dashboarding open source" → Analytics & Metrics
     # DevOps — PR automation (Mergify, Bors-ng, Kodiak, GitHub Actions; overrides bare "automation"→ai)
     "pr automation": "devops",              # bigram — "pr automation mergify", "pr automation github" → DevOps
+    # ── Probe pattern 73 (May 2026): API testing / HTTP mocking / stub dead zones ──
+    #
+    # Dead zones:
+    # "api stub server" → api (bare "api"→api fires at pos 0; stub servers → Testing: WireMock, Prism).
+    # "http mock" → api (bare "http"→api fires at pos 0; HTTP mocking → Testing: nock, msw, httpretty).
+    # "api testing tool" → api (bare "api"→api fires; "tool" stripped → meaningful=["api","testing"];
+    #   bigram "api testing"→testing needed to override "api"→api for testing queries).
+    # Strategy: bigrams that start with "api" or "http" override bare first-token routing.
+    #
+    # Testing — API stub / service virtualization (WireMock, Prism, Mountebank, Hoverfly)
+    "api stub": "testing",                  # bigram — "api stub server", "api stub wir emock" → Testing
+    "stub server": "testing",               # bigram — "stub server nodejs", "stub server wiremock" → Testing
+    # Testing — HTTP mocking (nock, msw, httpretty, responses; overrides bare "http"→api)
+    "http mock": "testing",                 # bigram — "http mock nodejs", "http mock python" → Testing
+    "http mocking": "testing",              # bigram — "http mocking library", "http mocking jest" → Testing
+    # Testing — API testing (overrides bare "api"→api for testing-intent queries)
+    "api testing": "testing",               # bigram — "api testing tool", "api testing postman" → Testing
 }
 
 _FTS_STOP_WORDS = {

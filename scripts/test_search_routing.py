@@ -821,6 +821,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("multi tenancy database", "authentication"),  # bigram "multi tenancy"→auth overrides bare "multi"→frontend
     ("multi player game server", "api"),           # bigram "multi player"→api overrides bare "multi"→frontend
     ("workflow automation n8n", "ai"),             # bare "workflow"→ai unchanged (workflow automation probe)
+    # ── Probe 73 (May 2026): API testing / HTTP mocking / stub dead zones ──
+    # Testing — API stub / service virtualization
+    ("api stub server", "testing"),                # bigram "api stub"→testing overrides bare "api"→api
+    ("api stub wiremock", "testing"),              # bigram "api stub"→testing
+    ("stub server nodejs", "testing"),             # bigram "stub server"→testing
+    # Testing — HTTP mocking (nock, msw, httpretty)
+    ("http mock nodejs", "testing"),               # bigram "http mock"→testing overrides bare "http"→api
+    ("http mocking library", "testing"),           # bigram "http mocking"→testing
+    # Testing — API testing (overrides bare "api"→api for testing queries)
+    ("api testing tool", "testing"),               # bigram "api testing"→testing (tool is stop word)
+    ("api testing postman alternative", "testing"),# bigram "api testing"→testing
+    # Regressions — api routing unchanged for non-testing queries
+    ("api gateway nodejs", "api"),                 # bigram "api gateway"→api still fires first
+    ("api key management", "api"),                 # bare "api"→api fires at pos 0 (api key routes to API Tools)
 ]
 
 
