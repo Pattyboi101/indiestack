@@ -7009,6 +7009,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — token streaming display components (overrides bare "token"→authentication)
     "token stream": "frontend",             # bigram — "token stream react component", "token stream display" → Frontend
     "token streaming": "frontend",          # bigram — "token streaming ui", "token streaming component" → Frontend
+    # ── Probe pattern 69 (May 2026): data-fetching / server-state / React hook dead zones ──
+    #
+    # Dead zones:
+    # "stale while revalidate" → raw_first "stale" — SWR/TanStack Query caching strategy → Caching.
+    # "optimistic update" → raw_first "optimistic" — TanStack Query optimistic updates → Frontend.
+    # "suspense react" → raw_first "suspense" ("react" stripped by _FRAMEWORK_QUERY_TERMS) — React
+    #   Suspense / Vue Suspense → Frontend (react-error-boundary, @tanstack/react-suspense).
+    # "prefetch data" → raw_first "prefetch" — TanStack Query/SWR data prefetching → Frontend.
+    # "mutation hook" → testing (via bare "mutation"→testing; mutation testing collision) —
+    #   React Query useMutation / TanStack mutations belong in Frontend; bigram overrides.
+    # NOTE: "react query" (spaced) CANNOT be fixed — "react" is in _FRAMEWORK_QUERY_TERMS and gets
+    #   stripped; "query"→database fires. Use "react-query" (hyphenated) or "tanstack query" instead.
+    # NOTE: "stale while" bigram: "while" is not a stop word so bigram CAN fire for "stale while revalidate".
+    #
+    # Caching — stale-while-revalidate HTTP caching strategy (SWR naming, Cache-Control directive)
+    "stale": "caching",                     # bare — "stale cache", "stale data", "stale while revalidate" → Caching
+    "stale while": "caching",               # bigram — "stale while revalidate", "stale while revalidate react" → Caching
+    "revalidate": "caching",                # bare — "revalidate cache", "next.js revalidate" → Caching
+    # Frontend — React/Vue hook patterns and data-fetching (overrides bare raw_first for unmapped tokens)
+    "optimistic": "frontend",              # bare — "optimistic update", "optimistic ui", "optimistic mutation" → Frontend
+    "prefetch": "frontend",                # bare — "prefetch data", "prefetch react query", "link prefetch" → Frontend
+    "suspense": "frontend",                # bare — "suspense react", "suspense fallback", "error boundary" → Frontend
+    # Frontend — "mutation hook" bigram overrides bare "mutation"→testing (mutation-testing collision)
+    # Context: React/TanStack Query "useMutation" hook; mutation-testing tools (Stryker) are Testing.
+    "mutation hook": "frontend",            # bigram — "mutation hook react", "usemutation hook" → Frontend
 }
 
 _FTS_STOP_WORDS = {

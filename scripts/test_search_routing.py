@@ -751,6 +751,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("audio streaming library", "media"),          # bare "streaming"→media unchanged (audio)
     ("event stream kafka", "message"),             # bare "stream"→message unchanged (message queue)
     ("token refresh jwt", "authentication"),       # bare "token"→auth unchanged
+    # ── Probe 69 (May 2026): data-fetching / server-state / React hook dead zones ──
+    # Caching — stale-while-revalidate (SWR HTTP caching strategy)
+    ("stale while revalidate", "caching"),         # bigram "stale while"→caching + bare "stale"→caching
+    ("stale cache policy", "caching"),             # bare "stale"→caching
+    ("revalidate cache nextjs", "caching"),        # bare "revalidate"→caching
+    # Frontend — React/TanStack Query hook patterns
+    ("optimistic update react", "frontend"),       # bare "optimistic"→frontend
+    ("optimistic ui pattern", "frontend"),         # bare "optimistic"→frontend
+    ("suspense react data", "frontend"),           # bare "suspense"→frontend (react stripped)
+    ("prefetch data react", "frontend"),           # bare "prefetch"→frontend (react stripped)
+    ("prefetch route link", "frontend"),           # bare "prefetch"→frontend
+    ("mutation hook react", "frontend"),           # bigram "mutation hook"→frontend overrides mutation→testing
+    # Regressions — mutation testing must still route correctly
+    ("mutation testing stryker", "testing"),       # bare "mutation"→testing unchanged
+    ("mutation test javascript", "testing"),       # bare "mutation"→testing unchanged
+    # NOTE: "react query" (spaced) → database (known limitation; "react" stripped → "query"→database)
+    # Use "react-query" (hyphenated) or "tanstack query" for data-fetching queries.
+    ("react-query alternative", "frontend"),       # compound "react-query"→frontend works correctly
+    ("tanstack query setup", "frontend"),          # "tanstack"→frontend fires correctly
+    ("swr data fetching", "frontend"),             # "swr"→frontend fires correctly
 ]
 
 
