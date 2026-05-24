@@ -7141,6 +7141,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — Tree-sitter (parser generator for code editors, GitHub Linguist)
     "tree sitter": "developer",             # bigram — "tree sitter grammar", "tree sitter parser" → Developer Tools
     "treesitter": "developer",              # compound — "treesitter nvim", "treesitter alternative" → Developer Tools
+    # ── Probe pattern 75 (May 2026): SRE / on-call / MTTR dead zones ──
+    #
+    # Dead zones:
+    # "on call rotation" → raw_first "call" (neither "on" nor "call" mapped; on-call tools → Monitoring).
+    #   Bare "call"→monitoring is risky (phone-call collision); bigram "on call"→monitoring safer.
+    #   NOTE: "on" is not a stop word so bigram "on call" CAN fire (both tokens survive filtering).
+    # "mttr" → raw_first (MTTR = Mean Time to Recovery/Repair, core SRE metric → Monitoring).
+    # "mttd" → raw_first (MTTD = Mean Time to Detect → Monitoring).
+    # "alertmanager" → raw_first (Prometheus AlertManager → Monitoring; complement to "prometheus"→monitoring).
+    # NOTE: "service level objective" — "service" is stop word → only "level"+"objective" survive →
+    #   no safe bigram possible; "slo"→monitoring already covers the abbreviation form.
+    #
+    # Monitoring — on-call management (PagerDuty, Opsgenie, Spike.sh, Rootly)
+    # NOTE: "on call" bigram CANNOT fire — "on" is in _FTS_STOP_WORDS (stripped first).
+    # Use compound "oncall" form which survives stop-word filtering.
+    "oncall": "monitoring",                 # compound — "oncall rotation", "oncall scheduling" → Monitoring & Uptime
+    # Monitoring — SRE metrics abbreviations
+    "mttr": "monitoring",                   # bare — "mttr dashboard", "mttr calculator", "improve mttr" → Monitoring
+    "mttd": "monitoring",                   # bare — "mttd monitoring", "mttd detection time" → Monitoring
+    "mtta": "monitoring",                   # bare — "mtta alert", "mtta response time" → Monitoring (Mean Time to Acknowledge)
+    # Monitoring — Prometheus ecosystem tools
+    "alertmanager": "monitoring",           # bare — "alertmanager config", "alertmanager alternative" → Monitoring
+    # NOTE: "prometheus"→monitoring already mapped above (line ~3712); not repeated here.
 }
 
 _FTS_STOP_WORDS = {

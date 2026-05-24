@@ -835,6 +835,21 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — api routing unchanged for non-testing queries
     ("api gateway nodejs", "api"),                 # bigram "api gateway"→api still fires first
     ("api key management", "api"),                 # bare "api"→api fires at pos 0 (api key routes to API Tools)
+    # ── Probe 75 (May 2026): SRE / on-call / MTTR dead zones ──
+    # Monitoring — on-call management (compound form; "on call" bigram dead — "on" is stop word)
+    ("oncall rotation", "monitoring"),             # compound "oncall"→monitoring
+    ("oncall scheduling", "monitoring"),           # compound "oncall"→monitoring
+    # Monitoring — MTTR/MTTD/MTTA SRE metrics
+    ("mttr dashboard", "monitoring"),              # bare "mttr"→monitoring
+    ("mttd detection", "monitoring"),              # bare "mttd"→monitoring
+    ("mtta alert", "monitoring"),                  # bare "mtta"→monitoring
+    # Monitoring — Prometheus ecosystem
+    ("alertmanager config", "monitoring"),         # bare "alertmanager"→monitoring
+    ("alertmanager alternative", "monitoring"),    # bare "alertmanager"→monitoring
+    # Already-correct (regressions guard)
+    ("error budget slo", "monitoring"),            # bare "error"→monitoring unchanged
+    ("slo service level", "monitoring"),           # bare "slo"→monitoring unchanged
+    ("incident response", "monitoring"),           # bare "incident"→monitoring unchanged
     # ── Probe 74 (May 2026): LSP / IDE / code editor dead zones ──
     # Developer — Language Server Protocol
     ("language server protocol", "developer"),     # bigram "language server"→developer
