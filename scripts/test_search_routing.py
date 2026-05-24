@@ -2751,6 +2751,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("rlhf training", "ai"),                       # "rlhf"→ai unchanged (not rls)
     ("rbac permissions", "authentication"),        # "rbac"→authentication unchanged
     ("zero downtime deploy", "devops"),            # "zero downtime" bigram→devops unchanged (not "zero shot")
+    # ── Probe pattern 72 (May 2026): Date/time picker UI + SEO structured data dead zones ──
+    # "time picker" → raw_first; time picker UI components live in Frontend Frameworks.
+    ("time picker react", "frontend"),             # bigram "time picker"→frontend
+    ("time picker accessible", "frontend"),        # bigram "time picker"→frontend
+    ("timepicker component", "frontend"),          # bare "timepicker"→frontend (compound form)
+    # "structured data" → raw_first; JSON-LD / schema.org structured data belongs in SEO Tools.
+    ("structured data json-ld", "seo"),            # bigram "structured data"→seo
+    ("structured data generator", "seo"),          # bigram "structured data"→seo
+    # "schema markup" → routes via bare "schema"→developer without bigram; schema.org markup → SEO.
+    ("schema markup generator", "seo"),            # bigram "schema markup"→seo (beats bare "schema"→developer)
+    ("schema markup testing", "seo"),              # bigram "schema markup"→seo
+    # "schema org" → raw_first without mapping; schema.org vocabulary → SEO Tools.
+    ("schema org validator", "seo"),               # bigram "schema org"→seo
+    ("schema org types", "seo"),                   # bigram "schema org"→seo
+    # Regressions — nearby tokens must not be affected.
+    ("schema validation library", "developer"),    # bare "schema"→developer unchanged (not schema.org)
+    ("json schema validator", "developer"),        # "json"→developer unchanged
+    ("date picker react", "frontend"),             # "date"→frontend unchanged (not "time picker")
+    ("structured logs", "logging"),                # "logs"→logging unchanged (not "structured data")
+    ("structured output llm", "ai"),               # "output"→ai fires; "structured" stops before "output"
 ]
 
 

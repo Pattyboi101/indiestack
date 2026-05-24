@@ -8832,6 +8832,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "progress bar": "frontend",              # bigram — "progress bar react", "progress bar component" → Frontend Frameworks
     "skeleton loader": "frontend",           # bigram — "skeleton loader react", "skeleton loading" → Frontend Frameworks
     "loading spinner": "frontend",           # bigram — "loading spinner component", "loading spinner react" → Frontend
+    # ── Probe pattern 72 (May 2026): Date/time picker UI + SEO structured data dead zones ──
+    #
+    # Dead zones:
+    # "time picker" → raw_first "time" (react-time-picker, flatpickr, react-datepicker — time picker
+    #   UI components live in Frontend Frameworks; "time" and "picker" both unmapped individually).
+    # "structured data" → raw_first "structured" ("structured" was intentionally removed to avoid
+    #   misrouting "structured output" LLM queries to Logging; but "structured data" (JSON-LD,
+    #   schema.org) is an SEO concept — needs a bigram to skip the bare-token gap).
+    # "schema markup" → routes via bare "schema"→developer (schema validation); but "schema markup"
+    #   means schema.org structured markup and belongs in SEO Tools.
+    # "schema org" → raw_first "schema" fires developer (same conflict as above); bare "schema.org"
+    #   (the vocabulary) should route to SEO.
+    #
+    # Frontend — time picker UI components (react-time-picker, flatpickr, Pikaday, react-datepicker).
+    "time picker": "frontend",              # bigram — "time picker react", "time picker accessible" → Frontend Frameworks
+    "timepicker": "frontend",              # compound — "timepicker component", "best timepicker" → Frontend Frameworks
+    # SEO — structured data (JSON-LD) and schema.org markup tools.
+    # Bigram fires before bare "structured"→missing fires raw_first; "schema markup" bigram beats "schema"→developer.
+    "structured data": "seo",              # bigram — "structured data json-ld", "structured data generator" → SEO Tools
+    "schema markup": "seo",               # bigram — "schema markup generator", "schema markup testing" → SEO Tools
+    "schema org": "seo",                  # bigram — "schema org validator", "schema org types" → SEO Tools
 }
 
 _FTS_STOP_WORDS = {
