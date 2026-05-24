@@ -2729,6 +2729,28 @@ TEST_CASES: list[tuple[str, str]] = [
     ("payment processing", "payments"),            # "payment"→payments unchanged (not micropayment)
     ("stripe payments", "payments"),               # "stripe"→payments unchanged
     ("color picker", "frontend"),                  # "color"→frontend unchanged (palette didn't break it)
+    # ── Probe pattern 71 (May 2026): AI prompting techniques + auth/security acronym dead zones ──
+    # "constitutional ai" → raw_first; Constitutional AI (Anthropic) belongs in AI Standards.
+    ("constitutional ai tools", "ai standards"),   # bigram "constitutional ai"→ai standards
+    ("constitutional ai research", "ai standards"),# bigram "constitutional ai"→ai standards
+    # "chain of thought" → "of" stripped → "chain thought" bigram; belongs in AI & Automation.
+    ("chain of thought prompting", "ai"),          # bigram "chain thought"→ai (stop word "of" stripped)
+    ("chain of thought reasoning", "ai"),          # bigram "chain thought"→ai
+    # "few shot" bigram → AI & Automation.
+    ("few shot learning", "ai"),                   # bigram "few shot"→ai
+    ("few shot prompting", "ai"),                  # bigram "few shot"→ai
+    # "zero shot" bigram → AI & Automation.
+    ("zero shot classification", "ai"),            # bigram "zero shot"→ai
+    ("zero shot inference", "ai"),                 # bigram "zero shot"→ai
+    # "rls" / "row level" → Authentication (access control, same tier as rbac/permissions).
+    ("rls supabase", "authentication"),            # bare "rls"→authentication
+    ("rls policy postgres", "authentication"),     # bare "rls"→authentication (fires before "postgres"→database)
+    ("row level security", "authentication"),      # bigram "row level"→authentication ("security" is stop word)
+    ("row level access", "authentication"),        # bigram "row level"→authentication
+    # Regressions — nearby tokens must not be affected.
+    ("rlhf training", "ai"),                       # "rlhf"→ai unchanged (not rls)
+    ("rbac permissions", "authentication"),        # "rbac"→authentication unchanged
+    ("zero downtime deploy", "devops"),            # "zero downtime" bigram→devops unchanged (not "zero shot")
 ]
 
 

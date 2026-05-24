@@ -8785,6 +8785,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "janusgraph": "database",               # JanusGraph — distributed graph database → Database
     # Background Jobs — Hadoop is a big-data batch processing framework (ETL/pipeline tier).
     "hadoop": "background",                  # Apache Hadoop — MapReduce batch processing → Background Jobs
+    # ── Probe pattern 71 (May 2026): AI prompting techniques + auth/security acronym dead zones ──
+    #
+    # Dead zones:
+    # "constitutional ai" → raw_first "constitutional" (Anthropic's alignment technique → AI Standards).
+    # "chain of thought" → "of" stripped → "chain thought"; both tokens unmapped → raw_first "chain".
+    # "few shot" → raw_first "few" (few-shot prompting/learning → AI & Automation).
+    # "zero shot" → raw_first "zero" (zero-shot classification/inference → AI & Automation).
+    # "rls" → raw_first (Row Level Security — Supabase/PostgreSQL data access control → Authentication).
+    #
+    # AI Standards — "constitutional ai" bigram (Anthropic Constitutional AI, RLHF safety research).
+    "constitutional ai": "ai standards",     # bigram — "constitutional ai tools", "constitutional ai research" → AI Standards
+    "constitutional": "ai standards",        # bare — "constitutional alignment", "constitutional method" → AI Standards
+    # AI & Automation — prompting technique bigrams (chain-of-thought, few-shot, zero-shot).
+    # "of" is in _FTS_STOP_WORDS → "chain of thought" → _meaningful = ["chain", "thought"] → bigram "chain thought".
+    "chain thought": "ai",                   # bigram — "chain of thought prompting", "chain thought reasoning" → AI
+    "few shot": "ai",                        # bigram — "few shot learning", "few shot prompting" → AI & Automation
+    "zero shot": "ai",                       # bigram — "zero shot classification", "zero shot inference" → AI & Automation
+    # Authentication — Row Level Security (Supabase RLS, PostgreSQL RLS, access control).
+    # "rbac"→authentication and "permission"→authentication already mapped; RLS is the same tier.
+    "rls": "authentication",                 # "rls supabase", "rls policy postgres" → Authentication (access control)
+    "row level": "authentication",           # bigram — "row level security", "row level access" → Authentication
     # ── Probe pattern 70 (May 2026): Frontend UI / color / font / payments micro dead zones ──
     #
     # Dead zones:
