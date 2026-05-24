@@ -2654,6 +2654,23 @@ TEST_CASES: list[tuple[str, str]] = [
     ("load testing nodejs", "testing"),            # bare "load"→testing unchanged (not preceded by "transform")
     ("metrics dashboard react", "analytics"),      # bare "metrics"→analytics unchanged (no "collection"/"server" token)
     ("usage tracking", "invoicing"),               # bare "usage"→invoicing unchanged (not preceded by "based"/"billing")
+    # ── Probe pattern 68 (May 2026): MCP protocol / file-watcher / AI alignment dead zones ──
+    # "model context protocol" → "model"→ai misfired; bigram "model context"→mcp added.
+    ("model context protocol", "mcp"),             # bigram "model context"→mcp (beats "model"→ai)
+    ("model context mcp server", "mcp"),           # bigram "model context"→mcp
+    # "context protocol" → "context"→frontend misfired; bigram "context protocol"→mcp added.
+    ("context protocol spec", "mcp"),              # bigram "context protocol"→mcp (beats "context"→frontend)
+    # "ai alignment" → both unmapped → raw_first; bigram "ai alignment"→ai standards added.
+    ("ai alignment research", "ai standards"),     # bigram "ai alignment"→ai standards
+    ("ai alignment tools", "ai standards"),        # bigram "ai alignment"→ai standards
+    # "file watcher" → unmapped; bare "watcher"→developer + bigram "file watcher"→developer added.
+    ("file watcher nodejs", "developer"),          # bigram "file watcher"→developer
+    ("file watcher rust", "developer"),            # bigram "file watcher"→developer
+    ("filesystem watcher", "developer"),           # bare "watcher"→developer
+    # Regressions — nearby tokens must not be affected.
+    ("model deployment cloud", "ai"),              # bare "model"→ai unchanged (not followed by "context")
+    ("react context api", "frontend"),             # "react"→frontend fires before bigram check (framework term)
+    ("context menu react", "frontend"),            # bare "context"→frontend unchanged (not followed by "protocol")
 ]
 
 

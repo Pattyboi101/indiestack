@@ -8731,6 +8731,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — back-office admin builders (Retool, Appsmith, Tooljet, Budibase).
     "backoffice": "developer",               # bare — "backoffice builder", "backoffice admin react" → Developer Tools
     "back office": "developer",              # bigram — "back office builder", "back office tool" → Developer Tools
+    # ── Probe pattern 68 (May 2026): MCP protocol spaced form / file-watcher / AI alignment dead zones ──
+    #
+    # Dead zones:
+    # "model context protocol" → bare "model"→ai fires at pos 0 (wrong; "model context protocol"
+    #   is the MCP spec name; tools in this space live in the mcp-servers category).
+    # "context protocol" → bare "context"→frontend fires at pos 0 (wrong; "context protocol"
+    #   in AI-agent context means MCP).
+    # "ai alignment" → both "ai" and "alignment" are unmapped → raw_first (wrong; AI alignment
+    #   safety/eval tools like Anthropic Constitutional AI frameworks live in AI Standards).
+    # "file watcher" → both "file" and "watcher" are unmapped → raw_first (wrong; filesystem
+    #   watcher tools like Chokidar, Watchman, nodemon live in Developer Tools).
+    #
+    # MCP — "model context protocol" / "context protocol" bigrams override bare token misfires.
+    # Regression: "model deployment"/"model fine tuning" still fire via bare "model"→ai (correct).
+    # Regression: "react context api"/"context menu react" still fire via "react"/"context"→frontend.
+    "model context": "mcp",                  # bigram — "model context protocol", "model context mcp" → MCP Servers
+    "context protocol": "mcp",              # bigram — "context protocol mcp", "context protocol spec" → MCP Servers
+    # AI Standards — "ai alignment" bigram routes to AI Standards category.
+    # Covers: constitutional AI, RLHF, safety evals, red-teaming tools.
+    # Regression: bare "ai" is NOT in _CAT_SYNONYMS so bare "alignment" still gives raw_first.
+    "ai alignment": "ai standards",          # bigram — "ai alignment research", "ai alignment tools" → AI Standards
+    # Developer Tools — file system watchers (Chokidar, Watchman, nodemon, entr).
+    # Bare "watcher" added for standalone queries; bigram "file watcher" closes the compound form.
+    "file watcher": "developer",             # bigram — "file watcher nodejs", "file watcher rust" → Developer Tools
+    "watcher": "developer",                  # bare — "filesystem watcher", "watcher react" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
