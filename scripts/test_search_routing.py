@@ -2944,6 +2944,50 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ab testing tool", "feature"),                # bare "ab"→feature-flags unchanged (probe 77 region)
     ("user research tool", "feedback"),            # bigram "user research"→feedback unchanged (probe 35)
     ("user authentication", "authentication"),     # "user"→raw_first; "authentication"→auth fires second token unchanged
+    # ── Probe pattern 79 (May 2026): MLops drift / experiment tracking / graph-RAG / DevEx dead zones ──
+    # "drift" bare → AI (Evidently, NannyML, Alibi Detect — MLops data drift monitoring).
+    ("drift detection", "ai"),                     # bare "drift"→ai (data/concept drift detection)
+    ("data drift detection", "ai"),                # bigram "data drift"→ai (MLops monitoring)
+    ("concept drift ml", "ai"),                    # bigram "concept drift"→ai (distribution shift detection)
+    # "ml experiment" → AI via "ml" (MLflow/W&B queries with "ml" prefix route correctly).
+    # NOTE: "experiment tracking [tool]" can't use a bigram — "tracking" is in _FTS_STOP_WORDS.
+    # "ml experiment tracking" routes via "ml"→ai; bare "mlflow"/"wandb" route directly to ai.
+    ("ml experiment tracking", "ai"),              # bare "ml"→ai (MLflow, W&B, Neptune MLops context)
+    # "graph rag" bigram → AI (knowledge-graph RAG; LlamaIndex, LangChain, Neo4j).
+    ("graph rag llama", "ai"),                     # bigram "graph rag"→ai
+    ("graph rag neo4j", "ai"),                     # bigram "graph rag"→ai
+    # "experimentation platform" bare → Feature Flags (Statsig, Optimizely, Split, VWO).
+    ("experimentation platform", "feature"),       # bare "experimentation"→feature-flags
+    # "entitlement" → Feature Flags (plan-tier feature access; Unleash, LaunchDarkly).
+    ("entitlement management saas", "feature"),    # bigram "entitlement management"→feature-flags
+    ("entitlement check api", "feature"),          # bare "entitlement"→feature-flags
+    # "golden path" → Developer Tools (IDP concept; Backstage, Port, Cortex).
+    ("golden path backstage", "developer"),        # bigram "golden path"→developer
+    ("golden path idp", "developer"),              # bigram "golden path"→developer
+    # "dx" bare → Developer Tools (developer experience abbreviation).
+    ("dx tooling", "developer"),                   # bare "dx"→developer
+    ("dx platform", "developer"),                  # bare "dx"→developer
+    # CRM — enrichment dead zones (Clearbit, Clay, Apollo, Cognism; bare "data/contact/company" fire raw_first).
+    ("data enrichment clearbit", "crm"),           # bigram "data enrichment"→crm
+    ("contact enrichment api", "crm"),             # bigram "contact enrichment"→crm
+    ("company enrichment apollo", "crm"),          # bigram "company enrichment"→crm
+    ("enrichment pipeline", "crm"),                # bare "enrichment"→crm
+    # CRM — buyer intent dead zone (Bombora, G2 Intent, Clearbit Intent; bare "buyer" unmapped).
+    ("buyer intent data", "crm"),                  # bigram "buyer intent"→crm
+    ("buyer signals platform", "crm"),             # bare "buyer"→crm
+    # Frontend — "user interface library" dead zone (bare "user" → raw_first).
+    ("user interface library", "frontend"),        # bigram "user interface"→frontend
+    ("user interface component react", "frontend"), # bigram "user interface"→frontend
+    # Frontend — "theming" bare token (Tailwind themes, CSS-in-JS, shadcn theme).
+    ("theming library css", "frontend"),           # bare "theming"→frontend
+    ("theming react", "frontend"),                 # bare "theming"→frontend
+    # Regressions — adjacent routes must not break.
+    ("graph database surreal", "database"),        # bare "graph"→database unchanged for DB queries
+    ("ab experiment", "feature"),                  # bare "ab"→feature unchanged for A/B testing
+    ("growth experiment", "feature"),              # bare "experiment"→feature unchanged for standalone
+    ("model drift", "ai"),                         # bare "model"→ai unchanged for model-monitoring queries
+    ("lead enrichment", "crm"),                    # bare "lead"→crm unchanged (lead enrichment via lead token)
+    ("user authentication", "authentication"),     # "user interface" bigram doesn't break auth routing
 ]
 
 

@@ -8965,6 +8965,79 @@ _CAT_SYNONYMS: dict[str, str] = {
     "multivariate": "feature",            # bare — "multivariate test", "multivariate a/b testing" → Feature Flags
     # Analytics — user behavior tracking (PostHog, FullStory, Heap, Mixpanel use-case)
     "user behavior": "analytics",         # bigram — "user behavior tracking", "user behavior analytics" → Analytics
+    # ── Probe pattern 79 (May 2026): MLops drift / experiment tracking / graph-RAG / DevEx dead zones ──
+    #
+    # Dead zones:
+    # "data drift" → raw_first "data" — no synonym for "drift"; data drift detection tools
+    #   (Evidently, NannyML, Alibi Detect, WhyLabs) are AI/MLops monitoring tools.
+    #   "drift detection", "concept drift" have the same gap.
+    #   Fix: bare "drift" → ai; bigrams "data drift" and "concept drift" reinforce it.
+    #
+    # "experiment tracking" → "feature" via bare "experiment" — MLflow, Weights & Biases,
+    #   Neptune, Comet are AI/ML experiment-tracking tools, not feature-flag tools.
+    #   A/B experiments are still correctly reached via bare "ab" → feature.
+    #   Fix: bigram "experiment tracking" → ai overrides bare "experiment" for MLflow queries.
+    #
+    # "graph rag" → "database" via bare "graph" — Graph RAG is an AI retrieval pattern
+    #   (LlamaIndex, LangChain, Neo4j GraphRAG) not a raw database query.
+    #   Fix: bigram "graph rag" → ai (pre-pass bigram fires before bare "graph"→database).
+    #
+    # "experimentation platform" → raw_first "experimentation" — A/B testing platforms
+    #   like Statsig, Optimizely, Split, VWO call themselves "experimentation platforms".
+    #   Fix: bare "experimentation" → feature.
+    #
+    # "entitlement management" → "project" via bare "management" — software entitlements
+    #   (feature access based on plan tier) live in Feature Flags (Unleash, LaunchDarkly).
+    #   Fix: bare "entitlement" → feature; bigram "entitlement management" → feature.
+    #
+    # "golden path" → raw_first "golden" — Internal Developer Platform term for the
+    #   blessed/recommended developer workflow (Backstage, Port, Cortex, OpsLevel).
+    #   Fix: bigram "golden path" → developer.
+    #
+    # "dx" → raw_first — DX (developer experience) abbreviation maps to no category.
+    #   Queries like "dx tooling" or "dx platform" are developer-tools searches.
+    #   Fix: bare "dx" → developer.
+    #
+    # AI — model drift / data drift detection (Evidently, NannyML, Alibi, WhyLabs)
+    "drift": "ai",                         # bare — "drift detection", "model drift" → AI & Automation
+    "data drift": "ai",                    # bigram — "data drift detection", "data drift monitoring" → AI
+    "concept drift": "ai",                 # bigram — "concept drift detection", "concept drift ml" → AI
+    # NOTE: "experiment tracking" bigram intentionally NOT added — "tracking" is in _FTS_STOP_WORDS
+    # and is stripped, so the bigram can never fire. "mlflow" and "wandb" individually map to "ai"
+    # (probe 79), so "experiment tracking mlflow" routes correctly via "mlflow" if typed second;
+    # "ml experiment tracking" routes correctly via "ml"→ai. A/B experiments use bare "ab"→feature.
+    # AI — Graph RAG bigram overrides bare "graph"→database for knowledge-graph RAG queries.
+    # LlamaIndex PropertyGraphIndex, LangChain GraphRAG, Neo4j GraphRAG are AI retrieval patterns.
+    # Regression: "graph database" still correctly routes to database (bigram "graph database" fires first).
+    "graph rag": "ai",                     # bigram — "graph rag llama", "graph rag neo4j", "graph rag pattern" → AI
+    # Feature Flags — experimentation platform bare token (Statsig, Optimizely, Split, VWO)
+    "experimentation": "feature",          # bare — "experimentation platform", "experimentation tool" → Feature Flags
+    # Feature Flags — entitlement management (plan-tier feature access; Unleash, LaunchDarkly)
+    "entitlement": "feature",             # bare — "entitlement management", "entitlement check" → Feature Flags
+    "entitlement management": "feature",  # bigram — "entitlement management saas", "entitlement system" → Feature Flags
+    # Developer Tools — Internal Developer Platform "golden path" concept (Backstage, Port, Cortex)
+    "golden path": "developer",           # bigram — "golden path backstage", "golden path idp" → Developer Tools
+    # Developer Tools — DX abbreviation (developer experience tooling)
+    "dx": "developer",                    # bare — "dx tooling", "dx platform", "dx improvement" → Developer Tools
+    # CRM — data/contact/company enrichment (Clearbit, Clay, Apollo, Cognism, Lusha)
+    # "enrichment" bare covers all enrichment queries; bigrams override raw_first for compound forms.
+    # Regression: "lead enrichment" still correctly routes to crm via "lead"→crm.
+    "enrichment": "crm",                  # bare — "enrichment api", "data enrichment tool" → CRM
+    "data enrichment": "crm",             # bigram — "data enrichment clearbit", "data enrichment pipeline" → CRM
+    "contact enrichment": "crm",          # bigram — "contact enrichment api", "contact enrichment clay" → CRM
+    "company enrichment": "crm",          # bigram — "company enrichment apollo", "company enrichment tool" → CRM
+    # CRM — buyer intent data (Bombora, Clearbit Intent, G2 Buyer Intent, DemandBase)
+    # "buyer" bare has no mapping — "buyer intent" bigram and "buyer" bare both map to CRM.
+    "buyer": "crm",                       # bare — "buyer intent data", "buyer signals" → CRM
+    "buyer intent": "crm",                # bigram — "buyer intent data", "buyer intent api" → CRM
+    # Frontend — "user interface" bigram routes UI-library queries to Frontend Frameworks.
+    # bare "user" has no mapping → "user interface library" fires raw_first "user".
+    # bigram "user interface" overrides raw_first for UI component library searches.
+    # Regression: "user authentication"→auth unchanged ("user"→raw_first, "authentication"→auth fires).
+    "user interface": "frontend",         # bigram — "user interface library", "user interface component react" → Frontend
+    # Frontend — CSS/UI theming (Tailwind themes, CSS-in-JS theming, shadcn theme customization).
+    # bare "theming" has no mapping; developers searching "theming" want frontend styling tools.
+    "theming": "frontend",               # bare — "theming react", "theming library css", "theming tokens" → Frontend
 }
 
 _FTS_STOP_WORDS = {
