@@ -3036,6 +3036,38 @@ TEST_CASES: list[tuple[str, str]] = [
     ("growth experiment", "feature"),              # bare "experiment"→feature unchanged (no bare "growth")
     ("lead generation", "crm"),                    # bare "lead"→crm unchanged
     ("email conversion", "email"),                 # bare "email"→email wins over "conversion"→analytics
+    # ── Probe pattern 81 (May 2026): RevOps / ABM / CDP / Customer-Success dead zones ──
+    # "revops" bare → CRM (Revenue Operations platforms: Clari, Gong, Revenue.io).
+    ("revops tool", "crm"),                        # bare "revops"→crm
+    ("revops saas", "crm"),                        # bare "revops"→crm
+    # "demand" bare → CRM (demand generation/ABM: 6sense, Demandbase, Terminus).
+    ("demand generation", "crm"),                  # bare "demand"→crm
+    ("demand gen", "crm"),                         # bare "demand"→crm
+    # "abm" bare → CRM (Account-Based Marketing abbreviation).
+    ("abm tool", "crm"),                           # bare "abm"→crm
+    ("abm software", "crm"),                       # bare "abm"→crm
+    # "account based" bigram → CRM (ABM strategy tools).
+    ("account based marketing", "crm"),            # bigram "account based"→crm
+    ("account based selling", "crm"),              # bigram "account based"→crm
+    # "customer success" bigram → CRM (Gainsight, ChurnZero, Vitally).
+    ("customer success tool", "crm"),              # bigram "customer success"→crm
+    ("customer success saas", "crm"),              # bigram "customer success"→crm
+    # "cdp" bare → Analytics (Customer Data Platform: Segment, RudderStack, mParticle).
+    ("cdp tool", "analytics"),                     # bare "cdp"→analytics
+    ("cdp alternative", "analytics"),              # bare "cdp"→analytics
+    # "customer data" bigram → Analytics (CDP context; "platform" is a stop word).
+    ("customer data platform", "analytics"),       # bigram "customer data"→analytics ("platform" stripped)
+    ("customer data pipeline", "analytics"),       # bigram "customer data"→analytics
+    # "net promoter" bigram → Feedback (NPS survey tools).
+    ("net promoter score", "feedback"),            # bigram "net promoter"→feedback
+    ("net promoter survey", "feedback"),           # bigram "net promoter"→feedback
+    # Regressions — nearby routes must not break.
+    ("revenue analytics", "analytics"),            # bare "revenue"→analytics unchanged
+    ("lead scoring crm", "crm"),                   # bare "lead"→crm unchanged
+    ("sales intelligence", "crm"),                 # bare "sales"→crm unchanged
+    ("nps survey", "feedback"),                    # bare "nps"→feedback unchanged
+    ("demand planning", "crm"),                    # bare "demand"→crm (supply chain planning not in catalog)
+    ("data pipeline etl", "background"),           # bare "data"→? → "pipeline"→background unchanged
 ]
 
 

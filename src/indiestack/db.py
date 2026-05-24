@@ -9069,6 +9069,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # No "memory heap" collision — "memory"→caching fires first for "memory heap javascript" queries.
     "heap": "analytics",                  # bare — "heap analytics alternative", "heap io" → Analytics
     "inspectlet": "analytics",            # bare — "inspectlet alternative", "inspectlet review" → Analytics
+    # CRM — Revenue Operations / ABM / Account-Based Marketing / Customer Success dead zones
+    # (6sense, Demandbase, Terminus, Gainsight, ChurnZero, Vitally)
+    # "revops" fired raw_first — RevOps platforms (Clari, Gong, Revenue.io) are CRM/Sales → CRM.
+    "revops": "crm",                      # bare — "revops tool", "revops saas" → CRM & Sales
+    # "demand generation" → raw_first "demand" — demand-gen/ABM tools (6sense, Demandbase) are CRM.
+    "demand": "crm",                      # bare — "demand generation", "demand gen", "demand capture" → CRM
+    # "abm" / "account based marketing" fired raw_first — ABM is a CRM-adjacent B2B strategy.
+    "abm": "crm",                         # bare — "abm tool", "abm saas", "abm software" → CRM & Sales
+    "account based": "crm",               # bigram — "account based marketing", "account based selling" → CRM
+    # "customer success" fired raw_first "customer" — CS platforms (Gainsight, ChurnZero) are CRM.
+    "customer success": "crm",            # bigram — "customer success tool", "customer success saas" → CRM
+    # Analytics — Customer Data Platform (CDP): Segment, RudderStack, mParticle
+    # "cdp" fired raw_first — bare CDP abbreviation unmapped.
+    # "customer data platform" → meaningful = ["customer","data"] ("platform" stripped) → raw_first.
+    "cdp": "analytics",                   # bare — "cdp tool", "cdp alternative", "cdp open source" → Analytics
+    "customer data": "analytics",         # bigram — "customer data platform", "customer data pipeline" → Analytics
+    # Feedback — Net Promoter Score (NPS) compound form
+    # "nps" already maps to feedback; "net promoter score" → "score" is not a stop word → bigram needed.
+    "net promoter": "feedback",           # bigram — "net promoter score", "net promoter survey" → Feedback
 }
 
 _FTS_STOP_WORDS = {
