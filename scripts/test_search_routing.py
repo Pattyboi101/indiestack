@@ -2988,6 +2988,54 @@ TEST_CASES: list[tuple[str, str]] = [
     ("model drift", "ai"),                         # bare "model"→ai unchanged for model-monitoring queries
     ("lead enrichment", "crm"),                    # bare "lead"→crm unchanged (lead enrichment via lead token)
     ("user authentication", "authentication"),     # "user interface" bigram doesn't break auth routing
+    # ── Probe pattern 80 (May 2026): attribution / UTM / PLG / CRO / DAU/MAU dead zones ──
+    # "attribution" bare → Analytics (Rockerbox, Triple Whale, Northbeam, Segment attribution).
+    ("attribution tool", "analytics"),             # bare "attribution"→analytics
+    ("click attribution", "analytics"),            # bare "attribution"→analytics at position 1
+    # "marketing attribution" bigram → Analytics.
+    ("marketing attribution software", "analytics"), # bigram "marketing attribution"→analytics
+    # "multi touch attribution" → Analytics via bigram "multi touch" at i=1.
+    ("multi touch attribution", "analytics"),      # bigram "multi touch"→analytics
+    # "utm" bare → Analytics (UTM parameter builders/trackers; "tracking" is a stop word).
+    ("utm builder", "analytics"),                  # bare "utm"→analytics
+    ("utm tracker", "analytics"),                  # bare "utm"→analytics ("tracking" stripped)
+    # "cro" bare → Analytics (Conversion Rate Optimization tools).
+    ("cro tool", "analytics"),                     # bare "cro"→analytics
+    ("cro software", "analytics"),                 # bare "cro"→analytics
+    # "conversion" bare → Analytics (stop-word "tracking" stripped; bare conv fires).
+    ("conversion tracking", "analytics"),          # bare "conversion"→analytics ("tracking" stripped)
+    ("conversion metrics", "analytics"),           # bare "conversion"→analytics
+    # "product led growth" → Analytics via bigram "led growth" at i=1 in pre-pass.
+    ("product led growth", "analytics"),           # bigram "led growth"→analytics
+    ("product led growth tool", "analytics"),      # bigram "led growth"→analytics ("tool" stripped)
+    # "growth hacking" bigram → Analytics.
+    ("growth hacking tool", "analytics"),          # bigram "growth hacking"→analytics
+    ("growth hacking analytics", "analytics"),     # bigram "growth hacking"→analytics
+    # "plg" bare → Analytics (Product-Led Growth abbreviation).
+    ("plg tool", "analytics"),                     # bare "plg"→analytics
+    ("plg saas", "analytics"),                     # bare "plg"→analytics
+    # "activation" bare → Analytics (user lifecycle / product analytics).
+    ("user activation", "analytics"),              # bare "activation"→analytics at position 1
+    ("activation rate", "analytics"),              # bare "activation"→analytics
+    ("activation funnel", "analytics"),            # bare "activation"→analytics
+    # "dau"/"mau" bare → Analytics (engagement metric dashboards).
+    ("dau tracking", "analytics"),                 # bare "dau"→analytics ("tracking" stripped)
+    ("mau dashboard", "analytics"),                # bare "mau"→analytics
+    ("dau mau ratio", "analytics"),                # bare "dau"→analytics at i=0
+    # "heap" bare → Analytics (Heap Analytics; no memory-heap collision).
+    ("heap analytics alternative", "analytics"),   # bare "heap"→analytics
+    ("heap io", "analytics"),                      # bare "heap"→analytics
+    # "inspectlet" bare → Analytics (session recording and heatmaps).
+    ("inspectlet alternative", "analytics"),       # bare "inspectlet"→analytics
+    # Regressions — nearby routes must not break.
+    ("conversion rate optimization", "analytics"), # bigram "conversion rate"→analytics unchanged
+    ("memory heap javascript", "caching"),         # "memory"→caching fires before bare "heap"→analytics
+    ("ab testing conversion", "feature"),          # bare "ab"→feature-flags wins over "conversion"→analytics
+    ("product roadmap", "project"),                # bare "roadmap"→project unchanged
+    ("product feedback", "feedback"),              # bare "feedback"→feedback unchanged
+    ("growth experiment", "feature"),              # bare "experiment"→feature unchanged (no bare "growth")
+    ("lead generation", "crm"),                    # bare "lead"→crm unchanged
+    ("email conversion", "email"),                 # bare "email"→email wins over "conversion"→analytics
 ]
 
 

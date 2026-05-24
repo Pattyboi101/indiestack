@@ -9038,6 +9038,37 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — CSS/UI theming (Tailwind themes, CSS-in-JS theming, shadcn theme customization).
     # bare "theming" has no mapping; developers searching "theming" want frontend styling tools.
     "theming": "frontend",               # bare — "theming react", "theming library css", "theming tokens" → Frontend
+    # Analytics — attribution / marketing analytics (Rockerbox, Triple Whale, Northbeam, Segment)
+    # "attribution tool" → "attribution" bare unmapped → raw_first fires.
+    # "marketing attribution" → "marketing" bare unmapped → raw_first fires.
+    # "multi touch attribution" → meaningful = ["multi","touch","attribution"] → all unmapped.
+    "attribution": "analytics",            # bare — "attribution tool", "last touch attribution" → Analytics & Metrics
+    "click attribution": "analytics",      # bigram — "click attribution model" beats "click"→cli collision → Analytics
+    "marketing attribution": "analytics",  # bigram — "marketing attribution software/model" → Analytics
+    "multi touch": "analytics",            # bigram — "multi touch attribution", "multi touch model" → Analytics
+    # Analytics — UTM / CRO abbreviations (no bare token; "tracking" is in _FTS_STOP_WORDS)
+    # "utm tracking" → "tracking" stripped → meaningful = ["utm"] → raw_first.
+    "utm": "analytics",                    # bare — "utm builder", "utm tracker", "utm parameters" → Analytics
+    "cro": "analytics",                    # bare — "cro tool", "cro software" → Conversion Rate Optimization → Analytics
+    # Analytics — bare "conversion" for stop-word-stripped queries
+    # "conversion tracking" → "tracking" stripped → meaningful = ["conversion"] → raw_first.
+    # Regression: "conversion rate" bigram fires first in pre-pass for "conversion rate optimization". ✓
+    # Note: "currency conversion" → analytics (acceptable; no currency-conversion tools in catalog).
+    "conversion": "analytics",             # bare — "conversion tracking", "conversion metrics" → Analytics
+    # Analytics — Product-Led Growth (PLG) ecosystem and growth metrics
+    # "product led growth" → meaningful = ["product","led","growth"]; none mapped individually.
+    # bigram "led growth" fires at i=1 in pre-pass (after "product led" misses at i=0).
+    "led growth": "analytics",            # bigram — "product led growth", "product-led growth tool" → Analytics
+    "growth hacking": "analytics",        # bigram — "growth hacking tool", "growth hacking analytics" → Analytics
+    "plg": "analytics",                   # bare — "plg tool", "plg analytics", "plg saas" → Analytics
+    # Analytics — activation/engagement metrics (user lifecycle, DAU/MAU)
+    "activation": "analytics",            # bare — "user activation", "activation rate", "activation funnel" → Analytics
+    "dau": "analytics",                   # bare — "dau tracking", "dau dashboard", "daily active users" → Analytics
+    "mau": "analytics",                   # bare — "mau analytics", "monthly active users dashboard" → Analytics
+    # Analytics — Heap Analytics and Inspectlet session-recording tools
+    # No "memory heap" collision — "memory"→caching fires first for "memory heap javascript" queries.
+    "heap": "analytics",                  # bare — "heap analytics alternative", "heap io" → Analytics
+    "inspectlet": "analytics",            # bare — "inspectlet alternative", "inspectlet review" → Analytics
 }
 
 _FTS_STOP_WORDS = {
