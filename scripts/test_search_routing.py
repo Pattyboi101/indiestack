@@ -2911,6 +2911,15 @@ TEST_CASES: list[tuple[str, str]] = [
     ("document qa tool", "ai"),                    # bigram "document qa"→ai unchanged (existing bigram)
     ("image upload react", "frontend"),            # bigram "image upload"→frontend unchanged
     ("pdf viewer react", "frontend"),              # bigram "pdf viewer"→frontend unchanged
+    # ── Probe pattern 77 (May 2026): "image to text" / "pdf to text" stop-word-stripped bigrams ──
+    # "to" is in _FTS_STOP_WORDS — "image to text" reduces to bigram "image text" after stripping.
+    ("image to text api", "ai"),                   # bigram "image text"→ai (to=stop word; EasyOCR, Textract)
+    ("pdf to text python", "ai"),                  # bigram "pdf text"→ai (to=stop word; pdfplumber, LlamaParse)
+    # Regressions — adjacent routing must not change.
+    ("image upload react", "frontend"),            # bigram "image upload"→frontend unchanged
+    ("image captioning api", "ai"),                # bigram "image captioning"→ai unchanged (probe 76)
+    ("pdf viewer react", "frontend"),              # bigram "pdf viewer"→frontend unchanged
+    ("pdf parsing python", "ai"),                  # bigram "pdf parsing"→ai unchanged (probe 76)
 ]
 
 

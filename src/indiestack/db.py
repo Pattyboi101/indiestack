@@ -8923,6 +8923,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "document parsing": "ai",           # bigram — "document parsing api", "document parsing python" → AI & Automation
     "pdf parsing": "ai",                # bigram — "pdf parsing python", "pdf parsing api" → AI & Automation
     "document understanding": "ai",     # bigram — "document understanding model", "document understanding azure" → AI & Automation
+    # ── Probe pattern 77 (May 2026): "image to text" / "pdf to text" stop-word-stripped bigrams ──
+    #
+    # "to" is in _FTS_STOP_WORDS — "image to text" reduces to bigram "image text" (not "image to text").
+    # "pdf to text" reduces to bigram "pdf text".
+    # Both fire bare token first ("image"→media, "pdf"→file) without these entries.
+    # OCR/document-extraction tools (EasyOCR, Tesseract, AWS Textract, LlamaParse) are AI & Automation.
+    # Regressions: "image text overlay" → ai (edge case; dominated by AI/OCR use case in IndieStack context).
+    "image text": "ai",                 # bigram — "image to text api" (stop-word-stripped) → AI & Automation (OCR)
+    "pdf text": "ai",                   # bigram — "pdf to text python" (stop-word-stripped) → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
