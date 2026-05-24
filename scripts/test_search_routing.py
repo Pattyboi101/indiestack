@@ -2699,6 +2699,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("dbeaver alternative", "developer"),          # "dbeaver"→developer unchanged (already mapped)
     ("kafka alternative", "message"),              # "kafka"→message unchanged (not Hadoop)
     ("voip integration", "notifications"),         # "voip"→notifications (integration is stop word)
+    # ── Probe pattern 70 (May 2026): Frontend UI / color / font / payments micro dead zones ──
+    # "palette" → raw_first; color palette tools (Coolors, Paletton) live in Frontend Frameworks.
+    ("palette generator", "frontend"),             # bare "palette"→frontend
+    ("color palette react", "frontend"),           # "color"→frontend fires at pos 0 (palette reinforces)
+    # "typeface" → raw_first; font/typeface tools (Fontjoy, Bunny Fonts) live in Frontend Frameworks.
+    ("typeface pairing", "frontend"),              # bare "typeface"→frontend
+    ("typeface tool", "frontend"),                 # bare "typeface"→frontend ("tool" is stop word)
+    # "micropayment"/"micropayments" → raw_first; micropayment APIs live in Payments.
+    ("micropayment api", "payments"),              # bare "micropayment"→payments fires first
+    ("micropayments stripe", "payments"),          # bare "micropayments"→payments fires first
+    # "virtualization"/"virtualisation" → raw_first; virtual list libs live in Frontend Frameworks.
+    ("virtualization react", "frontend"),          # bare "virtualization"→frontend fires first
+    ("list virtualization react", "frontend"),     # bare "virtualization"→frontend (at pos 1)
+    ("list virtualisation", "frontend"),           # British spelling → bare "virtualisation"→frontend
+    # "multi select" → raw_first; multiselect UI components live in Frontend Frameworks.
+    ("multi select react", "frontend"),            # bigram "multi select"→frontend
+    ("multi select accessible", "frontend"),       # bigram "multi select"→frontend
+    # "progress bar" → raw_first; progress indicator components live in Frontend Frameworks.
+    ("progress bar react", "frontend"),            # bigram "progress bar"→frontend
+    ("progress bar component", "frontend"),        # bigram "progress bar"→frontend ("component"→frontend also fires)
+    # "skeleton loader" → raw_first; skeleton loading UI libs live in Frontend Frameworks.
+    ("skeleton loader react", "frontend"),         # bigram "skeleton loader"→frontend
+    ("skeleton loading component", "frontend"),    # bare "component"→frontend (skeleton loading bigram not needed)
+    # "loading spinner" → raw_first; spinner components live in Frontend Frameworks.
+    ("loading spinner react", "frontend"),         # bigram "loading spinner"→frontend
+    ("loading spinner component", "frontend"),     # bigram "loading spinner"→frontend ("component"→frontend also)
+    # Regressions — nearby tokens must not be affected.
+    ("payment processing", "payments"),            # "payment"→payments unchanged (not micropayment)
+    ("stripe payments", "payments"),               # "stripe"→payments unchanged
+    ("color picker", "frontend"),                  # "color"→frontend unchanged (palette didn't break it)
 ]
 
 

@@ -8785,6 +8785,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "janusgraph": "database",               # JanusGraph — distributed graph database → Database
     # Background Jobs — Hadoop is a big-data batch processing framework (ETL/pipeline tier).
     "hadoop": "background",                  # Apache Hadoop — MapReduce batch processing → Background Jobs
+    # ── Probe pattern 70 (May 2026): Frontend UI / color / font / payments micro dead zones ──
+    #
+    # Dead zones:
+    # "palette" → raw_first (Coolors, Paletton, ColorHunt — color palette tools → Frontend Frameworks).
+    # "typeface" → raw_first (Google Fonts, Bunny Fonts, Fontjoy — font tools → Frontend Frameworks).
+    # "micropayment" / "micropayments" → raw_first (micropayment APIs → Payments).
+    # "virtualization" / "virtualisation" → raw_first (react-virtual, TanStack Virtual → Frontend Frameworks).
+    # "multi select" → raw_first (React Select, Headless UI multiselect → Frontend Frameworks).
+    # "progress bar" → raw_first (nprogress, react-circular-progressbar → Frontend Frameworks).
+    # "skeleton loader" → raw_first (react-loading-skeleton, Skeleton UI → Frontend Frameworks).
+    # "loading spinner" → raw_first (react-spinners, react-loader-spinner → Frontend Frameworks).
+    #
+    # Frontend — color/design tools (color palette, typeface; "color"→frontend already mapped).
+    "palette": "frontend",                   # "palette generator", "color palette" → Frontend Frameworks (Coolors, Paletton)
+    "typeface": "frontend",                  # "typeface tool", "typeface pairing" → Frontend Frameworks (Fontjoy, Bunny Fonts)
+    # Payments — micropayment APIs/platforms.
+    "micropayment": "payments",              # "micropayment api", "micropayment gateway" → Payments
+    "micropayments": "payments",             # plural — "micropayments stripe", "micropayments web" → Payments
+    # Frontend — list virtualisation / windowing libraries (react-virtual, TanStack Virtual, react-window).
+    "virtualization": "frontend",            # "list virtualization", "virtualization react" → Frontend Frameworks
+    "virtualisation": "frontend",            # British spelling — "list virtualisation", "virtualisation" → Frontend
+    # Frontend — common UI widget dead zones (individual tokens unmapped → raw_first).
+    "multi select": "frontend",              # bigram — "multi select react", "multi select accessible" → Frontend Frameworks
+    "progress bar": "frontend",              # bigram — "progress bar react", "progress bar component" → Frontend Frameworks
+    "skeleton loader": "frontend",           # bigram — "skeleton loader react", "skeleton loading" → Frontend Frameworks
+    "loading spinner": "frontend",           # bigram — "loading spinner component", "loading spinner react" → Frontend
 }
 
 _FTS_STOP_WORDS = {
