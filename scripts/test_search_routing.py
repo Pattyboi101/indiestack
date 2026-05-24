@@ -2889,6 +2889,28 @@ TEST_CASES: list[tuple[str, str]] = [
     ("jwt token refresh", "authentication"),       # bare "token"→auth (bigram "jwt token" not mapped, "token"→auth fires)
     ("event driven architecture", "message"),      # bare "event"→message unchanged
     ("data streaming kafka", "message"),           # bigram "data streaming"→message unchanged
+    # ── Probe pattern 76 (May 2026): AI document-processing + image-AI dead zones ──
+    # "image captioning" bigram → AI & Automation (overrides bare "image"→media).
+    ("image captioning api", "ai"),                # bigram "image captioning"→ai (BLIP, LLaVA, GPT-4V vision)
+    ("image captioning model", "ai"),              # bigram "image captioning"→ai
+    # "text extraction" bigram → AI & Automation (was raw_first).
+    ("text extraction nlp", "ai"),                 # bigram "text extraction"→ai (spaCy, Textract, Tika)
+    ("text extraction python", "ai"),              # bigram "text extraction"→ai
+    # "document parsing" bigram → AI & Automation (overrides bare "document"→database).
+    ("document parsing api", "ai"),                # bigram "document parsing"→ai (LlamaParse, unstructured.io)
+    ("document parsing python", "ai"),             # bigram "document parsing"→ai
+    # "pdf parsing" bigram → AI & Automation (overrides bare "pdf"→file).
+    ("pdf parsing python", "ai"),                  # bigram "pdf parsing"→ai (AI/RAG PDF extraction)
+    ("pdf parsing api", "ai"),                     # bigram "pdf parsing"→ai
+    # "document understanding" bigram → AI & Automation (overrides bare "document"→database).
+    ("document understanding model", "ai"),        # bigram "document understanding"→ai (LayoutLM, DocTR)
+    ("document understanding azure", "ai"),        # bigram "document understanding"→ai (Azure Form Recognizer)
+    # Regressions — existing document/image/pdf routing must not be affected.
+    ("document database", "database"),             # bare "document"→database unchanged (second loop fires)
+    ("document chunker python", "database"),       # bare "document"→database unchanged (bigram "document chunker" not mapped)
+    ("document qa tool", "ai"),                    # bigram "document qa"→ai unchanged (existing bigram)
+    ("image upload react", "frontend"),            # bigram "image upload"→frontend unchanged
+    ("pdf viewer react", "frontend"),              # bigram "pdf viewer"→frontend unchanged
 ]
 
 

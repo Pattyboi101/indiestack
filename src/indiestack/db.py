@@ -8900,6 +8900,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "llm streaming": "ai",              # bigram — "llm streaming response", "llm streaming python" → AI (reverse of "streaming llm")
     "stream ai": "ai",                  # bigram — "stream ai response", "stream ai output" → AI & Automation
     "token streaming": "ai",            # bigram — "token streaming react", "token streaming llm" → AI (overrides "token"→auth)
+    # ── Probe pattern 76 (May 2026): AI document-processing + image-AI dead zones ──
+    #
+    # Dead zones confirmed:
+    # "image captioning" → media (bare "image"→media fires); AI image captioning (BLIP, LLaVA, GPT-4V)
+    #   belongs in AI & Automation — bigram fires before bare token.
+    # "text extraction" → raw_first "text" (no synonym for bare "text"); NLP text extraction tools
+    #   (spaCy, Amazon Textract, Apache Tika) belong in AI & Automation.
+    # "document parsing" → database (bare "document"→database fires); AI document parsers
+    #   (LlamaParse, unstructured.io, docling) belong in AI & Automation.
+    # "pdf parsing" → file (bare "pdf"→file fires); PDF parsing for AI/RAG use cases
+    #   belongs in AI & Automation — distinct from PDF manipulation tools in file-management.
+    # "document understanding" → database (bare "document"→database); AI doc understanding
+    #   (LayoutLM, DocTR, Azure Document Intelligence) belongs in AI & Automation.
+    # Regressions guarded: "document database"→database (second loop, bare "document" still fires),
+    # "document chunker python"→database (bigram "document chunker" not matched, bare "document"→database),
+    # "document qa"→ai (existing bigram "document qa" fires; no conflict), "image upload"→frontend (bigram),
+    # "pdf viewer"→frontend (bigram), "pdf library"→file ("library" stripped, "pdf"→file fires).
+    #
+    "image captioning": "ai",           # bigram — "image captioning api", "image captioning model" → AI & Automation
+    "text extraction": "ai",            # bigram — "text extraction nlp", "text extraction python" → AI & Automation
+    "document parsing": "ai",           # bigram — "document parsing api", "document parsing python" → AI & Automation
+    "pdf parsing": "ai",                # bigram — "pdf parsing python", "pdf parsing api" → AI & Automation
+    "document understanding": "ai",     # bigram — "document understanding model", "document understanding azure" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
