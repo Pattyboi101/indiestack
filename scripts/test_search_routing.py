@@ -504,6 +504,35 @@ When hunting for routing gaps, these query forms are historically tricky:
     first-token synonym if it's unambiguous enough. Fixed: "operational transform"→api,
     "shared editing"→api, "presence awareness"→api, "live cursors"→api,
     "multi model"→database (probe 65, May 2026).
+
+59. "Named-tool first-token overreach — single CLI/framework name as common UI verb or
+    noun" — when a popular tool uses a generic word as its name (Python "click", the
+    npm masked-input library "masked", etc.) and that word is also a natural UI/UX term,
+    the bare token maps to the tool's category rather than the UI concept category.
+    Classic instances found in probe 73:
+      - "click"→cli (Python Click) misfires for "right click menu" (Frontend) and
+        "click heatmap" (Analytics). Bare "click" can't be remapped without breaking
+        Click framework routing; must use bigrams at position 0.
+      - "image"→media (media server) misfires for "image upload" and "image editor"
+        (both Frontend UI components). Add compound bigrams that fire before bare "image".
+      - "upload"→file misfires for "file upload react" (Frontend react-dropzone/FilePond).
+        Add "file upload"→frontend bigram (fires before bare "upload"→file at pos 0).
+      - "number"→developer misfires for "number input component" and "number format react"
+        (both Frontend UI widgets). Add bigrams "number input"→frontend, "number format"→frontend.
+    Strategy: for any token T that maps to category A, probe:
+      (a) "[qualifier] T [suffix]" — "right click menu", "file upload react"
+      (b) "T [noun]" — "click heatmap", "upload component"
+      (c) "T [UI-pattern]" — "number input", "masked input"
+    For each mismatch, add the compound bigram to override. Also probe the bare token
+    against the most common UI/UX context words: component, widget, input, picker,
+    editor, map, tracking, heatmap. NOTE: "click tracking" CANNOT use a bigram because
+    "tracking" is in _FTS_STOP_WORDS — this is a known dead zone (document and skip).
+    Fixed: "right click"/"click outside"→frontend, "click heatmap"→analytics,
+    "file upload"/"image upload"/"image editor"→frontend,
+    "number input"/"number format"→frontend,
+    "masked"/"masked input"→frontend,
+    "shader"/"glsl"/"opengl"→frontend (WebGL bare tokens),
+    "photo crop"→frontend (probe 73, May 2026).
 """
 
 import sys

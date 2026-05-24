@@ -14969,6 +14969,131 @@ TOOLS = [
         "npm install @logtail/node",
         "saas",
     ),
+    # Frontend — file upload UI components (added May 2026) ----------------------
+    (
+        "react-dropzone",
+        "react-dropzone",
+        "Simple HTML5 drag-and-drop zone with React hooks",
+        "react-dropzone is a lightweight React library that turns any element into a "
+        "file drop zone. Uses the HTML5 File API to accept dropped or clicked files, "
+        "with hooks-based API (useDropzone) for full customisation. Supports "
+        "file type and size validation, multiple file selection, and previews. "
+        "The most widely used file upload component in the React ecosystem with "
+        "minimal dependencies and excellent accessibility.",
+        "frontend-frameworks",
+        "react-dropzone/react-dropzone",
+        11000,
+        "https://react-dropzone.js.org",
+        "file-upload,drag-and-drop,react,dropzone,html5",
+        "npm install react-dropzone",
+        "code",
+    ),
+    (
+        "filepond",
+        "FilePond",
+        "Flexible file upload component with image previews and encoding",
+        "FilePond is a highly polished JavaScript file upload library that handles "
+        "chunked uploads, image previews, client-side image transforms (crop, resize, "
+        "filter), and async server uploads. Plugin architecture lets you add only the "
+        "capabilities you need. Adapters available for React, Vue, Angular, and Svelte. "
+        "Supports drag-and-drop, paste, and browse. Popular for user onboarding flows "
+        "that require inline image cropping before upload.",
+        "frontend-frameworks",
+        "pqina/filepond",
+        15000,
+        "https://pqina.nl/filepond",
+        "file-upload,drag-and-drop,image-preview,react,vue,angular,svelte",
+        "npm install filepond",
+        "code",
+    ),
+    (
+        "uppy",
+        "Uppy",
+        "Sleek open-source file uploader with plugin-based architecture",
+        "Uppy is a modular, extensible file uploader that works with any backend. "
+        "Core features include drag-and-drop, resumable uploads via tus protocol, "
+        "progress bars, and a React/Vue/Angular dashboard modal. Plugins add sources "
+        "(Google Drive, Dropbox, Instagram, Webcam) and processors (image compression, "
+        "thumbnail generation). First-party backend integration with Transloadit for "
+        "serverless file processing. Used by GitLab and thousands of SaaS apps.",
+        "frontend-frameworks",
+        "transloadit/uppy",
+        29000,
+        "https://uppy.io",
+        "file-upload,drag-and-drop,resumable-upload,tus,react,vue,dashboard",
+        "npm install @uppy/core @uppy/dashboard",
+        "code",
+    ),
+    # Frontend — masked input and number formatting (added May 2026) -------------
+    (
+        "imask",
+        "iMask.js",
+        "Input masking library for vanilla JS, React, Vue, and Angular",
+        "iMask.js is a feature-rich input masking library that handles phone numbers, "
+        "dates, credit cards, currencies, and custom regex patterns. Framework adapters "
+        "for React (react-imask), Vue, and Angular. Supports dynamic masks that change "
+        "based on input value, lazy masking, and full TypeScript types. Zero external "
+        "dependencies. Alternative to the older Cleave.js with more active maintenance.",
+        "frontend-frameworks",
+        "uNmAnNeR/imaskjs",
+        5000,
+        "https://imask.js.org",
+        "masked-input,input-mask,react,vue,angular,phone,credit-card,date",
+        "npm install imask",
+        "code",
+    ),
+    (
+        "react-number-format",
+        "React Number Format",
+        "Format numbers in inputs and display values with full React support",
+        "React Number Format is a React component that formats numbers in input fields "
+        "and static display elements — currencies, percentages, phone numbers, credit "
+        "card numbers, and custom patterns. Supports controlled and uncontrolled modes, "
+        "prefix/suffix, thousand separators, decimal scales, and allowance ranges. "
+        "Widely used as the canonical number formatting solution in React apps.",
+        "frontend-frameworks",
+        "s-yadav/react-number-format",
+        7500,
+        "https://s-yadav.github.io/react-number-format",
+        "number-format,number-input,masked-input,react,currency,phone",
+        "npm install react-number-format",
+        "code",
+    ),
+    # Frontend — image crop and editor components (added May 2026) ---------------
+    (
+        "cropperjs",
+        "Cropper.js",
+        "Powerful JavaScript image cropper with touch support",
+        "Cropper.js is the most-used open-source image cropping library. Provides a "
+        "draggable, resizable crop box with aspect ratio locking, rotation, zooming, "
+        "and flip. Works with <img> and <canvas> elements, outputs a cropped canvas or "
+        "blob. React adapter available as react-cropper. Used in profile photo upload "
+        "flows, avatar editors, and content management systems.",
+        "frontend-frameworks",
+        "fengyuanchen/cropperjs",
+        13000,
+        "https://fengyuanchen.github.io/cropperjs",
+        "image-crop,cropper,react,canvas,photo-editor,avatar",
+        "npm install cropperjs",
+        "code",
+    ),
+    (
+        "react-image-crop",
+        "react-image-crop",
+        "Responsive image cropping component for React with zero dependencies",
+        "react-image-crop is a lightweight React component for cropping images inline "
+        "in the browser. Supports percentage and pixel units, aspect ratio locking, "
+        "circular crops, and rotation. Uses a CSS-only crop box (no canvas until you "
+        "call the getCroppedImg helper), keeping the initial render fast. Commonly used "
+        "for avatar upload UIs in dashboards and social apps.",
+        "frontend-frameworks",
+        "DominicTobias/react-image-crop",
+        3900,
+        "https://github.com/DominicTobias/react-image-crop",
+        "image-crop,react,avatar,photo-editor",
+        "npm install react-image-crop",
+        "code",
+    ),
 ]
 
 
