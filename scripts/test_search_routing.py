@@ -2862,6 +2862,33 @@ TEST_CASES: list[tuple[str, str]] = [
     ("feature toggle library", "feature"),         # bare "toggle"→feature-flags unchanged
     ("interactive tutorial", "learning"),          # bare "tutorial"→learning unchanged (not "interactive demo/walkthrough")
     ("worker thread nodejs", "background"),        # bare "worker"→background unchanged (not "worker pwa")
+    # ── Probe pattern 75 (May 2026): LLM response streaming / HTTP streaming / Node.js stream dead zones ──
+    # "api response" bigram → API Tools (fires before bare "streaming"→media for streaming API queries).
+    ("streaming api response nodejs", "api"),      # bigram "api response"→api (overrides "streaming"→media)
+    ("streaming response react", "api"),           # bigram "streaming response"→api
+    ("streaming response nodejs", "api"),          # bigram "streaming response"→api
+    # "readable stream" bigram → API Tools (overrides "stream"→message for Node.js stream queries).
+    ("readable stream nodejs", "api"),             # bigram "readable stream"→api
+    ("readable stream browser", "api"),            # bigram "readable stream"→api
+    # "stream ai" bigram → AI & Automation (overrides "stream"→message).
+    ("stream ai response", "ai"),                  # bigram "stream ai"→ai
+    ("stream ai output", "ai"),                    # bigram "stream ai"→ai
+    # "token streaming" bigram → AI & Automation (overrides "token"→authentication).
+    ("token streaming react", "ai"),               # bigram "token streaming"→ai
+    ("token streaming llm", "ai"),                 # bigram "token streaming"→ai
+    # "llm streaming" bigram → AI & Automation (reverse of "streaming llm"→ai already mapped).
+    ("llm streaming response", "ai"),              # bigram "llm streaming"→ai (also works via bare "llm"→ai)
+    ("llm streaming python", "ai"),                # bigram "llm streaming"→ai
+    # "eventsource" compound → API Tools (spaced "event source" unfixable: "source" is stop word).
+    ("eventsource browser", "api"),                # bare "eventsource"→api
+    ("eventsource javascript", "api"),             # bare "eventsource"→api
+    # Regressions — nearby patterns must not be affected.
+    ("video streaming api", "media"),              # "video"→media fires before "streaming api" (no "streaming api" mapping)
+    ("audio streaming", "media"),                  # bare "audio"→media unchanged
+    ("live streaming", "media"),                   # bare "streaming"→media unchanged (no earlier match)
+    ("jwt token refresh", "authentication"),       # bare "token"→auth (bigram "jwt token" not mapped, "token"→auth fires)
+    ("event driven architecture", "message"),      # bare "event"→message unchanged
+    ("data streaming kafka", "message"),           # bigram "data streaming"→message unchanged
 ]
 
 

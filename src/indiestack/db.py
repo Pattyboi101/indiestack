@@ -8880,6 +8880,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     "structured data": "seo",              # bigram — "structured data json-ld", "structured data generator" → SEO Tools
     "schema markup": "seo",               # bigram — "schema markup generator", "schema markup testing" → SEO Tools
     "schema org": "seo",                  # bigram — "schema org validator", "schema org types" → SEO Tools
+    # ── Probe pattern 75 (May 2026): LLM response streaming / HTTP streaming / Node.js stream dead zones ──
+    #
+    # Dead zones confirmed:
+    # "streaming api response nodejs" → media (bare "streaming"→media fires); "api response" bigram at
+    #   position 1 fires in the first-pass bigram scan before the second loop reaches "streaming".
+    # "stream ai response" → message (bare "stream"→message fires); "stream ai" bigram overrides.
+    # "token streaming react" → authentication (bare "token"→auth fires); "token streaming" bigram overrides.
+    # "readable stream nodejs" → message (bare "stream"→message fires); "readable stream" bigram overrides.
+    # "event source javascript" → UNFIXABLE via bigram — "source" is in _FTS_STOP_WORDS; stripped to
+    #   "event"+"javascript", bare "event"→message fires. "eventsource" compound form IS fixable.
+    #
+    # API Tools — HTTP streaming + Node.js stream API patterns.
+    "api response": "api",              # bigram — "streaming api response nodejs" → API Tools (fires before "streaming"→media)
+    "streaming response": "api",        # bigram — "streaming response nodejs", "streaming response react" → API Tools
+    "readable stream": "api",           # bigram — "readable stream nodejs", "readable stream browser" → API Tools (Node.js Streams)
+    "eventsource": "api",               # compound — EventSource browser SSE API (spaced "event source" unfixable: source=stop word)
+    # AI & Automation — LLM/AI streaming output (complement to "streaming llm"→ai already mapped above).
+    "llm streaming": "ai",              # bigram — "llm streaming response", "llm streaming python" → AI (reverse of "streaming llm")
+    "stream ai": "ai",                  # bigram — "stream ai response", "stream ai output" → AI & Automation
+    "token streaming": "ai",            # bigram — "token streaming react", "token streaming llm" → AI (overrides "token"→auth)
 }
 
 _FTS_STOP_WORDS = {
