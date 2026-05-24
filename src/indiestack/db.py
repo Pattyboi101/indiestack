@@ -7084,6 +7084,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     "text chunk": "ai",                     # bigram — "text chunk size", "text chunk overlap" → AI & Automation
     # AI — LLM temperature parameter (sampling temperature, top-p, top-k)
     "temperature": "ai",                    # bare — "temperature sampling", "llm temperature", "model temperature" → AI
+    # ── Probe pattern 72 (May 2026): cross-platform / dashboarding / PR-automation dead zones ──
+    #
+    # Dead zones:
+    # "cross platform" → raw_first "cross" (unmapped; cross-platform dev tools → Frontend: Capacitor,
+    #   Ionic, NativeScript; "cross"→nothing→raw_first). Bigram "cross platform"→frontend added.
+    # "multi platform" → raw_first "multi" (unmapped). Bigram "multi platform"→frontend added.
+    # "dashboarding" → raw_first (unmapped; dashboard builders → Analytics: Metabase, Redash, Grafana).
+    # "pr automation" → ai (bare "automation"→ai; PR automation tools → DevOps: Mergify, Bors-ng).
+    #   Bigram "pr automation"→devops fires at pos [0,1]; "automation"→ai falls back only when alone.
+    #
+    # Frontend — cross-platform development
+    "cross": "frontend",                    # bare — "cross platform", "cross browser", "cross origin" → Frontend
+    # NOTE: "cross platform" bigram CANNOT fire — "platform" is in _FTS_STOP_WORDS.
+    # bare "cross"→frontend covers "cross platform" queries after stop-word stripping.
+    # NOTE: "multi platform" bigram CANNOT fire — "platform" stripped → only "multi" survives.
+    # bare "multi"→frontend added; "multi tenancy" bigram→auth and "multi player" bigram→api override.
+    "multi": "frontend",                    # bare — "multi platform app", "multi platform desktop" → Frontend
+    "multi player": "api",                  # bigram — "multi player game server", "multi player sync" → API Tools (Liveblocks, Ably)
+    "multi tenant": "authentication",       # bigram — "multi tenant architecture", "multi tenant database" → Authentication
+    # Analytics — dashboard builder (Metabase, Redash, Grafana, Superset, Lightdash)
+    "dashboarding": "analytics",            # bare — "dashboarding tool", "dashboarding open source" → Analytics & Metrics
+    # DevOps — PR automation (Mergify, Bors-ng, Kodiak, GitHub Actions; overrides bare "automation"→ai)
+    "pr automation": "devops",              # bigram — "pr automation mergify", "pr automation github" → DevOps
 }
 
 _FTS_STOP_WORDS = {

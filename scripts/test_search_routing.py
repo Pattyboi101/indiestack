@@ -806,6 +806,21 @@ TEST_CASES: list[tuple[str, str]] = [
     ("code splitting vite", "frontend"),           # bare "splitting"→frontend unchanged (code splitting != text splitting)
     ("react context api", "frontend"),             # bare "context"→frontend unchanged (react stripped; "context"→frontend)
     ("document database", "database"),             # bare "document"→database unchanged (no "chunking" adjacent)
+    # ── Probe 72 (May 2026): cross-platform / dashboarding / PR-automation dead zones ──
+    # Frontend — cross-platform development
+    ("cross platform mobile", "frontend"),         # bare "cross"→frontend (bigram "cross platform" dead — "platform" is stop word)
+    ("cross browser testing", "frontend"),         # bare "cross"→frontend
+    # Frontend — multi-platform (bare "multi"→frontend with bigram overrides for auth/api)
+    ("multi platform app", "frontend"),            # bare "multi"→frontend (platform+app are stop words)
+    # Analytics — dashboarding
+    ("dashboarding open source", "analytics"),     # bare "dashboarding"→analytics
+    # DevOps — PR automation
+    ("pr automation mergify", "devops"),           # bigram "pr automation"→devops overrides bare "automation"→ai
+    ("pr automation github", "devops"),            # bigram "pr automation"→devops
+    # Regressions — multi-tenancy and multi-player overrides
+    ("multi tenancy database", "authentication"),  # bigram "multi tenancy"→auth overrides bare "multi"→frontend
+    ("multi player game server", "api"),           # bigram "multi player"→api overrides bare "multi"→frontend
+    ("workflow automation n8n", "ai"),             # bare "workflow"→ai unchanged (workflow automation probe)
 ]
 
 
