@@ -835,6 +835,20 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — api routing unchanged for non-testing queries
     ("api gateway nodejs", "api"),                 # bigram "api gateway"→api still fires first
     ("api key management", "api"),                 # bare "api"→api fires at pos 0 (api key routes to API Tools)
+    # ── Probe 74 (May 2026): LSP / IDE / code editor dead zones ──
+    # Developer — Language Server Protocol
+    ("language server protocol", "developer"),     # bigram "language server"→developer
+    ("language server rust", "developer"),         # bigram "language server"→developer
+    # Frontend — syntax highlighting
+    ("syntax highlighting react", "frontend"),     # bigram "syntax highlighting"→frontend
+    ("syntax highlight component", "frontend"),    # bigram "syntax highlight"→frontend
+    # Developer — Tree-sitter
+    ("tree sitter parser", "developer"),           # bigram "tree sitter"→developer
+    ("treesitter nvim", "developer"),              # compound "treesitter"→developer
+    # Already-correct (regressions)
+    ("lsp server setup", "developer"),             # bare "lsp"→developer unchanged
+    ("monaco editor react", "frontend"),           # bare "monaco"→frontend unchanged
+    ("codemirror setup", "frontend"),              # bare "codemirror"→frontend unchanged
 ]
 
 

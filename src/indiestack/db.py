@@ -7124,6 +7124,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     "http mocking": "testing",              # bigram — "http mocking library", "http mocking jest" → Testing
     # Testing — API testing (overrides bare "api"→api for testing-intent queries)
     "api testing": "testing",               # bigram — "api testing tool", "api testing postman" → Testing
+    # ── Probe pattern 74 (May 2026): LSP / IDE / code editor dead zones ──
+    #
+    # Dead zones:
+    # "language server" → raw_first "language" (unmapped; Language Server Protocol → Developer Tools).
+    # "syntax highlighting" → raw_first "syntax" (unmapped; syntax highlighters → Frontend/Developer).
+    # "tree sitter" → raw_first "tree" (unmapped; Tree-sitter parser → Developer Tools).
+    # NOTE: "lsp server"→developer (via bare "lsp"→developer), "monaco editor"→frontend (via "monaco"),
+    #   "codemirror"→frontend — these already route correctly.
+    #
+    # Developer Tools — Language Server Protocol (clangd, pylsp, tsserver, rust-analyzer)
+    "language server": "developer",         # bigram — "language server protocol", "language server rust" → Developer Tools
+    # Frontend / Developer — syntax highlighting (Prism.js, Shiki, highlight.js, CodeMirror highlight)
+    "syntax highlighting": "frontend",      # bigram — "syntax highlighting react", "syntax highlighting library" → Frontend Frameworks
+    "syntax highlight": "frontend",         # bigram — "syntax highlight component", "syntax highlight js" → Frontend Frameworks
+    # Developer Tools — Tree-sitter (parser generator for code editors, GitHub Linguist)
+    "tree sitter": "developer",             # bigram — "tree sitter grammar", "tree sitter parser" → Developer Tools
+    "treesitter": "developer",              # compound — "treesitter nvim", "treesitter alternative" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
