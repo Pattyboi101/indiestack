@@ -731,6 +731,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("serverless deploy", "devops"),               # "serverless"→devops unchanged
     ("lambda function", "devops"),                 # "lambda"→devops unchanged (no "cloud" needed)
     ("edge function", "devops"),                   # "edge"→devops unchanged
+    # ── Probe 68 (May 2026): LLM streaming / token-streaming / SSE dead zones ──
+    # API Tools — ReadableStream / SSE (EventSource)
+    ("readable stream nodejs", "api"),             # bigram "readable stream"→api
+    ("readable stream browser api", "api"),        # bigram "readable stream"→api
+    ("eventsource javascript", "api"),             # compound "eventsource"→api (SSE browser API)
+    ("eventsource react sse", "api"),              # compound "eventsource"→api
+    # AI — LLM streaming (overrides bare "streaming"→media / "stream"→message)
+    ("llm streaming output", "ai"),                # bigram "llm streaming"→ai
+    ("llm streaming react", "ai"),                 # bigram "llm streaming"→ai
+    ("ai streaming response", "ai"),               # bigram "ai streaming"→ai
+    ("stream ai response", "ai"),                  # bigram "stream ai"→ai
+    ("stream ai output", "ai"),                    # bigram "stream ai"→ai
+    # Frontend — token streaming display components (overrides bare "token"→auth)
+    ("token stream react component", "frontend"),  # bigram "token stream"→frontend
+    ("token streaming ui", "frontend"),            # bigram "token streaming"→frontend
+    # Regressions — bare forms must stay unchanged
+    ("video streaming server", "media"),           # bare "streaming"→media unchanged (video)
+    ("audio streaming library", "media"),          # bare "streaming"→media unchanged (audio)
+    ("event stream kafka", "message"),             # bare "stream"→message unchanged (message queue)
+    ("token refresh jwt", "authentication"),       # bare "token"→auth unchanged
 ]
 
 

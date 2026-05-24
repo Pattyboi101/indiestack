@@ -6987,6 +6987,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "dx": "developer",                           # bare — "dx developer experience", "dx tooling", "dx audit" → Developer Tools
     # Developer Tools — "inner loop" bigram (local dev loop tools: Tilt, Skaffold, Garden, DevSpace).
     "inner loop": "developer",                   # bigram — "inner loop dev workflow", "inner loop kubernetes" → Developer Tools
+    # ── Probe pattern 68 (May 2026): LLM streaming / token-streaming / SSE dead zones ──
+    #
+    # Dead zones:
+    # "readable stream nodejs" → bare "stream"→message (Node.js Streams / Web ReadableStream → API Tools).
+    # "stream ai response" → bare "stream"→message (LLM streaming output → AI & Automation).
+    # "llm streaming react" → bare "streaming"→media (LLM token output → AI & Automation).
+    # "token stream react" → bare "token"→authentication (token streaming UI components → Frontend).
+    # "eventsource react" → bare "event"→message (EventSource SSE browser API → API Tools).
+    # NOTE: "event source" bigram CANNOT fire — "source" is in _FTS_STOP_WORDS.
+    # NOTE: "streaming api" and "streaming response" already mapped above (probe 70 parallel track).
+    #
+    # API Tools — ReadableStream / SSE browser API
+    "readable stream": "api",               # bigram — "readable stream nodejs", "readable stream browser" → API Tools
+    # NOTE: compound "eventsource" survives stop-word filter ("source" stripped → bare "event"→message is wrong).
+    "eventsource": "api",                   # compound — "eventsource javascript", "eventsource react" → API Tools (SSE)
+    # AI — LLM streaming output (overrides bare "streaming"→media / "stream"→message)
+    "llm streaming": "ai",                  # bigram — "llm streaming output", "llm streaming react" → AI & Automation
+    "ai streaming": "ai",                   # bigram — "ai streaming response", "ai streaming nodejs" → AI & Automation
+    "stream ai": "ai",                      # bigram — "stream ai response", "stream ai output" → AI & Automation
+    # Frontend — token streaming display components (overrides bare "token"→authentication)
+    "token stream": "frontend",             # bigram — "token stream react component", "token stream display" → Frontend
+    "token streaming": "frontend",          # bigram — "token streaming ui", "token streaming component" → Frontend
 }
 
 _FTS_STOP_WORDS = {
