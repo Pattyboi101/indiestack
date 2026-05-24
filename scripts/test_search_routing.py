@@ -2830,6 +2830,38 @@ TEST_CASES: list[tuple[str, str]] = [
     ("number parsing utility", "developer"),       # bare "number"→developer unchanged (no input/format bigram)
     ("image optimization cdn", "file"),            # "image optimization" bigram→file still fires
     ("shader editor vscode", "frontend"),          # "shader"→frontend + "editor" both route frontend
+    # ── Probe pattern 74 (May 2026): VoIP/telephony voice collision / service-worker PWA / product-tour dead zones ──
+    # "voice call" bigram → Notifications (VoIP/telephony, overrides bare "voice"→ai).
+    ("voice call api", "notifications"),           # bigram "voice call"→notifications (Twilio Voice, Telnyx)
+    ("voice call sdk", "notifications"),           # bigram "voice call"→notifications
+    ("voice calling library", "notifications"),    # bigram "voice call"→notifications (stops at "calling" → "call" stem? no — "calling" not "call")
+    # "phone call" bigram → Notifications (telephony, overrides bare "phone"→authentication).
+    ("phone call api", "notifications"),           # bigram "phone call"→notifications
+    ("phone call automation", "notifications"),    # bigram "phone call"→notifications
+    # "service worker pwa" — "service" is a stop word; "worker pwa" bigram fires instead.
+    ("service worker pwa", "frontend"),            # bigram "worker pwa"→frontend (service stripped as stop word)
+    ("worker pwa integration", "frontend"),        # bigram "worker pwa"→frontend
+    # "feature tour" bigram → Frontend Frameworks (overrides bare "feature"→feature-flags).
+    ("feature tour component", "frontend"),        # bigram "feature tour"→frontend
+    ("feature tour react", "frontend"),            # bigram "feature tour"→frontend
+    # "walkthrough" bare → Frontend Frameworks (product tour/onboarding libraries).
+    ("walkthrough guide library", "frontend"),     # bare "walkthrough"→frontend
+    ("interactive walkthrough tool", "frontend"),  # bigram "interactive walkthrough"→frontend
+    # "introjs" → Frontend Frameworks (named library, was raw_first).
+    ("introjs alternative", "frontend"),           # bare "introjs"→frontend
+    ("introjs tutorial", "frontend"),              # bare "introjs"→frontend (fires before "tutorial"→learning)
+    # "interactive demo" bigram → Frontend Frameworks.
+    ("interactive demo library", "frontend"),      # bigram "interactive demo"→frontend
+    ("interactive demo react", "frontend"),        # bigram "interactive demo"→frontend
+    # Regressions — nearby tokens must not be affected.
+    ("voice synthesis api", "ai"),                 # bare "voice"→ai unchanged (voice AI, not telephony)
+    ("voice cloning tool", "ai"),                  # bare "voice"→ai unchanged (ElevenLabs, etc.)
+    ("phone verification api", "authentication"),  # bare "phone"→authentication unchanged (not "phone call")
+    ("phone otp sms", "authentication"),           # bare "phone"→authentication unchanged
+    ("feature flag management", "feature"),        # bare "feature"→feature-flags unchanged (not "feature tour")
+    ("feature toggle library", "feature"),         # bare "toggle"→feature-flags unchanged
+    ("interactive tutorial", "learning"),          # bare "tutorial"→learning unchanged (not "interactive demo/walkthrough")
+    ("worker thread nodejs", "background"),        # bare "worker"→background unchanged (not "worker pwa")
 ]
 
 

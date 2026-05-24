@@ -3506,8 +3506,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "polyfill": "frontend",         # "polyfill library", "browser polyfill" → Frontend Frameworks
     "polyfills": "frontend",        # plural form
     # PWA / service workers — Workbox (Google)
+    # NOTE: "service worker" can't be a bigram — "service" is in _FTS_STOP_WORDS and is stripped.
+    # "worker pwa" covers the most common pattern after stripping.
+    "worker pwa": "frontend",       # "service worker pwa" → ["worker","pwa"] bigram → Frontend Frameworks
     "workbox": "frontend",          # Google Workbox — service worker and PWA caching library
-    "serviceworker": "frontend",    # "service worker library", "service worker caching" → Frontend
+    "serviceworker": "frontend",    # compound/no-space form — "serviceworker caching" → Frontend
     # Rate throttling (complement to rate/limiting/limiter/limit → api)
     "throttle": "api",              # "throttle requests", "api throttle" → API Tools
     "throttling": "api",            # "request throttling", "api throttling" → API Tools
@@ -3886,6 +3889,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tts": "ai",                    # text-to-speech — ElevenLabs, Cartesia, Coqui TTS
     "stt": "ai",                    # speech-to-text (STT abbreviation) — Deepgram, Whisper
     "asr": "ai",                    # automatic speech recognition — Deepgram, AssemblyAI
+    "voice call": "notifications",   # "voice call api", "voice call sdk" → Notifications (VoIP/telephony, not voice AI)
+    "voice calling": "notifications", # "voice calling library/sdk" → Notifications (gerund form)
+    "phone call": "notifications",   # "phone call api", "phone call automation" → Notifications (telephony; not phone auth)
     "voice": "ai",                  # voice AI — ElevenLabs, Play.ht, Murf → AI & Automation
     "speech": "ai",                 # "speech recognition", "speech synthesis" → AI & Automation
     "elevenlabs": "ai",             # ElevenLabs — leading voice AI API for TTS (developer-focused)
@@ -3972,9 +3978,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "product events": "analytics",      # bigram — "product events analytics", "product events sdk" → Analytics (overrides "events"→message at i=1)
     # Project management — Gantt charts (commonly searched feature)
     "gantt": "project",             # "Gantt chart", "Gantt timeline view" → Project Management
-    # User onboarding / product tours (Intro.js, Shepherd.js, Driver.js)
+    # User onboarding / product tours (Intro.js, Shepherd.js, Driver.js, Joyride)
+    "feature tour": "frontend",     # "feature tour component" → Frontend (overrides "feature"→feature-flags)
     "tour": "frontend",             # "product tour", "interactive tour library" → Frontend Frameworks
     "onboarding": "frontend",       # "user onboarding flow", "onboarding wizard" → Frontend Frameworks
+    "walkthrough": "frontend",      # "walkthrough guide library", "interactive walkthrough" → Frontend Frameworks
+    "introjs": "frontend",          # Intro.js — product tour and user onboarding library
+    "interactive demo": "frontend", # "interactive demo library", "interactive playground" → Frontend Frameworks
+    "interactive walkthrough": "frontend",  # "interactive walkthrough tool" → Frontend Frameworks
     # Vue utilities — VueUse is searched directly as a named tool
     "vueuse": "frontend",           # VueUse — Vue Composition API utility collection (21k★)
     # Debounce / rate-control hooks (use-debounce, xhook, lodash.debounce)
