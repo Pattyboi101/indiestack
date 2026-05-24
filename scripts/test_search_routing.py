@@ -789,6 +789,23 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — nearby mappings unchanged
     ("content marketing tool", "cms"),             # bare "content"→cms unchanged (no "security" adjacent)
     ("dependency management npm", "developer"),    # bare "dependency"→developer unchanged (no "scanning"/"audit" adjacent)
+    # ── Probe 71 (May 2026): LLM context / RAG chunking / temperature dead zones ──
+    # AI — context window (overrides bare "context"→frontend)
+    ("context window llm", "ai"),                  # bigram "context window"→ai overrides bare "context"→frontend
+    ("context window size", "ai"),                 # bigram "context window"→ai
+    # AI — document chunking / text splitting for RAG
+    ("document chunking langchain", "ai"),         # bigram "document chunking"→ai overrides bare "document"→database
+    ("document chunking rag", "ai"),               # bigram "document chunking"→ai
+    ("text splitting rag", "ai"),                  # bigram "text splitting"→ai overrides bare "splitting"→frontend
+    ("text splitting langchain", "ai"),            # bigram "text splitting"→ai
+    ("text chunk overlap", "ai"),                  # bigram "text chunk"→ai
+    # AI — LLM temperature/sampling parameter
+    ("temperature sampling", "ai"),                # bare "temperature"→ai
+    ("llm temperature", "ai"),                     # bare "llm"→ai (llm fires first anyway)
+    # Regressions — adjacent tokens must stay correct
+    ("code splitting vite", "frontend"),           # bare "splitting"→frontend unchanged (code splitting != text splitting)
+    ("react context api", "frontend"),             # bare "context"→frontend unchanged (react stripped; "context"→frontend)
+    ("document database", "database"),             # bare "document"→database unchanged (no "chunking" adjacent)
 ]
 
 

@@ -7061,6 +7061,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Security — OPA / policy-as-code (overrides bare "agent"→ai for policy agent queries)
     "policy agent": "security",             # bigram — "open policy agent", "policy agent rego" → Security (OPA)
     "rego": "security",                     # bare — "rego policy", "rego rule language" → Security (OPA Rego DSL)
+    # ── Probe pattern 71 (May 2026): LLM context / RAG chunking / temperature dead zones ──
+    #
+    # Dead zones:
+    # "context window llm" → frontend (bare "context"→frontend; React Context collision at pos 0).
+    #   Context window is an LLM concept (how many tokens fit in the model). → AI & Automation.
+    #   Bigram "context window" overrides bare "context"→frontend.
+    # "document chunking" → database (bare "document"→database at pos 0; MongoDB "document" collision).
+    #   Document chunking (LangChain text splitters, LlamaIndex) is a RAG pre-processing step → AI.
+    #   Bigram "document chunking" overrides bare "document"→database.
+    # "text splitting" → frontend (bare "splitting"→frontend; code-splitting collision).
+    #   Text splitting for RAG (CharacterTextSplitter, RecursiveCharacterTextSplitter) → AI.
+    #   Bigram "text splitting"→ai overrides bare "splitting"→frontend for RAG context.
+    # "temperature sampling" → raw_first "temperature" (unmapped; LLM temperature parameter → AI).
+    #   Bare "temperature"→ai safe (dev-context "temperature" is almost always LLM sampling param).
+    #
+    # AI — LLM context window (overrides bare "context"→frontend for context-window queries)
+    "context window": "ai",                 # bigram — "context window llm", "context window size" → AI & Automation
+    # AI — RAG document chunking (overrides bare "document"→database for chunking queries)
+    "document chunking": "ai",              # bigram — "document chunking langchain", "document chunking rag" → AI & Automation
+    "text splitting": "ai",                 # bigram — "text splitting rag", "text splitting langchain" → AI & Automation
+    "text chunk": "ai",                     # bigram — "text chunk size", "text chunk overlap" → AI & Automation
+    # AI — LLM temperature parameter (sampling temperature, top-p, top-k)
+    "temperature": "ai",                    # bare — "temperature sampling", "llm temperature", "model temperature" → AI
 }
 
 _FTS_STOP_WORDS = {
