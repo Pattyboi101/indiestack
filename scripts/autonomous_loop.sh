@@ -210,6 +210,15 @@ curl the API for these queries and check top-3 results are relevant:
     'etl pipeline tool', 'data pipeline orchestration', 'data warehouse alternative',
     'dbt alternative', 'apache airflow alternative', 'batch processing framework',
     'data lake storage', 'stream processing tool'.
+  ETL/metrics/billing/backoffice (probe 67, May 2026 — dead zones fixed):
+    'extract transform load' → Background Jobs (bigrams "transform load"/"extract transform");
+    'metrics collection' → Monitoring (bigram overrides "metrics"→analytics);
+    'metered billing', 'usage billing', 'usage based pricing' → Payments;
+    'backoffice builder', 'back office admin' → Developer Tools.
+  MCP/file-watcher/AI alignment (probe 68, May 2026 — dead zones fixed):
+    'model context protocol', 'context protocol' → MCP Servers;
+    'file watcher nodejs', 'filesystem watcher' → Developer Tools;
+    'ai alignment research' → AI Standards.
   Screen recording & UX analytics (May 2026 — recording/feedback tokens added):
     'screen recording tool', 'ux recording tool', 'user feedback widget',
     'customer feedback tool', 'feedback collection tool'.
