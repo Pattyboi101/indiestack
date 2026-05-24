@@ -2954,6 +2954,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "locales": "localization",
     "localization": "localization",
     "internationalization": "localization",
+    "language detection": "localization",  # "language detection api", "detect language python" → franc, langdetect, CLD3
     "crowdin": "localization",          # Crowdin — i18n platform
     "weblate": "localization",          # Weblate — self-hosted translation
     # CLI tools — "CLI Tools" category name, LIKE '%cli%' matches ✓
@@ -3083,6 +3084,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "limit": "api",              # "rate limit" → both "rate" and "limit" reinforce api routing
     # Headless browser / browser automation
     "browser": "testing",        # "headless browser", "browser automation" → Testing Tools
+    "web automation": "testing",  # "web automation python", "web scraping automation" → Testing Tools (Playwright, Selenium)
     # Microservices — common query pattern for API/service layer tools
     "microservice": "api",       # "microservice framework" → API Tools (Hono, Express, Fastify)
     "microservices": "api",      # plural form — "microservices architecture", "microservices pattern"
@@ -4192,6 +4194,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "openlayers": "maps",           # OpenLayers — full-featured maps in the browser (11k★)
     "gis": "maps",                  # GIS (Geographic Information System) generic queries → Maps & Location
     "cesium": "maps",               # CesiumJS — 3D globes and maps (Cesium ion, open-source, 13k★)
+    "geojson": "maps",              # GeoJSON — geospatial data format queries → Maps & Location
+    "routing api": "maps",          # geographic routing APIs (OSRM, Valhalla, Mapbox Directions) not frontend routing
     # API clients / API testing — Postman is the canonical tool; "[tool] alternative" is high-volume
     "postman": "api",               # Postman — most-used API testing and documentation platform
     "insomnia": "api",              # Insomnia — Kong's open-source REST/GraphQL/gRPC client (34k★)

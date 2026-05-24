@@ -873,6 +873,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("lsp server setup", "developer"),             # bare "lsp"→developer unchanged
     ("monaco editor react", "frontend"),           # bare "monaco"→frontend unchanged
     ("codemirror setup", "frontend"),              # bare "codemirror"→frontend unchanged
+    # ── Probe pattern 78 (May 2026): language-detection / GeoJSON / routing-API / web-automation dead zones ──
+    # "language detection" bigram → Localization (franc, langdetect, CLD3) — was raw_first.
+    ("language detection api", "localization"),    # bigram "language detection"→localization
+    ("language detection library", "localization"), # bigram "language detection"→localization
+    # "geojson" bare token → Maps & Location — was raw_first.
+    ("geojson parser", "maps"),                    # bare "geojson"→maps
+    ("geojson format", "maps"),                    # bare "geojson"→maps
+    # "routing api" bigram → Maps (OSRM, Valhalla, Mapbox Directions) — was "routing"→frontend.
+    ("routing api maps", "maps"),                  # bigram "routing api"→maps (not frontend routing)
+    ("routing api directions", "maps"),            # bigram "routing api"→maps
+    # "web automation" bigram → Testing Tools (Playwright, Selenium) — was "automation"→ai.
+    ("web automation python", "testing"),          # bigram "web automation"→testing
+    ("web automation selenium", "testing"),        # bigram "web automation"→testing
+    ("web automation framework", "testing"),       # bigram "web automation"→testing
+    # Regressions — adjacent routing must not change.
+    ("routing nextjs", "frontend"),                # bare "routing"→frontend unchanged (Next.js routing)
+    ("browser automation", "testing"),             # bare "browser"→testing unchanged
+    ("web scraping", "developer"),                 # bare "scraping"→developer unchanged
+    ("translation api", "localization"),           # bare "translation"→localization unchanged
+    ("geospatial data", "maps"),                   # bare "geospatial"→maps unchanged
 ]
 
 
