@@ -9207,6 +9207,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "loyalty reward" / "loyalty program" → raw_first "loyalty" (unmapped). Loyalty/rewards program
     # tools (Rewardful, LoyaltyLion, Stamp.me) are CRM-adjacent (customer retention).
     "loyalty": "crm",                    # bare — "loyalty program tool", "loyalty rewards api" → CRM & Sales
+
+    # Probe 87 — organization management / invite / impersonation dead zones
+
+    # "organization management" / "org management" → project via bare "management"→project (wrong;
+    # managing orgs/tenants in SaaS apps is an Authentication concern — Clerk Orgs, WorkOS Orgs,
+    # Auth0 Organizations handle this). "management"→project fires before "organization" because
+    # bare token scan is left-to-right: "organization" at pos 0 is unmapped, then "management" at
+    # pos 1 fires → wrong category. Bigrams override bare tokens at each position.
+    "organization management": "authentication",  # bigram — "org management saas", "manage organizations" → Authentication
+    "member management": "authentication",        # bigram — "manage org members", "member access control" → Authentication
+    "org management": "authentication",           # bigram — "org management api" → Authentication (short form)
+
+    # "invite system" / "email invite" → raw_first "invite" (unmapped). User invitation flows
+    # (magic link invites, team invite emails) are an Authentication feature (Clerk, Auth0, WorkOS).
+    "invite": "authentication",          # bare — "invite system", "invite link", "user invite" → Authentication
+
+    # "impersonation" → raw_first "impersonation" (unmapped). User impersonation for support/admin
+    # access (Clerk impersonation, Auth0 impersonation, WorkOS impersonation) → Authentication.
+    "impersonation": "authentication",   # bare — "user impersonation", "admin impersonation" → Authentication
 }
 
 _FTS_STOP_WORDS = {

@@ -3194,6 +3194,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("inline editor react", "frontend"),           # "editor"→frontend fires
     ("coming soon page", "landing"),               # bigram "coming soon"→landing unchanged
     ("referral program crm", "crm"),               # "referral"→crm unchanged
+
+    # Probe pattern 87 (May 2026): organization management / invite / impersonation dead zones.
+    # "organization management" → project via bare "management"→project (wrong; Clerk Orgs,
+    # WorkOS Orgs → Authentication); bigrams "organization management"/"member management"/"org management"→authentication added.
+    # "invite system" → raw_first "invite" (unmapped; invitation flows → Authentication); bare "invite"→authentication added.
+    # "impersonation" → raw_first "impersonation" (unmapped; admin user impersonation → Authentication); bare added.
+    ("organization management saas", "authentication"),   # bigram "organization management"→authentication
+    ("org management api", "authentication"),             # bigram "org management"→authentication
+    ("member management access", "authentication"),       # bigram "member management"→authentication
+    ("invite system users", "authentication"),            # bare "invite"→authentication
+    ("invite link magic", "authentication"),              # bare "invite"→authentication
+    ("user impersonation admin", "authentication"),       # bare "impersonation"→authentication
+    # Regressions — probe 87 changes must not break these.
+    ("project management linear", "project"),     # bare "management"→project fires when no auth-related prefix
+    ("sprint planning", "project"),               # bare "sprint"→project unchanged
+    ("team management platform", "project"),      # "management"→project fires (team management is ambiguous; keep project for now)
+    ("workos alternative", "authentication"),     # "workos"→authentication unchanged
+    ("scim provisioning", "authentication"),      # "scim"→authentication unchanged
 ]
 
 
