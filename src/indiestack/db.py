@@ -9453,6 +9453,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API Tools — HTTP request interceptors (Axios, Angular HttpClient, fetch interceptors)
     "request interceptor": "api",       # bigram — "request interceptor axios", "request interceptor http" → API Tools
     "interceptor": "api",               # bare fallback — "interceptor pattern", "http interceptor" → API Tools
+
+    # Probe pattern 98 (May 2026): DOM / XPath / duplex-streaming / input-sanitization / class-OOP dead zones.
+    # "dom manipulation"/"dom library"/"dom traversal" → raw_first "dom" — DOM manipulation libs
+    #   (jQuery, cash.js, Umbrella.js) are Frontend Frameworks; bare "dom"→frontend added.
+    # Regression guards: "dom testing" and "dom snapshot" still route to Testing (pre-pass bigrams override bare "dom").
+    "dom": "frontend",                  # bare — "dom manipulation", "dom library", "shadow dom" → Frontend
+    "dom testing": "testing",           # bigram override — "dom testing react" → Testing (beats bare "dom"→frontend)
+    "dom snapshot": "testing",          # bigram override — "dom snapshot diff" → Testing (beats bare "dom"→frontend)
+
+    # XPath — XML/HTML query language; lxml, BeautifulSoup xpath, libxml2 → Developer Tools
+    "xpath": "developer",               # bare — "xpath selector", "xpath library", "xpath query" → Developer Tools
+
+    # API Tools — full-duplex / bidirectional streaming (gRPC, WebSocket)
+    "bidirectional streaming": "api",   # bigram — "bidirectional streaming grpc", "bidirectional streaming ws" → API Tools
+    "duplex": "api",                    # bare — "duplex stream", "full duplex protocol" → API Tools
+
+    # Security — sanitization (complement to existing "sanitize"/"sanitizer" → security)
+    "sanitization": "security",         # bare — "data sanitization", "string sanitization" → Security
+    "input sanitization": "security",   # bigram override — fires before bare "input" (no "input" bare yet)
+    "html sanitization": "security",    # bigram override — fires before bare "html"→frontend
+
+    # Developer Tools — class-oriented OOP patterns (class-validator, reflect-metadata, InversifyJS)
+    "class validator": "developer",     # bigram — "class validator nestjs", "class-validator typescript" → Developer
+    "class decorator": "developer",     # bigram — "class decorator typescript", "class decorator pattern" → Developer
+    "class inheritance": "developer",   # bigram — "class inheritance javascript", "class inheritance oop" → Developer
 }
 
 _FTS_STOP_WORDS = {

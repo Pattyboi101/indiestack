@@ -3557,6 +3557,48 @@ TEST_CASES: list[tuple[str, str]] = [
     ("cursor ide alternative", "ai dev"),       # bare "cursor"→ai-dev unchanged (Cursor AI IDE queries)
     ("cursor ai editor", "ai dev"),             # bare "cursor"→ai-dev unchanged
     ("ioc container typescript", "developer"),  # "ioc"→developer unchanged (was already mapped)
+
+    # ── Probe pattern 98 (May 2026): DOM / XPath / duplex-streaming / input-sanitization / class-OOP ──────────
+    # "dom manipulation"/"dom library" → raw_first "dom" (DOM libs are Frontend Frameworks; bare "dom"→frontend).
+    # "dom testing"/"dom snapshot" → Testing via pre-pass bigram (overrides bare "dom"→frontend).
+    # "xpath selector"/"xpath library" → raw_first "xpath" (XPath tools are Developer Tools; "xpath"→developer).
+    # "bidirectional streaming" → media (wrong; gRPC/WebSocket bidirectional → API Tools).
+    # "duplex stream"/"full duplex" → message/raw_first (Node.js duplex, full-duplex → API Tools; "duplex"→api).
+    # "input sanitization" → raw_first (DOMPurify, sanitize-html, bleach → Security; bigram added).
+    # "html sanitization" → frontend via "html" (wrong; HTML sanitization → Security; bigram override).
+    # "data sanitization" → raw_first (sanitization noun form unmapped; "sanitization"→security added).
+    # "class validator"/"class decorator"/"class inheritance" → raw_first (OOP/class-validator → Developer; bigrams).
+    ("dom manipulation", "frontend"),           # bare "dom"→frontend
+    ("dom library", "frontend"),                # bare "dom"→frontend
+    ("dom traversal library", "frontend"),      # bare "dom"→frontend
+    ("shadow dom", "frontend"),                 # bare "dom"→frontend (position 1, fires after "shadow" raw_first... wait)
+    ("dom testing react", "testing"),           # bigram "dom testing"→testing (overrides bare "dom"→frontend)
+    ("dom snapshot diff", "testing"),           # bigram "dom snapshot"→testing (overrides bare "dom"→frontend)
+    ("xpath selector", "developer"),            # bare "xpath"→developer
+    ("xpath library", "developer"),             # bare "xpath"→developer
+    ("xpath query python", "developer"),        # bare "xpath"→developer (overrides "query"→database at pos 1)
+    ("bidirectional streaming grpc", "api"),    # bigram "bidirectional streaming"→api
+    ("bidirectional streaming websocket", "api"),# bigram "bidirectional streaming"→api
+    ("duplex stream nodejs", "api"),            # bare "duplex"→api
+    ("full duplex protocol", "api"),            # bare "duplex"→api (position 1)
+    ("input sanitization library", "security"), # bigram "input sanitization"→security
+    ("input sanitization python", "security"),  # bigram "input sanitization"→security
+    ("html sanitization library", "security"),  # bigram "html sanitization"→security
+    ("data sanitization tool", "security"),     # bare "sanitization"→security
+    ("string sanitization", "security"),        # bare "sanitization"→security
+    ("class validator nestjs", "developer"),    # bigram "class validator"→developer
+    ("class validator typescript", "developer"),# bigram "class validator"→developer
+    ("class decorator typescript", "developer"),# bigram "class decorator"→developer
+    ("class inheritance javascript", "developer"),# bigram "class inheritance"→developer
+    # Regressions — probe 98 changes must not break these.
+    ("dom testing", "testing"),                 # bigram override still fires
+    ("dom snapshot", "testing"),                # bigram override still fires
+    ("sanitize html library", "security"),      # bare "sanitize"→security unchanged
+    ("html sanitizer", "security"),             # bigram "html sanitizer"→security unchanged (probe 32)
+    ("class component react", "frontend"),      # bigram "class component" not mapped; "component"→frontend fires
+    ("class based component", "frontend"),      # "component"→frontend fires at position 2
+    ("input validation python", "developer"),   # "validation"→developer unchanged
+    ("html parser", "developer"),               # bigram "html parser"→developer unchanged (probe 32)
 ]
 
 
