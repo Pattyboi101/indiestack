@@ -533,6 +533,31 @@ When hunting for routing gaps, these query forms are historically tricky:
     "masked"/"masked input"→frontend,
     "shader"/"glsl"/"opengl"→frontend (WebGL bare tokens),
     "photo crop"→frontend (probe 73, May 2026).
+
+60. "Usage-context collision and API-prefix overreach" — two recurring patterns identified
+    in probe 96 (May 2026):
+    (a) USAGE CONTEXT: bare "usage"→invoicing fires correctly for billing/metering queries
+    ("usage billing", "usage based pricing"), but "cpu usage", "disk usage", "memory usage",
+    "resource usage" are system-resource MONITORING queries (Datadog, Prometheus, Grafana).
+    Without bigrams at position 0, "usage"→invoicing routes these to Invoicing & Billing.
+    Similarly, "memory"→caching misroutes "memory usage" to Caching. Fix: add bigrams
+    "cpu/disk/memory/resource usage"→monitoring that fire before the bare-token fallbacks.
+    (b) API PREFIX OVERREACH: "api"→api fires at position 0 for ANY "api X" query, even
+    when the second token completely changes the category intent: "api security" should →
+    Security (42crunch, Wallarm); "api monitoring"/"api observability" should → Monitoring
+    (Treblle, Helicone, Moesif); "api contract" should → Testing (Pact, Dredd). Add
+    compound bigrams at position 0 to override the bare "api"→api mapping.
+    (c) FAULT INJECTION: "injection"→developer (dependency injection DI containers) fires
+    for "fault injection" queries, routing chaos/resilience testing tools to Developer Tools.
+    Fix: add bigram "fault injection"→testing.
+    (d) CHAOS RECLASSIFICATION: "chaos"→devops was wrong. Gremlin, LitmusChaos, Chaos
+    Monkey, ChaosMesh are testing/fault-injection tools, not DevOps infra tools. Changed
+    bare "chaos"→testing. No bigrams needed since the bare token is now correct.
+    NOTE: "service virtualization"→frontend cannot be fixed — "service" is in _FTS_STOP_WORDS
+    so the bigram "service virtualization" can never fire. Documented limitation.
+    Fixed: cpu/disk/memory/resource usage→monitoring, api security→security,
+    api monitoring/observability→monitoring, api contract→testing,
+    fault injection→testing, chaos→testing (probe 96, May 2026).
 """
 
 import sys
@@ -3432,6 +3457,44 @@ TEST_CASES: list[tuple[str, str]] = [
     ("on call scheduling", "monitoring"),       # "call"→monitoring unchanged (no "procedure" qualifier)
     ("word embedding model", "ai"),             # "embedding"→ai unchanged (no iframe/widget prefix; "word" unmapped)
     ("text embedding model", "ai"),             # "embedding"→ai unchanged ("text" unmapped so "embedding"→ai fires)
+
+    # ── Probe 96: usage-context collision / API-prefix overreach / chaos reclassification ──
+    # "cpu/disk/memory/resource usage" → invoicing via bare "usage"→invoicing (wrong; monitoring).
+    # "api security/monitoring/observability/contract" → api via bare "api"→api at pos 0 (wrong).
+    # "fault injection" → developer via bare "injection"→developer (wrong; chaos testing).
+    # "chaos" bare token reclassified from devops → testing (Gremlin, LitmusChaos, ChaosMesh).
+    ("cpu usage monitor", "monitoring"),        # bigram "cpu usage"→monitoring (overrides bare "usage"→invoicing)
+    ("cpu usage dashboard", "monitoring"),      # same bigram
+    ("disk usage alert", "monitoring"),         # bigram "disk usage"→monitoring
+    ("disk usage monitor", "monitoring"),       # same bigram
+    ("memory usage chart", "monitoring"),       # bigram "memory usage"→monitoring (overrides "memory"→caching)
+    ("memory usage profiler", "monitoring"),    # same bigram
+    ("resource usage dashboard", "monitoring"), # bigram "resource usage"→monitoring
+    ("resource usage alert", "monitoring"),     # same bigram
+    ("api security scanner", "security"),       # bigram "api security"→security (overrides "api"→api)
+    ("api security testing", "security"),       # same bigram
+    ("api monitoring tool", "monitoring"),      # bigram "api monitoring"→monitoring (overrides "api"→api)
+    ("api monitoring dashboard", "monitoring"), # same bigram
+    ("api observability platform", "monitoring"),  # bigram "api observability"→monitoring
+    ("api contract testing", "testing"),        # bigram "api contract"→testing (overrides "api"→api)
+    ("api contract pact", "testing"),           # same bigram
+    ("fault injection testing", "testing"),     # bigram "fault injection"→testing (overrides "injection"→developer)
+    ("fault injection chaos", "testing"),       # same bigram
+    ("chaos testing gremlin", "testing"),       # bare "chaos"→testing (reclassified from devops)
+    ("chaos engineering litmus", "testing"),    # bare "chaos"→testing
+    ("chaos monkey netflix", "testing"),        # bare "chaos"→testing
+    # Regressions — probe 96 changes must not break these.
+    ("usage based pricing", "payments"),        # bigram "usage based"→payments unchanged
+    ("usage billing saas", "payments"),         # bigram "usage billing"→payments unchanged
+    ("usage tracking", "invoicing"),            # bare "usage"→invoicing unchanged (no cpu/disk/memory/resource prefix)
+    ("dependency injection spring", "developer"),  # bare "injection"→developer unchanged (no "fault" prefix)
+    ("constructor injection dotnet", "developer"), # bare "injection"→developer unchanged
+    ("memory cache redis", "caching"),          # bare "memory"→caching unchanged when no "usage" suffix
+    ("virtual scroll react", "frontend"),       # bare "virtual"→frontend unchanged
+    ("list virtualization", "frontend"),        # "virtualization"→frontend unchanged (not "service" context)
+    ("contract testing pact", "testing"),       # bare "contract"→testing unchanged (no "api" prefix)
+    ("api gateway kong", "api"),                # bare "api"→api unchanged (no security/monitoring/contract suffix)
+    ("api testing postman", "api"),             # bare "api"→api unchanged for testing tools in api category
 ]
 
 

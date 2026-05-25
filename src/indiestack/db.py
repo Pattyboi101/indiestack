@@ -6413,8 +6413,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "postmortem": "monitoring",     # "postmortem tool", "incident postmortem" → Monitoring & Uptime
     "runbook": "monitoring",        # "runbook automation", "ops runbook" → Monitoring & Uptime
     "playbook": "monitoring",       # "incident playbook", "ops playbook" → Monitoring & Uptime (complement to runbook)
-    # DevOps — chaos engineering bare term (named tools: chaostoolkit/chaos-mesh are mapped; generic queries weren't)
-    "chaos": "devops",              # "chaos engineering", "chaos testing tool" → DevOps & Infrastructure
+    # Testing — chaos engineering bare term (Gremlin, LitmusChaos, ChaosMesh, Chaos Monkey — resilience/fault-injection testing)
+    "chaos": "testing",             # "chaos engineering", "chaos testing tool" → Testing Tools (was devops: reclassified probe 96)
     # Developer Tools — IDE and internal developer portal query terms
     "ide": "developer",             # "IDE alternative", "lightweight IDE", "ide plugin" → Developer Tools (Zed, Neovim, VS Code)
     "portal": "developer",          # "developer portal", "internal developer portal" → Developer Tools (Backstage)
@@ -9372,6 +9372,45 @@ _CAT_SYNONYMS: dict[str, str] = {
     #   Regression: "vector embedding", "text embedding", "word embedding" keep "embedding"→ai (no iframe/widget).
     "widget embedding": "developer",    # bigram — "widget embedding tool", "widget embedding react" → Developer Tools
     "iframe embedding": "developer",    # bigram — "iframe embedding react", "iframe embedding html" → Developer Tools
+
+    # ── Probe pattern 96 (May 2026): usage-context / API-prefix / chaos collisions ──────────────────
+    #
+    # Dead zones / misfires fixed:
+    # "cpu/disk/memory/resource usage" → "invoicing" via bare "usage"→invoicing (and "memory"→caching).
+    #   These are system-resource monitoring queries; fix: bigrams at position 0 override bare token.
+    # "api security/monitoring/observability/contract" → "api" via bare "api"→api at position 0,
+    #   before the meaningful second token (security/monitoring/observability/testing) is reached.
+    #   Fix: compound bigrams fire before bare "api"→api in the second-pass loop.
+    # "fault injection" → "developer" via bare "injection"→developer (dependency-injection context).
+    #   Fault injection is a chaos/resilience testing technique (Gremlin, Chaos Toolkit) → Testing.
+    #
+    # Reclassification (bare token changed above at line 6417):
+    # "chaos"→devops was wrong; chaos engineering tools (Gremlin, LitmusChaos, ChaosMesh, Chaos Monkey)
+    # belong in Testing Tools. Changed to "chaos"→testing.
+    #
+    # Regression guards (unchanged):
+    # "usage billing"→payments, "usage based"→payments (bigrams still fire for billing context).
+    # "usage tracking"→invoicing (bare "usage"→invoicing still fires when no monitoring bigram matches).
+    # "dependency injection"→developer, "constructor injection"→developer (bare "injection"→developer OK).
+    # "virtual scroll"→frontend, "list virtualization"→frontend (bare "virtual"→frontend unchanged).
+    # "contract testing"→testing (bare "contract"→testing unchanged for non-"api" first-token queries).
+    # NOTE: "service virtualization"→testing CANNOT be fixed — "service" is in _FTS_STOP_WORDS so the
+    # bigram never fires; bare "virtualization"→frontend is the fallback (documented limitation).
+
+    # CPU / disk / memory / resource usage — Monitoring (overrides "usage"→invoicing / "memory"→caching)
+    "cpu usage": "monitoring",           # bigram — "cpu usage monitor", "cpu usage alert" → Monitoring & Uptime
+    "disk usage": "monitoring",          # bigram — "disk usage alert", "disk usage monitor" → Monitoring & Uptime
+    "memory usage": "monitoring",        # bigram — "memory usage chart", "memory usage profiler" → Monitoring & Uptime
+    "resource usage": "monitoring",      # bigram — "resource usage alert", "resource usage dashboard" → Monitoring
+
+    # API-prefix collision — second token changes category intent; bigrams fire before bare "api"→api
+    "api security": "security",          # bigram — "api security scanner", "api security test" → Security (42crunch, Wallarm)
+    "api monitoring": "monitoring",      # bigram — "api monitoring tool", "api monitoring dashboard" → Monitoring (Treblle, Helicone)
+    "api observability": "monitoring",   # bigram — "api observability platform" → Monitoring & Uptime
+    "api contract": "testing",           # bigram — "api contract testing", "api contract pact" → Testing Tools (Pact, Dredd)
+
+    # Fault injection — Testing (overrides "injection"→developer; chaos/resilience testing context)
+    "fault injection": "testing",        # bigram — "fault injection testing", "fault injection chaos" → Testing Tools
 }
 
 _FTS_STOP_WORDS = {
