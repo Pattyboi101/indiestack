@@ -9238,6 +9238,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cross site": "security",            # bigram — XSS/CSRF ("cross site scripting", "cross site request forgery") → Security
     "cross browser": "testing",          # bigram — "cross browser testing", "cross browser compatibility" → Testing Tools
     "crossplatform": "frontend",         # compound — "crossplatform desktop app", "crossplatform mobile" → Frontend
+
+    # Probe 89 — code smell / technical debt / pre-push hook / open graph image dead zones
+
+    # "code smell" → raw_first "code" (unmapped; code smell detectors like CodeClimate, SonarQube,
+    # PMD → Testing Tools — same tier as linters). Bigram prevents "code"→raw_first.
+    "code smell": "testing",             # bigram — "code smell detector", "code smell refactoring" → Testing Tools
+
+    # "technical debt" → raw_first "technical" ("tech debt" bigram already maps to developer correctly;
+    # but the spaced "technical debt" form was missing). Same category: Developer Tools.
+    "technical debt": "developer",       # bigram — "technical debt tracking", "technical debt report" → Developer Tools
+
+    # "pre push hook" → notifications via bare "push"→notifications (wrong; git pre-push hooks
+    # (Husky pre-push, Lefthook pre-push) are DevOps/git tooling). Bigram overrides at pos 0-1.
+    "pre push": "devops",               # bigram — "pre push hook", "pre push validation" → DevOps
+
+    # "open graph image" → database via bare "graph"→database ("open" is stop-word → ["graph","image"]).
+    # Open Graph image generators (Satori, @vercel/og, opengraph-image) → SEO Tools (meta tags tier).
+    "graph image": "seo",               # bigram — "open graph image" strips to ["graph","image"] → SEO Tools
 }
 
 _FTS_STOP_WORDS = {

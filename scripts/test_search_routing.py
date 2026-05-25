@@ -3230,6 +3230,29 @@ TEST_CASES: list[tuple[str, str]] = [
     ("react native alternative", "frontend"),     # "native"→frontend unchanged (no "cross" prefix)
     ("flutter alternative", "frontend"),          # "flutter"→frontend unchanged
     ("electron app", "frontend"),                 # "electron"→frontend unchanged
+
+    # Probe pattern 89 (May 2026): code smell / technical debt / pre-push hook / open graph image dead zones.
+    # "code smell" → raw_first "code" (unmapped; CodeClimate/SonarQube → Testing); bigram added.
+    # "technical debt" → raw_first "technical" (spaced form missing; "tech debt" bigram already worked);
+    # bigram "technical debt"→developer added.
+    # "pre push hook" → notifications via "push"→notifications (wrong; Husky/Lefthook pre-push → DevOps);
+    # bigram "pre push"→devops added.
+    # "open graph image" → database via bare "graph"→database ("open" stripped; Satori/@vercel/og → SEO);
+    # bigram "graph image"→seo added.
+    ("code smell detector", "testing"),           # bigram "code smell"→testing
+    ("code smell refactoring", "testing"),        # bigram "code smell"→testing
+    ("technical debt tracking", "developer"),     # bigram "technical debt"→developer
+    ("technical debt report", "developer"),       # bigram "technical debt"→developer
+    ("tech debt tool", "developer"),              # bigram "tech debt"→developer (unchanged, confirm)
+    ("pre push hook husky", "devops"),            # bigram "pre push"→devops
+    ("pre push validation git", "devops"),        # bigram "pre push"→devops
+    ("open graph image generator", "seo"),        # bigram "graph image"→seo ("open" stripped)
+    ("og image generator", "seo"),                # bare "og"→seo unchanged
+    # Regressions — probe 89 changes must not break these.
+    ("push notification api", "notifications"),   # bare "push"→notifications fires at pos 0 (no "pre" prefix)
+    ("code review tool", "developer"),             # "review"→developer fires (no "pull request" bigram)
+    ("code coverage report", "testing"),          # "coverage"→testing unchanged
+    ("knowledge graph database", "database"),     # "graph"→database fires (no "image" suffix)
 ]
 
 
