@@ -3692,6 +3692,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pytest": "testing",            # pytest — dominant Python testing framework
     "unittest": "testing",          # unittest — Python stdlib test framework
     "hypothesis": "testing",        # Hypothesis — property-based testing for Python
+    "factory pattern": "developer",  # bigram — GoF factory pattern → Developer Tools (overrides "factory"→testing)
     "factory": "testing",           # factory_boy / FactoryBot — test data factories
     # Python linters/formatters — Rust-powered tooling gaining fast adoption
     "ruff": "testing",              # Ruff — extremely fast Python linter + formatter (Rust)
@@ -4472,6 +4473,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — JSON Schema tooling (AJV, JSON Schema Validator, openapi-schema-validator)
     "jsonschema": "developer",      # "json schema validator", "jsonschema library" → Developer Tools
     "json-schema": "developer",     # hyphenated — "json-schema validation", "json-schema spec" → Developer Tools
+    # Boilerplate — white-label SaaS queries (bigrams override "labeling"→ai at position 1)
+    "white labeling": "boilerplate",    # bigram — "white labeling saas", "white labeling product" → Boilerplates
+    "white label": "boilerplate",       # bigram — "white label product", "white label dashboard" → Boilerplates
     # AI — data labeling / annotation platforms (Label Studio, Argilla, Prodigy, Scale AI alternatives)
     "labeling": "ai",               # "data labeling tool", "ml labeling platform" → AI & Automation
     "annotation": "ai",             # "data annotation", "training data annotation" → AI & Automation
@@ -8175,6 +8179,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "aggregate root": "developer",  # bigram — "aggregate root pattern", "aggregate root example" → Developer Tools
     "value object": "developer",    # bigram — "value object ddd", "value object pattern" → Developer Tools
     "ubiquitous": "developer",      # bare — "ubiquitous language ddd" → Developer Tools (unambiguous DDD term)
+    # GoF / software design patterns — "design pattern", "singleton pattern", "observer pattern",
+    # "decorator pattern", "adapter pattern", "repository pattern", "strategy pattern", etc.
+    # Bare "pattern" fires as a position-1 fallback when position-0 token is unmapped.
+    # "factory pattern" needs its own bigram to override "factory"→testing at position 0.
+    "design pattern": "developer",  # bigram — "design pattern examples", "gof design patterns" → Developer Tools
+    "pattern": "developer",         # bare fallback — "singleton pattern", "observer pattern", etc. → Developer Tools
     # DevOps — service catalog queries (Backstage, Cortex, OpsLevel, Port) lose "service" to stop words.
     # "service" is in _FTS_STOP_WORDS so "service catalog" reduces to bare "catalog" → raw_first.
     # Internal developer portals and service catalogs live in DevOps & Infrastructure.
@@ -8769,6 +8779,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "usage billing": "payments",             # bigram — "usage billing saas", "usage billing api" → Payments
     "usage based": "payments",               # bigram — "usage based pricing", "usage based billing" → Payments
     "metered billing": "payments",           # bigram — "metered billing stripe", "metered billing open source" → Payments
+    "per user": "payments",                  # bigram — "per user pricing", "per user billing" → Payments
+    "per seat": "payments",                  # bigram — "per seat pricing", "per seat plan" → Payments
+    "seat based": "payments",                # bigram — "seat based pricing", "seat based plan" → Payments
+    "tiered pricing": "payments",            # bigram — "tiered pricing model", "tiered pricing saas" → Payments
+    "freemium": "payments",                  # bare — "freemium model", "freemium pricing" → Payments
     "consumption billing": "payments",       # bigram — "consumption billing", "consumption based billing" → Payments
     # Developer Tools — back-office admin builders (Retool, Appsmith, Tooljet, Budibase).
     "backoffice": "developer",               # bare — "backoffice builder", "backoffice admin react" → Developer Tools

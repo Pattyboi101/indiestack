@@ -3343,6 +3343,38 @@ TEST_CASES: list[tuple[str, str]] = [
     ("faas platform", "devops"),                # "faas"→devops unchanged
     ("cohort analysis", "analytics"),           # "cohort"→analytics unchanged
     ("user journey funnel", "analytics"),       # "user journey"→analytics unchanged
+    # Regressions — probe 93 changes must not break these.
+    ("design pattern", "developer"),            # bigram "design pattern"→developer
+    ("factory pattern", "developer"),           # bigram "factory pattern"→developer (overrides "factory"→testing)
+    ("singleton pattern", "developer"),         # bare "pattern"→developer fallback at position 1
+    ("observer pattern", "developer"),          # bare "pattern"→developer
+    ("strategy pattern", "developer"),          # bare "pattern"→developer
+    ("decorator pattern", "developer"),         # bare "pattern"→developer
+    ("adapter pattern", "developer"),           # bare "pattern"→developer
+    ("repository pattern", "developer"),        # bare "pattern"→developer
+    ("builder pattern", "developer"),           # bare "pattern"→developer
+    ("command pattern", "developer"),           # bare "pattern"→developer
+    ("white labeling", "boilerplate"),          # bigram "white labeling"→boilerplate (overrides "labeling"→ai)
+    ("white label product", "boilerplate"),     # bigram "white label"→boilerplate
+    ("white label saas", "boilerplate"),        # bigram "white label"→boilerplate (fires before "saas"→boilerplate)
+    ("freemium model", "payments"),             # bare "freemium"→payments (overrides "model"→ai)
+    ("freemium pricing", "payments"),           # bare "freemium"→payments
+    ("seat based pricing", "payments"),         # bigram "seat based"→payments
+    ("per user pricing", "payments"),           # bigram "per user"→payments
+    ("per seat pricing", "payments"),           # bigram "per seat"→payments
+    ("per seat plan", "payments"),              # bigram "per seat"→payments
+    ("tiered pricing model", "payments"),       # bigram "tiered pricing"→payments
+    # Ensure existing neighbouring terms are unaffected by probe 93.
+    ("factory boy", "testing"),                 # bare "factory"→testing unchanged (no "pattern" suffix)
+    ("design system", "frontend"),              # bigram "design system"→frontend unchanged
+    ("data labeling tool", "ai"),               # bare "labeling"→ai unchanged (no "white" prefix)
+    ("image labeling dataset", "ai"),           # bigram "image labeling"→ai unchanged
+    ("usage based pricing", "payments"),        # bigram "usage based"→payments unchanged
+    ("metered billing", "payments"),            # bigram "metered billing"→payments unchanged
+    ("api pattern", "api"),                     # "api"→api fires before "pattern"→developer
+    ("saga pattern", "background"),             # "saga"→background fires before "pattern"→developer
+    ("cqrs pattern", "message"),                # "cqrs"→message fires before "pattern"→developer
+    ("circuit breaker pattern", "api"),         # "circuit"→api fires before "pattern"→developer
 ]
 
 
