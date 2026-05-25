@@ -859,6 +859,30 @@ TEST_CASES: list[tuple[str, str]] = [
     ("partial index postgres", "database"),        # bare "index"→database
     # Regressions — search keeps its priority over bare "index"
     ("elasticsearch index", "search"),             # bare "elasticsearch"→search fires before "index"→database
+    # ── Probe 77 (May 2026): batch inference / innersource / policy-as-code / private key dead zones ──
+    # "batch inference" → background via bare "batch" (wrong; vLLM, TensorRT → AI); bigram added.
+    ("batch inference vllm", "ai"),                # bigram "batch inference"→ai
+    ("batch inference server", "ai"),              # bigram "batch inference"→ai
+    # "innersource" → raw_first; InnerSource = open-source practices inside org → Developer Tools.
+    # "source" is in _FTS_STOP_WORDS so "inner source" strips to bare "inner".
+    ("innersource tool", "developer"),             # bare "innersource"→developer
+    ("innersource platform", "developer"),         # bare "innersource"→developer
+    ("inner source practices", "developer"),       # bare "inner"→developer ("source" stripped)
+    # "policy as code" → raw_first; OPA, Kyverno, Cedar → Security Tools.
+    ("policy as code", "security"),                # bare "policy"→security
+    ("policy engine opa", "security"),             # bare "policy"→security
+    # "private key management" → frontend via "management"→frontend (wrong); Security Tools.
+    ("private key management", "security"),        # bigram "private key"→security
+    ("private key signing", "security"),           # bigram "private key"→security
+    ("key management service", "security"),        # bigram "key management"→security
+    # "api key management" → still api via "api key"→api bigram (fires before "key management"→security).
+    ("api key management", "api"),                 # bigram "api key"→api (guard against "key management"→security)
+    # Regressions — probe 77 changes must not break these.
+    ("batch processing job", "background"),        # bare "batch"→background (no "inference" bigram)
+    ("batch job queue", "background"),             # bare "batch"→background
+    ("caching policy", "caching"),                 # "caching" fires before "policy"→security
+    ("code signing certificate", "security"),      # bare "certificate"→security unchanged
+    ("management console", "frontend"),            # bare "management"→frontend unchanged
     # ── Probe 74 (May 2026): LSP / IDE / code editor dead zones ──
     # Developer — Language Server Protocol
     ("language server protocol", "developer"),     # bigram "language server"→developer

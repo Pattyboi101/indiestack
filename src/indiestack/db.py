@@ -7177,6 +7177,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     "explain": "database",                  # bare — "explain plan", "explain analyze", "explain query" → Database
     "vacuum": "database",                   # bare — "vacuum analyze postgres", "autovacuum tuning" → Database
     "index": "database",                    # bare — "index optimization", "database index", "partial index" → Database
+
+    # Probe 77 — batch inference / innersource / policy-as-code / private key / key management dead zones
+
+    # "batch inference vllm" → background via bare "batch" (wrong; vLLM, TensorRT, Triton Inference
+    # Server batch AI inference → AI & Automation). Bigram overrides bare "batch"→background.
+    "batch inference": "ai",               # bigram — "batch inference api", "batch inference server" → AI & Automation
+
+    # "innersource tool/platform" → raw_first (unmapped). InnerSource = applying open-source
+    # practices inside an organization (InnerSource Commons, code-sharing platforms).
+    # NOTE: "source" is in _FTS_STOP_WORDS — "inner source" strips to bare "inner" so bigram
+    # can never fire; bare "inner" is the only tractable fix for the spaced form.
+    "innersource": "developer",            # compound — "innersource platform", "innersource tool" → Developer Tools
+    "inner": "developer",                  # bare — "inner source" strips to "inner" (source is stop-word)
+
+    # "policy as code" → raw_first "policy" (unmapped). OPA, Kyverno, Cedar → Security Tools.
+    # "as" is NOT a stop-word so meaningful=["policy","as","code"]; bare "policy" at first token.
+    # Regression guard: "caching policy"→caching fires via "caching" first; "retry policy"→api
+    # fires via "retry" first — "policy" only catches queries where it's the leading meaningful word.
+    "policy": "security",                  # bare — "policy as code", "policy engine", "policy enforcement" → Security Tools
+
+    # "private key management" → frontend via "management"→frontend (wrong; cryptographic key
+    # stores belong in Security). Multiple bigrams cover the main forms.
+    # NOTE: "api key management" → bigrams ["api key","key management"]. "api key"→api fires FIRST
+    # (alphabetically before "key management") so "api key management" correctly routes to api.
+    "api key": "api",                      # bigram — "api key management", "api key generation" → API Tools
+    "private key": "security",             # bigram — "private key storage", "private key signing" → Security Tools
+    "key management": "security",          # bigram — "key management service", "key management api" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
