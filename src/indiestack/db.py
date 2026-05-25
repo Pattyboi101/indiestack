@@ -2795,6 +2795,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "docker": "devops",
     "kubernetes": "devops",
     "k8s": "devops",
+    "liveness": "devops",           # "liveness probe", "liveness check" → DevOps & Infrastructure (k8s)
+    "readiness": "devops",          # "readiness probe", "readiness check" → DevOps & Infrastructure (k8s)
     "container": "devops",
     "containers": "devops",
     "vpc": "devops",
@@ -3516,6 +3518,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "throttling": "api",            # "request throttling", "api throttling" → API Tools
     # Circuit breaker / resilience patterns
     "circuit": "api",               # "circuit breaker", "circuit pattern" → API Tools
+    "bulkhead": "api",              # "bulkhead pattern", "bulkhead isolation" → API Tools (resilience)
+    "exponential": "api",           # "exponential backoff" → API Tools
+    "backoff": "api",               # "backoff strategy", "retry backoff" → API Tools
     "resilience": "monitoring",     # "resilience engineering", "resiliency" → Monitoring & Uptime
     # Durable execution / workflow engines (Temporal, Inngest, Trigger.dev)
     "durable": "background",        # "durable execution", "durable workflow" → Background Jobs
@@ -3970,6 +3975,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "funnel": "analytics",          # "conversion funnel", "funnel analysis" → Analytics & Metrics
     "conversion rate": "analytics", # bigram — "conversion rate optimization" → Analytics (overrides "rate"→api)
     "cohort": "analytics",          # "cohort analysis", "user cohorts" → Analytics & Metrics
+    "clickstream": "analytics",     # "clickstream data", "clickstream analysis" → Analytics & Metrics
     # Analytics — "event X" bigrams override bare "event"→message for product-analytics queries.
     # "event tracking" can't use a bigram — "tracking" is in _FTS_STOP_WORDS and is stripped.
     # Use the second surviving token as a bigram anchor instead.
@@ -4644,6 +4650,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "identity": "authentication",   # "identity provider", "identity management", "digital identity" → Authentication
     # FaaS — Function as a Service (serverless function alternatives)
     "faas": "devops",               # "FaaS alternative", "function as a service", "faas platform" → DevOps
+    "compute": "devops",            # "compute platform", "compute service", "edge compute" → DevOps
     # Batch processing — complement to background-job synonyms (cron/queue/worker/scheduler)
     "batch": "background",          # "batch job", "batch processing", "batch queue" → Background Jobs
     # API endpoint — extremely common term missing from synonyms
@@ -9106,6 +9113,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "user journey analytics"/"user journey map" fired raw_first "user" — user journey tools
     # (FullStory, Amplitude, Hotjar) belong in Analytics.
     "user journey": "analytics",          # bigram — "user journey analytics", "user journey funnel" → Analytics
+    "user flow": "analytics",             # bigram — "user flow diagram", "user flow tool" → Analytics
     # CRM — ATS / HR dead zones (probe 82)
     # "applicant tracking system" → meaningful = ["applicant","tracking","system"] — "tracking" is a
     # stop word → ["applicant","system"] — both unmapped → raw_first. ATS tools (Lever, Ashby,

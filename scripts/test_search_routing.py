@@ -3320,6 +3320,29 @@ TEST_CASES: list[tuple[str, str]] = [
     ("deployment pipeline", "devops"),          # "deployment"→devops fires before "pipeline"→background
     ("version control", "devops"),              # bare "version"→devops unchanged (non-data versioning)
     ("semantic versioning", "devops"),           # "semantic versioning"→devops unchanged
+    # Regressions — probe 92 changes must not break these.
+    ("bulkhead pattern", "api"),                # "bulkhead"→api (resilience)
+    ("bulkhead isolation", "api"),              # "bulkhead"→api
+    ("exponential backoff", "api"),             # "exponential"→api (retry logic)
+    ("backoff strategy", "api"),               # "exponential"→api; "backoff"→api (bare second token)
+    ("liveness probe", "devops"),               # "liveness"→devops (k8s)
+    ("readiness probe", "devops"),              # "readiness"→devops (k8s)
+    ("liveness check", "devops"),               # "liveness"→devops
+    ("readiness check", "devops"),              # "readiness"→devops
+    ("compute platform", "devops"),             # "compute"→devops
+    ("edge compute", "devops"),                 # "compute"→devops (edge)
+    ("clickstream data", "analytics"),          # "clickstream"→analytics
+    ("clickstream analysis", "analytics"),      # "clickstream"→analytics
+    ("user flow diagram", "analytics"),         # bigram "user flow"→analytics
+    ("user flow tool", "analytics"),            # bigram "user flow"→analytics
+    # Ensure existing neighbouring terms are unaffected by probe 92.
+    ("circuit breaker", "api"),                 # "circuit"→api unchanged
+    ("retry library", "api"),                   # "retry"→api unchanged
+    ("kubernetes cluster", "devops"),           # "kubernetes"→devops unchanged
+    ("k8s helm", "devops"),                     # "k8s"→devops unchanged
+    ("faas platform", "devops"),                # "faas"→devops unchanged
+    ("cohort analysis", "analytics"),           # "cohort"→analytics unchanged
+    ("user journey funnel", "analytics"),       # "user journey"→analytics unchanged
 ]
 
 
