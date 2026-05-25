@@ -3495,6 +3495,45 @@ TEST_CASES: list[tuple[str, str]] = [
     ("contract testing pact", "testing"),       # bare "contract"→testing unchanged (no "api" prefix)
     ("api gateway kong", "api"),                # bare "api"→api unchanged (no security/monitoring/contract suffix)
     ("api testing postman", "api"),             # bare "api"→api unchanged for testing tools in api category
+
+    # ── Probe 97: policy-engine / leaky-bucket / onboarding-UX / CSAT dead zones ──
+    # "policy"/"policy engine" → raw_first (OPA, Casbin, Cedar → Authentication).
+    # "leaky bucket" → file via bare "bucket"→file (rate-limiting algo, not S3 → API Tools).
+    # "hotspot"/"checklist"/"microsurvey" → raw_first (onboarding UX / feedback tools).
+    # "feature discovery"/"feature announcement" → feature-flags via "feature"→feature (wrong → Feedback).
+    # "satisfaction"/"customer satisfaction" → raw_first (CSAT tools → Feedback & Reviews).
+    # "decentralized" → raw_first (IPFS, decentralized storage, web3 infra → Developer Tools).
+    ("policy engine opa", "authentication"),    # bare "policy"→authentication (OPA, Casbin, Cedar)
+    ("policy engine casbin", "authentication"), # bare "policy"→authentication
+    ("policy as code tool", "authentication"),  # bare "policy"→authentication fires at pos 0
+    ("authorization policy", "authentication"), # "authorization"→authentication fires at pos 0 (regression guard)
+    ("leaky bucket algorithm", "api"),          # bigram "leaky bucket"→api (overrides "bucket"→file)
+    ("leaky bucket rate limit", "api"),         # same bigram
+    ("hotspot tool", "feedback"),               # bare "hotspot"→feedback (Hotjar hotspots, UXCam)
+    ("hotspot heatmap", "feedback"),            # bare "hotspot"→feedback
+    ("checklist widget", "frontend"),           # bare "checklist"→frontend (onboarding checklist component)
+    ("checklist component react", "frontend"),  # bare "checklist"→frontend
+    ("microsurvey tool", "feedback"),           # bare "microsurvey"→feedback (Sprig, Survicate)
+    ("in app microsurvey", "feedback"),         # bare "microsurvey"→feedback
+    ("feature discovery onboarding", "feedback"),  # bigram "feature discovery"→feedback (overrides "feature"→feature-flags)
+    ("feature discovery tool", "feedback"),     # bigram "feature discovery"→feedback
+    ("feature announcement widget", "feedback"),   # bigram "feature announcement"→feedback (Headway, Beamer)
+    ("feature announcement saas", "feedback"),  # bigram "feature announcement"→feedback
+    ("customer satisfaction score", "feedback"),   # bigram "customer satisfaction"→feedback (Delighted, Satismeter)
+    ("customer satisfaction tool", "feedback"), # bigram "customer satisfaction"→feedback
+    ("satisfaction survey", "feedback"),        # bare "satisfaction"→feedback
+    ("satisfaction score", "feedback"),         # bare "satisfaction"→feedback
+    ("decentralized storage", "developer"),     # bare "decentralized"→developer (IPFS, Filecoin, Arweave)
+    ("decentralized app", "developer"),         # bare "decentralized"→developer
+    # Regressions — probe 97 changes must not break these.
+    ("privacy policy generator", "security"),   # "privacy"→security fires at pos 0 (unaffected by "policy"→auth)
+    ("privacy first analytics", "security"),    # "privacy"→security unchanged
+    ("cookie consent banner", "security"),      # "cookie consent"→security bigram fires (unchanged)
+    ("feature flag nextjs", "feature"),         # "feature"→feature-flags unchanged (no discovery/announcement suffix)
+    ("feature toggle dark mode", "feature"),    # "feature"→feature-flags unchanged
+    ("token bucket algorithm", "api"),          # existing "token bucket"→api bigram unchanged
+    ("s3 bucket storage", "file"),              # "s3"→file fires before "bucket" at pos 1
+    ("storage bucket", "file"),                 # "storage"→file fires before "bucket"
 ]
 
 

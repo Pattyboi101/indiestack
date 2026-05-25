@@ -9411,6 +9411,52 @@ _CAT_SYNONYMS: dict[str, str] = {
 
     # Fault injection — Testing (overrides "injection"→developer; chaos/resilience testing context)
     "fault injection": "testing",        # bigram — "fault injection testing", "fault injection chaos" → Testing Tools
+
+    # ── Probe pattern 97 (May 2026): policy-engine / leaky-bucket / onboarding-UX / CSAT dead zones ──
+    #
+    # Dead zones / misfires fixed:
+    # "policy"/"policy engine"/"policy as code" → raw_first (OPA, Casbin, Cedar → Authentication).
+    #   Regression: "privacy policy" unaffected — "privacy"→security fires at pos 0 before "policy".
+    #   Regression: "policy gradient" / "policy network" (ML) go to auth which is acceptable —
+    #   those ML queries are niche and ML tools get strong enough boosts from other tokens.
+    # "leaky bucket" → file via bare "bucket"→file (S3 bucket context; wrong for rate-limiting algo).
+    #   "token bucket" already had its own bigram (→api); "leaky bucket" was missing.
+    # "hotspot" → raw_first (user-research hotspot tools like Hotjar, UXCam → Feedback & Reviews).
+    # "checklist" → raw_first (onboarding checklist widgets, UI checklist components → Frontend Frameworks).
+    # "feature discovery" → feature-flags via bare "feature"→feature (wrong; product feature discovery /
+    #   in-app spotlights, Appcues/Chameleon/Userpilot → Feedback & Reviews).
+    # "feature announcement" → feature-flags via bare "feature"→feature (wrong; product changelog /
+    #   release announcement widgets, Headway/Beamer/AnnounceKit → Feedback & Reviews).
+    # "microsurvey" → raw_first (in-app micro-survey tools, Sprig/Survicate → Feedback & Reviews).
+    # "satisfaction"/"customer satisfaction" → raw_first (CSAT tools, Delighted/Satismeter → Feedback).
+    # "decentralized" → raw_first (IPFS, decentralized storage, web3 infra tools → Developer Tools).
+    #
+    # Regression guards (unchanged):
+    # "privacy policy"→security (bare "privacy"→security at pos 0, unaffected).
+    # "feature flag"→feature-flags (bare "feature"→feature-flags still fires; no override for flag/toggle suffix).
+    # "token bucket"→api (existing bigram unchanged).
+    # "bucket" for S3 queries: "storage bucket"/"s3 bucket" still route via "storage"→file / "s3"→file.
+    # "checklist testing" / "a11y checklist" — "testing"→testing / "a11y"→testing fire at pos 0 or 1.
+
+    # Policy engine — Authentication (OPA, Casbin, Cedar, SpiceDB)
+    "policy": "authentication",              # bare — "policy engine", "policy as code" → Authentication
+
+    # Leaky bucket — rate limiting algorithm (API Tools, joins "token bucket" bigram)
+    "leaky bucket": "api",                   # bigram — "leaky bucket algorithm", "leaky bucket rate limit" → API Tools
+
+    # User research / onboarding UX — Feedback & Reviews
+    "hotspot": "feedback",                   # bare — "hotspot tool", "hotspot heatmap" → Feedback & Reviews (Hotjar, UXCam)
+    "checklist": "frontend",                 # bare — "checklist widget", "checklist component" → Frontend Frameworks
+    "microsurvey": "feedback",               # bare — "microsurvey tool", "in-app microsurvey" → Feedback & Reviews (Sprig)
+    "satisfaction": "feedback",              # bare — "satisfaction survey", "customer satisfaction score" → Feedback
+    "customer satisfaction": "feedback",     # bigram — "customer satisfaction tool", "customer satisfaction score" → Feedback
+
+    # Product adoption / feature announcements — Feedback & Reviews (overrides "feature"→feature-flags)
+    "feature discovery": "feedback",         # bigram — "feature discovery tool", "feature discovery onboarding" → Feedback
+    "feature announcement": "feedback",      # bigram — "feature announcement widget", "feature announcement saas" → Feedback
+
+    # Decentralized / web3 infrastructure — Developer Tools (IPFS, Filecoin, Arweave, Ceramic)
+    "decentralized": "developer",            # bare — "decentralized storage", "decentralized app" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
