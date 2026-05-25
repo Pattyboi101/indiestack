@@ -9320,6 +9320,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "data versioning" → devops via bare "versioning"→devops (wrong; data versioning tools
     # (DVC, LakeFS, Delta Lake, Pachyderm) are MLOps/data-lineage tools in AI & Automation).
     "data versioning": "ai",            # bigram — overrides "versioning"→devops for data/ML version control
+
+    # Probe 94 — type-checker / schema-stitching / error-boundary / env-file dead zones
+    #
+    # "schema stitching" → developer via bare "schema"→developer (wrong; GraphQL schema merging
+    # tools graphql-tools/merge, The Guild Mesh, GraphQL Stitching live in API Tools).
+    "schema stitching": "api",          # bigram — "schema stitching graphql", "schema stitching tool" → API Tools
+
+    # "type checker" / "type checking" → developer via bare "type"→developer (wrong; static type
+    # analysis tools mypy, pyright, tsc --noEmit, Flow belong in Testing Tools — same tier as linters).
+    # "static type checking" → frontend via bare "static"→frontend (wrong; same tools; bigram overrides).
+    # Regression guard: "type system", "type safety", "type annotation" still fire "type"→developer (no bigram match).
+    "type checker": "testing",          # bigram — "type checker python", "type checker typescript" → Testing Tools
+    "type checking": "testing",         # bigram — "type checking tool", "type checking python" → Testing Tools
+    "static type": "testing",           # bigram — "static type checking", "static type analysis" → Testing Tools
+
+    # "error boundary" → monitoring via bare "error"→monitoring (wrong; React error boundary
+    # component pattern and react-error-boundary library belong in Frontend Frameworks).
+    # Regression: "error tracking" / "error logging" unaffected — "tracking" is a stop word
+    # (bare "error"→monitoring fires) and "error logging" bigram is not added.
+    "error boundary": "frontend",       # bigram — "error boundary react", "error boundary component" → Frontend
+
+    # "env file" → security via bare "env"→security (wrong; dotenv, python-dotenv, dotenvx,
+    # direnv are config-loading developer tools, not secret-scanning/vault tools).
+    # Regression: "env secrets", "env variable" keep "env"→security (no "file" qualifier).
+    "env file": "developer",            # bigram — "env file loader", "env file manager", ".env file" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

@@ -3375,6 +3375,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("saga pattern", "background"),             # "saga"→background fires before "pattern"→developer
     ("cqrs pattern", "message"),                # "cqrs"→message fires before "pattern"→developer
     ("circuit breaker pattern", "api"),         # "circuit"→api fires before "pattern"→developer
+
+    # Probe pattern 94 (May 2026): type-checker / schema-stitching / error-boundary / env-file dead zones.
+    # "schema stitching" → developer via bare "schema"→developer (GraphQL schema merging tools → API Tools).
+    # "type checker" / "type checking" → developer via bare "type"→developer (mypy/pyright/tsc → Testing Tools).
+    # "static type checking" → frontend via bare "static"→frontend (bigram "static type"→testing added).
+    # "error boundary" → monitoring via bare "error"→monitoring (react-error-boundary → Frontend Frameworks).
+    # "env file" → security via bare "env"→security (dotenv/python-dotenv → Developer Tools).
+    ("schema stitching graphql", "api"),        # bigram "schema stitching"→api (overrides "schema"→developer)
+    ("schema stitching tool", "api"),           # bigram "schema stitching"→api
+    ("type checker python", "testing"),         # bigram "type checker"→testing (overrides "type"→developer)
+    ("type checker typescript", "testing"),     # bigram "type checker"→testing
+    ("type checking tool", "testing"),          # bigram "type checking"→testing (overrides "type"→developer)
+    ("type checking python", "testing"),        # bigram "type checking"→testing
+    ("static type checking", "testing"),        # bigram "static type"→testing (overrides "static"→frontend)
+    ("static type analysis", "testing"),        # bigram "static type"→testing
+    ("error boundary react", "frontend"),       # bigram "error boundary"→frontend (overrides "error"→monitoring)
+    ("error boundary component", "frontend"),   # bigram "error boundary"→frontend
+    ("env file loader", "developer"),           # bigram "env file"→developer (overrides "env"→security)
+    ("env file manager", "developer"),          # bigram "env file"→developer
+    # Regressions — probe 94 changes must not break these.
+    ("schema migration", "database"),           # bigram "schema migration"→database unchanged
+    ("schema validation", "developer"),         # "schema"→developer unchanged (no "stitching" suffix)
+    ("type system", "developer"),               # "type"→developer unchanged (no checker/checking suffix)
+    ("type safety", "developer"),               # "type"→developer unchanged
+    ("static site generator", "frontend"),      # "static"→frontend unchanged (no "type" suffix)
+    ("static analysis", "testing"),             # bigram "static analysis"→testing unchanged
+    ("error tracking", "monitoring"),           # "error"→monitoring unchanged ("tracking" is stop word)
+    ("error logging", "monitoring"),            # "error"→monitoring unchanged (bare "error" fires; no bigram)
+    ("env secrets manager", "security"),        # "env"→security unchanged (no "file" qualifier)
+    ("graphql type generation", "api"),         # "graphql"→api fires before "type"→developer
 ]
 
 
