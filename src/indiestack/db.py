@@ -9144,6 +9144,46 @@ _CAT_SYNONYMS: dict[str, str] = {
     # sync tools (ElectricSQL, PowerSync, Replicache, Instant) belong in Database (offline-sync tier).
     "local first": "database",          # bigram — "local first sync", "local first architecture" → Database
     "local-first": "database",          # hyphenated — "local-first database", "local-first app" → Database
+
+    # Probe 85 — memory leak / heap dump / SLA / terms / multi-region / tenancy / knowledge / team-collaboration dead zones
+
+    # "memory leak"/"memory leak detection" → caching via bare "memory"→caching (wrong; leak
+    # detection tools like Valgrind, LeakCanary, py-spy belong in Monitoring).
+    "memory leak": "monitoring",         # bigram — overrides "memory"→caching for leak detection queries
+
+    # "heap dump" → analytics via bare "heap"→analytics (Heap.io collision; wrong for JVM/Node
+    # heap analysis tools like jmap, VisualVM, node --inspect). Belong in Monitoring.
+    "heap dump": "monitoring",           # bigram — overrides "heap"→analytics (Heap.io) for heap dump queries
+
+    # "service level agreement" → raw_first "level" after stop-words strip
+    # ("service" stripped → "level agreement" bigram survives). SLA tools → Monitoring.
+    "level agreement": "monitoring",     # bigram — "service level agreement" strips to ["level","agreement"] → Monitoring
+
+    # "terms of service" → raw_first "terms" ("of"+"service" both stripped → bare "terms").
+    # Legal policy generators (Termly, Iubenda, Termsfeed, PrivacyPolicies.com) → Security Tools.
+    "terms": "security",                 # bare — "terms of service generator", "terms conditions" → Security Tools
+
+    # "multi region" / "multi cloud" → raw_first "multi" (both tokens unmapped).
+    # Multi-region/cloud deployment tools (Fly.io, Render, Railway, Crossplane) → DevOps.
+    # Bigrams prevent regression on "multi language" (localization) and "multi currency" (payments)
+    # since those are covered by bare "language"→localization and bare "currency"→payments.
+    "multi region": "devops",            # bigram — "multi region deployment", "multi region setup" → DevOps
+    "multi cloud": "devops",             # bigram — "multi cloud strategy", "multi cloud kubernetes" → DevOps
+    "multiregion": "devops",             # compound — "multiregion database", "multiregion cdn" → DevOps
+    "multicloud": "devops",              # compound — "multicloud management", "multicloud platform" → DevOps
+
+    # "multi tenancy" → raw_first "multi" ("tenant"→authentication fires for "multi tenant" correctly
+    # but the gerund form "tenancy" was missing). SaaS multi-tenancy → Authentication (same tier as tenant).
+    "tenancy": "authentication",         # bare — "multi tenancy", "tenancy isolation" → Authentication
+
+    # "knowledge sharing" → raw_first "knowledge" (bare "knowledge" intentionally excluded per probe 47
+    # note — "knowledge base chatbot" must route to AI). "knowledge sharing" (team wikis, Slab, Confluence)
+    # is Documentation-tier. Bigram is safe since "knowledge base" stays raw_first.
+    "knowledge sharing": "documentation",   # bigram — "knowledge sharing tool", "knowledge sharing wiki" → Documentation
+
+    # "team collaboration" → api via bare "collaboration"→api (realtime collaborative editing; wrong
+    # for team messaging/collab tools like Mattermost, Zulip, Rocket.Chat → Developer Tools).
+    "team collaboration": "developer",   # bigram — overrides "collaboration"→api for team messaging queries
 }
 
 _FTS_STOP_WORDS = {

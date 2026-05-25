@@ -3138,6 +3138,39 @@ TEST_CASES: list[tuple[str, str]] = [
     ("feature branch deploy", "devops"),           # bigram "feature branch"→devops
     ("ml experiment tracking", "ai"),              # "ml"→ai fires at pos 0 (correct for ML experiment tracking)
     ("market segmentation", "analytics"),          # "market"→analytics unchanged
+
+    # Probe pattern 85 (May 2026): memory leak / heap dump / SLA / terms / multi-region / tenancy / knowledge / team-collaboration dead zones.
+    # "memory leak"/"memory leak detection" → caching via bare "memory"→caching (wrong; Valgrind,
+    # LeakCanary, py-spy are Monitoring); bigram "memory leak"→monitoring added.
+    # "heap dump" → analytics via bare "heap"→analytics (Heap.io collision; jmap/VisualVM are Monitoring); bigram added.
+    # "service level agreement" → raw_first "level" ("service" stripped → ["level","agreement"]);
+    # SLA tools → Monitoring; bigram "level agreement"→monitoring added.
+    # "terms of service" → raw_first "terms" ("of"+"service" both stripped); Termly/Iubenda → Security; bare "terms"→security added.
+    # "multi region"/"multi cloud" → raw_first "multi" (both tokens unmapped); bigrams → DevOps.
+    # "multi tenancy" → raw_first "multi" ("tenancy" unmapped); bare "tenancy"→authentication added.
+    # "knowledge sharing" → raw_first "knowledge"; bigram "knowledge sharing"→documentation added.
+    # "team collaboration" → api via bare "collaboration"→api; bigram "team collaboration"→developer added.
+    ("memory leak detection", "monitoring"),       # bigram "memory leak"→monitoring (overrides "memory"→caching)
+    ("memory leak nodejs", "monitoring"),          # bigram "memory leak"→monitoring
+    ("heap dump analysis", "monitoring"),          # bigram "heap dump"→monitoring (overrides "heap"→analytics)
+    ("heap dump java", "monitoring"),              # bigram "heap dump"→monitoring
+    ("service level agreement", "monitoring"),     # bigram "level agreement"→monitoring
+    ("sla monitoring tool", "monitoring"),         # bare "sla"→monitoring (confirm unchanged)
+    ("terms of service generator", "security"),   # bare "terms"→security ("of"+"service" stripped)
+    ("terms and conditions", "security"),          # bare "terms"→security ("and" stripped)
+    ("multi region deployment", "devops"),         # bigram "multi region"→devops
+    ("multi cloud strategy", "devops"),            # bigram "multi cloud"→devops
+    ("multiregion kubernetes", "devops"),          # compound "multiregion"→devops
+    ("multi tenancy architecture", "authentication"),  # bare "tenancy"→authentication
+    ("knowledge sharing wiki", "documentation"),  # bigram "knowledge sharing"→documentation
+    ("team collaboration mattermost", "developer"),  # bigram "team collaboration"→developer
+    # Regressions — probe 85 changes must not break these.
+    ("memory store redis", "caching"),             # bare "memory"→caching unchanged (no "leak" suffix)
+    ("memory cache node", "caching"),              # bare "memory"→caching unchanged
+    ("heap analytics session", "analytics"),       # bare "heap"→analytics unchanged (no "dump" suffix)
+    ("multilingual app", "localization"),           # "multilingual"→localization fires (compound form; spaced "multi language" is a known gap)
+    ("multi currency payments", "payments"),       # "currency"→payments fires
+    ("collaborative editing yjs", "api"),          # bare "collaborative"→api unchanged (no "team" prefix)
 ]
 
 
