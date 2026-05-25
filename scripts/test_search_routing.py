@@ -3253,6 +3253,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("code review tool", "developer"),             # "review"→developer fires (no "pull request" bigram)
     ("code coverage report", "testing"),          # "coverage"→testing unchanged
     ("knowledge graph database", "database"),     # "graph"→database fires (no "image" suffix)
+
+    # Probe pattern 90 (May 2026): DDD / event-driven architecture dead zones.
+    # "bounded context" → frontend via bare "context"→frontend (wrong; DDD concept → Developer Tools);
+    # bigram "bounded context"→developer added. "aggregate root" → raw_first (no mapping; DDD → Developer);
+    # bigram "aggregate root"→developer added. "domain model" → devops via bare "domain"→devops (wrong;
+    # domain model / domain layer are DDD patterns → Developer Tools); bigram "domain model"→developer added.
+    # "domain event" (singular) → devops via bare "domain" (wrong; same as "domain events" plural);
+    # bigram "domain event"→message added. "value object" → file via bare "object" (wrong; DDD value
+    # object → Developer Tools); bigram "value object"→developer added. "ubiquitous" → raw_first (no
+    # mapping; ubiquitous language is unambiguous DDD vocabulary → Developer Tools); bare "ubiquitous"→developer added.
+    ("bounded context ddd", "developer"),        # bigram "bounded context"→developer (overrides "context"→frontend)
+    ("bounded context design", "developer"),     # bigram "bounded context"→developer
+    ("aggregate root pattern", "developer"),     # bigram "aggregate root"→developer
+    ("aggregate root example", "developer"),     # bigram "aggregate root"→developer
+    ("domain model framework", "developer"),     # bigram "domain model"→developer (overrides "domain"→devops)
+    ("domain model design", "developer"),        # bigram "domain model"→developer
+    ("domain event handler", "message"),         # bigram "domain event"→message (singular)
+    ("domain event bus", "message"),             # bigram "domain event"→message
+    ("value object ddd", "developer"),           # bigram "value object"→developer (overrides "object"→file)
+    ("value object pattern", "developer"),       # bigram "value object"→developer
+    ("ubiquitous language", "developer"),        # bare "ubiquitous"→developer
+    # Regressions — probe 90 changes must not break these.
+    ("react context api", "frontend"),           # bare "context"→frontend still fires (no "bounded" prefix)
+    ("context provider react", "frontend"),      # bare "context"→frontend unchanged
+    ("aggregate function sql", "database"),      # "sql"→database fires before any "aggregate" token
+    ("aggregate query database", "database"),    # "query"→database fires before any "aggregate" token
+    ("domain registrar", "devops"),              # bare "domain"→devops still fires (no "model"/"driven" suffix)
+    ("domain name provider", "devops"),          # bare "domain"→devops unchanged
+    ("domain events pattern", "message"),        # "domain events" bigram (plural) unchanged
+    ("event driven architecture", "message"),    # "event"→message unchanged
 ]
 
 

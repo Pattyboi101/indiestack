@@ -8157,9 +8157,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Message Queue — "domain events" routes to DevOps via bare "domain"→devops (domain registrar collision).
     # Domain events are DDD/event-driven patterns — tools like EventStoreDB, Axon live in Message Queue.
     "domain events": "message",     # bigram — "domain events pattern", "domain events library" → Message Queue
+    "domain event": "message",      # bigram (singular) — "domain event handler", "domain event bus" → Message Queue
     # Developer Tools — "domain driven" routes to DevOps via bare "domain"→devops.
     # Domain-driven design queries target DDD tooling → Developer Tools.
     "domain driven": "developer",   # bigram — "domain driven design", "domain driven architecture" → Developer Tools
+    "domain model": "developer",    # bigram — "domain model framework", "domain model design" → Developer Tools
+    # DDD concepts — "bounded context", "aggregate root", "value object", "ubiquitous language"
+    # These are DDD / clean-architecture concepts; tools that implement them live in Developer Tools.
+    "bounded context": "developer", # bigram — "bounded context ddd", "bounded context design" → Developer Tools
+    "aggregate root": "developer",  # bigram — "aggregate root pattern", "aggregate root example" → Developer Tools
+    "value object": "developer",    # bigram — "value object ddd", "value object pattern" → Developer Tools
+    "ubiquitous": "developer",      # bare — "ubiquitous language ddd" → Developer Tools (unambiguous DDD term)
     # DevOps — service catalog queries (Backstage, Cortex, OpsLevel, Port) lose "service" to stop words.
     # "service" is in _FTS_STOP_WORDS so "service catalog" reduces to bare "catalog" → raw_first.
     # Internal developer portals and service catalogs live in DevOps & Infrastructure.
