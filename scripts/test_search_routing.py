@@ -3106,6 +3106,38 @@ TEST_CASES: list[tuple[str, str]] = [
     ("infrastructure as code", "devops"),          # bare "infrastructure"→devops (unchanged; bigram fires first only for "monitoring" suffix)
     ("infrastructure deployment", "devops"),       # bare "infrastructure"→devops (no bigram collision)
     ("market segmentation", "analytics"),          # works via "market"→analytics (previously via "segmentation"→analytics)
+
+    # Probe pattern 84 (May 2026): competitive analysis / data engineering / data science / feature store / productivity dead zones.
+    # "competitive analysis"/"competitive intelligence"/"competitive pricing" → raw_first "competitive";
+    # competitive intelligence tools (Crayon, Klue, SimilarWeb) belong in Analytics; bare "competitive"→analytics added.
+    # "data engineering" → devops via bare "engineering"→devops (wrong; Airbyte/Fivetran/dbt are Background Jobs);
+    # bigram "data engineering"→background added.
+    # "data science" → raw_first (both tokens unmapped); data science tools (Jupyter, Pandas) belong in AI; bigram added.
+    # "feature store" → feature-flags via bare "feature"→feature (wrong; ML feature stores like Feast/Tecton are AI); bigram added.
+    # "developer productivity" → raw_first "productivity" ("developer" stripped by _FTS_STOP_WORDS);
+    # developer productivity tools (Raycast, Warp) → Developer Tools; bare "productivity"→developer added.
+    # "local first" → raw_first (both tokens unmapped); local-first sync tools (ElectricSQL, PowerSync) → Database; bigram added.
+    ("competitive analysis", "analytics"),         # bare "competitive"→analytics
+    ("competitive intelligence", "analytics"),     # bare "competitive"→analytics
+    ("competitive pricing", "analytics"),          # bare "competitive"→analytics
+    ("data engineering tools", "background"),      # bigram "data engineering"→background
+    ("data engineering python", "background"),     # bigram "data engineering"→background (python in _FRAMEWORK_QUERY_TERMS)
+    ("data science library", "ai"),                # bigram "data science"→ai
+    ("data science python", "ai"),                 # bigram "data science"→ai
+    ("feature store ml", "ai"),                    # bigram "feature store"→ai (overrides "feature"→feature)
+    ("feast feature store", "ai"),                 # bigram "feature store"→ai
+    ("developer productivity", "developer"),       # bare "productivity"→developer ("developer" stripped)
+    ("productivity tools", "developer"),           # bare "productivity"→developer
+    ("local first sync", "database"),              # bigram "local first"→database
+    ("local first architecture", "database"),      # bigram "local first"→database
+    ("local-first database", "database"),          # hyphenated form "local-first"→database
+    # Regressions — probe 84 changes must not break these.
+    ("platform engineering", "devops"),            # bare "engineering"→devops unchanged (no "data" prefix)
+    ("infrastructure engineering", "devops"),      # bare "engineering"→devops unchanged
+    ("feature flag toggle", "feature"),            # bigram "feature flag"→feature (no collision with "feature store" bigram)
+    ("feature branch deploy", "devops"),           # bigram "feature branch"→devops
+    ("ml experiment tracking", "ai"),              # "ml"→ai fires at pos 0 (correct for ML experiment tracking)
+    ("market segmentation", "analytics"),          # "market"→analytics unchanged
 ]
 
 

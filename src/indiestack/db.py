@@ -9117,6 +9117,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "market research"/"market intelligence"/"market data" → raw_first "market".
     # Market research & intelligence tools (Crayon, Klue, Semrush) are Analytics-adjacent.
     "market": "analytics",               # bare — "market research", "market data", "market intelligence" → Analytics
+
+    # Probe 84 — competitive analysis / data engineering / data science / feature store / productivity dead zones
+    # "competitive analysis"/"competitive intelligence"/"competitive pricing" → raw_first "competitive".
+    # Competitive intelligence tools (Crayon, Klue, SimilarWeb, Semrush) belong in Analytics.
+    "competitive": "analytics",          # bare — all "competitive X" queries → Analytics
+
+    # "data engineering" → devops via bare "engineering"→devops (wrong; Airbyte, Fivetran, dbt
+    # are data engineering / ETL tools that live in Background Jobs).
+    # Bigram overrides bare "engineering"→devops when "data" precedes it.
+    "data engineering": "background",    # bigram — "data engineering tools", "data engineering python" → Background Jobs
+
+    # "data science" → raw_first (both "data" and "science" unmapped after stop-word strip).
+    # Data science tools (Jupyter, Pandas, scikit-learn, Polars) belong in AI & Automation.
+    "data science": "ai",               # bigram — "data science library", "data science python" → AI & Automation
+
+    # "feature store" → feature-flags via bare "feature"→feature (wrong; ML feature stores
+    # (Feast, Tecton, Hopsworks, Vertex AI Feature Store) belong in AI & Automation).
+    "feature store": "ai",              # bigram — overrides "feature"→feature-flags for ML feature store queries
+
+    # "developer productivity" → raw_first "productivity" because "developer" is in _FTS_STOP_WORDS
+    # and gets stripped. Developer productivity tools (Raycast, Linear, Pieces, Warp) → Developer Tools.
+    "productivity": "developer",         # bare — "developer productivity", "productivity tools" → Developer Tools
+
+    # "local first" → raw_first "local" (both tokens unmapped). Local-first / offline-capable
+    # sync tools (ElectricSQL, PowerSync, Replicache, Instant) belong in Database (offline-sync tier).
+    "local first": "database",          # bigram — "local first sync", "local first architecture" → Database
+    "local-first": "database",          # hyphenated — "local-first database", "local-first app" → Database
 }
 
 _FTS_STOP_WORDS = {
