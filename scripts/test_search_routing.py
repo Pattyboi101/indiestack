@@ -3405,6 +3405,33 @@ TEST_CASES: list[tuple[str, str]] = [
     ("error logging", "monitoring"),            # "error"→monitoring unchanged (bare "error" fires; no bigram)
     ("env secrets manager", "security"),        # "env"→security unchanged (no "file" qualifier)
     ("graphql type generation", "api"),         # "graphql"→api fires before "type"→developer
+
+    # Probe pattern 95 (May 2026): component-testing / AI-router / procedure-call / embedding dead zones.
+    # "component testing" → testing via bigram (overrides bare "component"→frontend for test queries).
+    # "ai router" → ai via bigram (overrides bare "router"→frontend for LLM routing tool queries).
+    # "procedure call" → api via bigram (overrides bare "call"→monitoring for RPC protocol queries).
+    # "widget/iframe embedding" → developer via bigram (overrides "embedding"→ai for HTML embed queries).
+    ("component testing react", "testing"),     # bigram "component testing"→testing (overrides "component"→frontend)
+    ("component testing storybook", "testing"), # bigram "component testing"→testing
+    ("component testing library", "testing"),   # bigram "component testing"→testing
+    ("component testing tool", "testing"),      # bigram "component testing"→testing
+    ("ai router litellm", "ai"),                # bigram "ai router"→ai (overrides "router"→frontend)
+    ("ai router openrouter", "ai"),             # bigram "ai router"→ai
+    ("ai router tool", "ai"),                   # bigram "ai router"→ai
+    ("remote procedure call", "api"),           # bigram "procedure call"→api (overrides "call"→monitoring)
+    ("procedure call rpc", "api"),              # bigram "procedure call"→api
+    ("widget embedding tool", "developer"),     # bigram "widget embedding"→developer (overrides "embedding"→ai)
+    ("widget embedding react", "developer"),    # bigram "widget embedding"→developer
+    ("iframe embedding react", "developer"),    # bigram "iframe embedding"→developer (overrides "embedding"→ai)
+    ("iframe embedding html", "developer"),     # bigram "iframe embedding"→developer
+    # Regressions — probe 95 changes must not break these.
+    ("component library react", "frontend"),    # "component"→frontend unchanged (no "testing" suffix)
+    ("component design system", "frontend"),    # "component"→frontend unchanged
+    ("react router v7", "frontend"),            # "router"→frontend unchanged (no "ai" prefix)
+    ("vue router navigation", "frontend"),      # "router"→frontend unchanged
+    ("on call scheduling", "monitoring"),       # "call"→monitoring unchanged (no "procedure" qualifier)
+    ("word embedding model", "ai"),             # "embedding"→ai unchanged (no iframe/widget prefix; "word" unmapped)
+    ("text embedding model", "ai"),             # "embedding"→ai unchanged ("text" unmapped so "embedding"→ai fires)
 ]
 
 

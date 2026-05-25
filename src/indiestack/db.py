@@ -9345,6 +9345,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     # direnv are config-loading developer tools, not secret-scanning/vault tools).
     # Regression: "env secrets", "env variable" keep "env"→security (no "file" qualifier).
     "env file": "developer",            # bigram — "env file loader", "env file manager", ".env file" → Developer Tools
+
+    # Probe pattern 95 (May 2026): component-testing / AI-router / procedure-call / embedding dead zones.
+    #
+    # "component testing" → "frontend" via bare "component"→frontend (wrong; React Testing Library,
+    #   Storybook interaction tests, Testing Library are testing tools, not frontend frameworks).
+    #   Fix: bigram "component testing" → testing overrides bare "component" for test queries.
+    #   Regression: "component library", "component design" keep "component"→frontend (no "testing" suffix).
+    "component testing": "testing",     # bigram — "component testing react", "component testing tool" → Testing Tools
+
+    # "ai router" → "frontend" via bare "router"→frontend (wrong; AI model routers like LiteLLM,
+    #   OpenRouter, PortKey, Martian route requests between LLMs — these are AI/dev tools).
+    #   Fix: bigram "ai router" → ai overrides bare "router"→frontend for LLM routing queries.
+    #   Regression: "react router", "vue router", "client router" keep "router"→frontend (no "ai" prefix).
+    "ai router": "ai",                  # bigram — "ai router litellm", "ai router openrouter" → AI & Automation
+
+    # "remote procedure call" → "monitoring" via bare "call"→monitoring (wrong; RPC tools like
+    #   tRPC, gRPC, Connect-RPC are API Tools). "rpc" and "grpc" individually already route to api.
+    #   Fix: bigram "procedure call" → api catches "remote procedure call" and "procedure call rpc".
+    #   Regression: "on call", "call tracking" keep "call"→monitoring (no "procedure" qualifier).
+    "procedure call": "api",            # bigram — "remote procedure call", "procedure call rpc" → API Tools
+
+    # "widget embedding" / "iframe embedding" → "ai" via bare "embedding"→ai (wrong; these mean
+    #   HTML-embed widgets/iframes, not AI vector embeddings).
+    #   Fix: bigrams "widget embedding" and "iframe embedding" → developer override for embed queries.
+    #   Regression: "vector embedding", "text embedding", "word embedding" keep "embedding"→ai (no iframe/widget).
+    "widget embedding": "developer",    # bigram — "widget embedding tool", "widget embedding react" → Developer Tools
+    "iframe embedding": "developer",    # bigram — "iframe embedding react", "iframe embedding html" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
