@@ -534,6 +534,37 @@ When hunting for routing gaps, these query forms are historically tricky:
     "shader"/"glsl"/"opengl"→frontend (WebGL bare tokens),
     "photo crop"→frontend (probe 73, May 2026).
 
+61. "12-factor / soft-delete / cursor-pagination / IoC / interceptor dead zones" — six
+    unrelated raw_first dead zones discovered in a systematic probe (probe 97, May 2026):
+    (a) 12-FACTOR: "twelve factor", "twelve-factor", "12 factor", "12-factor" all hit
+    raw_first because neither "twelve" nor "12" had a synonym. These are DevOps methodology
+    queries (Heroku's 12-factor app guide, CNCF cloud-native practices). Fix: bigrams
+    "twelve factor", "12 factor" → devops, plus hyphenated token forms.
+    (b) SOFT DELETE: "soft delete", "soft deletion", "soft-delete" → raw_first because "soft"
+    has no synonym. Logical-deletion is a database design pattern (TypeORM SoftDelete,
+    Sequelize paranoid, Laravel SoftDeletes). Fix: bigrams "soft delete", "soft deletion",
+    hyphenated token → database.
+    (c) CURSOR PAGINATION: "cursor pagination" → "ai dev" via bare "cursor"→ai-dev. Cursor-
+    based/keyset pagination is an API design pattern (Relay cursor spec, Prisma cursor,
+    PostgREST range), not the Cursor AI IDE. Fix: bigrams "cursor pagination", "cursor based"
+    → api, fire before the bare "cursor"→ai-dev fallback.
+    (d) SOURCE-MAP: "source map" (space form) is PERMANENTLY BLOCKED — "source" is in
+    _FTS_STOP_WORDS, so "map" alone fires, routing to Maps & Location. The hyphenated form
+    "source-map" survives stop-word filtering as one token. Fix: add "source-map"→developer
+    (aligns with existing "sourcemap"→developer). Document limitation: "source map" with
+    space cannot be fixed without removing "source" from stop words.
+    (e) INVERSION OF CONTROL: "inversion of control" → raw_first because "inversion" is
+    unmapped and "of" is a stop word. After stripping, meaningful = ["inversion", "control"].
+    Fix: bigram "inversion control"→developer (fires for "inversion of control" after stop
+    word stripping) plus bare "inversion"→developer fallback.
+    (f) REQUEST INTERCEPTOR: "request interceptor" → raw_first because neither token had a
+    synonym. HTTP interceptors (Axios, Angular HttpClient, fetch) are API middleware tools.
+    Fix: bigram "request interceptor"→api and bare "interceptor"→api fallback.
+    Fixed: twelve factor/twelve-factor/12 factor/12-factor→devops, soft delete/deletion/
+    soft-delete→database, cursor pagination/cursor based/cursor-pagination→api,
+    source-map→developer, inversion control/inversion→developer,
+    request interceptor/interceptor→api (probe 97, May 2026).
+
 60. "Usage-context collision and API-prefix overreach" — two recurring patterns identified
     in probe 96 (May 2026):
     (a) USAGE CONTEXT: bare "usage"→invoicing fires correctly for billing/metering queries
@@ -3495,6 +3526,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("contract testing pact", "testing"),       # bare "contract"→testing unchanged (no "api" prefix)
     ("api gateway kong", "api"),                # bare "api"→api unchanged (no security/monitoring/contract suffix)
     ("api testing postman", "api"),             # bare "api"→api unchanged for testing tools in api category
+
+    # ── Probe 97: twelve-factor / soft-delete / cursor-pagination / source-map / IoC / interceptor dead zones ──
+    # "twelve factor" / "twelve-factor" / "12 factor" → raw_first (DevOps 12-factor methodology).
+    # "soft delete" / "soft-delete" → raw_first (Database logical-deletion pattern).
+    # "cursor pagination" → "ai dev" via bare "cursor"→ai-dev (wrong; cursor-keyset pagination → API).
+    # "source-map" (hyphenated) → raw_first ("source" stop word blocks space form; hyphen form survives).
+    # "inversion of control" → raw_first ("of" stripped → "inversion control" bigram needed).
+    # "request interceptor" → raw_first (HTTP middleware pattern → API Tools).
+    ("twelve factor app", "devops"),            # bigram "twelve factor"→devops
+    ("twelve factor methodology", "devops"),    # same bigram
+    ("twelve-factor app", "devops"),            # hyphenated token "twelve-factor"→devops
+    ("12 factor app", "devops"),                # numeric bigram "12 factor"→devops
+    ("12-factor principles", "devops"),         # numeric hyphenated token
+    ("soft delete django", "database"),         # bigram "soft delete"→database
+    ("soft delete typeorm", "database"),        # same bigram
+    ("soft-delete laravel", "database"),        # hyphenated token "soft-delete"→database
+    ("soft deletion postgres", "database"),     # variant "soft deletion"→database
+    ("cursor pagination relay", "api"),         # bigram "cursor pagination"→api (overrides "cursor"→ai-dev)
+    ("cursor pagination graphql", "api"),       # same bigram
+    ("cursor-pagination prisma", "api"),        # hyphenated token "cursor-pagination"→api
+    ("cursor based pagination", "api"),         # bigram "cursor based"→api
+    ("source-map webpack", "developer"),        # hyphenated token "source-map"→developer
+    ("inversion of control spring", "developer"),  # bigram "inversion control" after "of" stripped → developer
+    ("inversion of control tsyringe", "developer"),# same path
+    ("request interceptor axios", "api"),       # bigram "request interceptor"→api
+    ("request interceptor angular", "api"),     # same bigram
+    ("interceptor http", "api"),                # bare "interceptor"→api
+    # Regressions — probe 97 changes must not break these.
+    ("cursor ide alternative", "ai dev"),       # bare "cursor"→ai-dev unchanged (Cursor AI IDE queries)
+    ("cursor ai editor", "ai dev"),             # bare "cursor"→ai-dev unchanged
+    ("ioc container typescript", "developer"),  # "ioc"→developer unchanged (was already mapped)
 ]
 
 

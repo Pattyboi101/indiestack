@@ -9411,6 +9411,48 @@ _CAT_SYNONYMS: dict[str, str] = {
 
     # Fault injection — Testing (overrides "injection"→developer; chaos/resilience testing context)
     "fault injection": "testing",        # bigram — "fault injection testing", "fault injection chaos" → Testing Tools
+
+    # ── Probe pattern 97 (May 2026): twelve-factor / soft-delete / cursor-pagination / source-map / IoC / interceptor dead zones ──────
+    #
+    # "twelve factor" / "twelve-factor" / "12 factor" → raw_first (no synonym; 12-factor cloud-native
+    #   methodology belongs in DevOps — Twelve-Factor App guide, CNCF practices, Heroku principles).
+    # "soft delete" / "soft-delete" → raw_first ("soft" unmapped; DB pattern for logical deletion
+    #   without physical row removal — Sequelize paranoid, TypeORM SoftDelete, Laravel SoftDeletes).
+    # "cursor pagination" → "ai dev" via bare "cursor"→ai-dev (wrong; cursor-based/keyset pagination
+    #   is an API design pattern — Relay cursor spec, Prisma cursor, PostgREST range queries).
+    # "source-map" (hyphenated token) → raw_first ("source" is in _FTS_STOP_WORDS so space form is
+    #   dead; hyphenated query "source-map" survives as one token — webpack/vite source maps).
+    # "inversion of control" → raw_first ("inversion" unmapped; "of" is stop word → after stripping,
+    #   bigram becomes "inversion control" — IoC containers: tsyringe, InversifyJS, Spring DI).
+    # "request interceptor" → raw_first (HTTP middleware pattern — Axios interceptors,
+    #   Angular HttpClient interceptors, fetch interceptors → API Tools).
+
+    # DevOps — 12-factor methodology (cloud-native app design best practices)
+    "twelve factor": "devops",          # bigram — "twelve factor app", "twelve factor methodology" → DevOps
+    "twelve-factor": "devops",          # hyphenated token — "twelve-factor app", "twelve-factor checklist"
+    "12 factor": "devops",              # numeric form — "12 factor app", "12 factor methodology"
+    "12-factor": "devops",              # numeric hyphenated — "12-factor app", "12-factor principles"
+
+    # Database — soft delete pattern (logical deletion, record marked not physically removed)
+    "soft delete": "database",          # bigram — "soft delete django", "soft delete typeorm" → Database
+    "soft-delete": "database",          # hyphenated token — "soft-delete library", "soft-delete laravel"
+    "soft deletion": "database",        # variant form — "soft deletion pattern", "soft deletion postgres"
+
+    # API Tools — cursor-based/keyset pagination (overrides bare "cursor"→ai-dev for pagination queries)
+    "cursor pagination": "api",         # bigram — "cursor pagination relay", "cursor pagination graphql" → API Tools
+    "cursor-pagination": "api",         # hyphenated token — "cursor-pagination library", "cursor-pagination prisma"
+    "cursor based": "api",              # bigram — "cursor based pagination", "cursor based query"
+
+    # Developer Tools — source-map hyphenated form ("source map" with space is blocked by stop word)
+    "source-map": "developer",          # hyphenated token — "source-map webpack", "source-map support"
+
+    # Developer Tools — inversion of control / IoC container ("of" is stop word → "inversion control" bigram)
+    "inversion control": "developer",   # bigram — fires after "of" is stripped from "inversion of control"
+    "inversion": "developer",           # bare fallback — "inversion of control", "ioc" → Developer Tools
+
+    # API Tools — HTTP request interceptors (Axios, Angular HttpClient, fetch interceptors)
+    "request interceptor": "api",       # bigram — "request interceptor axios", "request interceptor http" → API Tools
+    "interceptor": "api",               # bare fallback — "interceptor pattern", "http interceptor" → API Tools
 }
 
 _FTS_STOP_WORDS = {
