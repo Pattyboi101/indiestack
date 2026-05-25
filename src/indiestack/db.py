@@ -9088,6 +9088,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Feedback — Net Promoter Score (NPS) compound form
     # "nps" already maps to feedback; "net promoter score" → "score" is not a stop word → bigram needed.
     "net promoter": "feedback",           # bigram — "net promoter score", "net promoter survey" → Feedback
+    # Analytics — segmentation dead zones (probe 82)
+    # "customer segmentation" fired raw_first "customer" — segmentation tools (Mixpanel, Amplitude, Braze)
+    # are Analytics. "user segmentation"/"audience segmentation" also fired raw_first.
+    "segmentation": "analytics",          # bare — "user segmentation", "audience segmentation tool" → Analytics
+    "customer segmentation": "analytics", # bigram — overrides raw_first("customer") → Analytics
+    "audience": "analytics",              # bare — "audience analytics", "audience segmentation" → Analytics
+    # Analytics — user journey dead zone
+    # "user journey analytics"/"user journey map" fired raw_first "user" — user journey tools
+    # (FullStory, Amplitude, Hotjar) belong in Analytics.
+    "user journey": "analytics",          # bigram — "user journey analytics", "user journey funnel" → Analytics
+    # CRM — ATS / HR dead zones (probe 82)
+    # "applicant tracking system" → meaningful = ["applicant","tracking","system"] — "tracking" is a
+    # stop word → ["applicant","system"] — both unmapped → raw_first. ATS tools (Lever, Ashby,
+    # Greenhouse, Workable) are CRM-adjacent people-management tools.
+    "applicant": "crm",                   # bare — "applicant tracking", "applicant management" → CRM
+    "ats": "crm",                         # bare — ATS abbreviation → CRM (Applicant Tracking System)
+    "hr": "crm",                          # bare — "hr software", "hr tool", "hr management" → CRM (BambooHR, Rippling)
 }
 
 _FTS_STOP_WORDS = {

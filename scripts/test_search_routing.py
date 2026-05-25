@@ -3068,6 +3068,28 @@ TEST_CASES: list[tuple[str, str]] = [
     ("nps survey", "feedback"),                    # bare "nps"→feedback unchanged
     ("demand planning", "crm"),                    # bare "demand"→crm (supply chain planning not in catalog)
     ("data pipeline etl", "background"),           # bare "data"→? → "pipeline"→background unchanged
+    # Probe pattern 82 (May 2026): segmentation / user journey / ATS / HR dead zones.
+    # "customer segmentation" fired raw_first "customer" — segmentation analytics tools
+    # (Mixpanel, Amplitude, Braze) belong in Analytics.
+    # "user/audience segmentation" also fired raw_first. "user journey" (FullStory, Amplitude) → Analytics.
+    # "applicant tracking system" (ATS) and "hr software" (BambooHR, Rippling) belong in CRM.
+    ("customer segmentation tool", "analytics"),   # bigram "customer segmentation"→analytics
+    ("user segmentation", "analytics"),            # bare "segmentation"→analytics
+    ("audience segmentation", "analytics"),        # bare "audience"→analytics
+    ("audience analytics", "analytics"),           # bare "audience"→analytics
+    ("user journey analytics", "analytics"),       # bigram "user journey"→analytics
+    ("user journey funnel", "analytics"),          # bigram "user journey"→analytics
+    ("applicant tracking system", "crm"),          # bare "applicant"→crm (ATS tools: Lever, Ashby, Greenhouse)
+    ("ats software", "crm"),                       # bare "ats"→crm (ATS abbreviation)
+    ("hr management tool", "crm"),                 # bare "hr"→crm (BambooHR, Rippling)
+    ("hr software", "crm"),                        # bare "hr"→crm
+    # Regressions — probe 82 changes must not break these.
+    ("customer support chat", "support"),          # bare "support"→customer-support (unchanged)
+    ("customer success platform", "crm"),          # bigram "customer success"→crm (unchanged)
+    ("customer data platform", "analytics"),       # bigram "customer data"→analytics (unchanged)
+    ("user authentication", "authentication"),     # bare "authentication"→auth (fires before segmentation)
+    ("user research tool", "feedback"),            # bigram "user research"→feedback (unchanged)
+    ("audience targeting ad", "analytics"),        # bare "audience"→analytics (consistent)
 ]
 
 
