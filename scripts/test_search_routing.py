@@ -3171,6 +3171,29 @@ TEST_CASES: list[tuple[str, str]] = [
     ("multilingual app", "localization"),           # "multilingual"→localization fires (compound form; spaced "multi language" is a known gap)
     ("multi currency payments", "payments"),       # "currency"→payments fires
     ("collaborative editing yjs", "api"),          # bare "collaborative"→api unchanged (no "team" prefix)
+
+    # Probe pattern 86 (May 2026): visual editor / page builder / site builder / countdown / loyalty dead zones.
+    # "visual editor component" → testing via bare "visual"→testing (wrong; WYSIWYG editors like TipTap,
+    # ProseMirror are Frontend Frameworks); bigram "visual editor"→frontend added.
+    # "page builder"/"site builder" → raw_first (both tokens unmapped); Landing Pages; bigrams added.
+    # "countdown timer" → raw_first "countdown" (unmapped); countdown UI components → Frontend; bare added.
+    # "loyalty reward"/"loyalty program" → raw_first "loyalty" (unmapped); loyalty tools → CRM; bare added.
+    ("visual editor react", "frontend"),           # bigram "visual editor"→frontend (overrides "visual"→testing)
+    ("visual editor component", "frontend"),       # bigram "visual editor"→frontend
+    ("page builder react", "landing"),             # bigram "page builder"→landing
+    ("page builder nextjs", "landing"),            # bigram "page builder"→landing
+    ("site builder open source", "landing"),       # bigram "site builder"→landing
+    ("countdown timer react", "frontend"),         # bare "countdown"→frontend
+    ("countdown component", "frontend"),           # bare "countdown"→frontend
+    ("loyalty program tool", "crm"),               # bare "loyalty"→crm
+    ("loyalty rewards api", "crm"),                # bare "loyalty"→crm
+    # Regressions — probe 86 changes must not break these.
+    ("visual regression testing", "testing"),      # bare "visual"→testing unchanged (no "editor" suffix)
+    ("visual testing percy", "testing"),           # bare "visual"→testing unchanged
+    ("block editor component", "frontend"),        # "editor"→frontend fires at pos 1 (no "visual" prefix needed)
+    ("inline editor react", "frontend"),           # "editor"→frontend fires
+    ("coming soon page", "landing"),               # bigram "coming soon"→landing unchanged
+    ("referral program crm", "crm"),               # "referral"→crm unchanged
 ]
 
 

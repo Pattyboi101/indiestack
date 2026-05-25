@@ -9184,6 +9184,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "team collaboration" → api via bare "collaboration"→api (realtime collaborative editing; wrong
     # for team messaging/collab tools like Mattermost, Zulip, Rocket.Chat → Developer Tools).
     "team collaboration": "developer",   # bigram — overrides "collaboration"→api for team messaging queries
+
+    # Probe 86 — visual editor / page builder / site builder / countdown / loyalty dead zones
+
+    # "visual editor component" → testing via bare "visual"→testing (visual regression; wrong for
+    # WYSIWYG/block editor components like TipTap, ProseMirror, Quill, Lexical → Frontend Frameworks).
+    # Bigram fires before bare "visual"→testing when "editor" follows.
+    "visual editor": "frontend",         # bigram — "visual editor react", "visual editor component" → Frontend Frameworks
+
+    # "page builder" / "site builder" → raw_first "page"/"site" (both tokens unmapped).
+    # Page/site builders (Webflow, Framer, Elementor, Builder.io) → Landing Pages category.
+    # NOTE: "documentation site builder" must still route to Documentation. Adding "documentation site"→
+    # documentation bigram (fires at pos 0) before "site builder"→landing (pos 1) can fire.
+    "documentation site": "documentation",  # bigram — prevents "documentation site builder" regression
+    "page builder": "landing",           # bigram — "page builder nextjs", "page builder react" → Landing Pages
+    "site builder": "landing",           # bigram — "site builder react", "site builder open source" → Landing Pages
+
+    # "countdown timer" → raw_first "countdown" (unmapped). Countdown UI components (react-countdown,
+    # CountUp.js, Swiper countdown) → Frontend Frameworks (UI widget tier).
+    "countdown": "frontend",             # bare — "countdown timer react", "countdown component" → Frontend Frameworks
+
+    # "loyalty reward" / "loyalty program" → raw_first "loyalty" (unmapped). Loyalty/rewards program
+    # tools (Rewardful, LoyaltyLion, Stamp.me) are CRM-adjacent (customer retention).
+    "loyalty": "crm",                    # bare — "loyalty program tool", "loyalty rewards api" → CRM & Sales
 }
 
 _FTS_STOP_WORDS = {
