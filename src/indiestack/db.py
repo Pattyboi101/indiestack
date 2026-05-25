@@ -9226,6 +9226,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "impersonation" → raw_first "impersonation" (unmapped). User impersonation for support/admin
     # access (Clerk impersonation, Auth0 impersonation, WorkOS impersonation) → Authentication.
     "impersonation": "authentication",   # bare — "user impersonation", "admin impersonation" → Authentication
+
+    # Probe 88 — cross-platform / cross-origin / cross-site / cross-browser dead zones
+
+    # "cross platform" → raw_first "cross" because "platform" is in _FTS_STOP_WORDS (stripped).
+    # Cross-platform dev tools (Tauri, Electron, Capacitor, React Native, Flutter) → Frontend Frameworks.
+    # Bare "cross" handles "cross-platform" after stop-word removal.
+    # Bigrams for "cross origin" and "cross site" override the bare mapping for CORS/security queries.
+    "cross": "frontend",                 # bare — "cross platform app", "cross platform framework" → Frontend
+    "cross origin": "api",               # bigram — CORS ("cross-origin resource sharing", "cross origin request") → API Tools
+    "cross site": "security",            # bigram — XSS/CSRF ("cross site scripting", "cross site request forgery") → Security
+    "cross browser": "testing",          # bigram — "cross browser testing", "cross browser compatibility" → Testing Tools
+    "crossplatform": "frontend",         # compound — "crossplatform desktop app", "crossplatform mobile" → Frontend
 }
 
 _FTS_STOP_WORDS = {

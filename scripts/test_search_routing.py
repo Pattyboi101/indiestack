@@ -3212,6 +3212,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("team management platform", "project"),      # "management"→project fires (team management is ambiguous; keep project for now)
     ("workos alternative", "authentication"),     # "workos"→authentication unchanged
     ("scim provisioning", "authentication"),      # "scim"→authentication unchanged
+
+    # Probe pattern 88 (May 2026): cross-platform / cross-origin / cross-site / cross-browser dead zones.
+    # "cross platform" → raw_first "cross" ("platform" is in _FTS_STOP_WORDS → only "cross" survives);
+    # cross-platform dev tools (Tauri, Electron, Capacitor) → Frontend; bare "cross"→frontend added.
+    # Bigrams "cross origin"→api, "cross site"→security, "cross browser"→testing override bare "cross"→frontend.
+    ("cross platform app", "frontend"),           # bare "cross"→frontend ("platform" stripped)
+    ("cross platform framework", "frontend"),     # bare "cross"→frontend
+    ("crossplatform desktop", "frontend"),        # compound "crossplatform"→frontend
+    ("cross origin request", "api"),              # bigram "cross origin"→api (CORS)
+    ("cross origin resource sharing", "api"),     # bigram "cross origin"→api
+    ("cross site scripting", "security"),         # bigram "cross site"→security (XSS)
+    ("cross site request", "security"),           # bigram "cross site"→security (CSRF)
+    ("cross browser testing", "testing"),         # bigram "cross browser"→testing
+    ("cross browser compatibility", "testing"),   # bigram "cross browser"→testing
+    # Regressions — probe 88 changes must not break these.
+    ("react native alternative", "frontend"),     # "native"→frontend unchanged (no "cross" prefix)
+    ("flutter alternative", "frontend"),          # "flutter"→frontend unchanged
+    ("electron app", "frontend"),                 # "electron"→frontend unchanged
 ]
 
 
