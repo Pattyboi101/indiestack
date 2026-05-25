@@ -2559,6 +2559,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "availability": "scheduling",
     # File / storage synonyms
     "upload": "file",
+    # File upload UI component bigrams — "upload"→file fires for bare queries, but these override
+    # for embedded UI component searches (react-dropzone, FilePond, Uppy, Filepond).
+    "file upload": "frontend",      # bigram — overrides "upload"→file for UI component queries
+    "image upload": "frontend",     # bigram — overrides "image"→media for upload widget queries
+    "image editor": "frontend",     # bigram — embedded image editor component (Filerobot, react-image-editor)
     "s3": "file",
     "cdn": "devops",    # CDN → DevOps & Infrastructure (Cloudflare, BunnyCDN, Fastly live there)
     "media": "media",  # "media server", "media streaming" → Media Servers (not file storage)
@@ -2650,7 +2655,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "jest": "testing",
     "vitest": "testing",
     "selenium": "testing",
-    "storybook": "testing",     # component testing / UI development
+    "storybook": "frontend",    # component development environment (Chromatic, Storybook — UI dev not test runner)
     "ci": "devops",
     "cicd": "devops",
     "deploy": "devops",
@@ -2803,10 +2808,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "chroma": "database",
     "pinecone": "database",
     "milvus": "database",
-    # AI dev tools
-    "cursor": "ai",
-    "windsurf": "ai",
-    "copilot": "ai",
+    # AI dev tools — these are AI coding assistants (ai-dev-tools), not AI automation (ai-automation).
+    # "ai dev" uniquely matches "AI Dev Tools" via LOWER(c.name) LIKE '%ai dev%'.
+    "cursor": "ai dev",
+    "windsurf": "ai dev",
+    "copilot": "ai dev",
     "linear": "project",
     # Background job tools
     "trigger.dev": "background",
@@ -2836,6 +2842,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pdf generator": "developer",   # "pdf generator nodejs", "pdf generator python" → Developer Tools
     "pdf creator": "developer",     # "pdf creator library", "pdf creator api" → Developer Tools
     "html pdf": "developer",        # "html to pdf" (stop-word "to" stripped → "html pdf") → Developer Tools
+    "pdf viewer": "frontend",       # "pdf viewer react", "pdf viewer component" → Frontend (react-pdf, pdfjs-dist)
     # Markdown processing — editors, renderers, parsers
     "markdown": "documentation", # markdown editors/renderers → Documentation category
     # Security tools — "security" as raw term already LIKE-matches "Security Tools",
@@ -2859,6 +2866,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "xero": "invoicing",
     "wave": "invoicing",
     # Media/uploads — image and audio are common queries beyond just "video"
+    "image cropper": "frontend",    # "image cropper react", "image cropper component" → Frontend (Cropper.js, react-image-crop)
     "image": "media",
     "audio": "media",
     "cloudinary": "media",
@@ -3498,8 +3506,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "polyfill": "frontend",         # "polyfill library", "browser polyfill" → Frontend Frameworks
     "polyfills": "frontend",        # plural form
     # PWA / service workers — Workbox (Google)
+    # NOTE: "service worker" can't be a bigram — "service" is in _FTS_STOP_WORDS and is stripped.
+    # "worker pwa" covers the most common pattern after stripping.
+    "worker pwa": "frontend",       # "service worker pwa" → ["worker","pwa"] bigram → Frontend Frameworks
     "workbox": "frontend",          # Google Workbox — service worker and PWA caching library
-    "serviceworker": "frontend",    # "service worker library", "service worker caching" → Frontend
+    "serviceworker": "frontend",    # compound/no-space form — "serviceworker caching" → Frontend
     # Rate throttling (complement to rate/limiting/limiter/limit → api)
     "throttle": "api",              # "throttle requests", "api throttle" → API Tools
     "throttling": "api",            # "request throttling", "api throttling" → API Tools
@@ -3576,6 +3587,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "schema": "developer",          # "json schema validator", "schema definition" → Developer Tools
     # Number / currency formatting — numeral.js, accounting.js, Intl.NumberFormat wrappers
     "number": "developer",          # "number formatting", "number parsing library" → Developer Tools (was raw_first)
+    # Number/masked input UI components — bigrams override "number"→developer for form widget queries
+    "number input": "frontend",     # bigram — number input UI (react-number-format, cleave.js numeric; overrides "number"→developer)
+    "number format": "frontend",    # bigram — react-number-format, numeral.js as UI widget (overrides "number"→developer)
+    "masked": "frontend",           # masked inputs (imask.js, Cleave.js, react-imask) → Frontend Frameworks
+    "masked input": "frontend",     # bigram — "masked input react", "masked input component" → Frontend Frameworks
+    "photo crop": "frontend",       # bigram — Cropper.js, react-image-crop (overrides raw_first "photo")
     # Frontend — infinite scroll / virtual list patterns
     "infinite": "frontend",         # "infinite scroll", "infinite loading" → Frontend Frameworks
     "virtual": "frontend",          # "virtual list", "virtual scroll", "react-virtual" → Frontend Frameworks
@@ -3777,6 +3794,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — monitoring: Prometheus + Grafana (canonical stack for metrics)
     "prometheus": "monitoring",     # Prometheus — open-source monitoring + alerting (52k★)
     "grafana": "monitoring",        # Grafana — observability dashboards + visualization (64k★)
+    # File storage — "file hosting" bigram overrides bare "hosting"→devops.
+    # "file hosting service", "file hosting s3" should land in File Management, not DevOps.
+    "file hosting": "file",         # bigram — "file hosting service", "file hosting alternative" → File Management
     # File storage — object storage (MinIO, Backblaze B2, Tigris, Cloudflare R2)
     "minio": "file",                # MinIO — open-source S3-compatible object storage (47k★)
     "backblaze": "file",            # Backblaze B2 — cheap S3-alternative object storage
@@ -3869,6 +3889,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tts": "ai",                    # text-to-speech — ElevenLabs, Cartesia, Coqui TTS
     "stt": "ai",                    # speech-to-text (STT abbreviation) — Deepgram, Whisper
     "asr": "ai",                    # automatic speech recognition — Deepgram, AssemblyAI
+    "voice call": "notifications",   # "voice call api", "voice call sdk" → Notifications (VoIP/telephony, not voice AI)
+    "voice calling": "notifications", # "voice calling library/sdk" → Notifications (gerund form)
+    "phone call": "notifications",   # "phone call api", "phone call automation" → Notifications (telephony; not phone auth)
     "voice": "ai",                  # voice AI — ElevenLabs, Play.ht, Murf → AI & Automation
     "speech": "ai",                 # "speech recognition", "speech synthesis" → AI & Automation
     "elevenlabs": "ai",             # ElevenLabs — leading voice AI API for TTS (developer-focused)
@@ -3955,9 +3978,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "product events": "analytics",      # bigram — "product events analytics", "product events sdk" → Analytics (overrides "events"→message at i=1)
     # Project management — Gantt charts (commonly searched feature)
     "gantt": "project",             # "Gantt chart", "Gantt timeline view" → Project Management
-    # User onboarding / product tours (Intro.js, Shepherd.js, Driver.js)
+    # User onboarding / product tours (Intro.js, Shepherd.js, Driver.js, Joyride)
+    "feature tour": "frontend",     # "feature tour component" → Frontend (overrides "feature"→feature-flags)
     "tour": "frontend",             # "product tour", "interactive tour library" → Frontend Frameworks
     "onboarding": "frontend",       # "user onboarding flow", "onboarding wizard" → Frontend Frameworks
+    "walkthrough": "frontend",      # "walkthrough guide library", "interactive walkthrough" → Frontend Frameworks
+    "introjs": "frontend",          # Intro.js — product tour and user onboarding library
+    "interactive demo": "frontend", # "interactive demo library", "interactive playground" → Frontend Frameworks
+    "interactive walkthrough": "frontend",  # "interactive walkthrough tool" → Frontend Frameworks
     # Vue utilities — VueUse is searched directly as a named tool
     "vueuse": "frontend",           # VueUse — Vue Composition API utility collection (21k★)
     # Debounce / rate-control hooks (use-debounce, xhook, lodash.debounce)
@@ -4294,6 +4322,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — WebGL (lower level than Three.js, but queried directly)
     "webgl": "frontend",            # WebGL — browser 3D graphics API; queries route to Three.js/Babylon.js
     "babylon": "frontend",          # Babylon.js — WebGL-based 3D engine (alternative to Three.js, 23k★)
+    "shader": "frontend",           # WebGL shader queries → Three.js/Babylon.js/React Three Fiber context
+    "glsl": "frontend",             # GLSL — WebGL shader language; "glsl editor", "glsl tutorial" → Frontend
+    "opengl": "frontend",           # OpenGL → browser WebGL graphics; "opengl library" → Frontend Frameworks
     # Time tracking — tools like Toggl, Harvest, Clockify (project-management category)
     "toggl": "project",             # Toggl Track — most-searched time tracker
     "harvest": "project",           # Harvest — time tracking + invoicing
@@ -4404,6 +4435,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "webcomponents": "frontend",    # plural — "web components standard", "custom elements" → Frontend Frameworks
     "custom-element": "frontend",   # "custom element", "custom elements API" → Frontend Frameworks (Lit, FAST)
     "custom-elements": "frontend",  # plural form — Web Components Custom Elements spec
+    "custom element": "frontend",   # spaced form (no hyphen) — bare "custom" is raw_first dead zone without this
     # Testing — integration tests (complement to e2e, unit, bdd, coverage already mapped)
     "integration": "testing",       # "integration test", "integration testing library" → Testing Tools
     # Database — time-series databases not individually mapped
@@ -7107,8 +7139,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Localization — missing platforms
     "tolgee": "localization",      # Tolgee — open-source i18n with in-context translation; "tolgee alternative" → Localization
     "localazy": "localization",    # Localazy — translation management platform; "localazy alternative" → Localization
-    "transifex": "localization",   # Transifex — popular enterprise i18n platform; "transifex alternative" → Localization
-    "phrase": "localization",      # Phrase (fka PhraseApp) — i18n strings + TMS; "phrase alternative" → Localization
     # SMS/telephony APIs — complement to twilio/vonage
     "sinch": "notifications",      # Sinch — cloud communication API (SMS/voice/WhatsApp); "sinch alternative" → Notifications
     "plivo": "notifications",      # Plivo — SMS and voice API; "plivo alternative" → Notifications
@@ -7411,6 +7441,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gemini-code": "ai dev",        # hyphenated — "gemini-code alternative", "gemini-code setup" → AI Dev Tools
     "gemini-assist": "ai dev",      # variant — "gemini-assist alternative" → AI Dev Tools
     "gemini-code-assist": "ai dev", # full slug — "gemini-code-assist vs copilot" → AI Dev Tools
+    # AI Dev Tools — "github copilot" bigram overrides bare "github"→devops for copilot queries.
+    # Without this bigram "github copilot alternative" routes to DevOps via "github".
+    "github copilot": "ai dev",    # bigram — "github copilot alternative", "github copilot replacement" → AI Dev Tools
+    # AI Dev Tools — "ai ide" bigram overrides bare "ide"→developer for AI-enhanced IDE queries.
+    # "ai ide alternative", "best ai ide 2025" should land in AI Dev Tools, not Developer Tools.
+    "ai ide": "ai dev",            # bigram — "ai ide alternative", "ai ide setup" → AI Dev Tools
+    # AI Dev Tools — LLM observability and tracing overrides.
+    # "ai tracing" → "tracing"→monitoring without bigram; LLM trace viewers (LangSmith, Langfuse) live in AI Dev Tools.
+    # "ai observability" → "observability"→monitoring without bigram; LLM observability tools live in AI Dev Tools.
+    "ai tracing": "ai dev",        # bigram — "ai tracing tool", "llm ai tracing" → AI Dev Tools
+    "ai observability": "ai dev",  # bigram — "ai observability platform", "llm ai observability" → AI Dev Tools
     # Database — local-first reactive databases (offline-first web and mobile apps)
     "rxdb": "database",             # RxDB — offline-first reactive database for JS/TS/React/Vue (30k★)
     "pouchdb": "database",          # PouchDB — browser CouchDB-compatible offline-first database (17k★)
@@ -7542,6 +7583,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "ai safety" → overrides raw_first "ai"→ai-automation; safety eval/red-team lives in ai-standards
     "responsible ai": "ai standards",   # bigram — "responsible ai framework", "responsible ai toolkit" → AI Standards & Specs
     "red teaming": "ai standards",      # bigram — "red teaming tool", "red teaming llm" → AI Standards & Specs (complement to "red-team")
+    "red team": "ai standards",         # bigram — "red team llm", "red team evaluation" → AI Standards & Specs ("red" alone has no category match)
     "ai benchmark": "ai standards",     # bigram — "ai benchmark tool", "ai benchmark suite" → AI Standards & Specs (overrides "benchmark"→testing)
     "ai safety": "ai standards",        # bigram — "ai safety framework", "ai safety testing" → AI Standards & Specs
     "ai governance": "ai standards",    # bigram — "ai governance tool", "ai governance framework" → AI Standards & Specs
@@ -7810,6 +7852,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "context window": "ai",             # bigram — "context window management", "context window limit" → AI & Automation
     "context engineering": "ai",        # bigram — "context engineering tool", "llm context engineering" → AI & Automation
     "context length": "ai",             # bigram — "context length optimization", "long context length" → AI & Automation
+    "context management": "ai",         # bigram — "context management tool", "llm context management" → AI & Automation (beats "context"→frontend)
+    # AI — "ai deployment" overrides "deployment"→devops: AI model deployment tools (BentoML, Modal, Baseten) live in AI & Automation.
+    "ai deployment": "ai",              # bigram — "ai deployment tool", "ai model deployment" → AI & Automation (beats "deployment"→devops)
+    # AI — "ai memory" overrides "memory"→caching: AI agent memory tools (MemGPT, Mem0, Zep) are AI & Automation, not caching.
+    "ai memory": "ai",                  # bigram — "ai memory tool", "ai agent memory" → AI & Automation (beats "memory"→caching)
+    # AI — "ai chat" overrides "chat"→customer: AI chatbots (Chatbase, OpenChat) live in AI & Automation, not Customer Support.
+    "ai chat": "ai",                    # bigram — "ai chat tool", "ai chat alternative" → AI & Automation (beats "chat"→customer)
     # AI — OpenAI GPT-4.1 family (released April 2025; frontier model + two cheaper variants)
     # Very high "gpt-4.1 alternative", "gpt-4.1 api", "gpt-4.1-mini vs claude" query volume post-launch
     "gpt41": "ai",                      # GPT-4.1 — "gpt41 alternative", "gpt41 api", "gpt41 setup" → AI & Automation
@@ -7993,6 +8042,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "heat maps": "analytics",            # plural — "heat maps user behavior" → Analytics & Metrics
     "scroll map": "analytics",           # "scroll map tool", "scroll map heatmap" → Analytics & Metrics
     "click map": "analytics",            # "click map tool", "click map heatmap" → Analytics & Metrics (beats "click"→cli)
+    # "click" UI collision bigrams — bare "click"→cli (Python Click) fires for non-CLI queries; bigrams override.
+    # NOTE: "click tracking" bigram CANNOT fire — "tracking" is in _FTS_STOP_WORDS.
+    "right click": "frontend",           # bigram — context menu UI libs (Radix, Headless UI; overrides "click"→cli)
+    "click outside": "frontend",         # bigram — useClickOutside / onClickOutside hooks (overrides "click"→cli)
+    "click heatmap": "analytics",        # bigram — heatmap analytics tools (Hotjar, Clarity; overrides "click"→cli)
     # AI — LLM token economics: "token"→authentication fires first for bare "token" queries.
     # "token usage" and "token count" are AI/LLM concerns (Helicone, LangSmith, OpenMeter).
     # Bigrams override "token"→authentication so these land in AI & Automation.
@@ -8370,6 +8424,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Fix: bigrams that override the bare "workflow"→ai and "visual"→testing tokens.
     "workflow builder": "background",   # bigram — "workflow builder", "visual workflow builder" step 0-1
     "workflow automation": "background", # bigram — "workflow automation tool", "workflow automation nocode"
+    "automation workflow": "background", # reversed form — "automation workflow n8n", "automation workflow engine"
     "visual workflow": "background",    # bigram — "visual workflow builder", "visual workflow editor" → BG Jobs
     #
     # LLM monitoring / observability — "llm"→ai fires for ALL llm-prefixed queries including
@@ -8424,7 +8479,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "meta tag" spaced bigrams — "meta"→ai fires without bigram; meta tags are SEO territory.
     # Tools: metatags.io, Open Graph Preview, MetaTags.io → SEO Tools.
     "meta tag": "seo",                          # bigram — "meta tag generator", "meta tag preview" → SEO Tools
-    "meta tags": "seo",                         # plural — "meta tags generator", "meta tags checker" → SEO Tools
     #
     # NOTE: "open graph" bigram intentionally NOT added — "open" is in _FTS_STOP_WORDS and is
     # always stripped, so the bigram can never fire. "og image" / "og meta" queries route
@@ -8485,6 +8539,584 @@ _CAT_SYNONYMS: dict[str, str] = {
     # for smart contract / blockchain queries. Smart-contract dev tools live in Developer Tools.
     "smart contract": "developer",             # bigram — "smart contract solidity", "smart contract testing" → Developer Tools
     "smart contracts": "developer",            # plural — "smart contracts ethereum", "smart contracts audit" → Developer Tools
+    # Feedback — changelog widget queries route to devops via "changelog"→devops (git changelog generators).
+    # Bigrams fire first so "changelog widget / embed / sdk" routes to Feedback (AnnounceKit, Beamer, Featurebase).
+    "changelog widget": "feedback",            # bigram — "changelog widget react", "changelog widget alternative" → Feedback & Reviews
+    "changelog embed": "feedback",             # bigram — "changelog embed", "changelog embed tool" → Feedback & Reviews
+    # Feedback — "what's new" / "whats new" product announcement queries (AnnounceKit, Beamer).
+    # NOTE: "whats new" bigram can NEVER fire — "new" is in _FTS_STOP_WORDS and gets stripped.
+    # "whats new widget" → meaningful = ["whats", "widget"] → raw_first (no safe fix without mapping bare "whats").
+    # Covered by "changelog widget"→feedback and "in-app changelog"→feedback bigrams instead.
+    # Forms — "document signing" overrides "document"→database (document-store/MongoDB terminology).
+    # E-signature APIs (DocuSign, HelloSign, PandaDoc) live in Forms & Surveys.
+    "document signing": "forms",               # bigram — "document signing api", "document signing integration" → Forms & Surveys
+    "esign": "forms",                          # bare — "esign api", "esign integration" → Forms & Surveys
+    # DevOps — "pre commit" spaced form (complement to "pre-commit"→devops hyphenated form at line 3747).
+    # "pre commit hooks" routed to frontend via "hooks"→frontend; bigram fires first to correct this.
+    "pre commit": "devops",                    # bigram — "pre commit hooks", "pre commit runner" → DevOps & Infrastructure
+    # Learning — "coding bootcamp" overrides "coding"→ai dev (AI coding tools).
+    # "developer tutorials" has "tutorials" unmapped; bare token + bigram added.
+    "coding bootcamp": "learning",             # bigram — "coding bootcamp platform", "coding bootcamp alternative" → Learning
+    "tutorials": "learning",                   # bare — "developer tutorials platform", "tutorials site" → Learning
+    "tutorial": "learning",                    # bare — "interactive tutorial", "tutorial generator" → Learning
+    "bootcamp": "learning",                    # bare — "bootcamp platform", "bootcamp builder" → Learning
+    # Documentation — "api docs" routes to api-tools via bare "api"→api (wrong; Swagger UI, Stoplight, ReadMe).
+    # Bigram fires before bare "api" to route API documentation tools to Documentation.
+    "api docs": "documentation",               # bigram — "api docs generator", "api docs site" → Documentation
+    "api documentation": "documentation",      # bigram — "api documentation generator", "openapi documentation" → Documentation
+    # CRM — "customer relationship" overrides "management"→project (wrong; Salesforce/HubSpot-type tools are CRM).
+    "customer relationship": "crm",            # bigram — "customer relationship management", "customer relationship tool" → CRM
+    # Landing pages — "sales page" overrides "sales"→crm (wrong; sales landing pages are Landing Pages category).
+    "sales page": "landing",                   # bigram — "sales page creator", "sales page builder" → Landing Pages
+    # Newsletters — "newsletter monetization" overrides "newsletter"→email.
+    # Newsletter business tools (Beehiiv, Substack) are Newsletters & Content, not Email Marketing.
+    "newsletter monetization": "newsletters",  # bigram — "newsletter monetization tool", "newsletter revenue" → Newsletters
+    # NOTE: "newsletter platform" bigram can NEVER fire — "platform" is in _FTS_STOP_WORDS.
+    # File management — "image optimization" overrides "image"→media.
+    # Image CDN/optimization tools (Cloudinary, imgix, Cloudflare Images) live in File Management.
+    "image optimization": "file",              # bigram — "image optimization cdn", "image optimization api" → File Management
+    # Forms — "feedback form" overrides "feedback"→feedback-reviews; a feedback form is a form tool.
+    # (Typeform, Tally, Jotform for collecting feedback ≠ Canny/ProductBoard for product feedback management)
+    "feedback form": "forms",                  # bigram — "feedback form builder", "feedback form alternative" → Forms & Surveys
+    # Creative — "3d" bare token unmapped; 3D tools (Blender API, Three.js, Babylon.js) live in Creative Tools.
+    "3d": "creative",                          # bare — "3d modeling tool", "3d rendering api" → Creative Tools
+    "3d modeling": "creative",                 # bigram — "3d modeling open source", "3d modeling web" → Creative Tools
+    # Boilerplate — "boilerplate code generator" mis-routes to ai dev via "code generator" bigram at position 1.
+    # Adding "boilerplate code" bigram at position 0 fires first and returns Boilerplates category.
+    "boilerplate code": "boilerplate",         # bigram — "boilerplate code generator", "boilerplate code react" → Boilerplates
+    # File management — "document storage" overrides "document"→database (document DB terminology).
+    # Document storage APIs (Cloudflare R2, Filestack, Uploadcare) live in File Management.
+    "document storage": "file",                # bigram — "document storage api", "document storage cloud" → File Management
+    # AI Standards — "model card" overrides "model"→ai (generic ML model queries).
+    # Model cards are structured documentation for ML models — AI safety/standards tools (Hugging Face Cards).
+    "model card": "ai standards",              # bigram — "model card generator", "model card template" → AI Standards
+    "model cards": "ai standards",             # plural — "model cards ml", "model cards documentation" → AI Standards
+    # Developer Tools — "mono repo" spaced form (complement to "monorepo"→developer already mapped).
+    # "mono repo tool", "mono repo architecture" route raw_first via "mono" (unmapped).
+    "mono repo": "developer",                  # bigram — "mono repo tool", "mono repo support" → Developer Tools
+    # DevOps — "pr automation" overrides "automation"→ai for pull-request workflow tooling.
+    # PR bots (Danger.js, Renovate, Dependabot, ReviewDog) live in DevOps & Infrastructure.
+    # NOTE: "pull request" bigram already maps to devops; "pr" bare token is unmapped → "automation"→ai fires.
+    "pr automation": "devops",                 # bigram — "pr automation tool", "pr automation github" → DevOps
+    "pr bot": "devops",                        # bigram — "pr bot review", "pr bot comment" → DevOps
+    # Security — "security testing" overrides downstream "testing"→testing token.
+    # SAST/DAST tools (Semgrep, Snyk Code, ZAP, Checkmarx) are Security Tools, not Testing Tools.
+    # Also fixes: "static application security testing" → meaningful ["static","security","testing"] →
+    # bigram "security testing" fires at pos 1-2, returning "security" (beats "static"→frontend at pos 0).
+    "security testing": "security",            # bigram — "security testing sast", "security testing pipeline" → Security Tools
+    # Frontend — "dev server" both tokens unmapped individually; bigram needed.
+    # Vite, webpack-dev-server, Bun serve, Parcel serve live in Frontend Frameworks.
+    "dev server": "frontend",                  # bigram — "dev server vite", "dev server hmr" → Frontend Frameworks
+    # DevOps — "commit lint" spaced form overrides "lint"→testing (commitlint is a git workflow tool).
+    # complement to bare "commitlint"→devops (line ~5017). Conventional Commits enforcement lives in DevOps.
+    "commit lint": "devops",                   # bigram — "commit lint setup", "commit lint husky" → DevOps
+    # ── Probe pattern 62 (May 2026): git branching strategy / preview environment dead zones ──
+    #
+    # Dead zones:
+    # "trunk based development" → "trunk"→frontend fires (Trunk.io build tool collision).
+    #   trunk-based development is a git branching strategy — DevOps.
+    # "gitflow branching" → raw_first "gitflow" (GitFlow is a git branching model — DevOps).
+    # "branch protection rules" → raw_first "branch" (GitHub branch protection tooling — DevOps).
+    # "feature branch deployment" → "feature"→feature-flags fires (git feature branches — DevOps).
+    # "preview environment deployment" → "environment"→security fires (deploy preview envs — DevOps).
+    # "staging environment" → "environment"→security fires (staging envs are DevOps infra).
+    # "ephemeral environment" → "environment"→security fires (ephemeral deploy envs — DevOps).
+    #
+    # DevOps — "trunk based" bigram overrides "trunk"→frontend for branching strategy queries.
+    # Regression: "trunk linter"/"trunk io" still route to frontend (bare "trunk" token unaffected).
+    "trunk based": "devops",                   # bigram — "trunk based development", "trunk based workflow" → DevOps
+    # DevOps — "gitflow" bare token (GitFlow git branching model; tools like git-flow, gitkraken).
+    "gitflow": "devops",                       # bare — "gitflow alternative", "gitflow branching" → DevOps
+    # DevOps — "branch protection" bigram (GitHub/GitLab branch protection rules and policies).
+    # "branch" alone is unmapped → raw_first; bigram catches the actionable query form.
+    "branch protection": "devops",             # bigram — "branch protection rules", "branch protection github" → DevOps
+    # DevOps — "feature branch" bigram overrides "feature"→feature-flags for git-workflow queries.
+    # Regression: "feature flag toggle"/"feature toggle" still route to feature-flags (different bigrams).
+    "feature branch": "devops",               # bigram — "feature branch deployment", "feature branch workflow" → DevOps
+    # DevOps — environment X bigrams override "environment"→security for deployment-environment queries.
+    # (Vercel preview URLs, Railway staging, ephemeral environments for CI preview deploys.)
+    "preview environment": "devops",           # bigram — "preview environment deployment", "preview environment ci" → DevOps
+    "staging environment": "devops",           # bigram — "staging environment setup", "staging environment deployment" → DevOps
+    "ephemeral environment": "devops",         # bigram — "ephemeral environment kubernetes", "ephemeral environment ci" → DevOps
+    # ── Probe pattern 63 (May 2026): UI component dead zones / modal collision ──
+    #
+    # Dead zones:
+    # "modal component" → bare "modal"→ai fires (Modal.com serverless collision).
+    #   React/Vue modal dialog components live in Frontend Frameworks, not AI & Automation.
+    # "modal window" → same "modal"→ai collision.
+    # "dropdown" / "dropdown menu" → unmapped → raw_first.
+    #   Dropdown components (React Select, Radix Dropdown, Headless UI) live in Frontend.
+    # "sorting" → unmapped → raw_first.
+    #   Table sorting (TanStack Table, ag-Grid) lives in Frontend Frameworks.
+    # "infinite scroll" → both tokens unmapped → raw_first (dual dead zone per Pattern 23).
+    #   Infinite scroll (react-infinite-scroll, TanStack Virtual) lives in Frontend.
+    # "select component" → bare "select" unmapped → raw_first.
+    #   React Select, Radix Select, shadcn/ui Select live in Frontend Frameworks.
+    #
+    # Frontend — "modal component"/"modal window" bigrams override "modal"→ai.
+    # Regression: bare "modal" (Modal.com serverless) still routes to ai; only bigram forms fixed.
+    "modal component": "frontend",             # bigram — "modal component react", "modal component shadcn" → Frontend
+    "modal window": "frontend",               # bigram — "modal window component", "modal window library" → Frontend
+    # Frontend — "dropdown" bare token + bigram (Radix Dropdown, Headless UI, React Select).
+    "dropdown": "frontend",                   # bare — "dropdown component", "dropdown menu react" → Frontend
+    "dropdown menu": "frontend",              # bigram — "dropdown menu component", "dropdown menu accessible" → Frontend
+    # Frontend — "sorting" bare token (TanStack Table sorting, ag-Grid, sortable libraries).
+    "sorting": "frontend",                    # bare — "table sorting react", "sorting library javascript" → Frontend
+    # Frontend — "infinite scroll" both tokens unmapped; bigram needed.
+    "infinite scroll": "frontend",            # bigram — "infinite scroll react", "infinite scroll component" → Frontend
+    # Frontend — "select component" bigram (React Select, Radix Select; avoids ambiguous bare "select").
+    # Bare "select" skipped — SQL SELECT collides with database category, too ambiguous alone.
+    "select component": "frontend",           # bigram — "select component accessible", "select component react" → Frontend
+    # ── Probe pattern 65 (May 2026): realtime-collaboration dead zones / multi-model DB collision ──
+    #
+    # Dead zones:
+    # "operational transform" → "operational" hits raw_first; OT is a realtime collab algorithm → API Tools.
+    # "shared editing" → "shared" hits raw_first; shared editing tools (Yjs, ShareDB) → API Tools.
+    # "presence awareness" → "presence" hits raw_first; presence APIs (Liveblocks, PartyKit) → API Tools.
+    # "presence tracking" → "presence" hits raw_first; same category.
+    # "live cursors" → "live" hits raw_first; cursor presence (Liveblocks) → API Tools.
+    # "multi model database" → bare "model"→ai fires before "database"→database;
+    #   multi-model DBs (SurrealDB, FaunaDB, ArangoDB, EdgeDB) belong in Database.
+    #
+    # API Tools — "operational transform" bigram (OT algorithm for realtime collab: ShareDB, Firepad).
+    "operational transform": "api",           # bigram — "operational transform sharedb", "operational transform algorithm" → API Tools
+    # API Tools — "shared editing" bigram (Yjs, Automerge; avoids bare "shared" dead zone).
+    "shared editing": "api",                  # bigram — "shared editing yjs", "shared editing crdt" → API Tools
+    # API Tools — "presence awareness" bigram (Liveblocks, PartyKit presence features).
+    # NOTE: bare "presence tracking" bigram CAN NEVER fire — "tracking" is in _FTS_STOP_WORDS.
+    # "presence tracking realtime" routes correctly via "realtime"→api after "tracking" is stripped.
+    "presence awareness": "api",              # bigram — "presence awareness liveblocks", "presence awareness realtime" → API Tools
+    # API Tools — "live cursors" bigram (Liveblocks cursor feature; avoids bare "live" dead zone).
+    "live cursors": "api",                    # bigram — "live cursors liveblocks", "live cursors component" → API Tools
+    # Database — "multi model" bigram overrides "model"→ai for multi-model database queries.
+    # SurrealDB, FaunaDB, ArangoDB, EdgeDB support multiple data models in one engine.
+    # Regression: "model serving"/"model inference" still route to ai (no "multi" prefix).
+    "multi model": "database",               # bigram — "multi model database surreal", "multi model db fauna" → Database
+    # ── Probe pattern 66 (May 2026): UI-component second-pass + mind-map/collaborative dead zones ──
+    #
+    # Dead zones:
+    # "mind map tool" → bare "map"→maps fires at pos 1 (wrong; mind-map tools are Developer Tools).
+    # "mind mapping react" → both "mind" and "mapping" unmapped → raw_first "mind".
+    # "mindmap react" → "mindmap" unmapped → raw_first.
+    # "markdown editor react" → bare "markdown"→documentation fires (wrong; markdown editors
+    #   like TipTap, Milkdown, ProseMirror are frontend UI components).
+    # "calendar component" → bare "calendar"→scheduling fires (wrong; calendar UI components
+    #   like React Big Calendar, FullCalendar are frontend libs, not scheduling apps).
+    # "toast notification react" → bare "toast"→notifications fires (wrong; toast libs like
+    #   react-hot-toast, Sonner, react-toastify are frontend UI components).
+    # "breadcrumb navigation" → "breadcrumb" unmapped → raw_first.
+    # "collaborative coding" → bare "collaborative"→api fires (wrong; collaborative IDE tools
+    #   like CodeTogether, CodeWithMe, Duckly are Developer Tools).
+    #
+    # Frontend — mind map bigrams (Markmap, React Flow, mxGraph; bare "map" fires maps-location).
+    "mind map": "developer",                 # bigram — "mind map tool", "mind map react" → Developer Tools
+    "mind mapping": "developer",             # bigram — "mind mapping react", "mind mapping javascript" → Developer Tools
+    "mindmap": "developer",                  # bare — "mindmap open source", "mindmap react" → Developer Tools
+    # Frontend — "markdown editor" bigram overrides bare "markdown"→documentation for editor queries.
+    # ProseMirror, TipTap, Milkdown, Plate are frontend editor frameworks, not doc-site generators.
+    # Regression: bare "markdown" still routes to documentation (correct for "markdown parser/renderer").
+    "markdown editor": "frontend",           # bigram — "markdown editor react", "markdown editor wysiwyg" → Frontend
+    # Frontend — "calendar component" bigram overrides "calendar"→scheduling for UI-component queries.
+    # React Big Calendar, FullCalendar, React DayPicker are UI libs; Calendly/Cal.com are scheduling apps.
+    "calendar component": "frontend",        # bigram — "calendar component react", "calendar component accessible" → Frontend
+    # Frontend — "toast notification" bigram overrides "toast"→notifications for UI-component queries.
+    # react-hot-toast, Sonner, react-toastify are frontend libs; OneSignal/Novu are push notification services.
+    "toast notification": "frontend",        # bigram — "toast notification react", "toast notification library" → Frontend
+    # Frontend — "breadcrumb" bare token (React Breadcrumb, Radix Breadcrumb, MUI Breadcrumbs).
+    "breadcrumb": "frontend",                # bare — "breadcrumb navigation", "breadcrumb component react" → Frontend
+    # Developer Tools — "collaborative coding" bigram overrides "collaborative"→api.
+    # CodeTogether, CodeWithMe, Duckly, Tuple are dev-tools for pair programming, not API libraries.
+    # Regression: "collaborative editing" still correctly routes to api (Yjs, Liveblocks).
+    "collaborative coding": "developer",     # bigram — "collaborative coding tool", "collaborative coding ide" → Developer Tools
+    # ── Probe pattern 67 (May 2026): ETL / metrics / billing / back-office dead zones ──
+    #
+    # Dead zones:
+    # "extract transform load" → bare "load"→testing fires (wrong; ETL pipelines like
+    #   dbt, Airbyte, Prefect belong in Background Jobs, not test runners).
+    # "metrics collection" → bare "metrics"→analytics fires (wrong; infrastructure metrics
+    #   tools like Prometheus, VictoriaMetrics, StatsD are Monitoring, not analytics dashboards).
+    # "usage billing" / "metered billing" → bare "usage"/"metered"→invoicing fires (wrong;
+    #   usage-based billing like Metronome, Orb, Lago are Payments tools).
+    # "backoffice" → unmapped → raw_first (wrong; back-office admin builders like Retool,
+    #   Appsmith, Tooljet are Developer Tools).
+    #
+    # Background Jobs — ETL bigrams (bare "load" fires testing via "load testing").
+    "transform load": "background",          # bigram — "extract transform load", "transform load pipeline" → Background Jobs
+    "extract transform": "background",       # bigram — "extract transform load", "extract transform pipeline" → Background Jobs
+    # Monitoring — "metrics collection" bigram overrides "metrics"→analytics for infra queries.
+    # Prometheus/StatsD/Telegraf are Monitoring tools; bare "metrics" still fires analytics (correct
+    # for product-metrics queries like "user metrics dashboard").
+    "metrics collection": "monitoring",      # bigram — "metrics collection open source", "metrics collection agent" → Monitoring
+    "metrics server": "monitoring",          # bigram — "metrics server prometheus", "metrics server k8s" → Monitoring
+    # Payments — usage-based / metered billing bigrams override "usage"/"metered"→invoicing.
+    # Metronome, Orb, Lago, Stripe Billing Meters are Payments; bare "usage" still fires invoicing
+    # (acceptable for invoicing-adjacent queries).
+    "usage billing": "payments",             # bigram — "usage billing saas", "usage billing api" → Payments
+    "usage based": "payments",               # bigram — "usage based pricing", "usage based billing" → Payments
+    "metered billing": "payments",           # bigram — "metered billing stripe", "metered billing open source" → Payments
+    "consumption billing": "payments",       # bigram — "consumption billing", "consumption based billing" → Payments
+    # Developer Tools — back-office admin builders (Retool, Appsmith, Tooljet, Budibase).
+    "backoffice": "developer",               # bare — "backoffice builder", "backoffice admin react" → Developer Tools
+    "back office": "developer",              # bigram — "back office builder", "back office tool" → Developer Tools
+    # ── Probe pattern 68 (May 2026): MCP protocol spaced form / file-watcher / AI alignment dead zones ──
+    #
+    # Dead zones:
+    # "model context protocol" → bare "model"→ai fires at pos 0 (wrong; "model context protocol"
+    #   is the MCP spec name; tools in this space live in the mcp-servers category).
+    # "context protocol" → bare "context"→frontend fires at pos 0 (wrong; "context protocol"
+    #   in AI-agent context means MCP).
+    # "ai alignment" → both "ai" and "alignment" are unmapped → raw_first (wrong; AI alignment
+    #   safety/eval tools like Anthropic Constitutional AI frameworks live in AI Standards).
+    # "file watcher" → both "file" and "watcher" are unmapped → raw_first (wrong; filesystem
+    #   watcher tools like Chokidar, Watchman, nodemon live in Developer Tools).
+    #
+    # MCP — "model context protocol" / "context protocol" bigrams override bare token misfires.
+    # Regression: "model deployment"/"model fine tuning" still fire via bare "model"→ai (correct).
+    # Regression: "react context api"/"context menu react" still fire via "react"/"context"→frontend.
+    "model context": "mcp",                  # bigram — "model context protocol", "model context mcp" → MCP Servers
+    "context protocol": "mcp",              # bigram — "context protocol mcp", "context protocol spec" → MCP Servers
+    # AI Standards — "ai alignment" bigram routes to AI Standards category.
+    # Covers: constitutional AI, RLHF, safety evals, red-teaming tools.
+    # Regression: bare "ai" is NOT in _CAT_SYNONYMS so bare "alignment" still gives raw_first.
+    "ai alignment": "ai standards",          # bigram — "ai alignment research", "ai alignment tools" → AI Standards
+    # Developer Tools — file system watchers (Chokidar, Watchman, nodemon, entr).
+    # Bare "watcher" added for standalone queries; bigram "file watcher" closes the compound form.
+    "file watcher": "developer",             # bigram — "file watcher nodejs", "file watcher rust" → Developer Tools
+    "watcher": "developer",                  # bare — "filesystem watcher", "watcher react" → Developer Tools
+    # ── Probe pattern 69 (May 2026): DB GUI / distributed SQL / VoIP / big-data dead zones ──
+    #
+    # Dead zones:
+    # "pgadmin" → raw_first (pgAdmin is a PostgreSQL DB admin GUI — same tier as TablePlus/DBeaver → Developer Tools).
+    # "trino" → raw_first (Trino is a distributed SQL query engine → Database, like ClickHouse/DuckDB).
+    # "presto" → raw_first (Presto — Meta's distributed SQL engine, predecessor to Trino → Database).
+    # "voip" → raw_first (VoIP tools live in Notifications — Twilio Voice, Telnyx, Vonage Voice).
+    # "sip" → raw_first (SIP is the VoIP signalling protocol → Notifications).
+    # "hbase" → raw_first (Apache HBase — distributed wide-column NoSQL → Database).
+    # "druid" → raw_first (Apache Druid — real-time OLAP analytics DB → Database).
+    # "rethinkdb" → raw_first (RethinkDB — real-time document DB → Database).
+    # "janusgraph" → raw_first (JanusGraph — distributed graph database → Database).
+    # "hadoop" → raw_first (Apache Hadoop — big data batch processing → Background Jobs / ETL).
+    #
+    # Developer Tools — DB GUI/admin clients (pgAdmin alongside TablePlus, DBeaver).
+    "pgadmin": "developer",                  # pgAdmin — PostgreSQL web + desktop admin tool → Developer Tools
+    # Database — distributed SQL query engines (same tier as ClickHouse, DuckDB, OLAP DBs).
+    "trino": "database",                     # Trino — distributed SQL over S3/Iceberg/Hive → Database
+    "presto": "database",                    # Presto — Meta's distributed SQL engine (Trino ancestor) → Database
+    # Notifications — VoIP / telephony (Twilio Voice, Telnyx, Vonage Voice, Plivo live in Notifications).
+    "voip": "notifications",                 # VoIP — "voip api", "voip sdk", "voip alternative" → Notifications
+    "sip": "notifications",                  # SIP — "sip server", "sip trunk", "sip provider" → Notifications
+    # Database — additional wide-column / graph / OLAP / document DBs.
+    "hbase": "database",                     # Apache HBase — distributed wide-column store → Database
+    "druid": "database",                     # Apache Druid — real-time OLAP analytics database → Database
+    "rethinkdb": "database",                 # RethinkDB — real-time document DB (archived but queried) → Database
+    "janusgraph": "database",               # JanusGraph — distributed graph database → Database
+    # Background Jobs — Hadoop is a big-data batch processing framework (ETL/pipeline tier).
+    "hadoop": "background",                  # Apache Hadoop — MapReduce batch processing → Background Jobs
+    # ── Probe pattern 71 (May 2026): AI prompting techniques + auth/security acronym dead zones ──
+    #
+    # Dead zones:
+    # "constitutional ai" → raw_first "constitutional" (Anthropic's alignment technique → AI Standards).
+    # "chain of thought" → "of" stripped → "chain thought"; both tokens unmapped → raw_first "chain".
+    # "few shot" → raw_first "few" (few-shot prompting/learning → AI & Automation).
+    # "zero shot" → raw_first "zero" (zero-shot classification/inference → AI & Automation).
+    # "rls" → raw_first (Row Level Security — Supabase/PostgreSQL data access control → Authentication).
+    #
+    # AI Standards — "constitutional ai" bigram (Anthropic Constitutional AI, RLHF safety research).
+    "constitutional ai": "ai standards",     # bigram — "constitutional ai tools", "constitutional ai research" → AI Standards
+    "constitutional": "ai standards",        # bare — "constitutional alignment", "constitutional method" → AI Standards
+    # AI & Automation — prompting technique bigrams (chain-of-thought, few-shot, zero-shot).
+    # "of" is in _FTS_STOP_WORDS → "chain of thought" → _meaningful = ["chain", "thought"] → bigram "chain thought".
+    "chain thought": "ai",                   # bigram — "chain of thought prompting", "chain thought reasoning" → AI
+    "few shot": "ai",                        # bigram — "few shot learning", "few shot prompting" → AI & Automation
+    "zero shot": "ai",                       # bigram — "zero shot classification", "zero shot inference" → AI & Automation
+    # Authentication — Row Level Security (Supabase RLS, PostgreSQL RLS, access control).
+    # "rbac"→authentication and "permission"→authentication already mapped; RLS is the same tier.
+    "rls": "authentication",                 # "rls supabase", "rls policy postgres" → Authentication (access control)
+    "row level": "authentication",           # bigram — "row level security", "row level access" → Authentication
+    # ── Probe pattern 70 (May 2026): Frontend UI / color / font / payments micro dead zones ──
+    #
+    # Dead zones:
+    # "palette" → raw_first (Coolors, Paletton, ColorHunt — color palette tools → Frontend Frameworks).
+    # "typeface" → raw_first (Google Fonts, Bunny Fonts, Fontjoy — font tools → Frontend Frameworks).
+    # "micropayment" / "micropayments" → raw_first (micropayment APIs → Payments).
+    # "virtualization" / "virtualisation" → raw_first (react-virtual, TanStack Virtual → Frontend Frameworks).
+    # "multi select" → raw_first (React Select, Headless UI multiselect → Frontend Frameworks).
+    # "progress bar" → raw_first (nprogress, react-circular-progressbar → Frontend Frameworks).
+    # "skeleton loader" → raw_first (react-loading-skeleton, Skeleton UI → Frontend Frameworks).
+    # "loading spinner" → raw_first (react-spinners, react-loader-spinner → Frontend Frameworks).
+    #
+    # Frontend — color/design tools (color palette, typeface; "color"→frontend already mapped).
+    "palette": "frontend",                   # "palette generator", "color palette" → Frontend Frameworks (Coolors, Paletton)
+    "typeface": "frontend",                  # "typeface tool", "typeface pairing" → Frontend Frameworks (Fontjoy, Bunny Fonts)
+    # Payments — micropayment APIs/platforms.
+    "micropayment": "payments",              # "micropayment api", "micropayment gateway" → Payments
+    "micropayments": "payments",             # plural — "micropayments stripe", "micropayments web" → Payments
+    # Frontend — list virtualisation / windowing libraries (react-virtual, TanStack Virtual, react-window).
+    "virtualization": "frontend",            # "list virtualization", "virtualization react" → Frontend Frameworks
+    "virtualisation": "frontend",            # British spelling — "list virtualisation", "virtualisation" → Frontend
+    # Frontend — common UI widget dead zones (individual tokens unmapped → raw_first).
+    "multi select": "frontend",              # bigram — "multi select react", "multi select accessible" → Frontend Frameworks
+    "progress bar": "frontend",              # bigram — "progress bar react", "progress bar component" → Frontend Frameworks
+    "skeleton loader": "frontend",           # bigram — "skeleton loader react", "skeleton loading" → Frontend Frameworks
+    "loading spinner": "frontend",           # bigram — "loading spinner component", "loading spinner react" → Frontend
+    # ── Probe pattern 72 (May 2026): Date/time picker UI + SEO structured data dead zones ──
+    #
+    # Dead zones:
+    # "time picker" → raw_first "time" (react-time-picker, flatpickr, react-datepicker — time picker
+    #   UI components live in Frontend Frameworks; "time" and "picker" both unmapped individually).
+    # "structured data" → raw_first "structured" ("structured" was intentionally removed to avoid
+    #   misrouting "structured output" LLM queries to Logging; but "structured data" (JSON-LD,
+    #   schema.org) is an SEO concept — needs a bigram to skip the bare-token gap).
+    # "schema markup" → routes via bare "schema"→developer (schema validation); but "schema markup"
+    #   means schema.org structured markup and belongs in SEO Tools.
+    # "schema org" → raw_first "schema" fires developer (same conflict as above); bare "schema.org"
+    #   (the vocabulary) should route to SEO.
+    #
+    # Frontend — time picker UI components (react-time-picker, flatpickr, Pikaday, react-datepicker).
+    "time picker": "frontend",              # bigram — "time picker react", "time picker accessible" → Frontend Frameworks
+    "timepicker": "frontend",              # compound — "timepicker component", "best timepicker" → Frontend Frameworks
+    # SEO — structured data (JSON-LD) and schema.org markup tools.
+    # Bigram fires before bare "structured"→missing fires raw_first; "schema markup" bigram beats "schema"→developer.
+    "structured data": "seo",              # bigram — "structured data json-ld", "structured data generator" → SEO Tools
+    "schema markup": "seo",               # bigram — "schema markup generator", "schema markup testing" → SEO Tools
+    "schema org": "seo",                  # bigram — "schema org validator", "schema org types" → SEO Tools
+    # ── Probe pattern 75 (May 2026): LLM response streaming / HTTP streaming / Node.js stream dead zones ──
+    #
+    # Dead zones confirmed:
+    # "streaming api response nodejs" → media (bare "streaming"→media fires); "api response" bigram at
+    #   position 1 fires in the first-pass bigram scan before the second loop reaches "streaming".
+    # "stream ai response" → message (bare "stream"→message fires); "stream ai" bigram overrides.
+    # "token streaming react" → authentication (bare "token"→auth fires); "token streaming" bigram overrides.
+    # "readable stream nodejs" → message (bare "stream"→message fires); "readable stream" bigram overrides.
+    # "event source javascript" → UNFIXABLE via bigram — "source" is in _FTS_STOP_WORDS; stripped to
+    #   "event"+"javascript", bare "event"→message fires. "eventsource" compound form IS fixable.
+    #
+    # API Tools — HTTP streaming + Node.js stream API patterns.
+    "api response": "api",              # bigram — "streaming api response nodejs" → API Tools (fires before "streaming"→media)
+    "streaming response": "api",        # bigram — "streaming response nodejs", "streaming response react" → API Tools
+    "readable stream": "api",           # bigram — "readable stream nodejs", "readable stream browser" → API Tools (Node.js Streams)
+    "eventsource": "api",               # compound — EventSource browser SSE API (spaced "event source" unfixable: source=stop word)
+    # AI & Automation — LLM/AI streaming output (complement to "streaming llm"→ai already mapped above).
+    "llm streaming": "ai",              # bigram — "llm streaming response", "llm streaming python" → AI (reverse of "streaming llm")
+    "stream ai": "ai",                  # bigram — "stream ai response", "stream ai output" → AI & Automation
+    "token streaming": "ai",            # bigram — "token streaming react", "token streaming llm" → AI (overrides "token"→auth)
+    # ── Probe pattern 76 (May 2026): AI document-processing + image-AI dead zones ──
+    #
+    # Dead zones confirmed:
+    # "image captioning" → media (bare "image"→media fires); AI image captioning (BLIP, LLaVA, GPT-4V)
+    #   belongs in AI & Automation — bigram fires before bare token.
+    # "text extraction" → raw_first "text" (no synonym for bare "text"); NLP text extraction tools
+    #   (spaCy, Amazon Textract, Apache Tika) belong in AI & Automation.
+    # "document parsing" → database (bare "document"→database fires); AI document parsers
+    #   (LlamaParse, unstructured.io, docling) belong in AI & Automation.
+    # "pdf parsing" → file (bare "pdf"→file fires); PDF parsing for AI/RAG use cases
+    #   belongs in AI & Automation — distinct from PDF manipulation tools in file-management.
+    # "document understanding" → database (bare "document"→database); AI doc understanding
+    #   (LayoutLM, DocTR, Azure Document Intelligence) belongs in AI & Automation.
+    # Regressions guarded: "document database"→database (second loop, bare "document" still fires),
+    # "document chunker python"→database (bigram "document chunker" not matched, bare "document"→database),
+    # "document qa"→ai (existing bigram "document qa" fires; no conflict), "image upload"→frontend (bigram),
+    # "pdf viewer"→frontend (bigram), "pdf library"→file ("library" stripped, "pdf"→file fires).
+    #
+    "image captioning": "ai",           # bigram — "image captioning api", "image captioning model" → AI & Automation
+    "text extraction": "ai",            # bigram — "text extraction nlp", "text extraction python" → AI & Automation
+    "document parsing": "ai",           # bigram — "document parsing api", "document parsing python" → AI & Automation
+    "pdf parsing": "ai",                # bigram — "pdf parsing python", "pdf parsing api" → AI & Automation
+    "document understanding": "ai",     # bigram — "document understanding model", "document understanding azure" → AI & Automation
+    # ── Probe pattern 77 (May 2026): "image to text" / "pdf to text" stop-word-stripped bigrams ──
+    #
+    # "to" is in _FTS_STOP_WORDS — "image to text" reduces to bigram "image text" (not "image to text").
+    # "pdf to text" reduces to bigram "pdf text".
+    # Both fire bare token first ("image"→media, "pdf"→file) without these entries.
+    # OCR/document-extraction tools (EasyOCR, Tesseract, AWS Textract, LlamaParse) are AI & Automation.
+    # Regressions: "image text overlay" → ai (edge case; dominated by AI/OCR use case in IndieStack context).
+    "image text": "ai",                 # bigram — "image to text api" (stop-word-stripped) → AI & Automation (OCR)
+    "pdf text": "ai",                   # bigram — "pdf to text python" (stop-word-stripped) → AI & Automation
+    # ── Probe pattern 78 (May 2026): business intelligence / headless automation / kill switch / user behavior / multivariate dead zones ──
+    #
+    # Dead zones:
+    # "business intelligence" → raw_first "business" — bare "bi"→analytics existed but the spaced bigram was missing.
+    #   BI tools (Metabase, Redash, Superset, Lightdash, Evidence) live in Analytics & Metrics.
+    #   Fix: bigram "business intelligence" → analytics.
+    #
+    # "headless automation" → cms via bare "headless"→cms collision.
+    #   Headless browser automation tools (Puppeteer, Playwright-cluster, Browserless) live in Testing.
+    #   Fix: bigram "headless automation" → testing (pre-pass bigram fires before bare "headless"→cms).
+    #
+    # "kill switch" → raw_first "kill" — no synonym existed for kill switch feature flag terminology.
+    #   Kill switch is a canonical feature-flag pattern (instant disable without redeploy).
+    #   Fix: bigram "kill switch" → feature-flags.
+    #
+    # "user behavior" → raw_first "user" — bare "user" has no synonym; bigram was missing.
+    #   User behaviour analytics tools (PostHog, Mixpanel, FullStory, Heap) live in Analytics.
+    #   "user behavior tracking" reduces to ["user","behavior"] after stop-word strip → bigram fires.
+    #   Fix: bigram "user behavior" → analytics.
+    #
+    # "multivariate" → raw_first — no bare token mapping existed.
+    #   Multivariate testing (A/B + multiple variants) is the core use case of Feature Flag tools.
+    #   Fix: bare "multivariate" → feature-flags.
+    #
+    # Analytics — BI spaced compound form
+    "business intelligence": "analytics",  # bigram — "business intelligence tool", "business intelligence dashboard" → Analytics
+    # Testing — headless automation override (bigram fires before bare "headless"→cms)
+    "headless automation": "testing",      # bigram — "headless automation puppeteer", "headless automation server" → Testing
+    # Feature Flags — kill switch + multivariate testing
+    "kill switch": "feature",              # bigram — "kill switch feature flag", "kill switch deployment" → Feature Flags
+    "multivariate": "feature",            # bare — "multivariate test", "multivariate a/b testing" → Feature Flags
+    # Analytics — user behavior tracking (PostHog, FullStory, Heap, Mixpanel use-case)
+    "user behavior": "analytics",         # bigram — "user behavior tracking", "user behavior analytics" → Analytics
+    # ── Probe pattern 79 (May 2026): MLops drift / experiment tracking / graph-RAG / DevEx dead zones ──
+    #
+    # Dead zones:
+    # "data drift" → raw_first "data" — no synonym for "drift"; data drift detection tools
+    #   (Evidently, NannyML, Alibi Detect, WhyLabs) are AI/MLops monitoring tools.
+    #   "drift detection", "concept drift" have the same gap.
+    #   Fix: bare "drift" → ai; bigrams "data drift" and "concept drift" reinforce it.
+    #
+    # "experiment tracking" → "feature" via bare "experiment" — MLflow, Weights & Biases,
+    #   Neptune, Comet are AI/ML experiment-tracking tools, not feature-flag tools.
+    #   A/B experiments are still correctly reached via bare "ab" → feature.
+    #   Fix: bigram "experiment tracking" → ai overrides bare "experiment" for MLflow queries.
+    #
+    # "graph rag" → "database" via bare "graph" — Graph RAG is an AI retrieval pattern
+    #   (LlamaIndex, LangChain, Neo4j GraphRAG) not a raw database query.
+    #   Fix: bigram "graph rag" → ai (pre-pass bigram fires before bare "graph"→database).
+    #
+    # "experimentation platform" → raw_first "experimentation" — A/B testing platforms
+    #   like Statsig, Optimizely, Split, VWO call themselves "experimentation platforms".
+    #   Fix: bare "experimentation" → feature.
+    #
+    # "entitlement management" → "project" via bare "management" — software entitlements
+    #   (feature access based on plan tier) live in Feature Flags (Unleash, LaunchDarkly).
+    #   Fix: bare "entitlement" → feature; bigram "entitlement management" → feature.
+    #
+    # "golden path" → raw_first "golden" — Internal Developer Platform term for the
+    #   blessed/recommended developer workflow (Backstage, Port, Cortex, OpsLevel).
+    #   Fix: bigram "golden path" → developer.
+    #
+    # "dx" → raw_first — DX (developer experience) abbreviation maps to no category.
+    #   Queries like "dx tooling" or "dx platform" are developer-tools searches.
+    #   Fix: bare "dx" → developer.
+    #
+    # AI — model drift / data drift detection (Evidently, NannyML, Alibi, WhyLabs)
+    "drift": "ai",                         # bare — "drift detection", "model drift" → AI & Automation
+    "data drift": "ai",                    # bigram — "data drift detection", "data drift monitoring" → AI
+    "concept drift": "ai",                 # bigram — "concept drift detection", "concept drift ml" → AI
+    # NOTE: "experiment tracking" bigram intentionally NOT added — "tracking" is in _FTS_STOP_WORDS
+    # and is stripped, so the bigram can never fire. "mlflow" and "wandb" individually map to "ai"
+    # (probe 79), so "experiment tracking mlflow" routes correctly via "mlflow" if typed second;
+    # "ml experiment tracking" routes correctly via "ml"→ai. A/B experiments use bare "ab"→feature.
+    # AI — Graph RAG bigram overrides bare "graph"→database for knowledge-graph RAG queries.
+    # LlamaIndex PropertyGraphIndex, LangChain GraphRAG, Neo4j GraphRAG are AI retrieval patterns.
+    # Regression: "graph database" still correctly routes to database (bigram "graph database" fires first).
+    "graph rag": "ai",                     # bigram — "graph rag llama", "graph rag neo4j", "graph rag pattern" → AI
+    # Feature Flags — experimentation platform bare token (Statsig, Optimizely, Split, VWO)
+    "experimentation": "feature",          # bare — "experimentation platform", "experimentation tool" → Feature Flags
+    # Feature Flags — entitlement management (plan-tier feature access; Unleash, LaunchDarkly)
+    "entitlement": "feature",             # bare — "entitlement management", "entitlement check" → Feature Flags
+    "entitlement management": "feature",  # bigram — "entitlement management saas", "entitlement system" → Feature Flags
+    # Developer Tools — Internal Developer Platform "golden path" concept (Backstage, Port, Cortex)
+    "golden path": "developer",           # bigram — "golden path backstage", "golden path idp" → Developer Tools
+    # Developer Tools — DX abbreviation (developer experience tooling)
+    "dx": "developer",                    # bare — "dx tooling", "dx platform", "dx improvement" → Developer Tools
+    # CRM — data/contact/company enrichment (Clearbit, Clay, Apollo, Cognism, Lusha)
+    # "enrichment" bare covers all enrichment queries; bigrams override raw_first for compound forms.
+    # Regression: "lead enrichment" still correctly routes to crm via "lead"→crm.
+    "enrichment": "crm",                  # bare — "enrichment api", "data enrichment tool" → CRM
+    "data enrichment": "crm",             # bigram — "data enrichment clearbit", "data enrichment pipeline" → CRM
+    "contact enrichment": "crm",          # bigram — "contact enrichment api", "contact enrichment clay" → CRM
+    "company enrichment": "crm",          # bigram — "company enrichment apollo", "company enrichment tool" → CRM
+    # CRM — buyer intent data (Bombora, Clearbit Intent, G2 Buyer Intent, DemandBase)
+    # "buyer" bare has no mapping — "buyer intent" bigram and "buyer" bare both map to CRM.
+    "buyer": "crm",                       # bare — "buyer intent data", "buyer signals" → CRM
+    "buyer intent": "crm",                # bigram — "buyer intent data", "buyer intent api" → CRM
+    # Frontend — "user interface" bigram routes UI-library queries to Frontend Frameworks.
+    # bare "user" has no mapping → "user interface library" fires raw_first "user".
+    # bigram "user interface" overrides raw_first for UI component library searches.
+    # Regression: "user authentication"→auth unchanged ("user"→raw_first, "authentication"→auth fires).
+    "user interface": "frontend",         # bigram — "user interface library", "user interface component react" → Frontend
+    # Frontend — CSS/UI theming (Tailwind themes, CSS-in-JS theming, shadcn theme customization).
+    # bare "theming" has no mapping; developers searching "theming" want frontend styling tools.
+    "theming": "frontend",               # bare — "theming react", "theming library css", "theming tokens" → Frontend
+    # Analytics — attribution / marketing analytics (Rockerbox, Triple Whale, Northbeam, Segment)
+    # "attribution tool" → "attribution" bare unmapped → raw_first fires.
+    # "marketing attribution" → "marketing" bare unmapped → raw_first fires.
+    # "multi touch attribution" → meaningful = ["multi","touch","attribution"] → all unmapped.
+    "attribution": "analytics",            # bare — "attribution tool", "last touch attribution" → Analytics & Metrics
+    "click attribution": "analytics",      # bigram — "click attribution model" beats "click"→cli collision → Analytics
+    "marketing attribution": "analytics",  # bigram — "marketing attribution software/model" → Analytics
+    "multi touch": "analytics",            # bigram — "multi touch attribution", "multi touch model" → Analytics
+    # Analytics — UTM / CRO abbreviations (no bare token; "tracking" is in _FTS_STOP_WORDS)
+    # "utm tracking" → "tracking" stripped → meaningful = ["utm"] → raw_first.
+    "utm": "analytics",                    # bare — "utm builder", "utm tracker", "utm parameters" → Analytics
+    "cro": "analytics",                    # bare — "cro tool", "cro software" → Conversion Rate Optimization → Analytics
+    # Analytics — bare "conversion" for stop-word-stripped queries
+    # "conversion tracking" → "tracking" stripped → meaningful = ["conversion"] → raw_first.
+    # Regression: "conversion rate" bigram fires first in pre-pass for "conversion rate optimization". ✓
+    # Note: "currency conversion" → analytics (acceptable; no currency-conversion tools in catalog).
+    "conversion": "analytics",             # bare — "conversion tracking", "conversion metrics" → Analytics
+    # Analytics — Product-Led Growth (PLG) ecosystem and growth metrics
+    # "product led growth" → meaningful = ["product","led","growth"]; none mapped individually.
+    # bigram "led growth" fires at i=1 in pre-pass (after "product led" misses at i=0).
+    "led growth": "analytics",            # bigram — "product led growth", "product-led growth tool" → Analytics
+    "growth hacking": "analytics",        # bigram — "growth hacking tool", "growth hacking analytics" → Analytics
+    "plg": "analytics",                   # bare — "plg tool", "plg analytics", "plg saas" → Analytics
+    # Analytics — activation/engagement metrics (user lifecycle, DAU/MAU)
+    "activation": "analytics",            # bare — "user activation", "activation rate", "activation funnel" → Analytics
+    "dau": "analytics",                   # bare — "dau tracking", "dau dashboard", "daily active users" → Analytics
+    "mau": "analytics",                   # bare — "mau analytics", "monthly active users dashboard" → Analytics
+    # Analytics — Heap Analytics and Inspectlet session-recording tools
+    # No "memory heap" collision — "memory"→caching fires first for "memory heap javascript" queries.
+    "heap": "analytics",                  # bare — "heap analytics alternative", "heap io" → Analytics
+    "inspectlet": "analytics",            # bare — "inspectlet alternative", "inspectlet review" → Analytics
+    # CRM — Revenue Operations / ABM / Account-Based Marketing / Customer Success dead zones
+    # (6sense, Demandbase, Terminus, Gainsight, ChurnZero, Vitally)
+    # "revops" fired raw_first — RevOps platforms (Clari, Gong, Revenue.io) are CRM/Sales → CRM.
+    "revops": "crm",                      # bare — "revops tool", "revops saas" → CRM & Sales
+    # "demand generation" → raw_first "demand" — demand-gen/ABM tools (6sense, Demandbase) are CRM.
+    "demand": "crm",                      # bare — "demand generation", "demand gen", "demand capture" → CRM
+    # "abm" / "account based marketing" fired raw_first — ABM is a CRM-adjacent B2B strategy.
+    "abm": "crm",                         # bare — "abm tool", "abm saas", "abm software" → CRM & Sales
+    "account based": "crm",               # bigram — "account based marketing", "account based selling" → CRM
+    # "customer success" fired raw_first "customer" — CS platforms (Gainsight, ChurnZero) are CRM.
+    "customer success": "crm",            # bigram — "customer success tool", "customer success saas" → CRM
+    # Analytics — Customer Data Platform (CDP): Segment, RudderStack, mParticle
+    # "cdp" fired raw_first — bare CDP abbreviation unmapped.
+    # "customer data platform" → meaningful = ["customer","data"] ("platform" stripped) → raw_first.
+    "cdp": "analytics",                   # bare — "cdp tool", "cdp alternative", "cdp open source" → Analytics
+    "customer data": "analytics",         # bigram — "customer data platform", "customer data pipeline" → Analytics
+    # Feedback — Net Promoter Score (NPS) compound form
+    # "nps" already maps to feedback; "net promoter score" → "score" is not a stop word → bigram needed.
+    "net promoter": "feedback",           # bigram — "net promoter score", "net promoter survey" → Feedback
+    # Analytics — segmentation dead zones (probe 82)
+    # "customer segmentation" fired raw_first "customer" — segmentation tools (Mixpanel, Amplitude, Braze)
+    # are Analytics. "user segmentation"/"audience segmentation" also fired raw_first.
+    "segmentation": "analytics",          # bare — "user segmentation", "audience segmentation tool" → Analytics
+    "customer segmentation": "analytics", # bigram — overrides raw_first("customer") → Analytics
+    "audience": "analytics",              # bare — "audience analytics", "audience segmentation" → Analytics
+    # Analytics — user journey dead zone
+    # "user journey analytics"/"user journey map" fired raw_first "user" — user journey tools
+    # (FullStory, Amplitude, Hotjar) belong in Analytics.
+    "user journey": "analytics",          # bigram — "user journey analytics", "user journey funnel" → Analytics
+    # CRM — ATS / HR dead zones (probe 82)
+    # "applicant tracking system" → meaningful = ["applicant","tracking","system"] — "tracking" is a
+    # stop word → ["applicant","system"] — both unmapped → raw_first. ATS tools (Lever, Ashby,
+    # Greenhouse, Workable) are CRM-adjacent people-management tools.
+    "applicant": "crm",                   # bare — "applicant tracking", "applicant management" → CRM
+    "ats": "crm",                         # bare — ATS abbreviation → CRM (Applicant Tracking System)
+    "hr": "crm",                          # bare — "hr software", "hr tool", "hr management" → CRM (BambooHR, Rippling)
+    # Monitoring — infrastructure monitoring collision fix (probe 83)
+    # "infrastructure monitoring" → "infrastructure"→devops fires before bare "monitoring"→monitoring.
+    # Infrastructure monitoring tools (Prometheus, Grafana, VictoriaMetrics) belong in Monitoring.
+    "infrastructure monitoring": "monitoring",  # bigram — overrides "infrastructure"→devops → Monitoring
+    # DevOps — capacity planning dead zone (probe 83)
+    # "capacity planning" → both tokens unmapped → raw_first. Infrastructure capacity planners
+    # (CloudHealth, Harness Cloud Cost, Spot.io) belong in DevOps.
+    "capacity": "devops",                 # bare — "capacity planning", "capacity management" → DevOps
+    # Analytics — market research dead zone (probe 83)
+    # "market research"/"market intelligence"/"market data" → raw_first "market".
+    # Market research & intelligence tools (Crayon, Klue, Semrush) are Analytics-adjacent.
+    "market": "analytics",               # bare — "market research", "market data", "market intelligence" → Analytics
 }
 
 _FTS_STOP_WORDS = {
