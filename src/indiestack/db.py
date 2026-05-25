@@ -9105,6 +9105,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "applicant": "crm",                   # bare — "applicant tracking", "applicant management" → CRM
     "ats": "crm",                         # bare — ATS abbreviation → CRM (Applicant Tracking System)
     "hr": "crm",                          # bare — "hr software", "hr tool", "hr management" → CRM (BambooHR, Rippling)
+    # Monitoring — infrastructure monitoring collision fix (probe 83)
+    # "infrastructure monitoring" → "infrastructure"→devops fires before bare "monitoring"→monitoring.
+    # Infrastructure monitoring tools (Prometheus, Grafana, VictoriaMetrics) belong in Monitoring.
+    "infrastructure monitoring": "monitoring",  # bigram — overrides "infrastructure"→devops → Monitoring
+    # DevOps — capacity planning dead zone (probe 83)
+    # "capacity planning" → both tokens unmapped → raw_first. Infrastructure capacity planners
+    # (CloudHealth, Harness Cloud Cost, Spot.io) belong in DevOps.
+    "capacity": "devops",                 # bare — "capacity planning", "capacity management" → DevOps
+    # Analytics — market research dead zone (probe 83)
+    # "market research"/"market intelligence"/"market data" → raw_first "market".
+    # Market research & intelligence tools (Crayon, Klue, Semrush) are Analytics-adjacent.
+    "market": "analytics",               # bare — "market research", "market data", "market intelligence" → Analytics
 }
 
 _FTS_STOP_WORDS = {

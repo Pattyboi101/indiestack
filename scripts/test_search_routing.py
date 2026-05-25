@@ -3090,6 +3090,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("user authentication", "authentication"),     # bare "authentication"→auth (fires before segmentation)
     ("user research tool", "feedback"),            # bigram "user research"→feedback (unchanged)
     ("audience targeting ad", "analytics"),        # bare "audience"→analytics (consistent)
+    # Probe pattern 83 (May 2026): infrastructure monitoring collision / capacity / market dead zones.
+    # "infrastructure monitoring" mis-routed to devops via "infrastructure"→devops — monitoring tools
+    # (Prometheus, Grafana, VictoriaMetrics) belong in Monitoring; bigram added.
+    # "capacity planning" fired raw_first — both tokens unmapped; infra capacity tools are DevOps.
+    # "market research"/"market intelligence" fired raw_first "market" — market analytics tools
+    # (Crayon, Klue, Semrush) belong in Analytics.
+    ("infrastructure monitoring", "monitoring"),   # bigram "infrastructure monitoring"→monitoring
+    ("capacity planning", "devops"),               # bare "capacity"→devops
+    ("capacity management", "devops"),             # bare "capacity"→devops
+    ("market research", "analytics"),              # bare "market"→analytics
+    ("market intelligence", "analytics"),          # bare "market"→analytics
+    ("market data", "analytics"),                  # bare "market"→analytics
+    # Regressions — probe 83 changes must not break these.
+    ("infrastructure as code", "devops"),          # bare "infrastructure"→devops (unchanged; bigram fires first only for "monitoring" suffix)
+    ("infrastructure deployment", "devops"),       # bare "infrastructure"→devops (no bigram collision)
+    ("market segmentation", "analytics"),          # works via "market"→analytics (previously via "segmentation"→analytics)
 ]
 
 
