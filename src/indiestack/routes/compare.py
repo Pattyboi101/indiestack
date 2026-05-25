@@ -284,16 +284,19 @@ async def compare_tools(request: Request, slugs: str):
             ld["offers"] = {"@type": "Offer", "price": "0", "priceCurrency": "GBP"}
         return ld
 
-    webpage_ld = _json.dumps({
+    def _safe_ld(s: str) -> str:
+        return s.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+
+    webpage_ld = _safe_ld(_json.dumps({
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": f"{tool1['name']} vs {tool2['name']} -- Agent-Verified Comparison",
         "description": f"Compare {tool1['name']} vs {tool2['name']} side-by-side with real community data.",
         "url": f"{BASE_URL}/compare/{slug1}-vs-{slug2}",
         "mainEntity": [_software_ld(tool1), _software_ld(tool2)],
-    })
+    }))
 
-    faq_ld = _json.dumps({
+    faq_ld = _safe_ld(_json.dumps({
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
@@ -314,7 +317,7 @@ async def compare_tools(request: Request, slugs: str):
                 }
             }
         ]
-    })
+    }))
 
     extra_head = (
         f'<script type="application/ld+json">{webpage_ld}</script>\n'
