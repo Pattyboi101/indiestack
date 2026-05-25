@@ -9264,6 +9264,39 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "open graph image" → database via bare "graph"→database ("open" is stop-word → ["graph","image"]).
     # Open Graph image generators (Satori, @vercel/og, opengraph-image) → SEO Tools (meta tags tier).
     "graph image": "seo",               # bigram — "open graph image" strips to ["graph","image"] → SEO Tools
+
+    # Probe 91 — ML/AI concept dead zones (feature engineering / training / augmentation)
+
+    # "feature engineering" → feature-flags via bare "feature"→feature (wrong; ML feature engineering
+    # tools Feast, Tecton, Hopsworks belong in AI & Automation, same tier as "feature store").
+    # Same collision for "feature extraction" and "feature selection" (ML preprocessing steps).
+    "feature engineering": "ai",        # bigram — overrides "feature"→feature-flags for ML queries
+    "feature extraction": "ai",         # bigram — "feature extraction nlp", "feature extraction ml" → AI
+    "feature selection": "ai",          # bigram — "feature selection algorithm", "feature selection tool" → AI
+
+    # "image labeling" → media via bare "image"→media (wrong; image labeling/annotation tools
+    # (Label Studio, CVAT, Roboflow, Scale AI) are ML data tools that belong in AI & Automation).
+    # Bare "labeling"→ai already exists; bigram needed to override "image" firing first.
+    "image labeling": "ai",             # bigram — overrides "image"→media for ML annotation queries
+    "image annotation": "ai",           # bigram — "image annotation tool" (same tier, CVAT, LabelImg)
+
+    # "training pipeline" → background-jobs via bare "pipeline"→background (wrong; ML training
+    # pipelines (Kubeflow Pipelines, ZenML, Metaflow, Kedro) belong in AI & Automation).
+    "training pipeline": "ai",          # bigram — overrides "pipeline"→background for ML training queries
+
+    # "training data" → raw_first (both "training" and "data" unmapped; ML training data
+    # management tools (DVC, Label Studio, Argilla, Snorkel) belong in AI & Automation).
+    "training data": "ai",              # bigram — "training data management", "training dataset" → AI
+
+    # "data augmentation" → raw_first (both "data" and "augmentation" unmapped; data augmentation
+    # libraries (Albumentations, imgaug, Augmentor, torchvision transforms) belong in AI).
+    "augmentation": "ai",               # bare — "data augmentation", "text augmentation" → AI
+    "data augmentation": "ai",          # bigram — explicit form for clarity
+    "image augmentation": "ai",         # bigram — overrides "image"→media for ML augmentation queries
+
+    # "data versioning" → devops via bare "versioning"→devops (wrong; data versioning tools
+    # (DVC, LakeFS, Delta Lake, Pachyderm) are MLOps/data-lineage tools in AI & Automation).
+    "data versioning": "ai",            # bigram — overrides "versioning"→devops for data/ML version control
 }
 
 _FTS_STOP_WORDS = {

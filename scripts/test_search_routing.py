@@ -3283,6 +3283,43 @@ TEST_CASES: list[tuple[str, str]] = [
     ("domain name provider", "devops"),          # bare "domain"→devops unchanged
     ("domain events pattern", "message"),        # "domain events" bigram (plural) unchanged
     ("event driven architecture", "message"),    # "event"→message unchanged
+
+    # Probe pattern 91 (May 2026): ML/AI concept dead zones.
+    # "feature engineering"/"feature extraction"/"feature selection" → feature-flags via bare
+    # "feature"→feature (wrong; ML preprocessing/feature-store concepts → AI & Automation);
+    # bigrams added. "image labeling"/"image annotation" → media via bare "image"→media (wrong;
+    # ML annotation tools → AI); bigrams added. "training pipeline" → background via bare
+    # "pipeline"→background (wrong; ML training pipelines → AI); bigram added.
+    # "training data" → raw_first (both tokens unmapped; ML training datasets → AI); bigram added.
+    # "data augmentation" → raw_first (both tokens unmapped; augmentation libraries → AI);
+    # bare "augmentation"→ai + bigram added. "data versioning" → devops via "versioning"→devops
+    # (wrong; DVC/LakeFS are MLOps tools → AI); bigram "data versioning"→ai added.
+    ("feature engineering tool", "ai"),         # bigram "feature engineering"→ai (overrides "feature"→feature-flags)
+    ("feature engineering ml", "ai"),           # bigram "feature engineering"→ai
+    ("feature extraction nlp", "ai"),           # bigram "feature extraction"→ai
+    ("feature extraction model", "ai"),         # bigram "feature extraction"→ai
+    ("feature selection algorithm", "ai"),      # bigram "feature selection"→ai
+    ("image labeling tool", "ai"),              # bigram "image labeling"→ai (overrides "image"→media)
+    ("image labeling dataset", "ai"),           # bigram "image labeling"→ai
+    ("image annotation tool", "ai"),            # bigram "image annotation"→ai
+    ("training pipeline kubeflow", "ai"),       # bigram "training pipeline"→ai (overrides "pipeline"→background)
+    ("training pipeline zenml", "ai"),          # bigram "training pipeline"→ai
+    ("training data management", "ai"),         # bigram "training data"→ai
+    ("training dataset tool", "ai"),            # bigram "training data"→ai
+    ("data augmentation library", "ai"),        # bigram "data augmentation"→ai + bare "augmentation"→ai
+    ("image augmentation tool", "ai"),          # bare "augmentation"→ai
+    ("data versioning dvc", "ai"),              # bigram "data versioning"→ai (overrides "versioning"→devops)
+    ("data versioning tool", "ai"),             # bigram "data versioning"→ai
+    # Regressions — probe 91 changes must not break these.
+    ("feature flag nextjs", "feature"),         # bare "feature"→feature-flags unchanged (no "engineering"/"extraction" suffix)
+    ("feature toggle react", "feature"),        # bare "feature"→feature-flags unchanged
+    ("ab testing tool", "feature"),             # "ab"→feature-flags unchanged
+    ("image compression", "media"),             # bare "image"→media unchanged (no "labeling" suffix)
+    ("image processing", "media"),              # bare "image"→media unchanged
+    ("ci cd pipeline", "devops"),               # bare "pipeline" still catches non-ML pipeline queries
+    ("deployment pipeline", "devops"),          # "deployment"→devops fires before "pipeline"→background
+    ("version control", "devops"),              # bare "version"→devops unchanged (non-data versioning)
+    ("semantic versioning", "devops"),           # "semantic versioning"→devops unchanged
 ]
 
 
