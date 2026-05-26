@@ -4548,8 +4548,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "open-webui": "ai",             # hyphenated form — "open-webui alternative" queries → AI & Automation
     # Identity — common query prefix not yet individually mapped
     "identity": "authentication",   # "identity provider", "identity management", "digital identity" → Authentication
-    # FaaS — Function as a Service (serverless function alternatives)
+    # FaaS / BaaS / XaaS — as-a-service platform queries
+    "function as": "devops",        # bigram — "function as a service" → tokens ['function','as'] → DevOps
+    "backend as": "devops",         # bigram — "backend as a service" → tokens ['backend','as'] → DevOps
     "faas": "devops",               # "FaaS alternative", "function as a service", "faas platform" → DevOps
+    "baas": "devops",               # "BaaS provider", "backend as a service" — Firebase, Supabase, Appwrite → DevOps
     # Batch processing — complement to background-job synonyms (cron/queue/worker/scheduler)
     "batch": "background",          # "batch job", "batch processing", "batch queue" → Background Jobs
     # API endpoint — extremely common term missing from synonyms

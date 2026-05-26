@@ -983,6 +983,18 @@ TEST_CASES: list[tuple[str, str]] = [
     ("signal based reactivity", "frontend"),               # bare "signal"→frontend unchanged (no "protocol" suffix)
     ("delivery pipeline cicd", "devops"),                  # bare "delivery"→devops unchanged for CI/CD context
     ("aes key rotation", "security"),                      # "aes"→security fires at pos 0 correctly
+    # ── Probe 103 (autonomous loop, May 2026): FaaS/BaaS XaaS dead zones ──
+    # "function as a service" and "backend as a service" fired raw_first
+    # (tokens after stop words: ['function','as'] and ['backend','as'] — both unmapped)
+    ("function as a service", "devops"),                   # bigram "function as"→devops
+    ("function as a service nodejs", "devops"),            # bigram still fires with extra token
+    ("backend as a service provider", "devops"),           # bigram "backend as"→devops
+    ("baas provider", "devops"),                           # bare "baas"→devops
+    ("baas platform firebase alternative", "devops"),      # "baas"→devops fires before "firebase"
+    # Regressions
+    ("faas platform", "devops"),                           # bare "faas"→devops still works
+    ("paas provider", "devops"),                           # bare "paas"→devops still works
+    ("database as a service", "database"),                 # "database" fires before "as" — unchanged
 ]
 
 
