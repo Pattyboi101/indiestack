@@ -125,6 +125,14 @@ Then probe new gaps using the offline route_query() helper. Use these probe stra
 For each misfire, add the missing entry to _CAT_SYNONYMS and a test case. Commit.
 After fixing db.py, commit with 'fix: probe pattern N — [short desc] (M/M pass)'.
 
+Known dead zones to probe next (probe 104+):
+  DAG/pipeline: "workflow dag" → background ✓ fixed probe 103
+  SOAR security: "soar platform" → security ✓ fixed probe 103
+  Try next: 'dagit ui', 'airflow scheduler', 'workflow engine python',
+            'cyber threat hunting', 'threat actor ioc',
+            'kubernetes admission controller', 'admission webhook k8s',
+            'openapi mock server', 'api fuzzing tool'
+
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
   - Find tools with high mcp_view_count but missing install_command, description, or github_url.

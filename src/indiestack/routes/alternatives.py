@@ -13,6 +13,10 @@ from indiestack.db import get_tools_replacing, get_all_competitors, slugify, get
 router = APIRouter()
 
 
+def _safe_ld(s: str) -> str:
+    return s.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+
+
 def _alt_health_badge(status: str) -> str:
     """Render a colored health-status pill for alternatives pages."""
     colors = {
@@ -159,7 +163,7 @@ async def compare_index(request: Request):
         "description": f"Side-by-side comparisons of developer tools across {category_count} categories. {total_pairs} comparison pages.",
         "url": f"{BASE_URL}/compare",
     }
-    jsonld_script = f'<script type="application/ld+json">{_json.dumps(jsonld)}</script>'
+    jsonld_script = f'<script type="application/ld+json">{_safe_ld(_json.dumps(jsonld))}</script>'
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
@@ -265,15 +269,15 @@ async def alternatives_index(request: Request):
         </div>
     </div>
     """
-    alt_ld = _json.dumps({
+    _alt_ld = _safe_ld(_json.dumps({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
         "name": "Indie Alternatives to Mainstream SaaS",
         "description": "Side-by-side comparisons of developer tools across categories.",
         "url": f"{BASE_URL}/alternatives",
         "isPartOf": {"@type": "WebSite", "name": "IndieStack", "url": BASE_URL},
-    }, ensure_ascii=False)
-    alt_head = f'<script type="application/ld+json">{alt_ld}</script>'
+    }, ensure_ascii=False))
+    alt_head = f'<script type="application/ld+json">{_alt_ld}</script>'
 
     return HTMLResponse(page_shell("Indie Alternatives to Big Tech", body,
                                    description="Discover indie SaaS alternatives to popular big-tech tools. Save money, support indie makers.",
@@ -283,14 +287,14 @@ async def alternatives_index(request: Request):
 
 def _stackshare_comparison_page(request: Request) -> HTMLResponse:
     """Render a custom IndieStack vs StackShare comparison landing page."""
-    jsonld = _json.dumps({
+    _stackshare_ld = _safe_ld(_json.dumps({
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "IndieStack vs StackShare — AI-Native Developer Tool Discovery",
         "description": "Compare IndieStack and StackShare. IndieStack uses agent-verified data, not stale self-reports. Free MCP server for Claude, Cursor, and Windsurf.",
         "url": f"{BASE_URL}/alternatives/stackshare",
-    }, ensure_ascii=False)
-    jsonld_script = f'<script type="application/ld+json">{jsonld}</script>'
+    }, ensure_ascii=False))
+    jsonld_script = f'<script type="application/ld+json">{_stackshare_ld}</script>'
 
     body = """
     <div class="container" style="padding:48px 24px;max-width:860px;">
@@ -564,8 +568,8 @@ async def alternatives_for(request: Request, competitor_slug: str):
     }
 
     jsonld_script = (
-        f'<script type="application/ld+json">{_json.dumps(jsonld_itemlist)}</script>\n'
-        f'    <script type="application/ld+json">{_json.dumps(jsonld_faq)}</script>'
+        f'<script type="application/ld+json">{_safe_ld(_json.dumps(jsonld_itemlist))}</script>\n'
+        f'    <script type="application/ld+json">{_safe_ld(_json.dumps(jsonld_faq))}</script>'
     )
 
     # Build HTML FAQ section
@@ -813,7 +817,7 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
             "description": tool.get('tagline', ''),
         }
     }
-    jsonld_script = f'<script type="application/ld+json">{_json.dumps(jsonld)}</script>'
+    jsonld_script = f'<script type="application/ld+json">{_safe_ld(_json.dumps(jsonld))}</script>'
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:800px;">

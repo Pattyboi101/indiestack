@@ -7641,6 +7641,24 @@ _CAT_SYNONYMS: dict[str, str] = {
     "exactly once": "message",                 # bigram — "exactly once semantics", "exactly once delivery" → Message Queues
     "least once": "message",                   # bigram — "at least once delivery", "at least once consumer" → Message Queues
     "most once": "message",                    # bigram — "at most once delivery", "at most once semantics" → Message Queues
+    #
+    # Probe pattern 103 (autonomous loop, May 2026): DAG orchestration / SOAR dead zones.
+    #
+    # DAG orchestration — Airflow, Prefect, Dagster, Luigi, Kedro, Mage all use DAG
+    # terminology. "workflow dag" fires "workflow"→ai (LLM workflow collision). "dag orchestrator"
+    # fires "orchestrator"→ai (LLM orchestration collision). "directed acyclic graph" fires
+    # "graph"→database (graph DB collision). Bare "dag" fires raw_first.
+    "dag": "background",                    # bare — "dag pipeline", "dag scheduler", "dag runner" → Background Jobs
+    "workflow dag": "background",           # bigram — "workflow dag orchestrator" → Background Jobs (overrides "workflow"→ai)
+    "dag orchestrator": "background",       # bigram — "dag orchestrator python", "dag orchestrator open source"
+    "directed acyclic": "background",       # bigram — "directed acyclic graph pipeline" (fires before "graph"→database)
+    "acyclic": "background",                # bare — "acyclic workflow", "acyclic graph runner"
+    #
+    # SOAR — Security Orchestration Automation and Response.
+    # "platform" is in _FTS_STOP_WORDS so "soar platform" strips to bare "soar".
+    # Tools: Splunk SOAR, Palo Alto XSOAR, Google Chronicle SOAR, Microsoft Sentinel SOAR.
+    "soar": "security",                     # bare — "soar tool", "soar platform" → Security Tools
+    "xsoar": "security",                    # bare — Palo Alto XSOAR → Security Tools
 }
 
 _FTS_STOP_WORDS = {

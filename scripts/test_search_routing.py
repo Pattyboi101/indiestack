@@ -983,6 +983,19 @@ TEST_CASES: list[tuple[str, str]] = [
     ("signal based reactivity", "frontend"),               # bare "signal"→frontend unchanged (no "protocol" suffix)
     ("delivery pipeline cicd", "devops"),                  # bare "delivery"→devops unchanged for CI/CD context
     ("aes key rotation", "security"),                      # "aes"→security fires at pos 0 correctly
+    # Probe pattern 103 (autonomous loop, May 2026): DAG orchestration / SOAR dead zones
+    ("dag pipeline python", "background"),                # bare "dag"→background
+    ("dag scheduler airflow", "background"),              # bare "dag"→background
+    ("workflow dag orchestrator", "background"),          # bigram "workflow dag"→background (overrides "workflow"→ai)
+    ("dag orchestrator python", "background"),            # bigram "dag orchestrator"→background
+    ("directed acyclic graph pipeline", "background"),    # bigram "directed acyclic"→background (overrides "graph"→database)
+    ("acyclic graph workflow", "background"),             # bare "acyclic"→background
+    ("soar platform open source", "security"),            # bare "soar"→security
+    ("soar automation tool", "security"),                 # bare "soar"→security
+    ("xsoar alternative", "security"),                    # bare "xsoar"→security
+    # Regression guards for probe 103
+    ("workflow automation n8n", "ai"),                    # bare "workflow"→ai still fires for unqualified workflow queries
+    ("graph database neo4j", "database"),                 # "graph"→database unchanged
 ]
 
 
