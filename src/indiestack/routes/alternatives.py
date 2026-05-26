@@ -17,10 +17,10 @@ def _alt_health_badge(status: str) -> str:
     """Render a colored health-status pill for alternatives pages."""
     colors = {
         'active': ('var(--success-bg, #D1FAE5)', 'var(--success-text, #065F46)'),
-        'stale': ('#FEF3C7', '#92400E'),
-        'dead': ('#FEE2E2', '#991B1B'),
+        'stale': ('var(--warning-bg, #FEF3C7)', 'var(--warning-text, #92400E)'),
+        'dead': ('var(--error-bg, #FEE2E2)', 'var(--error-text, #991B1B)'),
     }
-    bg, fg = colors.get(status, ('#F3F4F6', '#6B7280'))
+    bg, fg = colors.get(status, ('var(--cream-dark, #F3F4F6)', 'var(--ink-muted, #6B7280)'))
     label = escape(status.capitalize()) if status else 'Unknown'
     return (
         f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;'
@@ -58,7 +58,7 @@ def _alt_agent_citations(tool: dict) -> str:
     count = int(mcp_views)
     return (
         f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;'
-        f'font-weight:600;background:#EDE9FE;color:#7C3AED;">'
+        f'font-weight:600;background:var(--info-bg, #EDE9FE);color:var(--info-text, #7C3AED);">'
         f'AI agents recommend this {count:,} time{"s" if count != 1 else ""}</span>'
     )
 

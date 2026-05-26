@@ -897,6 +897,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("lsp server setup", "developer"),             # bare "lsp"→developer unchanged
     ("monaco editor react", "frontend"),           # bare "monaco"→frontend unchanged
     ("codemirror setup", "frontend"),              # bare "codemirror"→frontend unchanged
+
+    # ── Probe pattern 101 (May 2026): social dead zones / CMS bare-token / design mockup override ──
+    #
+    # "nostr protocol" → mcp via bare "protocol"→mcp (wrong; Nostr decentralised social
+    #   protocol — clients, relays, NDK belong in Social Media). bare "nostr"→social added.
+    # "publer alternative" → raw_first (Publer social scheduler; bare "publer" was missing).
+    # "keystone alternative" → raw_first (KeystoneJS headless CMS; only "keystonejs" existed).
+    # "ui mockup" / "ui wireframe" → frontend via bare "ui"→frontend (wrong; Balsamiq, MockFlow
+    #   are Design & Creative). Bigrams added. "color palette"/"font pairing" intentionally stay
+    #   → frontend (Coolors, Fontjoy categorised as Frontend Frameworks on IndieStack).
+    ("nostr client", "social"),                            # bare "nostr"→social
+    ("nostr relay", "social"),                             # bare "nostr"→social
+    ("nostr protocol", "social"),                          # bare "nostr" fires before "protocol"→mcp
+    ("publer alternative", "social"),                      # bare "publer"→social
+    ("publer free", "social"),                             # bare "publer"→social
+    ("keystone alternative", "cms"),                       # bare "keystone"→cms
+    ("keystone nodejs cms", "cms"),                        # bare "keystone"→cms fires before "nodejs"→frontend
+    ("ui mockup tool", "design"),                          # bigram "ui mockup"→design overrides "ui"→frontend
+    ("ui mockup generator", "design"),                     # bigram "ui mockup"→design
+    ("ui wireframe tool", "design"),                       # bigram "ui wireframe"→design
+    # Regressions — color/font palette tools stay in frontend (IndieStack categorisation).
+    ("color palette react", "frontend"),                   # bare "color"→frontend; palette tools in Frontend Frameworks
+    ("color palette generator", "frontend"),               # bare "color"→frontend unchanged
+    ("font pairing tool", "frontend"),                     # bare "font"→frontend; Fontjoy in Frontend Frameworks
+    ("font awesome react", "frontend"),                    # bare "font"→frontend unchanged
+    # Regressions — other social / CMS routes unaffected.
+    ("buffer alternative", "social"),                      # bare "buffer"→social unchanged
+    ("bluesky client", "social"),                          # bare "bluesky"→social unchanged
+    ("keystonejs headless", "cms"),                        # "keystonejs"→cms compound unchanged
+    ("ui library react", "frontend"),                      # bare "ui"→frontend unchanged for framework queries
+    ("ui component react", "frontend"),                    # bare "ui"→frontend unchanged for UI components
 ]
 
 

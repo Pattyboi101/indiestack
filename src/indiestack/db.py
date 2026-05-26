@@ -7552,6 +7552,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "fuzz"→security fires bare, but bigrams take priority and provide better specificity.
     "fuzz testing": "security",         # bigram — "fuzz testing library", "fuzz testing go" → Security Tools
     "fuzzing tool": "security",         # bigram — "fuzzing tool python", "fuzzing tool alternative" → Security Tools
+
+    # Probe pattern 101 (May 2026): social dead zones / CMS bare-token / design mockup override.
+    #
+    # "nostr protocol" → mcp via bare "protocol"→mcp (wrong; Nostr is a decentralised social
+    #   protocol — Nostr clients, relays, and NDK belong in Social Media). Bare "nostr"→social
+    #   fires at position 0 before "protocol"→mcp at position 1.
+    "nostr": "social",                         # bare — "nostr client", "nostr relay", "nostr protocol" → Social Media
+    #
+    # "publer alternative" → raw_first (wrong; Publer is a social media scheduler competing
+    #   with Buffer/Hootsuite). "alternative" is a stop word so only "publer" survives.
+    "publer": "social",                        # bare — "publer alternative", "publer free" → Social Media
+    #
+    # "keystone alternative" → raw_first (wrong; KeystoneJS is a Node.js headless CMS).
+    #   "keystonejs" compound already maps to cms; bare "keystone" was missing.
+    #   OpenStack Keystone queries include "openstack" which routes to devops first.
+    "keystone": "cms",                         # bare — "keystone alternative", "keystone nodejs" → Headless CMS
+    #
+    # "ui mockup" → frontend via bare "ui"→frontend (wrong; mockup tools like Balsamiq,
+    #   MockFlow, Wireframe.cc, Marvelapp are Design & Creative tools, not frontend frameworks).
+    #   Bigram fires before bare "ui" so frontend-framework queries like "ui framework" unaffected.
+    #   NOTE: "color palette" and "font pairing" stay → frontend (Coolors, Fontjoy categorised
+    #   as Frontend Frameworks on IndieStack; see "palette"→frontend, "typeface"→frontend).
+    "ui mockup": "design",                     # bigram — "ui mockup tool", "ui mockup generator" → Design & Creative
+    "ui wireframe": "design",                  # bigram — "ui wireframe tool", "ui wireframing" → Design & Creative
 }
 
 _FTS_STOP_WORDS = {
