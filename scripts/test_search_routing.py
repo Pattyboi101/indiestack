@@ -3620,6 +3620,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("e2e testing framework", "testing"),      # "e2e"→testing unchanged (not "e2ee")
     ("e2e encryption library", "security"),    # bigram "e2e encryption"→security unchanged (probe 71)
     ("data transformation pipeline", "background"),  # bigram "data transformation"→background unchanged
+
+    # ── Probe pattern 100 (May 2026): IP-security / task-scheduler / rate-limit dead zones ────────────────────────
+    # "ip firewall"/"ip blocking"/"ip allowlist"/"ip whitelist"/"ip ban" → maps via bare "ip"→maps (wrong;
+    #   IP access-control tools like ipapi, Cloudflare IP rules, IPBan belong in Security);
+    #   bigrams "ip firewall/blocking/allowlist/whitelist/ban/intelligence"→security added.
+    # "ip rate limit"/"ip rate limiting" → maps via bare "ip"→maps (wrong; per-IP rate limiting is API Tools);
+    #   bigram "ip rate"→api added (fires at position 0 before bare "ip").
+    # "rate limit" spaced bigram missing — "rate limit middleware", "rate limit per user" → api tools
+    #   (bare "rate"→api already covered; bigram closes the specific compound form).
+    # "task scheduler" → developer via bare "task"→developer (wrong; APScheduler, node-cron, Celery beat
+    #   are Background Jobs; "task queue" bigram already existed; "task scheduler"/"task scheduling" added).
+    ("ip firewall", "security"),              # bigram "ip firewall"→security
+    ("ip blocking", "security"),             # bigram "ip blocking"→security
+    ("ip allowlist", "security"),            # bigram "ip allowlist"→security
+    ("ip whitelist", "security"),            # bigram "ip whitelist"→security
+    ("ip ban", "security"),                  # bigram "ip ban"→security
+    ("ip intelligence api", "security"),     # bigram "ip intelligence"→security
+    ("ip rate limit", "api"),                # bigram "ip rate"→api (fires before bare "ip"→maps)
+    ("ip rate limiting", "api"),             # bigram "ip rate"→api
+    ("rate limit middleware", "api"),        # bigram "rate limit"→api
+    ("rate limit per user", "api"),          # bigram "rate limit"→api
+    ("task scheduler python", "background"), # bigram "task scheduler"→background
+    ("task scheduler library", "background"),# bigram "task scheduler"→background
+    ("task scheduling service", "background"),# bigram "task scheduling"→background
+    # Regressions — probe 100 changes must not break these.
+    ("ip geolocation", "maps"),              # bare "ip"→maps unchanged for geo queries
+    ("ip lookup", "maps"),                   # bare "ip"→maps unchanged for lookup queries
+    ("ip address api", "maps"),              # bare "ip"→maps unchanged
+    ("task runner", "developer"),            # bare "task"→developer unchanged for task runners (Grunt/Gulp)
+    ("task automation", "developer"),        # bare "task"→developer unchanged
+    ("rate limiting library", "api"),        # "rate limiting" bigram unchanged
 ]
 
 

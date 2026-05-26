@@ -2692,6 +2692,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ip": "maps",           # "ip lookup", "ip address api", "ip geolocation" → Maps & Location (ipapi.co, ipinfo.io)
     "ip reputation": "security",    # bigram — "ip reputation check", "ip reputation api" → Security Tools (AbuseIPDB)
     "ip blacklist": "security",     # bigram — "ip blacklist detection", "ip blacklist lookup" → Security Tools
+    "ip firewall": "security",      # bigram — "ip firewall rules", "ip-based firewall" → Security Tools
+    "ip blocking": "security",      # bigram — "ip blocking service", "ip block list" → Security Tools
+    "ip allowlist": "security",     # bigram — "ip allowlist management", "ip access control" → Security Tools
+    "ip whitelist": "security",     # bigram — "ip whitelist tool", "ip whitelist api" → Security Tools
+    "ip ban": "security",           # bigram — "ip ban tool", "ip ban list" → Security Tools
+    "ip intelligence": "security",  # bigram — "ip intelligence api", "ip threat intelligence" → Security Tools
+    "ip rate": "api",               # bigram — "ip rate limit", "ip rate limiting" → API Tools (fires before bare "ip"→maps)
     "country": "maps",      # "country detection", "country lookup api" → Maps & Location (IP-based geo tools)
     "serverless": "devops",
     # Caching → moved to dedicated section below (caching category now exists)
@@ -5614,6 +5621,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "state management": "frontend", # maps to Frontend Frameworks where Zustand, Jotai, MobX, Recoil live
     "state-management": "frontend", # hyphenated form — "state-management solution", "state-management library"
     # API Tools — rate limiting multi-word queries (Kong, Tyk, express-rate-limit, Upstash Ratelimit)
+    "rate limit": "api",            # bigram — "ip rate limit", "rate limit middleware", "rate limit per user" → API Tools
     "rate limiting": "api",         # "rate limiting library", "rate limiting middleware", "API rate limiting"
     "rate-limiting": "api",         # hyphenated — "rate-limiting solution", "rate-limiting service"
     "rate limiter": "api",          # "rate limiter npm", "rate limiter implementation", "distributed rate limiter"
@@ -7802,6 +7810,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Background Jobs — "task queue" bigram overrides "task"→developer for queue-specific queries
     # "task-queue" hyphenated already at line 6239; only the spaced bigram is new here
     "task queue": "background",     # spaced bigram — "task queue redis", "task queue celery" → Background Jobs
+    "task scheduler": "background", # bigram — "task scheduler python", "task scheduler library" → Background Jobs (APScheduler, node-cron)
+    "task scheduling": "background", # bigram — "task scheduling service", "task scheduling cron" → Background Jobs
     # Background Jobs — "data pipeline" bigram preserves correct routing vs "pipeline management"→crm below
     "data pipeline": "background",  # spaced bigram — "data pipeline orchestration", "data pipeline management" → Background Jobs
     # Background Jobs — "data transformation" / "data extraction" dead zones
