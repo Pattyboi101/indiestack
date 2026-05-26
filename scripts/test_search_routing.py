@@ -3737,6 +3737,33 @@ TEST_CASES: list[tuple[str, str]] = [
     ("federated sso saml", "authentication"),              # bare "federated"→auth; bare "sso"→auth also fires
     # Regression — "model interpretability" routes to ai (not ai-standards) via "model"→ai at pos 0.
     ("model interpretability tool", "ai"),                 # "model"→ai fires first; "interpretability" at pos 1 doesn't override
+    # ── Probe pattern 102: Distributed consensus / data structures / spatial / deepfake ──────
+    # Distributed consensus
+    ("raft consensus implementation", "database"),         # "raft"→database
+    ("consensus algorithm python", "database"),            # bigram "consensus algorithm"→database
+    ("paxos vs raft comparison", "database"),              # "paxos"→database; bigram "paxos vs" can't fire ("vs" not stop word)
+    ("etcd raft based", "devops"),                         # "etcd"→devops fires first (etcd is a DevOps/k8s tool)
+    # Materialized views
+    ("materialized view postgres", "database"),            # bigram "materialized view"→database
+    ("materialized table refresh", "database"),            # bare "materialized"→database
+    # Probabilistic data structures
+    ("bloom filter redis", "developer"),                   # bigram "bloom filter"→developer
+    ("bloom filter nodejs implementation", "developer"),   # bigram fires before bare "bloom"
+    ("hyperloglog cardinality estimation", "developer"),   # bare "hyperloglog"→developer
+    ("trie data structure javascript", "developer"),       # bare "trie"→developer
+    ("bitset bitmap operations", "developer"),             # bare "bitset"→developer
+    ("roaring bitmap compression", "developer"),           # bare "roaring"→developer
+    # Spatial indexing
+    ("spatial index python", "maps"),                      # bigram "spatial index"→maps
+    ("spatial query geospatial", "maps"),                  # bare "spatial"→maps
+    ("geohash encoding javascript", "maps"),               # bare "geohash"→maps
+    ("rtree spatial index nodejs", "maps"),                # bare "rtree"→maps
+    # Deepfake and watermarking
+    ("deepfake detection api", "ai"),                      # bigram "deepfake detection"→ai
+    ("deepfake model python", "ai"),                       # bare "deepfake"→ai
+    ("digital watermarking nodejs", "security"),           # bare "watermarking"→security
+    ("invisible watermark image", "security"),             # bare "watermark"→security
+    ("steganography library python", "security"),          # bare "steganography"→security
 ]
 
 

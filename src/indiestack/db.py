@@ -9542,6 +9542,42 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "federated learning" bigram overrides "federated"→authentication (identity federation).
     # "federated identity", "federated login", "federated sso" still route via bare "federated"→auth.
     "federated learning": "ai",                # bigram — "federated learning framework", "federated learning python" → AI & Automation
+    #
+    # Probe pattern 102 (autonomous loop, May 2026): Distributed consensus / data structures / spatial / deepfake dead zones.
+    #
+    # Distributed consensus — tools implementing Raft or Paxos (etcd, Consul, CockroachDB,
+    # TiKV, Apache ZooKeeper). Queries fire raw_first without these mappings.
+    "raft": "database",                         # Raft consensus — etcd, HashiCorp Raft, CockroachDB → Database
+    "consensus": "database",                    # bare — "consensus algorithm", "consensus library" → Database
+    "paxos": "database",                        # Paxos protocol — "paxos implementation", "paxos vs raft" → Database
+    "consensus algorithm": "database",          # bigram — "consensus algorithm python", "consensus algorithm comparison"
+    #
+    # Materialized views — database query optimization (Materialize, DuckDB, PG)
+    "materialized": "database",                 # bare — "materialized view", "materialized table refresh" → Database
+    "materialized view": "database",            # bigram — "materialized view postgres", "materialized view cache"
+    #
+    # Probabilistic data structures — Bloom filters, HyperLogLog, Trie, Roaring Bitmaps.
+    # All are developer utility libraries (bloomfilter.js, roaring-node, ioredis HLL, etc.)
+    "bloom filter": "developer",                # bigram — "bloom filter redis", "bloom filter nodejs" → Developer Tools
+    "hyperloglog": "developer",                 # HyperLogLog cardinality estimation — Redis HLL → Developer Tools
+    "trie": "developer",                        # prefix tree data structure — trie.js, fast-trie → Developer Tools
+    "bitset": "developer",                      # bitmap/bitset library — bitset.js, RoaringBitmap → Developer Tools
+    "roaring": "developer",                     # Roaring Bitmaps — high-perf compressed bitset → Developer Tools
+    #
+    # Spatial indexing — complement to "maps"→maps, "geolocation"→maps already mapped.
+    # rbush (R-tree), flatbush (static), kdbush (k-d tree), h3-js (hexagonal)
+    "spatial": "maps",                          # bare — "spatial index library", "spatial query python" → Maps & Location
+    "geohash": "maps",                          # geospatial hash encoding — geohash.js, python-geohash → Maps & Location
+    "rtree": "maps",                            # R-tree spatial index — rbush, flatbush → Maps & Location
+    "spatial index": "maps",                    # bigram — "spatial index postgres", "spatial index benchmark"
+    #
+    # AI — deepfake detection (DeepFaceLab, FaceForensics++, Sensity API, Hive Moderation)
+    "deepfake": "ai",                           # bare — "deepfake detector", "deepfake model" → AI & Automation
+    "deepfake detection": "ai",                 # bigram — "deepfake detection api", "deepfake detection python"
+    # Digital watermarking / steganography — content provenance, DRM, C2PA
+    "watermarking": "security",                 # bare — "digital watermarking api", "image watermarking" → Security Tools
+    "watermark": "security",                    # bare — "add watermark nodejs", "invisible watermark" → Security Tools
+    "steganography": "security",                # bare — "steganography library python", "lsb steganography" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
