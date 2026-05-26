@@ -370,12 +370,16 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 1101+ tests passing (50 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 1991+ tests passing (100 probe patterns).
 
-Probe 50 (May 2026): "favicon"→frontend, "meta tag"/"meta tags"→seo, "graph ql" bigram→api (spaced GraphQL
-form; "graphql" compound already mapped), "syslog"/"rsyslog"→logging, "pii" + PII bigrams→security, "hmac"→
-security, "request signing"→security, "team messaging"→developer, "matrix protocol" bigram→social.
-NOTE: "open graph" bigram intentionally NOT added — "open" is in _FTS_STOP_WORDS; "og" token already → seo.
+Probe 100 (May 2026): IP-security / task-scheduler / rate-limit dead zones.
+  'ip firewall', 'ip blocking', 'ip allowlist', 'ip ban' → security (were routing to maps via bare "ip"→maps)
+  'ip intelligence api' → security (IP threat intelligence tools; was routing to maps)
+  'ip rate limit', 'ip rate limiting' → api (were routing to maps; bigram "ip rate"→api added)
+  'rate limit middleware', 'rate limit per user' → api (spaced "rate limit" bigram was missing)
+  'task scheduler python', 'task scheduler library', 'task scheduling service' → background
+    (were routing to developer via bare "task"→developer; APScheduler/node-cron are Background Jobs)
+  Regressions guarded: ip geolocation/lookup/address api → maps, task runner/automation → developer.
 
 ITERATION 2 — DATA QUALITY:
 SSH to prod (flyctl ssh console -a indiestack) and:
