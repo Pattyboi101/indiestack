@@ -983,7 +983,16 @@ TEST_CASES: list[tuple[str, str]] = [
     ("signal based reactivity", "frontend"),               # bare "signal"→frontend unchanged (no "protocol" suffix)
     ("delivery pipeline cicd", "devops"),                  # bare "delivery"→devops unchanged for CI/CD context
     ("aes key rotation", "security"),                      # "aes"→security fires at pos 0 correctly
-    # ── Probe 103 (autonomous loop, May 2026): FaaS/BaaS XaaS dead zones ──
+    # ── Probe 103 (autonomous loop, May 2026): FaaS/BaaS XaaS + comparison query dead zones ──
+    # Comparison queries: "react vs svelte" was RAW_FIRST because 'react' and 'svelte' are in
+    # _FRAMEWORK_QUERY_TERMS, leaving only ['vs'] in meaningful_for_cat (non-empty → no fallback).
+    # Fix: add 'vs' to _FTS_STOP_WORDS so comparison tokens yield ['react','svelte'] → 'react'→frontend
+    ("react vs svelte", "frontend"),                       # 'vs' stripped → ['react','svelte'] → react→frontend
+    ("react vs vue", "frontend"),                          # same pattern
+    ("webpack vs vite", "frontend"),                       # already worked (webpack not in FW terms); regression guard
+    ("jest vs vitest", "testing"),                         # already worked; regression guard
+    ("postgres vs mysql", "database"),                     # already worked; regression guard
+    # ── FaaS/BaaS XaaS dead zones ──
     # "function as a service" and "backend as a service" fired raw_first
     # (tokens after stop words: ['function','as'] and ['backend','as'] — both unmapped)
     ("function as a service", "devops"),                   # bigram "function as"→devops

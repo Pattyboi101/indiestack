@@ -122,6 +122,14 @@ Then probe new gaps using the offline route_query() helper. Use these probe stra
     After adding a bigram "X evaluation"→cat, always add "X eval", "X evaluating" too.
     Test: 'llm eval', 'llm benchmarking', 'ai evaluation framework'
 
+  STRATEGY F — XaaS / compound stop-word gaps (probe 103 style):
+    When stop words sit INSIDE a concept, remaining tokens may be orphaned.
+    "function as a service" → ['function','as'] — both unmapped, add bigram "function as"→devops.
+    Test: 'backend as a service', 'storage as a service', 'search as a service'
+    Test: 'security as code', 'compliance as code', 'observability as code'
+    Also probe comparison queries — 'vs'/'or'/'not' are NOT stop words and can orphan token-0:
+    Test: 'redis vs memcached', 'postgres vs mysql', 'kafka vs rabbitmq'
+
 For each misfire, add the missing entry to _CAT_SYNONYMS and a test case. Commit.
 After fixing db.py, commit with 'fix: probe pattern N — [short desc] (M/M pass)'.
 

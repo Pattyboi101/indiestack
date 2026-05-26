@@ -7660,6 +7660,8 @@ _FTS_STOP_WORDS = {
     'open', 'source',
     # Gerunds/filler words that don't add FTS value (tools use root form in descriptions).
     'running', 'tracking', 'managing',
+    # Comparison particle — "react vs svelte" should route via 'react'→frontend, not block on 'vs'.
+    'vs',
 }
 
 # Framework qualifier terms in queries (e.g. "auth for nextjs", "payments django").
