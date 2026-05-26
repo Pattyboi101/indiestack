@@ -370,7 +370,17 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 1991+ tests passing (100 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2056+ tests passing (102 probe patterns).
+
+Probe 102 (May 2026): Distributed consensus / data structures / spatial / deepfake dead zones.
+  'raft', 'consensus', 'paxos' → database (distributed consensus protocol tools — etcd, CockroachDB)
+  'consensus algorithm' bigram → database
+  'materialized', 'materialized view' → database (materialized views — Postgres, DuckDB, Materialize)
+  'bloom filter' bigram → developer; 'hyperloglog', 'trie', 'bitset', 'roaring' → developer
+  'spatial', 'spatial index', 'geohash', 'rtree' → maps (spatial indexing — rbush, flatbush)
+  'deepfake', 'deepfake detection' → ai (deepfake detection APIs — Sensity, Hive Moderation)
+  'watermarking', 'watermark', 'steganography' → security (digital watermarking, C2PA)
+  Regression guard: 'etcd raft based' → devops (etcd fires before raft)
 
 Probe 100 (May 2026): IP-security / task-scheduler / rate-limit dead zones.
   'ip firewall', 'ip blocking', 'ip allowlist', 'ip ban' → security (were routing to maps via bare "ip"→maps)
