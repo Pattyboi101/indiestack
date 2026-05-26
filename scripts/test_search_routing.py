@@ -809,7 +809,7 @@ TEST_CASES: list[tuple[str, str]] = [
     # ── Probe 72 (May 2026): cross-platform / dashboarding / PR-automation dead zones ──
     # Frontend — cross-platform development
     ("cross platform mobile", "frontend"),         # bare "cross"→frontend (bigram "cross platform" dead — "platform" is stop word)
-    ("cross browser testing", "frontend"),         # bare "cross"→frontend
+    ("cross browser testing", "testing"),          # bigram "cross browser"→testing (cross-browser testing tools: BrowserStack, Sauce Labs)
     # Frontend — multi-platform (bare "multi"→frontend with bigram overrides for auth/api)
     ("multi platform app", "frontend"),            # bare "multi"→frontend (platform+app are stop words)
     # Analytics — dashboarding

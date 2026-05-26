@@ -671,6 +671,7 @@ SEED_CATEGORIES = [
     ("Notifications", "notifications", "Push notifications, in-app messaging, and alerts", ""),
     ("Background Jobs", "background-jobs", "Task queues, cron jobs, and workflow orchestration", ""),
     ("Localization", "localization", "Translation, i18n, and multilingual content", ""),
+    ("AI Standards & Specs", "ai-standards", "LLM benchmarks, evaluation harnesses, and safety testing frameworks", "📏"),
 ]
 
 # ── Token cost estimates per category ────────────────────────────────────
@@ -773,6 +774,7 @@ NEED_MAPPINGS = {
     "media": {"category": "media-server", "terms": ["video streaming", "transcoding", "media server", "audio streaming", "HLS", "video encoding", "adaptive bitrate"], "competitors": ["Mux", "Cloudinary Video", "Plex", "Jellyfin", "Bunny Stream"], "title": "Media Servers", "description": "Stream, transcode, and manage video and audio content.", "build_estimate": "2-4 weeks", "icon": "\U0001f3ac"},
     "maps": {"category": "maps-location", "terms": ["maps", "geolocation", "geocoding", "mapping", "location api", "map tiles", "leaflet", "mapbox"], "competitors": ["Google Maps", "Mapbox", "HERE Maps", "OpenLayers"], "title": "Maps & Location", "description": "Add maps, geolocation, geocoding, and location-based features to your app.", "build_estimate": "1-2 weeks", "icon": "\U0001f5fa\ufe0f"},
     "llmeval": {"category": "ai-standards", "terms": ["llm evaluation", "llm benchmark", "model evaluation", "llm red team", "llm safety", "ai safety eval", "garak", "lm-eval", "inspect ai"], "competitors": ["HELM", "BIG-bench", "OpenAI Evals"], "title": "AI Standards & Specs", "description": "LLM evaluation frameworks, red-teaming tools, and AI safety specs.", "build_estimate": "varies", "icon": "\U0001f52c"},
+    "evals": {"category": "ai-standards", "terms": ["llm benchmark", "ai evaluation", "model eval", "safety eval", "red team llm", "ai evals", "benchmark harness"], "competitors": ["MMLU", "HumanEval", "SWE-bench", "lm-evaluation-harness", "garak"], "title": "AI Standards & Specs", "description": "Benchmarks, evaluation harnesses, and safety testing frameworks for AI models.", "build_estimate": "varies", "icon": "\U0001f4cf"},
 }
 
 TECH_KEYWORDS = {
@@ -1746,7 +1748,7 @@ async def init_db():
                 pass  # already exists
         await db.commit()
 
-        # Migration: add v3 categories (frontend-frameworks, caching, mcp-servers, boilerplates, maps-location)
+        # Migration: add v3 categories (frontend-frameworks, caching, mcp-servers, boilerplates, maps-location, ai-standards)
         for _cat_name, _cat_slug, _cat_desc, _cat_icon in [
             ("Frontend Frameworks", "frontend-frameworks", "JavaScript frameworks, UI libraries, bundlers, and state management tools", "🖥️"),
             ("Caching", "caching", "In-memory stores, caching layers, and key-value databases for high-performance apps", "⚡"),
@@ -2554,6 +2556,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "apm": "monitoring",
     "sentry": "monitoring",
     "datadog": "monitoring",
+    "prometheus": "monitoring",     # Prometheus — metrics scraping / alertmanager → Monitoring
+    "grafana": "monitoring",        # Grafana — dashboards + Loki/Tempo stack → Monitoring
+    "opentelemetry": "monitoring",  # OpenTelemetry — OTEL spans, metrics, logs → Monitoring
+    "otelemetry": "monitoring",     # compact typo form of opentelemetry → Monitoring
+    "jaeger": "monitoring",         # Jaeger — distributed trace backend → Monitoring
+    "zipkin": "monitoring",         # Zipkin — distributed trace backend → Monitoring
+    "opentracing": "monitoring",    # OpenTracing — predecessor to OTEL → Monitoring
     # Scheduling synonyms
     "booking": "scheduling",
     "calendar": "scheduling",
@@ -2647,7 +2656,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "jest": "testing",
     "vitest": "testing",
     "selenium": "testing",
-    "storybook": "testing",     # component testing / UI development
+    "percy": "testing",             # Percy (BrowserStack) — visual regression screenshots → Testing
+    "chromatic": "testing",         # Chromatic (Storybook) — visual UI testing → Testing
+    "applitools": "testing",        # Applitools — visual AI testing → Testing
+    "backstop": "testing",          # BackstopJS — visual regression CSS testing → Testing
+    "storybook": "frontend",        # component development environment (not test runner — UI dev tier)
     "ci": "devops",
     "cicd": "devops",
     "deploy": "devops",
@@ -2826,6 +2839,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "secrets": "security",
     "secret": "security",       # singular form — "secret management", "secret store"
     "envvars": "security",      # "envvars management" → same
+    "fuzzing": "security",      # fuzzing — AFL, libFuzzer, Honggfuzz → Security Tools
+    "fuzzer": "security",       # "fuzzer tool", "fuzzer alternative" → Security Tools
+    "fuzz": "security",         # bare "fuzz" — "fuzz test", "fuzz testing tool" → Security Tools
+    "afl": "security",          # AFL / AFL++ — coverage-guided fuzzer → Security Tools
     "dotenv": "developer",      # dotenv — .env file loader library → Developer Tools category
     # Invoicing — "invoice"/"receipt" already mapped above (line ~2295); add named tools + new terms
     "invoicing": "invoicing",
@@ -7204,6 +7221,337 @@ _CAT_SYNONYMS: dict[str, str] = {
     "api key": "api",                      # bigram — "api key management", "api key generation" → API Tools
     "private key": "security",             # bigram — "private key storage", "private key signing" → Security Tools
     "key management": "security",          # bigram — "key management service", "key management api" → Security Tools
+
+    # "developer productivity" → raw_first "productivity" because "developer" is in _FTS_STOP_WORDS
+    # and gets stripped. Developer productivity tools (Raycast, Linear, Pieces, Warp) → Developer Tools.
+    "productivity": "developer",         # bare — "developer productivity", "productivity tools" → Developer Tools
+
+    # "local first" → raw_first "local" (both tokens unmapped). Local-first / offline-capable
+    # sync tools (ElectricSQL, PowerSync, Replicache, Instant) belong in Database (offline-sync tier).
+    "local first": "database",          # bigram — "local first sync", "local first architecture" → Database
+    "local-first": "database",          # hyphenated — "local-first database", "local-first app" → Database
+
+    # Probe 85 — memory leak / heap dump / SLA / terms / multi-region / tenancy / knowledge / team-collaboration dead zones
+
+    # "memory leak"/"memory leak detection" → caching via bare "memory"→caching (wrong; leak
+    # detection tools like Valgrind, LeakCanary, py-spy belong in Monitoring).
+    "memory leak": "monitoring",         # bigram — overrides "memory"→caching for leak detection queries
+
+    # "heap dump" → analytics via bare "heap"→analytics (Heap.io collision; wrong for JVM/Node
+    # heap analysis tools like jmap, VisualVM, node --inspect). Belong in Monitoring.
+    "heap dump": "monitoring",           # bigram — overrides "heap"→analytics (Heap.io) for heap dump queries
+
+    # "service level agreement" → raw_first "level" after stop-words strip
+    # ("service" stripped → "level agreement" bigram survives). SLA tools → Monitoring.
+    "level agreement": "monitoring",     # bigram — "service level agreement" strips to ["level","agreement"] → Monitoring
+
+    # "terms of service" → raw_first "terms" ("of"+"service" both stripped → bare "terms").
+    # Legal policy generators (Termly, Iubenda, Termsfeed, PrivacyPolicies.com) → Security Tools.
+    "terms": "security",                 # bare — "terms of service generator", "terms conditions" → Security Tools
+
+    # "multi region" / "multi cloud" → raw_first "multi" (both tokens unmapped).
+    # Multi-region/cloud deployment tools (Fly.io, Render, Railway, Crossplane) → DevOps.
+    # Bigrams prevent regression on "multi language" (localization) and "multi currency" (payments)
+    # since those are covered by bare "language"→localization and bare "currency"→payments.
+    "multi region": "devops",            # bigram — "multi region deployment", "multi region setup" → DevOps
+    "multi cloud": "devops",             # bigram — "multi cloud strategy", "multi cloud kubernetes" → DevOps
+    "multiregion": "devops",             # compound — "multiregion database", "multiregion cdn" → DevOps
+    "multicloud": "devops",              # compound — "multicloud management", "multicloud platform" → DevOps
+
+    # "multi tenancy" → raw_first "multi" ("tenant"→authentication fires for "multi tenant" correctly
+    # but the gerund form "tenancy" was missing). SaaS multi-tenancy → Authentication (same tier as tenant).
+    "tenancy": "authentication",         # bare — "multi tenancy", "tenancy isolation" → Authentication
+
+    # "knowledge sharing" → raw_first "knowledge" (bare "knowledge" intentionally excluded per probe 47
+    # note — "knowledge base chatbot" must route to AI). "knowledge sharing" (team wikis, Slab, Confluence)
+    # is Documentation-tier. Bigram is safe since "knowledge base" stays raw_first.
+    "knowledge sharing": "documentation",   # bigram — "knowledge sharing tool", "knowledge sharing wiki" → Documentation
+
+    # "team collaboration" → api via bare "collaboration"→api (realtime collaborative editing; wrong
+    # for team messaging/collab tools like Mattermost, Zulip, Rocket.Chat → Developer Tools).
+    "team collaboration": "developer",   # bigram — overrides "collaboration"→api for team messaging queries
+
+    # Probe 86 — visual editor / page builder / site builder / countdown / loyalty dead zones
+
+    # "visual editor component" → testing via bare "visual"→testing (visual regression; wrong for
+    # WYSIWYG/block editor components like TipTap, ProseMirror, Quill, Lexical → Frontend Frameworks).
+    # Bigram fires before bare "visual"→testing when "editor" follows.
+    "visual editor": "frontend",         # bigram — "visual editor react", "visual editor component" → Frontend Frameworks
+
+    # "page builder" / "site builder" → raw_first "page"/"site" (both tokens unmapped).
+    # Page/site builders (Webflow, Framer, Elementor, Builder.io) → Landing Pages category.
+    # NOTE: "documentation site builder" must still route to Documentation. Adding "documentation site"→
+    # documentation bigram (fires at pos 0) before "site builder"→landing (pos 1) can fire.
+    "documentation site": "documentation",  # bigram — prevents "documentation site builder" regression
+    "page builder": "landing",           # bigram — "page builder nextjs", "page builder react" → Landing Pages
+    "site builder": "landing",           # bigram — "site builder react", "site builder open source" → Landing Pages
+
+    # "countdown timer" → raw_first "countdown" (unmapped). Countdown UI components (react-countdown,
+    # CountUp.js, Swiper countdown) → Frontend Frameworks (UI widget tier).
+    "countdown": "frontend",             # bare — "countdown timer react", "countdown component" → Frontend Frameworks
+
+    # "loyalty reward" / "loyalty program" → raw_first "loyalty" (unmapped). Loyalty/rewards program
+    # tools (Rewardful, LoyaltyLion, Stamp.me) are CRM-adjacent (customer retention).
+    "loyalty": "crm",                    # bare — "loyalty program tool", "loyalty rewards api" → CRM & Sales
+
+    # Probe 87 — organization management / invite / impersonation dead zones
+
+    # "organization management" / "org management" → project via bare "management"→project (wrong;
+    # managing orgs/tenants in SaaS apps is an Authentication concern — Clerk Orgs, WorkOS Orgs,
+    # Auth0 Organizations handle this). "management"→project fires before "organization" because
+    # bare token scan is left-to-right: "organization" at pos 0 is unmapped, then "management" at
+    # pos 1 fires → wrong category. Bigrams override bare tokens at each position.
+    "organization management": "authentication",  # bigram — "org management saas", "manage organizations" → Authentication
+    "member management": "authentication",        # bigram — "manage org members", "member access control" → Authentication
+    "org management": "authentication",           # bigram — "org management api" → Authentication (short form)
+
+    # "invite system" / "email invite" → raw_first "invite" (unmapped). User invitation flows
+    # (magic link invites, team invite emails) are an Authentication feature (Clerk, Auth0, WorkOS).
+    "invite": "authentication",          # bare — "invite system", "invite link", "user invite" → Authentication
+
+    # "impersonation" → raw_first "impersonation" (unmapped). User impersonation for support/admin
+    # access (Clerk impersonation, Auth0 impersonation, WorkOS impersonation) → Authentication.
+    "impersonation": "authentication",   # bare — "user impersonation", "admin impersonation" → Authentication
+
+    # Probe 88 — cross-platform / cross-origin / cross-site / cross-browser dead zones
+
+    # "cross platform" → raw_first "cross" because "platform" is in _FTS_STOP_WORDS (stripped).
+    # Cross-platform dev tools (Tauri, Electron, Capacitor, React Native, Flutter) → Frontend Frameworks.
+    # Bare "cross" handles "cross-platform" after stop-word removal.
+    # Bigrams for "cross origin" and "cross site" override the bare mapping for CORS/security queries.
+    "cross": "frontend",                 # bare — "cross platform app", "cross platform framework" → Frontend
+    "cross origin": "api",               # bigram — CORS ("cross-origin resource sharing", "cross origin request") → API Tools
+    "cross site": "security",            # bigram — XSS/CSRF ("cross site scripting", "cross site request forgery") → Security
+    "cross browser": "testing",          # bigram — "cross browser testing", "cross browser compatibility" → Testing Tools
+    "crossplatform": "frontend",         # compound — "crossplatform desktop app", "crossplatform mobile" → Frontend
+
+    # Probe 89 — code smell / technical debt / pre-push hook / open graph image dead zones
+
+    # "code smell" → raw_first "code" (unmapped; code smell detectors like CodeClimate, SonarQube,
+    # PMD → Testing Tools — same tier as linters). Bigram prevents "code"→raw_first.
+    "code smell": "testing",             # bigram — "code smell detector", "code smell refactoring" → Testing Tools
+
+    # "technical debt" → raw_first "technical" ("tech debt" bigram already maps to developer correctly;
+    # but the spaced "technical debt" form was missing). Same category: Developer Tools.
+    "technical debt": "developer",       # bigram — "technical debt tracking", "technical debt report" → Developer Tools
+
+    # "pre push hook" → notifications via bare "push"→notifications (wrong; git pre-push hooks
+    # (Husky pre-push, Lefthook pre-push) are DevOps/git tooling). Bigram overrides at pos 0-1.
+    "pre push": "devops",               # bigram — "pre push hook", "pre push validation" → DevOps
+
+    # "open graph image" → database via bare "graph"→database ("open" is stop-word → ["graph","image"]).
+    # Open Graph image generators (Satori, @vercel/og, opengraph-image) → SEO Tools (meta tags tier).
+    "graph image": "seo",               # bigram — "open graph image" strips to ["graph","image"] → SEO Tools
+
+    # Probe 91 — ML/AI concept dead zones (feature engineering / training / augmentation)
+
+    # "feature engineering" → feature-flags via bare "feature"→feature (wrong; ML feature engineering
+    # tools Feast, Tecton, Hopsworks belong in AI & Automation, same tier as "feature store").
+    # Same collision for "feature extraction" and "feature selection" (ML preprocessing steps).
+    "feature engineering": "ai",        # bigram — overrides "feature"→feature-flags for ML queries
+    "feature extraction": "ai",         # bigram — "feature extraction nlp", "feature extraction ml" → AI
+    "feature selection": "ai",          # bigram — "feature selection algorithm", "feature selection tool" → AI
+
+    # "image labeling" → media via bare "image"→media (wrong; image labeling/annotation tools
+    # (Label Studio, CVAT, Roboflow, Scale AI) are ML data tools that belong in AI & Automation).
+    # Bare "labeling"→ai already exists; bigram needed to override "image" firing first.
+    "image labeling": "ai",             # bigram — overrides "image"→media for ML annotation queries
+    "image annotation": "ai",           # bigram — "image annotation tool" (same tier, CVAT, LabelImg)
+
+    # "training pipeline" → background-jobs via bare "pipeline"→background (wrong; ML training
+    # pipelines (Kubeflow Pipelines, ZenML, Metaflow, Kedro) belong in AI & Automation).
+    "training pipeline": "ai",          # bigram — overrides "pipeline"→background for ML training queries
+
+    # "training data" → raw_first (both "training" and "data" unmapped; ML training data
+    # management tools (DVC, Label Studio, Argilla, Snorkel) belong in AI & Automation).
+    "training data": "ai",              # bigram — "training data management", "training dataset" → AI
+
+    # "data augmentation" → raw_first (both "data" and "augmentation" unmapped; data augmentation
+    # libraries (Albumentations, imgaug, Augmentor, torchvision transforms) belong in AI).
+    "augmentation": "ai",               # bare — "data augmentation", "text augmentation" → AI
+    "data augmentation": "ai",          # bigram — explicit form for clarity
+    "image augmentation": "ai",         # bigram — overrides "image"→media for ML augmentation queries
+
+    # "data versioning" → devops via bare "versioning"→devops (wrong; data versioning tools
+    # (DVC, LakeFS, Delta Lake, Pachyderm) are MLOps/data-lineage tools in AI & Automation).
+    "data versioning": "ai",            # bigram — overrides "versioning"→devops for data/ML version control
+
+    # Probe 94 — type-checker / schema-stitching / error-boundary / env-file dead zones
+    #
+    # "schema stitching" → developer via bare "schema"→developer (wrong; GraphQL schema merging
+    # tools graphql-tools/merge, The Guild Mesh, GraphQL Stitching live in API Tools).
+    "schema stitching": "api",          # bigram — "schema stitching graphql", "schema stitching tool" → API Tools
+
+    # "type checker" / "type checking" → developer via bare "type"→developer (wrong; static type
+    # analysis tools mypy, pyright, tsc --noEmit, Flow belong in Testing Tools — same tier as linters).
+    # "static type checking" → frontend via bare "static"→frontend (wrong; same tools; bigram overrides).
+    # Regression guard: "type system", "type safety", "type annotation" still fire "type"→developer (no bigram match).
+    "type checker": "testing",          # bigram — "type checker python", "type checker typescript" → Testing Tools
+    "type checking": "testing",         # bigram — "type checking tool", "type checking python" → Testing Tools
+    "static type": "testing",           # bigram — "static type checking", "static type analysis" → Testing Tools
+
+    # "error boundary" → monitoring via bare "error"→monitoring (wrong; React error boundary
+    # component pattern and react-error-boundary library belong in Frontend Frameworks).
+    # Regression: "error tracking" / "error logging" unaffected — "tracking" is a stop word
+    # (bare "error"→monitoring fires) and "error logging" bigram is not added.
+    "error boundary": "frontend",       # bigram — "error boundary react", "error boundary component" → Frontend
+
+    # "env file" → security via bare "env"→security (wrong; dotenv, python-dotenv, dotenvx,
+    # direnv are config-loading developer tools, not secret-scanning/vault tools).
+    # Regression: "env secrets", "env variable" keep "env"→security (no "file" qualifier).
+    "env file": "developer",            # bigram — "env file loader", "env file manager", ".env file" → Developer Tools
+
+    # Probe pattern 95 (May 2026): component-testing / AI-router / procedure-call / embedding dead zones.
+    #
+    # "component testing" → "frontend" via bare "component"→frontend (wrong; React Testing Library,
+    #   Storybook interaction tests, Testing Library are testing tools, not frontend frameworks).
+    #   Fix: bigram "component testing" → testing overrides bare "component" for test queries.
+    #   Regression: "component library", "component design" keep "component"→frontend (no "testing" suffix).
+    "component testing": "testing",     # bigram — "component testing react", "component testing tool" → Testing Tools
+
+    # "ai router" → "frontend" via bare "router"→frontend (wrong; AI model routers like LiteLLM,
+    #   OpenRouter, PortKey, Martian route requests between LLMs — these are AI/dev tools).
+    #   Fix: bigram "ai router" → ai overrides bare "router"→frontend for LLM routing queries.
+    #   Regression: "react router", "vue router", "client router" keep "router"→frontend (no "ai" prefix).
+    "ai router": "ai",                  # bigram — "ai router litellm", "ai router openrouter" → AI & Automation
+
+    # "remote procedure call" → "monitoring" via bare "call"→monitoring (wrong; RPC tools like
+    #   tRPC, gRPC, Connect-RPC are API Tools). "rpc" and "grpc" individually already route to api.
+    #   Fix: bigram "procedure call" → api catches "remote procedure call" and "procedure call rpc".
+    #   Regression: "on call", "call tracking" keep "call"→monitoring (no "procedure" qualifier).
+    "procedure call": "api",            # bigram — "remote procedure call", "procedure call rpc" → API Tools
+
+    # "widget embedding" / "iframe embedding" → "ai" via bare "embedding"→ai (wrong; these mean
+    #   HTML-embed widgets/iframes, not AI vector embeddings).
+    #   Fix: bigrams "widget embedding" and "iframe embedding" → developer override for embed queries.
+    #   Regression: "vector embedding", "text embedding", "word embedding" keep "embedding"→ai (no iframe/widget).
+    "widget embedding": "developer",    # bigram — "widget embedding tool", "widget embedding react" → Developer Tools
+    "iframe embedding": "developer",    # bigram — "iframe embedding react", "iframe embedding html" → Developer Tools
+
+    # ── Probe pattern 96 (May 2026): usage-context / API-prefix / chaos collisions ──────────────────
+    #
+    # Dead zones / misfires fixed:
+    # "cpu/disk/memory/resource usage" → "invoicing" via bare "usage"→invoicing (and "memory"→caching).
+    #   These are system-resource monitoring queries; fix: bigrams at position 0 override bare token.
+    # "api security/monitoring/observability/contract" → "api" via bare "api"→api at position 0,
+    #   before the meaningful second token (security/monitoring/observability/testing) is reached.
+    #   Fix: compound bigrams fire before bare "api"→api in the second-pass loop.
+    # "fault injection" → "developer" via bare "injection"→developer (dependency-injection context).
+    #   Fault injection is a chaos/resilience testing technique (Gremlin, Chaos Toolkit) → Testing.
+    #
+    # Reclassification (bare token changed above at line 6417):
+    # "chaos"→devops was wrong; chaos engineering tools (Gremlin, LitmusChaos, ChaosMesh, Chaos Monkey)
+    # belong in Testing Tools. Changed to "chaos"→testing.
+    #
+    # Regression guards (unchanged):
+    # "usage billing"→payments, "usage based"→payments (bigrams still fire for billing context).
+    # "usage tracking"→invoicing (bare "usage"→invoicing still fires when no monitoring bigram matches).
+    # "dependency injection"→developer, "constructor injection"→developer (bare "injection"→developer OK).
+    # "virtual scroll"→frontend, "list virtualization"→frontend (bare "virtual"→frontend unchanged).
+    # "contract testing"→testing (bare "contract"→testing unchanged for non-"api" first-token queries).
+    # NOTE: "service virtualization"→testing CANNOT be fixed — "service" is in _FTS_STOP_WORDS so the
+    # bigram never fires; bare "virtualization"→frontend is the fallback (documented limitation).
+
+    # CPU / disk / memory / resource usage — Monitoring (overrides "usage"→invoicing / "memory"→caching)
+    "cpu usage": "monitoring",           # bigram — "cpu usage monitor", "cpu usage alert" → Monitoring & Uptime
+    "disk usage": "monitoring",          # bigram — "disk usage alert", "disk usage monitor" → Monitoring & Uptime
+    "memory usage": "monitoring",        # bigram — "memory usage chart", "memory usage profiler" → Monitoring & Uptime
+    "resource usage": "monitoring",      # bigram — "resource usage alert", "resource usage dashboard" → Monitoring
+
+    # API-prefix collision — second token changes category intent; bigrams fire before bare "api"→api
+    "api security": "security",          # bigram — "api security scanner", "api security test" → Security (42crunch, Wallarm)
+    "api monitoring": "monitoring",      # bigram — "api monitoring tool", "api monitoring dashboard" → Monitoring (Treblle, Helicone)
+    "api observability": "monitoring",   # bigram — "api observability platform" → Monitoring & Uptime
+    "api contract": "testing",           # bigram — "api contract testing", "api contract pact" → Testing Tools (Pact, Dredd)
+
+    # Fault injection — Testing (overrides "injection"→developer; chaos/resilience testing context)
+    "fault injection": "testing",        # bigram — "fault injection testing", "fault injection chaos" → Testing Tools
+
+    # ── Probe pattern 97 (May 2026): twelve-factor / soft-delete / cursor-pagination / source-map / IoC / interceptor dead zones ──────
+    #
+    # "twelve factor" / "twelve-factor" / "12 factor" → raw_first (no synonym; 12-factor cloud-native
+    #   methodology belongs in DevOps — Twelve-Factor App guide, CNCF practices, Heroku principles).
+    # "soft delete" / "soft-delete" → raw_first ("soft" unmapped; DB pattern for logical deletion
+    #   without physical row removal — Sequelize paranoid, TypeORM SoftDelete, Laravel SoftDeletes).
+    # "cursor pagination" → "ai dev" via bare "cursor"→ai-dev (wrong; cursor-based/keyset pagination
+    #   is an API design pattern — Relay cursor spec, Prisma cursor, PostgREST range queries).
+    # "source-map" (hyphenated token) → raw_first ("source" is in _FTS_STOP_WORDS so space form is
+    #   dead; hyphenated query "source-map" survives as one token — webpack/vite source maps).
+    # "inversion of control" → raw_first ("inversion" unmapped; "of" is stop word → after stripping,
+    #   bigram becomes "inversion control" — IoC containers: tsyringe, InversifyJS, Spring DI).
+    # "request interceptor" → raw_first (HTTP middleware pattern — Axios interceptors,
+    #   Angular HttpClient interceptors, fetch interceptors → API Tools).
+
+    # DevOps — 12-factor methodology (cloud-native app design best practices)
+    "twelve factor": "devops",          # bigram — "twelve factor app", "twelve factor methodology" → DevOps
+    "twelve-factor": "devops",          # hyphenated token — "twelve-factor app", "twelve-factor checklist"
+    "12 factor": "devops",              # numeric form — "12 factor app", "12 factor methodology"
+    "12-factor": "devops",              # numeric hyphenated — "12-factor app", "12-factor principles"
+
+    # Database — soft delete pattern (logical deletion, record marked not physically removed)
+    "soft delete": "database",          # bigram — "soft delete django", "soft delete typeorm" → Database
+    "soft-delete": "database",          # hyphenated token — "soft-delete library", "soft-delete laravel"
+    "soft deletion": "database",        # variant form — "soft deletion pattern", "soft deletion postgres"
+
+    # API Tools — cursor-based/keyset pagination (overrides bare "cursor"→ai-dev for pagination queries)
+    "cursor pagination": "api",         # bigram — "cursor pagination relay", "cursor pagination graphql" → API Tools
+    "cursor-pagination": "api",         # hyphenated token — "cursor-pagination library", "cursor-pagination prisma"
+    "cursor based": "api",              # bigram — "cursor based pagination", "cursor based query"
+
+    # Developer Tools — source-map hyphenated form ("source map" with space is blocked by stop word)
+    "source-map": "developer",          # hyphenated token — "source-map webpack", "source-map support"
+
+    # Developer Tools — inversion of control / IoC container ("of" is stop word → "inversion control" bigram)
+    "inversion control": "developer",   # bigram — fires after "of" is stripped from "inversion of control"
+    "inversion": "developer",           # bare fallback — "inversion of control", "ioc" → Developer Tools
+
+    # API Tools — HTTP request interceptors (Axios, Angular HttpClient, fetch interceptors)
+    "request interceptor": "api",       # bigram — "request interceptor axios", "request interceptor http" → API Tools
+    "interceptor": "api",               # bare fallback — "interceptor pattern", "http interceptor" → API Tools
+
+    # Probe pattern 98 (May 2026): DOM / XPath / duplex-streaming / input-sanitization / class-OOP dead zones.
+    # "dom manipulation"/"dom library"/"dom traversal" → raw_first "dom" — DOM manipulation libs
+    #   (jQuery, cash.js, Umbrella.js) are Frontend Frameworks; bare "dom"→frontend added.
+    # Regression guards: "dom testing" and "dom snapshot" still route to Testing (pre-pass bigrams override bare "dom").
+    "dom": "frontend",                  # bare — "dom manipulation", "dom library", "shadow dom" → Frontend
+    "dom testing": "testing",           # bigram override — "dom testing react" → Testing (beats bare "dom"→frontend)
+    "dom snapshot": "testing",          # bigram override — "dom snapshot diff" → Testing (beats bare "dom"→frontend)
+
+    # XPath — XML/HTML query language; lxml, BeautifulSoup xpath, libxml2 → Developer Tools
+    "xpath": "developer",               # bare — "xpath selector", "xpath library", "xpath query" → Developer Tools
+
+    # API Tools — full-duplex / bidirectional streaming (gRPC, WebSocket)
+    "bidirectional streaming": "api",   # bigram — "bidirectional streaming grpc", "bidirectional streaming ws" → API Tools
+    "duplex": "api",                    # bare — "duplex stream", "full duplex protocol" → API Tools
+
+    # Security — sanitization (complement to existing "sanitize"/"sanitizer" → security)
+    "sanitization": "security",         # bare — "data sanitization", "string sanitization" → Security
+    "input sanitization": "security",   # bigram override — fires before bare "input" (no "input" bare yet)
+    "html sanitization": "security",    # bigram override — fires before bare "html"→frontend
+
+    # Developer Tools — class-oriented OOP patterns (class-validator, reflect-metadata, InversifyJS)
+    "class validator": "developer",     # bigram — "class validator nestjs", "class-validator typescript" → Developer
+    "class decorator": "developer",     # bigram — "class decorator typescript", "class decorator pattern" → Developer
+    "class inheritance": "developer",   # bigram — "class inheritance javascript", "class inheritance oop" → Developer
+
+    # Monitoring — OpenTelemetry short forms and distributed tracing bigrams
+    "otel": "monitoring",               # bare — OTEL shorthand widely used in docs/queries → Monitoring
+    "distributed tracing": "monitoring",  # bigram — "distributed tracing setup", "distributed tracing go" → Monitoring
+    "metrics collection": "monitoring",   # bigram — "metrics collection prometheus", "metrics collection agent" → Monitoring
+    "log aggregation": "logging",         # bigram — "log aggregation tool", "log aggregation elk" → Logging
+
+    # Testing — visual regression bigrams (neither "visual" nor "regression" alone routes to testing)
+    # "regression" alone maps to testing but "visual" alone has no mapping.
+    # Bigrams ensure "visual regression testing" routes to Testing before "visual" fires raw_first.
+    "visual regression": "testing",     # bigram — "visual regression testing", "visual regression tool" → Testing
+    "visual testing": "testing",        # bigram — "visual testing percy", "visual testing ci" → Testing
+    "screenshot testing": "testing",    # bigram — "screenshot testing playwright", "screenshot diffing" → Testing
+    "snapshot testing": "testing",      # bigram — "snapshot testing jest", "snapshot testing alternative" → Testing
+
+    # Security — fuzz testing bigrams
+    # "fuzz"→security fires bare, but bigrams take priority and provide better specificity.
+    "fuzz testing": "security",         # bigram — "fuzz testing library", "fuzz testing go" → Security Tools
+    "fuzzing tool": "security",         # bigram — "fuzzing tool python", "fuzzing tool alternative" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
