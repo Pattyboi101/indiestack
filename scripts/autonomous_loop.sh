@@ -370,7 +370,17 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 2056+ tests passing (102 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2066+ tests passing (103 probe patterns).
+
+Probe 103 (May 2026): Repo-to-LLM dead zones — bigrams for repomix/gitingest query variants.
+  'repo llm' → ai dev ("repo to llm" after stop-word drop — repomix/gitingest use case)
+  'codebase llm' → ai dev ("codebase to llm")
+  'repository llm' → ai dev ("repository to llm")
+  'repo ingest' / 'repo ingestion' → ai dev (not ETL background-jobs ingest)
+  'code ingest' / 'code ingestion' → ai dev (code context, not data pipeline)
+  'codebase ingest' / 'codebase ingestion' → ai dev
+  Regression guard: 'data ingestion pipeline' still routes to background.
+  12 new tests added.
 
 Probe 102 (May 2026): Distributed consensus / data structures / spatial / deepfake dead zones.
   'raft', 'consensus', 'paxos' → database (distributed consensus protocol tools — etcd, CockroachDB)
