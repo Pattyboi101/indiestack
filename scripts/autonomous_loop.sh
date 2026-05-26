@@ -105,6 +105,10 @@ curl the API for these queries and check top-3 results are relevant:
   OpenAI 2026: 'openai agents sdk', 'responses api openai', 'agents sdk python alternative',
                'openai swarm replacement', 'goose ai agent', 'block goose coding agent'.
   Repo/LLM: 'repomix alternative', 'pack repo for llm', 'gitingest setup', 'repo to llm context'.
+  SOAP/legacy: 'soap client python', 'xml-rpc library', 'xml rpc server', 'wsdl parsing'.
+  Security: 'account takeover protection', 'multi-tenant app', 'dependency audit nodejs',
+            'package vulnerability scanner', 'message signing library'.
+  Frontend: 'optimistic update react', 'stale while revalidate', 'cf worker alternative'.
   Browser agents: 'ai browser automation', 'browser agent python', 'steel browser alternative',
                   'browserbase alternative', 'hyperbrowser setup', 'cloud browser api'.
   New AI editors: 'aide ide alternative', 'melty vs cursor', 'amp coding agent', 'codestory ide'.
