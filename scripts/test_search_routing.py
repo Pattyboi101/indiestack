@@ -843,6 +843,17 @@ TEST_CASES: list[tuple[str, str]] = [
     ("hybrid search bm25 vector", "search"),        # "hybrid" → search
     # Repo-for-LLM tools
     ("repomix alternative", "ai dev"),              # "repomix" → ai dev
+    ("gitingest setup", "ai dev"),                  # "gitingest" → ai dev
+    ("repo to llm", "ai dev"),                      # bigram "repo llm" (stop-word drop) → ai dev
+    ("codebase to llm", "ai dev"),                  # bigram "codebase llm" → ai dev
+    ("repository to llm", "ai dev"),                # bigram "repository llm" → ai dev
+    ("repo ingest tool", "ai dev"),                 # bigram "repo ingest" → ai dev (not ETL)
+    ("repo ingestion for ai", "ai dev"),            # bigram "repo ingestion" → ai dev
+    ("code ingest llm", "ai dev"),                  # bigram "code ingest" → ai dev
+    ("code ingestion pipeline llm", "ai dev"),      # bigram "code ingestion" fires before "pipeline"→background
+    ("codebase ingestion tool", "ai dev"),          # bigram "codebase ingestion" → ai dev
+    # Regression guard — bare "ingestion" still means ETL/data pipeline
+    ("data ingestion pipeline", "background"),      # bare "ingestion" → background (not repo-to-LLM)
     # E-signature / forms
     ("esignature api", "forms"),                    # "esignature" → forms
     ("digital signature tool", "forms"),            # "signature" → forms

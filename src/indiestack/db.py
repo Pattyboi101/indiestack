@@ -7411,6 +7411,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "repopack": "ai dev",           # Repopack — former name for Repomix; legacy queries → AI Dev Tools
     "gitingest": "ai dev",          # GitIngest — convert GitHub repos to LLM-digestible text (cyclotruc/gitingest) → AI Dev Tools
     "git-ingest": "ai dev",         # hyphenated — "git-ingest alternative", "git-ingest setup" → AI Dev Tools
+    # Repo-to-LLM query dead zones — bigrams to override bare "ingest"→background and "llm"→ai
+    "repo llm": "ai dev",           # "repo to llm" (stop-word drop) → AI Dev Tools
+    "codebase llm": "ai dev",       # "codebase to llm" → AI Dev Tools
+    "repository llm": "ai dev",     # "repository to llm" → AI Dev Tools
+    "repo ingest": "ai dev",        # "repo ingest", "repo ingestion" → AI Dev Tools (not ETL)
+    "repo ingestion": "ai dev",     # bigram override of bare "ingestion"→background
+    "code ingest": "ai dev",        # "code ingest tool", "code ingestion for llm" → AI Dev Tools
+    "code ingestion": "ai dev",     # bigram override — not data-pipeline ingestion
+    "codebase ingest": "ai dev",    # "codebase ingest", "codebase ingestion" → AI Dev Tools
+    "codebase ingestion": "ai dev", # bigram override of bare "ingestion"→background
     # AI Dev Tools — Melty (meltylabs/melty, ~22k★; open-source AI code editor built on VS Code)
     # Designed for AI pair-programming; "melty alternative", "melty vs cursor", "melty ai editor"
     "melty": "ai dev",              # Melty — "melty alternative", "melty vs cursor" → AI Dev Tools
