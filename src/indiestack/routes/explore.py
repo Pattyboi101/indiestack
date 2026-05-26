@@ -15,6 +15,11 @@ from indiestack.db import explore_tools, get_all_categories, get_all_tags_with_c
 
 router = APIRouter()
 
+
+def _safe_ld(s: str) -> str:
+    return s.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+
+
 # Per-category SEO meta descriptions — keyword-rich, mention IndieStack, under 160 chars with count inserted
 _CAT_META: dict[str, str] = {
     "authentication": "Browse {count}+ authentication tools on IndieStack — OAuth, SSO, passkeys, and magic link auth solutions recommended by AI agents.",
@@ -445,7 +450,7 @@ async def explore(request: Request):
         explore_page_title = "Explore 6,500+ Developer Tools by Category | IndieStack"
         explore_canonical = "/explore"
 
-    explore_ld = json.dumps({
+    explore_ld = _safe_ld(json.dumps({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
         "name": "Explore Developer Tools",
@@ -453,7 +458,7 @@ async def explore(request: Request):
         "url": f"{BASE_URL}/explore",
         "isPartOf": {"@type": "WebSite", "name": "IndieStack", "url": BASE_URL},
         "numberOfItems": total,
-    }, ensure_ascii=False)
+    }, ensure_ascii=False))
     explore_head = f'<script type="application/ld+json">{explore_ld}</script>'
     response = HTMLResponse(page_shell(title=explore_page_title, body=body + email_sticky_bar(), description=desc, user=user, canonical=explore_canonical, extra_head=explore_head))
     response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=300"

@@ -3599,6 +3599,27 @@ TEST_CASES: list[tuple[str, str]] = [
     ("class based component", "frontend"),      # "component"→frontend fires at position 2
     ("input validation python", "developer"),   # "validation"→developer unchanged
     ("html parser", "developer"),               # bigram "html parser"→developer unchanged (probe 32)
+
+    # ── Probe pattern 99 (May 2026): biometric auth / e2ee / data transform dead zones ──────────────────────────
+    # "biometric auth"/"biometric verification" → raw_first (Authentication; "biometric"→authentication added).
+    # "biometrics sdk" → raw_first (plural form; "biometrics"→authentication added).
+    # "e2ee library"/"e2ee messaging" → raw_first (Security; "e2ee"→security added).
+    # "data transform tool"/"data transform pipeline" → raw_first "data" (Background Jobs; bigram "data transform"→background added).
+    ("biometric auth", "authentication"),       # bare "biometric"→authentication
+    ("biometric verification", "authentication"),# bare "biometric"→authentication
+    ("biometrics sdk", "authentication"),       # bare "biometrics"→authentication (plural)
+    ("biometrics integration", "authentication"),# bare "biometrics"→authentication (position 0)
+    ("e2ee library", "security"),              # bare "e2ee"→security
+    ("e2ee messaging", "security"),            # bare "e2ee"→security
+    ("e2ee chat", "security"),                 # bare "e2ee"→security
+    ("data transform tool", "background"),     # bigram "data transform"→background
+    ("data transform pipeline", "background"), # bigram "data transform"→background
+    # Regressions — probe 99 changes must not break these.
+    ("passkeys support", "authentication"),    # "passkeys"→authentication unchanged
+    ("webauthn library", "authentication"),    # "webauthn"→authentication unchanged (probe 50)
+    ("e2e testing framework", "testing"),      # "e2e"→testing unchanged (not "e2ee")
+    ("e2e encryption library", "security"),    # bigram "e2e encryption"→security unchanged (probe 71)
+    ("data transformation pipeline", "background"),  # bigram "data transformation"→background unchanged
 ]
 
 

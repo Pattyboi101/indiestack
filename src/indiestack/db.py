@@ -4373,6 +4373,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "paywall": "payments",          # "paywall implementation", "content paywall" → Payments
     # Auth — passkeys (plural of passkey; singular already mapped at line ~2482)
     "passkeys": "authentication",   # plural — "passkeys support", "implement passkeys" → Authentication
+    # Auth — biometric authentication (WebAuthn, fingerprint, face ID — complement to passkey/fido2)
+    "biometric": "authentication",  # "biometric auth", "biometric verification", "fingerprint auth" → Authentication
+    "biometrics": "authentication", # plural — "biometrics sdk", "mobile biometrics integration" → Authentication
     # API — Django REST Framework (very high query volume in Python ecosystem)
     "drf": "api",                   # DRF — Django REST Framework abbreviation (most common Python API)
     "djangorestframework": "api",   # full canonical package name form → API Tools
@@ -5875,6 +5878,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "e2e"→testing is correct for "e2e testing" but wrong for "e2e encryption" (end-to-end encryption)
     "e2e encryption": "security",   # bigram — "e2e encryption library", "e2e encrypted chat" → Security Tools
     "e2e encrypted": "security",    # bigram — "e2e encrypted storage", "e2e encrypted messenger" → Security Tools
+    # Security — e2ee abbreviation (end-to-end encryption; "e2e"→testing is correct for tests but misses this)
+    "e2ee": "security",             # "e2ee library", "e2ee messaging", "e2ee chat" → Security Tools
     # Frontend — isomorphic / universal JavaScript rendering pattern
     "isomorphic": "frontend",       # "isomorphic JavaScript", "isomorphic rendering", "universal app" → Frontend Frameworks
     # Database — hyphenated form of "timeseries" (complement to "timeseries"→database already mapped)
@@ -7803,6 +7808,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "data" has no single-token synonym; these bigrams cover common ETL/ELT query patterns.
     "data transformation": "background",  # bigram — "data transformation tool", "data transformation pipeline" → Background Jobs (dbt)
     "data extraction": "background",      # bigram — "data extraction tool", "data extraction pipeline" → Background Jobs (ETL)
+    "data transform": "background",       # bigram — "data transform tool", "data transform pipeline" → Background Jobs (dbt; shorter form of "data transformation")
     # Database — "data modeling" queries (schema tools: dbdiagram.io, DrawSQL, ERD tools)
     "data modeling": "database",          # bigram — "data modeling tool", "data modeling database" → Database
     # CRM & Sales — lead and pipeline management queries missing from CRM routing

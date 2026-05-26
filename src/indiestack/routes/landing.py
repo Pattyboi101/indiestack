@@ -583,7 +583,9 @@ async def landing(request: Request):
     body = hero + _reveal(video_section) + _reveal(mcp_walkthrough) + _reveal(build_vs_buy) + _reveal(search_widget) + _reveal(trending_strip) + _reveal(categories_compact) + _reveal(analyze_cta) + _reveal(maker_cta)
 
     import json as _json
-    website_ld = _json.dumps({
+    def _safe_ld(s: str) -> str:
+        return s.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+    website_ld = _safe_ld(_json.dumps({
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "IndieStack",
@@ -594,7 +596,7 @@ async def landing(request: Request):
             "target": f"{BASE_URL}/search?q={{search_term_string}}",
             "query-input": "required name=search_term_string"
         }
-    }, ensure_ascii=False)
+    }, ensure_ascii=False))
     extra_head = f'<script type="application/ld+json">{website_ld}</script>'
     # Force dark mode on landing page (doesn't save to localStorage, so other pages respect user preference)
     extra_head += (

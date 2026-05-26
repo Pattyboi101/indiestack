@@ -13,6 +13,10 @@ from indiestack.db import get_tools_replacing, get_all_competitors, slugify, get
 router = APIRouter()
 
 
+def _safe_ld(s: str) -> str:
+    return s.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+
+
 def _alt_health_badge(status: str) -> str:
     """Render a colored health-status pill for alternatives pages."""
     colors = {
@@ -159,7 +163,7 @@ async def compare_index(request: Request):
         "description": f"Side-by-side comparisons of developer tools across {category_count} categories. {total_pairs} comparison pages.",
         "url": f"{BASE_URL}/compare",
     }
-    jsonld_script = f'<script type="application/ld+json">{_json.dumps(jsonld)}</script>'
+    jsonld_script = f'<script type="application/ld+json">{_safe_ld(_json.dumps(jsonld))}</script>'
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:960px;">
@@ -564,8 +568,8 @@ async def alternatives_for(request: Request, competitor_slug: str):
     }
 
     jsonld_script = (
-        f'<script type="application/ld+json">{_json.dumps(jsonld_itemlist)}</script>\n'
-        f'    <script type="application/ld+json">{_json.dumps(jsonld_faq)}</script>'
+        f'<script type="application/ld+json">{_safe_ld(_json.dumps(jsonld_itemlist))}</script>\n'
+        f'    <script type="application/ld+json">{_safe_ld(_json.dumps(jsonld_faq))}</script>'
     )
 
     # Build HTML FAQ section
@@ -813,7 +817,7 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
             "description": tool.get('tagline', ''),
         }
     }
-    jsonld_script = f'<script type="application/ld+json">{_json.dumps(jsonld)}</script>'
+    jsonld_script = f'<script type="application/ld+json">{_safe_ld(_json.dumps(jsonld))}</script>'
 
     body = f"""
     <div class="container" style="padding:48px 24px;max-width:800px;">

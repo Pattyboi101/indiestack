@@ -30,6 +30,11 @@ async def _inject_tool_cards(db, content: str) -> str:
 
 router = APIRouter()
 
+
+def _safe_ld(s: str) -> str:
+    return s.replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+
+
 _CONTAINER = 'style="max-width:800px; margin:40px auto; padding:0 24px; line-height:1.8;"'
 _HEADING = 'style="color:var(--terracotta);"'
 _TEXT = 'style="color:var(--ink);"'
@@ -533,14 +538,14 @@ async def blog_index(request: Request):
         {cards}
     </div>
     """
-    blog_ld = json.dumps({
+    blog_ld = _safe_ld(json.dumps({
         "@context": "https://schema.org",
         "@type": "Blog",
         "name": "IndieStack Blog",
         "description": "Thoughts on developer tools, AI workflows, and the future of software discovery.",
         "url": f"{BASE_URL}/blog",
         "publisher": {"@type": "Organization", "name": "IndieStack", "url": BASE_URL},
-    }, ensure_ascii=False)
+    }, ensure_ascii=False))
     blog_head = f'<script type="application/ld+json">{blog_ld}</script>'
 
     return HTMLResponse(page_shell(
