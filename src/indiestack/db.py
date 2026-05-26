@@ -9515,6 +9515,33 @@ _CAT_SYNONYMS: dict[str, str] = {
     # NOTE: "babel ast parser" still routes via "babel"→frontend (correct; Babel is a build tool).
     "ast": "developer",                        # bare — "ast explorer", "ast manipulation", "ast grep" → Developer Tools
     "acorn": "developer",                      # Acorn.js — foundational JS AST parser (27k★) → Developer Tools
+    #
+    # Probe pattern 101 (autonomous loop, May 2026): XAI / ML fairness / federated learning dead zones.
+    #
+    # "explainability library" → strips "library"→stop-word → raw_first "explainability" (unmapped).
+    # "interpretability framework" → strips "framework"→stop-word → raw_first "interpretability" (unmapped).
+    # "fairness toolkit" → raw_first "fairness" (unmapped; "toolkit" not a stop word but also unmapped).
+    # Tools in this space: SHAP, LIME, Captum (Meta), ELI5, Alibi (SeldonIO), fairlearn (Microsoft),
+    # AI Fairness 360 (IBM), Aequitas (UChicago). All belong in AI Standards & Specs.
+    "explainability": "ai standards",          # bare — "explainability library", "explainability framework" → AI Standards & Specs
+    "interpretability": "ai standards",        # bare — "model interpretability", "interpretability research" → AI Standards & Specs
+    "fairness": "ai standards",                # bare — "ml fairness toolkit", "ai fairness tool" → AI Standards & Specs
+    "explainable ai": "ai standards",          # bigram — "explainable ai library", "explainable ai python" → AI Standards & Specs
+    "ai fairness": "ai standards",             # bigram — "ai fairness toolkit", "ai fairness framework" → AI Standards & Specs
+    "ai explainability": "ai standards",       # bigram — "ai explainability tool", "ai explainability python" → AI Standards & Specs
+    # Named XAI tools — specific library queries fire raw_first without explicit mappings.
+    "shap": "ai",                              # SHAP (SHapley Additive exPlanations) — most popular XAI library → AI & Automation
+    "captum": "ai",                            # Captum — PyTorch attribution by Meta (5k★) → AI & Automation
+    "eli5": "ai",                              # ELI5 — ML explainability for sklearn/xgboost (2.7k★) → AI & Automation
+    "fairlearn": "ai",                         # fairlearn — Microsoft ML fairness toolkit (1.9k★) → AI & Automation
+    "aif360": "ai",                            # AI Fairness 360 — IBM fairness toolkit (2.4k★) → AI & Automation
+    "aequitas": "ai",                          # Aequitas — fairness auditing (UChicago) → AI & Automation
+    "flwr": "ai",                              # Flower Federated Learning (Python pkg: flwr, 5.8k★) → AI & Automation
+    "pysyft": "ai",                            # PySyft — privacy-preserving ML via federated learning (9.5k★) → AI & Automation
+    "opendp": "ai",                            # OpenDP — Harvard differential privacy library → AI & Automation
+    # "federated learning" bigram overrides "federated"→authentication (identity federation).
+    # "federated identity", "federated login", "federated sso" still route via bare "federated"→auth.
+    "federated learning": "ai",                # bigram — "federated learning framework", "federated learning python" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {

@@ -3707,6 +3707,36 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression — tree-sitter still routes to developer.
     ("tree-sitter alternative", "developer"),              # "tree-sitter"→developer unchanged
     ("treesitter nvim", "developer"),                      # bare "treesitter"→developer unchanged
+    #
+    # Probe pattern 101 (May 2026): XAI / ML fairness / federated learning dead zones.
+    # "explainability library" → strips "library"→stop-word → raw_first (no mapping) [FIXED].
+    # "interpretability framework" → strips "framework" → raw_first [FIXED].
+    # Named tools (shap, captum, eli5, fairlearn, aif360, aequitas, flwr, pysyft, opendp) all raw_first [FIXED].
+    # "federated learning" → "federated"→authentication (wrong; FL is AI/ML not identity) [FIXED via bigram].
+    #
+    ("explainability library", "ai standards"),            # bare "explainability"→"ai standards" (strips stop-word "library")
+    ("interpretability framework", "ai standards"),        # bare "interpretability"→"ai standards" (strips stop-word)
+    ("fairness toolkit", "ai standards"),                  # bare "fairness"→"ai standards"
+    ("explainable ai python", "ai standards"),             # bigram "explainable ai"→"ai standards"
+    ("ai fairness toolkit", "ai standards"),               # bigram "ai fairness"→"ai standards"
+    ("ai explainability tool", "ai standards"),            # bigram "ai explainability"→"ai standards"
+    ("shap values python", "ai"),                          # bare "shap"→ai
+    ("shap explainer alternative", "ai"),                  # bare "shap"→ai
+    ("captum attribution", "ai"),                          # bare "captum"→ai (PyTorch attribution)
+    ("eli5 sklearn", "ai"),                                # bare "eli5"→ai
+    ("fairlearn alternative", "ai"),                       # bare "fairlearn"→ai
+    ("aif360 bias detection", "ai"),                       # bare "aif360"→ai
+    ("aequitas audit", "ai"),                              # bare "aequitas"→ai
+    ("flwr federated", "ai"),                              # bare "flwr"→ai
+    ("pysyft privacy", "ai"),                              # bare "pysyft"→ai
+    ("opendp differential privacy", "ai"),                 # bare "opendp"→ai
+    ("federated learning framework", "ai"),                # bigram "federated learning"→ai (overrides "federated"→auth)
+    ("federated learning python", "ai"),                   # bigram fires at pos 0 in pre-pass
+    # Regressions — federated identity/SSO queries still route to authentication.
+    ("federated identity provider", "authentication"),     # bare "federated"→auth unchanged
+    ("federated sso saml", "authentication"),              # bare "federated"→auth; bare "sso"→auth also fires
+    # Regression — "model interpretability" routes to ai (not ai-standards) via "model"→ai at pos 0.
+    ("model interpretability tool", "ai"),                 # "model"→ai fires first; "interpretability" at pos 1 doesn't override
 ]
 
 
