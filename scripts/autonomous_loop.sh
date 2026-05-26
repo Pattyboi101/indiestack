@@ -370,7 +370,19 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 2066+ tests passing (103 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2089+ tests passing (104 probe patterns).
+
+Probe 104 (May 2026): SOAP / XML-RPC / ATO / multi-tenancy / optimistic-UI / stale-cache / cf-worker dead zones.
+  'soap', 'wsdl' → api (SOAP web services — Zeep, node-soap, SoapUI; bare "soap" was raw_first)
+  'xml-rpc', 'xml rpc' bigram → api (XML-RPC protocol; "xml rpc" was routing to developer via xml→developer)
+  'account takeover' bigram → security (ATO prevention — Arcjet, BotD, Plaid Shield)
+  'multi-tenant' → authentication (hyphenated form was raw_first; "multitenant" and "tenant" already mapped)
+  'optimistic' → frontend (optimistic UI updates — React Query, SWR, Zustand)
+  'stale' → caching; 'stale revalidate' bigram → caching (stale-while-revalidate strategy)
+  'cf worker' bigram → devops (Cloudflare Worker singular; "workers" plural was already correct)
+  'message signing', 'message authentication' bigrams → security (MAC/HMAC libraries, not message queues)
+  'dependency audit', 'package vulnerability' bigrams → security (Snyk, npm audit, OWASP Dependency-Check)
+  23 new tests + 6 regression guards added.
 
 Probe 103 (May 2026): Repo-to-LLM dead zones — bigrams for repomix/gitingest query variants.
   'repo llm' → ai dev ("repo to llm" after stop-word drop — repomix/gitingest use case)

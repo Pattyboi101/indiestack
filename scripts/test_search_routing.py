@@ -3775,6 +3775,32 @@ TEST_CASES: list[tuple[str, str]] = [
     ("digital watermarking nodejs", "security"),           # bare "watermarking"→security
     ("invisible watermark image", "security"),             # bare "watermark"→security
     ("steganography library python", "security"),          # bare "steganography"→security
+    # Probe 104 — SOAP / XML-RPC / ATO / multi-tenancy / optimistic-UI / stale-cache / cf-worker
+    ("soap client python", "api"),                         # bare "soap"→api
+    ("soap wsdl parsing", "api"),                          # bare "soap"→api + bare "wsdl"→api
+    ("soap service nodejs", "api"),                        # bare "soap"→api (Zeep, node-soap)
+    ("xml-rpc library", "api"),                            # hyphenated "xml-rpc"→api
+    ("xml rpc server python", "api"),                      # bigram "xml rpc"→api
+    ("account takeover protection", "security"),           # bigram "account takeover"→security
+    ("account takeover tool", "security"),                 # bigram "account takeover"→security
+    ("multi-tenant saas architecture", "authentication"),  # hyphenated "multi-tenant"→authentication
+    ("multi-tenant app isolation", "authentication"),      # hyphenated "multi-tenant"→authentication
+    ("optimistic update library", "frontend"),             # bare "optimistic"→frontend
+    ("optimistic ui react", "frontend"),                   # bare "optimistic"→frontend (before "ui"→frontend fires)
+    ("stale while revalidate strategy", "caching"),        # bare "stale"→caching
+    ("stale cache invalidation", "caching"),               # bare "stale"→caching
+    ("cf worker wrangler", "devops"),                      # bigram "cf worker"→devops
+    ("cf worker alternative", "devops"),                   # bigram "cf worker"→devops
+    ("message signing library", "security"),               # bigram "message signing"→security
+    ("message authentication code python", "security"),    # bigram "message authentication"→security
+    ("dependency audit nodejs", "security"),               # bigram "dependency audit"→security
+    ("package vulnerability scanner", "security"),         # bigram "package vulnerability"→security
+    # Regressions: "cf workers" (plural) still devops; "worker" alone still background
+    ("cf workers deploy", "devops"),                       # "workers"→devops (existing mapping)
+    ("background worker queue", "background"),             # bare "worker"→background (no regression)
+    # Regressions: "multi tenant" (spaced) still auth; "multitenant" still auth
+    ("multi tenant saas", "authentication"),               # bare "tenant"→authentication (no regression)
+    ("multitenant architecture", "authentication"),        # bare "multitenant"→authentication (no regression)
 ]
 
 

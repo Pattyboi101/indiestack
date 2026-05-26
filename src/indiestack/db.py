@@ -9588,6 +9588,35 @@ _CAT_SYNONYMS: dict[str, str] = {
     "watermarking": "security",                 # bare — "digital watermarking api", "image watermarking" → Security Tools
     "watermark": "security",                    # bare — "add watermark nodejs", "invisible watermark" → Security Tools
     "steganography": "security",                # bare — "steganography library python", "lsb steganography" → Security Tools
+    #
+    # Probe pattern 104 (autonomous loop, May 2026): SOAP / XML-RPC / ATO / multi-tenancy /
+    # optimistic-UI / stale-cache / cf-worker dead zones.
+    #
+    # SOAP protocol — Zeep (Python), node-soap, Apache CXF, SoapUI. Bare "soap" fires raw_first.
+    "soap": "api",                              # bare — "soap client", "soap wsdl", "soap service" → API Tools
+    "wsdl": "api",                              # Web Services Description Language — always SOAP context → API Tools
+    # XML-RPC — plain HTTP + XML remote calls (Python xmlrpc, Apache XMLRPC, Frontier)
+    "xml-rpc": "api",                           # hyphenated slug — "xml-rpc client", "xml-rpc library" → API Tools
+    "xml rpc": "api",                           # spaced bigram — "xml rpc server", "xml rpc python" → API Tools
+    # Account Takeover prevention — ATO detection, bot-driven credential stuffing (Arcjet, BotD, Plaid, Shield)
+    "account takeover": "security",             # bigram — "account takeover protection", "account takeover tool" → Security
+    # Multi-tenancy — tenant isolation, workspace/org management; hyphenated form was raw_first.
+    # Bare "tenant" already maps to authentication; "multitenant" already maps to authentication.
+    "multi-tenant": "authentication",           # hyphenated — "multi-tenant saas", "multi-tenant app" → Authentication
+    # Optimistic updates — frontend UI pattern (React Query, SWR, Zustand optimistic state)
+    "optimistic": "frontend",                   # bare — "optimistic update", "optimistic ui", "optimistic concurrency" → Frontend
+    # Stale-while-revalidate caching strategy (SWR, React Query, HTTP Cache-Control stale-while-revalidate)
+    "stale": "caching",                         # bare — "stale while revalidate", "stale cache" → Caching
+    "stale revalidate": "caching",              # bigram — stop-word drop turns "stale while revalidate" → ["stale","revalidate"]
+    # Cloudflare Worker (singular) — bare "worker" maps to background jobs; "cf worker" is always CF Workers (devops).
+    # "cf workers" (plural) already routes correctly via "workers"→devops.
+    "cf worker": "devops",                      # bigram — "cf worker wrangler", "cf worker alternative" → DevOps
+    # Message authentication code — HMAC/CMAC signing libraries; "message" alone → message-queue (wrong context).
+    "message signing": "security",              # bigram — "message signing library", "message authentication code" → Security
+    "message authentication": "security",       # bigram — "message authentication code", "mac authentication" → Security
+    # Dependency + package security auditing (Snyk, npm audit, OWASP Dependency-Check)
+    "dependency audit": "security",             # bigram — "dependency audit tool", "dependency vulnerability audit" → Security
+    "package vulnerability": "security",        # bigram — "package vulnerability scanner", "package security audit" → Security
 }
 
 _FTS_STOP_WORDS = {
