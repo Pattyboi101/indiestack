@@ -7576,6 +7576,71 @@ _CAT_SYNONYMS: dict[str, str] = {
     #   as Frontend Frameworks on IndieStack; see "palette"→frontend, "typeface"→frontend).
     "ui mockup": "design",                     # bigram — "ui mockup tool", "ui mockup generator" → Design & Creative
     "ui wireframe": "design",                  # bigram — "ui wireframe tool", "ui wireframing" → Design & Creative
+    #
+    # Probe pattern 102 (autonomous loop, May 2026): cryptographic primitives / ZK proofs /
+    # post-quantum / message-delivery semantics dead zones.
+    #
+    # ZK-proof family — all fired raw_first. Zero-knowledge tools (snarkjs, circom, gnark,
+    # bellman, risc0, arkworks) live in Security Tools alongside other cryptographic libraries.
+    # "zero knowledge" bigram was added in probe 101; add remaining ZK terms.
+    "zkp": "security",                         # bare — "zkp library", "zkp circuit" → Security Tools
+    "zkproof": "security",                     # compound — "zkproof prover", "zkproof tool" → Security Tools
+    "zk snark": "security",                    # bigram — "zk snark circuit", "zk snark prover" → Security Tools
+    "zk stark": "security",                    # bigram — "zk stark implementation", "zk stark rust" → Security Tools
+    "snarkjs": "security",                     # named tool — snarkjs (JS ZK-SNARK lib, 6k★) → Security Tools
+    "circom": "security",                      # named tool — circom (ZK circuit language) → Security Tools
+    "gnark": "security",                       # named tool — gnark (Go ZK library, Consensys) → Security Tools
+    #
+    # Post-quantum cryptography — bare "quantum" and "lattice" fired raw_first.
+    # NIST post-quantum standards (Kyber→ML-KEM, Dilithium→ML-DSA) finalized 2024.
+    # Libraries: liboqs (Open Quantum Safe), PQClean, CRYSTALS, pqcrypto.
+    "post quantum": "security",                # bigram — "post quantum cryptography", "post quantum algorithm" → Security Tools
+    "postquantum": "security",                 # compound — "postquantum key exchange" → Security Tools
+    "quantum": "security",                     # bare — "quantum resistant algorithm", "quantum safe encryption" → Security Tools
+    "lattice": "security",                     # bare — "lattice cryptography", "lattice based encryption" → Security Tools
+    #
+    # Elliptic curve cryptography — bare tokens fired raw_first.
+    "elliptic": "security",                    # bare — "elliptic curve cryptography", "elliptic curve diffie hellman" → Security
+    "ecc": "security",                         # bare — "ecc library", "ecc key pair" → Security Tools
+    "ecdsa": "security",                       # bare — "ecdsa signature", "ecdsa verify" → Security Tools
+    "ecdh": "security",                        # bare — "ecdh key exchange", "ecdh curve25519" → Security Tools
+    "x25519": "security",                      # bare — "x25519 key exchange", "x25519 library" → Security Tools
+    "ed25519": "security",                     # bare — "ed25519 signing", "ed25519 keypair" → Security Tools
+    "secp256k1": "security",                   # bare — "secp256k1 library", "secp256k1 signature" → Security Tools
+    #
+    # Key derivation functions — fired raw_first.
+    "key derivation": "security",              # bigram — "key derivation function", "key derivation scrypt" → Security Tools
+    "kdf": "security",                         # bare — "kdf library", "kdf algorithm" → Security Tools
+    "pbkdf2": "security",                      # bare — "pbkdf2 iterations", "pbkdf2 nodejs" → Security Tools
+    #
+    # Cryptographic libraries — bare named tools fired raw_first.
+    "libsodium": "security",                   # bare — "libsodium alternative", "libsodium python" → Security Tools
+    "nacl": "security",                        # bare — "nacl library", "nacl crypto" → Security Tools (NaCl / TweetNaCl)
+    "openssl": "security",                     # bare — "openssl library", "openssl alternative" → Security Tools
+    "libressl": "security",                    # bare — "libressl alternative" → Security Tools (OpenSSL fork)
+    #
+    # Cipher algorithms — bare tokens fired raw_first.
+    "aes": "security",                         # bare — "aes encryption", "aes gcm library" → Security Tools
+    "chacha20": "security",                    # bare — "chacha20 poly1305", "chacha20 stream cipher" → Security Tools
+    "aead": "security",                        # bare — "aead cipher", "aead encryption mode" → Security Tools
+    "sha256": "security",                      # bare — "sha256 implementation", "sha256 hash" → Security Tools
+    "sha3": "security",                        # bare — "sha3 library", "sha3-256" → Security Tools
+    #
+    # Cryptographic protocols — mis-routed via "protocol"→mcp or "signal"→frontend.
+    # Bigrams fire in pre-pass before bare-token collisions.
+    "noise protocol": "security",              # bigram — Noise Protocol Framework (handshake patterns) → Security Tools
+    "signal protocol": "security",            # bigram — Signal Protocol (E2EE ratchet) → Security Tools
+    "double ratchet": "security",              # bigram — "double ratchet algorithm", "double ratchet protocol" → Security Tools
+    "digital signature": "security",           # bigram — "digital signature library", "digital signature algorithm" → Security
+    "code signing": "security",               # bigram — "code signing certificate", "code signing tool" → Security Tools
+    "pki": "security",                         # bare — "pki tool", "pki certificate management" → Security Tools
+    #
+    # Message Queue — delivery-guarantee semantics dead zones.
+    # "at least once delivery" → ["at","least","once","delivery"] → bigram "least once" fires
+    # at i=1 before bare "delivery"→devops fires at i=3.
+    "exactly once": "message",                 # bigram — "exactly once semantics", "exactly once delivery" → Message Queues
+    "least once": "message",                   # bigram — "at least once delivery", "at least once consumer" → Message Queues
+    "most once": "message",                    # bigram — "at most once delivery", "at most once semantics" → Message Queues
 }
 
 _FTS_STOP_WORDS = {

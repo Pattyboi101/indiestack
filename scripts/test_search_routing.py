@@ -928,6 +928,61 @@ TEST_CASES: list[tuple[str, str]] = [
     ("keystonejs headless", "cms"),                        # "keystonejs"→cms compound unchanged
     ("ui library react", "frontend"),                      # bare "ui"→frontend unchanged for framework queries
     ("ui component react", "frontend"),                    # bare "ui"→frontend unchanged for UI components
+    #
+    # Probe 102: cryptographic primitives / ZK proofs / post-quantum / message-delivery semantics
+    #
+    # ZK proof family
+    ("zkp library", "security"),                           # bare "zkp"→security
+    ("zkproof prover", "security"),                        # bare "zkproof"→security
+    ("zk snark circuit", "security"),                      # bigram "zk snark"→security
+    ("zk stark implementation", "security"),               # bigram "zk stark"→security
+    ("zero knowledge proof", "security"),                  # bigram "zero knowledge"→security (pre-existing)
+    ("snarkjs alternative", "security"),                   # bare "snarkjs"→security
+    ("circom circuit", "security"),                        # bare "circom"→security
+    ("gnark library", "security"),                         # bare "gnark"→security
+    # Post-quantum cryptography
+    ("post quantum cryptography", "security"),             # bigram "post quantum"→security
+    ("quantum resistant algorithm", "security"),           # bare "quantum"→security
+    ("lattice cryptography", "security"),                  # bare "lattice"→security
+    # Elliptic curve cryptography
+    ("elliptic curve cryptography", "security"),           # bare "elliptic"→security
+    ("ecc library", "security"),                           # bare "ecc"→security
+    ("ecdsa signature", "security"),                       # bare "ecdsa"→security
+    ("ecdh key exchange", "security"),                     # bare "ecdh"→security
+    ("x25519 key exchange", "security"),                   # bare "x25519"→security
+    ("ed25519 signing", "security"),                       # bare "ed25519"→security
+    ("secp256k1 library", "security"),                     # bare "secp256k1"→security
+    # Key derivation functions
+    ("key derivation function", "security"),               # bigram "key derivation"→security
+    ("kdf algorithm", "security"),                         # bare "kdf"→security
+    ("pbkdf2 iterations", "security"),                     # bare "pbkdf2"→security
+    # Cryptographic libraries
+    ("libsodium alternative", "security"),                 # bare "libsodium"→security
+    ("nacl library", "security"),                          # bare "nacl"→security
+    ("openssl alternative", "security"),                   # bare "openssl"→security
+    ("libressl alternative", "security"),                  # bare "libressl"→security
+    # Cipher algorithms
+    ("aes gcm library", "security"),                       # bare "aes"→security
+    ("chacha20 poly1305", "security"),                     # bare "chacha20"→security
+    ("aead cipher", "security"),                           # bare "aead"→security
+    ("sha256 implementation", "security"),                 # bare "sha256"→security
+    ("sha3 library", "security"),                          # bare "sha3"→security
+    # Cryptographic protocols
+    ("noise protocol handshake", "security"),              # bigram "noise protocol"→security (pre-pass overrides "protocol"→mcp)
+    ("signal protocol library", "security"),               # bigram "signal protocol"→security (pre-pass overrides "signal"→frontend)
+    ("double ratchet algorithm", "security"),              # bigram "double ratchet"→security
+    ("digital signature algorithm", "security"),           # bigram "digital signature"→security
+    ("code signing certificate", "security"),              # bigram "code signing"→security
+    ("pki certificate management", "security"),            # bare "pki"→security
+    # Message Queue — delivery semantics
+    ("exactly once semantics", "message"),                 # bigram "exactly once"→message
+    ("at least once delivery", "message"),                 # bigram "least once"→message fires before "delivery"→devops
+    ("at most once delivery", "message"),                  # bigram "most once"→message
+    # Regressions — confirm no collisions
+    ("zero trust network", "security"),                    # "zero trust"→security bigram unchanged
+    ("signal based reactivity", "frontend"),               # bare "signal"→frontend unchanged (no "protocol" suffix)
+    ("delivery pipeline cicd", "devops"),                  # bare "delivery"→devops unchanged for CI/CD context
+    ("aes key rotation", "security"),                      # "aes"→security fires at pos 0 correctly
 ]
 
 
