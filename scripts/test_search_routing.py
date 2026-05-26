@@ -589,6 +589,23 @@ When hunting for routing gaps, these query forms are historically tricky:
     Fixed: cpu/disk/memory/resource usage→monitoring, api security→security,
     api monitoring/observability→monitoring, api contract→testing,
     fault injection→testing, chaos→testing (probe 96, May 2026).
+
+62. "Named acronym family audit" — when one acronym in a well-known family is mapped
+    (sast, dast, iast) always audit ALL siblings in the family for the missing member.
+    Here: ASTT (Application Security Testing Types) — sast/dast/iast were mapped but
+    "rasp" (Runtime Application Self-Protection) was the missing fourth member. Tools:
+    Contrast Security, Sqreen/Datadog App Protection, AppSentinel. Also add the spaced
+    form bigram ("runtime protection") to cover full-word queries. Fixed: "rasp"→security,
+    "runtime protection"→security (autonomous loop, May 2026).
+
+63. "Named-tool dead zones in popular developer utility categories" — bare tool names
+    for foundational libraries often miss _CAT_SYNONYMS coverage when the category
+    already has its topic well-mapped. AST tooling: tree-sitter/treesitter were mapped
+    but bare "ast" and named tools (acorn, jscodeshift) fired raw_first. Codemod tools:
+    "codemod"/"codemods"/"jscodeshift" all fired raw_first or mis-routed via later
+    tokens. Strategy: after adding a category (developer/frontend/security), enumerate
+    the top-5 tools by GitHub stars and verify each bare slug is in _CAT_SYNONYMS.
+    Fixed: "ast"/"acorn"/"codemod"/"codemods"/"jscodeshift"→developer (autonomous loop, May 2026).
 """
 
 import sys
@@ -3651,6 +3668,45 @@ TEST_CASES: list[tuple[str, str]] = [
     ("task runner", "developer"),            # bare "task"→developer unchanged for task runners (Grunt/Gulp)
     ("task automation", "developer"),        # bare "task"→developer unchanged
     ("rate limiting library", "api"),        # "rate limiting" bigram unchanged
+
+    # Probe pattern 54 (autonomous loop) — RASP / codemod / AST transformation dead zones
+    #
+    # "rasp" / "runtime protection" — the four ASTT acronyms (sast/dast/iast/rasp) were
+    # missing rasp. Runtime Application Self-Protection tools: Contrast Security, Sqreen,
+    # Datadog App Protection, AppSentinel — all belong in Security Tools.
+    ("rasp tool nodejs", "security"),                      # bare "rasp"→security
+    ("rasp alternative open source", "security"),          # bare "rasp"→security fires before "open"→stripped
+    ("rasp vs waf comparison", "security"),                # bare "rasp"→security at i=0
+    ("runtime protection layer", "security"),              # bigram "runtime protection"→security
+    ("runtime protection nodejs", "security"),             # bigram fires before bare "runtime" (unmapped)
+    # Regression — "sast" / "dast" / "iast" still route to security.
+    ("sast tool comparison", "security"),                  # bare "sast"→security unchanged
+    ("dast scanner", "security"),                          # bare "dast"→security unchanged
+    ("iast vs dast", "security"),                          # bare "iast"→security unchanged
+    #
+    # "codemod" / "codemods" / "jscodeshift" — code transformation tools mis-routed via
+    # surrounding tokens ("migration"→database, "typescript"→frontend).
+    # Fix: bare token mappings ensure first-token routing wins.
+    ("codemod tool", "developer"),                         # bare "codemod"→developer
+    ("codemod typescript", "developer"),                   # bare "codemod" fires before "typescript"→frontend
+    ("codemods react migration", "developer"),             # bare "codemods" fires before "migration"→database
+    ("codemods for upgrade", "developer"),                 # bare "codemods"→developer
+    ("jscodeshift alternative", "developer"),              # bare "jscodeshift"→developer
+    ("jscodeshift transform", "developer"),                # bare "jscodeshift"→developer
+    # Regression — "babel" queries still route to frontend (Babel is a build tool, not pure AST).
+    ("babel transform", "frontend"),                       # bare "babel"→frontend unchanged
+    ("babel plugin development", "frontend"),              # bare "babel"→frontend unchanged
+    #
+    # "ast" / "acorn" — Abstract Syntax Tree tooling fired raw_first; tree-sitter/treesitter
+    # were already mapped. bare "ast" and named foundational parsers (Acorn.js) were missing.
+    ("ast explorer", "developer"),                         # bare "ast"→developer
+    ("ast manipulation", "developer"),                     # bare "ast"→developer (no longer raw_first)
+    ("ast grep alternative", "developer"),                 # bare "ast"→developer fires before "grep" (unmapped)
+    ("acorn parser", "developer"),                         # bare "acorn"→developer (Acorn.js AST parser)
+    ("acorn alternative", "developer"),                    # bare "acorn"→developer
+    # Regression — tree-sitter still routes to developer.
+    ("tree-sitter alternative", "developer"),              # "tree-sitter"→developer unchanged
+    ("treesitter nvim", "developer"),                      # bare "treesitter"→developer unchanged
 ]
 
 

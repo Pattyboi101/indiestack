@@ -9494,6 +9494,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "class validator": "developer",     # bigram — "class validator nestjs", "class-validator typescript" → Developer
     "class decorator": "developer",     # bigram — "class decorator typescript", "class decorator pattern" → Developer
     "class inheritance": "developer",   # bigram — "class inheritance javascript", "class inheritance oop" → Developer
+    #
+    # Probe pattern 54 (autonomous loop, May 2026): RASP / codemod / AST transformation dead zones
+    #
+    # "rasp" — Runtime Application Self-Protection tools (Contrast Security, Sqreen/Datadog
+    # App Protection, AppSentinel) fired raw_first. Sibling acronyms sast/dast/iast already
+    # mapped; rasp was the missing fourth acronym in the ASTT family.
+    "rasp": "security",                        # bare — "rasp tool", "rasp alternative", "rasp vs waf" → Security Tools
+    "runtime protection": "security",          # bigram — "runtime protection layer", "runtime protection nodejs" → Security
+    #
+    # "codemod" / "codemods" / "jscodeshift" — code transformation tools fired raw_first or
+    # mis-routed via surrounding tokens ("migration"→database, "typescript"→frontend).
+    # jscodeshift (Facebook), ast-grep, codemod.com, putout all live in Developer Tools.
+    "codemod": "developer",                    # bare — "codemod tool", "codemod typescript" → Developer Tools
+    "codemods": "developer",                   # plural — "codemods react migration", "codemods for upgrade" → Developer Tools
+    "jscodeshift": "developer",                # named tool — "jscodeshift alternative", "jscodeshift transform" → Developer Tools
+    #
+    # "ast" — Abstract Syntax Tree tooling (AST Explorer, ts-morph, acorn, recast) fired
+    # raw_first. tree-sitter/treesitter already mapped; bare "ast" and named AST tools missing.
+    # NOTE: "babel ast parser" still routes via "babel"→frontend (correct; Babel is a build tool).
+    "ast": "developer",                        # bare — "ast explorer", "ast manipulation", "ast grep" → Developer Tools
+    "acorn": "developer",                      # Acorn.js — foundational JS AST parser (27k★) → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
