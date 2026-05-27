@@ -4060,6 +4060,42 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regression: "smtp client" / "email deliverability" / "dkim spf" still route correctly
     ("smtp client library", "email"),                       # "smtp"→email fires at pos 0 (no regression)
     ("email deliverability", "email"),                      # "email"→email fires at pos 0 (no regression)
+
+    # ── Probe 114 (autonomous loop, May 2026): stomp/digital-asset/image-registry/whatsapp/databricks dead zones ──
+    #
+    # "stomp protocol" → mcp via bare "protocol"→mcp (STOMP is a messaging protocol → Message Queue).
+    ("stomp broker", "message"),                            # bare "stomp"→message (STOMP broker)
+    ("stomp protocol", "message"),                          # bigram "stomp protocol"→message
+    ("stomp client nodejs", "message"),                     # bare "stomp"→message fires at pos 0
+    # Regression: amqp/kafka/rabbitmq still route correctly
+    ("amqp protocol", "message"),                           # bare "amqp"→message (no regression)
+    ("mqtt broker", "message"),                             # bare "mqtt"→message (no regression)
+    #
+    # "digital asset management" → project via "management"→project (DAM systems → File Management).
+    ("digital asset management", "file"),                   # bigram "digital asset"→file fires at pos 0
+    ("digital asset library", "file"),                      # bigram "digital asset"→file
+    #
+    # "image registry docker" → media via bare "image"→media (Docker image registries → DevOps).
+    ("image registry", "devops"),                           # bigram "image registry"→devops
+    ("image registry docker", "devops"),                    # bigram "image registry" fires at pos 0-1
+    ("oci image registry", "devops"),                       # "image registry" bigram fires at pos 1-2
+    # Regression: image scanning/upload bigrams still fire
+    ("image scanning trivy", "security"),                   # "image scanning"→security still fires (no regression)
+    ("image upload react", "frontend"),                     # "image upload"→frontend still fires (no regression)
+    #
+    # "whatsapp api" → api via bare "api" (WhatsApp Business API → Notifications).
+    ("whatsapp api", "notifications"),                      # bare "whatsapp"→notifications fires at pos 0
+    ("whatsapp business api", "notifications"),             # bare "whatsapp"→notifications fires
+    ("whatsapp sdk", "notifications"),                      # bare "whatsapp"→notifications fires
+    # Regression: "sms api"/"push notification" still route correctly
+    ("sms api", "notifications"),                           # bare "sms"→notifications (no regression)
+    #
+    # "databricks sql" → ai via bare "databricks"→ai (SQL warehouse queries → Database).
+    ("databricks sql", "database"),                         # bigram "databricks sql"→database fires before "databricks"→ai
+    ("databricks sql warehouse", "database"),               # meaningful=["databricks","sql"]; bigram fires at pos 0
+    # Regression: bare "databricks" still routes to ai for ML/MLflow queries
+    ("databricks mlflow", "ai"),                            # bare "databricks"→ai still fires (no regression)
+    ("databricks notebook", "ai"),                          # bare "databricks"→ai still fires (no regression)
 ]
 
 

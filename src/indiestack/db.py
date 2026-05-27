@@ -9706,6 +9706,37 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Complement to existing "smtp"→email. Also add "pop3" (POP3 email retrieval protocol).
     "imap": "email",                        # bare — "imap library", "imap client", "imap server" → Email Marketing
     "pop3": "email",                        # bare — "pop3 client", "pop3 library" → Email Marketing
+
+    # ── Probe 114 (autonomous loop, May 2026): stomp/digital-asset/image-registry/whatsapp/databricks dead zones ──
+    #
+    # "stomp protocol" / "stomp broker" → mcp via bare "protocol"→mcp (wrong; STOMP — Simple Text
+    # Oriented Messaging Protocol — is a messaging protocol for brokers like ActiveMQ, RabbitMQ → Message Queue).
+    "stomp": "message",                     # bare — "stomp broker", "stomp client", "stomp server" → Message Queue
+    "stomp protocol": "message",            # bigram — "stomp protocol client", "stomp protocol library" → Message Queue
+    #
+    # "digital asset management" → project via bare "management"→project (wrong; DAM systems
+    # (Cloudinary, Bynder, Canto, Filestack, Imagekit) belong in File Management; "management"→project
+    # fires before "asset"→file when "digital" is position 0 token but then position 1 is "asset" which
+    # fires "asset"→file before bigram check in second loop).
+    # Add bigram at pre-pass level to ensure File Management wins.
+    "digital asset": "file",                # bigram — "digital asset management", "digital asset library" → File Management
+    #
+    # "image registry docker" → media via bare "image"→media (wrong; Docker image registries
+    # (Docker Hub, Quay.io, Harbor, Nexus, JFrog Artifactory Container) belong in DevOps).
+    # Bigram fires before bare "image"→media when "registry" is the second token.
+    "image registry": "devops",             # bigram — "image registry self-hosted", "oci image registry" → DevOps
+    #
+    # "whatsapp api" → api via bare "api"→api (wrong; WhatsApp Business API is a notification/
+    # messaging channel tool — 360dialog, MessageBird, Twilio WhatsApp, Meta WhatsApp Cloud API
+    # belong in Notifications alongside SMS and push notification tools).
+    # Bare "whatsapp" fires at position 0 before bare "api" at position 1.
+    "whatsapp": "notifications",            # bare — "whatsapp api", "whatsapp business api", "whatsapp sdk" → Notifications
+    #
+    # "databricks sql" → ai via bare "databricks"→ai (Databricks is mapped to AI for ML/MLflow
+    # context; but "databricks sql" queries target the SQL Analytics Warehouse — effectively a
+    # managed cloud data warehouse competing with Snowflake/BigQuery → Database).
+    # Bigram fires before bare "databricks"→ai when "sql" is the second token.
+    "databricks sql": "database",           # bigram — "databricks sql warehouse", "databricks sql analytics" → Database
 }
 
 _FTS_STOP_WORDS = {
