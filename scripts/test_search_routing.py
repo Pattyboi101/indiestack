@@ -1042,6 +1042,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("argocd alternative", "devops"),                      # bare "argocd"→devops (no regression)
     ("ngrok alternative", "devops"),                       # bare "ngrok"→devops (no regression)
     ("nmap alternative", "security"),                      # bare "nmap"→security (no regression)
+    #
+    # Probe pattern 112 (autonomous loop, May 2026): insights / kpi / feature-voting dead zones.
+    #
+    # "product insights"/"user insights" — both tokens unmapped → raw_first (PostHog, Mixpanel unreachable).
+    ("product insights tool", "analytics"),                # bare "insights"→analytics
+    ("user insights dashboard", "analytics"),              # bare "insights"→analytics
+    ("data insight platform", "analytics"),                # bare "insight"→analytics (singular)
+    # "kpi tracking" strips "tracking" → just "kpi" → raw_first (Geckoboard, Databox unreachable).
+    ("kpi tracking tool", "analytics"),                    # bare "kpi"→analytics ("tracking" stripped)
+    ("kpis reporting", "analytics"),                       # bare "kpis"→analytics
+    # "feature voting" — "feature"→feature-flags fires (wrong; Canny, Featurebase → Feedback).
+    ("feature voting board", "feedback"),                  # bigram "feature voting"→feedback (beats "feature"→feature-flags)
+    ("feature voting tool", "feedback"),                   # bigram "feature voting"→feedback
+    # bare "voting"→feedback for generic voting queries
+    ("voting app open source", "feedback"),                # bare "voting"→feedback
+    # Regressions: feature-flags routing unchanged for non-voting queries
+    ("feature flags react", "feature"),                    # bare "feature"→feature-flags (no regression)
+    ("feature toggle nodejs", "feature"),                  # bare "feature"→feature-flags (no regression)
 ]
 
 

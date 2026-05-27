@@ -7656,6 +7656,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     "exactly once": "message",                 # bigram — "exactly once semantics", "exactly once delivery" → Message Queues
     "least once": "message",                   # bigram — "at least once delivery", "at least once consumer" → Message Queues
     "most once": "message",                    # bigram — "at most once delivery", "at most once semantics" → Message Queues
+    #
+    # ── Probe pattern 112 (autonomous loop, May 2026): insights / kpi / feature-voting dead zones ──
+    #
+    # "product insights"/"user insights"/"data insights" — both tokens unmapped → raw_first.
+    # Analytics tools (PostHog, Mixpanel, FullStory, Amplitude) unreachable for insights queries.
+    "insights": "analytics",                # bare — "product insights", "user insights", "data insights" → Analytics & Metrics
+    "insight": "analytics",                 # singular — "product insight", "insight tool" → Analytics & Metrics
+    #
+    # "kpi" bare token — no mapping existed. "kpi tool", "kpi tracking" ("tracking" is stop word → just "kpi")
+    # all fired raw_first. KPI dashboards (Geckoboard, Databox, Klipfolio) live in Analytics & Metrics.
+    "kpi": "analytics",                     # bare — "kpi dashboard", "kpi tracking tool" → Analytics & Metrics
+    "kpis": "analytics",                    # plural — "kpis reporting", "kpis dashboard" → Analytics & Metrics
+    #
+    # "feature voting" / "idea voting" — "feature"→feature-flags fires (wrong; Canny, Featurebase,
+    # UserVoice are Feedback & Reviews tools). Bigram "feature voting" overrides bare "feature"→feature-flags.
+    # "voting" bare token covers generic voting queries ("voting app", "idea voting").
+    # Regression: "feature flags react", "feature toggle", "feature rollout" keep "feature"→feature-flags.
+    "feature voting": "feedback",           # bigram — "feature voting board", "feature voting tool" → Feedback & Reviews
+    "voting": "feedback",                   # bare — "voting app", "feature voting" → Feedback & Reviews (Canny, UserVoice)
 }
 
 _FTS_STOP_WORDS = {
