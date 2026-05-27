@@ -606,6 +606,27 @@ When hunting for routing gaps, these query forms are historically tricky:
     tokens. Strategy: after adding a category (developer/frontend/security), enumerate
     the top-5 tools by GitHub stars and verify each bare slug is in _CAT_SYNONYMS.
     Fixed: "ast"/"acorn"/"codemod"/"codemods"/"jscodeshift"→developer (autonomous loop, May 2026).
+
+64. "Derivative-form gap — noun/verb/adjective variants of a mapped synonym family" —
+    when a canonical noun form is mapped (e.g. "encryption"→security) but the bare verb
+    ("encrypt") or adjective ("encrypted") is not, natural-language queries fire raw_first.
+    Similarly, when "letsencrypt" (compound) is mapped but "lets encrypt" (two words) is
+    not, the spaced form is an invisible dead zone. The same gap appears for document-format
+    tokens: "xlsx"→developer was mapped but "docx" (same file-format family) was not.
+    For realtime-collab concepts: "presence awareness" bigram existed but bare "presence"
+    as a standalone token had no entry. Strategy: for every token family already in
+    _CAT_SYNONYMS, audit these derivative forms:
+      (a) Verb form: "encryption"→"encrypt", "caching"→"cache" (already mapped),
+          "logging"→"log" (check), "signing"→"sign".
+      (b) Spaced compound variants when only hyphenated/compact forms exist:
+          "letsencrypt"→"lets encrypt" (spaced bigram).
+      (c) Sibling file-format tokens: ".xlsx" mapped → check ".docx", ".pptx", ".odt".
+      (d) Bare token when only a qualifier bigram exists: "presence awareness"→api
+          → verify bare "presence" is also mapped.
+    Probe: take any recently added entry, derive its verb/noun/adjective forms, check
+    each in _CAT_SYNONYMS. If missing and unambiguous in context, add the bare form.
+    Fixed: "encrypt"→security, "docx"→developer, "presence"→api, "signaling"→api,
+    "inner loop"→devops bigram (probe 111, May 2026).
 """
 
 import sys
