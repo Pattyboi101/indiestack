@@ -2615,6 +2615,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rag": "ai",
     "embedding": "ai",
     "embeddings": "ai",
+    "image embedding": "ai",        # bigram — "image embedding model", "image embedding search" → AI (CLIP, Jina; overrides "image"→media)
     # Vector databases (stored under database category)
     "vector": "database",
     # Direct category name fragments (for non-first-position terms like "self hosted auth")
@@ -3266,6 +3267,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI agent frameworks — increasingly common in developer queries
     "llamaindex": "ai",              # LlamaIndex — RAG + data framework for LLM apps
     "litellm": "ai",                 # LiteLLM — unified proxy for 100+ LLM providers
+    "llm load": "ai",               # bigram — "llm load balancer", "llm load routing" → AI & Automation (LiteLLM, PortKey; overrides "load balancer"→devops)
     "crewai": "ai",                  # CrewAI — multi-agent role-based framework
     "autogen": "ai",                 # AutoGen (Microsoft) — conversational multi-agent
     "dspy": "ai",                    # DSPy (Stanford) — programming model for LM pipelines
@@ -3280,6 +3282,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "dagster": "background",         # Dagster — data pipeline + asset-based orchestration
     "prefect": "background",         # Prefect — modern Python workflow orchestration
     "airflow": "background",         # Apache Airflow — DAG-based workflow scheduler
+    "dag": "background",             # bare — "DAG scheduler", "DAG runner", "DAG workflow" → Background Jobs (Airflow, Prefect, Dagster)
+    "dag runner": "background",      # bigram — "dag runner python", "dag task runner" → Background Jobs
     # API protocol — gRPC / Protobuf
     # "protocol buffer" bigram overrides "protocol"→mcp (which exists for MCP server queries)
     # so that "protocol buffer grpc", "protocol buffers golang" route to API Tools not MCP Servers.
@@ -3486,6 +3490,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "wails": "frontend",            # Wails — build desktop apps with Go + HTML/CSS/JS frontend
     # A/B testing — feature flags category (Split.io, GrowthBook, LaunchDarkly)
     "ab": "feature",                # "a/b test", "a/b testing" → Feature Flags (GrowthBook, Unleash)
+    "b testing": "feature",         # bigram — "a/b testing" slash-normalised form ("b" + "testing") → Feature Flags
+    "a/b": "feature",               # slash form — "a/b test", "a/b testing" (slash preserved in routing) → Feature Flags
+    "a/b testing": "feature",       # bigram — exact slash form → Feature Flags
     "split": "feature",             # "split testing", "Split.io alternative" → Feature Flags
     # Email — generic mail queries (mail relay, mailer libraries)
     "mail": "email",                # "mail sender", "mail relay", "Laravel mail", "Go mailer"
@@ -8374,6 +8381,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "cost" raw_first → no boost; cloud cost tools (Infracost, cloud-pricing-api) → DevOps.
     # "payment"/"subscription" fire first for billing queries so no regression risk.
     "cost": "devops",                    # "cost optimization", "infra cost", "cloud cost monitoring" → DevOps & Infrastructure
+    "ai cost": "ai",                     # bigram — "ai cost optimization", "ai cost tracking" → AI & Automation (Helicone, PortKey; "ai" not in _CAT_SYNONYMS so bare "cost"→devops would win)
     # "semantic" → search (semantic search/vector search); bigram overrides for release automation queries.
     "semantic release": "devops",        # bigram — "semantic-release config", "semantic release alternative" → DevOps (git-cliff, changesets)
     # "sortable" raw_first → no boost; drag-and-drop sortable UI libs (SortableJS, react-sortable-hoc) → Frontend.

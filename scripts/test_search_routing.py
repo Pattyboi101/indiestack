@@ -3819,6 +3819,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("token limit gpt4", "ai"),                            # bigram "token limit"→ai (no regression)
     ("token pricing comparison", "ai"),                    # bigram "token pricing"→ai (no regression)
     ("context window limit", "ai"),                        # bigram "context window"→ai (no regression)
+    #
+    # Probe 106 (autonomous loop, May 2026): DAG/workflow, LLM load balancing, AI cost, a/b testing, image embedding dead zones.
+    #
+    # "dag" was raw_first — bare "dag" maps to background (Airflow, Prefect, Dagster use DAGs).
+    ("dag scheduler", "background"),                        # bare "dag"→background
+    ("dag runner python", "background"),                    # bigram "dag runner"→background
+    ("dag workflow airflow", "background"),                 # bare "dag"→background fires before "airflow"
+    # "llm load balancer" was devops — bigram "llm load"→ai overrides "load balancer"→devops.
+    ("llm load balancer", "ai"),                            # bigram "llm load"→ai (LiteLLM, PortKey)
+    ("llm load routing fallback", "ai"),                    # bigram "llm load"→ai
+    # "ai cost optimization" was devops (bare "cost"→devops, "ai" not in _CAT_SYNONYMS).
+    # Bigram "ai cost"→ai overrides.
+    ("ai cost optimization", "ai"),                         # bigram "ai cost"→ai (Helicone, PortKey)
+    ("ai cost tracking helicone", "ai"),                    # bigram "ai cost"→ai
+    # "a/b testing" was testing — slash form "a/b" and bigram "a/b testing" now map to feature.
+    ("a/b testing", "feature"),                             # slash form "a/b testing"→feature
+    ("a/b test tool", "feature"),                           # bare "a/b"→feature
+    # "image embedding" was media (bare "image"→media firing before "embedding"→ai).
+    # Bigram "image embedding"→ai overrides.
+    ("image embedding model", "ai"),                        # bigram "image embedding"→ai (CLIP, Jina)
+    ("image embedding search", "ai"),                       # bigram "image embedding"→ai
+    # Regressions: existing a/b and cost routes still work
+    ("ab testing tool", "feature"),                         # bare "ab"→feature (no regression)
+    ("cost optimization infra", "devops"),                  # bare "cost"→devops (no regression)
+    ("load balancer nginx", "devops"),                      # bigram "load balancer"→devops (no regression)
 ]
 
 
