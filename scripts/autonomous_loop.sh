@@ -374,13 +374,24 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 2167+ tests passing (110 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2190+ tests passing (111 probe patterns).
 
 Probe 110 (autonomous loop, May 2026): metrics-aggregation/distributed-file/code-snippet dead zones.
   'metrics aggregation prometheus/victoria' → monitoring (bigram; bare "metrics"→analytics was firing; VictoriaMetrics/Prometheus are Monitoring)
   'distributed file system/storage' → file (bigram "distributed file"→file; bare "distributed" intentionally unmapped; Ceph/SeaweedFS)
   'code snippet manager/tool' → developer (bigram; bare "manager"→project was firing; Masscode/Codepoint are Developer Tools)
   9 new tests + 3 regression guards added.
+
+Probe 111 (autonomous loop, May 2026): tus-protocol/security-recon/legal-document dead zones.
+  'tus server/client' → file; 'tus protocol ...' → file (bare "tus"→raw_first; "tus protocol" was hitting "protocol"→mcp)
+  'whois lookup api/tool' → developer (bare "whois"→raw_first; WHOIS lookup APIs are infra utilities)
+  'subdomain finder/enumeration' → security (bare "subdomain"→raw_first; Subfinder/Amass)
+  'osint framework/python' → security (bare "osint"→raw_first; theHarvester/SpiderFoot)
+  'recon tool/automation' → security (bare "recon"→raw_first; recon-ng/reconftw)
+  'port scan tool/python' → security; 'port scanner open source' → security (bigrams; bare "port"→raw_first)
+  'port forwarding tool' → devops (bigram; bare "port"→raw_first)
+  'legal document generator/template' → security (bigram; bare "document"→database was firing; Termly/Iubenda)
+  23 new tests + 5 regression guards added.
 
 Probe 109 (autonomous loop, May 2026): workflow-orchestration/entity-extraction/api-key dead zones.
   'workflow orchestration tool/python' → background (Temporal, Prefect, Dagster; bigram "workflow orchestration"→background)

@@ -9666,6 +9666,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Custom elements (Web Components API) — "webcomponent"/"webcomponents" already mapped;
     # the spaced "custom elements" form was raw_first ("custom" unmapped, not a stop word).
     "custom elements": "frontend",          # bigram — "custom elements web", "custom elements html" → Frontend Frameworks
+    #
+    # ── Probe 111 (autonomous loop, May 2026): tus-protocol / security-recon / legal-document dead zones ──
+    #
+    # TUS resumable upload protocol — bare "tus" fires raw_first; "tus protocol" misroutes via
+    # "protocol"→mcp (model context protocol synonym). TUS is a file-upload protocol standard
+    # (tus.io, Uppy, Companion). Both the bare token and the compound form need File Management.
+    "tus": "file",                          # bare — "tus server", "tus client", "tus nodejs" → File Management
+    "tus protocol": "file",                 # bigram — "tus protocol nodejs", "tus protocol alternative" → File Management (overrides "protocol"→mcp)
+    #
+    # Security recon dead zones — bare tokens fired raw_first; all live in Security Tools.
+    # WHOIS lookup tools (whois.domaintools, WhoisXML API, python-whois).
+    "whois": "developer",                   # bare — "whois lookup api", "whois tool", "whois nodejs" → Developer Tools (infra utility)
+    # Subdomain enumeration tools (Subfinder, Amass, Sublist3r, DNSRecon).
+    "subdomain": "security",               # bare — "subdomain finder", "subdomain scanner", "subdomain enumeration" → Security Tools
+    # OSINT (Open Source Intelligence) frameworks (theHarvester, Maltego, SpiderFoot, Recon-ng).
+    "osint": "security",                   # bare — "osint tool", "osint framework", "osint python" → Security Tools
+    # Reconnaissance tools (recon-ng, reconftw, Shodan queries).
+    "recon": "security",                   # bare — "recon tool", "recon framework", "recon automation" → Security Tools
+    # Port scanning — bare "port" is raw_first (collides with port forwarding / port numbers).
+    # Use targeted bigrams: "port scan"/"port scanner" → Security, "port forwarding" → DevOps.
+    "port scan": "security",               # bigram — "port scan tool", "port scan python", "port scan alternative" → Security Tools
+    "port scanner": "security",            # bigram — "port scanner open source", "port scanner nmap" → Security Tools
+    "port forwarding": "devops",           # bigram — "port forwarding tool", "port forwarding setup" → DevOps (avoids raw_first)
+    #
+    # Legal document dead zone — bare "document"→database fires; "legal document" bigram routes
+    # to Security Tools (legal compliance, GDPR, privacy policy generators: Termly, Iubenda, Osano).
+    "legal document": "security",          # bigram — "legal document generator", "legal document template" → Security Tools
+    "legal template": "security",          # bigram — "legal template generator", "legal template site" → Security Tools
 }
 
 _FTS_STOP_WORDS = {

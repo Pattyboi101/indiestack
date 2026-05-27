@@ -3935,6 +3935,38 @@ TEST_CASES: list[tuple[str, str]] = [
     ("metrics dashboard", "analytics"),                      # bare "metrics"→analytics (business metrics; no regression)
     ("distributed tracing jaeger", "monitoring"),            # bare "tracing"→monitoring (no regression)
     ("distributed cache redis", "caching"),                  # bare "cache"→caching wins (no regression; "distributed" has no mapping)
+    #
+    # Probe 111 (autonomous loop, May 2026): tus-protocol / security-recon / legal-document dead zones.
+    #
+    # TUS resumable upload — bare "tus"→raw_first; "tus protocol" misrouted via "protocol"→mcp.
+    # Both now route to File Management.
+    ("tus server", "file"),                                  # bare "tus"→file (TUS server implementation)
+    ("tus client", "file"),                                  # bare "tus"→file
+    ("tus protocol nodejs", "file"),                         # bigram "tus protocol"→file (overrides "protocol"→mcp)
+    ("tus protocol alternative", "file"),                    # bigram "tus protocol"→file
+    # Security recon tools — bare tokens previously fired raw_first.
+    ("whois lookup api", "developer"),                       # bare "whois"→developer (infra utility; WHOIS APIs)
+    ("whois tool", "developer"),                             # bare "whois"→developer
+    ("subdomain finder", "security"),                        # bare "subdomain"→security (Subfinder, Amass)
+    ("subdomain enumeration tool", "security"),              # bare "subdomain"→security
+    ("osint framework", "security"),                         # bare "osint"→security (theHarvester, SpiderFoot)
+    ("osint python", "security"),                            # bare "osint"→security
+    ("recon tool", "security"),                              # bare "recon"→security (recon-ng, reconftw)
+    ("recon automation", "security"),                        # bare "recon"→security
+    # Port scanning bigrams — bare "port" is raw_first; bigrams now handle each context.
+    ("port scan tool", "security"),                          # bigram "port scan"→security
+    ("port scan python", "security"),                        # bigram "port scan"→security
+    ("port scanner open source", "security"),                # bigram "port scanner"→security (nmap-like tools)
+    ("port forwarding tool", "devops"),                      # bigram "port forwarding"→devops
+    # Legal document — bare "document"→database fires; bigram overrides for legal compliance tools.
+    ("legal document generator", "security"),                # bigram "legal document"→security (Termly, Iubenda)
+    ("legal document template", "security"),                 # bigram "legal document"→security
+    ("legal template generator", "security"),                # bigram "legal template"→security
+    # Regressions: existing security/devops/file mappings unchanged
+    ("model context protocol server", "mcp"),                # "mcp"→mcp fires before "protocol"→mcp (no regression)
+    ("tus upload chunk", "file"),                            # bare "tus"→file (no regression with "upload"→file)
+    ("document database mongodb", "database"),               # bare "document"→database (no regression)
+    ("penetration testing tool", "security"),                # bare "penetration testing"→security (no regression)
 ]
 
 
