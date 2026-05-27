@@ -4283,6 +4283,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "document": "database",          # "document store", "document database" → Database (MongoDB, Firestore)
     # AI — named entity recognition (NER) queries; "entity"→database would wrongly fire without bigram
     "named entity": "ai",            # bigram — "named entity recognition", "named entity extraction" → AI & Automation
+    "entity extraction": "ai",       # bigram — "entity extraction nlp", "entity extraction spacy" → AI & Automation (spaCy, HuggingFace NER)
     # Frontend — React context API ("react context api", "context provider" queries)
     "context": "frontend",           # "react context", "context provider", "context api" → Frontend Frameworks
     # Frontend — virtual DOM queries (React, Preact, Inferno)
@@ -8064,6 +8065,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # which live in Background Jobs. Bigrams fire before the single "workflow" token.
     "workflow engine": "background",        # "workflow engine temporal", "workflow engine open source" → Background Jobs
     "workflow orchestrator": "background",  # "workflow orchestrator temporal", "workflow orchestrator" → Background Jobs
+    "workflow orchestration": "background", # bigram — "workflow orchestration tool", "workflow orchestration python" → Background Jobs (Temporal, Prefect, Dagster)
+    # "ai workflow orchestration" must still route to AI (LangGraph, Flowise); bigram "ai workflow"
+    # fires at position 0 before "workflow orchestration"→background fires at position 1.
+    "ai workflow": "ai",                    # bigram — "ai workflow builder", "ai workflow orchestration" → AI & Automation
     # Developer Tools — "headless scraper" / "headless web" routes to cms via bare "headless"→cms.
     # Web scrapers (Crawlee, Playwright-extra, Apify) live in Developer Tools.
     "headless scraper": "developer",        # "headless scraper puppeteer", "headless scraper library" → Developer Tools
@@ -8476,6 +8481,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "key"→security single-token is too broad (key-value, API key, keyboard key).
     # Bigram is safer: "key management" specifically means cryptographic KMS context.
     "key management": "security",      # bigram — "key management system", "key management server" → Security Tools
+    # "api key management" fires "key management"→security (position 1). Need "api key" bigram at position 0
+    # so Unkey-style API key management tools route to API Tools, not Security.
+    "api key": "api",                  # bigram — "api key management", "api key rotation" → API Tools (Unkey, Kong)
     #
     # SaaS billing collision — "saas"→boilerplate fires before "billing/payments/subscription" tokens.
     # "saas metrics"→analytics (probe 26) fixed the analytics collision; this probe fixes payments.

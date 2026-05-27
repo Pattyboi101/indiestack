@@ -3895,6 +3895,27 @@ TEST_CASES: list[tuple[str, str]] = [
     ("camunda", "background"),                               # bare "camunda"→background (no regression)
     ("lit", "frontend"),                                     # bare "lit"→frontend (no regression)
     ("lit html", "frontend"),                                # bare "lit"→frontend (no regression)
+    #
+    # Probe 109 (autonomous loop, May 2026): workflow-orchestration / entity-extraction / api-key dead zones.
+    #
+    # "workflow orchestration" — bare "workflow"→ai fires (n8n/Make); bigram "workflow orchestration"→background
+    # now overrides for durable execution engine queries (Temporal, Prefect, Dagster, Inngest).
+    ("workflow orchestration tool", "background"),           # bigram "workflow orchestration"→background (Temporal, Prefect)
+    ("workflow orchestration python", "background"),         # bigram "workflow orchestration"→background
+    # "entity extraction" — bare "entity"→database fires; bigram "entity extraction"→ai now overrides.
+    # "named entity" bigram already existed; adding sibling for bare "entity extraction" form.
+    ("entity extraction nlp", "ai"),                         # bigram "entity extraction"→ai (spaCy, HuggingFace NER)
+    ("entity extraction spacy", "ai"),                       # bigram "entity extraction"→ai
+    # "api key management" — "key management"→security fired at pos 1; bigram "api key"→api now fires at pos 0.
+    ("api key management", "api"),                           # bigram "api key"→api (Unkey; beats "key management"→security)
+    ("api key rotation tool", "api"),                        # bigram "api key"→api
+    # Regressions: workflow engine/orchestrator unchanged; named entity unchanged; key management still security
+    ("workflow engine temporal", "background"),              # bigram "workflow engine"→background (no regression)
+    ("workflow orchestrator open source", "background"),     # bigram "workflow orchestrator"→background (no regression)
+    ("workflow automation n8n", "background"),               # bigram "workflow automation"→background (existing; probe 45)
+    ("named entity recognition", "ai"),                      # bigram "named entity"→ai (no regression)
+    ("entity relationship diagram", "database"),             # bare "entity"→database (no regression; no "extraction" token)
+    ("key management system", "security"),                   # bigram "key management"→security (no regression)
 ]
 
 

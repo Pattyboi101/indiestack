@@ -374,7 +374,14 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 2146+ tests passing (108 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2158+ tests passing (109 probe patterns).
+
+Probe 109 (autonomous loop, May 2026): workflow-orchestration/entity-extraction/api-key dead zones.
+  'workflow orchestration tool/python' → background (Temporal, Prefect, Dagster; bigram "workflow orchestration"→background)
+  'entity extraction nlp/spacy' → ai (spaCy, HuggingFace NER; bigram "entity extraction"→ai; bare "entity"→database was wrong)
+  'api key management/rotation' → api (Unkey, Kong; bigram "api key"→api fires before "key management"→security at pos 1)
+  'ai workflow orchestration' regression guarded: bigram "ai workflow"→ai fires at pos 0, overrides "workflow orchestration"→background
+  12 new tests (9 fixes + 3 regression guards) added.
 
 Probe 108 (autonomous loop, May 2026): LitElement/BPMN/visual-builder/custom-elements dead zones.
   'litelement', 'litjs' → frontend (compound slug forms; bare "lit"→frontend already existed)
