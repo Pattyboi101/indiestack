@@ -1025,6 +1025,23 @@ TEST_CASES: list[tuple[str, str]] = [
     # tekton: was unmapped → fired via "pipeline"→background (wrong)
     ("tekton pipeline cd", "devops"),                      # "tekton"→devops (new)
     ("tekton alternative", "devops"),                      # "tekton"→devops
+    # ── Probe 111 (autonomous loop, May 2026): port-forwarding / expose-localhost / argo / port-scanner ──
+    # "port forwarding" → raw_first via bare "port" (unmapped). Bigram "port forwarding"→devops added.
+    ("port forwarding tool", "devops"),                    # bigram "port forwarding"→devops
+    ("port forwarding localhost", "devops"),               # bigram "port forwarding"→devops
+    # "expose localhost/server" → raw_first via bare "expose" (unmapped). Bare "expose"→devops added.
+    ("expose localhost server", "devops"),                 # bare "expose"→devops (LocalXpose, expose.sh, bore)
+    ("expose local server", "devops"),                     # bare "expose"→devops
+    # "port scanner/scanning" → raw_first. Bigrams "port scanner"/"port scanning"→security added.
+    ("port scanner tool", "security"),                     # bigram "port scanner"→security
+    ("port scanning tool", "security"),                    # bigram "port scanning"→security
+    # "argo alternative" → raw_first; only "argocd" (compound) was mapped. Bare "argo"→devops added.
+    ("argo alternative", "devops"),                        # bare "argo"→devops (ArgoCD, Argo Workflows)
+    ("argo cd alternative", "devops"),                     # bare "argo"→devops fires at position 0
+    # Regressions: argocd/ngrok/nmap/alertmanager/policy unchanged
+    ("argocd alternative", "devops"),                      # bare "argocd"→devops (no regression)
+    ("ngrok alternative", "devops"),                       # bare "ngrok"→devops (no regression)
+    ("nmap alternative", "security"),                      # bare "nmap"→security (no regression)
 ]
 
 
