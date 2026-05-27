@@ -130,6 +130,16 @@ Then probe new gaps using the offline route_query() helper. Use these probe stra
     Also probe comparison queries — 'vs'/'or'/'not' are NOT stop words and can orphan token-0:
     Test: 'redis vs memcached', 'postgres vs mysql', 'kafka vs rabbitmq'
 
+  STRATEGY G — Infrastructure tool bare-noun dead zones (probe 111 style):
+    After mapping a named tool (argocd, alertmanager), also map the bare genus noun.
+    Rule: if "argocd"→devops is mapped but "argo" is not, "argo alternative" fires raw_first.
+    After adding any compound synonym, split it and probe each half separately.
+    Test: 'flux alternative', 'tekton alternative', 'spinnaker alternative'
+    Test: 'expose localhost', 'port forwarding', 'port scanner'
+    Test: 'jaeger alternative', 'zipkin alternative', 'tempo alternative'
+    Test: 'istio alternative', 'linkerd alternative', 'envoy alternative'
+    Test: 'crossplane alternative', 'cdk alternative', 'pulumi alternative'
+
 For each misfire, add the missing entry to _CAT_SYNONYMS and a test case. Commit.
 After fixing db.py, commit with 'fix: probe pattern N — [short desc] (M/M pass)'.
 
