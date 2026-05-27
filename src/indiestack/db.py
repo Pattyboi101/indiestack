@@ -7890,6 +7890,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "context engineering": "ai",        # bigram — "context engineering tool", "llm context engineering" → AI & Automation
     "context length": "ai",             # bigram — "context length optimization", "long context length" → AI & Automation
     "context management": "ai",         # bigram — "context management tool", "llm context management" → AI & Automation (beats "context"→frontend)
+    "context compression": "ai",        # bigram — "context compression llm", "prompt context compression" → AI & Automation (LLMLingua, Selective Context)
+    "long context": "ai",               # bigram — "long context model", "long context processing" → AI & Automation (beats "context"→frontend at pos 1)
     # AI — "ai deployment" overrides "deployment"→devops: AI model deployment tools (BentoML, Modal, Baseten) live in AI & Automation.
     "ai deployment": "ai",              # bigram — "ai deployment tool", "ai model deployment" → AI & Automation (beats "deployment"→devops)
     # AI — "ai memory" overrides "memory"→caching: AI agent memory tools (MemGPT, Mem0, Zep) are AI & Automation, not caching.
@@ -7915,11 +7917,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "tool" is a stop word, so "tool calling api" → _meaningful = ["calling", "api"] → "calling"→ai wins
     "calling": "ai",                # "tool calling", "function calling" (tool stripped) → AI & Automation
     "function calling": "ai",       # bigram — "function calling openai", "function calling spec" → AI & Automation
+    "json mode": "ai",              # bigram — "json mode openai", "json mode llm" → AI & Automation (beats "json"→developer; Instructor, Outlines, Marvin)
     # AI proxy / gateway queries — "ai" is not a stop word; bigram fires before "proxy"→devops
     "ai proxy": "ai",               # bigram — "ai proxy litellm", "ai proxy server alternative" → AI & Automation
     # LLM token economics — bigram overrides "token"→authentication for pricing/limit queries
     "token limit": "ai",            # bigram — "token limit gpt4", "token limit per request" → AI & Automation
     "token pricing": "ai",          # bigram — "token pricing openai", "token pricing comparison" → AI & Automation
+    "token budget": "ai",           # bigram — "token budget management", "token budget tracker" → AI & Automation (beats "token"→auth)
+    "token quota": "ai",            # bigram — "token quota per user", "token quota enforcement" → AI & Automation
     # Document Q&A — RAG retrieval pattern; bigram overrides "document"→database
     "document qa": "ai",            # bigram — "document qa tool", "document qa chatbot" → AI & Automation
     "document q&a": "ai",           # ampersand variant — "document q&a chatbot" → AI & Automation

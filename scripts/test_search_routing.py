@@ -3801,6 +3801,24 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions: "multi tenant" (spaced) still auth; "multitenant" still auth
     ("multi tenant saas", "authentication"),               # bare "tenant"→authentication (no regression)
     ("multitenant architecture", "authentication"),        # bare "multitenant"→authentication (no regression)
+    # Probe 105 (autonomous loop, May 2026): LLM token-budget / json-mode / context-compression dead zones.
+    # "token budget" fired "token"→authentication (wrong; LLM budget mgmt → AI).
+    # "json mode" fired "json"→developer (wrong; LLM JSON mode → AI; Instructor, Outlines, Marvin).
+    # "context compression" fired "context"→frontend (wrong; LLMLingua, Selective Context → AI).
+    # "long context" fired "context"→frontend at pos 1 (wrong; long-context models → AI).
+    ("token budget management", "ai"),                     # bigram "token budget"→ai (beats "token"→auth)
+    ("token budget tracker", "ai"),                        # bigram "token budget"→ai
+    ("token quota per user", "ai"),                        # bigram "token quota"→ai
+    ("json mode openai", "ai"),                            # bigram "json mode"→ai (beats "json"→developer)
+    ("json mode llm structured output", "ai"),             # bigram "json mode"→ai
+    ("context compression llm", "ai"),                     # bigram "context compression"→ai (beats "context"→frontend)
+    ("prompt context compression python", "ai"),           # bigram "context compression"→ai
+    ("long context model processing", "ai"),               # bigram "long context"→ai (beats "context"→frontend at pos 1)
+    ("long context llm alternative", "ai"),                # bigram "long context"→ai
+    # Regressions: existing token bigrams still work; json→developer still fires for non-AI queries
+    ("token limit gpt4", "ai"),                            # bigram "token limit"→ai (no regression)
+    ("token pricing comparison", "ai"),                    # bigram "token pricing"→ai (no regression)
+    ("context window limit", "ai"),                        # bigram "context window"→ai (no regression)
 ]
 
 
