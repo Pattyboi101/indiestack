@@ -1004,6 +1004,27 @@ TEST_CASES: list[tuple[str, str]] = [
     ("faas platform", "devops"),                           # bare "faas"→devops still works
     ("paas provider", "devops"),                           # bare "paas"→devops still works
     ("database as a service", "database"),                 # "database" fires before "as" — unchanged
+
+    # ── Probe 105: Flink reclassification / chaos tool consistency / pprof / tekton ──
+    # Flink: was "message" (wrong — Flink is a processing engine like Spark, not a broker)
+    ("apache flink stream", "background"),                 # "flink"→background (reclassified)
+    ("flink sql query", "background"),                     # "flink"→background
+    ("flink job stream", "background"),                    # "flink"→background
+    # Regression: stream/streams still → message (Kafka/Redis Streams context)
+    ("kafka stream consumer", "message"),                  # "stream"→message (unchanged)
+    ("kinesis streams consumer", "message"),               # "streams"→message (unchanged)
+    # Chaos tools: were "devops"; probe 96 moved bare "chaos"→testing but named synonyms lagged
+    ("litmus chaos kubernetes", "testing"),                # "litmus"→testing fires before bare "chaos"
+    ("litmuschaos install", "testing"),                    # "litmuschaos"→testing (new compound)
+    ("chaosmesh kubernetes", "testing"),                   # "chaosmesh"→testing (reclassified)
+    ("chaosmesh alternative", "testing"),                  # "chaosmesh"→testing
+    ("pumba docker container", "testing"),                 # "pumba"→testing (reclassified)
+    # pprof: was unmapped → fell through to golang→api
+    ("pprof cpu profiling", "monitoring"),                 # "pprof"→monitoring (new)
+    ("pprof memory leak", "monitoring"),                   # "pprof"→monitoring
+    # tekton: was unmapped → fired via "pipeline"→background (wrong)
+    ("tekton pipeline cd", "devops"),                      # "tekton"→devops (new)
+    ("tekton alternative", "devops"),                      # "tekton"→devops
 ]
 
 

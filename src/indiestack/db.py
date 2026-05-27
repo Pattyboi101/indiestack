@@ -3689,6 +3689,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Monitoring — profiling tools (pyspy, pprof, clinic.js, scalene, rbspy)
     "profiling": "monitoring",      # "cpu profiling", "memory profiling" → Monitoring & Uptime
     "profiler": "monitoring",       # "python profiler", "nodejs profiler" → Monitoring & Uptime
+    "pprof": "monitoring",          # pprof — Go's built-in CPU/memory profiler (official Go tool) → Monitoring
     # Message queue — generic "broker" queries
     "broker": "message",            # "message broker", "event broker" → Message Queue
     "brokers": "message",           # plural — "kafka brokers", "message brokers" → Message Queue
@@ -3820,9 +3821,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cartesia": "ai",               # Cartesia — ultra-low latency real-time voice synthesis
     "assemblyai": "ai",             # AssemblyAI — transcription + audio intelligence API
     # Stream processing — Apache Flink, Kafka Streams, Spark Streaming
+    # NOTE: "stream"/"streams" → message (Kafka Streams, Redis Streams are messaging)
+    # But Flink → background: Flink is a data processing engine (like Spark), not a message broker.
     "stream": "message",            # "stream processing", "event stream" → Message Queue
     "streams": "message",           # plural — "Redis Streams", "Kafka Streams" queries
-    "flink": "message",             # Apache Flink — stateful distributed stream processing (37k★)
+    "flink": "background",          # Apache Flink — stream/batch processing engine (37k★); like Spark → Background Jobs
     "kinesis": "message",           # AWS Kinesis — event streaming (for alternative queries)
     "redpanda": "message",          # Redpanda — Kafka-compatible streaming, 10× faster (8k★)
     # Auth — SCIM provisioning and LDAP directory services
@@ -4434,6 +4437,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "k9s": "devops",                # k9s — terminal-based Kubernetes TUI dashboard manager (27k★)
     "kustomize": "devops",          # Kustomize — Kubernetes-native configuration customization (CNCF)
     "skaffold": "devops",           # Skaffold — k8s build/push/deploy dev workflow tool (Google, 15k★)
+    "tekton": "devops",             # Tekton — Kubernetes-native CI/CD pipeline framework (CNCF, 8k★) → DevOps
     # Database — multi-model and document stores not yet individually mapped
     "arangodb": "database",         # ArangoDB — multi-model graph/document/key-value database (13k★)
     "couchdb": "database",          # Apache CouchDB — document-oriented NoSQL with HTTP API (6k★)
@@ -5718,10 +5722,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "chaostoolkit": "devops",       # Chaos Toolkit — open-source chaos engineering framework (2k★) → DevOps
     "chaos-toolkit": "devops",      # hyphenated — "chaos-toolkit experiment", "chaos-toolkit alternative" → DevOps
     "toxiproxy": "testing",         # Toxiproxy — TCP proxy for simulating network failures (10k★) → Testing Tools
-    "litmus": "devops",             # LitmusChaos — CNCF chaos engineering for Kubernetes (4k★) → DevOps & Infrastructure
-    "chaos-mesh": "devops",         # Chaos Mesh — Kubernetes chaos engineering platform (6k★) → DevOps & Infrastructure
-    "chaosmesh": "devops",          # compound — "chaosmesh alternative", "chaosmesh setup" → DevOps & Infrastructure
-    "pumba": "devops",              # Pumba — chaos tool for Docker containers (3k★) → DevOps & Infrastructure
+    # Probe 105: chaos tools reclassified → testing (probe 96 moved "chaos"→testing citing these tools;
+    # individual synonyms were not updated at that time — fixing now for consistency).
+    "litmus": "testing",            # LitmusChaos — CNCF chaos engineering framework (4k★) → Testing
+    "litmuschaos": "testing",       # compound — "litmuschaos install", "litmuschaos alternative" → Testing
+    "chaos-mesh": "testing",        # Chaos Mesh — Kubernetes chaos engineering platform (6k★) → Testing
+    "chaosmesh": "testing",         # compound — "chaosmesh alternative", "chaosmesh setup" → Testing
+    "pumba": "testing",             # Pumba — chaos tool for Docker containers (3k★) → Testing
     # gRPC / Protocol Buffers — "proto file", "proto schema", "proto codegen" (complement to grpc→api, protobuf→api)
     "proto": "api",                 # proto — "proto file", "proto codegen", "proto schema" → API Tools (gRPC, ConnectRPC)
     # ConnectRPC — gRPC-compatible HTTP/1+HTTP/2 protocol by buf.build (9k★ Go, 5k★ JS)
