@@ -3935,6 +3935,30 @@ TEST_CASES: list[tuple[str, str]] = [
     ("metrics dashboard", "analytics"),                      # bare "metrics"→analytics (business metrics; no regression)
     ("distributed tracing jaeger", "monitoring"),            # bare "tracing"→monitoring (no regression)
     ("distributed cache redis", "caching"),                  # bare "cache"→caching wins (no regression; "distributed" has no mapping)
+    #
+    # Probe 111 (autonomous loop, May 2026): encrypt / signaling / docx / presence / inner-loop dead zones.
+    #
+    # "lets encrypt alternative" — "alternative" stripped, "lets" unmapped, "encrypt"→security now added.
+    ("lets encrypt alternative", "security"),               # bare "encrypt"→security (Let's Encrypt queries)
+    ("encrypt data at rest", "security"),                   # bare "encrypt"→security (encryption category boost)
+    # "signaling server" — "signaling" had no mapping; added "signaling"→api.
+    ("signaling server", "api"),                            # bare "signaling"→api (WebRTC signaling servers)
+    ("webrtc signaling alternative", "api"),                # bare "webrtc"→api still fires (no regression)
+    # "docx generator" — "docx" had no mapping; added "docx"→developer.
+    ("docx generator", "developer"),                        # bare "docx"→developer (python-docx, mammoth, docxtemplater)
+    ("docx parser nodejs", "developer"),                    # bare "docx"→developer
+    # "presence system" — bare "presence" had no mapping; "presence awareness" bigram existed but not bare token.
+    ("presence system", "api"),                             # bare "presence"→api (Liveblocks, PartyKit presence)
+    ("user presence api", "api"),                           # bare "presence"→api
+    # "inner loop" — devops tooling bigram (Tilt, Garden, Skaffold for local k8s dev).
+    ("inner loop dev tooling", "devops"),                   # bigram "inner loop"→devops (beats "inner" dead zone)
+    ("inner loop kubernetes", "devops"),                    # bigram "inner loop"→devops
+    # Regressions: existing nearby mappings unchanged
+    ("letsencrypt alternative", "security"),                # bare "letsencrypt"→security (no regression)
+    ("ssl certificate management", "security"),             # bare "ssl"→security (no regression)
+    ("presence awareness liveblocks", "api"),               # bigram "presence awareness"→api still fires (no regression)
+    ("xlsx parser", "developer"),                           # bare "xlsx"→developer (no regression)
+    ("hot reload vite", "developer"),                       # bigram "hot reload"→developer (no regression)
 ]
 
 

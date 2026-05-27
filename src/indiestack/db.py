@@ -3070,6 +3070,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "encryption": "security",   # encryption libraries and key management
     "ssl": "security",          # SSL certificate management
     "tls": "security",          # TLS configuration tools
+    "encrypt": "security",      # "lets encrypt alternative", "encrypt data at rest" → Security Tools
     # Frontend rendering patterns — SSR/SSG/PWA/SPA (common agent query terms)
     "ssr": "frontend",          # Server-Side Rendering (Next.js, SvelteKit, Nuxt)
     "ssg": "frontend",          # Static Site Generation (Astro, Eleventy, Jekyll)
@@ -5457,6 +5458,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "exceljs": "developer",         # ExcelJS — Excel workbook read/write for Node.js (13k★) → Developer Tools
     "openpyxl": "developer",        # openpyxl — Python library for Excel 2010+ files → Developer Tools
     "xlsxwriter": "developer",      # XlsxWriter — Python library for creating Excel .xlsx files → Developer Tools
+    "docx": "developer",            # "docx generator", "docx parser nodejs", "python-docx alternative" → Developer Tools
     # Auth — ACL and FIDO2 (complement to "rbac"→authentication and "webauthn"→authentication)
     "acl": "authentication",        # ACL (Access Control List) — "acl library", "acl middleware" → Authentication
     "fido": "authentication",       # FIDO — "fido2 key", "fido hardware key", "fido standard" → Authentication
@@ -6584,6 +6586,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "turn": "api",                  # TURN server — "turn server setup", "coturn alternative" → API Tools (WebRTC infrastructure)
     "stun": "api",                  # STUN server — "stun server", "stun vs turn", "coturn stun" → API Tools
     "coturn": "api",                # coturn — open-source TURN/STUN server; "coturn alternative" → API Tools
+    "signaling": "api",             # "signaling server", "webrtc signaling", "signal server alternative" → API Tools
     # Frontend — Rust/WASM binding and packaging tools (complement to wasm-pack, wasm-bindgen queries)
     "wasm-bindgen": "frontend",     # wasm-bindgen — Rust⟷JS FFI for WASM modules; "wasm-bindgen alternative" → Frontend Frameworks
     "wasmbindgen": "frontend",      # compound — "wasmbindgen setup", "wasmbindgen alternative" → Frontend Frameworks
@@ -8011,6 +8014,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # HMR and live-reload are bundler/dev-server features; tree shaking is a bundler optimization.
     "hot reload": "developer",      # bigram — "hot reload dev server", "hot reload vite" → Developer Tools
     "live reload": "developer",     # bigram — "live reload webpack", "live reload browser" → Developer Tools
+    "inner loop": "devops",         # bigram — "inner loop dev", "inner loop tooling" → DevOps (Tilt, Garden, Skaffold)
     "hot module": "frontend",       # bigram — "hot module replacement", "hot module reloading" → Frontend Frameworks
     "tree shaking": "frontend",     # bigram — "tree shaking bundler", "tree shaking webpack" → Frontend Frameworks
     # Database — "schema migration" routes to developer via "schema"→developer token first.
@@ -8769,6 +8773,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # NOTE: bare "presence tracking" bigram CAN NEVER fire — "tracking" is in _FTS_STOP_WORDS.
     # "presence tracking realtime" routes correctly via "realtime"→api after "tracking" is stripped.
     "presence awareness": "api",              # bigram — "presence awareness liveblocks", "presence awareness realtime" → API Tools
+    "presence": "api",                        # bare — "presence system", "presence api", "user presence" → API Tools (Liveblocks, PartyKit)
     # API Tools — "live cursors" bigram (Liveblocks cursor feature; avoids bare "live" dead zone).
     "live cursors": "api",                    # bigram — "live cursors liveblocks", "live cursors component" → API Tools
     # Database — "multi model" bigram overrides "model"→ai for multi-model database queries.
