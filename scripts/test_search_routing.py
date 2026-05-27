@@ -627,6 +627,20 @@ When hunting for routing gaps, these query forms are historically tricky:
     each in _CAT_SYNONYMS. If missing and unambiguous in context, add the bare form.
     Fixed: "encrypt"→security, "docx"→developer, "presence"→api, "signaling"→api,
     "inner loop"→devops bigram (probe 111, May 2026).
+
+65. "Sibling file-format and data-serialization dead zones (probe 112)" —
+    After probe 111 added "docx"→developer (sibling of "xlsx"→developer), the same
+    gap remained for: "pptx" (PowerPoint files), "odt" (OpenDocument Text), "tsv"
+    (tab-separated values, sibling of "csv"→developer), and "avro" (Apache Avro
+    serialization, sibling of "parquet"→database). Additionally, verb forms of
+    recently-added crypto entries were missing: "decrypt"/"decryption" (complement to
+    "encrypt"/"encryption"→security), "transpile" (verb form of "transpiler"→frontend),
+    and "authenticate" (verb form of "authentication"→authentication). The hyphenated
+    package name "python-pptx" also required its own entry since hyphens are not
+    stripped during routing tokenization.
+    Fixed: "pptx"/"python-pptx"/"odt"/"tsv"→developer, "avro"→database,
+    "decrypt"/"decryption"→security, "transpile"→frontend,
+    "authenticate"→authentication (probe 112, May 2026).
 """
 
 import sys
@@ -3980,6 +3994,34 @@ TEST_CASES: list[tuple[str, str]] = [
     ("presence awareness liveblocks", "api"),               # bigram "presence awareness"→api still fires (no regression)
     ("xlsx parser", "developer"),                           # bare "xlsx"→developer (no regression)
     ("hot reload vite", "developer"),                       # bigram "hot reload"→developer (no regression)
+
+    # ── probe 112: file-format siblings, crypto verb forms, transpile verb ──────
+    # File-format siblings (pptx/odt/tsv after docx added in probe 111)
+    ("pptx generator python", "developer"),                 # bare "pptx"→developer
+    ("python-pptx alternative", "developer"),               # hyphenated package name → developer
+    ("odt parser nodejs", "developer"),                     # bare "odt"→developer
+    ("tsv parser", "developer"),                            # bare "tsv"→developer (sibling of csv)
+    ("tsv reader nodejs", "developer"),                     # tsv + framework qualifier
+    # Data serialization sibling (avro alongside parquet→database)
+    ("avro serialization python", "database"),              # bare "avro"→database
+    ("avro schema", "database"),                            # avro + schema context → database
+    # Crypto verb forms (decrypt/decryption alongside encrypt/encryption→security)
+    ("decrypt data nodejs", "security"),                    # verb "decrypt"→security
+    ("decryption library", "security"),                     # noun "decryption"→security
+    ("how to decrypt file", "security"),                    # natural-language verb query → security
+    # Transpile verb form (alongside transpiler→frontend)
+    ("transpile typescript", "frontend"),                   # verb "transpile"→frontend
+    ("transpile es6 code", "frontend"),                     # transpile + context → frontend
+    # Authenticate verb form (alongside auth/authentication→authentication)
+    ("authenticate users nodejs", "authentication"),        # verb form → authentication
+    ("authenticate requests middleware", "authentication"),  # verb form in infra context → authentication
+    # Regressions: existing sibling/verb mappings still fire
+    ("docx generator", "developer"),                        # "docx"→developer still fires (no regression)
+    ("encryption library", "security"),                     # "encryption"→security still fires
+    ("encrypt data at rest", "security"),                   # "encrypt"→security still fires
+    ("csv parser", "developer"),                            # "csv"→developer still fires
+    ("parquet reader", "database"),                         # "parquet"→database still fires
+    ("transpiler", "frontend"),                             # "transpiler"→frontend still fires
 ]
 
 

@@ -2507,6 +2507,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "jwt": "authentication",
     "passkey": "authentication",
     "passwordless": "authentication",
+    "authenticate": "authentication",  # "authenticate users", "authenticate requests" → Authentication (verb form)
     # Payment synonyms
     "checkout": "payments",
     "billing": "payments",
@@ -3036,6 +3037,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # JS/TS build ecosystem — transpilers and runtimes
     "babel": "frontend",        # Babel — JS transpiler (legacy + modern)
     "transpiler": "frontend",   # generic transpiler queries
+    "transpile": "frontend",    # "transpile typescript", "transpile es6" → Frontend Frameworks (verb form of transpiler)
     "swc": "frontend",          # SWC — Rust-based JS/TS transpiler (used by Next.js, Vite)
     "bun": "frontend",          # Bun — fast JS runtime + bundler + test runner
     "deno": "frontend",         # Deno — secure JS/TS runtime (Deno 2)
@@ -3071,6 +3073,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ssl": "security",          # SSL certificate management
     "tls": "security",          # TLS configuration tools
     "encrypt": "security",      # "lets encrypt alternative", "encrypt data at rest" → Security Tools
+    "decrypt": "security",      # "decrypt data nodejs", "how to decrypt" → Security Tools (verb form of "encryption")
+    "decryption": "security",   # "decryption library", "decryption key management" → Security Tools (complement to "encryption"→security)
     # Frontend rendering patterns — SSR/SSG/PWA/SPA (common agent query terms)
     "ssr": "frontend",          # Server-Side Rendering (Next.js, SvelteKit, Nuxt)
     "ssg": "frontend",          # Static Site Generation (Astro, Eleventy, Jekyll)
@@ -5336,6 +5340,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "iconoir": "frontend",          # Iconoir — clean open-source icon set; "iconoir alternative" (4k★) → Frontend Frameworks
     # Database — columnar file format (common in data pipeline / data lake queries)
     "parquet": "database",          # Apache Parquet — columnar storage format; "parquet reader", "parquet alternative" → Database
+    "avro": "database",             # Apache Avro — compact binary serialization; "avro serialization", "avro alternative" → Database
     # API — Haskell and OCaml web framework queries
     "haskell": "api",               # Haskell web framework queries → API Tools (Servant, Yesod, IHP) → API Tools
     "ocaml": "api",                 # OCaml web framework queries → API Tools (Dream, Opium) → API Tools
@@ -5459,6 +5464,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "openpyxl": "developer",        # openpyxl — Python library for Excel 2010+ files → Developer Tools
     "xlsxwriter": "developer",      # XlsxWriter — Python library for creating Excel .xlsx files → Developer Tools
     "docx": "developer",            # "docx generator", "docx parser nodejs", "python-docx alternative" → Developer Tools
+    "pptx": "developer",            # "pptx generator", "pptx parser" → Developer Tools (python-pptx, pptxgenjs)
+    "python-pptx": "developer",     # hyphenated — "python-pptx alternative" → Developer Tools (hyphens not stripped in routing)
+    "odt": "developer",             # "odt parser", "odt converter", "open document text" → Developer Tools
+    "tsv": "developer",             # "tsv parser", "tsv reader nodejs" — sibling of csv→developer → Developer Tools
     # Auth — ACL and FIDO2 (complement to "rbac"→authentication and "webauthn"→authentication)
     "acl": "authentication",        # ACL (Access Control List) — "acl library", "acl middleware" → Authentication
     "fido": "authentication",       # FIDO — "fido2 key", "fido hardware key", "fido standard" → Authentication
