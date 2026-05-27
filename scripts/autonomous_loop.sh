@@ -374,7 +374,15 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 2089+ tests passing (104 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2101+ tests passing (105 probe patterns).
+
+Probe 105 (May 2026): LLM token-budget / json-mode / context-compression / long-context dead zones.
+  'token budget' → ai (LLM token budget management — Helicone, LangSmith; "token"→auth was wrong)
+  'token quota' → ai (token quota enforcement per user — same collision as token budget)
+  'json mode' → ai (LLM JSON structured output — Instructor, Outlines, Marvin; "json"→developer was wrong)
+  'context compression' → ai (prompt compression — LLMLingua, Selective Context; "context"→frontend was wrong)
+  'long context' → ai (long-context LLM processing; "context"→frontend at pos 1 was wrong)
+  12 new tests + 3 regression guards added.
 
 Probe 104 (May 2026): SOAP / XML-RPC / ATO / multi-tenancy / optimistic-UI / stale-cache / cf-worker dead zones.
   'soap', 'wsdl' → api (SOAP web services — Zeep, node-soap, SoapUI; bare "soap" was raw_first)
