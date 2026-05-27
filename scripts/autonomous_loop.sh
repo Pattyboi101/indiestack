@@ -374,7 +374,15 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 2125+ tests passing (107 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2146+ tests passing (108 probe patterns).
+
+Probe 108 (autonomous loop, May 2026): LitElement/BPMN/visual-builder/custom-elements dead zones.
+  'litelement', 'litjs' → frontend (compound slug forms; bare "lit"→frontend already existed)
+  'bpmn', 'bpmn tool', 'bpmn engine' → background (generic BPMN term; camunda/zeebe individually mapped)
+  'visual builder', 'visual app builder' → frontend (bigram "visual builder"; "app" is stop word so strips)
+  'visual database', 'visual database browser' → database (bigram "visual database" overrides "visual"→testing)
+  'custom elements', 'custom elements web' → frontend (bigram "custom elements"; spaced form was raw_first)
+  21 new tests (14 fixes + 7 regression guards) added.
 
 Probe 107 (autonomous loop, May 2026): ai-standards/benchmark-llm/vector-cache dead zones.
   'ai standards nist' → ai standards (bigram "ai standards"→"ai standards"; "ai" not in _CAT_SYNONYMS so raw_first was dead-end)

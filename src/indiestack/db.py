@@ -9631,6 +9631,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Dependency + package security auditing (Snyk, npm audit, OWASP Dependency-Check)
     "dependency audit": "security",             # bigram — "dependency audit tool", "dependency vulnerability audit" → Security
     "package vulnerability": "security",        # bigram — "package vulnerability scanner", "package security audit" → Security
+    # ── Probe 108 (autonomous loop, May 2026): LitElement/BPMN/visual-builder/custom-elements dead zones ──
+    #
+    # LitElement compound forms — bare "lit"→frontend already works; compound slug forms were raw_first.
+    "litelement": "frontend",               # compound — "litelement alternative", "litelement typescript" → Frontend Frameworks
+    "litjs": "frontend",                    # compound — "litjs web component", "litjs alternative" → Frontend Frameworks
+    #
+    # BPMN (Business Process Model and Notation) — bare token was raw_first; camunda/zeebe already
+    # individually mapped but the generic protocol term "bpmn" was missing.
+    "bpmn": "background",                   # bare — "bpmn tool", "bpmn engine", "bpmn workflow" → Background Jobs (Camunda, Zeebe, jBPM)
+    #
+    # "visual builder" / "visual database" / "visual app" — bare "visual"→testing fires for ALL
+    # visual-prefixed queries. Bigrams override at position 0 for the non-testing cases.
+    # Regression guard: "visual testing", "visual regression" still route to testing (no bigram).
+    "visual builder": "frontend",           # bigram — "visual builder react", "visual ui builder", "visual app builder" → Frontend Frameworks
+    #   NOTE: "visual app builder" strip-drops "app" (stop word) → meaningful=["visual","builder"] → this bigram fires.
+    "visual database": "database",          # bigram — "visual database browser", "visual database tool" → Database (TablePlus, DBngin, Beekeeper)
+    #
+    # Custom elements (Web Components API) — "webcomponent"/"webcomponents" already mapped;
+    # the spaced "custom elements" form was raw_first ("custom" unmapped, not a stop word).
+    "custom elements": "frontend",          # bigram — "custom elements web", "custom elements html" → Frontend Frameworks
 }
 
 _FTS_STOP_WORDS = {

@@ -3864,6 +3864,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("benchmark tool k6", "testing"),                        # bare "benchmark"→testing (no regression)
     ("vector database pinecone", "database"),                # bare "vector"→database (no regression; no "cache" token)
     ("ai benchmark tool", "ai standards"),                   # bigram "ai benchmark"→ai standards (no regression)
+    #
+    # Probe 108 (autonomous loop, May 2026): LitElement / BPMN / visual-builder / custom-elements dead zones.
+    #
+    # "litelement" compound form — bare "lit"→frontend already worked; slug compound was raw_first.
+    ("litelement", "frontend"),                              # bare "litelement"→frontend (compound form of LitElement)
+    ("litelement typescript", "frontend"),                   # bare "litelement" fires at i=0
+    ("litjs", "frontend"),                                   # bare "litjs"→frontend (compound slug form)
+    # "bpmn" bare token — Camunda/Zeebe individually mapped; the generic BPMN term was raw_first.
+    ("bpmn", "background"),                                  # bare "bpmn"→background (BPMN engines: Camunda, Zeebe, jBPM)
+    ("bpmn tool", "background"),                             # bare "bpmn" fires at i=0
+    ("bpmn engine", "background"),                           # bare "bpmn" fires at i=0
+    # "visual builder" — bare "visual"→testing was overriding; bigram "visual builder"→frontend now overrides.
+    # NOTE: "visual app builder" strips "app" (stop word) → meaningful=["visual","builder"] → bigram fires.
+    ("visual builder", "frontend"),                          # bigram "visual builder"→frontend (Plasmic, Builder.io, Puck)
+    ("visual builder react", "frontend"),                    # bigram "visual builder"→frontend
+    ("visual app builder", "frontend"),                      # "app" is stop word → ["visual","builder"] → bigram fires
+    # "visual database" — bare "visual"→testing was overriding; bigram "visual database"→database now overrides.
+    ("visual database", "database"),                         # bigram "visual database"→database (TablePlus, DBngin, Beekeeper)
+    ("visual database browser", "database"),                 # bigram "visual database"→database
+    # "custom elements" spaced form — "webcomponents"/"webcomponent" already mapped; spaced form was raw_first.
+    ("custom elements", "frontend"),                         # bigram "custom elements"→frontend (Web Components API)
+    ("custom elements web", "frontend"),                     # bigram "custom elements"→frontend
+    # Regressions: visual-testing / workflow routes unchanged
+    ("visual testing", "testing"),                           # bare "visual"→testing (no regression)
+    ("visual regression testing", "testing"),                # bare "visual"→testing (no regression)
+    ("visual workflow builder", "background"),               # bigram "visual workflow"→background fires first (no regression)
+    ("visual editor", "frontend"),                           # bigram "visual editor"→frontend (no regression)
+    ("zeebe bpmn", "background"),                            # bare "zeebe"→background fires first (no regression)
+    ("camunda", "background"),                               # bare "camunda"→background (no regression)
+    ("lit", "frontend"),                                     # bare "lit"→frontend (no regression)
+    ("lit html", "frontend"),                                # bare "lit"→frontend (no regression)
 ]
 
 
