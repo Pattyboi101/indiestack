@@ -9627,6 +9627,38 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Dependency + package security auditing (Snyk, npm audit, OWASP Dependency-Check)
     "dependency audit": "security",             # bigram — "dependency audit tool", "dependency vulnerability audit" → Security
     "package vulnerability": "security",        # bigram — "package vulnerability scanner", "package security audit" → Security
+    #
+    # Probe pattern 107 (autonomous loop, May 2026): panel/popup/sidebar/split/html-email dead zones.
+    #
+    # "popup" / "popup library" fired raw_first — UI popup components (Tippy.js, Floating UI Popover,
+    # Headless UI) belong in Frontend Frameworks; bare "popup"→frontend added.
+    "popup": "frontend",                        # bare — "popup library", "popup component", "popup menu" → Frontend
+    # "widget" / "widget library" fired raw_first — generic UI widget libraries belong in Frontend;
+    # specific contexts override: "analytics widget"→analytics (via "analytics"), "chat widget"→customer (via "chat").
+    "widget": "frontend",                       # bare — "widget library", "widget component" → Frontend
+    # "resizable" fired raw_first — resizable panel/divider libs (react-resizable-panels, Allotment,
+    # react-resizable) belong in Frontend Frameworks.
+    "resizable": "frontend",                    # bare — "resizable panels", "resizable layout" → Frontend
+    "resizable panel": "frontend",              # bigram — "resizable panel react" → Frontend (overrides "panel"→ai)
+    # "collapsible" fired raw_first — collapsible UI components (Headless UI Disclosure, shadcn Collapsible,
+    # react-collapse) belong in Frontend Frameworks.
+    "collapsible": "frontend",                  # bare — "collapsible sidebar", "collapsible section" → Frontend
+    "collapsible panel": "frontend",            # bigram — "collapsible panel component" → Frontend (overrides "panel"→ai)
+    # "sidebar" fired raw_first — sidebar navigation components (shadcn Sidebar, react-sidebar,
+    # pro-sidebar) belong in Frontend Frameworks.
+    "sidebar": "frontend",                      # bare — "sidebar navigation", "sidebar component" → Frontend
+    # "split pane" / "split layout" mis-routed to Feature Flags via bare "split"→feature (Split.io collision).
+    # split-pane dividers (react-split-pane, Split.js, Allotment) belong in Frontend Frameworks;
+    # bigrams override bare "split"→feature for these layout-specific queries.
+    "split pane": "frontend",                   # bigram — "split pane react", "split pane divider" → Frontend
+    "split layout": "frontend",                 # bigram — "split layout component", "split editor layout" → Frontend
+    # "panel layout" / "panel component" mis-routed to AI via bare "panel"→ai (HoloViz Panel collision);
+    # UI layout panels (react-resizable-panels, Radix UI Panel) belong in Frontend Frameworks.
+    "panel layout": "frontend",                 # bigram — "panel layout component" → Frontend (overrides "panel"→ai)
+    "panel component": "frontend",              # bigram — "panel component react" → Frontend (overrides "panel"→ai)
+    # "html email template" / "html email renderer" mis-routed to Frontend via bare "html"→frontend;
+    # HTML email tools (MJML, react.email, Maizzle, Mosaico) belong in Email Marketing.
+    "html email": "email",                      # bigram — "html email template", "html email renderer" → Email Marketing
 }
 
 _FTS_STOP_WORDS = {

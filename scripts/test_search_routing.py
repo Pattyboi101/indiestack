@@ -3844,6 +3844,40 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ab testing tool", "feature"),                         # bare "ab"→feature (no regression)
     ("cost optimization infra", "devops"),                  # bare "cost"→devops (no regression)
     ("load balancer nginx", "devops"),                      # bigram "load balancer"→devops (no regression)
+    #
+    # Probe 107 (autonomous loop, May 2026): panel/popup/sidebar/split/html-email dead zones.
+    #
+    # "popup" / "popup library" — raw_first dead zone; popup UI components (Tippy.js, Floating UI) → Frontend.
+    ("popup library react", "frontend"),                    # bare "popup"→frontend
+    ("popup component headless", "frontend"),               # bare "popup"→frontend
+    # "widget" / "widget library" — raw_first dead zone; UI widget libraries → Frontend.
+    ("widget library react", "frontend"),                   # bare "widget"→frontend
+    ("ui widget component", "frontend"),                    # bare "widget"→frontend fires at pos 1 (after "ui")
+    # "resizable" — raw_first dead zone; react-resizable-panels, Allotment → Frontend.
+    ("resizable panel react", "frontend"),                  # bigram "resizable panel"→frontend (overrides "panel"→ai)
+    ("resizable panels layout", "frontend"),                # bare "resizable"→frontend
+    # "collapsible" — raw_first dead zone; Headless UI Disclosure, shadcn Collapsible → Frontend.
+    ("collapsible sidebar react", "frontend"),              # bare "collapsible"→frontend
+    ("collapsible panel component", "frontend"),            # bigram "collapsible panel"→frontend fires first
+    # "sidebar" — raw_first dead zone; shadcn Sidebar, react-sidebar → Frontend.
+    ("sidebar navigation react", "frontend"),               # bare "sidebar"→frontend
+    # "split pane" / "split layout" — Feature Flags collision via "split"→feature (Split.io).
+    # react-split-pane, Split.js dividers belong in Frontend Frameworks.
+    ("split pane react", "frontend"),                       # bigram "split pane"→frontend (overrides "split"→feature)
+    ("split layout component", "frontend"),                 # bigram "split layout"→frontend
+    # "panel layout" / "panel component" — AI collision via "panel"→ai (HoloViz Panel).
+    # React layout panels belong in Frontend Frameworks.
+    ("panel layout component", "frontend"),                 # bigram "panel layout"→frontend (overrides "panel"→ai)
+    ("panel component react", "frontend"),                  # bigram "panel component"→frontend fires (react stripped)
+    # "html email template" / "html email renderer" — Frontend collision via "html"→frontend.
+    # MJML, react.email, Maizzle belong in Email Marketing.
+    ("html email template", "email"),                       # bigram "html email"→email (overrides "html"→frontend)
+    ("html email renderer react", "email"),                 # bigram "html email"→email fires at i=0
+    # Regressions: split.io, holoviz panel, context-specific widget routes unchanged.
+    ("split testing ab", "feature"),                        # bare "split"→feature unchanged (no layout qualifier)
+    ("holoviz panel python", "ai"),                         # bare "panel"→ai unchanged for data-app queries
+    ("analytics widget dashboard", "analytics"),            # "analytics"→analytics fires before "widget"
+    ("chat widget support", "customer"),                    # "chat"→customer fires before "widget"
 ]
 
 

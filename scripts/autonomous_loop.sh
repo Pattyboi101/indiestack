@@ -374,7 +374,22 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 2101+ tests passing (105 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2134+ tests passing (107 probe patterns).
+
+Probe 107 (autonomous loop, May 2026): panel/popup/sidebar/split/html-email dead zones.
+  'popup' → frontend (popup UI components — Tippy.js, Floating UI Popover; was raw_first)
+  'widget' → frontend (generic UI widget libraries; was raw_first; specific bigrams override: chat→customer, analytics→analytics)
+  'resizable' → frontend (react-resizable-panels, Allotment; was raw_first)
+  'resizable panel' bigram → frontend (overrides "panel"→ai HoloViz Panel collision)
+  'collapsible' → frontend (Headless UI Disclosure, shadcn Collapsible; was raw_first)
+  'collapsible panel' bigram → frontend (overrides "panel"→ai)
+  'sidebar' → frontend (shadcn Sidebar, react-sidebar; was raw_first)
+  'split pane' bigram → frontend (react-split-pane; was "split"→feature Splits.io collision)
+  'split layout' bigram → frontend (same fix for layout split queries)
+  'panel layout' bigram → frontend (overrides "panel"→ai for layout panel UI queries)
+  'panel component' bigram → frontend (overrides "panel"→ai for component panel queries)
+  'html email' bigram → email (MJML, react.email, Maizzle; was "html"→frontend collision)
+  19 new tests + 4 regression guards added.
 
 Probe 105 (May 2026): LLM token-budget / json-mode / context-compression / long-context dead zones.
   'token budget' → ai (LLM token budget management — Helicone, LangSmith; "token"→auth was wrong)
