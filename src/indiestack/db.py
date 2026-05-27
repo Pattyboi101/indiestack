@@ -3006,6 +3006,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tunnel": "devops",         # "dev tunnel", "local tunnel" (ngrok, cloudflare tunnel)
     "tunneling": "devops",      # explicit form
     "ngrok": "devops",          # ngrok — localhost tunneling tool
+    "expose": "devops",         # "expose localhost", "expose server" → DevOps (LocalXpose, expose.sh, bore)
+    "port forwarding": "devops",  # bigram — "port forwarding tool", "port forwarding localhost" → DevOps
     "terraform": "devops",      # Terraform — infrastructure as code
     "pulumi": "devops",         # Pulumi — IaC with real programming languages
     "ansible": "devops",        # Ansible — configuration management
@@ -3018,7 +3020,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "surrealdb": "database",    # SurrealDB — multi-model DB (SQL + graph + document + KV)
     "webauthn": "authentication",   # WebAuthn — W3C passkey standard
     "fido2": "authentication",      # FIDO2 — underlying passkey protocol
-    # Security — compliance, encryption, certificates
+    # Security — compliance, encryption, certificates, port scanning
+    "port scanner": "security",  # bigram — "port scanner nmap", "port scanner tool" → Security Tools
+    "port scanning": "security", # bigram — "port scanning tool", "port scanning alternative" → Security Tools
     "compliance": "security",   # GDPR/SOC2 compliance tooling
     "gdpr": "security",         # GDPR compliance tools
     "encryption": "security",   # encryption libraries and key management
@@ -3218,6 +3222,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "smolagents": "ai",              # SmolAgents (HuggingFace) — minimal agentic framework
     # DevOps — Kubernetes ecosystem tools
     "helm": "devops",               # Helm — Kubernetes package manager (charts)
+    "argo": "devops",               # Argo bare — "argo alternative", "argo cd" → DevOps (ArgoCD, Argo Workflows)
     "argocd": "devops",             # Argo CD — GitOps continuous delivery for Kubernetes
     "fluxcd": "devops",             # Flux CD — GitOps operator for Kubernetes
     # Background / workflow orchestration
