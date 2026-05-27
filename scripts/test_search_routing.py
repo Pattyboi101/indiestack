@@ -4022,6 +4022,44 @@ TEST_CASES: list[tuple[str, str]] = [
     ("csv parser", "developer"),                            # "csv"→developer still fires
     ("parquet reader", "database"),                         # "parquet"→database still fires
     ("transpiler", "frontend"),                             # "transpiler"→frontend still fires
+
+    # ── Probe 113 (autonomous loop, May 2026): websocket-library / rollback / IMAP dead zones ──
+    #
+    # "websocket library" — "library" is in _FTS_STOP_WORDS → strips to bare ["websocket"].
+    # Previously routed to Message Queue (pub-sub server context); the majority of websocket
+    # queries are for npm client/server libraries (ws, µWS, socket.io-client) → API Tools.
+    ("websocket library", "api"),                           # "library" stripped → bare "websocket"→api (changed from message)
+    ("websocket client", "api"),                            # bare "websocket"→api fires at pos 0
+    ("websocket npm package", "api"),                       # meaningful=["websocket","npm"] → bare "websocket"→api fires
+    ("websocket hook react", "api"),                        # useWebSocket hook — bare "websocket"→api
+    ("ws npm library", "frontend"),                          # "library" stripped → ["ws","npm"]; "ws" unmapped so "npm"→frontend fires (2-char "ws" too ambiguous to map)
+    ("websocket reconnect", "api"),                         # bare "websocket"→api (reconnecting-websocket)
+    # Bigram guards for pub/sub server context (soketi/centrifugo still have named entries → message)
+    ("websocket server soketi", "message"),                 # soketi bare token→message fires at pos 2
+    ("centrifugo alternative", "message"),                  # bare "centrifugo"→message (no regression)
+    ("soketi alternative", "message"),                      # bare "soketi"→message (no regression)
+    # Regression: realtime/bidirectional-streaming bigrams fire before websocket bare token
+    ("realtime websocket", "api"),                          # "realtime"→api fires at pos 0 (no regression)
+    ("bidirectional streaming websocket", "api"),           # bigram "bidirectional streaming"→api fires (no regression)
+    #
+    # "rollback" → raw_first (unmapped; deployment rollback tools → DevOps).
+    # Regression: "database rollback"/"sql rollback" route via "database"/"sql"→database at pos 0.
+    ("rollback", "devops"),                                 # bare "rollback"→devops
+    ("rollback tool", "devops"),                            # "tool" stripped → bare "rollback"→devops
+    ("rollback strategy", "devops"),                        # meaningful=["rollback","strategy"] → bare "rollback"→devops
+    ("deployment rollback", "devops"),                      # "deployment"→devops fires at pos 0 (regression guard)
+    ("database rollback", "database"),                      # "database"→database fires at pos 0 (regression guard)
+    #
+    # "imap library" → raw_first "imap" (unmapped; IMAP client libraries — imapflow, imap-simple,
+    # node-imap, mailparser — belong in Email Marketing alongside smtp/pop3).
+    ("imap library", "email"),                              # "library" stripped → bare "imap"→email
+    ("imap client", "email"),                               # meaningful=["imap","client"] → bare "imap"→email
+    ("imap server", "email"),                               # bare "imap"→email
+    ("pop3 client", "email"),                               # bare "pop3"→email (POP3 email retrieval)
+    ("pop3 library", "email"),                              # "library" stripped → bare "pop3"→email
+    # Regression: "smtp client" / "email deliverability" / "dkim spf" still route correctly
+    ("smtp client library", "email"),                       # "smtp"→email fires at pos 0 (no regression)
+    ("email deliverability", "email"),                      # "email"→email fires at pos 0 (no regression)
 ]
 
 

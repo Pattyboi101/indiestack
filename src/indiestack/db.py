@@ -2603,8 +2603,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "kafka": "message",
     "rabbitmq": "message",
     "nats": "message",
-    "websocket": "message",  # WebSocket servers (Soketi, Centrifugo) live in Message Queue
-    "websockets": "message",
+    "websocket": "api",    # bare — "websocket library", "websocket client", "websocket npm" → API Tools
+    "websockets": "api",   # plural form — "websockets nodejs", "websockets python" → API Tools
+    # NOTE: soketi/centrifugo have their own bare-token entries (→ message) so pub/sub server
+    # queries still route correctly. "websocket server" bigram added in Probe 113 block below.
     # AI synonyms
     "llm": "ai",
     "gpt": "ai",
@@ -9680,6 +9682,30 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Custom elements (Web Components API) — "webcomponent"/"webcomponents" already mapped;
     # the spaced "custom elements" form was raw_first ("custom" unmapped, not a stop word).
     "custom elements": "frontend",          # bigram — "custom elements web", "custom elements html" → Frontend Frameworks
+
+    # ── Probe 113 (autonomous loop, May 2026): websocket-library collision / rollback / IMAP dead zones ──
+    #
+    # "websocket library" — bare "websocket" was mapped→message (Soketi/Centrifugo pub-sub context).
+    # "library" is in _FTS_STOP_WORDS so "websocket library" strips to bare ["websocket"].
+    # The majority of websocket queries are for client/server npm libraries (ws, µWS, socket.io-client)
+    # which belong in API Tools. Soketi/centrifugo have their own bare-token entries (→ message) so
+    # pub/sub server queries still route correctly.
+    # Fixed: bare "websocket"/"websockets" → api (above in message section, changed from "message").
+    # Bigrams guard the specific pub/sub server context.
+    "websocket server": "message",          # bigram — "websocket server self-hosted", "websocket pub-sub server" → Message Queue
+    "websocket pubsub": "message",          # bigram — "websocket pubsub", "websocket publish subscribe" → Message Queue
+    #
+    # "rollback" → raw_first (both "rollback" and its bare form unmapped; typical context is
+    # deployment rollback — Flux, Argo Rollouts, Spinnaker, Kubernetes rollout undo → DevOps).
+    # Regression: "database rollback"/"sql rollback" already route correctly via "database"→database
+    # and "sql"→database firing at position 0 before "rollback"→devops.
+    "rollback": "devops",                   # bare — "rollback tool", "rollback deployment", "rollback strategy" → DevOps
+    #
+    # "imap library" → raw_first "imap" (unmapped; "imap" and "library" both stripped or unmapped;
+    # IMAP client libraries (imapflow, imap-simple, node-imap, mailparser) belong in Email Marketing).
+    # Complement to existing "smtp"→email. Also add "pop3" (POP3 email retrieval protocol).
+    "imap": "email",                        # bare — "imap library", "imap client", "imap server" → Email Marketing
+    "pop3": "email",                        # bare — "pop3 client", "pop3 library" → Email Marketing
 }
 
 _FTS_STOP_WORDS = {
