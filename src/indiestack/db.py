@@ -9205,7 +9205,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "local first" → raw_first "local" (both tokens unmapped). Local-first / offline-capable
     # sync tools (ElectricSQL, PowerSync, Replicache, Instant) belong in Database (offline-sync tier).
     "local first": "database",          # bigram — "local first sync", "local first architecture" → Database
-    "local-first": "database",          # hyphenated — "local-first database", "local-first app" → Database
 
     # Probe 85 — memory leak / heap dump / SLA / terms / multi-region / tenancy / knowledge / team-collaboration dead zones
 
@@ -9232,7 +9231,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "multi region": "devops",            # bigram — "multi region deployment", "multi region setup" → DevOps
     "multi cloud": "devops",             # bigram — "multi cloud strategy", "multi cloud kubernetes" → DevOps
     "multiregion": "devops",             # compound — "multiregion database", "multiregion cdn" → DevOps
-    "multicloud": "devops",              # compound — "multicloud management", "multicloud platform" → DevOps
 
     # "multi tenancy" → raw_first "multi" ("tenant"→authentication fires for "multi tenant" correctly
     # but the gerund form "tenancy" was missing). SaaS multi-tenancy → Authentication (same tier as tenant).
@@ -9299,7 +9297,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "cross origin": "api",               # bigram — CORS ("cross-origin resource sharing", "cross origin request") → API Tools
     "cross site": "security",            # bigram — XSS/CSRF ("cross site scripting", "cross site request forgery") → Security
     "cross browser": "testing",          # bigram — "cross browser testing", "cross browser compatibility" → Testing Tools
-    "crossplatform": "frontend",         # compound — "crossplatform desktop app", "crossplatform mobile" → Frontend
 
     # Probe 89 — code smell / technical debt / pre-push hook / open graph image dead zones
 
