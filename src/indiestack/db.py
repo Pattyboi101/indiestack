@@ -7628,6 +7628,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ai benchmark": "ai standards",     # bigram — "ai benchmark tool", "ai benchmark suite" → AI Standards & Specs (overrides "benchmark"→testing)
     "ai safety": "ai standards",        # bigram — "ai safety framework", "ai safety testing" → AI Standards & Specs
     "ai governance": "ai standards",    # bigram — "ai governance tool", "ai governance framework" → AI Standards & Specs
+    "ai standards": "ai standards",     # bigram — "ai standards nist", "ai standards framework" → AI Standards & Specs (raw "ai" not in _CAT_SYNONYMS so this provides the boost)
+    "benchmark llm": "ai standards",    # bigram — "benchmark llm models", "benchmark llm python" → AI Standards & Specs (overrides "benchmark"→testing)
+    "llm benchmark": "ai standards",    # bigram — "llm benchmark comparison", "llm benchmark tool" → AI Standards & Specs (reversed form)
+    "vector cache": "caching",          # bigram — "vector cache embeddings", "vector cache redis" → Caching (overrides "vector"→database)
     # MCP Servers — high-star official + ecosystem tools (149th pass)
     # GitHub Official MCP Server (github/github-mcp-server, ~29k★; Issues, PRs, code search, Actions)
     "github-mcp": "mcp",            # "github mcp server", "github mcp setup" → MCP Servers

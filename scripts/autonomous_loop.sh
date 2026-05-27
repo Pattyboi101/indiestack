@@ -374,7 +374,16 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 2101+ tests passing (105 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2125+ tests passing (107 probe patterns).
+
+Probe 107 (autonomous loop, May 2026): ai-standards/benchmark-llm/vector-cache dead zones.
+  'ai standards nist' → ai standards (bigram "ai standards"→"ai standards"; "ai" not in _CAT_SYNONYMS so raw_first was dead-end)
+  'benchmark llm' → ai standards (LLM benchmarking tools — lm-eval-harness, evalplus; "benchmark"→testing was wrong)
+  'llm benchmark' → ai standards (reversed form)
+  'vector cache' → caching (vector caching tools — GPTCache, semantic cache; "vector"→database was overriding)
+  10 new tests + 4 regression guards added.
+
+Probe 106 (autonomous loop, May 2026): DAG/LLM-load-balancer/AI-cost/a/b-testing/image-embedding dead zones.
 
 Probe 105 (May 2026): LLM token-budget / json-mode / context-compression / long-context dead zones.
   'token budget' → ai (LLM token budget management — Helicone, LangSmith; "token"→auth was wrong)

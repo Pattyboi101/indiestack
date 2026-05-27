@@ -3844,6 +3844,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ab testing tool", "feature"),                         # bare "ab"→feature (no regression)
     ("cost optimization infra", "devops"),                  # bare "cost"→devops (no regression)
     ("load balancer nginx", "devops"),                      # bigram "load balancer"→devops (no regression)
+    #
+    # Probe 107 (autonomous loop, May 2026): ai-standards/benchmark/vector-cache dead zones.
+    #
+    # "ai standards nist" → raw_first "ai" (no cat boost; "ai" not in _CAT_SYNONYMS).
+    # Bigram "ai standards"→"ai standards" now overrides raw_first.
+    ("ai standards nist", "ai standards"),                   # bigram "ai standards"→ai standards
+    ("ai standards framework tool", "ai standards"),         # bigram "ai standards"→ai standards
+    # "benchmark llm" → testing ("benchmark"→testing fires; LLM benchmarking → ai-standards).
+    # Bigrams "benchmark llm" and "llm benchmark" now override.
+    ("benchmark llm models", "ai standards"),                # bigram "benchmark llm"→ai standards
+    ("llm benchmark comparison", "ai standards"),            # bigram "llm benchmark"→ai standards
+    ("llm benchmark harness python", "ai standards"),        # bigram "llm benchmark"→ai standards
+    # "vector cache embeddings" → database ("vector"→database fires; vector caching → caching).
+    # Bigram "vector cache" now overrides.
+    ("vector cache embeddings", "caching"),                  # bigram "vector cache"→caching (overrides "vector"→database)
+    ("vector cache redis", "caching"),                       # bigram "vector cache"→caching
+    # Regressions: existing benchmark/vector/ai routes still work
+    ("benchmark tool k6", "testing"),                        # bare "benchmark"→testing (no regression)
+    ("vector database pinecone", "database"),                # bare "vector"→database (no regression; no "cache" token)
+    ("ai benchmark tool", "ai standards"),                   # bigram "ai benchmark"→ai standards (no regression)
 ]
 
 
