@@ -3916,6 +3916,25 @@ TEST_CASES: list[tuple[str, str]] = [
     ("named entity recognition", "ai"),                      # bigram "named entity"→ai (no regression)
     ("entity relationship diagram", "database"),             # bare "entity"→database (no regression; no "extraction" token)
     ("key management system", "security"),                   # bigram "key management"→security (no regression)
+    #
+    # Probe 110 (autonomous loop, May 2026): metrics-aggregation / distributed-file / code-snippet dead zones.
+    #
+    # "metrics aggregation" — bare "metrics"→analytics fires (wrong; Prometheus/VictoriaMetrics are Monitoring).
+    # Bigram "metrics aggregation"→monitoring now overrides.
+    ("metrics aggregation prometheus", "monitoring"),        # bigram "metrics aggregation"→monitoring
+    ("metrics aggregation victoria", "monitoring"),          # bigram "metrics aggregation"→monitoring
+    # "distributed file system" — "distributed" has no mapping (intentionally removed to avoid caching collision).
+    # Bigram "distributed file"→file now handles distributed FS queries (Ceph, SeaweedFS, MinIO).
+    ("distributed file system", "file"),                     # bigram "distributed file"→file
+    ("distributed file storage", "file"),                    # bigram "distributed file"→file
+    # "code snippet manager" — bare "manager"→project fired (wrong; Masscode, Codepoint are Developer Tools).
+    # Bigram "code snippet"→developer now fires at position 0 before "snippet manager" at position 1.
+    ("code snippet manager", "developer"),                   # bigram "code snippet"→developer (beats "manager"→project)
+    ("code snippet tool", "developer"),                      # bigram "code snippet"→developer
+    # Regressions: bare "metrics"→analytics unchanged; "distributed tracing"→monitoring unchanged
+    ("metrics dashboard", "analytics"),                      # bare "metrics"→analytics (business metrics; no regression)
+    ("distributed tracing jaeger", "monitoring"),            # bare "tracing"→monitoring (no regression)
+    ("distributed cache redis", "caching"),                  # bare "cache"→caching wins (no regression; "distributed" has no mapping)
 ]
 
 

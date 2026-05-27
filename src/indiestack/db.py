@@ -2797,6 +2797,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "plausible": "analytics",
     "fathom": "analytics",
     "metrics": "analytics",
+    # "metrics aggregation" tools (VictoriaMetrics, Prometheus, M3) are Monitoring, not Analytics.
+    # Bare "metrics"→analytics still fires for business metrics dashboards (Amplitude, Mixpanel).
+    "metrics aggregation": "monitoring",  # bigram — "metrics aggregation prometheus", "metrics aggregation victoria" → Monitoring
     "dashboard": "analytics",
     "dashboards": "analytics",
     # DevOps/Infrastructure — docker/k8s queries get category boost
@@ -3736,6 +3739,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "invalidation": "caching",      # "cache invalidation", "cache busting" → Caching
     # "distributed" removed — "distributed tracing" wrongly routed to Caching;
     # "distributed cache" is handled by "cache"/"caching" as the second meaningful term.
+    # Bigram for distributed file system queries (Ceph, SeaweedFS, MinIO distributed mode).
+    "distributed file": "file",          # bigram — "distributed file system", "distributed file storage" → File Management
     "warmup": "caching",            # "cache warmup", "cache warming" → Caching
     # Memoization — in-process caching (memoizee, memize, lodash.memoize)
     "memoize": "caching",           # "memoize function", "memoize library" → Caching
@@ -4271,6 +4276,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — code review tooling
     "review": "developer",           # "code review tool", "automated code review" → Developer Tools
     "diff": "developer",             # "diff library", "json diff tool", "code diff" → Developer Tools
+    # Developer Tools — code snippet managers (Masscode, Codepoint, Quokka); bare "manager"→project fires without this
+    "code snippet": "developer",     # bigram — "code snippet manager", "code snippet tool" → Developer Tools
     # Database — query builders and ORMs ("sql query builder", "type-safe query")
     "query": "database",             # "query builder", "type-safe query", "sql query" → Database (Kysely, Knex, Drizzle)
     # Frontend — state stores ("global store", "state store", "redux store")

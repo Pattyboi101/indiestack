@@ -374,7 +374,13 @@ After fixing db.py, run validate_synonyms.py to check for duplicates, then commi
     "realtime collaboration"→api, "github actions ci"→devops, "edge database sqlite"→database all intact.
     13 new tests added.
 
-After all fixes: python3 scripts/test_search_routing.py should report 2158+ tests passing (109 probe patterns).
+After all fixes: python3 scripts/test_search_routing.py should report 2167+ tests passing (110 probe patterns).
+
+Probe 110 (autonomous loop, May 2026): metrics-aggregation/distributed-file/code-snippet dead zones.
+  'metrics aggregation prometheus/victoria' → monitoring (bigram; bare "metrics"→analytics was firing; VictoriaMetrics/Prometheus are Monitoring)
+  'distributed file system/storage' → file (bigram "distributed file"→file; bare "distributed" intentionally unmapped; Ceph/SeaweedFS)
+  'code snippet manager/tool' → developer (bigram; bare "manager"→project was firing; Masscode/Codepoint are Developer Tools)
+  9 new tests + 3 regression guards added.
 
 Probe 109 (autonomous loop, May 2026): workflow-orchestration/entity-extraction/api-key dead zones.
   'workflow orchestration tool/python' → background (Temporal, Prefect, Dagster; bigram "workflow orchestration"→background)
