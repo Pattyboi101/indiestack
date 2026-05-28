@@ -5040,6 +5040,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — local-first / offline sync tools (growing segment alongside CRDT/ElectricSQL)
     "replicache": "database",        # Replicache — local-first sync engine by Rocicorp → Database
     "powersync": "database",         # PowerSync — offline-first real-time sync by JourneyApps → Database
+    "triplit": "database",           # Triplit — local-first TypeScript database with cloud sync → Database
     "instantdb": "database",         # InstantDB — realtime Firebase alternative (instantdb/instant) → Database
     # API — Spring Boot compound/hyphenated forms (complement to "spring"→"api" already mapped)
     "springboot": "api",             # Spring Boot — compound form; "springboot alternative" queries → API Tools

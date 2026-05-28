@@ -15061,6 +15061,94 @@ TOOLS = [
         "npm install react-number-format",
         "code",
     ),
+    # API Tools — API key management / rate limiting (added May 2026) -----------
+    (
+        "unkey",
+        "Unkey",
+        "Open-source API key management and rate limiting",
+        "Unkey is an open-source API authentication and rate limiting platform. "
+        "Create scoped API keys with per-key rate limits, expiry, permissions, and "
+        "usage analytics — no auth server to maintain. Works with any backend via "
+        "REST or the official TypeScript/Python/Go SDKs. Built for indie developers "
+        "who want Stripe-quality key management without the complexity of OAuth.",
+        "api-tools",
+        "unkeyed/unkey",
+        4500,
+        "https://unkey.com",
+        "api-keys,rate-limiting,authentication,open-source,developer-tools",
+        "npm install @unkey/api",
+        "code",
+    ),
+    # Database — multitenant Postgres (added May 2026) -------------------------
+    (
+        "nile",
+        "Nile",
+        "Serverless Postgres re-engineered for multi-tenant SaaS",
+        "Nile re-engineers Postgres with tenant isolation as a first-class primitive. "
+        "Each tenant gets isolated virtual databases with separate compute, storage, "
+        "and connection pooling — no complex row-level-security schemas required. "
+        "Includes Postgres-compatible SQL, vector embeddings, and built-in auth. "
+        "Designed for B2B SaaS apps that need hard tenant isolation without sharding.",
+        "database",
+        "niledatabase/nile-js",
+        2000,
+        "https://thenile.dev",
+        "postgres,multitenant,saas,serverless,database,isolation",
+        "npm install @niledatabase/server",
+        "saas",
+    ),
+    # Database — local-first sync (added May 2026) ----------------------------
+    (
+        "powersync",
+        "PowerSync",
+        "Offline-first real-time sync between SQLite and Postgres",
+        "PowerSync provides offline-first real-time sync between client SQLite "
+        "databases and server-side Postgres (or MongoDB). The client SDK handles "
+        "conflicts, retry logic, and incremental sync automatically. Supports React "
+        "Native, Flutter, Capacitor, and web via a SQLite-compatible WASM driver. "
+        "Used by mobile-heavy B2C apps that need offline-first data with optimistic UI.",
+        "database",
+        "powersync-community/powersync-service",
+        1500,
+        "https://powersync.com",
+        "local-first,offline-first,sync,sqlite,real-time,mobile",
+        "npm install @powersync/web",
+        "code",
+    ),
+    (
+        "triplit",
+        "Triplit",
+        "Full-stack database that syncs between server and browser",
+        "Triplit is an open-source database that runs in both the browser and server "
+        "with automatic real-time sync. Write queries once with the TypeScript client; "
+        "data flows reactively to all connected clients. Supports relations, permissions, "
+        "and offline queuing. Aims to replace custom WebSocket state management and "
+        "optimistic update boilerplate in React apps.",
+        "database",
+        "aspen-cloud/triplit",
+        2500,
+        "https://triplit.dev",
+        "local-first,sync,typescript,real-time,offline-first,react",
+        "npm install @triplit/db",
+        "code",
+    ),
+    (
+        "replicache",
+        "Replicache",
+        "Instant, offline-capable mutations for web apps",
+        "Replicache is a local-first sync framework that adds offline-capable, "
+        "optimistic UI to any web app. Mutations apply instantly in the browser; "
+        "Replicache syncs them to your backend using a poke/pull model. The framework "
+        "handles conflict resolution, retry, and persistence via IndexedDB. "
+        "Backend-agnostic — works with any HTTP API or serverless function.",
+        "database",
+        "rocicorp/replicache",
+        4000,
+        "https://replicache.dev",
+        "local-first,offline-first,sync,react,mutations,optimistic-ui",
+        "npm install replicache",
+        "code",
+    ),
     # Frontend — image crop and editor components (added May 2026) ---------------
     (
         "cropperjs",
