@@ -20,11 +20,11 @@ def _safe_ld(s: str) -> str:
 def _alt_health_badge(status: str) -> str:
     """Render a colored health-status pill for alternatives pages."""
     colors = {
-        'active': ('var(--success-bg, #D1FAE5)', 'var(--success-text, #065F46)'),
-        'stale': ('#FEF3C7', '#92400E'),
-        'dead': ('#FEE2E2', '#991B1B'),
+        'active': ('var(--success-bg)', 'var(--success-text)'),
+        'stale': ('var(--warning-bg)', 'var(--warning-text)'),
+        'dead': ('var(--error-bg)', 'var(--error-text)'),
     }
-    bg, fg = colors.get(status, ('#F3F4F6', '#6B7280'))
+    bg, fg = colors.get(status, ('var(--card-bg)', 'var(--ink-muted)'))
     label = escape(status.capitalize()) if status else 'Unknown'
     return (
         f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;'
@@ -206,6 +206,8 @@ async def alternatives_index(request: Request):
     """List all competitors that IndieStack tools can replace."""
     db = request.state.db
     competitors = await get_all_competitors(db)
+    _tc = await db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
+    total_tools = (await _tc.fetchone())['cnt']
 
     if not competitors:
         body = """
@@ -339,7 +341,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
                         <tr>
                             <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Tool count</td>
                             <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-muted);">7,000</td>
-                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">6,500+ (indie-focused)</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">{total_tools:,}+ (indie-focused)</td>
                         </tr>
                         <tr>
                             <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Compatibility data</td>
@@ -377,7 +379,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
                 Install the MCP Server
             </h2>
             <p style="color:var(--ink-muted);font-size:15px;margin-bottom:20px;line-height:1.6;">
-                Give your AI agent access to 6,500+ developer tools. Works with Claude, Cursor, and Windsurf.
+                Give your AI agent access to {total_tools:,}+ developer tools. Works with Claude, Cursor, and Windsurf.
             </p>
             <div style="background:#1A1A2E;border-radius:var(--radius-sm);padding:16px 20px;overflow-x:auto;">
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--accent);white-space:nowrap;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code>
@@ -390,7 +392,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
                 See what&rsquo;s in the database
             </p>
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
-                Browse 6,500+ indie developer tools across 29 categories.
+                Browse {total_tools:,}+ indie developer tools across 29 categories.
             </p>
             <a href="/explore" class="btn btn-primary">Explore Tools &rarr;</a>
         </div>
