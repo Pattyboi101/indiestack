@@ -4022,6 +4022,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("csv parser", "developer"),                            # "csv"→developer still fires
     ("parquet reader", "database"),                         # "parquet"→database still fires
     ("transpiler", "frontend"),                             # "transpiler"→frontend still fires
+
+    # ── probe 113: crud/BaaS/AI-autocomplete/data-protection dead zones ──────
+    # CRUD generators — bare "crud" was raw_first; CRUD generators (PostgREST, Hasura) → API Tools
+    ("crud generator", "api"),                              # bare "crud"→api (CRUD generators produce APIs)
+    ("crud api builder", "api"),                            # bare "crud"→api at position 0
+    ("crud rest api", "api"),                               # bare "crud"→api before "api" at position 1
+    # BaaS — "baas" was raw_first; "backend as a service" reduces to ["backend","as"] after stop words
+    ("baas", "database"),                                   # bare "baas"→database (BaaS tools live in database category)
+    ("baas firebase alternative", "database"),              # "baas"→database overrides raw_first
+    ("backend as a service", "database"),                   # bigram "backend as"→database (a+service are stop words)
+    ("backend as a service nodejs", "database"),            # bigram fires before framework qualifier stripped
+    # AI autocomplete — bare "autocomplete"→frontend; bigram "ai autocomplete"→ai dev overrides
+    ("ai autocomplete", "ai dev"),                          # bigram "ai autocomplete"→ai dev at position 0
+    ("best ai autocomplete", "ai dev"),                     # bigram fires after "best" stop-word stripped
+    # Data protection / CCPA — both were raw_first; belong in Security Tools
+    ("data protection compliance", "security"),             # bigram "data protection"→security
+    ("data protection law", "security"),                    # bigram "data protection" in legal context → security
+    ("ccpa compliance tool", "security"),                   # bare "ccpa"→security
+    ("ccpa opt out", "security"),                           # bare "ccpa"→security
+    # Regressions: adjacent mappings unchanged
+    ("autocomplete component react", "frontend"),           # bare "autocomplete"→frontend still fires (no regression)
+    ("firebase alternative", "database"),                   # "firebase"→database still fires
+    ("supabase alternative", "database"),                   # "supabase"→database still fires
+    ("gdpr compliance", "security"),                        # "gdpr"→security still fires
+    ("graphql server", "api"),                              # "graphql"→api still fires
 ]
 
 

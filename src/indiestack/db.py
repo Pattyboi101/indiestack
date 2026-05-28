@@ -9680,6 +9680,25 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Custom elements (Web Components API) — "webcomponent"/"webcomponents" already mapped;
     # the spaced "custom elements" form was raw_first ("custom" unmapped, not a stop word).
     "custom elements": "frontend",          # bigram — "custom elements web", "custom elements html" → Frontend Frameworks
+    # ── Probe 113 (autonomous loop, May 2026): crud/BaaS/AI-autocomplete/data-protection dead zones ──
+    #
+    # CRUD generators — bare "crud" was raw_first; "crud generator" also fires raw_first since "generator"
+    # has no mapping. CRUD generators (PostgREST, Hasura, LoopBack, AdminJS) produce REST/GraphQL APIs → API Tools.
+    "crud": "api",                      # bare — "crud generator", "crud api builder", "crud rest api" → API Tools
+    #
+    # BaaS (Backend-as-a-Service) — "baas" was raw_first. "backend as a service" → meaningful=["backend","as"]
+    # after stop-word removal ("a"→stop, "service"→stop); bigram "backend as" added to catch spaced form.
+    "baas": "database",                 # bare — "baas comparison", "baas firebase alternative" → Database (Supabase, Appwrite, PocketBase)
+    "backend as": "database",          # bigram — "backend as a service" → ["backend","as"] after stop-word drop → Database
+    #
+    # AI autocomplete — bare "autocomplete"→frontend fires first for "ai autocomplete" (UI autocomplete collision).
+    # Bigram "ai autocomplete" overrides at position 0 → AI Dev Tools (Codeium, Tabnine, Copilot alternatives).
+    "ai autocomplete": "ai dev",       # bigram — "ai autocomplete editor", "best ai autocomplete" → AI Dev Tools
+    #
+    # Data protection / CCPA — "data protection" fired raw_first ("data" unmapped, "protection" unmapped);
+    # "ccpa" fired raw_first; both belong in Security Tools (GDPR/CCPA compliance: Osano, OneTrust, Termly).
+    "data protection": "security",     # bigram — "data protection regulation", "data protection compliance" → Security Tools
+    "ccpa": "security",                # bare — "ccpa compliance tool", "ccpa opt-out" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
