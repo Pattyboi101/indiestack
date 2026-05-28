@@ -2857,6 +2857,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pdf creator": "developer",     # "pdf creator library", "pdf creator api" → Developer Tools
     "html pdf": "developer",        # "html to pdf" (stop-word "to" stripped → "html pdf") → Developer Tools
     "pdf viewer": "frontend",       # "pdf viewer react", "pdf viewer component" → Frontend (react-pdf, pdfjs-dist)
+    "pdf invoice": "invoicing",     # "pdf invoice generator", "pdf invoice template" → Invoicing (overrides "pdf"→file)
+    "pdf signature": "forms",       # "pdf signature api", "pdf signature library" → Forms (e-signature; overrides "pdf"→file)
     # Markdown processing — editors, renderers, parsers
     "markdown": "documentation", # markdown editors/renderers → Documentation category
     # Security tools — "security" as raw term already LIKE-matches "Security Tools",
@@ -3709,6 +3711,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — TDD and mutation testing
     "tdd": "testing",               # test-driven development tooling queries
     "mutation": "testing",          # "mutation testing" — Stryker, Mutmut, PITest
+    "mutation observer": "frontend", # bigram — "mutation observer api", "mutation observer react" → Frontend (browser MutationObserver; overrides "mutation"→testing)
     "stryker": "testing",           # Stryker — JavaScript/TypeScript mutation testing framework
     # Python testing framework + tooling — fast-growing segment of agent searches
     "pytest": "testing",            # pytest — dominant Python testing framework
@@ -3981,6 +3984,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # File management — image processing beyond "upload" / "media"
     "sharp": "file",                # Sharp — high-performance Node.js image processing (27k★)
     "resize": "file",               # "image resize library", "image resizer" → File Management
+    "resize observer": "frontend",  # bigram — "resize observer hook", "resize observer react" → Frontend (browser ResizeObserver API; overrides "resize"→file)
+    "resize image": "developer",    # bigram — "resize image sharp", "resize image api" → Developer Tools (reverse of "image resize"→developer; overrides "resize"→file)
     # Developer Tools — clipboard utilities (very common utility query)
     "clipboard": "developer",       # "clipboard API", "copy to clipboard" → Developer Tools
     # Database — analytical / data warehouse queries
@@ -4000,6 +4005,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Concurrency / parallelism control (worker pools, async queues)
     "concurrency": "background",    # "concurrency control", "concurrent jobs" → Background Jobs
     "concurrent": "background",     # "concurrent tasks", "concurrent workers" → Background Jobs
+    "concurrent mode": "frontend",  # bigram — "concurrent mode react", "react concurrent mode" → Frontend (React Concurrent Mode; overrides "concurrent"→background)
+    "concurrent rendering": "frontend", # bigram — "concurrent rendering react", "concurrent rendering nextjs" → Frontend (overrides "concurrent"→background)
     # Analytics — user behavior analysis
     "replay": "monitoring",         # "session replay" (LogRocket, Highlight.io, PostHog) → Monitoring
     "heatmap": "analytics",         # "click heatmap", "scroll heatmap" (Hotjar, Clarity) → Analytics
@@ -9047,6 +9054,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "llm streaming": "ai",              # bigram — "llm streaming response", "llm streaming python" → AI (reverse of "streaming llm")
     "stream ai": "ai",                  # bigram — "stream ai response", "stream ai output" → AI & Automation
     "token streaming": "ai",            # bigram — "token streaming react", "token streaming llm" → AI (overrides "token"→auth)
+    "streaming ssr": "frontend",        # bigram — "streaming ssr nextjs", "streaming ssr react" → Frontend (React 18 SSR streaming; overrides "streaming"→media)
     # ── Probe pattern 76 (May 2026): AI document-processing + image-AI dead zones ──
     #
     # Dead zones confirmed:

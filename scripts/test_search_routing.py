@@ -4140,6 +4140,39 @@ TEST_CASES: list[tuple[str, str]] = [
     ("node crypto module", "security"),                # bare "crypto"→security unchanged
     ("freemium model saas", "payments"),               # bare "freemium"→payments still fires (no regression)
     ("subscription management stripe", "payments"),   # bare "subscription"→payments still fires (no regression)
+
+    # ── probe 117: pdf-invoice / streaming-ssr / concurrent-mode / observer-api dead zones ──
+    #
+    # Dead zones / misfires fixed:
+    # "pdf invoice generator" → file (wrong; bare "pdf"→file fired before "invoice"→invoicing)
+    # "streaming ssr nextjs" → media (wrong; "streaming"→media fires before "ssr"→frontend)
+    # "concurrent mode react" → background (wrong; "concurrent"→background fires before "react")
+    # "resize observer hook" → file (wrong; "resize"→file fires before "observer" which had no mapping)
+    # "mutation observer api" → testing (wrong; "mutation"→testing fires but browser MutationObserver is Frontend)
+    # "pdf signature api" → file (wrong; bare "pdf"→file fires before "signature"→forms)
+    # "resize image sharp" → file (wrong; bare "resize"→file fires; "image resize" already mapped but reversed form missing)
+    ("pdf invoice generator", "invoicing"),           # bigram "pdf invoice"→invoicing (overrides "pdf"→file)
+    ("pdf invoice template", "invoicing"),            # bigram "pdf invoice"→invoicing
+    ("streaming ssr nextjs", "frontend"),             # bigram "streaming ssr"→frontend (overrides "streaming"→media)
+    ("streaming ssr react", "frontend"),              # bigram "streaming ssr"→frontend
+    ("concurrent mode react", "frontend"),            # bigram "concurrent mode"→frontend (overrides "concurrent"→background)
+    ("react concurrent mode", "frontend"),            # bigram "concurrent mode"→frontend (reordered form)
+    ("concurrent rendering react", "frontend"),       # bigram "concurrent rendering"→frontend
+    ("resize observer hook", "frontend"),             # bigram "resize observer"→frontend (overrides "resize"→file)
+    ("resize observer react", "frontend"),            # bigram "resize observer"→frontend
+    ("mutation observer api", "frontend"),            # bigram "mutation observer"→frontend (overrides "mutation"→testing)
+    ("mutation observer react", "frontend"),          # bigram "mutation observer"→frontend
+    ("pdf signature api", "forms"),                   # bigram "pdf signature"→forms (overrides "pdf"→file)
+    ("pdf signature library python", "forms"),        # bigram "pdf signature"→forms
+    ("resize image sharp", "developer"),              # bigram "resize image"→developer (reverse of "image resize"→developer)
+    ("resize image api nodejs", "developer"),         # bigram "resize image"→developer
+    # Regressions: nearby mappings unchanged
+    ("pdf generation nodejs", "developer"),           # "pdf generation"→developer bigram still fires
+    ("pdf parsing python", "ai"),                      # "pdf parsing"→ai bigram still fires
+    ("streaming video api", "media"),                 # bare "streaming"→media still fires without "ssr"
+    ("concurrent jobs queue", "background"),          # bare "concurrent"→background still fires without "mode/rendering"
+    ("mutation testing javascript", "testing"),       # "mutation"→testing still fires without "observer"
+    ("image resize sharp", "developer"),              # existing "image resize"→developer bigram unchanged
 ]
 
 
