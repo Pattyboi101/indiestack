@@ -5,14 +5,16 @@ Safe to re-run — checks by slug before inserting.
 Run on production: python3 /app/src/indiestack/scripts/add_missing_tools.py
 
 DB_PATH defaults to /data/indiestack.db (Fly.io production path).
-Override: DB_PATH=/path/to/local.db python3 add_missing_tools.py
+Override via env var:   DB_PATH=/path/to/local.db python3 add_missing_tools.py
+Override via CLI arg:   python3 add_missing_tools.py /path/to/local.db
 """
 
-import asyncio
 import os
 import sqlite3
+import sys
 
-DB_PATH = os.environ.get("DB_PATH", "/data/indiestack.db")
+_default_db = os.environ.get("DB_PATH", "/data/indiestack.db")
+DB_PATH = sys.argv[1] if len(sys.argv) > 1 else _default_db
 
 # Each entry: (slug, name, tagline, description, category_slug, github_repo,
 #              github_stars, website_url, tags, install_command, source_type)
@@ -15111,6 +15113,23 @@ def slug_exists(conn: sqlite3.Connection, slug: str) -> bool:
     return row is not None
 
 
+def stars_to_quality_score(stars: int) -> int:
+    """Map GitHub stars to a quality_score (40–95 range)."""
+    if stars >= 100_000:
+        return 95
+    if stars >= 50_000:
+        return 90
+    if stars >= 20_000:
+        return 85
+    if stars >= 10_000:
+        return 80
+    if stars >= 5_000:
+        return 75
+    if stars >= 1_000:
+        return 65
+    return 55
+
+
 def insert_tool(conn: sqlite3.Connection, tool: tuple) -> None:
     (
         slug, name, tagline, description, category_slug, github_repo,
@@ -15122,19 +15141,21 @@ def insert_tool(conn: sqlite3.Connection, tool: tuple) -> None:
         print(f"  SKIP {slug} — category '{category_slug}' not found")
         return
 
+    quality_score = stars_to_quality_score(github_stars)
+
     conn.execute(
         """INSERT INTO tools (
             slug, name, tagline, description, category_id,
             github_repo, github_stars, website_url, tags,
             install_command, source_type, status, quality_score
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'approved', 80)""",
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'approved', ?)""",
         (
             slug, name, tagline, description, category_id,
             github_repo, github_stars, website_url, tags,
-            install_command, source_type,
+            install_command, source_type, quality_score,
         ),
     )
-    print(f"  INSERT {slug} ({category_slug})")
+    print(f"  INSERT {slug} ({category_slug}, quality={quality_score})")
 
 
 def main() -> None:
@@ -15155,13 +15176,17 @@ def main() -> None:
             inserted += 1
 
     conn.commit()
+
+    if inserted > 0:
+        print("\nRebuilding FTS index...")
+        conn.execute("INSERT INTO tools_fts(tools_fts) VALUES('rebuild')")
+        conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+        conn.commit()
+        print("FTS index rebuilt.")
+
     conn.close()
 
     print(f"\nDone: {inserted} inserted, {skipped} skipped")
-    if inserted > 0:
-        print("Next step: rebuild FTS index on production —")
-        print("  INSERT INTO tools_fts(tools_fts) VALUES('rebuild');")
-        print("  PRAGMA wal_checkpoint(TRUNCATE);")
 
 
 if __name__ == "__main__":
