@@ -4140,6 +4140,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("node crypto module", "security"),                # bare "crypto"→security unchanged
     ("freemium model saas", "payments"),               # bare "freemium"→payments still fires (no regression)
     ("subscription management stripe", "payments"),   # bare "subscription"→payments still fires (no regression)
+
+    # ── probe 117: browser Observer API hooks dead zones ──
+    #
+    # Dead zones fixed:
+    # "resize observer hook" → file via bare "resize"→file (wrong; ResizeObserver hooks like
+    #   use-resize-observer, @radix-ui/react-use-size are Frontend UI utilities)
+    # "mutation observer" → testing via bare "mutation"→testing (wrong; MutationObserver browser API
+    #   → Frontend; mutation-testing collision with Stryker/mutmut fixed by bigram override)
+    # "intersection observer react" → raw_first "intersection" (unmapped; IntersectionObserver
+    #   lazy-load/scroll-trigger hooks → Frontend)
+    # "scroll observer" → raw_first "scroll" (unmapped; scroll position tracking hooks → Frontend)
+    #
+    # Regressions guarded: "image resize sharp"→developer (bigram "image resize"→developer unchanged),
+    # "resize image nodejs"→file (bare "resize"→file still fires when "observer" not present),
+    # "mutation testing stryker"→testing (bare "mutation"→testing fires when "observer" not in query),
+    # "scroll heatmap"→analytics ("heatmap"→analytics fires since no "scroll observer" bigram matches).
+    ("resize observer hook", "frontend"),              # bigram "resize observer"→frontend (overrides "resize"→file)
+    ("resize observer react", "frontend"),             # bigram fires even with framework qualifier
+    ("resize observer typescript", "frontend"),        # bigram fires with TS qualifier
+    ("mutation observer api", "frontend"),             # bigram "mutation observer"→frontend (overrides "mutation"→testing)
+    ("mutation observer nodejs", "frontend"),          # bigram fires for node context
+    ("intersection observer react", "frontend"),       # bigram "intersection observer"→frontend
+    ("intersection observer hook", "frontend"),        # bigram + bare "intersection"→frontend
+    ("intersection api browser", "frontend"),          # bare "intersection"→frontend
+    ("scroll observer library", "frontend"),           # bigram "scroll observer"→frontend
+    # Regressions
+    ("resize image nodejs", "file"),                   # bare "resize"→file still fires (no bigram match for "resize image")
+    ("mutation testing stryker", "testing"),           # bare "mutation"→testing still fires (no "observer" token)
+    ("image resize sharp", "developer"),               # bigram "image resize"→developer still fires
+    ("scroll heatmap analytics", "analytics"),         # bare "heatmap"→analytics fires (no bigram collision)
 ]
 
 

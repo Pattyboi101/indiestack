@@ -3981,6 +3981,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # File management — image processing beyond "upload" / "media"
     "sharp": "file",                # Sharp — high-performance Node.js image processing (27k★)
     "resize": "file",               # "image resize library", "image resizer" → File Management
+    # Browser Observer API hooks — bigrams override bare tokens for UI hooks vs image/mutation-testing tools
+    "resize observer": "frontend",      # bigram — browser ResizeObserver hooks (use-resize-observer) → Frontend (overrides "resize"→file)
+    "mutation observer": "frontend",    # bigram — browser MutationObserver API → Frontend (overrides "mutation"→testing/Stryker)
+    "intersection observer": "frontend", # bigram — IntersectionObserver lazy-load/scroll-trigger → Frontend
+    "intersection": "frontend",         # bare — "intersection observer hook", "intersection API" → Frontend
+    "scroll observer": "frontend",      # bigram — scroll position tracking hooks → Frontend
     # Developer Tools — clipboard utilities (very common utility query)
     "clipboard": "developer",       # "clipboard API", "copy to clipboard" → Developer Tools
     # Database — analytical / data warehouse queries
