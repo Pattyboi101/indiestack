@@ -62,7 +62,7 @@ def _alt_agent_citations(tool: dict) -> str:
     count = int(mcp_views)
     return (
         f'<span style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;'
-        f'font-weight:600;background:#EDE9FE;color:#7C3AED;">'
+        f'font-weight:600;background:var(--info-bg);color:var(--info-text);">'
         f'AI agents recommend this {count:,} time{"s" if count != 1 else ""}</span>'
     )
 
@@ -782,7 +782,7 @@ async def alternative_vs(request: Request, competitor_slug: str, tool_slug: str)
         price_display = "Free"
 
     # Badges
-    ejectable_badge = '<span style="display:inline-block;background:var(--info-bg, #EDE9FE);color:var(--info-text, #7C3AED);padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Ejectable</span>' if tool.get('is_ejectable') else ''
+    ejectable_badge = '<span style="display:inline-block;background:var(--info-bg);color:var(--info-text);padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Ejectable</span>' if tool.get('is_ejectable') else ''
 
     # Get other alternatives for cross-linking
     other_tools = await get_tools_replacing(db, competitor_name, limit=6)

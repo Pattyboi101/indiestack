@@ -4118,6 +4118,28 @@ TEST_CASES: list[tuple[str, str]] = [
     ("notification service", "notifications"),         # bare "notification"→notifications still fires
     ("database indexing postgres", "database"),        # bare "database"→database still fires (no regression)
     ("minify css terser", "developer"),                # "minify" fires first (no regression from "css"→frontend)
+
+    # ── probe 116: recurring payments / cryptocurrency / crypto payment gateway dead zones ──
+    #
+    # Dead zones fixed: "recurring payments" → raw_first (no mapping for bare "recurring");
+    # "cryptocurrency" → raw_first; "crypto payments" → security (wrong; bare "crypto"→security
+    # fires but "crypto payments" bigram should override to payments).
+    ("recurring payments api", "payments"),            # bigram "recurring payments"→payments
+    ("recurring payments stripe", "payments"),         # bigram "recurring payments"→payments
+    ("recurring billing saas", "payments"),            # bigram "recurring billing"→payments
+    ("recurring billing open source", "payments"),     # bigram "recurring billing"→payments
+    ("recurring charges", "payments"),                 # bare "recurring"→payments
+    ("recurring invoices", "payments"),                # bare "recurring"→payments
+    ("cryptocurrency payments", "payments"),           # bare "cryptocurrency"→payments
+    ("accept cryptocurrency", "payments"),             # bare "cryptocurrency"→payments
+    ("crypto payments api", "payments"),               # bigram "crypto payments"→payments (overrides "crypto"→security)
+    ("crypto payments gateway", "payments"),           # bigram "crypto payment"→payments
+    ("crypto payment gateway nodejs", "payments"),     # bigram "crypto payment"→payments + qualifier
+    # Regressions: bare "crypto" still routes correctly for non-payment context
+    ("crypto library nodejs", "security"),             # bare "crypto"→security unchanged (node:crypto)
+    ("node crypto module", "security"),                # bare "crypto"→security unchanged
+    ("freemium model saas", "payments"),               # bare "freemium"→payments still fires (no regression)
+    ("subscription management stripe", "payments"),   # bare "subscription"→payments still fires (no regression)
 ]
 
 

@@ -8892,6 +8892,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tiered pricing": "payments",            # bigram — "tiered pricing model", "tiered pricing saas" → Payments
     "freemium": "payments",                  # bare — "freemium model", "freemium pricing" → Payments
     "consumption billing": "payments",       # bigram — "consumption billing", "consumption based billing" → Payments
+    # Payments — recurring billing, cryptocurrency, crypto payment gateways.
+    # "recurring" bare is unmapped → raw_first. Bigram "recurring payments" overrides.
+    # "crypto" bare → security (node:crypto library), but "crypto payments" bigram → payments.
+    # "cryptocurrency" is unmapped bare → add directly.
+    "recurring payments": "payments",        # bigram — "recurring payments api", "recurring payments stripe" → Payments
+    "recurring billing": "payments",         # bigram — "recurring billing open source", "recurring billing saas" → Payments
+    "recurring": "payments",                 # bare — "recurring charges", "recurring invoices" → Payments
+    "cryptocurrency": "payments",            # bare — "cryptocurrency payments", "accept cryptocurrency" → Payments
+    "crypto payments": "payments",           # bigram — overrides bare "crypto"→security; "crypto payments api" → Payments
+    "crypto payment": "payments",            # bigram — singular form — "crypto payment gateway" → Payments
     # Developer Tools — back-office admin builders (Retool, Appsmith, Tooljet, Budibase).
     "backoffice": "developer",               # bare — "backoffice builder", "backoffice admin react" → Developer Tools
     "back office": "developer",              # bigram — "back office builder", "back office tool" → Developer Tools
