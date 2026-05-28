@@ -1959,7 +1959,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("screen reader compatible", "testing"),         # bigram fires
     # "keyboard navigation" bigram → testing; a11y keyboard nav
     ("keyboard navigation testing", "testing"),      # bigram fires
-    ("keyboard nav a11y", "frontend"),               # "a11y"→frontend fires (a11y without "testing" suffix routes to frontend)
+    ("keyboard nav a11y", "testing"),                # bigram "keyboard nav"→testing fires (abbreviated keyboard navigation a11y)
     # "cost"→devops; cloud cost tools (Infracost)
     ("cost optimization tool", "devops"),            # "cost"→devops
     ("infra cost monitoring", "devops"),             # "infra" raw_first then "cost"→devops fires at i=1
@@ -4140,6 +4140,42 @@ TEST_CASES: list[tuple[str, str]] = [
     ("node crypto module", "security"),                # bare "crypto"→security unchanged
     ("freemium model saas", "payments"),               # bare "freemium"→payments still fires (no regression)
     ("subscription management stripe", "payments"),   # bare "subscription"→payments still fires (no regression)
+    #
+    # ── probe 117: passphrase / authenticator / keyboard / nsfw / acme / code-transform dead zones ──
+    #
+    # Dead zones fixed:
+    # "passphrase" bare token unmapped → raw_first; passphrase tools (xkpasswd, diceware) → Security.
+    ("passphrase generator", "security"),              # bare "passphrase"→security
+    ("passphrase entropy", "security"),                # bare "passphrase"→security
+    ("passphrase strength", "security"),               # bare "passphrase"→security
+    # "authenticator app" → raw_first; TOTP authenticator apps (Aegis, Bitwarden Auth) → Authentication.
+    ("authenticator app", "authentication"),           # bare "authenticator"→authentication
+    ("google authenticator alternative", "authentication"), # bare "authenticator"→authentication
+    ("totp authenticator", "authentication"),          # bare "authenticator"→authentication (complement to "totp"→authentication)
+    # "keyboard macro tool" → raw_first; keyboard automation tools (AutoHotkey, Espanso) → Developer.
+    ("keyboard macro tool", "developer"),              # bare "keyboard"→developer
+    ("keyboard remapping", "developer"),               # bare "keyboard"→developer
+    ("keyboard customization", "developer"),           # bare "keyboard"→developer
+    ("keyboard shortcut manager", "developer"),        # bare "keyboard"→developer (manager is a stop word)
+    # Regressions: keyboard navigation still routes to testing via bigram (fires before bare token).
+    ("keyboard navigation testing", "testing"),        # bigram "keyboard navigation"→testing unchanged
+    ("keyboard nav a11y", "testing"),                  # bigram "keyboard nav"→testing unchanged
+    # "nsfw detection" → raw_first; NSFW content detection APIs (Hive, Sightengine) → AI.
+    ("nsfw detection", "ai"),                          # bare "nsfw"→ai
+    ("nsfw classifier", "ai"),                         # bare "nsfw"→ai
+    ("nsfw content filter api", "ai"),                 # bare "nsfw"→ai at pos 0 (fires before "content"→cms)
+    # "acme client" → raw_first or misfired to mcp via "protocol"; ACME cert mgmt → Security.
+    ("acme protocol client", "security"),              # bigram "acme protocol"→security (overrides bare "protocol"→mcp)
+    ("acme client nodejs", "security"),                # bigram "acme client"→security
+    ("acme server letsencrypt", "security"),           # bigram "acme server"→security
+    # "code transformation" → raw_first; AST transform tools (babel-plugin, putout) → Developer.
+    ("code transformation tool", "developer"),         # bigram "code transformation"→developer (tool is stop word)
+    ("code transform typescript", "developer"),        # bigram "code transform"→developer
+    ("code transformation pipeline", "developer"),     # bigram "code transformation"→developer
+    # Regressions: crypto/code/acme bare tokens unchanged.
+    ("crypto library nodejs", "security"),             # bare "crypto"→security unchanged
+    ("code review tool", "developer"),                 # "review"→developer unchanged
+    ("code quality analyzer", "testing"),              # "quality"→testing unchanged
 ]
 
 

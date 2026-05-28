@@ -3073,6 +3073,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ssl": "security",          # SSL certificate management
     "tls": "security",          # TLS configuration tools
     "encrypt": "security",      # "lets encrypt alternative", "encrypt data at rest" → Security Tools
+    "acme protocol": "security",  # bigram — ACME (Automated Cert Mgmt Env) protocol queries → Security (overrides bare "protocol"→mcp)
+    "acme client": "security",    # bigram — "acme client nodejs", "certbot acme client" → Security
+    "acme server": "security",    # bigram — "acme server letsencrypt", "step-ca acme server" → Security
     "decrypt": "security",      # "decrypt data nodejs", "how to decrypt" → Security Tools (verb form of "encryption")
     "decryption": "security",   # "decryption library", "decryption key management" → Security Tools (complement to "encryption"→security)
     # Frontend rendering patterns — SSR/SSG/PWA/SPA (common agent query terms)
@@ -3362,6 +3365,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "uptimerobot": "monitoring",    # UptimeRobot — uptime monitoring with alerts
     "betterstack": "monitoring",    # Better Stack (ex-Logtail + Uptime) — monitoring platform
     # Password / cryptography — security libraries ("bcrypt alternative", "password hashing")
+    "passphrase": "security",        # "passphrase generator", "passphrase strength", "passphrase entropy" → Security
     "password": "security",         # "password hashing", "password manager" → Security Tools
     "hashing": "security",          # "password hashing library", "hashing algorithm" → Security
     "bcrypt": "security",           # bcrypt — adaptive password hashing function
@@ -8407,6 +8411,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Perspective API, CleanSpeak, purgomalum, hatesonar all live in AI & Automation.
     "profanity": "ai",                   # "profanity filter", "profanity detection", "profanity api" → AI & Automation
     "toxicity": "ai",                    # "toxicity detection", "toxicity classifier", "toxicity scoring" → AI & Automation
+    "nsfw": "ai",                        # "nsfw detection", "nsfw classifier", "nsfw content filter api" → AI & Automation (Hive Moderation, Sightengine)
     # Frontend — SVG manipulation libraries (SVG.js, Snap.svg, Paper.js, Rough.js)
     # "svg" alone has no mapping; raw_first fires with no category boost.
     "svg": "frontend",                   # "svg library", "svg animation", "svg manipulation" → Frontend Frameworks
@@ -8440,8 +8445,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "contrast": "testing",               # "contrast checker", "contrast ratio tool", "color contrast api" → Testing Tools
     # a11y screen reader testing — bare "screen" raw_first, bigram captures the compound query.
     "screen reader": "testing",          # bigram — "screen reader testing", "screen reader compatible" → Testing Tools
-    # a11y keyboard nav — bare "keyboard" raw_first, bigram captures the compound query.
-    "keyboard navigation": "testing",    # bigram — "keyboard navigation testing", "keyboard nav a11y" → Testing Tools
+    # a11y keyboard nav — bare "keyboard" → developer; bigrams override for a11y testing queries.
+    "keyboard navigation": "testing",    # bigram — "keyboard navigation testing", "keyboard navigation a11y" → Testing Tools (fires before bare "keyboard"→developer)
+    "keyboard nav": "testing",           # bigram — abbreviated form: "keyboard nav a11y", "keyboard nav library" → Testing Tools
+    "keyboard": "developer",             # bare — "keyboard macro tool", "keyboard remapping", "keyboard customization" → Developer Tools (AutoHotkey, Karabiner, Espanso)
     # "cost" raw_first → no boost; cloud cost tools (Infracost, cloud-pricing-api) → DevOps.
     # "payment"/"subscription" fire first for billing queries so no regression risk.
     "cost": "devops",                    # "cost optimization", "infra cost", "cloud cost monitoring" → DevOps & Infrastructure
@@ -9607,6 +9614,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "codemod": "developer",                    # bare — "codemod tool", "codemod typescript" → Developer Tools
     "codemods": "developer",                   # plural — "codemods react migration", "codemods for upgrade" → Developer Tools
     "jscodeshift": "developer",                # named tool — "jscodeshift alternative", "jscodeshift transform" → Developer Tools
+    "code transformation": "developer",        # bigram — "code transformation tool", "code transformation pipeline" → Developer Tools (AST transforms, codemods; "tool" is stop word so query reduces to this bigram)
+    "code transform": "developer",             # bigram — shorter form of above → Developer Tools
     #
     # "ast" — Abstract Syntax Tree tooling (AST Explorer, ts-morph, acorn, recast) fired
     # raw_first. tree-sitter/treesitter already mapped; bare "ast" and named AST tools missing.
@@ -9791,6 +9800,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     #  added above near "spellcheck" in the Developer Tools derivative-forms section)
     "authorize": "authentication",      # verb — "authorize request", "authorize user" → Authentication
     "authenticating": "authentication", # present-participle — "authenticating users", "authenticating requests" → Authentication
+    "authenticator": "authentication",  # noun — "authenticator app", "google authenticator alternative", "totp authenticator" → Authentication
     "notifier": "notifications",        # noun — "notifier service", "slack notifier", "push notifier" → Notifications
     "indexing database": "database",    # bigram — "indexing database postgres" → Database (overrides "indexing"→search)
 }
