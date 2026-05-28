@@ -4324,6 +4324,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — data/file compression (pako, fflate, lz-string, zstd-wasm)
     "compress": "developer",        # "compress files", "compress data", "js compress" → Developer Tools
     "compression": "developer",     # "compression library", "lossless compression" → Developer Tools
+    "decompress": "developer",      # "decompress gzip", "decompress library" → Developer Tools (consistent with "compress")
+    # File Management — zip/archive file operations (jszip, archiver, yauzl, node-archiver)
+    "zip": "file",                  # "zip library", "zip file nodejs" → File Management
+    "unzip": "file",                # "unzip library", "unzip nodejs" → File Management
+    "archive": "file",              # "archive library", "create archive nodejs" → File Management
+    "tarball": "file",              # "tarball library", "tarball nodejs" → File Management
     # Developer Tools — spell checking (cspell, nspell, hunspell bindings)
     "spell": "developer",           # "spell check", "spell checker library" → Developer Tools
     "spellcheck": "developer",      # "spellcheck library", "spellcheck api" → Developer Tools
@@ -4775,6 +4781,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Data visualization — generic "visualization" term
     "visualization": "analytics",  # "data visualization library", "visualization tool" → Analytics & Metrics
     "viz": "analytics",             # abbreviation — "data viz", "viz library", "viz component" → Analytics
+    # Graph/network visualization libraries (D3, ECharts, Cytoscape, Sigma) live in Analytics/Developer,
+    # not graph databases. "graph"→database fires first; bigrams override for visualization queries.
+    "graph visualization": "analytics",  # bigram — "graph visualization library/react/javascript" → Analytics (D3, ECharts, Cytoscape)
+    "network visualization": "analytics", # bigram — "network visualization react" → Analytics (overrides "network"→monitoring)
     # Data science / Python ecosystem — DataFrame, numeric, and scientific computing tools
     "polars": "database",           # Polars — Rust DataFrame library, fast pandas alternative (34k★)
     "pandas": "ai",                 # pandas — Python data analysis and DataFrame library (44k★)
@@ -7659,6 +7669,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "benchmark llm": "ai standards",    # bigram — "benchmark llm models", "benchmark llm python" → AI Standards & Specs (overrides "benchmark"→testing)
     "llm benchmark": "ai standards",    # bigram — "llm benchmark comparison", "llm benchmark tool" → AI Standards & Specs (reversed form)
     "vector cache": "caching",          # bigram — "vector cache embeddings", "vector cache redis" → Caching (overrides "vector"→database)
+    "vector embedding": "ai",           # bigram — "vector embedding python", "vector embedding model" → AI & Automation (overrides "vector"→database)
+    "vector embeddings": "ai",          # plural — "vector embeddings nodejs", "vector embeddings search" → AI & Automation
     # MCP Servers — high-star official + ecosystem tools (149th pass)
     # GitHub Official MCP Server (github/github-mcp-server, ~29k★; Issues, PRs, code search, Actions)
     "github-mcp": "mcp",            # "github mcp server", "github mcp setup" → MCP Servers
@@ -9704,6 +9716,31 @@ _CAT_SYNONYMS: dict[str, str] = {
     #   third-party widgets, chat bubbles, and iframe embeds are Developer Tools, not Frontend Frameworks).
     #   Bare "embed" was already unmapped; "embeddable" adjective form needs its own entry.
     "embeddable": "developer",          # bare — "embeddable widget", "embeddable chart", "embeddable map" → Developer Tools
+
+    # ── Probe 114 (autonomous loop, May 2026): zip/archive/embed/iframe dead zones + graph-viz misfire ──
+    #
+    # Dead zones fixed:
+    # "zip archive library", "extract zip file", "archive files library" → unknown (no mapping for zip/archive)
+    # "iframe embed", "embed widget" → unknown (bare "embed"/"iframe" unmapped; "embeddable" already mapped)
+    # "decompress gzip" → unknown ("compress"→developer was mapped; "decompress" was not)
+    # "tarball library" → unknown
+    #
+    # Wrong routing fixed:
+    # "graph visualization library" → database via "graph"→database (wrong; D3/ECharts/Cytoscape are analytics)
+    # "network visualization react" → monitoring via "network"→monitoring (wrong; network graph viz → analytics)
+    #
+    # Note: zip/archive/unzip/tarball → "file" (file management: jszip, archiver, yauzl, node-archiver)
+    #       decompress → "developer" (consistent with "compress"→developer: pako, fflate binary decompress)
+    #       embed/iframe/widget → "developer" (SDK embeds, chat widgets, iframe resizers)
+    #       graph-viz/network-viz bigrams → "analytics" (D3, ECharts, Cytoscape, Sigma.js)
+    # (zip/archive/tarball/unzip/decompress added above near "compress" in the compression section)
+    # (graph-viz/network-viz bigrams added above near "visualization" in the data-viz section)
+    "embed": "developer",               # bare — "embed widget", "embed code snippet", "embed script" → Developer Tools
+    "iframe": "developer",              # bare — "iframe embed", "iframe resizer", "iframe api" → Developer Tools
+    "widget": "developer",              # bare — "widget sdk", "chat widget", "dashboard widget embed" → Developer Tools
+    "extract zip": "file",              # bigram — "extract zip nodejs", "extract zip python" → File Management
+    "zip archive": "file",              # bigram — "zip archive library" → File Management
+    "archive files": "file",            # bigram — "archive files nodejs" → File Management
 }
 
 _FTS_STOP_WORDS = {

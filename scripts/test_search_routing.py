@@ -4055,6 +4055,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("serialization protobuf", "api"),                  # "serialization"→api still fires (binary-protocol context unchanged)
     ("binary serialization", "api"),                    # "serialization"→api still fires at pos 1
     ("fingerprint browser", "security"),                # bare "fingerprint"→security unchanged
+
+    # ── probe 114: zip/archive/embed/iframe dead zones + graph-viz misfire + vector-embedding ──
+    #
+    # Dead zones fixed: zip/archive/tarball/unzip → file; decompress → developer;
+    # embed/iframe/widget → developer; graph-viz/network-viz bigrams → analytics;
+    # vector embedding bigram → ai (overrides bare "vector"→database).
+    ("zip archive library", "file"),                   # bigram "zip archive"→file (jszip, archiver)
+    ("extract zip nodejs", "file"),                    # bigram "extract zip"→file
+    ("archive files python", "file"),                  # bigram "archive files"→file
+    ("zip file nodejs", "file"),                       # bare "zip"→file
+    ("unzip library python", "file"),                  # bare "unzip"→file (yauzl)
+    ("tarball library nodejs", "file"),                # bare "tarball"→file
+    ("decompress gzip library", "developer"),          # bare "decompress"→developer (consistent with "compress")
+    ("iframe embed", "developer"),                     # bare "iframe"→developer (iframe-resizer)
+    ("embed widget", "developer"),                     # bare "embed"→developer
+    ("widget sdk javascript", "developer"),            # bare "widget"→developer (chat widget SDKs)
+    ("iframe resizer react", "developer"),             # bare "iframe"→developer (no regression)
+    ("graph visualization library", "analytics"),      # bigram "graph visualization"→analytics (D3, ECharts, Cytoscape)
+    ("graph visualization react", "analytics"),        # bigram "graph visualization"→analytics
+    ("network visualization react", "analytics"),      # bigram "network visualization"→analytics
+    ("vector embedding python", "ai"),                 # bigram "vector embedding"→ai (overrides "vector"→database)
+    ("vector embeddings nodejs", "ai"),                # bigram "vector embeddings"→ai (plural form)
+    # Regressions: nearby mappings unchanged
+    ("graph database", "database"),                    # bare "graph"→database still fires (no regression)
+    ("vector database pinecone", "database"),          # bare "vector"→database still fires (no "embedding")
+    ("vector cache embeddings", "caching"),            # bigram "vector cache"→caching still fires
+    ("network monitoring", "monitoring"),              # bare "network"→monitoring still fires (no "visualization")
+    ("video embed player", "media"),                   # bigram "video embed"→media (embed disambiguated by "video")
+    ("compress files nodejs", "developer"),            # bare "compress"→developer still fires
+    ("embeddable widget react", "developer"),          # bare "embeddable"→developer still fires (no regression)
 ]
 
 
