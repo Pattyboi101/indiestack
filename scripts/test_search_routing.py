@@ -1042,6 +1042,19 @@ TEST_CASES: list[tuple[str, str]] = [
     ("argocd alternative", "devops"),                      # bare "argocd"→devops (no regression)
     ("ngrok alternative", "devops"),                       # bare "ngrok"→devops (no regression)
     ("nmap alternative", "security"),                      # bare "nmap"→security (no regression)
+    # ── Probe 112 (autonomous loop, May 2026): multi-tenancy hyphen / email bounce dead zones ──
+    # "multi-tenancy" (hyphenated noun) → raw_first; single token not split by tokenizer.
+    # "multi-tenant", "multitenancy", "tenancy" all mapped but hyphenated noun form was missing.
+    ("multi-tenancy saas", "authentication"),              # hyphenated noun → authentication
+    ("multi-tenancy architecture", "authentication"),      # hyphenated noun → authentication
+    # "bounce handling" → raw_first; dkim/spf/dmarc mapped but "bounce" sibling was missing.
+    ("bounce handling service", "email"),                  # bigram "bounce handling"→email
+    ("bounce management api", "email"),                    # bare "bounce"→email
+    ("email bounce rate", "email"),                        # bare "email"→email at pos 0 (regression)
+    # Regressions: existing multi-tenant and email-deliverability entries unchanged
+    ("multi tenancy database", "authentication"),          # bigram "multi tenancy"→auth unchanged
+    ("multitenancy app", "authentication"),                # "multitenancy"→auth unchanged
+    ("dkim spf setup", "email"),                           # "dkim"→email unchanged
 ]
 
 

@@ -3463,6 +3463,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Multi-tenancy (multi-tenant SaaS auth, tenant isolation)
     "multitenancy": "authentication",  # "multi-tenancy", "tenant isolation" → Authentication
     "multitenant": "authentication",   # "multitenant auth", "multitenant saas" → Authentication
+    "multi-tenancy": "authentication", # hyphenated noun — single token, not split by tokenizer → Authentication
     "tenancy": "authentication",       # "multi tenancy" spaced form; "data tenancy isolation" → Authentication
     "multi tenancy": "authentication", # bigram — overrides raw_first for exact "multi tenancy" query
     # Impersonation — WorkOS/Clerk "user impersonation" feature; lives in Authentication
@@ -4785,6 +4786,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "dkim": "email",                # DKIM — DomainKeys Identified Mail (email signing DNS record)
     "spf": "email",                 # SPF — Sender Policy Framework (authorised sender DNS record)
     "dmarc": "email",               # DMARC — email auth policy ("dmarc setup", "dmarc tool" queries)
+    "bounce": "email",              # bare — "email bounce", "bounce rate", "bounce management" → Email Marketing
+    "bounce handling": "email",     # bigram — "bounce handling library", "bounce handling service" → Email Marketing
     # Caching — eviction policy query terms (most common caching algorithm searched)
     "lru": "caching",               # LRU (Least Recently Used) — "lru cache library", "lru eviction"
     # Auth — federated identity (SAML/OIDC, complement to "federation"→api for GraphQL federation)
