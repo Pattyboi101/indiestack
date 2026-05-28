@@ -2597,8 +2597,8 @@ TEST_CASES: list[tuple[str, str]] = [
     # "image optimization cdn" → "image"→media misfired; image CDN/optimization tools are File Management.
     ("image optimization cdn", "file"),                    # bigram "image optimization"→file (beats image→media)
     ("image optimization api", "file"),                    # same bigram
-    # Regression — raw image/video queries still route to media.
-    ("image processing video", "media"),                   # "image"→media unchanged when no "optimization" bigram
+    # "image processing" bigram now → developer (probe 113); "image processing video" also fires it.
+    ("image processing video", "developer"),               # bigram "image processing"→developer (fires before "video"→media)
     # Probe pattern 59 — feedback-form collision / 3d dead zone / boilerplate-codegen collision / document-storage
     #
     # "feedback form" → "feedback"→feedback-reviews misfired; form builders (Typeform, Tally, Jotform)
@@ -2728,7 +2728,7 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions — nearby pdf and image entries should not be affected.
     ("pdf generation node", "developer"),      # "pdf generation"→developer bigram unchanged
     ("pdf generator python", "developer"),     # "pdf generator"→developer bigram unchanged
-    ("image processing", "media"),             # bare "image"→media unchanged (no cropper token)
+    ("image processing", "developer"),          # bigram "image processing"→developer (probe 113)
     # Probe pattern 65 — realtime-collaboration dead zones and multi-model database collision.
     # "operational transform" → bare "operational" hits raw_first (OT collab algorithm — API Tools).
     # "shared editing" → bare "shared" hits raw_first (Yjs, ShareDB — API Tools).
@@ -3433,8 +3433,8 @@ TEST_CASES: list[tuple[str, str]] = [
     ("feature flag nextjs", "feature"),         # bare "feature"→feature-flags unchanged (no "engineering"/"extraction" suffix)
     ("feature toggle react", "feature"),        # bare "feature"→feature-flags unchanged
     ("ab testing tool", "feature"),             # "ab"→feature-flags unchanged
-    ("image compression", "media"),             # bare "image"→media unchanged (no "labeling" suffix)
-    ("image processing", "media"),              # bare "image"→media unchanged
+    ("image compression", "media"),             # bare "image"→media unchanged (no "labeling" suffix; no "image compression" bigram)
+    ("image processing", "developer"),          # bigram "image processing"→developer (probe 113)
     ("ci cd pipeline", "devops"),               # bare "pipeline" still catches non-ML pipeline queries
     ("deployment pipeline", "devops"),          # "deployment"→devops fires before "pipeline"→background
     ("version control", "devops"),              # bare "version"→devops unchanged (non-data versioning)
@@ -4022,6 +4022,39 @@ TEST_CASES: list[tuple[str, str]] = [
     ("csv parser", "developer"),                            # "csv"→developer still fires
     ("parquet reader", "database"),                         # "parquet"→database still fires
     ("transpiler", "frontend"),                             # "transpiler"→frontend still fires
+
+    # ── probe 113: image-processing bigrams / serializer verb forms / fingerprinting / embeddable ──
+    #
+    # Image-processing library queries — "image"→media was firing for developer-library queries.
+    # Bigrams "image resize/processing/manipulation/transform/resizer"→developer now override.
+    ("image resize library", "developer"),              # bigram "image resize"→developer (sharp, jimp, Pillow)
+    ("image resize nodejs", "developer"),               # bigram "image resize"→developer + framework qualifier
+    ("image resizer tool", "developer"),                # bigram "image resizer"→developer
+    ("image processing nodejs", "developer"),           # bigram "image processing"→developer (Pillow, sharp, OpenCV)
+    ("image processing python", "developer"),           # bigram "image processing"→developer
+    ("image manipulation library", "developer"),        # bigram "image manipulation"→developer
+    ("image manipulation nodejs", "developer"),         # bigram "image manipulation"→developer
+    ("image transform pipeline", "developer"),          # bigram "image transform"→developer
+    # Serialize/serializer verb+noun forms (complement to "serialization"→api for binary protocols)
+    ("serialize data python", "developer"),             # bare "serialize"→developer (verb form)
+    ("serialize object nodejs", "developer"),           # bare "serialize"→developer
+    ("serializer library", "developer"),                # bare "serializer"→developer (noun form)
+    ("json serializer", "developer"),                   # bare "serializer"→developer
+    ("deserialization library", "developer"),           # bare "deserialization"→developer (noun form)
+    ("deserialization nodejs", "developer"),             # bare "deserialization"→developer
+    # Fingerprinting derivative form (alongside "fingerprint"→security and "browser fingerprinting"→security)
+    ("device fingerprinting", "security"),              # bare "fingerprinting"→security (derivative form)
+    ("browser fingerprinting api", "security"),         # bigram "browser fingerprinting"→security (no regression; existed before)
+    # Embeddable adjective form (embeddable widget/chart/map → Developer Tools)
+    ("embeddable widget", "developer"),                 # bare "embeddable"→developer
+    ("embeddable chart react", "developer"),            # bare "embeddable"→developer at pos 0
+    # Regressions: existing nearby mappings unchanged
+    ("image compression", "media"),                     # "image"→media unchanged (no "image compression" bigram added)
+    ("image labeling tool", "ai"),                      # bigram "image labeling"→ai unchanged
+    ("image augmentation", "ai"),                       # bigram "image augmentation"→ai unchanged
+    ("serialization protobuf", "api"),                  # "serialization"→api still fires (binary-protocol context unchanged)
+    ("binary serialization", "api"),                    # "serialization"→api still fires at pos 1
+    ("fingerprint browser", "security"),                # bare "fingerprint"→security unchanged
 ]
 
 

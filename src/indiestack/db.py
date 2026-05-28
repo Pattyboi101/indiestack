@@ -3771,6 +3771,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "superset": "analytics",        # Apache Superset — enterprise open-source BI (62k★)
     "lightdash": "analytics",       # Lightdash — open-source Looker alternative (9k★)
     "evidence": "analytics",        # Evidence — SQL-driven BI for data teams (5k★)
+    # Developer Tools — serialize/serializer verb/noun forms (complement to "serialization"→api for binary protocols)
+    # "serialization"→api is intentional (protobuf/msgpack binary-protocol context).
+    # "serialize" (verb) and "serializer" (noun) target library/action queries → Developer Tools.
+    "serialize": "developer",       # verb — "serialize data python", "serialize object nodejs" → Developer Tools
+    "serializer": "developer",      # noun — "serializer library", "json serializer", "object serializer" → Developer Tools
+    "deserialization": "developer", # noun — "deserialization library", "object deserialization" → Developer Tools
     # API — serialization protocols and resilience patterns
     "serialization": "api",         # "binary serialization", "data serialization" → API Tools
     "msgpack": "api",               # MessagePack — efficient binary serialization format
@@ -5376,6 +5382,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "browser fingerprinting": "security",  # bigram — "browser fingerprinting api" → Security Tools
     "device fingerprint": "security",      # bigram — "device fingerprint detection" → Security Tools
     "fingerprint": "security",      # "fingerprint api", "browser fingerprint", "device fingerprint" → Security Tools
+    "fingerprinting": "security",   # derivative form — "device fingerprinting", "browser fingerprinting api" → Security Tools
     "fingerprintjs": "security",    # FingerprintJS explicit named tool → Security Tools
     # Auth — social login and magic link flows (very common auth pattern queries)
     "sociallogin": "authentication", # compound — "sociallogin provider", "sociallogin sdk" → Authentication
@@ -9680,6 +9687,23 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Custom elements (Web Components API) — "webcomponent"/"webcomponents" already mapped;
     # the spaced "custom elements" form was raw_first ("custom" unmapped, not a stop word).
     "custom elements": "frontend",          # bigram — "custom elements web", "custom elements html" → Frontend Frameworks
+
+    # ── Probe 113 (autonomous loop, May 2026): image-processing bigrams / embeddable ──────────────────
+    #
+    # "image resize/processing/manipulation" → "media" via bare "image"→media (wrong; image-processing
+    #   library queries like sharp, Pillow, jimp, Imagemagick belong in Developer Tools, not Media Servers).
+    #   Existing overrides: "image optimization"→file (CDN context), "image labeling"→ai, "image augmentation"→ai.
+    #   These bigrams cover the remaining dev-library query forms; "image"→media unchanged for media-server queries.
+    "image resize": "developer",        # bigram — "image resize library", "image resize nodejs" → Developer Tools (sharp, jimp)
+    "image resizer": "developer",       # bigram — "image resizer tool", "image resizer nodejs" → Developer Tools
+    "image processing": "developer",    # bigram — "image processing python", "image processing nodejs" → Developer Tools (Pillow, sharp, OpenCV)
+    "image manipulation": "developer",  # bigram — "image manipulation library", "image manipulation nodejs" → Developer Tools
+    "image transform": "developer",     # bigram — "image transform library", "image transform pipeline" → Developer Tools
+    #
+    # "embeddable widget" → "frontend" via bare "javascript"→frontend at position 2 (wrong; embeddable
+    #   third-party widgets, chat bubbles, and iframe embeds are Developer Tools, not Frontend Frameworks).
+    #   Bare "embed" was already unmapped; "embeddable" adjective form needs its own entry.
+    "embeddable": "developer",          # bare — "embeddable widget", "embeddable chart", "embeddable map" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
