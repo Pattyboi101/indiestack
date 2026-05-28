@@ -4085,6 +4085,39 @@ TEST_CASES: list[tuple[str, str]] = [
     ("video embed player", "media"),                   # bigram "video embed"→media (embed disambiguated by "video")
     ("compress files nodejs", "developer"),            # bare "compress"→developer still fires
     ("embeddable widget react", "developer"),          # bare "embeddable"→developer still fires (no regression)
+
+    # ── probe 115: minification/obfuscation/encode-decode/authorize/notifier dead zones ──
+    #
+    # minify/minifier/minification/uglify/terser → developer (previously → frontend via "javascript"/"css")
+    # obfuscate/obfuscation → developer (previously → unknown)
+    # encode/encoding/decode/decoding/decoder → developer (previously → unknown)
+    # authorize/authenticating → authentication (verb/participle forms; previously → unknown)
+    # alerter → monitoring; notifier → notifications (noun forms; previously → unknown)
+    # "indexing database" bigram → database (overrides "indexing"→search for wrong-order queries)
+    ("minify javascript", "developer"),                # bare "minify"→developer (terser, UglifyJS)
+    ("minifier css", "developer"),                     # bare "minifier"→developer
+    ("minification plugin", "developer"),              # bare "minification"→developer
+    ("uglify javascript", "developer"),                # bare "uglify"→developer (UglifyJS)
+    ("terser minify", "developer"),                    # bare "terser"→developer (Terser minifier)
+    ("obfuscate code", "developer"),                   # bare "obfuscate"→developer
+    ("obfuscation tool", "developer"),                 # bare "obfuscation"→developer
+    ("encode data python", "developer"),               # bare "encode"→developer (URL/base64 encoding)
+    ("encoding library nodejs", "developer"),          # bare "encoding"→developer
+    ("decode base64", "developer"),                    # bare "decode"→developer
+    ("decoding library", "developer"),                 # bare "decoding"→developer
+    ("decoder library", "developer"),                  # bare "decoder"→developer
+    ("authorize request", "authentication"),           # bare "authorize"→authentication (OAuth middleware)
+    ("authenticating users", "authentication"),        # bare "authenticating"→authentication (present participle)
+    ("alerter library", "monitoring"),                 # bare "alerter"→monitoring (noun form of "alerting")
+    ("notifier service", "notifications"),             # bare "notifier"→notifications (Slack notifier, push notifier)
+    ("indexing database", "database"),                 # bigram "indexing database"→database (overrides "indexing"→search)
+    # Regressions: existing nearby routes unchanged
+    ("alert rule", "monitoring"),                      # bare "alert"→monitoring still fires
+    ("alerting tool", "monitoring"),                   # bare "alerting"→monitoring still fires
+    ("authorization library", "authentication"),       # bare "authorization"→authentication still fires
+    ("notification service", "notifications"),         # bare "notification"→notifications still fires
+    ("database indexing postgres", "database"),        # bare "database"→database still fires (no regression)
+    ("minify css terser", "developer"),                # "minify" fires first (no regression from "css"→frontend)
 ]
 
 

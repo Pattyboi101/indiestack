@@ -4333,6 +4333,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — spell checking (cspell, nspell, hunspell bindings)
     "spell": "developer",           # "spell check", "spell checker library" → Developer Tools
     "spellcheck": "developer",      # "spellcheck library", "spellcheck api" → Developer Tools
+    # Developer Tools — JS/CSS minification (terser, uglify-js, cssnano, esbuild)
+    "minify": "developer",          # verb — "minify javascript", "minify css" → Developer Tools
+    "minifier": "developer",        # noun — "js minifier", "css minifier" → Developer Tools
+    "minification": "developer",    # noun — "minification plugin", "js minification" → Developer Tools
+    "uglify": "developer",          # UglifyJS — classic JS minifier/obfuscator → Developer Tools
+    "terser": "developer",          # Terser — fast JS minifier (successor to UglifyJS) → Developer Tools
+    # Developer Tools — code obfuscation (javascript-obfuscator, bytenode)
+    "obfuscate": "developer",       # verb — "obfuscate code", "obfuscate javascript" → Developer Tools
+    "obfuscation": "developer",     # noun — "code obfuscation tool", "obfuscation library" → Developer Tools
+    # Developer Tools — encoding/decoding utilities (base64, URL encode, charset)
+    "encode": "developer",          # verb — "encode data python", "encode url nodejs" → Developer Tools
+    "encoding": "developer",        # noun — "encoding library", "url encoding" → Developer Tools
+    "decode": "developer",          # verb — "decode base64", "decode url" → Developer Tools
+    "decoding": "developer",        # noun — "decoding library", "decoding tool" → Developer Tools
+    "decoder": "developer",         # noun — "decoder library", "base64 decoder" → Developer Tools
     # Developer Tools — server-side template engines (Handlebars, Nunjucks, Mustache, EJS)
     "handlebars": "developer",      # Handlebars.js — minimal JS templating (18k★)
     "nunjucks": "developer",        # Nunjucks — Jinja2-inspired templates for Node.js
@@ -6462,6 +6477,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Monitoring — alert and incident management (very high query volume; terms in NEED_MAPPINGS but missing here)
     "alert": "monitoring",          # "alert rule", "alert threshold", "metric alert" → Monitoring & Uptime
     "alerts": "monitoring",         # plural — "configure alerts", "custom alerts" → Monitoring & Uptime
+    "alerter": "monitoring",        # noun — "alerter tool", "custom alerter" → Monitoring (complement to "alerting"→monitoring)
     "incident": "monitoring",       # "incident management", "incident response platform" → Monitoring & Uptime (Incident.io, Rootly)
     "on-call": "monitoring",        # "on-call management", "on-call scheduling", "on-call tool" → Monitoring & Uptime
     "call": "monitoring",           # bare form — "on call" reduces to "call" after stop-word "on" stripped → Monitoring
@@ -9741,6 +9757,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "extract zip": "file",              # bigram — "extract zip nodejs", "extract zip python" → File Management
     "zip archive": "file",              # bigram — "zip archive library" → File Management
     "archive files": "file",            # bigram — "archive files nodejs" → File Management
+
+    # ── Probe 115 (autonomous loop, May 2026): minification / obfuscation / encode-decode / authorize / notifier dead zones ──
+    #
+    # Dead zones fixed:
+    # "minify javascript" → frontend via "javascript"→frontend (wrong; terser, UglifyJS, cssnano are Developer Tools)
+    #   Bare "minify"→developer, "minifier"→developer, "minification"→developer, "uglify"→developer, "terser"→developer added.
+    # "obfuscate code" → unknown (code obfuscators: javascript-obfuscator, bytenode → Developer Tools)
+    #   Bare "obfuscate"→developer, "obfuscation"→developer added.
+    # "encode data python" → unknown (URL encoding, base64 encoding utilities → Developer Tools)
+    #   Bare "encode"→developer, "encoding"→developer, "decode"→developer, "decoding"→developer, "decoder"→developer added.
+    # "authorize request" → unknown (verb form of "authorization" → Authentication; OAuth middleware)
+    #   Bare "authorize"→authentication added (complement to "authenticate"→authentication and "authorization"→authentication).
+    # "authenticating users" → unknown (present participle of "authenticate"→authentication)
+    #   Bare "authenticating"→authentication added.
+    # "alerter library" → unknown (noun form; complement to "alerting"→monitoring and "alert"→monitoring)
+    #   Bare "alerter"→monitoring added above near the alert/alerting section.
+    # "notifier service" → unknown ("notification"→notifications but "notifier" noun was missing)
+    #   Bare "notifier"→notifications added.
+    # "indexing database" → search via "indexing"→search (wrong token order; "database indexing" routes correctly)
+    #   Bigram "indexing database"→database added (override "indexing"→search when "database" follows).
+    # (minify/minifier/minification/uglify/terser/obfuscate/obfuscation/encode/encoding/decode/decoding/decoder
+    #  added above near "spellcheck" in the Developer Tools derivative-forms section)
+    "authorize": "authentication",      # verb — "authorize request", "authorize user" → Authentication
+    "authenticating": "authentication", # present-participle — "authenticating users", "authenticating requests" → Authentication
+    "notifier": "notifications",        # noun — "notifier service", "slack notifier", "push notifier" → Notifications
+    "indexing database": "database",    # bigram — "indexing database postgres" → Database (overrides "indexing"→search)
 }
 
 _FTS_STOP_WORDS = {
