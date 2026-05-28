@@ -4471,6 +4471,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "speakeasy": "api",             # Speakeasy — type-safe SDK generation from OpenAPI specs (5k★)
     "zuplo": "api",                 # Zuplo — OpenAPI-native developer API gateway with rate limiting
     "stainless": "api",             # Stainless — automatic SDK generation for REST APIs
+    "fern": "api",                  # Fern — SDK generation and API docs from OpenAPI/Protobuf specs (4k★)
+    "liblab": "api",                # liblab — managed SDK generation service for REST APIs (SaaS)
     "redocly": "api",               # Redocly — OpenAPI documentation, linting, and bundling (7k★)
     "hurl": "api",                  # Hurl — HTTP request testing with plain text files (13k★)
     # Email — email testing / sandbox servers for local development

@@ -13222,6 +13222,78 @@ TOOLS = [
         "pip install arena-hard",
         "code",
     ),
+    # API Tools — SDK generation from OpenAPI specs (added May 2026) ---------------
+    (
+        "speakeasy",
+        "Speakeasy",
+        "Type-safe SDK generation from OpenAPI specs in 10+ languages",
+        "Speakeasy generates idiomatic, production-ready SDKs from your OpenAPI spec "
+        "in TypeScript, Python, Go, Java, C#, Ruby, PHP, and more. SDKs include "
+        "retries, pagination, OAuth flows, and runtime type validation — no hand-written "
+        "API clients needed. Used by Vercel, Mistral, Cohere, and 500+ API teams to "
+        "eliminate SDK maintenance overhead and give developers a first-class DX.",
+        "api-tools",
+        "speakeasy-api/speakeasy",
+        5500,
+        "https://speakeasy.com",
+        "sdk-generation,openapi,api-client,code-generation,developer-experience",
+        "npx speakeasy generate",
+        "saas",
+    ),
+    (
+        "fern",
+        "Fern",
+        "Generate SDKs and API docs from OpenAPI or Protobuf",
+        "Fern generates idiomatic SDKs in TypeScript, Python, Java, Go, C#, and Ruby "
+        "from your OpenAPI spec or Protobuf definitions. Beyond SDKs, Fern also publishes "
+        "beautifully formatted API reference documentation. The open-source CLI handles "
+        "generation locally; the managed cloud service adds CI/CD publishing to npm, "
+        "PyPI, and Maven. Used by teams that want consistent, typed client libraries "
+        "without writing and maintaining them by hand.",
+        "api-tools",
+        "fern-api/fern",
+        3500,
+        "https://buildwithfern.com",
+        "sdk-generation,openapi,protobuf,api-client,code-generation,documentation",
+        "npm install -g fern-api",
+        "code",
+    ),
+    (
+        "stainless",
+        "Stainless",
+        "Automatic SDK generation used by OpenAI, Cloudflare, and Anthropic",
+        "Stainless generates the official SDKs for OpenAI, Anthropic, Cloudflare, "
+        "Stripe, and dozens of other major API providers. Given an OpenAPI spec, "
+        "Stainless produces hand-quality TypeScript, Python, Go, Java, Kotlin, and "
+        "Ruby SDKs with pagination helpers, streaming support, auto-retries, and "
+        "full type safety. Managed SaaS service — Stainless handles the generation "
+        "pipeline and publishes to package registries on your behalf.",
+        "api-tools",
+        None,
+        0,
+        "https://stainlessapi.com",
+        "sdk-generation,openapi,api-client,code-generation,managed",
+        None,
+        "saas",
+    ),
+    (
+        "liblab",
+        "liblab",
+        "SDK generation platform — ship client libraries in hours not weeks",
+        "liblab generates and publishes production-ready SDKs in TypeScript, Python, "
+        "Java, C#, Go, PHP, and Ruby from your OpenAPI specification. The managed "
+        "platform handles versioning, changelog generation, and publishing to "
+        "npm/PyPI/Maven. Includes a portal for API consumers to browse interactive "
+        "reference docs alongside the generated client code. Used by API-first companies "
+        "that want branded SDKs without dedicated SDK engineering effort.",
+        "api-tools",
+        None,
+        0,
+        "https://liblab.com",
+        "sdk-generation,openapi,api-client,code-generation,managed,developer-experience",
+        None,
+        "saas",
+    ),
 ]
 
 
