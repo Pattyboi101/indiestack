@@ -281,8 +281,14 @@ async def alternatives_index(request: Request):
                                    extra_head=alt_head))
 
 
-def _stackshare_comparison_page(request: Request) -> HTMLResponse:
+async def _stackshare_comparison_page(request: Request) -> HTMLResponse:
     """Render a custom IndieStack vs StackShare comparison landing page."""
+    d = request.state.db
+    _tc = await d.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
+    total_tools = (await _tc.fetchone())['cnt']
+    _cc = await d.execute("SELECT COUNT(*) as cnt FROM categories")
+    cat_count = (await _cc.fetchone())['cnt']
+
     jsonld = _json.dumps({
         "@context": "https://schema.org",
         "@type": "WebPage",
@@ -292,7 +298,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
     }, ensure_ascii=False)
     jsonld_script = f'<script type="application/ld+json">{jsonld}</script>'
 
-    body = """
+    body = f"""
     <div class="container" style="padding:48px 24px;max-width:860px;">
 
         <!-- Breadcrumb -->
@@ -335,7 +341,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
                         <tr>
                             <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Tool count</td>
                             <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-muted);">7,000</td>
-                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">6,500+ (indie-focused)</td>
+                            <td style="padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink);">{total_tools:,}+ (indie-focused)</td>
                         </tr>
                         <tr>
                             <td style="padding:12px 20px;border-bottom:1px solid var(--border);font-weight:600;color:var(--ink);">Compatibility data</td>
@@ -373,7 +379,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
                 Install the MCP Server
             </h2>
             <p style="color:var(--ink-muted);font-size:15px;margin-bottom:20px;line-height:1.6;">
-                Give your AI agent access to 6,500+ developer tools. Works with Claude, Cursor, and Windsurf.
+                Give your AI agent access to {total_tools:,}+ developer tools. Works with Claude, Cursor, and Windsurf.
             </p>
             <div style="background:#1A1A2E;border-radius:var(--radius-sm);padding:16px 20px;overflow-x:auto;">
                 <code style="font-family:var(--font-mono);font-size:14px;color:var(--accent);white-space:nowrap;">claude mcp add indiestack -- uvx --from indiestack indiestack-mcp</code>
@@ -386,7 +392,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
                 See what&rsquo;s in the database
             </p>
             <p style="color:var(--ink-muted);font-size:14px;margin-bottom:16px;">
-                Browse 6,500+ indie developer tools across 29 categories.
+                Browse {total_tools:,}+ indie developer tools across {cat_count} categories.
             </p>
             <a href="/explore" class="btn btn-primary">Explore Tools &rarr;</a>
         </div>
@@ -408,7 +414,7 @@ async def alternatives_for(request: Request, competitor_slug: str):
     """Show all developer tools that replace a specific competitor."""
     # Special case: StackShare is a platform, not a tool in our DB
     if competitor_slug == "stackshare":
-        return _stackshare_comparison_page(request)
+        return await _stackshare_comparison_page(request)
 
     db = request.state.db
 

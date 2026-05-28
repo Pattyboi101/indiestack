@@ -7656,6 +7656,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "exactly once": "message",                 # bigram — "exactly once semantics", "exactly once delivery" → Message Queues
     "least once": "message",                   # bigram — "at least once delivery", "at least once consumer" → Message Queues
     "most once": "message",                    # bigram — "at most once delivery", "at most once semantics" → Message Queues
+
+    # ── Probe 112 (autonomous loop, May 2026): heartbeat / trust-safety / TCP / network-request / AI-autocomplete dead zones ──
+    #
+    # Dead zones fixed:
+    # "heartbeat" → raw_first (heartbeat monitoring: Healthchecks.io, Better Uptime, UptimeRobot → Monitoring)
+    # "trust" → raw_first (trust & safety tools: Sift, Hive Moderation, Perspective API → Security)
+    #   Regression guard: "zero trust" bigram fires before bare "trust" in pre-pass.
+    # "abuse" → raw_first (abuse detection APIs: AbuseIPDB, Akismet, Perspective → Security)
+    # "tcp" → raw_first (TCP socket libs: node:net, pyzmq, twisted, asyncio → Developer Tools)
+    # "network request" → monitoring via bare "network"→monitoring (wrong; HTTP client libs
+    #   Axios, Got, ky, undici belong in API Tools); bigram overrides bare token.
+    #   Regression: bare "network"→monitoring still fires for "network monitoring tool" etc.
+    # "ai autocomplete" → frontend via bare "autocomplete"→frontend (wrong; AI-powered code
+    #   completion: Copilot, Codeium, Supermaven → AI Dev Tools); bigram fires in pre-pass.
+    # NOTE: "code suggestion" is UNFIXABLE — "suggestion" is in _FTS_STOP_WORDS; bigram can
+    #   never fire. Users should search "code completion" or "ai copilot" instead.
+    "heartbeat": "monitoring",          # bare — "heartbeat check", "heartbeat cron job" → Monitoring & Uptime
+    "trust": "security",                # bare — "trust score", "trust badge", "trust safety" → Security Tools
+    "abuse": "security",                # bare — "abuse detection", "abuse reporting api" → Security Tools
+    "tcp": "developer",                 # bare — "tcp library", "tcp server python", "tcp socket" → Developer Tools
+    "network request": "api",           # bigram — "network request library", "network request axios" → API Tools
+    "ai autocomplete": "ai dev",        # bigram — "ai autocomplete" → AI Dev Tools (overrides autocomplete→frontend)
 }
 
 _FTS_STOP_WORDS = {

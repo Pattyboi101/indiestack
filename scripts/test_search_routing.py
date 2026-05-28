@@ -1042,6 +1042,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("argocd alternative", "devops"),                      # bare "argocd"→devops (no regression)
     ("ngrok alternative", "devops"),                       # bare "ngrok"→devops (no regression)
     ("nmap alternative", "security"),                      # bare "nmap"→security (no regression)
+
+    # ── Probe 112 (autonomous loop, May 2026): heartbeat / trust-safety / TCP / network-request / AI-autocomplete dead zones ──
+    ("heartbeat check api", "monitoring"),                 # bare "heartbeat"→monitoring
+    ("heartbeat cron job", "monitoring"),                  # bare "heartbeat"→monitoring
+    ("tcp socket library", "developer"),                   # bare "tcp"→developer
+    ("tcp server nodejs", "developer"),                    # bare "tcp"→developer
+    ("network request library", "api"),                    # bigram "network request"→api
+    ("network request axios", "api"),                      # bigram "network request"→api
+    ("ai autocomplete tool", "ai dev"),                    # bigram "ai autocomplete"→ai dev
+    ("ai autocomplete vs copilot", "ai dev"),              # bigram "ai autocomplete"→ai dev
+    ("trust score api", "security"),                       # bare "trust"→security
+    ("trust and safety tool", "security"),                 # bare "trust"→security
+    ("abuse detection api", "security"),                   # bare "abuse"→security
+    ("abuse reporting library", "security"),               # bare "abuse"→security
+    # Regressions: zero-trust/network-monitoring/autocomplete-frontend/code-completion unchanged
+    ("zero trust network", "security"),                    # bigram "zero trust"→security still fires
+    ("network monitoring tool", "monitoring"),             # bare "network"→monitoring unchanged
+    ("autocomplete component react", "frontend"),          # bare "autocomplete"→frontend unchanged
 ]
 
 
