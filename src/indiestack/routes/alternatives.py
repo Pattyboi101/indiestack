@@ -287,8 +287,11 @@ async def alternatives_index(request: Request):
                                    extra_head=alt_head))
 
 
-def _stackshare_comparison_page(request: Request) -> HTMLResponse:
+async def _stackshare_comparison_page(request: Request) -> HTMLResponse:
     """Render a custom IndieStack vs StackShare comparison landing page."""
+    _tc = await request.state.db.execute("SELECT COUNT(*) as cnt FROM tools WHERE status='approved'")
+    total_tools = (await _tc.fetchone())['cnt']
+
     jsonld = _json.dumps({
         "@context": "https://schema.org",
         "@type": "WebPage",
@@ -298,7 +301,7 @@ def _stackshare_comparison_page(request: Request) -> HTMLResponse:
     }, ensure_ascii=False)
     jsonld_script = f'<script type="application/ld+json">{jsonld}</script>'
 
-    body = """
+    body = f"""
     <div class="container" style="padding:48px 24px;max-width:860px;">
 
         <!-- Breadcrumb -->
@@ -414,7 +417,7 @@ async def alternatives_for(request: Request, competitor_slug: str):
     """Show all developer tools that replace a specific competitor."""
     # Special case: StackShare is a platform, not a tool in our DB
     if competitor_slug == "stackshare":
-        return _stackshare_comparison_page(request)
+        return await _stackshare_comparison_page(request)
 
     db = request.state.db
 

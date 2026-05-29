@@ -4164,6 +4164,35 @@ TEST_CASES: list[tuple[str, str]] = [
     ("sli definition tool", "monitoring"),            # bare "sli"→monitoring unchanged
     ("sre platform grafana", "monitoring"),           # bare "sre"→monitoring unchanged
     ("error tracking sentry", "monitoring"),          # bare "error"→monitoring unchanged
+
+    # ── probe 118: PWA manifest / Emscripten / installable-app / LSP-collision dead zones ──
+    #
+    # Dead zones fixed:
+    # "web app manifest" → "app" is in _FTS_STOP_WORDS → meaningful=["web","manifest"] → raw_first "web";
+    #   bigram "web manifest"→frontend added.
+    # "installable web app" → meaningful=["installable","web"] → raw_first "installable";
+    #   bare "installable"→frontend added.
+    # "emscripten" → unmapped; Emscripten is the C/C++ to WASM compiler (Frontend tooling);
+    #   bare "emscripten"→frontend added.
+    # "language server protocol" → meaningful=["language","server","protocol"] → routed to MCP via
+    #   bare "protocol"→mcp (collision with Model Context Protocol); bigram "language server"→developer
+    #   added at positions 0-1 to fire before bare "protocol"→mcp at position 2.
+    ("web app manifest generator", "frontend"),       # bigram "web manifest"→frontend (app stripped)
+    ("web manifest pwa", "frontend"),                 # bigram "web manifest"→frontend
+    ("pwa manifest config", "frontend"),              # bare "pwa"→frontend unchanged
+    ("installable web app", "frontend"),              # bare "installable"→frontend
+    ("installable pwa react", "frontend"),            # bare "installable"→frontend
+    ("emscripten wasm", "frontend"),                  # bare "emscripten"→frontend
+    ("emscripten build", "frontend"),                 # bare "emscripten"→frontend (no other token)
+    ("emscripten c++ compile", "frontend"),           # bare "emscripten"→frontend
+    ("language server protocol python", "developer"), # bigram "language server"→developer fires before "protocol"→mcp
+    ("language server protocol rust", "developer"),   # bigram "language server"→developer
+    ("language server implementation", "developer"),  # bigram "language server"→developer
+    # Regressions: LSP bare token and MCP protocol routing unchanged
+    ("lsp server neovim", "developer"),               # bare "lsp"→developer unchanged
+    ("mcp server typescript", "mcp"),                 # bare "mcp"→mcp unchanged
+    ("wasm pack rust", "frontend"),                   # bare "wasm"→frontend unchanged
+    ("webassembly runtime", "frontend"),              # bare "webassembly"→frontend unchanged
 ]
 
 

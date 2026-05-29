@@ -3108,6 +3108,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — WebAssembly
     "wasm": "frontend",         # WebAssembly queries (wasm-pack, wasm-bindgen)
     "webassembly": "frontend",  # full form of WebAssembly
+    "emscripten": "frontend",   # Emscripten — C/C++ to WebAssembly compiler (wasm-pack alternative)
     # Frontend — reactivity signals pattern (Angular, SolidJS, Vue)
     "signal": "frontend",       # "signal-based reactivity", "signal state"
     "signals": "frontend",      # plural form — common in Angular 17+ / SolidJS docs
@@ -3535,6 +3536,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "worker pwa": "frontend",       # "service worker pwa" → ["worker","pwa"] bigram → Frontend Frameworks
     "workbox": "frontend",          # Google Workbox — service worker and PWA caching library
     "serviceworker": "frontend",    # compound/no-space form — "serviceworker caching" → Frontend
+    # NOTE: "web manifest" bigram — "app" is in _FTS_STOP_WORDS; "web app manifest" strips to "web manifest"
+    "web manifest": "frontend",     # bigram — "web app manifest", "pwa manifest generator" → Frontend Frameworks
     # Rate throttling (complement to rate/limiting/limiter/limit → api)
     "throttle": "api",              # "throttle requests", "api throttle" → API Tools
     "throttling": "api",            # "request throttling", "api throttling" → API Tools
@@ -4569,6 +4572,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "panda": "frontend",            # short form — "panda css alternative", "panda setup" → Frontend
     # PWA — "progressive web app" without the "pwa" abbreviation
     "progressive": "frontend",      # "progressive web app", "progressive enhancement" → Frontend Frameworks
+    "installable": "frontend",      # "installable web app", "installable pwa" — PWA install-prompt / manifest tools
     # SolidJS meta-framework (complement to "solid"→"frontend", "solidjs"→"frontend")
     "solidstart": "frontend",       # SolidStart — SolidJS meta-framework (SSR, file routing, Server Actions)
     # Node.js backend frameworks not yet individually mapped
@@ -5947,6 +5951,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "lsp": "developer",             # LSP — Language Server Protocol tooling (Neovim LSP, clangd, pyright) → Developer Tools
     "language-server": "developer", # hyphenated — "language-server protocol", "language-server setup" → Developer Tools
     "languageserver": "developer",  # compound — "languageserver alternative", "languageserver node" → Developer Tools
+    # NOTE: bigram "language server" overrides bare "protocol"→mcp for "language server protocol" queries
+    # (LSP = Language Server Protocol, not the Model Context Protocol — collision fix)
+    "language server": "developer", # bigram — "language server protocol", "language server implementation" → Developer Tools
     # Testing — singular "unit" and hyphenated "end-to-end" forms (complements to "e2e"→"testing")
     "unit": "testing",              # "unit test framework", "unit testing library", "unit test runner" → Testing Tools
     "end-to-end": "testing",        # "end-to-end testing framework", "end-to-end test runner" → Testing Tools
