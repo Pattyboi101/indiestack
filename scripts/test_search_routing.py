@@ -4193,6 +4193,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("mcp server typescript", "mcp"),                 # bare "mcp"→mcp unchanged
     ("wasm pack rust", "frontend"),                   # bare "wasm"→frontend unchanged
     ("webassembly runtime", "frontend"),              # bare "webassembly"→frontend unchanged
+    # Probe pattern 119 — SEO link-analysis / ASO dead zones
+    #
+    # NOTE: "link building" bigram CANNOT fire — "building" is in _FTS_STOP_WORDS.
+    # "link building tool" → meaningful=["link"] → raw_first (unfixable; documented above).
+    # "domain authority" → "domain"→devops at i=0 without the bigram override.
+    # "broken link" → both tokens unmapped → raw_first.
+    # "anchor text" → both tokens unmapped → raw_first.
+    # "aso" → App Store Optimization abbreviation unmapped → raw_first.
+    ("broken link checker", "seo"),                   # bigram "broken link"→seo
+    ("broken link finder react", "seo"),              # bigram fires at i=0 before "broken" alone
+    ("domain authority checker", "seo"),              # bigram "domain authority"→seo (overrides "domain"→devops)
+    ("domain authority moz alternative", "seo"),      # bigram "domain authority"→seo at i=0
+    ("anchor text optimization", "seo"),              # bigram "anchor text"→seo
+    ("anchor text analysis", "seo"),                  # bigram "anchor text"→seo
+    ("aso tool", "seo"),                              # bare "aso"→seo (App Store Optimization)
+    ("aso keyword tracker", "seo"),                   # bare "aso"→seo at i=0
+    # Regressions: domain/link tokens still route correctly for non-SEO queries
+    ("domain registration api", "devops"),            # bare "domain"→devops unchanged
+    # NOTE: "link shortener self hosted" routes to devops via "self hosted" bigram (known limitation)
+    ("link shortener nodejs", "developer"),           # bare "shortener"→developer fires at i=1
 ]
 
 

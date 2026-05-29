@@ -8103,6 +8103,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "page speed": "seo",                # bigram — "page speed test", "page speed optimization" → SEO (beats "test"→testing)
     "meta tags": "seo",                 # "meta tags generator", "meta tags nextjs" → SEO Tools
     "xml sitemap": "seo",               # bigram beats "xml"→developer for sitemap queries
+    # SEO — link analysis and App Store Optimization dead zones (probe 119)
+    # NOTE: "link building" bigram CANNOT fire — "building" is in _FTS_STOP_WORDS and is stripped.
+    # "link building tool" → meaningful=["link"] → raw_first. Unfixable: bare "link"→seo
+    # would break "magic link"→auth and "link shortener"→developer queries.
+    # "domain authority" → "domain"→devops fires at i=0 without the bigram override.
+    # "broken link" → both tokens unmapped → raw_first.
+    # "anchor text" → both tokens unmapped → raw_first.
+    # "aso" (App Store Optimization) → not in _CAT_SYNONYMS → raw_first.
+    "broken link": "seo",               # bigram — "broken link checker", "broken link finder" → SEO Tools
+    "domain authority": "seo",          # bigram — "domain authority checker", "domain authority moz" → SEO Tools (overrides "domain"→devops)
+    "anchor text": "seo",               # bigram — "anchor text optimization", "anchor text analysis" → SEO Tools
+    "aso": "seo",                       # App Store Optimization — "aso tool", "aso keyword tracker" → SEO Tools
     # Scheduling — "meeting" unmapped and "scheduler"→background fires wrong for calendar scheduling
     "meeting scheduler": "scheduling",  # bigram — "meeting scheduler open source" → Scheduling & Booking
     "calendly": "scheduling",           # brand token — "calendly alternative" → Scheduling & Booking
