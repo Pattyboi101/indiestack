@@ -641,6 +641,22 @@ When hunting for routing gaps, these query forms are historically tricky:
     Fixed: "pptx"/"python-pptx"/"odt"/"tsv"→developer, "avro"→database,
     "decrypt"/"decryption"→security, "transpile"→frontend,
     "authenticate"→authentication (probe 112, May 2026).
+
+66. "Conversion-marketing / scraping-proxy / modal dead zones (probe 120)" —
+    "retargeting"/"remarketing" → raw_first (no synonym; Analytics).
+    "exit intent popup" → raw_first "exit" (bigram "exit intent"→Analytics).
+    "social proof widget" → social-media via "social"→social (wrong;
+    bigram "social proof"→Feedback overrides).
+    "proxy rotation"/"rotating proxy" → devops via "proxy"→devops (wrong for
+    web scraping proxy pools; bigrams → Developer Tools).
+    "ip rotation" → maps via "ip"→maps (clearly wrong; bigram → Developer Tools).
+    "modal popup"/"modal overlay"/"modal form"/"confirmation modal" → ai via
+    "modal"→ai (Modal.com collision; missing bigrams from probe 63 modal fix;
+    all → Frontend Frameworks).
+    Fixed: bare "retargeting"/"remarketing"→analytics, bigram "exit intent"→analytics,
+    bigram "social proof"→feedback, bigrams "proxy rotation"/"rotating proxy"/"ip
+    rotation"→developer, bigrams "modal popup"/"modal overlay"/"modal form"/
+    "confirmation modal"→frontend (probe 120, May 2026).
 """
 
 import sys
@@ -4213,6 +4229,50 @@ TEST_CASES: list[tuple[str, str]] = [
     ("domain registration api", "devops"),            # bare "domain"→devops unchanged
     # NOTE: "link shortener self hosted" routes to devops via "self hosted" bigram (known limitation)
     ("link shortener nodejs", "developer"),           # bare "shortener"→developer fires at i=1
+
+    # ── probe 120: conversion-marketing / scraping-proxy / modal dead zones ──
+    #
+    # Dead zones fixed:
+    # "retargeting" / "remarketing" → raw_first (no synonym). Retargeting/remarketing pixel
+    #   tools belong in Analytics. Bare tokens added.
+    # "exit intent popup" → raw_first (both "exit" and "intent" unmapped). Exit-intent
+    #   popup tools (OptinMonster, Popupsmart) belong in Analytics. Bigram added.
+    # "social proof widget" → social-media via bare "social"→social (wrong; social proof
+    #   tools (Proof.com, FOMO) are Feedback & Reviews). Bigram "social proof"→feedback added.
+    # "proxy rotation" / "rotating proxy" → devops via bare "proxy"→devops (wrong for web
+    #   scraping proxy pools; Developer Tools category). Bigrams added.
+    # "ip rotation scraping" → maps via bare "ip"→maps (clearly wrong for scraping proxies).
+    #   Bigram "ip rotation"→developer added.
+    # "modal popup" / "modal overlay" / "modal form" → ai via bare "modal"→ai (Modal.com
+    #   serverless collision; these are Frontend UI component queries). Bigrams added.
+    # "confirmation modal" → ai via "modal"→ai firing at position 1. Bigram added.
+    #
+    ("retargeting pixel tool", "analytics"),         # bare "retargeting"→analytics
+    ("retargeting ads platform", "analytics"),        # bare "retargeting"→analytics
+    ("remarketing tool open source", "analytics"),    # bare "remarketing"→analytics
+    ("remarketing campaign tracker", "analytics"),    # bare "remarketing"→analytics
+    ("exit intent popup open source", "analytics"),   # bigram "exit intent"→analytics
+    ("exit intent tool conversion", "analytics"),     # bigram "exit intent"→analytics at i=0
+    ("social proof widget react", "feedback"),        # bigram "social proof"→feedback (overrides "social"→social)
+    ("social proof tool ecommerce", "feedback"),      # bigram "social proof"→feedback
+    ("proxy rotation service", "developer"),          # bigram "proxy rotation"→developer (overrides "proxy"→devops)
+    ("proxy rotation python", "developer"),           # bigram "proxy rotation"→developer
+    ("rotating proxy api", "developer"),              # bigram "rotating proxy"→developer (overrides "proxy"→devops at pos 1)
+    ("rotating proxy scraping", "developer"),         # bigram "rotating proxy"→developer
+    ("ip rotation scraping tool", "developer"),       # bigram "ip rotation"→developer (overrides "ip"→maps)
+    ("modal popup react library", "frontend"),        # bigram "modal popup"→frontend (overrides "modal"→ai)
+    ("modal popup component", "frontend"),            # bigram "modal popup"→frontend
+    ("modal overlay library", "frontend"),            # bigram "modal overlay"→frontend (overrides "modal"→ai)
+    ("modal form validation react", "frontend"),      # bigram "modal form"→frontend (overrides "modal"→ai)
+    ("confirmation modal react", "frontend"),         # bigram "confirmation modal"→frontend (overrides "modal"→ai at pos 1)
+    ("confirmation modal dialog", "frontend"),        # bigram "confirmation modal"→frontend
+    # Regressions: existing routing unchanged
+    ("proxy server nginx", "devops"),                 # bare "proxy"→devops unchanged (reverse proxy)
+    ("social media scheduler", "social"),             # bare "social"→social unchanged (social media scheduling)
+    ("ip geolocation api", "maps"),                   # bare "ip"→maps unchanged (geolocation)
+    ("ip lookup service", "maps"),                    # bare "ip"→maps unchanged
+    ("modal component shadcn", "frontend"),           # bigram "modal component"→frontend (probe 63, unchanged)
+    ("modal window library", "frontend"),             # bigram "modal window"→frontend (probe 63, unchanged)
 ]
 
 

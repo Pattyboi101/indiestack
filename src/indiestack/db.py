@@ -9822,6 +9822,42 @@ _CAT_SYNONYMS: dict[str, str] = {
     "authenticating": "authentication", # present-participle — "authenticating users", "authenticating requests" → Authentication
     "notifier": "notifications",        # noun — "notifier service", "slack notifier", "push notifier" → Notifications
     "indexing database": "database",    # bigram — "indexing database postgres" → Database (overrides "indexing"→search)
+
+    # Probe 120 — conversion-marketing / scraping-proxy / modal dead zones
+    #
+    # Analytics — retargeting / remarketing dead zones.
+    # "retargeting" and "remarketing" fired raw_first — no synonym existed. Retargeting
+    # pixel tools (Adroll, Criteo, Perfect Audience) and remarketing analytics belong in
+    # Analytics & Metrics. "retargeting ads", "remarketing campaign", "retargeting pixel" all now route correctly.
+    "retargeting": "analytics",          # bare — "retargeting pixel tool", "retargeting ads" → Analytics
+    "remarketing": "analytics",          # bare — "remarketing tool", "remarketing campaign" → Analytics
+
+    # Analytics — exit-intent dead zone.
+    # "exit intent popup" fired raw_first — both "exit" and "intent" unmapped. Exit-intent
+    # popup tools (OptinMonster, Popupsmart, Hello Bar, Picreel) belong in Analytics (CRO tier).
+    "exit intent": "analytics",          # bigram — "exit intent tool", "exit intent popup" → Analytics
+
+    # Feedback — "social proof" bigram overrides "social"→social-media collision.
+    # "social proof widget" mis-routed to Social Media via bare "social"→social. Social proof
+    # tools (Proof.com, FOMO, Provely, Trustpilot) are Feedback & Reviews widgets, not social scheduling.
+    "social proof": "feedback",          # bigram — "social proof widget", "social proof tool" → Feedback (overrides "social"→social)
+
+    # Developer Tools — web-scraping proxy rotation dead zones.
+    # "proxy rotation" and "rotating proxy" mis-routed to DevOps via bare "proxy"→devops
+    # (correct for Nginx/HAProxy reverse proxies; wrong for web scraping proxy pools).
+    # "ip rotation scraping" mis-routed to Maps via bare "ip"→maps (clearly wrong).
+    # Scraping proxy services (ScraperAPI, Bright Data, Oxylabs) are Developer Tools.
+    "proxy rotation": "developer",       # bigram — overrides "proxy"→devops for scraping proxy pool queries
+    "rotating proxy": "developer",       # bigram — "rotating proxy service", "rotating proxy api" → Developer Tools
+    "ip rotation": "developer",          # bigram — overrides "ip"→maps; "ip rotation scraping" → Developer Tools
+
+    # Frontend Frameworks — modal bigram gaps (complement to probe 63 "modal component"/"modal window").
+    # "modal popup", "modal overlay", "modal form" mis-routed to AI via bare "modal"→ai (Modal.com serverless collision).
+    # "confirmation modal" mis-routed to AI because "modal" fires at position 1 without a bigram.
+    "modal popup": "frontend",           # bigram — "modal popup react", "modal popup library" → Frontend (overrides "modal"→ai)
+    "modal overlay": "frontend",         # bigram — "modal overlay component", "modal overlay css" → Frontend
+    "modal form": "frontend",            # bigram — "modal form validation", "modal form react" → Frontend
+    "confirmation modal": "frontend",    # bigram — "confirmation modal dialog", "confirmation modal react" → Frontend
 }
 
 _FTS_STOP_WORDS = {
