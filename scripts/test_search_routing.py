@@ -4304,6 +4304,44 @@ TEST_CASES: list[tuple[str, str]] = [
     ("user onboarding software", "feedback"),        # bigram "user onboarding"→feedback unchanged (probe 47)
     ("websocket server nodejs", "message"),          # bare "websocket"→message unchanged (WebSocket servers)
     ("sales pipeline crm", "crm"),                  # bare "sales"→crm unchanged (CRM pipeline queries)
+
+    # Probe 122 — BDD / approval-testing / fast-check / instrumentation / consumption-billing dead zones
+    #
+    # "behavior driven development" → bare "behavior"+"driven" both unmapped → raw_first.
+    # "approvaltests net" → raw_first "approvaltests" (compound unmapped).
+    # "fast check library" → "fast" is a stop word → meaningful=["check"] → raw_first "check".
+    # "property check library" → raw_first "property".
+    # "automatic instrumentation" → raw_first "automatic"; "instrumentation" was unmapped.
+    # "consumption based pricing" → raw_first "consumption"; "consumption billing"→payments bigram
+    #   already existed for the billing form but "based pricing" form was missing.
+    # "payg pricing" → raw_first "payg" (pay-as-you-go abbreviation unmapped).
+    ("behavior driven development", "testing"),       # bare "behavior"→testing
+    ("behavior driven testing tool", "testing"),      # bigram "behavior driven"→testing
+    ("behaviour driven development", "testing"),      # bare "behaviour"→testing (British spelling)
+    ("behaviour driven testing framework", "testing"),# bigram "behaviour driven"→testing
+    ("behaviordriven framework python", "testing"),   # compound "behaviordriven"→testing
+    ("approvaltests net", "testing"),                 # compound "approvaltests"→testing
+    ("approvaltests alternative", "testing"),         # compound "approvaltests"→testing
+    ("fast check library", "testing"),                # bare "check"→testing ("fast" is stop word)
+    ("fast check alternative", "testing"),            # bare "check"→testing
+    ("fastcheck", "testing"),                         # compound "fastcheck"→testing
+    ("property check library", "testing"),            # bigram "property check"→testing (pre-pass)
+    ("property check js", "testing"),                 # bigram "property check"→testing
+    ("automatic instrumentation opentelemetry", "monitoring"),  # bare "instrumentation"→monitoring
+    ("automatic instrumentation nodejs", "monitoring"),         # bare "instrumentation"→monitoring
+    ("code instrumentation otel", "monitoring"),               # bare "instrumentation"→monitoring at pos 1
+    ("consumption based pricing", "payments"),        # bare "consumption"→payments
+    ("consumption pricing model", "payments"),        # bigram "consumption based"→payments at pre-pass? no — bare fires
+    ("payg pricing", "payments"),                     # bare "payg"→payments
+    ("payg billing model", "payments"),               # bare "payg"→payments at pos 0
+    # Regressions: safe guards — existing routing unchanged
+    ("user behavior analytics", "analytics"),         # PRE:"user behavior"→analytics unchanged
+    ("user behavior tracking", "analytics"),          # PRE:"user behavior"→analytics unchanged
+    ("health check api", "monitoring"),               # bare "health"→monitoring fires before "check"→testing
+    ("background check api", "background"),           # bare "background"→background fires before "check"
+    ("sanity check tool", "cms"),                     # bare "sanity"→cms fires before "check"
+    ("consumption billing api", "payments"),          # PRE:"consumption billing"→payments unchanged
+    ("usage based pricing tool", "payments"),         # PRE:"usage based"→payments unchanged
 ]
 
 

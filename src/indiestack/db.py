@@ -9887,6 +9887,48 @@ _CAT_SYNONYMS: dict[str, str] = {
     # bare "websocket"→message (correct for WebSocket server tools like Soketi, Centrifugo).
     # Client-side WebSocket libraries are API Tools, not message queues.
     "websocket client": "api",           # bigram — "websocket client library", "websocket client javascript" → API Tools
+
+    # ── probe 122: BDD / approval-testing / property-testing / instrumentation / consumption-billing dead zones ──
+    #
+    # "behavior driven development" → RAW_FIRST 'behavior' (both "behavior" and "driven" unmapped;
+    #   "development" is a stop word). BDD frameworks (Cucumber, SpecFlow, Behave, RSpec) → Testing.
+    #   Regression: "user behavior"→analytics pre-pass bigram fires first for "user behavior *" queries.
+    # "approvaltests net" → RAW_FIRST 'approvaltests'. ApprovalTests.Net snapshot library → Testing.
+    # "fast check library" → RAW_FIRST 'check'. "fast" is in _FTS_STOP_WORDS so "fast-check" strips to
+    #   bare "check". fast-check (45k★ JS property-based testing) → Testing. Safe: common "X check Y"
+    #   queries have X mapped at pos 0 ("health"→monitoring, "background"→background, "sanity"→cms,
+    #   "type"→developer, "spell"→developer) so they always fire before bare "check" at pos 1+.
+    # "property check library" → RAW_FIRST 'property'. property-check (JS), PropCheck (Ruby) → Testing.
+    # "automatic instrumentation" → RAW_FIRST 'automatic'. bare "instrumentation"→monitoring fixes all
+    #   instrumentation compound forms (auto, code, otel). OTel instrumentation → Monitoring.
+    # "consumption based pricing" → RAW_FIRST 'consumption'. "consumption billing"→payments bigram works
+    #   but the "consumption based" form and standalone "consumption" were missing → Payments.
+    # "payg pricing" → RAW_FIRST 'payg'. PAYG (pay-as-you-go) billing abbreviation → Payments.
+
+    # Testing — BDD (Behavior-Driven Development) dead zones.
+    "behavior": "testing",               # bare — "behavior driven development", "behavior spec" → Testing (BDD)
+    "behaviour": "testing",              # British spelling — "behaviour driven development python" → Testing
+    "behavior driven": "testing",        # bigram — "behavior driven development", "behavior driven design" → Testing
+    "behaviour driven": "testing",       # bigram — British form — "behaviour driven development bdd" → Testing
+    "behaviordriven": "testing",         # compound — "behaviordriven framework" → Testing
+    "behaviourdriven": "testing",        # British compound — "behaviourdriven spec" → Testing
+
+    # Testing — ApprovalTests snapshot testing (.NET, Java, Python, JS).
+    "approvaltests": "testing",          # compound — "approvaltests net", "approvaltests alternative" → Testing
+
+    # Testing — fast-check property-based testing (45k★ JS). "fast" is a stop word so bare "check"
+    # is the only reachable token. "fastcheck" handles the compound form.
+    "check": "testing",                  # bare — "fast-check alternative", "check library" → Testing (fallback)
+    "fastcheck": "testing",              # compound — "fastcheck js", "fastcheck alternative" → Testing
+    "property check": "testing",         # bigram — "property check library", "property check js" → Testing
+
+    # Monitoring — OpenTelemetry instrumentation dead zones.
+    "instrumentation": "monitoring",     # bare — "auto instrumentation", "code instrumentation" → Monitoring
+
+    # Payments — consumption-based billing dead zones.
+    "consumption": "payments",           # bare — "consumption based pricing", "consumption pricing model" → Payments
+    "consumption based": "payments",     # bigram — "consumption based pricing", "consumption based billing" → Payments
+    "payg": "payments",                  # bare — "payg billing", "payg pricing", "payg model" → Payments
 }
 
 _FTS_STOP_WORDS = {
