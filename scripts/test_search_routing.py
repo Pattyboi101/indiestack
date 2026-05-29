@@ -4290,6 +4290,48 @@ TEST_CASES: list[tuple[str, str]] = [
     ("code generation ai", "ai dev"),                # bigram "code generation"→ai dev unchanged
     ("document signing esign", "forms"),             # bigram "document signing"→forms unchanged
     ("database backup solution", "database"),        # bare "database"→database unchanged
+
+    # ── probe 123: PDF processing dead zones ──
+    #
+    # Dead zones fixed:
+    # "pdf rendering library" / "pdf processing api" / "pdf export api" → file via bare "pdf"→file
+    #   (wrong; PDF generation/manipulation libraries belong in Developer Tools).
+    #   Bigrams added: "pdf rendering", "pdf processing", "pdf export", "pdf manipulation", "pdf converter" → developer
+    # "pdf to html" → file via bare "pdf" (wrong; PDF conversion is Developer Tools).
+    #   "to" is a stop word so "pdf to html" meaningful tokens are ["pdf", "html"]; bigram "pdf html" added.
+    # "pdf parse library" → file via bare "pdf" (wrong for document-intelligence queries).
+    #   Bigram "pdf parse"→ai added (extends existing "pdf parsing"→ai bigram).
+    # "pdf invoice generation" → file via bare "pdf" (wrong; belongs in Invoicing).
+    #   Bigram "pdf invoice"→invoicing added.
+    # "pdf form filling" → file via bare "pdf" (wrong; belongs in Forms).
+    #   Bigram "pdf form"→forms added.
+    #
+    # NOTE: "service worker" CANNOT be fixed — "service" is in _FTS_STOP_WORDS; "worker" alone
+    # maps to "background" (Background Jobs). Stop-word bigram trap — documented, not fixable.
+    #
+    ("pdf rendering library", "developer"),          # bigram "pdf rendering"→developer (overrides "pdf"→file)
+    ("pdf rendering nodejs", "developer"),           # bigram "pdf rendering"→developer
+    ("pdf processing api", "developer"),             # bigram "pdf processing"→developer
+    ("pdf processing python", "developer"),          # bigram "pdf processing"→developer
+    ("pdf export api", "developer"),                 # bigram "pdf export"→developer (overrides "pdf"→file)
+    ("pdf export react component", "developer"),     # bigram "pdf export"→developer at i=0
+    ("pdf manipulation tool", "developer"),          # bigram "pdf manipulation"→developer (overrides "pdf"→file)
+    ("pdf converter api", "developer"),              # bigram "pdf converter"→developer (overrides "pdf"→file)
+    ("pdf converter nodejs", "developer"),           # bigram "pdf converter"→developer
+    ("pdf to html conversion", "developer"),         # bigram "pdf html"→developer ("to" stripped → "pdf html")
+    ("pdf parse library", "ai"),                     # bigram "pdf parse"→ai (overrides "pdf"→file)
+    ("pdf invoice generation", "invoicing"),         # bigram "pdf invoice"→invoicing (overrides "pdf"→file)
+    ("pdf invoice template", "invoicing"),           # bigram "pdf invoice"→invoicing
+    ("pdf form filling", "forms"),                   # bigram "pdf form"→forms (overrides "pdf"→file)
+    ("pdf form builder", "forms"),                   # bigram "pdf form"→forms
+    # Regressions: existing PDF routing unchanged
+    ("pdf generation api", "developer"),             # bigram "pdf generation"→developer unchanged
+    ("pdf generator nodejs", "developer"),           # bigram "pdf generator"→developer unchanged
+    ("pdf viewer component", "frontend"),            # bigram "pdf viewer"→frontend unchanged (react-pdf)
+    ("pdf parsing python", "ai"),                    # bigram "pdf parsing"→ai unchanged (RAG pipeline)
+    ("html to pdf", "developer"),                    # bigram "html pdf"→developer unchanged
+    ("pdf storage", "file"),                         # bare "pdf"→file unchanged (PDF file storage)
+    ("pdf upload", "file"),                          # bare "pdf"→file unchanged (PDF file hosting)
 ]
 
 

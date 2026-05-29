@@ -2857,6 +2857,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pdf creator": "developer",     # "pdf creator library", "pdf creator api" → Developer Tools
     "html pdf": "developer",        # "html to pdf" (stop-word "to" stripped → "html pdf") → Developer Tools
     "pdf viewer": "frontend",       # "pdf viewer react", "pdf viewer component" → Frontend (react-pdf, pdfjs-dist)
+    # PDF processing bigrams — probe 123 dead zones: bare "pdf"→file fires first for these queries.
+    # "to" and "library" are stop words so can't form bigrams; "pdf rendering"/"pdf processing" etc. CAN fire.
+    # NOTE: "service worker" dead zone is UNFIXABLE — "service" is in _FTS_STOP_WORDS; documented.
+    "pdf rendering": "developer",   # "pdf rendering library", "pdf rendering nodejs" → Developer Tools (pdfkit, pdf-lib)
+    "pdf processing": "developer",  # "pdf processing api", "pdf processing python" → Developer Tools
+    "pdf export": "developer",      # "pdf export api", "pdf export react" → Developer Tools
+    "pdf manipulation": "developer",# "pdf manipulation python", "pdf manipulation tool" → Developer Tools
+    "pdf converter": "developer",   # "pdf converter api", "pdf converter nodejs" → Developer Tools
+    "pdf html": "developer",        # "pdf to html" (stop-word "to" stripped → "pdf html") → Developer Tools
+    "pdf parse": "ai",              # "pdf parse library" → AI (RAG pipelines; extends "pdf parsing"→ai bigram)
+    "pdf invoice": "invoicing",     # "pdf invoice generation", "pdf invoice template" → Invoicing
+    "pdf form": "forms",            # "pdf form filling", "pdf form builder" → Forms (PDF form tools)
     # Markdown processing — editors, renderers, parsers
     "markdown": "documentation", # markdown editors/renderers → Documentation category
     # Security tools — "security" as raw term already LIKE-matches "Security Tools",
