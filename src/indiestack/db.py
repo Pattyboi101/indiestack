@@ -7940,7 +7940,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Bigram fires before "llm" single token so these route to the correct ai-standards category.
     "llm evaluation": "ai standards",    # spaced bigram — "llm evaluation harness", "llm evaluation tool"
     "llm-evaluation": "ai standards",    # hyphenated — "llm-evaluation alternative" → AI Standards & Specs
-    "llm benchmark": "ai standards",     # spaced bigram — "llm benchmark leaderboard", "llm benchmark comparison"
     "llm-benchmark": "ai standards",     # hyphenated — "llm-benchmark suite" → AI Standards & Specs
     "llm eval": "ai standards",          # short form bigram — "llm eval setup", "llm eval tool" → AI Standards (was: "llm"→ai)
     "llm benchmarking": "ai standards",  # gerund bigram — "llm benchmarking tool", "llm benchmarking result" → AI Standards
@@ -8940,7 +8939,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "recurring": "payments",                 # bare — "recurring charges", "recurring invoices" → Payments
     "cryptocurrency": "payments",            # bare — "cryptocurrency payments", "accept cryptocurrency" → Payments
     "crypto payments": "payments",           # bigram — overrides bare "crypto"→security; "crypto payments api" → Payments
-    "crypto payment": "payments",            # bigram — singular form — "crypto payment gateway" → Payments
     # Developer Tools — back-office admin builders (Retool, Appsmith, Tooljet, Budibase).
     "backoffice": "developer",               # bare — "backoffice builder", "backoffice admin react" → Developer Tools
     "back office": "developer",              # bigram — "back office builder", "back office tool" → Developer Tools
@@ -9912,6 +9910,35 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "point in time recovery" after stop-word strip → ["point","time","recovery"]; bigram at pos 0-1 fires.
     "pitr": "database",                 # bare — "pitr postgres", "pitr backup" → Database
     "point time": "database",           # bigram — "point in time recovery/backup" after "in" stripped → Database
+
+    # Probe 125 — omnichannel / shared-inbox / screen-capture / help-center / selfhosted dead zones
+    #
+    # Customer Support — "omnichannel platform/software/messaging" fired raw_first.
+    # "omnichannel" alone was unmapped; "platform"/"software" are stop words, leaving bare "omnichannel".
+    # Omnichannel customer support tools (Chatwoot, Crisp, Intercom) → Customer Support.
+    "omnichannel": "support",            # bare — "omnichannel platform", "omnichannel messaging" → Customer Support
+
+    # Customer Support — "shared inbox" / "team inbox" mis-route to Notifications via bare "inbox"→notifications.
+    # Shared inbox tools (Front, Missive, Helpscout) are Customer Support, not notification inboxes.
+    # Bigrams fire before single token "inbox"→notifications.
+    "shared inbox": "support",           # bigram — "shared inbox software", "shared inbox open source" → Customer Support
+    "team inbox": "support",             # bigram — "team inbox software", "team inbox tool" → Customer Support
+
+    # Customer Support — "help center" spaced bigram (bare "help" unmapped; "help center tool/software"
+    # strips to "help center" meaningful=["help","center"]).
+    # Help center tools: Intercom Articles, HelpDocs, Document360, Helpjuice.
+    "help center": "support",            # bigram — "help center software", "open source help center" → Customer Support
+
+    # DevOps — "selfhosted" compound form (complement to "self hosted" bigram → devops already mapped).
+    # One-word compound form misses the bigram; bare token needed.
+    "selfhosted": "devops",              # bare — "selfhosted alternative", "selfhosted server" → DevOps
+
+    # Testing — "screen capture" / "screen grab" / "screen shot" (spaced) dead zones.
+    # bare "screenshot"→testing exists; these spaced/compound variants were raw_first via bare "screen" (unmapped).
+    # Screen capture tools: Flameshot, Gyazo, ShareX — consistent with "screenshot"→testing.
+    "screen capture": "testing",         # bigram — "screen capture tool", "screen capture api" → Testing Tools
+    "screen grab": "testing",            # bigram — "screen grab software", "screen grab react" → Testing Tools
+    "screen shot": "testing",            # bigram — spaced form: "screen shot tool", "screen shot api" → Testing Tools
 }
 
 _FTS_STOP_WORDS = {

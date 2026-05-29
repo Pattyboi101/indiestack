@@ -4377,6 +4377,42 @@ TEST_CASES: list[tuple[str, str]] = [
     ("password manager open source", "security"),   # bare "password"→security unchanged
     ("news feed syndication", "newsletters"),       # bare "feed"→newsletters unchanged (RSS/Atom feeds)
     ("chart js alternative", "analytics"),          # bare "chart"→analytics unchanged (Chart.js tool queries)
+
+    # ── probe 125: omnichannel / shared-inbox / screen-capture / help-center / selfhosted dead zones ──
+    #
+    # Dead zones fixed:
+    # "omnichannel platform/software" → raw_first (bare "omnichannel" unmapped; "platform"/"software" are
+    #   stop words). Omnichannel support tools (Chatwoot, Crisp, Intercom) → Customer Support. Bare added.
+    # "shared inbox software/open source" → Notifications via bare "inbox"→notifications (wrong; shared
+    #   inbox tools Front/Missive/Helpscout are Customer Support). Bigram "shared inbox"→support added.
+    # "team inbox software" → same collision; bigram "team inbox"→support added.
+    # "help center software" → raw_first "help" (bare unmapped). Help center tools: Intercom Articles,
+    #   HelpDocs, Document360. Bigram "help center"→support added.
+    # "selfhosted alternative/server" → raw_first "selfhosted" (compound, no space; "self hosted" bigram
+    #   already existed). Bare "selfhosted"→devops added.
+    # "screen capture tool/api" / "screen grab software" / "screen shot tool" → raw_first via bare "screen"
+    #   (unmapped). Consistent with "screenshot"→testing; bigrams "screen capture/grab/shot"→testing added.
+    # Also removed 2 duplicate _CAT_SYNONYMS keys ("llm benchmark" duplicate, "crypto payment" duplicate).
+    #
+    ("omnichannel platform", "support"),              # bare "omnichannel"→support
+    ("omnichannel software", "support"),              # bare "omnichannel"→support
+    ("omnichannel messaging", "support"),             # bare "omnichannel"→support
+    ("shared inbox software", "support"),             # bigram "shared inbox"→support (overrides "inbox"→notifications)
+    ("shared inbox open source", "support"),          # bigram "shared inbox"→support
+    ("team inbox software", "support"),               # bigram "team inbox"→support (overrides "inbox"→notifications)
+    ("team inbox tool", "support"),                   # bigram "team inbox"→support
+    ("help center software", "support"),              # bigram "help center"→support
+    ("open source help center", "support"),           # bigram "help center"→support (reversed position)
+    ("selfhosted alternative", "devops"),             # bare "selfhosted"→devops
+    ("selfhosted server", "devops"),                  # bare "selfhosted"→devops
+    ("screen capture tool", "testing"),               # bigram "screen capture"→testing
+    ("screen capture api", "testing"),                # bigram "screen capture"→testing
+    ("screen grab software", "testing"),              # bigram "screen grab"→testing
+    ("screen shot tool", "testing"),                  # bigram "screen shot"→testing (spaced form)
+    # Regressions: inbox notification routing, self-hosted bigram, screenshot unchanged
+    ("inbox notification component", "notifications"), # bare "inbox"→notifications unchanged (notification inbox)
+    ("self hosted alternative", "devops"),             # "self hosted" bigram unchanged
+    ("screenshot api playwright", "testing"),          # bare "screenshot"→testing unchanged
 ]
 
 
