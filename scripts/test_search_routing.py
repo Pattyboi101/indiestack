@@ -641,6 +641,26 @@ When hunting for routing gaps, these query forms are historically tricky:
     Fixed: "pptx"/"python-pptx"/"odt"/"tsv"→developer, "avro"→database,
     "decrypt"/"decryption"→security, "transpile"→frontend,
     "authenticate"→authentication (probe 112, May 2026).
+
+66. "Language-detection / promo-code / outreach / password-reset / chart-component / activity-feed dead zones (probe 124)" —
+    "language detection library" → raw_first:language; bigram "language detection" → Localization.
+    "language identification api" → raw_first:language; bigram "language identification" → Localization.
+    "promo code generator" → ai-dev via "code generator" bigram (collision); bigram "promo code" fires first → Payments.
+    "coupon code" / "discount code" → raw_first; bigrams → Payments.
+    "outreach tool" → raw_first; bare "outreach" → CRM (Apollo, Reply.io, Lemlist).
+    "password reset flow" → security via bare "password" (wrong); bigram "password reset" → Authentication.
+    "password recovery email" → same; bigram "password recovery" → Authentication.
+    "graph charting library" → database via "graph" (wrong); bigram "graph charting" → Frontend.
+    "chart component react" → analytics via "chart" (wrong); bigram "chart component" → Frontend.
+    "activity feed component" → newsletters via "feed" (wrong); bigram "activity feed" → Notifications.
+    "notification feed react" → newsletters; bigram "notification feed" → Notifications.
+    NOTE: "code signing" was already fixed in probe 122 on origin/main (bot-security track).
+    NOTE: "build automation" and "chart library" bigrams are DEAD CODE ("build"/"library" are stop words).
+    Fixed: bigrams "language detection"/"language identification"→localization, "promo code"/
+    "coupon code"/"discount code"→payments, bare "outreach"→crm, bigrams "password reset"/
+    "password recovery"→authentication, bigrams "graph charting"/"chart component"→frontend,
+    bigrams "activity feed"/"notification feed"→notifications. 23 new test cases.
+    Now 2441/2441 routing tests pass.
 """
 
 import sys
@@ -4332,6 +4352,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("html to pdf", "developer"),                    # bigram "html pdf"→developer unchanged
     ("pdf storage", "file"),                         # bare "pdf"→file unchanged (PDF file storage)
     ("pdf upload", "file"),                          # bare "pdf"→file unchanged (PDF file hosting)
+    # Probe 124 — language detection / promo code / outreach / password reset / chart component / activity feed
+    ("language detection library", "localization"),  # bigram "language detection"→localization (langdetect, lingua)
+    ("language detection api", "localization"),      # bigram "language detection"→localization
+    ("language identification tool", "localization"),# bigram "language identification"→localization
+    ("promo code api", "payments"),                  # bigram "promo code"→payments (overrides "code generator"→ai-dev)
+    ("promo code generator", "payments"),            # bigram "promo code"→payments (fires before "code generator" bigram)
+    ("coupon code system", "payments"),              # bigram "coupon code"→payments
+    ("discount code api", "payments"),              # bigram "discount code"→payments
+    ("outreach tool", "crm"),                       # bare "outreach"→crm (Apollo, Reply.io, Lemlist)
+    ("cold outreach platform", "crm"),              # bare "outreach"→crm
+    ("sales outreach", "crm"),                      # bare "sales"→crm (outreach is a sales activity)
+    ("password reset flow", "authentication"),      # bigram "password reset"→authentication (overrides "password"→security)
+    ("password reset api", "authentication"),       # bigram "password reset"→authentication
+    ("password recovery email", "authentication"), # bigram "password recovery"→authentication
+    ("graph charting library", "frontend"),         # bigram "graph charting"→frontend (overrides "graph"→database)
+    ("chart component react", "frontend"),          # bigram "chart component"→frontend (overrides "chart"→analytics)
+    ("chart component vue", "frontend"),            # bigram "chart component"→frontend
+    ("activity feed component", "notifications"),   # bigram "activity feed"→notifications (overrides "feed"→newsletters)
+    ("activity feed api", "notifications"),         # bigram "activity feed"→notifications
+    ("notification feed react", "notifications"),   # bigram "notification feed"→notifications
+    # Regressions: existing routing unchanged
+    ("password hashing library", "security"),       # bare "password"→security unchanged (bcrypt, argon2)
+    ("password manager open source", "security"),   # bare "password"→security unchanged
+    ("news feed syndication", "newsletters"),       # bare "feed"→newsletters unchanged (RSS/Atom feeds)
+    ("chart js alternative", "analytics"),          # bare "chart"→analytics unchanged (Chart.js tool queries)
 ]
 
 

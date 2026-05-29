@@ -2842,6 +2842,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "jaeger": "monitoring",          # Jaeger — distributed tracing (OTel-compatible)
     "zipkin": "monitoring",          # Zipkin — distributed tracing system
     # Data visualization / charting
+    # Bigrams route UI charting components to Frontend (Recharts, Chart.js, ApexCharts)
+    # NOTE: "chart library" bigram is DEAD CODE — "library" is in _FTS_STOP_WORDS.
+    "chart component": "frontend", # bigram — "chart component react", "chart component vue" → Frontend Frameworks
+    "graph charting": "frontend",  # bigram — "graph charting library" overrides "graph"→database → Frontend
     "charting": "analytics",    # "charting library" → Analytics & Metrics
     "charts": "analytics",      # "charts library", "charts component"
     "chart": "analytics",       # "chart.js", "chart library"
@@ -3377,6 +3381,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "uptimerobot": "monitoring",    # UptimeRobot — uptime monitoring with alerts
     "betterstack": "monitoring",    # Better Stack (ex-Logtail + Uptime) — monitoring platform
     # Password / cryptography — security libraries ("bcrypt alternative", "password hashing")
+    # Bigram overrides bare "password"→security for auth-flow queries
+    "password reset": "authentication",   # bigram — "password reset flow", "password reset api" → Authentication (Clerk, Auth0, Ory)
+    "password recovery": "authentication", # bigram — "password recovery email", "forgot password flow" → Authentication
     "password": "security",         # "password hashing", "password manager" → Security Tools
     "hashing": "security",          # "password hashing library", "hashing algorithm" → Security
     "bcrypt": "security",           # bcrypt — adaptive password hashing function
@@ -7242,7 +7249,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mux": "media",                # Mux — video infrastructure API (upload, transcode, stream); "mux alternative" → Media
     # File management — missing providers
     "uploadcare": "file",          # Uploadcare — file upload + CDN + transformations; "uploadcare alternative" → File
-    # Localization — missing platforms
+    # Localization — missing platforms and dead zone queries
+    "language detection": "localization",  # bigram — "language detection library", "language detection api" → Localization (langdetect, lingua)
+    "language identification": "localization",  # bigram — "language identification api" → Localization
     "tolgee": "localization",      # Tolgee — open-source i18n with in-context translation; "tolgee alternative" → Localization
     "localazy": "localization",    # Localazy — translation management platform; "localazy alternative" → Localization
     # SMS/telephony APIs — complement to twilio/vonage
@@ -7847,6 +7856,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "noticeable": "feedback",       # Noticeable — in-app product announcements; "noticeable alternative" → Feedback & Reviews
     "changefeed": "feedback",       # ChangeFeed — in-app changelog widget; "changefeed alternative" → Feedback & Reviews
     "in-app": "notifications",      # "in-app notification", "in-app announcement", "in-app messaging" → Notifications
+    # Activity feed bigrams override "feed"→newsletters for in-app stream / social feed queries
+    "activity feed": "notifications",  # bigram — "activity feed component", "activity feed api" → Notifications (Stream, Knock, Novu)
+    "notification feed": "notifications",  # bigram — "notification feed react", "notification feed api" → Notifications
     "product-update": "feedback",   # "product update widget", "product update feed" → Feedback & Reviews
     # Product adoption / user onboarding platforms (complement to appcues/userpilot/driverjs added May 2026)
     "chameleon": "feedback",        # Chameleon.io — product adoption + in-app tours; "chameleon alternative" → Feedback & Reviews
@@ -7920,6 +7932,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — "data modeling" queries (schema tools: dbdiagram.io, DrawSQL, ERD tools)
     "data modeling": "database",          # bigram — "data modeling tool", "data modeling database" → Database
     # CRM & Sales — lead and pipeline management queries missing from CRM routing
+    "outreach": "crm",              # bare — "outreach tool", "outreach platform", "cold outreach" → CRM & Sales (Apollo, Reply.io, Lemlist)
     "lead": "crm",                  # single token — "lead scoring", "lead management", "lead capture" → CRM & Sales
     "pipeline management": "crm",   # spaced bigram — "pipeline management tool" beats "pipeline"→background
     "pipeline-management": "crm",   # hyphenated — "pipeline-management crm" → CRM & Sales
@@ -8914,6 +8927,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tiered pricing": "payments",            # bigram — "tiered pricing model", "tiered pricing saas" → Payments
     "freemium": "payments",                  # bare — "freemium model", "freemium pricing" → Payments
     "consumption billing": "payments",       # bigram — "consumption billing", "consumption based billing" → Payments
+    # Bigram fires before "code generator"→ai-dev for discount/voucher queries
+    "promo code": "payments",               # bigram — "promo code api", "promo code generator" → Payments (Stripe coupons, Lemon Squeezy)
+    "coupon code": "payments",              # bigram — "coupon code system", "coupon code generator" → Payments
+    "discount code": "payments",           # bigram — "discount code api", "discount code management" → Payments
     # Payments — recurring billing, cryptocurrency, crypto payment gateways.
     # "recurring" bare is unmapped → raw_first. Bigram "recurring payments" overrides.
     # "crypto" bare → security (node:crypto library), but "crypto payments" bigram → payments.
