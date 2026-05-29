@@ -4140,6 +4140,30 @@ TEST_CASES: list[tuple[str, str]] = [
     ("node crypto module", "security"),                # bare "crypto"→security unchanged
     ("freemium model saas", "payments"),               # bare "freemium"→payments still fires (no regression)
     ("subscription management stripe", "payments"),   # bare "subscription"→payments still fires (no regression)
+
+    # ── probe 117: SRE incident-metrics / APDEX / error-budget / golden-signals dead zones ──
+    #
+    # Dead zones fixed: "mttr"/"mttd"/"mttf"/"mtbf" all fired raw_first (no mapping);
+    # "apdex" fired raw_first; "error budget" fired raw_first "error"→monitoring but
+    # "budget"→invoicing fires later — needs bigram override; "golden signals" fired
+    # raw_first "golden"→payments (gold-coloured payment icon confusion) and
+    # "signals"→notifications (notification signal confusion).
+    ("mttr dashboard prometheus", "monitoring"),      # bare "mttr"→monitoring
+    ("mttd incident tracking", "monitoring"),         # bare "mttd"→monitoring
+    ("mttf reliability analysis", "monitoring"),      # bare "mttf"→monitoring
+    ("mtbf calculation tool", "monitoring"),          # bare "mtbf"→monitoring
+    ("apdex score new relic", "monitoring"),          # bare "apdex"→monitoring
+    ("apdex monitoring dashboard", "monitoring"),     # bare "apdex"→monitoring
+    ("error budget tracking slo", "monitoring"),      # bigram "error budget"→monitoring
+    ("error budget alert grafana", "monitoring"),     # bigram "error budget"→monitoring
+    ("slo error budget tool", "monitoring"),          # bigram "error budget" fires mid-query
+    ("golden signals monitoring", "monitoring"),      # bigram "golden signals"→monitoring
+    ("four golden signals sre", "monitoring"),        # bigram "golden signals"→monitoring
+    # Regressions: existing monitoring terms unchanged
+    ("slo tracking open source", "monitoring"),       # bare "slo"→monitoring unchanged
+    ("sli definition tool", "monitoring"),            # bare "sli"→monitoring unchanged
+    ("sre platform grafana", "monitoring"),           # bare "sre"→monitoring unchanged
+    ("error tracking sentry", "monitoring"),          # bare "error"→monitoring unchanged
 ]
 
 

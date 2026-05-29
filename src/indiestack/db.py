@@ -5324,6 +5324,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "blue-green": "devops",         # hyphenated — "blue-green deployment", "blue-green switch" → DevOps
     # Monitoring — SRE (Site Reliability Engineering) tooling queries (Prometheus/Grafana/PagerDuty workflows)
     "sre": "monitoring",            # SRE — "sre tools", "sre platform", "site reliability engineering" → Monitoring & Uptime
+    # Monitoring — SRE incident & reliability metrics (MTTR/MTTD are key PagerDuty/Grafana dashboard terms)
+    "mttr": "monitoring",           # Mean Time to Recover — "mttr tracking", "mttr dashboard" → Monitoring & Uptime
+    "mttd": "monitoring",           # Mean Time to Detect — "mttd reduction", "mttd metric" → Monitoring & Uptime
+    "mttf": "monitoring",           # Mean Time to Failure — "mttf calculation", "mttf analysis" → Monitoring & Uptime
+    "mtbf": "monitoring",           # Mean Time Between Failures — "mtbf analysis", "mtbf reliability tool" → Monitoring & Uptime
+    # Monitoring — APDEX / error-budget / golden-signals SRE vocabulary (Google SRE book terminology)
+    "apdex": "monitoring",          # APDEX score — application performance satisfaction metric (New Relic, Datadog APM)
+    "error budget": "monitoring",   # bigram — "error budget tracking", "error budget alert", "slo error budget" → Monitoring
+    "golden signals": "monitoring", # bigram — "four golden signals", "golden signals monitoring" → Monitoring
     # Message Queue — event bus libraries (mitt, EventEmitter; distinct from "event"→message already mapped)
     "eventbus": "message",          # event bus — "eventbus library", "in-process eventbus", "eventbus pattern" → Message Queue
     "event-bus": "message",         # hyphenated — "event-bus alternative", "event-bus typescript" → Message Queue
