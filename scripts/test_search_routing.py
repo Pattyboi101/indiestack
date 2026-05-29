@@ -4223,6 +4223,25 @@ TEST_CASES: list[tuple[str, str]] = [
     ("booking availability api", "scheduling"),       # bare "booking"→scheduling fires first
     ("sre monitoring platform", "monitoring"),        # bare "sre"→monitoring unchanged
     ("chaos engineering testing", "testing"),         # bare "chaos"→testing unchanged
+    # Probe pattern 119 — AI fine-tuning acronyms / document-processing / contract-analysis dead zones
+    ("vlm inference", "ai"),                          # bare "vlm"→ai (Vision Language Model)
+    ("vlm model comparison", "ai"),                   # bare "vlm"→ai at i=0
+    ("slm deployment edge", "ai"),                    # bare "slm"→ai (Small Language Model)
+    ("slm vs llm comparison", "ai"),                  # bare "slm"→ai at i=0
+    ("sft training dataset", "ai"),                   # bare "sft"→ai (Supervised Fine-Tuning)
+    ("sft trainer python", "ai"),                     # bare "sft"→ai at i=0
+    ("grpo training reinforcement", "ai"),            # bare "grpo"→ai (Group Relative Policy Optimization)
+    ("orpo fine-tuning", "ai"),                       # bare "orpo"→ai (Odds Ratio Preference Optimization)
+    ("kto alignment", "ai"),                          # bare "kto"→ai (Kahneman-Tversky Optimization)
+    ("document extraction api", "ai"),                # bigram "document extraction"→ai (overrides "document"→database)
+    ("document extraction python", "ai"),             # bigram at i=0
+    ("document processing pipeline", "ai"),           # bigram "document processing"→ai
+    ("document processing llamaparse", "ai"),         # bigram at i=0
+    ("contract analysis ai", "ai"),                   # bigram "contract analysis"→ai (overrides "contract"→testing)
+    ("contract review automation", "ai"),             # bigram "contract review"→ai
+    # Regressions guarded
+    ("contract testing pact", "testing"),             # bare "contract"→testing still fires for API contract queries
+    ("document database mongodb", "database"),        # bare "document"→database still fires for DB queries
 ]
 
 

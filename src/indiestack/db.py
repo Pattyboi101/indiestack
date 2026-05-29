@@ -5799,6 +5799,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "trl": "ai",                    # HuggingFace TRL — RLHF/DPO fine-tuning library; "trl sft" → AI & Automation
     "rlhf": "ai",                   # RLHF — Reinforcement Learning from Human Feedback; "rlhf training" → AI & Automation
     "dpo": "ai",                    # DPO — Direct Preference Optimization; "dpo training", "dpo fine-tune" → AI & Automation
+    "grpo": "ai",                   # GRPO — Group Relative Policy Optimization (DeepSeek-R1 training); "grpo training" → AI & Automation
+    "orpo": "ai",                   # ORPO — Odds Ratio Preference Optimization; "orpo fine-tuning" → AI & Automation
+    "kto": "ai",                    # KTO — Kahneman-Tversky Optimization; "kto alignment" → AI & Automation
+    "sft": "ai",                    # SFT — Supervised Fine-Tuning; "sft training", "sft dataset" → AI & Automation
+    "vlm": "ai",                    # VLM — Vision Language Model (GPT-4V, LLaVA, InternVL); "vlm inference" → AI & Automation
+    "slm": "ai",                    # SLM — Small Language Model (Phi-3, TinyLlama, Qwen); "slm deployment" → AI & Automation
     "accelerate": "ai",             # HuggingFace Accelerate — distributed multi-GPU training; "accelerate launch" → AI & Automation
     # Games — major named game engines missing from synonyms
     "unity": "games",               # Unity — most-searched game engine; "unity alternative", "unity 6" → Games & Entertainment
@@ -9071,6 +9077,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "document parsing": "ai",           # bigram — "document parsing api", "document parsing python" → AI & Automation
     "pdf parsing": "ai",                # bigram — "pdf parsing python", "pdf parsing api" → AI & Automation
     "document understanding": "ai",     # bigram — "document understanding model", "document understanding azure" → AI & Automation
+    "document extraction": "ai",        # bigram — "document extraction api", "document extraction python" → AI & Automation (LlamaParse, unstructured.io)
+    "document processing": "ai",        # bigram — "document processing pipeline", "document processing python" → AI & Automation
+    "contract analysis": "ai",          # bigram — "contract analysis ai", "contract analysis tool" → AI (overrides "contract"→testing for legal-AI context)
+    "contract review": "ai",            # bigram — "contract review ai", "contract review automation" → AI & Automation
     # ── Probe pattern 77 (May 2026): "image to text" / "pdf to text" stop-word-stripped bigrams ──
     #
     # "to" is in _FTS_STOP_WORDS — "image to text" reduces to bigram "image text" (not "image to text").
