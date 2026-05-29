@@ -4187,6 +4187,42 @@ TEST_CASES: list[tuple[str, str]] = [
     ("semantic release config", "devops"),             # bigram "semantic release"→devops unchanged
     ("headwayapp alternative", "feedback"),            # bare "headwayapp"→feedback unchanged
     ("beamer alternative", "feedback"),                # bare "beamer"→feedback unchanged
+
+    # ── probe 118: high-availability / reliability / failover SRE dead zones ──
+    #
+    # Dead zones fixed:
+    # "high availability" → "availability"→scheduling collision (calendar availability fires wrong);
+    #   bigram "high availability"→devops added.
+    # "ha cluster" → "ha" unmapped + "cluster"→caching (redis cluster collision) misfires;
+    #   bigram "ha cluster"→devops added.
+    # "reliability" → completely unmapped; SRE reliability tools → Monitoring & Uptime;
+    #   bare "reliability"→monitoring added.
+    # "reliability testing" → chaos engineering / fault injection → Testing Tools;
+    #   bigram "reliability testing"→testing overrides bare "reliability"→monitoring.
+    # "site reliability" → pairs with existing "sre"→monitoring for multi-word SRE queries;
+    #   bigram "site reliability"→monitoring added.
+    # "failover" → completely unmapped; failover tooling (Patroni, Keepalived) → DevOps;
+    #   bare "failover"→devops added.
+    ("high availability setup", "devops"),            # bigram "high availability"→devops (overrides "availability"→scheduling)
+    ("high availability cluster kubernetes", "devops"), # bigram fires at pos 0-1
+    ("high availability postgresql patroni", "devops"), # HA Postgres cluster
+    ("ha cluster pacemaker", "devops"),               # bigram "ha cluster"→devops
+    ("ha cluster corosync", "devops"),                # bigram "ha cluster"→devops
+    ("reliability engineering tool", "monitoring"),   # bare "reliability"→monitoring
+    ("service reliability metric", "monitoring"),     # bare "reliability"→monitoring
+    ("reliability dashboard grafana", "monitoring"),  # bare "reliability"→monitoring
+    ("reliability testing chaos", "testing"),         # bigram "reliability testing"→testing (overrides bare)
+    ("reliability testing gremlin", "testing"),       # bigram "reliability testing"→testing
+    ("site reliability engineering", "monitoring"),   # bigram "site reliability"→monitoring
+    ("site reliability tooling", "monitoring"),       # bigram "site reliability"→monitoring
+    ("failover setup postgres", "devops"),            # bare "failover"→devops
+    ("automatic failover database", "devops"),        # bare "failover"→devops
+    ("failover cluster management", "devops"),        # bare "failover"→devops
+    # Regressions: scheduling availability and testing stability unchanged
+    ("doctor availability calendar", "scheduling"),   # bare "availability"→scheduling unchanged (calendar fires first)
+    ("booking availability api", "scheduling"),       # bare "booking"→scheduling fires first
+    ("sre monitoring platform", "monitoring"),        # bare "sre"→monitoring unchanged
+    ("chaos engineering testing", "testing"),         # bare "chaos"→testing unchanged
 ]
 
 

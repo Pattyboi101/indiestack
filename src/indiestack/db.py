@@ -9837,6 +9837,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "announcekit": "feedback",          # bare — AnnounceKit changelog widget; "announcekit alternative" → Feedback & Reviews
     "headway": "feedback",              # bare — Headway (headwayapp.co) in-app changelog; "headway alternative" → Feedback & Reviews
     "launchnotes": "feedback",          # bare — LaunchNotes product-updates platform; "launchnotes alternative" → Feedback & Reviews
+    # DevOps / Monitoring — SRE reliability / high-availability / failover dead zones (probe 118)
+    # "high availability" fires "availability"→scheduling (Calendly collision) without a bigram override.
+    # "ha cluster" fires "cluster"→caching (Redis collision) without a bigram override.
+    # "reliability" bare token unambiguously signals SRE/observability context.
+    # "failover" is DevOps infra (Patroni, Keepalived, VRRP) — completely unmapped.
+    "high availability": "devops",       # bigram — "high availability setup/cluster" → DevOps (overrides "availability"→scheduling)
+    "ha cluster": "devops",              # bigram — "ha cluster kubernetes/pacemaker" → DevOps (overrides "cluster"→caching)
+    "reliability": "monitoring",         # bare — "reliability engineering", "service reliability metric" → Monitoring & Uptime
+    "reliability testing": "testing",    # bigram — chaos/fault-injection testing → Testing Tools (overrides bare "reliability"→monitoring)
+    "site reliability": "monitoring",    # bigram — "site reliability engineering" → Monitoring & Uptime (complements "sre"→monitoring)
+    "failover": "devops",               # bare — "failover setup postgres", "automatic failover" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {
