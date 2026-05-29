@@ -4242,6 +4242,27 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions guarded
     ("contract testing pact", "testing"),             # bare "contract"→testing still fires for API contract queries
     ("document database mongodb", "database"),        # bare "document"→database still fires for DB queries
+    # ── probe 121: BaaS abbreviation / visual-programming dead zones ─────────────
+    #
+    # Dead zones fixed:
+    # "baas" → raw_first (BaaS abbreviation unmapped; Firebase/Supabase/Appwrite/PocketBase
+    #   are Backend-as-a-Service platforms → Database category). bare "baas"→database added.
+    # "visual programming" → testing via bare "visual"→testing (visual regression testing
+    #   collision; visual programming IDEs like Enso/Natto.dev → Developer Tools);
+    #   bigram "visual programming"→developer added (fires before bare "visual"→testing).
+    # NOTE: "backend as a service" spaced form is unfixable — "service" is in
+    #   _FTS_STOP_WORDS, stripping to bare "backend" which is too ambiguous. "baas"
+    #   abbreviation and specific tool names (firebase, supabase) handle these queries.
+    #
+    ("baas tool open source", "database"),            # bare "baas"→database
+    ("baas alternative firebase", "database"),        # bare "baas"→database
+    ("visual programming ide", "developer"),          # bigram "visual programming"→developer (overrides "visual"→testing)
+    ("visual programming language", "developer"),     # bigram "visual programming"→developer
+    # Regressions: existing routing unchanged
+    ("firebase alternative", "database"),             # "firebase"→database unchanged
+    ("supabase alternative", "database"),             # "supabase"→database unchanged
+    ("visual regression test", "testing"),            # bare "visual"→testing unchanged
+    ("visual testing tool", "testing"),               # bare "visual"→testing unchanged
 ]
 
 

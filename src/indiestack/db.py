@@ -3056,6 +3056,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pulumi": "devops",         # Pulumi — IaC with real programming languages
     "ansible": "devops",        # Ansible — configuration management
     # Database — BaaS / cloud tools in TECH_KEYWORDS but missing category synonym boost
+    "baas": "database",         # BaaS abbreviation — Firebase, Supabase, Appwrite, PocketBase
+    # NOTE: "backend as a service" (spaced form) is unfixable — "service" is in _FTS_STOP_WORDS,
+    # stripping to bare "backend" which is too ambiguous to map safely ("backend framework" would misfire).
     "turso": "database",        # Turso — distributed libSQL (serverless SQLite)
     "convex": "database",       # Convex — real-time BaaS with reactive queries
     "pocketbase": "database",   # PocketBase — SQLite-based open-source BaaS
@@ -9732,6 +9735,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "visual builder": "frontend",           # bigram — "visual builder react", "visual ui builder", "visual app builder" → Frontend Frameworks
     #   NOTE: "visual app builder" strip-drops "app" (stop word) → meaningful=["visual","builder"] → this bigram fires.
     "visual database": "database",          # bigram — "visual database browser", "visual database tool" → Database (TablePlus, DBngin, Beekeeper)
+    "visual programming": "developer",      # bigram — "visual programming language", "visual programming ide" → Developer Tools (Enso, Natto.dev)
     #
     # Custom elements (Web Components API) — "webcomponent"/"webcomponents" already mapped;
     # the spaced "custom elements" form was raw_first ("custom" unmapped, not a stop word).
