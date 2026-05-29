@@ -4263,6 +4263,33 @@ TEST_CASES: list[tuple[str, str]] = [
     ("supabase alternative", "database"),             # "supabase"→database unchanged
     ("visual regression test", "testing"),            # bare "visual"→testing unchanged
     ("visual testing tool", "testing"),               # bare "visual"→testing unchanged
+    # ── Probe 122: bot-security / brute-force / sensitive-data / code-signing / pitr ────────────
+    ("bot traffic filtering", "security"),           # bigram "bot traffic"→security
+    ("block bot traffic cloudflare", "security"),    # bigram "bot traffic"→security
+    ("bot mitigation service", "security"),          # bigram "bot mitigation"→security
+    ("bot mitigation datadome", "security"),         # bigram "bot mitigation"→security
+    ("antibot captcha", "security"),                 # bare "antibot"→security
+    ("antibot solution", "security"),                # bare "antibot"→security
+    ("anti-bot protection middleware", "security"),  # bare "anti-bot"→security (hyphenated)
+    ("brute force attack prevention", "security"),   # bigram "brute force"→security
+    ("brute force protection login", "security"),    # bigram "brute force"→security
+    ("brute force detection fail2ban", "security"),  # bare "brute"→security fires at pos 0
+    ("sensitive data masking python", "security"),   # bigram "sensitive data"→security
+    ("sensitive data redaction api", "security"),    # bigram "sensitive data"→security
+    ("code signing sigstore", "security"),           # bigram "code signing"→security
+    ("code signing certificate github", "security"), # bigram "code signing"→security
+    ("pitr postgres backup", "database"),            # bare "pitr"→database
+    ("pitr database recovery", "database"),          # bare "pitr"→database
+    ("point in time recovery postgres", "database"), # bigram "point time"→database (after "in" stripped)
+    ("point in time backup database", "database"),   # bigram "point time"→database
+    # Regressions: existing routing unchanged
+    ("bot detection library", "security"),           # bigram "bot detection"→security unchanged
+    ("bot protection service", "security"),          # bigram "bot protection"→security unchanged
+    ("code review pull request", "devops"),          # "pull request" bigram unchanged
+    ("code quality linting", "testing"),             # bare "quality"→testing unchanged
+    ("code generation ai", "ai dev"),                # bigram "code generation"→ai dev unchanged
+    ("document signing esign", "forms"),             # bigram "document signing"→forms unchanged
+    ("database backup solution", "database"),        # bare "database"→database unchanged
 ]
 
 

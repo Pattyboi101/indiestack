@@ -9862,6 +9862,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     "reliability testing": "testing",    # bigram — chaos/fault-injection testing → Testing Tools (overrides bare "reliability"→monitoring)
     "site reliability": "monitoring",    # bigram — "site reliability engineering" → Monitoring & Uptime (complements "sre"→monitoring)
     "failover": "devops",               # bare — "failover setup postgres", "automatic failover" → DevOps & Infrastructure
+
+    # Security — bot/anti-bot dead zones (DataDome, PerimeterX, HUMAN Security, Kasada, Cloudflare Bot Mgmt).
+    # bare "bot" intentionally NOT added — "discord bot"/"slack bot"/"telegram bot" are raw_first (acceptable).
+    # bigrams "bot detection"→security + "bot protection"→security already exist (probe 63).
+    "bot traffic": "security",          # bigram — "bot traffic filtering", "block bot traffic" → Security
+    "bot mitigation": "security",       # bigram — "bot mitigation service", "bot mitigation cloudflare" → Security
+    "antibot": "security",              # bare — "antibot solution", "antibot captcha" → Security
+    "anti-bot": "security",             # hyphenated — "anti-bot protection", "anti-bot middleware" → Security
+
+    # Security — brute force attack dead zones (fail2ban, Cloudflare rate-limit, account-lockout tools).
+    "brute": "security",                # bare — all "brute force *" queries route to Security via pos-0 token
+    "brute force": "security",          # bigram — explicit form for "brute force attack/protection/detection"
+
+    # Security — sensitive data / code signing dead zones.
+    "sensitive data": "security",       # bigram — "sensitive data masking", "sensitive data redaction" → Security (Presidio, piicatcher)
+    "code signing": "security",         # bigram — "code signing certificate", "code signing sigstore" → Security (Sigstore, cosign, Notary)
+
+    # Database — point-in-time recovery dead zone (Postgres PITR, PlanetScale, LiteFS, Turso).
+    # "point in time recovery" after stop-word strip → ["point","time","recovery"]; bigram at pos 0-1 fires.
+    "pitr": "database",                 # bare — "pitr postgres", "pitr backup" → Database
+    "point time": "database",           # bigram — "point in time recovery/backup" after "in" stripped → Database
 }
 
 _FTS_STOP_WORDS = {
