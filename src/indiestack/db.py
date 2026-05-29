@@ -9858,6 +9858,35 @@ _CAT_SYNONYMS: dict[str, str] = {
     "modal overlay": "frontend",         # bigram — "modal overlay component", "modal overlay css" → Frontend
     "modal form": "frontend",            # bigram — "modal form validation", "modal form react" → Frontend
     "confirmation modal": "frontend",    # bigram — "confirmation modal dialog", "confirmation modal react" → Frontend
+
+    # Payments — revenue recognition (Maxio, Zuora, Chargebee ASC 606 tools).
+    # bare "revenue"→analytics is correct for "revenue analytics/dashboard" queries.
+    # Bigram fires first for the subscription-accounting compound form.
+    "revenue recognition": "payments",   # bigram — "revenue recognition tool", "revenue recognition saas" → Payments
+
+    # Invoicing — sales tax APIs (Anrok, TaxJar, Avalara, Stripe Tax).
+    # bare "sales"→crm fires first without this bigram; "tax"→invoicing is already correct for bare queries.
+    "sales tax": "invoicing",            # bigram — "sales tax api", "sales tax calculation" → Invoicing (overrides "sales"→crm)
+
+    # Frontend — Gantt chart UI components (frappe-gantt, dhtmlxGantt, react-gantt-task).
+    # bare "gantt"→project is correct for "gantt chart" / "project gantt" queries.
+    # NOTE: "gantt library" can NEVER use a bigram — "library" is in _FTS_STOP_WORDS and gets stripped.
+    "gantt component": "frontend",       # bigram — "gantt component react", "gantt component vue" → Frontend
+
+    # Frontend — stepper / step-indicator UI components (MUI Stepper, Chakra Stepper, react-step-wizard).
+    # bare "stepper"→forms covers "form stepper" (multi-step form wizard); this bigram covers component queries.
+    "stepper component": "frontend",     # bigram — "stepper component react", "stepper component accessible" → Frontend
+
+    # Feedback — product onboarding platforms (Appcues, UserPilot, Userflow, Pendo).
+    # bare "onboarding"→frontend is correct for onboarding tour/walkthrough UI library queries.
+    # These bigrams override for SaaS product adoption platform queries.
+    "product onboarding": "feedback",    # bigram — "product onboarding tool", "product onboarding platform" → Feedback
+    "onboarding checklist": "feedback",  # bigram — "onboarding checklist widget", "onboarding checklist tool" → Feedback
+
+    # API Tools — WebSocket client libraries (ws, socket.io-client, SockJS, reconnecting-websocket).
+    # bare "websocket"→message (correct for WebSocket server tools like Soketi, Centrifugo).
+    # Client-side WebSocket libraries are API Tools, not message queues.
+    "websocket client": "api",           # bigram — "websocket client library", "websocket client javascript" → API Tools
 }
 
 _FTS_STOP_WORDS = {

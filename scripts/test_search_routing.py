@@ -4273,6 +4273,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ip lookup service", "maps"),                    # bare "ip"→maps unchanged
     ("modal component shadcn", "frontend"),           # bigram "modal component"→frontend (probe 63, unchanged)
     ("modal window library", "frontend"),             # bigram "modal window"→frontend (probe 63, unchanged)
+    # Probe 121 — revenue recognition / sales tax / gantt component / stepper / onboarding / websocket client
+    # "revenue recognition" → analytics via bare "revenue"→analytics (wrong; ASC 606 billing tools are Payments)
+    # "sales tax api" → crm via bare "sales"→crm (wrong; tax APIs belong in Invoicing)
+    # "gantt component react" → project via bare "gantt"→project (wrong for UI-component queries)
+    # "stepper component" → forms via bare "stepper"→forms (wrong for UI-component queries)
+    # "product onboarding" / "onboarding checklist" → frontend via bare "onboarding"→frontend (wrong; SaaS onboarding platforms)
+    # "websocket client" → message via bare "websocket"→message (wrong; client libs are API Tools)
+    ("revenue recognition tool", "payments"),         # bigram "revenue recognition"→payments (overrides "revenue"→analytics)
+    ("revenue recognition saas", "payments"),         # bigram "revenue recognition"→payments
+    ("revenue recognition api", "payments"),          # bigram "revenue recognition"→payments
+    ("sales tax api", "invoicing"),                   # bigram "sales tax"→invoicing (overrides "sales"→crm)
+    ("sales tax calculation", "invoicing"),           # bigram "sales tax"→invoicing
+    ("sales tax compliance tool", "invoicing"),       # bigram "sales tax"→invoicing at pos 0
+    ("gantt component react", "frontend"),            # bigram "gantt component"→frontend (overrides "gantt"→project)
+    ("gantt component vue", "frontend"),              # bigram "gantt component"→frontend
+    ("stepper component react", "frontend"),          # bigram "stepper component"→frontend (overrides "stepper"→forms)
+    ("stepper component accessible", "frontend"),     # bigram "stepper component"→frontend
+    ("product onboarding tool", "feedback"),          # bigram "product onboarding"→feedback (overrides "onboarding"→frontend)
+    ("product onboarding platform", "feedback"),      # bigram "product onboarding"→feedback
+    ("onboarding checklist widget", "feedback"),      # bigram "onboarding checklist"→feedback (overrides "onboarding"→frontend)
+    ("onboarding checklist tool", "feedback"),        # bigram "onboarding checklist"→feedback
+    ("websocket client library", "api"),              # bigram "websocket client"→api (overrides "websocket"→message)
+    ("websocket client javascript", "api"),           # bigram "websocket client"→api
+    # Regressions: existing routing unchanged
+    ("revenue analytics dashboard", "analytics"),    # bare "revenue"→analytics unchanged (general revenue tracking)
+    ("project gantt view", "project"),               # bare "gantt"→project unchanged (project management)
+    ("gantt chart", "project"),                      # bare "gantt"→project unchanged (project management)
+    ("stepper form wizard", "forms"),                # bare "stepper"→forms unchanged (multi-step form)
+    ("user onboarding software", "feedback"),        # bigram "user onboarding"→feedback unchanged (probe 47)
+    ("websocket server nodejs", "message"),          # bare "websocket"→message unchanged (WebSocket servers)
+    ("sales pipeline crm", "crm"),                  # bare "sales"→crm unchanged (CRM pipeline queries)
 ]
 
 
