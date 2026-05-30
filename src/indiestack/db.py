@@ -721,6 +721,7 @@ CATEGORY_TOKEN_COSTS = {
     "mcp-servers": 50_000,
     "boilerplates": 30_000,
     "maps-location": 25_000,
+    "ai-standards": 40_000,
 }
 
 # Maps common need keywords to category slugs, search terms, and competitors.
@@ -1744,13 +1745,14 @@ async def init_db():
                 pass  # already exists
         await db.commit()
 
-        # Migration: add v3 categories (frontend-frameworks, caching, mcp-servers, boilerplates, maps-location)
+        # Migration: add v3 categories (frontend-frameworks, caching, mcp-servers, boilerplates, maps-location, ai-standards)
         for _cat_name, _cat_slug, _cat_desc, _cat_icon in [
             ("Frontend Frameworks", "frontend-frameworks", "JavaScript frameworks, UI libraries, bundlers, and state management tools", "🖥️"),
             ("Caching", "caching", "In-memory stores, caching layers, and key-value databases for high-performance apps", "⚡"),
             ("MCP Servers", "mcp-servers", "MCP server implementations that give AI agents access to tools, data, and services", "🧩"),
             ("Boilerplates", "boilerplates", "Starter kits, scaffold templates, and opinionated project starters to ship faster", "📦"),
             ("Maps & Location", "maps-location", "Maps, geolocation, geocoding, and location-based APIs", "🗺️"),
+            ("AI Standards & Specs", "ai-standards", "AI evaluation frameworks, benchmarks, safety standards, and alignment tools", "🛡️"),
         ]:
             try:
                 await db.execute(
