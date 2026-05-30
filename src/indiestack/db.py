@@ -5290,6 +5290,15 @@ _CAT_SYNONYMS: dict[str, str] = {
     "syft": "security",             # Syft — open-source SBOM generator (Anchore, 6k★) → Security Tools
     "supply-chain": "security",     # "supply chain security", "software supply chain" → Security Tools
     "supplychain": "security",      # compound form — "supplychain attack", "supplychain hardening" → Security Tools
+    # Software supply chain standards / attestation — fast-growing 2026 compliance segment
+    "slsa": "security",             # SLSA — Supply-chain Levels for Software Artifacts (Google/CNCF) → Security Tools
+    "in-toto": "security",          # in-toto — supply chain integrity framework (Notary Project) → Security Tools
+    "intoto": "security",           # compound form — "intoto attestation", "intoto alternative" → Security Tools
+    "attestation": "security",      # "build attestation", "software attestation", "slsa attestation" → Security Tools
+    "provenance": "security",       # "build provenance", "artifact provenance", "npm provenance" → Security Tools
+    "rekor": "security",            # Rekor — Sigstore's immutable transparency log for artifact signing → Security Tools
+    "spdx": "security",             # SPDX — Linux Foundation open SBOM / license-data standard → Security Tools
+    "cyclonedx": "security",        # CycloneDX — OWASP SBOM/VEX format and tooling ecosystem → Security Tools
     # Security — compliance and privacy categories missing from synonyms
     "consent": "security",          # "consent management platform", "gdpr consent banner" → Security Tools (Cookiebot, Osano, iubenda)
     "hipaa": "security",            # HIPAA — US healthcare privacy law compliance tooling → Security Tools
@@ -9905,6 +9914,16 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Security — sensitive data / code signing dead zones.
     "sensitive data": "security",       # bigram — "sensitive data masking", "sensitive data redaction" → Security (Presidio, piicatcher)
     "code signing": "security",         # bigram — "code signing certificate", "code signing sigstore" → Security (Sigstore, cosign, Notary)
+    # Security — artifact/container signing bigrams (bare "artifact"→devops and "container"→devops fire first
+    # without these overrides; all are security-tier tools: Cosign, Notary, Rekor, in-toto).
+    "container signing": "security",    # bigram — "container signing cosign", "container signing tool" → Security Tools
+    "image signing": "security",        # bigram — "container image signing" strips to "image signing" → Security Tools
+    "binary signing": "security",       # bigram — "binary signing tool", "binary attestation" → Security Tools
+    "build provenance": "security",     # bigram — "build provenance slsa", "build provenance tool" → Security Tools
+    "artifact signing": "security",     # bigram — "artifact signing cosign", "artifact signing notary" → Security Tools
+    "artifact attestation": "security", # bigram — "artifact attestation cosign" → Security (overrides "artifact"→devops)
+    "artifact provenance": "security",  # bigram — "artifact provenance slsa" → Security (overrides "artifact"→devops)
+    "npm provenance": "security",       # bigram — "npm provenance attestation", "npm provenance tool" → Security Tools
 
     # Database — point-in-time recovery dead zone (Postgres PITR, PlanetScale, LiteFS, Turso).
     # "point in time recovery" after stop-word strip → ["point","time","recovery"]; bigram at pos 0-1 fires.

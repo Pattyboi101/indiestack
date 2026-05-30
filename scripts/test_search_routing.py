@@ -4413,6 +4413,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("inbox notification component", "notifications"), # bare "inbox"→notifications unchanged (notification inbox)
     ("self hosted alternative", "devops"),             # "self hosted" bigram unchanged
     ("screenshot api playwright", "testing"),          # bare "screenshot"→testing unchanged
+    # Probe 126 — supply-chain security dead zones: SLSA / in-toto / attestation / provenance / SBOM formats
+    # "slsa", "in-toto", "intoto", "attestation", "provenance", "rekor", "spdx", "cyclonedx" all fired
+    # raw_first. Artifact/container signing bigrams mis-routed to devops via "artifact"/"container"→devops.
+    ("slsa framework", "security"),                   # bare "slsa"→security (SLSA supply-chain levels)
+    ("slsa level 2 certification", "security"),       # bare "slsa"→security at position 0
+    ("slsa provenance attestation", "security"),      # bare "slsa"→security fires before "provenance"
+    ("in-toto attestation", "security"),              # bare "in-toto"→security (hyphenated single token)
+    ("intoto supply chain", "security"),              # bare "intoto"→security (compound form)
+    ("build attestation slsa", "security"),           # bare "attestation"→security
+    ("software attestation tool", "security"),        # "software" stripped → "attestation"→security
+    ("artifact attestation cosign", "security"),      # bigram "artifact attestation"→security (overrides "artifact"→devops)
+    ("build provenance slsa", "security"),            # bigram "build provenance"→security (overrides "build"→devops)
+    ("artifact provenance", "security"),              # bigram "artifact provenance"→security (overrides "artifact"→devops)
+    ("npm provenance attestation", "security"),       # bigram "npm provenance"→security (overrides "npm"→frontend)
+    ("rekor transparency log", "security"),           # bare "rekor"→security (Sigstore's transparency log)
+    ("rekor sigstore", "security"),                   # bare "rekor"→security at position 0
+    ("cyclonedx sbom", "security"),                   # bare "cyclonedx"→security (fires before "sbom")
+    ("cyclonedx generator", "security"),              # bare "cyclonedx"→security
+    ("spdx license scanner", "security"),             # bare "spdx"→security (fires before "license")
+    ("spdx sbom format", "security"),                 # bare "spdx"→security at position 0
+    ("container signing cosign", "security"),         # bigram "container signing"→security
+    ("container image signing", "security"),          # bigram "image signing"→security fires at pos 1-2
+    ("binary signing tool", "security"),              # bigram "binary signing"→security
+    ("artifact signing notary", "security"),          # bigram "artifact signing"→security
+    # Regressions: container/build/artifact queries unaffected without signing qualifier
+    ("container scan", "devops"),                     # PRE: "container"→devops unchanged
+    ("container registry", "devops"),                 # PRE: "container"→devops for registry queries
+    ("build pipeline nodejs", "background"),          # PRE: "pipeline"→background unchanged
+    ("artifact registry harbor", "devops"),           # PRE: "artifact"→devops unchanged for registry queries
+    ("sbom generator syft", "security"),              # PRE: "sbom"→security still fires correctly
+    ("supply chain attack", "security"),              # PRE: "supply chain"→security bigram unchanged
 ]
 
 
