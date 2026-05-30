@@ -4342,6 +4342,21 @@ TEST_CASES: list[tuple[str, str]] = [
     ("sanity check tool", "cms"),                     # bare "sanity"→cms fires before "check"
     ("consumption billing api", "payments"),          # PRE:"consumption billing"→payments unchanged
     ("usage based pricing tool", "payments"),         # PRE:"usage based"→payments unchanged
+
+    # probe 123 — headless table / virtualized list dead zones
+    ("headless table react", "frontend"),             # bigram "headless table"→frontend (overrides "headless"→cms)
+    ("headless table component", "frontend"),         # bigram "headless table"→frontend
+    ("headless table library", "frontend"),           # bigram "headless table"→frontend
+    ("headless datagrid react", "frontend"),          # bigram "headless datagrid"→frontend (overrides "headless"→cms)
+    ("headless datagrid component", "frontend"),      # bigram "headless datagrid"→frontend
+    ("virtualized list react", "frontend"),           # bare "virtualized"→frontend
+    ("virtualized table component", "frontend"),      # bare "virtualized"→frontend at pos 0
+    ("virtualised list javascript", "frontend"),      # British spelling bare "virtualised"→frontend
+    # Regressions: headless CMS and headless browser should be unaffected
+    ("headless cms nextjs", "cms"),                   # PRE: bare "headless"→cms unchanged for CMS queries
+    ("headless browser puppeteer", "testing"),        # PRE: "headless browser"→testing bigram unchanged
+    ("headless automation server", "testing"),        # PRE: "headless automation"→testing bigram unchanged
+    ("headless ui component", "frontend"),            # PRE: "headless ui"→frontend bigram unchanged
 ]
 
 

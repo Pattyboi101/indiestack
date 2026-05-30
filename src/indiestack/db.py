@@ -9931,6 +9931,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "consumption": "payments",           # bare — "consumption based pricing", "consumption pricing model" → Payments
     "consumption based": "payments",     # bigram — "consumption based pricing", "consumption based billing" → Payments
     "payg": "payments",                  # bare — "payg billing", "payg pricing", "payg model" → Payments
+
+    # Frontend — headless table / virtualized-list dead zones (probe 123).
+    # "headless table react" and "headless datagrid" mis-route to CMS via bare "headless"→cms.
+    # Headless table/grid components (TanStack Table, React Table, AG Grid headless) are
+    # Frontend Frameworks. "datagrid" alone already maps→frontend; "headless datagrid" needs
+    # a pre-pass bigram to fire before bare "headless"→cms.
+    "headless table": "frontend",        # bigram — "headless table react", "headless table component" → Frontend
+    "headless datagrid": "frontend",     # bigram — "headless datagrid component", "headless datagrid react" → Frontend
+    # "virtualized list react" fires raw_first — bare "virtualized" unmapped; react-window,
+    # react-virtualized, TanStack Virtual all belong in Frontend Frameworks.
+    # NOTE: "virtual"→frontend already maps — "virtualized" is a separate longer token form.
+    "virtualized": "frontend",           # bare — "virtualized list react", "virtualized table" → Frontend
+    "virtualised": "frontend",           # British spelling — "virtualised list component" → Frontend
 }
 
 _FTS_STOP_WORDS = {
