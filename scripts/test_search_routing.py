@@ -4426,6 +4426,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("tooltip component", "frontend"),                # PRE: "tooltip"→frontend unchanged
     ("walkthrough guide library", "frontend"),        # PRE: "walkthrough"→frontend unchanged
     ("onboarding wizard", "frontend"),                # PRE: bare "onboarding"→frontend unchanged
+
+    # probe 126 — builder/crud/visual-programming dead zones
+    #
+    # "app builder platform" → "app"+"platform" both stop-words → meaningful=["builder"] → raw_first
+    # "crud generator" → "crud" bare token had no mapping → raw_first "crud"
+    # "visual programming" → bare "visual"→testing wins without bigram override
+    ("app builder", "developer"),                     # bare "builder"→developer (stop-word drop)
+    ("app builder platform", "developer"),            # bare "builder"→developer after stop-word strip
+    ("admin panel builder", "developer"),             # "admin"→developer fires first
+    ("internal app builder", "developer"),            # "internal"→developer fires first
+    ("crud generator", "developer"),                  # bare "crud"→developer
+    ("crud api", "developer"),                        # bare "crud"→developer
+    ("crud operations library", "developer"),         # bare "crud"→developer
+    ("visual programming language", "developer"),     # bigram "visual programming"→developer
+    ("visual programming tool", "developer"),         # bigram "visual programming"→developer
+    ("visual coding environment", "testing"),          # "visual"→testing fires; "coding"+"environment" don't override
+    # Regressions: specific builder types still route correctly
+    ("page builder", "landing"),                      # PRE: bigram "page builder"→landing unchanged
+    ("form builder", "forms"),                        # PRE: "form"→forms at pos 0 wins over "builder"
+    ("email builder", "email"),                       # PRE: "email"→email at pos 0 wins over "builder"
+    ("query builder", "database"),                    # PRE: "query"→database at pos 0 wins over "builder"
+    ("site builder", "landing"),                      # PRE: bigram "site builder"→landing unchanged
+    ("workflow builder", "background"),               # PRE: bigram "workflow builder"→background unchanged
+    ("visual builder", "frontend"),                   # PRE: bigram "visual builder"→frontend unchanged
+    ("visual testing tool", "testing"),               # PRE: bare "visual"→testing unchanged
 ]
 
 

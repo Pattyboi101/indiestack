@@ -4473,6 +4473,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "nocode": "developer",          # "nocode builder", "nocode app" → Developer Tools
     "low code": "developer",        # bigram — "low code tool", "low code workflow" beats raw_first → Developer Tools
     "no code": "developer",         # bigram — "no code app", "no code builder" beats raw_first → Developer Tools
+    # NOTE: "builder" bare token fires when "app"/"platform" (stop-words) drop out:
+    # "app builder platform" → meaningful=["builder"] → raw_first. Adding bare mapping:
+    "builder": "developer",         # "app builder", "admin panel builder", generic CRUD builders → Developer Tools
+    # NOTE: "crud" is a common developer query — CRUD generators, REST CRUD scaffolding → Developer Tools
+    "crud": "developer",            # "crud generator", "crud api", "crud operations" → Developer Tools
+    # NOTE: "visual programming" is a specific compound; "visual"→testing fires without bigram override:
+    "visual programming": "developer",  # bigram — Blockly, Node-RED, Scratch visual coding → Developer Tools
     "e-commerce": "developer",      # hyphenated — "e-commerce platform" beats raw_first → Developer Tools (Medusa, Saleor)
     # Payments — in-app purchase (mobile billing via Apple/Google)
     # "in-app purchase" → "in" and "app" are stop words, "purchase" is the meaningful term
