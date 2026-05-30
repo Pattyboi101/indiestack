@@ -212,12 +212,12 @@ def design_tokens() -> str:
             transition: all 0.15s ease;
             min-height: 44px;
         }
-        .btn-primary { background: var(--accent); color: #000; font-weight: 700; }
-        .btn-primary:hover { background: var(--accent); color: #000; filter: brightness(1.1); }
+        .btn-primary { background: var(--accent); color: black; font-weight: 700; }
+        .btn-primary:hover { background: var(--accent); color: black; filter: brightness(1.1); }
         .btn-secondary { background: var(--cream-dark); color: var(--ink); border: 1px solid var(--border); }
         .btn-secondary:hover { background: var(--border); }
-        [data-theme="dark"] .btn-secondary { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #fff; }
-        [data-theme="dark"] .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); color: #fff; }
+        [data-theme="dark"] .btn-secondary { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: white; }
+        [data-theme="dark"] .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); color: white; }
         .btn-slate { background: var(--slate); color: white; }
         .btn-slate:hover { background: var(--slate-dark); color: white; }
         .btn-lg { padding: 16px 32px; font-size: 16px; }
@@ -459,7 +459,7 @@ def design_tokens() -> str:
         .custom-checkbox:checked { background: var(--accent); border-color: var(--accent); }
         .custom-checkbox:checked::after {
             content: ''; position: absolute; left: 5px; top: 2px;
-            width: 6px; height: 10px; border: solid #000; border-width: 0 2px 2px 0; transform: rotate(45deg);
+            width: 6px; height: 10px; border: solid black; border-width: 0 2px 2px 0; transform: rotate(45deg);
         }
         .custom-checkbox:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 4px var(--accent); }
 
@@ -477,12 +477,12 @@ def design_tokens() -> str:
         .verified-badge {
             display: inline-flex; align-items: center; gap: 4px;
             font-size: 12px; font-weight: 700;
-            color: #0a4f5c;
+            color: black;
             background: var(--accent);
             padding: 4px 12px; border-radius: 999px;
             border: 1px solid var(--accent);
         }
-        .verified-badge svg { width: 14px; height: 14px; fill: none; stroke: #0a4f5c; }
+        .verified-badge svg { width: 14px; height: 14px; fill: none; stroke: black; }
         .verified-card { border-color: var(--accent); border-top-color: var(--accent); background: linear-gradient(180deg, rgba(64,232,255,0.06) 0%, var(--card-bg) 40%); }
         .verified-card:hover { box-shadow: var(--shadow-lifted); }
 
@@ -592,10 +592,10 @@ def design_tokens() -> str:
             .mobile-menu a:hover, .mobile-menu button:hover { background: var(--cream-dark); }
             .mobile-menu .btn-primary {
                 margin: 8px 24px; width: auto; text-align: center;
-                border-radius: 999px; color: #000 !important;
+                border-radius: 999px; color: black !important;
             }
             [data-theme="dark"] .mobile-menu .btn-primary {
-                color: #000 !important;
+                color: black !important;
             }
         }
         details > summary::-webkit-details-marker { display: none; }

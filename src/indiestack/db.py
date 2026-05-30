@@ -2771,6 +2771,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "courier": "notifications",      # Courier — multi-channel notification routing
     "fcm": "notifications",          # Firebase Cloud Messaging — Android/web push
     "apns": "notifications",         # Apple Push Notification Service — iOS push
+    # Chat platform SDKs — developers searching for Discord/Slack/Telegram want bot libraries
+    "discord": "developer",          # discord.js, discord.py, discordgo — bot SDK queries
+    "discord.js": "developer",       # compound token form (period not stripped) — discord.js queries
+    "slack": "developer",            # Bolt, slackclient, slack-go — Slack app/bot SDKs
+    "telegram": "developer",         # aiogram, python-telegram-bot, Telethon — bot libraries
+    "aiogram": "developer",          # aiogram — async Python Telegram bot framework
+    "telethon": "developer",         # Telethon — async Telegram client (MTProto) library
     # WebRTC — real-time video/audio, routes to api-tools (Livekit, Partykit, Daily.co)
     "webrtc": "api",                 # WebRTC queries — real-time video/audio API tools
     # Monitoring / observability
@@ -3644,6 +3651,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "floating": "frontend",         # Floating UI — tooltip/popover/dropdown positioning
     "popover": "frontend",          # "popover component", "popover library" → Frontend
     "tooltip": "frontend",          # "tooltip library", "react tooltip" → Frontend
+    "tooltips": "frontend",         # plural form — "tooltips library", "tooltips react" → Frontend
     # Frontend — drag and drop (dnd-kit, react-beautiful-dnd, Pragmatic DnD)
     "drop": "frontend",             # "drop zone", "drop target", "drag and drop" → Frontend
     "gesture": "frontend",          # @use-gesture/react — gesture detection hooks → Frontend
@@ -4025,6 +4033,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tour": "frontend",             # "product tour", "interactive tour library" → Frontend Frameworks
     "onboarding": "frontend",       # "user onboarding flow", "onboarding wizard" → Frontend Frameworks
     "walkthrough": "frontend",      # "walkthrough guide library", "interactive walkthrough" → Frontend Frameworks
+    "walkthroughs": "frontend",     # plural form — "app walkthroughs", "product walkthroughs" → Frontend
+    "joyride": "frontend",          # React Joyride — product tour and guided tours library
     "introjs": "frontend",          # Intro.js — product tour and user onboarding library
     "interactive demo": "frontend", # "interactive demo library", "interactive playground" → Frontend Frameworks
     "interactive walkthrough": "frontend",  # "interactive walkthrough tool" → Frontend Frameworks

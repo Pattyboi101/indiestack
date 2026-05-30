@@ -4393,6 +4393,39 @@ TEST_CASES: list[tuple[str, str]] = [
     ("semantic search api", "search"),                # PRE: "semantic"→search unchanged without "segmentation"
     ("image upload react", "frontend"),               # PRE: bigram "image upload"→frontend unchanged
     ("image optimization cdn", "file"),               # PRE: bigram "image optimization"→file unchanged
+
+    # probe 125 — Discord/Slack/Telegram SDK dead zones + UI library plural forms
+    #
+    # "discord bot" → raw_first "discord" (no synonym; Discord.js/discord.py are developer tools)
+    # "slack bot framework" → raw_first "slack" (Bolt, slackclient → developer tools)
+    # "telegram bot" → raw_first "telegram" (aiogram, python-telegram-bot → developer tools)
+    # "tooltips react" → raw_first "tooltips" (plural "tooltip"→frontend was missing)
+    # "walkthroughs product" → raw_first "walkthroughs" (plural "walkthrough"→frontend missing)
+    # "joyride react" → raw_first "joyride" (React Joyride — product tour library)
+    ("discord bot", "developer"),                     # "discord"→developer (discord.js, discord.py)
+    ("discord library", "developer"),                 # "discord"→developer
+    ("discord bot framework", "developer"),           # "discord"→developer at position 0
+    ("discord.js alternative", "developer"),          # "discord"→developer even with .js suffix
+    ("slack sdk", "developer"),                       # "slack"→developer (Bolt, slackclient)
+    ("slack bot framework", "developer"),             # "slack"→developer
+    ("slack api library", "developer"),               # "slack"→developer at position 0
+    ("telegram bot", "developer"),                    # "telegram"→developer (aiogram, Telethon)
+    ("telegram bot library", "developer"),            # "telegram"→developer
+    ("telegram python", "developer"),                 # "telegram"→developer
+    ("aiogram alternative", "developer"),             # "aiogram"→developer
+    ("telethon alternative", "developer"),            # "telethon"→developer
+    ("tooltips react", "frontend"),                   # "tooltips"→frontend (plural form)
+    ("tooltips library", "frontend"),                 # "tooltips"→frontend
+    ("walkthroughs product", "frontend"),             # "walkthroughs"→frontend (plural form)
+    ("app walkthroughs", "frontend"),                 # "walkthroughs"→frontend
+    ("joyride react", "frontend"),                    # "joyride"→frontend (React Joyride)
+    ("joyride alternative", "frontend"),              # "joyride"→frontend
+    # Regressions: "discord"/"slack" at position 0 wins over later tokens
+    ("discord webhook", "developer"),                 # PRE: "discord"→developer fires first (pos 0)
+    ("slack webhook", "developer"),                   # PRE: "slack"→developer fires first (pos 0)
+    ("tooltip component", "frontend"),                # PRE: "tooltip"→frontend unchanged
+    ("walkthrough guide library", "frontend"),        # PRE: "walkthrough"→frontend unchanged
+    ("onboarding wizard", "frontend"),                # PRE: bare "onboarding"→frontend unchanged
 ]
 
 
