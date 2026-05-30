@@ -4556,6 +4556,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ai safety framework", "ai standards"),          # PRE: bigram "ai safety"→ai standards unchanged
     ("load testing k6", "testing"),                   # PRE: bare "load"→testing unchanged for load testing
     ("load balancer nginx", "devops"),                # PRE: bigram "load balancer"→devops unchanged
+
+    # probe 131 — web-automation / dependency-scanner misfires
+    #
+    # "web automation" → bare "automation"→ai fires (wrong; web automation tools Playwright/Puppeteer → Testing)
+    # "dependency scanner" → bare "dependency"→developer fires (wrong; Snyk/OWASP Dependency-Check → Security)
+    ("web automation tool", "testing"),               # bigram "web automation"→testing overrides "automation"→ai
+    ("web automation python", "testing"),             # bigram "web automation"→testing fires at pos 0-1
+    ("dependency scanner tool", "security"),          # bigram "dependency scanner"→security overrides "dependency"→developer
+    ("dependency check owasp", "security"),           # bigram "dependency check"→security fires at pos 0-1
+    # Regressions: existing automation routing unchanged
+    ("automation platform", "ai"),                    # PRE: bare "automation"→ai unchanged (no "web" prefix)
+    ("workflow automation n8n", "background"),         # PRE: bigram "workflow automation"→background correct for n8n
+    ("dependency injection", "developer"),            # PRE: bare "dependency"→developer unchanged (not scanner)
+    ("dependency management", "developer"),           # PRE: bare "dependency"→developer unchanged
+    ("dependency vulnerability", "security"),         # PRE: bigram "dependency vulnerability"→security unchanged
+    ("browser automation playwright", "testing"),     # PRE: bare "browser"→testing unchanged
 ]
 
 

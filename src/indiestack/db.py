@@ -5698,6 +5698,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Automation — "automation" alone (not prefixed by "workflow") must still route to AI & Automation
     "automation": "ai",             # "automation platform", "automation tool" → AI & Automation
     "automate": "ai",               # "automate workflow", "automate tasks" → AI & Automation
+    # NOTE: "web automation" fires "automation"→ai which is wrong for browser automation queries.
+    # Web automation tools (Playwright, Puppeteer used for scripting, not just testing) belong in Testing.
+    "web automation": "testing",    # bigram — "web automation tool", "web automation python" → Testing Tools
     # Background Jobs — RPA (Robotic Process Automation) queries (n8n, Windmill live in background-jobs)
     "rpa": "background",            # "rpa tool", "rpa open source" → Background Jobs
     # Browser / VS Code extensions — Developer Tools category hosts WXT, Plasmo, CRXJS
@@ -9790,6 +9793,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "message authentication": "security",       # bigram — "message authentication code", "mac authentication" → Security
     # Dependency + package security auditing (Snyk, npm audit, OWASP Dependency-Check)
     "dependency audit": "security",             # bigram — "dependency audit tool", "dependency vulnerability audit" → Security
+    "dependency scanner": "security",           # bigram — "dependency scanner tool", "dependency security scanner" → Security (overrides "dependency"→developer)
+    "dependency check": "security",             # bigram — "dependency check owasp", "dependency check tool" → Security
     "package vulnerability": "security",        # bigram — "package vulnerability scanner", "package security audit" → Security
     # ── Probe 108 (autonomous loop, May 2026): LitElement/BPMN/visual-builder/custom-elements dead zones ──
     #
