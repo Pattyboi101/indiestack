@@ -13366,6 +13366,113 @@ TOOLS = [
         None,
         "saas",
     ),
+    # API Keys & Rate Limiting ---------------------------------------------------
+    (
+        "unkey",
+        "Unkey",
+        "Open-source API authentication and authorization",
+        "Unkey is an open-source platform for managing API keys and rate limiting. "
+        "Create, verify, and revoke API keys with built-in rate limiting, usage analytics, "
+        "and expiration policies. Supports per-key rate limits, namespaces, and metadata. "
+        "The SDK integrates in a single function call — verify a key and enforce limits "
+        "in under 1ms at the edge. Ideal for SaaS products that expose public APIs.",
+        "api-tools",
+        "unkeyed/unkey",
+        9000,
+        "https://unkey.dev",
+        "api-keys,rate-limiting,authentication,authorization,edge,open-source",
+        "npm install @unkey/api",
+        "code",
+    ),
+    # Authorization / Fine-Grained Permissions -----------------------------------
+    (
+        "permify",
+        "Permify",
+        "Open-source authorization service based on Google Zanzibar",
+        "Permify is an open-source authorization service inspired by Google Zanzibar. "
+        "Define fine-grained permissions with a relationship-based access control (ReBAC) "
+        "model. Write permission schemas in a Google Zanzibar-like DSL, then check access "
+        "in real time. Supports multi-tenancy, roles, and relationship chains. "
+        "Drop-in replacement for building authorization from scratch.",
+        "authentication",
+        "Permify/permify",
+        5000,
+        "https://permify.co",
+        "authorization,rbac,rebac,fine-grained-access,zanzibar,permissions,multi-tenant",
+        "docker pull ghcr.io/permify/permify",
+        "code",
+    ),
+    (
+        "oso",
+        "Oso",
+        "Authorization library for your app",
+        "Oso is an authorization library that lets you define, enforce, and test "
+        "authorization policies as code using the Polar policy language. Supports RBAC, "
+        "ABAC, and relationship-based access control. Works as an embedded library "
+        "for Python, Node.js, Ruby, Go, Rust, and Java. Oso Cloud is the managed "
+        "version for multi-tenant authorization at scale.",
+        "authentication",
+        "osohq/oso",
+        3500,
+        "https://www.osohq.com",
+        "authorization,rbac,abac,policy,permissions,access-control",
+        "pip install oso",
+        "code",
+    ),
+    # Payments Orchestration ----------------------------------------------------
+    (
+        "hyperswitch",
+        "Hyperswitch",
+        "Open-source payments switch for maximum conversion",
+        "Hyperswitch is an open-source payments orchestration platform that routes "
+        "transactions across multiple payment processors (Stripe, Braintree, Adyen, etc.) "
+        "to maximize conversion and minimize costs. Connect once to Hyperswitch and switch "
+        "between payment providers without re-integration. Supports 50+ payment processors, "
+        "smart routing, retry logic, and unified analytics. Self-hostable or managed cloud.",
+        "payments",
+        "juspay/hyperswitch",
+        12000,
+        "https://hyperswitch.io",
+        "payments,orchestration,routing,multi-processor,open-source,stripe-alternative",
+        "docker-compose up",
+        "code",
+    ),
+    # UI Component Libraries ----------------------------------------------------
+    (
+        "daisyui",
+        "daisyUI",
+        "The most popular component library for Tailwind CSS",
+        "daisyUI is the most popular Tailwind CSS component library with 56+ component "
+        "classes, 30+ themes, and zero JavaScript. Build clean, consistent UIs by adding "
+        "component class names to HTML elements — no need to write custom CSS or "
+        "configure Tailwind utilities manually. Works with any framework: React, Vue, "
+        "Svelte, Angular, and plain HTML. Over 3M weekly npm downloads.",
+        "frontend-frameworks",
+        "saadeghi/daisyui",
+        36000,
+        "https://daisyui.com",
+        "ui-components,tailwind,css,themes,frontend,react,vue,svelte",
+        "npm install -D daisyui@latest",
+        "code",
+    ),
+    # API Monitoring & Observability --------------------------------------------
+    (
+        "treblle",
+        "Treblle",
+        "API observability for modern engineering teams",
+        "Treblle is a lightweight API observability platform that auto-captures every API "
+        "request and response, providing real-time monitoring, documentation, quality scoring, "
+        "and error tracking. Add one middleware line to instrument your API — supports "
+        "Laravel, Node.js, Django, Spring Boot, .NET, and more. Includes automatic "
+        "OpenAPI documentation generation from live traffic.",
+        "monitoring-uptime",
+        None,
+        0,
+        "https://treblle.com",
+        "api-monitoring,observability,documentation,quality,logging,tracing",
+        "npm install @treblle/express",
+        "saas",
+    ),
 ]
 
 
