@@ -4571,6 +4571,37 @@ TEST_CASES: list[tuple[str, str]] = [
     ("open policy agent", "security"),                # PRE: bigram "policy agent"→security unchanged
     ("image signing cosign", "security"),             # PRE: bigram "image signing"→security unchanged
     ("container signing", "security"),                # PRE: bigram "container signing"→security unchanged
+
+    # probe 134 — traffic routing dead zones + event webhook misfire + packet capture dead zone
+    #
+    # "event webhook" → bare "event"→message fires at pos 0 (wrong; Svix/Hookdeck/Convoy → API Tools)
+    # "traffic management" → bare "management"→project fires (wrong; Istio/Envoy → DevOps)
+    # "traffic routing" → bare "routing"→frontend fires (wrong; Nginx/Istio routing rules → DevOps)
+    # "traffic shaping" → raw_first (both tokens unmapped; HAProxy/tc shaping → DevOps)
+    # "traffic splitting" → bare "splitting"→frontend fires (wrong; Argo Rollouts/Flagger → DevOps)
+    # "traffic analysis" → raw_first (bare "traffic" unmapped; Wireshark/ntopng → Monitoring)
+    # "packet capture" → raw_first (bare "packet" unmapped; Wireshark/tcpdump → Monitoring)
+    ("event webhook svix", "api"),                    # bigram "event webhook"→api overrides "event"→message
+    ("event webhook delivery", "api"),                # bigram "event webhook"→api fires at pos 0-1
+    ("traffic management istio", "devops"),           # bigram "traffic management"→devops overrides "management"→project
+    ("traffic management envoy", "devops"),           # bigram "traffic management"→devops fires at pos 0-1
+    ("traffic routing nginx", "devops"),              # bigram "traffic routing"→devops overrides "routing"→frontend
+    ("traffic routing rules", "devops"),              # bigram "traffic routing"→devops fires at pos 0-1
+    ("traffic shaping tool", "devops"),               # bigram "traffic shaping"→devops (was raw_first)
+    ("traffic shaping haproxy", "devops"),            # bigram "traffic shaping"→devops fires at pos 0-1
+    ("traffic splitting canary", "devops"),           # bigram "traffic splitting"→devops overrides "splitting"→frontend
+    ("traffic splitting argo", "devops"),             # bigram "traffic splitting"→devops fires at pos 0-1
+    ("traffic analysis tool", "monitoring"),          # bigram "traffic analysis"→monitoring (was raw_first)
+    ("network traffic analysis", "monitoring"),       # "network"→monitoring fires first (unchanged)
+    ("packet capture tool", "monitoring"),            # bigram "packet capture"→monitoring + bare "packet"→monitoring
+    ("packet sniffer python", "monitoring"),          # bare "packet"→monitoring (was raw_first)
+    # Regressions: existing event and splitting routing unchanged
+    ("event streaming kafka", "message"),             # PRE: bare "event"→message unchanged (no webhook prefix)
+    ("event driven architecture", "message"),         # PRE: bare "event"→message unchanged
+    ("event analytics posthog", "analytics"),         # PRE: bigram "event analytics"→analytics unchanged
+    ("code splitting webpack", "frontend"),           # PRE: bare "splitting"→frontend unchanged (no traffic prefix)
+    ("routing library react", "frontend"),            # PRE: bare "routing"→frontend unchanged (no traffic prefix)
+    ("load balancer nginx", "devops"),                # PRE: bigram "load balancer"→devops unchanged
 ]
 
 

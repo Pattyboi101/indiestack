@@ -2585,6 +2585,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API synonyms
     "webhook": "api",
     "webhooks": "api",   # plural form
+    "event webhook": "api",     # bigram — "event webhook svix", "event-driven webhook" → API Tools (overrides "event"→message)
     "rest": "api",
     "graphql": "api",
     "openapi": "api",
@@ -3110,6 +3111,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "caddy": "devops",          # Caddy — automatic HTTPS web server
     "loadbalancer": "devops",   # load balancer tools
     "haproxy": "devops",        # HAProxy — high-availability load balancer
+    # Traffic management / routing / shaping (Envoy, Istio, Traefik, nginx)
+    # NOTE: bare "traffic" not added — too ambiguous (web analytics traffic vs network traffic).
+    # "traffic routing" misfires to Frontend via bare "routing"→frontend; bigrams override.
+    # "traffic management" misfires to Project via bare "management"→project; bigram overrides.
+    # "traffic splitting" misfires to Frontend via bare "splitting"→frontend; bigram overrides.
+    "traffic management": "devops",  # bigram — "traffic management istio", "traffic management envoy" → DevOps
+    "traffic routing": "devops",     # bigram — "traffic routing nginx", "traffic routing rules" → DevOps
+    "traffic shaping": "devops",     # bigram — "traffic shaping tool", "traffic shaping haproxy" → DevOps
+    "traffic splitting": "devops",   # bigram — "traffic splitting canary", "traffic splitting argo" → DevOps
+    "traffic analysis": "monitoring",# bigram — "traffic analysis tool", "network traffic analysis" → Monitoring
+    # Packet capture / network analysis (Wireshark, tcpdump, tshark)
+    "packet": "monitoring",          # "packet capture", "packet sniffer", "packet analysis" → Monitoring
+    "packet capture": "monitoring",  # bigram — "packet capture tool", "packet capture python" → Monitoring
     # API layer — CORS and middleware
     "cors": "api",              # "CORS middleware", "CORS header" → API Tools
     "middleware": "api",        # "API middleware", "Express middleware" → API Tools
