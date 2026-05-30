@@ -4495,6 +4495,33 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions: video streaming and live chat still route correctly
     ("video streaming hls", "media"),                 # PRE: "video"→media fires before "streaming" for video
     ("live chat widget", "customer"),                 # PRE: "live chat"→customer bigram still fires
+    #
+    # probe 130 — d3js/argo-cd-spaced/image-registry dead zones
+    #
+    # "d3js alternative" → bare "d3js" unmapped (d3.js → bare "d3"→analytics via dot-strip,
+    #   but concatenated npm-package form "d3js" had no entry); added "d3js"→analytics.
+    # "argo cd alternative" → both "argo" and "cd" unmapped → raw_first; argocd compound
+    #   was mapped but the spaced bigram wasn't; added "argo cd"→devops (sibling of flux cd).
+    # "image registry tool" → bare "image"→media at pos 0 beat "registry"→devops;
+    #   added "image registry"→devops bigram (GHCR, ECR, Harbor are DevOps tools, not media).
+    ("d3js alternative", "analytics"),               # bare "d3js"→analytics (was raw_first)
+    ("d3js tutorial", "analytics"),                  # bare "d3js"→analytics
+    ("d3js chart library", "analytics"),             # bare "d3js"→analytics fires at pos 0
+    ("argo cd alternative", "devops"),               # bigram "argo cd"→devops (was raw_first)
+    ("argo cd kubernetes", "devops"),                # bigram "argo cd"→devops
+    ("argo cd vs flux", "devops"),                   # bigram "argo cd"→devops
+    ("image registry tool", "devops"),               # bigram "image registry"→devops (overrides image→media)
+    ("image registry hosting", "devops"),            # bigram "image registry"→devops
+    ("private image registry", "devops"),            # bigram "image registry"→devops fires at pos 1
+    # Regressions: existing d3/argocd/flux/registry routing unchanged
+    ("d3 alternative", "analytics"),                 # PRE: bare "d3"→analytics unchanged
+    ("d3 chart", "analytics"),                       # PRE: bare "d3"→analytics unchanged
+    ("argocd alternative", "devops"),                # PRE: bare "argocd"→devops unchanged
+    ("flux cd alternative", "devops"),               # PRE: bigram "flux cd"→devops unchanged
+    ("container registry", "devops"),                # PRE: bare "registry"→devops still fires
+    ("oci registry", "devops"),                      # PRE: bare "registry"→devops still fires
+    ("image processing library", "developer"),       # PRE: bigram "image processing"→developer unchanged
+    ("image cdn", "media"),                          # PRE: bare "image"→media (image CDN ≠ registry)
 ]
 
 

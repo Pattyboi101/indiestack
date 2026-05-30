@@ -3302,6 +3302,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — Kubernetes ecosystem tools
     "helm": "devops",               # Helm — Kubernetes package manager (charts)
     "argocd": "devops",             # Argo CD — GitOps continuous delivery for Kubernetes
+    "argo cd": "devops",            # bigram — "argo cd alternative", "argo cd vs flux" → DevOps (spaced form; argocd already mapped)
     "fluxcd": "devops",             # Flux CD — GitOps operator for Kubernetes
     "flux cd": "devops",            # bigram — "flux cd alternative", "flux cd vs argo" → DevOps (overrides flux→ai)
     "flux gitops": "devops",        # bigram — "flux gitops kubernetes", "flux gitops operator" → DevOps
@@ -3995,6 +3996,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "three": "frontend",            # Three.js — 3D JavaScript / WebGL library (102k★)
     "threejs": "frontend",          # compound form — "threejs alternative", "three.js tutorial"
     "d3": "analytics",              # D3.js — data-driven documents, data visualization (108k★)
+    "d3js": "analytics",            # compound npm-package form — "d3js alternative", "d3js tutorial" → Analytics (sibling of d3)
     # Auth patterns — cookie/token queries grow with SSR + edge-auth patterns
     "cookie": "authentication",     # "cookie session", "cookie-based auth", "iron-session" → Auth
     "token": "authentication",      # "jwt token", "access token", "token refresh" → Authentication
@@ -5008,7 +5010,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pool": "database",             # "connection pool", "db pool", "postgres pool" → Database
     "pooler": "database",           # "connection pooler", "postgres pooler" → Database (PgBouncer, PgCat)
     # DevOps — container and artifact registry queries (Harbor, Quay, Zot, GHCR alternatives)
-    "registry": "devops",           # "container registry", "image registry", "oci registry" → DevOps
+    "registry": "devops",           # "container registry", "oci registry" → DevOps
+    "image registry": "devops",     # bigram override — "image registry" misfires via bare image→media; registries are DevOps (GHCR, ECR, Harbor)
     "harbor": "devops",             # Harbor — CNCF container image registry with RBAC and replication (22k★)
     # Background jobs — data/log ingestion pipeline queries (Airbyte, Kafka Connect, Debezium)
     "ingestion": "background",      # "data ingestion pipeline", "log ingestion" → Background Jobs / ETL

@@ -214,8 +214,8 @@ def design_tokens() -> str:
         .btn-primary:hover { background: var(--accent); color: #000; filter: brightness(1.1); }
         .btn-secondary { background: var(--cream-dark); color: var(--ink); border: 1px solid var(--border); }
         .btn-secondary:hover { background: var(--border); }
-        [data-theme="dark"] .btn-secondary { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #fff; }
-        [data-theme="dark"] .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); color: #fff; }
+        [data-theme="dark"] .btn-secondary { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: white; }
+        [data-theme="dark"] .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); color: white; }
         .btn-slate { background: var(--slate); color: white; }
         .btn-slate:hover { background: var(--slate-dark); color: white; }
         .btn-lg { padding: 16px 32px; font-size: 16px; }
@@ -1369,7 +1369,7 @@ document.addEventListener('click', function(e) {
 def copy_button(text: str, label: str = "Copy") -> str:
     """Render a copy button with data-copy attribute for the sitewide copy handler."""
     safe = escape(text).replace("'", "&#39;").replace('"', "&quot;")
-    return f'<button data-copy="{safe}" style="background:var(--slate,#64748B);color:#fff;border:none;border-radius:999px;padding:6px 14px;min-height:44px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:inline-flex;align-items:center;gap:4px;">{label}</button>'
+    return f'<button data-copy="{safe}" style="background:var(--slate,#64748B);color:white;border:none;border-radius:999px;padding:6px 14px;min-height:44px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:inline-flex;align-items:center;gap:4px;">{label}</button>'
 
 
 # ── Upvote Script ─────────────────────────────────────────────────────────
@@ -1826,7 +1826,7 @@ def user_stack_card(stack):
     <div class="card hover-lift" style="border-radius:var(--radius);padding:24px;cursor:pointer;">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
             <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--terracotta),var(--accent));
-                        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">
+                        display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:16px;">
                 {name[0].upper() if name else '?'}
             </div>
             <div>
@@ -1857,7 +1857,7 @@ def launch_readiness_bar(readiness):
     bar_color = 'var(--success-text)' if score >= 100 else 'var(--accent)'
     badge_html = ''
     if score >= 100:
-        badge_html = '<span style="background:var(--success-text);color:#fff;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;margin-left:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg> Launch Ready</span>'
+        badge_html = '<span style="background:var(--success-text);color:white;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600;margin-left:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg> Launch Ready</span>'
 
     checklist_items = ''
     for item in items:
