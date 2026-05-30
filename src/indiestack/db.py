@@ -3084,6 +3084,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "webauthn": "authentication",   # WebAuthn — W3C passkey standard
     "fido2": "authentication",      # FIDO2 — underlying passkey protocol
     # Security — compliance, encryption, certificates, license scanning
+    # "policy" and "policy agent" for Open Policy Agent (OPA) and policy-as-code tools
+    "policy": "security",           # bare — "policy as code", "policy engine" → Security Tools (OPA, Rego, Cedar)
+    "policy agent": "security",     # bigram — "open policy agent" meaningful=["policy","agent"] → Security (overrides "agent"→ai)
     "compliance": "security",   # GDPR/SOC2 compliance tooling
     "gdpr": "security",         # GDPR compliance tools
     "license": "security",      # "license checker", "open source license scanner" → Security Tools (FOSSA, SPDX, LicenseChecker)
@@ -3884,6 +3887,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "polar": "payments",            # Polar.sh — open-source Stripe alternative for OSS devs (5k★)
     "lemon": "payments",            # Lemon Squeezy — first term: "lemon squeezy alternative"
     "squeezy": "payments",          # Lemon Squeezy — second term for direct "squeezy" queries
+    # Payments — plural form and orchestration; bare "payment" is already mapped, "payments" plural wasn't
+    "payments": "payments",         # plural form — "payments api", "payments sdk", "payments gateway" → Payments
+    "payments orchestration": "payments",  # bigram — "payments orchestration platform" (Hyperswitch) → Payments (overrides "orchestration"→background)
+    "hyperswitch": "payments",      # Hyperswitch — open-source payments orchestration (12k★) → Payments
     # Workflow automation — n8n, Windmill, Activepieces, Pipedream (Zapier alternatives)
     "n8n": "background",            # n8n — self-hostable workflow automation (47k★)
     "windmill": "background",       # Windmill — fast workflow engine + script runner (12k★)

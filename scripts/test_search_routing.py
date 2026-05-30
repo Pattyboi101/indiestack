@@ -4537,6 +4537,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("config management ansible", "devops"),          # PRE: bare "config"→devops fires (no bigram prefix)
     ("service catalog backstage", "devops"),          # PRE: bare "catalog"→devops fires (no "product" prefix)
     ("project management linear", "project"),         # PRE: bare "management"→project unchanged
+    # Probe 132 — hyperswitch / payments-plural / payments-orchestration / policy-as-code / OPA
+    ("hyperswitch payments", "payments"),             # bare "hyperswitch"→payments (was: raw_first)
+    ("payments orchestration", "payments"),           # bigram "payments orchestration"→payments (was: background)
+    ("payments gateway", "payments"),                 # bare "payments"→payments plural form
+    ("payments sdk", "payments"),                     # bare "payments"→payments plural form
+    ("multi processor payments", "payments"),         # bare "payments"→payments fires at pos 2
+    ("policy as code", "security"),                   # bare "policy"→security (was: raw_first)
+    ("open policy agent", "security"),                # bigram "policy agent"→security (was: ai via "agent")
+    ("opa policy", "security"),                       # PRE: bare "opa"→security unchanged
+    # Regressions: workflow orchestration still goes to background, agent queries still go to ai
+    ("workflow orchestration n8n", "background"),     # PRE: bigram "workflow orchestration"→background
+    ("data orchestration prefect", "background"),     # PRE: bare "orchestration"→background (no "payments" prefix)
+    ("ai agent framework", "ai"),                     # PRE: bare "agent"→ai unchanged
+    ("compliance as code", "security"),               # PRE: bare "compliance"→security unchanged
 ]
 
 
