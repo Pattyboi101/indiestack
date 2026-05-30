@@ -4470,6 +4470,19 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions: audit log still routes to logging; "content moderation" bigram overrides bare "adversarial"
     ("audit log service", "logging"),                 # PRE: bare "audit"→logging unchanged
     ("adversarial content moderation", "ai"),         # PRE: "content moderation"→ai bigram fires first (correct)
+
+    # probe 128 — ResizeObserver / MutationObserver browser API dead zones
+    #
+    # "resize observer react" → "resize"→file MISROUTE (ResizeObserver hooks are Frontend UI)
+    # "mutation observer react" → "mutation"→testing MISROUTE (MutationObserver hooks are Frontend UI)
+    # Both need bigrams to fire before the misleading bare-token mappings.
+    ("resize observer react", "frontend"),            # bigram "resize observer"→frontend (overrides "resize"→file)
+    ("resize observer hook", "frontend"),             # bigram "resize observer"→frontend at pos 0
+    ("mutation observer react", "frontend"),          # bigram "mutation observer"→frontend (overrides "mutation"→testing)
+    ("mutation observer hook", "frontend"),           # bigram "mutation observer"→frontend at pos 0
+    # Regressions: image resize and mutation testing still route correctly
+    ("image resize library", "developer"),            # PRE: bigram "image resize"→developer fires before "resize"→file
+    ("mutation testing stryker", "testing"),          # PRE: bare "mutation"→testing fires correctly
 ]
 
 

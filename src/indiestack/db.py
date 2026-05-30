@@ -3731,6 +3731,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — TDD and mutation testing
     "tdd": "testing",               # test-driven development tooling queries
     "mutation": "testing",          # "mutation testing" — Stryker, Mutmut, PITest
+    "mutation observer": "frontend", # bigram — overrides "mutation"→testing for browser MutationObserver hooks → Frontend
     "stryker": "testing",           # Stryker — JavaScript/TypeScript mutation testing framework
     # Python testing framework + tooling — fast-growing segment of agent searches
     "pytest": "testing",            # pytest — dominant Python testing framework
@@ -4003,6 +4004,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # File management — image processing beyond "upload" / "media"
     "sharp": "file",                # Sharp — high-performance Node.js image processing (27k★)
     "resize": "file",               # "image resize library", "image resizer" → File Management
+    "resize observer": "frontend",  # bigram — overrides "resize"→file for browser ResizeObserver hooks → Frontend
     # Developer Tools — clipboard utilities (very common utility query)
     "clipboard": "developer",       # "clipboard API", "copy to clipboard" → Developer Tools
     # Database — analytical / data warehouse queries
