@@ -3558,6 +3558,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "exponential": "api",           # "exponential backoff" → API Tools
     "backoff": "api",               # "backoff strategy", "retry backoff" → API Tools
     "resilience": "monitoring",     # "resilience engineering", "resiliency" → Monitoring & Uptime
+    # NOTE: "load shedding" misfires to Testing via bare "load"→testing ("load testing" collision).
+    # Load shedding is an API resilience pattern (Envoy, HAProxy, Nginx rate-limiting drop policies).
+    "load shedding": "api",         # bigram — "load shedding strategy", "load shedding library" → API Tools
     # Durable execution / workflow engines (Temporal, Inngest, Trigger.dev)
     "durable": "background",        # "durable execution", "durable workflow" → Background Jobs
     # Notification inbox UI component (Novu, Knock, Courier)
@@ -7731,6 +7734,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ai safety": "ai standards",        # bigram — "ai safety framework", "ai safety testing" → AI Standards & Specs
     "ai governance": "ai standards",    # bigram — "ai governance tool", "ai governance framework" → AI Standards & Specs
     "ai standards": "ai standards",     # bigram — "ai standards nist", "ai standards framework" → AI Standards & Specs (raw "ai" not in _CAT_SYNONYMS so this provides the boost)
+    # AI Standards — "ethical ai" and "ai ethics" dead zones; both tokens unmapped without bigrams.
+    # AI ethics tools (Fairlearn, AI Fairness 360, Explainability tools) belong in AI Standards.
+    # NOTE: bare "ethical"→security added for "ethical hacking" context; bigram fires first for AI ethics.
+    "ethical ai": "ai standards",       # bigram — "ethical ai framework", "ethical ai tool" → AI Standards & Specs
+    "ai ethics": "ai standards",        # bigram — "ai ethics framework", "ai ethics tool" → AI Standards & Specs
+    "ethical": "security",              # bare — "ethical hacking", "ethical hacker" → Security Tools (pentest context)
     "benchmark llm": "ai standards",    # bigram — "benchmark llm models", "benchmark llm python" → AI Standards & Specs (overrides "benchmark"→testing)
     "llm benchmark": "ai standards",    # bigram — "llm benchmark comparison", "llm benchmark tool" → AI Standards & Specs (reversed form)
     "vector cache": "caching",          # bigram — "vector cache embeddings", "vector cache redis" → Caching (overrides "vector"→database)

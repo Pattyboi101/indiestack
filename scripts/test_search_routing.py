@@ -4537,6 +4537,25 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ai gateway litellm", "ai"),                     # PRE: bigram "ai gateway"→ai unchanged
     ("routing library", "frontend"),                  # PRE: bare "routing"→frontend unchanged for client-side routing
     ("pair programming tool", "ai"),                  # PRE: bigram "pair programming"→ai unchanged (intentional)
+
+    # probe 130 — ethical-ai / load-shedding dead zones
+    #
+    # "ethical ai tool" → both "ethical" and "ai" unmapped → raw_first
+    # "ai ethics" → both tokens unmapped → raw_first
+    # "load shedding" → bare "load"→testing fires (load testing collision; should be API Tools)
+    ("ethical ai framework", "ai standards"),         # bigram "ethical ai"→ai standards fires at pos 0-1
+    ("ethical ai tool", "ai standards"),              # bigram "ethical ai"→ai standards fires at pos 0-1
+    ("ai ethics framework", "ai standards"),          # bigram "ai ethics"→ai standards fires at pos 0-1
+    ("ai ethics tool", "ai standards"),               # bigram "ai ethics"→ai standards fires at pos 0-1
+    ("ethical hacking tool", "security"),             # bare "ethical"→security fires at pos 0 (not ai standards)
+    ("ethical hacker", "security"),                   # bare "ethical"→security fires at pos 0
+    ("load shedding strategy", "api"),                # bigram "load shedding"→api overrides "load"→testing
+    ("load shedding library", "api"),                 # bigram "load shedding"→api fires at pos 0-1
+    # Regressions: existing AI standards routing unchanged
+    ("responsible ai framework", "ai standards"),     # PRE: bigram "responsible ai"→ai standards unchanged
+    ("ai safety framework", "ai standards"),          # PRE: bigram "ai safety"→ai standards unchanged
+    ("load testing k6", "testing"),                   # PRE: bare "load"→testing unchanged for load testing
+    ("load balancer nginx", "devops"),                # PRE: bigram "load balancer"→devops unchanged
 ]
 
 
