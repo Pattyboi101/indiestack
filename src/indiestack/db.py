@@ -9951,6 +9951,17 @@ _CAT_SYNONYMS: dict[str, str] = {
     "artifact attestation": "security", # bigram — "artifact attestation cosign" → Security (overrides "artifact"→devops)
     "artifact provenance": "security",  # bigram — "artifact provenance slsa" → Security (overrides "artifact"→devops)
     "npm provenance": "security",       # bigram — "npm provenance attestation", "npm provenance tool" → Security Tools
+    # Security — Sigstore keyless / Notary v2 bare-token dead zones (probe 133)
+    # probe 132 added "image signing"/"container signing" bigrams but left bare tokens unmapped.
+    "keyless": "security",          # "keyless signing" bare token — Sigstore keyless model (no long-lived creds) → Security
+    "notary": "security",           # "notary v2", "notary alternative" — Notary v2 / notation OCI signing → Security
+    # Security — Rego / Kyverno / Kubernetes admission dead zones (probe 133)
+    # probe 132 added bare "policy"→security covering "rego policy"/"kyverno policy" at pos 1,
+    # but bare "rego"/"kyverno"/"admission" queries with no second policy token still misfire.
+    "rego": "security",             # "rego alternative", "rego file" — OPA's policy language → Security Tools
+    "kyverno": "devops",            # "kyverno alternative" — CNCF Kubernetes policy engine (5k★) → DevOps
+    "admission": "devops",          # "admission controller/webhook" — Kubernetes admission layer → DevOps
+    "admission controller": "devops",# bigram — "admission controller alternative" → DevOps (overrides bare "admission"→devops)
 
     # Database — point-in-time recovery dead zone (Postgres PITR, PlanetScale, LiteFS, Turso).
     # "point in time recovery" after stop-word strip → ["point","time","recovery"]; bigram at pos 0-1 fires.

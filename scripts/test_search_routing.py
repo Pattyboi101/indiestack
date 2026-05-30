@@ -4551,6 +4551,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("data orchestration prefect", "background"),     # PRE: bare "orchestration"→background (no "payments" prefix)
     ("ai agent framework", "ai"),                     # PRE: bare "agent"→ai unchanged
     ("compliance as code", "security"),               # PRE: bare "compliance"→security unchanged
+    # probe 133 — Rego / Kyverno / admission controller / Sigstore keyless / Notary bare-token dead zones
+    # probe 132 added bare "policy"→security fixing "rego policy"/"kyverno policy" at pos 1,
+    # but queries where these are the ONLY meaningful token still misfired.
+    ("rego alternative", "security"),                 # bare "rego"→security (was: raw_first)
+    ("rego file", "security"),                        # bare "rego"→security fires at pos 0
+    ("kyverno alternative", "devops"),                # bare "kyverno"→devops (was: raw_first)
+    ("kyverno admission", "devops"),                  # bare "kyverno"→devops fires at pos 0
+    ("admission controller", "devops"),               # bigram "admission controller"→devops (was: raw_first)
+    ("admission controller kubernetes", "devops"),    # bigram fires before "kubernetes"
+    ("admission webhook", "devops"),                  # bare "admission"→devops (was: api via "webhook")
+    ("keyless signing", "security"),                  # bare "keyless"→security (was: raw_first)
+    ("keyless certificate", "security"),              # "certificate"→security fires at pos 1; bare "keyless" at pos 0
+    ("notary v2", "security"),                        # bare "notary"→security (was: raw_first)
+    ("notary signing", "security"),                   # bare "notary"→security fires at pos 0
+    ("notary alternative", "security"),               # bare "notary"→security fires at pos 0
+    # Regressions: probe 132 policy/signing routing unchanged
+    ("policy as code", "security"),                   # PRE: bare "policy"→security unchanged
+    ("open policy agent", "security"),                # PRE: bigram "policy agent"→security unchanged
+    ("image signing cosign", "security"),             # PRE: bigram "image signing"→security unchanged
+    ("container signing", "security"),                # PRE: bigram "container signing"→security unchanged
 ]
 
 
