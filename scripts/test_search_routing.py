@@ -4444,6 +4444,32 @@ TEST_CASES: list[tuple[str, str]] = [
     ("artifact registry harbor", "devops"),           # PRE: "artifact"→devops unchanged for registry queries
     ("sbom generator syft", "security"),              # PRE: "sbom"→security still fires correctly
     ("supply chain attack", "security"),              # PRE: "supply chain"→security bigram unchanged
+
+    # probe 127 — AI Standards governance/safety + caching dead zones
+    #
+    # AI Standards: nist/rmf/bias/xai/adversarial all unmapped → raw_first
+    # ai audit → misrouted to logging; bigram override added
+    # Caching: Apache Ignite and Ehcache unmapped; ehcache java → misrouted via "java"→api
+    ("nist ai rmf", "ai standards"),                  # bare "nist"→ai standards
+    ("nist ai risk framework", "ai standards"),       # bare "nist"→ai standards
+    ("bias detection tool", "ai standards"),          # bigram "bias detection"→ai standards
+    ("bias mitigation fairlearn", "ai standards"),    # bigram "bias mitigation"→ai standards
+    ("ai bias detection", "ai standards"),            # bigram "bias detection"→ai standards
+    ("adversarial attack detection", "ai standards"), # bigram "adversarial attack"→ai standards
+    ("adversarial ml robustness", "ai standards"),    # bigram "adversarial ml"→ai standards
+    ("adversarial examples library", "ai standards"), # bare "adversarial"→ai standards
+    ("ai audit tool", "ai standards"),                # bigram "ai audit"→ai standards (overrides "audit"→logging)
+    ("ai audit model", "ai standards"),               # bigram "ai audit"→ai standards
+    ("xai library", "ai standards"),                  # bare "xai"→ai standards
+    ("xai python", "ai standards"),                   # bare "xai"→ai standards
+    ("apache ignite alternative", "caching"),         # bigram "apache ignite"→caching
+    ("ignite distributed cache", "caching"),          # bare "ignite"→caching
+    ("ehcache alternative", "caching"),               # bare "ehcache"→caching (no misroute via "java")
+    ("ehcache spring boot", "caching"),               # bare "ehcache"→caching at pos 0
+    ("caffeine java cache", "caching"),               # bare "caffeine"→caching at pos 0
+    # Regressions: audit log still routes to logging; "content moderation" bigram overrides bare "adversarial"
+    ("audit log service", "logging"),                 # PRE: bare "audit"→logging unchanged
+    ("adversarial content moderation", "ai"),         # PRE: "content moderation"→ai bigram fires first (correct)
 ]
 
 

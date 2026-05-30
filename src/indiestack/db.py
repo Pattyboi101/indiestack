@@ -9958,6 +9958,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     "screen capture": "testing",         # bigram — "screen capture tool", "screen capture api" → Testing Tools
     "screen grab": "testing",            # bigram — "screen grab software", "screen grab react" → Testing Tools
     "screen shot": "testing",            # bigram — spaced form: "screen shot tool", "screen shot api" → Testing Tools
+
+    # Probe pattern 127 (autonomous loop, May 2026): AI Standards governance/safety concept dead zones.
+    #
+    # "nist ai rmf" → raw_first (nist, ai, rmf all unmapped)
+    # "ai bias" → raw_first ("ai" not in _CAT_SYNONYMS; "bias" unmapped)
+    # "bias detection tool" → raw_first ("bias" unmapped)
+    # "adversarial attack" → raw_first ("adversarial" unmapped)
+    # "ai audit tool" → "audit"→logging MISROUTE (AI model auditing ≠ audit log)
+    # "xai tools" → raw_first ("xai" unmapped)
+    # "apache ignite" → raw_first (neither "apache" nor "ignite" mapped)
+    # "ehcache java" → "java"→api MISROUTE ("ehcache" unmapped; "java" fires first)
+    # "caffeine cache java" → routes ok via bare "cache"→caching but "caffeine" alone unmapped
+    #
+    "nist": "ai standards",            # bare — "nist ai rmf", "nist ai risk framework" → AI Standards & Specs
+    "rmf": "ai standards",             # bare — "nist rmf", "risk management framework" → AI Standards & Specs
+    "bias": "ai standards",            # bare — "ai bias detection", "bias mitigation", "ml bias" → AI Standards & Specs
+    "xai": "ai standards",             # bare — "xai library", "xai python", "explainable ai" abbreviation → AI Standards & Specs
+    "adversarial": "ai standards",     # bare — "adversarial ml", "adversarial robustness", "adversarial examples" → AI Standards & Specs
+    "ai audit": "ai standards",        # bigram — overrides "audit"→logging for AI model audit queries → AI Standards & Specs
+    "adversarial attack": "ai standards",  # bigram — "adversarial attack detection", "adversarial attack defense" → AI Standards & Specs
+    "adversarial ml": "ai standards",  # bigram — "adversarial ml robustness", "adversarial ml python" → AI Standards & Specs
+    "bias detection": "ai standards",  # bigram — "bias detection tool", "bias detection dataset" → AI Standards & Specs
+    "bias mitigation": "ai standards", # bigram — "bias mitigation techniques", "bias mitigation fairlearn" → AI Standards & Specs
+    # Caching — JVM and distributed caching libraries not yet individually mapped
+    "ignite": "caching",               # Apache Ignite — distributed in-memory computing/caching platform
+    "apache ignite": "caching",        # bigram — "apache ignite alternative", "apache ignite cache" → Caching
+    "ehcache": "caching",              # Ehcache — widely-used Java in-process caching library (Terracotta)
+    "caffeine": "caching",             # Caffeine — high-performance Java caching library (near-optimal eviction)
 }
 
 _FTS_STOP_WORDS = {
