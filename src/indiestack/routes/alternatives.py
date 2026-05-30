@@ -473,7 +473,7 @@ async def alternatives_for(request: Request, competitor_slug: str):
 
             sponsored_html += f"""
             <a href="/tool/{sp_slug}" class="card" style="text-decoration:none;color:inherit;display:block;
-                border:2px solid var(--slate);background:linear-gradient(135deg,var(--cream),#fff);position:relative;overflow:hidden;">
+                border:2px solid var(--slate);background:linear-gradient(135deg,var(--cream),white);position:relative;overflow:hidden;">
                 <div style="position:absolute;top:12px;right:12px;">
                     <span style="background:linear-gradient(135deg,var(--slate),var(--slate-light));color:var(--terracotta);padding:3px 10px;
                         border-radius:999px;font-size:11px;font-weight:700;">{sp_label}</span>
@@ -703,7 +703,7 @@ async def alternatives_for(request: Request, competitor_slug: str):
                     onfocus="this.style.borderColor='var(--accent)';this.style.boxShadow='0 0 0 3px rgba(0,212,245,0.15)'"
                     onblur="this.style.borderColor='rgba(255,255,255,0.2)';this.style.boxShadow='none'">
                 <button type="submit"
-                    style="height:48px;padding:0 24px;background:var(--accent);color:#000;font-weight:700;
+                    style="height:48px;padding:0 24px;background:var(--accent);color:black;font-weight:700;
                     font-size:14px;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-body);
                     white-space:nowrap;">Notify Me &rarr;</button>
             </form>

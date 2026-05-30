@@ -9944,6 +9944,38 @@ _CAT_SYNONYMS: dict[str, str] = {
     # NOTE: "virtual"→frontend already maps — "virtualized" is a separate longer token form.
     "virtualized": "frontend",           # bare — "virtualized list react", "virtualized table" → Frontend
     "virtualised": "frontend",           # British spelling — "virtualised list component" → Frontend
+
+    # probe 124 — computer vision / geospatial-DB / IoT dead zones
+    #
+    # Computer vision queries mis-route because bare "image"→media or "object"→file fires first,
+    # and specific CV tokens ("face", "yolo", "mediapipe", "pose") have no mapping at all.
+    # All computer vision / CV model tools belong in AI & Automation.
+    #
+    # "face detection library"/"face recognition" → raw_first "face" (no synonym)
+    "face": "ai",                        # bare — "face detection", "face recognition", "face id api" → AI
+    "face detection": "ai",             # bigram — "face detection library", "face detection react" → AI
+    "face recognition": "ai",           # bigram — "face recognition python", "face recognition api" → AI
+    # "object detection python" → "file" via "object"→file (object storage collision)
+    "object detection": "ai",           # bigram — overrides "object"→file for CV detection queries → AI
+    # "image classification api" → "media" via "image"→media; "image recognition" same
+    "image classification": "ai",       # bigram — overrides "image"→media for CV classification → AI
+    "image recognition": "ai",          # bigram — overrides "image"→media for CV recognition → AI
+    "image segmentation": "ai",         # bigram — overrides "image"→media for CV segmentation → AI
+    # "semantic segmentation" → "search" via "semantic"→search; need bigram override
+    "semantic segmentation": "ai",      # bigram — overrides "semantic"→search for CV queries → AI
+    # "pose estimation" → raw_first "pose"; "depth estimation" → raw_first "depth"
+    "pose": "ai",                       # bare — "pose estimation", "pose detection" → AI
+    "pose estimation": "ai",            # bigram — reinforces "pose"→ai for estimation queries → AI
+    "depth estimation": "ai",           # bigram — "depth estimation monocular" → AI
+    # "yolo detection"/"yolo alternative" → raw_first "yolo"
+    "yolo": "ai",                       # bare — YOLOv8/YOLOv9/YOLO11 object detection → AI
+    # "mediapipe alternative" → raw_first "mediapipe"
+    "mediapipe": "ai",                  # bare — Google MediaPipe CV/ML framework → AI
+    # "postgis alternative"/"postgis extension" → raw_first "postgis"
+    # PostGIS is the spatial extension for PostgreSQL → Database category
+    "postgis": "database",              # bare — "postgis alternative", "postgis extension" → Database
+    # "iot platform" → raw_first "iot" (neither "iot" nor "platform" had a synonym)
+    "iot": "devops",                    # bare — "iot platform", "iot data storage" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

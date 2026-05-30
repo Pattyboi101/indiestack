@@ -4357,6 +4357,42 @@ TEST_CASES: list[tuple[str, str]] = [
     ("headless browser puppeteer", "testing"),        # PRE: "headless browser"→testing bigram unchanged
     ("headless automation server", "testing"),        # PRE: "headless automation"→testing bigram unchanged
     ("headless ui component", "frontend"),            # PRE: "headless ui"→frontend bigram unchanged
+
+    # probe 124 — computer vision / geospatial-DB / IoT dead zones
+    #
+    # "face detection library" → raw_first "face" — face detection/recognition are CV/AI tools.
+    # "object detection model" → "file" via "object"→file (object storage collision).
+    # "semantic segmentation" → "search" via "semantic"→search (semantic search collision).
+    # "image classification api" → "media" via "image"→media (image hosting collision).
+    # "yolo detection"/"mediapipe alternative" → raw_first (no synonym for ML-specific terms).
+    # "postgis alternative" → raw_first "postgis" (no synonym; PostGIS = PostgreSQL spatial ext).
+    # "iot platform" → raw_first "iot" (no synonym; IoT platforms → DevOps/Infrastructure).
+    ("face detection library", "ai"),                 # bigram "face detection"→ai (overrides raw_first "face")
+    ("face detection react", "ai"),                   # bigram "face detection"→ai
+    ("face recognition python", "ai"),                # bigram "face recognition"→ai
+    ("face recognition api", "ai"),                   # bigram "face recognition"→ai
+    ("face analysis sdk", "ai"),                      # bare "face"→ai
+    ("object detection model", "ai"),                 # bigram "object detection"→ai (overrides "object"→file)
+    ("object detection python", "ai"),                # bigram "object detection"→ai
+    ("semantic segmentation pytorch", "ai"),          # bigram "semantic segmentation"→ai (overrides "semantic"→search)
+    ("semantic segmentation model", "ai"),            # bigram "semantic segmentation"→ai
+    ("image classification tensorflow", "ai"),        # bigram "image classification"→ai (overrides "image"→media)
+    ("image recognition model", "ai"),                # bigram "image recognition"→ai
+    ("image segmentation library", "ai"),             # bigram "image segmentation"→ai (overrides "image"→media)
+    ("yolo detection", "ai"),                         # bare "yolo"→ai
+    ("yolo alternative", "ai"),                       # bare "yolo"→ai
+    ("mediapipe alternative", "ai"),                  # bare "mediapipe"→ai
+    ("pose estimation python", "ai"),                 # bare "pose"→ai + bigram "pose estimation"→ai
+    ("pose detection library", "ai"),                 # bare "pose"→ai
+    ("postgis alternative", "database"),              # bare "postgis"→database
+    ("postgis extension", "database"),                # bare "postgis"→database
+    ("iot platform", "devops"),                       # bare "iot"→devops
+    ("iot data storage", "devops"),                   # bare "iot"→devops at position 0
+    # Regressions: existing routing unchanged
+    ("object storage s3", "file"),                    # PRE: "object"→file fires without "detection" bigram
+    ("semantic search api", "search"),                # PRE: "semantic"→search unchanged without "segmentation"
+    ("image upload react", "frontend"),               # PRE: bigram "image upload"→frontend unchanged
+    ("image optimization cdn", "file"),               # PRE: bigram "image optimization"→file unchanged
 ]
 
 
