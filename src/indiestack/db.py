@@ -2537,6 +2537,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "migration": "database",
     "prisma": "database",
     "drizzle": "database",
+    "bson": "database",            # BSON — MongoDB binary JSON format; "bson parser", "bson library" → Database
     # Monitoring synonyms
     "uptime": "monitoring",
     "alerting": "monitoring",
@@ -2692,6 +2693,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "maps": "maps",
     "map": "maps",
     "geo": "maps",
+    "geojson": "maps",             # GeoJSON — geographic JSON format; "geojson library", "geojson parser" → Maps & Location
     "location": "maps",
     "ip": "maps",           # "ip lookup", "ip address api", "ip geolocation" → Maps & Location (ipapi.co, ipinfo.io)
     "ip reputation": "security",    # bigram — "ip reputation check", "ip reputation api" → Security Tools (AbuseIPDB)
@@ -3793,6 +3795,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API — serialization protocols and resilience patterns
     "serialization": "api",         # "binary serialization", "data serialization" → API Tools
     "msgpack": "api",               # MessagePack — efficient binary serialization format
+    "capnproto": "api",             # Cap'n Proto — zero-copy binary serialization + RPC; "capnproto alternative" → API Tools
+    "capnp": "api",                 # short form of Cap'n Proto
+    "cbor": "api",                  # CBOR — Concise Binary Object Representation (RFC 7049); "cbor encoder/decoder" → API Tools
     "flatbuffers": "api",           # FlatBuffers — Google's memory-efficient binary serialization
     "retry": "api",                 # "retry library", "retry logic" → API Tools (resilience patterns)
     "retries": "api",               # plural form — "http retries", "retry strategy"
@@ -4825,6 +4830,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "network visualization": "analytics", # bigram — "network visualization react" → Analytics (overrides "network"→monitoring)
     # Data science / Python ecosystem — DataFrame, numeric, and scientific computing tools
     "polars": "database",           # Polars — Rust DataFrame library, fast pandas alternative (34k★)
+    "pyarrow": "database",          # PyArrow — Apache Arrow Python bindings; "pyarrow alternative", "pyarrow dataframe" → Database
     "pandas": "ai",                 # pandas — Python data analysis and DataFrame library (44k★)
     "numpy": "ai",                  # NumPy — fundamental scientific computing for Python (28k★)
     "scipy": "ai",                  # SciPy — scientific algorithms and math for Python (13k★)
@@ -5408,6 +5414,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — columnar file format (common in data pipeline / data lake queries)
     "parquet": "database",          # Apache Parquet — columnar storage format; "parquet reader", "parquet alternative" → Database
     "avro": "database",             # Apache Avro — compact binary serialization; "avro serialization", "avro alternative" → Database
+    "orc": "database",              # Apache ORC — columnar storage format; "orc file reader", "orc format" → Database (like parquet, avro)
     # API — Haskell and OCaml web framework queries
     "haskell": "api",               # Haskell web framework queries → API Tools (Servant, Yesod, IHP) → API Tools
     "ocaml": "api",                 # OCaml web framework queries → API Tools (Dream, Opium) → API Tools
@@ -5643,6 +5650,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "nodejs": "api",                # explicit form — "nodejs framework", "nodejs backend" → API Tools
     # JSON — bare "json" not mapped; "jsonschema"/"json-schema" exist but not "json parser" etc.
     "json": "developer",            # "json parser", "json validator", "json schema" → Developer Tools (AJV, Joi)
+    "ndjson": "developer",          # NDJSON — Newline Delimited JSON; "ndjson reader", "ndjson parser" → Developer Tools
+    "jsonl": "developer",           # JSON Lines format (synonym for NDJSON); "jsonl format", "jsonl reader" → Developer Tools
+    "jsonlines": "developer",       # full name — "jsonlines library", "jsonlines python" → Developer Tools
     # XML — xml parser/library/transformer queries → Developer Tools
     "xml": "developer",             # "xml parser", "xml library", "xslt tool" → Developer Tools
     # Network — "network monitoring", "network scanner", "network analysis" → Monitoring & Uptime

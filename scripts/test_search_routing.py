@@ -4477,6 +4477,41 @@ TEST_CASES: list[tuple[str, str]] = [
     ("design tokens css", "frontend"),                # PRE: bigram "design tokens"→frontend unchanged
     ("design token system", "frontend"),              # PRE: bigram "design token"→frontend unchanged
     ("xpath selector", "developer"),                  # PRE: bare "xpath"→developer unchanged
+    # probe 128 — binary data-format dead zones
+    #
+    # "capnproto library" → "capnproto" unmapped → raw_first
+    # "cbor encoder" → "cbor" unmapped → raw_first
+    # "bson parser" → "bson" unmapped → misfired to developer via "parser"
+    # "geojson library" → "geojson" unmapped → raw_first
+    # "ndjson reader" → "ndjson" unmapped → raw_first
+    # "jsonl format" → "jsonl" unmapped → misfired to testing via "format"→testing
+    # "pyarrow dataframe" → "pyarrow" unmapped → raw_first
+    # "orc file reader" → "orc" unmapped → raw_first
+    ("capnproto library", "api"),                     # bare "capnproto"→api fires at pos 0
+    ("capnproto alternative", "api"),                 # bare "capnproto"→api fires at pos 0
+    ("capnp schema", "api"),                          # bare "capnp"→api fires at pos 0
+    ("cbor encoder", "api"),                          # bare "cbor"→api fires at pos 0
+    ("cbor decoder python", "api"),                   # bare "cbor"→api fires at pos 0
+    ("bson parser", "database"),                      # bare "bson"→database fires at pos 0 (was: misfired via "parser"→developer)
+    ("bson library alternative", "database"),         # bare "bson"→database fires at pos 0
+    ("geojson library", "maps"),                      # bare "geojson"→maps fires at pos 0
+    ("geojson parser", "maps"),                       # bare "geojson"→maps fires at pos 0 (overrides "parser"→developer)
+    ("ndjson reader", "developer"),                   # bare "ndjson"→developer fires at pos 0
+    ("ndjson writer python", "developer"),            # bare "ndjson"→developer fires at pos 0
+    ("jsonl format", "developer"),                    # bare "jsonl"→developer fires at pos 0 (was: misfired to testing via "format")
+    ("jsonl reader", "developer"),                    # bare "jsonl"→developer fires at pos 0
+    ("jsonlines library", "developer"),               # bare "jsonlines"→developer fires at pos 0
+    ("pyarrow dataframe", "database"),                # bare "pyarrow"→database fires at pos 0
+    ("pyarrow alternative", "database"),              # bare "pyarrow"→database fires at pos 0
+    ("orc file reader", "database"),                  # bare "orc"→database fires at pos 0
+    ("orc format alternative", "database"),           # bare "orc"→database fires at pos 0
+    # Regressions: existing binary-format / serialization routing unchanged
+    ("msgpack library", "api"),                       # PRE: "msgpack"→api unchanged
+    ("flatbuffers schema", "api"),                    # PRE: "flatbuffers"→api unchanged
+    ("avro serialization", "database"),               # PRE: "avro"→database unchanged
+    ("parquet reader", "database"),                   # PRE: "parquet"→database unchanged
+    ("polars dataframe", "database"),                 # PRE: "polars"→database unchanged
+    ("turf geospatial", "maps"),                      # PRE: "turf"→maps unchanged (no collision with "orc")
 ]
 
 
