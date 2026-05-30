@@ -4522,6 +4522,21 @@ TEST_CASES: list[tuple[str, str]] = [
     ("oci registry", "devops"),                      # PRE: bare "registry"→devops still fires
     ("image processing library", "developer"),       # PRE: bigram "image processing"→developer unchanged
     ("image cdn", "media"),                          # PRE: bare "image"→media (image CDN ≠ registry)
+    # Probe 131 — headless-checkout / redis-queue / config-validation / product-catalog / order-management
+    ("headless checkout api", "payments"),            # bigram "headless checkout"→payments (was: cms via bare "headless")
+    ("headless payment flow", "payments"),            # bigram "headless payment"→payments (was: cms)
+    ("redis queue bull", "background"),               # bigram "redis queue"→background (was: caching via bare "redis")
+    ("redis queue bullmq", "background"),             # bigram "redis queue"→background
+    ("config validation schema", "developer"),        # bigram "config validation"→developer (was: devops)
+    ("config schema validation", "developer"),        # bigram "config schema"→developer
+    ("product catalog api", "cms"),                   # bigram "product catalog"→cms (was: devops via bare "catalog")
+    ("order management system", "payments"),          # bigram "order management"→payments (was: project)
+    # Regressions: headless/redis/config/catalog unchanged for non-checkout queries
+    ("headless cms contentful", "cms"),               # PRE: bare "headless"→cms unchanged
+    ("redis cache nextjs", "caching"),                # PRE: bare "redis"→caching fires (no "redis queue" bigram)
+    ("config management ansible", "devops"),          # PRE: bare "config"→devops fires (no bigram prefix)
+    ("service catalog backstage", "devops"),          # PRE: bare "catalog"→devops fires (no "product" prefix)
+    ("project management linear", "project"),         # PRE: bare "management"→project unchanged
 ]
 
 

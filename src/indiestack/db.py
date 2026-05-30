@@ -4172,6 +4172,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "vitess": "database",           # Vitess — MySQL horizontal scaling (powers YouTube/PlanetScale)
     "citus": "database",            # Citus — Postgres extension for horizontal sharding (Microsoft)
     # Background jobs — classic and additional Node.js schedulers
+    # "redis queue" bigram overrides bare "redis"→caching for job-queue context (Bull, BullMQ, Bee-Queue)
+    "redis queue": "background",    # bigram — "redis queue bull/bullmq/bee-queue" → Background Jobs
     "bull": "background",           # Bull — Redis-backed Node.js queue (classic; BullMQ successor)
     "agenda": "background",         # Agenda.js — MongoDB-backed job scheduler for Node.js (9k★)
     "bree": "background",           # Bree — worker thread-based JavaScript job scheduler (3k★)
@@ -4990,15 +4992,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     # API — Buf protobuf toolchain (modern Protobuf DX, 5k★; "buf lint", "buf generate" queries)
     "buf": "api",                   # Buf — developer-first Protobuf toolchain → API Tools
     # Headless commerce / e-commerce platforms (Medusa, Saleor, Vendure live in Developer Tools)
-    "ecommerce": "developer",       # "ecommerce platform", "headless ecommerce" → Developer Tools
-    "commerce": "developer",        # generic "commerce engine", "headless commerce" → Developer Tools
-    "storefront": "developer",      # "headless storefront", "custom storefront" → Developer Tools
-    "shopify": "developer",         # "shopify alternative" — Medusa, Saleor, Vendure → Developer Tools
-    "woocommerce": "developer",     # "woocommerce alternative" — headless commerce engines
-    "saleor": "developer",          # Saleor — open-source headless commerce platform (20k★)
-    "medusajs": "developer",        # compound form — "medusajs alternative", "medusa.js" → Developer Tools
-    "vendure": "developer",         # Vendure — TypeScript headless commerce framework (5k★)
-    "cart": "payments",             # "shopping cart", "cart library" → Payments (checkout flow)
+    # Bigrams for checkout/payment override bare "headless"→cms for transactional queries.
+    "headless checkout": "payments",    # bigram — "headless checkout api/sdk" → Payments (Stripe headless, Medusa checkout)
+    "headless payment": "payments",     # bigram — "headless payment flow" → Payments
+    "order management": "payments",     # bigram — "order management system/api" → Payments (commercelayer, Medusa OMS)
+    "product catalog": "cms",           # bigram — "product catalog api/cms" → Headless CMS (content + catalog)
+    "ecommerce": "developer",           # "ecommerce platform", "headless ecommerce" → Developer Tools
+    "commerce": "developer",            # generic "commerce engine", "headless commerce" → Developer Tools
+    "storefront": "developer",          # "headless storefront", "custom storefront" → Developer Tools
+    "shopify": "developer",             # "shopify alternative" — Medusa, Saleor, Vendure → Developer Tools
+    "woocommerce": "developer",         # "woocommerce alternative" — headless commerce engines
+    "saleor": "developer",              # Saleor — open-source headless commerce platform (20k★)
+    "medusajs": "developer",            # compound form — "medusajs alternative", "medusa.js" → Developer Tools
+    "vendure": "developer",             # Vendure — TypeScript headless commerce framework (5k★)
+    "cart": "payments",                 # "shopping cart", "cart library" → Payments (checkout flow)
     # Monorepo — Lerna (complement to turborepo/nx already mapped)
     "lerna": "developer",           # Lerna — original JS monorepo management tool (35k★) → Developer Tools
     # AI — reasoning models (o1, DeepSeek-R1, Claude extended thinking queries)
@@ -5970,7 +5977,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "openprops": "frontend",        # compound — "openprops setup", "openprops tokens" → Frontend Frameworks
     # Config management — Puppet, SaltStack, CFEngine live in DevOps & Infrastructure
     # "config management" was mis-routing to Frontend via "management"→"frontend"; "config" fixes this
-    "config": "devops",             # "config management", "config server", "config file watcher" → DevOps & Infrastructure
+    # Bigrams for schema/validation override bare "config"→devops (Zod/Joi/Yup for config = Developer Tools)
+    "config validation": "developer",   # bigram — "config validation schema/library" → Developer Tools (Zod, Joi, Yup)
+    "config schema": "developer",       # bigram — "config schema validation/parser" → Developer Tools
+    "config": "devops",                 # "config management", "config server", "config file watcher" → DevOps & Infrastructure
     "puppet": "devops",             # Puppet — declarative infrastructure config management (17k★) → DevOps
     "saltstack": "devops",          # SaltStack — remote execution + config management (14k★) → DevOps
     "cfengine": "devops",           # CFEngine — oldest config management tool (2k★) → DevOps & Infrastructure
