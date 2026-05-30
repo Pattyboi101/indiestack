@@ -4451,6 +4451,32 @@ TEST_CASES: list[tuple[str, str]] = [
     ("workflow builder", "background"),               # PRE: bigram "workflow builder"→background unchanged
     ("visual builder", "frontend"),                   # PRE: bigram "visual builder"→frontend unchanged
     ("visual testing tool", "testing"),               # PRE: bare "visual"→testing unchanged
+
+    # probe 127 — SLSA/attestation/style-dictionary/JSON-path dead zones
+    #
+    # "slsa attestation" → both "slsa" and "attestation" unmapped → raw_first
+    # "style dictionary" → both "style" and "dictionary" unmapped → raw_first
+    # "jsonata transform" → "jsonata" unmapped → raw_first; "jsonpath"/"jmespath" also missing
+    ("slsa attestation", "security"),                 # bare "slsa"→security fires at pos 0
+    ("slsa framework", "security"),                   # bare "slsa"→security fires
+    ("slsa build provenance", "security"),            # bare "slsa"→security fires at pos 0
+    ("artifact attestation", "security"),             # bare "attestation"→security fires at pos 1
+    ("build attestation", "security"),                # bare "attestation"→security fires at pos 1
+    ("code signing attestation", "security"),         # bare "attestation"→security fires at pos 2
+    ("style dictionary tool", "frontend"),            # bigram "style dictionary"→frontend fires
+    ("style dictionary amazon", "frontend"),          # bigram "style dictionary"→frontend fires
+    ("jsonata transform library", "developer"),       # bare "jsonata"→developer fires at pos 0
+    ("jsonata query language", "developer"),          # bare "jsonata"→developer fires at pos 0
+    ("jmespath library", "developer"),                # bare "jmespath"→developer fires at pos 0
+    ("jmespath query", "developer"),                  # bare "jmespath"→developer fires before "query"→database
+    ("jsonpath library", "developer"),                # bare "jsonpath"→developer fires at pos 0
+    ("jsonpath expression", "developer"),             # bare "jsonpath"→developer fires at pos 0
+    # Regressions: existing supply chain / design token / xpath routing unchanged
+    ("supply chain security", "security"),            # PRE: bigram "supply chain"→security unchanged
+    ("sbom generator", "security"),                   # PRE: bare "sbom"→security unchanged
+    ("design tokens css", "frontend"),                # PRE: bigram "design tokens"→frontend unchanged
+    ("design token system", "frontend"),              # PRE: bigram "design token"→frontend unchanged
+    ("xpath selector", "developer"),                  # PRE: bare "xpath"→developer unchanged
 ]
 
 

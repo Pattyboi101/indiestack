@@ -5291,6 +5291,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "syft": "security",             # Syft — open-source SBOM generator (Anchore, 6k★) → Security Tools
     "supply-chain": "security",     # "supply chain security", "software supply chain" → Security Tools
     "supplychain": "security",      # compound form — "supplychain attack", "supplychain hardening" → Security Tools
+    "slsa": "security",             # SLSA (Supply-chain Levels for Software Artifacts) — Google supply-chain security framework → Security Tools
+    "attestation": "security",      # "artifact attestation", "build attestation", "code signing attestation" → Security Tools
+    "artifact attestation": "security",  # bigram override — "artifact"→devops fires without this; signing/attestation context is security
     # Security — compliance and privacy categories missing from synonyms
     "consent": "security",          # "consent management platform", "gdpr consent banner" → Security Tools (Cookiebot, Osano, iubenda)
     "hipaa": "security",            # HIPAA — US healthcare privacy law compliance tooling → Security Tools
@@ -8238,6 +8241,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "design systems": "frontend",        # plural — "design systems tools", "best design systems 2025" → Frontend Frameworks
     "design tokens": "frontend",         # bigram — "design tokens css", "design tokens tool" → Frontend Frameworks
     "design token": "frontend",          # singular — "design token system", "design token management" → Frontend Frameworks
+    "style dictionary": "frontend",      # bigram — Amazon Style Dictionary — design token build system → Frontend Frameworks
     # DevOps — deployment pattern and Git workflow queries that hit raw_first with no category boost.
     "pull request": "devops",            # bigram — "pull request automation", "pull request review tool" → DevOps
     "zero downtime": "devops",           # bigram — "zero downtime deployment", "zero downtime migration" → DevOps
@@ -9624,8 +9628,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "dom testing": "testing",           # bigram override — "dom testing react" → Testing (beats bare "dom"→frontend)
     "dom snapshot": "testing",          # bigram override — "dom snapshot diff" → Testing (beats bare "dom"→frontend)
 
-    # XPath — XML/HTML query language; lxml, BeautifulSoup xpath, libxml2 → Developer Tools
+    # XPath / JSON path query languages → Developer Tools
     "xpath": "developer",               # bare — "xpath selector", "xpath library", "xpath query" → Developer Tools
+    "jsonata": "developer",             # JSONata — JSON query and transform language (jsonata-js, 2k★) → Developer Tools
+    "jmespath": "developer",            # JMESPath — JSON query language for filtering/projecting structures → Developer Tools
+    "jsonpath": "developer",            # JSONPath — "jsonpath library", "jsonpath expression" → Developer Tools
 
     # API Tools — full-duplex / bidirectional streaming (gRPC, WebSocket)
     "bidirectional streaming": "api",   # bigram — "bidirectional streaming grpc", "bidirectional streaming ws" → API Tools
