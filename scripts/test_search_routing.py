@@ -4512,6 +4512,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("parquet reader", "database"),                   # PRE: "parquet"→database unchanged
     ("polars dataframe", "database"),                 # PRE: "polars"→database unchanged
     ("turf geospatial", "maps"),                      # PRE: "turf"→maps unchanged (no collision with "orc")
+
+    # probe 129 — shared-inbox / ai-routing / mob-programming dead zones
+    #
+    # "shared inbox" → bare "inbox"→notifications (wrong; Missive, Front, Help Scout are Customer Support)
+    # "team inbox" → bare "inbox"→notifications (same misfire)
+    # "ai routing" → bare "routing"→frontend (wrong; LiteLLM, PortKey, OpenRouter are AI tooling)
+    # "llm routing" → bare "routing"→frontend (same misfire)
+    # "mob programming" → raw_first — both "mob" and "programming" unmapped (Mob.sh → Developer Tools)
+    ("shared inbox tool", "support"),                 # bigram "shared inbox"→support overrides "inbox"→notifications
+    ("shared inbox open source", "support"),          # bigram "shared inbox"→support fires at pos 0-1
+    ("team inbox software", "support"),               # bigram "team inbox"→support overrides "inbox"→notifications
+    ("team inbox helpdesk", "support"),               # bigram "team inbox"→support fires at pos 0-1
+    ("ai routing litellm", "ai"),                     # bigram "ai routing"→ai overrides "routing"→frontend
+    ("ai routing alternative", "ai"),                 # bigram "ai routing"→ai fires at pos 0-1
+    ("llm routing proxy", "ai dev"),                  # bigram "llm routing"→ai dev fires at pos 0-1
+    ("llm routing litellm", "ai dev"),                # bigram "llm routing"→ai dev fires at pos 0-1
+    ("model routing provider", "ai"),                 # bigram "model routing"→ai fires at pos 0-1
+    ("mob programming tool", "developer"),            # bigram "mob programming"→developer (dead zone fix)
+    ("mob programming software", "developer"),        # bigram "mob programming"→developer fires
+    # Regressions: notification inbox and existing AI routing unchanged
+    ("notification inbox", "notifications"),          # PRE: bare "inbox"→notifications unchanged for UI component queries
+    ("inbox component react", "notifications"),       # PRE: bare "inbox"→notifications unchanged
+    ("ai gateway litellm", "ai"),                     # PRE: bigram "ai gateway"→ai unchanged
+    ("routing library", "frontend"),                  # PRE: bare "routing"→frontend unchanged for client-side routing
+    ("pair programming tool", "ai"),                  # PRE: bigram "pair programming"→ai unchanged (intentional)
 ]
 
 

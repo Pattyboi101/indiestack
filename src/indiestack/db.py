@@ -7922,6 +7922,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ai image": "ai",               # spaced bigram — "ai image generator", "ai image model" → AI & Automation
     # AI — "ai gateway" bigram overrides "gateway"→api for LLM router/proxy queries
     "ai gateway": "ai",             # spaced bigram — "ai gateway litellm", "ai gateway alternative" → AI & Automation
+    # AI — "ai routing" / "llm routing" misfires to Frontend via bare "routing"→frontend.
+    # LLM router tools (LiteLLM, PortKey, OpenRouter) are AI tooling, not frontend routers.
+    "ai routing": "ai",             # bigram — "ai routing litellm", "ai routing openrouter" → AI & Automation
+    "llm routing": "ai dev",        # bigram — "llm routing proxy", "llm routing litellm" → AI Dev Tools
+    "model routing": "ai",          # bigram — "model routing provider", "model routing fallback" → AI & Automation
+    # Developer Tools — "mob programming" dead zone; both "mob" and "programming" unmapped.
+    # Mob programming tools (Mob.sh, Mobster) are developer collaboration utilities.
+    "mob programming": "developer", # bigram — "mob programming tool", "mob programming software" → Developer Tools
     # CRM & Sales — compound queries that collide with other categories via individual tokens
     # "pipeline"→background is correct for data pipelines but wrong for CRM pipelines.
     "sales pipeline": "crm",        # spaced bigram — "sales pipeline tool", "sales pipeline crm" → CRM & Sales
@@ -8152,6 +8160,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "calendly": "scheduling",           # brand token — "calendly alternative" → Scheduling & Booking
     # Customer support — "help desk" bigram missing
     "help desk": "support",             # "help desk software", "help desk open source" → Customer Support
+    # Customer support — shared/team inbox tools (Missive, Front, Help Scout, Hiver) misfire to
+    # Notifications via bare "inbox"→notifications; bigrams override for collaboration context.
+    "shared inbox": "support",          # bigram — "shared inbox tool", "shared inbox open source" → Customer Support
+    "team inbox": "support",            # bigram — "team inbox software", "team inbox helpdesk" → Customer Support
     # Learning — "coding tutorial" bigram overrides "coding"→ai dev for learning queries
     "coding tutorial": "learning",      # "coding tutorial platform", "coding tutorial site" → Learning
     # Headless UI/component library — bare "headless"→cms fires first; bigrams override to frontend
