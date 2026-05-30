@@ -657,6 +657,28 @@ When hunting for routing gaps, these query forms are historically tricky:
     bigram "social proof"→feedback, bigrams "proxy rotation"/"rotating proxy"/"ip
     rotation"→developer, bigrams "modal popup"/"modal overlay"/"modal form"/
     "confirmation modal"→frontend (probe 120, May 2026).
+
+67. "Automation-context split — 'automation' bare token overreach" — bare "automation"→ai
+    is correct for generic "automation platform/tool" queries (n8n, Make, Zapier). But
+    compound queries with a DOMAIN PREFIX route to the wrong category: "web automation"
+    (browser automation — Playwright/Puppeteer for scripting, not AI) routes to AI via
+    "automation"→ai. "workflow automation" correctly routes via bigram "workflow
+    automation"→background. Pattern: probe "[domain] automation [noun]" where the
+    domain prefix should change the target category away from AI. If the bigram is missing,
+    "automation"→ai fires as the second token, which is wrong. Add a bigram for each domain
+    prefix that changes the intent. Fixed: bigram "web automation"→testing (probe 131,
+    May 2026).
+
+68. "Dependency / package-audit context split — 'dependency' overreach" — bare
+    "dependency"→developer is correct for "dependency injection" and "dependency
+    management" (DI containers, npm dependency tooling). But security-audit compound
+    queries like "dependency scanner", "dependency check", "dependency audit" should
+    route to Security Tools (Snyk, OWASP Dependency-Check, npm audit, Dependabot).
+    Pattern: probe "dependency [security-noun]" — if bare "dependency"→developer fires
+    before a security second-token, add a bigram. Note: "dependency vulnerability"
+    already maps to security (existing bigram); also add "dependency scanner" and
+    "dependency check". Fixed: bigrams "dependency scanner"/"dependency check"→security
+    (probe 131, May 2026).
 """
 
 import sys
