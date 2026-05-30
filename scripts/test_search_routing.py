@@ -4483,6 +4483,18 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions: image resize and mutation testing still route correctly
     ("image resize library", "developer"),            # PRE: bigram "image resize"→developer fires before "resize"→file
     ("mutation testing stryker", "testing"),          # PRE: bare "mutation"→testing fires correctly
+
+    # probe 129 — streaming chat / LLM streaming dead zones
+    #
+    # "streaming chat react" → "streaming"→media MISROUTE (LLM streaming chat is AI & Automation)
+    # "chat stream nodejs" → "chat"→customer (Customer Support collision)
+    # Fixed: bigrams "streaming chat"/"chat stream"→ai
+    ("streaming chat react", "ai"),                   # bigram "streaming chat"→ai (overrides "streaming"→media)
+    ("streaming chat api", "ai"),                     # bigram "streaming chat"→ai at pos 0
+    ("chat stream nodejs", "ai"),                     # bigram "chat stream"→ai (overrides "chat"→customer)
+    # Regressions: video streaming and live chat still route correctly
+    ("video streaming hls", "media"),                 # PRE: "video"→media fires before "streaming" for video
+    ("live chat widget", "customer"),                 # PRE: "live chat"→customer bigram still fires
 ]
 
 

@@ -8009,6 +8009,11 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ai memory": "ai",                  # bigram — "ai memory tool", "ai agent memory" → AI & Automation (beats "memory"→caching)
     # AI — "ai chat" overrides "chat"→customer: AI chatbots (Chatbase, OpenChat) live in AI & Automation, not Customer Support.
     "ai chat": "ai",                    # bigram — "ai chat tool", "ai chat alternative" → AI & Automation (beats "chat"→customer)
+    # AI — "streaming chat" overrides "streaming"→media for LLM chat streaming queries.
+    # "streaming chat react"/"streaming chat api" strip to ["streaming","chat"]; "streaming"→media fires.
+    # LLM chat streaming (Vercel AI SDK, ai-stream-element) lives in AI & Automation, not Media.
+    "streaming chat": "ai",             # bigram — "streaming chat react", "streaming chat api" → AI & Automation
+    "chat stream": "ai",                # bigram — "chat stream nodejs", "chat stream vercel" → AI & Automation
     # AI — OpenAI GPT-4.1 family (released April 2025; frontier model + two cheaper variants)
     # Very high "gpt-4.1 alternative", "gpt-4.1 api", "gpt-4.1-mini vs claude" query volume post-launch
     "gpt41": "ai",                      # GPT-4.1 — "gpt41 alternative", "gpt41 api", "gpt41 setup" → AI & Automation
