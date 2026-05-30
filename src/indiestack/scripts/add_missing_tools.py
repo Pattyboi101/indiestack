@@ -15184,6 +15184,61 @@ TOOLS = [
         "npm install react-image-crop",
         "code",
     ),
+    # AI Standards & Specs — evaluation frameworks and safety tools (added May 2026)
+    (
+        "garak",
+        "garak",
+        "LLM vulnerability scanner and red-teaming framework",
+        "garak is NVIDIA's open-source LLM vulnerability scanner. It probes language "
+        "models for over 100 failure modes: prompt injection, jailbreaks, hallucination, "
+        "toxicity, malware generation, and data leakage. Supports OpenAI, Anthropic, "
+        "HuggingFace, and local models. Generates structured vulnerability reports for "
+        "compliance and safety audits. Used by AI safety teams, red-teamers, and "
+        "enterprises evaluating LLMs before production deployment.",
+        "ai-standards",
+        "NVIDIA/garak",
+        3800,
+        "https://garak.ai",
+        "llm,red-team,safety,vulnerability-scanning,ai-safety,evaluation",
+        "pip install garak",
+        "code",
+    ),
+    (
+        "lm-evaluation-harness",
+        "LM Evaluation Harness",
+        "Unified evaluation framework for language models across 60+ benchmarks",
+        "EleutherAI's LM Evaluation Harness is the standard toolkit for benchmarking "
+        "language models. Supports MMLU, HellaSwag, ARC, TruthfulQA, GSM8K, HumanEval, "
+        "and 60+ other benchmarks. Works with HuggingFace models, OpenAI API, and local "
+        "checkpoints. Produces reproducible scores for model comparison and capability "
+        "assessment. Used by Mistral, Falcon, and most open-weight LLM releases to "
+        "report standard evaluation results.",
+        "ai-standards",
+        "EleutherAI/lm-evaluation-harness",
+        7200,
+        "https://github.com/EleutherAI/lm-evaluation-harness",
+        "llm,benchmarks,evaluation,mmlu,arc,hellaswag,ai-safety",
+        "pip install lm-eval",
+        "code",
+    ),
+    (
+        "inspect-ai",
+        "Inspect",
+        "Composable evaluation framework for AI safety testing from UK AISI",
+        "Inspect is the UK AI Safety Institute's open-source framework for evaluating "
+        "AI models. Supports chain-of-thought, multi-turn dialogues, tool use, and "
+        "sandboxed code execution. Enables structured safety evaluations with scorers, "
+        "solvers, and datasets. Used for frontier model assessments by government AI "
+        "safety bodies. Integrates with OpenAI, Anthropic, Google, and HuggingFace. "
+        "Extensible via Python for custom eval scenarios.",
+        "ai-standards",
+        "UKGovernmentBEIS/inspect_ai",
+        1800,
+        "https://ukgovernmentbeis.github.io/inspect_ai",
+        "ai-safety,evaluation,llm,government,frontier-models,safety-testing",
+        "pip install inspect-ai",
+        "code",
+    ),
 ]
 
 
