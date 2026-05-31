@@ -90,6 +90,13 @@ These areas historically generate `raw_first` misses:
 | Edge/serverless | val town, deno deploy, cloudflare workers |
 | Standards | llms.txt, a2a, mcp, openai agents |
 | Token collision traps | cloud native (native→frontend), commit message (message→queue), local ai (local→raw_first) |
+| Async programming | async runtime, coroutine, coroutines, event loop (event→message collision) |
+| LLM inference | speculative decoding, kv cache, quantization, token budget |
+| Browser extension dev | firefox addon, chrome devtools extension, manifest v3 |
+| CI/CD pipeline | pipeline runner, pipeline agent, runner token |
+| Code generation | typescript codegen, graphql codegen, openapi codegen |
+| Internal developer portals | backstage idp, service catalog, developer portal |
+| NLP text processing | stemmer, lemmatizer, tokenizer, pos tagger |
 
 ### Pattern 16 — "conflicting first/second token" probe queries
 
