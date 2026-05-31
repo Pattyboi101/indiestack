@@ -611,7 +611,7 @@ async def render_growth_section(db) -> str:
             <h2 style="font-family:var(--font-display);font-size:20px;color:var(--ink);margin-bottom:16px;">Tool Claim Conversion</h2>
             <div style="display:flex;align-items:center;gap:16px;">
                 <div style="flex:1;height:24px;background:var(--cream-dark);border-radius:var(--radius-sm);overflow:hidden;">
-                    <div style="height:100%;width:{claimed_tools / total_tools * 100 if total_tools else 0:.0f}%;background:#16a34a;border-radius:var(--radius-sm);"></div>
+                    <div style="height:100%;width:{claimed_tools / total_tools * 100 if total_tools else 0:.0f}%;background:var(--success);border-radius:var(--radius-sm);"></div>
                 </div>
                 <span style="font-size:14px;font-weight:600;color:var(--ink);">{claim_pct}</span>
             </div>
