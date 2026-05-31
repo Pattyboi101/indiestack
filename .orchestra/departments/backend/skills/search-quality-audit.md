@@ -108,6 +108,15 @@ These areas historically generate `raw_first` misses:
 | Distributed transactions | two phase commit, distributed transaction, atomikos, seata, saga pattern |
 | Secret management | credential rotation, account rotation, key rotation, vault secrets, doppler secrets |
 | Property-based testing | pbt framework, hypothesis testing, fast-check, proptest, quickcheck |
+| WASM serverless | spin framework, fermyon, wasm serverless, wasmtime, wasmer, component model |
+| Code intelligence / syntax | tree sitter, syntax highlighter, code highlighter, highlighting library |
+| Remote dev environments | remote development, codespace, devpod, devcontainer, cloud ide |
+| AI agent patterns | computer use api, tool calling, structured output, prompt template, llm routing |
+| Data observability | data lineage, data catalog, data observability, data quality, data contract |
+| Service mesh / networking | service mesh, envoy proxy, istio, linkerd, ebpf networking |
+| Software supply chain | sbom generator, slsa provenance, sigstore, cosign, syft, grype |
+| Chaos / resilience testing | chaos engineering, fault injection, chaos monkey, litmus chaos, toxiproxy |
+| API contract testing | pact contract, wiremock stub, consumer driven contract, prism mock |
 
 ### Pattern 16 — "conflicting first/second token" probe queries
 
