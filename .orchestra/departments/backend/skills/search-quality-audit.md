@@ -146,6 +146,19 @@ These areas historically generate `raw_first` misses:
 | Stream processing SQL | streaming sql, flink sql, ksql, spark sql streaming, kafka streams sql |
 | Code navigation | code navigation, code intelligence, semantic code search, code map, codesearch |
 | Human-in-the-loop AI | hitl workflow, human loop annotation, human feedback loop, active learning labeling |
+| Classical NLP libraries | spacy (fixed probe 145), nltk (fixed), gensim, stanza, corenlp, stanfordnlp, flair nlp |
+| POS tagging / linguistics | pos tagger (fixed), stemmer (fixed), lemmatizer (fixed), dependency parsing, named entity recognition |
+| Architecture patterns | architecture bare (fixed probe 145), ddd, domain driven design, event storming, cqrs, saga pattern |
+| .js suffix forms | react.js (fixed probe 145), vue.js (fixed), node.js (fixed) — period preserved by str.split(); check other versioned forms: ember.js, backbone.js |
+| WebAssembly / WASM | wasm runtime, wasm module, webassembly toolkit, wasi, emscripten |
+| Accessibility testing | a11y, wcag checker, axe accessibility, screen reader testing, color contrast checker |
+| FinOps / cloud cost | finops tool, cloud cost optimization, infracost, kubecost, cloud cost explorer |
+| API versioning | api versioning, api deprecation, semantic versioning, changelog automation, breaking change detection |
+| CRDT / collaboration | crdt library, operational transformation, yjs alternative, automerge |
+| OpenTelemetry ecosystem | otel collector, opentelemetry collector, otel exporter, otel sdk, trace propagation |
+| gRPC tooling | grpc gateway, grpc reflection, grpc web, grpc mock |
+| Browser extension dev | chrome extension sdk, webextension, extension boilerplate, manifest v3 |
+| Service mesh | istio alternative, linkerd, consul connect, kuma mesh, cilium service mesh |
 
 ## Commit Style
 
