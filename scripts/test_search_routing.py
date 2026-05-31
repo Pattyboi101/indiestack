@@ -4673,6 +4673,14 @@ TEST_CASES: list[tuple[str, str]] = [
     ("entity extraction nlp", "ai"),                     # PRE: "entity extraction" bigram→ai unchanged
     ("css sprites", "frontend"),                         # PRE: "css"→frontend fires at pos 0
     ("ray tracing", "ai"),                               # PRE: "ray"→ai unchanged
+    # ── Probe 135: ANN / shell-completion / ECS named-tool dead zones ──
+    ("ann library python", "search"),                    # bare "ann"→search (ANN index libraries FAISS, Annoy)
+    ("approximate nearest neighbor", "search"),          # bigram "nearest neighbor"→search fires at i=1
+    ("tab completion bash", "cli"),                      # bigram "tab completion"→cli
+    ("flecs ecs framework", "games"),                    # bare "flecs"→games (C ECS framework)
+    # Probe 135 regression guards
+    ("code completion editor", "ai dev"),                # PRE: "code completion" bigram→ai-dev unchanged
+    ("ann search", "search"),                            # PRE: bare "ann"→search consistent
 ]
 
 

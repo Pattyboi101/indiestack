@@ -10120,6 +10120,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Entity Component System — "entity component system" → database via bare "entity"→database (wrong;
     # ECS game architecture tools: Flecs, bevy_ecs, EnTT → Games & Entertainment)
     "entity component": "games",        # bigram — overrides "entity"→database for game-ECS queries → Games
+    # ── Probe 135 (autonomous loop, May 2026): ANN / shell-completion / ECS named-tool dead zones ──
+    #
+    # ANN (Approximate Nearest Neighbor) — "ann library" → raw_first; FAISS, Annoy, HNSWlib, ScaNN are
+    # vector similarity search index libraries → Search Engines (complement to "vector"→database for vector DBs)
+    "ann": "search",                    # bare — "ann library python", "ann index" → Search Engines
+    "nearest neighbor": "search",       # bigram — "nearest neighbor search", "approximate nearest neighbor" → Search
+    # Shell tab completion — "tab completion" → raw_first (both tokens unmapped; zsh completions, bash complete,
+    # fig, carapace are CLI tools)
+    "tab completion": "cli",            # bigram — "tab completion bash", "tab completion zsh" → CLI Tools
+    # Flecs ECS game framework — "flecs ecs" → devops via bare "ecs"→devops (AWS ECS collision; Flecs is the
+    # most popular standalone C/C++ ECS library for games, 6k★)
+    "flecs": "games",                   # bare — "flecs alternative", "flecs ecs framework" → Games & Entertainment
 }
 
 _FTS_STOP_WORDS = {
