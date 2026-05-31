@@ -7974,7 +7974,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Bigram fires before "llm" single token so these route to the correct ai-standards category.
     "llm evaluation": "ai standards",    # spaced bigram — "llm evaluation harness", "llm evaluation tool"
     "llm-evaluation": "ai standards",    # hyphenated — "llm-evaluation alternative" → AI Standards & Specs
-    "llm benchmark": "ai standards",     # spaced bigram — "llm benchmark leaderboard", "llm benchmark comparison"
     "llm-benchmark": "ai standards",     # hyphenated — "llm-benchmark suite" → AI Standards & Specs
     "llm eval": "ai standards",          # short form bigram — "llm eval setup", "llm eval tool" → AI Standards (was: "llm"→ai)
     "llm benchmarking": "ai standards",  # gerund bigram — "llm benchmarking tool", "llm benchmarking result" → AI Standards
@@ -8987,7 +8986,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "recurring": "payments",                 # bare — "recurring charges", "recurring invoices" → Payments
     "cryptocurrency": "payments",            # bare — "cryptocurrency payments", "accept cryptocurrency" → Payments
     "crypto payments": "payments",           # bigram — overrides bare "crypto"→security; "crypto payments api" → Payments
-    "crypto payment": "payments",            # bigram — singular form — "crypto payment gateway" → Payments
     # Developer Tools — back-office admin builders (Retool, Appsmith, Tooljet, Budibase).
     "backoffice": "developer",               # bare — "backoffice builder", "backoffice admin react" → Developer Tools
     "back office": "developer",              # bigram — "back office builder", "back office tool" → Developer Tools
@@ -9794,7 +9792,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Dependency + package security auditing (Snyk, npm audit, OWASP Dependency-Check)
     "dependency audit": "security",             # bigram — "dependency audit tool", "dependency vulnerability audit" → Security
     "dependency scanner": "security",           # bigram — "dependency scanner tool", "dependency security scanner" → Security (overrides "dependency"→developer)
-    "dependency check": "security",             # bigram — "dependency check owasp", "dependency check tool" → Security
     "package vulnerability": "security",        # bigram — "package vulnerability scanner", "package security audit" → Security
     # ── Probe 108 (autonomous loop, May 2026): LitElement/BPMN/visual-builder/custom-elements dead zones ──
     #
@@ -9981,7 +9978,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — fast-check property-based testing (45k★ JS). "fast" is a stop word so bare "check"
     # is the only reachable token. "fastcheck" handles the compound form.
     "check": "testing",                  # bare — "fast-check alternative", "check library" → Testing (fallback)
-    "fastcheck": "testing",              # compound — "fastcheck js", "fastcheck alternative" → Testing
     "property check": "testing",         # bigram — "property check library", "property check js" → Testing
 
     # Monitoring — OpenTelemetry instrumentation dead zones.
@@ -10036,6 +10032,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "postgis": "database",              # bare — "postgis alternative", "postgis extension" → Database
     # "iot platform" → raw_first "iot" (neither "iot" nor "platform" had a synonym)
     "iot": "devops",                    # bare — "iot platform", "iot data storage" → DevOps & Infrastructure
+    # Probe 132 — browser-extension / event-loop / async / pipeline / codegen dead zones
+    # "firefox addon"/"firefox extension" → raw_first "firefox" (unmapped; complement to "chrome"→developer)
+    "firefox": "developer",             # bare — "firefox extension toolkit", "firefox addon" → Developer Tools
+    # "firefox addon" bigram adds explicit form (after stop-word "addon"→?) but bare "firefox" is sufficient
+    "addon": "developer",               # bare — "firefox addon", "vscode addon", "browser addon" → Developer Tools
+    "addons": "developer",              # plural — "vscode addons", "chrome addons" → Developer Tools
+    # "event loop" → message via bare "event"→message (wrong; JS event loop tools clinic.js/libuv → Developer)
+    "event loop": "developer",          # bigram — overrides "event"→message for event-loop queries → Developer Tools
+    # "async runtime" → raw_first "async" (unmapped; Tokio, asyncio, trio async runtimes → Developer Tools)
+    "async runtime": "developer",       # bigram — "async runtime rust", "async runtime python" → Developer Tools
+    # "coroutine library" → raw_first "coroutine" (unmapped; gevent, greenlet, Kotlin coroutines → Developer)
+    "coroutine": "developer",           # bare — "coroutine library", "coroutines python" → Developer Tools
+    "coroutines": "developer",          # plural — "python coroutines" → Developer Tools
+    "kotlin coroutines": "developer",   # bigram — overrides "kotlin"→api; Kotlin Coroutines library → Developer Tools
+    # "stemmer library" → raw_first "stemmer" (unmapped; NLTK stemmer, Snowball → Developer Tools)
+    "stemmer": "developer",             # bare — "stemmer library python", "stemming algorithm" → Developer Tools
+    # "pipeline runner" → background via bare "pipeline"→background (wrong; GitLab Runner is CI/CD → DevOps)
+    "pipeline runner": "devops",        # bigram — "pipeline runner gitlab", "pipeline runner ci" → DevOps
+    # "typescript codegen" → frontend via bare "typescript"→frontend (wrong; ts-to-zod/quicktype → Developer)
+    "typescript codegen": "developer",  # bigram — overrides "typescript"→frontend → Developer Tools
+    # "speculative decoding" → developer via bare "decoding"→developer (wrong; LLM inference optimization → AI)
+    "speculative decoding": "ai",       # bigram — overrides "decoding"→developer for LLM inference queries → AI
+    # "service catalog backstage" → devops via bare "catalog"→devops ("service" is a stop-word);
+    # Backstage IDP, Port, OpsLevel "service catalog" feature belongs in Developer Tools.
+    "catalog backstage": "developer",   # bigram — fired for "service catalog backstage" after stop-word strip
+    "catalog idp": "developer",         # bigram — "service catalog idp", "catalog idp backstage" → Developer
 }
 
 _FTS_STOP_WORDS = {

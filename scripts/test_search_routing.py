@@ -4594,6 +4594,41 @@ TEST_CASES: list[tuple[str, str]] = [
     ("dependency management", "developer"),           # PRE: bare "dependency"→developer unchanged
     ("dependency vulnerability", "security"),         # PRE: bigram "dependency vulnerability"→security unchanged
     ("browser automation playwright", "testing"),     # PRE: bare "browser"→testing unchanged
+    # ── Probe 132 (May 2026): duplicate-cleanup + browser-extension / event-loop / async / pipeline / codegen ──
+    # Duplicate keys removed: "llm benchmark"×2, "crypto payment"×2, "dependency check"×2, "fastcheck"×2
+    # Validate→0 duplicates after cleanup.
+    #
+    # "firefox addon" → raw_first "firefox" (unmapped; complement to "chrome"→developer)
+    ("firefox extension toolkit", "developer"),          # bare "firefox"→developer
+    ("firefox addon", "developer"),                      # bare "firefox"→developer at pos 0
+    ("addon browser", "developer"),                      # bare "addon"→developer
+    ("vscode addons list", "developer"),                 # bare "addons"→developer
+    # "event loop" → message via bare "event"→message (wrong; JS event loop tools → Developer)
+    ("event loop nodejs", "developer"),                  # bigram "event loop"→developer overrides "event"→message
+    ("event loop monitoring", "developer"),              # bigram "event loop"→developer fires before bare tokens
+    # "async runtime" → raw_first (unmapped; Tokio, asyncio → Developer)
+    ("async runtime rust", "developer"),                 # bigram "async runtime"→developer
+    ("async runtime python", "developer"),               # bigram "async runtime"→developer
+    # "coroutine" → raw_first (unmapped; gevent, greenlet, Kotlin → Developer)
+    ("coroutine library python", "developer"),           # bare "coroutine"→developer
+    ("kotlin coroutines", "developer"),                  # bigram "kotlin coroutines"→developer (overrides "kotlin"→api)
+    # "stemmer" → raw_first (unmapped; NLTK stemmer, Snowball → Developer)
+    ("stemmer library python", "developer"),             # bare "stemmer"→developer
+    # "pipeline runner" → background via "pipeline" (wrong; GitLab Runner, GitHub Actions Runner → DevOps)
+    ("pipeline runner gitlab", "devops"),                # bigram "pipeline runner"→devops overrides "pipeline"→background
+    ("pipeline runner ci", "devops"),                    # bigram "pipeline runner"→devops
+    # "typescript codegen" → frontend via "typescript" (wrong; ts-to-zod, quicktype → Developer)
+    ("typescript codegen tool", "developer"),            # bigram "typescript codegen"→developer fires at pos 0
+    # "speculative decoding" → developer via "decoding" (wrong; LLM inference optimization → AI)
+    ("speculative decoding llm", "ai"),                  # bigram "speculative decoding"→ai overrides "decoding"→developer
+    # "service catalog backstage" → devops via "catalog" ("service" stop-word; Backstage → Developer)
+    ("service catalog backstage", "developer"),          # bigram "catalog backstage"→developer (pos 0 after stop-word strip)
+    # Regressions
+    ("event sourcing kafka", "message"),                 # PRE: bare "event"→message unchanged without "loop" suffix
+    ("pipeline deployment", "background"),               # PRE: bare "pipeline"→background unchanged (no "runner" suffix)
+    ("typescript react", "frontend"),                    # PRE: bare "typescript"→frontend unchanged
+    ("async job queue", "background"),                   # PRE: "job"→background wins (no "async runtime" bigram collision)
+    ("chrome extension toolkit", "developer"),           # PRE: bare "chrome"→developer unchanged
 ]
 
 
