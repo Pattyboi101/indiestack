@@ -4602,6 +4602,51 @@ TEST_CASES: list[tuple[str, str]] = [
     ("code splitting webpack", "frontend"),           # PRE: bare "splitting"→frontend unchanged (no traffic prefix)
     ("routing library react", "frontend"),            # PRE: bare "routing"→frontend unchanged (no traffic prefix)
     ("load balancer nginx", "devops"),                # PRE: bigram "load balancer"→devops unchanged
+
+    # ── probe 135: frontend-bare / full-stack / micro-frontend / site-generator / drag-and-drop dead zones ──
+    # "frontend framework" → raw_first "frontend" (framework is stop word; bare "frontend" now explicitly mapped)
+    ("frontend framework", "frontend"),             # bare "frontend"→frontend (no longer via raw_first coincidence)
+    ("frontend developer", "frontend"),             # bare "frontend"→frontend at pos 0
+    ("frontend tooling", "frontend"),               # bare "frontend"→frontend
+    # "full stack" spaced form dead zone (complement to "full-stack" hyphenated form)
+    ("full stack developer", "frontend"),           # bigram "full stack"→frontend (was raw_first "full")
+    ("full stack web", "frontend"),                 # bigram form
+    ("full-stack web framework", "frontend"),       # PRE: hyphenated form unchanged
+    # "micro-frontend" hyphenated forms (spaced forms already worked)
+    ("micro-frontend architecture", "frontend"),    # hyphenated single token → frontend
+    ("micro-frontends module federation", "frontend"), # hyphenated plural → frontend
+    ("micro frontend react", "frontend"),           # PRE: spaced form unchanged
+    # "drag-and-drop" hyphenated (spaced "drag and drop" fires via bare "drag"→frontend unchanged)
+    ("drag-and-drop library", "frontend"),          # hyphenated compound → frontend
+    ("drag-and-drop react", "frontend"),            # hyphenated form
+    ("drag and drop library", "frontend"),          # PRE: spaced form still works via bare "drag"→frontend
+    # "site generator" dead zone ("static site generator" via "static" still works)
+    ("site generator react", "frontend"),           # bigram "site generator"→frontend (was raw_first "site")
+    ("site generators comparison", "frontend"),     # plural bigram → frontend
+    ("static site generator", "frontend"),          # PRE: "static"→frontend unchanged
+    # "docs site" regression guard (fires at pos 0 before "site generator" bigram at pos 1)
+    ("docs site generator", "documentation"),       # bigram "docs site"→documentation fires first
+
+    # ── probe 136: streaming-api / replay-debugging / semantic-caching / source-maps dead zones ──
+    # "streaming api" → media via bare "streaming"→media (SSE/chunked streaming APIs → API Tools)
+    ("streaming api nodejs", "api"),                # bigram "streaming api"→api overrides "streaming"→media
+    ("streaming api sse", "api"),                   # bigram form
+    # Regression — video/audio streaming queries still route to Media (bigrams fire at pos 0)
+    ("video streaming api", "media"),               # bigram "video streaming"→media fires before "streaming api"
+    ("audio streaming server", "media"),            # bigram "audio streaming"→media at pos 0
+    ("video streaming nodejs", "media"),            # bare "video"→media fires at pos 0
+    # "replay debugging" → monitoring via bare "replay"→monitoring (Replay.io/rr are Developer Tools)
+    ("replay debugging tool", "developer"),         # bigram "replay debugging"→developer
+    ("session replay tool", "analytics"),           # PRE: bigram "session replay"→analytics unchanged
+    # "semantic caching" → search via bare "semantic"→search (GPTCache, Redis SemanticCache → Caching)
+    ("semantic caching redis", "caching"),          # bigram "semantic caching"→caching overrides "semantic"→search
+    ("semantic caching llm", "caching"),            # bigram form
+    ("semantic cache gpt", "caching"),              # PRE: bigram "semantic cache"→caching unchanged
+    ("semantic search engine", "search"),           # PRE: bigram "semantic search"→search unchanged
+    # "source-maps" hyphenated plural (complement to "source-map" and "sourcemaps" already mapped)
+    ("source-maps react", "developer"),             # hyphenated plural token → Developer Tools
+    ("source-maps vite", "developer"),              # hyphenated plural form
+    ("sourcemaps webpack", "developer"),            # PRE: compound form unchanged
 ]
 
 
