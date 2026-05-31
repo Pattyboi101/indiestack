@@ -103,6 +103,11 @@ These areas historically generate `raw_first` misses:
 | DSL / parser tools | dsl, antlr, peg grammar, langium, chevrotain |
 | Screen / capture utilities | screen capture, screen share, screen recorder |
 | AST / code introspection | abstract syntax tree, syntax tree, ast parser |
+| ZKP / cryptography | zero knowledge proof, zkp library, zk snark, zk stark, circom, snarkjs, halo2 |
+| Embedded / IoT / RTOS | rtos, freertos, zephyr, arduino, platformio, micropython, yocto, esp32, cocoapods |
+| Distributed transactions | two phase commit, distributed transaction, atomikos, seata, saga pattern |
+| Secret management | credential rotation, account rotation, key rotation, vault secrets, doppler secrets |
+| Property-based testing | pbt framework, hypothesis testing, fast-check, proptest, quickcheck |
 
 ### Pattern 16 — "conflicting first/second token" probe queries
 
