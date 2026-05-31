@@ -4713,6 +4713,20 @@ TEST_CASES: list[tuple[str, str]] = [
     ("llm benchmark comparison", "ai standards"),        # PRE: "llm benchmark"→ai standards unchanged
     ("ai safety framework", "ai standards"),             # PRE: "ai safety"→ai standards unchanged
     ("prompt injection detection", "security"),          # PRE: "prompt injection"→security unchanged
+    # Probe 143 — tensor/JAX/similarity/cosine/graph-neural dead zones
+    ("tensor library python", "ai"),                    # bare "tensor"→ai (PyTorch/JAX/TF tensor ops)
+    ("tensor operations numpy", "ai"),                  # bare "tensor"→ai fires
+    ("jax library google", "ai"),                       # bare "jax"→ai (Google's numerical ML library)
+    ("jax autodiff", "ai"),                             # bare "jax"→ai
+    ("text similarity python", "ai"),                   # bare "similarity"→ai (sentence-transformers)
+    ("cosine similarity search", "ai"),                 # bare "cosine"→ai
+    ("cosine distance embedding", "ai"),                # bare "cosine"→ai overrides "distance"→maps
+    ("graph neural network library", "ai"),             # bigram "graph neural"→ai overrides bare "graph"→database
+    ("graph neural network gnn", "ai"),                 # bigram fires at position 0
+    # Probe 143 regression guards
+    ("graph database query", "database"),               # PRE: bare "graph"→database unchanged (no "neural" suffix)
+    ("graph rag pattern", "ai"),                        # PRE: bigram "graph rag"→ai unchanged
+    ("pytorch tensor ops", "ai"),                       # PRE: "pytorch"→ai fires before "tensor"
 ]
 
 

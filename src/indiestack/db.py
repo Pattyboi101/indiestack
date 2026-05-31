@@ -3893,6 +3893,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tensorflow": "ai",             # TensorFlow — Google's ML framework for production/research
     "torch": "ai",                  # PyTorch alias — "torch model", "torch training"
     "keras": "ai",                  # Keras — high-level neural networks API (TF/JAX/PyTorch backends)
+    "jax": "ai",                    # JAX — Google's ML numerical computing library (autodiff + XLA JIT) (29k★)
+    "tensor": "ai",                 # "tensor library", "tensor operations" → PyTorch/JAX/TF context → AI
     # AI — ML experiment tracking and model management
     "wandb": "ai",                  # Weights & Biases — MLOps platform for experiment tracking (9k★)
     "weights": "ai",                # "Weights & Biases" — first term in full name queries
@@ -3903,6 +3905,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rerank": "ai",                 # "reranking model", "cross-encoder rerank" → AI & Automation
     "reranking": "ai",              # explicit form — "reranking in RAG"
     "embedder": "ai",               # "document embedder", "fast embedder" → AI & Automation
+    "similarity": "ai",             # "text similarity", "cosine similarity" → AI (sentence-transformers, etc.)
+    "cosine": "ai",                 # "cosine similarity", "cosine distance" → AI vector/embedding tools
     # Payments — Polar.sh and Lemon Squeezy routing for "[tool] alternative" queries
     "polar": "payments",            # Polar.sh — open-source Stripe alternative for OSS devs (5k★)
     "lemon": "payments",            # Lemon Squeezy — first term: "lemon squeezy alternative"
@@ -9271,6 +9275,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # LlamaIndex PropertyGraphIndex, LangChain GraphRAG, Neo4j GraphRAG are AI retrieval patterns.
     # Regression: "graph database" still correctly routes to database (bigram "graph database" fires first).
     "graph rag": "ai",                     # bigram — "graph rag llama", "graph rag neo4j", "graph rag pattern" → AI
+    "graph neural": "ai",                  # bigram — "graph neural network", "graph neural library" → AI (DGL, PyG; overrides bare "graph"→database)
     # Feature Flags — experimentation platform bare token (Statsig, Optimizely, Split, VWO)
     "experimentation": "feature",          # bare — "experimentation platform", "experimentation tool" → Feature Flags
     # Feature Flags — entitlement management (plan-tier feature access; Unleash, LaunchDarkly)
