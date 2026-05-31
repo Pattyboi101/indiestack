@@ -296,7 +296,7 @@ async def render_funnels_section(db) -> str:
         ("Views", total_views, "var(--terracotta)"),
         ("Clicks", total_clicks, "var(--slate)"),
         ("Bookmarks", total_wishlists, "var(--success)"),
-        ("Purchases", total_purchases, "#EA580C"),
+        ("Purchases", total_purchases, "var(--gold)"),
     ]
     funnel_bar = ""
     if total_views > 0:
