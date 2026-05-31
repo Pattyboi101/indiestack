@@ -4751,6 +4751,26 @@ TEST_CASES: list[tuple[str, str]] = [
     ("crypto library node", "security"),                 # PRE: bare "crypto"→security unchanged
     ("quantum safe encryption", "security"),             # PRE: "encryption"→security fires (bare "quantum" not added)
     ("data quality monitoring", "analytics"),            # PRE: bigram "data quality"→analytics unchanged
+    # Probe 139 — WASM-serverless / tree-sitter / syntax-highlighter / remote-dev dead zones
+    ("spin framework", "devops"),                        # bare "spin"→devops (Fermyon Spin WASM serverless)
+    ("spin serverless wasm", "devops"),                  # bare "spin"→devops fires before "wasm"→frontend
+    ("fermyon", "devops"),                               # bare "fermyon"→devops (Fermyon Cloud)
+    ("tree sitter", "developer"),                        # bigram "tree sitter"→developer (spaced form)
+    ("tree sitter rust", "developer"),                   # bigram fires before bare "rust"→developer
+    ("tree sitter grammar", "developer"),                # bigram fires before bare "grammar"→developer
+    ("syntax highlighter", "documentation"),             # noun form "syntax highlighter"→documentation
+    ("syntax highlighter react", "documentation"),       # noun form bigram fires first
+    ("code highlighting", "documentation"),              # bigram "code highlighting"→documentation
+    ("code highlighter npm", "documentation"),           # bigram "code highlighter"→documentation
+    ("remote development", "devops"),                    # bigram "remote development"→devops (Gitpod, Codespaces, DevPod)
+    ("remote development environment", "devops"),        # bigram fires at positions 0-1
+    # Probe 139 regression guards
+    ("treesitter", "developer"),                         # PRE: bare "treesitter"→developer unchanged
+    ("tree-sitter alternative", "developer"),            # PRE: hyphenated form unchanged
+    ("syntax highlighting react", "documentation"),      # PRE: existing bigram unchanged
+    ("devcontainer", "devops"),                          # PRE: cloud dev env routing unchanged
+    ("gitpod", "devops"),                                # PRE: cloud dev env routing unchanged
+    ("wasm component", "frontend"),                      # PRE: "wasm"→frontend still fires (no collision with "spin")
 ]
 
 

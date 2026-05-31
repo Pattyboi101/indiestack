@@ -4221,6 +4221,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gitpod": "devops",         # Gitpod — cloud-based dev environments (instant workspace spin-up, 13k★)
     "devcontainer": "devops",   # Dev Containers (VS Code spec) — containerised reproducible dev envs
     "codespace": "devops",      # GitHub Codespaces — browser-based VS Code dev environments
+    # WASM serverless — Fermyon Spin (5k★), Fermyon Cloud — same category as Cloudflare Workers/Deno Deploy
+    "spin": "devops",           # Fermyon Spin — WASM serverless framework; "spin framework", "spin serverless" → DevOps
+    "fermyon": "devops",        # Fermyon — WASM cloud platform (Spin host, Fermyon Cloud) → DevOps
     # JAMstack / static site architecture terms (complement to "ssg", "ssr", "pwa")
     "jamstack": "frontend",     # JAMstack — JavaScript + APIs + Markup architecture (Netlify coined)
     "static": "frontend",       # "static site generator", "static site framework" → Frontend Frameworks
@@ -6948,6 +6951,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — Tree-sitter incremental parsing library (tree-sitter/tree-sitter, 17k★)
     "tree-sitter": "developer",     # Tree-sitter — "tree-sitter grammar", "tree-sitter alternative" → Developer Tools
     "treesitter": "developer",      # compound — "treesitter setup", "treesitter parser" → Developer Tools
+    "treewalker": "developer",      # "treewalker neovim", "treewalker plugin" → Developer Tools (sibling of tree-sitter)
     # Documentation — Sphinx Python documentation generator (sphinx-doc/sphinx, 6k★)
     "sphinx": "documentation",      # Sphinx — Python docs generator with reStructuredText; "sphinx alternative" → Documentation
     # Security — KMS (Key Management Service) — AWS KMS, GCP KMS, HashiCorp Vault
@@ -8196,8 +8200,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ciam": "authentication",              # "ciam solution", "ciam platform", "open source ciam" → Authentication
     # Documentation — "syntax highlight" routes to monitoring via bare "highlight"→monitoring (Highlight.io).
     # Syntax highlighting libraries (Shiki, Prism.js) live in the Documentation category.
+    "tree sitter": "developer",            # spaced form — "tree sitter rust", "tree sitter grammar" → Developer Tools (tree-sitter/tree-sitter, 17k★)
     "syntax highlight": "documentation",   # "syntax highlight library", "syntax highlight react" → Documentation
     "syntax highlighting": "documentation",# "syntax highlighting tool", "syntax highlighting react" → Documentation
+    "syntax highlighter": "documentation", # noun form — "syntax highlighter react", "syntax highlighter library" → Documentation
+    "code highlighting": "documentation",  # "code highlighting react", "code highlighting library" → Documentation (Shiki, Prism.js)
+    "code highlighter": "documentation",   # noun form — "code highlighter npm", "code highlighter component" → Documentation
+    "remote development": "devops",        # "remote development environment", "remote development tool" → DevOps (Gitpod, Codespaces, DevPod)
     # Background Jobs — "workflow engine/orchestrator" must NOT route to AI & Automation.
     # "workflow"→ai fires for n8n/Make/Zapier queries (correct). But "workflow engine" and
     # "workflow orchestrator" refer to durable execution engines (Temporal, Inngest, Restate)
