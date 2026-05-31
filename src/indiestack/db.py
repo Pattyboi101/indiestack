@@ -10206,6 +10206,47 @@ _CAT_SYNONYMS: dict[str, str] = {
     # General cryptography — "cryptography library" → raw_first ("cryptography" unmapped, only "crypto"→security existed).
     # Python cryptography, libsodium, Bouncy Castle, Tink → Security Tools.
     "cryptography": "security",            # bare — "cryptography library", "cryptography python" → Security (complement to "crypto"→security)
+    # ── Probe 141 (autonomous loop, May 2026): OPA Rego / Conftest / Cedar / raycasting /
+    #    llms.txt / text-classification / reverse-engineering / regex / POS-tagger / memory-mgmt ──
+    #
+    # Rego — OPA's policy language; "rego alternative" → raw_first (unmapped; OPA is already mapped
+    # but its domain-specific language "Rego" was not). Rego tools (OPA playground, Styra, Conftest)
+    # live in Security Tools alongside OPA itself.
+    "rego": "security",                     # bare — "rego policy", "rego alternative", "rego language" → Security Tools
+    "rego policy": "security",              # bigram — "rego policy engine", "rego policy rule" → Security Tools
+    # Conftest — OPA-based config/IaC validation tool (open-policy-agent/conftest, 3k★).
+    # "conftest alternative" → raw_first; should be Security (same category as OPA/Kyverno).
+    # Note: "conftest.py" is pytest's fixture file — not searched on IndieStack.
+    "conftest": "security",                 # bare — "conftest alternative", "conftest kubernetes" → Security Tools
+    # Cedar — AWS Cedar authorization policy language (cedar-policy/cedar, 3k★).
+    # Authorization DSLs/engines (Cedar, SpiceDB, OpenFGA, Casbin) live in Security Tools.
+    "cedar": "security",                    # bare — "cedar authorization", "cedar policy aws" → Security Tools
+    "cedar policy": "security",             # bigram — "cedar policy language", "cedar policy engine" → Security Tools
+    # Raycasting — game rendering technique; "raycasting library" → raw_first.
+    # Complement to "physics"→games, "pathfinding"→games, "collision"→games (Probe 133/134).
+    "raycasting": "games",                  # bare — "raycasting library js", "raycasting game engine" → Games & Entertainment
+    # llms.txt — "llms.txt" with period → single raw token; period NOT stripped in test script
+    # but IS stripped in production (sanitize_fts). "llmstxt" already mapped at line ~8116.
+    "llms.txt": "ai",                       # bare — raw test form with period (complement to "llmstxt"→ai at line ~8116) → AI & Automation
+    # Text classification / classifier — ML NLP; "text classification model" → raw_first "text".
+    # spaCy text-cat, HuggingFace pipeline, FastText, scikit-learn TfidfVectorizer → AI & Automation.
+    "text classification": "ai",            # bigram — "text classification python", "text classification model" → AI & Automation
+    "text classifier": "ai",               # bigram — "text classifier pytorch", "text classifier nlp" → AI & Automation
+    # Reverse engineering — security research tools (Ghidra, Binary Ninja, radare2, Cutter, RetDec).
+    # "reverse"→devops fires for reverse-proxy queries but is wrong for security-research queries.
+    # Bigram "reverse engineering" fires before bare "reverse" when that exact sequence appears.
+    "reverse engineering": "security",      # bigram — overrides "reverse"→devops for security research queries → Security Tools
+    # Regular expression — "regular expression engine/library" → raw_first; complement to "regex"→developer.
+    # re2, PCRE, Oniguruma, XRegExp, verbal-expressions all live in Developer Tools.
+    "regular expression": "developer",     # bigram — "regular expression library", "regular expression engine" → Developer Tools
+    # POS tagger — NLP part-of-speech tagging; "pos tagger python" → raw_first.
+    # spaCy, NLTK, Stanza, flair POS taggers belong in AI & Automation alongside NLP tools.
+    "pos tagger": "ai",                    # bigram — "pos tagger python", "pos tagger spacy" → AI & Automation
+    "pos tagging": "ai",                   # bigram — "pos tagging library", "pos tagging model" → AI & Automation
+    # Memory management — "memory management rust" → caching (wrong; "memory"→caching fires).
+    # Memory allocators (jemalloc, mimalloc, tcmalloc, buddy allocator) → Developer Tools.
+    "memory management": "developer",      # bigram — overrides "memory"→caching; "memory management rust/c++" → Developer Tools
+    "memory allocator": "developer",       # bigram — "custom memory allocator", "memory allocator rust" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

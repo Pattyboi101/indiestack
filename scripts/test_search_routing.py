@@ -4781,6 +4781,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("wasm pack rust", "frontend"),                      # PRE: bare "wasm"→frontend when no "serverless" suffix
     ("wasm bindgen", "frontend"),                        # PRE: wasm tool routing unchanged
     ("spin serverless wasm", "devops"),                  # PRE: bare "spin"→devops still fires (no regression)
+    # Probe 141 — OPA Rego / Conftest / Cedar / raycasting / llms.txt / text-classification /
+    #             reverse-engineering / regex / POS-tagger / memory-management dead zones
+    ("rego policy language", "security"),                # bare "rego"→security (OPA policy DSL)
+    ("rego alternative", "security"),                    # bare "rego"→security
+    ("conftest alternative", "security"),                # bare "conftest"→security (OPA Conftest tool)
+    ("conftest kubernetes", "security"),                 # bare "conftest"→security
+    ("cedar authorization", "security"),                 # bare "cedar"→security (AWS Cedar authz language)
+    ("cedar policy aws", "security"),                    # bigram "cedar policy"→security fires at pre-pass
+    ("raycasting library", "games"),                     # bare "raycasting"→games
+    ("raycasting game engine", "games"),                 # bare "raycasting"→games
+    ("llmstxt implementation", "ai"),                    # bare "llmstxt"→ai (production normalized form)
+    ("text classification python", "ai"),                # bigram "text classification"→ai
+    ("text classifier pytorch", "ai"),                   # bigram "text classifier"→ai
+    ("reverse engineering tool", "security"),            # bigram "reverse engineering"→security (overrides "reverse"→devops)
+    ("binary reverse engineering", "security"),          # bigram "reverse engineering" fires at position 1
+    ("regular expression library", "developer"),         # bigram "regular expression"→developer
+    ("pos tagger python", "ai"),                         # bigram "pos tagger"→ai
+    ("pos tagging spacy", "ai"),                         # bigram "pos tagging"→ai
+    ("memory management rust", "developer"),             # bigram "memory management"→developer (overrides "memory"→caching)
+    ("memory allocator custom", "developer"),            # bigram "memory allocator"→developer
+    # Probe 141 regression guards
+    ("reverse proxy nginx", "devops"),                   # PRE: bare "reverse"→devops still fires without "engineering" suffix
+    ("memory cache redis", "caching"),                   # PRE: bare "memory"→caching still fires for cache queries
+    ("async runtime rust", "developer"),                 # PRE: "async runtime" bigram→developer unchanged
+    ("async job queue", "background"),                   # PRE: "async job" still routes to background via "job"→background
 ]
 
 
