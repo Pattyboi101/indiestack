@@ -3462,6 +3462,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Code formatter — Prettier, Biome, dprint live in testing-tools alongside linters
     "formatter": "testing",         # "code formatter", "js formatter" → Testing Tools
     "format": "testing",            # "code format", "auto-format" → Testing Tools (Biome, Prettier)
+    "autoformat": "testing",        # "autoformat on save", "autoformat code" → Testing Tools (Biome, Prettier, Black)
     # HTTP clients — Axios, Got, Ky, node-fetch live in api-tools
     "http": "api",                  # "http client", "http server", "http framework" → API Tools
     "axios": "api",                 # Axios — most popular promise-based HTTP client for JS/TS
@@ -4318,6 +4319,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "sanitizer": "security",         # "html sanitizer", "input sanitizer" → Security Tools (DOMPurify)
     "sanitize": "security",          # verb form — "sanitize html input", "sanitize output" → Security
     "dompurify": "security",         # DOMPurify — fast, permissive XSS sanitizer for HTML (13k★)
+    # Email Marketing — HTML email builders (bigram overrides "html"→frontend for email-builder queries)
+    "html email": "email",           # MJML, React Email, Mailing, Maizzle — "html email builder/template" → Email Marketing
     # Developer Tools — HTML parsers and scrapers (bigrams override "html"→frontend below)
     "html parser": "developer",      # HTML parsers (Cheerio, htmlparser2, html5lib) → Developer Tools
     "html parsing": "developer",     # "html parsing library", "html parsing nodejs" → Developer Tools
@@ -4406,6 +4409,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "nunjucks": "developer",        # Nunjucks — Jinja2-inspired templates for Node.js
     "mustache": "developer",        # Mustache — logic-less templates for JS/Python/Ruby
     "jinja": "developer",           # Jinja2 — Python template engine (high search volume)
+    "jinja2": "developer",          # explicit version form — "jinja2 alternative", "jinja2 python" → Developer Tools
     "ejs": "developer",             # EJS — embedded JavaScript templating
     # Developer Tools — timezone handling (date-fns-tz, spacetime, temporal)
     "timezone": "developer",        # "timezone library", "timezone conversion" → Developer Tools
@@ -9548,6 +9552,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     "type checker": "testing",          # bigram — "type checker python", "type checker typescript" → Testing Tools
     "type checking": "testing",         # bigram — "type checking tool", "type checking python" → Testing Tools
     "static type": "testing",           # bigram — "static type checking", "static type analysis" → Testing Tools
+
+    # "formal verification" / "formal methods" → raw_first (both tokens unmapped).
+    # Formal verification tools (TLA+, Alloy, Dafny, Coq, Lean) and model checkers (Spin, CBMC)
+    # belong in Testing Tools — correctness proofs and specification checking are static testing.
+    # Regression guard: "formal spec" → bare "formal"→testing (correct; spec tools belong in testing tier).
+    "formal": "testing",                # bare — "formal verification", "formal methods tool" → Testing Tools
+    "formal verification": "testing",   # bigram — TLA+, Alloy, Dafny, Coq → Testing Tools
+    "formal methods": "testing",        # bigram — "formal methods tool", "formal methods course" → Testing Tools
 
     # "error boundary" → monitoring via bare "error"→monitoring (wrong; React error boundary
     # component pattern and react-error-boundary library belong in Frontend Frameworks).

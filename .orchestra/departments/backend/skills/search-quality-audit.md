@@ -134,6 +134,9 @@ These areas historically generate `raw_first` misses:
 | Replay/session collision | replay debugging (replay→monitoring; session replay→analytics is correct) |
 | Semantic prefix collision | semantic caching (semantic→search steals it; "semantic cache" bigram works but not gerund -ing form) |
 | Source map variants | source map (source is stop word — spaced bigram dead), source-map (hyphen), source-maps (hyphen plural) |
+| Formal verification | formal verification, formal methods, tla plus, alloy analyzer, dafny, coq proof, theorem prover, model checker |
+| HTML email builders | html email builder, mjml alternative, react email template, email html template |
+| Versioned tool names | jinja2, ejs, handlebars (versioned/named forms often missing when generic bare form is mapped) |
 
 ## Commit Style
 

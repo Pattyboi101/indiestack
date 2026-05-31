@@ -4647,6 +4647,31 @@ TEST_CASES: list[tuple[str, str]] = [
     ("source-maps react", "developer"),             # hyphenated plural token → Developer Tools
     ("source-maps vite", "developer"),              # hyphenated plural form
     ("sourcemaps webpack", "developer"),            # PRE: compound form unchanged
+
+    # Probe 139 — jinja2 / html-email / autoformat / formal-verification dead zones
+    # "jinja2 alternative" fires raw_first — "jinja" (without 2) was mapped but not "jinja2" explicit form.
+    # "html email builder" mis-routed to Frontend via bare "html" (wrong; MJML/React Email → Email Marketing).
+    # "autoformat on save" fires raw_first — "autoformat" compound was unmapped (sibling of "format"→testing).
+    # "formal verification" fires raw_first — "formal"/"formal verification" unmapped → Testing Tools.
+    ("jinja2 alternative", "developer"),                 # bare "jinja2"→developer (Jinja2 Python template engine)
+    ("jinja2 python", "developer"),                      # same mapping fires
+    ("jinja2 template engine", "developer"),             # bigram "template engine"→developer fires at pos 1 (also covers)
+    ("html email builder", "email"),                     # bigram "html email"→email overrides bare "html"→frontend
+    ("html email template", "email"),                    # same bigram fires
+    ("html email generator", "email"),                   # same bigram fires
+    ("autoformat on save", "testing"),                   # bare "autoformat"→testing
+    ("autoformat code", "testing"),                      # bare "autoformat"→testing
+    ("formal verification tool", "testing"),             # bare "formal"→testing fires at i=0
+    ("formal verification tla", "testing"),              # bigram "formal verification"→testing fires at i=0
+    ("formal methods tool", "testing"),                  # bigram "formal methods"→testing fires at i=0
+    # Regressions
+    ("email deliverability", "email"),                   # PRE: bare "email"→email unchanged
+    ("jinja template python", "developer"),              # PRE: bare "jinja"→developer unchanged
+    ("html parser", "developer"),                        # PRE: bigram "html parser"→developer unchanged
+    ("html sanitizer", "security"),                      # PRE: bigram "html sanitizer"→security unchanged
+    ("code formatter prettier", "testing"),              # PRE: bare "formatter"→testing unchanged
+    ("auto format code", "testing"),                     # PRE: bare "format"→testing unchanged
+    ("static type checking", "testing"),                 # PRE: bigram "static type"→testing unchanged
 ]
 
 
