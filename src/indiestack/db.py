@@ -10182,6 +10182,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     "embedded linux": "developer",          # bigram — "embedded linux build system", "embedded linux tool" → Developer Tools (overrides bare "embedded"→database)
     "embedded system": "developer",         # bigram — "embedded system programming", "embedded systems dev" → Developer Tools (overrides bare "embedded"→database)
     "raspberry pi": "developer",            # bigram — "raspberry pi sdk", "raspberry pi library" → Developer Tools
+    # ── Probe 138 (autonomous loop, May 2026): data-contract / post-quantum / cryptography dead zones ──
+    #
+    # Data contracts — "data contract validation"→testing (wrong; "contract"→testing fires via contract-testing
+    # collision; data contracts in data engineering = schema agreements between producers/consumers).
+    # Soda Core, Great Expectations, Monte Carlo support data contracts → Analytics & Metrics.
+    "data contract": "analytics",          # bigram — "data contract validation", "data contract soda" → Analytics (fires before "contract"→testing)
+    # Post-quantum cryptography — "post quantum cryptography" → raw_first (all three tokens unmapped).
+    # NIST PQC finalists (CRYSTALS-Kyber, CRYSTALS-Dilithium, liboqs) → Security Tools.
+    # NOTE: bare "quantum" intentionally NOT added — "quantum computing" queries unrelated to security.
+    "post quantum": "security",            # bigram — "post quantum cryptography", "post quantum key exchange" → Security
+    "pqc": "security",                     # bare — "pqc library", "pqc algorithm" → Security (Post-Quantum Crypto abbreviation)
+    # General cryptography — "cryptography library" → raw_first ("cryptography" unmapped, only "crypto"→security existed).
+    # Python cryptography, libsodium, Bouncy Castle, Tink → Security Tools.
+    "cryptography": "security",            # bare — "cryptography library", "cryptography python" → Security (complement to "crypto"→security)
 }
 
 _FTS_STOP_WORDS = {

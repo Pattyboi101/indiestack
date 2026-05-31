@@ -4735,6 +4735,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("embedded database", "database"),                   # PRE: bare "embedded"→database unchanged
     ("embedded sql", "database"),                        # PRE: bare "embedded"→database unchanged
     ("arduino ide", "developer"),                        # PRE: "arduino"→developer consistent (previously "ide"→developer fired; now "arduino"→developer fires first)
+    # ── Probe 138: data-contract / post-quantum / cryptography dead zones ──
+    ("data contract validation", "analytics"),           # bigram "data contract"→analytics (overrides "contract"→testing)
+    ("data contract soda", "analytics"),                 # bigram "data contract"→analytics
+    ("data contract schema", "analytics"),               # bigram fires before "schema"→developer
+    ("post quantum cryptography", "security"),           # bigram "post quantum"→security
+    ("post quantum key exchange", "security"),           # bigram "post quantum"→security
+    ("pqc library", "security"),                         # bare "pqc"→security (Post-Quantum Crypto)
+    ("pqc algorithm kyber", "security"),                 # bare "pqc"→security
+    ("cryptography library", "security"),                # bare "cryptography"→security
+    ("cryptography python", "security"),                 # bare "cryptography"→security
+    # Probe 138 regression guards
+    ("contract testing pact", "testing"),                # PRE: bare "contract"→testing unchanged for testing queries
+    ("api contract testing", "testing"),                 # PRE: bigram "api contract"→testing unchanged
+    ("crypto library node", "security"),                 # PRE: bare "crypto"→security unchanged
+    ("quantum safe encryption", "security"),             # PRE: "encryption"→security fires (bare "quantum" not added)
+    ("data quality monitoring", "analytics"),            # PRE: bigram "data quality"→analytics unchanged
 ]
 
 
