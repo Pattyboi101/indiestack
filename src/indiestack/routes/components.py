@@ -83,6 +83,7 @@ def design_tokens() -> str:
             --success-bg: #ECFDF5;
             --success-text: #065F46;
             --success-border: #A7F3D0;
+            --warning: #EA580C;
             --warning-bg: #FDF8EE;
             --warning-text: #92400E;
             --warning-border: #FDE68A;
@@ -122,6 +123,7 @@ def design_tokens() -> str:
             --success-bg: #052E16;
             --success-text: #86EFAC;
             --success-border: #166534;
+            --warning: #FB923C;
             --warning-bg: #451A03;
             --warning-text: #FDE68A;
             --warning-border: #92400E;

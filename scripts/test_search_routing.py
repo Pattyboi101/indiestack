@@ -4672,6 +4672,35 @@ TEST_CASES: list[tuple[str, str]] = [
     ("code formatter prettier", "testing"),              # PRE: bare "formatter"→testing unchanged
     ("auto format code", "testing"),                     # PRE: bare "format"→testing unchanged
     ("static type checking", "testing"),                 # PRE: bigram "static type"→testing unchanged
+
+    # ── probe 141: latency-percentile / CloudFormation / pluralization dead zones ──
+    #
+    # Dead zones fixed:
+    # "p99 latency" → raw_first (neither "p99" nor "latency" was mapped; APM/SLO terminology);
+    #   bare "p99"→monitoring, "p95"→monitoring, "p50"→monitoring, "percentile"→monitoring,
+    #   "latency"→monitoring added.
+    # "cloudformation alternative" → raw_first "cloud" (compound "cloudformation" and spaced bigram
+    #   "cloud formation" both added → DevOps & Infrastructure).
+    # "pluralization library" → raw_first (bare "pluralization"→localization + bare "plural"→localization added).
+    # Note: "language detection"/"language identification" bigrams already existed in this codebase.
+    ("p99 latency monitoring", "monitoring"),             # bare "p99"→monitoring
+    ("p95 response time", "monitoring"),                  # bare "p95"→monitoring
+    ("p50 percentile latency", "monitoring"),             # bare "p50"→monitoring + "percentile"→monitoring
+    ("percentile latency grafana", "monitoring"),         # bare "percentile"→monitoring
+    ("tail latency tracker", "monitoring"),               # bare "latency"→monitoring
+    ("low latency database", "monitoring"),               # bare "latency"→monitoring
+    ("cloudformation alternative", "devops"),             # bare "cloudformation"→devops
+    ("cloudformation vs terraform", "devops"),            # bare "cloudformation"→devops
+    ("cloud formation template", "devops"),               # bigram "cloud formation"→devops
+    ("cloud formation yaml", "devops"),                   # bigram "cloud formation"→devops
+    ("language detection library", "localization"),       # bigram "language detection"→localization (existing)
+    ("pluralization library i18n", "localization"),       # bare "pluralization"→localization
+    ("plural forms javascript", "localization"),          # bare "plural"→localization
+    # Regressions guarded
+    ("language model api", "ai"),                         # PRE: "model"→ai fires before any "language" match
+    ("language server protocol", "developer"),            # PRE: bigram "language server"→developer unchanged
+    ("natural language processing", "ai"),                # PRE: bare "natural"→ai fires first
+    ("terraform alternative", "devops"),                  # PRE: "terraform"→devops unchanged
 ]
 
 

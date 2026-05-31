@@ -3025,6 +3025,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "weblate": "localization",          # Weblate — self-hosted translation
     "locize": "localization",           # Locize — i18n-as-a-service backed by i18next
     "lokalise": "localization",         # Lokalise — translation management platform
+    "pluralization": "localization",    # i18n pluralization libraries (intl-messageformat, make-plural) → Localization
+    "plural": "localization",           # "plural forms library", "plural rules" → Localization
     "phrase": "localization",           # Phrase (formerly Memsource) — i18n SaaS
     "transifex": "localization",        # Transifex — localization platform
     "usercentrics": "security",         # Usercentrics — consent management (GDPR/CCPA)
@@ -3071,6 +3073,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "ngrok": "devops",          # ngrok — localhost tunneling tool
     "terraform": "devops",      # Terraform — infrastructure as code
     "pulumi": "devops",         # Pulumi — IaC with real programming languages
+    "cloudformation": "devops", # AWS CloudFormation — compound form ("cloudformation alternative", "cloudformation vs terraform")
+    "cloud-formation": "devops",  # hyphenated form of above
     "ansible": "devops",        # Ansible — configuration management
     # Database — BaaS / cloud tools in TECH_KEYWORDS but missing category synonym boost
     "baas": "database",         # BaaS abbreviation — Firebase, Supabase, Appwrite, PocketBase
@@ -5396,6 +5400,12 @@ _CAT_SYNONYMS: dict[str, str] = {
     "blue-green": "devops",         # hyphenated — "blue-green deployment", "blue-green switch" → DevOps
     # Monitoring — SRE (Site Reliability Engineering) tooling queries (Prometheus/Grafana/PagerDuty workflows)
     "sre": "monitoring",            # SRE — "sre tools", "sre platform", "site reliability engineering" → Monitoring & Uptime
+    # Monitoring — latency percentile vocabulary (p99/p95/tail latency are key APM/SLO terms)
+    "p99": "monitoring",            # P99 latency — "p99 latency monitoring", "p99 response time" → Monitoring & Uptime
+    "p95": "monitoring",            # P95 latency — "p95 response time", "p95 percentile" → Monitoring & Uptime
+    "p50": "monitoring",            # P50/median latency — "p50 latency", "p50 response" → Monitoring & Uptime
+    "percentile": "monitoring",     # "percentile latency", "response time percentile", "latency percentile" → Monitoring
+    "latency": "monitoring",        # bare "latency" — "latency monitoring", "latency tracker", "low latency tool" → Monitoring
     # Message Queue — event bus libraries (mitt, EventEmitter; distinct from "event"→message already mapped)
     "eventbus": "message",          # event bus — "eventbus library", "in-process eventbus", "eventbus pattern" → Message Queue
     "event-bus": "message",         # hyphenated — "event-bus alternative", "event-bus typescript" → Message Queue
@@ -10088,6 +10098,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Semantic similarity caches (GPTCache, Redis SemanticCache, Momento) belong in Caching.
     # "semantic cache" bigram already exists; this adds the gerund form.
     "semantic caching": "caching",      # bigram — "semantic caching redis", "semantic caching llm" → Caching
+
+    # DevOps — AWS CloudFormation spaced form ("cloudformation" compound and "cloud-formation"
+    # hyphenated handled by bare tokens above; spaced bigram covers "cloud formation template").
+    "cloud formation": "devops",        # bigram — "cloud formation template", "cloud formation yaml" → DevOps
+
+    # Developer Tools — LSP (Language Server Protocol) bigram.
+    # bare "protocol"→mcp fires for "language server protocol" unless "language server" bigram overrides.
+    "language server": "developer",     # bigram — "language server protocol", "language server implementation" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

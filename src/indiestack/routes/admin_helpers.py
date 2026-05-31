@@ -100,14 +100,14 @@ def pending_alert_bar(count):
     if not count or count <= 0:
         return ""
     return f'''
-    <div style="background:#FFF7ED;border:1px solid #FDBA74;border-left:4px solid #EA580C;
+    <div style="background:var(--warning-bg);border:1px solid var(--warning-border);border-left:4px solid var(--warning);
                 border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:20px;
                 display:flex;align-items:center;justify-content:space-between;">
-        <span style="color:#9A3412;font-size:14px;font-weight:600;">
+        <span style="color:var(--warning-text);font-size:14px;font-weight:600;">
             \u26a0\ufe0f {count} tool{"s" if count != 1 else ""} pending review
         </span>
         <a href="/admin?tab=tools&amp;status=pending"
-           style="background:#EA580C;color:#fff;padding:6px 14px;border-radius:var(--radius-sm);
+           style="background:var(--warning);color:#fff;padding:6px 14px;border-radius:var(--radius-sm);
                   font-size:12px;font-weight:600;text-decoration:none;">
             Review Now
         </a>
@@ -189,7 +189,7 @@ def tab_nav(active_tab, pending_count=0):
         if slug == "tools" and pending_count and pending_count > 0:
             dot = (
                 '<span style="display:inline-block;width:8px;height:8px;'
-                'border-radius:50%;background:#EA580C;margin-left:6px;'
+                'border-radius:50%;background:var(--warning);margin-left:6px;'
                 'vertical-align:middle;"></span>'
             )
         items.append(
