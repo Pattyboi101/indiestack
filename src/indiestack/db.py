@@ -10162,6 +10162,26 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Credential and service-account rotation are security hygiene patterns (Vault, Doppler, 1Password Secrets).
     "credential rotation": "security",      # bigram — overrides bare "credential"→authentication for rotation queries
     "account rotation": "security",         # bigram — "service account rotation" reduces to ["account","rotation"] → Security
+    # ── Probe 137 (autonomous loop, May 2026): embedded/IoT RTOS / iOS dependency dead zones ──
+    #
+    # Embedded/RTOS — "rtos library"/"freertos alternative" → raw_first (both tokens unmapped).
+    # FreeRTOS, Zephyr RTOS, mbed OS, NuttX, RIOT OS, MicroPython, PlatformIO, Yocto Project
+    # all belong in Developer Tools.
+    # NOTE: bare "embedded"→database stays (embedded DB use case: "embedded database sqlite").
+    # Bigrams "embedded linux" and "embedded system" override it only in those specific contexts.
+    "rtos": "developer",                    # bare — "rtos library", "rtos kernel", "rtos tutorial" → Developer Tools
+    "freertos": "developer",                # bare — FreeRTOS (most popular MCU RTOS, 11k★) → Developer Tools
+    "zephyr": "developer",                  # bare — Zephyr RTOS (Linux Foundation, 6k★); NOTE: ZephyrScale (test mgmt) is niche enterprise, unlikely in catalog
+    "arduino": "developer",                 # bare — "arduino library", "arduino cli" → Developer Tools (IDE/cli distinct from "arduino ide"→developer via "ide")
+    "platformio": "developer",              # bare — PlatformIO (16k★ embedded IDE) → Developer Tools
+    "micropython": "developer",             # bare — MicroPython (embedded Python runtime) → Developer Tools
+    "yocto": "developer",                   # bare — Yocto Project (embedded Linux build system) → Developer Tools
+    "cocoapods": "developer",               # bare — CocoaPods (iOS/macOS dependency manager) → Developer Tools
+    "esp32": "developer",                   # bare — ESP32 microcontroller dev tools → Developer Tools
+    "esp8266": "developer",                 # bare — ESP8266 microcontroller dev tools → Developer Tools
+    "embedded linux": "developer",          # bigram — "embedded linux build system", "embedded linux tool" → Developer Tools (overrides bare "embedded"→database)
+    "embedded system": "developer",         # bigram — "embedded system programming", "embedded systems dev" → Developer Tools (overrides bare "embedded"→database)
+    "raspberry pi": "developer",            # bigram — "raspberry pi sdk", "raspberry pi library" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {

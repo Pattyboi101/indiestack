@@ -4713,6 +4713,28 @@ TEST_CASES: list[tuple[str, str]] = [
     ("protocol buffer grpc", "api"),                     # PRE: bigram "protocol buffer"→api unchanged
     ("credential management tool", "authentication"),    # PRE: bare "credential"→auth still fires for mgmt queries
     ("zk sso", "security"),                              # PRE: bare "zk"→security fires before "sso"→auth (ZK-SSO is cryptographic auth)
+    # ── Probe 137: embedded/IoT RTOS / iOS dependency dead zones ──
+    ("rtos library", "developer"),                       # bare "rtos"→developer (FreeRTOS, Zephyr, mbed OS)
+    ("rtos kernel", "developer"),                        # bare "rtos"→developer
+    ("freertos alternative", "developer"),               # bare "freertos"→developer
+    ("freertos port", "developer"),                      # bare "freertos"→developer
+    ("zephyr rtos", "developer"),                        # bare "zephyr"→developer (Zephyr RTOS)
+    ("arduino library", "developer"),                    # bare "arduino"→developer
+    ("platformio alternative", "developer"),             # bare "platformio"→developer (16k★ embedded IDE)
+    ("micropython library", "developer"),                # bare "micropython"→developer
+    ("yocto recipe", "developer"),                       # bare "yocto"→developer
+    ("cocoapods alternative", "developer"),              # bare "cocoapods"→developer
+    ("esp32 library", "developer"),                      # bare "esp32"→developer
+    ("esp8266 micropython", "developer"),                # bare "esp8266"→developer (fires before "micropython"→developer)
+    ("embedded linux tool", "developer"),                # bigram "embedded linux"→developer (overrides "embedded"→database)
+    ("embedded system programming", "developer"),        # bigram "embedded system"→developer
+    ("raspberry pi sdk", "developer"),                   # bigram "raspberry pi"→developer
+    ("raspberry pi library", "developer"),               # bigram "raspberry pi"→developer
+    # Probe 137 regression guards
+    ("embedded database sqlite", "database"),            # PRE: bare "embedded"→database still fires (no "linux"/"system" suffix)
+    ("embedded database", "database"),                   # PRE: bare "embedded"→database unchanged
+    ("embedded sql", "database"),                        # PRE: bare "embedded"→database unchanged
+    ("arduino ide", "developer"),                        # PRE: "arduino"→developer consistent (previously "ide"→developer fired; now "arduino"→developer fires first)
 ]
 
 
