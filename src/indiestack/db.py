@@ -10098,6 +10098,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "bytecode": "security",             # bare — "bytecode analysis", "jvm bytecode viewer" → Security Tools
     "disassembler": "security",         # bare — "disassembler tool", "x86 disassembler" → Security Tools
     "binary analysis": "security",      # bigram — "binary analysis tool", "binary analysis framework" → Security Tools
+    # ── Probe 134 (autonomous loop, May 2026): policy-engine named tools / game-primitives / compiler-tools /
+    #    parser-grammar / networking dead zones ──
+    #
+    # Kyverno — Kubernetes-native policy engine (raw_first; "kyverno alternative" is a high-volume DevOps query)
+    "kyverno": "devops",                # bare — "kyverno alternative", "kyverno policy" → DevOps & Infrastructure
+    # Voxel engines — "voxel engine" → raw_first; voxel game tools (Veloren, Minetest, 0fps) belong in Games
+    "voxel": "games",                   # bare — "voxel engine javascript", "voxel world generator" → Games & Entertainment
+    # ANTLR / grammar DSL — "antlr alternative" → raw_first; ANTLR, PEG.js, Nearley → Developer Tools
+    "antlr": "developer",               # bare — "antlr alternative", "antlr grammar" → Developer Tools
+    "grammar": "developer",             # bare — "grammar definition", "grammar parser" → Developer Tools
+    #   NOTE: "grammar checker" (LanguageTool, Vale) also routes to developer — correct for dev tool catalog
+    # Raycast — "raycast alternative" → raw_first; Raycast.com is a macOS developer launcher/productivity tool
+    "raycast": "developer",             # bare — "raycast alternative", "raycast extension" → Developer Tools
+    # Game sprites — "sprite sheet" → raw_first; sprite sheet generators/packers → Games & Entertainment
+    "sprite": "games",                  # bare — "sprite sheet", "sprite animation library" → Games & Entertainment
+    # Compiler linker — "linker tool" → raw_first; mold, LLD, Gold linkers → Developer Tools
+    "linker": "developer",              # bare — "linker tool", "linker script", "fast linker" → Developer Tools
+    # UDP networking — "udp server" → raw_first (bare "udp" unmapped; "socket"→api fires for "udp socket")
+    "udp": "api",                       # bare — "udp server library", "udp multicast" → API Tools
+    # Entity Component System — "entity component system" → database via bare "entity"→database (wrong;
+    # ECS game architecture tools: Flecs, bevy_ecs, EnTT → Games & Entertainment)
+    "entity component": "games",        # bigram — overrides "entity"→database for game-ECS queries → Games
 }
 
 _FTS_STOP_WORDS = {

@@ -4658,6 +4658,21 @@ TEST_CASES: list[tuple[str, str]] = [
     ("cookie policy", "authentication"),                 # PRE: "cookie"→auth fires at pos 0
     ("container collision", "devops"),                   # PRE: "container"→devops fires at pos 0
     ("game physics engine", "games"),                    # PRE: "game"→games fires at pos 0
+    # ── Probe 134: policy-engine named tools / game-primitives / compiler-tools / parser-grammar / networking ──
+    ("kyverno alternative", "devops"),                   # bare "kyverno"→devops (Kubernetes policy engine)
+    ("voxel engine javascript", "games"),                # bare "voxel"→games (voxel world tools)
+    ("antlr grammar parser", "developer"),               # bare "antlr"→developer (ANTLR parser generator)
+    ("grammar definition peg", "developer"),             # bare "grammar"→developer (PEG/EBNF grammars)
+    ("raycast extension", "developer"),                  # bare "raycast"→developer (Raycast macOS launcher)
+    ("sprite sheet generator", "games"),                 # bare "sprite"→games (2D sprite tools)
+    ("linker tool mold", "developer"),                   # bare "linker"→developer (mold, LLD, Gold)
+    ("udp server library", "api"),                       # bare "udp"→api (UDP networking libs)
+    ("entity component system", "games"),                # bigram "entity component"→games (ECS game architecture)
+    # Probe 134 regression guards
+    ("entity framework dotnet", "database"),             # PRE: "entity"→database unchanged (no "component" present)
+    ("entity extraction nlp", "ai"),                     # PRE: "entity extraction" bigram→ai unchanged
+    ("css sprites", "frontend"),                         # PRE: "css"→frontend fires at pos 0
+    ("ray tracing", "ai"),                               # PRE: "ray"→ai unchanged
 ]
 
 
