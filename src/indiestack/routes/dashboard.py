@@ -203,7 +203,7 @@ async def dashboard_overview(request: Request):
     if just_claimed_param and not is_pro:
         _tool_link = f'<a href="/tool/{just_claimed_tool_slug}" style="color:var(--accent);text-decoration:none;font-weight:700;">{just_claimed_tool_slug}</a>' if just_claimed_tool_slug else 'your tool'
         just_claimed_banner = f'''
-        <div style="background:linear-gradient(135deg,var(--navy) 0%,#243B5E 100%);border:1px solid rgba(0,212,245,0.25);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;">
+        <div style="background:linear-gradient(135deg,var(--navy) 0%,var(--terracotta-light) 100%);border:1px solid rgba(0,212,245,0.25);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;">
             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
                 <div style="flex:1;min-width:200px;">
                     <div style="font-family:var(--font-display);font-size:20px;color:white;margin-bottom:6px;">
@@ -1127,7 +1127,7 @@ async def dashboard_overview(request: Request):
             plan_label = 'Founding Member'
         header_html = f'''
         <style>@media(max-width:600px){{.pro-stats-grid{{grid-template-columns:repeat(2,1fr) !important;}}}}</style>
-        <div style="background:linear-gradient(135deg,var(--terracotta) 0%,#243B5E 100%);border-radius:var(--radius);padding:32px;margin-bottom:24px;">
+        <div style="background:linear-gradient(135deg,var(--terracotta) 0%,var(--terracotta-light) 100%);border-radius:var(--radius);padding:32px;margin-bottom:24px;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
                 <div>
                     <h1 style="font-family:var(--font-display);font-size:32px;color:white;margin:0 0 4px;">
@@ -1231,15 +1231,15 @@ async def dashboard_overview(request: Request):
             <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">{_hub_title}</h3>
             <style>.pro-hub-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}}@media(max-width:600px){{.pro-hub-grid{{grid-template-columns:1fr;}}}}.pro-feat{{text-decoration:none;display:block;padding:20px;border-radius:var(--radius);transition:transform 0.15s ease;}}.pro-feat:hover{{transform:translateY(-1px);}}</style>
             <div class="pro-hub-grid">
-                <a href="/gaps" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),#243B5E);">
+                <a href="/gaps" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-light));">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Demand Signals</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Full opportunity scores, sparklines &amp; competition maps</div>
                 </a>
-                <a href="#ai-distribution" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),#243B5E);">
+                <a href="#ai-distribution" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-light));">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Citation Intel</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">See which AI agents recommend your tools &amp; how often</div>
                 </a>
-                <a href="/setup" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),#243B5E);">
+                <a href="/setup" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-light));">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Priority API</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Unlimited searches + personalized recommendations</div>
                 </a>
@@ -1250,7 +1250,7 @@ async def dashboard_overview(request: Request):
                     </div>
                     <div style="font-size:13px;color:var(--ink-muted);line-height:1.4;">Your tools rank higher in search &amp; AI discovery</div>
                 </div>
-                <a href="/dashboard/export?format=json" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),#243B5E);">
+                <a href="/dashboard/export?format=json" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-light));">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Data Export</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Download your tools &amp; analytics as JSON or CSV</div>
                 </a>
@@ -1449,7 +1449,7 @@ async def dashboard_tools(request: Request):
         upvotes = t.get('upvote_count', 0)
         is_totw = t.get('tool_of_the_week', 0) == 1
         mcp_views = t.get('mcp_view_count', 0)
-        totw_badge = ' <span style="background:linear-gradient(135deg,#E2B764,#D4A84B);color:var(--terracotta);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> Tool of the Week</span>' if is_totw else ''
+        totw_badge = ' <span style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--terracotta);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> Tool of the Week</span>' if is_totw else ''
         totw_line = ' &mdash; <span style="color:var(--gold);font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> Currently Tool of the Week!</span>' if is_totw else ' &mdash; top tool each week gets featured on our homepage'
         # Get rating
         rating = await get_tool_rating(db, t['id'])

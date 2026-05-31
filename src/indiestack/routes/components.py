@@ -17,6 +17,7 @@ def design_tokens() -> str:
             --terracotta: #1A2D4A;
             --terracotta-light: #2B4A6E;
             --terracotta-dark: #0F1D30;
+            --navy: var(--terracotta);
             --gold: #E2B764;
             --gold-light: #F0D898;
             --gold-dark: #78350F;
