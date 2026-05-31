@@ -4224,6 +4224,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # WASM serverless — Fermyon Spin (5k★), Fermyon Cloud — same category as Cloudflare Workers/Deno Deploy
     "spin": "devops",           # Fermyon Spin — WASM serverless framework; "spin framework", "spin serverless" → DevOps
     "fermyon": "devops",        # Fermyon — WASM cloud platform (Spin host, Fermyon Cloud) → DevOps
+    "wasm serverless": "devops", # bigram — "wasm serverless framework", "wasm serverless rust" → DevOps (Fermyon, Cloudflare WASM)
     # JAMstack / static site architecture terms (complement to "ssg", "ssr", "pwa")
     "jamstack": "frontend",     # JAMstack — JavaScript + APIs + Markup architecture (Netlify coined)
     "static": "frontend",       # "static site generator", "static site framework" → Frontend Frameworks
@@ -5937,7 +5938,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "chaostoolkit": "devops",       # Chaos Toolkit — open-source chaos engineering framework (2k★) → DevOps
     "chaos-toolkit": "devops",      # hyphenated — "chaos-toolkit experiment", "chaos-toolkit alternative" → DevOps
     "toxiproxy": "testing",         # Toxiproxy — TCP proxy for simulating network failures (10k★) → Testing Tools
-    "litmus": "devops",             # LitmusChaos — CNCF chaos engineering for Kubernetes (4k★) → DevOps & Infrastructure
+    "litmus": "testing",            # LitmusChaos — CNCF chaos engineering for Kubernetes (4k★) → Testing Tools (probe 96: chaos tools reclassified from devops→testing)
     "chaos-mesh": "devops",         # Chaos Mesh — Kubernetes chaos engineering platform (6k★) → DevOps & Infrastructure
     "chaosmesh": "devops",          # compound — "chaosmesh alternative", "chaosmesh setup" → DevOps & Infrastructure
     "pumba": "devops",              # Pumba — chaos tool for Docker containers (3k★) → DevOps & Infrastructure

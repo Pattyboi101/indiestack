@@ -4771,6 +4771,16 @@ TEST_CASES: list[tuple[str, str]] = [
     ("devcontainer", "devops"),                          # PRE: cloud dev env routing unchanged
     ("gitpod", "devops"),                                # PRE: cloud dev env routing unchanged
     ("wasm component", "frontend"),                      # PRE: "wasm"→frontend still fires (no collision with "spin")
+    # Probe 140 — wasm-serverless bigram + litmus reclassification
+    ("wasm serverless", "devops"),                       # bigram "wasm serverless"→devops (overrides bare "wasm"→frontend)
+    ("wasm serverless rust", "devops"),                  # bigram fires at position 0 before "wasm"→frontend
+    ("wasm serverless framework", "devops"),             # bigram fires before "wasm"→frontend
+    ("litmus chaos", "testing"),                         # "litmus"→testing (reclassified from devops per probe 96 intent)
+    ("litmus chaos kubernetes", "testing"),              # same — bare "litmus"→testing fires first
+    # Probe 140 regression guards
+    ("wasm pack rust", "frontend"),                      # PRE: bare "wasm"→frontend when no "serverless" suffix
+    ("wasm bindgen", "frontend"),                        # PRE: wasm tool routing unchanged
+    ("spin serverless wasm", "devops"),                  # PRE: bare "spin"→devops still fires (no regression)
 ]
 
 
