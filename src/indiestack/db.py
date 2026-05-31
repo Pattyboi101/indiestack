@@ -2955,6 +2955,19 @@ _CAT_SYNONYMS: dict[str, str] = {
     "solidjs": "frontend",      # SolidJS — reactive UI library
     "stencil": "frontend",      # Stencil — web components compiler
     "ember": "frontend",        # Ember.js
+    # .js-suffix forms — period survives Python str.split(), so "react.js" is a distinct
+    # token from "react". Users paste these forms from npm docs, Stack Overflow, etc.
+    # (probe 145, May 2026)
+    "react.js": "frontend",          # period form — "react.js alternative", "react.js vs vue.js"
+    "vue.js": "frontend",            # period form — "vue.js alternative", "vue.js tutorial"
+    "svelte.js": "frontend",         # period form — consistent with "svelte"→frontend
+    "angular.js": "frontend",        # period form — consistent with "angular"→frontend
+    "solid.js": "frontend",          # period form — consistent with "solidjs"→frontend
+    "node.js": "api",                # period form — consistent with "node"→api (runtime, not framework)
+    "express.js": "api",             # period form — consistent with "express"→api
+    "next.js": "frontend",           # period form — consistent with "nextjs"→frontend
+    "htmx.js": "frontend",           # period form — consistent with "htmx"→frontend
+    "alpine.js": "frontend",         # period form — consistent with "alpinejs"→frontend
     # API tools — routing, RPC, gateways
     "trpc": "api",              # tRPC — type-safe API layer
     "gateway": "api",           # API gateway queries
@@ -4537,6 +4550,18 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — natural language processing (NLP tools live in ai-automation alongside LLM tools)
     "nlp": "ai",                    # "NLP library", "NLP pipeline", "nlp tool" → AI & Automation
     "sentiment": "ai",              # "sentiment analysis", "sentiment classifier" → AI & Automation
+    # Developer Tools — classical NLP libraries (probe 145: spaCy/NLTK/stemming were raw_first dead zones)
+    "spacy": "developer",           # spaCy — 30k★ NLP library, "spacy alternative", "spacy ner" → Developer Tools
+    "nltk": "developer",            # NLTK — classic Python NLP toolkit, "nltk tokenizer" → Developer Tools
+    "stemmer": "developer",         # "porter stemmer", "snowball stemmer python" → Developer Tools
+    "lemmatizer": "developer",      # "python lemmatizer", "word lemmatizer nlp" → Developer Tools
+    "lemmatization": "developer",   # explicit noun form — "text lemmatization", "lemmatization spacy" → Developer Tools
+    "tagger": "developer",          # "pos tagger", "html tagger", "xml tagger" → Developer Tools (not ai: rule-based)
+    "pos tagger": "developer",      # bigram — "pos tagger python", "pos tagger spacy" → Developer Tools
+    "pos tagging": "developer",     # bigram — "pos tagging nlp", "pos tagging library" → Developer Tools
+    "pos tag": "developer",         # bigram — "pos tag sentence", "pos tag corpus" → Developer Tools
+    # AI — AgentStack (AI agent scaffolding framework; company named "agentstack" exactly)
+    "agentstack": "ai",             # bigram collision guard — "agentstack framework", "agentstack python" → AI
     # HTTP client / fetch wrapper libraries — Axios, Got, Ky, undici, node-fetch → api-tools
     "fetch": "api",                 # "fetch wrapper", "node fetch alternative" → API Tools
     # Date/time utility libraries — date-fns, dayjs, Luxon, Temporal polyfill → frontend-frameworks
@@ -8153,6 +8178,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "llms txt": "ai",               # bigram — "llms txt implementation", "llms txt website" → AI & Automation
     "llms-txt": "ai",               # hyphenated — "llms-txt tool", "llms-txt generator" → AI & Automation
     "llmstxt": "ai",                # compact — "llmstxt generator", "llmstxt implementation" → AI & Automation
+    "llms.txt": "ai",               # period form — canonical filename "llms.txt" query → AI & Automation
     # Testing — headless browser queries route to CMS via "headless"→cms (correct for headless-cms queries).
     # Bigrams fire before the single token so browser/chrome/test + headless lands in Testing Tools.
     "headless browser": "testing",  # bigram — "headless browser puppeteer", "headless browser testing" → Testing Tools
@@ -8479,6 +8505,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "clean architecture": "developer",    # bigram — "clean architecture framework" → Developer Tools
     "hexagonal architecture": "developer",# bigram — "hexagonal architecture framework" → Developer Tools
     "onion architecture": "developer",    # bigram — "onion architecture example" → Developer Tools
+    # Developer Tools — bare architecture token (probe 145: "software architecture" strips "software" as stop word,
+    # leaving bare "architecture" as raw_first dead zone)
+    "architecture": "developer",         # bare — "system architecture", "architecture diagram tool" → Developer Tools
+    "layered": "developer",              # "layered architecture pattern", "layered design" → Developer Tools
+    "system design": "developer",        # bigram — "system design tool", "system design diagram" → Developer Tools
+    # AI — "system instructions" is an LLM prompt concept (distinct from "system design")
+    "system instructions": "ai",         # bigram — "system instructions llm", "set system instructions" → AI
     # Probe pattern 31: security dead zones — "dependency"→developer fires before security terms;
     # "penetration" unmapped so "testing"→testing fires wrong; "iast" not in dict; "git"→devops
     # wins over "secrets" for "git secrets" queries.

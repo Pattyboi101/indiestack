@@ -4745,6 +4745,56 @@ TEST_CASES: list[tuple[str, str]] = [
     ("conda package manager", "developer"),             # PRE: bare "conda"→developer unchanged
     ("streaming response api", "api"),                  # PRE: bigram "streaming response"→api unchanged
     ("code smell detector", "testing"),                 # PRE: bigram "code smell"→testing unchanged
+    # ── Probe 145: .js-suffix forms / NLP libraries / architecture / system-design dead zones ──
+    # .js suffix forms — str.split() preserves periods, making these distinct tokens from base forms
+    ("react.js component library", "frontend"),         # "react.js"→frontend (period form was raw_first)
+    ("vue.js framework alternative", "frontend"),       # "vue.js"→frontend
+    ("svelte.js tutorial", "frontend"),                 # "svelte.js"→frontend
+    ("angular.js migration guide", "frontend"),         # "angular.js"→frontend
+    ("solid.js reactivity model", "frontend"),          # "solid.js"→frontend
+    ("node.js server library", "api"),                  # "node.js"→api (period form was raw_first)
+    ("express.js middleware library", "api"),            # "express.js"→api
+    ("next.js app router tutorial", "frontend"),        # "next.js"→frontend
+    ("htmx.js hypermedia approach", "frontend"),        # "htmx.js"→frontend
+    ("alpine.js component pattern", "frontend"),        # "alpine.js"→frontend
+    # NLP libraries — spaCy/NLTK/stemmer/lemmatizer were unmapped (dead zones)
+    ("spacy alternative python", "developer"),          # "spacy"→developer (30k★ NLP lib was raw_first)
+    ("spacy ner pipeline", "developer"),                # "spacy"→developer fires at pos 0
+    ("nltk tokenizer library", "developer"),            # "nltk"→developer (classic Python NLP toolkit)
+    ("nltk text processing", "developer"),              # "nltk"→developer fires at pos 0
+    ("snowball stemmer library", "developer"),          # "stemmer"→developer (porter→devops, so use snowball)
+    ("stemmer library nlp", "developer"),               # "stemmer"→developer at pos 0
+    ("lemmatizer tool nlp", "developer"),               # "lemmatizer"→developer (python→api, so put lemmatizer first)
+    ("text lemmatization library", "developer"),        # "lemmatization"→developer at pos 1
+    # POS tagging — all bigram and bare forms were raw_first
+    ("pos tagger python library", "developer"),         # bigram "pos tagger"→developer
+    ("pos tagging library nlp", "developer"),           # bigram "pos tagging"→developer
+    ("pos tag sentence python", "developer"),           # bigram "pos tag"→developer
+    ("sentence tagger nlp", "developer"),               # bare "tagger"→developer (html→frontend, so use sentence)
+    # AgentStack — AI agent scaffolding framework
+    ("agentstack framework python", "ai"),              # "agentstack"→ai (not stripped by framework terms)
+    ("agentstack agent scaffold", "ai"),                # "agentstack"→ai fires at pos 0
+    # llms.txt period form — canonical filename was missing despite all other variants mapped
+    ("llms.txt generator tool", "ai"),                  # "llms.txt"→ai (period form was raw_first)
+    ("llms.txt implementation guide", "ai"),            # "llms.txt"→ai
+    # Architecture — "software architecture" strips "software" leaving bare "architecture" as dead zone
+    ("system architecture diagram", "developer"),       # "architecture"→developer at pos 1
+    ("software architecture tool", "developer"),        # "architecture"→developer after stop-word strip
+    ("layered architecture pattern", "developer"),      # "layered"→developer at pos 0
+    ("layered design approach", "developer"),           # "layered"→developer fires
+    ("system design tool", "developer"),                # bigram "system design"→developer at pos 0
+    ("system design diagram software", "developer"),    # bigram "system design"→developer fires
+    ("system instructions llm prompt", "ai"),           # bigram "system instructions"→ai at pos 0
+    ("set system instructions context", "ai"),          # bigram "system instructions"→ai at pos 1
+    # Probe 145 regression guards
+    ("react component library", "frontend"),            # PRE: bare "react"→frontend unchanged
+    ("node library", "api"),                            # PRE: bare "node"→api unchanged (fallback when only framework term)
+    ("express middleware framework", "api"),             # PRE: bare "express"→api unchanged
+    ("nlp library python", "ai"),                       # PRE: bare "nlp"→ai unchanged (AI not developer)
+    ("llms txt website format", "ai"),                  # PRE: spaced "llms txt"→ai unchanged
+    ("llmstxt standard", "ai"),                         # PRE: compact "llmstxt"→ai unchanged
+    ("clean architecture framework", "developer"),      # PRE: bigram "clean architecture"→developer unchanged
+    ("hexagonal architecture guide", "developer"),      # PRE: bigram "hexagonal architecture"→developer unchanged
 ]
 
 
