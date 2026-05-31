@@ -97,6 +97,12 @@ These areas historically generate `raw_first` misses:
 | Code generation | typescript codegen, graphql codegen, openapi codegen |
 | Internal developer portals | backstage idp, service catalog, developer portal |
 | NLP text processing | stemmer, lemmatizer, tokenizer, pos tagger |
+| Game dev primitives | physics engine, pathfinding, collision detection, shader, raycasting |
+| Security research | decompiler, bytecode, disassembler, binary analysis, reverse engineering |
+| Policy / compliance tooling | policy as code, rego, conftest, opa, cedar |
+| DSL / parser tools | dsl, antlr, peg grammar, langium, chevrotain |
+| Screen / capture utilities | screen capture, screen share, screen recorder |
+| AST / code introspection | abstract syntax tree, syntax tree, ast parser |
 
 ### Pattern 16 — "conflicting first/second token" probe queries
 

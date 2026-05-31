@@ -4629,6 +4629,35 @@ TEST_CASES: list[tuple[str, str]] = [
     ("typescript react", "frontend"),                    # PRE: bare "typescript"→frontend unchanged
     ("async job queue", "background"),                   # PRE: "job"→background wins (no "async runtime" bigram collision)
     ("chrome extension toolkit", "developer"),           # PRE: bare "chrome"→developer unchanged
+    # ── Probe 133: NLP lemmatization / screen-tools / AST / game-physics / policy-as-code / DSL / security-research ──
+    ("lemmatization nltk", "developer"),                 # bare "lemmatization"→developer (NLP lemmatizer)
+    ("lemmatizer python", "developer"),                  # bare "lemmatizer"→developer
+    ("text lemmatizer nlp", "developer"),                # bigram "text normalizer" / bare "lemmatizer"
+    ("text normalization library", "developer"),         # bigram "text normalization"→developer
+    ("screen capture tool", "developer"),                # bare "screen"→developer (screen utilities)
+    ("screen share sdk", "developer"),                   # bare "screen"→developer
+    ("abstract syntax tree parser", "developer"),        # bare "abstract"→developer (AST tools)
+    ("abstract class typescript", "developer"),          # bare "abstract"→developer
+    ("syntax tree visualization", "developer"),          # bigram "syntax tree"→developer
+    ("physics engine javascript", "games"),              # bare "physics"→games (Rapier, Box2D, Matter.js)
+    ("physics simulation library", "games"),             # bare "physics"→games
+    ("collision detection library", "games"),            # bigram "collision detection"→games
+    ("pathfinding algorithm game", "games"),             # bare "pathfinding"→games
+    ("policy as code tool", "devops"),                   # bare "policy"→devops (OPA, Conftest, Kyverno)
+    ("policy enforcement engine", "devops"),             # bare "policy"→devops
+    ("dsl language builder", "developer"),               # bare "dsl"→developer (ANTLR, Langium, Chevrotain)
+    ("jar decompiler java", "security"),                 # bare "decompiler"→security (Jadx, JD-GUI)
+    ("bytecode analysis jvm", "security"),               # bare "bytecode"→security
+    ("disassembler x86", "security"),                    # bare "disassembler"→security
+    ("binary analysis framework", "security"),           # bigram "binary analysis"→security
+    # Probe 133 regression guards
+    ("screen recording software", "analytics"),          # PRE: "screen recording" bigram unchanged
+    ("screen reader testing", "testing"),                # PRE: "screen reader" bigram unchanged
+    ("syntax highlighting react", "documentation"),      # PRE: "syntax highlighting" bigram unchanged
+    ("privacy policy generator", "security"),            # PRE: "privacy"→security fires at pos 0
+    ("cookie policy", "authentication"),                 # PRE: "cookie"→auth fires at pos 0
+    ("container collision", "devops"),                   # PRE: "container"→devops fires at pos 0
+    ("game physics engine", "games"),                    # PRE: "game"→games fires at pos 0
 ]
 
 

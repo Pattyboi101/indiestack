@@ -10058,6 +10058,46 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Backstage IDP, Port, OpsLevel "service catalog" feature belongs in Developer Tools.
     "catalog backstage": "developer",   # bigram — fired for "service catalog backstage" after stop-word strip
     "catalog idp": "developer",         # bigram — "service catalog idp", "catalog idp backstage" → Developer
+    # ── Probe 133 (autonomous loop, May 2026): NLP lemmatization / screen-tools / AST / game-physics /
+    #    policy-as-code / DSL / security-research dead zones ──
+    #
+    # NLP lemmatization — "lemmatization nltk" / "text lemmatizer" → raw_first (stemmer was mapped→developer
+    # in probe 132; adding sibling lemmatization terms for consistency — spaCy, NLTK, TextBlob lemmatizers
+    # belong in Developer Tools alongside stemmers / tokenizers)
+    "lemmatize": "developer",           # bare — "lemmatize text python", "lemmatize nltk" → Developer Tools
+    "lemmatizer": "developer",          # bare — "lemmatizer python", "text lemmatizer" → Developer Tools
+    "lemmatization": "developer",       # bare — "lemmatization nltk", "lemmatization spacy" → Developer Tools
+    # Text normalizer — "text normalizer" / "text normalization library" → raw_first (text pre-processing
+    # utilities like python-ftfy, Unidecode, text-cleaner → Developer Tools)
+    "normalizer": "developer",          # bare — "text normalizer", "unicode normalizer" → Developer Tools
+    "text normalization": "developer",  # bigram — "text normalization python", "text normalization library" → Developer Tools
+    "text normalizer": "developer",     # bigram — "text normalizer nlp" → Developer Tools (pre-pass; overrides raw_first "text")
+    # Screen tools — "screen capture" / "screen share" → raw_first (bare "screen recording"→analytics bigram
+    # and "screen reader"→testing bigram fire in pre-pass first; bare "screen"→developer is a safe fallback
+    # for other screen-related developer utilities: ShareX, Flameshot, Screen.so)
+    "screen": "developer",              # bare — "screen capture tool", "screen share sdk" → Developer Tools
+    # Abstract Syntax Tree — "abstract syntax tree" / "abstract class" → raw_first
+    # (AST parsing libraries: tree-sitter, @babel/parser, espree, swc parser → Developer Tools)
+    "abstract": "developer",            # bare — "abstract syntax tree parser", "abstract class typescript" → Developer Tools
+    "syntax tree": "developer",         # bigram — "syntax tree visualization", "syntax tree builder" → Developer Tools (overrides raw_first "syntax")
+    # Game physics / pathfinding — "physics engine" / "pathfinding algorithm" / "collision detection" → raw_first
+    # (physics: Rapier, Box2D, Matter.js, Cannon.js; pathfinding: PathFinding.js, EasyStar.js → Games)
+    "physics": "games",                 # bare — "physics engine javascript", "physics simulation" → Games & Entertainment
+    "pathfinding": "games",             # bare — "pathfinding algorithm", "a star pathfinding" → Games & Entertainment
+    "collision": "games",               # bare — "collision detection library", "collision response" → Games & Entertainment
+    "collision detection": "games",     # bigram — explicit form; overrides bare "collision" already → Games & Entertainment
+    # Policy as code — "policy generator" → raw_first (OPA, Conftest, Kyverno, Cedar → DevOps & Infrastructure)
+    # Note: "privacy policy"→security fires via "privacy" at pos 0; "cookie policy"→auth via "cookie" at pos 0 ✓
+    "policy": "devops",                 # bare — "policy as code", "policy generator", "policy enforcement" → DevOps
+    # DSL — "domain specific language" → devops via "domain"→devops (wrong; parser/grammar DSL tools
+    # like ANTLR, Langium, Chevrotain, Xtext are Developer Tools)
+    "dsl": "developer",                 # bare — "dsl language", "dsl parser", "custom dsl" → Developer Tools
+    # Security research tools — "decompiler tool" / "bytecode analysis" / "disassembler" → raw_first
+    # (Jadx, Ghidra decompiler, Binary Ninja, JD-GUI → Security Tools; same tier as SAST/DAST)
+    "decompiler": "security",           # bare — "jar decompiler", "java decompiler", "decompiler tool" → Security Tools
+    "bytecode": "security",             # bare — "bytecode analysis", "jvm bytecode viewer" → Security Tools
+    "disassembler": "security",         # bare — "disassembler tool", "x86 disassembler" → Security Tools
+    "binary analysis": "security",      # bigram — "binary analysis tool", "binary analysis framework" → Security Tools
 }
 
 _FTS_STOP_WORDS = {
