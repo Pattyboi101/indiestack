@@ -140,6 +140,12 @@ These areas historically generate `raw_first` misses:
 | ML primitives | tensor library, tensor ops, jax autodiff, cosine similarity, text similarity, graph neural network (category collision with graph→database) |
 | Vector math | cosine distance (distance→maps collision), cosine similarity, similarity search, nearest neighbor (nn→?) |
 | Code signing | code signing tool, artifact signing, binary signing (signing→security already fixed; watch for new collision patterns) |
+| Flow control / resilience | backpressure, backpressure queue, load shedding, bulkhead, exponential backoff |
+| Distributed primitives | mutex lock, distributed mutex, distributed semaphore, pessimistic locking |
+| Package registries | pypi mirror, private pypi, devpi, cargo registry, verdaccio, nexus repository |
+| Stream processing SQL | streaming sql, flink sql, ksql, spark sql streaming, kafka streams sql |
+| Code navigation | code navigation, code intelligence, semantic code search, code map, codesearch |
+| Human-in-the-loop AI | hitl workflow, human loop annotation, human feedback loop, active learning labeling |
 
 ## Commit Style
 

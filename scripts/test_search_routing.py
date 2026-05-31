@@ -4727,6 +4727,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("graph database query", "database"),               # PRE: bare "graph"→database unchanged (no "neural" suffix)
     ("graph rag pattern", "ai"),                        # PRE: bigram "graph rag"→ai unchanged
     ("pytorch tensor ops", "ai"),                       # PRE: "pytorch"→ai fires before "tensor"
+    # Probe 144 — backpressure / mutex / pypi / streaming-sql / code-nav / hitl dead zones
+    ("backpressure handling", "api"),                   # bare "backpressure"→api (producer/consumer flow control)
+    ("backpressure library", "api"),                    # bare "backpressure"→api
+    ("mutex lock python", "database"),                  # bigram "mutex lock"→database
+    ("distributed mutex redis", "database"),            # bigram "distributed mutex"→database
+    ("pypi mirror", "developer"),                       # bare "pypi"→developer (Python package registry tools)
+    ("private pypi registry", "developer"),             # bare "pypi"→developer at pos 1
+    ("streaming sql flink", "background"),              # bigram "streaming sql"→background (Apache Flink SQL)
+    ("streaming sql ksql", "background"),               # bigram "streaming sql"→background (KSQL)
+    ("code navigation tool", "developer"),              # bigram "code navigation"→developer (Sourcegraph, OpenGrok)
+    ("code intelligence engine", "ai dev"),             # bigram "code intelligence"→ai dev
+    ("hitl annotation tool", "ai"),                     # bare "hitl"→ai (Human In The Loop)
+    # Probe 144 regression guards
+    ("code splitting vite", "frontend"),                # PRE: bare "splitting"→frontend unchanged for code-splitting
+    ("distributed lock redis", "database"),             # PRE: bigram "distributed lock"→database unchanged
+    ("conda package manager", "developer"),             # PRE: bare "conda"→developer unchanged
+    ("streaming response api", "api"),                  # PRE: bigram "streaming response"→api unchanged
+    ("code smell detector", "testing"),                 # PRE: bigram "code smell"→testing unchanged
 ]
 
 

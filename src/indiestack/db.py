@@ -3589,6 +3589,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "bulkhead": "api",              # "bulkhead pattern", "bulkhead isolation" → API Tools (resilience)
     "exponential": "api",           # "exponential backoff" → API Tools
     "backoff": "api",               # "backoff strategy", "retry backoff" → API Tools
+    "backpressure": "api",          # "backpressure handling", "backpressure queue" → API Tools (flow control between producer/consumer)
     "resilience": "monitoring",     # "resilience engineering", "resiliency" → Monitoring & Uptime
     # Durable execution / workflow engines (Temporal, Inngest, Trigger.dev)
     "durable": "background",        # "durable execution", "durable workflow" → Background Jobs
@@ -4722,6 +4723,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pdm": "developer",             # PDM — Python dependency manager with PEP 582 / lockfile (7k★)
     "pipenv": "developer",          # Pipenv — Python dev workflow tool (virtualenv + pip unified, 24k★)
     "conda": "developer",           # Conda — cross-language package + environment manager (data science)
+    "pypi": "developer",            # PyPI — Python Package Index mirror/registry tools (devpi, Nexus, Artifactory for PyPI)
     "mamba": "developer",           # Mamba — fast C++ conda alternative for env management
     "pixi": "developer",            # Pixi — fast conda-compatible package manager by prefix.dev (4k★)
     # Rust database / ORM tooling — growing fast as Rust web dev adoption increases
@@ -7152,6 +7154,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # AI — Humanloop (LLM ops, evaluation, and prompt management)
     "humanloop": "ai",             # Humanloop — "humanloop alternative", "humanloop evaluation" → AI & Automation
     "human-loop": "ai",            # hyphenated — "human-loop setup", "human-loop vs braintrust" → AI & Automation
+    "hitl": "ai",                  # abbreviation — HITL (Human In The Loop) workflows → AI & Automation
     # AI — ElizaOS (elizaOS/eliza, 19k★; most-searched AI agent OS framework in 2025-2026)
     "elizaos": "ai",               # ElizaOS — "elizaos alternative", "elizaos agent", "elizaos setup" → AI & Automation
     "eliza": "ai",                 # base form — "eliza agent framework", "eliza multi-agent" → AI & Automation
@@ -8308,6 +8311,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "optimistic locking": "database",    # bigram — "optimistic locking library", "optimistic locking postgres" → Database
     "distributed lock": "database",      # bigram — "distributed lock redis", "distributed lock service" → Database
     "distributed locking": "database",  # bigram — "distributed locking service", "distributed locking redis" → Database
+    "distributed mutex": "database",    # bigram — "distributed mutex redis", "distributed mutex golang" → Database (same tier as distributed lock)
+    "mutex lock": "database",           # bigram — "mutex lock library", "mutex lock python" → Database (distributed mutual exclusion)
     # Analytics — data catalog queries fall through to raw_first with no boost ("data" has no synonym).
     # DataHub, Amundsen, OpenMetadata, Apache Atlas all live in Analytics & Metrics.
     "data catalog": "analytics",        # bigram — "data catalog tool", "open source data catalog" → Analytics & Metrics
@@ -9156,6 +9161,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "api response": "api",              # bigram — "streaming api response nodejs" → API Tools (fires before "streaming"→media)
     "streaming response": "api",        # bigram — "streaming response nodejs", "streaming response react" → API Tools
     "readable stream": "api",           # bigram — "readable stream nodejs", "readable stream browser" → API Tools (Node.js Streams)
+    "streaming sql": "background",      # bigram — "streaming sql flink", "streaming sql ksql" → Background Jobs (Apache Flink SQL, KSQL, Spark SQL Streaming)
     "eventsource": "api",               # compound — EventSource browser SSE API (spaced "event source" unfixable: source=stop word)
     # AI & Automation — LLM/AI streaming output (complement to "streaming llm"→ai already mapped above).
     "llm streaming": "ai",              # bigram — "llm streaming response", "llm streaming python" → AI (reverse of "streaming llm")
@@ -9511,6 +9517,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "code smell" → raw_first "code" (unmapped; code smell detectors like CodeClimate, SonarQube,
     # PMD → Testing Tools — same tier as linters). Bigram prevents "code"→raw_first.
     "code smell": "testing",             # bigram — "code smell detector", "code smell refactoring" → Testing Tools
+    "code navigation": "developer",     # bigram — "code navigation tool", "code navigation ide" → Developer Tools (Sourcegraph, OpenGrok)
+    "code intelligence": "ai dev",      # bigram — "code intelligence api", "code intelligence engine" → AI Dev Tools (Sourcegraph Cody, Tabnine)
 
     # "technical debt" → raw_first "technical" ("tech debt" bigram already maps to developer correctly;
     # but the spaced "technical debt" form was missing). Same category: Developer Tools.
