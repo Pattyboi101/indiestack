@@ -4701,6 +4701,18 @@ TEST_CASES: list[tuple[str, str]] = [
     ("language server protocol", "developer"),            # PRE: bigram "language server"→developer unchanged
     ("natural language processing", "ai"),                # PRE: bare "natural"→ai fires first
     ("terraform alternative", "devops"),                  # PRE: "terraform"→devops unchanged
+    # ── probe 142: LLM/prompt/model safety dead zones (autonomous loop, May 2026) ──
+    ("llm safety guardrails", "ai standards"),           # bigram "llm safety"→ai standards overrides "llm"→ai
+    ("llm safety evaluation", "ai standards"),           # bigram fires at pos 0 before "llm"→ai
+    ("prompt safety filter", "ai standards"),            # bigram "prompt safety"→ai standards overrides "prompt"→ai
+    ("prompt safety library", "ai standards"),           # bigram fires before "prompt"→ai
+    ("model safety evaluation", "ai standards"),         # bigram "model safety"→ai standards overrides "model"→ai
+    ("model safety testing", "ai standards"),            # bigram fires before "model"→ai
+    # Probe 142 regression guards
+    ("llm monitoring tool", "monitoring"),               # PRE: bigram "llm monitoring"→monitoring unchanged
+    ("llm benchmark comparison", "ai standards"),        # PRE: "llm benchmark"→ai standards unchanged
+    ("ai safety framework", "ai standards"),             # PRE: "ai safety"→ai standards unchanged
+    ("prompt injection detection", "security"),          # PRE: "prompt injection"→security unchanged
 ]
 
 

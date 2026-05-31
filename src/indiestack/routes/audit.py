@@ -451,7 +451,7 @@ def _results_html(
 
     # Pro upsell CTA
     html += f"""
-        <div style="background:#1A2D4A;border-radius:var(--radius);padding:32px 28px;margin-top:40px;
+        <div style="background:var(--terracotta);border-radius:var(--radius);padding:32px 28px;margin-top:40px;
                     text-align:center;">
             <h3 style="font-family:var(--font-display);font-size:20px;color:#fff;margin-bottom:8px;">
                 Want deeper intelligence?

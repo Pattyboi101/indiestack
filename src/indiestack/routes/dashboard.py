@@ -618,7 +618,7 @@ async def dashboard_overview(request: Request):
                 tweet_url = f"https://twitter.com/intent/tweet?text={share_text}&url={BASE_URL}/tool/{tool_slug}" if tool_slug else ""
 
                 cards += f"""
-                <div style="background:linear-gradient(135deg,#1A2D4A,var(--terracotta-dark));border-radius:var(--radius);padding:20px 24px;
+                <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);padding:20px 24px;
                             display:flex;align-items:center;gap:16px;margin-bottom:8px;">
                     <span style="font-size:36px;">{emoji}</span>
                     <div style="flex:1;">
@@ -693,7 +693,7 @@ async def dashboard_overview(request: Request):
                     view_listing_btn = '<div style="text-align:center;margin-top:16px;"><a href="/tool/' + escape(str(bt['slug'])) + '" style="background:var(--slate);color:var(--terracotta);padding:10px 24px;border-radius:999px;font-weight:700;text-decoration:none;font-size:14px;">View Your Listing</a></div>'
 
                 boost_report_html += f"""
-                <div style="background:linear-gradient(135deg,#1A2D4A,var(--terracotta-dark));border-radius:var(--radius);padding:24px;margin-bottom:24px;color:#fff;">
+                <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);padding:24px;margin-bottom:24px;color:#fff;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
                         <h3 style="font-family:var(--font-display);font-size:20px;margin:0;color:#fff;">
                             &#9733; Boost Report &mdash; {escape(str(bt['name']))}
@@ -854,7 +854,7 @@ async def dashboard_overview(request: Request):
     '''
 
     # ── Welcome perk banner (Perplexity Comet) ──────────────────────
-    welcome_perk = '''<div id="comet-banner" style="display:none;background:linear-gradient(135deg,#1A2D4A,var(--terracotta-dark));border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
+    welcome_perk = '''<div id="comet-banner" style="display:none;background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border:1px solid rgba(0,212,245,0.3);border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;position:relative;">
         <button onclick="localStorage.setItem('comet_dismissed','1');document.getElementById('comet-banner').remove();"
                 style="position:absolute;top:10px;right:12px;background:none;border:none;color:var(--ink-muted);font-size:18px;cursor:pointer;line-height:1;">&times;</button>
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
@@ -1127,7 +1127,7 @@ async def dashboard_overview(request: Request):
             plan_label = 'Founding Member'
         header_html = f'''
         <style>@media(max-width:600px){{.pro-stats-grid{{grid-template-columns:repeat(2,1fr) !important;}}}}</style>
-        <div style="background:linear-gradient(135deg,#1A2D4A 0%,#243B5E 100%);border-radius:var(--radius);padding:32px;margin-bottom:24px;">
+        <div style="background:linear-gradient(135deg,var(--terracotta) 0%,#243B5E 100%);border-radius:var(--radius);padding:32px;margin-bottom:24px;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
                 <div>
                     <h1 style="font-family:var(--font-display);font-size:32px;color:white;margin:0 0 4px;">
@@ -1231,15 +1231,15 @@ async def dashboard_overview(request: Request):
             <h3 style="font-family:var(--font-display);font-size:18px;color:var(--ink);margin-bottom:12px;">{_hub_title}</h3>
             <style>.pro-hub-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}}@media(max-width:600px){{.pro-hub-grid{{grid-template-columns:1fr;}}}}.pro-feat{{text-decoration:none;display:block;padding:20px;border-radius:var(--radius);transition:transform 0.15s ease;}}.pro-feat:hover{{transform:translateY(-1px);}}</style>
             <div class="pro-hub-grid">
-                <a href="/gaps" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
+                <a href="/gaps" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),#243B5E);">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Demand Signals</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Full opportunity scores, sparklines &amp; competition maps</div>
                 </a>
-                <a href="#ai-distribution" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
+                <a href="#ai-distribution" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),#243B5E);">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Citation Intel</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">See which AI agents recommend your tools &amp; how often</div>
                 </a>
-                <a href="/setup" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
+                <a href="/setup" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),#243B5E);">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Priority API</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Unlimited searches + personalized recommendations</div>
                 </a>
@@ -1250,7 +1250,7 @@ async def dashboard_overview(request: Request):
                     </div>
                     <div style="font-size:13px;color:var(--ink-muted);line-height:1.4;">Your tools rank higher in search &amp; AI discovery</div>
                 </div>
-                <a href="/dashboard/export?format=json" class="pro-feat" style="background:linear-gradient(135deg,#1A2D4A,#243B5E);">
+                <a href="/dashboard/export?format=json" class="pro-feat" style="background:linear-gradient(135deg,var(--terracotta),#243B5E);">
                     <div style="font-size:15px;font-weight:700;color:white;margin-bottom:4px;">Data Export</div>
                     <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.4;">Download your tools &amp; analytics as JSON or CSV</div>
                 </a>
@@ -1449,7 +1449,7 @@ async def dashboard_tools(request: Request):
         upvotes = t.get('upvote_count', 0)
         is_totw = t.get('tool_of_the_week', 0) == 1
         mcp_views = t.get('mcp_view_count', 0)
-        totw_badge = ' <span style="background:linear-gradient(135deg,#E2B764,#D4A84B);color:#1A2D4A;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> Tool of the Week</span>' if is_totw else ''
+        totw_badge = ' <span style="background:linear-gradient(135deg,#E2B764,#D4A84B);color:var(--terracotta);padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> Tool of the Week</span>' if is_totw else ''
         totw_line = ' &mdash; <span style="color:var(--gold);font-weight:600;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:2px;"><path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26z"/></svg> Currently Tool of the Week!</span>' if is_totw else ' &mdash; top tool each week gets featured on our homepage'
         # Get rating
         rating = await get_tool_rating(db, t['id'])
@@ -2590,7 +2590,7 @@ async def developer_page(request: Request):
             </p>
         </div>
 
-        <div style="text-align:center;padding:24px;margin-bottom:32px;background:linear-gradient(135deg,#1A2D4A,#0F1D30);border-radius:var(--radius);border:1px solid rgba(0,212,245,0.2);">
+        <div style="text-align:center;padding:24px;margin-bottom:32px;background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border-radius:var(--radius);border:1px solid rgba(0,212,245,0.2);">
             <p style="color:#fff;font-size:16px;font-weight:600;margin:0 0 4px;">Everything is free &mdash; unlimited searches</p>
             <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:0 0 16px;">Create a key for personalized recommendations and migration intelligence.</p>
             <a href="/login?next=/welcome" class="btn btn-primary" style="font-size:15px;padding:12px 32px;background:var(--accent);color:#0F1D30;border:none;border-radius:8px;font-weight:600;text-decoration:none;">
@@ -2787,7 +2787,7 @@ async def developer_page(request: Request):
     onboarding_card = ''
     if not keys:
         onboarding_card = '''
-        <div style="background:linear-gradient(135deg,#1A2D4A,#0F1D30);border:1px solid rgba(0,212,245,0.2);
+        <div style="background:linear-gradient(135deg,var(--terracotta),var(--terracotta-dark));border:1px solid rgba(0,212,245,0.2);
                     border-radius:var(--radius);padding:32px;margin-bottom:24px;text-align:center;">
             <h2 style="font-family:var(--font-display);font-size:24px;color:#fff;margin:0 0 8px;">
                 Create your API key

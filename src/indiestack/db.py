@@ -7774,6 +7774,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "red team": "ai standards",         # bigram — "red team llm", "red team evaluation" → AI Standards & Specs ("red" alone has no category match)
     "ai benchmark": "ai standards",     # bigram — "ai benchmark tool", "ai benchmark suite" → AI Standards & Specs (overrides "benchmark"→testing)
     "ai safety": "ai standards",        # bigram — "ai safety framework", "ai safety testing" → AI Standards & Specs
+    "llm safety": "ai standards",       # bigram — "llm safety guardrails", "llm safety evaluation" → AI Standards & Specs (overrides "llm"→ai)
+    "prompt safety": "ai standards",    # bigram — "prompt safety filter", "prompt safety library" → AI Standards & Specs (overrides "prompt"→ai)
+    "model safety": "ai standards",     # bigram — "model safety evaluation", "model safety testing" → AI Standards & Specs (overrides "model"→ai)
     "ai governance": "ai standards",    # bigram — "ai governance tool", "ai governance framework" → AI Standards & Specs
     "ai standards": "ai standards",     # bigram — "ai standards nist", "ai standards framework" → AI Standards & Specs (raw "ai" not in _CAT_SYNONYMS so this provides the boost)
     "benchmark llm": "ai standards",    # bigram — "benchmark llm models", "benchmark llm python" → AI Standards & Specs (overrides "benchmark"→testing)
