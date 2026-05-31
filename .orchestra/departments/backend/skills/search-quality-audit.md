@@ -129,6 +129,11 @@ These areas historically generate `raw_first` misses:
 | Screen tools | screen recorder, screen capture (developer tools) |
 | Media pipeline | streaming pipeline, data pipeline (message vs media) |
 | Document conversion | html to pdf, markdown to html (file management) |
+| Frontend naming variants | full stack (vs full-stack), micro-frontend (vs micro frontend), drag-and-drop (vs drag and drop), site generator (vs static site generator), frontend framework (framework is stop word) |
+| Streaming collision | streaming api (streaming→media steals it; add video/audio streaming bigrams at pos 0 as guards) |
+| Replay/session collision | replay debugging (replay→monitoring; session replay→analytics is correct) |
+| Semantic prefix collision | semantic caching (semantic→search steals it; "semantic cache" bigram works but not gerund -ing form) |
+| Source map variants | source map (source is stop word — spaced bigram dead), source-map (hyphen), source-maps (hyphen plural) |
 
 ## Commit Style
 

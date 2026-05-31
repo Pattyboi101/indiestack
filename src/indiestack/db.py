@@ -3229,6 +3229,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "stimulus": "frontend",      # Stimulus.js — modest JS framework (Hotwire)
     # Drag and drop libraries (dnd-kit, react-beautiful-dnd, Sortable.js)
     "drag": "frontend",          # "drag and drop", "drag to reorder" → Frontend Frameworks
+    "drag-and-drop": "frontend", # hyphenated compound — "drag-and-drop library", "drag-and-drop react" → Frontend
     "dnd": "frontend",           # dnd-kit abbreviation — common in React drag-and-drop queries
     # Backend web frameworks — "fastapi alternative", "django orm", "rails framework" etc.
     # All route to api-tools where backend frameworks and their indie alternatives live
@@ -4141,6 +4142,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Full-stack framework queries (Next.js, SvelteKit, Remix live in frontend-frameworks)
     "fullstack": "frontend",        # "fullstack framework", "fullstack typescript" → Frontend Frameworks
     "full-stack": "frontend",       # hyphenated form — "full-stack web framework" → Frontend Frameworks
+    # "frontend" bare token — handles "frontend framework", "frontend developer" etc.
+    # "framework" is a stop word so only "frontend" survives; raw_first was the prior fallback.
+    "frontend": "frontend",         # bare — "frontend framework", "frontend developer" → Frontend Frameworks
     # OpenAPI spec tooling (Scalar, Speakeasy, Redoc, openapi-ts)
     "spec": "api",                  # "openapi spec", "api specification", "json schema spec" → API Tools
     "specification": "api",         # long form — "api specification tool" → API Tools
@@ -8187,6 +8191,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # space-separated "micro service" users should use compound "microservice" (already mapped).
     "micro frontend": "frontend",       # "micro frontend framework", "micro frontend react" → Frontend Frameworks
     "micro frontends": "frontend",      # plural spaced — "micro frontends module federation" → Frontend Frameworks
+    "micro-frontend": "frontend",       # hyphenated — "micro-frontend architecture", "micro-frontend react" → Frontend
+    "micro-frontends": "frontend",      # hyphenated plural — "micro-frontends module federation" → Frontend
     "module federation": "frontend",    # bigram — "module federation webpack", "module federation react" → Frontend Frameworks
     # Auth — "user management" and "account management" route to project via "management"→project.
     # User/account management tools (Clerk, Auth0, WorkOS, Logto) live in Authentication.
@@ -9434,6 +9440,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # NOTE: "documentation site builder" must still route to Documentation. Adding "documentation site"→
     # documentation bigram (fires at pos 0) before "site builder"→landing (pos 1) can fire.
     "documentation site": "documentation",  # bigram — prevents "documentation site builder" regression
+    # "docs site generator" guard: "site generator"→frontend bigram at i=1 fires before bare "docs"→documentation.
+    # "docs site" bigram at i=0 fires first and routes correctly.
+    "docs site": "documentation",           # bigram — "docs site generator", "docs site builder" → Documentation
     "page builder": "landing",           # bigram — "page builder nextjs", "page builder react" → Landing Pages
     "site builder": "landing",           # bigram — "site builder react", "site builder open source" → Landing Pages
 
@@ -9650,6 +9659,7 @@ _CAT_SYNONYMS: dict[str, str] = {
 
     # Developer Tools — source-map hyphenated form ("source map" with space is blocked by stop word)
     "source-map": "developer",          # hyphenated token — "source-map webpack", "source-map support"
+    "source-maps": "developer",         # hyphenated plural — "source-maps react", "source-maps vite" → Developer
 
     # Developer Tools — inversion of control / IoC container ("of" is stop word → "inversion control" bigram)
     "inversion control": "developer",   # bigram — fires after "of" is stripped from "inversion of control"
@@ -10038,6 +10048,34 @@ _CAT_SYNONYMS: dict[str, str] = {
     "apache ignite": "caching",        # bigram — "apache ignite alternative", "apache ignite cache" → Caching
     "ehcache": "caching",              # Ehcache — widely-used Java in-process caching library (Terracotta)
     "caffeine": "caching",             # Caffeine — high-performance Java caching library (near-optimal eviction)
+
+    # Frontend — "full stack" spaced form (complement to "full-stack" hyphenated form already mapped).
+    # "full stack developer"/"full stack web" → raw_first "full" (unmapped) without this bigram.
+    "full stack": "frontend",           # bigram — "full stack developer", "full stack web" → Frontend Frameworks
+
+    # Frontend — "site generator" dead zone.
+    # "static site generator" fires "static"→frontend at pos 0; bare "site generator react" had no synonym.
+    # Static-site generators (Astro, Eleventy, Hugo, Jekyll) live in Frontend Frameworks.
+    "site generator": "frontend",       # bigram — "site generator react", "site generator npm" → Frontend
+    "site generators": "frontend",      # plural — "site generators comparison", "site generators list" → Frontend
+
+    # Media — "video streaming" and "audio streaming" bigrams prevent "streaming api" bigram
+    # from stealing queries that start with video/audio prefix.
+    "video streaming": "media",         # bigram — "video streaming api", "video streaming open source" → Media
+    "audio streaming": "media",         # bigram — "audio streaming api", "audio streaming server" → Media
+
+    # API Tools — "streaming api" mis-routes to Media via bare "streaming"→media.
+    # Streaming APIs (SSE, chunked responses, WebSocket streams) belong in API Tools.
+    "streaming api": "api",             # bigram — "streaming api nodejs", "streaming api sse" → API Tools
+
+    # Developer Tools — "replay debugging" mis-routes to Monitoring via bare "replay"→monitoring.
+    # Execution-replay debuggers (Replay.io, rr, WinDbg TTD) belong in Developer Tools.
+    "replay debugging": "developer",    # bigram — "replay debugging tool", "replay debugger" → Developer Tools
+
+    # Caching — "semantic caching" mis-routes to Search via bare "semantic"→search.
+    # Semantic similarity caches (GPTCache, Redis SemanticCache, Momento) belong in Caching.
+    # "semantic cache" bigram already exists; this adds the gerund form.
+    "semantic caching": "caching",      # bigram — "semantic caching redis", "semantic caching llm" → Caching
 }
 
 _FTS_STOP_WORDS = {
