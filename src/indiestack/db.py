@@ -10132,6 +10132,36 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Flecs ECS game framework — "flecs ecs" → devops via bare "ecs"→devops (AWS ECS collision; Flecs is the
     # most popular standalone C/C++ ECS library for games, 6k★)
     "flecs": "games",                   # bare — "flecs alternative", "flecs ecs framework" → Games & Entertainment
+    # ── Probe 136 (autonomous loop, May 2026): ZKP / PBT / distributed-tx / credential-rotation dead zones ──
+    #
+    # Property-Based Testing abbreviation — "pbt framework" → raw_first; Hypothesis, fast-check, Proptest,
+    # QuickCheck are Testing Tools; "property-based"→testing (hyphenated) was mapped but bare "pbt" was not.
+    "pbt": "testing",                       # bare — "pbt framework", "pbt approach", "pbt python" → Testing Tools
+    # Zero-Knowledge Proofs — "zero knowledge proof" → raw_first; ZKP tools (Circom, SnarkJS, Halo2, Arkworks,
+    # Bellman) belong in Security Tools; "zk"→security acts as generic prefix for "zk proof"/"zk circuit"/"zk rollup".
+    "zero knowledge": "security",           # bigram — "zero knowledge proof/protocol/cryptography" → Security
+    "zkp": "security",                      # bare — "zkp library", "zkp circuit", "zkp implementation" → Security
+    "zk": "security",                       # bare — "zk proof", "zk rollup", "zk evm", "zk circuit" → Security
+    "zk snark": "security",                 # bigram — "zk snark verification", "zk-snark circuit" → Security (pre-pass override of bare "zk")
+    "zk stark": "security",                 # bigram — "zk stark proof", "zk-stark verifier" → Security
+    "snark": "security",                    # bare — "snark proof", "snark library rust" → Security
+    "stark": "security",                    # bare — "stark proof", "stark verifier" → Security (ZK-STARK scheme)
+    "circom": "security",                   # bare — Circom (ZKP circuit compiler, 5k★) → Security
+    "snarkjs": "security",                  # bare — SnarkJS (ZK-SNARK proofs in JS, 3k★) → Security
+    "arkworks": "security",                 # bare — Arkworks (Rust ZKP library ecosystem) → Security
+    "halo2": "security",                    # bare — Halo2 (Zcash ZKP proving system) → Security
+    # Distributed transactions — "two phase commit protocol" → mcp (wrong; bare "protocol"→mcp fires last);
+    # "distributed transaction management" → project (wrong; "management"→project fires).
+    # Two-phase commit / distributed transaction coordination tools (Atomikos, Seata, Narayana) → Database.
+    # "two phase"→database fires at pre-pass position 0, before bare "protocol"→mcp can fire.
+    # Regression guard: "two factor auth" bigram→authentication still fires at pre-pass i=0 (different query).
+    "two phase": "database",                # bigram — "two phase commit", "two phase locking" → Database
+    "distributed transaction": "database",  # bigram — "distributed transaction management/coordination" → Database
+    # Credential / account rotation — "credential rotation vault"→authentication (wrong; "credential"→auth fires);
+    # "service account rotation"→raw_first (meaningful=["account","rotation"] after stop-word "service" stripped).
+    # Credential and service-account rotation are security hygiene patterns (Vault, Doppler, 1Password Secrets).
+    "credential rotation": "security",      # bigram — overrides bare "credential"→authentication for rotation queries
+    "account rotation": "security",         # bigram — "service account rotation" reduces to ["account","rotation"] → Security
 }
 
 _FTS_STOP_WORDS = {

@@ -4681,6 +4681,38 @@ TEST_CASES: list[tuple[str, str]] = [
     # Probe 135 regression guards
     ("code completion editor", "ai dev"),                # PRE: "code completion" bigram→ai-dev unchanged
     ("ann search", "search"),                            # PRE: bare "ann"→search consistent
+    # ── Probe 136: ZKP / PBT / distributed-tx / credential-rotation dead zones ──
+    ("pbt framework", "testing"),                        # bare "pbt"→testing (Property-Based Testing)
+    ("pbt tool python", "testing"),                      # NOTE: "python"→api fires but "pbt"→testing comes first via mfc loop
+    ("pbt approach", "testing"),                         # bare "pbt"→testing
+    ("zero knowledge proof library", "security"),        # bigram "zero knowledge"→security
+    ("zero knowledge protocol", "security"),             # bigram "zero knowledge"→security
+    ("zkp library rust", "security"),                    # bare "zkp"→security (fires before "rust"→api)
+    ("zkp circuit compiler", "security"),                # bare "zkp"→security (fires before "circuit"→api)
+    ("zk snark verification", "security"),               # bigram "zk snark"→security
+    ("zk stark proof", "security"),                      # bigram "zk stark"→security
+    ("zk proof circuit", "security"),                    # bare "zk"→security (fires before "circuit"→api)
+    ("zk rollup ethereum", "security"),                  # bare "zk"→security (ZK layer-2 scaling)
+    ("zk evm implementation", "security"),               # bare "zk"→security
+    ("circom circuit compiler", "security"),             # bare "circom"→security (ZKP circuit tool)
+    ("snarkjs library", "security"),                     # bare "snarkjs"→security (SnarkJS)
+    ("halo2 proving", "security"),                       # bare "halo2"→security (Zcash ZKP)
+    ("arkworks rust zkp", "security"),                   # bare "arkworks"→security (Rust ZKP)
+    ("two phase commit", "database"),                    # bigram "two phase"→database (2PC protocol)
+    ("two phase locking protocol", "database"),          # bigram "two phase"→database (fires before "protocol"→mcp)
+    ("distributed transaction management", "database"),  # bigram "distributed transaction"→database
+    ("distributed transaction coordination", "database"), # bigram "distributed transaction"→database
+    ("credential rotation vault", "security"),           # bigram "credential rotation"→security (overrides "credential"→auth)
+    ("service account rotation", "security"),            # meaningful→["account","rotation"]; bigram "account rotation"→security
+    # Probe 136 regression guards
+    ("property based testing python", "testing"),        # PRE: "property based"→testing unchanged
+    ("property-based testing framework", "testing"),     # PRE: "property-based"→testing unchanged
+    ("two factor auth", "authentication"),               # PRE: bigram "two factor"→auth unchanged
+    ("zero downtime deploy", "devops"),                  # PRE: bigram "zero downtime"→devops unchanged
+    ("model context protocol", "mcp"),                   # PRE: bigram "model context"→mcp unchanged
+    ("protocol buffer grpc", "api"),                     # PRE: bigram "protocol buffer"→api unchanged
+    ("credential management tool", "authentication"),    # PRE: bare "credential"→auth still fires for mgmt queries
+    ("zk sso", "security"),                              # PRE: bare "zk"→security fires before "sso"→auth (ZK-SSO is cryptographic auth)
 ]
 
 
