@@ -10155,6 +10155,27 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — LSP (Language Server Protocol) bigram.
     # bare "protocol"→mcp fires for "language server protocol" unless "language server" bigram overrides.
     "language server": "developer",     # bigram — "language server protocol", "language server implementation" → Developer Tools
+
+    # ── Probe 146 (autonomous loop, Jun 2026): SolidStart spaced-form / Turbo Streams / Qwik City dead zones ──
+    #
+    # "solid start" (spaced) — "solid" is in _FRAMEWORK_QUERY_TERMS so it's stripped from meaningful_for_cat,
+    # leaving bare "start" with no _CAT_SYNONYMS entry → raw_first. The hyphenated "solid-start" and compound
+    # "solidstart" forms existed but the spaced bigram fires in the PRE-PASS (on meaningful before stripping),
+    # so it correctly routes "solid start alternative"/"solid start framework" to Frontend Frameworks.
+    # Applies Probe Pattern 13 (hyphenated-form-only trap): always add space, hyphen, and compound variants.
+    "solid start": "frontend",             # bigram — "solid start alternative", "solid start framework" → Frontend (pre-pass fires before "solid" stripped)
+
+    # "turbo stream" / "turbo rails" — bare "turbo"→developer (Turborepo monorepo CLI) is correct for
+    # "turbo run build" but wrong for Hotwire's Turbo Streams feature (Rails meta-framework layer).
+    # "turbo stream view"/"turbo stream hotwire" mis-route to Developer via bare "turbo".
+    # Bigrams fire in pre-pass at position 0, overriding "turbo"→developer at position 0 in main pass.
+    # Regression: "turbo run build"→developer unchanged ("run"→? no bigram; bare "turbo"→developer fires).
+    "turbo stream": "frontend",            # bigram — "turbo stream view", "turbo stream hotwire" → Frontend (Hotwire Turbo Streams)
+    "turbo rails": "frontend",             # bigram — "turbo rails framework", "turbo hotwire rails" → Frontend (overrides "turbo"→developer)
+
+    # "qwik city" (spaced) — "qwik" is in _FRAMEWORK_QUERY_TERMS and stripped; only "city" remains →
+    # raw_first. Hyphenated "qwik-city" and compound "qwikcity" existed; spaced bigram fires in pre-pass.
+    "qwik city": "frontend",              # bigram — "qwik city alternative", "qwik city vs nextjs" → Frontend
 }
 
 _FTS_STOP_WORDS = {

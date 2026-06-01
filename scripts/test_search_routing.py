@@ -4795,6 +4795,21 @@ TEST_CASES: list[tuple[str, str]] = [
     ("llmstxt standard", "ai"),                         # PRE: compact "llmstxt"→ai unchanged
     ("clean architecture framework", "developer"),      # PRE: bigram "clean architecture"→developer unchanged
     ("hexagonal architecture guide", "developer"),      # PRE: bigram "hexagonal architecture"→developer unchanged
+
+    # Probe 146 — SolidStart spaced-form / Turbo Streams / Qwik City dead zones
+    ("solid start alternative", "frontend"),             # bigram "solid start"→frontend (pre-pass fires before framework-stripping drops "solid")
+    ("solid start framework", "frontend"),               # bigram "solid start"→frontend
+    ("turbo stream hotwire", "frontend"),                # bigram "turbo stream"→frontend (overrides bare "turbo"→developer)
+    ("turbo stream view", "frontend"),                   # bigram "turbo stream"→frontend
+    ("turbo stream rails", "frontend"),                  # bigram "turbo stream"→frontend
+    ("turbo rails framework", "frontend"),               # bigram "turbo rails"→frontend (overrides bare "turbo"→developer)
+    ("qwik city alternative", "frontend"),               # bigram "qwik city"→frontend (pre-pass fires before "qwik" is stripped)
+    ("qwik city vs nextjs", "frontend"),                 # bigram "qwik city"→frontend
+    # Probe 146 regression guards
+    ("turbo run build", "developer"),                    # PRE: bare "turbo"→developer still fires (no "stream"/"rails" suffix)
+    ("turborepo alternative", "developer"),              # PRE: bare "turborepo"→developer unchanged
+    ("solidstart ssr", "frontend"),                      # PRE: bare "solidstart"→frontend unchanged
+    ("solid js framework", "frontend"),                  # PRE: bare "solid"→frontend unchanged (no "start" suffix)
 ]
 
 
