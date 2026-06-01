@@ -126,6 +126,11 @@ These areas historically generate `raw_first` misses:
 | FaaS spaced forms | function as a service, function as service — "faas" maps but long-form bigrams often missing |
 | Data pipeline verbs | data export, data import, data transform — "data" + verb bigrams often raw_first |
 | Automation qualifier | automation testing (→testing, not ai), automation workflow (→background) — "automation" bare→ai causes misfires |
+| Payments / billing ops | chargeback, chargebacks, dunning, refund policy, dispute management — payment ops terms often raw_first |
+| Code quality verb forms | beautify, beautifier (→testing) — check verb/gerund/noun forms when base formatter is mapped |
+| Approval / BPM | approval workflow (→background), approval process, document approval — "workflow"→ai fires without qualifier bigram |
+| Image operation bigrams | image compression, image minification (→file) — "image"→media fires; need op-specific bigrams per "image optimization" pattern |
+| Education / assessment | technical interview, coding challenge, coding assessment, live coding (→learning) — "coding"→ai-dev causes misfires |
 
 ### Pattern 16 — "conflicting first/second token" probe queries
 
