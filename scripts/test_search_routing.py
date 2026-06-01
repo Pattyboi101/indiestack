@@ -4806,6 +4806,29 @@ TEST_CASES: list[tuple[str, str]] = [
     ("memory cache redis", "caching"),                   # PRE: bare "memory"→caching still fires for cache queries
     ("async runtime rust", "developer"),                 # PRE: "async runtime" bigram→developer unchanged
     ("async job queue", "background"),                   # PRE: "async job" still routes to background via "job"→background
+
+    # Probe 142 (autonomous loop, Jun 2026): fixtures plural / automation-testing misfire / FaaS spaced form / data-export dead zones.
+    #
+    # "fixtures library" → raw_first "fixtures" (plural form of "fixture"→testing missing).
+    # "automation testing tool/framework" → "ai" via bare "automation"→ai (wrong; QA automation → Testing).
+    # "function as service/a service" → raw_first "function as" (stop-words strip "a"+"service"; "function as" bigram missing).
+    # "data export tool"/"data import tool" → raw_first "data export"/"data import" bigrams (both tokens unmapped).
+    ("fixtures library", "testing"),                     # bare "fixtures"→testing (plural of fixture→testing)
+    ("test fixtures python", "testing"),                 # bare "test"→testing fires first; confirms "fixtures" is correct
+    ("automation testing framework", "testing"),         # bigram "automation testing"→testing overrides "automation"→ai
+    ("automation testing selenium", "testing"),          # bigram fires at pos 0-1, "selenium"→testing also reinforces
+    ("function as service", "devops"),                   # bigram "function as"→devops (stop-words strip "a"+"service")
+    ("function as a service", "devops"),                 # same — "a" is stop-word → meaningful=['function','as']
+    ("data export tool", "developer"),                   # bigram "data export"→developer
+    ("data export api", "developer"),                    # bigram "data export" fires at pos 0-1
+    ("data import tool", "developer"),                   # bigram "data import"→developer
+    # Regressions guarded
+    ("automation platform", "ai"),                       # PRE: bare "automation"→ai unchanged (no "testing" suffix)
+    ("web automation tool", "testing"),                  # PRE: "web automation" bigram→testing unchanged
+    ("workflow automation n8n", "background"),            # PRE: "workflow automation"→background unchanged
+    ("faas platform", "devops"),                         # PRE: bare "faas"→devops unchanged
+    ("data engineering python", "background"),           # PRE: "data engineering"→background unchanged
+    ("data science library", "ai"),                      # PRE: "data science"→ai unchanged
 ]
 
 

@@ -3125,6 +3125,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "signals": "frontend",      # plural form — common in Angular 17+ / SolidJS docs
     # Testing — additional patterns
     "fixture": "testing",       # "test fixture" — pytest fixtures, testing factory patterns
+    "fixtures": "testing",      # plural form — "fixtures library", "test fixtures python" → Testing Tools
     "snapshot": "testing",      # "snapshot testing" — Jest / Vitest snapshots
     "benchmark": "testing",     # "benchmark tool" — k6, Vitest bench, hyperfine
     "benchmarking": "testing",  # explicit form
@@ -4746,6 +4747,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "identity": "authentication",   # "identity provider", "identity management", "digital identity" → Authentication
     # FaaS — Function as a Service (serverless function alternatives)
     "faas": "devops",               # "FaaS alternative", "function as a service", "faas platform" → DevOps
+    "function as": "devops",        # bigram — "function as a service" → stop-word strips "a"+"service" → ["function","as"] → DevOps
     "compute": "devops",            # "compute platform", "compute service", "edge compute" → DevOps
     # Batch processing — complement to background-job synonyms (cron/queue/worker/scheduler)
     "batch": "background",          # "batch job", "batch processing", "batch queue" → Background Jobs
@@ -5705,6 +5707,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # NOTE: "web automation" fires "automation"→ai which is wrong for browser automation queries.
     # Web automation tools (Playwright, Puppeteer used for scripting, not just testing) belong in Testing.
     "web automation": "testing",    # bigram — "web automation tool", "web automation python" → Testing Tools
+    # NOTE: "automation testing" → "automation"→ai fires first (wrong; QA automation testing
+    # tools belong in Testing, not AI & Automation). Bigram pre-pass override at position 0.
+    "automation testing": "testing", # bigram — "automation testing framework", "automation testing selenium" → Testing Tools
     # Background Jobs — RPA (Robotic Process Automation) queries (n8n, Windmill live in background-jobs)
     "rpa": "background",            # "rpa tool", "rpa open source" → Background Jobs
     # Browser / VS Code extensions — Developer Tools category hosts WXT, Plasmo, CRXJS
@@ -9369,6 +9374,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # are data engineering / ETL tools that live in Background Jobs).
     # Bigram overrides bare "engineering"→devops when "data" precedes it.
     "data engineering": "background",    # bigram — "data engineering tools", "data engineering python" → Background Jobs
+    "data export": "developer",          # bigram — "data export tool", "data export api" → Developer Tools (CSV/data export libs)
+    "data import": "developer",          # bigram — "data import tool", "data import python" → Developer Tools
 
     # "data science" → raw_first (both "data" and "science" unmapped after stop-word strip).
     # Data science tools (Jupyter, Pandas, scikit-learn, Polars) belong in AI & Automation.
