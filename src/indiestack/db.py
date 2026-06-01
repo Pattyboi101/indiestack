@@ -10254,6 +10254,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Memory allocators (jemalloc, mimalloc, tcmalloc, buddy allocator) → Developer Tools.
     "memory management": "developer",      # bigram — overrides "memory"→caching; "memory management rust/c++" → Developer Tools
     "memory allocator": "developer",       # bigram — "custom memory allocator", "memory allocator rust" → Developer Tools
+    # Activity feed — "activity feed" → raw "feed"→newsletters (wrong; GetStream, Knock, Novu activity feeds → Notifications).
+    # Bare "feed" stays "newsletters" for "rss feed", "news feed", "content feed"; only overridden when "activity" precedes.
+    "activity feed": "notifications",      # bigram — "activity feed api", "user activity feed" → Notifications
+    "activity stream": "notifications",    # bigram — "activity stream standard", "activity stream react" → Notifications
+    # Language detection — "language detection" → raw_first "language" (unmapped bare token).
+    # lingua, franc, cld3, langdetect detect written-language locale → Localization category.
+    "language detection": "localization",  # bigram — "language detection library", "language detection nlp" → Localization
+    "language detector": "localization",   # bigram — noun form; "language detector python" → Localization
+    # String extraction — i18n key extraction from source code → Localization (i18n-ally, babel-plugin-i18n-json, i18next-parser).
+    # "string" alone routes nowhere (raw_first); "extraction" alone routes to raw_first "extraction".
+    "string extraction": "localization",   # bigram — "string extraction i18n", "string extraction react" → Localization
+    # Plural form — ICU message format, pluralization rules (i18next-icu, make-plural) → Localization.
+    # "plural form handling/rules" misfires to Forms via bare "form"→forms; bigram fires first.
+    "plural form": "localization",         # bigram — "plural form rules", "plural form handling" → Localization
+    "plural forms": "localization",        # bigram — plural variant "plural forms library" → Localization
 }
 
 _FTS_STOP_WORDS = {

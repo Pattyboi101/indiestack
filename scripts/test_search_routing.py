@@ -4829,6 +4829,33 @@ TEST_CASES: list[tuple[str, str]] = [
     ("faas platform", "devops"),                         # PRE: bare "faas"→devops unchanged
     ("data engineering python", "background"),           # PRE: "data engineering"→background unchanged
     ("data science library", "ai"),                      # PRE: "data science"→ai unchanged
+    # Probe 143 (autonomous loop, Jun 2026): activity-feed/language-detection/string-extraction/plural-form i18n dead zones.
+    #
+    # "activity feed [api/react]" → raw "feed"→newsletters (wrong; GetStream, Knock, Novu activity feeds → Notifications).
+    # "activity stream [api/react]" → similar issue; bigram "activity stream"→notifications added.
+    # "language detection [library/nlp]" → raw_first "language" (unmapped bare token); bigram "language detection"→localization.
+    # "language detector [python]" → noun form also unmapped; bigram "language detector"→localization.
+    # "string extraction [i18n/react]" → raw_first "string" (i18n key extraction → Localization).
+    # "plural form [rules/handling]" → "forms" via bare "form"→forms (wrong; i18n pluralization → Localization).
+    ("activity feed api", "notifications"),              # bigram "activity feed"→notifications (overrides "feed"→newsletters)
+    ("user activity feed react", "notifications"),       # bigram fires before bare "feed"→newsletters
+    ("activity stream api", "notifications"),            # bigram "activity stream"→notifications
+    ("activity stream react", "notifications"),          # bigram fires before bare "stream"→message-queue
+    # Regressions — bare "feed" for rss/news still routes to newsletters
+    ("rss feed reader", "newsletters"),                  # bare "feed"→newsletters unchanged (no "activity" prefix)
+    ("news feed aggregator", "newsletters"),             # bare "feed"→newsletters unchanged
+    ("language detection library", "localization"),      # bigram "language detection"→localization (was raw_first)
+    ("language detection nlp", "localization"),          # bigram fires before raw_first
+    ("language detector python", "localization"),        # bigram "language detector"→localization
+    ("string extraction i18n", "localization"),          # bigram "string extraction"→localization (was raw_first)
+    ("string extraction react", "localization"),         # bigram fires before raw_first
+    ("plural form rules", "localization"),               # bigram "plural form"→localization (overrides "form"→forms)
+    ("plural form handling", "localization"),            # bigram fires before bare "form"→forms
+    ("plural forms library", "localization"),            # bigram "plural forms"→localization
+    # Regressions guarded
+    ("i18n library react", "localization"),              # PRE: bare "i18n"→localization unchanged
+    ("translation management", "localization"),          # PRE: bare "translation"→localization unchanged
+    ("contact form builder", "forms"),                   # PRE: bare "form"→forms unchanged (no "plural" prefix)
 ]
 
 
