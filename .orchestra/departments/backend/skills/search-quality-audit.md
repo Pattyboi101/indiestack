@@ -115,8 +115,13 @@ These areas historically generate `raw_first` misses:
 | Data observability | data lineage, data catalog, data observability, data quality, data contract |
 | Service mesh / networking | service mesh, envoy proxy, istio, linkerd, ebpf networking |
 | Software supply chain | sbom generator, slsa provenance, sigstore, cosign, syft, grype |
-| Chaos / resilience testing | chaos engineering, fault injection, chaos monkey, litmus chaos, toxiproxy |
+| Chaos / resilience testing | chaos engineering, fault injection, chaos monkey, litmus chaos, toxiproxy, gremlin, blast radius, steady state |
 | API contract testing | pact contract, wiremock stub, consumer driven contract, prism mock |
+| Game dev advanced | tilemap, tileset, particle system, procedural generation, shader graph, level design, game jam |
+| Security signing / PKI | code signing, binary signing, artifact signing, mtls, mutual tls, certificate authority |
+| Hardware auth | yubikey, hardware key, hardware token, fido2 key, passkey device |
+| IaC / provisioning | cloudformation, cloud formation, pulumi stack, opentofu, crossplane, terraform cdk |
+| BPM / workflow engines | bpm, camunda, activiti, flowable, zeebe, temporal workflow |
 | Plural-form gaps | fixtures (→testing), formatters, notifiers — always probe the plural when singular is mapped |
 | FaaS spaced forms | function as a service, function as service — "faas" maps but long-form bigrams often missing |
 | Data pipeline verbs | data export, data import, data transform — "data" + verb bigrams often raw_first |

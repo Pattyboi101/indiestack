@@ -10269,6 +10269,55 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "plural form handling/rules" misfires to Forms via bare "form"→forms; bigram fires first.
     "plural form": "localization",         # bigram — "plural form rules", "plural form handling" → Localization
     "plural forms": "localization",        # bigram — plural variant "plural forms library" → Localization
+    # ── Probe 144 (autonomous loop, Jun 2026): chaos/gremlin / game-primitives / security-signing / auth-hardware / IaC dead zones ──
+    #
+    # "gremlin" → raw_first; Gremlin (chaos engineering SaaS, 2k users) → Testing Tools (joins
+    #   litmus/toxiproxy/chaos-mesh in the chaos cluster). Note: "chaos"→testing already fires for
+    #   "gremlin chaos" queries but bare "gremlin" alone was unrouted.
+    # "blast radius" → raw_first bigram; chaos engineering concept (scope of a failure) → Testing.
+    # "steady state" → "frontend" via bare "state"→frontend (wrong; Steady State Hypothesis is the
+    #   core chaos engineering verification step — Gremlin, Chaos Toolkit use this terminology).
+    # "tilemap" / "tileset" → raw_first; tile-based 2D game primitives (Tiled editor, ggez, libtcod,
+    #   Pyxel, LDTK) → Games & Entertainment. Complement to "sprite"→games, "voxel"→games.
+    # "particle system" → raw_first bigram; game/simulation VFX (particles.js, three.js, Phaser,
+    #   PIXI.js particle emitters) → Games & Entertainment.
+    # "procedural generation" → raw_first bigram; PCG in game dev (Wave Function Collapse, noise libs,
+    #   FastNoiseLite, PolyGen) → Games & Entertainment.
+    # "code signing" → raw_first bigram; signing executables/packages (rcodesign, osslsigncode,
+    #   jsign, electron-builder codesign) → Security Tools.
+    # "binary signing" → raw_first bigram; signing compiled binaries (cosign, notary, sigstore) → Security.
+    # "mtls" → raw_first; mutual TLS (SPIFFE, cert-manager, step-ca, Linkerd identity) → Security Tools.
+    # "yubikey" / "hardware key" → raw_first; hardware security keys for FIDO2/WebAuthn → Authentication.
+    # "bpm" → raw_first; Business Process Management (Camunda, Activiti, Flowable, Zeebe) → Background Jobs.
+    # "cloudformation" / "cloud formation" → raw_first; AWS CloudFormation is an IaC tool → DevOps.
+    #   "cloud" alone stays raw_first (too ambiguous); only compound "cloudformation" gets the devops routing.
+
+    # Chaos engineering
+    "gremlin": "testing",              # bare — "gremlin chaos", "gremlin alternative" → Testing Tools
+    "blast radius": "testing",         # bigram — "blast radius chaos", "blast radius failure" → Testing Tools
+    "steady state": "testing",         # bigram — overrides "state"→frontend; Steady State Hypothesis → Testing
+
+    # Game dev primitives
+    "tilemap": "games",                # bare — "tilemap editor", "tilemap collision" → Games & Entertainment
+    "tileset": "games",                # bare — "tileset creator", "tileset png" → Games & Entertainment
+    "particle system": "games",        # bigram — "particle system javascript", "particle system phaser" → Games
+    "procedural generation": "games",  # bigram — "procedural generation algorithm", "pcg game" → Games
+
+    # Security — code/binary signing + mTLS
+    "code signing": "security",        # bigram — "code signing certificate", "code signing electron" → Security
+    "binary signing": "security",      # bigram — "binary signing tool", "binary signing cosign" → Security
+    "mtls": "security",                # bare — "mtls certificate", "mtls envoy", "mtls setup" → Security Tools
+
+    # Authentication — hardware security keys
+    "yubikey": "authentication",       # bare — "yubikey authentication", "yubikey fido2" → Authentication
+    "hardware key": "authentication",  # bigram — "hardware key fido2", "hardware key auth" → Authentication
+
+    # Background Jobs — Business Process Management
+    "bpm": "background",               # bare — "bpm engine", "bpm workflow", "bpm camunda" → Background Jobs
+
+    # DevOps — AWS CloudFormation
+    "cloudformation": "devops",        # bare — "cloudformation alternative", "cloudformation template" → DevOps
+    "cloud formation": "devops",       # bigram — spaced form "cloud formation template" → DevOps & Infrastructure
 }
 
 _FTS_STOP_WORDS = {

@@ -4856,6 +4856,50 @@ TEST_CASES: list[tuple[str, str]] = [
     ("i18n library react", "localization"),              # PRE: bare "i18n"→localization unchanged
     ("translation management", "localization"),          # PRE: bare "translation"→localization unchanged
     ("contact form builder", "forms"),                   # PRE: bare "form"→forms unchanged (no "plural" prefix)
+    # Probe 144 (autonomous loop, Jun 2026): chaos/gremlin / game-primitives / security-signing / auth-hardware / IaC dead zones.
+    #
+    # "gremlin" → raw_first; Gremlin chaos engineering platform → Testing Tools.
+    # "blast radius" → raw_first bigram; chaos engineering scope-of-failure concept → Testing.
+    # "steady state" → "frontend" via bare "state"→frontend (wrong; Steady State Hypothesis → Testing).
+    # "tilemap"/"tileset" → raw_first; tile-based game primitives → Games & Entertainment.
+    # "particle system" → raw_first bigram; game VFX emitters → Games & Entertainment.
+    # "procedural generation" → raw_first bigram; PCG algorithm game dev → Games & Entertainment.
+    # "code signing"/"binary signing" → raw_first bigrams; signing executables → Security Tools.
+    # "mtls" → raw_first; mutual TLS authentication → Security Tools.
+    # "yubikey"/"hardware key" → raw_first; hardware FIDO2 keys → Authentication.
+    # "bpm" → raw_first; Business Process Management engines → Background Jobs.
+    # "cloudformation"/"cloud formation" → raw_first; AWS CloudFormation IaC → DevOps.
+    ("gremlin chaos", "testing"),                        # bare "gremlin"→testing (was raw_first)
+    ("gremlin alternative", "testing"),                  # bare "gremlin"→testing
+    ("blast radius chaos", "testing"),                   # bigram "blast radius"→testing (was raw_first)
+    ("blast radius failure scope", "testing"),           # bigram fires before raw_first
+    ("steady state hypothesis", "testing"),              # bigram "steady state"→testing (overrides "state"→frontend)
+    ("steady state chaos", "testing"),                   # bigram fires before bare "state"→frontend
+    ("tilemap editor", "games"),                         # bare "tilemap"→games (was raw_first)
+    ("tilemap collision detection", "games"),            # bare "tilemap"→games
+    ("tileset creator", "games"),                        # bare "tileset"→games (was raw_first)
+    ("particle system javascript", "games"),             # bigram "particle system"→games (was raw_first)
+    ("particle system phaser", "games"),                 # bigram fires before raw_first
+    ("procedural generation algorithm", "games"),        # bigram "procedural generation"→games (was raw_first)
+    ("procedural generation game", "games"),             # bigram fires before raw_first
+    ("code signing certificate", "security"),            # bigram "code signing"→security (was raw_first)
+    ("code signing electron", "security"),               # bigram fires before raw_first
+    ("binary signing cosign", "security"),               # bigram "binary signing"→security (was raw_first)
+    ("mtls certificate", "security"),                    # bare "mtls"→security (was raw_first)
+    ("mtls envoy setup", "security"),                    # bare "mtls"→security
+    ("yubikey authentication", "authentication"),        # bare "yubikey"→authentication (was raw_first)
+    ("yubikey fido2", "authentication"),                 # bare "yubikey"→authentication
+    ("hardware key fido2", "authentication"),            # bigram "hardware key"→authentication (was raw_first)
+    ("bpm engine camunda", "background"),                # bare "bpm"→background (was raw_first)
+    ("bpm workflow", "background"),                      # bare "bpm"→background
+    ("cloudformation alternative", "devops"),            # bare "cloudformation"→devops (was raw_first)
+    ("cloudformation template", "devops"),               # bare "cloudformation"→devops
+    ("cloud formation template", "devops"),              # bigram "cloud formation"→devops (was raw_first)
+    # Regressions guarded
+    ("chaos engineering", "testing"),                    # PRE: bare "chaos"→testing unchanged
+    ("physics engine javascript", "games"),              # PRE: bare "physics"→games unchanged
+    ("code coverage", "testing"),                        # PRE: bare "code"→(testing via coverage) unchanged
+    ("state management react", "frontend"),              # PRE: bare "state"→frontend unchanged (no "steady" prefix)
 ]
 
 
