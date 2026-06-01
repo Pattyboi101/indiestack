@@ -117,6 +117,10 @@ These areas historically generate `raw_first` misses:
 | Software supply chain | sbom generator, slsa provenance, sigstore, cosign, syft, grype |
 | Chaos / resilience testing | chaos engineering, fault injection, chaos monkey, litmus chaos, toxiproxy |
 | API contract testing | pact contract, wiremock stub, consumer driven contract, prism mock |
+| Plural-form gaps | fixtures (→testing), formatters, notifiers — always probe the plural when singular is mapped |
+| FaaS spaced forms | function as a service, function as service — "faas" maps but long-form bigrams often missing |
+| Data pipeline verbs | data export, data import, data transform — "data" + verb bigrams often raw_first |
+| Automation qualifier | automation testing (→testing, not ai), automation workflow (→background) — "automation" bare→ai causes misfires |
 
 ### Pattern 16 — "conflicting first/second token" probe queries
 
