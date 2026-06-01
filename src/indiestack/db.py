@@ -10427,6 +10427,69 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Background Jobs — data transformation and ELT pipeline tools
     "sqlmesh": "background",          # bare — "sqlmesh alternative", "sqlmesh dbt" → Background Jobs (dbt-compatible SQL transform)
     "dlthub": "background",           # bare — "dlthub pipeline", "dlthub python" → Background Jobs (Python ELT data-load tool)
+
+    # ── Probe 149 (autonomous loop, Jun 2026): BPM tools / data-catalog singles / payment-ops / plural forms / game-dev bigrams / coding qualifier bigrams ──
+    #
+    # "flowable" → raw_first; Flowable is an open-source BPM/workflow engine (7k★) → Background Jobs (same tier as Camunda/Zeebe).
+    # "activiti" → raw_first; Activiti is a Java BPM engine (Camunda fork origin, 10k★) → Background Jobs.
+    # "collibra" → raw_first; Collibra is a leading enterprise data governance & catalog platform → Analytics & Metrics.
+    # "alation" → raw_first; Alation is a major enterprise data catalog SaaS → Analytics & Metrics.
+    # "amundsen" → raw_first; Amundsen (Lyft open-source, 4k★) is a data discovery & metadata engine → Analytics & Metrics.
+    # "nifi" → raw_first; Apache NiFi is a visual data-flow / ETL orchestration tool (4k★) → Background Jobs.
+    # "refund" → raw_first; payment ops term → Payments.
+    # "dispute" → raw_first; payment ops term → Payments.
+    # "formatters" → raw_first; plural of "formatter" (→testing) — always add plural when singular is mapped.
+    # "notifiers" → raw_first; plural of "notifier" (→notifications) — always add plural when singular is mapped.
+    # "level design" / "level editor" → bare "level" raw_first or "editor"→frontend (wrong; game level design tools → Games).
+    # "shader graph" → "frontend" via bare "shader"→frontend (wrong; shader graph editors are game-dev tools → Games).
+    #   NOTE: bare "shader" stays frontend — WebGL / Three.js shaders are legitimately frontend tools.
+    # "coding challenge" / "coding assessment" / "live coding" → "ai dev" via bare "coding"→ai-dev (wrong; coding
+    #   interview/assessment platforms like Codewars, LeetCode, HackerRank → Learning).
+    # "approval process" → "devops" via bare "process"→devops (wrong; approval process automation → Background Jobs,
+    #   same tier as "approval workflow"→background already mapped).
+    # "artifact signing" → "devops" via bare "artifact"→devops (wrong; software-supply-chain signing tools → Security).
+    # "dispute management" → "project" via bare "management"→project (wrong; payment dispute management → Payments).
+    # "refund policy" → "devops" via bare "policy"→devops (wrong; refund policy automation → Payments).
+
+    # Background Jobs — BPM / workflow engine named tools
+    "flowable": "background",          # bare — "flowable bpm", "flowable process" → Background Jobs (open-source BPM engine, 7k★)
+    "activiti": "background",          # bare — "activiti bpm", "activiti workflow" → Background Jobs (Java BPM engine, 10k★)
+
+    # Analytics — remaining data-catalog named tools (singles; collibra/alation/amundsen probed 149)
+    "collibra": "analytics",           # bare — "collibra data governance", "collibra catalog" → Analytics & Metrics
+    "alation": "analytics",            # bare — "alation data catalog", "alation alternative" → Analytics & Metrics
+    "amundsen": "analytics",           # bare — "amundsen data discovery", "amundsen lyft" → Analytics & Metrics
+
+    # Background Jobs — Apache NiFi data-flow tool
+    "nifi": "background",              # bare — "nifi dataflow", "nifi etl" → Background Jobs (Apache NiFi visual ETL)
+
+    # Payments — payment-ops terms (bare tokens)
+    "refund": "payments",              # bare — "refund management", "refund automation" → Payments
+    "dispute": "payments",             # bare — "dispute handling", "dispute resolution" → Payments
+
+    # Testing / Notifications — plural forms missing while singular was mapped
+    "formatters": "testing",           # bare — "formatters code", "formatters list" → Testing (plural of formatter→testing)
+    "notifiers": "notifications",      # bare — "notifiers library", "notifiers python" → Notifications (plural of notifier→notifications)
+
+    # Games — game-dev bigrams (override frontend/raw_first bare-token routing)
+    "level design": "games",           # bigram — "level design tool", "level design game" → Games (overrides "level"→raw_first)
+    "level editor": "games",           # bigram — "level editor tool", "level editor godot" → Games (overrides "editor"→frontend)
+    "shader graph": "games",           # bigram — "shader graph unity", "shader graph editor" → Games (overrides "shader"→frontend)
+
+    # Learning — coding-interview/assessment bigrams (override "coding"→ai-dev)
+    "coding challenge": "learning",    # bigram — "coding challenge platform", "coding challenge site" → Learning
+    "coding assessment": "learning",   # bigram — "coding assessment tool", "coding assessment interview" → Learning
+    "live coding": "learning",         # bigram — "live coding interview", "live coding platform" → Learning
+
+    # Background Jobs — BPM approval qualifier (overrides "process"→devops)
+    "approval process": "background",  # bigram — "approval process automation", "approval process workflow" → Background Jobs
+
+    # Security — software supply chain signing (overrides "artifact"→devops)
+    "artifact signing": "security",    # bigram — "artifact signing tool", "artifact signing cosign" → Security
+
+    # Payments — payment-ops bigrams (override management/policy routing)
+    "dispute management": "payments",  # bigram — "dispute management tool", "dispute management chargeback" → Payments
+    "refund policy": "payments",       # bigram — "refund policy automation", "refund policy tool" → Payments
 }
 
 _FTS_STOP_WORDS = {

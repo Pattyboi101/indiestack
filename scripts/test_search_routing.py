@@ -5010,6 +5010,60 @@ TEST_CASES: list[tuple[str, str]] = [
     ("service discovery kubernetes", "devops"),         # PRE: bare "discovery"→devops; "service" is stop word → no bigram collision
     ("team management kanban", "project"),              # PRE: bare "management"→project unchanged (bigram "metadata management" doesn't fire)
     ("great barrier reef", "great"),                    # PRE: "great" (raw_first) fires for non-GE queries → no category boost
+
+    # ── probe 149: BPM tools / data-catalog singles / payment-ops / plural forms / game-dev bigrams / coding qualifier bigrams ──
+    #
+    # Fixed: flowable→background, activiti→background, collibra→analytics, alation→analytics,
+    #        amundsen→analytics, nifi→background, refund→payments, dispute→payments,
+    #        formatters→testing, notifiers→notifications, level design→games (bigram),
+    #        level editor→games (bigram), shader graph→games (bigram), coding challenge→learning (bigram),
+    #        coding assessment→learning (bigram), live coding→learning (bigram),
+    #        approval process→background (bigram), artifact signing→security (bigram),
+    #        dispute management→payments (bigram), refund policy→payments (bigram).
+    ("flowable bpm", "background"),                     # bare "flowable"→background (was raw_first)
+    ("flowable workflow engine", "background"),         # bare "flowable"→background fires at pos 0
+    ("activiti bpm", "background"),                     # bare "activiti"→background fires before "bpm"
+    ("activiti workflow java", "background"),           # bare "activiti"→background fires at pos 0
+    ("collibra data governance", "analytics"),          # bare "collibra"→analytics (was raw_first)
+    ("collibra alternative", "analytics"),              # bare "collibra"→analytics fires at pos 0
+    ("alation data catalog", "analytics"),              # bare "alation"→analytics (was raw_first)
+    ("alation alternative", "analytics"),               # bare "alation"→analytics fires at pos 0
+    ("amundsen data discovery", "analytics"),           # bare "amundsen"→analytics (was raw_first)
+    ("amundsen lyft", "analytics"),                     # bare "amundsen"→analytics fires before "lyft"→payments
+    ("nifi dataflow", "background"),                    # bare "nifi"→background (was raw_first)
+    ("nifi etl pipeline", "background"),                # bare "nifi"→background fires at pos 0
+    ("refund management", "payments"),                  # bare "refund"→payments (was raw_first)
+    ("refund automation", "payments"),                  # bare "refund"→payments fires at pos 0
+    ("dispute handling", "payments"),                   # bare "dispute"→payments (was raw_first)
+    ("formatters code", "testing"),                     # bare "formatters"→testing (was raw_first; plural of formatter)
+    ("notifiers library", "notifications"),             # bare "notifiers"→notifications (was raw_first; plural of notifier)
+    ("level design tool", "games"),                     # bigram "level design"→games (overrides "level"→raw_first)
+    ("level design game", "games"),                     # bigram fires at pos 0
+    ("level editor tool", "games"),                     # bigram "level editor"→games (overrides "editor"→frontend)
+    ("level editor godot", "games"),                    # bigram fires before "godot"→games
+    ("shader graph unity", "games"),                    # bigram "shader graph"→games (overrides "shader"→frontend)
+    ("shader graph editor", "games"),                   # bigram fires at pos 0
+    ("coding challenge platform", "learning"),          # bigram "coding challenge"→learning (overrides "coding"→ai-dev)
+    ("coding challenge site", "learning"),              # bigram fires; no stop words
+    ("coding assessment tool", "learning"),             # bigram "coding assessment"→learning (overrides "coding"→ai-dev)
+    ("coding assessment interview", "learning"),        # bigram fires; no stop words
+    ("live coding interview", "learning"),              # bigram "live coding"→learning (overrides "coding"→ai-dev)
+    ("live coding platform", "learning"),               # bigram fires at pos 0
+    ("approval process automation", "background"),      # bigram "approval process"→background (overrides "process"→devops)
+    ("approval process workflow", "background"),        # bigram fires; "workflow" also maps to background
+    ("artifact signing tool", "security"),              # bigram "artifact signing"→security (overrides "artifact"→devops)
+    ("artifact signing cosign", "security"),            # bigram fires before "cosign"→security
+    ("dispute management tool", "payments"),            # bigram "dispute management"→payments (overrides "management"→project)
+    ("dispute management chargeback", "payments"),      # bigram fires before "chargeback"→payments
+    ("refund policy automation", "payments"),           # bigram "refund policy"→payments (overrides "policy"→devops)
+    ("refund policy tool", "payments"),                 # bigram fires; "tool" is stop word → only "refund policy" tested
+    # Regressions guarded (probe 149)
+    ("shader webgl", "frontend"),                       # PRE: bare "shader"→frontend unchanged (bigram "shader graph" doesn't fire)
+    ("artifact registry tool", "devops"),               # PRE: bare "artifact"→devops unchanged (bigram "artifact signing" doesn't fire)
+    ("approval workflow bpm", "background"),            # PRE: "approval workflow"→background bigram unchanged
+    ("process manager node", "devops"),                 # PRE: bare "process"→devops unchanged (bigram "approval process" doesn't fire)
+    ("coding assistant ai", "ai dev"),                  # PRE: bare "coding"→ai-dev unchanged (bigrams don't fire without second token)
+    ("live reload webpack", "developer"),               # PRE: "live reload"→developer bigram unchanged
 ]
 
 
