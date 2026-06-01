@@ -5026,6 +5026,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — container and artifact registry queries (Harbor, Quay, Zot, GHCR alternatives)
     "registry": "devops",           # "container registry", "image registry", "oci registry" → DevOps
     "harbor": "devops",             # Harbor — CNCF container image registry with RBAC and replication (22k★)
+    # DevOps — artifact repository / package registry tools (JFrog, Sonatype, Verdaccio)
+    "jfrog": "devops",              # JFrog — DevOps platform (Artifactory, Xray, Pipelines) → DevOps
+    "artifactory": "devops",        # JFrog Artifactory — universal artifact repository manager → DevOps
+    "nexus": "devops",              # Sonatype Nexus Repository — artifact repository manager → DevOps
+    "sonatype": "devops",           # Sonatype — "sonatype nexus", "sonatype lifecycle", "sonatype alternative" → DevOps
+    # DevOps — Nitric cloud-native framework (IaC + runtime for cloud apps; generates Pulumi/Terraform)
+    "nitric": "devops",             # Nitric — "nitric framework", "nitric cloud", "nitric alternative" → DevOps
     # Background jobs — data/log ingestion pipeline queries (Airbyte, Kafka Connect, Debezium)
     "ingestion": "background",      # "data ingestion pipeline", "log ingestion" → Background Jobs / ETL
     "ingest": "background",         # verb form — "ingest data", "ingest logs" → Background Jobs
@@ -6261,6 +6268,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "second brain": "learning",     # bigram — "second brain app", "second brain tool" → Learning & Education (Tiago Forte)
     # Analytics — Customer Data Platform tools (complement to "segment"→analytics)
     "rudderstack": "analytics",     # RudderStack — open-source Segment CDP alternative (4k★) → Analytics & Metrics
+    # Analytics — data catalog / metadata management (OpenMetadata, DataHub, Amundsen)
+    "openmetadata": "analytics",    # OpenMetadata — open-source data catalog and metadata management → Analytics
     # Games & Entertainment — PixiJS disambiguation (pixi→developer is for conda; pixijs is the 2D game renderer)
     "pixijs": "games",              # PixiJS — fast 2D WebGL renderer for games/interactive graphics (43k★)
     "kaboom": "games",              # Kaboom.js — fun browser JS game programming library (7k★)

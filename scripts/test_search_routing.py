@@ -4954,6 +4954,27 @@ TEST_CASES: list[tuple[str, str]] = [
     ("image optimization cdn", "file"),                  # PRE: "image optimization"→file bigram unchanged
     ("image labeling tool", "ai"),                       # PRE: bigram "image labeling"→ai unchanged
     ("image augmentation python", "ai"),                 # PRE: bigram "image augmentation"→ai unchanged
+
+    # ── probe 147: artifact-registry / nitric / openmetadata dead zones ──
+    #
+    # Fixed: nitric→devops, jfrog→devops, artifactory→devops, nexus→devops,
+    #        sonatype→devops, openmetadata→analytics.
+    ("nitric", "devops"),                               # Nitric cloud-native IaC framework → DevOps
+    ("nitric framework", "devops"),                     # bare "nitric" fires at pos 0
+    ("nitric cloud native", "devops"),                  # bare "nitric" fires before "cloud native" at pos 1
+    ("jfrog artifactory", "devops"),                    # "jfrog"→devops fires at pos 0
+    ("jfrog alternative", "devops"),                    # bare "jfrog"→devops
+    ("artifactory npm proxy", "devops"),                # bare "artifactory"→devops fires at pos 0
+    ("artifactory self hosted", "devops"),              # bare "artifactory"→devops
+    ("nexus repository manager", "devops"),             # bare "nexus"→devops fires at pos 0
+    ("nexus npm registry", "devops"),                   # bare "nexus"→devops before "registry"→devops (both devops; belt-and-suspenders)
+    ("sonatype nexus", "devops"),                       # bare "sonatype"→devops fires at pos 0
+    ("sonatype lifecycle", "devops"),                   # bare "sonatype"→devops
+    ("openmetadata alternative", "analytics"),          # bare "openmetadata"→analytics fires at pos 0
+    ("openmetadata data catalog", "analytics"),         # bare "openmetadata"→analytics before "data catalog"→analytics bigram
+    # Regressions guarded
+    ("container registry harbor", "devops"),            # PRE: "registry"→devops + "harbor"→devops unchanged
+    ("npm registry verdaccio", "frontend"),              # PRE: "npm"→frontend fires at pos 0 (beats "registry"→devops at pos 1)
 ]
 
 
