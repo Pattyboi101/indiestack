@@ -4915,6 +4915,43 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ci pipeline", "devops"),                           # PRE: bare "ci"→devops unchanged
     ("cicd pipeline", "devops"),                         # PRE: bare "cicd"→devops unchanged
     ("deployment pipeline", "devops"),                   # PRE: bare "deployment"→devops unchanged
+
+    # ── probe 149: plural-form / BPM-brand / adapter / dup-cleanup dead zones ──
+    #
+    # Fixed: formatters→testing, linters→testing, validator→developer,
+    #        validators→developer, parsers→developer, schedulers→background,
+    #        notifiers→notifications, activiti→background, flowable→background,
+    #        adapter→developer, adapters→developer.
+    # Housekeeping: removed 4 pre-existing duplicate keys (hot-reload, micro-frontend,
+    #        micro-frontends, multi-tenant — all same-value dups from earlier probes).
+    ("formatters", "testing"),                          # plural — "code formatters", "best formatters" → Testing Tools
+    ("best code formatters", "testing"),                # bare "formatters" fires as first meaningful → Testing Tools
+    ("linters", "testing"),                             # plural — "js linters", "python linters" → Testing Tools
+    ("best linters 2025", "testing"),                   # bare "linters" fires at pos 1 → Testing Tools
+    ("validator", "developer"),                         # noun — "schema validator", "json validator" → Developer Tools
+    ("json validator library", "developer"),            # bare "validator" fires at pos 1 → Developer Tools
+    ("validators", "developer"),                        # plural — "schema validators", "form validators" → Developer Tools
+    ("parsers", "developer"),                           # plural — "html parsers", "parser libraries" → Developer Tools
+    ("best parsers python", "developer"),               # bare "parsers" fires as first meaningful → Developer Tools
+    ("schedulers", "background"),                       # plural — "job schedulers", "task schedulers" → Background Jobs
+    ("best schedulers python", "background"),           # bare "schedulers" fires as first meaningful → Background Jobs
+    ("notifiers", "notifications"),                     # plural — "push notifiers", "notifiers library" → Notifications
+    ("activiti", "background"),                         # Activiti — Apache Java BPM/workflow engine → Background Jobs
+    ("activiti alternative", "background"),             # bare "activiti" fires at pos 0 → Background Jobs
+    ("activiti bpmn", "background"),                    # bare "activiti" before "bpmn" → Background Jobs
+    ("flowable", "background"),                         # Flowable — open-source BPMN workflow engine → Background Jobs
+    ("flowable alternative", "background"),             # bare "flowable" fires at pos 0 → Background Jobs
+    ("adapter", "developer"),                           # "database adapter", "ORM adapter" → Developer Tools
+    ("adapters", "developer"),                          # plural — "prisma adapters", "database adapters" → Developer Tools
+    ("best adapters library", "developer"),             # bare "adapters" fires as first meaningful → Developer Tools
+    # Regressions guarded
+    ("formatter", "testing"),                           # PRE: singular still maps → Testing Tools
+    ("linter", "testing"),                              # PRE: singular still maps → Testing Tools
+    ("parser", "developer"),                            # PRE: singular still maps → Developer Tools
+    ("scheduler", "background"),                        # PRE: singular still maps → Background Jobs
+    ("notifier", "notifications"),                      # PRE: singular still maps → Notifications
+    ("micro-frontend", "frontend"),                     # PRE: hyphenated form still routes (later entry in synonyms)
+    ("multi-tenant saas", "authentication"),            # PRE: hyphenated "multi-tenant"→authentication still routes
 ]
 
 

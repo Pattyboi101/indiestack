@@ -2488,6 +2488,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "queue": "background",
     "worker": "background",
     "scheduler": "background",
+    "schedulers": "background",     # plural — "job schedulers", "task schedulers" → Background Jobs
     "scheduled": "background",
     "job": "background",
     "jobs": "background",
@@ -3264,6 +3265,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "nx": "developer",          # Nx — monorepo platform from Nrwl
     # Schema validation — Zod, Yup, Valibot all live in developer-tools category
     "validation": "developer",  # "schema validation", "runtime validation", "form validation"
+    "validator": "developer",    # noun — "schema validator", "input validator", "json validator" → Developer Tools
+    "validators": "developer",   # plural — "schema validators", "form validators" → Developer Tools
     "zod": "developer",          # Zod — TypeScript-first schema validation (34k stars)
     "yup": "developer",          # Yup — popular JS/TS schema validation (22k stars)
     "valibot": "developer",      # Valibot — lightweight modular Zod alternative
@@ -3481,6 +3484,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "domain": "devops",             # "domain management", "domain name provider" → DevOps (was raw_first)
     # Code formatter — Prettier, Biome, dprint live in testing-tools alongside linters
     "formatter": "testing",         # "code formatter", "js formatter" → Testing Tools
+    "formatters": "testing",        # plural — "code formatters", "best formatters" → Testing Tools
     "format": "testing",            # "code format", "auto-format" → Testing Tools (Biome, Prettier)
     "autoformat": "testing",        # "autoformat on save", "autoformat code" → Testing Tools (Biome, Prettier, Black)
     # HTTP clients — Axios, Got, Ky, node-fetch live in api-tools
@@ -4020,6 +4024,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — plugin and extension systems
     "plugin": "developer",          # "plugin system", "vite plugin" → Developer Tools
     "plugins": "developer",         # plural — "rollup plugins", "webpack plugins"
+    "adapter": "developer",         # "database adapter", "auth adapter", "ORM adapter" → Developer Tools
+    "adapters": "developer",        # plural — "prisma adapters", "nextauth adapters" → Developer Tools
     # Logging — additional named tools not yet covered
     "loguru": "logging",            # Loguru — delightful Python logging with zero setup (18k★)
     "structlog": "logging",         # structlog — structured logging for Python (3k★)
@@ -5781,6 +5787,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Parser libraries — tree-sitter, xml2js, cheerio, csv-parse, html-parser → Developer Tools
     "parse": "developer",           # "xml parse library", "html parse", "json parse" → Developer Tools
     "parser": "developer",          # "html parser", "xml parser", "css parser" → Developer Tools
+    "parsers": "developer",         # plural — "html parsers", "parser libraries" → Developer Tools
     # AI — agent memory layers (fast-growing 2026 segment: stateful persistent agent memory)
     "mem0": "ai",                   # mem0 — AI agent long-term memory layer (mem0ai/mem0, 22k★) → AI & Automation
     "zep": "ai",                    # Zep — fast, scalable AI agent memory server (getzep/zep, 5k★) → AI & Automation
@@ -5964,6 +5971,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Background Jobs — Camunda process automation / BPM platform (30k★, very common query)
     "camunda": "background",        # Camunda — "camunda alternative", "camunda bpm", "camunda workflow" → Background Jobs
     "zeebe": "background",          # Zeebe — Camunda's distributed workflow engine; "zeebe alternative" → Background Jobs
+    "activiti": "background",       # Activiti — Apache Java BPM/workflow engine; "activiti alternative" → Background Jobs
+    "flowable": "background",       # Flowable — open-source BPMN workflow engine (Activiti fork); "flowable alternative" → Background Jobs
     # Background Jobs — Conductor Netflix/Orkes workflow orchestration (14k★)
     "conductor": "background",      # Conductor — Netflix/Orkes workflow engine; "conductor alternative" → Background Jobs
     # Database — Snowpark Snowflake developer API (Python/Java/Scala)
@@ -6090,8 +6099,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "arkui": "frontend",            # Ark UI — "arkui alternative", "ark ui components" → Frontend Frameworks
     "ark-ui": "frontend",           # hyphenated — "ark-ui setup", "ark-ui vs radix" → Frontend Frameworks
     # Testing — linting tools (ESLint, Biome, OXLint, Pylint, Ruff live in Testing Tools)
-    # "lint" has no synonym despite being one of the most common dev queries
     "linter": "testing",            # "css linter", "python linter", "linter alternative" → Testing Tools
+    "linters": "testing",           # plural — "js linters", "python linters", "best linters" → Testing Tools
     # Testing — property-based testing pattern (Hypothesis, fast-check, PropEr, QuickCheck)
     "property-based": "testing",    # "property-based testing", "property-based test framework" → Testing Tools
     "fast-check": "testing",        # fast-check — TypeScript property-based testing (dubzzz/fast-check, 4k★) → Testing Tools
@@ -6256,7 +6265,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Email — deliverability (DKIM/SPF/DMARC are mapped; "deliverability" bare term was missing)
     "deliverability": "email",     # "email deliverability", "deliverability tool", "sender reputation" → Email Marketing
     # Frontend — hot module reload queries (Vite, Webpack, esbuild all feature HMR)
-    "hot-reload": "frontend",      # "hot-reload setup", "hot-reload alternative" → Frontend Frameworks
     "hotreload": "frontend",       # compound — "hotreload webpack", "hotreload vite" → Frontend Frameworks
     # Security — SOPS secrets file encryption (getsops/sops, 17k★; Doppler/Vault alternative)
     "sops": "security",            # SOPS — "sops alternative", "sops encryption", "sops secrets" → Security Tools
@@ -8249,8 +8257,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     # space-separated "micro service" users should use compound "microservice" (already mapped).
     "micro frontend": "frontend",       # "micro frontend framework", "micro frontend react" → Frontend Frameworks
     "micro frontends": "frontend",      # plural spaced — "micro frontends module federation" → Frontend Frameworks
-    "micro-frontend": "frontend",       # hyphenated — "micro-frontend architecture", "micro-frontend react" → Frontend
-    "micro-frontends": "frontend",      # hyphenated plural — "micro-frontends module federation" → Frontend
     "module federation": "frontend",    # bigram — "module federation webpack", "module federation react" → Frontend Frameworks
     # Auth — "user management" and "account management" route to project via "management"→project.
     # User/account management tools (Clerk, Auth0, WorkOS, Logto) live in Authentication.
@@ -9870,7 +9876,6 @@ _CAT_SYNONYMS: dict[str, str] = {
     "account takeover": "security",             # bigram — "account takeover protection", "account takeover tool" → Security
     # Multi-tenancy — tenant isolation, workspace/org management; hyphenated form was raw_first.
     # Bare "tenant" already maps to authentication; "multitenant" already maps to authentication.
-    "multi-tenant": "authentication",           # hyphenated — "multi-tenant saas", "multi-tenant app" → Authentication
     # Optimistic updates — frontend UI pattern (React Query, SWR, Zustand optimistic state)
     "optimistic": "frontend",                   # bare — "optimistic update", "optimistic ui", "optimistic concurrency" → Frontend
     # Stale-while-revalidate caching strategy (SWR, React Query, HTTP Cache-Control stale-while-revalidate)
@@ -9973,6 +9978,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "authorize": "authentication",      # verb — "authorize request", "authorize user" → Authentication
     "authenticating": "authentication", # present-participle — "authenticating users", "authenticating requests" → Authentication
     "notifier": "notifications",        # noun — "notifier service", "slack notifier", "push notifier" → Notifications
+    "notifiers": "notifications",       # plural — "notifiers library", "push notifiers" → Notifications
     "indexing database": "database",    # bigram — "indexing database postgres" → Database (overrides "indexing"→search)
     # ── Probe 112 remote + SDK tools (May 2026, merged from parallel session): heartbeat / trust / tcp / fern / liblab ──
     # Dead zones from remote autonomous session: heartbeat→monitoring, trust/abuse→security,
