@@ -3454,7 +3454,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("feature flag nextjs", "feature"),         # bare "feature"→feature-flags unchanged (no "engineering"/"extraction" suffix)
     ("feature toggle react", "feature"),        # bare "feature"→feature-flags unchanged
     ("ab testing tool", "feature"),             # "ab"→feature-flags unchanged
-    ("image compression", "media"),             # bare "image"→media unchanged (no "labeling" suffix; no "image compression" bigram)
+    ("image compression", "file"),              # "image compression" bigram→file (probe 150: image compression is file management)
     ("image processing", "developer"),          # bigram "image processing"→developer (probe 113)
     ("ci cd pipeline", "devops"),               # bare "pipeline" still catches non-ML pipeline queries
     ("deployment pipeline", "devops"),          # "deployment"→devops fires before "pipeline"→background
@@ -4070,7 +4070,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("embeddable widget", "developer"),                 # bare "embeddable"→developer
     ("embeddable chart react", "developer"),            # bare "embeddable"→developer at pos 0
     # Regressions: existing nearby mappings unchanged
-    ("image compression", "media"),                     # "image"→media unchanged (no "image compression" bigram added)
+    ("image compression", "file"),                       # "image compression" bigram→file (probe 150: image compression is file management)
     ("image labeling tool", "ai"),                      # bigram "image labeling"→ai unchanged
     ("image augmentation", "ai"),                       # bigram "image augmentation"→ai unchanged
     ("serialization protobuf", "api"),                  # "serialization"→api still fires (binary-protocol context unchanged)
@@ -4952,6 +4952,43 @@ TEST_CASES: list[tuple[str, str]] = [
     ("notifier", "notifications"),                      # PRE: singular still maps → Notifications
     ("micro-frontend", "frontend"),                     # PRE: hyphenated form still routes (later entry in synonyms)
     ("multi-tenant saas", "authentication"),            # PRE: hyphenated "multi-tenant"→authentication still routes
+
+    # ── Probe 150: property-based testing / Apache Beam / image-op gerunds / marketing-automation ──
+    # proptest / quickcheck — PBT library names were raw_first; bare tokens now route to Testing
+    ("proptest rust", "testing"),                       # bare "proptest"→testing (Rust PBT library)
+    ("proptest library", "testing"),                    # bare fires; "library" is stop-word → "proptest" sole meaningful token
+    ("quickcheck haskell", "testing"),                  # bare "quickcheck"→testing (overrides "haskell"→api at pos 1)
+    ("quickcheck typescript", "testing"),               # bare fires at pos 0 before "typescript" at pos 1
+    # Apache Beam — bigram routes to Background Jobs
+    ("apache beam python", "background"),               # bigram "apache beam"→background fires at pos 0
+    ("apache beam pipeline", "background"),             # bigram fires; "pipeline"→background also at pos 2
+    ("apache beam dataflow", "background"),             # bigram fires before raw "dataflow" token
+    # Google Dataflow — managed Beam runner → Background Jobs
+    ("google dataflow beam", "background"),             # bigram "google dataflow"→background fires at pos 0
+    ("google dataflow alternative", "background"),      # bigram fires; "alternative" is stop-word
+    # Image resizing gerund — Developer Tools (sharp, Pillow, jimp)
+    ("image resizing api", "developer"),                # bigram "image resizing"→developer (overrides bare "image"→media)
+    ("image resizing nodejs", "developer"),             # bigram fires; "nodejs" is stop-word stripped
+    # Image crop — Frontend Frameworks (Cropper.js, react-image-crop)
+    ("image crop react", "frontend"),                   # bigram "image crop"→frontend (overrides bare "image"→media)
+    ("image crop component", "frontend"),               # bigram fires at pos 0
+    ("image cropping tool", "frontend"),                # bigram "image cropping"→frontend fires
+    ("image cropping component", "frontend"),           # bigram fires at pos 0
+    # Marketing automation — Email Marketing (Mailchimp, ActiveCampaign)
+    ("marketing automation tool", "email"),             # bigram "marketing automation"→email (overrides bare "automation"→ai)
+    ("marketing automation platform", "email"),         # bigram fires; "platform" is stop-word
+    ("marketing automation email", "email"),            # bigram fires at pos 0 before "email" at pos 2
+    # Regressions guarded (probe 150)
+    ("hypothesis testing python", "testing"),           # PRE: bare "hypothesis"→testing unchanged
+    ("pbt framework", "testing"),                       # PRE: bare "pbt"→testing unchanged
+    ("apache spark streaming", "background"),           # PRE: "spark"→background fires for Apache Spark (no bigram collision)
+    ("apache flink stream", "message"),                 # PRE: "flink"→message fires for Apache Flink (no bigram collision)
+    ("image resize cdn", "developer"),                  # PRE: "image resize"→developer bigram unchanged
+    ("image cropper react", "frontend"),                # PRE: "image cropper"→frontend bigram unchanged (probe 64)
+    ("image compression api", "file"),                  # PRE: "image compression"→file unchanged
+    ("email marketing automation", "email"),            # PRE: "email" at pos 0 still fires for this form
+    ("workflow automation n8n", "background"),          # PRE: "automation workflow" bigram unchanged
+    ("automation testing selenium", "testing"),         # PRE: "automation testing"→testing bigram unchanged
 ]
 
 

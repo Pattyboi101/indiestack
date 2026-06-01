@@ -10276,6 +10276,44 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — shortener hyphenated forms
     "url-shortener": "developer",      # hyphenated — "url-shortener api", "url-shortener open source" → Developer Tools
     "link-shortener": "developer",     # hyphenated — "link-shortener service", "link-shortener alternative" → Developer Tools
+
+    # ── Probe 150 (autonomous loop, Jun 2026): property-based testing / Apache Beam / image-op gerunds / marketing-automation dead zones ──
+    #
+    # "proptest" → raw_first; proptest is a property-based testing library for Rust (complement to hypothesis→testing) → Testing Tools.
+    # "quickcheck" → raw_first; QuickCheck is the canonical PBT library (Haskell original; Rust/JS ports including fast-check) → Testing Tools.
+    # "apache beam" → raw_first via "apache"; Apache Beam is an ETL/batch+stream processing framework (Google Dataflow backend) → Background Jobs.
+    # "google dataflow" → raw_first via "google"; Google Dataflow is the managed Apache Beam runner → Background Jobs.
+    # "image resizing" → "media" via bare "image"; space-separated form of "image resize"→developer — sharp/Pillow/jimp resize ops → Developer Tools.
+    #   NOTE: hyphenated "image-resizing"→media stays (covers CDN/service context like imgix); space bigram covers server-side library queries.
+    # "image crop" / "image cropping" → "media" via bare "image"; image crop UI components (Cropper.js, react-image-crop) → Frontend Frameworks.
+    #   NOTE: "image cropper"→frontend bigram already existed (probe 64); this closes the shorter/gerund form gaps.
+    # "marketing automation" → "ai" via bare "automation"; marketing automation platforms (Mailchimp, ActiveCampaign, Klaviyo) → Email Marketing.
+
+    # Testing — property-based testing
+    "pbt": "testing",                # bare — "pbt framework", "pbt approach" → Testing (Property-Based Testing abbreviation)
+    "proptest": "testing",           # bare — "proptest rust", "proptest library" → Testing (Rust PBT library, 4k★)
+    "quickcheck": "testing",         # bare — "quickcheck haskell", "quickcheck typescript" → Testing (canonical PBT)
+
+    # Testing — automation qualifier bigram (overrides bare "automation"→ai for testing context)
+    "automation testing": "testing", # bigram — "automation testing selenium", "automation testing playwright" → Testing Tools
+
+    # Background Jobs — Apache Beam data pipeline (bigram + managed runner)
+    "apache beam": "background",     # bigram — "apache beam python", "apache beam pipeline" → Background Jobs (ETL/batch+stream)
+    "google dataflow": "background", # bigram — "google dataflow beam", "google dataflow alternative" → Background Jobs (managed Beam runner)
+
+    # Developer Tools — image resizing space-bigram (complement to "image resize"→developer; distinct from "image-resizing"→media hyphenated form)
+    "image resizing": "developer",   # bigram — "image resizing api", "image resizing nodejs" → Developer Tools (sharp, Pillow, jimp)
+
+    # File Management — image compression/minification operations (complement to "image optimization"→file)
+    "image compression": "file",     # bigram — "image compression api", "image compression library" → File Management
+    "image minification": "file",    # bigram — "image minification tool", "image minify online" → File Management
+
+    # Frontend Frameworks — image crop UI components (complement to "image cropper"→frontend from probe 64)
+    "image crop": "frontend",        # bigram — "image crop react", "image crop component" → Frontend Frameworks (Cropper.js, react-image-crop)
+    "image cropping": "frontend",    # bigram — "image cropping component", "image cropping tool" → Frontend Frameworks
+
+    # Email Marketing — marketing automation bigram (overrides bare "automation"→ai)
+    "marketing automation": "email", # bigram — "marketing automation tool", "marketing automation platform" → Email Marketing (Mailchimp, ActiveCampaign)
 }
 
 _FTS_STOP_WORDS = {
