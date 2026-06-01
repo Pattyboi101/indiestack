@@ -4989,6 +4989,18 @@ TEST_CASES: list[tuple[str, str]] = [
     ("email marketing automation", "email"),            # PRE: "email" at pos 0 still fires for this form
     ("workflow automation n8n", "background"),          # PRE: "automation workflow" bigram unchanged
     ("automation testing selenium", "testing"),         # PRE: "automation testing"→testing bigram unchanged
+    # ── Probe 151 (autonomous loop, Jun 2026): WebAssembly spaced forms / AssemblyScript dead zones ──
+    ("web assembly", "frontend"),                       # bigram "web assembly"→frontend (spaced form of WebAssembly)
+    ("web assembly alternative", "frontend"),           # bigram fires before bare "web" raw_first
+    ("web assembly runtime", "frontend"),               # bigram fires at position 0
+    ("assembly script", "frontend"),                    # bigram "assembly script"→frontend (spaced AssemblyScript)
+    ("assembly script typescript", "frontend"),         # bigram fires at position 0
+    ("assemblyscript", "frontend"),                     # single token — AssemblyScript canonical form
+    ("assemblyscript wasm", "frontend"),                # bare "assemblyscript"→frontend fires first
+    # Regressions guarded (probe 151)
+    ("wasm pack rust", "frontend"),                     # PRE: bare "wasm"→frontend unchanged
+    ("webassembly runtime", "frontend"),                # PRE: bare "webassembly"→frontend unchanged
+    ("assemblyai transcription", "ai"),                 # PRE: bare "assemblyai"→ai unchanged (no collision with "assembly")
 ]
 
 

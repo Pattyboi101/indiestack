@@ -3164,6 +3164,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Frontend — WebAssembly
     "wasm": "frontend",         # WebAssembly queries (wasm-pack, wasm-bindgen)
     "webassembly": "frontend",  # full form of WebAssembly
+    "assemblyscript": "frontend",  # AssemblyScript — TypeScript subset that compiles to WASM
     # Frontend — reactivity signals pattern (Angular, SolidJS, Vue)
     "signal": "frontend",       # "signal-based reactivity", "signal state"
     "signals": "frontend",      # plural form — common in Angular 17+ / SolidJS docs
@@ -4283,6 +4284,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "gitpod": "devops",         # Gitpod — cloud-based dev environments (instant workspace spin-up, 13k★)
     "devcontainer": "devops",   # Dev Containers (VS Code spec) — containerised reproducible dev envs
     "codespace": "devops",      # GitHub Codespaces — browser-based VS Code dev environments
+    # Frontend — WebAssembly spaced bigrams (complement to "wasm"→frontend, "webassembly"→frontend)
+    "web assembly": "frontend",    # bigram — spaced form of WebAssembly; overrides "web" raw_first
+    "assembly script": "frontend", # bigram — spaced form of AssemblyScript → Frontend Frameworks
     # JAMstack / static site architecture terms (complement to "ssg", "ssr", "pwa")
     "jamstack": "frontend",     # JAMstack — JavaScript + APIs + Markup architecture (Netlify coined)
     "static": "frontend",       # "static site generator", "static site framework" → Frontend Frameworks
