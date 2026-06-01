@@ -113,6 +113,7 @@ These areas historically generate `raw_first` misses:
 | Remote dev environments | remote development, codespace, devpod, devcontainer, cloud ide |
 | AI agent patterns | computer use api, tool calling, structured output, prompt template, llm routing |
 | Data observability | data lineage, data catalog, data observability, data quality, data contract |
+| Data catalog named tools | datahub (probe 148 ✓), atlan (probe 148 ✓), zincsearch (probe 148 ✓), great expectations (probe 148 ✓), sqlmesh (probe 148 ✓), dlthub (probe 148 ✓), collibra, alation, amundsen, apache atlas (atlas→database via bigram), apache beam, apache nifi, apache ranger |
 | Service mesh / networking | service mesh, envoy proxy, istio, linkerd, ebpf networking |
 | Software supply chain | sbom generator, slsa provenance, sigstore, cosign, syft, grype |
 | Chaos / resilience testing | chaos engineering, fault injection, chaos monkey, litmus chaos, toxiproxy, gremlin, blast radius, steady state |
