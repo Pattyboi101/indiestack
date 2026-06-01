@@ -118,7 +118,7 @@ These areas historically generate `raw_first` misses:
 | Software supply chain | sbom generator, slsa provenance, sigstore, cosign, syft, grype |
 | Chaos / resilience testing | chaos engineering, fault injection, chaos monkey, litmus chaos, toxiproxy, gremlin, blast radius, steady state |
 | API contract testing | pact contract, wiremock stub, consumer driven contract, prism mock |
-| Game dev advanced | tilemap, tileset, particle system, procedural generation, shader graph (probe 149 ✓ bigram→games), level design (probe 149 ✓ bigram→games), level editor (probe 149 ✓ bigram→games), game jam |
+| Game dev advanced | tilemap, tileset, particle system, procedural generation, shader graph (probe 149 ✓ bigram→games), level design (probe 149 ✓ bigram→games), level editor (probe 149 ✓ bigram→games), delta time (probe 150 ✓ bigram→games), sprite sheet (probe 150 ✓ bigram→games), ecs game (probe 150 ✓ bigram→games), game jam |
 | Security signing / PKI | code signing, binary signing, artifact signing (probe 149 ✓ bigram→security), mtls, mutual tls, certificate authority |
 | Hardware auth | yubikey, hardware key, hardware token, fido2 key, passkey device |
 | IaC / provisioning | cloudformation, cloud formation, pulumi stack, opentofu, crossplane, terraform cdk |
@@ -132,6 +132,7 @@ These areas historically generate `raw_first` misses:
 | Approval / BPM | approval workflow (→background), approval process (probe 149 ✓ bigram→background), document approval — "workflow"→ai fires without qualifier bigram |
 | Image operation bigrams | image compression, image minification (→file) — "image"→media fires; need op-specific bigrams per "image optimization" pattern |
 | Education / assessment | technical interview, coding challenge (probe 149 ✓ bigram→learning), coding assessment (probe 149 ✓ bigram→learning), live coding (probe 149 ✓ bigram→learning) — "coding"→ai-dev causes misfires |
+| LLM inference algorithms | flash attention (probe 150 ✓ bigram→ai), paged attention (probe 150 ✓ bigram→ai), continuous batching (probe 150 ✓ bigram→ai), speculative sampling (probe 150 ✓ bigram→ai) — "continuous"→devops and bare raw_first cause misfires; kv cache intentionally skipped (collision with Redis KV caching) |
 
 ### Pattern 16 — "conflicting first/second token" probe queries
 

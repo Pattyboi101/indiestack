@@ -10490,6 +10490,40 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Payments — payment-ops bigrams (override management/policy routing)
     "dispute management": "payments",  # bigram — "dispute management tool", "dispute management chargeback" → Payments
     "refund policy": "payments",       # bigram — "refund policy automation", "refund policy tool" → Payments
+
+    # ── Probe 150 (autonomous loop, Jun 2026): LLM inference algorithms / game-loop primitives dead zones ──
+    #
+    # LLM inference optimization terms — all fired raw_first or mis-routed to DevOps/Caching:
+    # "flash attention" → raw_first (Flash Attention / FA2, Tri Dao's efficient attention algorithm, 12k★ → AI)
+    # "paged attention" → raw_first (PagedAttention, vLLM's KV-cache memory management algorithm → AI)
+    # "continuous batching" → devops via bare "continuous"→devops (wrong; continuous batching = LLM serving
+    #   throughput technique in vLLM / TGI / SGLang → AI & Automation)
+    # "speculative sampling" → raw_first (complement to "speculative decoding"→ai; same technique, synonym form)
+    #
+    # Game-loop primitives mis-routed due to Delta Lake / AWS ECS token collisions:
+    # "delta time" → database via bare "delta"→database (wrong; delta time = per-frame elapsed time in game loops
+    #   → Games & Entertainment; bare "delta"→database left intact for "delta lake", "delta table")
+    # "sprite sheet" → games via bare "sprite"→games fires at pos 1 BUT bare "atlas"→database fires first for
+    #   "atlas sprite sheet" queries — adding pre-pass bigram "sprite sheet"→games fires at pos 1 BEFORE bare tokens
+    # "ecs game" → devops via bare "ecs"→devops (wrong; "ecs game engine/architecture" = Entity Component System
+    #   in game dev, NOT AWS ECS — bigram fires before bare "ecs"→devops for game-qualified queries)
+    #
+    # Regressions guarded:
+    #   "speculative decoding"→ai (bigram unchanged), "delta lake"→database (bigram "delta time" only fires
+    #   when "time" follows), "ecs kubernetes"/"ecs terraform"→devops (bare "ecs"→devops unchanged for non-game
+    #   qualifiers), "sprite animation"→games (bare "sprite" unchanged), "kv cache redis"→caching
+    #   (NOT adding "kv cache"→ai to avoid collision with Redis KV caching queries)
+
+    # AI — LLM inference algorithm bigrams (complement to "speculative decoding"→ai, "quantization"→ai)
+    "flash attention": "ai",           # bigram — "flash attention 2", "flash attention cuda" → AI & Automation
+    "paged attention": "ai",           # bigram — "paged attention vllm", "paged attention inference" → AI & Automation
+    "continuous batching": "ai",       # bigram — "continuous batching vllm", "continuous batching inference" → AI
+    "speculative sampling": "ai",      # bigram — "speculative sampling llm", "speculative sampling decoding" → AI
+
+    # Games — game-loop primitive bigrams (override "delta"→database and "ecs"→devops for game context)
+    "delta time": "games",             # bigram — "delta time fps", "delta time calculation" → Games (frame timing)
+    "sprite sheet": "games",           # bigram — "sprite sheet atlas", "sprite sheet generator" → Games (pre-pass pos 1)
+    "ecs game": "games",               # bigram — "ecs game engine", "ecs game architecture" → Games (ECS ≠ AWS ECS)
 }
 
 _FTS_STOP_WORDS = {

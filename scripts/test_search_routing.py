@@ -5064,6 +5064,32 @@ TEST_CASES: list[tuple[str, str]] = [
     ("process manager node", "devops"),                 # PRE: bare "process"→devops unchanged (bigram "approval process" doesn't fire)
     ("coding assistant ai", "ai dev"),                  # PRE: bare "coding"→ai-dev unchanged (bigrams don't fire without second token)
     ("live reload webpack", "developer"),               # PRE: "live reload"→developer bigram unchanged
+    # ── Probe 150 (autonomous loop, Jun 2026): LLM inference algorithms / game-loop primitives ──
+    # LLM inference optimization bigrams
+    ("flash attention pytorch", "ai"),                  # bigram "flash attention"→ai fires at pos 0
+    ("flash attention 2 cuda", "ai"),                   # bigram fires before bare "flash"→raw_first
+    ("paged attention vllm", "ai"),                     # bigram "paged attention"→ai fires at pos 0
+    ("paged attention inference", "ai"),                # bigram fires before bare "paged"→raw_first
+    ("continuous batching vllm", "ai"),                 # bigram overrides "continuous"→devops
+    ("continuous batching inference", "ai"),            # bigram fires at pos 0
+    ("speculative sampling llm", "ai"),                 # bigram "speculative sampling"→ai fires at pos 0
+    ("speculative sampling decoding", "ai"),            # bigram fires; complement to "speculative decoding"→ai
+    # Game-loop primitives bigrams
+    ("delta time fps", "games"),                        # bigram "delta time"→games overrides "delta"→database
+    ("delta time calculation", "games"),                # bigram fires at pos 0
+    ("atlas sprite sheet", "games"),                    # bigram "sprite sheet"→games fires at pre-pass pos 1 (before "atlas"→database)
+    ("sprite sheet generator", "games"),                # bigram "sprite sheet" fires at pos 0
+    ("ecs game engine", "games"),                       # bigram "ecs game"→games overrides "ecs"→devops
+    ("ecs game architecture", "games"),                 # bigram fires at pos 0
+    # Regressions guarded (probe 150)
+    ("speculative decoding vllm", "ai"),                # PRE: "speculative decoding"→ai bigram unchanged
+    ("delta lake databricks", "database"),              # PRE: bare "delta"→database fires (no "delta lake" bigram added)
+    ("delta table spark", "database"),                  # PRE: bare "delta"→database unchanged
+    ("ecs kubernetes cluster", "devops"),               # PRE: bare "ecs"→devops unchanged (bigram "ecs game" doesn't fire)
+    ("ecs terraform module", "devops"),                 # PRE: bare "ecs"→devops unchanged
+    ("sprite animation library", "games"),              # PRE: bare "sprite"→games unchanged
+    ("continuous deployment pipeline", "devops"),       # PRE: bare "continuous"→devops unchanged (bigram "continuous batching" doesn't fire)
+    ("continuous integration ci", "devops"),            # PRE: bare "continuous"→devops unchanged
 ]
 
 
