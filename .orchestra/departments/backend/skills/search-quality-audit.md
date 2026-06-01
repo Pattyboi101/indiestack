@@ -159,6 +159,19 @@ These areas historically generate `raw_first` misses:
 | gRPC tooling | grpc gateway, grpc reflection, grpc web, grpc mock |
 | Browser extension dev | chrome extension sdk, webextension, extension boilerplate, manifest v3 |
 | Service mesh | istio alternative, linkerd, consul connect, kuma mesh, cilium service mesh |
+| Meta-framework spaced forms (probe 146 pattern) | solid start, qwik city, turbo stream, turbo rails — when base token is in _FRAMEWORK_QUERY_TERMS it gets stripped from meaningful_for_cat; spaced bigram pre-pass fires before stripping and solves it. Always probe all three forms: spaced / hyphenated / compounded |
+| Hotwire / Rails ecosystem | turbo frame, turbo native, hotwire native, stimulus controller, importmap rails |
+| Astro ecosystem | astro island, astro component, astro integration, astro view transitions |
+| Remix routing | remix loader, remix action, remix nested routes, remix resource route |
+| SvelteKit pages | sveltekit endpoint, sveltekit hooks, sveltekit adapter, sveltekit load |
+| Bun ecosystem | bun runtime, bun bundler, bun test, bun shell — "bun" has no single-token synonym; all compound forms at risk |
+| Deno ecosystem | deno deploy, deno kv, deno fresh, deno jsx — "deno" single-token check first |
+| AI agent frameworks 2026 | composio, julep, e2b, morph (cloud), bolt diy, replit agent, devin alternative |
+| LLM routing / gateway | llm proxy, llm gateway, llm load balancer, llm router, model router |
+| Prompt management | prompt registry, prompt template, prompt version, prompt hub, promptfoo alternative |
+| Multimodal AI | vision model, audio model, speech recognition api, tts api, stt api |
+| Structured output | json schema llm, instructor library, outlines llm, guided generation |
+| Memory / context stores | agent memory, long term memory llm, conversation memory, vector memory |
 
 ## Commit Style
 
