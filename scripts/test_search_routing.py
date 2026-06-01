@@ -5001,6 +5001,57 @@ TEST_CASES: list[tuple[str, str]] = [
     ("wasm pack rust", "frontend"),                     # PRE: bare "wasm"→frontend unchanged
     ("webassembly runtime", "frontend"),                # PRE: bare "webassembly"→frontend unchanged
     ("assemblyai transcription", "ai"),                 # PRE: bare "assemblyai"→ai unchanged (no collision with "assembly")
+
+    # ── Probe 152 (autonomous loop, Jun 2026): service-bus / IoT / Apache ecosystem / monitoring-metrics / context-AI dead zones ──
+    # Monitoring — network jitter + Go goroutine dump
+    ("network jitter tool", "monitoring"),              # bare "jitter"→monitoring
+    ("latency jitter variance", "monitoring"),          # bare "jitter" at pos 1
+    ("goroutine dump pprof", "monitoring"),             # bigram "goroutine dump"→monitoring
+    ("goroutine dump analyzer", "monitoring"),          # bigram "goroutine dump"→monitoring
+    # Message Queue — service bus / ESB / Rebus.js
+    ("service bus azure", "message"),                   # "service" stripped → bare "bus"→message
+    ("message bus pattern", "message"),                 # bare "bus"→message fires at pos 1
+    ("enterprise service bus esb", "message"),          # bigram "enterprise bus"→message ("service" stripped)
+    ("rebus nodejs", "message"),                        # bare "rebus"→message
+    ("rebus js alternative", "message"),                # bare "rebus"→message
+    # Documentation — syntax highlighting
+    ("highlightjs alternative", "documentation"),       # bare "highlightjs"→documentation
+    ("highlighting library react", "documentation"),    # "library" stripped → bare "highlighting"→documentation
+    ("code highlighting syntax", "documentation"),      # bare "highlighting" at pos 1
+    # Developer Tools — firmware and Apache Commons
+    ("firmware development", "developer"),              # bare "firmware"→developer
+    ("firmware sdk", "developer"),                      # bare "firmware"→developer at pos 0
+    ("apache commons utility", "developer"),            # bigram "apache commons"→developer
+    ("apache commons java", "developer"),               # bigram "apache commons"→developer
+    # Database — Apache Arrow + Atomikos
+    ("apache arrow columnar", "database"),              # bigram "apache arrow"→database
+    ("apache arrow python", "database"),                # bigram "apache arrow"→database
+    ("atomikos xa transaction", "database"),            # bare "atomikos"→database
+    ("atomikos alternative java", "database"),          # bare "atomikos"→database
+    # Message Queue — Apache Storm
+    ("apache storm realtime", "message"),               # bigram "apache storm"→message
+    ("apache storm alternative", "message"),            # bigram "apache storm"→message
+    # Security — Apache Ranger
+    ("apache ranger security", "security"),             # bigram "apache ranger"→security
+    ("apache ranger policy", "security"),               # bigram "apache ranger"→security
+    # DevOps — IoT / digital twin
+    ("digital twin iot", "devops"),                     # bigram "digital twin"→devops
+    ("digital twin simulation", "devops"),              # bigram "digital twin"→devops
+    ("connected devices iot", "devops"),                # bigram "connected devices"→devops
+    ("connected devices platform", "devops"),           # bigram "connected devices"→devops
+    # AI — context learning / context limit
+    ("in context learning llm", "ai"),                  # "in" stripped → bigram "context learning"→ai
+    ("context learning rag", "ai"),                     # bigram "context learning"→ai
+    ("context limit gpt4", "ai"),                       # bigram "context limit"→ai
+    ("context limit 128k", "ai"),                       # bigram "context limit"→ai
+    # Regression guards (probe 152)
+    ("apache kafka streaming", "message"),              # PRE: "kafka"→message unchanged
+    ("apache airflow dag", "background"),               # PRE: "airflow"→background unchanged
+    ("apache beam pipeline", "background"),             # PRE: "apache beam"→background still works
+    ("apache solr search", "search"),                   # PRE: "solr"→search unchanged
+    ("react context api", "frontend"),                  # PRE: bare "context"→frontend unchanged
+    ("context window management", "ai"),                # PRE: bigram "context window"→ai fires first
+    ("heap dump analysis", "monitoring"),               # PRE: bigram "heap dump"→monitoring unchanged
 ]
 
 

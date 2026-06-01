@@ -10318,6 +10318,60 @@ _CAT_SYNONYMS: dict[str, str] = {
 
     # Email Marketing — marketing automation bigram (overrides bare "automation"→ai)
     "marketing automation": "email", # bigram — "marketing automation tool", "marketing automation platform" → Email Marketing (Mailchimp, ActiveCampaign)
+
+    # ── Probe 152 (autonomous loop, Jun 2026): service-bus / IoT / Apache ecosystem / monitoring-metrics / context-AI dead zones ──
+    #
+    # Monitoring — network jitter and goroutine profiling:
+    # "jitter" → raw_first (latency/percentile/p95/p99 already fixed; jitter still missing).
+    # "goroutine dump" → raw_first "goroutine" (Go pprof goroutine dump → Monitoring).
+    "jitter": "monitoring",            # "network jitter", "latency jitter tool" → Monitoring & Uptime
+    "goroutine dump": "monitoring",    # bigram — "goroutine dump pprof", "goroutine dump analyzer" → Monitoring
+
+    # Message Queue — service bus and Rebus.js:
+    # "service bus" → meaningful=['bus'] (stop-word "service" stripped) → bare "bus" needed.
+    # "enterprise service bus" → meaningful=['enterprise','bus'] → bigram "enterprise bus".
+    # "rebus" → raw_first (Rebus.js is a Node.js service bus library → Message Queue).
+    "bus": "message",                  # bare — "service bus azure", "message bus pattern" → Message Queue
+    "enterprise bus": "message",       # bigram — "enterprise service bus esb" → Message Queue (3-token: "service" stripped)
+    "rebus": "message",                # Rebus.js — Node.js service bus (saga/process manager patterns) → Message Queue
+
+    # Documentation — syntax highlighting library dead zones:
+    # "highlightjs" → raw_first (Highlight.js — most popular standalone syntax highlighter → Documentation).
+    # "highlighting library" → meaningful=['highlighting'] ("library" is stop-word) → bare "highlighting".
+    "highlightjs": "documentation",    # Highlight.js — syntax highlighting for docs/blogs → Documentation
+    "highlighting": "documentation",   # "highlighting library", "syntax highlighting react" → Documentation
+
+    # Developer Tools — firmware and Apache Commons:
+    # "firmware" → raw_first (embedded firmware dev tools → Developer Tools).
+    # "apache commons" → meaningful=['apache','commons'] → bigram.
+    "firmware": "developer",           # "firmware development", "embedded firmware sdk" → Developer Tools
+    "apache commons": "developer",     # bigram — "apache commons utility", "apache commons java" → Developer Tools
+
+    # Database — Apache Arrow + Atomikos XA transaction manager:
+    # "apache arrow" → meaningful=['apache','arrow'] → bigram.
+    # "atomikos" → raw_first (Java XA/2PC transaction manager → Database, same tier as distributed-tx tools).
+    "apache arrow": "database",        # bigram — "apache arrow columnar", "apache arrow python pyarrow" → Database
+    "atomikos": "database",            # Atomikos — Java XA distributed transaction manager → Database
+
+    # Message Queue — Apache Storm real-time stream computation:
+    # "apache storm" → meaningful=['apache','storm'] → bigram.
+    "apache storm": "message",         # bigram — "apache storm realtime", "apache storm alternative" → Message Queue
+
+    # Security — Apache Ranger (Hadoop/HDP access control framework):
+    # "apache ranger" → meaningful=['apache','ranger'] → bigram.
+    "apache ranger": "security",       # bigram — "apache ranger security", "apache ranger policy" → Security Tools
+
+    # DevOps — IoT / digital twin concepts:
+    # "digital twin" → meaningful=['digital','twin'] → bigram.
+    # "connected devices" → meaningful=['connected','devices'] → bigram.
+    "digital twin": "devops",          # bigram — "digital twin iot", "digital twin simulation" → DevOps
+    "connected devices": "devops",     # bigram — "connected devices iot", "connected devices platform" → DevOps
+
+    # AI — LLM context learning / context limit dead zones:
+    # "in context learning" → "in" is stop-word → meaningful=['context','learning'] → bigram fires before "context"→frontend.
+    # "context limit" → meaningful=['context','limit'] → bigram fires before bare "context"→frontend.
+    "context learning": "ai",          # bigram — "in context learning llm", "context learning rag" → AI & Automation
+    "context limit": "ai",             # bigram — "context limit gpt4", "context limit 128k tokens" → AI & Automation
 }
 
 _FTS_STOP_WORDS = {
