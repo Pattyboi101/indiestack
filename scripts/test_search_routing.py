@@ -4900,6 +4900,34 @@ TEST_CASES: list[tuple[str, str]] = [
     ("physics engine javascript", "games"),              # PRE: bare "physics"→games unchanged
     ("code coverage", "testing"),                        # PRE: bare "code"→(testing via coverage) unchanged
     ("state management react", "frontend"),              # PRE: bare "state"→frontend unchanged (no "steady" prefix)
+    # Probe 145 (autonomous loop, Jun 2026): reranker/colbert/cross-encoder-spaced/llvm/late-interaction/gitignore/wasm-runtime dead zones.
+    #
+    # "reranker" → raw_first (bare token; "rerank"→ai + "reranking"→ai existed but "-er" noun form missing).
+    # "cross encoder" (spaced) → "frontend" via bare "cross"→frontend (wrong; cross-encoder rerankers → AI).
+    # "colbert" → raw_first (ColBERT neural retrieval model → Search Engines).
+    # "late interaction" → raw_first (ColBERT's retrieval mechanism → Search Engines).
+    # "llvm" → raw_first (LLVM compiler infrastructure → Developer Tools).
+    # "gitignore" → raw_first (gitignore generators → Developer Tools).
+    # "wasm runtime" → "frontend" via bare "wasm"→frontend (wrong; wasmtime/wasmer runtime context → Developer Tools).
+    ("reranker model", "ai"),                            # bare "reranker"→ai (was raw_first)
+    ("reranker python", "ai"),                           # bare "reranker"→ai fires before raw_first
+    ("cross encoder reranking", "ai"),                   # bigram "cross encoder"→ai (spaced form; overrides "cross"→frontend)
+    ("cross encoder model", "ai"),                       # bigram fires before bare "cross"→frontend
+    ("colbert retrieval", "search"),                     # bare "colbert"→search (was raw_first)
+    ("colbert vs bm25", "search"),                       # bare "colbert"→search
+    ("late interaction retrieval", "search"),            # bigram "late interaction"→search (was raw_first)
+    ("late interaction model", "search"),                # bigram fires before raw_first
+    ("llvm alternative", "developer"),                   # bare "llvm"→developer (was raw_first)
+    ("llvm pass", "developer"),                          # bare "llvm"→developer
+    ("gitignore generator", "developer"),                # bare "gitignore"→developer (was raw_first)
+    ("gitignore python", "developer"),                   # bare "gitignore"→developer
+    ("wasm runtime wasmtime", "developer"),              # bigram "wasm runtime"→developer (overrides "wasm"→frontend)
+    ("wasm runtime alternative", "developer"),           # bigram fires before bare "wasm"→frontend
+    # Regressions guarded
+    ("reranking model", "ai"),                           # PRE: bare "reranking"→ai unchanged
+    ("rerank cohere", "ai"),                             # PRE: bare "rerank"→ai unchanged
+    ("cross-encoder alternative", "ai"),                 # PRE: hyphenated "cross-encoder"→ai unchanged
+    ("wasm bundler vite", "frontend"),                   # PRE: bare "wasm"→frontend unchanged (no "runtime" suffix)
 ]
 
 

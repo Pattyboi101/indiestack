@@ -10318,6 +10318,36 @@ _CAT_SYNONYMS: dict[str, str] = {
     # DevOps — AWS CloudFormation
     "cloudformation": "devops",        # bare — "cloudformation alternative", "cloudformation template" → DevOps
     "cloud formation": "devops",       # bigram — spaced form "cloud formation template" → DevOps & Infrastructure
+    # ── Probe 145 (autonomous loop, Jun 2026): reranker / colbert / cross-encoder-spaced / llvm / late-interaction / gitignore / wasm-runtime dead zones ──
+    #
+    # "reranker" → raw_first; bare token missing despite "rerank"→ai + "reranking"→ai existing.
+    #   Reranker models (cross-encoders, ColBERT reranker, Cohere Rerank) → AI & Automation.
+    # "colbert" → raw_first; ColBERT (Contextualized Late Interactions over BERT) is a neural
+    #   retrieval/IR model for passage ranking → Search Engines (Vespa, Weaviate, Qdrant use it).
+    # "cross encoder" (spaced form) → "frontend" via bare "cross"→frontend (wrong; cross-encoder
+    #   is an ML reranking model; hyphenated "cross-encoder"→ai was mapped, spaced form was not).
+    # "late interaction" → raw_first; late interaction retrieval is ColBERT's core mechanism
+    #   → Search Engines (complement to bigram "cross encoder"→ai for the full IR tooling cluster).
+    # "llvm" → raw_first; LLVM is compiler infrastructure used by Clang, rustc, Swift, Zig, etc.
+    #   → Developer Tools (same tier as "linker"→developer, "bytecode"→security is wrong for llvm).
+    # "gitignore" → raw_first; gitignore generators (gitignore.io, toptal/gitignore) → Developer Tools.
+    # "wasm runtime" → "frontend" via bare "wasm"→frontend (wrong for runtime-specific queries;
+    #   wasmtime/wasmer already mapped→developer but bare "wasm" wins; bigram override needed).
+
+    # AI — reranker + cross-encoder (spaced form)
+    "reranker": "ai",                  # bare — "reranker model", "reranker python" → AI & Automation
+    "cross encoder": "ai",             # bigram — spaced form; overrides "cross"→frontend → AI & Automation
+
+    # Search — ColBERT + late interaction retrieval
+    "colbert": "search",               # bare — "colbert retrieval", "colbert vs bm25" → Search Engines
+    "late interaction": "search",      # bigram — "late interaction retrieval", "late interaction model" → Search
+
+    # Developer Tools — LLVM + gitignore generators
+    "llvm": "developer",               # bare — "llvm alternative", "llvm pass", "llvm ir" → Developer Tools
+    "gitignore": "developer",          # bare — "gitignore generator", "gitignore python" → Developer Tools
+
+    # Frontend / DevOps — WASM runtime override
+    "wasm runtime": "developer",       # bigram — overrides "wasm"→frontend; "wasm runtime wasmtime" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
