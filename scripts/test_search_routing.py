@@ -1200,9 +1200,10 @@ TEST_CASES: list[tuple[str, str]] = [
     ("background removal api", "ai"),                # bigram "background removal" → AI & Automation
     ("background removal python", "ai"),             # bigram form → AI & Automation
     # Routing fixes — "hot"/"live"/"tree" had no synonym; raw_first fired returning unmapped token
-    ("hot reload dev server", "developer"),          # bigram "hot reload" → Developer Tools
-    ("hot reload vite", "developer"),                # bigram form → Developer Tools
-    ("live reload webpack", "developer"),            # bigram "live reload" → Developer Tools
+    # (hot/live reload reclassified to frontend in probe 148 — HMR tools like Vite/webpack are frontend-frameworks)
+    ("hot reload dev server", "frontend"),           # bigram "hot reload" → Frontend Frameworks
+    ("hot reload vite", "frontend"),                 # bigram form → Frontend Frameworks
+    ("live reload webpack", "frontend"),             # bigram "live reload" → Frontend Frameworks
     ("hot module replacement", "frontend"),          # bigram "hot module" → Frontend Frameworks
     ("tree shaking bundler", "frontend"),            # bigram "tree shaking" → Frontend Frameworks
     ("tree shaking webpack", "frontend"),            # bigram form → Frontend Frameworks
@@ -4013,7 +4014,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("ssl certificate management", "security"),             # bare "ssl"→security (no regression)
     ("presence awareness liveblocks", "api"),               # bigram "presence awareness"→api still fires (no regression)
     ("xlsx parser", "developer"),                           # bare "xlsx"→developer (no regression)
-    ("hot reload vite", "developer"),                       # bigram "hot reload"→developer (no regression)
+    ("hot reload vite", "frontend"),                        # bigram "hot reload"→frontend (reclassified probe 148)
 
     # ── probe 112: file-format siblings, crypto verb forms, transpile verb ──────
     # File-format siblings (pptx/odt/tsv after docx added in probe 111)
@@ -4887,6 +4888,33 @@ TEST_CASES: list[tuple[str, str]] = [
     ("object storage s3", "file"),                       # PRE: "object"→file unchanged
     ("distributed tracing", "monitoring"),               # PRE: "tracing"→monitoring unchanged
     ("end-to-end testing framework", "testing"),         # PRE: "end-to-end"→testing unchanged for non-encryption queries
+
+    # ── Probe 148 (autonomous loop, Jun 2026): hot/live reload→frontend; browser storage; email template; transactional sms; customer portal; cd/ci-cd pipeline ──
+    # Fixes: "hot reload"/"live reload" reclassified to frontend (HMR tools are frontend-frameworks);
+    #        "hot reloading" bigram added; "local storage"/"session storage"→frontend (Web Storage API);
+    #        "email template"→email bigram; "transactional sms"→notifications; "customer portal"→payments;
+    #        "cd"/"ci/cd"→devops (Continuous Delivery pipeline routing).
+    ("hot reload vite", "frontend"),                     # bigram "hot reload"→frontend (reclassified from developer)
+    ("hot reload react", "frontend"),                    # bigram fires before raw_first
+    ("hot reloading setup", "frontend"),                 # bigram "hot reloading"→frontend (spaced form, complements hyphenated)
+    ("live reload webpack", "frontend"),                 # bigram "live reload"→frontend (reclassified from developer)
+    ("local storage api", "frontend"),                   # bigram "local storage"→frontend (overrides "storage"→file)
+    ("session storage clear", "frontend"),               # bigram "session storage"→frontend (overrides "session"→auth)
+    ("email template react", "email"),                   # bigram "email template"→email (overrides bare "email")
+    ("transactional sms api", "notifications"),          # bigram "transactional sms"→notifications (overrides "transactional"→email)
+    ("customer portal stripe", "payments"),              # bigram "customer portal"→payments (overrides "portal"→developer)
+    ("cd pipeline", "devops"),                           # bare "cd"→devops (was "pipeline"→background)
+    ("ci/cd pipeline", "devops"),                        # bare "ci/cd"→devops slash form (was "pipeline"→background)
+    # Regressions guarded
+    ("hot module replacement", "frontend"),              # PRE: bigram "hot module"→frontend unchanged
+    ("hot-reload config", "frontend"),                   # PRE: hyphenated "hot-reload"→frontend from probe 147 unchanged
+    ("localstorage alternative", "caching"),             # PRE: bare "localstorage"→caching unchanged (compound form)
+    ("session replay tool", "analytics"),                # PRE: bigram "session replay"→analytics overrides "session"→auth
+    ("transactional email api", "email"),                # PRE: bare "transactional"→email unchanged
+    ("transactional outbox pattern", "background"),      # PRE: bigram "transactional outbox"→background unchanged
+    ("ci pipeline", "devops"),                           # PRE: bare "ci"→devops unchanged
+    ("cicd pipeline", "devops"),                         # PRE: bare "cicd"→devops unchanged
+    ("deployment pipeline", "devops"),                   # PRE: bare "deployment"→devops unchanged
 ]
 
 

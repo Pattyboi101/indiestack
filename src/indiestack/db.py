@@ -2661,6 +2661,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "storybook": "frontend",    # component development environment (Chromatic, Storybook — UI dev not test runner)
     "ci": "devops",
     "cicd": "devops",
+    "cd": "devops",              # "cd pipeline", "cd tool" → Continuous Delivery/Deployment → DevOps
+    "ci/cd": "devops",           # "ci/cd pipeline" slash form → DevOps
     "deploy": "devops",
     "deployment": "devops",
     "hosting": "devops",
@@ -3277,6 +3279,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Email — MJML and React Email are common template-layer tools
     "mjml": "email",            # MJML — responsive email template language
     "react-email": "email",     # React Email — React components for email templates
+    "email template": "email",  # bigram — "email template builder", "email template react" → Email Marketing
     # Frontend — Formik (popular React form library, Zod/RHF complement)
     "formik": "frontend",       # Formik — React form library (pre-RHF era, still widely used)
     # Database — connection pooling (PgBouncer, PgCat, pgpool)
@@ -6684,6 +6687,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Customer success — CRM/portal/success tools (Gainsight, ChurnZero, Vitally)
     "customer-success": "customer", # "customer success platform", "customer success tool" → Customer Support
     "customer-portal": "customer",  # "customer portal", "self-service portal" → Customer Support
+    "customer portal": "payments",  # bigram — "customer portal stripe", "customer billing portal" → Payments (overrides "portal"→developer)
     # Documentation — knowledge base and FAQ queries (GitBook, Mintlify, Docusaurus)
     # NOTE: "knowledge base" spaced bigram intentionally NOT added — "knowledge base llm/chatbot"
     # queries must route to AI (RAG/retrieval use case). Hyphenated/compound forms cover the rest.
@@ -6928,6 +6932,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "saga": "background",           # "saga pattern", "saga orchestration" → Background Jobs (Temporal, Restate)
     "outbox": "background",         # "transactional outbox", "outbox pattern", "outbox relay" → Background Jobs
     "transactional outbox": "background",  # bigram — "transactional outbox pattern" beats "transactional"→email → Background Jobs
+    "transactional sms": "notifications",  # bigram — "transactional sms api", "transactional sms gateway" → Notifications (overrides "transactional"→email)
     # API Tools — rate limiting algorithm queries (complement to "rate"→api and "limiting"→api)
     "token bucket": "api",          # "token bucket algorithm", "token bucket rate limiter" → API Tools
     "sliding window": "api",        # "sliding window rate limiter", "sliding window counter" → API Tools
@@ -7308,6 +7313,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "idb": "database",             # idb npm — Promise-based IndexedDB; "idb alternative" → Database
     "opfs": "database",            # Origin Private File System — "opfs sqlite", "opfs pglite" → Database
     "localstorage": "caching",     # localStorage — "localstorage alternative", "localstorage library" → Caching
+    "local storage": "frontend",   # bigram — "local storage api", "local storage react" → Frontend Frameworks (Web Storage API; overrides "storage"→file)
+    "session storage": "frontend", # bigram — "session storage javascript", "session storage clear" → Frontend Frameworks (overrides "session"→auth)
     # Event-driven architecture — hyphenated/compound forms not split by whitespace tokenizer
     "event-driven": "message",     # "event-driven architecture", "event-driven system" → Message Queue
     "eventdriven": "message",      # compound — "eventdriven framework", "eventdriven pattern" → Message Queue
@@ -8193,9 +8200,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "background removal": "ai",     # bigram — "background removal api", "background removal python" → AI & Automation
     # Frontend — "hot reload" / "live reload" / "hot module replacement" have no single-token mappings
     # so raw_first fires returning "hot"/"live"/"tree" which never matches a category.
-    # HMR and live-reload are bundler/dev-server features; tree shaking is a bundler optimization.
-    "hot reload": "developer",      # bigram — "hot reload dev server", "hot reload vite" → Developer Tools
-    "live reload": "developer",     # bigram — "live reload webpack", "live reload browser" → Developer Tools
+    # HMR and live-reload are bundler/dev-server features (Vite, webpack); tree shaking is a bundler optimization.
+    "hot reload": "frontend",       # bigram — "hot reload vite", "hot reload webpack" → Frontend Frameworks (HMR)
+    "hot reloading": "frontend",    # bigram spaced form — "hot reloading react" → Frontend Frameworks
+    "live reload": "frontend",      # bigram — "live reload webpack", "live reload browser" → Frontend Frameworks
     "inner loop": "devops",         # bigram — "inner loop dev", "inner loop tooling" → DevOps (Tilt, Garden, Skaffold)
     "hot module": "frontend",       # bigram — "hot module replacement", "hot module reloading" → Frontend Frameworks
     "tree shaking": "frontend",     # bigram — "tree shaking bundler", "tree shaking webpack" → Frontend Frameworks
