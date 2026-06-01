@@ -3434,6 +3434,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Code formatter — Prettier, Biome, dprint live in testing-tools alongside linters
     "formatter": "testing",         # "code formatter", "js formatter" → Testing Tools
     "format": "testing",            # "code format", "auto-format" → Testing Tools (Biome, Prettier)
+    "beautifier": "testing",        # "code beautifier", "js beautifier" → Testing Tools (js-beautify, Prettier)
+    "beautify": "testing",          # "beautify code", "beautify html" → Testing Tools (verb form)
     # HTTP clients — Axios, Got, Ky, node-fetch live in api-tools
     "http": "api",                  # "http client", "http server", "http framework" → API Tools
     "axios": "api",                 # Axios — most popular promise-based HTTP client for JS/TS
@@ -5199,6 +5201,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "toml": "developer",            # TOML config parsers — toml.rs, tomllib, toml-ts, toml-node → Developer Tools
     # Payments — dunning management (failed payment retry and recovery)
     "dunning": "payments",          # dunning management — failed payment recovery flows → Payments (Stripe Billing, Chargebee)
+    "chargeback": "payments",       # "chargeback prevention", "chargeback tool" → Payments (Stripe Radar, Kount, Chargebacks911)
+    "chargebacks": "payments",      # plural form — "chargebacks api", "chargebacks management" → Payments
     # Invoicing — VAT compliance and calculation
     "vat": "invoicing",             # VAT compliance — "vat calculation", "eu vat api" → Invoicing & Billing (Anrok, TaxJar, Avalara)
     # AI — text tokenization (tokenizer tools for LLM pre-processing pipelines)
@@ -10348,6 +10352,30 @@ _CAT_SYNONYMS: dict[str, str] = {
 
     # Frontend / DevOps — WASM runtime override
     "wasm runtime": "developer",       # bigram — overrides "wasm"→frontend; "wasm runtime wasmtime" → Developer Tools
+
+    # ── Probe 146 (autonomous loop, Jun 2026): chargeback / code-beautifier / approval-workflow / image-compression / technical-interview dead zones ──
+    #
+    # "chargeback" → raw_first; chargeback prevention tools (Stripe Radar, Kount, Chargebacks911, Signifyd)
+    #   belong in Payments. Already added as bare tokens above (near "dunning"→payments).
+    # "beautifier" / "beautify" → raw_first; code beautifiers (js-beautify, Prettier in beautify mode)
+    #   belong in Testing Tools (same tier as formatter/linter). Added as bare tokens above (near "formatter").
+    # "approval workflow" → ai via bare "workflow"→ai (wrong; approval workflow steps in n8n, Temporal,
+    #   Windmill, Zapier are background-job orchestration tools → Background Jobs).
+    # "image compression" / "image minification" → media via bare "image"→media (wrong; image compression
+    #   tools imagemin, sharp, Squoosh, pngquant are file-management/CDN tools → File Management,
+    #   consistent with existing "image optimization"→file bigram from probe 58).
+    # "technical interview" → raw_first; both "technical" and "interview" unmapped; technical interview
+    #   platforms (HackerRank, Codility, Codewars, Pramp, Interview.io) belong in Learning & Education.
+
+    # Background Jobs — approval workflow (overrides bare "workflow"→ai)
+    "approval workflow": "background",  # bigram — "approval workflow tool", "approval workflow n8n" → Background Jobs
+
+    # File Management — image compression (complement to "image optimization"→file from probe 58)
+    "image compression": "file",        # bigram — "image compression api", "image compression library" → File Management
+    "image minification": "file",       # bigram — "image minification tool", "image minify online" → File Management
+
+    # Learning — technical interview platforms
+    "technical interview": "learning",  # bigram — "technical interview platform", "technical interview prep" → Learning
 }
 
 _FTS_STOP_WORDS = {

@@ -3471,7 +3471,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("feature flag nextjs", "feature"),         # bare "feature"→feature-flags unchanged (no "engineering"/"extraction" suffix)
     ("feature toggle react", "feature"),        # bare "feature"→feature-flags unchanged
     ("ab testing tool", "feature"),             # "ab"→feature-flags unchanged
-    ("image compression", "media"),             # bare "image"→media unchanged (no "labeling" suffix; no "image compression" bigram)
+    ("image compression", "file"),              # probe 146: "image compression" bigram → File Management (consistent with "image optimization"→file)
     ("image processing", "developer"),          # bigram "image processing"→developer (probe 113)
     ("ci cd pipeline", "devops"),               # bare "pipeline" still catches non-ML pipeline queries
     ("deployment pipeline", "devops"),          # "deployment"→devops fires before "pipeline"→background
@@ -4087,7 +4087,7 @@ TEST_CASES: list[tuple[str, str]] = [
     ("embeddable widget", "developer"),                 # bare "embeddable"→developer
     ("embeddable chart react", "developer"),            # bare "embeddable"→developer at pos 0
     # Regressions: existing nearby mappings unchanged
-    ("image compression", "media"),                     # "image"→media unchanged (no "image compression" bigram added)
+    ("image compression", "file"),                      # probe 146: "image compression" bigram → File Management
     ("image labeling tool", "ai"),                      # bigram "image labeling"→ai unchanged
     ("image augmentation", "ai"),                       # bigram "image augmentation"→ai unchanged
     ("serialization protobuf", "api"),                  # "serialization"→api still fires (binary-protocol context unchanged)
@@ -4928,6 +4928,32 @@ TEST_CASES: list[tuple[str, str]] = [
     ("rerank cohere", "ai"),                             # PRE: bare "rerank"→ai unchanged
     ("cross-encoder alternative", "ai"),                 # PRE: hyphenated "cross-encoder"→ai unchanged
     ("wasm bundler vite", "frontend"),                   # PRE: bare "wasm"→frontend unchanged (no "runtime" suffix)
+
+    # ── Probe 146 (autonomous loop, Jun 2026): chargeback / code-beautifier / approval-workflow / image-compression / technical-interview dead zones ──
+    # Fixes: bare "chargeback"/"chargebacks"→payments; bare "beautifier"/"beautify"→testing;
+    #        bigrams "approval workflow"→background, "image compression"/"image minification"→file, "technical interview"→learning.
+    ("chargeback prevention", "payments"),               # bare "chargeback"→payments (was raw_first)
+    ("chargeback tool", "payments"),                     # bare "chargeback"→payments
+    ("chargebacks api", "payments"),                     # bare "chargebacks"→payments (plural form)
+    ("chargebacks management", "payments"),              # bare "chargebacks"→payments
+    ("code beautifier", "testing"),                      # bare "beautifier"→testing (was raw_first)
+    ("js beautifier tool", "frontend"),                  # bare "js"→frontend fires at pos 0 (before "beautifier"→testing at pos 1)
+    ("beautify code", "testing"),                        # bare "beautify"→testing (was raw_first)
+    ("approval workflow tool", "background"),            # bigram "approval workflow"→background (overrides "workflow"→ai)
+    ("approval workflow n8n", "background"),             # bigram fires before bare "workflow"→ai
+    ("image compression api", "file"),                   # bigram "image compression"→file (overrides "image"→media)
+    ("image compression library", "file"),               # bigram fires before bare "image"→media
+    ("image minification tool", "file"),                 # bigram "image minification"→file
+    ("technical interview platform", "learning"),        # bigram "technical interview"→learning (was raw_first)
+    ("technical interview prep", "learning"),            # bigram fires before "technical" (unmapped)
+    # Regressions guarded
+    ("chargeback fraud detection", "payments"),          # PRE: bare "chargeback"→payments fires at pos 0 (before "fraud"→security at pos 1)
+    ("beautify html", "testing"),                        # PRE: bare "beautify"→testing fires at pos 0 (before "html"→frontend at pos 1)
+    ("js formatter", "frontend"),                        # PRE: bare "js"→frontend fires at pos 0 (before "formatter"→testing at pos 1 — same as "js beautifier")
+    ("workflow automation n8n", "background"),           # PRE: bigram "workflow automation"→background unchanged
+    ("image optimization cdn", "file"),                  # PRE: "image optimization"→file bigram unchanged
+    ("image labeling tool", "ai"),                       # PRE: bigram "image labeling"→ai unchanged
+    ("image augmentation python", "ai"),                 # PRE: bigram "image augmentation"→ai unchanged
 ]
 
 
