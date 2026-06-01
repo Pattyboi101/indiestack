@@ -4810,6 +4810,83 @@ TEST_CASES: list[tuple[str, str]] = [
     ("turborepo alternative", "developer"),              # PRE: bare "turborepo"→developer unchanged
     ("solidstart ssr", "frontend"),                      # PRE: bare "solidstart"→frontend unchanged
     ("solid js framework", "frontend"),                  # PRE: bare "solid"→frontend unchanged (no "start" suffix)
+
+    # ── Probe 147: hyphenated single-token dead zones ──────────────────────
+    # Hyphenated queries stay as one token after whitespace-split; bare words don't fire.
+
+    # Frontend — micro-frontend
+    ("micro-frontend framework", "frontend"),            # hyphenated "micro-frontend"→frontend (was raw_first)
+    ("micro-frontends setup", "frontend"),               # plural hyphenated form
+    ("micro-frontend architecture", "frontend"),         # with suffix stripped by stop words
+    # Frontend — web components
+    ("web-component library", "frontend"),               # hyphenated "web-component"→frontend (was raw_first)
+    ("web-components polyfill", "frontend"),             # plural hyphenated
+    # Frontend — build tooling hyphenated forms
+    ("tree-shaking webpack", "frontend"),                # "tree-shaking"→frontend (was raw_first)
+    ("hot-reload config", "frontend"),                   # "hot-reload"→frontend (was raw_first)
+    ("hot-reloading nextjs", "frontend"),                # gerund form
+    # Testing — hyphenated compound forms
+    ("e2e-testing framework", "testing"),                # "e2e-testing"→testing (was raw_first)
+    ("unit-testing library", "testing"),                 # "unit-testing"→testing
+    ("load-testing open source", "testing"),             # "load-testing"→testing
+    ("stress-testing alternative", "testing"),           # "stress-testing"→testing (was raw_first)
+    # API — gateway and docs hyphenated
+    ("api-gateway alternative", "api"),                  # "api-gateway"→api (was raw_first)
+    ("api-documentation generator", "api"),              # "api-documentation"→api
+    # Security — injection/protection hyphenated forms
+    ("sql-injection prevention", "security"),            # "sql-injection"→security (was raw_first)
+    ("xss-protection middleware", "security"),           # "xss-protection"→security
+    ("csrf-protection library", "security"),             # "csrf-protection"→security
+    ("ip-filtering middleware", "security"),             # "ip-filtering"→security (overrides ip→maps)
+    ("content-security-policy setup", "security"),       # "content-security-policy"→security
+    ("end-to-end encryption library", "security"),       # bigram override: "end-to-end encryption"→security
+    # Message queue / Background — hyphenated queue terms
+    ("message-queue alternative", "message"),            # "message-queue"→message (was raw_first)
+    ("job-queue library", "background"),                 # "job-queue"→background
+    ("pub-sub pattern", "message"),                      # "pub-sub"→message (was raw_first)
+    ("publish-subscribe broker", "message"),             # "publish-subscribe"→message
+    # Email — transactional and infrastructure
+    ("transactional-email api", "email"),                # "transactional-email"→email (was raw_first)
+    ("smtp-server setup", "email"),                      # "smtp-server"→email
+    ("email-template builder", "email"),                 # "email-template"→email
+    # Monitoring — observability hyphenated forms
+    ("open-telemetry setup", "monitoring"),              # "open-telemetry"→monitoring (was raw_first)
+    ("distributed-tracing tool", "monitoring"),          # "distributed-tracing"→monitoring
+    ("crash-reporting sdk", "monitoring"),               # "crash-reporting"→monitoring
+    # Logging — aggregation and management
+    ("log-aggregation tool", "logging"),                 # "log-aggregation"→logging (was raw_first)
+    ("log-management platform", "logging"),              # "log-management"→logging
+    # Auth — multi-tenancy and permission
+    ("multi-tenancy saas", "authentication"),            # "multi-tenancy"→authentication (was raw_first)
+    ("multi-tenant architecture", "authentication"),     # "multi-tenant"→authentication
+    ("permission-management sdk", "authentication"),     # "permission-management"→authentication
+    ("mfa-totp library", "authentication"),              # "mfa-totp"→authentication
+    ("phone-verification api", "authentication"),        # "phone-verification"→authentication
+    # Caching — invalidation and distributed
+    ("cache-invalidation strategy", "caching"),          # "cache-invalidation"→caching (was raw_first)
+    ("distributed-caching setup", "caching"),            # "distributed-caching"→caching
+    # Storage — object storage
+    ("object-storage alternative", "file"),              # "object-storage"→file (was raw_first)
+    # CMS — headless and content management
+    ("headless-cms alternative", "cms"),                 # "headless-cms"→cms (was raw_first)
+    ("content-management system", "cms"),                # "content-management"→cms
+    ("blog-platform open source", "cms"),                # "blog-platform"→cms
+    # Media — transcoding and resizing
+    ("video-transcoding api", "media"),                  # "video-transcoding"→media (was raw_first)
+    ("image-resizing cdn", "media"),                     # "image-resizing"→media
+    # Developer Tools — shortener forms
+    ("url-shortener api", "developer"),                  # "url-shortener"→developer (was raw_first)
+    ("link-shortener alternative", "developer"),         # "link-shortener"→developer
+    # Regressions guarded — bare token forms must still work unchanged
+    ("micro frontend architecture", "frontend"),         # PRE: bigram "micro frontend"→frontend unchanged
+    ("web component framework", "frontend"),             # PRE: "component"→frontend unchanged
+    ("load testing tool", "testing"),                    # PRE: "load"→testing unchanged
+    ("api gateway open source", "api"),                  # PRE: "gateway"→api unchanged
+    ("transactional email api", "email"),                # PRE: "transactional"→email unchanged
+    ("headless cms", "cms"),                             # PRE: "headless"→cms unchanged
+    ("object storage s3", "file"),                       # PRE: "object"→file unchanged
+    ("distributed tracing", "monitoring"),               # PRE: "tracing"→monitoring unchanged
+    ("end-to-end testing framework", "testing"),         # PRE: "end-to-end"→testing unchanged for non-encryption queries
 ]
 
 

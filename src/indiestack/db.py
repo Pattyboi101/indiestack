@@ -10176,6 +10176,92 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "qwik city" (spaced) — "qwik" is in _FRAMEWORK_QUERY_TERMS and stripped; only "city" remains →
     # raw_first. Hyphenated "qwik-city" and compound "qwikcity" existed; spaced bigram fires in pre-pass.
     "qwik city": "frontend",              # bigram — "qwik city alternative", "qwik city vs nextjs" → Frontend
+
+    # ── Probe 147: hyphenated single-token dead zones ───────────────────────
+    # Root cause: whitespace-tokeniser keeps hyphenated queries as one opaque
+    # token; bare-word synonyms ("micro", "frontend", etc.) never fire.
+    # Added explicit hyphenated forms for the highest-traffic segments.
+
+    # Frontend — micro-frontend architecture queries
+    "micro-frontend": "frontend",      # hyphenated — "micro-frontend architecture", "micro-frontend framework" → Frontend Frameworks
+    "micro-frontends": "frontend",     # plural hyphenated — "micro-frontends setup", "micro-frontends alternative" → Frontend Frameworks
+
+    # Frontend — Web Components (custom elements; Lit, Stencil, FAST)
+    "web-component": "frontend",       # hyphenated — "web-component library", "web-component alternative" → Frontend Frameworks
+    "web-components": "frontend",      # plural — "web-components spec", "web-components polyfill" → Frontend Frameworks
+
+    # Frontend — build optimisation terms (webpack, Vite, Rollup ecosystem)
+    "tree-shaking": "frontend",        # hyphenated — "tree-shaking setup", "tree-shaking alternative" → Frontend Frameworks
+    "hot-reload": "frontend",          # hyphenated — "hot-reload config", "hot-reload alternative" → Frontend Frameworks
+    "hot-reloading": "frontend",       # gerund — "hot-reloading nextjs", "hot-reloading setup" → Frontend Frameworks
+
+    # Testing — compound form dead zones (individual words work but hyphenated doesn't)
+    "e2e-testing": "testing",          # hyphenated — "e2e-testing tool", "e2e-testing framework" → Testing Tools
+    "unit-testing": "testing",         # hyphenated — "unit-testing library", "unit-testing alternative" → Testing Tools
+    "load-testing": "testing",         # hyphenated — "load-testing tool", "load-testing open source" → Testing Tools
+    "stress-testing": "testing",       # hyphenated — "stress-testing tool", "stress-testing alternative" → Testing Tools
+
+    # API — gateway and documentation hyphenated forms
+    "api-gateway": "api",              # hyphenated — "api-gateway alternative", "api-gateway open source" → API Tools
+    "api-documentation": "api",        # hyphenated — "api-documentation tool", "api-documentation generator" → API Tools
+
+    # Security — injection/protection hyphenated forms
+    "sql-injection": "security",       # hyphenated — "sql-injection prevention", "sql-injection library" → Security Tools
+    "xss-protection": "security",      # hyphenated — "xss-protection library", "xss-protection middleware" → Security Tools
+    "csrf-protection": "security",     # hyphenated — "csrf-protection setup", "csrf-protection alternative" → Security Tools
+    "ip-filtering": "security",        # hyphenated — "ip-filtering library", "ip-filtering middleware" → Security Tools (overrides ip→maps)
+    "content-security-policy": "security",  # hyphenated — "content-security-policy setup", "csp alternative" → Security Tools
+
+    # Security — bigram override (end-to-end→testing fires before encryption→security)
+    "end-to-end encryption": "security",  # bigram — overrides end-to-end→testing; "e2e encryption" → Security Tools
+
+    # Message Queue / Background — hyphenated queue terms
+    "message-queue": "message",        # hyphenated — "message-queue alternative", "message-queue setup" → Message Queue
+    "job-queue": "background",         # hyphenated — "job-queue library", "job-queue alternative" → Background Jobs
+    "pub-sub": "message",              # hyphenated — "pub-sub pattern", "pub-sub library" → Message Queue
+    "publish-subscribe": "message",    # hyphenated — "publish-subscribe pattern", "publish-subscribe broker" → Message Queue
+
+    # Email — transactional and infrastructure hyphenated forms
+    "transactional-email": "email",    # hyphenated — "transactional-email api", "transactional-email alternative" → Email Marketing
+    "smtp-server": "email",            # hyphenated — "smtp-server setup", "smtp-server alternative" → Email Marketing
+    "email-template": "email",         # hyphenated — "email-template builder", "email-template library" → Email Marketing
+
+    # Monitoring — hyphenated observability terms
+    "open-telemetry": "monitoring",    # hyphenated — "open-telemetry setup", "open-telemetry alternative" → Monitoring & Uptime
+    "distributed-tracing": "monitoring",  # hyphenated — "distributed-tracing tool", "distributed-tracing setup" → Monitoring & Uptime
+    "crash-reporting": "monitoring",   # hyphenated — "crash-reporting sdk", "crash-reporting alternative" → Monitoring & Uptime
+
+    # Logging — aggregation and management hyphenated forms
+    "log-aggregation": "logging",      # hyphenated — "log-aggregation tool", "log-aggregation alternative" → Logging Tools
+    "log-management": "logging",       # hyphenated — "log-management platform", "log-management setup" → Logging Tools
+
+    # Authentication — multi-tenancy and permission hyphenated forms
+    "multi-tenancy": "authentication", # hyphenated — "multi-tenancy support", "multi-tenancy saas" → Authentication
+    "multi-tenant": "authentication",  # hyphenated — "multi-tenant architecture", "multi-tenant saas" → Authentication
+    "permission-management": "authentication",  # hyphenated — "permission-management library", "permission-management sdk" → Authentication
+    "mfa-totp": "authentication",      # hyphenated — "mfa-totp library", "mfa-totp setup" → Authentication
+    "sms-verification": "notifications",  # hyphenated — "sms-verification api", "sms-verification alternative" → Notifications
+    "phone-verification": "authentication",  # hyphenated — "phone-verification api", "phone-verification sdk" → Authentication
+
+    # Caching — invalidation and distribution hyphenated forms
+    "cache-invalidation": "caching",   # hyphenated — "cache-invalidation strategy", "cache-invalidation library" → Caching
+    "distributed-caching": "caching",  # hyphenated — "distributed-caching setup", "distributed-caching alternative" → Caching
+
+    # Storage — object storage hyphenated form
+    "object-storage": "file",          # hyphenated — "object-storage alternative", "object-storage s3" → File Storage & CDN
+
+    # CMS — headless and content management hyphenated forms
+    "headless-cms": "cms",             # hyphenated — "headless-cms alternative", "headless-cms setup" → Headless CMS
+    "content-management": "cms",       # hyphenated — "content-management system", "content-management alternative" → Headless CMS
+    "blog-platform": "cms",            # hyphenated — "blog-platform alternative", "blog-platform open source" → Headless CMS
+
+    # Media — transcoding and resizing hyphenated forms
+    "video-transcoding": "media",      # hyphenated — "video-transcoding api", "video-transcoding alternative" → Media Processing
+    "image-resizing": "media",         # hyphenated — "image-resizing api", "image-resizing cdn" → Media Processing
+
+    # Developer Tools — shortener hyphenated forms
+    "url-shortener": "developer",      # hyphenated — "url-shortener api", "url-shortener open source" → Developer Tools
+    "link-shortener": "developer",     # hyphenated — "link-shortener service", "link-shortener alternative" → Developer Tools
 }
 
 _FTS_STOP_WORDS = {
