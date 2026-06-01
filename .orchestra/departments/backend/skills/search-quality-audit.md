@@ -113,25 +113,25 @@ These areas historically generate `raw_first` misses:
 | Remote dev environments | remote development, codespace, devpod, devcontainer, cloud ide |
 | AI agent patterns | computer use api, tool calling, structured output, prompt template, llm routing |
 | Data observability | data lineage, data catalog, data observability, data quality, data contract |
-| Data catalog named tools | datahub (probe 148 ✓), atlan (probe 148 ✓), zincsearch (probe 148 ✓), great expectations (probe 148 ✓), sqlmesh (probe 148 ✓), dlthub (probe 148 ✓), collibra, alation, amundsen, apache atlas (atlas→database via bigram), apache beam, apache nifi, apache ranger |
+| Data catalog named tools | datahub (probe 148 ✓), atlan (probe 148 ✓), zincsearch (probe 148 ✓), great expectations (probe 148 ✓), sqlmesh (probe 148 ✓), dlthub (probe 148 ✓), collibra (probe 149 ✓), alation (probe 149 ✓), amundsen (probe 149 ✓), nifi (probe 149 ✓), apache atlas (atlas→database via bigram), apache beam, apache ranger |
 | Service mesh / networking | service mesh, envoy proxy, istio, linkerd, ebpf networking |
 | Software supply chain | sbom generator, slsa provenance, sigstore, cosign, syft, grype |
 | Chaos / resilience testing | chaos engineering, fault injection, chaos monkey, litmus chaos, toxiproxy, gremlin, blast radius, steady state |
 | API contract testing | pact contract, wiremock stub, consumer driven contract, prism mock |
-| Game dev advanced | tilemap, tileset, particle system, procedural generation, shader graph, level design, game jam |
-| Security signing / PKI | code signing, binary signing, artifact signing, mtls, mutual tls, certificate authority |
+| Game dev advanced | tilemap, tileset, particle system, procedural generation, shader graph (probe 149 ✓ bigram→games), level design (probe 149 ✓ bigram→games), level editor (probe 149 ✓ bigram→games), game jam |
+| Security signing / PKI | code signing, binary signing, artifact signing (probe 149 ✓ bigram→security), mtls, mutual tls, certificate authority |
 | Hardware auth | yubikey, hardware key, hardware token, fido2 key, passkey device |
 | IaC / provisioning | cloudformation, cloud formation, pulumi stack, opentofu, crossplane, terraform cdk |
-| BPM / workflow engines | bpm, camunda, activiti, flowable, zeebe, temporal workflow |
-| Plural-form gaps | fixtures (→testing), formatters, notifiers — always probe the plural when singular is mapped |
+| BPM / workflow engines | bpm, camunda, activiti (probe 149 ✓), flowable (probe 149 ✓), zeebe, temporal workflow |
+| Plural-form gaps | fixtures (→testing), formatters (probe 149 ✓), notifiers (probe 149 ✓) — always probe the plural when singular is mapped |
 | FaaS spaced forms | function as a service, function as service — "faas" maps but long-form bigrams often missing |
 | Data pipeline verbs | data export, data import, data transform — "data" + verb bigrams often raw_first |
 | Automation qualifier | automation testing (→testing, not ai), automation workflow (→background) — "automation" bare→ai causes misfires |
-| Payments / billing ops | chargeback, chargebacks, dunning, refund policy, dispute management — payment ops terms often raw_first |
+| Payments / billing ops | chargeback, chargebacks, dunning, refund (probe 149 ✓), dispute (probe 149 ✓), refund policy (probe 149 ✓ bigram), dispute management (probe 149 ✓ bigram) — payment ops terms often raw_first |
 | Code quality verb forms | beautify, beautifier (→testing) — check verb/gerund/noun forms when base formatter is mapped |
-| Approval / BPM | approval workflow (→background), approval process, document approval — "workflow"→ai fires without qualifier bigram |
+| Approval / BPM | approval workflow (→background), approval process (probe 149 ✓ bigram→background), document approval — "workflow"→ai fires without qualifier bigram |
 | Image operation bigrams | image compression, image minification (→file) — "image"→media fires; need op-specific bigrams per "image optimization" pattern |
-| Education / assessment | technical interview, coding challenge, coding assessment, live coding (→learning) — "coding"→ai-dev causes misfires |
+| Education / assessment | technical interview, coding challenge (probe 149 ✓ bigram→learning), coding assessment (probe 149 ✓ bigram→learning), live coding (probe 149 ✓ bigram→learning) — "coding"→ai-dev causes misfires |
 
 ### Pattern 16 — "conflicting first/second token" probe queries
 
