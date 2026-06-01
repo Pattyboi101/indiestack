@@ -4975,6 +4975,41 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions guarded
     ("container registry harbor", "devops"),            # PRE: "registry"→devops + "harbor"→devops unchanged
     ("npm registry verdaccio", "frontend"),              # PRE: "npm"→frontend fires at pos 0 (beats "registry"→devops at pos 1)
+
+    # ── probe 148: data-catalog / zincsearch / great-expectations / data-fabric dead zones ──
+    #
+    # Fixed: datahub→analytics, atlan→analytics, zincsearch→search,
+    #        great expectations→testing (bigram), data fabric→analytics (bigram),
+    #        metadata management→analytics (bigram), data discovery→analytics (bigram),
+    #        unity catalog→database (bigram), sqlmesh→background, dlthub→background.
+    ("datahub alternative", "analytics"),               # bare "datahub"→analytics (was raw_first)
+    ("datahub data catalog", "analytics"),              # bare "datahub"→analytics fires at pos 0
+    ("datahub linkedin", "analytics"),                  # bare "datahub"→analytics fires before "linkedin"→social
+    ("atlan alternative", "analytics"),                 # bare "atlan"→analytics (was raw_first)
+    ("atlan data catalog", "analytics"),                # bare "atlan"→analytics fires at pos 0
+    ("zincsearch alternative", "search"),               # bare "zincsearch"→search (was raw_first)
+    ("zincsearch elasticsearch", "search"),             # bare "zincsearch"→search fires at pos 0
+    ("great expectations", "testing"),                  # bigram "great expectations"→testing (was raw_first "great")
+    ("great expectations python", "testing"),           # bigram fires; "great" + "expectations" adjacent
+    ("great expectations data quality", "testing"),     # bigram at pos 0 overrides "data quality"→analytics
+    ("data fabric architecture", "analytics"),          # bigram "data fabric"→analytics (overrides "fabric"→frontend)
+    ("data fabric integration", "analytics"),           # bigram "data fabric"→analytics
+    ("metadata management tool", "analytics"),          # bigram "metadata management"→analytics (overrides "management"→project)
+    ("metadata management openmetadata", "analytics"),  # bigram fires; "management" preserved before "openmetadata"
+    ("data discovery catalog", "analytics"),            # bigram "data discovery"→analytics (overrides "discovery"→devops)
+    ("data discovery tool", "analytics"),               # bigram "data discovery"→analytics
+    ("unity catalog databricks", "database"),           # bigram "unity catalog"→database (overrides "unity"→games)
+    ("unity catalog delta lake", "database"),           # bigram fires at pos 0
+    ("sqlmesh alternative", "background"),              # bare "sqlmesh"→background (was raw_first)
+    ("sqlmesh dbt alternative", "background"),          # bare "sqlmesh"→background fires at pos 0
+    ("dlthub pipeline", "background"),                  # bare "dlthub"→background (was raw_first)
+    ("dlthub python", "background"),                    # bare "dlthub"→background fires at pos 0
+    # Regressions guarded
+    ("unity game engine", "games"),                     # PRE: bare "unity"→games unchanged (bigram "unity catalog" doesn't fire)
+    ("fabric canvas library", "frontend"),              # PRE: bare "fabric"→frontend unchanged (bigram "data fabric" doesn't fire)
+    ("service discovery kubernetes", "devops"),         # PRE: bare "discovery"→devops; "service" is stop word → no bigram collision
+    ("team management kanban", "project"),              # PRE: bare "management"→project unchanged (bigram "metadata management" doesn't fire)
+    ("great barrier reef", "great"),                    # PRE: "great" (raw_first) fires for non-GE queries → no category boost
 ]
 
 

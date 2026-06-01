@@ -10385,6 +10385,48 @@ _CAT_SYNONYMS: dict[str, str] = {
 
     # Learning — technical interview platforms
     "technical interview": "learning",  # bigram — "technical interview platform", "technical interview prep" → Learning
+
+    # ── Probe 148 (autonomous loop, Jun 2026): data-catalog / zincsearch / great-expectations / data-fabric dead zones ──
+    #
+    # "datahub" → raw_first; DataHub (LinkedIn) is the dominant open-source data catalog (11k★) → Analytics.
+    # "zincsearch" → raw_first; ZincSearch (now Zinc) is a common Elasticsearch alternative (16k★) → Search.
+    # "great expectations" → raw_first via "great"; Great Expectations is the dominant Python data-quality
+    #   library (9k★) → Testing Tools (data validation framework; complement to "evidently"→ai for ML monitoring).
+    # "atlan" → raw_first; Atlan is a leading enterprise data catalog SaaS → Analytics & Metrics.
+    # "data fabric" → "frontend" via bare "fabric"→frontend (wrong; "data fabric" is enterprise data integration
+    #   architecture — tools like Informatica, Denodo, IBM Data Fabric → Analytics & Metrics).
+    # "unity catalog" → "games" via bare "unity"→games (wrong; Unity Catalog is Databricks' open-source data
+    #   lakehouse governance layer for Delta Lake tables → Database).
+    # "sqlmesh" → raw_first; SQLMesh is a dbt-compatible SQL transformation framework (7k★) → Background Jobs
+    #   (same tier as "dbt"→background — runs SQL transforms as scheduled pipeline steps).
+    # "dlthub" → raw_first; dlt (data load tool) by dlthub is a Python ELT/data-ingestion framework (4k★)
+    #   → Background Jobs. Bare "dlt" skipped intentionally — too ambiguous with "distributed ledger technology".
+    # "metadata management" → "project" via bare "management"→project (wrong; metadata management is an analytics
+    #   / data governance discipline — DataHub, Atlan, OpenMetadata → Analytics & Metrics).
+    # "data discovery" → "devops" via bare "discovery"→devops (wrong; "data discovery" is data catalog
+    #   exploration — DataHub, Atlan, Collibra → Analytics & Metrics).
+    #   NOTE: "service discovery" is unaffected — "service" is in _FTS_STOP_WORDS → only "discovery" survives
+    #   → bare "discovery"→devops still fires correctly for service-discovery queries.
+
+    # Analytics — data catalog named tools
+    "datahub": "analytics",          # bare — "datahub alternative", "datahub data catalog" → Analytics & Metrics
+    "atlan": "analytics",            # bare — "atlan alternative", "atlan data catalog" → Analytics & Metrics
+    "zincsearch": "search",          # bare — "zincsearch alternative", "zincsearch elasticsearch" → Search Engines
+
+    # Testing — Python data quality / validation
+    "great expectations": "testing", # bigram — "great expectations data quality", "great expectations python" → Testing
+
+    # Analytics — data architecture concepts (bigrams override wrong bare-token routing)
+    "data fabric": "analytics",           # bigram — "data fabric architecture", "data fabric tool" → Analytics (overrides "fabric"→frontend)
+    "metadata management": "analytics",   # bigram — "metadata management tool", "metadata management openmetadata" → Analytics (overrides "management"→project)
+    "data discovery": "analytics",        # bigram — "data discovery catalog", "data discovery tool" → Analytics (overrides "discovery"→devops)
+
+    # Database — Databricks Unity Catalog (bigram overrides "unity"→games)
+    "unity catalog": "database",      # bigram — "unity catalog databricks", "unity catalog delta lake" → Database
+
+    # Background Jobs — data transformation and ELT pipeline tools
+    "sqlmesh": "background",          # bare — "sqlmesh alternative", "sqlmesh dbt" → Background Jobs (dbt-compatible SQL transform)
+    "dlthub": "background",           # bare — "dlthub pipeline", "dlthub python" → Background Jobs (Python ELT data-load tool)
 }
 
 _FTS_STOP_WORDS = {
