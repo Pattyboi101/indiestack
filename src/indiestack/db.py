@@ -2930,6 +2930,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "rollup": "frontend",
     "parcel": "frontend",
     "turbopack": "frontend",
+    "snowpack": "frontend",         # Snowpack — ES-module-based frontend build tool (preceded Vite)
     "esbuild": "frontend",
     "webpack": "frontend",
     "grunt": "frontend",        # Grunt — JS task runner (webpack/gulp era build tooling)
@@ -3564,6 +3565,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "bulkhead": "api",              # "bulkhead pattern", "bulkhead isolation" → API Tools (resilience)
     "exponential": "api",           # "exponential backoff" → API Tools
     "backoff": "api",               # "backoff strategy", "retry backoff" → API Tools
+    "fallback": "api",              # "fallback strategy", "fallback mechanism" → API Tools (resilience)
     "resilience": "monitoring",     # "resilience engineering", "resiliency" → Monitoring & Uptime
     # NOTE: "load shedding" misfires to Testing via bare "load"→testing ("load testing" collision).
     # Load shedding is an API resilience pattern (Envoy, HAProxy, Nginx rate-limiting drop policies).
@@ -4691,6 +4693,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "event-sourcing": "message",    # "event sourcing pattern", "event sourcing library" → Message Queue
     "eventsourcing": "message",     # compound form — "eventsourcing framework" → Message Queue
     "cqrs": "message",              # CQRS — Command Query Responsibility Segregation → Message Queue
+    "command bus": "message",       # bigram — "command bus pattern", "command bus cqrs" → Message Queue (CQRS artifact)
+    "command handler": "message",   # bigram — "command handler pattern", "command handler ddd" → Message Queue
     # API — GraphQL federation and supergraph (Apollo Federation, Cosmo Router, WunderGraph)
     "federation": "api",            # "graphql federation", "apollo federation" → API Tools
     "supergraph": "api",            # "supergraph", "apollo supergraph" — federated GraphQL schema

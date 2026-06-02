@@ -5188,6 +5188,27 @@ TEST_CASES: list[tuple[str, str]] = [
     ("edge caching redis", "caching"),                  # PRE: bigram "edge caching"→caching fires first
     ("pytorch model training", "ai"),                   # PRE: "pytorch"→ai fires at pos 0
     ("tensorflow model deploy", "ai"),                  # PRE: "tensorflow"→ai fires at pos 0
+    #
+    # Probe 156 — snowpack/command-bus/fallback dead zones
+    # "snowpack build" → raw_first "snowpack" (Snowpack — ES-module build tool for frontend); bare "snowpack"→frontend added.
+    # "command bus" → raw_first "command" (CQRS command dispatch pattern); bigram "command bus"→message added.
+    # "command handler" → raw_first "command" (CQRS command handler); bigram "command handler"→message added.
+    # "fallback strategy" → raw_first "fallback" (API resilience); bare "fallback"→api added.
+    ("snowpack build tool", "frontend"),               # bare "snowpack"→frontend
+    ("snowpack alternative", "frontend"),              # bare "snowpack"→frontend fires at pos 0
+    ("command bus pattern", "message"),                # bigram "command bus"→message fires at pos 0
+    ("command bus cqrs", "message"),                   # bigram "command bus"→message fires before "cqrs"→message
+    ("command handler ddd", "message"),                # bigram "command handler"→message fires at pos 0
+    ("command handler pattern", "message"),            # bigram "command handler"→message fires at pos 0
+    ("fallback strategy api", "api"),                  # bare "fallback"→api fires at pos 0
+    ("fallback mechanism", "api"),                     # bare "fallback"→api fires at pos 0
+    # Regressions guarded (probe 156)
+    ("command line tool", "cli"),                      # PRE: bigram "command line"→cli unchanged
+    ("command line interface", "cli"),                 # PRE: "command line"→cli bigram still fires
+    ("webpack alternative", "frontend"),               # PRE: bare "webpack"→frontend unchanged
+    ("esbuild alternative", "frontend"),               # PRE: bare "esbuild"→frontend unchanged
+    ("circuit breaker pattern", "api"),                # PRE: bare "circuit"→api unchanged
+    ("backoff retry", "api"),                          # PRE: bare "backoff"→api unchanged
 ]
 
 
