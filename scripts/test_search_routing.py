@@ -5158,6 +5158,36 @@ TEST_CASES: list[tuple[str, str]] = [
     ("beam data pipeline", "background"),               # PRE: bare "beam"→background fires; "data pipeline"→background also unchanged
     ("apache kafka stream", "message"),                 # PRE: "kafka"→message fires at pos 1; no apache bigram for kafka (already mapped)
     ("apache flink stream", "message"),                 # PRE: "flink"→message fires at pos 1; unchanged
+    # ── Probe pattern 155 (autonomous loop, Jun 2026): tensor/dataframe/edge-ai dead zones ──
+    # "tensor library" → raw_first "tensor" (TensorFlow tensors, PyTorch tensors unmapped; bare "tensorflow"/"pytorch"
+    #   mapped but bare "tensor" as a generic term was missing); bare "tensor"→ai added.
+    # "tensorflowlite" compound → raw_first (TFLite on-device inference; separate from "tensorflow" compound);
+    #   bare "tensorflowlite"→ai + bare "tflite"→ai added.
+    # "dataframe manipulation" → raw_first "dataframe" (pandas DataFrame, Polars DataFrame, Modin DataFrame;
+    #   "pandas"→ai existed but bare "dataframe" noun was unmapped); bare "dataframe"→ai added.
+    # "modin dataframe" → raw_first "modin" (Modin parallel pandas replacement, 9k★); bare "modin"→ai added.
+    # "edge ai inference" → devops via bare "edge"→devops (wrong; on-device ML inference tools TFLite/ONNX RT/CoreML
+    #   belong in AI & Automation); bigram "edge ai"→ai added (fires at pos 0 before bare "edge"→devops at pos 1).
+    # Regressions guarded: polars→database, bare edge→devops, edge database→database, edge caching→caching all unchanged.
+    ("tensor library python", "ai"),                    # bare "tensor"→ai; pos 1 "python"→api irrelevant
+    ("tensor flow lite", "ai"),                         # bare "tensor"→ai fires at pos 0 before "flow"/"lite"
+    ("tensorflowlite alternative", "ai"),               # bare "tensorflowlite"→ai
+    ("tflite model", "ai"),                             # bare "tflite"→ai (model→ai is pos 1 fallback)
+    ("tflite alternative", "ai"),                       # bare "tflite"→ai
+    ("dataframe manipulation python", "ai"),            # bare "dataframe"→ai
+    ("dataframe library", "ai"),                        # bare "dataframe"→ai
+    ("modin pandas alternative", "ai"),                 # bare "modin"→ai fires at pos 0
+    ("modin dataframe", "ai"),                          # bare "modin"→ai fires at pos 0
+    ("edge ai inference", "ai"),                        # bigram "edge ai"→ai at pos 0 overrides bare "edge"→devops
+    ("edge ai chip", "ai"),                             # bigram fires
+    ("edge ai model", "ai"),                            # bigram fires; "model"→ai is pos 1 fallback
+    # Regressions guarded (probe 155)
+    ("polars dataframe python", "database"),            # PRE: "polars"→database fires at pos 0 before "dataframe"→ai
+    ("edge function cloudflare", "devops"),             # PRE: bare "edge"→devops unchanged when no "ai" follows
+    ("edge database turso", "database"),                # PRE: bigram "edge database"→database fires first
+    ("edge caching redis", "caching"),                  # PRE: bigram "edge caching"→caching fires first
+    ("pytorch model training", "ai"),                   # PRE: "pytorch"→ai fires at pos 0
+    ("tensorflow model deploy", "ai"),                  # PRE: "tensorflow"→ai fires at pos 0
 ]
 
 

@@ -3877,6 +3877,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "tensorflow": "ai",             # TensorFlow — Google's ML framework for production/research
     "torch": "ai",                  # PyTorch alias — "torch model", "torch training"
     "keras": "ai",                  # Keras — high-level neural networks API (TF/JAX/PyTorch backends)
+    "tensor": "ai",                 # bare — "tensor library", "tensor flow lite", "tensor operations" → AI & Automation
+    "tensorflowlite": "ai",         # compound — "tensorflowlite model", "tensorflowlite inference" → AI & Automation
+    "tflite": "ai",                 # abbreviation — "tflite model", "tflite alternative", "tflite runtime" → AI & Automation
     # AI — ML experiment tracking and model management
     "wandb": "ai",                  # Weights & Biases — MLOps platform for experiment tracking (9k★)
     "weights": "ai",                # "Weights & Biases" — first term in full name queries
@@ -4852,6 +4855,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pandas": "ai",                 # pandas — Python data analysis and DataFrame library (44k★)
     "numpy": "ai",                  # NumPy — fundamental scientific computing for Python (28k★)
     "scipy": "ai",                  # SciPy — scientific algorithms and math for Python (13k★)
+    "dataframe": "ai",              # bare — "dataframe library", "dataframe manipulation", "dataframe python" → AI & Automation (pandas/Polars/Modin/Dask)
+    "modin": "ai",                  # Modin — drop-in pandas replacement with parallel execution (9k★)
     "matplotlib": "analytics",      # Matplotlib — foundational Python plotting library (19k★)
     "seaborn": "analytics",         # Seaborn — statistical data visualization on Matplotlib (12k★)
     # Distributed computing / parallel Python — Ray (ML), Dask (big data)
@@ -8723,6 +8728,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "edge database" bigram (line ~7856) correctly routes to database; this covers the caching variant.
     "edge caching": "caching",                  # bigram — "edge caching redis", "edge caching cloudflare" → Caching
     "edge cache": "caching",                    # bigram singular — "edge cache setup", "edge cache alternative" → Caching
+    "edge ai": "ai",                            # bigram — "edge ai inference", "edge ai chip", "edge ai model" → AI & Automation (TFLite, ONNX RT, CoreML; overrides "edge"→devops)
     # ── Probe pattern 50 (May 2026): favicon / OG / PII / team-messaging / syslog / HMAC dead zones ──
     #
     # "favicon" bare token — no mapping; favicon tools (favicon.io, RealFaviconGenerator, Faviconer)
