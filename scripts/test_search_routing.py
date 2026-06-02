@@ -5209,6 +5209,41 @@ TEST_CASES: list[tuple[str, str]] = [
     ("esbuild alternative", "frontend"),               # PRE: bare "esbuild"→frontend unchanged
     ("circuit breaker pattern", "api"),                # PRE: bare "circuit"→api unchanged
     ("backoff retry", "api"),                          # PRE: bare "backoff"→api unchanged
+    #
+    # Probe 157 — plural forms / data-viz / e-commerce dead zones
+    # Plural forms: "linters"/"validators"/"transpilers"/"compilers"/"routers"/"parsers" fired
+    #   raw_first despite their singular forms being mapped. Always add plural when singular mapped.
+    # "vega" / "vega lite" → raw_first (Vega.js grammar of graphics visualization); bare "vega"→analytics + bigram added.
+    # "marketplace" → raw_first (Medusa, Sharetribe, multi-vendor engines); bare "marketplace"→developer added.
+    # "dropshipping" → raw_first (commerce platform query); bare "dropshipping"→developer added.
+    # "digital downloads" → raw_first "digital" ("digital downloads platform" → Gumroad/LemonSqueezy); bigram added→payments.
+    # "upsell" → raw_first (upsell/cross-sell tools → CRM & Sales); bare "upsell"→crm added.
+    ("linters", "testing"),                            # plural "linters"→testing (was raw_first)
+    ("best linters", "testing"),                       # bare "linters"→testing fires at pos 1 (after stop-word "best")
+    ("validators", "testing"),                         # plural "validators"→testing (was raw_first)
+    ("validator", "testing"),                          # singular also now mapped (was raw_first)
+    ("input validators", "testing"),                   # bare "validators"→testing fires at pos 1
+    ("transpilers", "frontend"),                       # plural "transpilers"→frontend (was raw_first)
+    ("compilers", "frontend"),                         # plural "compilers"→frontend (was raw_first)
+    ("routers", "frontend"),                           # plural "routers"→frontend (was raw_first)
+    ("parsers", "developer"),                          # plural "parsers"→developer (was raw_first)
+    ("vega alternative", "analytics"),                 # bare "vega"→analytics fires
+    ("vega lite tutorial", "analytics"),               # bigram "vega lite"→analytics fires
+    ("marketplace platform", "developer"),             # bare "marketplace"→developer fires
+    ("dropshipping platform", "developer"),            # bare "dropshipping"→developer fires
+    ("sell digital downloads", "payments"),            # bigram "digital downloads"→payments fires
+    ("digital downloads platform", "payments"),        # bigram fires at pos 1 (after "digital" is pos 0)
+    ("upsell tool", "crm"),                            # bare "upsell"→crm fires
+    # Regressions guarded (probe 157)
+    ("linter alternative", "testing"),                 # PRE: singular "linter"→testing unchanged
+    ("transpiler alternative", "frontend"),            # PRE: singular "transpiler"→frontend unchanged
+    ("compiler alternative", "frontend"),              # PRE: singular "compiler"→frontend unchanged
+    ("router react", "frontend"),                      # PRE: singular "router"→frontend unchanged
+    ("parser library", "developer"),                   # PRE: singular "parser"→developer unchanged
+    ("d3 visualization", "analytics"),                 # PRE: "d3"→analytics unchanged
+    ("recharts library", "analytics"),                 # PRE: "recharts"→analytics unchanged
+    ("cart abandonment", "payments"),                  # PRE: "cart"→payments unchanged
+    ("checkout flow", "payments"),                     # PRE: "checkout"→payments unchanged
 ]
 
 

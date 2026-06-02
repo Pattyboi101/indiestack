@@ -3049,6 +3049,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # JS/TS build ecosystem — transpilers and runtimes
     "babel": "frontend",        # Babel — JS transpiler (legacy + modern)
     "transpiler": "frontend",   # generic transpiler queries
+    "transpilers": "frontend",  # plural — "js transpilers", "ts transpilers" → Frontend Frameworks
     "transpile": "frontend",    # "transpile typescript", "transpile es6" → Frontend Frameworks (verb form of transpiler)
     "swc": "frontend",          # SWC — Rust-based JS/TS transpiler (used by Next.js, Vite)
     "bun": "frontend",          # Bun — fast JS runtime + bundler + test runner
@@ -3202,6 +3203,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Client-side routing libraries (React Router, TanStack Router, Vue Router)
     "routing": "frontend",       # "routing library", "client-side routing", "file-based routing"
     "router": "frontend",        # "react router", "client router", "frontend router"
+    "routers": "frontend",       # plural — "js routers", "client-side routers" → Frontend Frameworks
     # Rails/Laravel server-rendered JS frameworks
     "livewire": "frontend",      # Laravel Livewire — reactive PHP components
     "hotwire": "frontend",       # Rails Hotwire — HTML-over-the-wire framework
@@ -4008,6 +4010,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "three": "frontend",            # Three.js — 3D JavaScript / WebGL library (102k★)
     "threejs": "frontend",          # compound form — "threejs alternative", "three.js tutorial"
     "d3": "analytics",              # D3.js — data-driven documents, data visualization (108k★)
+    "vega": "analytics",            # Vega.js — grammar of graphics data visualization (11k★)
+    "vega lite": "analytics",       # bigram — "vega lite tutorial", "vega lite alternative" → Analytics (spaced form of Vega-Lite)
     # Auth patterns — cookie/token queries grow with SSR + edge-auth patterns
     "cookie": "authentication",     # "cookie session", "cookie-based auth", "iron-session" → Auth
     "token": "authentication",      # "jwt token", "access token", "token refresh" → Authentication
@@ -4787,6 +4791,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "medusa": "developer",          # Medusa — open-source headless commerce engine (23k★)
     # Compiler / transpiler tools (Babel, SWC, Binaryen, esbuild — frontend build chain)
     "compiler": "frontend",         # "js compiler", "typescript compiler", "babel compiler" → Frontend Frameworks
+    "compilers": "frontend",        # plural — "js compilers", "wasm compilers" → Frontend Frameworks
     # Validation — complement to "validation" → developer; "validate" form catches verb queries
     "validate": "developer",        # "validate schema", "validate input", "data validate" → Developer Tools
     # OXC toolchain — Rust-based JS/TS tools (oxlint, rolldown, oxc-transform)
@@ -5028,6 +5033,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "saleor": "developer",          # Saleor — open-source headless commerce platform (20k★)
     "medusajs": "developer",        # compound form — "medusajs alternative", "medusa.js" → Developer Tools
     "vendure": "developer",         # Vendure — TypeScript headless commerce framework (5k★)
+    "marketplace": "developer",     # "marketplace platform", "multi-vendor marketplace" → Developer Tools (Medusa, Sharetribe)
+    "dropshipping": "developer",    # "dropshipping platform", "dropshipping app" → Developer Tools (commerce engines)
+    "digital downloads": "payments", # bigram — "digital downloads platform", "sell digital downloads" → Payments (Gumroad, Lemon Squeezy)
+    "upsell": "crm",                # "upsell tool", "upsell strategy" → CRM & Sales (conversion optimization)
     "cart": "payments",             # "shopping cart", "cart library" → Payments (checkout flow)
     # Monorepo — Lerna (complement to turborepo/nx already mapped)
     "lerna": "developer",           # Lerna — original JS monorepo management tool (35k★) → Developer Tools
@@ -5753,6 +5762,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Parser libraries — tree-sitter, xml2js, cheerio, csv-parse, html-parser → Developer Tools
     "parse": "developer",           # "xml parse library", "html parse", "json parse" → Developer Tools
     "parser": "developer",          # "html parser", "xml parser", "css parser" → Developer Tools
+    "parsers": "developer",         # plural — "xml parsers", "json parsers" → Developer Tools
     # AI — agent memory layers (fast-growing 2026 segment: stateful persistent agent memory)
     "mem0": "ai",                   # mem0 — AI agent long-term memory layer (mem0ai/mem0, 22k★) → AI & Automation
     "zep": "ai",                    # Zep — fast, scalable AI agent memory server (getzep/zep, 5k★) → AI & Automation
@@ -6058,6 +6068,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Testing — linting tools (ESLint, Biome, OXLint, Pylint, Ruff live in Testing Tools)
     # "lint" has no synonym despite being one of the most common dev queries
     "linter": "testing",            # "css linter", "python linter", "linter alternative" → Testing Tools
+    "linters": "testing",           # plural — "js linters", "python linters" → Testing Tools
+    "validator": "testing",         # "schema validator", "json validator", "form validator" → Testing Tools
+    "validators": "testing",        # plural — "input validators", "schema validators" → Testing Tools
     # Testing — property-based testing pattern (Hypothesis, fast-check, PropEr, QuickCheck)
     "property-based": "testing",    # "property-based testing", "property-based test framework" → Testing Tools
     "fast-check": "testing",        # fast-check — TypeScript property-based testing (dubzzz/fast-check, 4k★) → Testing Tools
