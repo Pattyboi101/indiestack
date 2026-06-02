@@ -76,6 +76,41 @@ Both must pass with zero failures and zero duplicates before committing.
 
 Add corresponding test cases to the `TEST_CASES` list in `scripts/test_search_routing.py`. Update the test count comment in `.orchestra/departments/backend/CLAUDE.md`.
 
+## Quick-Start Probe (run this first in every improvement cycle)
+
+Copy-paste this script to immediately find new raw_first gaps without reading the full audit table:
+
+```python
+PYTHONPATH=src python3 -c "
+import sys; sys.path.insert(0,'scripts')
+from test_search_routing import route_query
+# Probe categories with historically high raw_first rates
+probes = [
+    # Apache named tools (most have second-token fallback but bare 'apache X' queries are raw_first)
+    'apache arrow', 'apache beam', 'apache ranger', 'apache httpd', 'apache tomcat',
+    # ML paradigms beyond machine/deep learning
+    'online learning', 'federated learning', 'meta learning', 'few shot learning',
+    'zero shot learning', 'self supervised learning', 'semi supervised learning',
+    # Distributed computing patterns
+    'event sourcing', 'cqrs pattern', 'saga pattern', 'outbox pattern',
+    # Platform observability
+    'slo', 'sla management', 'reliability engineering', 'incident management',
+    # Code quality / static analysis
+    'cyclomatic complexity', 'code smell', 'technical debt', 'dead code',
+    # Collaboration / project
+    'pair programming', 'code review tool', 'pull request automation',
+]
+for q in probes:
+    cat, via = route_query(q)
+    if via == 'raw_first':
+        print(f'GAP  {q!r:40s} -> {cat!r}')
+    else:
+        print(f'ok   {q!r:40s} -> {cat!r} (via {via!r})')
+"
+```
+
+Then probe any `GAP` entries more deeply before adding entries.
+
 ## Common Gap Categories to Probe
 
 These areas historically generate `raw_first` misses:
@@ -122,6 +157,8 @@ These areas historically generate `raw_first` misses:
 | Interview / on-premise / rollback | coding interview (probe 151 ✓ bigram→learning), interview platform (probe 151 ✓ bare→learning), rollback tool (probe 151 ✓ bare→devops), on premise (probe 151 ✓ bare→devops via "premise") |
 | Reinforcement / transfer learning | reinforcement learning (probe 152 ✓ bare→ai), transfer learning (probe 152 ✓ bigram→ai), active learning (probe 153 ✓ bigram→ai), contrastive learning (probe 153 ✓ bare→ai) |
 | Distributed systems / file protocols | distributed system/systems (probe 152 ✓ bigram→devops), nfs (probe 152 ✓ bare→file), smb (probe 152 ✓ bare→file) |
+| Apache named tools | apache beam (probe 154 ✓ bigram→background), apache arrow (probe 154 ✓ bigram→analytics), apache ranger (probe 154 ✓ bigram→security), apache httpd (probe 154 ✓ bigram→devops), apache tomcat (probe 154 ✓ bigram→devops) |
+| Self/semi/meta-supervised ML | self supervised (probe 154 ✓ bigram→ai), semi supervised (probe 154 ✓ bigram→ai), meta learning (probe 154 ✓ bigram→ai) |
 | Security signing / PKI | code signing, binary signing, artifact signing (probe 149 ✓ bigram→security), mtls, mutual tls, certificate authority |
 | Hardware auth | yubikey, hardware key, hardware token, fido2 key, passkey device |
 | IaC / provisioning | cloudformation, cloud formation, pulumi stack, opentofu, crossplane, terraform cdk |

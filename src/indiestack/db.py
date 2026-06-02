@@ -3306,6 +3306,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "dagster": "background",         # Dagster — data pipeline + asset-based orchestration
     "prefect": "background",         # Prefect — modern Python workflow orchestration
     "airflow": "background",         # Apache Airflow — DAG-based workflow scheduler
+    "beam": "background",            # Apache Beam — unified batch/stream data processing (bigram "apache beam" also added at bottom)
     "dag": "background",             # bare — "DAG scheduler", "DAG runner", "DAG workflow" → Background Jobs (Airflow, Prefect, Dagster)
     "dag runner": "background",      # bigram — "dag runner python", "dag task runner" → Background Jobs
     # API protocol — gRPC / Protobuf
@@ -3795,6 +3796,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "metabase": "analytics",        # Metabase — open-source BI and dashboards (38k★)
     "redash": "analytics",          # Redash — data visualization and dashboards (26k★)
     "superset": "analytics",        # Apache Superset — enterprise open-source BI (62k★)
+    "arrow": "analytics",           # Apache Arrow — in-memory columnar format for data analytics (bigram "apache arrow" also added at bottom)
     "lightdash": "analytics",       # Lightdash — open-source Looker alternative (9k★)
     "evidence": "analytics",        # Evidence — SQL-driven BI for data teams (5k★)
     # Developer Tools — serialize/serializer verb/noun forms (complement to "serialization"→api for binary protocols)
@@ -10588,6 +10590,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Regressions guarded:
     #   "active directory"→auth ("directory" fires as second token; bigram "active learning" doesn't affect "active directory")
     #   "active record"→database ("orm"/"record" tokens fire in context queries; "active" bare not added)
+
+    # ── Probe 154 (autonomous loop, Jun 2026): Apache tool bigrams / self/semi-supervised ML paradigms ──
+    #
+    # Apache named tools where "apache X" prefix queries hit raw_first via "apache":
+    # "apache beam" → raw_first (bare "beam"→background added above; bigram for "apache beam" prefix queries)
+    # "apache arrow" → raw_first (bare "arrow"→analytics added above; bigram for "apache arrow" prefix queries)
+    # "apache ranger" → raw_first (Apache Ranger data access control → Security)
+    # "apache httpd" → raw_first (Apache HTTP Server → DevOps)
+    # "apache tomcat" → raw_first (Apache Tomcat Java servlet container → DevOps)
+    #
+    # Self/semi/meta-supervised ML paradigm bigrams:
+    # "self supervised learning" → devops via "self"→devops (wrong; self-supervised = SSL/SimCLR/MoCo → AI)
+    # "semi supervised learning" → raw_first via "semi" (semi-supervised = ML label-efficient paradigm)
+    # "meta learning" → raw_first via "meta" (meta-learning = learning-to-learn; "meta" bare → ambiguous with Meta/Facebook)
+    "apache beam": "background",      # bigram — "apache beam pipeline", "apache beam alternative" → Background Jobs
+    "apache arrow": "analytics",      # bigram — "apache arrow format", "apache arrow ipc" → Analytics & Metrics
+    "apache ranger": "security",      # bigram — "apache ranger access", "apache ranger alternative" → Security
+    "apache httpd": "devops",         # bigram — "apache httpd config", "apache httpd alternative" → DevOps
+    "apache tomcat": "devops",        # bigram — "apache tomcat alternative", "apache tomcat setup" → DevOps
+    "self supervised": "ai",          # bigram — "self supervised learning", "self supervised pretraining" → AI (overrides "self"→devops)
+    "semi supervised": "ai",          # bigram — "semi supervised learning", "semi supervised classification" → AI
+    "meta learning": "ai",            # bigram — "meta learning pytorch", "meta learning algorithm" → AI (learning-to-learn)
 }
 
 _FTS_STOP_WORDS = {

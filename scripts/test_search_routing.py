@@ -5137,6 +5137,27 @@ TEST_CASES: list[tuple[str, str]] = [
     # Regressions guarded (probe 153)
     ("active directory sso", "authentication"),         # PRE: bigram "active learning" doesn't fire; "directory"→auth fires as second token
     ("reinforcement learning numpy", "ai"),             # PRE: bare "reinforcement"→ai unchanged (probe 152)
+    # ── Probe 154 (autonomous loop, Jun 2026): Apache tool bigrams / self-semi-supervised ML ──
+    # Apache bigrams
+    ("apache beam pipeline", "background"),             # bigram "apache beam"→background fires before bare "apache"
+    ("apache beam alternative", "background"),          # bigram fires; "alternative" is stop word
+    ("apache arrow format", "analytics"),               # bigram "apache arrow"→analytics fires at pos 0
+    ("apache arrow ipc", "analytics"),                  # bigram fires; "ipc" is unmapped standalone
+    ("apache ranger access", "security"),               # bigram "apache ranger"→security fires at pos 0
+    ("apache httpd config", "devops"),                  # bigram "apache httpd"→devops fires at pos 0
+    ("apache tomcat setup", "devops"),                  # bigram "apache tomcat"→devops fires at pos 0
+    # ML paradigm bigrams
+    ("self supervised learning", "ai"),                 # bigram "self supervised"→ai (overrides "self"→devops)
+    ("self supervised pretraining", "ai"),              # bigram fires; "pretraining" is unmapped
+    ("semi supervised learning", "ai"),                 # bigram "semi supervised"→ai (was raw_first via "semi")
+    ("semi supervised classification", "ai"),           # bigram fires; "classification" is unmapped
+    ("meta learning pytorch", "ai"),                    # bigram "meta learning"→ai (bare "meta" not added — too ambiguous)
+    ("meta learning algorithm", "ai"),                  # bigram fires at pos 0
+    # Regressions guarded (probe 154)
+    ("self hosted redis", "devops"),                    # PRE: bigram "self hosted"→devops unchanged (fires before "self supervised" bigram)
+    ("beam data pipeline", "background"),               # PRE: bare "beam"→background fires; "data pipeline"→background also unchanged
+    ("apache kafka stream", "message"),                 # PRE: "kafka"→message fires at pos 1; no apache bigram for kafka (already mapped)
+    ("apache flink stream", "message"),                 # PRE: "flink"→message fires at pos 1; unchanged
 ]
 
 
