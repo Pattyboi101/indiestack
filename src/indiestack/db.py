@@ -4553,6 +4553,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — time-series databases not individually mapped
     "influxdb": "database",         # InfluxDB — most popular open-source time-series database (28k★)
     "questdb": "database",          # QuestDB — fast SQL time-series database (14k★)
+    "tsdb": "database",             # TSDB abbreviation — Time Series Database (generic term for InfluxDB/TimescaleDB tier)
+    "opentsdb": "database",         # OpenTSDB — distributed time-series database on HBase (4.8k★)
     "cassandra": "database",        # Apache Cassandra — wide-column distributed NoSQL store
     "scylladb": "database",         # ScyllaDB — C++ Cassandra-compatible (10× faster, 13k★)
     # Security — Zero Trust architecture (growing segment in enterprise security queries)
@@ -8328,6 +8330,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "optimistic locking": "database",    # bigram — "optimistic locking library", "optimistic locking postgres" → Database
     "distributed lock": "database",      # bigram — "distributed lock redis", "distributed lock service" → Database
     "distributed locking": "database",  # bigram — "distributed locking service", "distributed locking redis" → Database
+    "redlock": "database",              # Redlock — Redis distributed lock algorithm; implementations in every language
     # Analytics — data catalog queries fall through to raw_first with no boost ("data" has no synonym).
     # DataHub, Amundsen, OpenMetadata, Apache Atlas all live in Analytics & Metrics.
     "data catalog": "analytics",        # bigram — "data catalog tool", "open source data catalog" → Analytics & Metrics

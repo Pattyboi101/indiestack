@@ -5206,6 +5206,21 @@ TEST_CASES: list[tuple[str, str]] = [
     ("argocd alternative", "devops"),                   # PRE: compound "argocd"→devops unchanged
     ("video streaming platform", "media"),              # PRE: bare "streaming"→media unchanged when "analytics" absent
     ("realtime websocket", "api"),                      # PRE: bare "realtime"→api unchanged when "analytics" absent
+    # ── Probe 157 (autonomous loop, Jun 2026): tsdb / opentsdb / redlock abbreviation dead zones ──
+    # "tsdb" → raw_first (TSDB is the generic time-series-database abbreviation; InfluxDB/TimescaleDB/QuestDB
+    #   all individually mapped but the acronym itself was missing); bare "tsdb"→database added.
+    # "opentsdb" → raw_first (OpenTSDB distributed time-series on HBase, 4.8k★; no mapping); bare added.
+    # "redlock" → raw_first (Redlock distributed lock algorithm for Redis; no mapping); bare "redlock"→database added
+    #   (consistent with "distributed lock" bigram → database).
+    ("tsdb alternative", "database"),                   # bare "tsdb"→database
+    ("tsdb time series", "database"),                   # bare fires at pos 0
+    ("opentsdb alternative", "database"),               # bare "opentsdb"→database
+    ("redlock redis", "database"),                      # bare "redlock"→database
+    ("redlock distributed locking", "database"),        # bare fires at pos 0
+    # Regressions guarded (probe 157)
+    ("influxdb alternative", "database"),               # PRE: "influxdb"→database unchanged
+    ("questdb alternative", "database"),                # PRE: "questdb"→database unchanged
+    ("distributed lock redis", "database"),             # PRE: bigram "distributed lock"→database unchanged
 ]
 
 
