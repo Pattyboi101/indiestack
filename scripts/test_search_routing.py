@@ -5269,6 +5269,61 @@ TEST_CASES: list[tuple[str, str]] = [
     ("async hook react", "frontend"),                   # PRE: "hook"→frontend fires (bare "async" NOT added so pos 1 wins)
     ("virtual list react", "frontend"),                 # PRE: bare "virtual"→frontend unchanged (no "list" suffix for thread bigram)
     ("reactive programming rxjs", "frontend"),          # PRE: "reactive"→frontend at pos 0 (unchanged)
+    # ── Probe 160 (autonomous loop, Jun 2026): injection-attack / SSRF / path-traversal / cold-start / deadlock / race-condition / heap-profiler dead zones ──
+    # sql injection — "sql injection scanner" was routing to Database via "sql"→database; bigram "sql injection"→security fixes it
+    # nosql injection — same via "nosql"→database
+    # command injection — was routing to Developer via bare "injection"→developer; bigram overrides
+    # xxe injection — XXE (XML External Entity) injection; same "injection"→developer collision
+    # injection attack — generic injection attack context; same collision
+    # ssrf — bare "ssrf" was raw_first; "ssrf vulnerability" works via "vulnerability"→security but bare "ssrf" didn't
+    # path traversal — both "path" and "traversal" were unmapped → raw_first
+    # directory traversal — "directory" fires → authentication (Active Directory collision); bigram overrides
+    # attack — bare "attack" token added → security (attack surface, attack vector, cyber attack detection)
+    # cold start — "cold start" bare was raw_first; "cold start aws lambda" worked via "aws" but "cold start reduce" didn't
+    # deadlock — bare "deadlock" was raw_first; "database deadlock" worked via "database" but "deadlock detection" didn't
+    # race condition — bare "race condition" was raw_first; "race condition test" worked via "test" but "race condition detector" didn't
+    # heap profiler / heap allocation — "heap"→analytics (Heap.io collision) was firing; bigrams override to Monitoring
+    # New fixes
+    ("sql injection scanner", "security"),              # bigram "sql injection"→security overrides "sql"→database
+    ("sql injection prevention", "security"),           # bigram fires in pre-pass
+    ("nosql injection attack", "security"),             # bigram "nosql injection"→security overrides "nosql"→database
+    ("command injection prevention", "security"),       # bigram "command injection"→security overrides "injection"→developer
+    ("command injection attack", "security"),           # bigram fires at pos 0
+    ("xxe injection vulnerability", "security"),        # bigram "xxe injection"→security fires
+    ("injection attack prevention", "security"),        # bigram "injection attack"→security overrides "injection"→developer
+    ("ssrf", "security"),                               # bare "ssrf"→security
+    ("ssrf protection", "security"),                    # bare fires at pos 0
+    ("ssrf check", "security"),                         # bare fires at pos 0
+    ("path traversal attack", "security"),              # bigram "path traversal"→security fires in pre-pass
+    ("path traversal prevention", "security"),          # bigram fires
+    ("directory traversal vulnerability", "security"),  # bigram "directory traversal"→security overrides "directory"→auth
+    ("attack surface", "security"),                     # bare "attack"→security fires at pos 0
+    ("attack vector", "security"),                      # bare fires
+    ("cyber attack detection", "security"),             # bare fires at pos 0 ("cyber" unmapped → "attack" at pos 1 = security)
+    ("cold start optimization", "devops"),              # bigram "cold start"→devops fires in pre-pass
+    ("cold start reduce", "devops"),                    # bigram fires; "reduce" unmapped
+    ("deadlock detection", "database"),                 # bare "deadlock"→database fires at pos 0
+    ("deadlock prevention postgres", "database"),       # bare fires; "postgres" is unmapped (safe)
+    ("race detection", "testing"),                      # bare "race"→testing fires at pos 0
+    ("race condition detector", "testing"),             # bigram "race condition"→testing fires in pre-pass
+    ("race condition golang", "testing"),               # bigram fires; "golang" unmapped standalone
+    ("heap profiler java", "monitoring"),               # bigram "heap profiler"→monitoring fires in pre-pass
+    ("heap profiler python", "monitoring"),             # bigram fires
+    ("heap allocation tracker", "monitoring"),          # bigram "heap allocation"→monitoring fires
+    # Regressions guarded (probe 160)
+    ("sql query builder", "database"),                  # PRE: "sql"→database unchanged (no "injection" suffix)
+    ("sql migration", "database"),                      # PRE: "sql"→database unchanged
+    ("dependency injection", "developer"),              # PRE: "dependency"→developer fires at pos 0 (overrides "injection"→developer)
+    ("constructor injection", "developer"),             # PRE: bare "injection"→developer fires (no "sql"/"command" prefix)
+    ("prompt injection detection", "security"),         # PRE: bigram "prompt injection"→security unchanged
+    ("directory service", "authentication"),            # PRE: "directory"→auth unchanged (no "traversal" suffix)
+    ("active directory", "authentication"),             # PRE: "directory"→auth fires at pos 1
+    ("cold email outreach", "email"),                   # PRE: "email" fires before any "cold" token (correct)
+    ("cold storage", "file"),                           # PRE: "storage"→file fires at pos 1 (bare "cold" unmapped)
+    ("heap analytics", "analytics"),                    # PRE: bare "heap"→analytics unchanged (no "profiler"/"allocation" suffix)
+    ("heap dump", "monitoring"),                        # PRE: bigram "heap dump"→monitoring unchanged
+    ("database deadlock", "database"),                  # PRE: "database"→database fires at pos 0 (unchanged)
+    ("race car engine", "testing"),                     # NEW: bare "race"→testing fires (no false positive in dev context)
 ]
 
 

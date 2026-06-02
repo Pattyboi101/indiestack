@@ -10655,6 +10655,50 @@ _CAT_SYNONYMS: dict[str, str] = {
     "thread pool": "api",           # bigram — "thread pool java", "thread pool executor" → API Tools (overrides "pool"→database)
     "virtual thread": "api",        # bigram — "virtual thread java", "virtual thread loom" → API Tools (overrides "virtual"→frontend)
     "green thread": "api",          # bigram — "green thread erlang", "green thread ruby" → API Tools
+
+    # ── Probe 160 (autonomous loop, Jun 2026): injection-attack / SSRF / path-traversal / cold-start / deadlock / race-condition / heap-profiler dead zones ──
+    #
+    # sql injection — "sql injection scanner", "sql injection prevention" → Database via bare "sql"→database (wrong;
+    #   SQLMap, Ghauri, OWASP SQLi tools are Security); bigram "sql injection"→security fires before bare "sql".
+    # nosql injection — same collision via "nosql"→database.
+    # command injection — "command injection" → Developer via bare "injection"→developer (wrong; command injection
+    #   prevention tools belong in Security); bigram overrides bare "injection"→developer.
+    # xxe injection — XXE (XML External Entity) injection attack; same "injection"→developer collision.
+    # injection attack — generic injection attack context → Developer via "injection" (wrong; → Security).
+    # ssrf — "ssrf" bare → raw_first (unmapped); "ssrf vulnerability" works via "vulnerability"→security but bare "ssrf" misses.
+    #   SSRF = Server-Side Request Forgery; detection/protection tools (ssrfcheck, ssrf-agent) are Security.
+    # path traversal — "path traversal attack", "path traversal vulnerability" → raw_first (neither "path" nor "traversal" mapped).
+    # directory traversal — "directory traversal" → Authentication via "directory"→authentication (wrong; → Security).
+    # attack — bare "attack" token; almost all dev-context attack queries are security ("attack surface", "attack vector",
+    #   "attack simulation", "cyber attack detection"); no realistic false-positive in a developer tool search context.
+    # cold start — "cold start" bare → raw_first (unmapped); "cold start aws lambda" works via "aws"→devops but
+    #   "cold start reduce", "cold start optimization" do not. Serverless cold-start tools (Provisioned Concurrency,
+    #   Bun/Deno for low-latency, WarmupPlugin, serverless-warmer) are DevOps & Infrastructure.
+    #   NOTE: bare "cold" intentionally NOT added — would break "cold email" (→email) and "cold outreach" (unmapped is fine).
+    # deadlock — bare "deadlock" → raw_first; "database deadlock" works via "database"→database. Deadlock detection/
+    #   prevention tools (pg_locks queries, Diagnose Deadlocks, SchemaSpy) are Database-tier.
+    # race condition — "race condition" → raw_first; "race condition test" works via "test"→testing. Concurrency race
+    #   condition detectors (ThreadSanitizer, Go -race, Helgrind/Valgrind) are Testing-tier.
+    #   bare "race"→testing also added for "race detection go", "race test" without "condition" suffix.
+    # heap profiler — "heap profiler" → Analytics via "heap"→analytics (Heap.io collision; wrong).
+    #   Heap profilers (gperftools heaptrack, py-spy, pyHeaptools, JVM heap profilers) are Monitoring.
+    #   Bigram overrides bare "heap"→analytics. "heap dump"→monitoring bigram already existed (probe 85).
+    # heap allocation — "heap allocation" → Analytics via "heap" (wrong; memory allocation profiling → Monitoring).
+    "sql injection": "security",         # bigram — "sql injection scanner", "sql injection prevention" → Security (overrides "sql"→database)
+    "nosql injection": "security",       # bigram — "nosql injection prevention", "nosql injection attack" → Security
+    "command injection": "security",     # bigram — "command injection prevention", "command injection attack" → Security (overrides "injection"→developer)
+    "xxe injection": "security",         # bigram — "xxe injection attack", "xxe injection prevention" → Security
+    "injection attack": "security",      # bigram — "injection attack prevention", "injection attack scanner" → Security
+    "ssrf": "security",                  # bare — "ssrf vulnerability", "ssrf protection", "ssrf check" → Security
+    "path traversal": "security",        # bigram — "path traversal attack", "path traversal prevention" → Security
+    "directory traversal": "security",   # bigram — "directory traversal vulnerability" → Security (overrides "directory"→authentication)
+    "attack": "security",                # bare — "attack surface", "attack vector", "cyber attack detection" → Security
+    "cold start": "devops",              # bigram — "cold start optimization", "cold start reduce" → DevOps & Infrastructure
+    "deadlock": "database",              # bare — "deadlock detection postgres", "deadlock prevention" → Database
+    "race": "testing",                   # bare — "race detection go", "race test" → Testing Tools (ThreadSanitizer, Go -race)
+    "race condition": "testing",         # bigram — "race condition detector", "race condition test" → Testing (overrides "race"→testing with explicit bigram)
+    "heap profiler": "monitoring",       # bigram — "heap profiler java", "heap profiler python" → Monitoring (overrides "heap"→analytics)
+    "heap allocation": "monitoring",     # bigram — "heap allocation tracker", "heap allocation profiler" → Monitoring
 }
 
 _FTS_STOP_WORDS = {
