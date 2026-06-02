@@ -5127,6 +5127,49 @@ TEST_CASES: list[tuple[str, str]] = [
     ("demand generation saas", "crm"),                  # PRE: bare "demand"→crm when no "forecasting" follows
     ("influxdb alternative", "database"),               # PRE: "influxdb"→database fires at pos 0
     ("timescale alternative", "database"),              # PRE: "timescale"→database fires at pos 0
+
+    # ── Probe 157: tsdb/opentsdb/redlock abbreviation dead zones ──
+    ("tsdb alternative", "database"),                   # bare "tsdb"→database (TSDB abbreviation)
+    ("opentsdb hadoop", "database"),                    # bare "opentsdb"→database
+    ("redlock redis", "database"),                      # bare "redlock"→database (Redis distributed lock)
+    ("redlock algorithm", "database"),                  # bare "redlock"→database; "algorithm" → raw_first but "redlock" fires first
+
+    # ── Probe 158: proptest/quickcheck/falsify/manifest-v3 dead zones ──
+    ("falsify python", "testing"),                      # bare "falsify"→testing (HypothesisWorks/falsify)
+    ("falsify property testing", "testing"),            # bare fires at pos 0; "testing" stop-word
+    ("manifest v3 migration", "developer"),             # bigram "manifest v3"→developer (Chrome extension MV3)
+    ("manifest v3 chrome", "developer"),                # bigram fires; "chrome" → dev at pos 2 redundant
+
+    # ── Probe 159: goroutine/async-await/thread-pool/virtual-thread/green-thread dead zones ──
+    ("goroutines golang", "api"),                       # plural "goroutines"→api
+    ("goroutine channel", "api"),                       # bare "goroutine"→api
+    ("async await javascript", "api"),                  # bigram "async await"→api
+    ("async await library", "api"),                     # bigram fires; "library" stop-word
+    ("incremental build", "frontend"),                  # bare "incremental"→frontend
+    ("incremental compilation", "frontend"),            # bare fires at pos 0
+    ("rxjava alternative", "frontend"),                 # bare "rxjava"→frontend (same tier as rxjs)
+    ("thread pool java", "api"),                        # bigram "thread pool"→api (overrides "pool"→database)
+    ("thread pool executor", "api"),                    # bigram fires before bare "pool"→database
+    ("virtual thread java", "api"),                     # bigram "virtual thread"→api (overrides "virtual"→frontend)
+    ("virtual thread loom", "api"),                     # bigram fires; JVM Project Loom
+    ("green thread erlang", "api"),                     # bigram "green thread"→api
+    # PRE: existing goroutine-dump→monitoring unaffected
+    ("goroutine dump pprof", "monitoring"),             # bigram "goroutine dump"→monitoring still fires (bigram > bare)
+
+    # ── Probe 160: distributed-systems / consistency / thread-safety dead zones ──
+    ("cap theorem", "database"),
+    ("cap theorem database", "database"),
+    ("eventual consistency", "database"),
+    ("eventual consistency nosql", "database"),
+    ("strong consistency", "database"),
+    ("strong consistency model", "database"),
+    ("base consistency", "database"),
+    ("thread safety library", "api"),
+    ("thread safe golang", "api"),
+    ("threading python", "api"),
+    # PRE: existing routes unaffected by new "cap"/"thread" bare tokens
+    ("capture group regex", "developer"),               # PRE: "capture"→raw_first, "regex"→developer fires
+    ("captcha widget", "security"),                     # PRE: "captcha"→security (not "cap"→database)
 ]
 
 

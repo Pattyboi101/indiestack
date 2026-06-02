@@ -4623,6 +4623,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Database — time-series databases not individually mapped
     "influxdb": "database",         # InfluxDB — most popular open-source time-series database (28k★)
     "questdb": "database",          # QuestDB — fast SQL time-series database (14k★)
+    "tsdb": "database",             # TSDB abbreviation — Time Series Database (generic term for InfluxDB/TimescaleDB tier)
+    "opentsdb": "database",         # OpenTSDB — distributed time-series database on HBase (4.8k★)
     "cassandra": "database",        # Apache Cassandra — wide-column distributed NoSQL store
     "scylladb": "database",         # ScyllaDB — C++ Cassandra-compatible (10× faster, 13k★)
     # Security — Zero Trust architecture (growing segment in enterprise security queries)
@@ -8226,6 +8228,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "headless chrome": "testing",   # bigram — "headless chrome screenshot", "headless chrome automation" → Testing Tools
     "headless test": "testing",     # bigram — "headless test runner", "headless test automation" → Testing Tools
     "browser extension": "developer", # bigram — "browser extension framework", "chrome extension" → Developer Tools (Plasmo, WXT)
+    "manifest v3": "developer",       # bigram — "manifest v3 migration", "manifest v3 api", "manifest v3 chrome" → Developer Tools
     # File Management — thumbnail generation has no synonym; raw_first fires with no category boost.
     # Sharp, imgix, Cloudinary (thumbnail generation) live in file-management.
     "thumbnail": "file",            # "thumbnail generation api", "thumbnail resize", "thumbnail cdn" → File Management
@@ -8378,6 +8381,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "distributed lock": "database",      # bigram — "distributed lock redis", "distributed lock service" → Database
     "distributed locking": "database",  # bigram — "distributed locking service", "distributed locking redis" → Database
     "distributed mutex": "database",    # bigram — "distributed mutex redis", "distributed mutex golang" → Database (same tier as distributed lock)
+    "redlock": "database",              # Redlock — Redis distributed lock algorithm; implementations in every language
     "mutex lock": "database",           # bigram — "mutex lock library", "mutex lock python" → Database (distributed mutual exclusion)
     # Analytics — data catalog queries fall through to raw_first with no boost ("data" has no synonym).
     # DataHub, Amundsen, OpenMetadata, Apache Atlas all live in Analytics & Metrics.
@@ -10321,6 +10325,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pbt": "testing",                # bare — "pbt framework", "pbt approach" → Testing (Property-Based Testing abbreviation)
     "proptest": "testing",           # bare — "proptest rust", "proptest library" → Testing (Rust PBT library, 4k★)
     "quickcheck": "testing",         # bare — "quickcheck haskell", "quickcheck typescript" → Testing (canonical PBT)
+    "falsify": "testing",            # Falsify — property-based testing for Python (HypothesisWorks/falsify)
 
     # Testing — automation qualifier bigram (overrides bare "automation"→ai for testing context)
     "automation testing": "testing", # bigram — "automation testing selenium", "automation testing playwright" → Testing Tools
@@ -10411,6 +10416,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "meta programming": "developer",   # bigram — "meta programming guide", "meta programming python" → Developer Tools (bare "meta" excluded: Meta/Facebook collision)
     "dynamic import": "frontend",      # bigram — "dynamic import react", "dynamic import javascript" → Frontend (JS module lazy loading / code splitting)
     "meta description": "seo",         # bigram — "meta description tag", "meta description generator" → SEO Tools (overrides raw_first "meta")
+
+    # ── Probe 159 (autonomous loop, Jun 2026): goroutine / async-await / incremental-build / thread-pool / virtual-thread / green-thread / rxjava dead zones ──
+    "goroutine": "api",             # bare — "goroutine channel", "goroutine pool go" → API Tools (Go concurrency)
+    "goroutines": "api",            # plural — "goroutines golang", "goroutines scheduler" → API Tools
+    "async await": "api",           # bigram — "async await library", "async await javascript" → API Tools
+    "incremental": "frontend",      # bare — "incremental build", "incremental compilation" → Frontend Frameworks
+    "rxjava": "frontend",           # bare — "rxjava alternative", "rxjava rxandroid" → Frontend Frameworks (same tier as rxjs)
+    "thread pool": "api",           # bigram — "thread pool java", "thread pool executor" → API Tools (overrides "pool"→database)
+    "virtual thread": "api",        # bigram — "virtual thread java", "virtual thread loom" → API Tools (overrides "virtual"→frontend)
+    "green thread": "api",          # bigram — "green thread erlang", "green thread ruby" → API Tools
+
+    # ── Probe 160 (autonomous loop, Jun 2026): distributed-systems / consistency / thread-safety dead zones ──
+    "cap theorem": "database",      # bigram — "cap theorem tools", "cap theorem explained" → Database
+    "cap": "database",              # bare — "cap theorem" second-token path; "cap database tradeoff" → Database
+    "eventual consistency": "database",  # bigram — "eventual consistency database", "eventual consistency nosql" → Database
+    "eventual": "database",         # bare — first token of "eventual consistency" without bigram match → Database
+    "consistency": "database",      # bare — "strong consistency", "consistency guarantee" → Database
+    "strong consistency": "database",    # bigram — "strong consistency guarantee", "strong consistency model" → Database
+    "base consistency": "database", # bigram — "base model nosql", "base vs acid", "BASE consistency" → Database
+    "thread safety": "api",         # bigram — "thread safety library", "thread safe queue" → API Tools (concurrency)
+    "thread safe": "api",           # bigram — "thread safe map golang", "thread safe singleton" → API Tools
+    "thread": "api",                # bare — "thread safety", "thread pool", "threading library" → API Tools
 }
 
 _FTS_STOP_WORDS = {
