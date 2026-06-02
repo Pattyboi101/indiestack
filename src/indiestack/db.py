@@ -3598,6 +3598,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "neural": "ai",                # "neural network", "neural architecture" → AI & Automation
     "deep": "ai",                  # "deep learning" — "deep" fires before "learning"→education
     "reinforcement": "ai",         # "reinforcement learning" — fires before unmapped "learning" token → AI & Automation
+    "contrastive": "ai",           # "contrastive learning", "contrastive loss" — self-supervised ML paradigm → AI & Automation
     "inference": "ai",             # "llm inference", "model inference", "inference api" → AI & Automation
     "chatgpt": "ai",               # ChatGPT alternative queries → AI & Automation
     # AI observability — LLM tracing, evaluation, and proxy tools
@@ -10573,8 +10574,20 @@ _CAT_SYNONYMS: dict[str, str] = {
     #   "reinforcement testing"→testing ("testing" fires as second token; correct)
     #   "file transfer"→file (bigram "distributed lock" pattern; bare "transfer" not added)
     "transfer learning": "ai",        # bigram — "transfer learning pytorch", "transfer learning fine-tune" → AI
+    "active learning": "ai",          # bigram — "active learning annotation", "active learning labeling" → AI (ML paradigm; bigram avoids "active"→ai bare which would break "active directory"→auth)
     "distributed system": "devops",   # bigram — "distributed system tool", "distributed system design" → DevOps
     "distributed systems": "devops",  # plural — "distributed systems library", "distributed systems course" → DevOps
+
+    # ── Probe 153 (autonomous loop, Jun 2026): ML learning paradigms / contrastive learning dead zones ──
+    #
+    # "active learning" → raw_first via "active" (active learning = ML paradigm where model queries human oracle;
+    #   bare "active"→ai CANNOT be added — would break "active directory"→auth; bigram is precise and safe)
+    # "contrastive learning" → raw_first via "contrastive" (self-supervised ML; "contrastive" has no non-AI meaning
+    #   in dev tool searches; bare "contrastive"→ai added alongside reinforcement/deep/neural/machine block)
+    #
+    # Regressions guarded:
+    #   "active directory"→auth ("directory" fires as second token; bigram "active learning" doesn't affect "active directory")
+    #   "active record"→database ("orm"/"record" tokens fire in context queries; "active" bare not added)
 }
 
 _FTS_STOP_WORDS = {

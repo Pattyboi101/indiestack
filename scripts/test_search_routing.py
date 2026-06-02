@@ -5128,6 +5128,15 @@ TEST_CASES: list[tuple[str, str]] = [
     ("distributed tracing jaeger", "monitoring"),       # PRE: bare "tracing"→monitoring fires as second token (no bare "distributed")
     ("distributed cache redis", "caching"),             # PRE: bare "cache"→caching fires as second token (no bare "distributed")
     ("file transfer tool", "file"),                     # PRE: bare "transfer" not added; "file"→file fires at pos 0
+    # ── Probe 153 (autonomous loop, Jun 2026): ML learning paradigms (active/contrastive learning) ──
+    # New fixes
+    ("active learning annotation", "ai"),               # bigram "active learning"→ai (ML paradigm; avoids bare "active"→ai collision)
+    ("active learning labeling", "ai"),                 # bigram fires; "labeling" has no standalone synonym
+    ("contrastive learning pytorch", "ai"),             # bare "contrastive"→ai (self-supervised ML; no non-AI dev use case)
+    ("contrastive loss function", "ai"),                # bare fires; "loss" / "function" are stop words/unmapped
+    # Regressions guarded (probe 153)
+    ("active directory sso", "authentication"),         # PRE: bigram "active learning" doesn't fire; "directory"→auth fires as second token
+    ("reinforcement learning numpy", "ai"),             # PRE: bare "reinforcement"→ai unchanged (probe 152)
 ]
 
 
