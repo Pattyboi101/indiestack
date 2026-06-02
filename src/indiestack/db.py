@@ -3298,6 +3298,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "smolagents": "ai",              # SmolAgents (HuggingFace) — minimal agentic framework
     # DevOps — Kubernetes ecosystem tools
     "helm": "devops",               # Helm — Kubernetes package manager (charts)
+    "argo": "devops",               # Argo CD — bare "argo" queries (argocd compound also mapped)
     "argocd": "devops",             # Argo CD — GitOps continuous delivery for Kubernetes
     "fluxcd": "devops",             # Flux CD — GitOps operator for Kubernetes
     "flux cd": "devops",            # bigram — "flux cd alternative", "flux cd vs argo" → DevOps (overrides flux→ai)
@@ -8219,6 +8220,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "headless component": "frontend",   # "headless component library", "headless component react" → Frontend
     # Data streaming — bare "streaming"→media fires first; bigram routes event/data streaming to message queue
     "data streaming": "message",        # "data streaming platform", "data streaming kafka" → Message Queues
+    # Streaming analytics / realtime analytics — bare "streaming"→media and "realtime"→api fire first
+    "streaming analytics": "analytics", # "streaming analytics platform", "streaming analytics tool" → Analytics
+    "realtime analytics": "analytics",  # "realtime analytics dashboard", "realtime analytics react" → Analytics
     # Micro-prefixed queries — "micro" is unmapped so raw_first fires; bigrams route correctly
     # Note: "micro service" can't be a bigram because "service" is in _FTS_STOP_WORDS —
     # space-separated "micro service" users should use compound "microservice" (already mapped).

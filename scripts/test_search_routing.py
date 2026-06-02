@@ -5188,6 +5188,24 @@ TEST_CASES: list[tuple[str, str]] = [
     ("edge caching redis", "caching"),                  # PRE: bigram "edge caching"→caching fires first
     ("pytorch model training", "ai"),                   # PRE: "pytorch"→ai fires at pos 0
     ("tensorflow model deploy", "ai"),                  # PRE: "tensorflow"→ai fires at pos 0
+    # ── Probe 156 (autonomous loop, Jun 2026): argo-cd / streaming-analytics / realtime-analytics dead zones ──
+    # "argo cd" → raw_first "argo" (argocd compound was mapped but bare "argo" was not; "argo cd" bigram
+    #   also needed); bare "argo"→devops added.
+    # "streaming analytics" → media via bare "streaming"→media (wrong; Tinybird/ClickHouse streaming
+    #   analytics → Analytics; bigram "streaming analytics"→analytics added).
+    # "realtime analytics" → api via bare "realtime"→api (wrong; realtime analytics dashboards → Analytics;
+    #   bigram "realtime analytics"→analytics added).
+    ("argo cd kubernetes", "devops"),                   # bare "argo"→devops fires at pos 0
+    ("argo alternative", "devops"),                     # bare "argo"→devops
+    ("argo workflow", "devops"),                        # bare "argo"→devops (Argo Workflows OSS)
+    ("streaming analytics platform", "analytics"),      # bigram "streaming analytics"→analytics overrides "streaming"→media
+    ("streaming analytics tool", "analytics"),          # bigram fires
+    ("realtime analytics dashboard", "analytics"),      # bigram "realtime analytics"→analytics overrides "realtime"→api
+    ("realtime analytics react", "analytics"),          # bigram fires
+    # Regressions guarded (probe 156)
+    ("argocd alternative", "devops"),                   # PRE: compound "argocd"→devops unchanged
+    ("video streaming platform", "media"),              # PRE: bare "streaming"→media unchanged when "analytics" absent
+    ("realtime websocket", "api"),                      # PRE: bare "realtime"→api unchanged when "analytics" absent
 ]
 
 
