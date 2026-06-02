@@ -3742,6 +3742,9 @@ _CAT_SYNONYMS: dict[str, str] = {
     "pytest": "testing",            # pytest — dominant Python testing framework
     "unittest": "testing",          # unittest — Python stdlib test framework
     "hypothesis": "testing",        # Hypothesis — property-based testing for Python
+    "proptest": "testing",          # Proptest — property-based testing for Rust (AltF4-LLC/proptest)
+    "quickcheck": "testing",        # QuickCheck — property-based testing (Haskell origin; Rust/Go/JS ports)
+    "falsify": "testing",           # Falsify — property-based testing for Python (HypothesisWorks/falsify)
     "factory pattern": "developer",  # bigram — GoF factory pattern → Developer Tools (overrides "factory"→testing)
     "factory": "testing",           # factory_boy / FactoryBot — test data factories
     # Python linters/formatters — Rust-powered tooling gaining fast adoption
@@ -8155,6 +8158,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "headless chrome": "testing",   # bigram — "headless chrome screenshot", "headless chrome automation" → Testing Tools
     "headless test": "testing",     # bigram — "headless test runner", "headless test automation" → Testing Tools
     "browser extension": "developer", # bigram — "browser extension framework", "chrome extension" → Developer Tools (Plasmo, WXT)
+    "manifest v3": "developer",       # bigram — "manifest v3 migration", "manifest v3 api", "manifest v3 chrome" → Developer Tools
     # File Management — thumbnail generation has no synonym; raw_first fires with no category boost.
     # Sharp, imgix, Cloudinary (thumbnail generation) live in file-management.
     "thumbnail": "file",            # "thumbnail generation api", "thumbnail resize", "thumbnail cdn" → File Management

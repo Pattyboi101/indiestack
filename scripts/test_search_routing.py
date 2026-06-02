@@ -5221,6 +5221,22 @@ TEST_CASES: list[tuple[str, str]] = [
     ("influxdb alternative", "database"),               # PRE: "influxdb"→database unchanged
     ("questdb alternative", "database"),                # PRE: "questdb"→database unchanged
     ("distributed lock redis", "database"),             # PRE: bigram "distributed lock"→database unchanged
+    # ── Probe 158 (autonomous loop, Jun 2026): property-based testing / manifest v3 dead zones ──
+    # proptest/quickcheck/falsify — property-based testing libraries; bare tool names were raw_first
+    # manifest v3 — Chrome extension manifest format; "manifest" alone was raw_first, bigram fires
+    ("proptest", "testing"),                            # bare "proptest"→testing (Rust PBT library)
+    ("proptest rust", "testing"),                       # bare fires at pos 0 before "rust"→api
+    ("quickcheck", "testing"),                          # bare "quickcheck"→testing (Haskell/Rust/Go PBT)
+    ("quickcheck property testing", "testing"),         # bare fires at pos 0
+    ("falsify", "testing"),                             # bare "falsify"→testing (Python PBT library)
+    ("manifest v3", "developer"),                       # bigram "manifest v3"→developer (Chrome extension format)
+    ("manifest v3 migration", "developer"),             # bigram fires at pos 0
+    ("manifest v3 chrome", "developer"),                # bigram fires even with "chrome"→developer present
+    # Regressions guarded (probe 158)
+    ("hypothesis python", "testing"),                   # PRE: "hypothesis"→testing unchanged
+    ("pbt framework", "testing"),                       # PRE: "pbt"→testing unchanged
+    ("browser extension framework", "developer"),       # PRE: bigram "browser extension"→developer unchanged
+    ("web manifest", "frontend"),                       # PRE: bigram "web manifest"→frontend unchanged (PWA, distinct from manifest v3)
 ]
 
 
