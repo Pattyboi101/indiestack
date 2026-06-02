@@ -163,8 +163,12 @@ These areas historically generate `raw_first` misses:
 | Hardware auth | yubikey, hardware key, hardware token, fido2 key, passkey device |
 | IaC / provisioning | cloudformation, cloud formation, pulumi stack, opentofu, crossplane, terraform cdk |
 | BPM / workflow engines | bpm, camunda, activiti (probe 149 ✓), flowable (probe 149 ✓), zeebe, temporal workflow |
-| Plural-form gaps | fixtures (→testing), formatters (probe 149 ✓), notifiers (probe 149 ✓) — always probe the plural when singular is mapped |
+| Plural-form gaps | fixtures (→testing), formatters (probe 149 ✓), notifiers (probe 149 ✓), linters (probe 157 ✓), validators (probe 157 ✓), transpilers (probe 157 ✓), compilers (probe 157 ✓), routers (probe 157 ✓), parsers (probe 157 ✓) — RULE: whenever you add a singular form, add the plural too |
 | FaaS spaced forms | function as a service, function as service — "faas" maps but long-form bigrams often missing |
+| E-commerce / commerce | marketplace, dropshipping, digital downloads, upsell, cross-sell, flash sale, abandoned cart — commerce ops terms often raw_first (probe 157 ✓ for first batch) |
+| Data visualization | vega (probe 157 ✓), vega lite (probe 157 ✓), dc.js, nivo, visx, visx library, highcharts — "chart"/"recharts"/"plotly"/"d3" mapped but Vega family missing |
+| Resilience / fallback | fallback (probe 156 ✓), graceful (→devops), circuit (→api), bulkhead (→api) — "resilience strategy" + compound terms often raw_first |
+| CQRS / DDD patterns | command bus (probe 156 ✓ bigram→message), command handler (probe 156 ✓ bigram→message), event store, domain event, aggregate root, bounded context — DDD vocabulary often raw_first |
 | Data pipeline verbs | data export, data import, data transform — "data" + verb bigrams often raw_first |
 | Automation qualifier | automation testing (→testing, not ai), automation workflow (→background) — "automation" bare→ai causes misfires |
 | Payments / billing ops | chargeback, chargebacks, dunning, refund (probe 149 ✓), dispute (probe 149 ✓), refund policy (probe 149 ✓ bigram), dispute management (probe 149 ✓ bigram) — payment ops terms often raw_first |
