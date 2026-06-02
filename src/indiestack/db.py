@@ -2640,6 +2640,10 @@ _CAT_SYNONYMS: dict[str, str] = {
     "notifications": "notifications",
     "push": "notifications",
     "sms": "notifications",
+    # Auth — SMS-specific auth bigrams override bare "sms"→notifications when OTP/auth intent is clear
+    "sms otp": "authentication",        # bigram — "sms otp service", "sms otp api" → Authentication (Twilio Verify, AWS SNS)
+    "sms verification": "authentication",  # bigram — "sms verification api", "sms verify" → Authentication
+    "sms authentication": "authentication",  # bigram — explicit auth intent → Authentication
     "otp": "authentication",
     "totp": "authentication",
     "phone": "authentication",      # "phone verification", "phone otp", "phone auth" → Authentication (Twilio Verify)
@@ -3918,7 +3922,13 @@ _CAT_SYNONYMS: dict[str, str] = {
     "torch": "ai",                  # PyTorch alias — "torch model", "torch training"
     "keras": "ai",                  # Keras — high-level neural networks API (TF/JAX/PyTorch backends)
     "jax": "ai",                    # JAX — Google's ML numerical computing library (autodiff + XLA JIT) (29k★)
-    "tensor": "ai",                 # "tensor library", "tensor operations" → PyTorch/JAX/TF context → AI
+    "tensor": "ai",                 # bare — "tensor library", "tensor operations", "tensor flow lite" → AI & Automation
+    "tensorflowlite": "ai",         # compound — "tensorflowlite model", "tensorflowlite inference" → AI & Automation
+    "tflite": "ai",                 # abbreviation — "tflite model", "tflite alternative", "tflite runtime" → AI & Automation
+    # AI — time series forecasting tools and patterns (ML, not database)
+    "forecasting": "ai",            # bare — "demand forecasting", "sales forecasting", "load forecasting" → AI & Automation
+    "prophet": "ai",                # Prophet — Meta's open-source forecasting library (facebook/prophet, 18k★)
+    "outlier": "ai",                # bare — "outlier detection", "outlier analysis" → AI & Automation (PyOD, Isolation Forest)
     # AI — ML experiment tracking and model management
     "wandb": "ai",                  # Weights & Biases — MLOps platform for experiment tracking (9k★)
     "weights": "ai",                # "Weights & Biases" — first term in full name queries
@@ -8080,6 +8090,14 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Social Media — bare "social" token for "social media tool", "social media management" queries
     # "social"→social-media lets "social media scheduling" route correctly before "media"→file fires
     "social": "social",             # "social media tool", "social media management" → Social Media
+    # AI — time series ML bigrams (override "series"→database when forecasting/ML intent is clear)
+    # "time series database"/"time series data" still route correctly via bare "series"→database
+    # because none of these bigrams fire when "database" or "data" follows "series".
+    "series forecasting": "ai",         # bigram — "time series forecasting", "series forecasting api" → AI & Automation
+    "series prediction": "ai",          # bigram — "time series prediction", "series prediction model" → AI & Automation
+    "series analysis": "ai",            # bigram — "time series analysis", "series analysis library" → AI & Automation
+    "series model": "ai",               # bigram — "time series model", "series modelling" → AI & Automation
+    "series anomaly": "monitoring",     # bigram — "time series anomaly detection" → Monitoring (consistent with "anomaly"→monitoring)
     # Database — "series" catches "time series database/data" queries; "time"→api is removed (gotcha)
     "series": "database",           # "time series database", "time series data" → Database Tools (InfluxDB, TimescaleDB)
     # Feedback — bare "feedback" token for "user feedback widget", "customer feedback tool"
@@ -9401,6 +9419,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "revops" fired raw_first — RevOps platforms (Clari, Gong, Revenue.io) are CRM/Sales → CRM.
     "revops": "crm",                      # bare — "revops tool", "revops saas" → CRM & Sales
     # "demand generation" → raw_first "demand" — demand-gen/ABM tools (6sense, Demandbase) are CRM.
+    # "demand forecasting" bigram overrides "demand"→crm for ML/supply-chain forecasting queries.
+    "demand forecasting": "ai",           # bigram — "demand forecasting model", "demand forecasting api" → AI & Automation
     "demand": "crm",                      # bare — "demand generation", "demand gen", "demand capture" → CRM
     # "abm" / "account based marketing" fired raw_first — ABM is a CRM-adjacent B2B strategy.
     "abm": "crm",                         # bare — "abm tool", "abm saas", "abm software" → CRM & Sales

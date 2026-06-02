@@ -13473,6 +13473,61 @@ TOOLS = [
         "npm install @treblle/express",
         "saas",
     ),
+    # Time Series Forecasting / Outlier Detection -----------------------------------------------
+    (
+        "prophet",
+        "Prophet",
+        "Automatic forecasting tool by Meta for business time series",
+        "Prophet is Meta's open-source forecasting library designed for business "
+        "time series with strong seasonal patterns. Handles missing data, outliers, "
+        "and holidays automatically. Uses a decomposable additive model with trend, "
+        "seasonality, and holiday components. Ideal for demand forecasting, capacity "
+        "planning, and financial forecasting. Produces confidence intervals and "
+        "works well with daily data. Available for Python and R.",
+        "ai-automation",
+        "facebook/prophet",
+        18000,
+        "https://facebook.github.io/prophet",
+        "forecasting,time-series,machine-learning,python,r,seasonal",
+        "pip install prophet",
+        "code",
+    ),
+    (
+        "darts",
+        "Darts",
+        "Python library for user-friendly forecasting and anomaly detection",
+        "Darts is a Python library for easy manipulation and forecasting of time "
+        "series. Provides a unified interface for classical models (ARIMA, Theta, "
+        "Exponential Smoothing), machine learning (LightGBM, XGBoost), and deep "
+        "learning (N-BEATS, TiDE, TFT, TSMixer). Supports probabilistic forecasting, "
+        "multivariate series, and backtesting. Built by Unit8, backed by an active "
+        "open-source community.",
+        "ai-automation",
+        "unit8co/darts",
+        8000,
+        "https://unit8co.github.io/darts",
+        "forecasting,time-series,machine-learning,python,probabilistic,anomaly-detection",
+        "pip install darts",
+        "code",
+    ),
+    (
+        "pyod",
+        "PyOD",
+        "Python toolkit for detecting outliers in multivariate data",
+        "PyOD is a comprehensive Python toolkit for detecting outlying objects in "
+        "multivariate data. Includes 40+ detection algorithms: classical (LOF, OCSVM, "
+        "Isolation Forest, AutoEncoder), ensemble methods (SUOD, LODA), and deep "
+        "learning (AnoGAN, DeepSVDD). Widely used in fraud detection, network "
+        "intrusion detection, and IoT anomaly detection. Offers a scikit-learn "
+        "compatible API with unified training and prediction.",
+        "ai-automation",
+        "yzhao062/pyod",
+        8500,
+        "https://pyod.readthedocs.io",
+        "anomaly-detection,outlier-detection,machine-learning,python,fraud-detection",
+        "pip install pyod",
+        "code",
+    ),
 ]
 
 

@@ -5092,6 +5092,41 @@ TEST_CASES: list[tuple[str, str]] = [
     ("dynamic import webpack", "frontend"),             # PRE: bigram "dynamic import"→frontend; "webpack"→frontend also unchanged
     ("rtl support react", "localization"),             # PRE: bare "rtl"→localization unchanged
     ("i18n library react", "localization"),            # PRE: bare "i18n"→localization unchanged
+    # ── Probe pattern 157 (autonomous loop, Jun 2026): time-series ML / SMS-auth / forecasting dead zones ──
+    # "time series forecasting" → "database" via "series"→database (WRONG; ML forecasting ≠ TSDB).
+    #   Fix: bigrams "series forecasting/prediction/analysis/model"→ai fire in pre-pass before "series"→database.
+    # "sms otp" → "notifications" via bare "sms" (WRONG; OTP/verify is an auth pattern).
+    #   Fix: bigrams "sms otp"/"sms verification"/"sms authentication"→authentication fire in pre-pass.
+    # "demand forecasting" → "crm" via bare "demand" (WRONG; demand-forecast is ML/supply-chain).
+    #   Fix: bigram "demand forecasting"→ai fires in pre-pass before "demand"→crm.
+    # "prophet forecasting" → raw_first "prophet" (no mapping; Prophet is Meta's forecasting library).
+    #   Fix: bare "prophet"→ai added.
+    # "outlier detection" → raw_first "outlier" (no mapping; outlier detection is an ML task).
+    #   Fix: bare "outlier"→ai added.
+    ("time series forecasting", "ai"),                  # bigram "series forecasting"→ai overrides "series"→database
+    ("time series forecasting api", "ai"),              # bigram fires at pos 1,2 in pre-pass
+    ("time series prediction model", "ai"),             # bigram "series prediction"→ai at pos 1,2
+    ("time series analysis library", "ai"),             # bigram "series analysis"→ai at pos 1,2
+    ("time series model pytorch", "ai"),                # bigram "series model"→ai fires before "pytorch"→ai
+    ("time series anomaly detection", "monitoring"),    # bigram "series anomaly"→monitoring (consistent with "anomaly"→monitoring)
+    ("sms otp service", "authentication"),              # bigram "sms otp"→auth overrides "sms"→notifications
+    ("sms otp verification", "authentication"),         # bigram fires; "sms"→notifications suppressed
+    ("sms authentication api", "authentication"),       # bigram "sms authentication"→auth
+    ("sms verification api", "authentication"),         # bigram "sms verification"→auth
+    ("demand forecasting model", "ai"),                 # bigram "demand forecasting"→ai overrides "demand"→crm
+    ("demand forecasting api", "ai"),                   # bigram fires
+    ("prophet forecasting library", "ai"),              # bare "prophet"→ai fires at pos 0
+    ("prophet time series", "ai"),                      # bare "prophet"→ai fires at pos 0
+    ("outlier detection python", "ai"),                 # bare "outlier"→ai fires at pos 0
+    ("outlier analysis tool", "ai"),                    # bare "outlier"→ai fires at pos 0
+    # Regressions guarded (probe 157)
+    ("time series database", "database"),               # PRE: bare "series"→database still fires (no ML bigram matches)
+    ("time series data ingestion", "database"),         # PRE: bare "series"→database; "ingestion" unmapped
+    ("sms notification service", "notifications"),      # PRE: bare "sms"→notifications when no auth bigram fires
+    ("sms marketing campaign", "notifications"),        # PRE: "sms"→notifications; "marketing"→email fires later
+    ("demand generation saas", "crm"),                  # PRE: bare "demand"→crm when no "forecasting" follows
+    ("influxdb alternative", "database"),               # PRE: "influxdb"→database fires at pos 0
+    ("timescale alternative", "database"),              # PRE: "timescale"→database fires at pos 0
 ]
 
 
