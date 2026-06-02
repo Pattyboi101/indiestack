@@ -120,6 +120,8 @@ These areas historically generate `raw_first` misses:
 | API contract testing | pact contract, wiremock stub, consumer driven contract, prism mock |
 | Game dev advanced | tilemap, tileset, particle system, procedural generation, shader graph (probe 149 ✓ bigram→games), level design (probe 149 ✓ bigram→games), level editor (probe 149 ✓ bigram→games), delta time (probe 150 ✓ bigram→games), sprite sheet (probe 150 ✓ bigram→games), ecs game (probe 150 ✓ bigram→games), game jam |
 | Interview / on-premise / rollback | coding interview (probe 151 ✓ bigram→learning), interview platform (probe 151 ✓ bare→learning), rollback tool (probe 151 ✓ bare→devops), on premise (probe 151 ✓ bare→devops via "premise") |
+| Reinforcement / transfer learning | reinforcement learning (probe 152 ✓ bare→ai), transfer learning (probe 152 ✓ bigram→ai) |
+| Distributed systems / file protocols | distributed system/systems (probe 152 ✓ bigram→devops), nfs (probe 152 ✓ bare→file), smb (probe 152 ✓ bare→file) |
 | Security signing / PKI | code signing, binary signing, artifact signing (probe 149 ✓ bigram→security), mtls, mutual tls, certificate authority |
 | Hardware auth | yubikey, hardware key, hardware token, fido2 key, passkey device |
 | IaC / provisioning | cloudformation, cloud formation, pulumi stack, opentofu, crossplane, terraform cdk |

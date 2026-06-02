@@ -3254,6 +3254,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "blob": "file",                  # "blob storage", "Azure Blob" → File Management
     "r2": "file",                    # Cloudflare R2 — S3-compatible object storage
     "object": "file",                # "object storage" — R2, MinIO, Tigris, Backblaze B2
+    "nfs": "file",                   # NFS — Network File System; "nfs server", "nfs alternative" → File Management
+    "smb": "file",                   # SMB — Server Message Block; "smb share", "smb protocol" → File Management (Samba, etc.)
     # Auth — enterprise directory / SSO providers not yet mapped
     "workos": "authentication",      # WorkOS — enterprise SSO, SCIM, and Directory Sync
     # Security — secrets management (Infisical, Doppler, Bitwarden)
@@ -3595,6 +3597,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "machine": "ai",               # "machine learning" — "machine" fires before "learning"→education
     "neural": "ai",                # "neural network", "neural architecture" → AI & Automation
     "deep": "ai",                  # "deep learning" — "deep" fires before "learning"→education
+    "reinforcement": "ai",         # "reinforcement learning" — fires before unmapped "learning" token → AI & Automation
     "inference": "ai",             # "llm inference", "model inference", "inference api" → AI & Automation
     "chatgpt": "ai",               # ChatGPT alternative queries → AI & Automation
     # AI observability — LLM tracing, evaluation, and proxy tools
@@ -10549,6 +10552,29 @@ _CAT_SYNONYMS: dict[str, str] = {
     #   "on-premise deployment"→devops (bare "deployment"→devops fires; unchanged)
     #   "coding assistant"→ai-dev (bare "coding"→ai-dev fires; bigram "coding interview" needs "interview" as second token)
     "coding interview": "learning",    # bigram — "coding interview platform", "coding interview prep" → Learning (overrides "coding"→ai-dev)
+
+    # ── Probe 152 (autonomous loop, Jun 2026): reinforcement learning / distributed systems / NFS/SMB dead zones ──
+    #
+    # "reinforcement learning" → raw_first via "reinforcement" (both tokens unmapped; bare "reinforcement"→ai added
+    #   in ML block above, alongside "machine"/"deep"/"neural" for consistency)
+    # "transfer learning" → raw_first via "transfer" (bare "transfer" too ambiguous — file/data/payments;
+    #   bigram "transfer learning"→ai is safe and precise)
+    # "distributed system/systems" → raw_first via "distributed" (bare "distributed" intentionally removed
+    #   earlier to avoid "distributed cache"→devops collision; bigrams are safe)
+    # "nfs" → raw_first (Network File System tools → File Management; bare token added above)
+    # "smb" → raw_first (SMB/CIFS file sharing tools → File Management; bare token added above)
+    #
+    # Regressions guarded:
+    #   "distributed lock/locking"→database (bigrams fire before "distributed" bare token)
+    #   "distributed transaction"→database (bigram fires first)
+    #   "distributed file"→file (bigram fires first)
+    #   "distributed tracing"→monitoring ("tracing" fires as second token; "distributed" bare not added)
+    #   "distributed cache"→caching ("cache" fires as second token; no bare "distributed" added)
+    #   "reinforcement testing"→testing ("testing" fires as second token; correct)
+    #   "file transfer"→file (bigram "distributed lock" pattern; bare "transfer" not added)
+    "transfer learning": "ai",        # bigram — "transfer learning pytorch", "transfer learning fine-tune" → AI
+    "distributed system": "devops",   # bigram — "distributed system tool", "distributed system design" → DevOps
+    "distributed systems": "devops",  # plural — "distributed systems library", "distributed systems course" → DevOps
 }
 
 _FTS_STOP_WORDS = {

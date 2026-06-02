@@ -5107,6 +5107,27 @@ TEST_CASES: list[tuple[str, str]] = [
     ("user interview tool", "feedback"),                # PRE: bigram "user interview"→feedback unchanged (fires before bare "interview")
     ("coding assistant ai", "ai dev"),                  # PRE: bare "coding"→ai-dev fires (bigram "coding interview" needs "interview")
     ("on-premise deployment", "devops"),                # PRE: bare "deployment"→devops fires (unchanged)
+    # ── Probe 152 (autonomous loop, Jun 2026): reinforcement learning / distributed systems / NFS/SMB ──
+    # New fixes
+    ("reinforcement learning pytorch", "ai"),           # bare "reinforcement"→ai (overrides raw_first; ML term)
+    ("reinforcement learning framework", "ai"),         # bare fires; "framework" is stop word
+    ("transfer learning pytorch", "ai"),                # bigram "transfer learning"→ai (bare "transfer" too ambiguous)
+    ("transfer learning fine-tune", "ai"),              # bigram fires at pos 0
+    ("distributed system tool", "devops"),              # bigram "distributed system"→devops (safe; bare "distributed" not added)
+    ("distributed system design", "devops"),            # bigram fires; "design" maps to design-creative but bigram fires first
+    ("distributed systems library", "devops"),          # plural bigram fires; "library" is stop word
+    ("nfs server alternative", "file"),                 # bare "nfs"→file (Network File System → File Management)
+    ("nfs mount tool", "file"),                         # bare fires; "mount"/"tool" are stop words or unmapped
+    ("smb share protocol", "file"),                     # bare "smb"→file (SMB/CIFS → File Management)
+    ("smb alternative linux", "file"),                  # bare fires; "linux" has no file synonym
+    # Regressions guarded (probe 152)
+    ("distributed lock redis", "database"),             # PRE: bigram "distributed lock"→database fires before bare "distributed" (not added)
+    ("distributed locking service", "database"),        # PRE: bigram "distributed locking"→database unchanged
+    ("distributed transaction management", "database"), # PRE: bigram "distributed transaction"→database unchanged
+    ("distributed file system", "file"),                # PRE: bigram "distributed file"→file unchanged
+    ("distributed tracing jaeger", "monitoring"),       # PRE: bare "tracing"→monitoring fires as second token (no bare "distributed")
+    ("distributed cache redis", "caching"),             # PRE: bare "cache"→caching fires as second token (no bare "distributed")
+    ("file transfer tool", "file"),                     # PRE: bare "transfer" not added; "file"→file fires at pos 0
 ]
 
 
