@@ -3166,6 +3166,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "self host": "devops",            # bigram — "self host tool", "self host nextjs" → DevOps
     "self-hosted": "devops",          # hyphenated single token — "self-hosted version", "self-hosted open source" → DevOps
     "self-hosting": "devops",         # gerund — "self-hosting guide", "self-hosting option" → DevOps
+    "premise": "devops",              # "on premise" → strips "on" (stop word) → bare "premise"→devops (on-premise software/deployment)
     "fly": "devops",                  # short form of "fly.io" in queries
     # Frontend — modern frameworks not yet covered
     "qwik": "frontend",               # Qwik — resumable JavaScript framework
@@ -5374,6 +5375,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "canary": "devops",             # canary deployment — "canary release", "canary testing", "canary rollout" → DevOps
     "bluegreen": "devops",          # compound — "bluegreen deployment", "blue green release strategy" → DevOps
     "blue-green": "devops",         # hyphenated — "blue-green deployment", "blue-green switch" → DevOps
+    "rollback": "devops",           # "rollback tool", "rollback strategy" → DevOps (regression safe: "database rollback" routes via "database" first)
     # Monitoring — SRE (Site Reliability Engineering) tooling queries (Prometheus/Grafana/PagerDuty workflows)
     "sre": "monitoring",            # SRE — "sre tools", "sre platform", "site reliability engineering" → Monitoring & Uptime
     # Monitoring — SRE incident & reliability metrics (MTTR/MTTD are key PagerDuty/Grafana dashboard terms)
@@ -6257,6 +6259,7 @@ _CAT_SYNONYMS: dict[str, str] = {
     "mooc": "learning",             # MOOC — Massive Open Online Course; "mooc platform", "mooc alternative" → Learning & Education
     "e-learning": "learning",       # hyphenated — "e-learning platform", "e-learning open source" → Learning & Education
     "elearning": "learning",        # compound — "elearning alternative", "elearning software" → Learning & Education
+    "interview": "learning",        # "interview platform", "interview tool" → Learning & Education (CoderPad, HackerRank alternatives)
     # Learning & Education — PKM / note-taking apps (Logseq, Zettlr, Obsidian all seeded as learning-education)
     "pkm": "learning",              # PKM — Personal Knowledge Management; "pkm app", "pkm tool" → Learning & Education
     "obsidian": "learning",         # Obsidian — graph-based PKM; "obsidian alternative" high volume → Learning & Education
@@ -10524,6 +10527,28 @@ _CAT_SYNONYMS: dict[str, str] = {
     "delta time": "games",             # bigram — "delta time fps", "delta time calculation" → Games (frame timing)
     "sprite sheet": "games",           # bigram — "sprite sheet atlas", "sprite sheet generator" → Games (pre-pass pos 1)
     "ecs game": "games",               # bigram — "ecs game engine", "ecs game architecture" → Games (ECS ≠ AWS ECS)
+
+    # ── Probe 151 (autonomous loop, Jun 2026): interview / rollback / on-premise / coding-interview dead zones ──
+    #
+    # "coding interview" → 'ai dev' via bare "coding"→ai-dev (wrong; CoderPad, HackerRank, Exercism are Learning)
+    # "interview platform" → raw_first via "interview" (unmapped; technical interview platforms → Learning)
+    # "rollback tool" → raw_first via "rollback" (unmapped; deployment rollback tools → DevOps)
+    # "rollback strategy" → raw_first via "rollback" (same)
+    # "on premise solution" → raw_first via "premise" (unmapped; "on" stripped as stop word → "premise" raw_first)
+    # "on premise software" → raw_first via "premise" (same)
+    #
+    # Bare token fixes: "interview"→learning, "rollback"→devops, "premise"→devops (added above in thematic blocks)
+    # Bigram fix: "coding interview"→learning (overrides bare "coding"→ai-dev when "interview" qualifier present)
+    #
+    # Regressions guarded:
+    #   "database rollback"→database (bare "database" fires at pos 0, overrides "rollback"→devops at pos 1)
+    #   "git rollback"→devops (bare "git" fires; unchanged)
+    #   "technical interview"→learning (bigram unchanged, fires before bare "interview")
+    #   "user interview"→feedback (bigram "user interview"→feedback unchanged; fires before bare "interview")
+    #   "job interview"→background (bare "job"→background fires at pos 0; unchanged)
+    #   "on-premise deployment"→devops (bare "deployment"→devops fires; unchanged)
+    #   "coding assistant"→ai-dev (bare "coding"→ai-dev fires; bigram "coding interview" needs "interview" as second token)
+    "coding interview": "learning",    # bigram — "coding interview platform", "coding interview prep" → Learning (overrides "coding"→ai-dev)
 }
 
 _FTS_STOP_WORDS = {

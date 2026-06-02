@@ -5090,6 +5090,23 @@ TEST_CASES: list[tuple[str, str]] = [
     ("sprite animation library", "games"),              # PRE: bare "sprite"→games unchanged
     ("continuous deployment pipeline", "devops"),       # PRE: bare "continuous"→devops unchanged (bigram "continuous batching" doesn't fire)
     ("continuous integration ci", "devops"),            # PRE: bare "continuous"→devops unchanged
+    # ── Probe 151 (autonomous loop, Jun 2026): interview / rollback / on-premise / coding-interview ──
+    # New fixes
+    ("coding interview platform", "learning"),          # bigram "coding interview"→learning (overrides "coding"→ai-dev)
+    ("coding interview prep", "learning"),              # bigram fires; "prep" is not a stop word
+    ("interview platform", "learning"),                 # bare "interview"→learning (was raw_first)
+    ("interview tool", "learning"),                     # bare fires; "tool" is stop word but "interview" fires first
+    ("rollback tool", "devops"),                        # bare "rollback"→devops (was raw_first)
+    ("rollback strategy", "devops"),                    # bare fires; "strategy" is not a stop word
+    ("on premise solution", "devops"),                  # bare "premise"→devops (after "on" stripped as stop word)
+    ("on premise software", "devops"),                  # bare fires; "software" is stop word → "premise"→devops wins
+    # Regressions guarded (probe 151)
+    ("database rollback", "database"),                  # PRE: bare "database"→database fires at pos 0 (overrides "rollback"→devops)
+    ("git rollback", "devops"),                         # PRE: bare "git"→devops fires at pos 0 (unchanged)
+    ("technical interview platform", "learning"),       # PRE: bigram "technical interview"→learning unchanged (fires before "interview")
+    ("user interview tool", "feedback"),                # PRE: bigram "user interview"→feedback unchanged (fires before bare "interview")
+    ("coding assistant ai", "ai dev"),                  # PRE: bare "coding"→ai-dev fires (bigram "coding interview" needs "interview")
+    ("on-premise deployment", "devops"),                # PRE: bare "deployment"→devops fires (unchanged)
 ]
 
 
