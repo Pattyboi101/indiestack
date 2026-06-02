@@ -5052,6 +5052,46 @@ TEST_CASES: list[tuple[str, str]] = [
     ("react context api", "frontend"),                  # PRE: bare "context"→frontend unchanged
     ("context window management", "ai"),                # PRE: bigram "context window"→ai fires first
     ("heap dump analysis", "monitoring"),               # PRE: bigram "heap dump"→monitoring unchanged
+    # ── Probe pattern 156 (autonomous loop, Jun 2026): RTL/bidi / metaprogramming / macro / dynamic-import / meta-description dead zones ──
+    # "bidi text" → raw_first "bidi" (RTL/bidi text → Localization); bare "bidi"→localization added.
+    # "bidirectional text" → raw_first "bidirectional" (safe: bigram "bidirectional streaming"→api fires first for streaming queries).
+    # "right to left text" → raw_first "right" ("to" stop-word stripped → meaningful=["right","left","text"]; bigram "right left"→localization added).
+    # "macro programming" → raw_first "macro" (Lisp/Rust/C macros → Developer Tools); bare "macro"→developer added.
+    # "metaprogramming" → raw_first compound form; bare "metaprogramming"→developer added.
+    # "meta programming" → raw_first "meta" (bare "meta" excluded — Meta/Facebook collision); bigram "meta programming"→developer added.
+    # "dynamic import react" → raw_first "dynamic" (JS module dynamic import() → Frontend; bigram "dynamic import"→frontend added).
+    # "meta description tag" → raw_first "meta" ("meta tags"→seo existed but shorter bigram form missing); bigram "meta description"→seo added.
+    ("bidi text", "localization"),                      # bare "bidi"→localization
+    ("bidi layout support", "localization"),            # bare "bidi"→localization fires at pos 0
+    ("bidi rtl rendering", "localization"),             # bare "bidi"→localization at pos 0
+    ("bidirectional text", "localization"),             # bare "bidirectional"→localization
+    ("bidirectional text layout", "localization"),      # bare "bidirectional"→localization fires at pos 0
+    ("right to left text", "localization"),             # bigram "right left"→localization (after "to" stop-word strip)
+    ("right to left layout", "localization"),           # bigram fires; "layout" unmapped
+    ("macro programming", "developer"),                 # bare "macro"→developer fires at pos 0
+    ("macro programming rust", "developer"),            # bare "macro"→developer fires at pos 0
+    ("lisp macro system", "developer"),                 # bare "macro"→developer fires at pos 1
+    ("procedural macro rust", "developer"),             # bare "macro"→developer fires at pos 1 (after "procedural" unmapped)
+    ("compile time macro", "developer"),                # bare "macro"→developer fires at pos 2 (after "compile"/"time" unmapped)
+    ("macro recorder automation", "developer"),         # bare "macro"→developer fires at pos 0
+    ("metaprogramming", "developer"),                   # bare "metaprogramming"→developer (compound form)
+    ("advanced metaprogramming guide", "developer"),    # bare "metaprogramming"→developer at pos 1 ("advanced" unmapped)
+    ("meta programming guide", "developer"),            # bigram "meta programming"→developer (spaced form)
+    ("meta programming python", "developer"),           # bigram fires at pos 0
+    ("dynamic import react", "frontend"),               # bigram "dynamic import"→frontend (overrides raw_first "dynamic")
+    ("dynamic import javascript", "frontend"),          # bigram fires
+    ("dynamic import vite", "frontend"),                # bigram fires at pos 0 before "vite"→frontend at pos 1
+    ("meta description tag", "seo"),                   # bigram "meta description"→seo (overrides raw_first "meta")
+    ("meta description generator", "seo"),             # bigram fires
+    ("meta description seo tool", "seo"),              # bigram fires at pos 0
+    # Regressions guarded (probe 156)
+    ("bidirectional streaming grpc", "api"),            # PRE: bigram "bidirectional streaming"→api fires before bare "bidirectional"→localization
+    ("bidirectional streaming websocket", "api"),       # PRE: bigram "bidirectional streaming"→api unchanged
+    ("meta learning pytorch", "ai"),                   # PRE: bigram "meta learning"→ai fires before bare "meta" or bigram "meta programming"
+    ("meta tags seo", "seo"),                          # PRE: bigram "meta tags"→seo unchanged
+    ("dynamic import webpack", "frontend"),             # PRE: bigram "dynamic import"→frontend; "webpack"→frontend also unchanged
+    ("rtl support react", "localization"),             # PRE: bare "rtl"→localization unchanged
+    ("i18n library react", "localization"),            # PRE: bare "i18n"→localization unchanged
 ]
 
 

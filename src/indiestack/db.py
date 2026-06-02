@@ -3045,6 +3045,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     "plural": "localization",           # "plural forms library", "plural rules" → Localization
     "phrase": "localization",           # Phrase (formerly Memsource) — i18n SaaS
     "transifex": "localization",        # Transifex — localization platform
+    "bidi": "localization",             # bare — "bidi text", "bidi support", "bidi layout" → Localization
+    "bidirectional": "localization",    # bare — "bidirectional text" → Localization (safe; bigram "bidirectional streaming"→api fires first for streaming queries)
     "usercentrics": "security",         # Usercentrics — consent management (GDPR/CCPA)
     "cookiebot": "security",            # Cookiebot — cookie consent & GDPR compliance
     "osano": "security",                # Osano — privacy compliance platform
@@ -4025,6 +4027,8 @@ _CAT_SYNONYMS: dict[str, str] = {
     # Developer Tools — plugin and extension systems
     "plugin": "developer",          # "plugin system", "vite plugin" → Developer Tools
     "plugins": "developer",         # plural — "rollup plugins", "webpack plugins"
+    "macro": "developer",           # bare — "macro programming", "lisp macro", "rust macro", "procedural macro" → Developer Tools
+    "metaprogramming": "developer", # compound — "metaprogramming python", "metaprogramming ruby" → Developer Tools
     "adapter": "developer",         # "database adapter", "auth adapter", "ORM adapter" → Developer Tools
     "adapters": "developer",        # plural — "prisma adapters", "nextauth adapters" → Developer Tools
     # Logging — additional named tools not yet covered
@@ -10372,6 +10376,21 @@ _CAT_SYNONYMS: dict[str, str] = {
     # "context limit" → meaningful=['context','limit'] → bigram fires before bare "context"→frontend.
     "context learning": "ai",          # bigram — "in context learning llm", "context learning rag" → AI & Automation
     "context limit": "ai",             # bigram — "context limit gpt4", "context limit 128k tokens" → AI & Automation
+
+    # ── Probe 156 (autonomous loop, Jun 2026): RTL/bidi text / metaprogramming / macro / dynamic-import / meta-description dead zones ──
+    #
+    # "right to left text" → raw_first "right" ("to" is stop-word → meaningful=["right","left","text"]; no synonym for "right")
+    # "bidi text" → raw_first "bidi" (bare "bidi" unmapped; RTL/bidi text rendering → Localization)
+    # "bidirectional text" → bare "bidirectional" unmapped (safe: "bidirectional streaming"→api bigram fires first for those queries)
+    # "meta programming" → raw_first "meta" (bare "meta" intentionally excluded — ambiguous with Meta/Facebook; bigram needed)
+    # "metaprogramming" → raw_first (compound form unmapped; added as bare token above)
+    # "macro programming", "lisp macro", "procedural macro" → raw_first "macro" (bare "macro" unmapped; added above)
+    # "dynamic import react" → raw_first "dynamic" ("lazy"→frontend exists but "dynamic" alone unmapped; "dynamic import" bigram needed)
+    # "meta description tag" → raw_first "meta" (very common SEO query; "meta tags"→seo exists but shorter "meta description" form missing)
+    "right left": "localization",      # bigram — "right to left" → ["right","left"] after "to" stop-word → Localization (RTL text)
+    "meta programming": "developer",   # bigram — "meta programming guide", "meta programming python" → Developer Tools (bare "meta" excluded: Meta/Facebook collision)
+    "dynamic import": "frontend",      # bigram — "dynamic import react", "dynamic import javascript" → Frontend (JS module lazy loading / code splitting)
+    "meta description": "seo",         # bigram — "meta description tag", "meta description generator" → SEO Tools (overrides raw_first "meta")
 }
 
 _FTS_STOP_WORDS = {
