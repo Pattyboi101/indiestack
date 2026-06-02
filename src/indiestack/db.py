@@ -10629,6 +10629,32 @@ _CAT_SYNONYMS: dict[str, str] = {
     "self supervised": "ai",          # bigram — "self supervised learning", "self supervised pretraining" → AI (overrides "self"→devops)
     "semi supervised": "ai",          # bigram — "semi supervised learning", "semi supervised classification" → AI
     "meta learning": "ai",            # bigram — "meta learning pytorch", "meta learning algorithm" → AI (learning-to-learn)
+
+    # ── Probe 159 (autonomous loop, Jun 2026): goroutine / async-await / incremental-build / thread-pool / virtual-thread / green-thread / rxjava dead zones ──
+    #
+    # goroutine — Go's lightweight concurrency primitive; "goroutine channel" → raw_first, "goroutine pool go"
+    #   → Database via "pool"→database (connection pool collision); bare "goroutine"→api added.
+    #   Goroutine pool libraries (ants, pond, gammazero/workerpool) are API-layer concurrent tools.
+    # async await — JavaScript/Python async/await pattern; "async await library" → raw_first "async"
+    #   (bare "async" intentionally NOT added — would break "async hook react"→frontend since bare "async"
+    #   at pos 0 would fire before "hook"→frontend at pos 1); bigram "async await"→api added instead.
+    # incremental — build/compilation pattern; "incremental build", "incremental compilation" → raw_first
+    #   (Turbopack incremental mode, tsc --incremental, esbuild incremental → Frontend Frameworks).
+    # rxjava — RxJava reactive JVM library; "rxjava alternative" → raw_first — same tier as rxjs→frontend.
+    # thread pool — concurrency pattern; "thread pool java", "thread pool executor" → Database via "pool"→database
+    #   (connection pool collision); bigram "thread pool"→api fires before bare "pool"→database.
+    # virtual thread — JVM Project Loom (JDK 21); "virtual thread java" → Frontend via "virtual"→frontend
+    #   (virtual list/windowing collision); bigram "virtual thread"→api overrides "virtual"→frontend.
+    # green thread — lightweight concurrency (Erlang processes, Ruby Fibers, Go before goroutine naming);
+    #   "green thread erlang" → raw_first "green" (unmapped); bigram "green thread"→api added.
+    "goroutine": "api",             # bare — "goroutine channel", "goroutine pool go" → API Tools (Go concurrency)
+    "goroutines": "api",            # plural — "goroutines golang", "goroutines scheduler" → API Tools
+    "async await": "api",           # bigram — "async await library", "async await javascript" → API Tools
+    "incremental": "frontend",      # bare — "incremental build", "incremental compilation" → Frontend Frameworks
+    "rxjava": "frontend",           # bare — "rxjava alternative", "rxjava rxandroid" → Frontend Frameworks (same tier as rxjs)
+    "thread pool": "api",           # bigram — "thread pool java", "thread pool executor" → API Tools (overrides "pool"→database)
+    "virtual thread": "api",        # bigram — "virtual thread java", "virtual thread loom" → API Tools (overrides "virtual"→frontend)
+    "green thread": "api",          # bigram — "green thread erlang", "green thread ruby" → API Tools
 }
 
 _FTS_STOP_WORDS = {

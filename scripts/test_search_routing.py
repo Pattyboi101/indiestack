@@ -5237,6 +5237,38 @@ TEST_CASES: list[tuple[str, str]] = [
     ("pbt framework", "testing"),                       # PRE: "pbt"→testing unchanged
     ("browser extension framework", "developer"),       # PRE: bigram "browser extension"→developer unchanged
     ("web manifest", "frontend"),                       # PRE: bigram "web manifest"→frontend unchanged (PWA, distinct from manifest v3)
+    # ── Probe 159 (autonomous loop, Jun 2026): goroutine / async-await / incremental-build / thread-pool / virtual-thread / green-thread / rxjava dead zones ──
+    # goroutine — bare "goroutine"→api fixes raw_first and "goroutine pool"→database collision
+    # async await — bigram "async await"→api (bare "async" intentionally NOT added — breaks async hook react)
+    # incremental — bare "incremental"→frontend for incremental build/compilation tool queries
+    # rxjava — bare "rxjava"→frontend (same tier as rxjs; reactive JVM library)
+    # thread pool — bigram "thread pool"→api overrides bare "pool"→database (connection pool collision)
+    # virtual thread — bigram "virtual thread"→api overrides bare "virtual"→frontend (virtual list collision)
+    # green thread — bigram "green thread"→api (lightweight concurrency: Erlang processes, Ruby fibers)
+    # New fixes
+    ("goroutine channel", "api"),                       # bare "goroutine"→api fires at pos 0
+    ("goroutine pool", "api"),                          # bare "goroutine"→api at pos 0 overrides "pool"→database at pos 1
+    ("goroutines scheduler", "api"),                    # plural "goroutines"→api fires at pos 0
+    ("async await library", "api"),                     # bigram "async await"→api fires in pre-pass
+    ("async await javascript", "api"),                  # bigram fires; "javascript" is unmapped standalone
+    ("async await python", "api"),                      # bigram fires; "python" would be api but bigram wins
+    ("incremental build", "frontend"),                  # bare "incremental"→frontend fires at pos 0
+    ("incremental compilation", "frontend"),            # bare fires; "compilation" is unmapped
+    ("rxjava alternative", "frontend"),                 # bare "rxjava"→frontend fires at pos 0
+    ("rxjava rxandroid", "frontend"),                   # bare fires at pos 0
+    ("thread pool java", "api"),                        # bigram "thread pool"→api fires before "pool"→database
+    ("thread pool executor", "api"),                    # bigram fires; "executor" is unmapped
+    ("virtual thread java", "api"),                     # bigram "virtual thread"→api overrides "virtual"→frontend
+    ("virtual thread loom", "api"),                     # bigram fires (Project Loom JDK 21)
+    ("green thread erlang", "api"),                     # bigram "green thread"→api fires at pos 0
+    ("green thread ruby", "api"),                       # bigram fires; "ruby" is unmapped standalone
+    # Regressions guarded (probe 159)
+    ("connection pool postgres", "database"),           # PRE: bare "pool"→database unchanged (no "thread" prefix)
+    ("async runtime rust", "developer"),                # PRE: bigram "async runtime"→developer fires (different bigram, unchanged)
+    ("async task queue", "background"),                 # PRE: bigram "task queue"→background fires in pre-pass first
+    ("async hook react", "frontend"),                   # PRE: "hook"→frontend fires (bare "async" NOT added so pos 1 wins)
+    ("virtual list react", "frontend"),                 # PRE: bare "virtual"→frontend unchanged (no "list" suffix for thread bigram)
+    ("reactive programming rxjs", "frontend"),          # PRE: "reactive"→frontend at pos 0 (unchanged)
 ]
 
 
